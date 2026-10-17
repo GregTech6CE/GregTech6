@@ -68,7 +68,10 @@ public final class GTWoods {
                     BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS))));
             BEAMS.put(sp, reg("beam_" + sp.id(), () -> new WoodBeamBlock(sp, p)));
         }
-        SLAB_BLUE_SPRUCE = reg("slab_bluespruce", () -> new WoodSlabBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD)));
+        for (String wood : com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS) {
+            var slab = reg("slab_" + wood, () -> new WoodSlabBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD).strength(2.0f, 3.0f).sound(SoundType.WOOD)));
+            if (wood.equals("bluespruce")) SLAB_BLUE_SPRUCE = slab;
+        }
     }
 }

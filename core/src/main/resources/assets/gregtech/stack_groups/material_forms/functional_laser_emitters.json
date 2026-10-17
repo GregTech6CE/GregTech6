@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_laser_emitters",
+  "contents": [
+    "item:gregtech:co2_laser_ev",
+    "item:gregtech:co2_laser_hv",
+    "item:gregtech:co2_laser_iv",
+    "item:gregtech:co2_laser_lv",
+    "item:gregtech:co2_laser_mv",
+    "item:gregtech:laser_emitter_argon",
+    "item:gregtech:laser_emitter_carbondioxide",
+    "item:gregtech:laser_emitter_carbonmonoxide",
+    "item:gregtech:laser_emitter_emptygas",
+    "item:gregtech:laser_emitter_helium",
+    "item:gregtech:laser_emitter_heliumneon",
+    "item:gregtech:laser_emitter_krypton",
+    "item:gregtech:laser_emitter_neon",
+    "item:gregtech:laser_emitter_xenon"
+  ],
+  "priority": 110
+}

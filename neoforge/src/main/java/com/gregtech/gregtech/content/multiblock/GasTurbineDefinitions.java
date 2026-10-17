@@ -25,7 +25,7 @@ public final class GasTurbineDefinitions {
         return java.util.stream.Stream.concat(
                 BLOCKS.stream().map(DeferredHolder::get),
                 java.util.stream.IntStream.range(17231, 17235).mapToObj(LargeMachineParts::block))
-                .toArray(Block[]::new);
+                .distinct().toArray(Block[]::new);
     }
     public static Grade grade(Block block) { return ((LargeGasTurbineControllerBlock) block).grade(); }
     public static boolean isController(net.minecraft.world.item.ItemStack stack) {

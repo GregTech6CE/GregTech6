@@ -44,7 +44,7 @@ public final class AxialGeneratorDefinitions {
         return java.util.stream.Stream.concat(
                 blocks(steam).stream().map(DeferredHolder::get),
                 java.util.stream.IntStream.range(first, first + 4).mapToObj(LargeMachineParts::block))
-                .toArray(Block[]::new);
+                .distinct().toArray(Block[]::new);
     }
     public static Grade grade(Block block) { return ((AxialGeneratorBlock)block).grade(); }
 }

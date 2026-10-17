@@ -24,9 +24,13 @@ import static com.gregtech.gregtech.registry.GTMultiblocks.*;
 public final class MultiblockDefinitions {
     private MultiblockDefinitions() {}
     private static RegistryObject<Block> part(String id) {
+        if (id.equals("coke_oven_wall")) id = "fire_bricks";
+        else if (com.gregtech.gregtech.registry.LegacyContentAliases.legacy(id))
+            return RegistryObject.create(com.gregtech.gregtech.GregTech.id(com.gregtech.gregtech.registry.LegacyContentAliases.canonical(id)), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        final String path = id;
         var source = OriginalMultiblockPartData.byPath(id);
         return com.gregtech.gregtech.registry.MachineBlockRegistration.block(id, props ->
-                java.util.Set.of("large_niobium_titanium_coil", "coke_oven_wall", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(id)
+                java.util.Set.of("large_niobium_titanium_coil", "fire_bricks", "distillation_tower_part", "large_gas_turbine_wall", "bedrock_drill_wall", "heat_transmitter", "boiler_wall", "tank_wall", "tank_wall_dense", "implosion_compressor_wall", "centrifuge_part", "electrolyzer_part", "turbine_wall", "large_dynamo_wall", "large_crucible_wall").contains(path)
                         ? new com.gregtech.gregtech.block.machine.MultiblockPortBlock(props) : new Block(props))
                 .strength(source.map(OriginalMultiblockPartData.Part::hardness).orElse(6.0f),
                         source.map(OriginalMultiblockPartData.Part::resistance).orElse(6.0f)).register();
@@ -60,23 +64,8 @@ public final class MultiblockDefinitions {
         COKE_OVEN_MAIN = com.gregtech.gregtech.registry.MachineBlockRegistration.block("coke_oven_main", com.gregtech.gregtech.block.machine.CokeOvenControllerBlock::new)
                 .strength(6.0f, 6.0f).register();
 
-        TANK_3X3 = GTBlocks.BLOCKS.register("tank_3x3", () ->
-                new com.gregtech.gregtech.block.machine.TankControllerBlock(3,
-                        BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.METAL)
-                                .strength(5.0f, 10.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("tank_3x3",
-                () -> new BlockItem(TANK_3X3.get(), new Item.Properties()));
-
-        TANK_5X5 = GTBlocks.BLOCKS.register("tank_5x5", () ->
-                new com.gregtech.gregtech.block.machine.TankControllerBlock(5,
-                        BlockBehaviour.Properties.of()
-                                .mapColor(MapColor.METAL)
-                                .strength(5.0f, 10.0f)
-                                .requiresCorrectToolForDrops()));
-        GTBlocks.BLOCK_ITEMS.register("tank_5x5",
-                () -> new BlockItem(TANK_5X5.get(), new Item.Properties()));
+        TANK_3X3 = RegistryObject.create(com.gregtech.gregtech.GregTech.id("small_stainless_steel_tank_main_valve"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        TANK_5X5 = RegistryObject.create(com.gregtech.gregtech.GregTech.id("large_stainless_steel_tank_main_valve"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
 
         // Large Crucible multiblock
         LARGE_CRUCIBLE_WALL = part("large_crucible_wall");

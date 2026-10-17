@@ -17,20 +17,7 @@ final class CatalogFeedbackSmoke {
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
     private static void require(boolean ok, String message) { if (!ok) throw new IllegalStateException(message); }
     static void server(MinecraftServer server, JsonObject receipt) {
-        int aliases = 0;
-        for (var entry : LegacyContentAliases.ALIASES.entrySet()) {
-            if (!BuiltInRegistries.ITEM.containsKey(id(entry.getKey()))) continue;
-            require(BuiltInRegistries.ITEM.containsKey(id(entry.getValue())), "missing alias target " + entry);
-            var old = BuiltInRegistries.ITEM.get(id(entry.getKey()));
-            require(LegacyContentBinding.canonicalItem(old) == BuiltInRegistries.ITEM.get(id(entry.getValue())), "alias mismatch " + entry);
-            if (BuiltInRegistries.BLOCK.containsKey(id(entry.getKey()))) {
-                var a = BuiltInRegistries.BLOCK.get(id(entry.getKey()));
-                var b = BuiltInRegistries.BLOCK.get(id(entry.getValue()));
-                require(LegacyContentBinding.samePart(a, b), "old structural part not accepted " + entry);
-                require(!LegacyContentBinding.samePart(a, Blocks.STONE), "alias accepts unrelated block " + entry);
-            }
-            aliases++;
-        }
+        int aliases = LegacyContentAliases.ALIASES.size();
         for (int i = 0; i < com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.size(); i++) {
             var material = com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.get(i);
             var key = GTDungeonKeys.byIndex(i);
@@ -72,13 +59,34 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("canonicalDungeonKeys", 10);
         receipt.addProperty("originBlackSandVariants", 3);
         receipt.addProperty("baleDryWetRotAndScheduling", true);
-        // Machine recipes may name an old wall; accept either identity with the
-        // canonical item first rather than requiring a hidden unobtainable part.
+        // Old ingredient IDs must resolve directly to the sole canonical item.
         var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gregtech:boiler_wall",
                 com.gregtech.gregtech.content.material.Materials.StainlessSteel, 1);
-        require(ingredient instanceof java.util.List<?> options && options.size() == 2
-                && options.getFirst().equals(java.util.Map.of("item", "gregtech:tank_wall"))
-                && options.contains(java.util.Map.of("item", "gregtech:boiler_wall")), "canonical/legacy recipe alternatives lost");
+        require(ingredient.equals(java.util.Map.of("item", "gregtech:tank_wall")), "canonical wall recipe lost");
+        for (var row : com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS)
+            require(server.getRecipeManager().byKey(id("survival_repairs/" + row.id())).isPresent(), "missing source crafting recipe " + row.id());
+        require(server.getRecipeManager().byKey(id("bales/bale_grass_pack")).isPresent(), "missing grass bale recipe");
+        for (var wood : com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS) {
+            var slab = BuiltInRegistries.BLOCK.get(id("slab_" + wood));
+            require(slab instanceof com.gregtech.gregtech.api.block.FaceGridSlab, "no nine-grid wood slab " + wood);
+            require(server.getRecipeManager().byKey(id("catalog_repairs/slab_" + wood)).isPresent(), "missing wood slab recipe " + wood);
+        }
+        for(var alias : LegacyContentAliases.ALIASES.entrySet()) {
+            require(BuiltInRegistries.ITEM.get(id(alias.getKey())) == BuiltInRegistries.ITEM.get(id(alias.getValue())), "duplicate identity " + alias);
+            require(!BuiltInRegistries.ITEM.keySet().contains(id(alias.getKey())), "old item still registered " + alias);
+        }
+        receipt.addProperty("sourceRepairCraftingRows", com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS.size());
+        var cut = com.gregtech.gregtech.data.MachineRecipeMaps.Cutter.mRecipeList.stream()
+                .filter(r -> r.mOutputs.length > 0 && java.util.Set.of("glass_clear_slab","glass_glow_slab","cfoam_slab")
+                        .contains(BuiltInRegistries.ITEM.getKey(r.mOutputs[0].getItem()).getPath())).toList();
+        require(cut.size() == 16 * 3 * com.gregtech.gregtech.content.recipe.SawingCoolants.variants(false).size(), "missing colored slab coolant recipes " + cut.size());
+        for (var recipe : cut) {
+            require(recipe.mExactItemInputs, "slab cutter ignores color");
+            require(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(recipe.mInputs[0])
+                    == com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(recipe.mOutputs[0]), "slab cutter changes color");
+        }
+        receipt.addProperty("exactColoredSlabCuttingRecipes", cut.size());
+        receipt.addProperty("woodSlabFamilies", com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS.size());
         receipt.addProperty("canonicalWallRecipeAlternatives", true);
         com.mojang.logging.LogUtils.getLogger().info("CATALOG_FEEDBACK_SERVER_SUCCESS aliases={} keys=10 sands=3 baleDryWetRot=true", aliases);
     }

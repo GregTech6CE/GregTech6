@@ -71,3 +71,15 @@ for state, en, zh in (("dead", "Dead Bumblebees", "死亡大黄蜂"),
                        ("queen", "Bumblebee Queens", "大黄蜂蜂后")):
     LABELS["bumblebee_" + state] = (en, zh)
     LABELS["bumblebee_scanned_" + state] = (en + " (Scanned)", zh + " (已扫描)")
+
+LABELS.update({
+    "laser_emitters": ("Laser Emitters", "镭射器"),
+    "batteries": ("Batteries", "电池"), "filters": ("Filters", "过滤器"),
+    "wall_spikes": ("Wall Spikes", "壁刺"), "logs": ("Logs", "原木"),
+    "crystal_processors": ("Crystal Processors", "晶体处理器"),
+    "generator_cores": ("Dynamo Main Housings", "发电机主机壳"),
+    "loot_items": ("Loot Items", "战利品掉落物"), "wood_slabs": ("Wooden Slabs", "木板半砖"),
+    "decor_glass_clear_slab": ("GT Glass Slabs", "GT玻璃半砖"),
+})
+
+LABELS["other_gt"] = ("Other GregTech Items", "其他格雷科技物品")

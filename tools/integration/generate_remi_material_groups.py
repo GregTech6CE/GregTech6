@@ -62,6 +62,7 @@ def resources():
                      "contents": ["item:gregtech:" + item for item in ids], "priority": 100}
     from remi_functional_groups import resources as functional_resources
     yield from functional_resources(ROOT)
+    yield "other_gt", {"type": "remi:group", "name": "emi.group.gregtech.functional_other_gt", "regex": "^item:gregtech:[a-z0-9_./-]+$", "priority": 90}
 
 
 def titled_resources():

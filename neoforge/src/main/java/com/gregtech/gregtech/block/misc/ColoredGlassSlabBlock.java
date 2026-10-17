@@ -9,7 +9,7 @@ public final class ColoredGlassSlabBlock extends CFoamSlabBlock {
     @Override public boolean skipRendering(BlockState state,BlockState adjacent,Direction side) {
         Direction own=state.getValue(FACING);
         if(side==own.getOpposite())return false;
-        if(adjacent.getBlock() instanceof ColoredGlassBlock full && full.glow() && state.getValue(COLOR)==adjacent.getValue(ColoredGlassBlock.COLOR))return true;
+        if(adjacent.getBlock() instanceof ColoredGlassBlock full && full.glow() == (state.getLightEmission() > 0) && state.getValue(COLOR)==adjacent.getValue(ColoredGlassBlock.COLOR))return true;
         if(adjacent.getBlock() instanceof ColoredGlassSlabBlock && state.getValue(COLOR)==adjacent.getValue(COLOR)) {
             Direction other=adjacent.getValue(FACING);
             return other==side.getOpposite() || other!=side && other==own;

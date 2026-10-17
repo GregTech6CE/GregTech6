@@ -1,0 +1,19 @@
+{
+  "type": "gregtech:tool_shaped",
+  "pattern": [
+    "sP"
+  ],
+  "key": {
+    "s": {
+      "item": "gregtech:tool_saw"
+    },
+    "P": {
+      "item": "gregtech:planks_bluespruce"
+    }
+  },
+  "result": {
+    "item": "gregtech:slab_bluespruce",
+    "count": 2
+  },
+  "allow_mirror": false
+}

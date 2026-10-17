@@ -44,7 +44,7 @@ public final class OriginalGeneratorTooltipData {
     public static Converter find(String path) {
         return ALL.stream().filter(p->p.legacyPath().equals(path)||p.sourcePath().equals(path)).findFirst().orElseThrow(()->new IllegalArgumentException("Unknown original generator:"+path));
     }
-    /** The existing one-item legacy conversion preserves the source controller composition. */
+    /** Legacy registry IDs resolve to the source controller identity and composition. */
     private static Map<String,String> createAliases() {
         var result=new LinkedHashMap<String,String>();
         for(var p:ALL)result.put(p.legacyPath(),p.sourcePath());

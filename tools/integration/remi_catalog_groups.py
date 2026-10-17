@@ -13,6 +13,15 @@ def extend(root, groups, ids):
 
     for group, pattern in {
         "long_dist_pipe_fluid": r"long_dist_pipe_(?:fluid|adamantium|draconium|tungsten)",
+        "laser_emitters": r"(?:laser_emitter|laser_emitter_co2|co2_laser)(?:_.+)?",
+        "batteries": r"(?:battery_(?!box).+|rechargeable_battery_.+)",
+        "filters": r"filter_(?:items|fluids|items_fluids|oredict)",
+        "wall_spikes": r"spike_.+",
+        "logs": r"log_(?!hole_|sap_|resin_).+",
+        "log_hole": r"log_(?:hole|sap|resin)_.+",
+        "crystal_processors": r"crystal_processor_.+",
+        "loot_items": r"(?:loot_bottle|clouded_bottle|gem_pouch|seed_pouch|loot_pouch|bagged_sapling|dusty_guide_book|dusty_material_dictionary)",
+        "wood_slabs": r"slab_.+",
         "food_shapes": r"(?:slicer_shape|foodmold_shape)_.+",
         "indicator_flowers": r"flower_.+",
         "circuit": r"circuit_(?:basic|good|advanced|elite|master|ultimate|signalum|enderium|magic)",
@@ -20,12 +29,12 @@ def extend(root, groups, ids):
         "keys": r"(?:key_(?:brass|bronze|copper|gold|iron|lead|plastic|platinum|silver|tin)|(?:brass|bronze|copper|gold|iron|lead|plastic|platinum|silver|tin)_key)",
         "clay_blocks": r"clay_(?:blue|brown|red|white|yellow)",
         "clay_balls": r"(?:blue|brown|red|white|yellow)_clay",
-        "bridges": r"(?:inventory|inventory_tank|universal)_bridge",
+        "bridges": r"(?:inventory|inventory_tank|tank|universal)_bridge",
         "usb_sticks": r"usb[1-4]_stick",
         "usb_cables": r"usb[1-4]_cable",
         "usb_hdd": r"usb[1-4]_hdd",
         "repeaters": r"(?:extender_(?:basic|advanced|elite|wireless)|(?:inventory|inventory_tank|tank|universal)_extender)",
-        "dynamite": r"(?:strong_)?dynamite(?:_.+)?",
+        "dynamite": r"(?:boomstick|(?:strong_)?dynamite(?:_.+)?)",
         "fluid_measure": r"(?:fluid_measure|fluid_measuring_pot)(?:_.+)?",
         "barometer_bottle": r"fluid_barometer_gas_cylinder(?:_.+)?",
     }.items():
@@ -46,10 +55,12 @@ def extend(root, groups, ids):
                   else "multiblock_dense_tanks" if 17022 <= n <= 17027 or 17062 <= n <= 17067
                   else "large_crucibles" if 17302 <= n <= 17312
                   else "gas_turbine_cores" if 17231 <= n <= 17234
-                  else "steam_turbine_cores" if 17211 <= n <= 17214 else None)
+                  else "steam_turbine_cores" if 17211 <= n <= 17214
+                  else "generator_cores" if 17221 <= n <= 17224 else None)
         if family and path in ids:
             groups[family].append(path)
     for group, pattern in {
+        "generator_cores": r"large_dynamo_(?!wall$).+",
         "gas_turbine_cores": r"large_gas_turbine_(?!wall$).+",
         "steam_turbine_cores": r"large_(?:steam_turbine_(?!wall$).+|turbine_main)",
         "large_crucibles": r"large_crucible_main",

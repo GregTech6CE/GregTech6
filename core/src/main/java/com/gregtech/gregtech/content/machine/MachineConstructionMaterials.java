@@ -22,6 +22,7 @@ public final class MachineConstructionMaterials {
         }
     }
     public static Optional<ItemComposition> block(String path) {
+        path = com.gregtech.gregtech.registry.LegacyContentAliases.canonical(path);
         var storage = OriginalStorageMaterialData.blocks().get(path);
         if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);

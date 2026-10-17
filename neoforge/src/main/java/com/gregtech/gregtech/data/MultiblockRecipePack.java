@@ -94,6 +94,19 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         }
 
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original multiblock crafting datapack: {} emitted, {} not registered or unresolved", generated.size(), MultiblockCraftingRecipes.ENTRIES.size()-generated.size());
+        for (var row : OriginalSurvivalRecipes.ROWS) {
+            var blockId = ResourceLocation.fromNamespaceAndPath("gregtech", row.id());
+            Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(blockId);
+            if (item == null || item == net.minecraft.world.item.Items.AIR)
+                throw new IllegalStateException("Unregistered original recipe output " + row.id());
+            var recipe = buildRecipe(row.entry(), row.material(), item);
+            if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
+            recipe.put("result", Map.of("id", row.id().contains(":") ? row.id() : "gregtech:" + row.id(), "count", row.count()));
+            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/survival_repairs/" + row.id() + ".json"),
+                    GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
+            EMITTED.add(row.id());
+        }
+
         resources = Collections.unmodifiableMap(generated);
         return resources;
     }

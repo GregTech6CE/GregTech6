@@ -14,7 +14,7 @@ import java.util.List;
  * Iron, Gold, Copper, Tin, Bronze, Brass, Silver, Platinum, Lead and Plastic key, multi-item ids
  * 30000..30009).
  *
- * <p>The ids are {@code key_<material>} in the order of GT6's {@code IL.KEYS}
+ * <p>The canonical ids are {@code <material>_key} in the order of GT6's {@code IL.KEYS}
  * ({@code gregapi/data/IL.java:516}), which is alphabetical and is the order the dungeon's key id
  * table uses. The port has no {@code key} material prefix, so the keys are registered like every other
  * plain item of the mod instead of extending the material form table - GT6's keys are ore-dictionary
@@ -59,8 +59,7 @@ public final class GTDungeonKeys {
     public static void registerAll() {
         if (!ALL.isEmpty()) return;
         for (String material : MATERIALS) {
-            ALL.add(GTItems.ITEMS.register("key_" + material,
-                    () -> new GTDungeonKeyItem(new Item.Properties().stacksTo(64))));
+            ALL.add(DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", material + "_key")));
         }
     }
 }

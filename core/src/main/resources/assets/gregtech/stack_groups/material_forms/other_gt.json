@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gregtech.functional_other_gt",
+  "regex": "^item:gregtech:[a-z0-9_./-]+$",
+  "priority": 90
+}

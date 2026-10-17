@@ -322,18 +322,8 @@ public final class MachineRecipeIngredients {
     private static Object byItemId(String id) {
         ResourceLocation key = ResourceLocation.tryParse(id.trim());
         if (key == null) return null;
-        if (key.getNamespace().equals("gregtech")) {
-            String canonical = com.gregtech.gregtech.registry.LegacyContentAliases.canonical(key.getPath());
-            var options = new java.util.ArrayList<Map<String, String>>();
-            var primary = ResourceLocation.fromNamespaceAndPath("gregtech", canonical);
-            if (net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(primary)) options.add(Map.of("item", primary.toString()));
-            for (var alias : com.gregtech.gregtech.registry.LegacyContentAliases.ALIASES.entrySet()) {
-                var old = ResourceLocation.fromNamespaceAndPath("gregtech", alias.getKey());
-                if (alias.getValue().equals(canonical) && net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(old))
-                    options.add(Map.of("item", old.toString()));
-            }
-            if (options.size() > 1) return options;
-        }
+        if (key.getNamespace().equals("gregtech")) key = ResourceLocation.fromNamespaceAndPath("gregtech",
+                com.gregtech.gregtech.registry.LegacyContentAliases.canonical(key.getPath()));
         Item item = ForgeRegistries.ITEMS.getValue(key);
         if (item == null || item == Items.AIR) return null;
         return Map.of("item", key.toString());
