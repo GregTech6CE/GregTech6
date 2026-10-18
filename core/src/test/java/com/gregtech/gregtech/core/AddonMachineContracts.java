@@ -3,6 +3,8 @@ package com.gregtech.gregtech.core;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
 import com.gregtech.gregtech.api.machine.MachineControllerKind;
@@ -23,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /** Addon machine queue. Each scenario is its own JVM because the queue freezes. */
@@ -42,6 +45,14 @@ public final class AddonMachineContracts {
             case "energy" -> unknownEnergy();
             case "controller" -> noController();
             case "service" -> service();
+            case "overlap" -> overlap();
+            case "bounds" -> bounds();
+            case "benergy" -> behaviorEnergy();
+            case "factory" -> missingFactory();
+            case "share" -> sharedBlockEntity();
+            case "bconflict" -> behaviorConflict();
+            case "bslots" -> behaviorSlots();
+            case "blayout" -> behaviorLayout();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -165,6 +176,101 @@ public final class AddonMachineContracts {
                 .machineType(machineName).energy(GregTechTags.Energy.EU, 512).tier(1).build(),
                 recipeMap, MachineControllerKind.LARGE_RECIPE, 10_000, true,
                 List.of("aa_sample.structure.press.1"));
+    }
+
+    private static void overlap() {
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+                .fluid(1000, 8, 8, BehaviorMachineDeclaration.SlotRole.INPUT).build(),
+                "overlaps");
+    }
+
+    private static void bounds() {
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyGauge(-1, 8).build(),
+                "outside");
+    }
+
+    private static void behaviorEnergy() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(irrigator("bad_press", 8000,
+                BehaviorMachineDeclaration.SlotRole.INPUT, "", "ZZ")));
+        expectInstall("aa_sample", "unknown", "energy", "ZZ");
+    }
+
+    private static void missingFactory() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
+                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+        expectInstall("aa_sample", "irrigator", "no", "behavior", "factory");
+    }
+
+    private static void sharedBlockEntity() {
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("irrigator")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
+                irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "be_irrigator", "EU"),
+                irrigator("irrigator_2", 16000, BehaviorMachineDeclaration.SlotRole.INPUT, "be_irrigator", "EU")));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.behaviorMachines().size() == 2, "both tiers accepted");
+        check(AddonMachines.machines().isEmpty(), "behavior machines are not recipe machines");
+        for (var machine : AddonMachines.behaviorMachines())
+            check("be_irrigator".equals(machine.blockEntityPath()), "shared block entity path");
+        check(AddonMachines.behaviorMachines().get(0).declaration().fluids().get(0).capacity() == 8000, "tier one tank");
+        check(AddonMachines.behaviorMachines().get(1).declaration().fluids().get(0).capacity() == 16000, "tier two tank");
+        check(AddonMachines.behaviorMachines().get(0).energyInMin()
+                == BasicMachineParameters.defaultEnergyInMin("EU", 32), "energy minimum");
+        check(AddonMachines.behaviorMachines().get(0).energyInMax()
+                == BasicMachineParameters.defaultEnergyInMax("EU", 32), "energy maximum");
+    }
+
+    private static void behaviorConflict() {
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_one", Set.of("irrigator")));
+        AddonMachines.accept("aa_one", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
+                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+        AddonMachines.accept("aa_two", List.of(), List.of(), List.of(), List.of(irrigator("irrigator", 8000,
+                BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+        expectInstall("aa_two", "irrigator", "aa_one");
+    }
+
+    private static void behaviorSlots() {
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("irrigator")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
+                irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU"),
+                irrigator("irrigator_2", 8000, BehaviorMachineDeclaration.SlotRole.OUTPUT, "be_other", "EU")));
+        expectInstall("aa_sample", "irrigator", "disagrees");
+    }
+
+    private static void behaviorLayout() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(),
+                List.of(new AddonMachineLayout("irrigator", List.of(
+                        new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING)))),
+                List.of(irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
+        expectInstall("aa_sample", "irrigator", "no", "controller");
+    }
+
+    private static BehaviorMachineDeclaration irrigator(String id, int capacity,
+                                                        BehaviorMachineDeclaration.SlotRole input,
+                                                        String blockEntity, String energy) {
+        var builder = BehaviorMachineDeclaration.builder(id, "Steel")
+                .machineType("irrigator")
+                .energy(energy, 32)
+                .gui("aa_sample:textures/gui/machine.png")
+                .item(44, 26, input)
+                .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+                .fluid(capacity, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
+                .toggle("aa.irrigator.water", 26, 64, true);
+        if (!blockEntity.isEmpty()) builder.blockEntityId(blockEntity);
+        return builder.build();
     }
 
     private static void prepare() {

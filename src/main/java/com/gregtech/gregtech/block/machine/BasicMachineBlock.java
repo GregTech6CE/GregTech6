@@ -82,6 +82,8 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
             case DISTILLATION -> new com.gregtech.gregtech.blockentity.machine.DistillationTowerControllerBlockEntity(type,pos,state);
             case LARGE_RECIPE -> new com.gregtech.gregtech.blockentity.machine.LargeRecipeMachineBlockEntity(type,pos,state);
             case BASIC -> new BasicMachineBlockEntity(type, pos, state);
+            case BEHAVIOR -> throw new IllegalStateException(
+                    "Behavior machines are not recipe controllers: " + basicSpec.machineName());
         };
     }
 

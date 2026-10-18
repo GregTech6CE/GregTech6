@@ -7,10 +7,10 @@ import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 /**
- * @deprecated Use {@link MachineLayout}. Removal is 0.6.
+ * @deprecated Use {@link MachineLayout}. Removal is 0.8.
  */
 @Deprecated(since = "0.4", forRemoval = true)
-@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineLayout", removeAt = "0.6")
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineLayout", removeAt = "0.8")
 public record AddonMachineLayout(String machineName, List<Cell> cells) {
     public AddonMachineLayout {
         if (machineName == null || !machineName.matches("[a-z0-9_]+"))

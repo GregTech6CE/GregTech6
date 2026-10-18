@@ -27,16 +27,22 @@ public final class AddonMachines {
     private static boolean installed;
     private static List<AcceptedRecipeMap> recipeMaps = List.of();
     private static List<AcceptedMachine> machines = List.of();
+    private static List<AcceptedBehavior> behaviorMachines = List.of();
 
     private AddonMachines() {}
 
     public record AcceptedRecipeMap(String addonId, RecipeMapSpec spec) {}
     public record AcceptedMachine(String addonId, AddonMachineDefinition definition) {}
+    public record AcceptedBehavior(String addonId, BehaviorMachineDeclaration declaration,
+                                   long energyInMin, long energyInMax, String blockEntityPath) {}
 
     private record Submission(String addonId, List<RecipeMapSpec> recipeMaps,
-                              List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts) {}
+                              List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                              List<BehaviorMachineDeclaration> behavior) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
                              boolean constantEnergy, List<String> structureKeys) {}
+    private record BehaviorSignature(String energy, List<BehaviorMachineDeclaration.SlotRole> items,
+                                     List<BehaviorMachineDeclaration.SlotRole> fluids, List<String> toggleKeys) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
     public static void collectContributors() {
@@ -51,7 +57,7 @@ public final class AddonMachines {
         Objects.requireNonNull(loader, "loader");
         for (GregTechMachineContributor contributor : ServiceLoader.load(GregTechMachineContributor.class, loader)) {
             try {
-                accept(contributor.addonId(), contributor.recipeMaps(), contributor.machines(), contributor.layouts());
+                accept(contributor.addonId(), contributor.recipeMaps(), contributor.machines(), contributor.layouts(), List.of());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -60,7 +66,7 @@ public final class AddonMachines {
         for (AddonMachineContributor contributor : ServiceLoader.load(AddonMachineContributor.class, loader)) {
             try {
                 accept(contributor.addonId(), maps(contributor.recipeMaps()), machines(contributor.machines()),
-                        layouts(contributor.layouts()));
+                        layouts(contributor.layouts()), contributor.behaviorMachines());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -127,6 +133,13 @@ public final class AddonMachines {
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts) {
+        accept(addonId, recipeMaps, machines, layouts, List.of());
+    }
+
+    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
+    public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
+                                           List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                                           List<BehaviorMachineDeclaration> behavior) {
         if (installed) throw new IllegalStateException("Addon machine queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -137,7 +150,8 @@ public final class AddonMachines {
         QUEUE.put(addonId, new Submission(addonId,
                 List.copyOf(Objects.requireNonNull(recipeMaps, "recipeMaps")),
                 List.copyOf(Objects.requireNonNull(machines, "machines")),
-                List.copyOf(Objects.requireNonNull(layouts, "layouts"))));
+                List.copyOf(Objects.requireNonNull(layouts, "layouts")),
+                List.copyOf(Objects.requireNonNull(behavior, "behaviorMachines"))));
     }
 
     /** Names of the built-in machine recipe maps. Fuel maps are not machine maps. */
@@ -242,17 +256,82 @@ public final class AddonMachines {
             if (machine.definition().kind() == MachineControllerKind.LARGE_RECIPE && !layoutNames.contains(name))
                 throw new IllegalStateException("Addon '" + machine.addonId() + "' machine '" + name + "' has no structure");
         }
+        var acceptedBehavior = behavior(machineOwner, machineSignature, idOwner, reservedMachineNames);
         for (PreparedLayout layout : preparedLayouts)
             SharedLargeMachineLayouts.add(layout.machineName, layout.cells);
         SharedLargeMachineLayouts.freeze();
         recipeMaps = List.copyOf(acceptedMaps);
         machines = List.copyOf(acceptedMachines);
+        behaviorMachines = List.copyOf(acceptedBehavior);
         installed = true;
     }
 
     public static List<AcceptedRecipeMap> recipeMaps() { return recipeMaps; }
     public static List<AcceptedMachine> machines() { return machines; }
+    public static List<AcceptedBehavior> behaviorMachines() { return behaviorMachines; }
     public static boolean installed() { return installed; }
+
+    private static List<AcceptedBehavior> behavior(java.util.Map<String, String> machineOwner,
+                                                   java.util.Map<String, Signature> machineSignature,
+                                                   java.util.Map<String, String> idOwner,
+                                                   Set<String> reservedMachineNames) {
+        var signatures = new LinkedHashMap<String, BehaviorSignature>();
+        var accepted = new ArrayList<AcceptedBehavior>();
+        var byPath = new LinkedHashMap<String, AcceptedBehavior>();
+        for (Submission submission : QUEUE.values()) {
+            for (BehaviorMachineDeclaration declaration : submission.behavior) {
+                var material = GTMaterialRegistry.get(declaration.material());
+                if (material == null || !material.isValid())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                            + declaration.id() + "' uses unknown material '" + declaration.material() + "'");
+                try {
+                    energy(declaration.energy());
+                } catch (IllegalArgumentException failure) {
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                            + declaration.id() + "' uses unknown energy type '" + declaration.energy() + "'", failure);
+                }
+                String machineName = declaration.machineType();
+                String previousId = idOwner.putIfAbsent(submission.addonId + ":" + declaration.id(), submission.addonId);
+                if (previousId != null)
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine id '"
+                            + declaration.id() + "' is already used");
+                if (reservedMachineNames.contains(machineName))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' uses a built-in machine name");
+                String previousOwner = machineOwner.putIfAbsent(machineName, submission.addonId);
+                if (previousOwner != null && !previousOwner.equals(submission.addonId))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' uses the same machine name as addon '" + previousOwner + "'");
+                if (machineSignature.containsKey(machineName))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' disagrees with an earlier definition of that machine");
+                var signature = new BehaviorSignature(declaration.energy(),
+                        declaration.items().stream().map(BehaviorMachineDeclaration.ItemSlot::role).toList(),
+                        declaration.fluids().stream().map(BehaviorMachineDeclaration.FluidSlot::role).toList(),
+                        declaration.toggles().stream().map(BehaviorMachineDeclaration.Toggle::translationKey).toList());
+                BehaviorSignature existing = signatures.putIfAbsent(machineName, signature);
+                if (existing != null && !existing.equals(signature))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' disagrees with an earlier definition of that machine");
+                if (!BehaviorMachineFactories.ready())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' has no behavior factory");
+                if (!BehaviorMachineFactories.types(submission.addonId).contains(machineName))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' has no behavior factory");
+                long min = BasicMachineParameters.defaultEnergyInMin(declaration.energy(), declaration.energyPerTick());
+                long max = BasicMachineParameters.defaultEnergyInMax(declaration.energy(), declaration.energyPerTick());
+                var row = new AcceptedBehavior(submission.addonId, declaration, min, max, declaration.blockEntityPath());
+                AcceptedBehavior shared = byPath.putIfAbsent(submission.addonId + ":" + row.blockEntityPath(), row);
+                if (shared != null && (!shared.declaration().machineType().equals(machineName)
+                        || !signatures.get(shared.declaration().machineType()).equals(signature)))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' block entity '"
+                            + row.blockEntityPath() + "' is shared by machines that disagree");
+                accepted.add(row);
+            }
+        }
+        return accepted;
+    }
 
     private static List<SharedLargeMachineLayouts.Cell> cells(String addonId, AddonMachineLayout layout) {
         var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
