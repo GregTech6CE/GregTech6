@@ -21,4 +21,10 @@ public interface AddonMachineContributor {
 
     /** Behavior machines. Pair each machine type with a platform {@code BehaviorMachineContributor}. */
     default List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(); }
+
+    /** Fuel maps. These are not machine recipe maps. */
+    default List<FuelMapDeclaration> fuelMaps() { return List.of(); }
+
+    /** Fuel generators. A multiblock names its layout through {@code machineType}. */
+    default List<FuelGeneratorDeclaration> fuelGenerators() { return List.of(); }
 }

@@ -6,6 +6,7 @@ import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.api.recipe.RecipeMapSpec;
 import com.gregtech.gregtech.content.machine.BasicMachineCatalog;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
+import com.gregtech.gregtech.data.FuelRecipeMaps;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public final class AddonMachineRuntime {
         MachineRecipeMaps.bootstrap();
         for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.recipeMaps())
             create(accepted.spec());
+        for (AddonMachines.AcceptedRecipeMap accepted : AddonMachines.fuelMaps())
+            FuelRecipeMaps.registerFuelMap(create(accepted.spec()));
         for (AddonMachines.AcceptedMachine accepted : AddonMachines.machines()) {
             BasicMachineSpec spec = toSpec(accepted);
             SPECS.add(spec);

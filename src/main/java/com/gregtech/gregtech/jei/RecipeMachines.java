@@ -28,6 +28,8 @@ public final class RecipeMachines {
         for (var entry:MachineRegistry.smeltingCrucibles()) if(entry.isPresent())
             add(result,MachineRecipeMaps.CrucibleAlloying,new ItemStack(entry.get()));
         add(result,MachineRecipeMaps.ImplosionCompressor,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN.get()));
+        for (var entry : com.gregtech.gregtech.registry.FuelGeneratorRegistration.all()) if (entry.isPresent())
+            add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
         for(var entry:com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.blocks())
             add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
         for (int originalId = 17231; originalId <= 17234; originalId++)

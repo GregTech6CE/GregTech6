@@ -2,6 +2,8 @@ package com.gregtech.addonsample;
 
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.addon.FuelMapDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineLayout;
 import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
@@ -54,7 +56,25 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 }
             }
         }
-        return List.of(new MachineLayout("largesamplepress", cells));
+        return List.of(new MachineLayout("largesamplepress", cells),
+                new MachineLayout("sample_turbine", List.of(
+                        new MachineLayout.Cell(0, 0, 1, "tank_wall", StructureRole.FLUID_INPUT))));
+    }
+
+    @Override public List<FuelMapDeclaration> fuelMaps() {
+        return List.of(new FuelMapDeclaration("addon_sample.fuel.gas", "Sample Gas",
+                "addon_sample:textures/gui/machines/press",
+                0, 0, 0, 1, 1, 1, 1, false, false, false, false));
+    }
+
+    @Override public List<FuelGeneratorDeclaration> fuelGenerators() {
+        return List.of(
+                FuelGeneratorDeclaration.builder("sample_engine", "Steel")
+                        .machineType("sample_engine").fuelMap("addon_sample.fuel.gas")
+                        .efficiency(10_000).energy("RU", 32).tank(4_000).outputFront().single().build(),
+                FuelGeneratorDeclaration.builder("sample_turbine", "Steel")
+                        .machineType("sample_turbine").fuelMap("addon_sample.fuel.gas")
+                        .efficiency(5_000).energy("RU", 32).tank(8_000).outputBehind(4).multi().build());
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(IRRIGATOR); }
