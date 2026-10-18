@@ -8,7 +8,8 @@ run-data/
 __pycache__/
 
 # Integration scratch, local runs and generated evidence. Summaries live in docs/integration.
-/work/
+/work/*
+!/work/addon-sample/
 # Local card plans; durable decisions and evidence still go to docs/integration.
 /docs/card-plans/
 **/build/

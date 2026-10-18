@@ -6,6 +6,16 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
+sourceSets {
+    api {
+        java.srcDir 'src/api/java'
+    }
+}
+
+dependencies {
+    implementation sourceSets.api.output
+}
+
 // Use the same checked resource synchronization as both loader projects. Later local
 // builds only copy changed shared assets instead of replacing the entire catalog.
 apply from: rootProject.file('gradle/incremental-resources.gradle')
@@ -29,27 +39,35 @@ tasks.withType(JavaCompile).configureEach {
 // Pure Java contracts do not consume the shared Minecraft asset catalog.
 // Keep tens of thousands of static resources off their compiler/runtime classpaths.
 sourceSets.test {
-    compileClasspath = sourceSets.main.output.classesDirs + configurations.testCompileClasspath
-    runtimeClasspath = output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
+    compileClasspath = sourceSets.api.output + sourceSets.main.output.classesDirs + configurations.testCompileClasspath
+    runtimeClasspath = sourceSets.api.output + output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
 }
 
 tasks.named('jar', Jar).configure {
     // Shared textures/models now exceed the ZIP 16-bit entry count.
     zip64 = true
+    from sourceSets.api.output
     preserveFileTimestamps = false
     reproducibleFileOrder = true
 }
 
-// Compile-only shared addon API/domain dependency. Runtime classes are supplied by the mod JAR.
-tasks.register('addonApiJar', Jar) {
-    dependsOn tasks.named('compileJava')
-    archiveBaseName = 'gregtech6-addon-api'
-    archiveVersion = rootProject.version.toString()
-    from sourceSets.main.output.classesDirs
-    from('src/main/resources/META-INF/gregtech6') { into 'META-INF/gregtech6' }
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
+def addonApiClosureCheck = tasks.register('addonApiClosureCheck', Exec) {
+    description = 'Fails when a core API class references anything outside the API and the JDK.'
+    group = 'verification'
+    dependsOn tasks.named('compileApiJava')
+    workingDir rootProject.projectDir
+    def python = rootProject.findProperty('pythonExecutable') ?: 'python'
+    def classes = layout.buildDirectory.dir('classes/java/api')
+    commandLine python, '-X', 'utf8', 'tools/integration/check_addon_api_closure.py',
+            '--check', classes.get().asFile.absolutePath,
+            '--allow', classes.get().asFile.absolutePath,
+            '--kind', 'core'
+    inputs.files(sourceSets.api.allJava).withPropertyName('coreAddonApiSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.dir(classes).withPropertyName('coreAddonApiClasses')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
 }
+tasks.named('check').configure { dependsOn addonApiClosureCheck }
 
 // These deterministic contracts consume only compiled core/test classes and test
 // resources. JavaExec tracks its classpath, arguments and toolchain as inputs.
@@ -147,6 +165,9 @@ def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaEx
     inputs.file(rootProject.file('gradle.properties')).withPropertyName('modVersionProperties')
     inputs.dir(rootProject.file('core/src/main/java'))
             .withPropertyName('addonApiSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.dir(rootProject.file('core/src/api/java'))
+            .withPropertyName('addonApiSurface')
             .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
     inputs.files(rootProject.file('docs/ADDON_API.md'), rootProject.file('docs/ADDON_API.zh-CN.md'))
             .withPropertyName('addonApiDocs')

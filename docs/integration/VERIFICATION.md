@@ -1,5 +1,25 @@
 # 验证账本
 
+## 2026-10-18 / 附属 API 源码集与分加载器 SDK
+
+`mod_version` 是 `0.4.0`，`GregTechAddons.API_VERSION` 是 4。本机 Gradle 走用户目录里的代理，ForgeGradle 的证书检查对这个代理失败，所以下面的 Gradle 命令都加了 `-Dnet.minecraftforge.gradle.check.certs=false`。这不是项目配置。启动器是已安装的 Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。
+
+`:core:check` 通过，22 秒。`sourcePolicyCheck` 是 2383 个 Java 源文件。`:core:addonApiClosureCheck` 输出 `Addon API closure passed (core): 34 API classes`。`:core:addonApiVersionContracts` 输出 `addon API version contracts passed: 69 assertions, 4 scheduled removals`。`coreBehaviorContracts` 输出 `2806 assertions in 33 groups`。生命周期断言改为读取 `GregTechAddons.API_VERSION`，不再写死 3。
+
+`:build :neoforge:build` 通过，1 分 12 秒。Forge 闭包 `49 API classes`，NeoForge 闭包 `49 API classes`。样例编译任务的类路径只有 SDK jar、Minecraft 和加载器，没有 core 的 main 类，也没有本项目打出来的模组 jar。NeoForge 的加载器文件在 `neoforge/build/moddev`，样例类路径保留这一段。样例的 NeoForge 编译使用 JDK 21。
+
+验包脚本与 CI 工作流相同。`verify_artifacts.py`：833 个共享 core 类，Forge 1542 个平台类，NeoForge 1626 个平台类，其中 306 个算平台共享。两份报告的 `mod_version` 都是 `0.4.0`，34 个核心 API 类的哈希一致。`verify_addon_api.py`：两份 SDK 都是 34 个核心 API 类加 15 个平台 API 类，没有运行时资源。jar 是 `build/libs/gregtech6-1.20.1-forge-0.4.0.jar`、`neoforge/build/libs/gregtech6-neoforge-1.21.1-0.4.0.jar`、`build/addon-sdk/gregtech6-addon-sdk-1.20.1-forge-0.4.0.jar`、`neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-0.4.0.jar`。GitHub Actions 没有跑。
+
+闭包失败证明：把一个引用 `GTMaterial` 的 `ClosureProbe.class` 放进 `core/build/classes/java/api` 后，`:core:addonApiClosureCheck` 失败，输出 `ClosureProbe.class -> com/gregtech/gregtech/api/material/GTMaterial`。探针源文件和 class 已删除。随后同一任务通过，仍是 34 个类。
+
+`gregtech_card11_sample` 带 `-PaddonSample=true`。Forge 02:26:04、NeoForge 02:27:07 都打印 `All 4 required tests passed`，两边都有 `[addon-sample] dust_ammoniumnitrate=true`。整次 `:runGameTestServer :neoforge:runGameTestServer` 是 3 分 29 秒。
+
+开发专服目录是 `build/card14-forge-server` 和 `neoforge/build/card14-neo-server`，只在这两处写了 `eula=true`。`-PaddonSampleHalt=true` 让样例在确认硝酸铵粉尘后停服。Forge 1 分 47 秒，NeoForge 1 分 13 秒，两边都是 `dust_ammoniumnitrate=true` 后 `BUILD SUCCESSFUL`。
+
+开发客户端用 `-PclientSmoke=true`。Forge `CLIENT_SMOKE_SUCCESS`，66011 毫秒，1280×720，24 帧，`TitleScreen`，并打印 `GT addon API 4 ready: [addon_sample]`。NeoForge 43232 毫秒，1280×720，152 帧，同样是标题画面和 `GT addon API 4 ready: [addon_sample]`。
+
+成品 jar 没有在已安装的加载器里启动。`tools/integration/launch_production_smoke.py` 需要一份完整的启动器版本目录，仓库里没有这份路径。没有做保存后重启，也没有开旧档。
+
 ## 2026-10-17 / 附属 API 版本号与加载器拦截
 
 `mod_version` 是 `0.3.0`。`:core:addonApiVersionContracts` 通过，输出 `addon API version contracts passed: 49 assertions, 0 scheduled removals`。随后 `:core:check` 通过，里面包含 `sourcePolicyCheck`、这项版本契约，以及原有的 core 契约和 `test`。同一次构建还编译了 Forge、NeoForge，以及两边带 `-PaddonSample=true` 的样例源码集。`BUILD SUCCESSFUL`，用时 3 分 48 秒。

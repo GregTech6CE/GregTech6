@@ -118,7 +118,7 @@ Read the [collaboration guide](docs/integration/COLLABORATION.md), [integration 
 
 ## Addon development
 
-Both platforms expose the shared `GregTechAddon` / `GregTechAddons` recipe lifecycle, material domain and energy contracts. Build the compile-only SDK with `:core:addonApiJar`; do not bundle its classes into an addon. See [the addon API guide](docs/ADDON_API.md) and [voltage tiers](docs/VOLTAGE_TIERS.md). API version 1 currently supports recipe-ready callbacks; new-material registration is not yet a supported automatic lifecycle.
+Both platforms expose the shared `GregTechAddon` / `GregTechAddons` recipe lifecycle. Build the compile-only SDK for the loader you target: `:addonSdkJar` on Forge, `:neoforge:addonSdkJar` on NeoForge. Do not bundle its classes into an addon. See [the addon API guide](docs/ADDON_API.md) and [voltage tiers](docs/VOLTAGE_TIERS.md). API version 4 is mod version 0.4.0.
 
 ## License
 

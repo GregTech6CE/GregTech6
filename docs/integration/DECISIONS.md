@@ -1,5 +1,25 @@
 # 实现选择记录
 
+## 2026-10-18 / 计划卡不再验收成品 jar 启动
+
+本机没有已安装的 Forge / NeoForge 加载器目录，`launch_production_smoke.py` 跑不了。计划卡的验收清单不再写「成品 jar 启动」。成品仍然用 `verify_artifacts.py` 核对 jar 内容。启动证据用开发环境的客户端和专服。
+
+## 2026-10-17 / 附属接口放进独立源码集，每个加载器一个 SDK
+
+附属编译只看见接口。GT 内部依赖接口。接口不依赖内部。这个边界由 Gradle classpath 执行：核心接口在 `core/src/api/java`，两边共用且带 Minecraft 类型的接口在 `platform-shared/src/api/java`，流体和配方因为 `FluidStack` 不同而各有一份，放在 `src/api/java` 和 `neoforge/src/api/java`。平台接口的编译 classpath 含核心接口、Minecraft 和该加载器，不含核心 main，也不含该平台的 main。
+
+SDK 按加载器出 jar，不放进 `build/libs`（那里只能有一个模组 jar）。Forge 是 `build/addon-sdk/gregtech6-addon-sdk-1.20.1-forge-<version>.jar`，NeoForge 是 `neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-<version>.jar`。内容是核心接口加上该加载器的平台接口，Mojang 名，外加 `META-INF/gregtech6` 的许可文件。没有素材，没有模组描述。附属 `compileOnly` 这一个 jar。不发布 Maven，CI 上传这个 jar。运行时用的是 GT 模组，不是 SDK。Forge 生产 jar 里的平台接口类随平台 jar 一起 reobf；核心接口在 reobf 之后加入，和原来的核心类一样。
+
+`API_VERSION` 升到 4，`mod_version` 是 `0.4.0`。附属 `versionRange` 写成 `[0.4,)`。旧的 `GregTechMaterialContributor`、`GregTechMachineContributor`、`AddonMachineDefinition`、`AddonMachineLayout` 留在 main，`@Deprecated(since = "0.4", forRemoval = true)`，`removeAt = "0.6"`。旧二进制在运行时仍能找到它们。它们不进 SDK。新入口是 `AddonMaterialContributor` 和 `AddonMachineContributor`。
+
+纯 JDK 类型按原包名挪进接口源码集：`GregTechAddon`、`GregTechAddons`、`AddonApiRemoval`、`MaterialFormRequest`、`CropScanSource`、信号线三个接口、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`、`GTValues`。带内部依赖的类型不搬。材料用 `GregTechMaterials` 句柄，未知名字是 id 为 -1、`valid()` 为 false 的哨兵。前缀用名字字符串，`GregTechPrefixes.exists`。物品用 `AddonItems.stack`。流体用 `AddonFluids`，名字是 GT 流体字段（`DistW`），不是材料名。配方用 `AddonRecipes`。工具只开 `SPADE`、`UNIVERSAL_SPADE` 和放大镜。能源方块用 `EnergyBlock`，能源类型是短名。EU 电缆的插入和抽出通过 `EnergyBlockViews` 同时接受旧的 `IEnergyBlock` 和新接口。其他网络不改。
+
+GT 在材料初始化之前装三个静态绑定：`AddonRuntime`、`AddonPlatform`、`AddonLoader`。没装就调用会抛 “GregTech addon API is not installed”。GT 自己的实现不走 `ServiceLoader`。附属入口仍走 `ServiceLoader`。
+
+不开放，并写明原因：`BasicMachineBlock` / `BasicMachineBlockEntity` 只给 GameTest 用，附属机器是声明不是子类；`Recipe.mRecipeList` 只给测试查看，正式添加用 `add` 的返回值；`GTMaterial`、`GTMaterialRegistry`、材料哨兵由 `GregTechMaterials` 代替；`GregTechTags` 由能源短名代替；`MachineRecipeMaps` 字段由配方表名代替；`MaterialPrefix` 常量由前缀名代替。不迁移 gt6-crops。
+
+闭包检查读 class 常量池和字段、方法描述符。核心接口只能引用接口自身和 JDK。平台接口还可以引用 Minecraft 和本加载器。样例附属的 class 只能引用 SDK、JDK、Minecraft 和该加载器。检查脚本每次先用一个合成类确认它能看见 `GTMaterial` 并拒绝它。
+
 ## 2026-10-17 / 附属 API 用 0.x 版本，加载器拦版本
 
 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 等于 MINOR，现在是 3，所以版本是 `0.3.0`。只改实现时升 PATCH。文档列出的入口有增删改时升 MINOR，并同时改 `API_VERSION`。1.0 之前不承诺兼容。不兼容的改动要么先走弃用，要么在同一版写进 `ADDON_API` 的变更表。

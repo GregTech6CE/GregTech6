@@ -1,9 +1,13 @@
 package com.gregtech.gregtech.api.addon;
 
+import com.gregtech.gregtech.api.machine.BasicMachineParameters;
 import com.gregtech.gregtech.api.machine.MachineControllerKind;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.multiblock.StructureGrid;
 import com.gregtech.gregtech.api.recipe.RecipeMapSpec;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts;
+import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.MachineRecipeMapDefinitions;
 
 import java.lang.reflect.Field;
@@ -52,6 +56,71 @@ public final class AddonMachines {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
             }
+        }
+        for (AddonMachineContributor contributor : ServiceLoader.load(AddonMachineContributor.class, loader)) {
+            try {
+                accept(contributor.addonId(), maps(contributor.recipeMaps()), machines(contributor.machines()),
+                        layouts(contributor.layouts()));
+            } catch (RuntimeException | Error failure) {
+                throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
+                        + " (" + contributor.getClass().getName() + ")", failure);
+            }
+        }
+    }
+
+    private static List<RecipeMapSpec> maps(List<RecipeMapDeclaration> declarations) {
+        var specs = new ArrayList<RecipeMapSpec>();
+        for (RecipeMapDeclaration declaration : declarations) {
+            specs.add(new RecipeMapSpec(null, declaration.name(), declaration.title(), declaration.gui(),
+                    declaration.inputItems(), declaration.outputItems(), declaration.minimalInputItems(),
+                    declaration.inputFluids(), declaration.outputFluids(), declaration.minimalInputFluids(),
+                    declaration.minimalInputs(), declaration.needsOutputs(), declaration.combinePower(),
+                    declaration.bucketIn(), declaration.bucketOut()));
+        }
+        return List.copyOf(specs);
+    }
+
+    private static List<AddonMachineDefinition> machines(List<MachineDeclaration> declarations) {
+        var definitions = new ArrayList<AddonMachineDefinition>();
+        for (MachineDeclaration declaration : declarations) {
+            var parameters = BasicMachineParameters.builder(declaration.id(), GTMaterialRegistry.get(declaration.material()))
+                    .machineType(declaration.machineType())
+                    .energy(energy(declaration.energy()), declaration.energyPerTick())
+                    .tier(declaration.tier())
+                    .parallel(declaration.parallel())
+                    .build();
+            definitions.add(new AddonMachineDefinition(parameters, declaration.recipeMap(),
+                    declaration.kind() == MachineDeclaration.Kind.LARGE_RECIPE
+                            ? MachineControllerKind.LARGE_RECIPE : MachineControllerKind.BASIC,
+                    declaration.efficiency(), declaration.constantEnergy(), declaration.structureKeys()));
+        }
+        return List.copyOf(definitions);
+    }
+
+    private static List<AddonMachineLayout> layouts(List<MachineLayout> declarations) {
+        var layouts = new ArrayList<AddonMachineLayout>();
+        for (MachineLayout layout : declarations) {
+            var cells = new ArrayList<AddonMachineLayout.Cell>();
+            for (MachineLayout.Cell cell : layout.cells()) {
+                cells.add(new AddonMachineLayout.Cell(cell.right(), cell.up(), cell.back(), cell.part(),
+                        StructureGrid.Role.valueOf(cell.role().name())));
+            }
+            layouts.add(new AddonMachineLayout(layout.machineName(), cells));
+        }
+        return List.copyOf(layouts);
+    }
+
+    private static GregTechTags.Tag energy(String shortName) {
+        return GregTechTags.Energy.ALL.stream().filter(tag -> tag.getShortName().equalsIgnoreCase(shortName))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("Unknown machine energy type: " + shortName));
+    }
+
+    private static String safeMachineId(AddonMachineContributor contributor) {
+        try {
+            String id = contributor.addonId();
+            return id == null ? contributor.getClass().getName() : id;
+        } catch (RuntimeException | Error ignored) {
+            return contributor.getClass().getName();
         }
     }
 

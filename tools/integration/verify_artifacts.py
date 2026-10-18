@@ -295,11 +295,26 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             if digest != expected_hash:
                 raise ValueError(f'{path}: shared class differs from current core output: {name}')
             hashes[name] = digest
+        api_dir = repo / 'core/build/classes/java/api'
+        api_hashes = compiled_core_hashes(api_dir)
+        for name, expected_hash in api_hashes.items():
+            if counts.get(name) != 1 or hashlib.sha256(archive.read(name)).hexdigest() != expected_hash:
+                raise ValueError(f'{path}: missing or stale core addon API class {name}')
+        platform_api = repo / ('build/classes/java/api' if platform == 'forge'
+                               else 'neoforge/build/classes/java/api')
+        platform_api_hashes = compiled_core_hashes(platform_api)
+        for name, expected_hash in platform_api_hashes.items():
+            if counts.get(name) != 1:
+                raise ValueError(f'{path}: missing platform addon API class {name}')
+            # Forge reobfuscates platform API constant pools. NeoForge ships the compiler output.
+            if platform == 'neoforge' and hashlib.sha256(archive.read(name)).hexdigest() != expected_hash:
+                raise ValueError(f'{path}: platform addon API class differs from compiler output: {name}')
         return {
             'path': str(path.resolve()), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
             'bytes': path.stat().st_size, 'zip_entries': len(counts),
             'metadata_path': metadata_path, 'metadata': metadata, 'core_class_sha256': hashes,
             'zip_crc_checked': True, 'mixin_verification': mixin_verification,
+            'core_api_class_sha256': api_hashes,
             'current_platform_classes_checked': len(native_hashes),
             'current_platform_classes_sha256': hashlib.sha256(
                 json.dumps(native_hashes, sort_keys=True).encode('utf-8')).hexdigest(),

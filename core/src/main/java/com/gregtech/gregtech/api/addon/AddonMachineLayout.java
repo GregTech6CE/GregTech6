@@ -5,7 +5,12 @@ import com.gregtech.gregtech.api.multiblock.StructureGrid;
 import java.util.List;
 import java.util.Objects;
 
-/** One addon multiblock structure. The controller occupies the origin and is not a cell. */
+/** SPDX-License-Identifier: LGPL-3.0-or-later */
+/**
+ * @deprecated Use {@link MachineLayout}. Removal is 0.6.
+ */
+@Deprecated(since = "0.4", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineLayout", removeAt = "0.6")
 public record AddonMachineLayout(String machineName, List<Cell> cells) {
     public AddonMachineLayout {
         if (machineName == null || !machineName.matches("[a-z0-9_]+"))
