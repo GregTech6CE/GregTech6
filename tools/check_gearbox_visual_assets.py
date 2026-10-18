@@ -2,12 +2,19 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 SOURCE = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/iconsets"
 NAMES = (
     "gearbox",
@@ -19,9 +26,9 @@ NAMES = (
 
 
 def check() -> None:
-    registered = (ROOT / "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java").read_text(encoding="utf-8")
-    loader = (ROOT / "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java").read_text(encoding="utf-8")
-    model = (ROOT / "src/main/java/com/gregtech/gregtech/client/GearboxBakedModel.java").read_text(encoding="utf-8")
+    registered = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java")).read_text(encoding="utf-8")
+    loader = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java")).read_text(encoding="utf-8")
+    model = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/client/GearboxBakedModel.java")).read_text(encoding="utf-8")
     assert "GTIconSetBlocks.registerAll()" in loader, "icon set blocks are not registered"
     for name in NAMES:
         assert f'"{name}"' in registered, f"{name} is not a registered icon set block"

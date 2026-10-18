@@ -1,4 +1,11 @@
 """Catch faces whose resource paths are mistaken for BlockModel texture-map keys."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import importlib.util
 import json
 from pathlib import Path
@@ -19,7 +26,7 @@ class PileTextureBindings(unittest.TestCase):
                 # BlockModel.getMaterial resolves keys in textureMap, not raw resource locations.
                 self.assertIn(key, model["textures"])
                 namespace, path = model["textures"][key].split(":", 1)
-                self.assertTrue((ROOT / "src/main/resources/assets" / namespace / "textures" / (path + ".png")).is_file())
+                self.assertTrue((native_path(ROOT / "src/main/resources/assets" / namespace / "textures" / (path + ".png"))).is_file())
 
     def test_generated_model_binds_every_face(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -52,8 +59,8 @@ class PileTextureBindings(unittest.TestCase):
             for face in ("top", "sides"):
                 with self.subTest(kind=port_folder, face=face):
                     port = generator.ASSETS / "textures/block/machines/placeables" / port_folder / f"{face}.png"
-                    gt6 = (generator.ORIGINAL / "src/main/resources/assets/gregtech/textures/blocks"
-                           / "machines/placeables" / original_folder / f"{face}.png")
+                    gt6 = (native_path(generator.ORIGINAL / "src/main/resources/assets/gregtech/textures/blocks"
+                           / "machines/placeables" / original_folder / f"{face}.png"))
                     self.assertEqual(port.read_bytes(), gt6.read_bytes())
 
 

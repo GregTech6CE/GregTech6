@@ -6,11 +6,18 @@ per-id blockstate (facing x lit x running) and item model, plus lang entries.
 Mirrors the structure of the existing 66 basic machine assets.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 TEX = os.path.join(ASSETS, "textures", "block", "machines", "basicmachines")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "basic")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")

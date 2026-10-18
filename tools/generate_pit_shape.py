@@ -1,12 +1,19 @@
 """Generate the Java mask constant of GT6's WorldgenPit.SHAPE (48x48) so the port's pit generator
 uses GT6's exact pit outline instead of a hand-copied (and easily mistyped) table."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import os
 import re
 
 GT6 = os.path.join("..", "gregtech6-master", "gregtech6-master", "build", "sources", "java",
                    "gregtech", "worldgen", "WorldgenPit.java")
-OUT = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTPitShape.java")
+OUT = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTPitShape.java")
 
 with open(GT6, encoding="utf-8", errors="replace") as handle:
     text = handle.read()

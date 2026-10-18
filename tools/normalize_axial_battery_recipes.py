@@ -4,13 +4,20 @@ The runtime recipe resolver already handles these groups. Static JSON recipes mu
 use the same tags. Only source-declared B/C keys are changed; housings, tools,
 pattern, output and mirror rules are preserved.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
-RECIPES = ROOT / 'src/main/resources/data/gregtech/recipes/axial'
+RECIPES = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/axial')
 TARGETS = dict(zip(range(17221, 17225), [
     'large_dynamo_main', 'large_dynamo_titanium',
     'large_dynamo_tungstensteel', 'large_dynamo_adamantium']))

@@ -3,6 +3,14 @@
 No translations are generated. Missing source keys fail; missing patch values are
 reported and retain Minecraft's English fallback. The audit preserves exact values.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import hashlib
 import json
@@ -27,7 +35,7 @@ def main():
     ap.add_argument('--alias', nargs=2, action='append', default=[], metavar=('PORT_KEY', 'SOURCE_KEY'),
                     help='Existing port language key mapped to an original LH/CS key, without translating it.')
     ns = ap.parse_args()
-    root = ns.source / 'src/main/java/gregapi/data'
+    root = native_path(ns.source / 'src/main/java/gregapi/data')
     lh = (root / 'LH.java').read_text(encoding='utf-8')
     cs = (root / 'CS.java').read_text(encoding='utf-8')
     literal = r'("(?:\\.|[^"\\])*")'

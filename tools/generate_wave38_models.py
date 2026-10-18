@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """Generate forge:composite model JSONs and update blockstate JSONs for Wave 38 blocks."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json, os
 
-BASE = "src/main/resources/assets/gregtech"
+BASE = str(native_path("src/main/resources/assets/gregtech"))
 MODEL_DIR = f"{BASE}/models/block/machine"
 BLOCKSTATE_DIR = f"{BASE}/blockstates"
 

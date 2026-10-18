@@ -20,6 +20,13 @@ Spec grammar:
           w:<mB>             water
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import os
 import re
 import sys
@@ -59,7 +66,7 @@ if SET not in SOURCES:
     raise SystemExit("unknown set %r (choose from %s)" % (SET, ", ".join(SOURCES)))
 SOURCE_FILE, CLASS_NAME, DOC = SOURCES[SET]
 SRC = os.path.join(GT6, "gregtech", "loaders", "c", SOURCE_FILE)
-OUT = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+OUT = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
                    CLASS_NAME + ".java")
 
 # RM map fields available in the port (others are skipped).
@@ -90,7 +97,7 @@ def _port_prefixes():
     only the ones this port has an item form for can be translated, so the list is derived from
     the port instead of being maintained by hand.
     """
-    path = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "data",
+    path = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data",
                         "MaterialPrefix.java")
     try:
         text = open(path, encoding="utf-8").read()

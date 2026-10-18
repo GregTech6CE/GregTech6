@@ -5,11 +5,19 @@ The keys come from GT6's two data-storage behaviours (`Behavior_DataStorage:42`,
 Idempotent: re-running rewrites the same values and keeps the file's key order.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
 
-ASSETS = os.path.join('src', 'main', 'resources', 'assets', 'gregtech', 'lang')
+ASSETS = os.path.join(str(native_path('src')), 'main', 'resources', 'assets', 'gregtech', 'lang')
 
 EN = {
     "gt.tooltip.usb.tier": "Data: USB %s.0",

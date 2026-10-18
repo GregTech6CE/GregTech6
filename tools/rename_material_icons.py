@@ -3,13 +3,20 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 
 
 def case_insensitive_rename(path: Path, new_name: str) -> Path:
@@ -81,8 +88,8 @@ def main() -> None:
 
     patched = 0
     for base in (
-        ROOT / "src/main/java",
-        ROOT / "src/main/resources",
+        native_path(ROOT / "src/main/java"),
+        native_path(ROOT / "src/main/resources"),
         ROOT / "tools",
     ):
         for path in base.rglob("*"):

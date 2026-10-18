@@ -4,6 +4,13 @@ Reads only local artifacts: the last gate log, the progress snapshot and the mul
 Run from the repository root: python tools/handoff_check.py
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import json
 import os
@@ -12,7 +19,7 @@ import re
 LOG = os.path.join("build", "gametest.log")
 JAR = os.path.join("build", "libs", "gregtech-1.0.0.jar")
 PROGRESS = os.path.join("docs", "porting-progress.json")
-PARTS = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "content", "multiblock",
+PARTS = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "content", "multiblock",
                      "LargeMachineParts.java")
 
 
@@ -43,7 +50,7 @@ def main():
         print("jar: not built yet")
 
     java_newest = 0
-    for root, _dirs, files in os.walk(os.path.join("src", "main", "java")):
+    for root, _dirs, files in os.walk(os.path.join(str(native_path("src")), "main", "java")):
         for name in files:
             if name.endswith(".java"):
                 java_newest = max(java_newest, os.path.getmtime(os.path.join(root, name)))

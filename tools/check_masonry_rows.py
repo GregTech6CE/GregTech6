@@ -12,6 +12,13 @@ Usage:  python tools/check_masonry_rows.py [--json docs/gt6-masonry-parity.json]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import re
@@ -19,11 +26,11 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-GT6 = (ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
-       / "gregapi" / "block" / "metatype" / "BlockStones.java").resolve()
+GT6 = (native_path(ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
+       / "gregapi" / "block" / "metatype" / "BlockStones.java")).resolve()
 PORT_REPORT = ROOT / "docs" / "stone-variant-coverage.json"
-PORT_LOADER = (ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "loaders"
-               / "Loader_StoneCraftingRecipes.java")
+PORT_LOADER = (native_path(ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "loaders"
+               / "Loader_StoneCraftingRecipes.java"))
 ROCK_TYPES = 27
 
 GROUP = re.compile(r"for \(ItemStackContainer tStack : \(ItemStackSet<ItemStackContainer>\)mEqualBlocks\[(\w+)\]\)")

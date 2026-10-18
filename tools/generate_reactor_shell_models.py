@@ -4,6 +4,14 @@ Source: MultiTileEntityReactorCore1x1/2x2.setBlockBounds2/getTexture2.
 The six shell slabs are two pixels thick and render only their two axial faces.
 Fuel rods and tank contents remain block-entity render passes, separate from the shell.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import json
 
@@ -42,7 +50,7 @@ def shell(folder, sub, hot, cold):
 
 
 def main():
-    for platform in ('src/main', 'neoforge/src/main'):
+    for platform in (str(native_path('src/main')), str(native_path('neoforge/src/main'))):
         assets = ROOT / platform / 'resources/assets/gregtech'
         for name, folder in (('reactor_core', 'reactor_core_1x1'),
                              ('reactor_core_2x2', 'reactor_core_2x2')):

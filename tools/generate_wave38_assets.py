@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 """Generate blockstate + model JSONs for Wave 38: axles, gearboxes, rotation transformers, pumps."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json, os
 
-ASSETS = "src/main/resources/assets/gregtech"
+ASSETS = str(native_path("src/main/resources/assets/gregtech"))
 BLOCKSTATES = f"{ASSETS}/blockstates"
 MODELS_BLOCK = f"{ASSETS}/models/block"
 MODELS_ITEM = f"{ASSETS}/models/item"

@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import re
 import unittest
@@ -5,12 +12,12 @@ from pathlib import Path
 from collections import Counter
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 
 
 class FusionResources(unittest.TestCase):
     def test_exact_original_part_counts_and_energy_ports(self):
-        source = (ROOT / 'src/main/java/com/gregtech/gregtech/content/multiblock/FusionStructure.java').read_text(encoding='utf8')
+        source = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/content/multiblock/FusionStructure.java')).read_text(encoding='utf8')
         cells = re.findall(r'Cell\((-?\d+),(-?\d+),(-?\d+),(\d+),Role\.(\w+)\)', source)
         self.assertEqual(len(cells), 886)
         self.assertEqual(len({(x,y,z) for x,y,z,_,_ in cells}),886)
@@ -40,6 +47,6 @@ class FusionResources(unittest.TestCase):
             value=1
             for number in re.search(r'setSpecialNumber\(([^)]+)',line).group(1).replace('L','').split('*'):value*=int(number)
             expected.append((int(circuit),int(ticks),int(eut),value))
-        port=(ROOT/'src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java').read_text(encoding='utf8')
+        port=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java')).read_text(encoding='utf8')
         actual=[tuple(map(int,match)) for match in re.findall(r'add\((\d+),(\d+),(-?\d+),(\d+)L,',port)]
         self.assertEqual(actual,expected)

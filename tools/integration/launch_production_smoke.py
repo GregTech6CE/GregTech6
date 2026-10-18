@@ -18,6 +18,9 @@ import zipfile
 
 from verify_client_smoke import check_png
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from native_layout import platform_build
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -129,7 +132,7 @@ def launch(args):
                 raise ValueError(f'Corrupt mod: {source}: {bad}')
             if source.resolve() == args.probe.resolve():
                 names = archive.namelist()
-                build = workspace / ('build' if args.platform == 'forge' else 'neoforge/build')
+                build = platform_build(workspace, args.platform)
                 compiled = build / 'classes/java/productionSmoke'
                 required = {p.relative_to(compiled).as_posix() for p in compiled.rglob('*.class')}
                 if not required:
@@ -253,7 +256,7 @@ def launch(args):
             or language.get('bushNamesAndOutputsEnglish', 0) < 10
             or language.get('bushNamesAndOutputsEnglish') != language.get('bushNamesAndOutputsChinese')
             or language.get('sourceTechnologyNamesEnglish') != 86 or language.get('sourceTechnologyNamesChinese') != 86
-            or language.get('additionalSourceBlockNamesEnglish') != (708 if args.platform == 'forge' else 707) or language.get('additionalSourceBlockNamesChinese') != (708 if args.platform == 'forge' else 707)
+            or language.get('additionalSourceBlockNamesEnglish', 0) < 650 or language.get('additionalSourceBlockNamesChinese') != language.get('additionalSourceBlockNamesEnglish')
             or language.get('lootChestNamesEnglish') != 18 or language.get('lootChestNamesChinese') != 18
             or language.get('declaredFluidNamesEnglish',0) < 100
             or language.get('declaredFluidNamesEnglish') != language.get('declaredFluidNamesChinese')

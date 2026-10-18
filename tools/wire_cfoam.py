@@ -1,10 +1,18 @@
 """Wire the drying construction foam: the fresh block gets its block entity type and the hardened
 block stays a plain block."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import os
 
-ROOT = os.path.join("src", "main", "java", "com", "gregtech", "gregtech")
+ROOT = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech")
 
 # 1. cfoam_fresh becomes the drying block.
 decor = os.path.join(ROOT, "registry", "GTDecorBlocks.java")

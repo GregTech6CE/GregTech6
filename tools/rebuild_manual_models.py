@@ -3,11 +3,18 @@
 Reference: MultiTileEntityMortar/GrindStone/SiftingTable/Crank.setBlockBounds2,
 getTexture2 in the original GT6 source. Recipe-display markers are not geometry.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import copy
 import json
 
-ROOT = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech'
+ROOT = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech')
 SIDES = ('down', 'up', 'north', 'south', 'west', 'east')
 
 def box(lo, hi, texture, **faces):

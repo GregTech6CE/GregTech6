@@ -8,13 +8,20 @@ form, fluid or item is worth adding first.
 Usage: python tools/rank_missing_content.py <missing-tokens-file>
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import collections
 import os
 import re
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-GEN_DIR = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "loaders", "c")
+GEN_DIR = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c")
 SPEC = re.compile(r'"([a-z]+:[^"]+)"')
 
 

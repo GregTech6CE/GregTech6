@@ -21,6 +21,13 @@ Usage: python tools/generate_wood_recipes.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import os
 import re
@@ -28,7 +35,7 @@ import string
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-GT6 = os.path.normpath(os.path.join(ROOT, "..", "gregtech6-master", "gregtech6-master", "src", "main", "java"))
+GT6 = os.path.normpath(os.path.join(ROOT, "..", "gregtech6-master", "gregtech6-master", str(native_path("src")), "main", "java"))
 
 DICT_FILE = os.path.join(GT6, "gregapi", "load", "LoaderWoodDictionary.java")
 ROWS_FILE = os.path.join(GT6, "gregtech", "loaders", "c", "Loader_Recipes_Woods.java")
@@ -39,8 +46,8 @@ WOOD_ENTRY_FILE = os.path.join(GT6, "gregapi", "wooddict", "WoodEntry.java")
 BEAM_ENTRY_FILE = os.path.join(GT6, "gregapi", "wooddict", "BeamEntry.java")
 PLANK_ENTRY_FILE = os.path.join(GT6, "gregapi", "wooddict", "PlankEntry.java")
 
-PORT = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech")
-CORE = os.path.join(ROOT, "core", "src", "main", "java", "com", "gregtech", "gregtech")
+PORT = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech")
+CORE = os.path.join(ROOT, "core", str(native_path("src")), "main", "java", "com", "gregtech", "gregtech")
 SPECIES_FILE = os.path.join(CORE, "block", "wood", "WoodSpecies.java")
 WOODS_FILE = os.path.join(PORT, "registry", "GTWoods.java")
 MATERIALS_DIR = os.path.join(CORE, "content", "material", "generated")

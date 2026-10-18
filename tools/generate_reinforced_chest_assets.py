@@ -2,20 +2,28 @@
 
 Original textures: GregTech-6 Team, LGPL-3.0-or-later. Only this family's keys are updated.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import json
 import re
 import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
 
 
 def specs():
-    text = (ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java').read_text(encoding='utf-8')
+    text = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java')).read_text(encoding='utf-8')
     port = re.findall(r'new Spec\("([^"]+)", [^,]+, ([\d.]+)F, ([\d.]+)F\)', text)
-    original = (ORIGINAL / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java').read_text(encoding='utf-8')
+    original = (native_path(ORIGINAL / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')).read_text(encoding='utf-8')
     source = re.findall(r'metalset\(aRegistry, aMetal, aUtilMetal, aMachine, aWooden, (?:MT|ANY)\.(\w+)\s*,\s*(\d+),\s*([\d.]+)F,\s*([\d.]+)F,', original)
     assert len(port) == len(source) == 60
     # This table is explicitly stored in GT6 registration order; reject reordered physical specs.
@@ -50,7 +58,7 @@ def generate(assets=ASSETS):
     for shell in ('woodchest', 'lootchest'):
         for source_layer, layer in (('colored', 'colored'), ('plain', 'overlay')):
             relative = f'textures/block/machines/{shell}/{layer}.png'
-            source = ORIGINAL / f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{source_layer}.png'
+            source = native_path(ORIGINAL / f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{source_layer}.png')
             target = assets / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(source.read_bytes())
@@ -59,7 +67,7 @@ def generate(assets=ASSETS):
 
 if __name__ == '__main__':
     family = generate()
-    tag = ROOT / 'src/main/resources/data/forge/tags/items/chests/wooden.json'
+    tag = native_path(ROOT / 'src/main/resources/data/forge/tags/items/chests/wooden.json')
     data = json.loads(tag.read_text(encoding='utf-8')) if tag.exists() else {'replace': False, 'values': []}
     data['values'] = sorted(set(data['values']) | {'gregtech:reinforced_wood_chest_' + suffix for suffix, _ in family})
     tag.parent.mkdir(parents=True, exist_ok=True)
@@ -70,6 +78,6 @@ if __name__ == '__main__':
         for source_layer, layer in (('colored', 'colored'), ('plain', 'overlay')):
             relative = f'textures/block/machines/{shell}/{layer}.png'
             data[relative] = {'sha256': hashlib.sha256((ASSETS / relative).read_bytes()).hexdigest(),
-                             'source': f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{source_layer}.png'}
+                             'source': str(native_path(f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{source_layer}.png'))}
     manifest.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     print(f'Generated {len(family)} chest variants, four original texture layers, bilingual names and wooden chest tags.')

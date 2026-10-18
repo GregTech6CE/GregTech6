@@ -1,4 +1,11 @@
 """Source identity parser must preserve English literals and refuse ambiguous IDs."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 from pathlib import Path
 import sys
 import tempfile
@@ -16,7 +23,7 @@ from source_recipe_language import recipe_map_names
 class IdentityLanguageTests(unittest.TestCase):
     def test_recipe_names_follow_inheritance_and_reject_changed_forwarding(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java/gregapi'
+            root=Path(folder);java=native_path(root/'src/main/java/gregapi')
             (java/'data').mkdir(parents=True);(java/'recipes/maps').mkdir(parents=True)
             (java/'recipes/Recipe.java').write_text('''mNameInternal=aNameInternal;
 mNameLocal=aNameLocal; LH.add(mNameInternal, mNameLocal);''',encoding='utf-8')
@@ -59,7 +66,7 @@ super(aRecipes, aUnlocalizedName, aNameLocal);}''',encoding='utf-8')
 
     def test_generated_fluid_english_requires_identity_but_not_a_chinese_translation(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data';data.mkdir(parents=True)
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data';data.mkdir(parents=True)
             (data/'MT.java').write_text('Gas = create(42, "Example Gas").setLocal("Original Gas");',encoding='utf-8')
             material=java/'gregapi/oredict/OreDictMaterial.java';material.parent.mkdir(parents=True)
             material.write_text('',encoding='utf-8')
@@ -90,7 +97,7 @@ return create("plasma."+aMaterial.mNameInternal.toLowerCase(), aTexture, aMateri
 
     def test_numeric_material_identity_preserves_case_and_local_overrides(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             material=java/'gregapi/oredict/OreDictMaterial.java';material.parent.mkdir(parents=True)
             material.write_text('// Original sanitizer and getLocal are provenance inputs.',encoding='utf-8')
@@ -142,7 +149,7 @@ Duplicate = metal(99, "Second", 0);
 
     def test_antimatter_ids_and_placeholder_names_keep_different_proof_rules(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data';data.mkdir(parents=True)
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data';data.mkdir(parents=True)
             material=java/'gregapi/oredict/OreDictMaterial.java';material.parent.mkdir(parents=True)
             material.write_text('',encoding='utf-8')
             (data/'MT.java').write_text('''Empty=create(0,"Empty");
@@ -184,7 +191,7 @@ Clash=create(4020,"Antimatter Test");'''
 
     def test_lazy_unused_names_do_not_replace_active_names_or_prove_ids(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data';data.mkdir(parents=True)
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data';data.mkdir(parents=True)
             material=java/'gregapi/oredict/OreDictMaterial.java';material.parent.mkdir(parents=True)
             material.write_text('',encoding='utf-8')
             (data/'MT.java').write_text('''static OreDictMaterial unused(String aNameOreDict) {return create(-1, aNameOreDict);}
@@ -199,7 +206,7 @@ Unnumbered=unused("Compatibility Gem").setLocal("Original Display");
 
     def test_original_literals_material_names_and_numeric_offsets(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder); java=root/'src/main/java'
+            root=Path(folder); java=native_path(root/'src/main/java')
             (java/'gregapi/data').mkdir(parents=True)
             (java/'gregapi/data/MT.java').write_text('Steel = metal(26, "Source Steel", 0);',encoding='utf-8')
             (java/'Loader_MultiTileEntities.java').write_text('''
@@ -222,7 +229,7 @@ private static void storages() {
 
     def test_conflicting_declarations_are_not_silently_overwritten(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java'
+            root=Path(folder);java=native_path(root/'src/main/java')
             (java/'gregapi/data').mkdir(parents=True)
             (java/'gregapi/data/MT.java').write_text('',encoding='utf-8')
             (java/'MultiItemBooks.java').write_text('''
@@ -238,7 +245,7 @@ addItem(2, "Conflicting", "Original description");
 
     def test_original_local_overrides_voltage_and_any_material_are_distinct(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             (data/'MT.java').write_text('''
 static OreDictMaterial iron() {return metal(260, "Iron", 0);}
@@ -281,7 +288,7 @@ aMat = MT.Galvanized; aRegistry.add(aMat.mNameLocal+" Anvil", "Misc Tool Blocks"
 
     def test_flower_metadata_comes_from_registered_class_and_not_comments(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             loader=java/'gregtech/loaders/a/Loader_Blocks.java'
@@ -297,7 +304,7 @@ public BlockFlowersA(String id) {
 
     def test_shared_lh_constant_declarations_keep_exact_source_phrase(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);data=root/'src/main/java/gregapi/data'
+            root=Path(folder);data=native_path(root/'src/main/java/gregapi/data')
             data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             (data/'LH.java').write_text('''
@@ -310,7 +317,7 @@ add(TOOL_HINT, " Exact source hint ");
 
     def test_colored_constructor_inherits_exact_full_and_slab_names(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             (data/'CS.java').write_text('DYE_NAMES={'+','.join('"Dye '+str(i)+'"' for i in range(16))+'};',encoding='utf-8')
@@ -337,7 +344,7 @@ for (int i = 0; i < 16; i++) LH.add(getUnlocalizedName()+"."+i, DYE_NAMES[i] + "
 
     def test_wire_helpers_preserve_sparse_offsets_and_cable_availability(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';helpers=java/'gregapi/tileentity/connectors'
+            root=Path(folder);java=native_path(root/'src/main/java');helpers=java/'gregapi/tileentity/connectors'
             loader=java/'gregtech/loaders/b/Loader_MultiTileEntities.java'
             helpers.mkdir(parents=True);loader.parent.mkdir(parents=True)
             loader.write_text('''
@@ -370,7 +377,7 @@ private static void metalset() {} private static void storages() {}
 
     def test_pipe_helpers_resolve_numeric_offsets_and_refuse_incomplete_tables(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';helpers=java/'gregapi/tileentity/connectors'
+            root=Path(folder);java=native_path(root/'src/main/java');helpers=java/'gregapi/tileentity/connectors'
             loader=java/'gregtech/loaders/b/Loader_MultiTileEntities.java'
             helpers.mkdir(parents=True);loader.parent.mkdir(parents=True)
             loader.write_text('''
@@ -393,7 +400,7 @@ MultiTileEntityPipeFluid.addFluidPipes(26000, 0, MT.Wood);
 
     def test_stone_full_and_oriented_slab_formulas_use_material_display_name(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             (data/'MT.java').write_text('Rock = stone(10, "Rock", 0).setLocal("Layer Rock");',encoding='utf-8')
             loader=java/'gregtech/loaders/a/Loader_Rocks.java';loader.parent.mkdir(parents=True)
@@ -428,7 +435,7 @@ MultiTileEntityPipeFluid.addFluidPipes(26000, 0, MT.Wood);
 
     def test_original_component_loop_stops_before_port_only_tier(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data'
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data'
             data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             (data/'CS.java').write_text('String[] VN={"ULV","LV","MV","HV","EV","IV","LuV","ZPM","UV","PUV1"};',encoding='utf-8')
@@ -444,7 +451,7 @@ IL.MOTORS[i].set(addItem(12000+i, "Compact Electric Motor ("+VN[i]+")", ""));
 
     def test_il_shape_identity_preserves_native_word_order(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);items=root/'src/main/java/gregtech/items';items.mkdir(parents=True)
+            root=Path(folder);items=native_path(root/'src/main/java/gregtech/items');items.mkdir(parents=True)
             (items/'MultiItemTechnological.java').write_text('''
 IL.Shape_Extruder_Pipe_Tiny.set(addItem(10009,"Tiny shape","Description"));
 IL.Shape_SimpleEx_CCC.set(addItem(10228,"Capsule shape","Description"));
@@ -465,7 +472,7 @@ IL.Shape_Slicer_Eigths_Hollow.set(addItem(10904,"Hollow eighths",""));
 
     def test_paired_spray_metadata_and_selector_constructor_names(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data';data.mkdir(parents=True)
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data';data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             (data/'CS.java').write_text('String[] DYE_NAMES={'+','.join('"Dye '+str(i)+'"' for i in range(16))+'};',encoding='utf-8')
             spray=java/'MultiItemRandomTools.java'
@@ -490,7 +497,7 @@ LH.add(mName + ".configuration", "Configuration: ");
 
     def test_literal_fluid_names_preserve_spaces_case_and_ignore_unresolved_expressions(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);java=root/'src/main/java';data=java/'gregapi/data';data.mkdir(parents=True)
+            root=Path(folder);java=native_path(root/'src/main/java');data=java/'gregapi/data';data.mkdir(parents=True)
             (data/'MT.java').write_text('',encoding='utf-8')
             (data/'LH.java').write_text('add("loot.gt.books", "+Random Books+");\n'
                                         'String LABEL="gt.lang.label"; add(LABEL,"Label: ");',encoding='utf-8')

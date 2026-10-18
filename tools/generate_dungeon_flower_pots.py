@@ -6,6 +6,14 @@ disappear from the potted models or drop tables. Run with --check in CI.
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import json
 import re
@@ -13,9 +21,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FLOWERS = ROOT / "src/main/java/com/gregtech/gregtech/content/plant/BedrockFlowers.java"
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
-DATA = ROOT / "src/main/resources/data/gregtech"
+FLOWERS = native_path(ROOT / "src/main/java/com/gregtech/gregtech/content/plant/BedrockFlowers.java")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+DATA = native_path(ROOT / "src/main/resources/data/gregtech")
 
 
 def encoded(value: dict) -> str:

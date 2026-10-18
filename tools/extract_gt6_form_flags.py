@@ -23,6 +23,13 @@ Usage: python tools/extract_gt6_form_flags.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import collections
 import json
 import os
@@ -33,7 +40,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 TD_JAVA = os.path.join(GT6, "gregapi", "data", "TD.java")
 MT_JAVA = os.path.join(GT6, "gregapi", "data", "MT.java")
 OUT_JSON = os.path.join(ROOT, "docs", "gt6-form-flags.json")
-OUT_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "data",
+OUT_JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data",
                         "generated", "MaterialForms.java")
 
 SINGLE_FLAG = re.compile(r"(\w+)\s*=\s*TagData\.createTagData\(\"ITEMGENERATOR\.(\w+)\"")

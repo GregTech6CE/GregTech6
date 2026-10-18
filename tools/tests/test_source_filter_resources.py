@@ -1,10 +1,17 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import sys
 import unittest
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 sys.path.insert(0,str(ROOT/'tools'))
 from rebuild_source_filters import FILTERS
 from rebuild_source_extenders import DIRECTIONS
@@ -29,7 +36,7 @@ class SourceFilterResources(unittest.TestCase):
         self.assertFalse(issues)
 
     def test_recipes_use_actual_casing_ids_and_original_patterns(self):
-        folder=ROOT/'src/main/resources/data/gregtech/recipes/logistics'
+        folder=native_path(ROOT/'src/main/resources/data/gregtech/recipes/logistics')
         for name,_,pattern in FILTERS:
             recipe=json.loads((folder/f'{name}.json').read_text(encoding='utf-8'))
             self.assertEqual(recipe['pattern'],pattern)

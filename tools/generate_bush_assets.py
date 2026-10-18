@@ -7,13 +7,21 @@ bush -> bush+immature -> bush+berries -> bush+berries (the last two differ only 
 which the colour handler picks from GT6's BushesGT table, so they share one model).
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import os
 import shutil
 
 GT6_TEXTURES = os.path.join("..", "gregtech6-master", "gregtech6-master", "build", "resources", "main",
                             "assets", "gregtech", "textures", "blocks", "machines", "plants", "bush")
-ASSETS = os.path.join("src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
 TEX_OUT = os.path.join(ASSETS, "textures", "block", "plants", "bush")
 LANG = os.path.join(ASSETS, "lang")
 

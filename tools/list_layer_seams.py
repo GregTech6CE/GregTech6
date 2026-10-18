@@ -4,11 +4,18 @@ Answers whether coal/lignite/bauxite/salt already exist as whole-block seams in 
 reason the port's vein table cites for omitting those veins).
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import re
 from collections import Counter
 
-PORT = "src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java"
+PORT = str(native_path("src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java"))
 text = io.open(PORT, encoding="utf-8", errors="replace").read()
 start = text.find("static void load()")
 body = text[start:]

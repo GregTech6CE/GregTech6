@@ -23,6 +23,14 @@ Usage: python tools/generate_food_item_assets.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
@@ -31,15 +39,15 @@ import shutil
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GT6_TEXTURES = os.path.join(r'F:\Dev\GregTech6\gregtech6-master\gregtech6-master', 'src', 'main',
+GT6_TEXTURES = os.path.join(r'F:\Dev\GregTech6\gregtech6-master\gregtech6-master', str(native_path('src')), 'main',
                             'resources', 'assets', 'gregtech', 'textures', 'items', 'gt.multiitem.food')
 PACK_TEXTURES = os.path.join(r'F:\Dev\GregTech6\GT6resourcepack\gt6', 'resources', 'assets', 'gregtech',
                              'textures', 'items', 'gt.multiitem.food')
-ASSETS = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'gregtech')
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
 PORT_TEXTURES = os.path.join(ASSETS, 'textures', 'item', 'food')
 MODELS = os.path.join(ASSETS, 'models', 'item')
 LANG = os.path.join(ASSETS, 'lang')
-GENERATED = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'data',
+GENERATED = os.path.join(ROOT, str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'data',
                          'generated', 'GTFoodItemsGen.java')
 
 ROW = re.compile(

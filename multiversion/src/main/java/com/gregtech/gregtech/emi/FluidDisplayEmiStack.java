@@ -37,7 +37,7 @@ final class FluidDisplayEmiStack extends EmiStack {
     }
     @Override public boolean isEmpty() { return fluid.isEmpty(); }
 //? if >=1.21.1 {
-/*    @Override public DataComponentPatch getComponentChanges() { return fluid.getComponentChanges(); }
+    /*@Override public DataComponentPatch getComponentChanges() { return fluid.getComponentChanges(); }
 *///?} else {
     @Override public CompoundTag getNbt() { return fluid.getNbt(); }
 //?}

@@ -13,6 +13,13 @@ Usage: python tools/check_material_lang_collisions.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import json
 import os
@@ -20,8 +27,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-LANG = ROOT / "src/main/resources/assets/gregtech/lang"
-GENERATED = ROOT / "src/main/java/com/gregtech/gregtech/data/generated"
+LANG = native_path(ROOT / "src/main/resources/assets/gregtech/lang")
+GENERATED = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated")
 
 DISPLAY = re.compile(r'GTMaterialRegistry\.setDisplayName\("([^"]+)",\s*"([^"]*)"\)')
 
@@ -29,7 +36,7 @@ DISPLAY = re.compile(r'GTMaterialRegistry\.setDisplayName\("([^"]+)",\s*"([^"]*)
 def display_names() -> dict[str, str]:
     out: dict[str, str] = {}
     for path in list(GENERATED.glob("*.java")) + list(
-            (ROOT / "src/main/java/com/gregtech/gregtech/data").glob("*.java")):
+            (native_path(ROOT / "src/main/java/com/gregtech/gregtech/data")).glob("*.java")):
         try:
             text = path.read_text(encoding="utf-8")
         except OSError:

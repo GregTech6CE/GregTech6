@@ -1,4 +1,11 @@
 """Read original recipe-map labels through their constructor forwarding chain."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import re
 
@@ -7,7 +14,7 @@ from source_language_common import STRING
 
 
 def recipe_map_names(original):
-    java = original / 'src/main/java/gregapi'
+    java = native_path(original / 'src/main/java/gregapi')
     catalogs = [p for p in (java / 'data/RM.java', java / 'data/FM.java') if p.exists()]
     if not catalogs:
         return {}, []

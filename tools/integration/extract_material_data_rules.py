@@ -4,6 +4,14 @@ Read-only source access. Factory arguments are substituted before extracting tag
 uumMcfg/uumAloy propagate UUM only when every referenced component has that tag.
 """
 from __future__ import annotations
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import hashlib
 import importlib.util
@@ -51,7 +59,7 @@ def main():
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
     ns = parser.parse_args()
-    root = ns.source / 'src/main/java/gregapi'
+    root = native_path(ns.source / 'src/main/java/gregapi')
     mt = masked((root/'data/MT.java').read_text(encoding='utf-8'))
     op = masked((root/'data/OP.java').read_text(encoding='utf-8'))
     spec = importlib.util.spec_from_file_location('forms', ns.repo/'tools/extract_gt6_form_flags.py')

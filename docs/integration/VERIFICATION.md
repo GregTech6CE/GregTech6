@@ -1,5 +1,11 @@
 # 验证账本
 
+## 2026-10-18 / Stonecutter 完整原生迁移
+
+双版所有源集生成和编译通过；活动版本 NeoForge → Forge 往返通过；删除选定生成输出后依赖图能自动恢复。冻结清单核对 2,630 Java、14,291 资源；最终 14 项独立探针输出有明确测试维护签名，main/资源无业务变化。双版 JAR CRC、823 共享类、全部当前原生类、两版 7,514 / 6,684 资源与各自处理输出一致，Java17 SDK 通过。80 项 Python 检查、451 分组和四组纯核心合约通过。
+
+NeoForge 开发新世界 + EMI/REMI 通过变速箱 13/13、服装 24、列表/搜索/安全箱展开收回等定向回归。Forge / NeoForge 实际成品安装到独立实例，主界面、原生模型、材料含量、双语回调通过。新环境依赖、首次引导及旧测试 ID 预期问题已修复；一次 NeoForge 原生早期窗口异常退出后，同包重试通过，根因未定位。没有远端 CI 执行、完整生存、完整 GameTest 或旧存档兼容结论。详见 [完整摘要与回执](verification/stonecutter-full-summary-20261018.json)。
+
 ## 2026-10-18 / Stonecutter 生成、双版编译与打包
 
 实际生成两版各 12 个 EMI 类，代码及字符串签名与 `1e3a60d0a` 基线一致。源策略 2629 Java 通过；`compileBothPlatforms assembleBothPlatforms` 8m48s 成功。各成品确认 12 个 EMI 类、13 个普通变速箱 parent 修正、服装分类 24 成员；无 Stonecutter 构建插件类和旧分类回退 mixin，ZIP CRC 通过。生成任务不再是 NO-SOURCE，原生编译通过目录 artifact 自动依赖生成。未启动客户端／服务端或跑完整测试，GUI 视觉、生存、旧存档继续待验。见[记录](verification/stonecutter-emi-20261018.md)、[构建回执](verification/stonecutter-emi-build-20261018.json)。

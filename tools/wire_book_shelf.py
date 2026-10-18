@@ -1,12 +1,20 @@
 """Register GT6's book shelf: block + block entity + assets + language keys."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
 
-DECOR = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "registry", "GTDecorBlocks.java")
-BE = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "registry", "GTBlockEntities.java")
-ASSETS = os.path.join("src", "main", "resources", "assets", "gregtech")
+DECOR = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry", "GTDecorBlocks.java")
+BE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry", "GTBlockEntities.java")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
 LANG = os.path.join(ASSETS, "lang")
 
 FIELD = """    // N12: Misc placeables

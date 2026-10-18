@@ -3,6 +3,13 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import re
 from pathlib import Path
 from readable_data_names import readable_java
@@ -12,7 +19,7 @@ GT6_MATERIALS = (
     Path(__file__).resolve().parents[1]
     / "tools/generated/materials-source.java.txt"
 )
-OUT = Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech/data/MaterialGroups.java"
+OUT = native_path(Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech/data/MaterialGroups.java")
 
 ANY_DECL_RE = re.compile(r"(\w+)\s*=\s*any\(\"((?:\\.|[^\"\\])*)\"\s*\)")
 LOCAL_RE = re.compile(r'\.setLocal\("((?:\\.|[^"\\])*)"\)')

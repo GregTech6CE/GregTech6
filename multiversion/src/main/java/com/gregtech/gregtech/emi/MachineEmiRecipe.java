@@ -42,7 +42,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         this.inputs = List.copyOf(inputs); this.catalysts = List.copyOf(catalysts); this.outputs = List.copyOf(outputs);
     }
 //? if >=1.21.1 {
-/*    private static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+    /*private static EmiStack fluid(net.neoforged.neoforge.fluids.FluidStack stack) {
         return EmiStack.of(stack.getFluid(), stack.getComponentsPatch(), stack.getAmount());
 *///?} else {
     private static EmiStack fluid(net.minecraftforge.fluids.FluidStack stack) {
@@ -51,7 +51,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
     }
     /** Only the visible slot gets the GT icon; indexing and R/U retain the real fluid key/components. */
 //? if >=1.21.1 {
-/*    private static EmiStack displayFluid(net.neoforged.neoforge.fluids.FluidStack stack) {
+    /*private static EmiStack displayFluid(net.neoforged.neoforge.fluids.FluidStack stack) {
 *///?} else {
     private static EmiStack displayFluid(net.minecraftforge.fluids.FluidStack stack) {
 //?}
@@ -59,7 +59,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         var client = net.minecraft.client.Minecraft.getInstance();
         if (client.level == null) return nativeStack;
 //? if >=1.21.1 {
-/*        var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
+        /*var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(client.level.registryAccess(), stack);
 *///?} else {
         var display = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.display(stack);
 //?}
@@ -113,7 +113,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
     }
     private void side(WidgetHolder widgets, boolean input, ItemStack[] items,
 //? if >=1.21.1 {
-/*                      net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset) {
+                      /*net.neoforged.neoforge.fluids.FluidStack[] fluids,float scale,float offset) {
 *///?} else {
                       net.minecraftforge.fluids.FluidStack[] fluids,float scale,float offset) {
 //?}

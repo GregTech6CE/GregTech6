@@ -1,0 +1,9 @@
+{
+  "path": "C:\\Dev\\GregTech6\\core\\build\\libs\\gregtech6-addon-api-0.0.0.jar",
+  "bytes": 1930246,
+  "sha256": "1032d14aa0a78b376efdffabb2b92871d705a1dd65ae1837a5332831e9c12444",
+  "shared_classes": 823,
+  "java_class_version": 61,
+  "compile_only": true,
+  "external_addon_runtime_verified": false
+}

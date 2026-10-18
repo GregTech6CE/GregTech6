@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import json
 import sys
@@ -5,7 +12,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 sys.path.insert(0, str(ROOT / 'tools'))
 from rebuild_source_extenders import SPECS, DIRECTIONS
 from check_render_resources import check
@@ -49,7 +56,7 @@ class SourceExtenderResources(unittest.TestCase):
             for name, _, _ in SPECS:
                 self.assertIn('block.gregtech.' + name, lang)
         for name, _, pattern in SPECS:
-            recipe = json.loads((ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json').read_text(encoding='utf-8'))
+            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')).read_text(encoding='utf-8'))
             self.assertEqual(recipe['pattern'], pattern)
             self.assertEqual(set(recipe['key']), set(''.join(pattern)) - {' '})
             self.assertEqual(recipe['type'], 'gregtech:tool_shaped')

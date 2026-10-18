@@ -1,9 +1,16 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 
 def read(path): return json.loads((ASSETS / path).read_text(encoding='utf-8'))
 

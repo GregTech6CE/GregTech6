@@ -1,4 +1,11 @@
 """Restore original GT6 optical device textures and generate six-facing active models."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import json
 import hashlib
@@ -6,8 +13,8 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
-SOURCE = ORIGINAL / 'src/main/resources/assets/gregtech/textures/blocks'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+SOURCE = native_path(ORIGINAL / 'src/main/resources/assets/gregtech/textures/blocks')
 FAMILIES = {
     'co2_laser': ('machines/lasers/laser_electric', ['lv', 'mv', 'hv', 'ev', 'iv']),
     'flux_laser': ('machines/lasers/laser_flux', ['lv', 'mv', 'hv', 'ev', 'iv']),

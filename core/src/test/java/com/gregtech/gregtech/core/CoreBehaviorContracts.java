@@ -251,7 +251,10 @@ public final class CoreBehaviorContracts {
                     "common form tags exclude storage blocks " + taggedNames[i]);
         }
         var aliases = com.gregtech.gregtech.api.material.MaterialTagAliases.ALTERNATE_SPELLINGS;
-        equal(4, aliases.size(), "four established common-tag spellings");
+        equal(7, aliases.size(), "established spellings and restored recipe-material aliases");
+        check("osmium".equals(aliases.get("osmium_elemental")), "elemental osmium recipe-tag alias");
+        check("ad".equals(aliases.get("adamantium")), "adamantium recipe-tag alias");
+        check("bedrock_hsla_alloy".equals(aliases.get("bedrock_hslaalloy")), "bedrock HSLA recipe-tag alias");
         check("aluminum".equals(aliases.get("aluminium")), "aluminium common-tag alias");
         check("nether_quartz".equals(aliases.get("quartz")), "quartz common-tag alias");
         check("sulphur".equals(aliases.get("sulfur")), "sulfur common-tag alias");

@@ -37,6 +37,14 @@ every ore block.
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import re
 import sys
@@ -44,12 +52,12 @@ from pathlib import Path
 from modular_materials import parse_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS = ASSETS / "models/block/ores"
 ITEM_MODELS = ASSETS / "models/item"
 
-JAVA = ROOT / "src/main/java/com/gregtech/gregtech"
+JAVA = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
 GEN_MATERIALS = ROOT / "tools/generated/materials-source.java.txt"
 MT_FILE = JAVA / "data/ImportedMaterialData.java"
 FORM_FILE = JAVA / "data/generated/MaterialForms.java"

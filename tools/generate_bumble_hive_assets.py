@@ -19,6 +19,14 @@ just work.
 
 Usage: python tools/generate_bumble_hive_assets.py [--check]
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import json
 import os
@@ -27,7 +35,7 @@ import sys
 from PIL import Image, ImageChops
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 SOURCE = os.path.join(ASSETS, "textures", "block", "nature", "bumblehive")
 FACES = ("bottom", "top", "side")
 

@@ -3,6 +3,14 @@
 The original checkout is read-only. A dry run writes an audit; --write also updates
 the accepted bindings and shared language files through the strict pipeline.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import hashlib
 from pathlib import Path
@@ -28,13 +36,13 @@ def extract(repo, original):
     def string(value):
         return json.loads('"' + value + '"')
 
-    bee_file = original / 'src/main/java/gregtech/items/MultiItemBumbles.java'
+    bee_file = native_path(original / 'src/main/java/gregtech/items/MultiItemBumbles.java')
     bees = read(bee_file)
     original_species, original_types = bumble_declarations(bees)
     catalog = read(repo / 'core/src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleSpecies.java')
     species = re.findall(r'new Species\((\d+),\s*' + LITERAL + r',\s*' + LITERAL, catalog)
     type_maps = []
-    for directory in ('src/main/java', 'neoforge/src/main/java'):
+    for directory in (str(native_path('src/main/java')), str(native_path('neoforge/src/main/java'))):
         types = read(repo / directory / 'com/gregtech/gregtech/content/bumble/BumbleBeeType.java')
         suffixes = dict(re.findall(r'^\s*(\w+)\("([^"]+)",', types, re.M))
         body = types.split('public int meta()', 1)[1].split('/** The scanned variant', 1)[0]
@@ -76,7 +84,7 @@ def extract(repo, original):
     symbols = {}
     for symbol, canonical in re.findall(r'GTMaterial\s+(\w+)\s*=\s*com\.gregtech\.gregtech\.content\.material\.generated\.\w+\.(\w+)', facade):
         symbols.setdefault(symbol, set()).add(canonical)
-    registrations = read(original / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
+    registrations = read(native_path(original / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'))
     anvils = {}
     for line in registrations.splitlines():
         if 'MultiTileEntityAnvil.class' not in line:

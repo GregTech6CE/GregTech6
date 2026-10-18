@@ -8,11 +8,19 @@ No GTM source or texture is used.
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech"
+ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech")
 SOURCE = ROOT / "models/block/machine/energy"
 TARGET = ROOT / "models/block/machine/logistics"
 

@@ -3,6 +3,14 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import re
 from pathlib import Path
 from modular_materials import parse_catalog, write_readable_references
@@ -11,8 +19,8 @@ from readable_data_names import readable_java
 ROOT = Path(__file__).resolve().parents[1]
 GT6_MT = Path(r"f:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\MT.java")
 GT6_MATERIALS = ROOT / "tools/generated/materials-source.java.txt"
-MT_JAVA = ROOT / "src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java"
-MOD_TAGS_OUT = ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialModTags.java"
+MT_JAVA = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java")
+MOD_TAGS_OUT = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialModTags.java")
 
 BEGIN = "    // <generated-mt-fields>"
 END = "    // </generated-mt-fields>"
@@ -340,7 +348,7 @@ def main() -> None:
     block = emit_mt_fields(paths, by_bucket, aliases, gt6_text)
     patch_mt_java(block)
     tags = parse_mod_tags(gt6_text)
-    md_fields = load_md_fields(ROOT / "src/main/java/com/gregtech/gregtech/data/ModReferences.java")
+    md_fields = load_md_fields(native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/ModReferences.java"))
     MOD_TAGS_OUT.parent.mkdir(parents=True, exist_ok=True)
     MOD_TAGS_OUT.write_text(
         readable_java(emit_mod_tags(tags, paths, by_bucket, md_fields, set(parse_gt6_nested_fields(gt6_text, "OREMATS")))),

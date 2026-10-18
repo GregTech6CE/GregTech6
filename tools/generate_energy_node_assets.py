@@ -3,6 +3,14 @@
 turbines/solar/battery boxes/storage cabinets): copies the GT6 textures and
 emits composite block models, facing blockstates, item models and lang."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import os
 import shutil
@@ -12,7 +20,7 @@ from pathlib import Path
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech\textures\blocks\machines"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 TEX = os.path.join(ASSETS, "textures", "block", "machines")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "energy")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")

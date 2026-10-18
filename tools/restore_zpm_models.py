@@ -1,4 +1,11 @@
 """GT6 ZPM models and language entries; retain old discharger registry names."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import json
 import shutil
@@ -70,7 +77,7 @@ def main():
         lang = json.loads(p.read_text(encoding='utf8'))
         lang.update({key: value[i] for key, value in translations.items()})
         p.write_text(json.dumps(lang, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
-    tagpath = ROOT / 'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json'
+    tagpath = native_path(ROOT / 'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json')
     tag = json.loads(tagpath.read_text(encoding='utf8'))
     for suffix in ['basic', 'advanced', 'elite']:
         name = 'gregtech:zpm_discharger_' + suffix
@@ -78,7 +85,7 @@ def main():
             tag['values'].append(name)
     tagpath.write_text(json.dumps(tag, indent=2) + '\n', encoding='utf8')
 
-    recipes = ROOT / 'src/main/resources/data/gregtech/recipes/zpm'
+    recipes = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/zpm')
     recipes.mkdir(parents=True, exist_ok=True)
     # Original 11170/11171 patterns, using currently registered representative circuits.
     for suffix, crystal in [('basic', 'ruby'), ('advanced', 'sapphire')]:

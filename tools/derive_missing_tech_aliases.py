@@ -14,6 +14,13 @@ Usage:  python tools/derive_missing_tech_aliases.py [--json docs/tech-item-token
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import pathlib
 import re
@@ -21,7 +28,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
-GENERATED = ROOT / "src/main/java/com/gregtech/gregtech"
+GENERATED = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
 TOKENS = ROOT / "docs/tech-item-tokens.json"
 OUT = ROOT / "docs/tech-item-token-aliases.json"
 

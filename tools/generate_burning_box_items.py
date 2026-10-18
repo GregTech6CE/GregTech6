@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """Generate item model JSONs for liquid/gas/fluidized-bed burning boxes."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json, os
 
-ITEM_DIR = "src/main/resources/assets/gregtech/models/item"
+ITEM_DIR = str(native_path("src/main/resources/assets/gregtech/models/item"))
 
 MATERIALS = [
     "lead", "bismuth", "bronze", "arsenic_copper", "arsenic_bronze",

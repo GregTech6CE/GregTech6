@@ -16,12 +16,19 @@ Ores guarded by MD.<mod>.mLoaded are dropped (those mods don't exist on 1.20.1).
 Biome filters are dropped for now (TODO).
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import os
 import re
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "worldgen")
+OUT = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen")
 
 NOISE_SRC = os.path.join(GT6, "gregtech", "worldgen", "NoiseGenerator.java")
 WORLDGEN_SRC = os.path.join(GT6, "gregtech", "loaders", "b", "Loader_Worldgen.java")

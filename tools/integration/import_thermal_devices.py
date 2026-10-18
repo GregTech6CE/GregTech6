@@ -4,6 +4,14 @@ Source trees are read-only. Keep native composite loaders, tint layers and IDs.
 The canonical snapshot lacks some image files; the preserved _w asset snapshot
 supplies those exact named files under its original CC0 asset license.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import copy
 import hashlib
@@ -24,7 +32,7 @@ def main():
     ap.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
     ap.add_argument('--audit', type=Path, required=True)
     ns = ap.parse_args()
-    loader = ns.source / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
+    loader = native_path(ns.source / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
     raw = loader.read_text(encoding='utf-8')
     all_rows = re.findall(r'aRegistry\.add\(([^,\n]+),\s*"([^"]+)"\s*,\s*([^,]+)\s*,\s*(\d+)\s*,\s*([\w.]+)', raw)
     source_rows = [(expr, group, legacy.strip()) for expr, group, legacy, _, _ in all_rows if legacy.strip().isdigit()]
@@ -46,8 +54,8 @@ def main():
             for layer in ('colored', 'overlay', 'overlay_active'):
                 for face in ('front', 'back', 'side'):
                     rel = f'assets/gregtech/textures/blocks/machines/{folder}/{layer}/{face}.png'
-                    canonical = ns.source / 'src/main/resources' / rel
-                    donor = canonical if canonical.is_file() else ns.comparison / 'src/main/resources' / rel
+                    canonical = native_path(ns.source / 'src/main/resources' / rel)
+                    donor = canonical if canonical.is_file() else native_path(ns.comparison / 'src/main/resources' / rel)
                     target = ns.repo / f'core/src/main/resources/assets/gregtech/textures/block/machines/{folder}/{layer}/{face}.png'
                     if not donor.is_file():
                         raise ValueError('Missing original asset: ' + str(donor))
@@ -77,7 +85,7 @@ def main():
                 variants.append({'id': id, 'source_id': source_id, 'source_key': source_key,
                                  'en_us': name, 'zh_cn': chinese[source_key], 'folder': folder,
                                  'creative_family': group.lower(), 'source_order': order[source_id]})
-                for platform in ('src', 'neoforge/src'):
+                for platform in (str(native_path('src')), str(native_path('neoforge/src'))):
                     root = ns.repo / platform / 'main/resources/assets/gregtech'
                     model_path = root / f'models/block/machine/energy/{id}.json'
                     template_id = 'electric_' + ('cooler_' if cooler else 'heater_') + tier

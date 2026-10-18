@@ -9,12 +9,19 @@ Usage:  python tools/report_gt6_only_prefixes.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import pathlib
 import re
 
 REPORT = pathlib.Path("docs/prefix-condition-comparison.json")
-PORT_BLOCKS = pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java")
+PORT_BLOCKS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java"))
 
 GROUPS = [
     ("armor", r"^armor"),

@@ -3,18 +3,26 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JAVA_ALIAS_SOURCES = (
     ROOT / "tools/generated/materials-source.java.txt",
-    ROOT / "src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+    native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java"),
 )
 JAVA_DISPLAY_SOURCES = JAVA_ALIAS_SOURCES + (
-    ROOT / "src/main/java/com/gregtech/gregtech/data/AntimatterMaterials.java",
+    native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/AntimatterMaterials.java"),
 )
-OUT = ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java"
+OUT = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java")
 
 MATERIAL_LINE_RE = re.compile(
     r"(\w+(?:\s*,\s*\w+)*)\s*=\s*(?:\w+\.)?(?:create|metal|element|alloy|ore|gem|dust|gas|wood|stone|elec|cent|clay)\(\s*[^,]+,\s*\"((?:\\.|[^\"\\])*)\""

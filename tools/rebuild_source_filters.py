@@ -1,4 +1,11 @@
 """Original filter assets and crafting, preserving existing port registry IDs."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 from rebuild_container_tool_models import write, ASSETS
@@ -12,7 +19,7 @@ FILTERS = [('filter_items','filter_slots',[' hY','ZMZ','Yw ']),
 
 
 def recipe(name, data):
-    path=ROOT/f'src/main/resources/data/gregtech/recipes/logistics/{name}.json'
+    path=native_path(ROOT/f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')
     path.parent.mkdir(parents=True,exist_ok=True)
     text=json.dumps(data,indent=2)+'\n'
     if not path.exists() or path.read_text(encoding='utf-8')!=text:path.write_text(text,encoding='utf-8')

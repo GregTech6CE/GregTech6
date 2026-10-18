@@ -1,11 +1,18 @@
 """Dynamite's active/embedded models preserve GT6 art and agree with six-face bounds."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import itertools
 import json
 import math
 from pathlib import Path
 import unittest
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/tools/dynamite'
 class DynamiteModelTests(unittest.TestCase):
     def test_all_states_match_the_visible_and_collision_bounds(self):

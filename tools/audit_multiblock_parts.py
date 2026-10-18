@@ -5,11 +5,18 @@ numeric id (18000+). The port hosts them either in LargeMachineParts.DEFINITIONS
 non-throwing switch in LargeMachineParts.find(...).
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import re
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregtech\loaders\b\Loader_MultiTileEntities.java"
-PORT_PARTS = "src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java"
+PORT_PARTS = str(native_path("src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java"))
 
 text = io.open(GT6, encoding="utf-8", errors="replace").read()
 flat = re.sub(r"\s+", " ", text)

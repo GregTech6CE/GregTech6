@@ -3,11 +3,18 @@
 Bounds follow the corresponding MultiTileEntity classes. Dynamic contents,
 anvil workpieces and coin inserts are intentionally separate from the empty mesh.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 DIRECTIONS = ('west', 'east', 'north', 'south', 'up', 'down')
 
 
@@ -165,7 +172,7 @@ def main():
         source.append(f'            case "{name}" -> new int[][] {{{values}}};')
     source += ['            default -> throw new IllegalArgumentException("Unknown tool mesh: " + id);',
                '        };', '    }', '}']
-    java = ROOT/'src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java'
+    java = native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java')
     java.parent.mkdir(parents=True, exist_ok=True)
     text = '\n'.join(source)+'\n'
     if not java.exists() or java.read_text(encoding='utf-8') != text: java.write_text(text, encoding='utf-8')

@@ -1,4 +1,11 @@
 """Restore original GT6 named fluid PNGs and their animation metadata, byte for byte."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import hashlib
 import json
@@ -7,8 +14,8 @@ import shutil
 ROOT=Path(__file__).resolve().parents[1]
 
 def restore(original):
-    source=original/'src/main/resources/assets/gregtech/textures/blocks/fluids'
-    assets=ROOT/'src/main/resources/assets/gregtech'
+    source=native_path(original/'src/main/resources/assets/gregtech/textures/blocks/fluids')
+    assets=native_path(ROOT/'src/main/resources/assets/gregtech')
     ledger_path=ROOT/'tools/gt6_texture_sources.json'
     ledger=json.loads(ledger_path.read_text(encoding='utf-8'))
     changed=0

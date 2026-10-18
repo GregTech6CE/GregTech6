@@ -22,16 +22,23 @@ Usage:  python tools/compare_prefix_conditions.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import pathlib
 import re
 
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 PREFIX = GT6 / "gregapi/data/OP.java"
-PORT = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java")
-PORT_REGISTRY = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java")
-PORT_BLOCKS = pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java")
-FORMS = pathlib.Path("src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java")
+PORT = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java"))
+PORT_REGISTRY = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java"))
+PORT_BLOCKS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java"))
+FORMS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java"))
 OUT = pathlib.Path("docs/prefix-condition-comparison.json")
 
 GT6_ENTRY = re.compile(r"^\s*(\w+)\s*=\s*create\(", re.M)

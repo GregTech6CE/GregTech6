@@ -1,0 +1,384 @@
+{
+  "status": "passed",
+  "scope": "Actual distribution jar in isolated installed-loader client; title screen only",
+  "platform": "neoforge",
+  "version": "1.21.1-NeoForge_21.1.252",
+  "java": "C:\\Program Files\\Java\\jdk-21\\bin\\java.exe",
+  "java_version": "java version \"21.0.7\" 2025-04-15 LTS\nJava(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)",
+  "exit_code": 0,
+  "elapsed_seconds": 53.31,
+  "installed_files_modified": false,
+  "version_json_sha256": "2bc1c6df818257a3543bad63115059e6e5f423ae86de49de9a3ccc48dda0e2e4",
+  "distribution": {
+    "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\libs\\gregtech6-neoforge-1.21.1-0.0.0.jar",
+    "sha256": "378d35e9ab7d6ae80945e465a059b8ac6ef77e4c6fb6edb69fdb72ec2f369edf"
+  },
+  "probe": {
+    "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\production-probe\\gregtech-delivery-probe-0.0.0.jar",
+    "sha256": "3dd9edeebff5c0c43841923b7332c90db4175eb57e63100b6524c036388a10f9"
+  },
+  "mods": [
+    {
+      "name": "gregtech6-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "378d35e9ab7d6ae80945e465a059b8ac6ef77e4c6fb6edb69fdb72ec2f369edf",
+      "bytes": 40529985
+    },
+    {
+      "name": "gregtech-delivery-probe-0.0.0.jar",
+      "sha256": "3dd9edeebff5c0c43841923b7332c90db4175eb57e63100b6524c036388a10f9",
+      "bytes": 164658
+    },
+    {
+      "name": "emi-1.1.24+1.21.1+neoforge.jar",
+      "sha256": "b68691f94f0727fc517cac2ab55bd6658d1179cc8cc715fe610b60c37469bc4c",
+      "bytes": 1111538
+    },
+    {
+      "name": "Jade-1.21.1-NeoForge-15.10.6.jar",
+      "sha256": "276f1f65a20d04f536989c4f311949d770b52c440c23c2b904a08860f3c93810",
+      "bytes": 726853
+    }
+  ],
+  "log": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-23ece3db-922e-4860-9a9e-522aaf31c04f\\launch.log",
+  "log_encoding": "native messages may differ; structured receipt utf-8",
+  "log_sha256": "522273dc7e851be775b9b9c4e3125dfd234f2a859aad7fa000a158677c98e870",
+  "receipt": {
+    "surfaceChecks": {
+      "materialBushInventoryModelsColorsNamesChecked": 1034,
+      "surfaceItems": [
+        "gregtech:bush_cotton",
+        "gregtech:bush_blueberry",
+        "gregtech:bush_candleberry",
+        "gregtech:bush_cranberry",
+        "gregtech:bush_black_currants",
+        "gregtech:bush_white_currants",
+        "gregtech:bush_red_currants",
+        "gregtech:bush_blackberry",
+        "gregtech:bush_raspberry",
+        "gregtech:fluid_spring_liquid_extra_heavy_oil",
+        "gregtech:fluid_spring_liquid_heavy_oil",
+        "gregtech:fluid_spring_liquid_medium_oil",
+        "gregtech:fluid_spring_liquid_light_oil",
+        "gregtech:fluid_spring_gas_natural_gas",
+        "gregtech:fluid_spring_watergeothermal",
+        "gregtech:fluid_spring_lava"
+      ],
+      "machineItems": [
+        "lightning_galvanized_steel",
+        "lightning_aluminium",
+        "lightning_stainless_steel",
+        "lightning_chromium",
+        "lightning_titanium",
+        "melter_stainless_steel"
+      ],
+      "machineModelsChecked": 6,
+      "surfaceItemModelsChecked": 16,
+      "surfaceSpringSpritesChecked": 7,
+      "surfaceBerryStageColorsChecked": 36,
+      "sandwich": {
+        "customInventoryModelsChecked": 3,
+        "ingredientLayerCounts": [
+          10,
+          4,
+          6
+        ],
+        "sourceLayerTexturesChecked": 22,
+        "sourceSauceColorsChecked": 2,
+        "cans": {
+          "inventoryModelsChecked": 57,
+          "renderedCanSamples": [
+            "tiny_food_can_meat",
+            "small_food_can_fish",
+            "tall_food_can_vegetables",
+            "wide_food_can_fruits",
+            "large_food_can_bread",
+            "huge_food_can_cookies",
+            "canned_air",
+            "canned_hot_air",
+            "canned_space_air",
+            "huge_food_can_rotten",
+            "tiny_food_can_chum",
+            "empty_food_can"
+          ]
+        }
+      },
+      "canvas": {
+        "originalCircuitTagGrades": 10,
+        "externalHighBatteryBoxRecipes": 5,
+        "originalMolecularDataFields": true,
+        "mercuryAmbientUnitMb": 1000,
+        "originalCanvasItemModels": 16,
+        "printedPageModels": 2,
+        "coloredBookScanHints": 28,
+        "directionalAndFluidFaces": 4,
+        "brightImage": true
+      },
+      "decorativePanels": {
+        "installedItemModels": 83,
+        "canonicalColoredModels": 48,
+        "canonicalWoodModels": 30,
+        "centeredTwoPixelMesh": true,
+        "sourceRgbAndTextures": true,
+        "legacyAliasesHiddenFromCreative": true,
+        "originalPerItemMaterialsAndAdvancedTooltip": 83,
+        "installedShredderEntries": 83,
+        "transportMaterialItemsAndShredderEntries": 441,
+        "originalTankGroupFormVariants": 10,
+        "resolvedTransportCraftingRows": 539,
+        "preferredTransportForms": 406,
+        "materialDataDisplay": {
+          "scans": 1003,
+          "prints": 1105,
+          "replications": 565
+        },
+        "usbFileDisplayTypes": 4,
+        "tankItemData": {
+          "cheapSourceVariants": 4,
+          "knownLogisticsComponents": 7,
+          "cleanItemData": 35,
+          "storedItemDataProtected": 35,
+          "completeWorldSaveRetained": true,
+          "observedEmptyLoaderWrappers": 0,
+          "scope": "installed methods at title screen; actual harvest tested separately in native server worlds",
+          "originalFunctionalTooltips": {
+            "manualStations": 14,
+            "boilersDefaultAndSavedEfficiency": 26,
+            "scope": "installed actual item tooltip methods at title screen; no player hover or machine operation claim"
+          },
+          "sourceMechanicalTooltips": {
+            "axles": 52,
+            "customGearboxesDefaultAndSavedConfigurations": 13,
+            "originalLargeBoilersDefaultAndSavedEfficiencies": 5,
+            "scope": "installed item methods at title screen; no mechanical transport or boiler operation claim"
+          },
+          "sourceEnergyDeviceTooltips": {
+            "batteryBoxes": 20,
+            "solarPanels": 2,
+            "electricTransformers": 9,
+            "rotationalTransformers": 13,
+            "savedDirectionItemTooltipsAndNativeToggleStatistics": 22,
+            "scope": "installed item methods and native factory rating getters at title screen; no energy transfer or saved-world restart claim"
+          },
+          "sourceThermalConverters": {
+            "heaters": 10,
+            "coolers": 10,
+            "rfDevices": 10,
+            "actualBakedStates": 720,
+            "sourceMaterialsAndSingleAdvancedSection": true,
+            "scope": "installed title-screen native factories, methods, tooltip events and baked models; world output/contact checked separately"
+          },
+          "sourceBipolarMagnets": {
+            "magnets": 10,
+            "actualBakedStates": 240,
+            "exactMaterialQuantitiesAndSourceTooltips": true,
+            "scope": "installed native factories, tooltip methods and baked models at title screen; no world restart claim"
+          },
+          "sourceSteamTurbines": {
+            "steamTurbines": 15,
+            "actualBakedStates": 2160,
+            "exactMaterialQuantitiesAndSourceTooltips": true,
+            "scope": "installed title-screen factories, tooltip methods, sided capability visibility and baked models; no world or restart claim"
+          },
+          "sourceRotaryConverters": {
+            "motors": 7,
+            "dynamos": 7,
+            "actualBakedStates": 1260,
+            "exactMaterialsAndSingleAdvancedSection": true,
+            "scope": "installed title-screen native factories, methods, tooltip events and baked models; actual world chain checked separately"
+          },
+          "machineSourceMaterials": {
+            "sourceBlockIdentities": 1547,
+            "nativeBasicMachinesAndControllers": 265,
+            "singleAdvancedMaterialSection": true,
+            "exactSourceComponentAmounts": true,
+            "scope": "installed item methods and tooltip event at title screen; no recovery gameplay claim"
+          },
+          "sourceFluidPipeTooltips": 280,
+          "storedTankTooltips": 35
+        }
+      },
+      "commonBlockTooltips": {
+        "sourceBlockAndHopperIdentities": 1589,
+        "actualSourceBasicMachines": 265,
+        "nativeBlockClasses": 142,
+        "overlappingNamedBasicMachines": 5,
+        "nativeSavedCoverFaces": 12,
+        "scope": "native installed item tooltip events, source policy and sparse saved face data; no hover screenshot, actual harvest or world restart claim",
+        "storageTooltips": {
+          "safes": 120,
+          "drawers": 60,
+          "craftingTables": 120,
+          "bottleCrates": 90,
+          "massStorages": 120,
+          "hoppers": 120,
+          "bookShelves": 75,
+          "scaffolds": 60,
+          "savedMassConfigurations": 4,
+          "scope": "default rows through native tooltip calls/events; four saved-template rows through actual BlockItem.appendHoverText with built-in item lookup at title; no world interaction or screen hover claim"
+        }
+      },
+      "smelteryTooltipsAndMaterials": {
+        "vessels": 39,
+        "companions": 156,
+        "exactSourceCompositions": 155,
+        "undefinedSourceAmountsPreserved": 40,
+        "savedShapeTooltipAndProtectionCases": 156,
+        "nativeThermalParameterMethods": 39,
+        "largeVesselTooltipAndNativeParameterMethods": 9,
+        "scope": "installed tooltip calls/events, saved item state, entity thermal parameter methods and recovery parsing; no world ticking or restart"
+      },
+      "multiblockTankTooltipsAndMaterials": {
+        "originalControllers": 25,
+        "retainedAliases": 0,
+        "savedTooltipAndActualEntityLoadCases": 150,
+        "scope": "installed item tooltips/events and actual native entity data loading; no formed-tank flow or restart claim"
+      },
+      "processControllerTooltipsAndMaterials": {
+        "originalControllers": 5,
+        "exactMaterialRecords": 5,
+        "sourceStructureRows": 28,
+        "scope": "actual installed tooltip methods/events and native parameter methods; no world tick/restart claim"
+      },
+      "largeRecipeControllerTooltipsAndMaterials": {
+        "controllers": 12,
+        "sourceStructureRows": 43,
+        "exactMaterialRecords": 12
+      },
+      "sourceBasicMachineTooltips": {
+        "sourceBasicMachines": 247,
+        "magneticMachines": 10,
+        "exactAdvancedMaterialSections": 247,
+        "scope": "installed actual tooltip calls/events at title screen; not player hover or world operations"
+      },
+      "advancedControllerTooltipsAndMaterials": {
+        "controllers": 3,
+        "sourceStructureRows": 17,
+        "scope": "installed actual tooltip calls/events only; not player hover, natural processing or restart"
+      },
+      "generatorSourceTooltipsAndMaterials": {
+        "items": 12,
+        "sourceStructureRows": 44,
+        "materialAndHarvestAliases": 12,
+        "scope": "installed actual tooltip calls/events and registrations; not natural generation/recycling or player hover/restart"
+      },
+      "utilityControllerTooltipsAndMaterials": {
+        "items": 3,
+        "sourceStructureRows": 17,
+        "fixedBottomHeatModels": 6,
+        "distinctLavaFluidModels": 3,
+        "originalHotRecipes": 16,
+        "scope": "Installed tooltip calls/events, baked heat/fluid models and hot recipe registry; not world fuel/strike generation, player hover or restart"
+      },
+      "sensorSourceTooltipsAndMaterials": {
+        "items": 21,
+        "sourceTooltipRows": 147,
+        "scope": "Installed native tooltip events and material/harvest registration only; measurements, player hover and save restart are separate"
+      },
+      "originalMultiblockParts": {
+        "parts": 45,
+        "sourceTooltipRows": 90,
+        "scope": "Actual installed tooltip/material/physical registration; structure binding and player hover are separate"
+      },
+      "originalChinese": {
+        "locale": "zh_cn",
+        "englishItemNames": 75897,
+        "beeNames": 640,
+        "beeDescriptions": 360,
+        "emptyBeeDescriptions": 280,
+        "anvilNames": 35,
+        "fluidNameSamples": 3,
+        "fluidPropertySamples": 7,
+        "hotRecipeValues": 2,
+        "sourceIdentitySamples": 20,
+        "machineNamesEnglish": 516,
+        "originalEnglishMaterialFormSamples": 18,
+        "machineNamesChinese": 516,
+        "coloredConstructionNamesEnglish": 144,
+        "coloredConstructionNamesChinese": 144,
+        "sourceStoneNamesEnglish": 544,
+        "sourceStoneNamesChinese": 544,
+        "bushNamesAndOutputsEnglish": 1044,
+        "bushNamesAndOutputsChinese": 1044,
+        "coinNamesAndMaterialsEnglish": 597,
+        "coinNamesAndMaterialsChinese": 597,
+        "additionalSourceBlockNamesEnglish": 702,
+        "additionalSourceBlockNamesChinese": 702,
+        "lootChestNamesEnglish": 18,
+        "lootChestNamesChinese": 18,
+        "declaredFluidNamesEnglish": 916,
+        "declaredFluidNamesChinese": 916,
+        "materialFluidFallbackNamesEnglish": 12,
+        "materialFluidFallbackNamesChinese": 12,
+        "sourceTechnologyNamesEnglish": 86,
+        "sourceTechnologyNamesChinese": 86,
+        "chineseItemNames": 75897,
+        "latinNameCandidates": 13813,
+        "materialFormNames": {
+          "registered": 67445,
+          "exactOriginal": 53695,
+          "missingOriginal": 13750,
+          "originalCasingNames": 309
+        },
+        "assembledToolNames": 3,
+        "toolHintsEnglish": 10,
+        "toolHintsChinese": 10,
+        "generatedNamesEnglish": {
+          "bees": 640,
+          "anvils": 35,
+          "books": 28,
+          "canvases": 16,
+          "panels": 83,
+          "creativeTabs": 185,
+          "bottles": 169,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "engineDescriptions": 59,
+          "wireDescriptions": 620
+        },
+        "generatedNamesChinese": {
+          "bees": 640,
+          "anvils": 35,
+          "books": 28,
+          "canvases": 16,
+          "panels": 83,
+          "creativeTabs": 185,
+          "bottles": 169,
+          "faceMasks": 64,
+          "machineLabels": 7,
+          "engineDescriptions": 59,
+          "wireDescriptions": 620
+        },
+        "newSourceDescriptions": 1,
+        "moltenIronTooltip": [
+          "Amount: 144 L",
+          "Fe",
+          "Temperature: 1811 K (1538°C)",
+          "State: Liquid (Might able to cast into Molds)",
+          "Density: 3000 ; Heavier than Air (typically moves down)",
+          "Viscosity: 6000",
+          "Fluid owned by GT6"
+        ],
+        "scope": "Installed resource-manager language and actual item callbacks; explicitly supplied native lookup for Neo payloads at title screen; no in-world player hover or survival claim"
+      }
+    },
+    "platform": "neoforge",
+    "screen": "net.minecraft.client.gui.screens.TitleScreen",
+    "screenshot": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-23ece3db-922e-4860-9a9e-522aaf31c04f\\screenshots\\production-neoforge-7850e089-413c-4238-b33a-bcb1f8784b21.png",
+    "width": 1280,
+    "height": 720,
+    "renderedFrames": 181,
+    "elapsedMs": 44461
+  },
+  "screenshot_sha256": "23cf780c1b1391e2d5e9d9418eccc82f7b374277aa58220a7542bb320e3d1dae",
+  "visually_reviewed": false,
+  "language_name_inventory": {
+    "path": "C:\\Dev\\GregTech6\\build\\production-smoke\\neoforge-23ece3db-922e-4860-9a9e-522aaf31c04f\\language-names.json",
+    "sha256": "b231503a0c3dce72387194bc7952a5fbccf0034b23bf5a0e625a4b9271a4a48d",
+    "registered_items": 75897,
+    "latin_candidates": 13813
+  },
+  "saved_screenshot": {
+    "path": "docs/integration/verification/stonecutter-full-neoforge-20261018.png",
+    "sha256": "23cf780c1b1391e2d5e9d9418eccc82f7b374277aa58220a7542bb320e3d1dae"
+  }
+}

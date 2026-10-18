@@ -4,6 +4,13 @@ Requires Python 3.11+ (CI pins 3.12). Verify one platform with --platform/--jar,
 or both with --forge/--neoforge. The core compilation output is authoritative;
 two jars agreeing with each other is insufficient if both contain stale classes.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, platform_build
+
 import argparse
 import hashlib
 import json
@@ -81,14 +88,14 @@ def compiled_core_hashes(core_output):
 def current_platform_hashes(repo, platform, artifact, required_core):
     """Forge uses current SRG output; NeoForge ships the named compiler output."""
     if platform == 'forge':
-        mapped = repo / 'build/forge-intermediates' / artifact.name
+        mapped = platform_build(repo, platform) / 'forge-intermediates' / artifact.name
         if not mapped.is_file():
             raise ValueError(f'Missing current Forge reobfuscated input: {mapped}; run :assemble')
         with zipfile.ZipFile(mapped) as archive:
             return {name: hashlib.sha256(archive.read(name)).hexdigest()
                     for name in archive.namelist()
                     if name.endswith('.class') and name not in required_core}
-    output = repo / 'neoforge/build/classes/java/main'
+    output = platform_build(repo, platform) / 'classes/java/main'
     result = {path.relative_to(output).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
               for path in output.rglob('*.class')
               if path.relative_to(output).as_posix() not in required_core}
@@ -99,9 +106,9 @@ def current_platform_hashes(repo, platform, artifact, required_core):
 
 def test_only_entries(repo):
     """All test source sets are separate; none belong in a production mod JAR."""
-    roots = (repo / 'core/src/test', repo / 'src/bootstrapGameTest',
-             repo / 'neoforge/src/bootstrapGameTest', repo / 'src/productionSmoke',
-             repo / 'neoforge/src/productionSmoke')
+    roots = (repo / 'core/src/test', native_path(repo / 'src/bootstrapGameTest'),
+             native_path(repo / 'neoforge/src/bootstrapGameTest'), native_path(repo / 'src/productionSmoke'),
+             native_path(repo / 'neoforge/src/productionSmoke'))
     class_stems, resources = set(), set()
     for root in roots:
         java = root / 'java'
@@ -234,7 +241,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             if counts.get(refmap_name) != 1:
                 raise ValueError(f'{path}: missing Mixin refmap {refmap_name}')
             refmap = json.loads(archive.read(refmap_name))
-            current = Path(__file__).resolve().parents[2] / 'build/tmp/compileJava' / refmap_name
+            current = platform_build(repo, platform) / 'tmp/compileJava' / refmap_name
             if archive.read(refmap_name) != current.read_bytes():
                 raise ValueError(f'{path}: Mixin refmap differs from current compiler output')
             mappings = refmap.get('mappings', {})

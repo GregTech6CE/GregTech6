@@ -1,12 +1,20 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import re,json
-r=Path('src/main/resources'); models=r/'assets/gregtech/models/item'
+r=native_path(Path('src/main/resources')); models=r/'assets/gregtech/models/item'
 source=Path('../gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java').read_text(encoding='utf-8')
 # Exact symbol-to-port item suffixes; do not translate localized display strings.
 names={'Pb':'lead','Bi':'bismuth','Cu':'copper','Cr':'chromium','Ti':'titanium','W':'tungsten','Ta':'tantalum','Mo':'molybdenum','Nb':'niobium','Os':'osmium','Ir':'iridium','V':'vanadium','Ta4HfC5':'ta4hfc5','SiC':'silicon_carbide','C':'carbon','Quartz':'quartz'}
 def snake(s):return re.sub(r'(?<=[a-z0-9])(?=[A-Z])','_',s).lower()
 def suffix(s):return names.get(s,snake(s))
-registry=Path('src/main/java/com/gregtech/gregtech/registry/GTMachines.java').read_text(encoding='utf-8')
+registry=native_path(Path('src/main/java/com/gregtech/gregtech/registry/GTMachines.java')).read_text(encoding='utf-8')
 crucibles={int(n):name for name,n in re.findall(r'crucible\("([^"]+)",\s*[^,]+,\s*(\d+)',registry)}
 out=r/'data/gregtech/recipes/smeltery_survival';out.mkdir(exist_ok=True)
 manifest={};skipped=[]

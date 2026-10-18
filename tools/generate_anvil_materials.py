@@ -1,10 +1,18 @@
 """Import the original, uncoated self-forging metal definitions for anvil joining/flattening."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java'
-OUT = ROOT / 'src/main/java/com/gregtech/gregtech/content/tool/AnvilMaterialCatalog.java'
+OUT = native_path(ROOT / 'src/main/java/com/gregtech/gregtech/content/tool/AnvilMaterialCatalog.java')
 
 def names(text):
     result = set()

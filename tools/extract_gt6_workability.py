@@ -17,6 +17,13 @@ Usage: python tools/extract_gt6_workability.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 import re
@@ -24,7 +31,7 @@ import re
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 MT_JAVA = os.path.join(GT6, "gregapi", "data", "MT.java")
-OUT_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "data", "generated", "MaterialWorkability.java")
+OUT_JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data", "generated", "MaterialWorkability.java")
 OUT_JSON = os.path.join(ROOT, "docs", "material-workability.json")
 
 DECL_ENUM = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=")

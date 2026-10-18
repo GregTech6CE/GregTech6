@@ -3,6 +3,13 @@
 Pass the original repository root (the directory containing src/main/resources).
 Records source paths and checksums, including animation metadata, for review.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import argparse
 import hashlib
 import json
@@ -31,7 +38,7 @@ def original_path(resource):
 
 
 def restore(original):
-    textures = original / 'src/main/resources/assets/gregtech/textures'
+    textures = native_path(original / 'src/main/resources/assets/gregtech/textures')
     if not textures.is_dir():
         raise ValueError(f'Original textures not found: {textures}')
     originals = {p.relative_to(textures).as_posix().lower(): p for p in textures.rglob('*.png')}

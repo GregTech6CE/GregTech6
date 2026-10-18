@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-18 / Stonecutter 完整迁移
+
+在 `experiment/stonecutter-emi` 完成全部原生源集、资源、构建、运行、生成器和 CI 迁移。2,630 Java / 14,291 资源输出全量核对；main 和资源保持基线，另对七个独立测试探针更新已去重 ID 的预期。双版成品和 SDK 验包、80 项 Python 检查、四组核心合约、活动版本往返、双版成品客户端及 NeoForge + REMI 新世界定向验证通过。13 个普通变速箱模型、78 个可调变速箱贴图面及 24 件服装分类实机通过。旧并行原生目录已移除；main 不合并、不推送，远端 CI 尚未触发。完整生存、旧世界兼容和完整 GameTest 不在本批验收中。见 [完整说明](STONECUTTER_MIGRATION.md)、[最终证据](verification/stonecutter-full-summary-20261018.json)。
+
 ## 2026-10-18 / Stonecutter EMI 分支试点完成
 
 独立分支 `experiment/stonecutter-emi` 已接入真实源码：12 对 EMI 类合并为 12 份条件源码，4 个类保留平台 API 分支，原生编译自动依赖生成目录。双版 24 个生成结果与迁移前代码／字符串签名一致；源策略 2629 Java 通过；双版编译和打包 8m48s 通过，成品检查各包含 12 个 EMI 类、13 份普通变速箱修复和 24 件服装分类，ZIP CRC 通过。统一入口 `compileBothPlatforms` / `assembleBothPlatforms`，CI 纳入签名校验。未启动游戏、未跑全套测试、未合回 main 或推送；其它平台模块尚未迁入 Stonecutter。见[试验说明](verification/stonecutter-emi-20261018.md)、[构建回执](verification/stonecutter-emi-build-20261018.json)。

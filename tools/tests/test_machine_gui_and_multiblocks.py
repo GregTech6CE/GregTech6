@@ -1,4 +1,11 @@
 """Actual resource graph, tint layers and original GUI provenance."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import json
 from pathlib import Path
@@ -30,7 +37,7 @@ class MachineAppearanceTests(unittest.TestCase):
                     self.assertTrue(all('tintindex' not in face for face in element['faces'].values()))
 
     def test_machine_guis_are_original_bytes(self):
-        originals = list((ORIGINAL / 'src/main/resources/assets/gregtech/textures/gui/machines').glob('*.png'))
+        originals = list((native_path(ORIGINAL / 'src/main/resources/assets/gregtech/textures/gui/machines')).glob('*.png'))
         self.assertEqual(87, len(originals))
         for source in originals:
             target = ASSETS / 'textures/gui/recipes' / source.name.lower()

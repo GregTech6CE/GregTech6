@@ -1,6 +1,14 @@
 """GT6 optical machine crafting whose required forms/components are currently registered.
 Exact representative circuits/cables are used; the full original ore dictionary alternatives remain separate.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import json
 
@@ -8,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TIERS = ['lv', 'mv', 'hv', 'ev', 'iv']
 
 def main():
-    folder = ROOT / 'src/main/resources/data/gregtech/recipes/optical'
+    folder = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/optical')
     folder.mkdir(parents=True, exist_ok=True)
     def recipe(name, pattern, ingredients):
         data = {'type': 'minecraft:crafting_shaped', 'pattern': pattern,
@@ -30,7 +38,7 @@ def main():
             'C': 'crystal_processor_sapphire', 'M': 'casing_machine_osmiridium',
             'F': 'compact_force_field_emitter_' + tier, 'S': 'compact_sensor_' + tier,
             'E': 'compact_signal_emitter_' + tier})
-    tag_path = ROOT / 'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json'
+    tag_path = native_path(ROOT / 'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json')
     tag = json.loads(tag_path.read_text(encoding='utf8'))
     blocks = ['gregtech:' + family + '_' + tier for family in ['co2_laser', 'flux_laser', 'laser_absorber'] for tier in TIERS]
     blocks += ['gregtech:quantum_energizer_' + tier for tier in quantum_ids] + ['gregtech:laser_fiber_wire']

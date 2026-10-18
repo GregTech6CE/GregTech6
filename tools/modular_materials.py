@@ -3,11 +3,18 @@
 Legacy field names remain in a generated compatibility facade only. Registry
 names, IDs, factory calls and their ordering are preserved.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-JAVA = ROOT / 'src/main/java/com/gregtech/gregtech'
+JAVA = native_path(ROOT / 'src/main/java/com/gregtech/gregtech')
 GROUPS = {'Elements': 'ElementMaterials', 'Compounds': 'CompoundMaterials',
           'Ores': 'OreMaterials', 'Stones': 'StoneMaterials', 'Woods': 'WoodMaterials'}
 TOKEN = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/|\b[A-Za-z_$][\w$]*\b')

@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import importlib.util
 import json
@@ -5,8 +12,8 @@ import re
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
-DATA=ROOT/'src/main/resources/data/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+DATA=native_path(ROOT/'src/main/resources/data/gregtech')
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main'
 CHEM=['lead_acid','alkaline','nickel_cadmium','lithium_cobalt','lithium_manganese']
 TIERS=['ulv','lv','mv','hv','ev']

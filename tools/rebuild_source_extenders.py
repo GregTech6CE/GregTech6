@@ -1,4 +1,11 @@
 """GT6 extender/bridge model and crafting definitions. No GTM code or generated bitmaps."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import hashlib
 import json
 import shutil
@@ -59,7 +66,7 @@ def main():
         used = set(''.join(pattern)) - {' '}
         recipe = {'type': 'gregtech:tool_shaped', 'pattern': pattern,
                   'key': {k: {'item': 'gregtech:' + keys[k]} for k in sorted(used)}, 'result': {'item': 'gregtech:' + name}}
-        path = ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json'
+        path = native_path(ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(recipe, indent=2) + '\n', encoding='utf-8')
 
@@ -68,7 +75,7 @@ def import_textures(original):
     ledger_path = ROOT / 'tools/gt6_texture_sources.json'
     ledger = json.loads(ledger_path.read_text(encoding='utf-8'))
     for _, texture, _ in SPECS:
-        folder = original / f'src/main/resources/assets/gregtech/textures/blocks/machines/extenders/{texture}'
+        folder = native_path(original / f'src/main/resources/assets/gregtech/textures/blocks/machines/extenders/{texture}')
         for source in folder.rglob('*.png'):
             relative = f'textures/block/machines/extenders/{texture}/' + source.relative_to(folder).as_posix()
             destination = ASSETS / relative

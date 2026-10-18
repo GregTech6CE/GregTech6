@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import re
 import unittest
@@ -9,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class JadeTranslations(unittest.TestCase):
     def test_provider_config_names_exist_in_supported_languages(self):
-        providers = ROOT / 'src/main/java/com/gregtech/gregtech/integration/jade'
+        providers = native_path(ROOT / 'src/main/java/com/gregtech/gregtech/integration/jade')
         keys = set()
         for path in providers.glob('*Provider.java'):
             source = path.read_text(encoding='utf-8')

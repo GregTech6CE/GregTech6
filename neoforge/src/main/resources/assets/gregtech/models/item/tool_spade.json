@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "gregtech:item/material_icons/dull/stick",
-    "layer1": "gregtech:item/material_icons/dull/toolheadspade",
-    "layer2": "gregtech:item/material_icons/dull/toolheadspade_overlay"
-  }
-}

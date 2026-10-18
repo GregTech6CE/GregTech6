@@ -1,4 +1,11 @@
 """Use concrete Forge material-form tags in recipe ingredients, never in results."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
@@ -28,7 +35,7 @@ def main():
     manifest[value['item']]=target;value.clear();value['tag']=target;changed+=1
    else:
     for v in value.values():visit(v)
- for p in (ROOT/'src/main/resources/data/gregtech/recipes').rglob('*.json'):
+ for p in (native_path(ROOT/'src/main/resources/data/gregtech/recipes')).rglob('*.json'):
   data=json.loads(p.read_text(encoding='utf-8'));before=json.dumps(data)
   for key in ['key','ingredients','ingredient','base','addition']: 
    if key in data:visit(data[key])

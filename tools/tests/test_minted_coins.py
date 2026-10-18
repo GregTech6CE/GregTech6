@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import importlib.util
 import json
 from pathlib import Path
@@ -6,7 +13,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 spec = importlib.util.spec_from_file_location("minted_coins", ROOT / "tools/generate_minted_coin_assets.py")
 generator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(generator)
@@ -14,8 +21,8 @@ spec.loader.exec_module(generator)
 
 class MintedCoins(unittest.TestCase):
     def test_stack_specific_die_is_wired_to_item_renderer(self):
-        client = ROOT / "src/main/java/com/gregtech/gregtech/client"
-        item = (ROOT / "src/main/java/com/gregtech/gregtech/item/CoinItem.java").read_text()
+        client = native_path(ROOT / "src/main/java/com/gregtech/gregtech/client")
+        item = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/item/CoinItem.java")).read_text()
         aliases = (client / "MaterialClientModels.java").read_text()
         model = (client / "CoinItemBakedModel.java").read_text()
         renderer = (client / "CoinItemRenderer.java").read_text()

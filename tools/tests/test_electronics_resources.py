@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 import sys
@@ -8,13 +15,13 @@ from check_render_resources import check
 
 class ElectronicsResources(unittest.TestCase):
     def test_new_material_forms_have_complete_shared_textures(self):
-        assets=ROOT/'src/main/resources/assets/gregtech/models/item/material'
+        assets=native_path(ROOT/'src/main/resources/assets/gregtech/models/item/material')
         paths=[assets/texture/(form+'.json') for texture in ['copper','metallic'] for form in ['boulegt','plategem','plategemtiny']]
         paths += [assets/texture/(form+'.json') for texture in ['rubber','dull'] for form in ['ingot','plate','ring']]
         issues,_=check(paths)
         self.assertEqual([],issues)
     def test_component_results_have_existing_item_models(self):
-        root=ROOT/'src/main/resources'
+        root=native_path(ROOT/'src/main/resources')
         recipes=list((root/'data/gregtech/recipes/components').glob('*.json'))
         self.assertEqual(55,len(recipes))
         paths=[]

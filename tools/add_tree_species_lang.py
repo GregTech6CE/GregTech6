@@ -6,9 +6,16 @@ line, and re-dumping them would rewrite every line. The new keys are inserted ne
 ``block.gregtech.sapling_rubber`` with the same indentation.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import os
 
-LANG = os.path.join("src", "main", "resources", "assets", "gregtech", "lang")
+LANG = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech", "lang")
 ANCHOR = '"block.gregtech.sapling_rubber":'
 NEW = {
     "en_us.json": [

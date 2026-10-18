@@ -3,12 +3,19 @@
 Usage: python tools/resolve_port_materials.py Lignite Coal Bauxite ...
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import glob
 import io
 import re
 import sys
 
-FILES = sorted(glob.glob("src/main/java/com/gregtech/gregtech/content/material/**/*.java", recursive=True))
+FILES = sorted(glob.glob(str(native_path("src/main/java/com/gregtech/gregtech/content/material/**/*.java")), recursive=True))
 
 
 def main():

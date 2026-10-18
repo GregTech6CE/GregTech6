@@ -11,12 +11,20 @@ Output : src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import os
 import re
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\MT.java"
-TARGET = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
                       "GTMaterialFields.java")
 
 # `Field, Alias = Field = helper( 8637, "HSLA-Steel" , ...)` and

@@ -1,12 +1,20 @@
 """GT6 chemical batteries: original recipe rows, textures, bounds and standard Chinese names."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import json
 import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main'
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
-DATA=ROOT/'src/main/resources/data/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+DATA=native_path(ROOT/'src/main/resources/data/gregtech')
 CHEM=[('Lead_Acid','lead_acid','Lead-Acid','lead_acid_cell_filled'),('Alkaline','alkaline','Alkaline','alkaline_button_cell_filled'),('NiCd','nickel_cadmium','Nickel-Cadmium','nickel_cadmium_cell_filled'),('LiCoO2','lithium_cobalt','Lithium-Cobalt','lithium_cobalt_cell_filled'),('LiMn','lithium_manganese','Lithium-Manganese','lithium_manganese_cell_filled')]
 TIERS=['ulv','lv','mv','hv','ev']
 CIRCUITS=['basic','good','advanced','elite','master','ultimate']

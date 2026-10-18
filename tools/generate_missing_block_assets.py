@@ -31,6 +31,14 @@ Usage:
 `--check` reports the ids that still have no blockstate and exits non-zero.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import io
 import json
@@ -39,11 +47,11 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'gregtech')
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
 BLOCKSTATES = os.path.join(ASSETS, 'blockstates')
 BLOCK_MODELS = os.path.join(ASSETS, 'models', 'block', 'blocks')
 ITEM_MODELS = os.path.join(ASSETS, 'models', 'item')
-PREFIXES_JAVA = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'data',
+PREFIXES_JAVA = os.path.join(ROOT, str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'data',
                              'MaterialPrefixes.java')
 
 BS_LINE = re.compile(r"blockstates/([a-z0-9_]+)\.json")

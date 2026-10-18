@@ -11,18 +11,26 @@ port had registered one block per texture. This script:
 Keep COLUMN/BOTTOM_TOP in sync with GTIconSetBlocks.java.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import os
 import re
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block", "iconsets")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
 LANG_EN = os.path.join(ASSETS, "lang", "en_us.json")
 LANG_ZH = os.path.join(ASSETS, "lang", "zh_cn.json")
-JAVA = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech",
+JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech",
                     "registry", "GTIconSetBlocks.java")
 
 WOODS = ["bluemahoe", "bluespruce", "cinnamon", "coconut", "dry", "frozen", "hazel",

@@ -1,0 +1,1138 @@
+[
+  {
+    "tool": "tools/add_bumble_scanned_lang.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/add_burning_box_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_coin_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/add_loot_crate_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_sensor_variants.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/add_track_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_tree_species_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_usb_tooltip_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_valve_part_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/add_valve_parts.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/apply_recipe_mirror_flags.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_bedrock_ores.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_missing_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_multiblock_parts.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_porting_progress.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_recipe_sources.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/audit_tech_item_tokens.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/census_gt6_registrations.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/check_enchant_table_coverage.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/check_gearbox_visual_assets.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/check_large_crucible_uv.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/check_masonry_rows.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/check_material_forms.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/check_material_id_agreement.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/check_material_lang_collisions.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/check_preview_viewport.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/check_registration.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/check_render_resources.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/check_retired_cover_refs.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/check_stone_extrusions.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/cleanup_iconset_wave16.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/compare_prefix_conditions.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/compare_registry_counts.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/debug_material_ids.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/derive_missing_tech_aliases.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/drop_retired_cover_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_alloy_table.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/extract_enchantment_table.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_bottles.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/extract_gt6_bumbles.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_comb_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_drinks.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_food_items.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/extract_gt6_food_stats.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_form_flags.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_large_ores.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_material_fields.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_multiblock_ids.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/extract_gt6_processing_targets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/extract_gt6_recyclable_prefixes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_small_ores.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_tool_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/extract_gt6_workability.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/find_alloy_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/find_missing_composition_refs.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/find_multiitem_id.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/find_water_fluids.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_deposit_twigs.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_duplicate_didyouknow.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_duplicate_machine_parts.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/fix_flowing_fluid_import.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_hint_zinc_fluid.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_iconset_shapes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_nether_quartz_test.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/fix_recipe_hint_rows.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/fix_utf8_corruption.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/gen_wire_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_advanced_button_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_advanced_crafting_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_anvil_materials.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_anvil_variants.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_axle_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_bars_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_block_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_boiler_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_bookshelf_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_bookshelf_family.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/generate_bottle_crate_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_bumble_hive_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_bumble_scanned_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_burning_box_items.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_burning_box_jsons.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_bush_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_charging_crafting_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_chemical_batteries.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_damage_types.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_drawer_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_dungeon_flower_pots.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_dust_funnel_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_dynamite_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_energy_node_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_food_item_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_gearbox_assets.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/generate_gt6_tree_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_gt_tool_type.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_guide_book_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_iconset_composites.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_large_machine_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_logistics_mass_storage_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_logistics_wire_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_loot_bottle_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_loot_chest_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_magnet_machine_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_manufacturing_recipes.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_material_dictionary_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_material_metadata.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_minted_coin_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_missing_block_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_missing_component_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_missing_leaves_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_mt_fields.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_multiblock_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_multiblock_recipe_table.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_optical_recipes.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_ore_block_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_pile_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_pipe_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_pit_shape.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_prefix_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_reactor_shell_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_reinforced_chest_assets.py",
+    "expressions": 6
+  },
+  {
+    "tool": "tools/generate_rock_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_rope_dynamite_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_rope_dynamite_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_rotation_engine_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_safe_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_scaffold_family.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_scaffold_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_shape_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_smeltery_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_smeltery_survival_recipes.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/generate_spike_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_stone_survival_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_stone_textures.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_track_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_tree_hole_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_vanilla_compositions.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_wave38_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_wave38_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_wood_recipes.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/generate_wood_tags.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/generate_wooden_pipe_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/handoff_check.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/import_fusion_structure.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/extract_material_data_rules.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/generate_gauge_item_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/integration/generate_machine_material_data.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/generate_material_names.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/generate_rotary_converter_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/integration/generate_source_block_properties.py",
+    "expressions": 7
+  },
+  {
+    "tool": "tools/integration/generate_storage_material_data.py",
+    "expressions": 6
+  },
+  {
+    "tool": "tools/integration/import_hazmat_suits.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/integration/import_identity_localization.py",
+    "expressions": 26
+  },
+  {
+    "tool": "tools/integration/import_magnet_devices.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/integration/import_numbered_localization.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/integration/import_source_tooltip_lang.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/import_steam_turbines.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/integration/import_thermal_devices.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/integration/source_creative_language.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/integration/source_recipe_language.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/integration/verify_artifacts.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/inventory_gt6_worldgen.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/inventory_port_ids.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/javac_selfcheck.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/list_layer_seams.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/list_material_prefixes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/list_tooltip_keys.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/modular_materials.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/normalize_axial_battery_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/port_recipe_hints.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/probe_port_form_families.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/rank_missing_content.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/rebuild_container_tool_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/rebuild_machine_control_covers.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/rebuild_manual_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/rebuild_panel_covers.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/rebuild_source_extenders.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/rebuild_source_filters.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/regen_pipe_wire_blockstates.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/register_spring_fluid_blocks.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/register_water_body_blocks.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/rename_iconset_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/rename_material_icons.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/rename_nether_lava_level.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/repair_block_model_roots.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_block_condition_delta.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/report_form_flag_materials.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_gt6_books.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_gt6_only_prefixes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_items_without_recipes.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_material_form_flags.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_material_form_key_collisions.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_material_form_lookup.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_material_form_unreachable.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_missing_item_prefixes.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_missing_machine_recipes.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_missing_materials.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_missing_prefix_usage.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/report_prefixless_delegates.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/report_unused_form_flags.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/report_wood_leaf_colours.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/resolve_port_materials.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/restore_fluid_textures.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/restore_fusion_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/restore_gt6_textures.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/restore_laser_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/restore_matter_assets.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/restore_misc_block_textures.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/restore_multiblock_appearance.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/restore_zpm_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/show_machine_parts.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/show_material_enchantments.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/show_vein_order.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/standardize_recipe_ingredients.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/sync_gt6_element_atomic_data.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/test_axle_repair_assets.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/test_electric_wire_specs.py",
+    "expressions": 5
+  },
+  {
+    "tool": "tools/tests/test_advanced_button_models.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_axial_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_bars_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_battery_box_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_bookshelf_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_capsule_cell_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_chemical_batteries.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_creative_language.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_diggable_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_dynamite_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_dynamite_substrates.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_electric_tool_resources.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_electronics_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_fluid_tools_and_chest.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_fluid_visual_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_fusion_resources.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/tests/test_gearbox_item_roots.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_glyphs_and_misc.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_identity_localization.py",
+    "expressions": 18
+  },
+  {
+    "tool": "tools/tests/test_inventory_model_roots.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_jade_translations.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_legacy_battery_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_localization_coverage.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_machine_control_covers.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_machine_gui_and_multiblocks.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_manual_rebuild.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_manufacturing_resources.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/tests/test_material_names.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_matter_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_minted_coins.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/tests/test_no_legacy_data_files.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_nuclear_and_tool_defaults.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_nuclear_survival_resources.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/tests/test_numbered_language.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/tests/test_original_turbine_rotor_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_panel_covers.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/tests/test_pile_texture_bindings.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_piston_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_reinforced_chest_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_render_resources.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_scaffold_family.py",
+    "expressions": 4
+  },
+  {
+    "tool": "tools/tests/test_scaffold_models.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_second_rebuild.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_signal_wires.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_source_extender_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_source_filter_resources.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/tests/test_track_icon_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_transformer_assets.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/tests/test_vanilla_compositions.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/transpile_gt6_any.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/transpile_gt6_books.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/transpile_gt6_chem.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/transpile_gt6_loot.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/transpile_gt6_materials.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/transpile_gt6_md.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/transpile_gt6_multiitems.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/transpile_gt6_stonelayers.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/update_boiler_blockstates.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/wire_black_sand_turf.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/wire_book_shelf.py",
+    "expressions": 3
+  },
+  {
+    "tool": "tools/wire_cfoam.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/wire_coltan.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/wire_dungeon_keys_and_portals.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/wire_fluid_springs.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/wire_nether_bedrock_ores.py",
+    "expressions": 1
+  },
+  {
+    "tool": "tools/wire_rocks_deep_ocean.py",
+    "expressions": 2
+  },
+  {
+    "tool": "tools/wire_water_bodies.py",
+    "expressions": 2
+  }
+]

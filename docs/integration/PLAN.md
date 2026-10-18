@@ -1,5 +1,9 @@
 # GregTech 6 整合计划与验收合同
 
+当前范围（2026-10-18，用户明确要求完整迁移）：在 `experiment/stonecutter-emi` 完成全部 Forge／NeoForge 原生源集、资源、构建、运行、生成器、自检和 CI 的 Stonecutter 迁移，保留纯 Java core；不以此前 EMI 试点为完成。验收条件和开发命令见 [完整迁移说明](STONECUTTER_MIGRATION.md)。不自动合并 main 或推送。
+
+以下为此前阶段记录；新的完整迁移范围优先。
+
 分支试验（2026-10-18，用户恢复授权）：在 main 完成普通变速箱根因／服装分类修复后，继续 `experiment/stonecutter-emi` 的 Stonecutter 试点；将 12 对 EMI 类合为一份条件源码，接入原平台编译与打包，保留 core 和其它原生边界。见[试验范围与证据](verification/stonecutter-emi-20261018.md)。先前“不恢复 Stonecutter”安排由本次用户指令更新。
 
 当前追加范围（2026-10-18）：用户指定的橡胶产出口分类、原版服装、食物／饮料和木半砖配方、基岩钻机核对、仪表盘物品模型及覆盖板九宫格／整格选中形状。保持双版一致，本轮不构建；见[落实范围与待验清单](verification/feedback-20261018.md)。

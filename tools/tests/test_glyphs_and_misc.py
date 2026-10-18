@@ -1,8 +1,15 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json, sys, unittest
 from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 sys.path.insert(0,str(ROOT/'tools'))
 from restore_misc_block_textures import MAPPING
 from check_render_resources import check
@@ -23,7 +30,7 @@ class GlyphAndMiscTests(unittest.TestCase):
 
     def test_display_renderers_no_longer_use_minecraft_fonts(self):
         for name in ('SensorRenderer','MassStorageRenderer'):
-            source=(ROOT/f'src/main/java/com/gregtech/gregtech/client/{name}.java').read_text(encoding='utf-8')
+            source=(native_path(ROOT/f'src/main/java/com/gregtech/gregtech/client/{name}.java')).read_text(encoding='utf-8')
             self.assertNotIn('drawInBatch',source)
             self.assertIn('SixCellDisplayRenderer.draw',source)
             self.assertIn('DisplayFaceOrientation.rotation(facing)',source)

@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json
 import os
 from pathlib import Path
@@ -163,8 +170,8 @@ def make_side_model(size, insulated):
 
     return {'parent': 'block/block', 'textures': textures, 'elements': elements}
 
-base_blocks = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/blocks'
-base_machine = Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/machine'
+base_blocks = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/blocks')
+base_machine = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/machine')
 
 count = 0
 

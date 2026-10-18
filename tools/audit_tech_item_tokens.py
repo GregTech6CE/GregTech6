@@ -14,13 +14,20 @@ Run:  python tools/audit_tech_item_tokens.py [--json docs/tech-item-tokens.json]
 """
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-GENERATED = ROOT / "src/main/java/com/gregtech/gregtech"
+GENERATED = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
 TECH = GENERATED / "registry/GTTechnological.java"
 MULTI = GENERATED / "registry/GTMultiItemsGen.java"
 

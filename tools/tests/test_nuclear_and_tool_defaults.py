@@ -1,14 +1,21 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import re
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 
 class NuclearAndToolDefaults(unittest.TestCase):
     def test_each_tool_has_its_own_uncolored_gregtech_model(self):
-        source = (ROOT / 'src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java').read_text(encoding='utf-8')
+        source = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/api/tool/GTToolType.java')).read_text(encoding='utf-8')
         ids = re.findall(r'^    \w+\(\d+, "([^"]+)"', source, re.M)
         self.assertGreaterEqual(len(ids), 37)
         for name in ids:

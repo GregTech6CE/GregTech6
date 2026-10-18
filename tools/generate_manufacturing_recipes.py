@@ -1,19 +1,27 @@
 """Generate wire recipes and GT6's orientation-sensitive extruder shape tree.
 Source checkout is read-only; no GTM code is used. Run from any directory.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import json,re
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main/java'
 def write(folder,name,data):
-    path=ROOT/'src/main/resources/data/gregtech/recipes'/folder/(name+'.json')
+    path=native_path(ROOT/'src/main/resources/data/gregtech/recipes'/folder/(name+'.json'))
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(data,indent=2)+'\n',encoding='utf8')
 def item(name):return {'item':'gregtech:'+name}
 def shapeless(name,inputs,output,count=1):
     write('wire_working',name,{'type':'minecraft:crafting_shapeless','ingredients':[item(x) for x in inputs],'result':item(output)|{'count':count}})
 def main():
-    defs=(ROOT/'src/main/java/com/gregtech/gregtech/content/energy/WireDefinitions.java').read_text(encoding='utf8')
+    defs=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/energy/WireDefinitions.java')).read_text(encoding='utf8')
     materials=re.findall(r'new WireDef\("([a-z_]+)"',defs)
     for material in materials:
         wire=lambda size:f'wire_{size:02d}_{material}'

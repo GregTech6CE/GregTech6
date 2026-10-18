@@ -1,12 +1,20 @@
 """Wire the fluid spring: GT6's spring block gets its block entity type, and the worldgen data files
 of {@code WorldgenFluidSpring} are added."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
 import re
 
-ROOT = os.path.join("src", "main", "java", "com", "gregtech", "gregtech")
+ROOT = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech")
 written = []
 
 
@@ -59,7 +67,7 @@ if "FLUID_SPRINGS" not in text:
     io.open(features, "w", encoding="utf-8", newline="\n").write(text.replace(old, new))
     print("GTFeatures: gt_fluid_springs registered")
 
-data = os.path.join("src", "main", "resources", "data", "gregtech")
+data = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech")
 write_json(os.path.join(data, "worldgen", "configured_feature", "gt_fluid_springs.json"),
            {"type": "gregtech:gt_fluid_springs", "config": {}})
 write_json(os.path.join(data, "worldgen", "placed_feature", "gt_fluid_springs.json"),

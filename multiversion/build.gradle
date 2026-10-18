@@ -1,15 +1,35 @@
-// This node produces sources, not an independent mod or another copy of core.
-// Native compilation and packaging remain in the existing Forge/NeoForge projects.
-configurations {
-    versionedSources {
-        canBeConsumed = true
-        canBeResolved = false
-    }
+// Single source tree; native loader differences live in the platform Gradle adapters.
+sourceSets { bootstrapGameTest; productionSmoke }
+
+stonecutter.filters.include('**/*.json', '**/*.mcmeta')
+// Restrict loader rewriting to entire JSON documents. Java text blocks also
+// contain model examples and must retain their original native literals.
+// Unnamed rules apply globally; named rules require an opt-in source marker.
+// Register both directions on both nodes, including after an active-version switch.
+stonecutter.replacements.regex(project.name.endsWith('neoforge')) { replacement ->
+    replacement.phase.set('LAST')
+    replacement.replace('(?s)\\A(\\s*\\{.*?"loader"\\s*:\\s*")forge:composite(".*)\\z',
+            '$1neoforge:composite$2')
+    replacement.reverse('(?s)\\A(\\s*\\{.*?"loader"\\s*:\\s*")neoforge:composite(".*)\\z',
+            '$1forge:composite$2')
 }
 
-artifacts.add('versionedSources', layout.buildDirectory.dir('generated/stonecutter/main/java')) {
-    builtBy tasks.named('stonecutterGenerate')
-}
+// Each version node owns its loader, compile, package and development-run tasks.
+apply from: rootProject.file(project.name.endsWith('neoforge')
+        ? 'gradle/platform-neoforge.gradle' : 'gradle/platform-forge.gradle')
+apply from: rootProject.file('gradle/native-smoke-runs.gradle')
 
-tasks.withType(JavaCompile).configureEach { enabled = false }
-tasks.withType(Jar).configureEach { enabled = false }
+sourceSets.configureEach { sources ->
+    def suffix = sources.name == 'main' ? '' : sources.name.capitalize()
+    def generate = tasks.named('stonecutterGenerate' + suffix)
+    // SourceDirectorySet.setSrcDirs flattens an Iterable<File>, losing builtBy.
+    // Explicit edges are required on a clean checkout, including custom probes.
+    tasks.named(sources.compileJavaTaskName).configure { dependsOn generate }
+    tasks.named(sources.processResourcesTaskName).configure { dependsOn generate }
+    sources.java.setSrcDirs(files(
+            layout.buildDirectory.dir("generated/stonecutter/${sources.name}/java"),
+            layout.projectDirectory.dir("src/${sources.name}/java")).builtBy(generate))
+    sources.resources.setSrcDirs(files(
+            layout.buildDirectory.dir("generated/stonecutter/${sources.name}/resources"),
+            layout.projectDirectory.dir("src/${sources.name}/resources")).builtBy(generate))
+}

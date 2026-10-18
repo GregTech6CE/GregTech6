@@ -1,12 +1,19 @@
 """Guard GT6's 3x3 rotor sprites and the eight six-way original housings."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
+
 import json
 import struct
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PORT = ROOT / "src/main/resources/assets/gregtech"
+PORT = native_path(ROOT / "src/main/resources/assets/gregtech")
 SOURCE = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech"
 
 ORIGINALS = (

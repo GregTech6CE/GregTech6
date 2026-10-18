@@ -3,6 +3,14 @@
 Input is LanguageIdentities.java's export from the current compiled core. The
 original checkout is read-only; unsupported English expressions remain reported.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import ast
 from collections import defaultdict
@@ -23,7 +31,7 @@ from source_recipe_language import recipe_map_names
 
 def any_material_names(original):
     """ANY.init overrides display names before multi-tile machine registration."""
-    path=original/'src/main/java/gregapi/data/ANY.java'
+    path=native_path(original/'src/main/java/gregapi/data/ANY.java')
     if not path.exists():return {},{},[]
     raw=masked(path.read_text(encoding='utf-8'))
     names={symbol:json.loads(value) for symbol,value in re.findall(
@@ -40,7 +48,7 @@ def any_material_names(original):
 
 
 def tool_ids(original):
-    cs = original / 'src/main/java/gregapi/data/CS.java'
+    cs = native_path(original / 'src/main/java/gregapi/data/CS.java')
     if not cs.exists(): return {}
     text = masked(cs.read_text(encoding='utf-8'))
     if 'class ToolsGT' not in text: return {}
@@ -54,12 +62,12 @@ def material_identities(original):
     Names use OreDictMaterial's sanitizer; getLocal uses the separate setLocal
     override. ID zero is a validation/compatibility placeholder, never proof.
     """
-    path=original/'src/main/java/gregapi/data/MT.java'
-    material=original/'src/main/java/gregapi/oredict/OreDictMaterial.java'
+    path=native_path(original/'src/main/java/gregapi/data/MT.java')
+    material=native_path(original/'src/main/java/gregapi/oredict/OreDictMaterial.java')
     if not path.exists() or not material.exists():return {},{},[],{}
     by_id,english=defaultdict(set),defaultdict(set)
     tables=[path]
-    antimatter=original/'src/main/java/gregapi/data/AM.java'
+    antimatter=native_path(original/'src/main/java/gregapi/data/AM.java')
     if antimatter.exists():tables.append(antimatter)
     for table in tables:
         raw=masked(table.read_text(encoding='utf-8'))
@@ -162,7 +170,7 @@ def numbered_item_identities(original):
     categories={'MultiItemRandomTools':'randomtools','MultiItemFood':'food','MultiItemBottles':'bottles',
                 'MultiItemCans':'cans','MultiItemTechnological':'technological','MultiItemBooks':'books'}
     for stem,category in categories.items():
-        path=original/f'src/main/java/gregtech/items/{stem}.java'
+        path=native_path(original/f'src/main/java/gregtech/items/{stem}.java')
         if not path.exists(): continue
         files.append(path)
         for line in masked(path.read_text(encoding='utf-8')).splitlines():
@@ -183,7 +191,7 @@ def numbered_item_identities(original):
 
 def pipe_identities(original, symbols):
     """Resolve original helper offsets using adopted material identities, not names."""
-    root = original / 'src/main/java'
+    root = native_path(original / 'src/main/java')
     loader = root / 'gregtech/loaders/b/Loader_MultiTileEntities.java'
     if not loader.exists(): return {}, []
     files = [loader]
@@ -229,7 +237,7 @@ def pipe_identities(original, symbols):
 
 def electric_wire_rows(original):
     """Read wire sizes/offsets and preserve the helper's cable-only guard."""
-    path=original/'src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireElectric.java'
+    path=native_path(original/'src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireElectric.java')
     raw=masked(path.read_text(encoding='utf-8'))
     guard=re.search(r'if\s*\(aCable\)\s*\{',raw)
     if guard is None:raise ValueError('Unsupported original electric cable guard')
@@ -260,7 +268,7 @@ def electric_wire_rows(original):
 
 
 def wire_identities(original,symbols):
-    loader=original/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
+    loader=native_path(original/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
     if not loader.exists():return {},[]
     registrations=list(calls(masked(loader.read_text(encoding='utf-8')),'MultiTileEntityWireElectric.addElectricWires'))
     if not registrations:return {},[]
@@ -287,8 +295,8 @@ def material_fluid_english(original, identity_rows, material_data=None):
     This proves the English naming formula, not original fluid availability or a
     Chinese translation; the Chinese patch must not limit English coverage.
     """
-    helper=original/'src/main/java/gregapi/data/FL.java'
-    loader=original/'src/main/java/gregtech/loaders/a/Loader_Fluids.java'
+    helper=native_path(original/'src/main/java/gregapi/data/FL.java')
+    loader=native_path(original/'src/main/java/gregtech/loaders/a/Loader_Fluids.java')
     if not helper.exists() or not loader.exists():return {},[]
     compact=lambda value: ''.join(re.findall(STRING+r'|\S',masked(value)))
     raw=compact(helper.read_text(encoding='utf-8'))
@@ -317,17 +325,17 @@ def material_fluid_english(original, identity_rows, material_data=None):
 
 
 def original_english(original, material_data=None):
-    found, files = defaultdict(set), [original / 'src/main/java/gregapi/data/MT.java']
+    found, files = defaultdict(set), [native_path(original / 'src/main/java/gregapi/data/MT.java')]
     declaration_count = 0
     creative_files = creative_name_sources(original)
     files.extend(creative_files)
     tools = tool_ids(original)
     wood_classes = {}
-    woods_file = original/'src/main/java/gregtech/loaders/a/Loader_Woods.java'
+    woods_file = native_path(original/'src/main/java/gregtech/loaders/a/Loader_Woods.java')
     if woods_file.exists():
         wood_classes=dict(re.findall(r'new (BlockTree\w+)\s*\(\s*"([^"]+)"',masked(woods_file.read_text(encoding='utf-8'))))
         files.append(woods_file)
-    blocks_file = original/'src/main/java/gregtech/loaders/a/Loader_Blocks.java'
+    blocks_file = native_path(original/'src/main/java/gregtech/loaders/a/Loader_Blocks.java')
     if blocks_file.exists():
         wood_classes.update(re.findall(r'new (BlockFlowers[AB]|BlockBaleGrass|BlockBaleCrop|BlockSands|BlockGrass|BlockDiggable|'
                                       r'BlockAsphalt|BlockConcrete(?:Reinforced)?|BlockCFoam(?:Fresh)?|BlockGlass(?:Clear|Glow)|'
@@ -355,7 +363,7 @@ def original_english(original, material_data=None):
     _,material_english,material_files,_=material_identities(original) if material_data is None else material_data
     files.extend(p for p in material_files if p not in files)
     for key,value in material_english.items():put(key,value)
-    material_text = masked((original / 'src/main/java/gregapi/data/MT.java').read_text(encoding='utf-8'))
+    material_text = masked((native_path(original / 'src/main/java/gregapi/data/MT.java')).read_text(encoding='utf-8'))
     material_names = defaultdict(set)
     for m in re.finditer(r'\bwoodnormal\(\s*\d+\s*,\s*(' + STRING + r')\s*,\s*(' + STRING + ')', material_text):
         put('gt.material.'+json.loads(m[1]),json.loads(m[2]))
@@ -396,7 +404,7 @@ def original_english(original, material_data=None):
             if len(local)>1 or len(local)!=len(re.findall(r'\.setLocal\s*\(',line)):continue
             put(key,json.loads(local[0] if local else row[1]))
     voltages, dyes, dye_posts, dye_indices = [], [], [], {}
-    cs = original / 'src/main/java/gregapi/data/CS.java'
+    cs = native_path(original / 'src/main/java/gregapi/data/CS.java')
     if cs.exists():
         match = re.search(r'\bVN\s*=\s*\{([^}]+)\}', masked(cs.read_text(encoding='utf-8')))
         if match: voltages = [json.loads(v.strip()) for v in match[1].split(',')]
@@ -449,7 +457,7 @@ def original_english(original, material_data=None):
         return ''.join(values)
     if blocks_file.exists():
         block_raw=masked(blocks_file.read_text(encoding='utf-8'))
-        wire_helper=original/'src/main/java/gregtech/blocks/tool/BlockLongDistWire.java'
+        wire_helper=native_path(original/'src/main/java/gregtech/blocks/tool/BlockLongDistWire.java')
         wire_constructors=list(calls(block_raw,'new BlockLongDistWire'))
         if wire_constructors:
             formula=''.join(re.findall(STRING+r'|\S',masked(wire_helper.read_text(encoding='utf-8'))))
@@ -466,11 +474,11 @@ def original_english(original, material_data=None):
                     raise ValueError('Invalid original long-distance wire tiers')
                 for i,tier in enumerate(values):
                     put(json.loads(args[0])+'.'+str(i),'Long Distance Electric Wire ('+voltages[tier]+')')
-    rocks_file=original/'src/main/java/gregtech/loaders/a/Loader_Rocks.java'
+    rocks_file=native_path(original/'src/main/java/gregtech/loaders/a/Loader_Rocks.java')
     if rocks_file.exists():
-        stone_file=original/'src/main/java/gregapi/block/metatype/BlockStones.java'
-        wrapper=original/'src/main/java/gregtech/blocks/stone/BlockStonesGT.java'
-        meta=original/'src/main/java/gregapi/block/metatype/BlockMetaType.java'
+        stone_file=native_path(original/'src/main/java/gregapi/block/metatype/BlockStones.java')
+        wrapper=native_path(original/'src/main/java/gregtech/blocks/stone/BlockStonesGT.java')
+        meta=native_path(original/'src/main/java/gregapi/block/metatype/BlockMetaType.java')
         files.extend([rocks_file,stone_file,wrapper,meta])
         wrapper_calls=list(calls(masked(wrapper.read_text(encoding='utf-8')),'super'))
         if not wrapper_calls or wrapper_calls[0][1][3:5]!=['aName','aMaterial.getLocal()']:
@@ -504,7 +512,7 @@ def original_english(original, material_data=None):
                 bases=[base] if kind==0 else [base+'.slab.'+str(side) for side in range(6)]
                 for stem in bases:
                     for index,expr in expressions.items():put(stem+'.'+str(index),name(expr,display))
-    for path in sorted((original / 'src/main/java').rglob('*.java')):
+    for path in sorted((native_path(original / 'src/main/java')).rglob('*.java')):
         raw = masked(path.read_text(encoding='utf-8-sig'))
         before = declaration_count
         for key, text in re.findall(r'\bLH\.add\(\s*(' + STRING + r')\s*,\s*(' + STRING + ')', raw):
@@ -528,7 +536,7 @@ def original_english(original, material_data=None):
                 if len(args)==4 and args[0]=='getUnlocalizedName()' and re.fullmatch(STRING,args[1]):
                     put('itemGroup.gt.multiitem.'+multi_category,json.loads(args[1]))
         if path.name == 'Loader_Fluids.java':
-            helper=original/'src/main/java/gregapi/data/FL.java'
+            helper=native_path(original/'src/main/java/gregapi/data/FL.java')
             if helper.exists():
                 helper_raw=masked(helper.read_text(encoding='utf-8'))
                 compact=lambda value: ''.join(re.findall(STRING+r'|\S',value))
@@ -685,7 +693,7 @@ def original_english(original, material_data=None):
                     if offset and value is not None:
                         put('gt.multitileentity.'+str(int(args[6])+int(offset[1] or 0)),value)
             for helper in ('Item','Fluid'):
-                helper_file = original / f'src/main/java/gregapi/tileentity/connectors/MultiTileEntityPipe{helper}.java'
+                helper_file = native_path(original / f'src/main/java/gregapi/tileentity/connectors/MultiTileEntityPipe{helper}.java')
                 if not helper_file.exists(): continue
                 files.append(helper_file)
                 helper_rows=list(calls(masked(helper_file.read_text(encoding='utf-8')), 'aRegistry.add'))
@@ -728,7 +736,7 @@ def original_english(original, material_data=None):
         if path.stem in wood_classes:
             if re.search(r'extends\s+BlockColored\b',raw) and len(dyes)==16:
                 # Only evaluate the literal constructor and the verified common BlockColored formula.
-                colored = original/'src/main/java/gregapi/block/metatype/BlockColored.java'
+                colored = native_path(original/'src/main/java/gregapi/block/metatype/BlockColored.java')
                 formula = ''.join(re.findall(STRING+r'|\S',masked(colored.read_text(encoding='utf-8'))))
                 for suffix in ('', '+" Slab"'):
                     expected='for(inti=0;i<16;i++)LH.add(getUnlocalizedName()+"."+i,DYE_NAMES[i]+" "+aDefaultLocalised'+suffix+');'
@@ -758,7 +766,7 @@ def original_english(original, material_data=None):
 
 def material_prefix_templates(original, identity_rows):
     from generate_material_names import prefix_rows, default_templates, empty_templates
-    base=original/'src/main/java'
+    base=native_path(original/'src/main/java')
     paths=[base/'gregapi/data/OP.java',base/'gregapi/oredict/OreDictPrefix.java',base/'gregapi/lang/LanguageHandler.java']
     op,helper,language=[masked(p.read_text(encoding='utf-8')) for p in paths]
     templates=default_templates(prefix_rows(op,helper),language)

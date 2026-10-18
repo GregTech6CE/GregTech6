@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import importlib.util
 import json
 import re
@@ -26,7 +33,7 @@ class ReinforcedChestAssets(unittest.TestCase):
                     self.assertEqual((assets / relative).read_bytes(), (generator.ASSETS / relative).read_bytes())
             for shell in ('woodchest', 'lootchest'):
                 for original_layer, target_layer in (('colored', 'colored'), ('plain', 'overlay')):
-                    source = generator.ORIGINAL / f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{original_layer}.png'
+                    source = native_path(generator.ORIGINAL / f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{original_layer}.png')
                     target = generator.ASSETS / f'textures/block/machines/{shell}/{target_layer}.png'
                     self.assertEqual(source.read_bytes(), target.read_bytes())
             before = json.loads((generator.ASSETS / 'lang/zh_cn.json').read_text(encoding='utf-8'))

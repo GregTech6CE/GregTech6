@@ -16,14 +16,22 @@ Usage:  python tools/extract_gt6_tool_recipes.py [--json docs/gt6-tool-recipes.j
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-GT6 = (ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
-       / "gregtech" / "loaders" / "a" / "Loader_Tools.java").resolve()
+GT6 = (native_path(ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
+       / "gregtech" / "loaders" / "a" / "Loader_Tools.java")).resolve()
 
 OP_TOOL = re.compile(r"new OreProcessing_Tool\(")
 ADVANCED = re.compile(r"new AdvancedCraftingTool\(([^;]*?)\);", re.S)

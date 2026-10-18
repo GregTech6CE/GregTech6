@@ -1,4 +1,11 @@
 """Regression: blockstate `model` fields silently produce empty item models."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 import re
@@ -12,7 +19,7 @@ class GearboxItemRoots(unittest.TestCase):
     def test_registered_families_inherit_drawable_geometry(self):
         catalog = (ROOT / "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java").read_text()
         tiers = re.findall(r'new Tier\("([^"]+)"', catalog)
-        for platform in ("src", "neoforge/src"):
+        for platform in (str(native_path("src")), str(native_path("neoforge/src"))):
             assets = ROOT / platform / "main/resources/assets/gregtech"
 
             def geometry(model_id):

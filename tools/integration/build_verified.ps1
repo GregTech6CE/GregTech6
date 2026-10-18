@@ -21,7 +21,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Shared-core checks failed; see $coreLog" }
     foreach ($platform in @('neoforge', 'forge')) {
         $logPath = Join-Path $logDirectory ($platform + '-world-creation.log')
-        $runTask = if ($platform -eq 'forge') { ':runClient' } else { ':neoforge:runClient' }
+        $runTask = if ($platform -eq 'forge') { ':multiversion:1.20.1-forge:runClient' } else { ':multiversion:1.21.1-neoforge:runClient' }
         Write-Host "Starting ${platform}: create a fresh normal world and enter the game. Log: $logPath"
         & $Gradle @gradleArguments '-PdirectCoreClasspath=true' '-PdirectCoreResources=true' '-PclientCreateWorldSmoke=true' '-PclientSmoke=false' '-PclientSmokeTimeout=360' '-PclientSmokeHeap=4g' '-PemiSmoke=true' '-PemiOnlySmoke=true' $runTask *> $logPath
         if ($LASTEXITCODE -ne 0) { throw "$platform preflight Gradle failed; see $logPath" }
@@ -77,16 +77,16 @@ try {
     if (-not $PreflightOnly) {
         $buildLog = Join-Path $logDirectory 'dual-assemble.log'
         Write-Host "Both client preflights passed. Building dual artifacts. Log: $buildLog"
-        & $Gradle @gradleArguments ':assemble' ':neoforge:assemble' *> $buildLog
+        & $Gradle @gradleArguments ':assembleBothPlatforms' *> $buildLog
         if ($LASTEXITCODE -ne 0) { throw "Dual assemble failed; see $buildLog" }
-        & python 'tools/integration/verify_artifacts.py' --forge 'build/libs/gregtech6-1.20.1-forge-0.0.0.jar' --neoforge 'neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar' --output (Join-Path $logDirectory 'artifacts.json')
+        & python 'tools/integration/verify_artifacts.py' --forge 'multiversion/versions/1.20.1-forge/build/libs/gregtech6-1.20.1-forge-0.0.0.jar' --neoforge 'multiversion/versions/1.21.1-neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar' --output (Join-Path $logDirectory 'artifacts.json')
         if ($LASTEXITCODE -ne 0) { throw 'Artifact verification failed.' }
         if (Test-Path -LiteralPath $ProductionEnvironment) {
             $production = Get-Content -LiteralPath $ProductionEnvironment -Raw -Encoding utf8 | ConvertFrom-Json
-            & $Gradle @gradleArguments ':productionSmokeJar' ':neoforge:productionSmokeJar' *> (Join-Path $logDirectory 'production-probes.log')
+            & $Gradle @gradleArguments ':multiversion:1.20.1-forge:productionSmokeJar' ':multiversion:1.21.1-neoforge:productionSmokeJar' *> (Join-Path $logDirectory 'production-probes.log')
             if ($LASTEXITCODE -ne 0) { throw 'Production startup probes did not build.' }
             foreach ($platform in @('forge', 'neoforge')) {
-                $platformBuild = if ($platform -eq 'forge') { 'build' } else { 'neoforge/build' }
+                $platformBuild = if ($platform -eq 'forge') { 'multiversion/versions/1.20.1-forge/build' } else { 'multiversion/versions/1.21.1-neoforge/build' }
                 $jarName = if ($platform -eq 'forge') { 'gregtech6-1.20.1-forge-0.0.0.jar' } else { 'gregtech6-neoforge-1.21.1-0.0.0.jar' }
                 & python 'tools/integration/launch_production_smoke.py' --platform $platform --minecraft-root $production.minecraft_root --version $production.versions.$platform --java $production.java --jar "$platformBuild/libs/$jarName" --probe "$platformBuild/production-probe/gregtech-delivery-probe-0.0.0.jar" --output (Join-Path $logDirectory ($platform + '-production.json'))
                 if ($LASTEXITCODE -ne 0) { throw "$platform distribution client did not reach the title screen." }

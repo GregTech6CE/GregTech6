@@ -3,13 +3,20 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import re
 from pathlib import Path
 from readable_data_names import readable_java
 
 GT6_MD = Path(r"f:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\MD.java")
 GT6_CS = Path(r"f:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\CS.java")
-OUT = Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech/data/ModReferences.java"
+OUT = native_path(Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech/data/ModReferences.java")
 
 MODID_RE = re.compile(r"^\s*,?\s*(\w+)\s*=\s*\"((?:\\.|[^\"\\])*)\"")
 MD_ENTRY_RE = re.compile(

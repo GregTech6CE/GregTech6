@@ -22,6 +22,13 @@ so nothing in ``build/classes`` is touched; a directory that gradle does not man
 "java sources newest < gate log" invariant is unaffected.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import glob
 import io
 import os
@@ -44,10 +51,10 @@ EXTRA_JAR_GLOBS = [
 
 # Handy default: the round-109 sensor recipe files. Pass paths explicitly for anything else.
 DEFAULT_SOURCES = [
-    os.path.join('src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'SensorRecipePack.java'),
-    os.path.join('src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'generated',
+    os.path.join(str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'SensorRecipePack.java'),
+    os.path.join(str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'generated',
                  'GTSensorRecipesGen.java'),
-    os.path.join('src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'gametest',
+    os.path.join(str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'gametest',
                  'SensorMatrixTests.java'),
 ]
 

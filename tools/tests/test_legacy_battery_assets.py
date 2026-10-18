@@ -1,9 +1,16 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import importlib.util
 import json
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 class LegacyBatteryAssets(unittest.TestCase):
     def test_alias_models_names_and_charge_overrides_match_canonical_chemistry(self):
         langs=[json.loads((ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8')) for lang in ['en_us','zh_cn']]

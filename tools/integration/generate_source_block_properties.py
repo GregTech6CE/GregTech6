@@ -3,6 +3,14 @@
 Input audit is produced by generate_machine_material_data.py. Source trees are read-only;
 group/tool/adventure exemptions come from Loader_MultiTileEntities and vanilla Material.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import argparse, hashlib, json, re, sys
 
@@ -22,9 +30,9 @@ def main():
     ap.add_argument('--material-audit',type=Path,required=True);ap.add_argument('--out',type=Path,required=True)
     ap.add_argument('--audit',type=Path,required=True);ns=ap.parse_args()
     data=json.loads(ns.material_audit.read_text(encoding='utf-8'))
-    raw=masked((ns.source/'src/main/java/gregapi/data/MT.java').read_text(encoding='utf-8'))
+    raw=masked((native_path(ns.source/'src/main/java/gregapi/data/MT.java')).read_text(encoding='utf-8'))
     arrays={m[1]:split_top_level(m[2]) for m in re.finditer(r'(\w+)\s*=\s*\{([^{}]*)\}',raw)}
-    any_raw=masked((ns.source/'src/main/java/gregapi/data/ANY.java').read_text(encoding='utf-8'))
+    any_raw=masked((native_path(ns.source/'src/main/java/gregapi/data/ANY.java')).read_text(encoding='utf-8'))
     aliases={m[1]:norm(m[2]) for m in re.finditer(r'^\s*(\w+)\s*\.[^\n]*?\.setAllToTheOutputOf\(([^)]*)\)',any_raw,re.M)}
     # Quality belongs to the registered hull, before output unification (Quartz steals MilkyQuartz).
     quality_aliases={m[1]:norm(m[2]) for m in re.finditer(r'^\s*(\w+)\s*\.[^\n]*?\.steal\(([^)]*)\)',any_raw,re.M)}
@@ -91,8 +99,8 @@ public final class SourceBlockProperties {
                 java.append(f'        {target}.put("{name}", new Params({v["source_id"]},"{v["tool"]}",{v["material"]},{v["explicit_level"]},{str(v["hand_harvestable"]).lower()}));\n')
             java.append('    }\n')
     java.append('}\n');ns.out.parent.mkdir(parents=True,exist_ok=True);ns.out.write_text(''.join(java),encoding='utf-8')
-    paths=['src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java','src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java','src/main/java/gregapi/data/ANY.java',
-           'src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java','src/main/java/gregapi/data/MT.java','LICENSE']
+    paths=[str(native_path('src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')),str(native_path('src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java')),str(native_path('src/main/java/gregapi/data/ANY.java')),
+           str(native_path('src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java')),str(native_path('src/main/java/gregapi/data/MT.java')),'LICENSE']
     audit=dict(blocks=blocks,basics=basics,additional_dynamic_hoppers=120,additional_dynamic_storage=720,additional_generator_aliases=12,additional_utility_controller_aliases=2,
                source_files=[dict(path=str(ns.source/p),sha256=hashlib.sha256((ns.source/p).read_bytes()).hexdigest()) for p in paths],
                authors=['GregTech-6 Team','Gregorius Techneticies'],license='LGPL-3.0-or-later',

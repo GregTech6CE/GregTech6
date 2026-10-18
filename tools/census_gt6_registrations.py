@@ -11,6 +11,13 @@ Usage: python tools/census_gt6_registrations.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import collections
 import json
 import re
@@ -23,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 GT6 = Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 GT6_REGISTRY = GT6 / "gregtech/loaders/b/Loader_MultiTileEntities.java"
 GT6_RECIPE_MAPS = GT6 / "gregapi/data/RM.java"
-PORT = ROOT / "src/main/java/com/gregtech/gregtech"
+PORT = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
 PORT_MACHINES = PORT / "content/machine/BasicMachineDefinitions.java"
 PORT_MAPS = PORT / "data/MachineRecipeMaps.java"
 PORT_MULTIBLOCK = PORT / "content/multiblock"

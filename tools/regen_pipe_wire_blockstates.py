@@ -10,12 +10,19 @@ Also patches wire/cable side models to cullface their end cap (the pipe side
 models already do), so caps vanish inside solid machine faces.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS_MACHINE = ASSETS / "models/block/machine"
 

@@ -10,12 +10,19 @@ Usage:  python tools/report_prefixless_delegates.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import pathlib
 import re
 
-PREFIX = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java")
-REGISTRY = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java")
-BLOCKS = pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java")
+PREFIX = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java"))
+REGISTRY = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java"))
+BLOCKS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java"))
 
 
 def main() -> None:

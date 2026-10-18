@@ -3,6 +3,14 @@
 Sources are read-only. Native families include recursively known charging cables
 and logistics covers. Missing automatic ore data is retained without guessing.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 from collections import Counter
 import argparse, hashlib, json, re, sys
@@ -19,9 +27,9 @@ GROUPS={'aMetal':('pickaxe',False),'aWooden':('axe',True),'aMachine':('wrench',F
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--source',type=Path,required=True)
  ap.add_argument('--out',type=Path,required=True);ap.add_argument('--audit',type=Path,required=True);ns=ap.parse_args()
- relatives=['src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java','src/main/java/gregapi/data/OP.java',
-            'src/main/java/gregapi/load/LoaderOreDictReRegistrations.java','src/main/java/gregapi/data/ANY.java',
-            'src/main/java/gregapi/data/MT.java','src/main/java/gregtech/items/MultiItemTechnological.java','LICENSE']
+ relatives=[str(native_path('src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')),str(native_path('src/main/java/gregapi/data/OP.java')),
+            str(native_path('src/main/java/gregapi/load/LoaderOreDictReRegistrations.java')),str(native_path('src/main/java/gregapi/data/ANY.java')),
+            str(native_path('src/main/java/gregapi/data/MT.java')),str(native_path('src/main/java/gregtech/items/MultiItemTechnological.java')),'LICENSE']
  texts=[masked((ns.source/p).read_text(encoding='utf-8')) for p in relatives[:-1]]
  mte,op,automatic,any_source,mt,tech=texts
  weights={m[1]:amount(m[2].split(',')[0]) for m in re.finditer(r'^\s*(\w+)\s*=\s*create\([^\n]*?\.setMaterialStats\(([^)]*)\)',op,re.M)}

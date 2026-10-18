@@ -4,6 +4,8 @@
 
 A community integration project bringing GregTech 6 to modern Minecraft, with a shared core and dedicated Forge and NeoForge implementations.
 
+The experimental branch now manages all native source sets and resources with **Stonecutter 0.7.11**. See the [migration and generator guide](docs/integration/STONECUTTER_MIGRATION.md).
+
 ## About
 
 GregTech 6 Community Edition combines work from **saltnya's gregtech6reborn**, **brokestar233's gregtech6**, and **lombinaxmasson's cruciblecraft**. The project uses saltnya's implementation as its initial content baseline while comparing and integrating the strengths of all three ports.
@@ -50,24 +52,24 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 Forge 1.20.1:
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar
+.\gradlew.bat --console=plain :multiversion:1.20.1-forge:distributionJar
 ```
 
 NeoForge 1.21.1:
 
 ```powershell
-.\gradlew.bat --console=plain :neoforge:jar
+.\gradlew.bat --console=plain :multiversion:1.21.1-neoforge:jar
 ```
 
 Both versions:
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar :neoforge:jar
+.\gradlew.bat --console=plain :assembleBothPlatforms
 ```
 
 On Linux or macOS, set the same environment variables and use `./gradlew` instead of `.\gradlew.bat`. Run `chmod +x gradlew` if necessary.
 
-Final artifacts are written to `build/libs/` for Forge and `neoforge/build/libs/` for NeoForge. Forge's `build/forge-intermediates/` directory contains intermediate output. The mod version is configured in `gradle.properties`.
+Final artifacts are written to `multiversion/versions/1.20.1-forge/build/libs/` for Forge and `multiversion/versions/1.21.1-neoforge/build/libs/` for NeoForge. Forge's `multiversion/versions/1.20.1-forge/build/forge-intermediates/` directory contains intermediate output. The mod version is configured in `gradle.properties`.
 
 See [BUILDING.md](docs/work/BUILDING.md) for complete setup, additional build options, and Git handoff instructions.
 
@@ -85,8 +87,8 @@ Forge development commands:
 NeoForge development commands:
 
 ```powershell
-.\gradlew.bat :neoforge:runClient
-.\gradlew.bat :neoforge:runServer
+.\gradlew.bat :multiversion:1.21.1-neoforge:runClient
+.\gradlew.bat :multiversion:1.21.1-neoforge:runServer
 ```
 
 Run each command separately. Server setup requires acceptance of the Minecraft EULA. The existing Windows helper can also run shared-core checks and build both platforms:
@@ -99,9 +101,8 @@ Run each command separately. Server setup requires acceptance of the Minecraft E
 
 ```text
 GregTech6/
-├── src/                  Forge platform code and resources
+├── multiversion/         Stonecutter shared native sources and version overrides
 ├── core/                 Shared logic, data, and resources
-├── neoforge/             NeoForge platform code and resources
 ├── gradle/               Gradle wrapper
 ├── scripts/              Build and development helpers
 ├── .github/workflows/    Dual-platform CI

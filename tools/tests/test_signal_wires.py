@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import unittest
 from tools.rebuild_signal_wires import ROOT, ASSETS, IDS
@@ -21,7 +28,7 @@ class SignalWireResources(unittest.TestCase):
     def test_panels_use_source_wire_ingredients(self):
         for name,key,material in [('energy_display_cover','L','lumium'),('machine_status_display_cover','L','lumium'),
                                   ('redstone_conductor_cover_accept','R','redalloy'),('redstone_conductor_cover_emit','R','redalloy')]:
-            recipe=json.loads((ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json').read_text())
+            recipe=json.loads((native_path(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json')).read_text())
             self.assertEqual(recipe['key'][key],{'item':'gregtech:wire_01_'+material})
 
 if __name__=='__main__':unittest.main()

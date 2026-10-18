@@ -10,13 +10,20 @@ grepping the port for the class name. Anything that is neither mapped nor mentio
 missing.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import glob
 import io
 import os
 import re
 
 GT6_ROOT = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java"
-PORT_ROOT = "src/main/java/com/gregtech/gregtech"
+PORT_ROOT = str(native_path("src/main/java/com/gregtech/gregtech"))
 LOADER = os.path.join(GT6_ROOT, "gregtech", "loaders", "b", "Loader_Worldgen.java")
 
 # GT6 class -> the port file(s) that implement it (checked by hand against §47-§68 of the porting notes).

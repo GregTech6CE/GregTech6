@@ -1,4 +1,12 @@
 """GT6 metalset scaffold family: original material table, textures, names and recipes."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import copy
 import json
 import re
@@ -9,8 +17,8 @@ def generate():
     def write(path, data):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding='utf-8')
-    books = {v['gt6_id'] - 7100: v for v in json.loads((ROOT / 'src/main/resources/data/gregtech/bookshelf_variants.json').read_text())['variants'] if v['kind'] == 'metal'}
-    source = (ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java').read_text(encoding='utf-8')
+    books = {v['gt6_id'] - 7100: v for v in json.loads((native_path(ROOT / 'src/main/resources/data/gregtech/bookshelf_variants.json')).read_text())['variants'] if v['kind'] == 'metal'}
+    source = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java')).read_text(encoding='utf-8')
     materials = dict(re.findall(r'new Spec\("([^"]+)", [^,]+\.(\w+),', source))
     names = dict(re.findall(r'^\s*S:gt.multitileentity\.(\d+)=(.*)$', (ROOT.parent / 'GregTech.lang').read_text(encoding='utf-8'), re.M))
     langs = {locale: json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8')) for locale in ('en_us','zh_cn')}
@@ -33,7 +41,7 @@ def generate():
                 write(ASSETS / f'models/block/tool/{name}{tail}.json', model)
             write(ASSETS / f'models/item/{name}.json', {'parent': f'gregtech:block/tool/{name}_1'})
         material = re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', materials[suffix]).lower()
-        write(ROOT / f'src/main/resources/data/gregtech/recipes/scaffolds/{name}.json', {
+        write(native_path(ROOT / f'src/main/resources/data/gregtech/recipes/scaffolds/{name}.json'), {
             'type': 'gregtech:tool_shaped', '_comment': f'GT6 Loader_MultiTileEntities:147 ({8400 + old_id})',
             'pattern': ['TPT', 'SdS'], 'key': {'T': {'tag': 'forge:screws/' + material},
             'P': {'tag': 'forge:plates/' + material}, 'S': {'tag': 'forge:rods/' + material},

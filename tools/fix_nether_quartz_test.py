@@ -1,11 +1,19 @@
 """Fix the quartz test: the GameTestHolder import and a direct call to the (now public) seam pass."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import os
 
-FEATURE = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "worldgen",
+FEATURE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen",
                        "GTNetherDepositFeature.java")
-TEST = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "gametest",
+TEST = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "gametest",
                     "NetherQuartzTests.java")
 
 text = io.open(FEATURE, encoding="utf-8").read()

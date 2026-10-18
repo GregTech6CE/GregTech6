@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json,re,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
@@ -13,7 +20,7 @@ class LocalizationCoverageTests(unittest.TestCase):
     def test_static_tooltip_and_jade_keys_exist(self):
         en=json.loads((ROOT/'core/src/main/resources/assets/gregtech/lang/en_us.json').read_text(encoding='utf-8'))
         missing=set()
-        for directory in ('src/main/java', 'neoforge/src/main/java', 'core/src/main/java'):
+        for directory in (str(native_path('src/main/java')), str(native_path('neoforge/src/main/java')), 'core/src/main/java'):
             for path in (ROOT/directory).rglob('*.java'):
                 for key in re.findall(r'"((?:tooltip|jade|message|gui|config)\.gregtech\.[a-zA-Z0-9_.]+)"',path.read_text(encoding='utf-8')):
                     if not key.endswith('.') and key not in en:missing.add(key)

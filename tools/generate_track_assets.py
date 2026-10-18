@@ -18,13 +18,21 @@ Output : src/main/resources/assets/gregtech/blockstates/track*.json
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BLOCKSTATES = ROOT / "src/main/resources/assets/gregtech/blockstates"
-MODELS = ROOT / "src/main/resources/assets/gregtech/models/block/tracks"
-ITEM_MODELS = ROOT / "src/main/resources/assets/gregtech/models/item"
+BLOCKSTATES = native_path(ROOT / "src/main/resources/assets/gregtech/blockstates")
+MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/block/tracks")
+ITEM_MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/item")
 
 # material slug -> the GT6 iconset texture stem (upper case, as in the resource pack)
 # `LoadTracks.java` uses RAIL_STRAIGHT_/RAIL_TURNED_/RAIL_BOOSTER(_ACTIVE)_/RAIL_DETECTOR(_ACTIVE)_.

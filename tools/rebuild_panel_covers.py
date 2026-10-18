@@ -1,11 +1,18 @@
 """Import unmodified GT6 panel textures and generate the twelve functional panel recipes/models."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import hashlib
 import json
 import shutil
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 BUTTON_STYLES=['underlay','underlay_0_to_15','underlay_0_to_F','underlay_1_to_16','underlay_16_1_to_15','underlay_keypad_1_to_9','underlay_keypad_9_to_1','underlay_bits']
 MODE_FOLDERS=['manualselector','redstoneselector','buttonselector','redstoneemitter']
 TEXTURES=['base','progressredstone/circuit','energyredstone/circuit','redstoneconductor/in','redstoneconductor/out','coverswitch/base','coverswitch/circuit','shutter/normal','shutter/inverted']
@@ -54,7 +61,7 @@ def write(path,data):
 def main(original):
     ledger_path=ROOT/'tools/gt6_texture_sources.json';ledger=json.loads(ledger_path.read_text(encoding='utf-8'))
     for texture in TEXTURES:
-        source=original/f'src/main/resources/assets/gregtech/textures/blocks/machines/covers/{texture}.png'
+        source=native_path(original/f'src/main/resources/assets/gregtech/textures/blocks/machines/covers/{texture}.png')
         relative=f'textures/block/machines/covers/{texture}.png';target=ASSETS/relative
         target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
         ledger[relative]={'source':source.relative_to(original).as_posix(),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
@@ -66,7 +73,7 @@ def main(original):
         write(ASSETS/f'models/item/{name}.json',{'parent':'minecraft:item/generated','textures':textures})
     for name,(pattern,overrides) in RECIPES.items():
         keys=COMMON|overrides;used=set(''.join(pattern))-{' '}
-        write(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json',{
+        write(native_path(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json'),{
             'type':'gregtech:tool_shaped','pattern':pattern,'key':{k:{'item':keys[k]} for k in sorted(used)},'result':{'item':'gregtech:'+name}})
 if __name__=='__main__':
     import sys

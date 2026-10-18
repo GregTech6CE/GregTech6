@@ -6,6 +6,13 @@ textures into name-based files (technological-style), and generates
 GTMultiItemsGen.java + item models + lang entries.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 import re
@@ -13,10 +20,10 @@ import shutil
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 ITEM_TEX = os.path.join(ASSETS, "textures", "item")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
-OUT_JAVA = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech",
+OUT_JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech",
                         "registry", "GTMultiItemsGen.java")
 
 SRC_TEX = os.path.join(GT6, "resources", "assets", "gregtech", "textures", "items")
@@ -118,7 +125,7 @@ def unique_id(base: str, used: set) -> str:
 def existing_ids_from_sources() -> set:
     """Authoritative taken-id set from the Java registries (the models directory
     alone is not reliable — an earlier run may have clobbered block-item models)."""
-    java = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "registry")
+    java = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry")
     used = set()
     icon = open(os.path.join(java, "GTIconSetBlocks.java"), encoding="utf-8").read()
     used |= set(re.findall(r'"([a-z0-9_]+)"', icon.split("buildIconNames() {")[1].split("};")[0]))

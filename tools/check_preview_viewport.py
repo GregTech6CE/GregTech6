@@ -1,4 +1,11 @@
 """Run the production JEI scissor calculation with translated recipe poses, without starting Minecraft."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import os
 import subprocess
@@ -16,7 +23,7 @@ def executable(name):
 
 with tempfile.TemporaryDirectory(prefix='gt6-preview-test-') as directory:
     subprocess.run([executable('javac'), '--release', '17', '-cp', str(joml), '-d', directory,
-                    str(ROOT / f'src/main/java/{package}/PreviewViewport.java'),
-                    str(ROOT / f'src/test/java/{package}/PreviewViewportContracts.java')], check=True)
+                    str(native_path(ROOT / f'src/main/java/{package}/PreviewViewport.java')),
+                    str(native_path(ROOT / f'src/test/java/{package}/PreviewViewportContracts.java'))], check=True)
     subprocess.run([executable('java'), '-cp', directory + os.pathsep + str(joml),
                     'com.gregtech.gregtech.jei.PreviewViewportContracts'], check=True)

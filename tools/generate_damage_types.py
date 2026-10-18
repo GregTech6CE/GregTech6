@@ -28,13 +28,21 @@ Usage: python tools/generate_damage_types.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RES = os.path.join(ROOT, "src", "main", "resources")
+RES = os.path.join(ROOT, str(native_path("src")), "main", "resources")
 
 # id -> (GT6 source file, GT6 flags, effects, exhaustion, [tags], en, zh)
 # The message texts are GT6's own (`DamageSource*#func_151519_b`); the two entries marked IC2 are the

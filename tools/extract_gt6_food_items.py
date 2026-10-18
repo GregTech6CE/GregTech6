@@ -36,6 +36,14 @@ Usage:
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import os
 import re
@@ -43,10 +51,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GT6 = r'F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java'
-OUT = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'generated',
+OUT = os.path.join(ROOT, str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'data', 'generated',
                    'GTFoodItemsGen.java')
 MULTI_FOOD = os.path.join(GT6, 'gregtech', 'items', 'MultiItemFood.java')
-MULTI_GEN = os.path.join(ROOT, 'src', 'main', 'java', 'com', 'gregtech', 'gregtech', 'registry',
+MULTI_GEN = os.path.join(ROOT, str(native_path('src')), 'main', 'java', 'com', 'gregtech', 'gregtech', 'registry',
                          'GTMultiItemsGen.java')
 
 # 1.7.10 -> 1.20.1 vanilla items GT6 aliases its food onto (`IL.Food_X.set(ST.make(Items.x, 1, 0))`).

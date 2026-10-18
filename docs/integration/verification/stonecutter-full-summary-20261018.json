@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "branch": "experiment/stonecutter-emi",
+  "baseline_commit": "4e39348c6",
+  "scope": "Complete Stonecutter native-layout/build migration; no production gameplay or resource changes",
+  "native_java_outputs": 2630,
+  "native_resource_outputs": 14291,
+  "native_main_outputs": 2165,
+  "managed_java_files": 1558,
+  "managed_logical_resources": 7704,
+  "tool_path_adaptations": 284,
+  "tool_path_expressions": 528,
+  "checks": {
+    "all_source_sets_generated_and_compiled": true,
+    "selected_missing_outputs_regenerated_by_compile_dependencies": true,
+    "active_version_neo_and_reset_forge": true,
+    "frozen_native_main_code_literals_and_resources": true,
+    "approved_independent_probe_updates": 14,
+    "python_targeted_tests": 80,
+    "core_contract_assertions": {
+      "core": 2809,
+      "machine": 8275,
+      "material": 7947,
+      "thermal": 53
+    },
+    "remi_groups": 451,
+    "current_core_classes_in_each_mod_and_sdk": 823,
+    "forge_processed_resources_in_jar": 7514,
+    "neo_processed_resources_in_jar": 6684,
+    "forge_installed_client": true,
+    "neo_installed_client": true,
+    "neo_fresh_world_remi": true
+  },
+  "test_maintenance": "Two core contracts updated for seven material aliases and sixty restored lockers; seven independent production probes updated for canonical IDs. Original migration manifest was not rewritten; exact old/new probe signatures are in migration-test-updates.json.",
+  "attempts_resolved": [
+    "Java-only compile initially missed an explicit compile-to-generator dependency; fixed and verified by removing selected generated outputs.",
+    "Fresh isolated REMI instance initially lacked YACL and stopped at first-run onboarding; copied the cached opt-in dependency and added isolated smoke-run options.",
+    "Old test counts and legacy duplicate-ID expectations updated from original source/canonical catalogs.",
+    "One installed NeoForge client exited 0xc0000005 during early native window initialization before mod loading; unchanged jars passed on retry. Root cause was not identified."
+  ],
+  "not_claimed": [
+    "GitHub Actions execution: branch not pushed",
+    "Full survival progression",
+    "Old-world or cross-version save compatibility",
+    "Complete GameTest suite"
+  ],
+  "logs": {
+    "native-package.log": "fc2709d5f1f0c696a48a31dd97a9013f97d970acc3f15444316a207f0ac9dc9a",
+    "checks-and-neo-runtime3.log": "aa20f032c12d3f103a6cb602a68e14007d06d7b1faccb97a0e9c29e0fc498551",
+    "checks-and-neo-runtime4.log": "f87c7dc1b81d3804c000585b8e2584d97e573cd7d088387f1a2cbf82b5ce9ee6",
+    "neo-runtime6.log": "078c25d803f734078bb0c3758b2838d207d777d68d330dac57f719228118ed55",
+    "switch-neo.log": "42fb30fff24abd0393aec8c595ec91fffbcdeda278d46fe22536526b56546a7a",
+    "neo-active-parity.log": "2613d5af60ec01b3736f1bd4e3dac0005e4d2a22142061d3f6791640aba9ede4",
+    "switch-forge.log": "c7de7daa8b7192e1a9a322f8c0eefbe7189d0a0fc7142ef455c8e047aa72f4ed",
+    "final-regenerate-compile.log": "d8463cf9779d2a4d2ab31c550062707e6a81a2d3749031bca340c4906fb2b31b",
+    "final-baseline.log": "ed3d6b01d51d136fb229f39f679953a2d9849b17b5951d5b85b9b296dd888938",
+    "final-python-checks.log": "5f4f3b1fae85071edfcb201727c610cfc43181f886f2e17ff92a2df8923cc376",
+    "production-neo-retry.log": "ebcedc7659aec40a5cd6f4e966c825d0ec4401e5a0a2964b848a97bae6fb94ea"
+  },
+  "delivery": "C:\\Dev\\GregTech6\\build\\verified\\20261018-012237Z-23a09a4f"
+}

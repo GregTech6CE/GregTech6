@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import json
 import sys
@@ -5,7 +12,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
 
@@ -32,7 +39,7 @@ class CapsuleCellResources(unittest.TestCase):
             self.assertEqual(hashlib.sha256((ASSETS / path).read_bytes()).hexdigest(), entry['sha256'])
 
     def test_core_and_geiger_source_components(self):
-        recipes = ROOT / 'src/main/resources/data/gregtech/recipes/nuclear'
+        recipes = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/nuclear')
         core = json.loads((recipes / 'reactor_core_2x2.json').read_text(encoding='utf-8'))
         self.assertEqual(core['key']['M']['item'], 'gregtech:casing_machine_dense_lead')
         geiger = json.loads((recipes / 'geiger_counter_empty.json').read_text(encoding='utf-8'))

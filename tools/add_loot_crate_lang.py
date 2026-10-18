@@ -1,8 +1,15 @@
 """Add the loot crate tooltip key (GT6 LH.TOOL_TO_OPEN_CROWBAR) to both language files."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import os
 
-LANG = os.path.join("src", "main", "resources", "assets", "gregtech", "lang")
+LANG = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech", "lang")
 ANCHOR = '"block.gregtech.loot_crate":'
 NEW = {
     "en_us.json": "Open with a Crowbar: one random vanilla loot roll and the Crate itself",

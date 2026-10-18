@@ -5,13 +5,21 @@ material dictionary needs the reverse direction ("which alloys is Copper part of
 transcribes the calls into a small generated table.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import os
 import re
 
-SOURCE = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+SOURCE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
                       "Loader_Recipes_Alloys.java")
-TARGET = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
                       "GTAlloyTable.java")
 
 text = io.open(SOURCE, encoding="utf-8").read()

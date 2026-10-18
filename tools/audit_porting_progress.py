@@ -15,6 +15,13 @@ Usage: python tools/audit_porting_progress.py [--log build/gametest.log]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import os
@@ -27,7 +34,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parents[1]
 GT6 = Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
-PORT_JAVA = ROOT / "src/main/java/com/gregtech/gregtech"
+PORT_JAVA = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
 DOCS = ROOT / "docs"
 
 # label -> (GT6 relative dir, port relative dirs)

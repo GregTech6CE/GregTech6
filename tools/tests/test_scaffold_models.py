@@ -1,8 +1,15 @@
 """Scaffold block states must select the actual structural design."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 from pathlib import Path
 import unittest
-ASSETS = Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech')
 class ScaffoldModelTests(unittest.TestCase):
     def test_all_structural_designs(self):
         variants = json.loads((ASSETS / 'blockstates/scaffold.json').read_text())['variants']

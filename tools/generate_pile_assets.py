@@ -33,6 +33,14 @@ Run from the repository root:  python tools/generate_pile_assets.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import hashlib
 import copy
 import json
@@ -40,7 +48,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 MANIFEST = ROOT / "tools/gt6_texture_sources.json"
 MODELS = ASSETS / "models/block/decoration/pile"
@@ -201,8 +209,8 @@ def copy_textures(manifest: dict) -> int:
     copied = 0
     for port_folder, gt6_folder in PILE_TEXTURES.items():
         for name in ("sides", "top"):
-            source = (ORIGINAL / "src/main/resources/assets/gregtech/textures/blocks/machines"
-                      / "placeables" / gt6_folder / f"{name}.png")
+            source = (native_path(ORIGINAL / "src/main/resources/assets/gregtech/textures/blocks/machines"
+                      / "placeables" / gt6_folder / f"{name}.png"))
             target = ASSETS / "textures/block/machines/placeables" / port_folder / f"{name}.png"
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)

@@ -2,6 +2,14 @@
 
 Requires explicit read-only original and resource-reference checkouts. No invented translations.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import argparse, hashlib, json, re
 ROOT=Path(__file__).resolve().parents[2]
@@ -16,7 +24,7 @@ def save(path,value):
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 assets=ROOT/'core/src/main/resources/assets/gregtech'
 data=ROOT/'core/src/main/resources/data/gregtech'
-source=a.source/'src/main/java/gregtech/loaders/a/Loader_Tools.java'
+source=native_path(a.source/'src/main/java/gregtech/loaders/a/Loader_Tools.java')
 rows=re.findall(r'"(gt\.armor\.hazmat\.(\w+)\.(\w+))"\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"\s*,\s*"([^"]+)"',source.read_text(encoding='utf-8'))
 assert len(rows)==24
 en=load(assets/'lang/en_us.json');aliases=load(ROOT/'tools/localization/aliases.json');english=load(ROOT/'tools/localization/english_source.json')
@@ -27,7 +35,7 @@ for key,family,part,name,tip,texture in rows:
  for dest,original,value in [(f'item.gregtech.{id}',key,name),(key+'.tooltip_main',key+'.tooltip_main',tip)]:
   en[dest]=value;aliases[dest]=original;english['values'][dest]={'source_key':original,'value':value}
  for prefix,checkout in [('armor',a.source),('items/armor',a.reference)]:
-  rel=f'textures/{prefix}/{texture}/{index}.png';src=checkout/'src/main/resources/assets/gregtech'/rel
+  rel=f'textures/{prefix}/{texture}/{index}.png';src=native_path(checkout/'src/main/resources/assets/gregtech'/rel)
   dst=assets/rel;dst.parent.mkdir(parents=True,exist_ok=True);dst.write_bytes(src.read_bytes())
   provenance.append({'source':str(src),'destination':str(dst.relative_to(ROOT)),'sha256':sha(src)})
  save(assets/f'models/item/{id}.json',{'parent':'minecraft:item/generated','textures':{'layer0':f'gregtech:items/armor/{texture}/{index}'}})

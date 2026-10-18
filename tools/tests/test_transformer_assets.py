@@ -1,8 +1,15 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 class TransformerAssets(unittest.TestCase):
     def test_nine_transformers_three_layers_all_faces_and_water_states(self):
         steps=['ulv_lv','lv_mv','mv_hv','hv_ev','ev_iv','iv_luv','luv_zpm','zpm_uv','uv_xv']

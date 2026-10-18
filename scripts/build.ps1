@@ -49,7 +49,7 @@ try {
     New-Item -ItemType Directory -Force -Path (Join-Path $repo 'work') | Out-Null
     $targets = if ($Target -eq 'all') { @('forge', 'neoforge') } else { @($Target) }
     foreach ($platform in $targets) {
-        $task = if ($platform -eq 'forge') { ':build' } else { ':neoforge:build' }
+        $task = if ($platform -eq 'forge') { ':multiversion:1.20.1-forge:build' } else { ':multiversion:1.21.1-neoforge:build' }
         $log = Join-Path $repo "work\build-$platform-$(Get-Date -Format 'yyyyMMdd-HHmmss').log"
         Write-Output "Building $platform; log: $log"
         & (Join-Path $repo 'gradlew.bat') --no-daemon --console=plain ':core:check' $task *> $log

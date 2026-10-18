@@ -9,6 +9,13 @@ Usage:  python tools/report_missing_prefix_usage.py [--limit N]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import collections
 import pathlib
 import re
@@ -23,8 +30,8 @@ def missing_prefixes() -> list[str]:
     """Names from the comparison report that have no port item/block form."""
     import json
     report = json.loads(pathlib.Path("docs/prefix-condition-comparison.json").read_text(encoding="utf-8"))
-    prefix = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java").read_text(encoding="utf-8")
-    registry = pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java").read_text(encoding="utf-8")
+    prefix = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java")).read_text(encoding="utf-8")
+    registry = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java")).read_text(encoding="utf-8")
     item_fields = set(re.findall(r"MaterialPrefix\s+(\w+)\s*;", prefix))
     blocks = set(re.findall(r'\bblock\(\s*"(\w+)"', registry))
     return [name for name in report["conditions"] if name not in item_fields and name not in blocks]

@@ -1,4 +1,11 @@
 """Original numbered names must not be confused with recipe stack factories."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 from pathlib import Path
 import sys
 import tempfile
@@ -42,7 +49,7 @@ LH.add(rFluid.getUnlocalizedName(),aLocalized);
                 original_english(root)
 
     def make_source(self, root):
-        java = root / 'src/main/java'
+        java = native_path(root / 'src/main/java')
         data = java / 'gregapi/data'
         data.mkdir(parents=True)
         (data / 'MT.java').write_text('', encoding='utf-8')
@@ -146,10 +153,10 @@ remake(100, "Not a species", "wrong");
         root_dir.mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=root_dir) as directory:
             root = Path(directory)
-            data = root / 'src/main/java/gregapi/data'
+            data = native_path(root / 'src/main/java/gregapi/data')
             data.mkdir(parents=True)
             (data / 'MT.java').write_text('', encoding='utf-8')
-            bees = root / 'src/main/java/gregtech/items/MultiItemBumbles.java'
+            bees = native_path(root / 'src/main/java/gregtech/items/MultiItemBumbles.java')
             bees.parent.mkdir(parents=True)
             bees.write_text(SOURCE, encoding='utf-8')
             values, files = original_english(root)

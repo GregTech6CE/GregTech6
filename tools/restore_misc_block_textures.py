@@ -1,9 +1,16 @@
 """Replace generic wall placeholders with byte-for-byte original GT6 textures."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import json, shutil, hashlib
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 MAPPING={
  'advanced_crafting_table':'craftingtables/advanced', 'charging_crafting_table':'craftingtables/charging',
  'filter_items':'extenders/filter_slots', 'filter_fluids':'extenders/filter_slots',
@@ -25,7 +32,7 @@ def main():
   target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(source,target)
   manifest[target.relative_to(ASSETS).as_posix()]={'source':source.relative_to(ORIGINAL).as_posix(),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
  for name,folder in MAPPING.items():
-  source=ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines'/folder
+  source=native_path(ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines'/folder)
   for p in source.rglob('*.png*'): copy(p,ASSETS/'textures/block/machines'/folder/p.relative_to(source))
   children={}
   for layer in ('colored','overlay'):
@@ -43,7 +50,7 @@ def main():
   model={'loader':'forge:composite','parent':'minecraft:block/block','textures':{'particle':children['colored']['textures']['down']},'children':children}
   write(ASSETS/f'models/block/misc/{name}.json',model)
  for name,icon in {'asphalt':'ASPHALT','concrete':'CONCRETE','concrete_reinforced':'CONCRETE_REINFORCED','cfoam':'CFOAM_HARDENED','cfoam_fresh':'CFOAM_FRESH'}.items():
-  source=ORIGINAL/f'src/main/resources/assets/gregtech/textures/blocks/iconsets/{icon}.png'
+  source=native_path(ORIGINAL/f'src/main/resources/assets/gregtech/textures/blocks/iconsets/{icon}.png')
   copy(source,ASSETS/f'textures/block/iconsets/{icon.lower()}.png')
   texture=f'gregtech:block/iconsets/{icon.lower()}'
   write(ASSETS/f'models/block/decoration/{name}.json',{'parent':'minecraft:block/cube_all','textures':{'all':texture}})

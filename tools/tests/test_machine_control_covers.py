@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import json
 import re
@@ -25,11 +32,11 @@ class MachineControlCoverResources(unittest.TestCase):
         self.assertGreaterEqual(count, 12)
 
     def test_java_catalog_and_crafting_patterns_agree(self):
-        source = (ROOT / 'src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java').read_text(encoding='utf-8')
+        source = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java')).read_text(encoding='utf-8')
         declared = set(re.findall(r'\("([a-z0-9_]+)","([a-z0-9_/]+)",-?\d+\)', source))
         self.assertEqual(declared, {(name, texture) for name, texture, *_ in SPECS})
         for name, _, pattern, *_ in SPECS:
-            recipe = json.loads((ROOT / f'src/main/resources/data/gregtech/recipes/control_covers/{name}.json').read_text(encoding='utf-8'))
+            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gregtech/recipes/control_covers/{name}.json')).read_text(encoding='utf-8'))
             self.assertEqual(recipe['pattern'], pattern)
             self.assertEqual(set(recipe['key']), set(''.join(pattern)) - {' '})
             self.assertEqual(recipe['type'], 'gregtech:tool_shaped')

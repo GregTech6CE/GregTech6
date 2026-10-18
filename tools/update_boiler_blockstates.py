@@ -1,8 +1,15 @@
 #!/usr/bin/env python3
 """Update boiler blockstate JSONs to include HORIZONTAL_FACING variants."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import json, os
 
-BASE = "src/main/resources/assets/gregtech"
+BASE = str(native_path("src/main/resources/assets/gregtech"))
 BS_DIR = os.path.join(BASE, "blockstates")
 
 updated = 0

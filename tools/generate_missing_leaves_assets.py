@@ -23,6 +23,14 @@ Usage:
   python tools/generate_missing_leaves_assets.py --check     # fail when something is missing
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import io
 import json
@@ -32,8 +40,8 @@ import sys
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, 'src', 'main', 'resources', 'assets', 'gregtech')
-GT6_ICONS = os.path.join('F:\\', 'Dev', 'GregTech6', 'gregtech6-master', 'gregtech6-master', 'src',
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
+GT6_ICONS = os.path.join('F:\\', 'Dev', 'GregTech6', 'gregtech6-master', 'gregtech6-master', str(native_path('src')),
                          'main', 'resources', 'assets', 'gregtech', 'textures', 'blocks', 'iconsets')
 
 # species -> (source texture in GT6, synthesised?, species colour for the synthesised ones)

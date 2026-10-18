@@ -1,4 +1,12 @@
 """GT6 advanced crafting table assets. Original textures: GregTech-6 Team, LGPL-3.0-or-later."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import json, re, hashlib
 from generate_reinforced_chest_assets import specs, ROOT, ASSETS, ORIGINAL
 
@@ -11,7 +19,7 @@ def generate(assets=ASSETS):
     for layer in ('colored','overlay'):
         for part in ('bottom','top','front','back','side'):
             relative=f'textures/block/machines/craftingtables/advanced/{layer}/{part}.png'
-            source=f'src/main/resources/assets/gregtech/textures/blocks/machines/craftingtables/advanced/{layer}/{part}.png'
+            source=str(native_path(f'src/main/resources/assets/gregtech/textures/blocks/machines/craftingtables/advanced/{layer}/{part}.png'))
             p=assets/relative; p.parent.mkdir(parents=True,exist_ok=True); p.write_bytes((ORIGINAL/source).read_bytes())
             textures[relative]={'source':source,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
     opposite={'down':'up','up':'down','north':'south','south':'north','west':'east','east':'west'}
@@ -50,7 +58,7 @@ def generate(assets=ASSETS):
         for key,values in tooltips.items():data[key]=values[0 if locale=='en_us' else 1]
         write(f'lang/{locale}.json',data)
     relative='textures/gui/machines/advanced_crafting_table.png'
-    source='src/main/resources/assets/gregtech/textures/gui/machines/AdvancedCraftingTable.png'
+    source=str(native_path('src/main/resources/assets/gregtech/textures/gui/machines/AdvancedCraftingTable.png'))
     target=assets/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes((ORIGINAL/source).read_bytes())
     textures[relative]={'source':source,'sha256':hashlib.sha256(target.read_bytes()).hexdigest()}
     return textures

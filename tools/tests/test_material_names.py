@@ -1,4 +1,11 @@
 """Small source-parser contracts; runtime naming is checked separately in shared Java."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 from pathlib import Path
 import sys
 import unittest
@@ -36,7 +43,7 @@ if (aMaterial == MT.Empty) {if (aPrefix == OP.bulletGtSmall) return "Small Bulle
 
     def test_exported_native_template_must_match_original_source(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
-            root=Path(folder);base=root/'src/main/java/gregapi'
+            root=Path(folder);base=native_path(root/'src/main/java/gregapi')
             for name in ('data','oredict','lang'):(base/name).mkdir(parents=True)
             (base/'data/OP.java').write_text('dust = create("dust", "Dusts", "", " Dust");')
             (base/'oredict/OreDictPrefix.java').write_text('add(MATERIAL_BASED, UNIFICATABLE, ORE, TOOLTIP_ENCHANTS);')

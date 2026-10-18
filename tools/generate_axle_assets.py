@@ -6,6 +6,14 @@ them with the connected, animated 3D models during client model baking.
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import json
 import re
@@ -13,9 +21,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 GT6 = ROOT.parent / "gregtech6-master/gregtech6-master"
-GT6_SOURCE = GT6 / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java"
+GT6_SOURCE = native_path(GT6 / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java")
 CHINESE = ROOT.parent / "GregTech.lang"
 
 # Resource ID, original multitileentity ID, and original English material name.
@@ -145,7 +153,7 @@ def main() -> None:
         model = json.loads(path.read_text(encoding="utf-8") if args.check else files[path])
         for texture in model.get("textures", {}).values():
             namespace, resource = texture.split(":", 1)
-            texture_path = ROOT / "src/main/resources/assets" / namespace / "textures" / f"{resource}.png"
+            texture_path = native_path(ROOT / "src/main/resources/assets" / namespace / "textures" / f"{resource}.png")
             if not texture_path.is_file():
                 raise SystemExit(f"Missing axle texture: {texture_path}")
     print("Checked 52 GT6 axles: 156 model/blockstate files, 52 exact Chinese names, all textures present.")

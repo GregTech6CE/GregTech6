@@ -22,6 +22,13 @@ Usage:
   python tools/audit_missing_models.py --quiet    # only the summary line
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import collections
 import io
@@ -30,7 +37,7 @@ import os
 import re
 import sys
 
-ASSETS = os.path.join('src', 'main', 'resources', 'assets')
+ASSETS = os.path.join(str(native_path('src')), 'main', 'resources', 'assets')
 # Forward slashes on purpose: `rel` below is normalised with `replace('\\', '/')`, so an
 # os.path.join() built prefix never matches on Windows and silently skipped every model file.
 MODEL_DIRS = ('blockstates', 'models/block', 'models/item')

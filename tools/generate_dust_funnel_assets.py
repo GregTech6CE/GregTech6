@@ -1,4 +1,12 @@
 """GT6 MultiTileEntityDustFunnel six render passes, empty top texture and metal tint."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[1]
@@ -24,6 +32,6 @@ def model(loader):
             "textures":{"particle":"gregtech:block/machines/tools/dust_funnel/colored/top"},
             "display":{"gui":{"rotation":[30,225,0],"translation":[0,0,0],"scale":[.625,.625,.625]}}}
 if __name__=="__main__":
-    for base,loader in (("src","forge"),("neoforge/src","neoforge")):
+    for base,loader in ((str(native_path("src")),"forge"),(str(native_path("neoforge/src")),"neoforge")):
         path=ROOT/base/"main/resources/assets/gregtech/models/block/machine/tool/dust_funnel.json"
         path.write_text(json.dumps(model(loader),indent=2)+"\n",encoding="utf-8")

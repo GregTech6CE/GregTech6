@@ -1,4 +1,12 @@
 """GT6 mechanical/key-safe assets and standard Chinese; original PNGs are LGPL-3.0-or-later."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import json
 import re
 import hashlib
@@ -20,7 +28,7 @@ def generate(assets=ASSETS):
             entries={}
             for face in ('front','back','side'):
                 relative=f'textures/block/machines/safes/{kind}/{layer}{phase}/{face}.png'
-                source=f'src/main/resources/assets/gregtech/textures/blocks/machines/safes/{kind}/{layer}{phase}/{face}.png'
+                source=str(native_path(f'src/main/resources/assets/gregtech/textures/blocks/machines/safes/{kind}/{layer}{phase}/{face}.png'))
                 p=assets/relative
                 p.parent.mkdir(parents=True,exist_ok=True)
                 p.write_bytes((ORIGINAL/source).read_bytes())

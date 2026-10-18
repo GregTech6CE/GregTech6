@@ -1,4 +1,11 @@
 """Verify the original creative-tab naming path before reading its arguments."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import re
 
@@ -17,7 +24,7 @@ def creative_name_sources(original):
         'gregapi/oredict/OreDictPrefix.java': (
             'mNameCategory=aCategoryName;',),
     }
-    files = [original / 'src/main/java' / path for path in snippets]
+    files = [native_path(original / 'src/main/java' / path) for path in snippets]
     if not any(path.exists() for path in files):
         return []  # Minimal fixtures without a creative-tab subsystem.
     for path, required in zip(files, snippets.values()):
@@ -34,8 +41,8 @@ def unused_prefix_names(original, op):
     rows = re.findall(r'\b\w+\s*=\s*unused\(\s*(' + STRING + r')\s*\)([^;\n]*)', op)
     if not rows:
         return {}, []
-    helper = original / 'src/main/java/gregapi/oredict/OreDictPrefix.java'
-    proxy = original / 'src/main/java/gregapi/GT_API_Proxy_Client.java'
+    helper = native_path(original / 'src/main/java/gregapi/oredict/OreDictPrefix.java')
+    proxy = native_path(original / 'src/main/java/gregapi/GT_API_Proxy_Client.java')
     required = {
         helper: ('String tName = aName.replaceAll(" ", "").replaceAll("-", "");',
                  'return rPrefix == null ? new OreDictPrefix(tName, aName) : rPrefix;',

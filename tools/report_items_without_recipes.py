@@ -13,6 +13,13 @@ Usage: python tools/report_items_without_recipes.py [--all]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 import re
@@ -20,8 +27,8 @@ import sys
 from collections import Counter
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-RESOURCES = os.path.join(ROOT, "src", "main", "resources")
-ITEM_SOURCE = os.path.join(ROOT, "src", "main", "java", "com", "gregtech", "gregtech", "registry",
+RESOURCES = os.path.join(ROOT, str(native_path("src")), "main", "resources")
+ITEM_SOURCE = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry",
                            "GTTechnological.java")
 
 # families that are deliberately craftless (see docs/PORTING_REMAINING_2026-09-14.md)

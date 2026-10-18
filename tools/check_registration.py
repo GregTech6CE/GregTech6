@@ -3,6 +3,13 @@
 The ModList fixture models only mod presence; this is not a Forge launch test.
 Usage: python tools/check_registration.py [--offline]
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import os
 import subprocess
@@ -25,7 +32,7 @@ def main():
         subprocess.run([str(wrapper), 'compileJava', 'registrationContractClasspath',
                         '--console=plain', '-I', str(init), *sys.argv[1:]], cwd=ROOT, check=True)
         cp = classpath_file.read_text(encoding='utf-8')
-        anvil_test = ROOT / 'src/test/java/com/gregtech/gregtech/client/AnvilRenderContracts.java'
+        anvil_test = native_path(ROOT / 'src/test/java/com/gregtech/gregtech/client/AnvilRenderContracts.java')
         fixture = temp / 'ModList.java'
         fixture.write_text('''package net.minecraftforge.fml;
 public final class ModList {
@@ -36,7 +43,7 @@ public final class ModList {
     }
 }
 ''', encoding='utf-8')
-        test = ROOT / 'src/test/java/com/gregtech/gregtech/registration/RegistrationContracts.java'
+        test = native_path(ROOT / 'src/test/java/com/gregtech/gregtech/registration/RegistrationContracts.java')
         client_test = test.with_name('ClientModelContracts.java')
         tool_test = test.with_name('ToolInteractionContracts.java')
         piston_test = test.with_name('PistonEngineContracts.java')

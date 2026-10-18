@@ -8,12 +8,20 @@ material-tinted rendering. Here we synthesize each set offline: the limestone se
 the stone material's color from GT6Materials.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import os
 
 from PIL import Image, ImageOps
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-STONES = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech", "textures", "block", "stones")
+STONES = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech", "textures", "block", "stones")
 BASE = os.path.join(STONES, "gt.stone.limestone")
 
 # stone id -> (texture folder, material color from GT6Materials)

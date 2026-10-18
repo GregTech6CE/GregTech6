@@ -1,6 +1,14 @@
 """Import GT6 item data and derive modern crafting compositions from the local 1.20.1 assets.
 No network dependencies. GT6 source rows always take precedence over modern conventions.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 from fractions import Fraction as F
 import re,json,zipfile,ast,operator
@@ -216,7 +224,7 @@ def build():
                 new[name]={'components':components,'source':'Minecraft 1.20.1 recipe: '+key,'recoverable':False}
         if not new:break
         rows.update(new)
-    path=ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json'
+    path=native_path(ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json')
     path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(rows,indent=2,ensure_ascii=False,sort_keys=True)+'\n',encoding='utf-8')
     (ROOT/'docs/vanilla-composition-render-variants.txt').write_text('\n'.join(sorted(ids-rows.keys())),encoding='utf-8')
     print(f'{len(rows)} mapped model/item IDs; {len(ids-rows.keys())} unclassified models (includes render variants)')

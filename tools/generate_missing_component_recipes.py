@@ -18,12 +18,19 @@ Usage: python tools/generate_missing_component_recipes.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT_DIR = os.path.join(ROOT, "src", "main", "resources", "data", "gregtech", "recipes", "components")
+OUT_DIR = os.path.join(ROOT, str(native_path("src")), "main", "resources", "data", "gregtech", "recipes", "components")
 
 # MT.DATA.Electric_T (MT.java:3690) - the port's material *name* per GT6 voltage tier
 ELECTRIC_T_NAME = ["TinAlloy", "SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium",

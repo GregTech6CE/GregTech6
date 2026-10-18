@@ -15,11 +15,19 @@ Output : src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import re
 from pathlib import Path
 
-JAVA = Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech"
+JAVA = native_path(Path(__file__).resolve().parents[1] / "src/main/java/com/gregtech/gregtech")
 SOURCE_JSON = Path(__file__).with_name("gt6_multiblock_recipes.json")
 LOGISTICS_SOURCE_JSON = Path(__file__).with_name("gt6_logistics_core_recipe.json")
 LOGISTICS_WIRE_JSON = Path(__file__).with_name("gt6_logistics_wire_recipe.json")

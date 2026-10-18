@@ -4,6 +4,8 @@
 
 一个面向现代 Minecraft 的 GregTech 6 社区整合项目，通过共享核心和各自的 Forge、NeoForge 平台实现持续移植与开发。
 
+当前实验分支使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，详见[迁移与生成器说明](docs/integration/STONECUTTER_MIGRATION.md)。
+
 ## 项目介绍
 
 GregTech 6 Community Edition 整合了 **saltnya 的 gregtech6reborn**、**brokestar233 的 gregtech6** 和 **lombinaxmasson 的 cruciblecraft** 三个项目的工作。项目以 saltnya 的实现作为初始内容基准，逐项比较并吸收三个移植项目的完善部分。
@@ -50,24 +52,24 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 Forge 1.20.1：
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar
+.\gradlew.bat --console=plain :multiversion:1.20.1-forge:distributionJar
 ```
 
 NeoForge 1.21.1：
 
 ```powershell
-.\gradlew.bat --console=plain :neoforge:jar
+.\gradlew.bat --console=plain :multiversion:1.21.1-neoforge:jar
 ```
 
 两个版本：
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar :neoforge:jar
+.\gradlew.bat --console=plain :assembleBothPlatforms
 ```
 
 Linux 或 macOS 使用相同的环境变量，以 `./gradlew` 替代 `.\gradlew.bat`。必要时先执行 `chmod +x gradlew`。
 
-Forge 最终产物位于 `build/libs/`，NeoForge 最终产物位于 `neoforge/build/libs/`。Forge 的 `build/forge-intermediates/` 目录存放中间产物。模组版本在 `gradle.properties` 中配置。
+Forge 最终产物位于 `multiversion/versions/1.20.1-forge/build/libs/`，NeoForge 最终产物位于 `multiversion/versions/1.21.1-neoforge/build/libs/`。Forge 的 `multiversion/versions/1.20.1-forge/build/forge-intermediates/` 目录存放中间产物。模组版本在 `gradle.properties` 中配置。
 
 完整环境配置、更多构建选项及 Git 交接步骤见 [BUILDING.md](docs/work/BUILDING.md)。
 
@@ -85,8 +87,8 @@ Forge 开发命令：
 NeoForge 开发命令：
 
 ```powershell
-.\gradlew.bat :neoforge:runClient
-.\gradlew.bat :neoforge:runServer
+.\gradlew.bat :multiversion:1.21.1-neoforge:runClient
+.\gradlew.bat :multiversion:1.21.1-neoforge:runServer
 ```
 
 每条命令分别执行。服务器环境需要接受 Minecraft EULA。已有 Windows 辅助脚本也可运行共享核心检查并构建两个平台：
@@ -99,9 +101,8 @@ NeoForge 开发命令：
 
 ```text
 GregTech6/
-├── src/                  Forge 平台代码与资源
+├── multiversion/         Stonecutter 共同原生源码与版本覆盖
 ├── core/                 共享逻辑、数据与资源
-├── neoforge/             NeoForge 平台代码与资源
 ├── gradle/               Gradle wrapper
 ├── scripts/              构建与开发辅助脚本
 ├── .github/workflows/    双平台 CI

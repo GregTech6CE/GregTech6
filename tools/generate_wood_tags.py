@@ -6,10 +6,17 @@ Without these tags vanilla's LeavesBlock never finds a log near a GT6 leaf, so i
 7 and the leaf decays — the bug that made naturally grown GT6 trees lose their leaves.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 
-DATA = os.path.join("src", "main", "resources", "data", "minecraft", "tags", "blocks")
+DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "minecraft", "tags", "blocks")
 SPECIES = ["rubber", "maple", "rainbowood", "willow", "blue_mahoe",
            "hazel", "cinnamon", "coconut", "bluespruce",
            "pine", "ebony", "white_mahoe"]

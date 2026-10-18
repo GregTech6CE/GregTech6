@@ -7,6 +7,14 @@ per-dimension tables in GTOreVeins; this prints the per-dimension diff.
 Usage: python tools/extract_gt6_large_ores.py [--json out.json]
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import json
 import os
@@ -14,7 +22,7 @@ import re
 import sys
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregtech\loaders\b\Loader_Worldgen.java"
-PORT = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTOreVeins.java")
+PORT = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTOreVeins.java")
 DIMS = ["GEN_OVERWORLD", "GEN_NETHER", "GEN_END"]
 # WorldgenOresLarge gets its dimension membership from the ORE_* lists at the end of the call.
 ORE_SETS = {"OVERWORLD": "ORE_OVERWORLD", "NETHER": "ORE_NETHER", "END": "ORE_END"}

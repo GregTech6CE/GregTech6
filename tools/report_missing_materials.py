@@ -11,13 +11,20 @@ Usage:  python tools/report_missing_materials.py [--limit N]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import pathlib
 import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-JAVA = ROOT / "src/main/java"
+JAVA = native_path(ROOT / "src/main/java")
 REPORT = ROOT / "docs/gt6-form-flags.json"
 
 PORT_DECL = re.compile(r'(?:GTMaterial|MaterialDefinition)\s+(\w+)\s*=\s*[\w.]+\s*\(\s*(\d{1,5})\s*,\s*"([^"]+)"')

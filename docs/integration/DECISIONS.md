@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-18 / 全部原生内容交由 Stonecutter 版本节点
+
+按用户“不要试点，直接完全迁移”的新要求，撤销此前只导出 EMI 源码的临时结构。根项目改为聚合，两个 Stonecutter 版本节点直接持有 ForgeGradle／ModDevGradle 的编译、资源、打包和运行任务；旧 `src`、`neoforge/src` 不再独立维护。所有原生源集纳入共同条件源码或真实版本专有覆盖，core 继续只含共享纯 Java 领域与资源。
+
+冻结签名用于证明本次迁移没有修改代码、字面量和资源；日常 CI 的当前清单检查允许后续正常功能修改。旧文本工具消费生成视图，成功的原生生成改动经统一入口回写受管理树；普通编译直接消费 Stonecutter 生成输出。复合模型 loader 采用双向、仅针对 JSON 文档的替换，支持活动版本切换，不改 Java 文本块示例。Stonecutter 仅为构建依赖，不进入模组 JAR。见 [完整说明](STONECUTTER_MIGRATION.md)。
+
 ## 2026-10-18 / 独立分支接入 Stonecutter
 
 先以 EMI 12 对类验证单份原生源码管理：相同代码共享，四个 API 差异类用版本条件；不将原生 Minecraft 类型塞入 core。两个源码节点只导出带任务依赖的生成目录，由现有原生项目编译和打包，避免重复模组／重复 core。保留 0.7.11 与现有 Gradle 8.8；代码和字符串签名验证迁移保持行为，CI 浅克隆可运行。试点只在 `experiment/stonecutter-emi`，后续扩面与合并不在本轮自动执行范围。见[试验记录](verification/stonecutter-emi-20261018.md)。

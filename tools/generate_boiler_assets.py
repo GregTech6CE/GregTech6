@@ -6,11 +6,18 @@ model (colored + overlay layers, material tint via the block/item colour
 handler); each id gets a blockstate + item model pointing at it, plus lang.
 Textures already live in the port (machines/tanks/boiler_steam)."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, "src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "boiler")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")

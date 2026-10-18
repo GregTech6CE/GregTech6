@@ -6,6 +6,14 @@ Unknown automatic ore data is retained in the audit, rather than assigned 1U.
 """
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import ast
 from collections import Counter
@@ -83,7 +91,7 @@ def main():
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--smeltery-out', type=Path)
     ns = ap.parse_args()
-    root = ns.source / 'src/main/java'
+    root = native_path(ns.source / 'src/main/java')
     relative = ['gregtech/loaders/b/Loader_MultiTileEntities.java', 'gregtech/items/MultiItemTechnological.java',
                 'gregapi/data/MT.java', 'gregapi/data/ANY.java', 'gregapi/data/OP.java',
                 'gregapi/load/LoaderItemData.java', 'gregapi/load/LoaderOreDictReRegistrations.java']

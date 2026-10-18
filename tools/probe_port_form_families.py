@@ -9,10 +9,17 @@ Usage:  python tools/probe_port_form_families.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import pathlib
 import re
 
-SRC = pathlib.Path("src/main/java")
+SRC = native_path(pathlib.Path("src/main/java"))
 FAMILIES = {
     "pipe": r'"pipe|pipeSmall|pipeMedium|pipeLarge|pipeHuge|pipeNonuple|pipeQuadruple',
     "cable": r'"cable|cableGt|cable_0|cable01',

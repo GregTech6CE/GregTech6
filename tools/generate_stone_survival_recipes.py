@@ -1,6 +1,14 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import json
-base=Path('src/main/resources');out=base/'data/gregtech/recipes/stone_survival';out.mkdir(exist_ok=True)
+base=native_path(Path('src/main/resources'));out=base/'data/gregtech/recipes/stone_survival';out.mkdir(exist_ok=True)
 count=0
 for file in (base/'assets/gregtech/models/item').glob('stone_*_stone.json'):
  family=file.stem[:-6]

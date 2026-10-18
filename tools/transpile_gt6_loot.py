@@ -1,4 +1,4 @@
-﻿"""Transpile GT6's ``Loader_Loot`` rows into the port's item-spec format.
+"""Transpile GT6's ``Loader_Loot`` rows into the port's item-spec format.
 
 GT6 fills its chests from loot tables it defines with ``addLoot(table, weight, min, max, stack)``
 (``gregtech/loaders/c/Loader_Loot.java``, 575 rows). Two kinds of table appear there:
@@ -33,14 +33,21 @@ Usage:  python tools/transpile_gt6_loot.py
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import pathlib
 import re
 
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 SOURCE = GT6 / "gregtech/loaders/c/Loader_Loot.java"
-OUT_JAVA = pathlib.Path(
-    "src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java")
+OUT_JAVA = native_path(pathlib.Path(
+    "src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java"))
 OUT_JSON = pathlib.Path("docs/gt6-loot-rows.json")
 
 ROW = re.compile(

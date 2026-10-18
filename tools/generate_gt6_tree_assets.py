@@ -12,10 +12,17 @@ Two jobs:
    block state (missing model). ``log_*``/``beam_*`` (axis) and ``planks_*`` were already correct.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import json
 import os
 
-ASSETS = os.path.join("src", "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
 SPECIES = ["rubber", "maple", "rainbowood", "willow", "blue_mahoe",
            "hazel", "cinnamon", "coconut", "bluespruce",
            "pine", "ebony", "white_mahoe"]

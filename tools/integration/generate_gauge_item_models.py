@@ -1,4 +1,12 @@
 """Bake the existing idle boiler dial into inventory-only models on both loaders."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 from pathlib import Path
 import argparse,copy,json
 ROOT=Path(__file__).resolve().parents[2]
@@ -8,7 +16,7 @@ def put(path,obj):
  if a.check:assert path.read_text(encoding='utf-8')==text,path
  else:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(text,encoding='utf-8')
 count=0
-for platform in ['src','neoforge/src']:
+for platform in [str(native_path('src')),str(native_path('neoforge/src'))]:
  models=ROOT/platform/'main/resources/assets/gregtech/models/block/machine'
  boiler=json.loads((models/'boiler/steam_boiler_inventory.json').read_text(encoding='utf-8'))
  children=boiler.get('children',boiler.get('parts'))

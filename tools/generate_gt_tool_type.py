@@ -1,5 +1,12 @@
 """Generate GTToolType.java from GT6 manual tool list (user order)."""
 from __future__ import annotations
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import os
 
 # (enum_name, id, gt6_id, head_prefix|null, icon|null, handle|null,
@@ -224,7 +231,7 @@ footer = '''
 
 lines = [emit_enum(t) for t in TOOLS]
 out = header + "\n".join(lines) + footer
-path = os.path.join(os.path.dirname(__file__), "..", "src", "main", "java", "com", "gregtech", "gregtech", "api", "tool", "GTToolType.java")
+path = os.path.join(os.path.dirname(__file__), "..", str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "api", "tool", "GTToolType.java")
 with open(path, "w", encoding="utf-8", newline="\n") as f:
     f.write(out)
 print("wrote", path, len(TOOLS), "tools")

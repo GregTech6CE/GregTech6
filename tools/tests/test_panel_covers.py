@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import json
 import re
@@ -17,7 +24,7 @@ class PanelCoverResources(unittest.TestCase):
         self.assertEqual(issues,[])
 
     def test_every_runtime_panel_has_model_recipe_and_bilingual_help(self):
-        source=(ROOT/'src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java').read_text(encoding='utf-8')
+        source=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java')).read_text(encoding='utf-8')
         ids=set(re.findall(r'[A-Z_]+\("([a-z_]+)"\)',source))
         self.assertEqual(ids,set(MODELS));self.assertEqual(ids,set(RECIPES))
         for lang in ['en_us','zh_cn']:
@@ -30,13 +37,13 @@ class PanelCoverResources(unittest.TestCase):
 
     def test_shaped_patterns_and_source_component_distinctions(self):
         for name,(pattern,_) in RECIPES.items():
-            data=json.loads((ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json').read_text(encoding='utf-8'))
+            data=json.loads((native_path(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json')).read_text(encoding='utf-8'))
             self.assertEqual(data['pattern'],pattern)
             self.assertEqual(set(data['key']),set(''.join(pattern))-{' '})
             self.assertEqual(data['result']['item'],'gregtech:'+name)
-        source=(ROOT/'src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java').read_text(encoding='utf-8')
+        source=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java')).read_text(encoding='utf-8')
         # Dedicated client snapshots are required: these blocks have no open menu for syncing covers.
-        extender=(ROOT/'src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java').read_text(encoding='utf-8')
+        extender=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java')).read_text(encoding='utf-8')
         self.assertIn('getUpdatePacket()',extender)
         self.assertIn('sendBlockUpdated',source)
 

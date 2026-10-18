@@ -3,6 +3,14 @@
 Read-only canonical/_w sources. This importer never creates a second recipe set:
 OriginalMagnetCrafting supplies both native registries under the retained recipe IDs.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import hashlib
 import json
@@ -22,7 +30,7 @@ def main():
     ap.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[2])
     ap.add_argument('--audit', type=Path, required=True)
     ns = ap.parse_args()
-    loader = ns.source/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
+    loader = native_path(ns.source/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
     rows = re.findall(r'aRegistry\.add\(([^,\n]+),\s*"([^"]+)"\s*,\s*([^,]+)\s*,\s*(\d+)\s*,\s*([\w.]+)', loader.read_text(encoding='utf-8'))
     chinese = dict(line.lstrip()[2:].split('=', 1) for line in ns.zh_patch.read_text(encoding='utf-8').splitlines()
                    if line.lstrip().startswith('S:') and '=' in line)
@@ -36,8 +44,8 @@ def main():
         for layer in ('colored', 'overlay', 'overlay_active'):
             for face in ('front', 'back', 'side'):
                 rel = f'assets/gregtech/textures/blocks/machines/{folder}/{layer}/{face}.png'
-                canonical = ns.source/'src/main/resources'/rel
-                donor = canonical if canonical.is_file() else ns.comparison/'src/main/resources'/rel
+                canonical = native_path(ns.source/'src/main/resources'/rel)
+                donor = canonical if canonical.is_file() else native_path(ns.comparison/'src/main/resources'/rel)
                 target = ns.repo/f'core/src/main/resources/assets/gregtech/textures/block/machines/{folder}/{layer}/{face}.png'
                 if not target.is_file() or not donor.is_file() or sha(target) != sha(donor):
                     raise ValueError('Existing magnet asset needs inspection: ' + str(target))
@@ -53,7 +61,7 @@ def main():
             locales['en_us'][key], locales['zh_cn'][key] = name, chinese[source_key]
             variants.append({'id': id, 'source_id': source_id, 'source_key': source_key, 'en_us': name,
                              'zh_cn': chinese[source_key], 'source_order': ordinal, 'creative_family': 'magnets'})
-            for platform in ('src', 'neoforge/src'):
+            for platform in (str(native_path('src')), str(native_path('neoforge/src'))):
                 root = ns.repo/platform/'main/resources/assets/gregtech'
                 state_path = root/f'blockstates/{id}.json'
                 states = json.loads(state_path.read_text())['variants']

@@ -2,6 +2,14 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import json
 import re
@@ -9,12 +17,12 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java"
 SOURCE = ORIGINAL / "gregtech/loaders/b/Loader_MultiTileEntities.java"
 VOLTAGES = ORIGINAL / "gregapi/data/CS.java"
 CHINESE = ROOT.parent / "GregTech.lang"
-REGISTRY = ROOT / "src/main/java/com/gregtech/gregtech/registry/GTEngines.java"
+REGISTRY = native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTEngines.java")
 
 # Keep the four existing registry names, including tungsten_steel's underscore.
 TIERS = (
@@ -108,7 +116,7 @@ def check_textures() -> None:
         for layer in model["children"].values():
             for texture in layer["textures"].values():
                 namespace, resource = texture.split(":", 1)
-                path = ROOT / "src/main/resources/assets" / namespace / "textures" / f"{resource}.png"
+                path = native_path(ROOT / "src/main/resources/assets" / namespace / "textures" / f"{resource}.png")
                 if not path.is_file():
                     raise ValueError(f"Missing rotation-engine texture: {path}")
 

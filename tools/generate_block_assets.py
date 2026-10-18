@@ -3,12 +3,20 @@
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS = ASSETS / "models/block"
 ITEM_MODELS = ASSETS / "models/item"
@@ -455,7 +463,7 @@ def main() -> None:
 
     print(f"Shared material block models: {shared_models}, blockstates: {blockstates}, partial crate assets updated: {partial_assets}, stone blocks: {stone_count}, stone slabs: {slab_count}, item models: {item_models}")
 
-    tags_root = ROOT / "src/main/resources/data"
+    tags_root = native_path(ROOT / "src/main/resources/data")
     stone_ids = [f"gregtech:stone_{stone}_{variant}" for stone in STONE_TYPES for variant in STONE_VARIANTS]
     slab_ids = [f"gregtech:stone_{stone}_{variant}_slab" for stone in STONE_TYPES for variant in STONE_VARIANTS]
     write_json(tags_root / "gregtech/tags/blocks/stone_blocks.json", {"values": stone_ids + slab_ids})

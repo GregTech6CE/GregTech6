@@ -1,4 +1,12 @@
 """Original15 small steam turbines: read-only names, order, selected source assets and native visuals."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse,copy,hashlib,itertools,json,re
 from pathlib import Path
 
@@ -13,7 +21,7 @@ def main():
     ap=argparse.ArgumentParser()
     for name in ('source','comparison','zh-patch','audit'):ap.add_argument('--'+name,type=Path,required=True)
     ap.add_argument('--repo',type=Path,default=Path(__file__).resolve().parents[2]);ns=ap.parse_args()
-    loader=ns.source/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
+    loader=native_path(ns.source/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
     rows=re.findall(r'aRegistry\.add\(([^,\n]+),\s*"([^"]+)"\s*,\s*([^,]+)\s*,\s*(\d+)\s*,\s*([\w.]+)',loader.read_text(encoding='utf-8'))
     chinese=dict(line.lstrip()[2:].split('=',1) for line in ns.zh_patch.read_text(encoding='utf-8').splitlines() if line.lstrip().startswith('S:') and '=' in line)
     langs={k:json.loads((ns.repo/f'core/src/main/resources/assets/gregtech/lang/{k}.json').read_text(encoding='utf-8')) for k in ('en_us','zh_cn')}
@@ -21,8 +29,8 @@ def main():
     for layer in ('colored','overlay','overlay_active_ls','overlay_active_lf','overlay_active_rs','overlay_active_rf'):
         for face in ('front','back','side'):
             rel=f'assets/gregtech/textures/blocks/machines/turbines/rotation_steam/{layer}/{face}.png'
-            canonical=ns.source/'src/main/resources'/rel
-            donor=canonical if canonical.is_file() else ns.comparison/'src/main/resources'/rel
+            canonical=native_path(ns.source/'src/main/resources'/rel)
+            donor=canonical if canonical.is_file() else native_path(ns.comparison/'src/main/resources'/rel)
             target=ns.repo/f'core/src/main/resources/assets/gregtech/textures/block/machines/turbines/rotation_steam/{layer}/{face}.png'
             for orig,out in [(donor,target),(Path(str(donor)+'.mcmeta'),Path(str(target)+'.mcmeta'))]:
                 if not orig.is_file():
@@ -37,7 +45,7 @@ def main():
         source_key=f'gt.multitileentity.{source_id}'
         langs['en_us']['block.gregtech.'+id]='Steam Turbine ('+name+')';langs['zh_cn']['block.gregtech.'+id]=chinese[source_key]
         variants[id]={'source_id':source_id,'source_key':source_key,'name':'Steam Turbine ('+name+')','zh_cn':chinese[source_key],'source_order':ordinal}
-        for platform in ('src','neoforge/src'):
+        for platform in (str(native_path('src')),str(native_path('neoforge/src'))):
             root=ns.repo/platform/'main/resources/assets/gregtech'
             base=json.loads((root/'models/block/machine/energy/steam_turbine_bronze.json').read_text(encoding='utf-8'))
             if base['loader']!=('forge:composite' if platform=='src' else 'neoforge:composite'):raise ValueError('platform loader')

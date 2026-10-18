@@ -1,10 +1,17 @@
 """Print the port's vein-table order and the GT6 registration order, for insertion parity."""
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import json
 import re
 
-PORT = "src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java"
+PORT = str(native_path("src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java"))
 text = io.open(PORT, encoding="utf-8").read()
 
 

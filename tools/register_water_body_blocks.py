@@ -9,12 +9,19 @@ GT6 renders every waterlike block with **vanilla water's icon** (`BlockWaterlike
 textures — no new art.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import json
 import os
 
-LOADER = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "loaders", "a", "Loader_Fluids.java")
-ASSETS = os.path.join("src", "main", "resources", "assets", "gregtech")
+LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "a", "Loader_Fluids.java")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
 LANG = os.path.join(ASSETS, "lang")
 
 # path (GT6 fluid registry name) -> (english, chinese)

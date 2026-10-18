@@ -18,13 +18,13 @@ final class EmiCatalogRepair {
             if (!stack.getId().getNamespace().equals("gregtech")) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
-/*            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
+            /*var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
 *///?} else {
             var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolve(item);
 //?}
             sorted.add(fluid.isEmpty() ? stack : new FluidDisplayEmiStack(
 //? if >=1.21.1 {
-/*                    EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
+                    /*EmiStack.of(fluid.getFluid(), fluid.getComponentsPatch(), fluid.getAmount()), stack, true));
 *///?} else {
                     EmiStack.of(fluid.getFluid(), fluid.getTag(), fluid.getAmount()), stack, true));
 //?}

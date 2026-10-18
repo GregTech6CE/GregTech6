@@ -4,19 +4,27 @@
 wood-dictionary plank IDs that have a corresponding block in this 1.20.1 port.
 Normal regeneration needs only the checked-in manifest, not the original checkout.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
-MANIFEST = ROOT / "src/main/resources/data/gregtech/bookshelf_variants.json"
-RECIPES = ROOT / "src/main/resources/data/gregtech/recipes/bookshelves"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+MANIFEST = native_path(ROOT / "src/main/resources/data/gregtech/bookshelf_variants.json")
+RECIPES = native_path(ROOT / "src/main/resources/data/gregtech/recipes/bookshelves")
 ORIGINAL_LOADER = (ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java"
                    / "gregtech/loaders/b/Loader_MultiTileEntities.java")
-ALIASES = ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java"
-MATERIALS = ROOT / "src/main/java/com/gregtech/gregtech/content/material/generated"
+ALIASES = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java")
+MATERIALS = native_path(ROOT / "src/main/java/com/gregtech/gregtech/content/material/generated")
 
 # Index is PlankData.PLANKS[] in GT6 LoaderWoodDictionary. The GT6-owned trees
 # have shipped plank textures here. Third-party pine/ebony plank models currently

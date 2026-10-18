@@ -1,11 +1,18 @@
 """GT6 MultiItemTechnological 1003/1005/1006/1009-1013/1015-1019 (12 implemented covers)."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 import hashlib
 import json
 import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 SPECS = [
     ('automatic_machine_switch', 'autoswitch', ['BW', 'CQ'], 1, 'lever', None),
     ('redstone_machine_switch', 'redstoneswitch', ['BW', 'CQ'], 1, 'redstone_torch', None),
@@ -35,7 +42,7 @@ def main(original=None):
         ledger_path = ROOT / 'tools/gt6_texture_sources.json'
         ledger = json.loads(ledger_path.read_text(encoding='utf-8'))
         for texture in ['base'] + [s[1] + '/circuit' for s in SPECS]:
-            source = original / f'src/main/resources/assets/gregtech/textures/blocks/machines/covers/{texture}.png'
+            source = native_path(original / f'src/main/resources/assets/gregtech/textures/blocks/machines/covers/{texture}.png')
             relative = f'textures/block/machines/covers/{texture}.png'
             target = ASSETS / relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -54,7 +61,7 @@ def main(original=None):
         if extra:
             keys['X'] = 'minecraft:' + extra
         used = set(''.join(pattern)) - {' '}
-        write(ROOT / f'src/main/resources/data/gregtech/recipes/control_covers/{name}.json', {
+        write(native_path(ROOT / f'src/main/resources/data/gregtech/recipes/control_covers/{name}.json'), {
             'type': 'gregtech:tool_shaped', 'pattern': pattern,
             'key': {k: {'item': keys[k]} for k in sorted(used)}, 'result': {'item': 'gregtech:' + name}})
 

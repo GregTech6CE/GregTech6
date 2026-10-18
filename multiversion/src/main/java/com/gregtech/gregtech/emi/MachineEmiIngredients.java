@@ -19,7 +19,7 @@ final class MachineEmiIngredients {
     }
     EmiIngredient ingredient(ItemStack stack) {
 //? if >=1.21.1 {
-/*        if (!stack.getComponentsPatch().isEmpty()) return create(stack);
+        /*if (!stack.getComponentsPatch().isEmpty()) return create(stack);
 *///?} else {
         if (stack.hasTag()) return create(stack);
 //?}

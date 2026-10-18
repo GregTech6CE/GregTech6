@@ -21,6 +21,14 @@ Usage: python tools/extract_gt6_bottles.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import io
 import re
 import sys
@@ -29,8 +37,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 GT6 = Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 BOTTLES = GT6 / "gregtech/items/MultiItemBottles.java"
-PORT_GEN = ROOT / "src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java"
-OUT = ROOT / "src/main/java/com/gregtech/gregtech/data/generated/GTBottlesGen.java"
+PORT_GEN = native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java")
+OUT = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated/GTBottlesGen.java")
 
 ADD_ITEM = re.compile(r'addItem\(\s*(\d+)\s*,\s*"((?:\\.|[^"\\])*)"')
 # fluid expressions, in the priority order GT6's own FoodStatFluid reads them. GT6 aligns the calls

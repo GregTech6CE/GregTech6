@@ -6,6 +6,14 @@ the JSON resource paths for the port. Use --check to verify generated output.
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import json
 import re
@@ -14,13 +22,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GT6 = ROOT.parent / "gregtech6-master" / "gregtech6-master"
-ASSETS = ROOT / "src/main/resources/assets/gregtech"
-TEXTURE_SOURCE = GT6 / "src/main/resources/assets/gregtech/textures/blocks/machines/massstorage/logistics"
+ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+TEXTURE_SOURCE = native_path(GT6 / "src/main/resources/assets/gregtech/textures/blocks/machines/massstorage/logistics")
 TEXTURE_TARGET = ASSETS / "textures/block/machines/massstorage/logistics"
 
 
 def expected_files() -> dict[Path, bytes]:
-    metals = (ROOT / "src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java").read_text(encoding="utf-8")
+    metals = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java")).read_text(encoding="utf-8")
     suffixes = re.findall(r'new Spec\("([a-z_]+)"', metals)
     if len(suffixes) != 60 or len(set(suffixes)) != 60:
         raise ValueError(f"expected 60 unique GT6 metalset suffixes, found {len(suffixes)}")

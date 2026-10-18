@@ -18,13 +18,21 @@ Idempotent: a second run writes nothing and reports ``0`` for every counter.
 Usage: python tools/add_sensor_variants.py [--check]
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import io
 import json
 import os
 import sys
 
-SRC_RES = os.path.join("src", "main", "resources")
+SRC_RES = os.path.join(str(native_path("src")), "main", "resources")
 ASSETS = os.path.join(SRC_RES, "assets", "gregtech")
 TEXTURE_ROOT = os.path.join(ASSETS, "textures", "block", "machines", "redstone", "sensors")
 MODEL_ROOT = os.path.join(ASSETS, "models", "block", "machine", "sensor")
@@ -35,7 +43,7 @@ LANG_ROOT = os.path.join(ASSETS, "lang")
 # GT6's own texture tree; the mod's source tree first, the resource pack as the fallback.
 GT6_TEXTURE_ROOTS = [
     os.path.join("F:\\", "Dev", "GregTech6", "gregtech6-master", "gregtech6-master",
-                 "src", "main", "resources", "assets", "gregtech", "textures", "blocks",
+                 str(native_path("src")), "main", "resources", "assets", "gregtech", "textures", "blocks",
                  "machines", "redstone", "sensors"),
     os.path.join("F:\\", "Dev", "GregTech6", "GT6resourcepack", "gt6", "resources", "assets",
                  "gregtech", "textures", "blocks", "machines", "redstone", "sensors"),

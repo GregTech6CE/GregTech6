@@ -19,12 +19,19 @@ Usage::
     python tools/restore_multiblock_appearance.py          # write assets (idempotent)
     python tools/restore_multiblock_appearance.py --check  # verify only, exit 1 when incomplete
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import hashlib,json,shutil,sys
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
-ASSETS=ROOT/'src/main/resources/assets/gregtech'
-SOURCE=ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines'
+ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+SOURCE=native_path(ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines')
 MAINS={
     'large_boiler_main':'multiblockmains/largeboiler',
     'large_turbine_main':'multiblockmains/largeturbine',
@@ -116,7 +123,7 @@ def owned_directory(name):
 
 # The port's part table is the source of truth: every `new Part(id,"name","material")` is a block.
 import re as _re
-PARTS_SOURCE=ROOT/'src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java'
+PARTS_SOURCE=native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java')
 PART_NAMES=[m.group(1) for m in _re.finditer(r'new Part\(\d+,\s*"([a-z0-9_]+)"',
                                               PARTS_SOURCE.read_text(encoding='utf-8'))]
 # Parts whose blockstate still points at a stand-in model (`wood_wall` used the barrel model) but that

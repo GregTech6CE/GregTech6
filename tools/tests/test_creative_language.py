@@ -1,4 +1,11 @@
 """Check original tab constructors and loop-generated block names independently."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 from pathlib import Path
 import sys
 import tempfile
@@ -13,7 +20,7 @@ from source_language_common import counted_blocks
 class CreativeLanguageTests(unittest.TestCase):
     def source(self, directory):
         root = Path(directory)
-        java = root / 'src/main/java'
+        java = native_path(root / 'src/main/java')
         sources = {
             'gregapi/data/MT.java': 'Steel = metal(42, "Source Steel", 0).setLocal("Actual Steel");',
             'gregapi/data/CS.java': 'VN={"LOW","HIGH"};',

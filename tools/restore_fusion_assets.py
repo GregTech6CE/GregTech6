@@ -1,4 +1,11 @@
 """Original GT6 fusion controller and structural part assets, with material tint layers."""
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
 from pathlib import Path
 import json, shutil, hashlib, gzip, struct
 from tools.restore_laser_models import ROOT, ORIGINAL, ASSETS, SOURCE, write, cube, layer
@@ -61,7 +68,7 @@ def main():
     for i,locale in enumerate(['en_us','zh_cn']):
         path=ASSETS/f'lang/{locale}.json';data=json.loads(path.read_text(encoding='utf8'))
         data.update({k:v[i] for k,v in translations.items()});path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-    path=ROOT/'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json'
+    path=native_path(ROOT/'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json')
     data=json.loads(path.read_text(encoding='utf8'))
     for name in PARTS:
         if 'gregtech:'+name not in data['values']:data['values'].append('gregtech:'+name)
@@ -70,6 +77,6 @@ def main():
     def string(s):return struct.pack('>H',len(s))+s.encode()
     def named(kind,name,data):return bytes([kind])+string(name)+data
     nbt=named(10,'',named(3,'DataVersion',struct.pack('>i',3465))+named(9,'size',bytes([3])+struct.pack('>iiii',3,25,9,25))+named(9,'entities',bytes([10])+struct.pack('>i',0))+named(9,'blocks',bytes([10])+struct.pack('>i',0))+named(9,'palette',bytes([10])+struct.pack('>i',1)+named(8,'Name',string('minecraft:air'))+b'\x00')+b'\x00')
-    path=ROOT/'src/main/resources/data/gregtech/structures/test_fusion_empty.nbt';path.write_bytes(gzip.compress(nbt,mtime=0))
+    path=native_path(ROOT/'src/main/resources/data/gregtech/structures/test_fusion_empty.nbt');path.write_bytes(gzip.compress(nbt,mtime=0))
 
 if __name__=='__main__':main()

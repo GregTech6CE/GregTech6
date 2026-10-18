@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "baseline_commit": "4e39348c6",
+  "mode": "migration-baseline",
+  "tooling_java_checked": 2630,
+  "approved_test_output_updates": 14,
+  "source_sets": {
+    "forge": {
+      "bootstrapGameTest": 324,
+      "main": 1047,
+      "productionSmoke": 19,
+      "test": 10
+    },
+    "neoforge": {
+      "bootstrapGameTest": 93,
+      "main": 1118,
+      "productionSmoke": 19,
+      "test": 0
+    }
+  },
+  "resources": {
+    "forge": {
+      "bootstrapGameTest": 52,
+      "generated": 0,
+      "main": 7514,
+      "productionSmoke": 0,
+      "test": 0
+    },
+    "neoforge": {
+      "bootstrapGameTest": 41,
+      "generated": 0,
+      "main": 6684,
+      "productionSmoke": 0,
+      "test": 0
+    }
+  },
+  "failures": []
+}

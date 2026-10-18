@@ -3,6 +3,14 @@
 Only reads the supplied GT6 tree. Dry run unless --write; generated Java is pure
 domain code. Unknown source syntax fails rather than silently dropping branches.
 """
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
 import argparse
 import hashlib
 import json
@@ -107,7 +115,7 @@ def default_templates(prefixes, language):
 
 
 def generate(source):
-    paths={name:source/'src/main/java'/path for name,path in {
+    paths={name:native_path(source/'src/main/java'/path) for name,path in {
         'language':'gregapi/lang/LanguageHandler.java','mt':'gregapi/data/MT.java',
         'op':'gregapi/data/OP.java','any':'gregapi/data/ANY.java',
         'prefix':'gregapi/oredict/OreDictPrefix.java','constants':'gregapi/data/CS.java'}.items()}

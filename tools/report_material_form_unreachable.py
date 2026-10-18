@@ -11,12 +11,19 @@ Usage:  python tools/report_material_form_unreachable.py [--limit N]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import pathlib
 import re
 import sys
 
-PORT_MATERIALS = pathlib.Path("src/main/java/com/gregtech/gregtech/content/material")
-FORMS = pathlib.Path("src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java")
+PORT_MATERIALS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/content/material"))
+FORMS = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java"))
 PORT_DECL = re.compile(r"GTMaterial\s+(\w+)\s*=\s*\w+\(\s*(\d+)\s*,\s*\"([^\"]+)\"", re.M)
 ROW = re.compile(r'^\s+"([^"|]+)\|([A-Z_,]*)"', re.M)
 

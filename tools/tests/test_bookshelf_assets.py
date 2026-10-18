@@ -1,3 +1,10 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import hashlib
 import importlib.util
 import json
@@ -26,7 +33,7 @@ class BookShelfAssets(unittest.TestCase):
         ledger = json.loads((ROOT / "tools/gt6_texture_sources.json").read_text(encoding="utf-8"))
         for face in ("back", "side"):
             relative = f"textures/block/books/book_dusty_{face}.png"
-            source_relative = f"src/main/resources/assets/gregtech/textures/blocks/books/BOOK_DUSTY_{face.upper()}.png"
+            source_relative = str(native_path(f"src/main/resources/assets/gregtech/textures/blocks/books/BOOK_DUSTY_{face.upper()}.png"))
             source = assets.ORIGINAL / "textures/blocks/books" / f"BOOK_DUSTY_{face.upper()}.png"
             self.assertEqual(ledger[relative]["source"], source_relative)
             self.assertEqual(ledger[relative]["sha256"], hashlib.sha256(source.read_bytes()).hexdigest())

@@ -1,10 +1,17 @@
+
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[1]))
+from native_layout import native_path
+
 import json
 import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / 'src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
 
@@ -33,14 +40,14 @@ class NuclearSurvivalResources(unittest.TestCase):
             self.assertFalse(issues)
 
     def test_suit_recipes_use_exactly_the_declared_pattern_keys(self):
-        for p in (ROOT / 'src/main/resources/data/gregtech/recipes/nuclear').glob('radiation_suit_*.json'):
+        for p in (native_path(ROOT / 'src/main/resources/data/gregtech/recipes/nuclear')).glob('radiation_suit_*.json'):
             d = json.loads(p.read_text(encoding='utf-8'))
             symbols = set(''.join(d['pattern'])) - {' '}
             self.assertEqual(symbols, set(d['key']))
             self.assertEqual(d['key']['L'], {'tag': 'forge:plates/lead'})
 
     def test_new_messages_and_protection_tag(self):
-        tag = json.loads((ROOT / 'src/main/resources/data/gregtech/tags/items/radiation_protection.json').read_text(encoding='utf-8'))
+        tag = json.loads((native_path(ROOT / 'src/main/resources/data/gregtech/tags/items/radiation_protection.json')).read_text(encoding='utf-8'))
         self.assertEqual(len(set(tag['values'])), 4)
         for locale in ['zh_cn', 'en_us']:
             lang = json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8'))

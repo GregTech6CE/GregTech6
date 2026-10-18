@@ -10,13 +10,20 @@ compatibility; they are listed separately so a real regression (a port material 
 stands out.
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import io
 import json
 import re
 
-TABLE = "src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java"
-FIELDS = "src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java"
-LANG = "src/main/resources/assets/gregtech/lang/zh_cn.json"
+TABLE = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java"))
+FIELDS = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java"))
+LANG = str(native_path("src/main/resources/assets/gregtech/lang/zh_cn.json"))
 
 
 def norm(name: str) -> str:

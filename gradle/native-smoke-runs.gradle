@@ -1,0 +1,18 @@
+// Fresh isolated clients otherwise stop at Minecraft's accessibility onboarding.
+// Ordinary development runs and any existing options file are left as configured.
+def nativeProject = project
+tasks.matching { it.name == 'runClient' }.configureEach {
+    doFirst {
+        def creation = nativeProject.findProperty('clientCreateWorldSmoke') == 'true'
+        def world = nativeProject.findProperty('clientWorldSmoke') == 'true'
+        def title = nativeProject.findProperty('clientSmoke') == 'true'
+        if (!(creation || world || title)) return
+        def runName = creation ? 'world-creation-smoke-run' : world ? 'client-world-smoke-run' : 'client-smoke-run'
+        def options = nativeProject.layout.buildDirectory.file("${runName}/options.txt").get().asFile
+        if (!options.exists()) {
+            options.parentFile.mkdirs()
+            options.setText('onboardAccessibility:false\npauseOnLostFocus:false\nmaxFps:60\nrenderDistance:4\n' +
+                    'simulationDistance:4\nsoundCategory_master:0.0\nfullscreen:false\n', 'UTF-8')
+        }
+    }
+}

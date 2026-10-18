@@ -16,15 +16,22 @@ Usage:  python tools/check_stone_extrusions.py [--json docs/gt6-stone-extrusion-
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-GT6_BLOCKSTONES = (ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
-                   / "gregapi" / "block" / "metatype" / "BlockStones.java").resolve()
-PORT_RECIPES = ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "content" / "recipe" / "StoneAndToolSurvivalRecipes.java"
+GT6_BLOCKSTONES = (native_path(ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
+                   / "gregapi" / "block" / "metatype" / "BlockStones.java")).resolve()
+PORT_RECIPES = native_path(ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "content" / "recipe" / "StoneAndToolSurvivalRecipes.java")
 
 # GT6 IL.Shape_* name -> port mould id suffix.
 MOULD = {

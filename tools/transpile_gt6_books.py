@@ -16,6 +16,13 @@ Usage:  python tools/transpile_gt6_books.py [--check]
 
 from __future__ import annotations
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path
+
+
 import argparse
 import json
 import pathlib
@@ -23,7 +30,7 @@ import re
 
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 SOURCE = GT6 / "gregtech/loaders/b/Loader_Books.java"
-OUT = pathlib.Path("src/main/java/com/gregtech/gregtech/content/book/GTBooksGen.java")
+OUT = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/content/book/GTBooksGen.java"))
 OUT_JSON = pathlib.Path("docs/gt6-books.json")
 
 PAGE_SEPARATOR = "\u0001"

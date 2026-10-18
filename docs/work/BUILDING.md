@@ -1,16 +1,17 @@
 # 双版本构建与 Git 上传说明
 
-更新：2026-10-02。当前为整合开发版，目标为 Minecraft 1.20.1 Forge 和 Minecraft 1.21.1 NeoForge。源码对齐、编译、游戏启动、完整玩法及存档兼容是分别记录的状态，详见 `docs/integration/STATUS.md` 和 `VERIFICATION.md`。
+更新：2026-10-18。当前为整合开发版，目标为 Minecraft 1.20.1 Forge 和 Minecraft 1.21.1 NeoForge。源码对齐、编译、游戏启动、完整玩法及存档兼容是分别记录的状态，详见 `docs/integration/STATUS.md` 和 `VERIFICATION.md`。
+
+当前实验分支使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，详见[迁移与生成器说明](../integration/STONECUTTER_MIGRATION.md)。
 
 ## 项目结构：一个仓库，两个平台产物
 
-目前不是两个完全独立的项目。`settings.gradle` 同时包含 `core` 和 `neoforge`，根项目本身是 Forge 平台。
+目前不是两个完全独立的项目。`settings.gradle` 包含纯 Java `core` 和 Stonecutter `multiversion`，根项目负责聚合；两个版本节点直接负责加载器构建和运行。
 
 ```text
 GregTech6/
-├── src/                  Forge 1.20.1 平台代码和平台资源
+├── multiversion/         Stonecutter 共同原生源码和版本专有覆盖
 ├── core/                 两平台共享的材料、配方、能源、物流、热量等逻辑与公共资源
-├── neoforge/             NeoForge 1.21.1 平台代码和平台资源
 ├── gradle/               Gradle wrapper
 ├── scripts/build.ps1     Windows 完整构建入口
 ├── .github/workflows/    两平台构建 CI
@@ -51,31 +52,31 @@ $env:JAVA_HOME = $env:JAVA17_HOME
 Forge 1.20.1：
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar
+.\gradlew.bat --console=plain :multiversion:1.20.1-forge:distributionJar
 ```
 
-当前输出：`build/libs/gregtech6-1.20.1-forge-0.0.0.jar`。
+当前输出：`multiversion/versions/1.20.1-forge/build/libs/gregtech6-1.20.1-forge-0.0.0.jar`。
 
 NeoForge 1.21.1：
 
 ```powershell
-.\gradlew.bat --console=plain :neoforge:jar
+.\gradlew.bat --console=plain :multiversion:1.21.1-neoforge:jar
 ```
 
-当前输出：`neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar`。
+当前输出：`multiversion/versions/1.21.1-neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar`。
 
 一次生成两个版本：
 
 ```powershell
-.\gradlew.bat --console=plain :distributionJar :neoforge:jar
+.\gradlew.bat --console=plain :assembleBothPlatforms
 ```
 
-Forge 应使用 `distributionJar` 的最终产物，它包含重混淆后的平台代码和未改写的 core；`build/forge-intermediates/` 内是平台中间包。NeoForge 最终 JAR 位于自己的 `build/libs/`。文件版本号取自 `gradle.properties` 的 `mod_version`。
+Forge 应使用 `distributionJar` 的最终产物，它包含重混淆后的平台代码和未改写的 core；`multiversion/versions/1.20.1-forge/build/forge-intermediates/` 内是平台中间包。NeoForge 最终 JAR 位于 `multiversion/versions/1.21.1-neoforge/build/libs/`。文件版本号取自 `gradle.properties` 的 `mod_version`。
 
 只编译源码、暂不打包：
 
 ```powershell
-.\gradlew.bat --console=plain :compileJava :neoforge:compileJava
+.\gradlew.bat --console=plain :compileBothPlatforms
 ```
 
 ## 完整构建与开发运行
@@ -89,25 +90,25 @@ Forge 应使用 `distributionJar` 的最终产物，它包含重混淆后的平�
 .\scripts\build.ps1 -Target all
 ```
 
-脚本会执行 `:core:check` 和相应平台的 `:build` / `:neoforge:build`，日志写入忽略的 `work/`。仅检查 JDK 可加 `-CheckEnvironmentOnly`。
+脚本会执行 `:core:check` 和相应平台的 `:multiversion:1.20.1-forge:build` / `:multiversion:1.21.1-neoforge:build`，日志写入忽略的 `work/`。仅检查 JDK 可加 `-CheckEnvironmentOnly`。
 
 客户端开发启动：
 
 ```powershell
 .\gradlew.bat :runClient
-.\gradlew.bat :neoforge:runClient
+.\gradlew.bat :multiversion:1.21.1-neoforge:runClient
 ```
 
-上述两个命令分别运行对应客户端，按需选一个。专用服务器对应 `:runServer` 和 `:neoforge:runServer`，首次需按 Minecraft 的要求处理服务器 EULA；开发启动不会自动证明成品 JAR、玩法或世界重载通过。
+上述两个命令分别运行对应客户端，按需选一个。专用服务器对应 `:runServer` 和 `:multiversion:1.21.1-neoforge:runServer`，首次需按 Minecraft 的要求处理服务器 EULA；开发启动不会自动证明成品 JAR、玩法或世界重载通过。
 
 Linux/macOS 先设置 `JAVA17_HOME`、`JAVA21_HOME` 和 `JAVA_HOME="$JAVA17_HOME"`，再执行：
 
 ```sh
 chmod +x gradlew
-./gradlew --console=plain :distributionJar :neoforge:jar
+./gradlew --console=plain :assembleBothPlatforms
 # 包含共享行为合约的完整构建：
-./gradlew --console=plain :core:check :build
-./gradlew --console=plain :core:check :neoforge:build
+./gradlew --console=plain :core:check :multiversion:1.20.1-forge:build
+./gradlew --console=plain :core:check :multiversion:1.21.1-neoforge:build
 ```
 
 不要安装两个平台的 JAR 到同一游戏实例；玩家只安装自己 Minecraft/加载器版本对应的一个包。JEI/Jade 适配已包含，依赖本身不捆绑；版本见 `gradle.properties`。

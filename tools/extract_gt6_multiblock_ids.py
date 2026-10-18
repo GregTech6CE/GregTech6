@@ -24,17 +24,25 @@ Usage:
   python tools/extract_gt6_multiblock_ids.py --check     # fail when the file differs (idempotency)
 """
 
+# Native paths are generated views; generators must use tools/native_tool.py.
+import sys as _native_sys
+from pathlib import Path as _NativePath
+_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
+from native_layout import native_path, require_managed_writer
+if __name__ == "__main__": require_managed_writer()
+
+
 import argparse
 import io
 import os
 import re
 import sys
 
-GT6 = os.path.join("F:\\", "Dev", "GregTech6", "gregtech6-master", "gregtech6-master", "src", "main",
+GT6 = os.path.join("F:\\", "Dev", "GregTech6", "gregtech6-master", "gregtech6-master", str(native_path("src")), "main",
                    "java", "gregtech", "loaders", "b", "Loader_MultiTileEntities.java")
-PORT_PARTS = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "content", "multiblock",
+PORT_PARTS = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "content", "multiblock",
                           "LargeMachineParts.java")
-OUT = os.path.join("src", "main", "java", "com", "gregtech", "gregtech", "data", "generated",
+OUT = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data", "generated",
                    "GT6MultiblockIds.java")
 
 # GT6 multiblock controller id -> the port's machine name. Every entry was verified by hand:
