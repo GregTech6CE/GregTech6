@@ -23,24 +23,22 @@ final class UtilityControllerContracts {
         check(OriginalUtilityControllerData.LIGHTNING_CAPACITY == 589824000L, "Original 18000 * VREC[6] per strike");
         composition("heat_exchanger_main", Map.of("W", 36L, "AnnealedCopper", 54L, "Cu", 24L));
         composition("lightning_rod_electric_output", Map.of("W", 8L, "NiobiumTitanium", 16L, "Pt", 2L, "Sapphire", 2L));
-        check(OriginalUtilityControllerData.aliases().equals(Map.of("lightning_rod_main", "lightning_rod_electric_output", "bedrock_drill_main", "bedrock_mining_drill_controller")),
-                "Preserved legacy controller maps to the original main only");
-        check(MachineConstructionMaterials.block("lightning_rod_main").equals(
-                MachineConstructionMaterials.block("lightning_rod_electric_output")), "Alias lookup preserves exact source REV");
-        check(MachineConstructionMaterials.blocks().get("lightning_rod_main").equals(
-                MachineConstructionMaterials.blocks().get("lightning_rod_electric_output")), "Alias enumeration registers the same exact REV");
-        for (var path : List.of("heat_exchanger_main", "lightning_rod_electric_output", "lightning_rod_main")) {
+        check(OriginalUtilityControllerData.LIGHTNING_PATH.equals("lightning_rod_electric_output"),
+                "Utility controllers use their canonical source paths");
+        check(MachineConstructionMaterials.block("lightning_rod_electric_output").orElseThrow().recoverable(),
+                "Canonical lightning controller preserves exact source REV");
+        for (var path : List.of("heat_exchanger_main", "lightning_rod_electric_output")) {
             var p = SourceBlockProperties.block(path).orElseThrow();
             check(p.sourceId() == (path.equals("heat_exchanger_main") ? 17197 : 17998)
                     && p.tool().equals("wrench"), "Original utility source harvest identity " + path);
         }
-        check(SourceBlockProperties.block("lightning_rod_main").equals(
-                SourceBlockProperties.block("lightning_rod_electric_output")), "Alias source material / harvest quality unchanged");
+        check(SourceBlockProperties.block("lightning_rod_electric_output").orElseThrow().material().resolve()
+                == GTMaterialRegistry.get("Tungsten").resolve(), "Original lightning harvest material is tungsten");
         composition("von_da_graagg_generator", Map.of("NetherStar",1L,"Pt",2L,"Ruby",2L,"SteelGalvanized",8L,"EnderEye",1L));
-        check(MachineConstructionMaterials.block("bedrock_drill_main").equals(
-                MachineConstructionMaterials.block("bedrock_mining_drill_controller")), "Legacy drill shares exact source quantities");
-        check(SourceBlockProperties.block("bedrock_drill_main").orElseThrow().sourceId()==17999,
-                "Legacy drill keeps source titanium harvest identity");
+        check(MachineConstructionMaterials.block("bedrock_mining_drill_controller").orElseThrow().recoverable(),
+                "Canonical drill retains recoverable source quantities");
+        check(SourceBlockProperties.block("bedrock_mining_drill_controller").orElseThrow().sourceId()==17999,
+                "Canonical drill keeps source titanium harvest identity");
         for(long energy : new long[]{0,15,16,255,256,2048,4095,4096,Long.MAX_VALUE}) {
             int range=com.gregtech.gregtech.content.multiblock.VonDaGraaggRules.range(energy,true);
             int expected=(int)Math.min(255,energy/16);

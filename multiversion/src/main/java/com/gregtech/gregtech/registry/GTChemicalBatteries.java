@@ -18,24 +18,20 @@ import java.util.*;
 public final class GTChemicalBatteries {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block,ChemicalBatteryBlock>> ALL=new ArrayList<>();
-    private static final List<DeferredHolder<Block,ChemicalBatteryBlock>> LEGACY=new ArrayList<>();
     public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gregtech");
     public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gregtech");
     public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity>> CHEMICAL_BATTERY=ENTITIES.register("chemical_battery",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity::new,allRegistered().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
     private static final List<RegistryObject<ChemicalBatteryBlock>> ALL=new ArrayList<>();
-    private static final List<RegistryObject<ChemicalBatteryBlock>> LEGACY=new ArrayList<>();
 //?}
     private GTChemicalBatteries(){}
 //? if >=1.21.1 {
     /*public static void register(IEventBus bus){if(!ALL.isEmpty())throw new IllegalStateException("Chemical batteries registered twice");registerAll();BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);}
-    public static List<DeferredHolder<Block,ChemicalBatteryBlock>> legacy(){return Collections.unmodifiableList(LEGACY);}
-    public static List<DeferredHolder<Block,ChemicalBatteryBlock>> allRegistered(){return java.util.stream.Stream.concat(ALL.stream(),LEGACY.stream()).toList();}
+    public static List<DeferredHolder<Block,ChemicalBatteryBlock>> allRegistered(){return all();}
     public static List<DeferredHolder<Block,ChemicalBatteryBlock>> all(){return Collections.unmodifiableList(ALL);}
 *///?} else {
-    public static List<RegistryObject<ChemicalBatteryBlock>> legacy(){return Collections.unmodifiableList(LEGACY);}
-    public static List<RegistryObject<ChemicalBatteryBlock>> allRegistered(){return java.util.stream.Stream.concat(ALL.stream(),LEGACY.stream()).toList();}
+    public static List<RegistryObject<ChemicalBatteryBlock>> allRegistered(){return all();}
     public static List<RegistryObject<ChemicalBatteryBlock>> all(){return Collections.unmodifiableList(ALL);}
 //?}
     public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
@@ -49,12 +45,6 @@ public final class GTChemicalBatteries {
         return battery;
     }
     public static void registerAll(){
-//? if >=1.21.1 {
-        /*for(var alias:com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES)
-            ITEMS.addAlias(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.oldId()),
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.target().id()));
-*///?} else {
-//?}
         for(var spec:ChemicalBatterySpec.all()) {
 //? if >=1.21.1 {
             /*var block=BLOCKS.register(spec.id(),()->new ChemicalBatteryBlock(spec));

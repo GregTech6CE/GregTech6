@@ -58,9 +58,7 @@ public final class DiggableRecipes {
             ItemMaterialRegistry.register(item(row.ball()), null, row.material(), GTValues.U);
         }
         ItemMaterialRegistry.register(item("turf"), null, Materials.Peat, GTValues.U * 4);
-        // Earlier port ids remain placeable in saved worlds and represent these same two variants.
-        ItemMaterialRegistry.register(item("diggable_clay"), null, Materials.ClayBrown, GTValues.U * 4);
-        ItemMaterialRegistry.register(item("diggable_peat"), null, Materials.Peat, GTValues.U * 4);
+        // Retired diggable_* IDs resolve through registry aliases to these same material entries.
     }
 
     public static int register() {

@@ -205,8 +205,6 @@ class LanguageIdentities {
         String[] diggables = {"mud", "clay_brown", "turf", "clay_red", "clay_yellow", "clay_blue", "clay_white"};
         for (int i = 0; i < diggables.length; i++)
             row("block.gregtech." + diggables[i], "gt.block.diggable." + i, "");
-        row("block.gregtech.diggable_clay", "gt.block.diggable.1", "");
-        row("block.gregtech.diggable_peat", "gt.block.diggable.2", "");
         // Textures.BlockIcons.GRASSES_TOP order used by original BlockGrass.
         String[] grassColors = {"medium", "light", "dark", "normal", "yellow", "brown"};
         for (int i = 0; i < grassColors.length; i++)
@@ -296,7 +294,6 @@ class LanguageIdentities {
         row("block.gregtech.fluid_funnel", "gt.multitileentity.32723", "");
         row("block.gregtech.fluid_funnel_stainless_steel", "gt.multitileentity.32725", "");
         row("block.gregtech.loot_crate", "gt.multitileentity.32110", "");
-        row("block.gregtech.bumble_hive", "gt.multitileentity.32755", "");
         for (var color : colors)
             row("block.gregtech.bumble_hive_" + color, "gt.multitileentity.32755", "");
         for (var spring : com.gregtech.gregtech.worldgen.FluidSpringRules.SPRINGS)

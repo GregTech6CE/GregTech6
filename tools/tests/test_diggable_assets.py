@@ -11,7 +11,7 @@ import unittest
 
 
 PORT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(PORT / "src/main/resources/assets/gregtech")
+ASSETS = PORT / "core/src/main/resources/assets/gregtech"
 SOURCE = (PORT.parent / "gregtech6-master/gregtech6-master/src/main/resources"
           / "assets/gregtech/textures/blocks/iconsets")
 ICONS = ("mud", "clay_brown", "turf", "clay_red", "clay_yellow",
@@ -36,14 +36,12 @@ class DiggableAssets(unittest.TestCase):
                 self.assertEqual(texture.read_bytes(), (SOURCE / f"{icon.upper()}.png").read_bytes(),
                                  f"{icon}: GT6 icon set differs")
 
-    def test_legacy_ids_use_real_clay_and_turf_texture(self):
-        for block_id, icon in (("diggable_clay", "clay_brown"), ("diggable_peat", "turf")):
-            model = ASSETS / f"models/block/decoration/{block_id}.json"
-            self.assertEqual(json.loads(model.read_text(encoding="utf-8"))["parent"],
-                             f"gregtech:block/iconsets/{icon}")
-            self.assertEqual(json.loads((ASSETS / f"models/item/{block_id}.json")
-                                        .read_text(encoding="utf-8"))["parent"],
-                             f"gregtech:block/decoration/{block_id}")
+    def test_retired_duplicate_ids_have_no_assets(self):
+        for block_id in ("diggable_clay", "diggable_peat"):
+            for relative in (f"models/block/decoration/{block_id}.json",
+                             f"models/item/{block_id}.json", f"blockstates/{block_id}.json"):
+                for base in (ASSETS, native_path(PORT / "src/main/resources/assets/gregtech")):
+                    self.assertFalse((base / relative).exists(), str(base / relative))
 
 
 if __name__ == "__main__":

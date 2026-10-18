@@ -45,7 +45,7 @@ public final class ControllerStructureLayouts {
             result.put(LargeMachineParts.block(valve.originalId()), tank(valve));
         for (var boiler : OriginalLargeBoilerSpecs.all())
             result.put(LargeMachineParts.block(boiler.originalId()), boiler.previewCells());
-        result.put(GTMultiblocks.LARGE_CRUCIBLE_MAIN.get(),crucible(GTMultiblocks.LARGE_CRUCIBLE_WALL.get()));
+        result.put(GTMultiblocks.findPart(17302).get(),crucible(GTMultiblocks.FIRE_BRICKS.get()));
         for (var variant : LargeCrucibleSpecs.all())
             result.put(LargeMachineParts.block(variant.originalId()), crucible(variant.wall()));
         result.put(LargeMachineParts.block(17996), vonDaGraagg());

@@ -117,9 +117,9 @@ public final class MultiblockCraftingTests {
         for (String controller : List.of(
                 "coke_oven_main", "implosion_compressor_main", "distillation_tower_main",
                 "cryo_distillation_main", "fusion_reactor_main", "heat_exchanger_main",
-                "bedrock_drill_main", "lightning_rod_main", "large_boiler_main",
-                "large_crucible_main", "large_dynamo_main", "large_gas_turbine_main",
-                "large_turbine_main")) {
+                "bedrock_mining_drill_controller", "lightning_rod_electric_output", "stainless_steel_boiler_main_barometer",
+                "large_stainless_steel_crucible", "stainless_steel_dynamo_main_housing", "magnalium_gas_turbine_main_housing",
+                "magnalium_steam_turbine_main_housing")) {
             Block block = ForgeRegistries.BLOCKS.getValue(
                     ResourceLocation.fromNamespaceAndPath("gregtech", controller));
             helper.assertTrue(block != null, "controller block exists: " + controller);

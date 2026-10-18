@@ -62,5 +62,5 @@ public final class OriginalMultiblockPartData {
             new Part(18204, "conversion_processor_unit", 6.0f, 6.0f)
     );
     public static Optional<Part> byId(int id) { return ALL.stream().filter(p -> p.originalId() == id).findFirst(); }
-    public static Optional<Part> byPath(String path) { return ALL.stream().filter(p -> p.path().equals(com.gregtech.gregtech.registry.LegacyContentAliases.canonical(path))).findFirst(); }
+    public static Optional<Part> byPath(String path) { return ALL.stream().filter(p -> p.path().equals(path)).findFirst(); }
 }

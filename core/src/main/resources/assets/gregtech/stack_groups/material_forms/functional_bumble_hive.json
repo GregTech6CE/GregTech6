@@ -2,7 +2,6 @@
   "type": "remi:group",
   "name": "emi.group.gregtech.functional_bumble_hive",
   "contents": [
-    "item:gregtech:bumble_hive",
     "item:gregtech:bumble_hive_black",
     "item:gregtech:bumble_hive_blue",
     "item:gregtech:bumble_hive_brown",

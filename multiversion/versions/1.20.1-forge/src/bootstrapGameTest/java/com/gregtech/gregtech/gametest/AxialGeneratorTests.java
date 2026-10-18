@@ -90,7 +90,7 @@ public final class AxialGeneratorTests {
             machine.toggleStopped();h.assertTrue(!machine.isStopped(),"explicit restart");
             var middle=pos.relative(front.getOpposite());h.setBlock(middle,grade.wall());
             h.assertTrue(!machine.isStructureOk(),"solid metal cannot replace a copper coil");
-            h.setBlock(middle,GTMultiblocks.LARGE_DYNAMO_WALL.get());
+            h.setBlock(middle,GTMultiblocks.LARGE_COPPER_COIL.get());
             h.assertTrue(!machine.isStructureOk(),"legacy generic dynamo wall cannot replace GT6 18040 copper coil");
         }
         h.succeed();
@@ -115,7 +115,7 @@ public final class AxialGeneratorTests {
     @GameTest(template="test_blueprint_empty")
     public static void steamPartRoutingPurgeAndOverload(GameTestHelper h) {
         var pos=new BlockPos(6,3,6);
-        var machine=(LargeTurbineControllerBlockEntity)assemble(h,pos,GTMultiblocks.LARGE_TURBINE_MAIN.get(),Direction.NORTH);
+        var machine=(LargeTurbineControllerBlockEntity)assemble(h,pos,GTMultiblocks.findPart(17211).get(),Direction.NORTH);
         var front=h.getLevel().getBlockEntity(h.absolutePos(pos.east())).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER).resolve().orElseThrow();
         var bottom=h.getLevel().getBlockEntity(h.absolutePos(pos.south().below())).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER).resolve().orElseThrow();
         int amount=machine.grade().input()*2;
@@ -169,7 +169,7 @@ public final class AxialGeneratorTests {
         inventory.setItem(1,wrench);h.assertTrue(recipe.matches(inventory,h.getLevel()),"usable wrench matches original pattern");
         var remaining=recipe.getRemainingItems(inventory);h.assertTrue(remaining.get(1).getDamageValue()==800&&wrench.getDamageValue()==0,"wrench returned with original 800 wear, input untouched");
         wrench.setDamageValue(wrench.getMaxDamage());h.assertTrue(!recipe.matches(inventory,h.getLevel()),"broken wrench cannot craft");
-        var info=com.gregtech.gregtech.integration.jade.MultiblockJadeProvider.inspect(assemble(h,new BlockPos(6,3,6),GTMultiblocks.LARGE_DYNAMO_MAIN.get(),Direction.NORTH));
+        var info=com.gregtech.gregtech.integration.jade.MultiblockJadeProvider.inspect(assemble(h,new BlockPos(6,3,6),GTMultiblocks.findPart(17221).get(),Direction.NORTH));
         h.assertTrue(info.getBoolean("formed")&&info.getInt("axialOutput")==3072,"Jade carries actual conversion grade");
         h.succeed();
     }

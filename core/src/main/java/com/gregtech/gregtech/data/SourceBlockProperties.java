@@ -22,12 +22,8 @@ public final class SourceBlockProperties {
             int sourceId = BLOCKS.get("chest_"+suffix).sourceId() + (entry.queue() ? 8200 : 8000);
             BLOCKS.put(entry.spec().id(), new Params(sourceId,"wrench",entry.spec().material(),0,false));
         }
-        com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().forEach((alias,source)->
-                BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
-        com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().forEach((alias,source)->
-                BLOCKS.put(alias,Objects.requireNonNull(BLOCKS.get(source),source)));
     }
-    public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path.equals("fire_bricks") ? "coke_oven_wall" : path)); }
+    public static Optional<Params> block(String path) { return Optional.ofNullable(BLOCKS.get(path)); }
     public static Optional<Params> basic(String machine, int tier) { return Optional.ofNullable(BASICS.get(machine+"/"+tier)); }
     public static Map<String, Params> blocks() { return Collections.unmodifiableMap(BLOCKS); }
     public static Map<String, Params> basics() { return Collections.unmodifiableMap(BASICS); }
@@ -273,7 +269,7 @@ public final class SourceBlockProperties {
         BLOCKS.put("heat_exchanger_main", new Params(17197,"wrench",ImportedMaterialData.W,-1,false));
         BLOCKS.put("distillation_tower_main", new Params(17101,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
         BLOCKS.put("cryo_distillation_main", new Params(17111,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
-        BLOCKS.put("coke_oven_wall", new Params(18000,"pickaxe",ImportedMaterialData.Ceramic,-1,false));
+        BLOCKS.put("fire_bricks", new Params(18000,"pickaxe",ImportedMaterialData.Ceramic,-1,false));
         BLOCKS.put("tank_wall", new Params(18002,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
         BLOCKS.put("tank_wall_dense", new Params(18022,"wrench",ImportedMaterialData.StainlessSteel,-1,false));
         BLOCKS.put("implosion_compressor_wall", new Params(18023,"wrench",ImportedMaterialData.TungstenSteel,-1,false));

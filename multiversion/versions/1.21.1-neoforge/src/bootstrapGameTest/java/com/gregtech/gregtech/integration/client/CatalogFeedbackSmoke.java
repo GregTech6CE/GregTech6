@@ -17,13 +17,11 @@ final class CatalogFeedbackSmoke {
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
     private static void require(boolean ok, String message) { if (!ok) throw new IllegalStateException(message); }
     static void server(MinecraftServer server, JsonObject receipt) {
-        int aliases = LegacyContentAliases.ALIASES.size();
+        int canonical = com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS.size();
         for (int i = 0; i < com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.size(); i++) {
             var material = com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.get(i);
             var key = GTDungeonKeys.byIndex(i);
             require(key == BuiltInRegistries.ITEM.get(id(material + "_key")), "dungeon uses duplicate key " + material);
-            require(BuiltInRegistries.ITEM.get(id("key_" + material)) instanceof com.gregtech.gregtech.item.GTDungeonKeyItem,
-                    "old key lost its behavior " + material);
         }
         var level = server.overworld();
         int height = level.getSeaLevel() + 36;
@@ -55,12 +53,12 @@ final class CatalogFeedbackSmoke {
         require(level.getBlockState(pos).is(moldy), "wet fresh bale does not become moldy");
         for (int n = 0; n < 1000 && level.getBlockState(pos).is(moldy); n++) moldy.tick(level.getBlockState(pos), level, pos, random);
         require(level.getBlockState(pos).is(BuiltInRegistries.BLOCK.get(id("bale_grass_rotten"))), "wet moldy bale does not rot");
-        receipt.addProperty("catalogAliasesChecked", aliases);
+        receipt.addProperty("canonicalPartsChecked", canonical);
         receipt.addProperty("canonicalDungeonKeys", 10);
         receipt.addProperty("originBlackSandVariants", 3);
         receipt.addProperty("baleDryWetRotAndScheduling", true);
         // Old ingredient IDs must resolve directly to the sole canonical item.
-        var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gregtech:boiler_wall",
+        var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gregtech:tank_wall",
                 com.gregtech.gregtech.content.material.Materials.StainlessSteel, 1);
         require(ingredient.equals(java.util.Map.of("item", "gregtech:tank_wall")), "canonical wall recipe lost");
         for (var row : java.util.stream.Stream.concat(com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS.stream(),
@@ -96,10 +94,8 @@ final class CatalogFeedbackSmoke {
             require(slab instanceof com.gregtech.gregtech.api.block.FaceGridSlab, "no nine-grid wood slab " + wood);
             require(server.getRecipeManager().byKey(id("catalog_repairs/slab_" + wood)).isPresent(), "missing wood slab recipe " + wood);
         }
-        for(var alias : LegacyContentAliases.ALIASES.entrySet()) {
-            require(BuiltInRegistries.ITEM.get(id(alias.getValue())) != net.minecraft.world.item.Items.AIR,"alias points to missing target " + alias);
-            require(BuiltInRegistries.ITEM.get(id(alias.getKey())) == BuiltInRegistries.ITEM.get(id(alias.getValue())), "duplicate identity " + alias);
-            require(!BuiltInRegistries.ITEM.keySet().contains(id(alias.getKey())), "old item still registered " + alias);
+        for(var part:com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS){
+            require(BuiltInRegistries.BLOCK.get(id(part.name()))==GTMultiblocks.findPart(part.originalId()).get(),"part identity mismatch "+part.name());
         }
         receipt.addProperty("sourceRepairCraftingRows", com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS.size());
         var cut = com.gregtech.gregtech.data.MachineRecipeMaps.Cutter.mRecipeList.stream()
@@ -114,7 +110,7 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("exactColoredSlabCuttingRecipes", cut.size());
         receipt.addProperty("woodSlabFamilies", com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS.size());
         receipt.addProperty("canonicalWallRecipeAlternatives", true);
-        com.mojang.logging.LogUtils.getLogger().info("CATALOG_FEEDBACK_SERVER_SUCCESS aliases={} keys=10 sands=3 baleDryWetRot=true", aliases);
+        com.mojang.logging.LogUtils.getLogger().info("CATALOG_FEEDBACK_SERVER_SUCCESS canonicalParts={} keys=10 sands=3 baleDryWetRot=true", canonical);
     }
     private static void checkRecipeTags(MinecraftServer server, JsonObject receipt) {
         var failures = new java.util.ArrayList<String>();

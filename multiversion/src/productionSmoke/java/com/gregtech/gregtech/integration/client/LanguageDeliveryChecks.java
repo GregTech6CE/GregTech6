@@ -521,18 +521,18 @@ final class LanguageDeliveryChecks {
             ids.add(icon.startsWith("ore_")?"block_"+icon:icon);
         for(String tier:new String[]{"lv","mv","hv","ev","iv"})
             for(String family:new String[]{"co2_laser","flux_laser","laser_absorber"})ids.add(family+"_"+tier);
-        ids.addAll(List.of("zpm","zpm_discharger_basic","zpm_discharger_advanced","zpm_discharger_elite",
+        ids.addAll(List.of("zpm","zpm_discharger_basic","zpm_discharger_advanced","zpm_discharger_basic",
                 "ingot_pile","plate_pile","plate_gem_pile","coin_pile","sandwich_block","sensor_kilogibblometer"));
         ids.addAll(List.of("log_hole_maple","log_sap_maple","log_hole_rainbowood","log_sap_rainbowood",
                 "log_hole_rubber","log_resin_rubber"));
-        ids.addAll(List.of("boiler_wall","turbine_wall","large_crucible_wall","cryo_distillation_wall",
-                "large_gas_turbine_wall","large_dynamo_wall","heat_exchanger_wall","bedrock_drill_wall",
+        ids.addAll(List.of("tank_wall","tank_wall_dense","fire_bricks","distillation_tower_part",
+                "tank_wall_dense","large_copper_coil","heat_transmitter","dense_titanium_wall",
 //? if >=1.21.1 {
-                /*"lightning_rod_wall","extender_basic","extender_advanced","extender_elite","extender_wireless"));
+                /*"tungsten_wall","inventory_tank_extender","inventory_tank_extender","inventory_tank_extender","inventory_tank_extender"));
 *///?} else {
-                "lightning_rod_wall","fusion_reactor_wall","extender_basic","extender_advanced","extender_elite","extender_wireless"));
+                "tungsten_wall","large_iridium_coil","inventory_tank_extender","inventory_tank_extender","inventory_tank_extender","inventory_tank_extender"));
 //?}
-        var canonicalIds = ids.stream().map(com.gregtech.gregtech.registry.LegacyContentAliases::canonical).distinct().toList();
+        var canonicalIds = ids.stream().distinct().toList();
         for(String id:canonicalIds) {
             var stack=item(id);String key="block.gregtech."+id;
             require(stack.getDescriptionId().equals(key),"Source-bound registry description identity "+id);
@@ -746,7 +746,7 @@ final class LanguageDeliveryChecks {
         return checked;
     }
     private static ItemStack item(String path) {
-        var canonical=com.gregtech.gregtech.registry.LegacyContentAliases.canonical(path);
+        var canonical=path;
         var id=ResourceLocation.parse("gregtech:"+canonical);require(BuiltInRegistries.ITEM.containsKey(id),"Registered item "+id);
         return new ItemStack(BuiltInRegistries.ITEM.get(id));
     }

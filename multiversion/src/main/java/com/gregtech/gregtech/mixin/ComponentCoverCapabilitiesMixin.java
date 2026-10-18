@@ -69,7 +69,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
     com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.KineticDieselEngineBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.KineticSteamEngineBlockEntity.class,
-    com.gregtech.gregtech.blockentity.machine.LargeBoilerControllerBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.LargeCrucibleControllerBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity.class,
     com.gregtech.gregtech.blockentity.machine.LargeHeatExchangerControllerBlockEntity.class,

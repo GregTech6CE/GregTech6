@@ -36,7 +36,7 @@ OUT = JAVA / "data/MultiblockCraftingRecipes.java"
 # GT6 part id -> port block id, for the parts this port already provides.
 PART_BLOCKS = {
     "24900": "laser_fiber_wire",         # GT6 logistics wire uses the laser-fiber connector
-    "18000": "coke_oven_wall",              # GT6 "Fire Bricks"
+    "18000": "fire_bricks",              # GT6 "Fire Bricks"
     "18002": "tank_wall",                   # GT6 "Stainless Steel Wall"
     "18003": "tungstensteel_wall",
     "18006": "titanium_wall",
@@ -62,8 +62,8 @@ TARGETS = {
     # BasicMachineDefinitions excludes the obsolete single-block variants of these machines;
     # each exists only as its *_main controller in this port.
     "Distillation Tower": (["distillation_tower_main"], "distillation_tower_part"),
-    "Cryo Distillation Tower": (["cryo_distillation_main"], "cryo_distillation_wall"),
-    "Fusion Reactor": (["fusion_reactor_main"], "fusion_reactor_wall"),
+    "Cryo Distillation Tower": (["cryo_distillation_main"], "distillation_tower_part"),
+    "Fusion Reactor": (["fusion_reactor_main"], "large_iridium_coil"),
     "Large Centrifuge": ([], "centrifuge_part"),
     "Large Electrolyzer": ([], "electrolyzer_part"),
     "Large Coagulator Array": ([], "tank_wall"),
@@ -78,37 +78,9 @@ TARGETS = {
     "Large Squeezer": ([], "steel_wall"),
     "Large Matter Fabricator": ([], "dense_lead_wall"),
     "Large Heat Exchanger": (["heat_exchanger_main"], "dense_tungsten_wall"),
-    "Bedrock Mining Drill Controller": (["bedrock_drill_main"], "bedrock_drill_wall"),
-    "Lightning Rod Electric Output": (["lightning_rod_main"], "lightning_rod_wall"),
-    "Coke Oven": (["coke_oven_main"], "coke_oven_wall"),
+    "Coke Oven": (["coke_oven_main"], "fire_bricks"),
     "Implosion Compressor": (["implosion_compressor_main"], "implosion_compressor_wall"),
-    # Boiler barometers and dynamo housings come in one GT6 variant per material; the port
-    # registers one boiler and four dynamo grades, so only the matching variants are mapped.
-    "Stainless Steel Boiler Main Barometer": (["large_boiler_main"], "boiler_wall"),
-    "Stainless Steel Dynamo Main Housing": (["large_dynamo_main"], "large_dynamo_wall"),
-    "Titanium Dynamo Main Housing": (["large_dynamo_titanium"], "large_dynamo_wall"),
-    "Tungstensteel Dynamo Main Housing": (["large_dynamo_tungstensteel"], "large_dynamo_wall"),
-    "Adamantium Dynamo Main Housing": (["large_dynamo_adamantium"], "large_dynamo_wall"),
-    # The twelve old axial *_main blocks are conversion-only aliases. Their direct recipes
-    # used generic walls and tier-1 components, bypassing the original 172xx progression.
-    "Large Stainless Steel Crucible": (["large_crucible_main"], "large_crucible_wall"),
-}
 
-# Legacy axial controllers must first be crafted as their GT6 172xx originals. In particular
-# the four original gas turbine recipes consume the matching 17211-17214 steam turbine.
-AXIAL_LEGACY_CONVERSIONS = {
-    "large_turbine_main": ("Magnalium Steam Turbine Main Housing", 17211),
-    "large_steam_turbine_trinitanium": ("Trinitanium Steam Turbine Main Housing", 17212),
-    "large_steam_turbine_graphene": ("Graphene Steam Turbine Main Housing", 17213),
-    "large_steam_turbine_vibramantium": ("Vibramantium Steam Turbine Main Housing", 17214),
-    "large_dynamo_main": ("Stainless Steel Dynamo Main Housing", 17221),
-    "large_dynamo_titanium": ("Titanium Dynamo Main Housing", 17222),
-    "large_dynamo_tungstensteel": ("Tungstensteel Dynamo Main Housing", 17223),
-    "large_dynamo_adamantium": ("Adamantium Dynamo Main Housing", 17224),
-    "large_gas_turbine_main": ("Magnalium Gas Turbine Main Housing", 17231),
-    "large_gas_turbine_trinitanium": ("Trinitanium Gas Turbine Main Housing", 17232),
-    "large_gas_turbine_graphene": ("Graphene Gas Turbine Main Housing", 17233),
-    "large_gas_turbine_vibramantium": ("Vibramantium Gas Turbine Main Housing", 17234),
 }
 
 # GT6 machine name -> port machine type, for the legacy `large*` family whose block id carries
@@ -323,11 +295,11 @@ def translate(expr: str, default_material: str | None = None) -> str | None:
 
 def legacy_block_ids() -> dict[str, list[str]]:
     """Port block id of every legacy `large*` machine, read from BasicMachineDefinitions."""
-    src = (JAVA / "content/machine/BasicMachineDefinitions.java").read_text(encoding="utf-8")
+    src = (Path(__file__).resolve().parents[1] / "core/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineCatalog.java").read_text(encoding="utf-8")
     short = {m.group(1): m.group(2) for m in re.finditer(
         r'MAT_SHORT\.put\(Materials\.(\w+),\s*"([a-z_0-9]+)"\)', src)}
     result: dict[str, list[str]] = {}
-    for m in re.finditer(r'new MachineDef\("([a-z_0-9]+)",\s*"\w+",\s*([^,]+?),\s*m ->', src):
+    for m in re.finditer(r'new MachineDef\("([a-z_0-9]+)",\s*"\w+",\s*([^)]*)\)', src):
         name, tier_expr = m.group(1), m.group(2).strip()
         if name not in LEGACY_MACHINE_TYPES.values():
             continue
@@ -347,7 +319,9 @@ def legacy_block_ids() -> dict[str, list[str]]:
 
 def original_part_ids() -> dict[str, str]:
     """Read numeric GT6 ids at the registry boundary, avoiding a second block-name table."""
-    src = (JAVA / "content/multiblock/LargeMachineParts.java").read_text(encoding="utf-8")
+    parts = Path(__file__).resolve().parents[1] / "core/src/main/java/com/gregtech/gregtech/content/multiblock"
+    src = "\n".join((parts / name).read_text(encoding="utf-8") for name in
+                    ("SharedLargeMachineParts.java", "OriginalMultiblockPartData.java"))
     return {original_id: block_id for original_id, block_id in re.findall(
         r'new Part\(\s*(\d+)\s*,\s*"([a-z_0-9]+)"', src)}
 
@@ -406,9 +380,6 @@ def main() -> int:
             )
 
     for gt6_name, (blocks, structural) in TARGETS.items():
-        # The original 17221 dynamo main was formerly the source for the old alias, too.
-        # It now has its own recipe, and the alias is handled by the conversion loop below.
-        blocks = [block for block in blocks if block not in AXIAL_LEGACY_CONVERSIONS]
         if not blocks and gt6_name not in LEGACY_MACHINE_TYPES:
             continue
         machine_type = LEGACY_MACHINE_TYPES.get(gt6_name)
@@ -457,11 +428,11 @@ import java.util.Map;
  * GENERATED by {@code tools/generate_multiblock_recipe_table.py} - do not edit by hand.
  * Keys use the spec grammar of {@link BasicMachineCraftingRecipes} and are resolved by
  * {@link MachineRecipeIngredients}. Original 170xx/17996 controllers retain their GT6
- * ingredients; old axial IDs resolve to their 172xx controller registry objects.
+ * ingredients; axial controllers use their canonical 172xx identities.
  * </p>
  */
 public final class MultiblockCraftingRecipes {
-    /** One craftable block: port id, GT6 name or legacy conversion, pattern and keys. */
+    /** One craftable block: port id, GT6 name, pattern and keys. */
     public record Entry(String blockId, String originalName, String pattern, Map<Character, String> keys) {
         public String[] rows() { return pattern.split("\\\\|", -1); }
     }

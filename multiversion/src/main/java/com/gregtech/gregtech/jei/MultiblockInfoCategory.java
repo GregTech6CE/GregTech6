@@ -30,7 +30,7 @@ public final class MultiblockInfoCategory extends MultiblockInfoData implements 
             @Override public int getHeight() {return com.gregtech.gregtech.client.MultiblockPreviewPanel.preferredHeight();}
             @Override public void draw(GuiGraphics graphics,int x,int y) {}
         };
-        icon=helper.createDrawableItemStack(new ItemStack(GTMultiblocks.LARGE_BOILER_MAIN.get()));
+        icon=helper.createDrawableItemStack(new ItemStack(GTMultiblocks.findPart(17201).get()));
         slot=helper.getSlotDrawable();
     }
 

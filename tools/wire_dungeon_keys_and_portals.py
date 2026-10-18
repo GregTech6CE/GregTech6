@@ -57,16 +57,16 @@ VANILLA_TEXTURES = "*/assets/minecraft/textures/blocks"
 # GT6 multi-item id -> (port item id, English name, Chinese name). The order is GT6's IL.KEYS
 # (gregapi/data/IL.java:516), which is the order GTDungeonKeys registers them in.
 KEYS = [
-    (30005, "key_brass", "Brass Key", "\u9ec4\u94dc\u94a5\u5319"),
-    (30004, "key_bronze", "Bronze Key", "\u9752\u94dc\u94a5\u5319"),
-    (30002, "key_copper", "Copper Key", "\u94dc\u94a5\u5319"),
-    (30001, "key_gold", "Gold Key", "\u91d1\u94a5\u5319"),
-    (30000, "key_iron", "Iron Key", "\u94c1\u94a5\u5319"),
-    (30008, "key_lead", "Lead Key", "\u94c5\u94a5\u5319"),
-    (30009, "key_plastic", "Plastic Key", "\u5851\u6599\u94a5\u5319"),
-    (30007, "key_platinum", "Platinum Key", "\u94c2\u91d1\u94a5\u5319"),
-    (30006, "key_silver", "Silver Key", "\u94f6\u94a5\u5319"),
-    (30003, "key_tin", "Tin Key", "\u9521\u94a5\u5319"),
+    (30005, "brass_key", "Brass Key", "\u9ec4\u94dc\u94a5\u5319"),
+    (30004, "bronze_key", "Bronze Key", "\u9752\u94dc\u94a5\u5319"),
+    (30002, "copper_key", "Copper Key", "\u94dc\u94a5\u5319"),
+    (30001, "gold_key", "Gold Key", "\u91d1\u94a5\u5319"),
+    (30000, "iron_key", "Iron Key", "\u94c1\u94a5\u5319"),
+    (30008, "lead_key", "Lead Key", "\u94c5\u94a5\u5319"),
+    (30009, "plastic_key", "Plastic Key", "\u5851\u6599\u94a5\u5319"),
+    (30007, "platinum_key", "Platinum Key", "\u94c2\u91d1\u94a5\u5319"),
+    (30006, "silver_key", "Silver Key", "\u94f6\u94a5\u5319"),
+    (30003, "tin_key", "Tin Key", "\u9521\u94a5\u5319"),
 ]
 
 # GT6's MultiTileEntityMiniPortal.sBlockBounds (:282-297): PX_P[n] = n, PX_N[n] = 16 - n, in pixels.

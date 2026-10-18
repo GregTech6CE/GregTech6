@@ -33,15 +33,7 @@ ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
 ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
 SOURCE=native_path(ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines')
 MAINS={
-    'large_boiler_main':'multiblockmains/largeboiler',
-    'large_turbine_main':'multiblockmains/largeturbine',
-    'tank_3x3':'multiblockmains/tankmetal','tank_5x5':'multiblockmains/tankmetal',
-    'large_crucible_main':'multiblockmains/crucible',
-    'large_gas_turbine_main':'multiblockmains/gasturbine',
-    'large_dynamo_main':'multiblockmains/largedynamo',
     'heat_exchanger_main':'multiblockmains/largeheatexchanger',
-    'bedrock_drill_main':'multiblockmains/bedrockdrill',
-    'lightning_rod_main':'multiblockmains/lightningrod',
     'coke_oven_main':'basicmachines/cokeoven',
     'distillation_tower_main':'basicmachines/distillationtower',
     'cryo_distillation_main':'basicmachines/cryodistillationtower',
@@ -63,12 +55,7 @@ PARTS={
 
     'centrifuge_part':'centrifugeparts/0','electrolyzer_part':'electrolyzerparts/0',
     'heat_transmitter':'heatacceptor/0','distillation_tower_part':'distillationtowerparts/0',
-    'boiler_wall':'metalwall/0','turbine_wall':'metalwalldense/0',
     'tank_wall':'metalwall/0','tank_wall_dense':'metalwalldense/0',
-    'coke_oven_wall':'firebricks/0','large_crucible_wall':'firebricks/0',
-    'cryo_distillation_wall':'distillationtowerparts/0','large_gas_turbine_wall':'metalwalldense/0',
-    'large_dynamo_wall':'coil/0','heat_exchanger_wall':'heatacceptor/0',
-    'bedrock_drill_wall':'bedrockdrill/0','lightning_rod_wall':'metalwall/0', 'lightning_rod_pillar':'lightningrod/0', 'large_niobium_titanium_coil':'coil/0',
     'implosion_compressor_wall':'metalwalldense/0','fusion_reactor_wall':'coil/0',
 }
 # GT6 texture folder per part family, taken from `NBT_TEXTURE` in Loader_MultiTileEntities.java.
@@ -123,9 +110,10 @@ def owned_directory(name):
 
 # The port's part table is the source of truth: every `new Part(id,"name","material")` is a block.
 import re as _re
-PARTS_SOURCE=native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java')
-PART_NAMES=[m.group(1) for m in _re.finditer(r'new Part\(\d+,\s*"([a-z0-9_]+)"',
-                                              PARTS_SOURCE.read_text(encoding='utf-8'))]
+PARTS_ROOT=ROOT/'core/src/main/java/com/gregtech/gregtech/content/multiblock'
+PART_NAMES=[m.group(1) for file in ('SharedLargeMachineParts.java','OriginalMultiblockPartData.java')
+            for m in _re.finditer(r'new Part\(\d+,\s*"([a-z0-9_]+)"',
+                                 (PARTS_ROOT/file).read_text(encoding='utf-8'))]
 # Parts whose blockstate still points at a stand-in model (`wood_wall` used the barrel model) but that
 # GT6 textures as a structural wall; listing them here lets this tool take them over and re-point the
 # blockstate at `block/machine/multiblock/<name>`.
@@ -177,10 +165,10 @@ def restore():
             manifest[target.relative_to(ASSETS).as_posix()]={'source':source.relative_to(ORIGINAL).as_posix(),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
         ref='gregtech:block/machine/multiblock/'+name
         base_model=model(folder)
-        if name in ('bedrock_drill_main','heat_exchanger_main'):
+        if name in ('heat_exchanger_main',):
             for child in base_model['children'].values():
                 for element in child.get('elements',[]):
-                    faces=element['faces'];side='up' if name=='bedrock_drill_main' else 'down'
+                    faces=element['faces'];side='down'
                     faces[side],faces['north']=faces['north'],faces[side]
                     faces[side]['cullface']=side;faces['north']['cullface']='north'
         write(ASSETS/f'models/block/machine/multiblock/{name}.json',base_model)
@@ -198,7 +186,7 @@ def restore():
             elif 'running=true' in key and (SOURCE/folder/'overlay_running').is_dir():suffix='_running'
             vertical='up' if 'facing=up' in key else 'down' if 'facing=down' in key else None
             output_suffix=suffix+('_'+vertical if vertical else '')
-            write(ASSETS/f'models/block/machine/multiblock/{name}{output_suffix}.json',base_model if name in ('bedrock_drill_main','heat_exchanger_main') else model(folder,suffix,'top' if vertical=='up' else 'bottom' if vertical=='down' else 'side'))
+            write(ASSETS/f'models/block/machine/multiblock/{name}{output_suffix}.json',base_model if name in ('heat_exchanger_main',) else model(folder,suffix,'top' if vertical=='up' else 'bottom' if vertical=='down' else 'side'))
             variant['model']=ref+output_suffix
         write(path,states)
         write(ASSETS/f'models/item/{name}.json',{'parent':ref})

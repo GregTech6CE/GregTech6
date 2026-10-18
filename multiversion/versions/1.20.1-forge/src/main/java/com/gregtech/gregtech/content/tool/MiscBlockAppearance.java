@@ -23,7 +23,7 @@ public final class MiscBlockAppearance {
         if(id.endsWith("_titanium")) return Materials.Titanium.getColor();
         if(id.endsWith("_tungsten")) return Materials.Tungsten.getColor();
         if(id.endsWith("_ultimet")) return Materials.Ultimet.getColor();
-        if(id.endsWith("_stainless") || id.equals("extender_elite") || id.equals("extender_wireless")) return Materials.StainlessSteel.getColor();
+        if(id.endsWith("_stainless")) return Materials.StainlessSteel.getColor();
         if(id.startsWith("filter_")) return Materials.SteelGalvanized.getColor();
         if(id.equals("advanced_crafting_table")) return com.gregtech.gregtech.content.material.generated.WoodMaterials.Wood.getColor();
         return Materials.Steel.getColor();

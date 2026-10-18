@@ -18,7 +18,7 @@ public record Info(ItemStack controller, ItemStack wall, ItemStack base, Map<Blo
 public static List<Info> recipes() {
         var cells=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         for(var cell:BoilerStructure.LAYOUT.cells()) cells.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
-        var boiler=new Info(new ItemStack(GTMultiblocks.LARGE_BOILER_MAIN.get()),new ItemStack(GTMultiblocks.BOILER_WALL.get(),25),
+        var boiler=new Info(new ItemStack(GTMultiblocks.findPart(17201).get()),new ItemStack(GTMultiblocks.TANK_WALL.get(),25),
                 new ItemStack(GTMultiblocks.HEAT_TRANSMITTER.get(),9),Map.copyOf(cells),true);
         var implosionCells=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         implosionCells.put(BlockPos.ZERO,MultiblockLayout.Role.ITEM_IO);
@@ -55,18 +55,18 @@ public static List<Info> recipes() {
         var exchanger=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         for(int y=0;y<2;y++)for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)exchanger.put(new BlockPos(x,y,z),y==0?MultiblockLayout.Role.FLUID_INPUT:MultiblockLayout.Role.CASING);
 //? if >=1.21.1 {
-        /*result.add(new Info(new ItemStack(GTMultiblocks.LARGE_HEAT_EXCHANGER_MAIN.get()),new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024),9),new ItemStack(GTMultiblocks.HEAT_TRANSMITTER.get(),8),Map.copyOf(exchanger),false));
+        /*result.add(new Info(new ItemStack(GTMultiblocks.HEAT_EXCHANGER_MAIN.get()),new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024),9),new ItemStack(GTMultiblocks.HEAT_TRANSMITTER.get(),8),Map.copyOf(exchanger),false));
 *///?} else {
         result.add(new Info(new ItemStack(GTMultiblocks.HEAT_EXCHANGER_MAIN.get()),new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024),9),new ItemStack(GTMultiblocks.HEAT_TRANSMITTER.get(),8),Map.copyOf(exchanger),false));
 //?}
         var drill=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         for(int y=-5;y<=0;y++)for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)
             drill.put(new BlockPos(x,y,z),y==-5?MultiblockLayout.Role.CASING:com.gregtech.gregtech.blockentity.machine.BedrockDrillControllerBlockEntity.role(x,y,z));
-        result.add(new Info(new ItemStack(GTMultiblocks.BEDROCK_DRILL_MAIN.get()),new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026),35),new ItemStack(GTMultiblocks.BEDROCK_DRILL_WALL.get(),9),Map.copyOf(drill),false));
+        result.add(new Info(new ItemStack(GTMultiblocks.findPart(17999).get()),new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026),35),new ItemStack(GTMultiblocks.DENSE_TITANIUM_WALL.get(),9),Map.copyOf(drill),false));
         var rod=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         for(int y=0;y<5;y++)for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)rod.put(new BlockPos(x,y,z),MultiblockLayout.Role.CASING);
         rod.put(new BlockPos(0,5,0),MultiblockLayout.Role.CASING);
-        result.add(new Info(new ItemStack(GTMultiblocks.LIGHTNING_ROD_MAIN.get()),new ItemStack(GTMultiblocks.LIGHTNING_ROD_WALL.get(),26),new ItemStack(GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get(),18),Map.copyOf(rod),false,new ItemStack(GTMultiblocks.LIGHTNING_ROD_PILLAR.get())));
+        result.add(new Info(new ItemStack(GTMultiblocks.findPart(17998).get()),new ItemStack(GTMultiblocks.TUNGSTEN_WALL.get(),26),new ItemStack(GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get(),18),Map.copyOf(rod),false,new ItemStack(GTMultiblocks.LIGHTNING_ROD.get())));
         for(var entry:com.gregtech.gregtech.content.multiblock.ControllerStructureLayouts.all().entrySet()) {
             var diagram=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
             diagram.put(BlockPos.ZERO,MultiblockLayout.Role.CASING);
@@ -116,12 +116,12 @@ public static ItemStack expectedPart(Info info,BlockPos pos) {
         }
         if(com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.isController(info.controller()))return new ItemStack(com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.grade(((net.minecraft.world.item.BlockItem)info.controller().getItem()).getBlock()).wall());
 //? if >=1.21.1 {
-        /*if(info.controller().is(GTMultiblocks.LARGE_HEAT_EXCHANGER_MAIN.get().asItem()))return new ItemStack(pos.getY()==0||pos.getX()==0&&pos.getZ()==0?com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
+        /*if(info.controller().is(GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem()))return new ItemStack(pos.getY()==0||pos.getX()==0&&pos.getZ()==0?com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
 *///?} else {
         if(info.controller().is(GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem()))return new ItemStack(pos.getY()==0||pos.getX()==0&&pos.getZ()==0?com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
 //?}
-        if(info.controller().is(GTMultiblocks.BEDROCK_DRILL_MAIN.get().asItem()))return new ItemStack(pos.getY()==-5?net.minecraft.world.level.block.Blocks.BEDROCK:pos.getY()==-4?GTMultiblocks.BEDROCK_DRILL_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
-        if(info.controller().is(GTMultiblocks.LIGHTNING_ROD_MAIN.get().asItem()))return new ItemStack(pos.getY()==5?GTMultiblocks.LIGHTNING_ROD_PILLAR.get():pos.getY()%2==0?GTMultiblocks.LIGHTNING_ROD_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
+        if(info.controller().is(GTMultiblocks.findPart(17999).get().asItem()))return new ItemStack(pos.getY()==-5?net.minecraft.world.level.block.Blocks.BEDROCK:pos.getY()==-4?GTMultiblocks.DENSE_TITANIUM_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
+        if(info.controller().is(GTMultiblocks.findPart(17998).get().asItem()))return new ItemStack(pos.getY()==5?GTMultiblocks.LIGHTNING_ROD.get():pos.getY()%2==0?GTMultiblocks.TUNGSTEN_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
         if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine) {
             var cells=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName());
             if(cells!=null)for(var cell:cells)if(cell.at(BlockPos.ZERO,Direction.NORTH).equals(pos))return new ItemStack(cell.block());

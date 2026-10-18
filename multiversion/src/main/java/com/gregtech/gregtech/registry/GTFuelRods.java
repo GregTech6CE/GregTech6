@@ -34,7 +34,7 @@ public final class GTFuelRods {
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_CO_60 = register("fuel_rod_co_60", FuelType.Co_60, 0);
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_AM_241 = register("fuel_rod_am_241", FuelType.Am_241, 0);
     public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_AM_243 = register("fuel_rod_am_243", FuelType.Am_243, 0);
-    public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_NAQUADAH = register("fuel_rod_naquadah", FuelType.Naquadah, 2);
+    public static final DeferredHolder<Item,FuelRodItem> FUEL_ROD_NAQUADAH = DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "reactor_rod_9440"));
 *///?} else {
     public static final RegistryObject<FuelRodItem> FUEL_ROD_U_235 = register("fuel_rod_u_235", FuelType.U_235, 0);
     public static final RegistryObject<FuelRodItem> FUEL_ROD_U_238 = register("fuel_rod_u_238", FuelType.U_238, 0);
@@ -44,15 +44,13 @@ public final class GTFuelRods {
     public static final RegistryObject<FuelRodItem> FUEL_ROD_CO_60 = register("fuel_rod_co_60", FuelType.Co_60, 0);
     public static final RegistryObject<FuelRodItem> FUEL_ROD_AM_241 = register("fuel_rod_am_241", FuelType.Am_241, 0);
     public static final RegistryObject<FuelRodItem> FUEL_ROD_AM_243 = register("fuel_rod_am_243", FuelType.Am_243, 0);
-    public static final RegistryObject<FuelRodItem> FUEL_ROD_NAQUADAH = register("fuel_rod_naquadah", FuelType.Naquadah, 2);
+    public static final RegistryObject<FuelRodItem> FUEL_ROD_NAQUADAH = RegistryObject.create(com.gregtech.gregtech.GregTech.id("reactor_rod_9440"), net.minecraftforge.registries.ForgeRegistries.ITEMS);
 //?}
 
 //? if >=1.21.1 {
     /*private static DeferredHolder<Item,FuelRodItem> register(String id, FuelType type, int tier) {
-        if (LegacyContentAliases.legacy(id)) return DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", LegacyContentAliases.canonical(id)));
 *///?} else {
     private static RegistryObject<FuelRodItem> register(String id, FuelType type, int tier) {
-        if (LegacyContentAliases.legacy(id)) return RegistryObject.create(com.gregtech.gregtech.GregTech.id(LegacyContentAliases.canonical(id)), net.minecraftforge.registries.ForgeRegistries.ITEMS);
 //?}
         var block = GTBlocks.BLOCKS.register(id, com.gregtech.gregtech.block.energy.ReactorRodBlock::new);
         BLOCKS.put(id, block);

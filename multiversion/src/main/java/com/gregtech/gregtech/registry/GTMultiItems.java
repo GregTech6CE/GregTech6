@@ -23,7 +23,7 @@ public final class GTMultiItems {
 //? if >=1.21.1 {
    /*// Original remainder entries have no food stat; remote uses its actual native behavior item.
    String category=entries[i+2];String bottle=com.gregtech.gregtech.content.food.GTBottles.fluidKeyOf(id);
-   BY_ID.put(id,ITEMS.register(id,()-> {Item.Properties props=category.equals("food")?com.gregtech.gregtech.content.food.GTFoodItems.itemProperties(id):category.equals("cans")?com.gregtech.gregtech.content.food.GTFoodItems.itemProperties(id):new Item.Properties().stacksTo(64);if(LegacyContentAliases.originalKey(id))return new com.gregtech.gregtech.item.GTDungeonKeyItem(props);if(category.equals("cans"))return new com.gregtech.gregtech.item.CannedFoodItem(id,name,props);if(id.equals("geiger_counter"))return new com.gregtech.gregtech.item.GeigerCounterItem();if(id.equals("remote_activator"))return new com.gregtech.gregtech.item.RemoteActivatorItem(name,props);if(bottle!=null&&!category.equals("food")&&!category.equals("cans"))return new com.gregtech.gregtech.item.BottleItem(bottle,props);return switch(id){case "printed_pages", "many_printed_pages" -> new com.gregtech.gregtech.item.PrintedPagesItem(id.equals("many_printed_pages"),props);
+   BY_ID.put(id,ITEMS.register(id,()-> {Item.Properties props=category.equals("food")?com.gregtech.gregtech.content.food.GTFoodItems.itemProperties(id):category.equals("cans")?com.gregtech.gregtech.content.food.GTFoodItems.itemProperties(id):new Item.Properties().stacksTo(64);if(com.gregtech.gregtech.content.storage.SafeLockRules.isKey(id))return new com.gregtech.gregtech.item.GTDungeonKeyItem(props);if(category.equals("cans"))return new com.gregtech.gregtech.item.CannedFoodItem(id,name,props);if(id.equals("geiger_counter"))return new com.gregtech.gregtech.item.GeigerCounterItem();if(id.equals("remote_activator"))return new com.gregtech.gregtech.item.RemoteActivatorItem(name,props);if(bottle!=null&&!category.equals("food")&&!category.equals("cans"))return new com.gregtech.gregtech.item.BottleItem(bottle,props);return switch(id){case "printed_pages", "many_printed_pages" -> new com.gregtech.gregtech.item.PrintedPagesItem(id.equals("many_printed_pages"),props);
 *///?} else {
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.item.TechItem;
@@ -131,7 +131,7 @@ public final class GTMultiItems {
             String name = entries[i + 1];
             String category = entries[i + 2];
             final boolean hasTooltip = !entries[i + 3].isEmpty();
-            if (LegacyContentAliases.originalKey(id)) {
+            if (com.gregtech.gregtech.content.storage.SafeLockRules.isKey(id)) {
                 BY_ID.put(id, ITEMS.register(id, () -> new com.gregtech.gregtech.item.GTDungeonKeyItem(new Item.Properties().stacksTo(64))));
                 continue;
             }

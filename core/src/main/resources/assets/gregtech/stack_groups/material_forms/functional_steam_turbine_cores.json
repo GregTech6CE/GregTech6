@@ -3,10 +3,6 @@
   "name": "emi.group.gregtech.functional_steam_turbine_cores",
   "contents": [
     "item:gregtech:graphene_steam_turbine_main_housing",
-    "item:gregtech:large_steam_turbine_graphene",
-    "item:gregtech:large_steam_turbine_trinitanium",
-    "item:gregtech:large_steam_turbine_vibramantium",
-    "item:gregtech:large_turbine_main",
     "item:gregtech:magnalium_steam_turbine_main_housing",
     "item:gregtech:trinitanium_steam_turbine_main_housing",
     "item:gregtech:vibramantium_steam_turbine_main_housing"

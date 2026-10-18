@@ -22,22 +22,16 @@ public final class MachineConstructionMaterials {
         }
     }
     public static Optional<ItemComposition> block(String path) {
-        path = com.gregtech.gregtech.registry.LegacyContentAliases.canonical(path);
         var storage = OriginalStorageMaterialData.blocks().get(path);
         if (storage != null) return Optional.of(storage);
         var hopper = HOPPERS.get(path);
         if (hopper != null) return Optional.of(hopper);
-        path=com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().getOrDefault(path,path);
-        return OriginalMachineMaterialData.block(com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().getOrDefault(path,path));
+        return OriginalMachineMaterialData.block(path);
     }
     public static Map<String, ItemComposition> blocks() {
         var blocks = new HashMap<>(OriginalMachineMaterialData.blocks());
         blocks.putAll(HOPPERS);
         blocks.putAll(OriginalStorageMaterialData.blocks());
-        com.gregtech.gregtech.content.multiblock.OriginalGeneratorTooltipData.aliases().forEach((alias,source)->
-                blocks.put(alias,Objects.requireNonNull(blocks.get(source),source)));
-        com.gregtech.gregtech.content.multiblock.OriginalUtilityControllerData.aliases().forEach((alias,source)->
-                blocks.put(alias,Objects.requireNonNull(blocks.get(source),source)));
         return Map.copyOf(blocks);
     }
 }

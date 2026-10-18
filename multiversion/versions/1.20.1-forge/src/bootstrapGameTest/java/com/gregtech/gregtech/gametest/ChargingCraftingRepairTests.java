@@ -25,7 +25,7 @@ import net.minecraftforge.gametest.*;
 @PrefixGameTestTemplate(false)
 public final class ChargingCraftingRepairTests {
     private static ChargingCraftingTableBlockEntity place(GameTestHelper h,BlockPos pos){h.setBlock(pos,GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());return (ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));}
-    private static void batteries(ChargingCraftingTableBlockEntity table){for(int i=16;i<=20;i++)table.items().setStackInSlot(i,new ItemStack(GTElectricItems.BATTERY_LV.get()));}
+    private static void batteries(ChargingCraftingTableBlockEntity table){for(int i=16;i<=20;i++)table.items().setStackInSlot(i,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));}
     private static long charge(ItemStack stack){return stack.getItem() instanceof IItemEnergy energy?energy.getEnergyStored(stack,GregTechTags.Energy.EU):0;}
     private static ItemStack tool(GTToolType type){return com.gregtech.gregtech.item.GTToolItem.create(type,Materials.Steel,com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));}
     private static ElectricWireBlock cable(){return GTWires.allCables().stream().map(net.minecraftforge.registries.RegistryObject::get).filter(b->b.spec().material()==Materials.Copper&&b.spec().size()==12).findFirst().orElseThrow();}
@@ -45,9 +45,9 @@ public final class ChargingCraftingRepairTests {
     }
     @GameTest(template="test_empty")
     public static void skipsFullItemsAndSynchronizesChargeToOpenCraftingMenu(GameTestHelper h){
-        var table=place(h,new BlockPos(1,1,1));var battery=new ItemStack(GTElectricItems.BATTERY_LV.get());GTElectricItems.BATTERY_LV.get().setCharge(battery,GTElectricItems.BATTERY_LV.get().spec().capacity());table.items().setStackInSlot(16,battery);
+        var table=place(h,new BlockPos(1,1,1));var battery=new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1));com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1).setCharge(battery,com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1).spec().capacity());table.items().setStackInSlot(16,battery);
         table.items().setStackInSlot(17,new ItemStack(Items.STICK));table.items().setStackInSlot(18,new ItemStack(GTElectricItems.ELECTRIC_DRILL.get()));
-        table.items().setStackInSlot(0,new ItemStack(GTElectricItems.BATTERY_LV.get()));table.items().setStackInSlot(70,new ItemStack(GTElectricItems.BATTERY_LV.get()));
+        table.items().setStackInSlot(0,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));table.items().setStackInSlot(70,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
         var player=h.makeMockSurvivalPlayer();var menu=new AdvancedCraftingMenu(1,player.getInventory(),table);long[] synced={-1};
         menu.addSlotListener(new ContainerListener(){public void slotChanged(AbstractContainerMenu m,int slot,ItemStack stack){if(slot==19)synced[0]=charge(stack);}public void dataChanged(AbstractContainerMenu m,int id,int value){}});
         h.assertTrue((menu.modes()&32)!=0,"same menu carries charging GUI selector");
@@ -99,13 +99,13 @@ public final class ChargingCraftingRepairTests {
             h.assertTrue(recipe.matches(grid,h.getLevel())&&recipe.getResultItem(h.getLevel().registryAccess()).is(block.asItem())&&block.asItem().getDefaultInstance().getMaxStackSize()==16,"same-material table and original 4x gold cables: "+spec.suffix());
             h.assertTrue(GTBlockEntities.CHARGING_CRAFTING_TABLE.get().isValid(block.defaultBlockState()),"correct entity type for every charging variant");
         }
-        table.items().setStackInSlot(16,new ItemStack(GTElectricItems.BATTERY_LV.get()));
+        table.items().setStackInSlot(16,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
         h.assertTrue(table.doEnergyInjection(GregTechTags.Energy.EU,null,512,1,true)==0,"LV battery rejects HV voltage before drop test");
         h.assertTrue(table.doEnergyInjection(GregTechTags.Energy.EU,null,32,1,true)==1,"LV battery charges at valid voltage before drop test");
         var menu=table.storageMenu(1,player.getInventory());menu.getSlot(35).set(new ItemStack(Items.DIAMOND,7));
         h.assertTrue(table.items().getStackInSlot(70).getCount()==7&&table.getType()==GTBlockEntities.CHARGING_CRAFTING_TABLE.get(),"charging inherits rear inventory with correct entity id");
         h.getLevel().destroyBlock(pos,true);table.dropContents();h.runAfterDelay(1,()->{
-            var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,new AABB(pos).inflate(2));int batteries=0,diamonds=0;for(var e:drops){if(e.getItem().is(GTElectricItems.BATTERY_LV.get())){batteries+=e.getItem().getCount();h.assertTrue(charge(e.getItem())==32,"dropped battery retains charge NBT");}if(e.getItem().is(Items.DIAMOND))diamonds+=e.getItem().getCount();}
+            var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,new AABB(pos).inflate(2));int batteries=0,diamonds=0;for(var e:drops){if(e.getItem().is(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1))){batteries+=e.getItem().getCount();h.assertTrue(charge(e.getItem())==32,"dropped battery retains charge NBT");}if(e.getItem().is(Items.DIAMOND))diamonds+=e.getItem().getCount();}
             h.assertTrue(batteries==1&&diamonds==7,"charged item and normal inventory drop exactly once");h.succeed();});
     }
 }

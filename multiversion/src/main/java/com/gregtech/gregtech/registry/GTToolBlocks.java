@@ -192,10 +192,10 @@ public final class GTToolBlocks {
         // GT6's bumbliary (Loader_MultiTileEntities:2221, hardness 5.0/resistance 5.0) and the
         // advanced one (:2222, stainless steel, 6.0/6.0). This used to be a placeholder block; the
         // ids stay, so the existing lang keys and the model keep working.
-        BUMBLIARY = bumbliary("bumbliary", false,
-                BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(5f, 5f).sound(SoundType.WOOD));
-        ADVANCED_BUMBLIARY = bumbliary("advanced_bumbliary", true,
-                BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f, 6f).sound(SoundType.WOOD));
+        GTBumbleBlocks.initializeApiaries();
+        BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("bumbliary"),net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        ADVANCED_BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("advanced_bumbliary"),net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        ALL_SIMPLE.add((RegistryObject)BUMBLIARY);ALL_SIMPLE.add((RegistryObject)ADVANCED_BUMBLIARY);
         SAP_BAG = simple("sap_bag",
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5f, 0.5f).sound(SoundType.WOOL));
         for (var spec : GTStorageMetals.ALL) {
@@ -231,21 +231,6 @@ public final class GTToolBlocks {
                     block.get(), spec, new Item.Properties().stacksTo(spec.shapeId().equals("cell")?64:16)));   // GT6 Fluid Containers: 16
         }
 
-    }
-
-    /**
-     * One of GT6's two bumbliaries: a tool block that hosts the breeding machine
-     * ({@code com.gregtech.gregtech.blockentity.tool.BumbliaryBlockEntity}). GT6 registers both with
-     * 16 items per stack ({@code Loader_MultiTileEntities:2221-2222}).
-     */
-    @SuppressWarnings("unchecked")
-    private static RegistryObject<com.gregtech.gregtech.block.tool.BumbliaryBlock> bumbliary(
-            String id, boolean advanced, BlockBehaviour.Properties props) {
-        var block = GTBlocks.BLOCKS.register(id,
-                () -> new com.gregtech.gregtech.block.tool.BumbliaryBlock(id, advanced, props));
-        ALL_SIMPLE.add((RegistryObject) block);
-        GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
-        return block;
     }
 
     /** Registers a simple tool block with no associated block entity. */

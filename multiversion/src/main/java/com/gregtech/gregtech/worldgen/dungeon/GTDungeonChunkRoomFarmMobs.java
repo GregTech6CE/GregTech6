@@ -460,7 +460,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
     /** GT6's mass storage (multi-tile {@code 6009}) as the port's mass storage, with GT6's facing. */
     private static BlockState storage(Direction facing) {
 //? if >=1.21.1 {
-        /*return DungeonBindings.block("mass_storage").defaultBlockState()
+        /*return DungeonBindings.block("mass_storage_stainless_steel").defaultBlockState()
 *///?} else {
         return GTStorage.MASS_STORAGE.get().defaultBlockState()
 //?}

@@ -128,7 +128,6 @@ public class Loader_Creative implements IGTLoader {
             // Wave 48: decorative blocks + placeables
             for (var entry : com.gregtech.gregtech.registry.GTDecorBlocks.all()) {
                 if (!entry.isPresent()) continue;
-                if (entry.getId().getPath().equals("bumble_hive")) continue;
                 var block = entry.get();
                 if (block instanceof com.gregtech.gregtech.block.misc.ConcreteBlock
                         || block instanceof com.gregtech.gregtech.block.misc.ColoredConstructionBlock) {
@@ -307,21 +306,21 @@ public class Loader_Creative implements IGTLoader {
                 && event.getTabKey().equals(GTCreativeTabs.MULTIBLOCKS_TAB.getKey())) {
             var main = com.gregtech.gregtech.registry.GTMultiblocks.DISTILLATION_TOWER_MAIN;
             if (main != null && main.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(main.get()));
-            var boiler = com.gregtech.gregtech.registry.GTMultiblocks.LARGE_BOILER_MAIN;
+            var boiler = com.gregtech.gregtech.registry.GTMultiblocks.findPart(17201);
             if (boiler != null && boiler.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(boiler.get()));
-            var turbine = com.gregtech.gregtech.registry.GTMultiblocks.LARGE_TURBINE_MAIN;
+            var turbine = com.gregtech.gregtech.registry.GTMultiblocks.findPart(17211);
             if (turbine != null && turbine.isPresent()) event.accept(new net.minecraft.world.item.ItemStack(turbine.get()));
-            for (var ro : new net.minecraftforge.registries.RegistryObject[]{
+            for (var ro : new com.gregtech.gregtech.registry.RegisteredBlock[]{
                     com.gregtech.gregtech.registry.GTMultiblocks.COKE_OVEN_MAIN,
-                    com.gregtech.gregtech.registry.GTMultiblocks.TANK_3X3,
-                    com.gregtech.gregtech.registry.GTMultiblocks.TANK_5X5,
-                    com.gregtech.gregtech.registry.GTMultiblocks.LARGE_CRUCIBLE_MAIN,
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17002),
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17042),
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17302),
                     com.gregtech.gregtech.registry.GTMultiblocks.CRYO_DISTILLATION_MAIN,
-                    com.gregtech.gregtech.registry.GTMultiblocks.LARGE_GAS_TURBINE_MAIN,
-                    com.gregtech.gregtech.registry.GTMultiblocks.LARGE_DYNAMO_MAIN,
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17231),
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17221),
                     com.gregtech.gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN,
-                    com.gregtech.gregtech.registry.GTMultiblocks.BEDROCK_DRILL_MAIN,
-                    com.gregtech.gregtech.registry.GTMultiblocks.LIGHTNING_ROD_MAIN,
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17999),
+                    com.gregtech.gregtech.registry.GTMultiblocks.findPart(17998),
                     com.gregtech.gregtech.registry.GTMultiblocks.IMPLOSION_COMPRESSOR_MAIN,
                     com.gregtech.gregtech.registry.GTMultiblocks.FUSION_REACTOR_MAIN}) {
                 if (ro != null && ro.isPresent()) {

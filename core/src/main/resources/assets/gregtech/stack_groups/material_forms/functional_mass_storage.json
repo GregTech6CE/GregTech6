@@ -2,7 +2,6 @@
   "type": "remi:group",
   "name": "emi.group.gregtech.functional_mass_storage",
   "contents": [
-    "item:gregtech:mass_storage",
     "item:gregtech:mass_storage_adamantium",
     "item:gregtech:mass_storage_aluminium",
     "item:gregtech:mass_storage_antimony",

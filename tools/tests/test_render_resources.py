@@ -29,15 +29,11 @@ class RenderResourceTests(unittest.TestCase):
         self.assertEqual([], issues)
 
     def test_controller_parents_exist(self):
-        for name in ('bedrock_drill_main', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_main'):
-            model = json.loads((ASSETS / f'models/block/machine/{name}.json').read_text())
-            parent = model['parent']
-            if parent.startswith('gregtech:'):
-                self.assertTrue((ASSETS / f'models/{parent.split(":")[1]}.json').is_file(), name)
-            else:
-                self.assertEqual('minecraft:block/orientable', parent)
-            for texture in model['textures'].values():
-                self.assertTrue((ASSETS / f'textures/{texture.split(":")[1]}.png').is_file(), texture)
+        for name in ('bedrock_mining_drill_controller', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_electric_output'):
+            from check_render_resources import check
+            issues, count = check([ASSETS / f'models/item/{name}.json'])
+            self.assertGreater(count, 1, name)
+            self.assertEqual([], issues, name)
 
     def test_panels_cover_all_placeable_faces(self):
         for path in (ASSETS / 'blockstates').glob('panel_*.json'):

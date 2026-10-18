@@ -223,7 +223,7 @@ public final class DungeonKeysAndPortalsTests {
         check(problems, GTDungeonKeys.all().size() == 10,
                 "GT6 has ten keys, got " + GTDungeonKeys.all().size());
         check(problems, GTDungeonKeys.byIndex(0) != null && ForgeRegistries.ITEMS
-                        .getKey(GTDungeonKeys.byIndex(0)).getPath().equals("key_brass"),
+                        .getKey(GTDungeonKeys.byIndex(0)).getPath().equals("brass_key"),
                 "the first key of IL.KEYS is the brass one");
         // Both portal blocks and their items, with a name in both languages (the localization guard
         // reads the block item's name for a block).

@@ -1,6 +1,6 @@
 # GregTech 6 整合计划与验收合同
 
-当前范围（2026-10-18，用户明确要求完整迁移）：在 `experiment/stonecutter-emi` 完成全部 Forge／NeoForge 原生源集、资源、构建、运行、生成器、自检和 CI 的 Stonecutter 迁移，保留纯 Java core；不以此前 EMI 试点为完成。验收条件和开发命令见 [完整迁移说明](STONECUTTER_MIGRATION.md)。不自动合并 main 或推送。
+当前范围（2026-10-18，用户追加要求）：分支改名 `experiment/stonecutter`，删除全部已确认重复旧 ID 的运行时注册、别名与重映射，活动业务直接引用正式身份；在完整 Stonecutter 接入基础上继续合并双版本业务实现。见[本批范围与验证边界](verification/business-dedup-20261018.md)。不自动合并 main 或推送。
 
 以下为此前阶段记录；新的完整迁移范围优先。
 

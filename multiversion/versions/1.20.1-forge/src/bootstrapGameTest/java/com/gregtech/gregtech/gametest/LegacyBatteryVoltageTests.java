@@ -17,8 +17,8 @@ import java.util.List;
 public final class LegacyBatteryVoltageTests {
     @GameTest(template = "test_empty")
     public static void migratedHandlesHonorChemicalPacketLimitsAndSimulation(GameTestHelper h) {
-        var batteries = List.of(GTElectricItems.BATTERY_LV.get(), GTElectricItems.BATTERY_MV.get(),
-                GTElectricItems.BATTERY_HV.get(), GTElectricItems.BATTERY_EV.get(), GTElectricItems.BATTERY_IV.get());
+        var batteries = List.of(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1), com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2),
+                com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,3), com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,4), com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.LITHIUM_COBALT,4));
         var eu = GregTechTags.Energy.EU;
         for (ChemicalBatteryItem battery : batteries) {
             var stack = new ItemStack(battery);
@@ -56,8 +56,8 @@ public final class LegacyBatteryVoltageTests {
 
     @GameTest(template = "test_empty")
     public static void batteryBoxCountsOnlyCompatibleLegacyVoltage(GameTestHelper h) {
-        var lv = new ItemStack(GTElectricItems.BATTERY_LV.get());
-        var mv = new ItemStack(GTElectricItems.BATTERY_MV.get());
+        var lv = new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1));
+        var mv = new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2));
         var cells = List.of(lv, mv);
         h.assertTrue(new BatteryBoxEnergy(cells, 32).providers() == 1, "LV box counts only LV battery");
         h.assertTrue(new BatteryBoxEnergy(cells, 128).providers() == 1, "MV box counts only MV battery");

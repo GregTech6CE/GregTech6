@@ -156,30 +156,20 @@ public final class GTMiscBlocks {
         AUTO_HAMMER_TITANIUM = reg("auto_hammer_titanium", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_titanium").quality()));
         AUTO_HAMMER_TUNGSTEN = reg("auto_hammer_tungsten", () -> new AutoHammerBlock(props(MapColor.METAL, com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").hardness()), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").input(), com.gregtech.gregtech.content.tool.AutomaticToolRules.profile("auto_hammer_tungsten").quality()));
 
-        // N5: Long Distance Transport
-        reg("long_dist_wire_lead", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_lead"),longDistanceProperties("long_dist_wire_lead")));
-        reg("long_dist_wire_gold", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_gold"),longDistanceProperties("long_dist_wire_gold")));
-        reg("long_dist_wire_electrum", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_electrum"),longDistanceProperties("long_dist_wire_electrum")));
-        reg("long_dist_wire_blue_alloy", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_blue_alloy"),longDistanceProperties("long_dist_wire_blue_alloy")));
-        reg("long_dist_wire_electrotine_alloy", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_electrotine_alloy"),longDistanceProperties("long_dist_wire_electrotine_alloy")));
-        reg("long_dist_wire_aluminium", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_aluminium"),longDistanceProperties("long_dist_wire_aluminium")));
-        reg("long_dist_wire_tungsten", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_tungsten"),longDistanceProperties("long_dist_wire_tungsten")));
-        reg("long_dist_wire_tungsten_steel", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_tungsten_steel"),longDistanceProperties("long_dist_wire_tungsten_steel")));
-        reg("long_dist_wire_platinum", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_platinum"),longDistanceProperties("long_dist_wire_platinum")));
-        reg("long_dist_wire_naquadah", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_naquadah"),longDistanceProperties("long_dist_wire_naquadah")));
-        reg("long_dist_wire_graphene", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_wire_graphene"),longDistanceProperties("long_dist_wire_graphene")));
-        reg("long_dist_pipe_tungsten", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_tungsten"),longDistanceProperties("long_dist_pipe_tungsten")));
-        reg("long_dist_pipe_adamantium", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_adamantium"),longDistanceProperties("long_dist_pipe_adamantium")));
-        reg("long_dist_pipe_draconium", () -> new LongDistPipeBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.get("long_dist_pipe_draconium"),longDistanceProperties("long_dist_pipe_draconium")));
+        // The common catalog owns every original line and endpoint.
+        GTLongDistance.initialize();
         LONG_DIST_PIPE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_pipe_fluid"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
         LONG_DIST_WIRE = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_wire_ev"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
-        LONG_DIST_ENDPOINT_ITEM = reg("long_dist_endpoint_item", () -> new LongDistEndpointBlock(false, longDistanceProperties("long_dist_endpoint_item")));
-        LONG_DIST_ENDPOINT_FLUID = reg("long_dist_endpoint_fluid", () -> new LongDistEndpointBlock(true, longDistanceProperties("long_dist_endpoint_fluid")));
-        LONG_DIST_TRANSFORMER_ULV = reg("long_dist_transformer_ulv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_ulv"), props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_LV = reg("long_dist_transformer_lv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_lv"), props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_MV = reg("long_dist_transformer_mv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_mv"), props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_ZPM = reg("long_dist_transformer_zpm", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_zpm"), props(MapColor.METAL, 4f)));
-        LONG_DIST_TRANSFORMER_UV = reg("long_dist_transformer_uv", () -> new LongDistanceTransformerBlock(com.gregtech.gregtech.content.logistics.LongDistanceCatalog.voltage("long_dist_transformer_uv"), props(MapColor.METAL, 4f)));
+        LONG_DIST_ENDPOINT_ITEM = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_endpoint_item"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_ENDPOINT_FLUID = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_endpoint_fluid"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_TRANSFORMER_ULV = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_transformer_ulv"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_TRANSFORMER_LV = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_transformer_lv"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_TRANSFORMER_MV = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_transformer_mv"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_TRANSFORMER_ZPM = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_transformer_zpm"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        LONG_DIST_TRANSFORMER_UV = RegistryObject.create(com.gregtech.gregtech.GregTech.id("long_dist_transformer_uv"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        for(var entry:GTLongDistance.all()) ALL.add(RegistryObject.create(entry.getId(),net.minecraftforge.registries.ForgeRegistries.BLOCKS));
+
+
     }
 
     private static PanelBlock panel(String material){var s=com.gregtech.gregtech.content.transport.PanelCatalog.get(material);return new PanelBlock(s.material(),s.tint(),props(switch(s.mapColor()){case "WOOD"->MapColor.WOOD;case "STONE"->MapColor.STONE;case "WOOL"->MapColor.WOOL;case "COLOR_BLACK"->MapColor.COLOR_BLACK;default->MapColor.COLOR_GRAY;},s.hardness()));}

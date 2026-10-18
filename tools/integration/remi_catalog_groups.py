@@ -36,14 +36,14 @@ def extend(root, groups, ids):
         "indicator_flowers": r"flower_.+",
         "circuit": r"circuit_(?:basic|good|advanced|elite|master|ultimate|signalum|enderium|magic)",
         "circuit_wire": r"circuit_(?:wire|wiring)_.+",
-        "keys": r"(?:key_(?:brass|bronze|copper|gold|iron|lead|plastic|platinum|silver|tin)|(?:brass|bronze|copper|gold|iron|lead|plastic|platinum|silver|tin)_key)",
+        "keys": r"(?:brass|bronze|copper|gold|iron|lead|plastic|platinum|silver|tin)_key",
         "clay_blocks": r"clay_(?:blue|brown|red|white|yellow)",
         "clay_balls": r"(?:blue|brown|red|white|yellow)_clay",
         "bridges": r"(?:inventory|inventory_tank|tank|universal)_bridge",
         "usb_sticks": r"usb[1-4]_stick",
         "usb_cables": r"usb[1-4]_cable",
         "usb_hdd": r"usb[1-4]_hdd",
-        "repeaters": r"(?:extender_(?:basic|advanced|elite|wireless)|(?:inventory|inventory_tank|tank|universal)_extender)",
+        "repeaters": r"(?:inventory|inventory_tank|tank|universal)_extender",
         "dynamite": r"(?:boomstick|(?:strong_)?dynamite(?:_.+)?)",
         "fluid_measure": r"(?:fluid_measure|fluid_measuring_pot)(?:_.+)?",
         "barometer_bottle": r"fluid_barometer_gas_cylinder(?:_.+)?",
@@ -69,12 +69,3 @@ def extend(root, groups, ids):
                   else "generator_cores" if 17221 <= n <= 17224 else None)
         if family and path in ids:
             groups[family].append(path)
-    for group, pattern in {
-        "generator_cores": r"large_dynamo_(?!wall$).+",
-        "gas_turbine_cores": r"large_gas_turbine_(?!wall$).+",
-        "steam_turbine_cores": r"large_(?:steam_turbine_(?!wall$).+|turbine_main)",
-        "large_crucibles": r"large_crucible_main",
-        "multiblock_tanks": r"tank_3x3",
-        "multiblock_dense_tanks": r"tank_5x5",
-    }.items():
-        groups[group].extend(i for i in ids if re.fullmatch(pattern, i))

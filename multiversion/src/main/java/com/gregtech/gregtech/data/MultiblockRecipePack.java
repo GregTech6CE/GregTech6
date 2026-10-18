@@ -100,7 +100,6 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
-            if (com.gregtech.gregtech.registry.LegacyContentAliases.legacy(entry.blockId())) continue;
             ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
 //? if >=1.21.1 {
             /*Block block = BuiltInRegistries.BLOCK.get(blockId);

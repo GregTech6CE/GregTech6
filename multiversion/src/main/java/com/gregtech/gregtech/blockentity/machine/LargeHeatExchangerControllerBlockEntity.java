@@ -87,7 +87,7 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
         boolean complete=true;
         for(var cell:com.gregtech.gregtech.content.multiblock.SharedHeatExchangerStructure.CELLS){
             var pos=worldPosition.offset(cell.right(),cell.up(),cell.back());var expected=LargeMachineParts.block(cell.part());
-            if(!level.hasChunkAt(pos)||!com.gregtech.gregtech.registry.LegacyContentBinding.samePart(level.getBlockState(pos).getBlock(), expected)
+            if(!level.hasChunkAt(pos)||!(level.getBlockState(pos).getBlock() == expected)
                     ||!(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)||!part.canBind(worldPosition)) {
                 complete=false;
                 continue;

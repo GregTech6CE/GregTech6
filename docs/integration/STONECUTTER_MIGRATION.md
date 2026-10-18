@@ -1,6 +1,6 @@
 # Stonecutter 完整迁移
 
-用户要求在 `experiment/stonecutter-emi` 分支完整迁移，不以 EMI 试点作为验收终点。
+用户要求完整迁移，不以 EMI 试点作为验收终点；当前分支已改名 `experiment/stonecutter`。
 Stonecutter 是构建和源码管理工具；Git 托管仍为现有 GitHub 仓库。本分支不自动推送或合并 main。
 
 ## 范围与验收
@@ -19,10 +19,17 @@ Stonecutter 是构建和源码管理工具；Git 托管仍为现有 GitHub 仓�
 
 - `core/`：共享领域逻辑、API、通用资源，不引入 Minecraft 或加载器类型。
 - `multiversion/src/<sourceSet>/`：共同的原生源码与资源，Forge 为 VCS 活动版本。
-- `multiversion/versions/<version>/src/<sourceSet>/`：真正的平台专有源码、资源覆盖和元数据。
+- `multiversion/versions/<version>/src/<sourceSet>/`：按版本保留的实现、资源覆盖和元数据，包含平台入口及尚未进一步合并的不同实现。
 - `multiversion/versions/<version>/build/generated/stonecutter/`：Stonecutter 生成输出，不直接编辑。
 - `gradle/platform-{forge,neoforge}.gradle`：加载器依赖、映射、运行和生产打包边界。
 - `multiversion/migration-manifest.json`：迁移基线及全部原生文件的代码/字符串或资源签名。
+
+## 接入范围与代码去重边界
+
+“完整迁移”指全部原生源集与双版本构建、运行、资源及工具入口接入 Stonecutter，不表示所有同功能业务代码都已重构为一份。
+2026-10-18 业务重构后 main 源码：共同原生类 990，Forge 版本目录 65，NeoForge 版本目录 129；另有纯 core 类 473。此前迁移时对应为 978／69／140／476；测试源集、生成输出和参考项目不计入这些数字。
+多方块、远距离线路、电动工具、地表／建筑／蜂巢等工厂与原手工配方实现已统一。Forge 的 `GTDecorBlocks` 等门面引用共同工厂的正式注册对象。66 个重复旧身份的运行时兼容入口按用户要求删除，详见[业务重构范围与证据](verification/business-dedup-20261018.md)。
+不同名字或包名的其它版本专有实现仍需按业务逐项检查，不能仅由类数量宣称全仓库无重复。生成目录内两份版本输出是正常的编译输入，不应手动去重。下方“最终验收”保留的是此前完整接入的历史证据；本批业务改动的验证单独记录。
 
 ## 已有证据及限制
 

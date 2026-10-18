@@ -17,13 +17,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
-CONTROLLERS = ('bedrock_drill_main', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_main')
+CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gregtech'
+CONTROLLERS = ('bedrock_mining_drill_controller', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_electric_output')
 
 
 def check(paths, assets=ASSETS):
     pending = list(paths)
     visited = set()
     issues = set()
+    def resolve(path):
+        if path.is_file() or assets != ASSETS:
+            return path
+        return CORE_ASSETS / path.relative_to(assets)
     while pending:
         path = pending.pop()
         if path in visited:
@@ -31,7 +36,7 @@ def check(paths, assets=ASSETS):
         visited.add(path)
         source = path.relative_to(assets).as_posix()
         try:
-            data = json.loads(path.read_text(encoding='utf-8-sig'))
+            data = json.loads(resolve(path).read_text(encoding='utf-8-sig'))
         except (ValueError, OSError) as error:
             issues.add((source, 'json', str(error)))
             continue
@@ -41,7 +46,7 @@ def check(paths, assets=ASSETS):
                 return
             relative = value.split(':', 1)[1]
             target = assets / ('models' if kind == 'model' else 'textures') / (relative + ('.json' if kind == 'model' else '.png'))
-            if not target.is_file():
+            if not resolve(target).is_file():
                 issues.add((source, kind, value))
             elif kind == 'model':
                 pending.append(target)

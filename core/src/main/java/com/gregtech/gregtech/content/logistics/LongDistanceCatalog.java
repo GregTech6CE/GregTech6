@@ -68,9 +68,6 @@ public final class LongDistanceCatalog {
     public static final List<Spec> ALL;
     static {
         var entries = new java.util.ArrayList<Spec>();
-        // Keep the old generic IDs, without introducing new survival recipes for them.
-        entries.add(new Spec("long_dist_pipe", "LEGACY_PIPE", 0, 5, 20, -1, "", Long.MAX_VALUE, "long_dist_pipe_item"));
-        entries.add(wire("long_dist_wire", 0, "Tin", 4));
         entries.add(endpoint("long_dist_endpoint_item", "ITEM_ENDPOINT", 0));
         entries.add(endpoint("long_dist_endpoint_fluid", "FLUID_ENDPOINT", 0));
         entries.add(endpoint("long_dist_transformer_ulv", "TRANSFORMER", 2048));

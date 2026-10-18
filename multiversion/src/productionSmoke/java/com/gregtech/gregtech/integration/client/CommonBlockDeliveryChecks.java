@@ -43,7 +43,7 @@ final class CommonBlockDeliveryChecks {
         }
         var expected = new LinkedHashSet<String>();
         for (var path : SourceBlockProperties.blocks().keySet())
-            expected.add(com.gregtech.gregtech.registry.LegacyContentAliases.canonical(path));
+            expected.add(path);
         var missing = new LinkedHashSet<>(expected);
         missing.removeAll(checkedSourcePaths);
         System.err.println("SOURCE_BLOCK_TOOLTIP_COVERAGE blocks="+sourceBlocks+" basicMachines="+sourceMachines

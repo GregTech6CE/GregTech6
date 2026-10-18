@@ -26,14 +26,14 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class OriginalAxialControllerTests {
     private static final String[] STEAM_RECIPES = {
-            "large_turbine_main", "large_steam_turbine_trinitanium",
-            "large_steam_turbine_graphene", "large_steam_turbine_vibramantium"};
+            "magnalium_steam_turbine_main_housing", "trinitanium_steam_turbine_main_housing",
+            "graphene_steam_turbine_main_housing", "vibramantium_steam_turbine_main_housing"};
     private static final String[] DYNAMO_RECIPES = {
-            "large_dynamo_main", "large_dynamo_titanium",
-            "large_dynamo_tungstensteel", "large_dynamo_adamantium"};
+            "stainless_steel_dynamo_main_housing", "titanium_dynamo_main_housing",
+            "tungstensteel_dynamo_main_housing", "adamantium_dynamo_main_housing"};
     private static final String[] GAS_RECIPES = {
-            "large_gas_turbine_main", "large_gas_turbine_trinitanium",
-            "large_gas_turbine_graphene", "large_gas_turbine_vibramantium"};
+            "magnalium_gas_turbine_main_housing", "trinitanium_gas_turbine_main_housing",
+            "graphene_gas_turbine_main_housing", "vibramantium_gas_turbine_main_housing"};
 
     @GameTest(template = "test_blueprint_empty")
     public static void originalSteamAndDynamoHousingsFormAtEveryGrade(GameTestHelper helper) {

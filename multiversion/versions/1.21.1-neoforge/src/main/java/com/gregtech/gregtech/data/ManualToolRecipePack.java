@@ -75,65 +75,12 @@ public final class ManualToolRecipePack extends AbstractPackResources {
          }
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original powered tool datapack: {} concrete material/battery assemblies",powered);
-        addAxles(generated);
         OriginalHandCraftingRows.add(generated);
         com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.add(generated);
         com.gregtech.gregtech.loaders.Loader_StoneCraftingRecipes.add(generated);
         com.gregtech.gregtech.loaders.Loader_BedrockFlowerCraftingRecipes.add(generated);
         resources=Map.copyOf(generated);return resources;
     }
-    /** Full Loader_HandToolCraftingRecipes.axles patterns; same ids, forms and tool costs. */
-    private static void addAxles(Map<ResourceLocation,byte[]> data) {
-        var axles = com.gregtech.gregtech.registry.GTAxles.all();
-        if (axles.size() != 52) throw new IllegalStateException("Expected 52 original axle variants");
-        for (var holder : axles) {
-            var spec = holder.get().spec();
-            boolean wood = spec.material() == com.gregtech.gregtech.content.material.generated.WoodMaterials.WoodTreated;
-            boolean creosote = wood && spec.size() == 4;
-            var keys = new java.util.LinkedHashMap<String, Object>();
-            keys.put("f", itemIngredient(new net.minecraft.world.item.ItemStack(com.gregtech.gregtech.registry.GTToolItems.get(com.gregtech.gregtech.api.tool.GTToolType.FILE))));
-            var hammer = wood ? com.gregtech.gregtech.api.tool.GTToolType.SOFT_HAMMER : com.gregtech.gregtech.api.tool.GTToolType.HARD_HAMMER;
-            keys.put(wood ? "r" : "h", itemIngredient(new net.minecraft.world.item.ItemStack(com.gregtech.gregtech.registry.GTToolItems.get(hammer))));
-            String[] pattern;
-            if (creosote) {
-                pattern = new String[]{"rS", "Bf"};
-                keys.put("S", Map.of("tag", "gregtech:wooden_beams"));
-                keys.put("B", Map.of("type", "gregtech:creosote_container_1000"));
-            } else {
-                var form = switch (spec.size()) {
-                    case 1 -> MaterialPrefix.stick;
-                    case 2 -> MaterialPrefix.stickLong;
-                    case 3 -> wood ? MaterialPrefix.stickLong : MaterialPrefix.ingotDouble;
-                    case 4 -> MaterialPrefix.ingotQuadruple;
-                    default -> throw new IllegalStateException("Unknown axle size");
-                };
-                var stack = com.gregtech.gregtech.registry.GTItems.getStack(form, spec.material(), 1);
-                Object piece = itemIngredient(stack);
-                if (form == MaterialPrefix.stick || form == MaterialPrefix.stickLong) {
-                    var tag = (form == MaterialPrefix.stick ? "rods/" : "long_rods/")
-                            + com.gregtech.gregtech.api.material.MaterialEquivalence.materialName(spec.material());
-                    piece = List.of(piece, Map.of("tag", "forge:" + tag), Map.of("tag", "c:" + tag));
-                }
-                keys.put("S", piece);
-                pattern = wood && spec.size() == 3 ? new String[]{"  S", "SrS", "S f"}
-                        : new String[]{"  S", wood ? " r " : " h ", "S f"};
-            }
-            var json = new java.util.LinkedHashMap<String, Object>();
-            json.put("type", creosote ? "gregtech:creosote_axle" : "gregtech:tool_shaped");
-            json.put("category", "misc"); json.put("group", "gt.hand");
-            json.put("pattern", pattern); json.put("key", keys); json.put("allow_mirror", false);
-            json.put("result", Map.of("id", holder.getId().toString(), "count", 1));
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/hand/axle/" + spec.id() + ".json");
-            if (data.putIfAbsent(id, GSON.toJson(json).getBytes(StandardCharsets.UTF_8)) != null)
-                throw new IllegalStateException("Duplicate axle recipe " + id);
-        }
-        com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native axle crafting recipes: {}", axles.size());
-    }
-    private static Map<String, Object> itemIngredient(net.minecraft.world.item.ItemStack stack) {
-        if (stack.isEmpty()) throw new IllegalStateException("Missing original axle material/tool");
-        return Map.of("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
-    }
-
     private static void add(Map<ResourceLocation,byte[]> data,String id,String serializer,String tool,int pattern){
         var key=ResourceLocation.fromNamespaceAndPath("gregtech","recipe/"+id+".json");
         byte[] value=GSON.toJson(Map.of("type","gregtech:"+serializer,"tool",tool,"pattern",pattern)).getBytes(StandardCharsets.UTF_8);
