@@ -1,5 +1,25 @@
 # 验证账本
 
+## 2026-10-18 / 附属燃料能源模板
+
+`mod_version` 是 `0.7.0`，`GregTechAddons.API_VERSION` 是 7。启动器是已安装的 Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 Temurin 21.0.6。本机默认 `java` 是 JDK 25，Gradle 8.8 不能跑。命令都是 `--offline`，`GRADLE_USER_HOME` 用用户目录里已有的缓存。ForgeGradle 证书检查加了 `-Dnet.minecraftforge.gradle.check.certs=false`。这不是项目配置。
+
+`:core:check` 通过，20 秒。`sourcePolicyCheck` 是 2414 个 Java 源文件。`addonApiClosureCheck` 输出 `Addon API closure passed (core): 49 API classes`。`addonApiVersionContracts` 输出 `addon API version contracts passed: 84 assertions, 7 scheduled removals`。燃料契约每个场景单独一个 JVM：`fuelok` 6、`fuelmap` 1、`fuelenergy` 1、`fuelstruct` 1、`fuelname` 1、`fuelmachine` 1、`fuelbounds` 7。在这之前，`:core:compileJava`、`:core:compileTestJava`、`:compileJava`、`:neoforge:compileJava`、两边的 `compileBootstrapGameTestJava`，以及两边只对着 SDK 的 `compileAddonSample`，一次通过，2 分 40 秒。
+
+`gregtech_card17_fuel` 带 `-PaddonSample=true`，堆是 2560m，SerialGC。Forge 先跑样例四项，19:20:47 是 `All 4 required tests passed`，`GT addon API 7 ready: [addon_sample]`，Gradle 5 分 19 秒，目录 `build/card17-gametest`。同一命名空间补上 `GasTurbineGradeTests` 的三项后，20:06:06 是 `All 7 required tests passed`，ready 仍是 `[addon_sample]`，Gradle 4 分 34 秒，目录相同。NeoForge 跑样例四项，19:23:30 是 `All 4 required tests passed`，19:22:26 ready `[addon_sample]`，Gradle 2 分 24 秒。属性写成 `neoforge/build/card17-gametest`，NeoForge 工程按自己的目录解析，实际目录是 `neoforge/neoforge/build/card17-gametest`。NeoForge 没有 `GasTurbineGradeTests`。
+
+样例燃料表是 `addon_sample.fuel.gas`。数据包熔岩 100 mB、水 10 mB、`eu_per_tick` 16、持续 20 tick，读进配方表后 `mEUt` 是 -16。单方块 `addon_sample:sample_engine` 效率 10000，每 tick 一个 32 RU 的包，从正面送出。第一 tick 没有接收方，缓冲是 320，熔岩用完，废液水 10 mB 留下，方块没有点亮。关掉开关后再装 100 mB，下一 tick 燃料和缓冲都不变。打开开关后，北面的机器收到 32 RU，缓冲少 32。多方块 `addon_sample:sample_turbine` 效率 5000，从正面背后 4 格送出。没有外壳时不烧燃料。放上 (0,0,1) 的 `tank_wall` 后成形，缓冲 160。南面 4 格外的机器收到 32，缓冲剩 128。拆掉外壳后不再燃烧，缓冲停在 128。`RecipeMachines.collect` 把两台机器列为这张燃料表的催化剂。`MultiblockInfoData` 里涡轮预览的 (0,0,1) 是储罐壁。JEI 和 EMI 用的就是这张配方表和催化剂索引，这次没有打开查看器界面。
+
+存档用方块实体自己的 `saveWithoutMetadata` 再读进新放的方块实体：燃料 50 mB、废液水 10 mB、能量 160、关掉的开关、已成形都在。这是同一局测试里的存读，不是第二个进程。
+
+`GasTurbineGradeTests` 的 `structuralPartsDropThemselves`、`fourGradesConsumeConserveAndBind`、`newWallsHaveOriginalWeldingRecipes` 在上面的 7 项里通过。`MachineControlTests.generatorFamiliesControlAndSave` 先走到电动引擎。延长器的 `machineControl` 固定 `supportsProgress()` 为 true，断言在 `gregtech:engine_electric_galvanized_steel` 停住，柴油引擎还没轮到。`ExtenderBlockEntity`、柴油引擎和燃气涡轮的方块实体都不在本卡改动里。整组 `gregtech` 命名空间约 695 项开过一次，约 8 分钟后停掉；停之前已经有延长器掉落、选择器、迷你末地门和面坐标几项失败，和燃料模板无关，没有再跑完。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒，`-PclientSmokeHeap=3g`。带样例：Forge `CLIENT_SMOKE_SUCCESS` 125235 毫秒，19:28:15，5 帧，`TitleScreen`，ready `[addon_sample]`，Gradle 3 分 19 秒。NeoForge 64626 毫秒，19:33:50，151 帧，同一画面，ready `[addon_sample]`，Gradle 1 分 50 秒。不带样例：Forge 104285 毫秒，19:31:16，ready `[]`，Gradle 2 分 33 秒。NeoForge 61506 毫秒，19:35:55，ready `[]`，Gradle 1 分 46 秒。没有打开样例引擎或涡轮的界面。
+
+专服带样例并 `-PaddonSampleHalt=true`。Forge 目录 `build/card17-forge-server`，19:37:28 ready `[addon_sample]`，`Done (24.814s)` 后 `dust_ammoniumnitrate=true`，Gradle 1 分 48 秒。NeoForge 属性 `build/card17-neo-server` 落在 `neoforge/build/card17-neo-server`，19:41:30 ready `[addon_sample]`，`Done (7.456s)` 后同样的粉尘行，Gradle 1 分 16 秒。两处都写了 `eula=true`。不带样例的专服不会自己停。Forge `build/card17-forge-plain`，19:39:36 ready `[]`，`Done (26.100s)`。NeoForge `neoforge/build/card17-neo-plain`，19:42:56 ready `[]`，`Done (7.567s)`。看到 Done 后结束进程。
+
+旧存档备份不涉及。内置柴油引擎和燃气涡轮的行为、注册名和存档格式都保持原样。
+
 ## 2026-10-18 / 附属行为型机器外壳
 
 `mod_version` 是 `0.6.0`，`GregTechAddons.API_VERSION` 是 6。启动器是 Temurin 21.0.6，因为本机默认 `java` 是 JDK 25，Gradle 8.8 不能跑。命令都是 `--offline`，`GRADLE_USER_HOME` 用用户目录里已有的缓存。一次 NeoForge 专服在守护进程被停掉后重新校验 ForgeGradle 证书失败，补了 `-Dnet.minecraftforge.gradle.check.certs=false` 才启动。这不是项目配置。
