@@ -1,5 +1,19 @@
 # 验证账本
 
+## 2026-10-16 / 共享平台源码的成品对照和验包
+
+这是打包和字节对照，不是玩法通过。
+
+相对 `0480522d` 的基线，C、D 之后资源逐字节相同。class 例外：湿泡沫那次单独提交让 `CFoamBlock`、`FreshCFoamBlock` 的 reobf 名字变了；D 有 13 个 class 只差行号表，去掉行号表后与 C 之后一致；Forge 的 `gregtech.refmap.json` 只是两个 mixin 键对调。
+
+E 相对 D 之后的成品：两边都新增 `Mc.class`。去掉行号表之后，有变化的是改过的类和垫片。资源和 refmap 没有再变。`StoneAndToolSurvivalRecipes` 有一行曾被误换成会在 Forge 上转小写的 `Mc.gregtechId`，已改回两边原来的 `fromNamespaceAndPath`。
+
+`verify_artifacts.py` 通过。共享 core 833，Forge 平台 class 1516，NeoForge 平台 class 1616。`platform-shared` 的 301 个顶层类都在两个成品里，不在 core 清单里。同名平台 class 1395 个，逐字节相同的是 0 个，脚本不要求它们相同。回执 [platform-shared-source-artifacts-20261016.json](verification/platform-shared-source-artifacts-20261016.json)。
+
+GameTest 没有跑完。Forge 默认命名空间 1043 项，3g 堆在约 13 分钟后内存溢出，手动结束；NeoForge 没开始。溢出前 9 项失败，其中 5 项覆盖第二批移入的 `PanelCover` 和 `ToolAssemblyCatalog`，没有改动前的对照。
+
+`:core:check` 这次没跑。开发环境在共享目录接上之后启动过，全部做完后的那次还没做。成品 jar 按正式安装加载器启动还没做。
+
 ## 2026-10-15 / 机器配方数据包覆盖层
 
 `machineRecipeOverlayContracts` 通过 44 条断言。没有重跑完整 `:core:check`。两边主源码和 GameTest 源码都编译通过。
