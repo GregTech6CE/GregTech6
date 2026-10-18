@@ -21,7 +21,7 @@ import shutil
 
 GT6_TEXTURES = os.path.join("..", "gregtech6-master", "gregtech6-master", "build", "resources", "main",
                             "assets", "gregtech", "textures", "blocks", "machines", "plants", "bush")
-ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 TEX_OUT = os.path.join(ASSETS, "textures", "block", "plants", "bush")
 LANG = os.path.join(ASSETS, "lang")
 
@@ -68,7 +68,7 @@ def cube(box, texture, tint):
 
 
 def layer(berry, tinted):
-    base = "gregtech:block/plants/bush/colored/" if tinted else "gregtech:block/plants/bush/overlay/"
+    base = "gt6ce:block/plants/bush/colored/" if tinted else "gt6ce:block/plants/bush/overlay/"
     elements = [cube(BUSH_BOX, "#bush", 0 if tinted else None)]
     if berry:
         elements.append(cube(BERRY_BOX, "#berry", 1 if tinted else None))
@@ -83,7 +83,7 @@ def model(stage):
     return {
         "parent": "minecraft:block/block",
         "loader": "forge:composite",
-        "textures": {"particle": "gregtech:block/plants/bush/colored/bush"},
+        "textures": {"particle": "gt6ce:block/plants/bush/colored/bush"},
         "children": {
             "colored": layer(berry, True),
             "overlay": layer(berry, False),
@@ -103,22 +103,22 @@ for relative in TEXTURES:
 
 for stage in STAGES:
     write_json(os.path.join(ASSETS, "models", "block", "plants", "bush_stage%d.json" % stage), model(stage))
-write_json(os.path.join(ASSETS, "models", "item", "bush.json"), {"parent": "gregtech:block/plants/bush_stage3"})
+write_json(os.path.join(ASSETS, "models", "item", "bush.json"), {"parent": "gt6ce:block/plants/bush_stage3"})
 write_json(os.path.join(ASSETS, "blockstates", "bush.json"), {"variants": {
-    "stage=%d" % stage: {"model": "gregtech:block/plants/bush_stage%d" % stage} for stage in STAGES}})
+    "stage=%d" % stage: {"model": "gt6ce:block/plants/bush_stage%d" % stage} for stage in STAGES}})
 
 for name, value in (("en_us.json", "Berry Bush"), ("zh_cn.json", "浆果灌木丛")):
     path = os.path.join(LANG, name)
     with open(path, encoding="utf-8") as handle:
         lines = handle.readlines()
-    if any('"block.gregtech.bush"' in line for line in lines):
+    if any('"block.gt6ce.bush"' in line for line in lines):
         print("%s: bush key already present" % name)
         continue
-    anchor = next((i for i, line in enumerate(lines) if '"block.gregtech.rock"' in line), None)
+    anchor = next((i for i, line in enumerate(lines) if '"block.gt6ce.rock"' in line), None)
     if anchor is None:
         raise SystemExit("%s: no anchor for the bush key" % name)
     indent = lines[anchor][:len(lines[anchor]) - len(lines[anchor].lstrip())]
-    lines[anchor:anchor] = ['%s"block.gregtech.bush": "%s",\n' % (indent, value)]
+    lines[anchor:anchor] = ['%s"block.gt6ce.bush": "%s",\n' % (indent, value)]
     with open(path, "w", encoding="utf-8", newline="\n") as handle:
         handle.writelines(lines)
     print("%s: inserted the bush key" % name)

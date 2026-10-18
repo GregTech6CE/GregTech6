@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:casing_machine_double/steel",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:casing_machine_double/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:casing_machine_double/meteoric_steel",
+      "required": false
+    }
+  ]
+}

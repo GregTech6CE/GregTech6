@@ -19,7 +19,7 @@ FILTERS = [('filter_items','filter_slots',[' hY','ZMZ','Yw ']),
 
 
 def recipe(name, data):
-    path=native_path(ROOT/f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')
+    path=native_path(ROOT/f'src/main/resources/data/gt6ce/recipes/logistics/{name}.json')
     path.parent.mkdir(parents=True,exist_ok=True)
     text=json.dumps(data,indent=2)+'\n'
     if not path.exists() or path.read_text(encoding='utf-8')!=text:path.write_text(text,encoding='utf-8')
@@ -37,18 +37,18 @@ def main():
             for secondary in DIRECTIONS:
                 for explicit in [False,True]:
                     actual=secondary if explicit else opposite[front]
-                    variants[f'facing={front},secondary={secondary},secondary_set={str(explicit).lower()}']={'model':f'gregtech:block/logistics/{texture}/{front}_{actual}'}
+                    variants[f'facing={front},secondary={secondary},secondary_set={str(explicit).lower()}']={'model':f'gt6ce:block/logistics/{texture}/{front}_{actual}'}
         write(f'blockstates/{name}.json',{'variants':variants})
-        write(f'models/item/{name}.json',{'parent':f'gregtech:block/logistics/{texture}/north_south'})
+        write(f'models/item/{name}.json',{'parent':f'gt6ce:block/logistics/{texture}/north_south'})
         keys={'M':'casing_machine_double_steelgalvanized' if name in ['filter_items_fluids','filter_oredict'] else 'casing_machine_steelgalvanized',
               'X':'pipe_medium_galvanized_steel','Y':'item_pipe_medium_electrum','Z':'fluid_filter' if name=='filter_fluids' else 'item_filter',
               'F':'fluid_filter','h':'tool_hammer','w':'tool_wrench'}
         used=set(''.join(pattern))-{' '}
-        recipe(name,{'type':'gregtech:tool_shaped','pattern':pattern,'key':{k:{'item':'gregtech:'+keys[k]} for k in sorted(used)},'result':{'item':'gregtech:'+name}})
-        recipe(name+'_reset',{'type':'minecraft:crafting_shapeless','ingredients':[{'item':'gregtech:'+name}],'result':{'item':'gregtech:'+name}})
-    recipe('blank_cover',{'type':'gregtech:tool_shaped','pattern':['Sh','Pd'],'key':{k:{'item':'gregtech:'+v} for k,v in {'S':'screw_aluminium','P':'plate_aluminium','h':'tool_hammer','d':'tool_screwdriver'}.items()},'result':{'item':'gregtech:blank_cover'}})
+        recipe(name,{'type':'gt6ce:tool_shaped','pattern':pattern,'key':{k:{'item':'gt6ce:'+keys[k]} for k in sorted(used)},'result':{'item':'gt6ce:'+name}})
+        recipe(name+'_reset',{'type':'minecraft:crafting_shapeless','ingredients':[{'item':'gt6ce:'+name}],'result':{'item':'gt6ce:'+name}})
+    recipe('blank_cover',{'type':'gt6ce:tool_shaped','pattern':['Sh','Pd'],'key':{k:{'item':'gt6ce:'+v} for k,v in {'S':'screw_aluminium','P':'plate_aluminium','h':'tool_hammer','d':'tool_screwdriver'}.items()},'result':{'item':'gt6ce:blank_cover'}})
     for name,pattern in [('item_filter',[' Z ','ZQZ',' Z ']),('fluid_filter',['Z Z',' Q ','Z Z'])]:
-        recipe(name,{'type':'minecraft:crafting_shaped','pattern':pattern,'key':{'Q':{'item':'gregtech:blank_cover'},'Z':{'item':'gregtech:foil_zinc'}},'result':{'item':'gregtech:'+name}})
+        recipe(name,{'type':'minecraft:crafting_shaped','pattern':pattern,'key':{'Q':{'item':'gt6ce:blank_cover'},'Z':{'item':'gt6ce:foil_zinc'}},'result':{'item':'gt6ce:'+name}})
 
 
 if __name__=='__main__':main()

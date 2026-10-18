@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 sys.path.insert(0, str(ROOT / 'tools'))
 from rebuild_source_extenders import SPECS, DIRECTIONS
 from check_render_resources import check
@@ -54,12 +54,12 @@ class SourceExtenderResources(unittest.TestCase):
         for locale in ['zh_cn', 'en_us']:
             lang = json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8'))
             for name, _, _ in SPECS:
-                self.assertIn('block.gregtech.' + name, lang)
+                self.assertIn('block.gt6ce.' + name, lang)
         for name, _, pattern in SPECS:
-            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')).read_text(encoding='utf-8'))
+            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gt6ce/recipes/logistics/{name}.json')).read_text(encoding='utf-8'))
             self.assertEqual(recipe['pattern'], pattern)
             self.assertEqual(set(recipe['key']), set(''.join(pattern)) - {' '})
-            self.assertEqual(recipe['type'], 'gregtech:tool_shaped')
+            self.assertEqual(recipe['type'], 'gt6ce:tool_shaped')
 
     def test_capsule_source_alias_and_forming_groups(self):
         rows = json.loads((ROOT / 'docs/capsule-cell-source.json').read_text(encoding='utf-8'))

@@ -168,7 +168,7 @@ public final class CreosoteAxleRecipe extends ToolShapedRecipe {
 
         private static ItemStack example() {
 //? if >=1.21.1 {
-            /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "fluid_cell_tin"));
+            /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "fluid_cell_tin"));
             if (item == Items.AIR) throw new IllegalStateException("Creosote axle requires the finite tin cell");
             var handler = FluidUtil.getFluidHandler(new ItemStack(item)).orElse(null);
             var fluid = required();

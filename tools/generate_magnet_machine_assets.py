@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GT6 = native_path(ROOT.parent / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "resources" / "assets" / "gregtech" / "textures" / "blocks" / "machines")
-ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gregtech")
+ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gt6ce")
 TEXTURES = ASSETS / "textures" / "block" / "machines"
 TIERS = ("lv", "mv", "hv", "ev", "iv")
 
@@ -28,7 +28,7 @@ def write_json(path, value):
 def layer(folder, overlay):
     subdir = "colored" if overlay is None else overlay
     names = {"north": "front", "south": "back", "west": "side", "east": "side", "up": "side", "down": "side"}
-    textures = {side: f"gregtech:block/machines/magnets/{folder}/{subdir}/{name}" for side, name in names.items()}
+    textures = {side: f"gt6ce:block/machines/magnets/{folder}/{subdir}/{name}" for side, name in names.items()}
     faces = {side: {"texture": "#" + side, **({"tintindex": 0} if overlay is None else {})}
              for side in names}
     return {"parent": "minecraft:block/block", "textures": textures,
@@ -49,7 +49,7 @@ def blockstate(name):
     for facing, rotation in rotations.items():
         for active in (False, True):
             variants[f"facing={facing},active={str(active).lower()}"] = {
-                "model": f"gregtech:block/machine/energy/{name}{'_active' if active else ''}", **rotation}
+                "model": f"gt6ce:block/machine/energy/{name}{'_active' if active else ''}", **rotation}
     return {"variants": variants}
 
 
@@ -73,7 +73,7 @@ def main():
                            model(folder, active))
             write_json(ASSETS / "blockstates" / f"{name}.json", blockstate(name))
             write_json(ASSETS / "models" / "item" / f"{name}.json",
-                       {"parent": f"gregtech:block/machine/energy/{name}"})
+                       {"parent": f"gt6ce:block/machine/energy/{name}"})
     # Recipes are resolved once from core OriginalMagnetCrafting by both native
     # loaders. Never recreate the old unguarded static JSON recipes here.
 

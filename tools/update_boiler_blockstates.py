@@ -9,7 +9,7 @@ from native_layout import native_path
 
 import json, os
 
-BASE = str(native_path("src/main/resources/assets/gregtech"))
+BASE = str(native_path("src/main/resources/assets/gt6ce"))
 BS_DIR = os.path.join(BASE, "blockstates")
 
 updated = 0

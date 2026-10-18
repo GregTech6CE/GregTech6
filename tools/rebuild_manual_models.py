@@ -14,7 +14,7 @@ from pathlib import Path
 import copy
 import json
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech')
+ROOT = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gt6ce')
 SIDES = ('down', 'up', 'north', 'south', 'west', 'east')
 
 def box(lo, hi, texture, **faces):
@@ -30,7 +30,7 @@ def model(name, folder, parts):
         elements = copy.deepcopy(parts)
         if name == "mortar_block" and layer == "colored":
             for face in elements[-1]["faces"].values(): face["tintindex"] = 1
-        textures = {key: f'gregtech:block/machines/tools/{folder}/{layer}/{key}' for key in sorted(keys)}
+        textures = {key: f'gt6ce:block/machines/tools/{folder}/{layer}/{key}' for key in sorted(keys)}
         for path in textures.values():
             assert (ROOT / 'textures' / (path.split(':')[1] + '.png')).exists(), path
         if layer == 'overlay':
@@ -68,7 +68,7 @@ def main():
     model('crank', 'crank', [box([2,2,13], [14,14,15], 'front'), box([5,5,15], [11,11,16], 'front')])
     crank_path = ROOT / 'models/block/machine/tool/crank.json'
     crank = json.loads(crank_path.read_text(encoding='utf-8'))
-    crank['children']['colored']['textures']['axle'] = 'gregtech:block/iconsets/axle'
+    crank['children']['colored']['textures']['axle'] = 'gt6ce:block/iconsets/axle'
     for part in crank['children']['colored']['elements']:
         for side, face in part['faces'].items():
             if side != 'north': face['texture'] = '#axle'
@@ -79,7 +79,7 @@ def main():
     for facing, rotation in [('north',0),('east',90),('south',180),('west',270)]:
         for stone in (False, True):
             variants[f'facing={facing},stone={str(stone).lower()}'] = {
-                'model': 'gregtech:block/machine/tool/' + ('grindstone_block' if stone else 'grindstone_empty'), 'y': rotation}
+                'model': 'gt6ce:block/machine/tool/' + ('grindstone_block' if stone else 'grindstone_empty'), 'y': rotation}
     (ROOT/'blockstates/grindstone_block.json').write_text(json.dumps({'variants': variants}, indent=2)+'\n', encoding='utf-8')
 
 if __name__ == '__main__': main()

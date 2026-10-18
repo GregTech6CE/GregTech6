@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.gametest.*;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class CrucibleSurvivalTests {
  @GameTest(template="test_empty") public static void reductionConsumesFluxAndHonorsYield(GameTestHelper h) {
   var content=new ArrayList<>(List.of(CrucibleMaterialStack.of(Ores.Fe2O3,5*GTValues.U),CrucibleMaterialStack.of(Elements.C,GTValues.U),CrucibleMaterialStack.of(Ores.CaCO3,GTValues.U)));

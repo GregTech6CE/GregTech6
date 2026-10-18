@@ -84,7 +84,7 @@ public final class BaleBlock extends RotatedPillarBlock {
 *///?} else {
         var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         if (block instanceof BaleBlock) {
             level.setBlock(pos, block.defaultBlockState().setValue(AXIS, state.getValue(AXIS)), 3);
         }

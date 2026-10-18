@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/sensor/fluidometer"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/sensor/fluidometer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/sensor/fluidometer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/sensor/fluidometer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/sensor/fluidometer",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down": {
+      "model": "gt6ce:block/machine/sensor/fluidometer",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

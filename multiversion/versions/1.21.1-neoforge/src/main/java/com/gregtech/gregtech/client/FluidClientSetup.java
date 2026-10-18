@@ -33,7 +33,7 @@ public final class FluidClientSetup {
         event.enqueueWork(() -> {
             for (var binding : GTFluids.entries().entrySet()) {
                 ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(binding.getKey()), RenderType.translucent());
-                ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gregtech", binding.getKey().getPath()+"_flowing")), RenderType.translucent());
+                ItemBlockRenderTypes.setRenderLayer(BuiltInRegistries.FLUID.get(ResourceLocation.fromNamespaceAndPath("gt6ce", binding.getKey().getPath()+"_flowing")), RenderType.translucent());
             }
         });
     }

@@ -22,8 +22,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FLOWERS = native_path(ROOT / "src/main/java/com/gregtech/gregtech/content/plant/BedrockFlowers.java")
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
-DATA = native_path(ROOT / "src/main/resources/data/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
+DATA = native_path(ROOT / "src/main/resources/data/gt6ce")
 
 
 def encoded(value: dict) -> str:
@@ -52,17 +52,17 @@ def main() -> None:
             raise SystemExit(f"missing GT6 flower texture: {texture}")
         name = f"potted_{flower}"
         emit(ASSETS / "blockstates" / f"{name}.json",
-             encoded({"variants": {"": {"model": f"gregtech:block/{name}"}}}), check)
+             encoded({"variants": {"": {"model": f"gt6ce:block/{name}"}}}), check)
         emit(ASSETS / "models/block" / f"{name}.json",
              encoded({"parent": "minecraft:block/flower_pot_cross",
-                      "textures": {"plant": f"gregtech:block/iconsets/{flower}"}}), check)
+                      "textures": {"plant": f"gt6ce:block/iconsets/{flower}"}}), check)
         emit(DATA / "loot_tables/blocks" / f"{name}.json", encoded({
             "type": "minecraft:block",
             "pools": [
                 {"rolls": 1, "conditions": [{"condition": "minecraft:survives_explosion"}],
                  "entries": [{"type": "minecraft:item", "name": "minecraft:flower_pot"}]},
                 {"rolls": 1, "conditions": [{"condition": "minecraft:survives_explosion"}],
-                 "entries": [{"type": "minecraft:item", "name": f"gregtech:{flower}"}]},
+                 "entries": [{"type": "minecraft:item", "name": f"gt6ce:{flower}"}]},
             ],
         }), check)
     print(f"{len(ids)} GT6 dungeon flower pots {'checked' if check else 'generated'}")

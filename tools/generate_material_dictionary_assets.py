@@ -32,20 +32,20 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 GT6_TEX = pathlib.Path(
     r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech"
     r"\textures\items\gt.multiitem.books\32766.png")
-ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gregtech")
+ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gt6ce")
 ITEM_ID = "dusty_material_dictionary"
 TEXTURE = ASSETS / "textures" / "item" / "books" / f"{ITEM_ID}.png"
 MODEL = ASSETS / "models" / "item" / f"{ITEM_ID}.json"
 
 EN = {
-    f"item.gregtech.{ITEM_ID}": "Dusty Material Dictionary",
-    f"item.gregtech.{ITEM_ID}.tooltip": "Loot: Book about a random Material",
-    "gregtech.tooltip.loot_bag": "Rightclick this on a Block to loot",
+    f"item.gt6ce.{ITEM_ID}": "Dusty Material Dictionary",
+    f"item.gt6ce.{ITEM_ID}.tooltip": "Loot: Book about a random Material",
+    "gt6ce.tooltip.loot_bag": "Rightclick this on a Block to loot",
 }
 ZH = {
-    f"item.gregtech.{ITEM_ID}": "沾满灰尘的材料词典",
-    f"item.gregtech.{ITEM_ID}.tooltip": "战利品：随机一本材料词典",
-    "gregtech.tooltip.loot_bag": "对着一方块右键即可开启",
+    f"item.gt6ce.{ITEM_ID}": "沾满灰尘的材料词典",
+    f"item.gt6ce.{ITEM_ID}.tooltip": "战利品：随机一本材料词典",
+    "gt6ce.tooltip.loot_bag": "对着一方块右键即可开启",
 }
 
 
@@ -56,7 +56,7 @@ def main() -> int:
     shutil.copyfile(GT6_TEX, TEXTURE)
     MODEL.parent.mkdir(parents=True, exist_ok=True)
     MODEL.write_text(json.dumps(
-        {"parent": "minecraft:item/generated", "textures": {"layer0": f"gregtech:item/books/{ITEM_ID}"}},
+        {"parent": "minecraft:item/generated", "textures": {"layer0": f"gt6ce:item/books/{ITEM_ID}"}},
         indent=2) + "\n", encoding="utf-8")
     for name, keys in (("en_us.json", EN), ("zh_cn.json", ZH)):
         path = ASSETS / "lang" / name

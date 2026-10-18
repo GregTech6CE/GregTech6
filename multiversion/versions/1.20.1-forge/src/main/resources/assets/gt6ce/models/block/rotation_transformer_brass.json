@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "block/material_icons/metallic/machine_bottom",
+    "down": "block/material_icons/metallic/machine_bottom",
+    "up": "block/material_icons/metallic/machine_bottom",
+    "north": "block/material_icons/metallic/machine_bottom",
+    "south": "block/material_icons/metallic/machine_bottom",
+    "west": "block/material_icons/metallic/machine_bottom",
+    "east": "block/material_icons/metallic/machine_bottom"
+  }
+}

@@ -26,7 +26,7 @@ import java.util.*;
 /** Three finite source-bound cases, real recipe lookup/binding and actual powered inventories. */
 @GameTestHolder("gregtech_documents") @PrefixGameTestTemplate(false)
 public final class VisualDocumentPortTests {
-    private static ItemStack item(String path){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path)));}
+    private static ItemStack item(String path){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path)));}
     private static List<FluidStack> black(int amount){return List.of(GTFluids.stack("Dye_Chemical_Black",amount));}
     private static List<FluidStack> cmyk(){return List.of("Black","Cyan","Magenta","Yellow").stream().map(c->GTFluids.stack("Dye_Chemical_"+c,16)).toList();}
     private static Recipe lookup(RecipeMap map,GameTestHelper h,List<ItemStack> items,List<FluidStack> fluids){return map.findRecipe(items,fluids,false,map.mInputItemsCount,map.mOutputItemsCount,h.getLevel(),null,ItemStack.EMPTY);}
@@ -109,7 +109,7 @@ public final class VisualDocumentPortTests {
     public static void poweredScannerAndHddPrinterProduceBoundBook(GameTestHelper h){
         var book=GTBooks.bookStack("Manual_Printer");var scanner=machine(h,new BlockPos(3,2,3),MachineRecipeMaps.ScannerVisuals);scanner.inventory().setStackInSlot(0,book);scanner.inventory().setStackInSlot(1,item("usb1_stick"));power(h,scanner,550);
         var usb=scanner.inventory().getStackInSlot(MachineRecipeMaps.ScannerVisuals.mInputItemsCount);var data=UsbDataMedia.readStick(usb,1);h.assertTrue(data!=null&&VisualDocumentData.pages(data)==GTBooks.pagesOf("Manual_Printer").size(),"powered registered scanner reads actual manual");
-        var printer=machine(h,new BlockPos(10,2,3),MachineRecipeMaps.Printer);var portPos=printer.getBlockPos().north();h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","hdd_switch")).defaultBlockState());
+        var printer=machine(h,new BlockPos(10,2,3),MachineRecipeMaps.Printer);var portPos=printer.getBlockPos().north();h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","hdd_switch")).defaultBlockState());
         var port=(com.gregtech.gregtech.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);var drive=item("usb3_hdd");UsbDataMedia.writeDrive(drive,9,1,data);port.items().setStackInSlot(0,drive);port.setMode(9);
 //? if >=1.21.1 {
         /*var cable=item("usb3_cable");var cableData=UsbDataMedia.tagOrEmpty(cable);cableData.putByte(UsbDataCable.NBT_DIRECTION,(byte)Direction.NORTH.ordinal());UsbDataMedia.store(cable,cableData);

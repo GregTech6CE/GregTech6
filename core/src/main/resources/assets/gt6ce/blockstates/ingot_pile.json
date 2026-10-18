@@ -1,0 +1,199 @@
+{
+  "variants": {
+    "stack=0": {
+      "model": "gt6ce:block/decoration/pile/ingot_0"
+    },
+    "stack=1": {
+      "model": "gt6ce:block/decoration/pile/ingot_1"
+    },
+    "stack=2": {
+      "model": "gt6ce:block/decoration/pile/ingot_2"
+    },
+    "stack=3": {
+      "model": "gt6ce:block/decoration/pile/ingot_3"
+    },
+    "stack=4": {
+      "model": "gt6ce:block/decoration/pile/ingot_4"
+    },
+    "stack=5": {
+      "model": "gt6ce:block/decoration/pile/ingot_5"
+    },
+    "stack=6": {
+      "model": "gt6ce:block/decoration/pile/ingot_6"
+    },
+    "stack=7": {
+      "model": "gt6ce:block/decoration/pile/ingot_7"
+    },
+    "stack=8": {
+      "model": "gt6ce:block/decoration/pile/ingot_8"
+    },
+    "stack=9": {
+      "model": "gt6ce:block/decoration/pile/ingot_9"
+    },
+    "stack=10": {
+      "model": "gt6ce:block/decoration/pile/ingot_10"
+    },
+    "stack=11": {
+      "model": "gt6ce:block/decoration/pile/ingot_11"
+    },
+    "stack=12": {
+      "model": "gt6ce:block/decoration/pile/ingot_12"
+    },
+    "stack=13": {
+      "model": "gt6ce:block/decoration/pile/ingot_13"
+    },
+    "stack=14": {
+      "model": "gt6ce:block/decoration/pile/ingot_14"
+    },
+    "stack=15": {
+      "model": "gt6ce:block/decoration/pile/ingot_15"
+    },
+    "stack=16": {
+      "model": "gt6ce:block/decoration/pile/ingot_16"
+    },
+    "stack=17": {
+      "model": "gt6ce:block/decoration/pile/ingot_17"
+    },
+    "stack=18": {
+      "model": "gt6ce:block/decoration/pile/ingot_18"
+    },
+    "stack=19": {
+      "model": "gt6ce:block/decoration/pile/ingot_19"
+    },
+    "stack=20": {
+      "model": "gt6ce:block/decoration/pile/ingot_20"
+    },
+    "stack=21": {
+      "model": "gt6ce:block/decoration/pile/ingot_21"
+    },
+    "stack=22": {
+      "model": "gt6ce:block/decoration/pile/ingot_22"
+    },
+    "stack=23": {
+      "model": "gt6ce:block/decoration/pile/ingot_23"
+    },
+    "stack=24": {
+      "model": "gt6ce:block/decoration/pile/ingot_24"
+    },
+    "stack=25": {
+      "model": "gt6ce:block/decoration/pile/ingot_25"
+    },
+    "stack=26": {
+      "model": "gt6ce:block/decoration/pile/ingot_26"
+    },
+    "stack=27": {
+      "model": "gt6ce:block/decoration/pile/ingot_27"
+    },
+    "stack=28": {
+      "model": "gt6ce:block/decoration/pile/ingot_28"
+    },
+    "stack=29": {
+      "model": "gt6ce:block/decoration/pile/ingot_29"
+    },
+    "stack=30": {
+      "model": "gt6ce:block/decoration/pile/ingot_30"
+    },
+    "stack=31": {
+      "model": "gt6ce:block/decoration/pile/ingot_31"
+    },
+    "stack=32": {
+      "model": "gt6ce:block/decoration/pile/ingot_32"
+    },
+    "stack=33": {
+      "model": "gt6ce:block/decoration/pile/ingot_33"
+    },
+    "stack=34": {
+      "model": "gt6ce:block/decoration/pile/ingot_34"
+    },
+    "stack=35": {
+      "model": "gt6ce:block/decoration/pile/ingot_35"
+    },
+    "stack=36": {
+      "model": "gt6ce:block/decoration/pile/ingot_36"
+    },
+    "stack=37": {
+      "model": "gt6ce:block/decoration/pile/ingot_37"
+    },
+    "stack=38": {
+      "model": "gt6ce:block/decoration/pile/ingot_38"
+    },
+    "stack=39": {
+      "model": "gt6ce:block/decoration/pile/ingot_39"
+    },
+    "stack=40": {
+      "model": "gt6ce:block/decoration/pile/ingot_40"
+    },
+    "stack=41": {
+      "model": "gt6ce:block/decoration/pile/ingot_41"
+    },
+    "stack=42": {
+      "model": "gt6ce:block/decoration/pile/ingot_42"
+    },
+    "stack=43": {
+      "model": "gt6ce:block/decoration/pile/ingot_43"
+    },
+    "stack=44": {
+      "model": "gt6ce:block/decoration/pile/ingot_44"
+    },
+    "stack=45": {
+      "model": "gt6ce:block/decoration/pile/ingot_45"
+    },
+    "stack=46": {
+      "model": "gt6ce:block/decoration/pile/ingot_46"
+    },
+    "stack=47": {
+      "model": "gt6ce:block/decoration/pile/ingot_47"
+    },
+    "stack=48": {
+      "model": "gt6ce:block/decoration/pile/ingot_48"
+    },
+    "stack=49": {
+      "model": "gt6ce:block/decoration/pile/ingot_49"
+    },
+    "stack=50": {
+      "model": "gt6ce:block/decoration/pile/ingot_50"
+    },
+    "stack=51": {
+      "model": "gt6ce:block/decoration/pile/ingot_51"
+    },
+    "stack=52": {
+      "model": "gt6ce:block/decoration/pile/ingot_52"
+    },
+    "stack=53": {
+      "model": "gt6ce:block/decoration/pile/ingot_53"
+    },
+    "stack=54": {
+      "model": "gt6ce:block/decoration/pile/ingot_54"
+    },
+    "stack=55": {
+      "model": "gt6ce:block/decoration/pile/ingot_55"
+    },
+    "stack=56": {
+      "model": "gt6ce:block/decoration/pile/ingot_56"
+    },
+    "stack=57": {
+      "model": "gt6ce:block/decoration/pile/ingot_57"
+    },
+    "stack=58": {
+      "model": "gt6ce:block/decoration/pile/ingot_58"
+    },
+    "stack=59": {
+      "model": "gt6ce:block/decoration/pile/ingot_59"
+    },
+    "stack=60": {
+      "model": "gt6ce:block/decoration/pile/ingot_60"
+    },
+    "stack=61": {
+      "model": "gt6ce:block/decoration/pile/ingot_61"
+    },
+    "stack=62": {
+      "model": "gt6ce:block/decoration/pile/ingot_62"
+    },
+    "stack=63": {
+      "model": "gt6ce:block/decoration/pile/ingot_63"
+    },
+    "stack=64": {
+      "model": "gt6ce:block/decoration/pile/ingot_64"
+    }
+  }
+}

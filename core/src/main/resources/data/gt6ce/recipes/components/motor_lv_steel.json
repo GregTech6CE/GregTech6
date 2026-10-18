@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:cable_01_tin"
+    },
+    "W": {
+      "item": "gt6ce:wire_01_copper"
+    },
+    "R": {
+      "tag": "forge:rods/steel_galvanized"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_steelgalvanized"
+    },
+    "I": {
+      "tag": "forge:rods/steel_magnetic"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_electric_motor_lv",
+    "count": 1
+  }
+}

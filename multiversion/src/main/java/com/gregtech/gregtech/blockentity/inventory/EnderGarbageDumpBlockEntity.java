@@ -112,7 +112,7 @@ public class EnderGarbageDumpBlockEntity extends BlockEntity implements MenuProv
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gregtech.ender_garbage_dump");
+        return Component.translatable("block.gt6ce.ender_garbage_dump");
     }
 
     @Nullable

@@ -1,0 +1,37 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:485",
+  "allow_mirror": false,
+  "pattern": [
+    "wPh",
+    "CMC",
+    "XfX"
+  ],
+  "key": {
+    "w": {
+      "tag": "forge:tools/wrench"
+    },
+    "h": {
+      "tag": "forge:tools/hammer"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_steelgalvanized"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_3_plus"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_hv"
+    },
+    "X": {
+      "item": "gt6ce:plate_stainlesssteel"
+    },
+    "f": {
+      "tag": "forge:tools/file"
+    }
+  },
+  "result": {
+    "item": "gt6ce:robot_arm_cutter_tip",
+    "count": 1
+  }
+}

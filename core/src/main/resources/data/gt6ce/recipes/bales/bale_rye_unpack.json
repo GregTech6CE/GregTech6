@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:bale_rye"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:rye",
+    "count": 9
+  }
+}

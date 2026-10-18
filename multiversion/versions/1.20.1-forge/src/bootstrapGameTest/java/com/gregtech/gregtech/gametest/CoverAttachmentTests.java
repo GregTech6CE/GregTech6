@@ -48,7 +48,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * below (fluid arriving, tanks emptying) are the independent proof that the same id reached the
  * dispatcher.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CoverAttachmentTests {
     private static final int BASE_X = 25000;
@@ -110,9 +110,9 @@ public final class CoverAttachmentTests {
         String drain = CoverItems.behavior(cover(CoverAttachmentBehaviors.DRAIN));
         String vent = CoverItems.behavior(cover(CoverAttachmentBehaviors.AIR_VENT));
         helper.assertTrue(CoverAttachmentBehaviors.DRAIN.equals(drain),
-                "gregtech:drain is the drain cover behaviour, got " + drain);
+                "gt6ce:drain is the drain cover behaviour, got " + drain);
         helper.assertTrue(CoverAttachmentBehaviors.AIR_VENT.equals(vent),
-                "gregtech:air_vent is the air vent behaviour, got " + vent);
+                "gt6ce:air_vent is the air vent behaviour, got " + vent);
         helper.assertTrue(!"drain".equals(vent) && !"air_vent".equals(drain),
                 "the two covers do not share a behaviour id");
 
@@ -168,12 +168,12 @@ public final class CoverAttachmentTests {
      */
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void drainCoverTakesTheFluidOfAGt6WorldBlock(GameTestHelper helper) {
-        var seaBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gregtech:seawater"));
+        var seaBlock = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gt6ce:seawater"));
         helper.assertTrue(seaBlock != null && seaBlock != Blocks.AIR && seaBlock instanceof LiquidBlock,
-                "the gregtech:seawater world fluid block is registered, got " + seaBlock);
+                "the gt6ce:seawater world fluid block is registered, got " + seaBlock);
         var seaFluid = seaBlock.defaultBlockState().getFluidState().getType();
         var seaId = ForgeRegistries.FLUIDS.getKey(seaFluid);
-        helper.assertTrue(seaId != null && seaId.toString().equals("gregtech:seawater"),
+        helper.assertTrue(seaId != null && seaId.toString().equals("gt6ce:seawater"),
                 "the block carries its own fluid, got " + seaId);
 
         ServerLevel level = helper.getLevel();

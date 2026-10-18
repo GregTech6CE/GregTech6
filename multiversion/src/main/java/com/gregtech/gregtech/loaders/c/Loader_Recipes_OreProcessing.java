@@ -296,7 +296,7 @@ public class Loader_Recipes_OreProcessing implements IGTLoader {
         if (prefix == null) return ItemStack.EMPTY;
 //? if >=1.21.1 {
         /*net.minecraft.world.level.block.Block block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", prefix.getBlockId(material)));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix.getBlockId(material)));
 *///?} else {
         net.minecraft.world.level.block.Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
                 new net.minecraft.resources.ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, prefix.getBlockId(material)));

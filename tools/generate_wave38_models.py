@@ -9,7 +9,7 @@ from native_layout import native_path
 
 import json, os
 
-BASE = str(native_path("src/main/resources/assets/gregtech"))
+BASE = str(native_path("src/main/resources/assets/gt6ce"))
 MODEL_DIR = f"{BASE}/models/block/machine"
 BLOCKSTATE_DIR = f"{BASE}/blockstates"
 
@@ -52,13 +52,13 @@ def make_composite(texture_path, faces):
         "children": {
             "layer0": {
                 "parent": "minecraft:block/block",
-                "textures": {d: f"gregtech:block/machines/{texture_path}/colored/{s}" for d, s in faces.items()},
+                "textures": {d: f"gt6ce:block/machines/{texture_path}/colored/{s}" for d, s in faces.items()},
                 "elements": cube_element(),
                 "render_type": "minecraft:solid"
             },
             "layer1": {
                 "parent": "minecraft:block/block",
-                "textures": {d: f"gregtech:block/machines/{texture_path}/overlay/{s}" for d, s in faces.items()},
+                "textures": {d: f"gt6ce:block/machines/{texture_path}/overlay/{s}" for d, s in faces.items()},
                 "elements": cube_element_overlay(),
                 "render_type": "minecraft:cutout"
             }
@@ -88,12 +88,12 @@ materials = ["wood", "bronze", "steel", "titanium", "tungstensteel"]
 for mat in materials:
     bs = {
         "variants": {
-            "facing=down":  {"model": "gregtech:block/machine/gearbox/gearbox", "x": 90},
-            "facing=up":    {"model": "gregtech:block/machine/gearbox/gearbox", "x": 270},
-            "facing=north": {"model": "gregtech:block/machine/gearbox/gearbox"},
-            "facing=south": {"model": "gregtech:block/machine/gearbox/gearbox", "y": 180},
-            "facing=west":  {"model": "gregtech:block/machine/gearbox/gearbox", "y": 270},
-            "facing=east":  {"model": "gregtech:block/machine/gearbox/gearbox", "y": 90}
+            "facing=down":  {"model": "gt6ce:block/machine/gearbox/gearbox", "x": 90},
+            "facing=up":    {"model": "gt6ce:block/machine/gearbox/gearbox", "x": 270},
+            "facing=north": {"model": "gt6ce:block/machine/gearbox/gearbox"},
+            "facing=south": {"model": "gt6ce:block/machine/gearbox/gearbox", "y": 180},
+            "facing=west":  {"model": "gt6ce:block/machine/gearbox/gearbox", "y": 270},
+            "facing=east":  {"model": "gt6ce:block/machine/gearbox/gearbox", "y": 90}
         }
     }
     with open(f"{BLOCKSTATE_DIR}/gearbox_{mat}.json", "w") as f:
@@ -104,12 +104,12 @@ pump_mats = ["bronze", "steel", "titanium", "tungstensteel"]
 for mat in pump_mats:
     bs = {
         "variants": {
-            "facing=down":  {"model": "gregtech:block/machine/pump/rotational_pump", "x": 90},
-            "facing=up":    {"model": "gregtech:block/machine/pump/rotational_pump", "x": 270},
-            "facing=north": {"model": "gregtech:block/machine/pump/rotational_pump"},
-            "facing=south": {"model": "gregtech:block/machine/pump/rotational_pump", "y": 180},
-            "facing=west":  {"model": "gregtech:block/machine/pump/rotational_pump", "y": 270},
-            "facing=east":  {"model": "gregtech:block/machine/pump/rotational_pump", "y": 90}
+            "facing=down":  {"model": "gt6ce:block/machine/pump/rotational_pump", "x": 90},
+            "facing=up":    {"model": "gt6ce:block/machine/pump/rotational_pump", "x": 270},
+            "facing=north": {"model": "gt6ce:block/machine/pump/rotational_pump"},
+            "facing=south": {"model": "gt6ce:block/machine/pump/rotational_pump", "y": 180},
+            "facing=west":  {"model": "gt6ce:block/machine/pump/rotational_pump", "y": 270},
+            "facing=east":  {"model": "gt6ce:block/machine/pump/rotational_pump", "y": 90}
         }
     }
     with open(f"{BLOCKSTATE_DIR}/rotational_pump_{mat}.json", "w") as f:
@@ -120,12 +120,12 @@ trans_mats = ["bronze", "steel", "titanium", "tungstensteel"]
 for mat in trans_mats:
     bs = {
         "variants": {
-            "facing=down":  {"model": "gregtech:block/machine/transformer/rotation_transformer", "x": 90},
-            "facing=up":    {"model": "gregtech:block/machine/transformer/rotation_transformer", "x": 270},
-            "facing=north": {"model": "gregtech:block/machine/transformer/rotation_transformer"},
-            "facing=south": {"model": "gregtech:block/machine/transformer/rotation_transformer", "y": 180},
-            "facing=west":  {"model": "gregtech:block/machine/transformer/rotation_transformer", "y": 270},
-            "facing=east":  {"model": "gregtech:block/machine/transformer/rotation_transformer", "y": 90}
+            "facing=down":  {"model": "gt6ce:block/machine/transformer/rotation_transformer", "x": 90},
+            "facing=up":    {"model": "gt6ce:block/machine/transformer/rotation_transformer", "x": 270},
+            "facing=north": {"model": "gt6ce:block/machine/transformer/rotation_transformer"},
+            "facing=south": {"model": "gt6ce:block/machine/transformer/rotation_transformer", "y": 180},
+            "facing=west":  {"model": "gt6ce:block/machine/transformer/rotation_transformer", "y": 270},
+            "facing=east":  {"model": "gt6ce:block/machine/transformer/rotation_transformer", "y": 90}
         }
     }
     with open(f"{BLOCKSTATE_DIR}/rotation_transformer_{mat}.json", "w") as f:
@@ -134,17 +134,17 @@ for mat in trans_mats:
 # --- Update item models to point to same composite models ---
 ITEM_DIR = f"{BASE}/models/item"
 for mat in materials:
-    im = {"model": f"gregtech:block/machine/gearbox/gearbox"}
+    im = {"model": f"gt6ce:block/machine/gearbox/gearbox"}
     with open(f"{ITEM_DIR}/gearbox_{mat}.json", "w") as f:
         json.dump(im, f, indent=2)
 
 for mat in pump_mats:
-    im = {"model": "gregtech:block/machine/pump/rotational_pump"}
+    im = {"model": "gt6ce:block/machine/pump/rotational_pump"}
     with open(f"{ITEM_DIR}/rotational_pump_{mat}.json", "w") as f:
         json.dump(im, f, indent=2)
 
 for mat in trans_mats:
-    im = {"model": "gregtech:block/machine/transformer/rotation_transformer"}
+    im = {"model": "gt6ce:block/machine/transformer/rotation_transformer"}
     with open(f"{ITEM_DIR}/rotation_transformer_{mat}.json", "w") as f:
         json.dump(im, f, indent=2)
 
@@ -154,7 +154,7 @@ for mat in trans_mats:
 for mat in materials:
     for size in range(1, 5):
         name = f"axle_{mat}_{size}"
-        im = {"parent": "item/generated", "textures": {"layer0": f"gregtech:block/iconsets/axle"}}
+        im = {"parent": "item/generated", "textures": {"layer0": f"gt6ce:block/iconsets/axle"}}
         with open(f"{ITEM_DIR}/{name}.json", "w") as f:
             json.dump(im, f, indent=2)
 

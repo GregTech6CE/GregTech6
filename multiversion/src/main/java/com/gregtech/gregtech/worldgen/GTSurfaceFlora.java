@@ -13,14 +13,14 @@ public final class GTSurfaceFlora extends SurfaceFloraRules {
  public static int twigMultiplier(ResourceLocation biome){return SurfaceFloraRules.twigMultiplier(biome==null?null:biome.toString());}
  public static boolean glowtusBiome(ResourceLocation biome){return SurfaceFloraRules.glowtusBiome(biome==null?null:biome.toString());}
 //? if >=1.21.1 {
- /*public static Block logBlock(Log log){return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",log.blockId()));}
+ /*public static Block logBlock(Log log){return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",log.blockId()));}
 *///?} else {
- public static Block logBlock(Log log){return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",log.blockId()));}
+ public static Block logBlock(Log log){return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",log.blockId()));}
 //?}
  public static Block twigs(){return GTBlocks.TWIGS.get();}
 //? if >=1.21.1 {
- /*public static Block glowtus(String colour){return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","glowtus_"+colour));}
+ /*public static Block glowtus(String colour){return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glowtus_"+colour));}
 *///?} else {
- public static Block glowtus(String colour){return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","glowtus_"+colour));}
+ public static Block glowtus(String colour){return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","glowtus_"+colour));}
 //?}
 }

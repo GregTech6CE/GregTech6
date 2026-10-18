@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 BOWL_DIR = ASSETS / "models/block/machine/crucible_bowl"
 EN_LANG = ASSETS / "lang/en_us.json"
 
@@ -160,8 +160,8 @@ def composite_model(base: str, overlay: str, elements_tinted: list, elements_ove
 
 
 def write_shared_models(texture_set: str) -> None:
-    base = f"gregtech:block/material_icons/{texture_set}/blocksolid"
-    overlay = f"gregtech:block/material_icons/{texture_set}/blocksolid_overlay"
+    base = f"gt6ce:block/material_icons/{texture_set}/blocksolid"
+    overlay = f"gt6ce:block/material_icons/{texture_set}/blocksolid_overlay"
 
     simple_models = {
         "mold_basin": BASIN_BOXES,
@@ -204,12 +204,12 @@ def crucible_suffixes() -> list[str]:
 def write_blockstates(suffixes: list[str]) -> None:
     for suffix in suffixes:
         for prefix in ("mold", "mold_basin", "crucible_crossing"):
-            data = {"variants": {"": {"model": f"gregtech:block/blocks/{prefix}_{suffix}"}}}
+            data = {"variants": {"": {"model": f"gt6ce:block/blocks/{prefix}_{suffix}"}}}
             (ASSETS / "blockstates" / f"{prefix}_{suffix}.json").write_text(
                 json.dumps(data, indent=2) + "\n", encoding="utf-8")
         faucet = {
             "variants": {
-                f"facing={facing}": {"model": f"gregtech:block/blocks/crucible_faucet_{suffix}"}
+                f"facing={facing}": {"model": f"gt6ce:block/blocks/crucible_faucet_{suffix}"}
                 for facing in ("north", "south", "east", "west")
             }
         }
@@ -221,14 +221,14 @@ def write_item_models(suffixes: list[str]) -> None:
     for suffix in suffixes:
         for prefix in ("mold", "mold_basin", "crucible_crossing", "crucible_faucet"):
             block_id = f"{prefix}_{suffix}"
-            data = {"parent": f"gregtech:block/blocks/{block_id}"}
+            data = {"parent": f"gt6ce:block/blocks/{block_id}"}
             (ASSETS / "models/item" / f"{block_id}.json").write_text(
                 json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
 
 def update_lang(suffixes: list[str]) -> None:
     en = json.loads(EN_LANG.read_text(encoding="utf-8-sig"))
-    en["itemGroup.gregtech.smelting_crucibles"] = "Crucibles / Molds"
+    en["itemGroup.gt6ce.smelting_crucibles"] = "Crucibles / Molds"
     labels = {
         "mold": "Mold",
         "mold_basin": "Mold Basin",
@@ -236,11 +236,11 @@ def update_lang(suffixes: list[str]) -> None:
         "crucible_crossing": "Crucible Crossing",
     }
     for suffix in suffixes:
-        crucible_en = en.get(f"block.gregtech.smelting_crucible_{suffix}", "")
+        crucible_en = en.get(f"block.gt6ce.smelting_crucible_{suffix}", "")
         mat_match = re.search(r"\((.+)\)\s*$", crucible_en)
         mat_name = mat_match.group(1) if mat_match else suffix.replace("_", " ").title()
         for prefix, label in labels.items():
-            en[f"block.gregtech.{prefix}_{suffix}"] = f"{label} ({mat_name})"
+            en[f"block.gt6ce.{prefix}_{suffix}"] = f"{label} ({mat_name})"
     EN_LANG.write_text(json.dumps(dict(sorted(en.items())), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 

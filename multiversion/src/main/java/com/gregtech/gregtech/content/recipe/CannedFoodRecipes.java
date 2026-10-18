@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 /** Explicit MultiItemCans and Loader_Recipes_Food:40-51 rows; no external ingredient guesses. */
 public final class CannedFoodRecipes {
     private CannedFoodRecipes() {}
-    private static ItemStack can(String id, int count) { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)), count); }
+    private static ItemStack can(String id, int count) { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)), count); }
     public static int register() {
         int registered=0;
         for(var entry:RegisteredFluids.all().entrySet()) {

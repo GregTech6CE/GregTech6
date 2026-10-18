@@ -470,7 +470,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
     /** GT6 multi-tile 25377: Arsenic Bronze medium pipe; mask uses Direction's DOWN..EAST bit order. */
     private static void pipe(GTDungeonData data, int x, int y, int z, int mask) {
 //? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","item_pipe_medium_arsenic_bronze"));
+        /*Block block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","item_pipe_medium_arsenic_bronze"));
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(GregTech.id("item_pipe_medium_arsenic_bronze"));
 //?}

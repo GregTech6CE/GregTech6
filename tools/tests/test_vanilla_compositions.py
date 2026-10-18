@@ -27,7 +27,7 @@ class VanillaCompositionDataTests(unittest.TestCase):
         self.assertEqual(rows['stone']['components'], {'Stone':u*9})
 
     def test_modern_inferences_do_not_enable_automatic_recovery(self):
-        rows=json.loads((native_path(ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
+        rows=json.loads((native_path(ROOT/'src/main/resources/data/gt6ce/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
         for name,row in rows.items():
             self.assertTrue(row['source'])
             self.assertTrue(all(isinstance(v,int) and v>0 for v in row['components'].values()),name)
@@ -38,13 +38,13 @@ class VanillaCompositionDataTests(unittest.TestCase):
         self.assertEqual(rows['command_block']['components'],{})
 
     def test_source_quantities_do_not_depend_on_stack_size(self):
-        rows=json.loads((native_path(ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
+        rows=json.loads((native_path(ROOT/'src/main/resources/data/gt6ce/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
         self.assertEqual(rows['iron_ingot']['components']['Iron'],generator.U)
         self.assertEqual(rows['iron_block']['components']['Iron'],9*generator.U)
         self.assertEqual(rows['glass_bottle']['components']['Glass'],generator.U)
 
     def test_wood_dictionary_and_modern_stonecutting_override_legacy_defaults(self):
-        rows=json.loads((native_path(ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
+        rows=json.loads((native_path(ROOT/'src/main/resources/data/gt6ce/materials/vanilla_compositions.json')).read_text(encoding='utf-8'))
         u=generator.U
         for wood in ['oak','spruce','birch','jungle','acacia','dark_oak','mangrove','cherry']:
             self.assertEqual(rows[wood+'_log']['components'],{'Wood':8*u,'Bark':u})

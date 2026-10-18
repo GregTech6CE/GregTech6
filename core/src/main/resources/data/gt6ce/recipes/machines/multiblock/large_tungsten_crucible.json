@@ -1,0 +1,11 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": ["hMy"],
+  "key": {
+    "h": {"item": "gt6ce:tool_hammer"},
+    "M": {"item": "gt6ce:tungsten_wall"},
+    "y": {"item": "gt6ce:tool_chisel"}
+  },
+  "result": {"item": "gt6ce:large_tungsten_crucible"},
+  "allow_mirror": false
+}

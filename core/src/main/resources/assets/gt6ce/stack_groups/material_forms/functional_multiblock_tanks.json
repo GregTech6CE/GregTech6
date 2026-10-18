@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_multiblock_tanks",
+  "contents": [
+    "item:gt6ce:large_adamantium_tank_main_valve",
+    "item:gt6ce:large_invar_tank_main_valve",
+    "item:gt6ce:large_stainless_steel_tank_main_valve",
+    "item:gt6ce:large_titanium_tank_main_valve",
+    "item:gt6ce:large_tungsten_tank_main_valve",
+    "item:gt6ce:large_tungstensteel_tank_main_valve",
+    "item:gt6ce:small_adamantium_tank_main_valve",
+    "item:gt6ce:small_invar_tank_main_valve",
+    "item:gt6ce:small_stainless_steel_tank_main_valve",
+    "item:gt6ce:small_titanium_tank_main_valve",
+    "item:gt6ce:small_tungsten_tank_main_valve",
+    "item:gt6ce:small_tungstensteel_tank_main_valve",
+    "item:gt6ce:wood_tank_main_valve"
+  ],
+  "priority": 110
+}

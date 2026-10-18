@@ -84,11 +84,11 @@ public final class TaggedMaterialDataGameTests {
         helper.assertTrue(MaterialEquivalence.matches(lead, gtLead),
                 "an IE lead ingot requirement accepts a GT lead ingot");
 //? if >=1.21.1 {
-        /*helper.assertTrue(!lead.is(ItemTags.create(ResourceLocation.parse("gregtech:ingot/lead"))),
+        /*helper.assertTrue(!lead.is(ItemTags.create(ResourceLocation.parse("gt6ce:ingot/lead"))),
 *///?} else {
-        helper.assertTrue(!lead.is(ItemTags.create(new ResourceLocation("gregtech", "ingot/lead"))),
+        helper.assertTrue(!lead.is(ItemTags.create(new ResourceLocation("gt6ce", "ingot/lead"))),
 //?}
-                "IE lead ingot must stay out of gregtech:ingot/lead");
+                "IE lead ingot must stay out of gt6ce:ingot/lead");
     }
 
     private static void assertForm(GameTestHelper helper, ItemStack stack, MaterialPrefix prefix,

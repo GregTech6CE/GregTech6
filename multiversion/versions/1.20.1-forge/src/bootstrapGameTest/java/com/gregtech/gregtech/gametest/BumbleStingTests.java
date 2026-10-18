@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleStingTests {
     private static ItemStack queen(int species) {

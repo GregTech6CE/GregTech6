@@ -160,7 +160,7 @@ public final class ExternalOreProcessing {
             var id = BuiltInRegistries.ITEM.getKey(item);
             if (id == null || item == Items.AIR) continue;
             String namespace = id.getNamespace();
-            if (namespace.equals("minecraft") || namespace.equals("gregtech")) continue;
+            if (namespace.equals("minecraft") || namespace.equals("gt6ce")) continue;
             if (ItemMaterialRegistry.explicit(item).isPresent() || materialData.containsKey(item)) continue;
             var forms = CraftingMaterialForms.taggedForms(new ItemStack(item));
             boolean common = false;

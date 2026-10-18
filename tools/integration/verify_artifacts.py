@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import zipfile
 from collections import Counter
 from pathlib import Path
@@ -70,6 +71,8 @@ def read_properties(path):
         raise ValueError(f'{path}: missing metadata properties: {missing}')
     if properties['mod_id'] != 'gt6ce':
         raise ValueError('The loader mod ID must be gt6ce')
+    if properties['mod_name'] != 'GregTech 6 Community Edition':
+        raise ValueError('The loader display name must be GregTech 6 Community Edition')
     if properties['minecraft_version'] != PLATFORMS['forge']['minecraft']:
         raise ValueError('The Forge target must remain Minecraft 1.20.1')
     if properties['minecraft_version_range'] != '[1.20.1]':
@@ -138,6 +141,41 @@ def is_test_entry(name, stems, resources):
         or (name.endswith('.class') and name[:-6].split('$', 1)[0] in stems))
 
 
+def check_resource_namespace(archive):
+    """Reject stale self-owned resources and references in the delivered pack.
+
+    Java package names, Mixin configuration and META-INF source/license records
+    are independent identities and intentionally outside this resource check.
+    """
+    names = archive.namelist()
+    retired = [name for name in names if name.startswith(('assets/gregtech/', 'data/gregtech/'))]
+    if retired:
+        raise ValueError('Retired gregtech resource namespace remains: ' + ', '.join(retired[:8]))
+    retired_reference = re.compile(r'(?<![A-Za-z0-9_])gregtech:')
+    checked = 0
+
+    def strings(value):
+        if isinstance(value, str):
+            yield value
+        elif isinstance(value, dict):
+            for key, child in value.items():
+                yield key
+                yield from strings(child)
+        elif isinstance(value, list):
+            for child in value:
+                yield from strings(child)
+
+    for name in names:
+        if not name.startswith(('assets/', 'data/')) or not name.endswith(('.json', '.mcmeta')):
+            continue
+        data = json.loads(archive.read(name))
+        if any(retired_reference.search(value) for value in strings(data)):
+            raise ValueError('Retired gregtech resource reference remains: ' + name)
+        checked += 1
+    return {'namespace': 'gt6ce', 'json_documents_checked': checked,
+            'retired_resource_roots_rejected': True, 'retired_resource_references_rejected': True}
+
+
 def check_metadata(raw, platform, properties):
     spec = PLATFORMS[platform]
     metadata = tomllib.loads(raw.decode('utf-8'))
@@ -201,6 +239,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         duplicates = [name for name, count in counts.items() if count > 1]
         if duplicates:
             raise ValueError(f'{path}: duplicate ZIP entries: {duplicates[:10]}')
+        namespace_verification = check_resource_namespace(archive)
         required_gameplay = GAMEPLAY_CLASSES + PLATFORM_GAMEPLAY_CLASSES[platform]
         missing_gameplay = [name for name in required_gameplay if counts.get(name) != 1]
         if missing_gameplay:
@@ -231,7 +270,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
         if contamination:
             raise ValueError(f'{path}: test-only entries: {contamination[:10]}')
         for locale in ('en_us', 'zh_cn'):
-            language = f'assets/gregtech/lang/{locale}.json'
+            language = f'assets/gt6ce/lang/{locale}.json'
             if archive.read(language) != (repo / 'core/src/main/resources' / language).read_bytes():
                 raise ValueError(f'{path}: language differs from the checked shared source: {language}')
         mixin_verification = None
@@ -279,6 +318,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
             'bytes': path.stat().st_size, 'zip_entries': len(counts),
             'metadata_path': metadata_path, 'metadata': metadata, 'core_class_sha256': hashes,
             'zip_crc_checked': True, 'mixin_verification': mixin_verification,
+            'resource_namespace_verification': namespace_verification,
             'current_platform_classes_checked': len(native_hashes),
             'current_platform_classes_sha256': hashlib.sha256(
                 json.dumps(native_hashes, sort_keys=True).encode('utf-8')).hexdigest(),

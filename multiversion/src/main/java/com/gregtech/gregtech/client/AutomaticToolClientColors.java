@@ -35,9 +35,9 @@ public final class AutomaticToolClientColors {
         AutomaticToolRules.ALL.forEach(spec -> ids.add(spec.id()));
         ids.add("usb_switch"); ids.add("hdd_switch"); ids.add("advanced_button"); ids.add("dust_funnel");
 //? if >=1.21.1 {
-        /*for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id)));
+        /*for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
 *///?} else {
-        for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(new net.minecraft.resources.ResourceLocation("gregtech", id)));
+        for (String id : ids) result.add(BuiltInRegistries.BLOCK.get(new net.minecraft.resources.ResourceLocation("gt6ce", id)));
 //?}
         return result;
     }

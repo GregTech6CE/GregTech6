@@ -74,7 +74,7 @@ public final class LargeCrucibleRenderer implements BlockEntityRenderer<LargeCru
             }
             for (int layer = 0; layer < 2; layer++) {
                 var sprite = CrucibleRenderSprites.resolve(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                        "gregtech", "block/machines/multiblockmains/crucible/"
+                        "gt6ce", "block/machines/multiblockmains/crucible/"
                                 + (layer == 0 ? "colored" : "overlay") + front + "/" + part));
                 int rgb = layer == 0 ? tint : 0xFFFFFF;
                 LargeCrucibleHullFace.draw(pose.last(), out, face, x0, y0, z0, x1, y1, z1,

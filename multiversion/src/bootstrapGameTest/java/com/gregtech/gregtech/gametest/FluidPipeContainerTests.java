@@ -47,7 +47,7 @@ public final class FluidPipeContainerTests {
             for (int i = 0; i < previous.getTanks(); i++) previous.drain(Integer.MAX_VALUE, FluidAction.EXECUTE);
         }
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         h.assertTrue(block != Blocks.AIR, "registered block " + id);
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         // Clear auto-connections inherited from any previous fixture before opening the requested face.

@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2171, Logistics Tank 32072",
+  "allow_mirror": false,
+  "require_empty_fluid_containers": true,
+  "pattern": ["TQT", "wFd", "TMT"],
+  "key": {
+    "T": {"tag": "forge:screws/tungsten"},
+    "Q": {"item": "gt6ce:generic_logistics_storage_bus"},
+    "F": {"item": "gt6ce:compact_force_field_emitter_ulv"},
+    "M": {"item": "gt6ce:drum_tungsten"},
+    "w": {"item": "gt6ce:tool_wrench"},
+    "d": {"item": "gt6ce:tool_screwdriver"}
+  },
+  "result": {"item": "gt6ce:logistics_tank"}
+}

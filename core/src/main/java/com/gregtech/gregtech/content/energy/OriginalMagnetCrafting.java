@@ -17,13 +17,13 @@ public final class OriginalMagnetCrafting {
             int tier = Arrays.asList(tiers).indexOf(spec.id().substring(spec.id().lastIndexOf('_') + 1));
             boolean rf = spec.id().startsWith("flux_");
             var key = rf ? Map.of('S', new Input("form", "stickLong", spec.material()),
-                    'M', new Input("item", "gregtech:electromagnet_" + tiers[tier], null))
+                    'M', new Input("item", "gt6ce:electromagnet_" + tiers[tier], null))
                     : Map.of('C', new Input("wire", Integer.toString(1 << tier), tier < 2 ? MaterialGroups.Cu : Materials.AnnealedCopper),
                     'M', new Input("casing", "casingMachine", spec.material()),
-                    'x', new Input("item", "gregtech:tool_wire_cutter", null),
-                    'w', new Input("item", "gregtech:tool_wrench", null));
+                    'x', new Input("item", "gt6ce:tool_wire_cutter", null),
+                    'w', new Input("item", "gt6ce:tool_wrench", null));
             rows.add(new Row("magnets/" + spec.id(), rf ? List.of("SSS", "SMS", "SSS") : List.of("CxC", "CMC", "CwC"),
-                    key, "gregtech:" + spec.id(), 1, false, true));
+                    key, "gt6ce:" + spec.id(), 1, false, true));
         }
         return List.copyOf(rows);
     }

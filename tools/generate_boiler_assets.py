@@ -17,7 +17,7 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "boiler")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
@@ -49,7 +49,7 @@ DISPLAY = {
 }
 
 FOLDER = "tanks/boiler_steam"
-MODEL_REF = "gregtech:block/machine/boiler/steam_boiler"
+MODEL_REF = "gt6ce:block/machine/boiler/steam_boiler"
 FACE_TEX = {"up": "top", "down": "bottom", "north": "side", "south": "side", "west": "side", "east": "side"}
 
 
@@ -61,7 +61,7 @@ def write(path, data):
 
 
 def tex(sub, name):
-    return f"gregtech:block/machines/{FOLDER}/{sub}/{name}"
+    return f"gt6ce:block/machines/{FOLDER}/{sub}/{name}"
 
 
 def layer(sub, tinted):
@@ -91,7 +91,7 @@ def main():
     for name, depth, texture in (("gauge", -0.08, "base"), ("needle", -0.096, "00")):
         inventory["children"][name] = {
             "parent": "minecraft:block/block", "render_type": "minecraft:cutout",
-            "textures": {"gauge": "gregtech:block/machines/barometer/" + texture},
+            "textures": {"gauge": "gt6ce:block/machines/barometer/" + texture},
             "elements": [{"from": [1, 1, depth], "to": [15, 15, depth],
                           "faces": {"north": {"texture": "#gauge", "uv": [0, 0, 16, 16]}}}],
         }
@@ -105,12 +105,12 @@ def main():
             device_id = prefix + suffix
             write(os.path.join(BLOCKSTATES, device_id + ".json"), {"variants": {"": {"model": MODEL_REF}}})
             write(os.path.join(ITEM_MODELS, device_id + ".json"), {"parent": MODEL_REF + "_inventory"})
-            lang_en[f"block.gregtech.{device_id}"] = f"{en_name} ({en})"
-            lang_zh[f"block.gregtech.{device_id}"] = f"{zh_name}({zh})"
+            lang_en[f"block.gt6ce.{device_id}"] = f"{en_name} ({en})"
+            lang_zh[f"block.gt6ce.{device_id}"] = f"{zh_name}({zh})"
             count += 1
 
     # fill the zh energy-input tooltip key (missing; also used by energy nodes)
-    lang_zh["tooltip.gregtech.machine.energy_in"] = "能量输入: "
+    lang_zh["tooltip.gt6ce.machine.energy_in"] = "能量输入: "
 
     for lang_path, entries in ((os.path.join(ASSETS, "lang", "en_us.json"), lang_en),
                                (os.path.join(ASSETS, "lang", "zh_cn.json"), lang_zh)):

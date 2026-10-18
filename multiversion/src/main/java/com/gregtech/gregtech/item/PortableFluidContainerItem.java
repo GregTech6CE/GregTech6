@@ -91,12 +91,12 @@ public final class PortableFluidContainerItem extends BlockItem implements com.g
     @Override public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         var fluid = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-        tooltip.add(Component.translatable("tooltip.gregtech.portable_fluid.contents",
-                fluid.isEmpty() ? Component.translatable("tooltip.gregtech.portable_fluid.empty") : fluid.getDisplayName(),
+        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.contents",
+                fluid.isEmpty() ? Component.translatable("tooltip.gt6ce.portable_fluid.empty") : fluid.getDisplayName(),
                 fluid.getAmount(), com.gregtech.gregtech.content.tool.PortableContainerLimits.capacity(stack,spec)));
         if(com.gregtech.gregtech.content.tool.PortableContainerLimits.adjustable(spec))
-            tooltip.add(Component.translatable("tooltip.gregtech.portable_fluid.limit_use"));
-        tooltip.add(Component.translatable("tooltip.gregtech.portable_fluid.temperature", spec.maxTemperature()));
-        tooltip.add(Component.translatable("tooltip.gregtech.portable_fluid.use"));
+            tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.limit_use"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.temperature", spec.maxTemperature()));
+        tooltip.add(Component.translatable("tooltip.gt6ce.portable_fluid.use"));
     }
 }

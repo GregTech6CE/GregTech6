@@ -11,16 +11,16 @@ if __name__ == "__main__": require_managed_writer()
 import pathlib
 
 KEYS = (
-    "item.gregtech.cover_conveyor",
-    "item.gregtech.cover_pump",
-    "item.gregtech.cover_redstone_repeater",
-    "item.gregtech.cover_redstone_torch",
-    "item.gregtech.cover_robot_arm",
-    "item.gregtech.cover_tag_selector",
+    "item.gt6ce.cover_conveyor",
+    "item.gt6ce.cover_pump",
+    "item.gt6ce.cover_redstone_repeater",
+    "item.gt6ce.cover_redstone_torch",
+    "item.gt6ce.cover_robot_arm",
+    "item.gt6ce.cover_tag_selector",
 )
 
 for name in ("en_us.json", "zh_cn.json"):
-    path = native_path(pathlib.Path("src/main/resources/assets/gregtech/lang")) / name
+    path = native_path(pathlib.Path("src/main/resources/assets/gt6ce/lang")) / name
     lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
     kept = [line for line in lines if not any(f'"{key}"' in line for key in KEYS)]
     removed = len(lines) - len(kept)

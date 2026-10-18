@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "gt6ce:mud"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:mud_2",
+    "count": 4
+  }
+}

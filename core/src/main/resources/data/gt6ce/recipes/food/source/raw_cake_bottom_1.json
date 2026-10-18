@@ -1,0 +1,22 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:food/foodsugardough"
+    },
+    {
+      "tag": "gt6ce:food/foodsugardough"
+    },
+    {
+      "tag": "gt6ce:food/foodsugardough"
+    },
+    {
+      "tag": "gt6ce:food/foodsugardough"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:raw_cake_bottom",
+    "count": 1
+  },
+  "gregtech_autocraftable": false
+}

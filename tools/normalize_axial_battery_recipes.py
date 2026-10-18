@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java'
-RECIPES = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/axial')
+RECIPES = native_path(ROOT / 'src/main/resources/data/gt6ce/recipes/axial')
 TARGETS = dict(zip(range(17221, 17225), [
     'large_dynamo_main', 'large_dynamo_titanium',
     'large_dynamo_tungstensteel', 'large_dynamo_adamantium']))
@@ -36,8 +36,8 @@ def normalize(recipe, source_line):
     for symbol in ('B', 'C'):
         if symbol not in result['key'] or symbol not in ''.join(result['pattern']):
             raise ValueError('Recipe does not contain source key ' + symbol)
-    result['key']['B'] = {'tag': 'gregtech:rechargeable_batteries/' + TIERS[int(battery[1])]}
-    result['key']['C'] = {'tag': 'gregtech:circuits_tier_' + circuit[1] + '_plus'}
+    result['key']['B'] = {'tag': 'gt6ce:rechargeable_batteries/' + TIERS[int(battery[1])]}
+    result['key']['C'] = {'tag': 'gt6ce:circuits_tier_' + circuit[1] + '_plus'}
     return result
 
 

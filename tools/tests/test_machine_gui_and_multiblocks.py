@@ -25,7 +25,7 @@ class MachineAppearanceTests(unittest.TestCase):
     def test_multiblock_layers_and_item_parent(self):
         for name in MAPPING:
             with self.subTest(name=name):
-                ref = f'gregtech:block/machine/multiblock/{name}'
+                ref = f'gt6ce:block/machine/multiblock/{name}'
                 item = json.loads((ASSETS / f'models/item/{name}.json').read_text())
                 self.assertEqual(ref, item['parent'])
                 model = json.loads((ASSETS / f'models/block/machine/multiblock/{name}.json').read_text())
@@ -64,7 +64,7 @@ class MachineAppearanceTests(unittest.TestCase):
         for locale in ('en_us', 'zh_cn'):
             lang = json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8'))
             for key in ('energy_used', 'energy_produced', 'energy_total', 'costs', 'gain', 'usage', 'output', 'tier'):
-                text = lang['gregtech.jei.' + key]
+                text = lang['gt6ce.jei.' + key]
                 self.assertNotIn('GU', text)
                 self.assertEqual(2, text.count('%s'))
 

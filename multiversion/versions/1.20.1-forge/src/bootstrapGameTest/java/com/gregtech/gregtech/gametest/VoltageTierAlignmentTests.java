@@ -46,7 +46,7 @@ import java.util.TreeSet;
  * <p>Every expectation below is derived from those GT6 arrays rather than from the port's own
  * constants, so a shift in either direction fails loudly.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class VoltageTierAlignmentTests {
 
@@ -308,7 +308,7 @@ public final class VoltageTierAlignmentTests {
             for (int tier = 1; tier <= 6; tier++) {
                 Object resolved = MachineRecipeIngredients.resolve(entry.getKey(), Materials.SteelGalvanized, tier);
                 String id = resolved instanceof Map<?, ?> map ? String.valueOf(map.get("item")) : String.valueOf(resolved);
-                String want = "gregtech:" + entry.getValue() + TIER_SUFFIX[tier];
+                String want = "gt6ce:" + entry.getValue() + TIER_SUFFIX[tier];
                 if (!want.equals(id)) {
                     problems.add(entry.getKey() + " at tier " + tier + " → " + id + ", expected " + want);
                 }

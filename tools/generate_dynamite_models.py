@@ -11,7 +11,7 @@ import json
 import shutil
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/tools/dynamite'
 def generate():
     def write(path, data):
@@ -32,17 +32,17 @@ def generate():
                 faces={side:{'texture':'#'+('front' if side=='north' else 'back' if side=='south' else 'side')} for side in ('north','south','east','west','up','down')}
                 if layer=='colored':
                     for face in faces.values(): face['tintindex']=0
-                children[layer]={'textures': {f:f'gregtech:block/machines/tools/dynamite/{folder}/{f}' for f in ('front','back','side')},
+                children[layer]={'textures': {f:f'gt6ce:block/machines/tools/dynamite/{folder}/{f}' for f in ('front','back','side')},
                     'elements':[{'from':[5,5,14 if sunk else 0],'to':[11,11,16],'faces':faces}], 'render_type':'minecraft:cutout'}
             write(ASSETS/f'models/block/machine/tool/dynamite{suffix}.json', {'parent':'minecraft:block/block','loader':'forge:composite',
-                'textures':{'particle':'gregtech:block/machines/tools/dynamite/colored/side'},'children':children})
+                'textures':{'particle':'gt6ce:block/machines/tools/dynamite/colored/side'},'children':children})
     states={}
     for facing,x,y in (('north',0,0),('east',0,90),('south',0,180),('west',0,270),('up',270,0),('down',90,0)):
         for active in (False,True):
             for sunk in (False,True):
                 suffix=('_active' if active else '')+('_sunk' if sunk else '')
-                states[f'armed={str(active).lower()},facing={facing},sunk={str(sunk).lower()}']={'model':'gregtech:block/machine/tool/dynamite'+suffix,'x':x,'y':y}
+                states[f'armed={str(active).lower()},facing={facing},sunk={str(sunk).lower()}']={'model':'gt6ce:block/machine/tool/dynamite'+suffix,'x':x,'y':y}
     for name in ('dynamite','boomstick','strong_dynamite'):
         write(ASSETS/f'blockstates/{name}.json',{'variants':states})
-        write(ASSETS/f'models/item/{name}.json',{'parent':'gregtech:block/machine/tool/dynamite'})
+        write(ASSETS/f'models/item/{name}.json',{'parent':'gt6ce:block/machine/tool/dynamite'})
 if __name__=='__main__': generate()

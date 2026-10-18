@@ -14,9 +14,10 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 
 /** Small server-side checks inside the single EMI client launch, never a separate world runner. */
 final class CatalogFeedbackSmoke {
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static void require(boolean ok, String message) { if (!ok) throw new IllegalStateException(message); }
     static void server(MinecraftServer server, JsonObject receipt) {
+        checkNamespaceIdentity(receipt);
         int canonical = com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS.size();
         for (int i = 0; i < com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.size(); i++) {
             var material = com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.get(i);
@@ -58,9 +59,9 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("originBlackSandVariants", 3);
         receipt.addProperty("baleDryWetRotAndScheduling", true);
         // Old ingredient IDs must resolve directly to the sole canonical item.
-        var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gregtech:tank_wall",
+        var ingredient = com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("item:gt6ce:tank_wall",
                 com.gregtech.gregtech.content.material.Materials.StainlessSteel, 1);
-        require(ingredient.equals(java.util.Map.of("item", "gregtech:tank_wall")), "canonical wall recipe lost");
+        require(ingredient.equals(java.util.Map.of("item", "gt6ce:tank_wall")), "canonical wall recipe lost");
         for (var row : java.util.stream.Stream.concat(com.gregtech.gregtech.data.OriginalSurvivalRecipes.ROWS.stream(),
                 com.gregtech.gregtech.data.UtilityCraftingRows.ROWS.stream()).toList()) {
             var recipe=server.getRecipeManager().byKey(id("survival_repairs/" + row.id()));
@@ -112,11 +113,69 @@ final class CatalogFeedbackSmoke {
         receipt.addProperty("canonicalWallRecipeAlternatives", true);
         com.mojang.logging.LogUtils.getLogger().info("CATALOG_FEEDBACK_SERVER_SUCCESS canonicalParts={} keys=10 sands=3 baleDryWetRot=true", canonical);
     }
+    private static void checkNamespaceIdentity(JsonObject receipt) {
+        String namespace = "gt6ce";
+        String expectedName = "GregTech 6 Community Edition";
+        require(namespace.equals(com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
+                && namespace.equals(com.gregtech.gregtech.api.mod.GregTechIdentity.REGISTRY_NAMESPACE),
+                "loader and content namespace differ");
+        require(expectedName.equals(com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_NAME),
+                "shared mod display name differs");
+        var keyId = id("copper_key");
+        var blockId = id("clay_brown");
+        var fluidId = id("seawater");
+        require(BuiltInRegistries.ITEM.containsKey(keyId), "missing migrated copper key");
+        require(BuiltInRegistries.ITEM.getKey(GTDungeonKeys.byIndex(
+                com.gregtech.gregtech.content.storage.SafeLockRules.KEY_MATERIALS.indexOf("copper"))).equals(keyId),
+                "dungeon copper key uses another namespace");
+        require(BuiltInRegistries.BLOCK.containsKey(blockId)
+                && BuiltInRegistries.BLOCK.getKey(BuiltInRegistries.BLOCK.get(blockId)).equals(blockId),
+                "missing migrated clay block");
+        require(BuiltInRegistries.FLUID.containsKey(fluidId)
+                && BuiltInRegistries.FLUID.getKey(BuiltInRegistries.FLUID.get(fluidId)).equals(fluidId),
+                "missing migrated seawater fluid");
+        require(!BuiltInRegistries.ITEM.containsKey(ResourceLocation.fromNamespaceAndPath("gregtech", keyId.getPath()))
+                && !BuiltInRegistries.BLOCK.containsKey(ResourceLocation.fromNamespaceAndPath("gregtech", blockId.getPath()))
+                && !BuiltInRegistries.FLUID.containsKey(ResourceLocation.fromNamespaceAndPath("gregtech", fluidId.getPath())),
+                "old content namespace remains registered");
+        var container = net.neoforged.fml.ModList.get().getModContainerById(namespace)
+                .orElseThrow(() -> new IllegalStateException("missing gt6ce mod container"));
+        String loadedName = container.getModInfo().getDisplayName();
+        require(expectedName.equals(loadedName), "loader reports another mod display name: " + loadedName);
+        var owner = com.gregtech.gregtech.data.ModReferences.GT;
+        require(namespace.equals(owner.id) && expectedName.equals(owner.name) && owner.isLoaded()
+                && com.gregtech.gregtech.api.mod.ModData.MODS.get(namespace) == owner,
+                "material ownership metadata does not resolve to GT6CE");
+        require("gregtech".equals(com.gregtech.gregtech.data.ModReferences.GT5U.id)
+                && "gregtech".equals(com.gregtech.gregtech.data.ModReferences.GT6U.id),
+                "external GregTech provenance IDs were replaced");
+        String emiName;
+        try {
+            // EMI's implementation is available only at runtime, outside its compile-time API jar.
+            emiName = (String) Class.forName("dev.emi.emi.EmiUtil")
+                    .getMethod("getModName", String.class).invoke(null, namespace);
+        } catch (ReflectiveOperationException failure) {
+            throw new IllegalStateException("cannot resolve actual EMI namespace display name", failure);
+        }
+        require(expectedName.equals(emiName), "EMI reports another mod name: " + emiName);
+        var identity = new JsonObject();
+        identity.addProperty("namespace", namespace);
+        identity.addProperty("itemId", keyId.toString());
+        identity.addProperty("blockId", blockId.toString());
+        identity.addProperty("fluidId", fluidId.toString());
+        identity.addProperty("oldRegistrySamplesAbsent", true);
+        identity.addProperty("loaderDisplayName", loadedName);
+        identity.addProperty("materialOwnerId", owner.id);
+        identity.addProperty("materialOwnerDisplayName", owner.name);
+        identity.addProperty("materialOwnerIdentityVerified", true);
+        identity.addProperty("emiDisplayName", emiName);
+        receipt.add("namespaceIdentity", identity);
+    }
     private static void checkRecipeTags(MinecraftServer server, JsonObject receipt) {
         var failures = new java.util.ArrayList<String>();
-        for (String name : java.util.List.of("forge:chests/wooden", "gregtech:bumble_hives", "gregtech:plant_pot_mud",
-                "gregtech:clay_balls", "gregtech:quicksilver", "minecraft:music_discs", "forge:slimeballs",
-                "gregtech:ingot/brick", "forge:sandstone", "forge:plates/osmium", "forge:plates/ad", "forge:plates/bedrock_hsla_alloy")) {
+        for (String name : java.util.List.of("forge:chests/wooden", "gt6ce:bumble_hives", "gt6ce:plant_pot_mud",
+                "gt6ce:clay_balls", "gt6ce:quicksilver", "minecraft:music_discs", "forge:slimeballs",
+                "gt6ce:ingot/brick", "forge:sandstone", "forge:plates/osmium", "forge:plates/ad", "forge:plates/bedrock_hsla_alloy")) {
             var tag = net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, ResourceLocation.parse(name));
             if (BuiltInRegistries.ITEM.getTag(tag).map(v -> v.size() == 0).orElse(true)) failures.add(name);
         }
@@ -139,7 +198,7 @@ final class CatalogFeedbackSmoke {
         int imprints=0, spikes=0, tapes=0;
         for(var holder:server.getRecipeManager().getRecipes()) {
             var path=holder.id().getPath();
-            if(!holder.id().getNamespace().equals("gregtech") || !(path.startsWith("clay_molds/") || path.startsWith("catalog_repairs/spike_") || path.contains("tape")))continue;
+            if(!holder.id().getNamespace().equals("gt6ce") || !(path.startsWith("clay_molds/") || path.startsWith("catalog_repairs/spike_") || path.contains("tape")))continue;
             for(var input:holder.value().getIngredients())
                 if(input!=net.minecraft.world.item.crafting.Ingredient.EMPTY && java.util.Arrays.stream(input.getItems()).noneMatch(s->!s.isEmpty()&&!s.is(net.minecraft.world.item.Items.BARRIER))) failures.add(holder.id().toString());
             if(path.startsWith("clay_molds/imprint_"))imprints++;

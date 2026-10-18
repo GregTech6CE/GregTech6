@@ -36,7 +36,7 @@ public final class BookShelfVariants {
         }
 
         public MutableComponent displayName() {
-            return Component.translatable("block.gregtech." + path());
+            return Component.translatable("block.gt6ce." + path());
         }
     }
 
@@ -65,7 +65,7 @@ public final class BookShelfVariants {
 
     private static List<Variant> load() {
         try (InputStream stream = BookShelfVariants.class.getClassLoader()
-                .getResourceAsStream("data/gregtech/bookshelf_variants.json")) {
+                .getResourceAsStream("data/gt6ce/bookshelf_variants.json")) {
             if (stream == null) throw new IllegalStateException("Missing bookshelf_variants.json");
             var array = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8))
                     .getAsJsonObject().getAsJsonArray("variants");

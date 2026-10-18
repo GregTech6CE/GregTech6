@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_indicator_flowers",
+  "contents": [
+    "item:gt6ce:flower_alpine_catchfly",
+    "item:gt6ce:flower_altered_andesite_buckwheat",
+    "item:gt6ce:flower_copper_plant",
+    "item:gt6ce:flower_crosby_buckwheat",
+    "item:gt6ce:flower_desert_trumpet",
+    "item:gt6ce:flower_four_wing_saltbush",
+    "item:gt6ce:flower_hexalily",
+    "item:gt6ce:flower_narcissus_sheldonia",
+    "item:gt6ce:flower_orechid",
+    "item:gt6ce:flower_pandanus_candelabrum",
+    "item:gt6ce:flower_prince_s_plume",
+    "item:gt6ce:flower_sagebrush",
+    "item:gt6ce:flower_thlaspi_lereschianum",
+    "item:gt6ce:flower_thompsons_locoweed",
+    "item:gt6ce:flower_tufted_evening_primrose",
+    "item:gt6ce:flower_tungstus",
+    "item:gt6ce:flower_viola_calaminaria"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_dense/chromium"
+    },
+    "S": {
+      "tag": "gt6ce:stick/chromium"
+    },
+    "I": {
+      "tag": "gt6ce:spring/chromium"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_strong_chromium"
+  },
+  "allow_mirror": false
+}

@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_repeaters",
+  "contents": [
+    "item:gt6ce:inventory_extender",
+    "item:gt6ce:inventory_tank_extender",
+    "item:gt6ce:tank_extender",
+    "item:gt6ce:universal_extender"
+  ],
+  "priority": 110
+}

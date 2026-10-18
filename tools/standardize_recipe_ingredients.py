@@ -15,7 +15,7 @@ VANILLA={'iron_ingot':'ingots/iron','gold_ingot':'ingots/gold','copper_ingot':'i
 def tag(item):
  ns,_,path=item.partition(':')
  if ns=='minecraft':return 'forge:'+VANILLA[path] if path in VANILLA else None
- if ns!='gregtech':return None
+ if ns!='gt6ce':return None
  for form in sorted(FORMS,key=len,reverse=True):
   if path.startswith(form+'_'):
    material=path[len(form)+1:]
@@ -35,7 +35,7 @@ def main():
     manifest[value['item']]=target;value.clear();value['tag']=target;changed+=1
    else:
     for v in value.values():visit(v)
- for p in (native_path(ROOT/'src/main/resources/data/gregtech/recipes')).rglob('*.json'):
+ for p in (native_path(ROOT/'src/main/resources/data/gt6ce/recipes')).rglob('*.json'):
   data=json.loads(p.read_text(encoding='utf-8'));before=json.dumps(data)
   for key in ['key','ingredients','ingredient','base','addition']: 
    if key in data:visit(data[key])

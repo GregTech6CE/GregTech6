@@ -12,7 +12,7 @@ from pathlib import Path
 from collections import Counter
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 
 
 class FusionResources(unittest.TestCase):

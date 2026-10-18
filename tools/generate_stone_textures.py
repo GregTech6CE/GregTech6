@@ -21,7 +21,7 @@ import os
 from PIL import Image, ImageOps
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-STONES = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech", "textures", "block", "stones")
+STONES = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce", "textures", "block", "stones")
 BASE = os.path.join(STONES, "gt.stone.limestone")
 
 # stone id -> (texture folder, material color from GT6Materials)

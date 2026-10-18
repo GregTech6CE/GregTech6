@@ -70,7 +70,7 @@ public class EnderGarbageBlockEntity extends BlockEntity implements MenuProvider
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gregtech.ender_garbage_bin");
+        return Component.translatable("block.gt6ce.ender_garbage_bin");
     }
 
     @Nullable

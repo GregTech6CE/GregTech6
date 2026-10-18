@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "  h",
+    "PP ",
+    "oP "
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_tantalumhafniumcarbide"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "o": {
+      "item": "gt6ce:tool_bending_cylinder"
+    }
+  },
+  "result": {
+    "item": "gt6ce:tap_tantalum_hafnium_carbide"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

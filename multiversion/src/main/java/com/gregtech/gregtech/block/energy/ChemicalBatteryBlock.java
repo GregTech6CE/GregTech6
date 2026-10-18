@@ -39,7 +39,7 @@ public final class ChemicalBatteryBlock extends Block implements EntityBlock {
 //?}
             return net.minecraft.world.InteractionResult.PASS;
         if(!level.isClientSide&&level.getBlockEntity(pos) instanceof ChemicalBatteryBlockEntity be) {
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.electric_tool.energy",be.stored(),spec.capacity()),true);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",be.stored(),spec.capacity()),true);
 //? if >=1.21.1 {
             /*com.gregtech.gregtech.platform.neoforge.NeoToolBindings.damageForUse(tool,1,player,
 *///?} else {

@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_press",
+  "contents": [
+    "item:gt6ce:press_bronze",
+    "item:gt6ce:press_steel",
+    "item:gt6ce:press_titanium",
+    "item:gt6ce:press_tungsten_steel"
+  ],
+  "priority": 110
+}

@@ -107,7 +107,7 @@ public final class BumbleWorkplace {
 *///?} else {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
 //?}
-        return id != null && id.getNamespace().equals("gregtech")
+        return id != null && id.getNamespace().equals("gt6ce")
                 && (id.getPath().equals("leaves_rainbowood")
                 || id.getPath().equals("leaves_opaque_rainbowood"));
     }
@@ -160,7 +160,7 @@ public final class BumbleWorkplace {
                 && !plant.iconName().equals("flower_hexalily");
     }
 //? if >=1.21.1 {
-    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals("gregtech")&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
+    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals("gt6ce")&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
 *///?} else {
 //?}
 }

@@ -34,7 +34,7 @@ public final class FluidPipeRemovalTests {
         var pos = new BlockPos(112900 + x, 180, 112900);
         h.getLevel().getChunkAt(pos);
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_" + size + "_steel"));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_" + size + "_steel"));
         h.assertTrue(block instanceof FluidPipeBlock, "registered steel pipe " + size);
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
@@ -42,7 +42,7 @@ public final class FluidPipeRemovalTests {
     }
 
     private static TankBlockEntity drum(GameTestHelper h, BlockPos pos) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "drum_stainless_steel"));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_stainless_steel"));
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         var entity = h.getLevel().getBlockEntity(pos);

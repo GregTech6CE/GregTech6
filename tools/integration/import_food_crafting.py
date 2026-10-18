@@ -21,7 +21,7 @@ def calls(raw,pattern):
     if depth==0:break
   yield m,raw[start:end+1]
 aliases=json.loads((ROOT/'tools/localization/aliases.json').read_text(encoding='utf-8'))
-identities={v:k.removeprefix('item.gregtech.') for k,v in aliases.items() if re.fullmatch(r'item\.gregtech\.[a-z0-9_]+',k)}
+identities={v:k.removeprefix('item.gt6ce.') for k,v in aliases.items() if re.fullmatch(r'item\.gt6ce\.[a-z0-9_]+',k)}
 foods=ROOT/'core/src/main/java/com/gregtech/gregtech/data/generated/GTFoodItemsGen.java'
 foodmeta={int(n):id for id,n in re.findall(r'new FoodNutritionRows.Entry\("([^"]+)",\s*"[^"]*",\s*(\d+)',foods.read_text(encoding='utf-8'))}
 il={};tags=collections.defaultdict(set);sources={}
@@ -37,7 +37,7 @@ for family in ['Food','Bottles']:
   number=int(a[0]);id=identities.get(f'gt.multiitem.{family.lower()}.{number}')
   if family=='Food':id=foodmeta.get(number,id)
   if not id:continue
-  meta[number]='gregtech:'+id
+  meta[number]='gt6ce:'+id
   for token in a[3:]:
    if re.fullmatch(r'"(?:food|crop|bottle)[A-Za-z0-9]+"',token):tags[json.loads(token)].add(meta[number])
  for name,number in re.findall(r'IL\.(\w+)\s*\.set\(\s*addItem\(\s*(\d+)',raw):
@@ -63,15 +63,15 @@ def ingredient(exp):
  m=re.fullmatch(r'OP\.(\w+)\.dat\((?:MT|ANY)\.(\w+)\)',exp)
  if m:
   prefix,material=m.groups()
-  if prefix=='stick' and material=='Wood':return {'tag':'gregtech:ammunition/sticks_wood'}
+  if prefix=='stick' and material=='Wood':return {'tag':'gt6ce:ammunition/sticks_wood'}
   prefix=re.sub(r'(?<=[a-z0-9])(?=[A-Z])','_',prefix).lower()
   material={'Al':'Aluminium'}.get(material,material)
   material=re.sub(r'(?<=[a-z0-9])(?=[A-Z])','_',material).lower()
-  return {'tag':f'gregtech:{prefix}/{material}'}
+  return {'tag':f'gt6ce:{prefix}/{material}'}
  if exp.startswith('"'):
   tag=json.loads(exp)
   if not tags[tag]:raise ValueError('unresolved food group '+tag)
-  usedtags.add(tag);return {'tag':'gregtech:food/'+tag.lower()}
+  usedtags.add(tag);return {'tag':'gt6ce:food/'+tag.lower()}
  raise ValueError(exp)
 rows=[];skipped=[];files=[];serial=collections.Counter()
 for m,call in calls(foodraw,r'CR\.(?:shaped|shapeless)\s*\('):
@@ -84,7 +84,7 @@ for m,call in calls(foodraw,r'CR\.(?:shaped|shapeless)\s*\('):
    body=re.fullmatch(r'new Object\[\]\s*\{(.*)\}',a[2],re.S)
    if not body:raise ValueError(a[2])
    ingredients=[ingredient(exp) for exp in split_args('('+body[1]+')')]
-   row={'type':'gregtech:tool_shapeless','ingredients':ingredients,'result':result}
+   row={'type':'gt6ce:tool_shapeless','ingredients':ingredients,'result':result}
   else:
    patterns=[];index=2
    while index<len(a) and a[index].startswith('"'):patterns.append(json.loads(a[index]));index+=1
@@ -92,15 +92,15 @@ for m,call in calls(foodraw,r'CR\.(?:shaped|shapeless)\s*\('):
    for char in set(''.join(patterns))-set(keys)-{' '}:
     if char not in tools:raise ValueError('tool '+char)
     keys[char]={'tag':'forge:tools/'+tools[char]}
-   row={'type':'gregtech:tool_shaped','pattern':patterns,'key':keys,'result':result,'allow_mirror':'MIR' in a[1]}
+   row={'type':'gt6ce:tool_shaped','pattern':patterns,'key':keys,'result':result,'allow_mirror':'MIR' in a[1]}
   row['gregtech_autocraftable']='NCC' not in a[1]
   id=output.split(':')[1];serial[id]+=1;file=f'food/source/{id}_{serial[id]}.json'
-  save(ROOT/'core/src/main/resources/data/gregtech/recipes'/file,row);files.append(file)
+  save(ROOT/'core/src/main/resources/data/gt6ce/recipes'/file,row);files.append(file)
   rows.append({'file':file,'source_call':call})
  except (ValueError,KeyError) as ex:skipped.append({'call':call,'reason':str(ex)})
-for tag in sorted(usedtags):save(ROOT/f'core/src/main/resources/data/gregtech/tags/items/food/{tag.lower()}.json',{'replace':False,'values':sorted(tags[tag])})
+for tag in sorted(usedtags):save(ROOT/f'core/src/main/resources/data/gt6ce/tags/items/food/{tag.lower()}.json',{'replace':False,'values':sorted(tags[tag])})
 catalog=ROOT/'core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java';text=catalog.read_text(encoding='utf-8')
-for field,values in [('FILES',files),('TAGS',['gregtech:food/'+t.lower() for t in sorted(usedtags)])]:
+for field,values in [('FILES',files),('TAGS',['gt6ce:food/'+t.lower() for t in sorted(usedtags)])]:
  anchor=f'    public static final java.util.List<String> {field} = java.util.List.of(\n';assert anchor in text
  text=text.replace(anchor,anchor+''.join('            '+json.dumps(v)+',\n' for v in values if '"'+v+'"' not in text))
 catalog.write_text(text,encoding='utf-8')

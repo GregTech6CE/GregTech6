@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
 
@@ -29,7 +29,7 @@ class CapsuleCellResources(unittest.TestCase):
         for locale in ['en_us', 'zh_cn']:
             lang = json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8'))
             for row in rows:
-                self.assertIn('block.gregtech.fluid_' + row['id'], lang)
+                self.assertIn('block.gt6ce.fluid_' + row['id'], lang)
 
     def test_all_eight_original_textures_keep_source_bytes(self):
         ledger = json.loads((ROOT / 'tools/gt6_texture_sources.json').read_text(encoding='utf-8'))
@@ -39,9 +39,9 @@ class CapsuleCellResources(unittest.TestCase):
             self.assertEqual(hashlib.sha256((ASSETS / path).read_bytes()).hexdigest(), entry['sha256'])
 
     def test_core_and_geiger_source_components(self):
-        recipes = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/nuclear')
+        recipes = native_path(ROOT / 'src/main/resources/data/gt6ce/recipes/nuclear')
         core = json.loads((recipes / 'reactor_core_2x2.json').read_text(encoding='utf-8'))
-        self.assertEqual(core['key']['M']['item'], 'gregtech:casing_machine_dense_lead')
+        self.assertEqual(core['key']['M']['item'], 'gt6ce:casing_machine_dense_lead')
         geiger = json.loads((recipes / 'geiger_counter_empty.json').read_text(encoding='utf-8'))
         self.assertTrue(geiger['require_empty_fluid_containers'])
         for recipe in [core, geiger]:

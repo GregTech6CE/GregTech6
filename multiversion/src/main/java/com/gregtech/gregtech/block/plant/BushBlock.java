@@ -76,7 +76,7 @@ public class BushBlock extends Block implements EntityBlock {
 
     @Override public net.minecraft.network.chat.MutableComponent getName() {
         // GT6 32759 keeps one name; BushBlockItem shows the localized output separately.
-        return net.minecraft.network.chat.Component.translatable("block.gregtech.bush");
+        return net.minecraft.network.chat.Component.translatable("block.gt6ce.bush");
     }
 
     public String berryId() { return berryId; }

@@ -162,7 +162,7 @@ public final class MachineRecipeIngredients {
                     return blockIngredient(BlockMaterialPrefix.casingMachine, material);
                 }
                 int sourceTier = Integer.parseInt(argument.trim());
-                if (sourceTier == 2) return Map.of("tag", "gregtech:cable_01/any_copper");
+                if (sourceTier == 2) return Map.of("tag", "gt6ce:cable_01/any_copper");
                 return wireIngredient("01", target, material, ElectricalCraftingRules.insulatedCable(sourceTier));
             }
             case "wiretier": {
@@ -171,7 +171,7 @@ public final class MachineRecipeIngredients {
                     note("wire tier " + argument, "machine casing block");
                     return blockIngredient(BlockMaterialPrefix.casingMachine, material);
                 }
-                if (Integer.parseInt(argument.trim()) == 2) return Map.of("tag", "gregtech:wire_04/any_copper");
+                if (Integer.parseInt(argument.trim()) == 2) return Map.of("tag", "gt6ce:wire_04/any_copper");
                 return wireIngredient("04", target, material, false);
             }
             case "il":
@@ -243,7 +243,7 @@ public final class MachineRecipeIngredients {
             if (path != null) {
                 return Map.of("tag", "forge:" + path);
             }
-            return Map.of("tag", "gregtech:" + candidate.getRegistryName() + "/"
+            return Map.of("tag", "gt6ce:" + candidate.getRegistryName() + "/"
                     + MaterialEquivalence.materialName(target));
         }
         note(prefixName + " of " + target.getName(), "machine casing block");
@@ -312,7 +312,7 @@ public final class MachineRecipeIngredients {
             // and MT/IL definitions (IL.MOTORS[1] = SteelGalvanized motor = LV).
             int index = Math.min(Math.max(tier, 1), IL_TIER_SUFFIX.length - 1);
             for (int i = index; i >= 1; i--) {
-                var ingredient = byItemId("gregtech:" + itemPrefix + IL_TIER_SUFFIX[i]);
+                var ingredient = byItemId("gt6ce:" + itemPrefix + IL_TIER_SUFFIX[i]);
                 if (ingredient != null) {
                     if (i != index) note("IL." + arrayName + "[" + tier + "]", itemPrefix + IL_TIER_SUFFIX[i]);
                     return ingredient;
@@ -336,7 +336,7 @@ public final class MachineRecipeIngredients {
             int tier = Integer.parseInt(battery.group(1));
             String[] tiers = {"ulv", "lv", "mv", "hv", "ev", "iv"};
             if (tier >= 0 && tier < tiers.length) {
-                return Map.of("tag","gregtech:rechargeable_batteries/"+tiers[tier]);
+                return Map.of("tag","gt6ce:rechargeable_batteries/"+tiers[tier]);
             }
         }
         note("ore dictionary " + key, "machine casing block");
@@ -368,7 +368,7 @@ public final class MachineRecipeIngredients {
     private static Object byItemId(String id) {
         ResourceLocation key = ResourceLocation.tryParse(id.trim());
         if (key == null) return null;
-        if (key.getNamespace().equals("gregtech")) key = ResourceLocation.fromNamespaceAndPath("gregtech",
+        if (key.getNamespace().equals("gt6ce")) key = ResourceLocation.fromNamespaceAndPath("gt6ce",
                 key.getPath());
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(key);

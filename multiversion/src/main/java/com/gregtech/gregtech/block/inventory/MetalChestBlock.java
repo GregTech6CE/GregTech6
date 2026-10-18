@@ -180,7 +180,7 @@ public class MetalChestBlock extends HorizontalDirectionalBlock implements Entit
                 instanceof MetalChestBlockEntity chest) {
 //? if >=1.21.1 {
             /*var data = chest.lootItemData();
-            data.putString("id", "gregtech:metal_chest");
+            data.putString("id", "gt6ce:metal_chest");
             result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
                     net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {

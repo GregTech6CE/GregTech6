@@ -140,7 +140,7 @@ public class BottleCrateBlockEntity extends BlockEntity {
 //?}
         if (!data.getCompound("gt_bottles").getList("Items", 10).isEmpty()) {
 //? if >=1.21.1 {
-            /*data.putString("id","gregtech:bottle_crate");
+            /*data.putString("id","gt6ce:bottle_crate");
             result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             net.minecraft.world.item.BlockItem.setBlockEntityData(result, GTBlockEntities.BOTTLE_CRATE.get(), data);

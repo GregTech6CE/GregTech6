@@ -38,7 +38,7 @@ public final class CanvasCoverRenderer {
     }
     public static void render(ItemStack stack,Direction side,PoseStack pose,MultiBufferSource buffers,int light,BlockAndTintGetter level,BlockPos pos) {
         var canvas=(CanvasItem)stack.getItem();var vertices=buffers.getBuffer(RenderType.cutout());
-        CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
+        CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,0,canvas.variant().rgb());
         var image=imageFace(stack,side,level,pos);
         if(image!=null)CoverSurfaceRenderer.draw(pose,buffers.getBuffer(RenderType.translucent()),side,image.sprite(),image.bright()?LightTexture.FULL_BRIGHT:light,1,image.color());
     }

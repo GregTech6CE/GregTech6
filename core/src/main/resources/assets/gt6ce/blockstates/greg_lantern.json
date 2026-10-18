@@ -1,0 +1,6 @@
+{"variants":{
+  "facing=north":{"model":"gt6ce:block/decoration/greg_lantern"},
+  "facing=east":{"model":"gt6ce:block/decoration/greg_lantern","y":90},
+  "facing=south":{"model":"gt6ce:block/decoration/greg_lantern","y":180},
+  "facing=west":{"model":"gt6ce:block/decoration/greg_lantern","y":270}
+}}

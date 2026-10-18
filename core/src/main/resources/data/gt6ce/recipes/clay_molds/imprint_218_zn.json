@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:218",
+  "ingredients": [
+    {
+      "item": "gt6ce:clay_mold"
+    },
+    {
+      "tag": "gt6ce:molds/forms/platetiny/zn"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:clay_tiny_plate_mold",
+    "count": 1
+  }
+}

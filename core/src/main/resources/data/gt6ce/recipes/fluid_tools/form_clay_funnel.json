@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "CRC",
+    "kC "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "k": {
+      "item": "gt6ce:tool_knife"
+    },
+    "R": {
+      "item": "gt6ce:tool_rolling_pin"
+    }
+  },
+  "result": {
+    "item": "gt6ce:clay_funnel"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

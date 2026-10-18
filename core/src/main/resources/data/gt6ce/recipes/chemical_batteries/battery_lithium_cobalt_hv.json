@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WxW",
+    "BCB",
+    "BPB"
+  ],
+  "key": {
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gt6ce:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gt6ce:lithium_cobalt_cell_filled"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_gold"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_5_plus"
+    }
+  },
+  "result": {
+    "item": "gt6ce:battery_lithium_cobalt_hv"
+  }
+}

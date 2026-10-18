@@ -43,12 +43,12 @@ public final class ProjectRedCompatGameTests {
         var manager = helper.getLevel().getServer().getRecipeManager();
 //? if >=1.21.1 {
         /*var replaced = ResourceLocation.parse("projectred_core:red_iron_comp");
-        var added = ResourceLocation.parse("gregtech:compat/projectred/red_iron_comp");
-        var silicon = ResourceLocation.parse("gregtech:compat/projectred/silicon");
+        var added = ResourceLocation.parse("gt6ce:compat/projectred/red_iron_comp");
+        var silicon = ResourceLocation.parse("gt6ce:compat/projectred/silicon");
 *///?} else {
         var replaced = new ResourceLocation("projectred_core", "red_iron_comp");
-        var added = new ResourceLocation("gregtech", "compat/projectred/red_iron_comp");
-        var silicon = new ResourceLocation("gregtech", "compat/projectred/silicon");
+        var added = new ResourceLocation("gt6ce", "compat/projectred/red_iron_comp");
+        var silicon = new ResourceLocation("gt6ce", "compat/projectred/silicon");
 //?}
         if (!loaded) {
             helper.assertTrue(manager.byKey(replaced).isEmpty(), "red iron recipe must stay absent without Project Red");

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "gt6ce:wire_16_tungsten",
+      "required": false
+    },
+    {
+      "id": "gt6ce:wire_16_tungsten_sintered",
+      "required": false
+    }
+  ]
+}

@@ -153,7 +153,7 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
 *///?} else {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
-        return id != null && id.getNamespace().equals("gregtech") && id.getPath().startsWith("sand_");
+        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().startsWith("sand_");
     }
 
     /**
@@ -185,5 +185,5 @@ public class GTPitFeature extends Feature<NoneFeatureConfiguration> {
 
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_pits.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
-            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gregtech", "gt_pits"));
+            ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_pits"));
 }

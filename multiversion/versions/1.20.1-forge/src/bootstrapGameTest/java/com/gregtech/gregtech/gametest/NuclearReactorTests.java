@@ -10,7 +10,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import java.util.*;
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class NuclearReactorTests {
     private static ReactorCoreBlockEntity core(GameTestHelper h,int x,boolean four){

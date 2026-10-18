@@ -27,7 +27,7 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
         this.category = category;
         this.info = info;
         int material = com.gregtech.gregtech.api.tool.GTToolHelper.getHead(info.output()).getId();
-        this.id = ResourceLocation.fromNamespaceAndPath("gregtech", "/tool_assembly/" + info.type().id() + "/" + material);
+        this.id = ResourceLocation.fromNamespaceAndPath("gt6ce", "/tool_assembly/" + info.type().id() + "/" + material);
         this.slots = info.inputs().stream().map(options -> (EmiIngredient) new MachineEmiIngredient(options.stream().map(EmiStack::of).toList(), 1)).toList();
         var consumed = new ArrayList<EmiIngredient>();
         var tools = new ArrayList<EmiIngredient>();
@@ -45,9 +45,9 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
     public static void register(EmiRegistry registry) {
         var rows = ToolAssemblyCatalog.build();
         if (rows.isEmpty()) return;
-        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gregtech", "tool_assembly"),
+        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_assembly"),
                 EmiStack.of(rows.get(0).output())) {
-            @Override public Component getName() { return Component.translatable("gregtech.jei.category.tool_assembly"); }
+            @Override public Component getName() { return Component.translatable("gt6ce.jei.category.tool_assembly"); }
         };
         registry.addCategory(category);
         registry.addWorkstation(category, EmiStack.of(Items.CRAFTING_TABLE));
@@ -72,8 +72,8 @@ public final class ToolAssemblyEmiRecipe implements EmiRecipe {
         }
         widgets.addSlot(outputs.get(0), 90, 18).recipeContext(this);
         widgets.addText(info.headAssembly()
-                ? Component.translatable("gregtech.jei.info.tool_head_and_handle")
-                : Component.translatable("gregtech.jei.info.tool_material_forms", info.inputs().size()), 1,58,0xff404040,false);
-        widgets.addText(Component.translatable("gregtech.jei.info.tool_any_material"),1,68,0xff707070,false);
+                ? Component.translatable("gt6ce.jei.info.tool_head_and_handle")
+                : Component.translatable("gt6ce.jei.info.tool_material_forms", info.inputs().size()), 1,58,0xff404040,false);
+        widgets.addText(Component.translatable("gt6ce.jei.info.tool_any_material"),1,68,0xff707070,false);
     }
 }

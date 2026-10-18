@@ -45,7 +45,7 @@ public final class BookShelfRenderer implements BlockEntityRenderer<BookShelfBlo
         return stack.is(Items.COBBLESTONE)
                 ? ResourceLocation.parse("minecraft:textures/block/cobblestone.png")
 //? if >=1.21.1 {
-                /*: ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/books/" + texture + "_" + face + ".png");
+                /*: ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/books/" + texture + "_" + face + ".png");
 *///?} else {
                 : GregTech.id("textures/block/books/" + texture + "_" + face + ".png");
 //?}

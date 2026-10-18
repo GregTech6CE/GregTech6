@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MqM",
+    "MlM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:technology/any_rubber_plate"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gt6ce:biochemgas_suit_leggings"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

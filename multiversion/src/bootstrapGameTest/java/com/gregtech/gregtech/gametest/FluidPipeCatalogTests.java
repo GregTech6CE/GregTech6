@@ -25,7 +25,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class FluidPipeCatalogTests {
     private static FluidPipeBlockEntity pipe(GameTestHelper h, String name) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_medium_" + name));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_medium_" + name));
         h.assertTrue(block instanceof FluidPipeBlock, "registered " + name);
         var p = new FluidPipeBlockEntity(h.absolutePos(new BlockPos(2, 150, 2)), block.defaultBlockState());
         p.setLevel(h.getLevel());
@@ -37,7 +37,7 @@ public final class FluidPipeCatalogTests {
         var definitions = FluidTransportDefinitions.pipes();
         h.assertTrue(definitions.size() == 280, "40 materials and seven sizes");
         for (var expected : definitions) {
-            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", expected.id()));
+            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", expected.id()));
             h.assertTrue(block instanceof FluidPipeBlock, "registered " + expected.id());
             h.assertTrue(((FluidPipeBlock) block).spec().equals(expected), "complete shared spec survives registration: " + expected.id());
             h.assertTrue(block.getFlammability(block.defaultBlockState(), h.getLevel(), BlockPos.ZERO,

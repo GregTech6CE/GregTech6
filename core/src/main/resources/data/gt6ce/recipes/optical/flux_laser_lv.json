@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:co2_laser_lv"
+    },
+    "P": {
+      "tag": "forge:plates/lead"
+    }
+  },
+  "result": {
+    "item": "gt6ce:flux_laser_lv"
+  }
+}

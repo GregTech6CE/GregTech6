@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-BUILD = Path("F:/Dev/GregTech/GregTech6/build/resources/main/assets/gregtech/models/block/machine")
+BUILD = Path("F:/Dev/GregTech/GregTech6/build/resources/main/assets/gt6ce/models/block/machine")
 
 MATERIALS = [
     'wood','treated_wood','plastic','rubber','copper','aluminium','tin_alloy',

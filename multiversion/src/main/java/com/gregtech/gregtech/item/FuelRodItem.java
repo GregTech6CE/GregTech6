@@ -51,9 +51,9 @@ public class FuelRodItem extends net.minecraft.world.item.BlockItem {
         super(block,properties);this.definition=definition;this.fuelType=FuelType.NONE;this.tier=0;this.maxHealth=0;
     }
 //? if >=1.21.1 {
-    /*@Override public String getDescriptionId() { return "item.gregtech." + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this).getPath(); }
+    /*@Override public String getDescriptionId() { return "item.gt6ce." + net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(this).getPath(); }
 *///?} else {
-    @Override public String getDescriptionId() { return "item.gregtech." + net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(this).getPath(); }
+    @Override public String getDescriptionId() { return "item.gt6ce." + net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(this).getPath(); }
 //?}
     public com.gregtech.gregtech.content.nuclear.ReactorRodCatalog.Rod definition(){return definition;}
     public FuelType fuelType() { return fuelType; }

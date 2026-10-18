@@ -62,7 +62,7 @@ public final class WireDefinitionRepairTests {
         var recipe=h.getLevel().getRecipeManager().byKey(GregTech.id("hand_components/usb4_cable")).orElseThrow();
         var graphene=wire("graphene",1,false).asItem();
         h.assertTrue(recipe.getIngredients().get(4).test(new ItemStack(graphene))&&recipe.getIngredients().get(7).test(new ItemStack(graphene)),"USB4 C slots use MT.DATA.CABLES_01[6], which is bare graphene in GT6");
-        for(var recipeEntry:h.getLevel().getRecipeManager().getRecipes())if(recipeEntry.getId().getNamespace().equals("gregtech")&&recipeEntry.getId().getPath().startsWith("wire_working/"))for(var ingredient:recipeEntry.getIngredients())
+        for(var recipeEntry:h.getLevel().getRecipeManager().getRecipes())if(recipeEntry.getId().getNamespace().equals("gt6ce")&&recipeEntry.getId().getPath().startsWith("wire_working/"))for(var ingredient:recipeEntry.getIngredients())
             h.assertTrue(ingredient==net.minecraft.world.item.crafting.Ingredient.EMPTY||ingredient.getItems().length>0,"loaded recipe has resolvable ingredients: "+recipeEntry.getId());
         h.succeed();
     }

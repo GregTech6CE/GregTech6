@@ -9,10 +9,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SteamChainTests {
     private static KineticSteamEngineBlockEntity engine(GameTestHelper h){
-        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","engine_steam_bronze"));
+        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","engine_steam_bronze"));
         var pos=new BlockPos(1,2,1);h.setBlock(pos,block);
         return (KineticSteamEngineBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
     }

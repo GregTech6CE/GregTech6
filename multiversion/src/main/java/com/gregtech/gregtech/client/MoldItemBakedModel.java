@@ -70,7 +70,7 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
                 /*quads.add(bakery.bakeQuad(from,to,face,sprite,direction,BlockModelRotation.X0_Y0,null,true));
 *///?} else {
                 quads.add(bakery.bakeQuad(from,to,face,sprite,direction,BlockModelRotation.X0_Y0,null,true,
-                        ResourceLocation.fromNamespaceAndPath("gregtech","mold_item_grid")));
+                        ResourceLocation.fromNamespaceAndPath("gt6ce","mold_item_grid")));
 //?}
             }
         }

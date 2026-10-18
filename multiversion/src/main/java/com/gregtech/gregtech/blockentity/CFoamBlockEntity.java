@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * <p>GT6 rolls once per tick after a hundred tick grace period: {@code aTimer >= 100 && !mFoamDried
  * && rng(5900) == 0} sets {@code mFoamDried} and swaps in the hardened texture. A player can also dry
  * it by hand ({@code dryFoam}, which the port exposes as {@link #dry()}). The port turns the wet block
- * into {@code gregtech:cfoam} — the same block GT6 swaps to.
+ * into {@code gt6ce:cfoam} — the same block GT6 swaps to.
  */
 public class CFoamBlockEntity extends BlockEntity {
     /** GT6 waits a hundred ticks before the first drying roll. */

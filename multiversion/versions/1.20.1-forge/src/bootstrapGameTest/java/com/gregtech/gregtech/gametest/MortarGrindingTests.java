@@ -30,7 +30,7 @@ import java.util.Set;
  * converted with {@code OM.pulverize} (a 1.25U purified ore therefore yields small piles, not one dust).
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MortarGrindingTests {
 

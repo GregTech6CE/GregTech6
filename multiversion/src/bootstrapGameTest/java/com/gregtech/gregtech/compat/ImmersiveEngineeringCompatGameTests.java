@@ -43,9 +43,9 @@ public final class ImmersiveEngineeringCompatGameTests {
         helper.assertTrue(CompatRecipes.errors() == 0, "unresolved compat rows: " + CompatRecipes.problems());
         var manager = helper.getLevel().getServer().getRecipeManager();
 //? if >=1.21.1 {
-        /*var conversion = ResourceLocation.parse("gregtech:compat/immersiveengineering/gt_to_horizontal");
+        /*var conversion = ResourceLocation.parse("gt6ce:compat/immersiveengineering/gt_to_horizontal");
 *///?} else {
-        var conversion = new ResourceLocation("gregtech", "compat/immersiveengineering/gt_to_horizontal");
+        var conversion = new ResourceLocation("gt6ce", "compat/immersiveengineering/gt_to_horizontal");
 //?}
         if (!loaded) {
             helper.assertTrue(manager.byKey(conversion).isEmpty(), "crafting rows must stay absent without IE");

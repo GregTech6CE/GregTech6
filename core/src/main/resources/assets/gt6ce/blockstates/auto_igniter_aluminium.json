@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gt6ce:block/misc/auto_igniter_aluminium",
+      "x": 90
+    }
+  }
+}

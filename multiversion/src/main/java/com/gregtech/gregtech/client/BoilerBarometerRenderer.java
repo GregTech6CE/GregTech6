@@ -22,11 +22,11 @@ import org.joml.Matrix4f;
 public class BoilerBarometerRenderer implements BlockEntityRenderer<BoilerTankBlockEntity> {
     private static final ResourceLocation[] NEEDLE = new ResourceLocation[32];
     private static final ResourceLocation GAUGE_BASE =
-            ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/barometer/base");
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/barometer/base");
 
     static {
         for (int i = 0; i < 32; i++) {
-            NEEDLE[i] = ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/barometer/" + String.format("%02d", i));
+            NEEDLE[i] = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/barometer/" + String.format("%02d", i));
         }
     }
 

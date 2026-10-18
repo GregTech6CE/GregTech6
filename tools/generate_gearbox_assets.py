@@ -21,7 +21,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 SOURCE = native_path(ORIGINAL / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java")
 CS = native_path(ORIGINAL / "src/main/java/gregapi/data/CS.java")
@@ -77,7 +77,7 @@ def language(path: Path, entries: dict[str, str]) -> bytes:
     raw = path.read_bytes()
     newline = "\r\n" if b"\r\n" in raw else "\n"
     lines = raw.decode("utf-8").splitlines(keepends=True)
-    pattern = re.compile(r'  "block\.gregtech\.(?:gearbox|rotation_transformer)_[^" ]+":')
+    pattern = re.compile(r'  "block\.gt6ce\.(?:gearbox|rotation_transformer)_[^" ]+":')
     indices = [i for i, line in enumerate(lines) if pattern.match(line)]
     if not indices:
         raise ValueError(f"No insertion point in {path}")
@@ -97,7 +97,7 @@ def expected_model_textures() -> dict[str, dict[str, str]]:
     expected: dict[str, dict[str, str]] = {}
     for layer_name, texture_kind in (("layer0", "colored"), ("layer1", "overlay")):
         expected[layer_name] = {
-            face: f"gregtech:block/machines/transformers/transformer_rotation/{texture_kind}/{original_face}"
+            face: f"gt6ce:block/machines/transformers/transformer_rotation/{texture_kind}/{original_face}"
             for face, original_face in (("down", "side"), ("up", "side"),
                                         ("north", "front"), ("south", "back"),
                                         ("west", "side"), ("east", "side"))
@@ -124,7 +124,7 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
     transformer_state = (ASSETS / "blockstates/rotation_transformer_bronze.json").read_bytes()
     # An item model inherits with `parent`; `model` belongs to blockstate variants
     # and silently bakes an empty inventory model in both Minecraft versions.
-    transformer_item = (json.dumps({"parent": "gregtech:block/machine/transformer/rotation_transformer"}, indent=2) + "\n").encode("utf-8")
+    transformer_item = (json.dumps({"parent": "gt6ce:block/machine/transformer/rotation_transformer"}, indent=2) + "\n").encode("utf-8")
     transformer_model = (ASSETS / "models/block/rotation_transformer_bronze.json").read_bytes()
 
     files: dict[Path, bytes] = {}
@@ -155,10 +155,10 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
 
         transform_resource = f"rotation_transformer_{suffix}"
         gearbox_resource = f"gearbox_{suffix}"
-        english[f"block.gregtech.{transform_resource}"] = f"{material} Transformer Gearbox"
-        english[f"block.gregtech.{gearbox_resource}"] = f"Custom {material} Gearbox"
-        chinese[f"block.gregtech.{transform_resource}"] = translations[transformer_id]
-        chinese[f"block.gregtech.{gearbox_resource}"] = translations[gearbox_id]
+        english[f"block.gt6ce.{transform_resource}"] = f"{material} Transformer Gearbox"
+        english[f"block.gt6ce.{gearbox_resource}"] = f"Custom {material} Gearbox"
+        chinese[f"block.gt6ce.{transform_resource}"] = translations[transformer_id]
+        chinese[f"block.gt6ce.{gearbox_resource}"] = translations[gearbox_id]
         if suffix not in OLD_GEARBOXES:
             files[ASSETS / "blockstates" / f"{gearbox_resource}.json"] = gearbox_state
             files[ASSETS / "models/item" / f"{gearbox_resource}.json"] = gearbox_item

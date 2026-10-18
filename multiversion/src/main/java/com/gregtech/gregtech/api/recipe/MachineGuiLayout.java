@@ -5,5 +5,5 @@ public final class MachineGuiLayout {
  private MachineGuiLayout(){}
  public static Point item(boolean input,int index,int count,int fluids){var p=MachineGuiCoordinates.item(input,index,count,fluids);return new Point(p.x(),p.y());}
  public static Point fluid(boolean input,int index){var p=MachineGuiCoordinates.fluid(input,index);return new Point(p.x(),p.y());}
- public static ResourceLocation texture(RecipeMap map){return ResourceLocation.fromNamespaceAndPath("gregtech",MachineGuiCoordinates.texture(map==null?null:map.mGUIPath));}
+ public static ResourceLocation texture(RecipeMap map){return ResourceLocation.fromNamespaceAndPath("gt6ce",MachineGuiCoordinates.texture(map==null?null:map.mGUIPath));}
 }

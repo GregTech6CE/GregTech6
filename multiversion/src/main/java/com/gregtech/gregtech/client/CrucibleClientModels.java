@@ -108,7 +108,7 @@ public final class CrucibleClientModels {
             BakedModel worldModel = new CrucibleBlockBakedModel(shared);
             BakedModel itemModel = BlockItemClientModels.asBlockItem(shared);
 //? if >=1.21.1 {
-            /*ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/blocks/" + blockId.getPath());
+            /*ResourceLocation blockModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath());
             ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
 *///?} else {
             ResourceLocation blockModelId = GregTech.id("block/blocks/" + blockId.getPath());
@@ -123,7 +123,7 @@ public final class CrucibleClientModels {
         }
 
 //? if >=1.21.1 {
-        /*LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", "gregtech", aliased, missing);
+        /*LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
         LOGGER.info("[{}] Crucible model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
 //?}

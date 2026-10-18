@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_replicator",
+  "contents": [
+    "item:gt6ce:replicator_osmiridium_t2",
+    "item:gt6ce:replicator_osmiridium_t3",
+    "item:gt6ce:replicator_osmiridium_t4",
+    "item:gt6ce:replicator_osmiridium_t5",
+    "item:gt6ce:replicator_osmium"
+  ],
+  "priority": 110
+}

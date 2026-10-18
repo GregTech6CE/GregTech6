@@ -70,7 +70,7 @@ public final class BottleCrateRenderer implements BlockEntityRenderer<BottleCrat
         for(int pass=0;pass<3;pass++) {
             String texture=pass==0?"sides":pass==1?"top":"cap";
 //? if >=1.21.1 {
-            /*out=buffers.getBuffer(RenderType.entityCutout(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
+            /*out=buffers.getBuffer(RenderType.entityCutout(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
 *///?} else {
             out=buffers.getBuffer(RenderType.entityCutout(GregTech.id("textures/block/iconsets/bottlecrate_bottle_"+texture+".png")));
 //?}

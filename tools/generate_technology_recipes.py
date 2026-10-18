@@ -9,12 +9,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java'
-DATA = ROOT / 'core/src/main/resources/data/gregtech'
+DATA = ROOT / 'core/src/main/resources/data/gt6ce'
 RANDOM = (SRC / 'gregtech/items/MultiItemRandomTools.java').read_text(encoding='utf-8').splitlines()
 MTE = (SRC / 'gregtech/loaders/b/Loader_MultiTileEntities.java').read_text(encoding='utf-8').splitlines()
 ROWS = {}
-def item(id): return {'item': id if ':' in id else 'gregtech:'+id}
-def tag(id): return {'tag': id if ':' in id else 'gregtech:'+id}
+def item(id): return {'item': id if ':' in id else 'gt6ce:'+id}
+def tag(id): return {'tag': id if ':' in id else 'gt6ce:'+id}
 def circuits(n): return tag(f'circuits_tier_{n}_plus')
 def write(path, data):
     text = json.dumps(data, ensure_ascii=False, indent=2)+'\n'
@@ -26,7 +26,7 @@ def row(id, line, pattern, keys, count=1, mirror=False, mte=False):
     text = source[line-1]
     assert 'CR.shaped' in text and all('"'+s+'"' in text for s in pattern), (id,line)
     assert ("CR.DEF_NCC_MIR" in text) == mirror, (id,'mirror')
-    ROWS[id] = {'type':'gregtech:tool_shaped', '_comment':f"GT6 {'Loader_MultiTileEntities' if mte else 'MultiItemRandomTools'}:{line}",
+    ROWS[id] = {'type':'gt6ce:tool_shaped', '_comment':f"GT6 {'Loader_MultiTileEntities' if mte else 'MultiItemRandomTools'}:{line}",
         'allow_mirror':mirror, 'pattern':pattern, 'key':keys, 'result':{**item(id),'count':count}}
 
 tool = lambda kind: tag('forge:tools/'+kind)
@@ -56,7 +56,7 @@ for line,prefix,count,phosphorus in [(352,'dust_small',1,False),(353,'dust_small
     pattern=['P','S'] if count==1 else [' S ','SPS',' S ']
     row(id,line,pattern,{'P':tag('technology/any_phosphorus_'+prefix) if phosphorus else item(prefix+'_phosphor'),
         'S':tag('technology/any_wood_bolt')},count=count)
-    ROWS[id]['result']['item']='gregtech:match'
+    ROWS[id]['result']['item']='gt6ce:match'
 row('portable_scanner',1075,['EXR','CPU','BXB'],{'B':item('battery_alkaline_hv'),'X':item('plate_chromium'),
     'U':tag('technology/usb_sticks_tier_3_plus'),'C':tag('technology/usb_cables_tier_3_plus'),'E':item('compact_signal_emitter_ev'),'R':item('compact_sensor_ev'),
     'P':item('crystal_circuit_sapphire')},mte=True)

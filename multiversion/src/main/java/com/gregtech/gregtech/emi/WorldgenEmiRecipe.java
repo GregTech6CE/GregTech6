@@ -22,19 +22,19 @@ public final class WorldgenEmiRecipe implements EmiRecipe {
     private WorldgenEmiRecipe(EmiRecipeCategory category, int index, List<ItemStack> outputs,
                              List<ItemStack> catalysts, List<Component> captions) {
         this.category = category;
-        id = ResourceLocation.fromNamespaceAndPath("gregtech", "/worldgen/" + category.getId().getPath() + "/" + index);
+        id = ResourceLocation.fromNamespaceAndPath("gt6ce", "/worldgen/" + category.getId().getPath() + "/" + index);
         this.outputs = outputs.stream().filter(s -> !s.isEmpty()).map(EmiStack::of).toList();
         this.catalysts = catalysts.stream().filter(s -> !s.isEmpty()).map(s -> (EmiIngredient)EmiStack.of(s)).toList();
         this.captions = List.copyOf(captions);
     }
     private static EmiRecipeCategory category(EmiRegistry registry, String path, String title, Item icon) {
-        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gregtech", path), EmiStack.of(new ItemStack(icon))) {
-            @Override public Component getName() { return Component.translatable("gregtech.jei.category." + title); }
+        var category = new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce", path), EmiStack.of(new ItemStack(icon))) {
+            @Override public Component getName() { return Component.translatable("gt6ce.jei.category." + title); }
         };
         registry.addCategory(category);
         return category;
     }
-    private static Component line(String key, Object... args) { return Component.translatable("gregtech.jei.info." + key, args); }
+    private static Component line(String key, Object... args) { return Component.translatable("gt6ce.jei.info." + key, args); }
     public static void register(EmiRegistry registry) {
         var veins = category(registry, "ore_veins", "ore_veins", Items.IRON_ORE);
         int index = 0;

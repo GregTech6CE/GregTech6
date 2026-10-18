@@ -9,7 +9,7 @@ plus the language keys the food table adds:
   1. For every row of ``GTFoodItemsGen`` it checks that GT6's texture
      (``<gt6>/resources/assets/gregtech/textures/items/gt.multiitem.food/<meta>.png``, or the
      ``GT6resourcepack`` copy) has a counterpart in the port
-     (``src/main/resources/assets/gregtech/textures/item/food/<id>.png``) and that the item model
+     (``src/main/resources/assets/gt6ce/textures/item/food/<id>.png``) and that the item model
      exists. **No texture is ever invented**: a row without one is reported instead of being given a
      placeholder, and so is a model that is missing while its texture is present (that one is written,
      because the texture is the thing that cannot be made up).
@@ -43,7 +43,7 @@ GT6_TEXTURES = os.path.join(r'F:\Dev\GregTech6\gregtech6-master\gregtech6-master
                             'resources', 'assets', 'gregtech', 'textures', 'items', 'gt.multiitem.food')
 PACK_TEXTURES = os.path.join(r'F:\Dev\GregTech6\GT6resourcepack\gt6', 'resources', 'assets', 'gregtech',
                              'textures', 'items', 'gt.multiitem.food')
-ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gt6ce')
 PORT_TEXTURES = os.path.join(ASSETS, 'textures', 'item', 'food')
 MODELS = os.path.join(ASSETS, 'models', 'item')
 LANG = os.path.join(ASSETS, 'lang')
@@ -112,7 +112,7 @@ def main() -> int:
                 os.makedirs(MODELS, exist_ok=True)
                 with io.open(model, 'w', encoding='utf-8', newline='\n') as handle:
                     json.dump({'parent': 'minecraft:item/generated',
-                               'textures': {'layer0': 'gregtech:item/food/' + item_id}},
+                               'textures': {'layer0': 'gt6ce:item/food/' + item_id}},
                               handle, indent=2)
                     handle.write('\n')
         if os.path.getsize(texture) == 0:
@@ -125,7 +125,7 @@ def main() -> int:
             lang = json.load(handle)
         added = []
         for entry in entries:
-            key = 'item.gregtech.' + entry['id']
+            key = 'item.gt6ce.' + entry['id']
             if key not in lang:
                 lang[key] = entry['display']
                 added.append(key)

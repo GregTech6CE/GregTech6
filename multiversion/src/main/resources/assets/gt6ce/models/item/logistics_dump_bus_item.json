@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:item/technological/logistics_dump_bus_item"
+  }
+}

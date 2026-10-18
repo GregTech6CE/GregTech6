@@ -15,9 +15,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/item/material")
-LANG_EN = native_path(ROOT / "src/main/resources/assets/gregtech/lang/en_us.json")
-LANG_ZH = native_path(ROOT / "src/main/resources/assets/gregtech/lang/zh_cn.json")
+MODELS = native_path(ROOT / "src/main/resources/assets/gt6ce/models/item/material")
+LANG_EN = native_path(ROOT / "src/main/resources/assets/gt6ce/lang/en_us.json")
+LANG_ZH = native_path(ROOT / "src/main/resources/assets/gt6ce/lang/zh_cn.json")
 
 # (id, display_en, display_zh, texture_file) — texture defaults to id.lower() with special cases below
 PREFIXES: list[tuple[str, str, str, str | None]] = [
@@ -165,8 +165,8 @@ def texture_name(prefix_id: str, override: str | None) -> str:
 def model_json(tex_set: str, tex_file: str) -> str:
     # Coins use the original minted relief, shared by every material texture set.
     if tex_file == "coin":
-        return '{"parent": "gregtech:item/coin_minted"}\n'
-    layer0 = f"gregtech:item/material_icons/{tex_set}/{tex_file}"
+        return '{"parent": "gt6ce:item/coin_minted"}\n'
+    layer0 = f"gt6ce:item/material_icons/{tex_set}/{tex_file}"
     layer1 = f"{layer0}_overlay"
     return json.dumps(
         {
@@ -192,10 +192,10 @@ def main() -> None:
     zh: dict[str, str] = {}
     for prefix_id, display_en, display_zh, _ in PREFIXES:
         key = camel_to_snake(prefix_id)
-        en[f"item.gregtech.{key}"] = f"%s {display_en}"
-        en[f"itemGroup.gregtech.{key}"] = f"GregTech {display_en}s"
-        zh[f"item.gregtech.{key}"] = f"%s{display_zh}"
-        zh[f"itemGroup.gregtech.{key}"] = f"格雷科技·{display_zh}"
+        en[f"item.gt6ce.{key}"] = f"%s {display_en}"
+        en[f"itemGroup.gt6ce.{key}"] = f"GregTech {display_en}s"
+        zh[f"item.gt6ce.{key}"] = f"%s{display_zh}"
+        zh[f"itemGroup.gt6ce.{key}"] = f"格雷科技·{display_zh}"
 
     for path, data in ((LANG_EN, en), (LANG_ZH, zh)):
         existing = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}

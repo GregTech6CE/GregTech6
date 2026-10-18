@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    " hY",
+    " M ",
+    "Yw "
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:casing_machine_steel"
+    },
+    "Y": {
+      "item": "gt6ce:item_pipe_medium_electrum"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:inventory_extender"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

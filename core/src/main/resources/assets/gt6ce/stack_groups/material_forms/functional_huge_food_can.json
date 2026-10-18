@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_huge_food_can",
+  "contents": [
+    "item:gt6ce:huge_food_can_bread",
+    "item:gt6ce:huge_food_can_chum",
+    "item:gt6ce:huge_food_can_cookies",
+    "item:gt6ce:huge_food_can_fish",
+    "item:gt6ce:huge_food_can_fruits",
+    "item:gt6ce:huge_food_can_meat",
+    "item:gt6ce:huge_food_can_rotten",
+    "item:gt6ce:huge_food_can_unknown",
+    "item:gt6ce:huge_food_can_vegetables"
+  ],
+  "priority": 110
+}

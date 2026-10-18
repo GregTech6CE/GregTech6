@@ -12,14 +12,14 @@ spec.loader.exec_module(generator)
 class AxialBatteryRecipes(unittest.TestCase):
     def test_normalization_preserves_all_non_group_fields_and_is_idempotent(self):
         recipe = {'pattern': ['PwP', 'BMC', 'PEP'], 'key': {
-            'B': {'item': 'gregtech:battery_lv'}, 'C': {'item': 'gregtech:circuit_ultimate'},
-            'M': {'item': 'gregtech:original_housing'}}, 'allow_mirror': False,
-            '_mirror_flags': 'gt6-census', 'result': {'item': 'gregtech:original_output'}}
+            'B': {'item': 'gt6ce:battery_lv'}, 'C': {'item': 'gt6ce:circuit_ultimate'},
+            'M': {'item': 'gt6ce:original_housing'}}, 'allow_mirror': False,
+            '_mirror_flags': 'gt6-census', 'result': {'item': 'gt6ce:original_output'}}
         line = "'B', \"gt:re-battery2\", 'C', OD_CIRCUITS[6]"
         before = json.loads(json.dumps(recipe))
         result = generator.normalize(recipe, line)
         self.assertEqual(recipe, before)
-        self.assertEqual(result['key']['B'], {'tag': 'gregtech:rechargeable_batteries/mv'})
+        self.assertEqual(result['key']['B'], {'tag': 'gt6ce:rechargeable_batteries/mv'})
         self.assertEqual(result, generator.normalize(result, line))
         result['key']['B'] = before['key']['B']
         result['key']['C'] = before['key']['C']
@@ -29,8 +29,8 @@ class AxialBatteryRecipes(unittest.TestCase):
         for number, name in generator.TARGETS.items():
             recipe = json.loads((generator.RECIPES / (name + '.json')).read_text(encoding='utf-8'))
             tier = 'lv' if number < 17230 else ['lv', 'mv', 'hv', 'ev'][number - 17231]
-            self.assertEqual(recipe['key']['B'], {'tag': 'gregtech:rechargeable_batteries/' + tier})
-            self.assertEqual(recipe['key']['C'], {'tag': 'gregtech:circuits_tier_6_plus'})
+            self.assertEqual(recipe['key']['B'], {'tag': 'gt6ce:rechargeable_batteries/' + tier})
+            self.assertEqual(recipe['key']['C'], {'tag': 'gt6ce:circuits_tier_6_plus'})
             self.assertFalse(recipe['allow_mirror'])
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 @JeiPlugin
 public final class LootJeiSmokePlugin implements IModPlugin {
     private static IJeiRuntime runtime;
-    @Override public ResourceLocation getPluginUid() { return ResourceLocation.fromNamespaceAndPath("gregtech", "loot_smoke_runtime"); }
+    @Override public ResourceLocation getPluginUid() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "loot_smoke_runtime"); }
     @Override public void onRuntimeAvailable(IJeiRuntime value) { runtime = value; }
     static boolean ready() { return runtime != null; }
     static void check(com.google.gson.JsonObject result) {
@@ -39,7 +39,7 @@ public final class LootJeiSmokePlugin implements IModPlugin {
                 }
                 for(var slot:layout.getRecipeSlotsView().getSlotViews(mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT)) {
                     var tooltip=((mezz.jei.api.gui.ingredient.IRecipeSlotDrawable)slot).getTooltip();
-                    if(tooltip.stream().noneMatch(c->c.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && (t.getKey().equals("gregtech.loot.chance")||t.getKey().equals("gregtech.loot.conditional"))))throw new IllegalStateException("JEI output tooltip omitted chance");
+                    if(tooltip.stream().noneMatch(c->c.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t && (t.getKey().equals("gt6ce.loot.chance")||t.getKey().equals("gt6ce.loot.conditional"))))throw new IllegalStateException("JEI output tooltip omitted chance");
                     tooltips++;
                 }
             }

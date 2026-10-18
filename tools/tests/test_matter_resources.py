@@ -17,7 +17,7 @@ from check_render_resources import check
 
 class MatterResources(unittest.TestCase):
     def test_matter_parts_and_all_compact_tiers_have_complete_model_graphs(self):
-        assets=native_path(ROOT/'src/main/resources/assets/gregtech')
+        assets=native_path(ROOT/'src/main/resources/assets/gt6ce')
         names=['dense_lead_wall','large_osmium_coil','conversion_processor_unit','largemassfab_lead','massfab_osmium']
         names += ['massfab_osmiridium_t'+str(t) for t in range(2,6)]
         paths=[assets/f'blockstates/{name}.json' for name in names]+[assets/f'models/item/{name}.json' for name in names]
@@ -29,10 +29,10 @@ class MatterResources(unittest.TestCase):
             self.assertTrue(all('tintindex' not in face for face in model['children']['overlay']['elements'][0]['faces'].values()))
 
     def test_machine_crafting_uses_original_field_generator_tiers(self):
-        folder=native_path(ROOT/'src/main/resources/data/gregtech/recipes/matter')
+        folder=native_path(ROOT/'src/main/resources/data/gt6ce/recipes/matter')
         for tier,emitter in enumerate(['lv','mv','hv','ev','iv'],1):
             name='massfab_osmium' if tier==1 else 'massfab_osmiridium_t'+str(tier)
             recipe=json.loads((folder/(name+'.json')).read_text(encoding='utf8'))
-            self.assertEqual('gregtech:casing_machine_osmiridium',recipe['key']['M']['item'])
-            self.assertEqual('gregtech:compact_force_field_emitter_'+emitter,recipe['key']['F']['item'])
+            self.assertEqual('gt6ce:casing_machine_osmiridium',recipe['key']['M']['item'])
+            self.assertEqual('gt6ce:compact_force_field_emitter_'+emitter,recipe['key']['F']['item'])
             self.assertEqual(['RFS','FMF','RFS'],recipe['pattern'])

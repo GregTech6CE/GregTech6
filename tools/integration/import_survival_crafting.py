@@ -64,29 +64,29 @@ for line,txt in enumerate(source.splitlines(),1):
      spec=prefix+':'+form+'@'+names[material]
     if form=='stone':
      stone=mat.rsplit('.',1)[-1];slugs={'Basalt':'basalt','GraniteBlack':'granite_black','GraniteRed':'granite_red','Umber':'umber','Livingrock':'livingrock','Holystone':'holystone','Betweenstone':'betweenstone','NetherBrick':'nether_brick'}
-     spec='item:minecraft:nether_bricks' if stone=='NetherBrick' else 'item:gregtech:stone_'+slugs.get(stone,stone.lower())+'_stone'
-    if material=='ANY.Steel' and form=='bolt':spec='tag:gregtech:technology/any_steel_bolt'
+     spec='item:minecraft:nether_bricks' if stone=='NetherBrick' else 'item:gt6ce:stone_'+slugs.get(stone,stone.lower())+'_stone'
+    if material=='ANY.Steel' and form=='bolt':spec='tag:gt6ce:technology/any_steel_bolt'
     if material=='ANY.Iron' and form in {'gearGt','stick','stickLong'}:
-     spec='tag:gregtech:technology/any_iron_'+{'gearGt':'gear','stick':'rod','stickLong':'long_rod'}[form]
-    if material=='ANY.Si' and form=='plateGem':spec='tag:gregtech:technology/any_silicon_gem_plate'
+     spec='tag:gt6ce:technology/any_iron_'+{'gearGt':'gear','stick':'rod','stickLong':'long_rod'}[form]
+    if material=='ANY.Si' and form=='plateGem':spec='tag:gt6ce:technology/any_silicon_gem_plate'
     keys[key]=spec
    elif exp in {'Blocks.stone','Blocks.brick_block'}:keys[key]='item:minecraft:'+{'Blocks.stone':'stone','Blocks.brick_block':'bricks'}[exp]
    elif re.fullmatch(r'OD_CIRCUITS\[\d+\]',exp):keys[key]='circuit:'+re.search(r'\d+',exp)[0]
    elif re.fullmatch(r'MT.DATA.CABLES_01\[\d+\]',exp):keys[key]='cabletier:'+re.search(r'\[(\d+)\]',exp)[1]
-   elif exp=='IL.Processor_Crystal_Sapphire':keys[key]='item:gregtech:crystal_processor_sapphire'
-   elif exp=='IL.Processor_Crystal_Emerald':keys[key]='item:gregtech:crystal_processor_emerald'
+   elif exp=='IL.Processor_Crystal_Sapphire':keys[key]='item:gt6ce:crystal_processor_sapphire'
+   elif exp=='IL.Processor_Crystal_Emerald':keys[key]='item:gt6ce:crystal_processor_emerald'
    elif exp=='OD.container1000water':keys[key]='item:minecraft:water_bucket'
    elif exp in {'Blocks.hopper','Blocks.pumpkin'}:keys[key]='item:minecraft:'+exp.removeprefix('Blocks.')
    elif exp=='OD.blockTorch':keys[key]='item:minecraft:torch'
-   elif exp=='OD.itemMud':keys[key]='tag:gregtech:plant_pot_mud'
-   elif exp=='OD.listAllmushroom':keys[key]='tag:gregtech:mushrooms'
+   elif exp=='OD.itemMud':keys[key]='tag:gt6ce:plant_pot_mud'
+   elif exp=='OD.listAllmushroom':keys[key]='tag:gt6ce:mushrooms'
    elif exp=='OD.blockGlassColorless':keys[key]='item:minecraft:glass'
-   elif exp=='IL.Ceramic_Basin':keys[key]='item:gregtech:mold_basin_ceramic'
-   elif exp=='IL.Tacho_Meter':keys[key]='item:gregtech:tachometer'
-   elif exp=='IL.Electro_Meter':keys[key]='item:gregtech:electrometer'
+   elif exp=='IL.Ceramic_Basin':keys[key]='item:gt6ce:mold_basin_ceramic'
+   elif exp=='IL.Tacho_Meter':keys[key]='item:gt6ce:tachometer'
+   elif exp=='IL.Electro_Meter':keys[key]='item:gt6ce:electrometer'
    else:bad.append(exp)
   for ch in set(''.join(patterns))-{' '}-set(keys):
-   if ch in tools:keys[ch]='item:gregtech:tool_'+tools[ch]
+   if ch in tools:keys[ch]='item:gt6ce:tool_'+tools[ch]
    else:bad.append(ch)
   if bad:missing.append([path,bad]);continue
   if path=='coke_oven_wall':path='fire_bricks'
@@ -95,9 +95,9 @@ for line,txt in enumerate(source.splitlines(),1):
   evidence.append({'id':path,'line':line,'source_id':int(a[2])})
 # Key crafting is identical in all ten original MultiItemRandomTools registrations.
 for material in ['Iron','Gold','Copper','Tin','Bronze','Brass','Silver','Platinum','Lead','Plastic']:
- rows.append(f'        new Row("{material.lower()}_key", 3, com.gregtech.gregtech.api.material.GTMaterialRegistry.get("{material}"), "fPx", Map.of(\'f\', "item:gregtech:tool_file", \'P\', "mat:plate", \'x\', "item:gregtech:tool_wire_cutter"))')
+ rows.append(f'        new Row("{material.lower()}_key", 3, com.gregtech.gregtech.api.material.GTMaterialRegistry.get("{material}"), "fPx", Map.of(\'f\', "item:gt6ce:tool_file", \'P\', "mat:plate", \'x\', "item:gt6ce:tool_wire_cutter"))')
 for size,form in [('small','Double'),('medium','Triple'),('large','Quadruple')]:
- rows.append(f'        new Row("press_bullet_casing_shape_{size}", 1, com.gregtech.gregtech.content.material.Materials.Steel, "TPT|dyh|SPS", Map.of(\'T\', "mat:screw", \'P\', "mat:plate{form}", \'S\', "mat:stick", \'d\', "item:gregtech:tool_screwdriver", \'y\', "item:gregtech:tool_chisel", \'h\', "item:gregtech:tool_hammer"))')
+ rows.append(f'        new Row("press_bullet_casing_shape_{size}", 1, com.gregtech.gregtech.content.material.Materials.Steel, "TPT|dyh|SPS", Map.of(\'T\', "mat:screw", \'P\', "mat:plate{form}", \'S\', "mat:stick", \'d\', "item:gt6ce:tool_screwdriver", \'y\', "item:gt6ce:tool_chisel", \'h\', "item:gt6ce:tool_hammer"))')
 out='''/* Original GT6 Loader_MultiTileEntities and MultiItemRandomTools; LGPL-3.0-or-later. */
 package com.gregtech.gregtech.data;
 import com.gregtech.gregtech.api.material.GTMaterial;

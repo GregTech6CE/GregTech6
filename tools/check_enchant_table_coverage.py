@@ -3,7 +3,7 @@
 The table's rows are the receiver of GT6's `addEnchantmentFor…` calls, i.e. GT6 **field** names
 (`Ma`, `Fe`, `PO4`, `Polycarbonate`), not material names. They are resolved through the generated
 field table (`GTMaterialFields`) and then matched against the port's own material registry names,
-which the language file stores without spaces (`Hard Plastic` -> `material.gregtech.hardplastic`).
+which the language file stores without spaces (`Hard Plastic` -> `material.gt6ce.hardplastic`).
 
 Rows that name a material this port does not have are other mods' materials GT6 enchanted for
 compatibility; they are listed separately so a real regression (a port material losing its row)
@@ -23,7 +23,7 @@ import re
 
 TABLE = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java"))
 FIELDS = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java"))
-LANG = str(native_path("src/main/resources/assets/gregtech/lang/zh_cn.json"))
+LANG = str(native_path("src/main/resources/assets/gt6ce/lang/zh_cn.json"))
 
 
 def norm(name: str) -> str:
@@ -31,12 +31,12 @@ def norm(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
 
-# The port imported GT6's own language file, so a few `material.gregtech.*` keys name materials the
+# The port imported GT6's own language file, so a few `material.gt6ce.*` keys name materials the
 # port does not register (their rows stay unresolved at runtime too).
 INHERITED_ONLY = {"sunstone"}
 
 port_names = {norm(key.split(".", 2)[2]) for key in json.load(io.open(LANG, encoding="utf-8"))
-              if key.startswith("material.gregtech.")} - INHERITED_ONLY
+              if key.startswith("material.gt6ce.")} - INHERITED_ONLY
 fields = dict(re.findall(r'BY_FIELD\.put\("([^"]+)", "([^"]+)"\);',
                          io.open(FIELDS, encoding="utf-8").read()))
 rows = re.findall(r'new Material\("(\w+)", List\.of\(',

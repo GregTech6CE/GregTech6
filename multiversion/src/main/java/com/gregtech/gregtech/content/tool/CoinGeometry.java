@@ -25,7 +25,7 @@ public final class CoinGeometry {
     };
 
     private static MintPattern loadDefault() {
-        try (var input = CoinGeometry.class.getResourceAsStream("/assets/gregtech/geometry/coin_shape.json")) {
+        try (var input = CoinGeometry.class.getResourceAsStream("/assets/gt6ce/geometry/coin_shape.json")) {
             if (input == null) throw new IllegalStateException("Missing GT6 coin shape");
             int[][] data = new Gson().fromJson(new InputStreamReader(input, StandardCharsets.UTF_8), int[][].class);
             if (data == null || data.length != 2 || data[0].length != 16 || data[1].length != 16)

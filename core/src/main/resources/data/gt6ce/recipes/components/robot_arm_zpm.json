@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_zpm"
+    },
+    "S": {
+      "tag": "forge:rods/osmium_elemental"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_zpm"
+    },
+    "E": {
+      "item": "gt6ce:integrated_circuit_7"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_robot_arm_zpm",
+    "count": 1
+  }
+}

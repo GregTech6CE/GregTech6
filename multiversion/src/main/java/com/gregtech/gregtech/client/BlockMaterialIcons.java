@@ -25,7 +25,7 @@ public final class BlockMaterialIcons {
     public static ResourceLocation texture(MaterialTextureSet set, BlockMaterialPrefix prefix, boolean overlay) {
         String file = prefix.getTextureFileName() + (overlay ? "_overlay" : "");
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/" + set.folder() + "/" + file);
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/" + set.folder() + "/" + file);
 *///?} else {
         return GregTech.id("block/material_icons/" + set.folder() + "/" + file);
 //?}
@@ -33,7 +33,7 @@ public final class BlockMaterialIcons {
 
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, BlockMaterialPrefix prefix) {
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/material/" + set.folder() + "/" + prefix.getTextureFileName());
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material/" + set.folder() + "/" + prefix.getTextureFileName());
 *///?} else {
         return GregTech.id("block/material/" + set.folder() + "/" + prefix.getTextureFileName());
 //?}
@@ -41,7 +41,7 @@ public final class BlockMaterialIcons {
 
     public static ResourceLocation crateBottomTexture() {
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/crate");
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/crate");
 *///?} else {
         return GregTech.id("block/iconsets/crate");
 //?}
@@ -142,7 +142,7 @@ public final class BlockMaterialIcons {
 
     public static ResourceLocation stoneTexture(GTStoneBlockPaths paths) {
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/stones/" + paths.folder() + "/" + paths.variantTexture());
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/stones/" + paths.folder() + "/" + paths.variantTexture());
 *///?} else {
         return GregTech.id("block/stones/" + paths.folder() + "/" + paths.variantTexture());
 //?}

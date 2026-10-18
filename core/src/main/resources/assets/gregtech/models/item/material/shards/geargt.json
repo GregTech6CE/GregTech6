@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gregtech:item/material_icons/shards/geargt",
-    "layer1": "gregtech:item/material_icons/shards/geargt_overlay"
-  }
-}

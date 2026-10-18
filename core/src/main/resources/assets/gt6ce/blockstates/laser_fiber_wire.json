@@ -1,0 +1,57 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_center"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_down"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_up"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_south"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_west"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "gt6ce:block/machine/energy/laser_fiber_east"
+      }
+    }
+  ]
+}

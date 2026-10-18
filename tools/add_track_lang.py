@@ -2,10 +2,10 @@
 """Add the language keys of GT6's tracks (`Loader_Rails:41-72`) to both language files.
 
 English uses GT6's own display names ("Aluminium Booster Track"); Chinese is built from the port's
-own material translations plus the family noun, so it can never contradict `material.gregtech.*`.
+own material translations plus the family noun, so it can never contradict `material.gt6ce.*`.
 Keys are inserted at their sorted position without reformatting the rest of the file.
 
-Inputs : src/main/resources/assets/gregtech/lang/{en_us,zh_cn}.json
+Inputs : src/main/resources/assets/gt6ce/lang/{en_us,zh_cn}.json
 Output : same files, +30 keys each
 """
 
@@ -25,7 +25,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANG = native_path(ROOT / "src/main/resources/assets/gregtech/lang")
+LANG = native_path(ROOT / "src/main/resources/assets/gt6ce/lang")
 
 MATERIALS = ["Aluminium", "Bronze", "Magnalium", "Steel", "StainlessSteel", "Tungsten",
              "Titanium", "Tungstensteel", "TungstenCarbide", "Adamantium"]
@@ -40,9 +40,9 @@ def read(path: Path) -> dict:
 
 
 def zh_material(material: str) -> str:
-    """The port's own Chinese name for a material, e.g. {@code material.gregtech.aluminium}."""
+    """The port's own Chinese name for a material, e.g. {@code material.gt6ce.aluminium}."""
     zh = read(LANG / "zh_cn.json")
-    value = zh.get("material.gregtech." + material.lower())
+    value = zh.get("material.gt6ce." + material.lower())
     return value.strip() if isinstance(value, str) and value.strip() else material
 
 
@@ -80,7 +80,7 @@ def main() -> int:
         for material in MATERIALS:
             slug = material.lower()
             for family in FAMILIES:
-                entries["block.gregtech." + family[0] % slug] = build(material, family)
+                entries["block.gt6ce." + family[0] % slug] = build(material, family)
         path = LANG / (language + ".json")
         added = insert(path, entries)
         check = read(path)

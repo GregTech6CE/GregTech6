@@ -20,11 +20,11 @@ import json
 from pathlib import Path
 
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech")
+ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gt6ce")
 MATERIALS = (
     "iron", "steel", "brass", "bronze", "wrought_iron", "stainless", "tungsten_steel"
 )
-TEXTURE = "gregtech:block/machines/multiblockparts/metalwall/0/colored/side"
+TEXTURE = "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side"
 
 # Bit combinations for GT6's render passes 0..19.  The first four are corner
 # posts; each wall contributes its bottom/top rails and two inner uprights.
@@ -88,14 +88,14 @@ def output_files() -> dict[Path, dict]:
                 elements = [element(lo, hi) for lo, hi in ITEM_PASSES]
             result[base / f"bars_{name}_{mask}.json"] = model(elements)
             blockstate["variants"][f"mask={mask}"] = {
-                "model": f"gregtech:block/decoration/bars_{name}_{mask}"
+                "model": f"gt6ce:block/decoration/bars_{name}_{mask}"
             }
         result[ROOT / f"blockstates/bars_{name}.json"] = blockstate
         result[base / f"bars_{name}.json"] = model(
             [element(lo, hi) for lo, hi in ITEM_PASSES]
         )
         result[ROOT / f"models/item/bars_{name}.json"] = {
-            "parent": f"gregtech:block/decoration/bars_{name}"
+            "parent": f"gt6ce:block/decoration/bars_{name}"
         }
     return result
 

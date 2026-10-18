@@ -86,7 +86,7 @@ public final class SmelteryFireHelper {
         for (var face : net.minecraft.core.Direction.values())
             if (block.getFlammability(state, level, pos, face)>0)
                 return level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
-        if (net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gregtech")) return false;
+        if (net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return false;
         if (!checkFlammability) return level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
         for (var face : net.minecraft.core.Direction.values()) {
             var neighborPos = pos.relative(face);

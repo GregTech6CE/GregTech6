@@ -28,7 +28,7 @@ import java.util.TreeSet;
  * GregTech 6. These tests assert the original pattern and that no machine is uncraftable.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BasicMachineCraftingTests {
 

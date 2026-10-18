@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gregtech:item/food/cookie_shaped_abyssal_dough"
-  }
-}

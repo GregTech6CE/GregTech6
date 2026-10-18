@@ -18,9 +18,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
-MANIFEST = native_path(ROOT / "src/main/resources/data/gregtech/bookshelf_variants.json")
-RECIPES = native_path(ROOT / "src/main/resources/data/gregtech/recipes/bookshelves")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
+MANIFEST = native_path(ROOT / "src/main/resources/data/gt6ce/bookshelf_variants.json")
+RECIPES = native_path(ROOT / "src/main/resources/data/gt6ce/recipes/bookshelves")
 ORIGINAL_LOADER = (ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java"
                    / "gregtech/loaders/b/Loader_MultiTileEntities.java")
 ALIASES = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java")
@@ -96,7 +96,7 @@ def refresh_manifest():
         texture_set = texture_sets.get(material_field)
         if texture_set is None:
             raise AssertionError(f"Missing texture set for GT material {alias} -> {material_field}")
-        texture = f"gregtech:block/material_icons/{texture_set}/casingmachine"
+        texture = f"gt6ce:block/material_icons/{texture_set}/casingmachine"
         texture_file = ASSETS / "textures" / (texture.split(":", 1)[1] + ".png")
         if not texture_file.is_file():
             raise AssertionError(f"Missing bookshelf texture: {texture_file}")
@@ -128,12 +128,12 @@ def generate(assets=ASSETS, variants=None):
             for element in model["elements"]:
                 for face in element["faces"].values():
                     face["tintindex"] = 0
-        blockstate = {"variants": {f"facing={direction}": {"model": f"gregtech:block/{path}", "y": angle}
+        blockstate = {"variants": {f"facing={direction}": {"model": f"gt6ce:block/{path}", "y": angle}
                                    for direction, angle in (("north", 0), ("east", 90),
                                                             ("south", 180), ("west", 270))}}
         files = {
             f"models/block/{path}.json": model,
-            f"models/item/{path}.json": {"parent": f"gregtech:block/{path}"},
+            f"models/item/{path}.json": {"parent": f"gt6ce:block/{path}"},
             f"blockstates/{path}.json": blockstate,
         }
         for relative, data in files.items():
@@ -156,7 +156,7 @@ def recipe_for(variant):
         plank_by_id = {
             original_wood_id(index): (
                 f"minecraft:{species}_planks" if texture is not None
-                else f"gregtech:planks_{species}"
+                else f"gt6ce:planks_{species}"
             ) for index, species, _display, texture in WOODS
         }
         plank = plank_by_id.get(variant["gt6_id"])
@@ -165,9 +165,9 @@ def recipe_for(variant):
         pattern = ["PPP", "sfr", "PPP"]
         keys = {
             "P": {"item": plank},
-            "s": {"item": "gregtech:tool_saw"},
-            "f": {"item": "gregtech:tool_file"},
-            "r": {"item": "gregtech:tool_soft_hammer"},
+            "s": {"item": "gt6ce:tool_saw"},
+            "f": {"item": "gt6ce:tool_file"},
+            "r": {"item": "gt6ce:tool_soft_hammer"},
         }
         source = "Loader_MultiTileEntities:181-183"
     elif variant["kind"] == "metal":
@@ -179,20 +179,20 @@ def recipe_for(variant):
         keys = {
             "P": {"tag": f"forge:plates/{material}"},
             "T": {"tag": f"forge:screws/{material}"},
-            "s": {"item": "gregtech:tool_saw"},
-            "d": {"item": "gregtech:tool_screwdriver"},
-            "h": {"item": "gregtech:tool_hammer"},
+            "s": {"item": "gt6ce:tool_saw"},
+            "d": {"item": "gt6ce:tool_screwdriver"},
+            "h": {"item": "gt6ce:tool_hammer"},
         }
         source = "Loader_MultiTileEntities:143"
     else:
         raise ValueError(f"Unknown bookshelf kind: {variant['kind']}")
     return {
-        "type": "gregtech:tool_shaped",
+        "type": "gt6ce:tool_shaped",
         "_comment": f"GT6 {source}, multi-tile {variant['gt6_id']}",
         "pattern": pattern,
         "key": keys,
         "allow_mirror": False,
-        "result": {"item": f"gregtech:{variant['path']}", "count": 1},
+        "result": {"item": f"gt6ce:{variant['path']}", "count": 1},
     }
 
 

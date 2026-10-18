@@ -40,7 +40,7 @@ import java.util.TreeSet;
  * two rows of the batch match the same grid — GT6's own {@code CR.DEF} does not mirror patterns, so a
  * mirror-image pair such as the logistics export/storage buses would otherwise collapse.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class HandCraftingTests {
 
@@ -78,7 +78,7 @@ public final class HandCraftingTests {
 
     /** Recipe directories/ids the generated batch owns. */
     private static boolean isBatchRecipe(ResourceLocation id) {
-        if (!id.getNamespace().equals("gregtech")) return false;
+        if (!id.getNamespace().equals("gt6ce")) return false;
         String path = id.getPath();
         if (path.startsWith("hand_covers/") || path.startsWith("hand_components/")) return true;
         if (!path.startsWith("logistics/")) return false;
@@ -233,7 +233,7 @@ public final class HandCraftingTests {
         int unresolvedIngredients = 0;
         java.util.List<String> mirroring = new java.util.ArrayList<>();
         for (Recipe<?> recipe : h.getLevel().getRecipeManager().getRecipes()) {
-            if (!recipe.getId().getNamespace().equals("gregtech")) continue;
+            if (!recipe.getId().getNamespace().equals("gt6ce")) continue;
             if (!(recipe instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe tool)) continue;
             // Rows injected at runtime (hand recipes, the GT6 masonry patterns) state their own flag in
             // code and are audited by their own tests; this rule is about the data-pack rows the
@@ -262,7 +262,7 @@ public final class HandCraftingTests {
         // 668 data-pack rows (the runtime hand/stone rows state their flag in code and are audited by
         // their own tests, so they are excluded above).
         h.assertTrue(checked >= 600, "tool_shaped recipes checked: " + checked);
-        h.assertTrue(mirroring.equals(java.util.List.of("gregtech:wood/slab_bluespruce")),
+        h.assertTrue(mirroring.equals(java.util.List.of("gt6ce:wood/slab_bluespruce")),
                 "only the GT6 CR.DEF_NCC_MIR Blue Spruce slab row mirrors: " + mirroring);
         // 113 of those 668 data-pack rows have a pattern that is not mirror-symmetric, i.e. exactly the
         // rows where the flag is observable at all (183 counting the runtime hand/stone rows, which
@@ -280,7 +280,7 @@ public final class HandCraftingTests {
         int unbuildable = 0;
         int asymmetric = 0;
         for (Recipe<?> recipe : h.getLevel().getRecipeManager().getRecipes()) {
-            if (!recipe.getId().getNamespace().equals("gregtech")) continue;
+            if (!recipe.getId().getNamespace().equals("gt6ce")) continue;
             if (!(recipe instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe tool)) continue;
             int width = tool.getWidth();
             int height = tool.getHeight();
@@ -441,7 +441,7 @@ public final class HandCraftingTests {
 
     private static ItemStack stack(String id) {
         Item item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SourceFilterTests {
     private static final BlockPos P=new BlockPos(3,3,3);
     @GameTest(template="test_blueprint_empty") public static void mainFaceBypassAndDualRouting(GameTestHelper h){
@@ -70,7 +70,7 @@ public final class SourceFilterTests {
     }
     @GameTest(template="test_empty") public static void filterManufacturingRoutesLoad(GameTestHelper h){
         for(String name:new String[]{"blank_cover","item_filter","fluid_filter","filter_items","filter_fluids","filter_items_fluids","filter_oredict","filter_items_reset","filter_fluids_reset","filter_items_fluids_reset","filter_oredict_reset"})
-            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","logistics/"+name)).isPresent(),"filter manufacturing/reset recipe loaded: "+name);
+            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","logistics/"+name)).isPresent(),"filter manufacturing/reset recipe loaded: "+name);
         var casing=GTBlocks.getStack(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachine,com.gregtech.gregtech.content.material.Materials.SteelGalvanized);
         h.assertTrue(com.gregtech.gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length>0&&r.mOutputs[0].is(casing.getItem())),"galvanized casing upstream is craftable");h.succeed();
     }

@@ -15,7 +15,7 @@ public final class DefinitionCatalogTest {
         rejects(UnsupportedOperationException.class, () -> catalog.add("extra"));
         rejects(IllegalArgumentException.class,
                 () -> DefinitionCatalog.validated(List.of("same", "same"), id -> id));
-        for (String invalid : List.of("", "Uppercase", "contains space", "gregtech:oven")) {
+        for (String invalid : List.of("", "Uppercase", "contains space", "gt6ce:oven")) {
             rejects(IllegalArgumentException.class,
                     () -> DefinitionCatalog.validated(List.of(invalid), id -> id));
         }

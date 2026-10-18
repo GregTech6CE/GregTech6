@@ -127,7 +127,7 @@ public class MaterialItem extends Item implements com.gregtech.gregtech.api.mate
     @Override
     public String getDescriptionId() {
 //? if >=1.21.1 {
-        /*return "item.gregtech." + prefix.getRegistryName();
+        /*return "item.gt6ce." + prefix.getRegistryName();
 *///?} else {
         return "item." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
 //?}

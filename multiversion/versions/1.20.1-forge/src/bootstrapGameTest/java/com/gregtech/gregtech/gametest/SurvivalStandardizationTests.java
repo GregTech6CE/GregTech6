@@ -8,7 +8,7 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SurvivalStandardizationTests {
  @GameTest(template="test_empty") public static void vanillaOutputTargetsRetainMaterialAndNbt(GameTestHelper h){
   for(var pair:List.of(Map.entry("Iron",Items.IRON_INGOT),Map.entry("Gold",Items.GOLD_INGOT),Map.entry("Copper",Items.COPPER_INGOT))){

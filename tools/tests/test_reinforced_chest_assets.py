@@ -28,7 +28,7 @@ class ReinforcedChestAssets(unittest.TestCase):
             zh = json.loads((assets / 'lang/zh_cn.json').read_text(encoding='utf-8'))
             for suffix, source_id in family:
                 name = 'reinforced_wood_chest_' + suffix
-                self.assertEqual(originals[str(source_id)].strip(), zh['block.gregtech.' + name])
+                self.assertEqual(originals[str(source_id)].strip(), zh['block.gt6ce.' + name])
                 for relative in ('blockstates/' + name + '.json', 'models/item/' + name + '.json'):
                     self.assertEqual((assets / relative).read_bytes(), (generator.ASSETS / relative).read_bytes())
             for shell in ('woodchest', 'lootchest'):
@@ -51,7 +51,7 @@ class ReinforcedChestAssets(unittest.TestCase):
                 parent = model['parent']
                 if parent == 'builtin/entity':
                     break
-                self.assertTrue(parent.startswith('gregtech:'))
+                self.assertTrue(parent.startswith('gt6ce:'))
                 path = generator.ASSETS / ('models/' + parent.split(':', 1)[1] + '.json')
 
 

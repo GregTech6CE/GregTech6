@@ -23,7 +23,7 @@ import java.util.List;
  * generate as whole-block seam layers instead" — but GT6 has both: the same resources also appear as
  * whole-block seams in its stone layers, which the port keeps in {@link GTStoneLayersGen}.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class VeinTableTests {
 

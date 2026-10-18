@@ -30,7 +30,7 @@ import java.util.List;
  * them, so hitting a block with a hammer did nothing.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ToolBlockConversionTests {
 
@@ -42,7 +42,7 @@ public final class ToolBlockConversionTests {
     /** GT6's hard hammer uses the whole-block recipe before considering normal ore drops. */
     @GameTest(template = "test_empty")
     public static void hammerConvertsOreSeamBlock(GameTestHelper helper) {
-        Block ore = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", "block_ore_bauxite"));
+        Block ore = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", "block_ore_bauxite"));
         helper.assertTrue(ore instanceof RockOreBlock, "bauxite seam block is a GT6 rock ore");
         var level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
@@ -89,7 +89,7 @@ public final class ToolBlockConversionTests {
     public static void otherToolsDoNotConvert(GameTestHelper helper) {
         var level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
-        Block ore = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", "block_ore_bauxite"));
+        Block ore = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", "block_ore_bauxite"));
         level.setBlockAndUpdate(pos, ore.defaultBlockState());
 
         var wrench = GTToolHelper.write(GTToolItems.empty(GTToolType.WRENCH),

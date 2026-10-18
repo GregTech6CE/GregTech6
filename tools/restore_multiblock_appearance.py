@@ -30,7 +30,7 @@ from pathlib import Path
 import hashlib,json,shutil,sys
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 SOURCE=native_path(ORIGINAL/'src/main/resources/assets/gregtech/textures/blocks/machines')
 MAINS={
     'heat_exchanger_main':'multiblockmains/largeheatexchanger',
@@ -104,7 +104,7 @@ def owned_directory(name):
     path=ASSETS/f'blockstates/{name}.json'
     if not path.is_file():return None
     refs={variant['model'] for variant in json.loads(path.read_text(encoding='utf-8'))['variants'].values()}
-    folders={ref.rsplit('/',1)[0] for ref in refs if ref.startswith('gregtech:')}
+    folders={ref.rsplit('/',1)[0] for ref in refs if ref.startswith('gt6ce:')}
     return folders.pop().rsplit('/',1)[-1] if len(folders)==1 else None
 
 
@@ -141,7 +141,7 @@ def model(folder,state='',front='side'):
                 candidates=[f'{folder}/{stem}/{name}.png' for name in [part,'side','sides']]
                 relative=next((name for name in candidates if (SOURCE/name).is_file()),None)
             if relative is None or not (SOURCE/relative).is_file(): continue
-            textures[face]='gregtech:block/machines/'+relative[:-4]
+            textures[face]='gt6ce:block/machines/'+relative[:-4]
             faces[face]={'texture':'#'+face,'cullface':face}
             if layer=='colored':faces[face]['tintindex']=0
         if faces:
@@ -163,7 +163,7 @@ def restore():
             target=ASSETS/'textures/block/machines'/source.relative_to(SOURCE)
             target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,target);copied+=1
             manifest[target.relative_to(ASSETS).as_posix()]={'source':source.relative_to(ORIGINAL).as_posix(),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
-        ref='gregtech:block/machine/multiblock/'+name
+        ref='gt6ce:block/machine/multiblock/'+name
         base_model=model(folder)
         if name in ('heat_exchanger_main',):
             for child in base_model['children'].values():
@@ -213,7 +213,7 @@ def check():
         if not blockstate.is_file():missing.append(f'{name}: no blockstate');continue
         if not item.is_file():missing.append(f'{name}: no item model');continue
         for ref in model_refs(name):
-            if not ref.startswith('gregtech:'):
+            if not ref.startswith('gt6ce:'):
                 raise ValueError(f'{name}: unexpected namespace in {ref}')
             if not (ASSETS/f'models/{ref.split(":",1)[1]}.json').is_file():
                 missing.append(f'{name}: {ref} missing')

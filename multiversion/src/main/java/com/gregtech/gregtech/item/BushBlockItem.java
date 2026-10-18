@@ -17,7 +17,7 @@ public final class BushBlockItem extends BlockItem {
 //?}
         var id=((BushBlock)getBlock()).berryId();
         var key=GTBerryBushes.itemId(id);
-        Component output=key==null ? Component.translatable("tooltip.gregtech.bush.set_output")
+        Component output=key==null ? Component.translatable("tooltip.gt6ce.bush.set_output")
                 : new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key)).getHoverName();
         lines.add(output.copy().withStyle(net.minecraft.ChatFormatting.AQUA));
     }

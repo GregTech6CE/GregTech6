@@ -14,7 +14,7 @@ class AxleAssets(unittest.TestCase):
   files=list((ORIGINAL/'resources/assets/gregtech/textures/blocks/iconsets').glob('AXLE*'))
   self.assertEqual(15,len(files))
   for source in files:
-   self.assertEqual(source.read_bytes(),(native_path(ROOT/'src/main/resources/assets/gregtech/textures/block/iconsets'/source.name.lower())).read_bytes())
+   self.assertEqual(source.read_bytes(),(native_path(ROOT/'src/main/resources/assets/gt6ce/textures/block/iconsets'/source.name.lower())).read_bytes())
  def test_axis_face_rotation_matrix_is_original(self):
   source=(ORIGINAL/'java/gregapi/old/Textures.java').read_text(encoding='utf-8').split('AXLES[][] =',1)[1].split('GLASSES_CLEAR',1)[0]
   expected=[]

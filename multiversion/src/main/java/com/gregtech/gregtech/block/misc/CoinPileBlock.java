@@ -51,7 +51,7 @@ import java.util.List;
  * declared {@code unused} ({@code gregapi/data/OP.java:473}) and generates no items at all.</p>
  *
  * <p>The port has no multi-tile items, so it registers <b>one coin item per material</b> like every
- * other form ({@code MaterialPrefix.coin}, {@code gregtech:coin_<i>&lt;material&gt;</i>}, 586 items -
+ * other form ({@code MaterialPrefix.coin}, {@code gt6ce:coin_<i>&lt;material&gt;</i>}, 586 items -
  * the port's tiny-plate materials, which is GT6's own condition plus its four forced precious
  * metals), and {@link #coinItem()} answers with the copper one for a pile that has not bound a
  * material yet, GT6's {@code MT.Cu} being the first of the four {@code WorldgenDungeonGT.java:195}
@@ -144,7 +144,7 @@ public class CoinPileBlock extends Block implements EntityBlock {
      * True when the stack is one of the port's coins - the port's equivalent of GT6's
      * {@code ST.equal(aStack, getCoin(1, registry, id))} ({@code MultiTileEntityCoin.java:157}).
      *
-     * <p>The pile's own block item, a bare {@code gregtech:coin_pile}, is not a coin: it carries no
+     * <p>The pile's own block item, a bare {@code gt6ce:coin_pile}, is not a coin: it carries no
      * material, so GT6's pile would not match it either - see the class javadoc.</p>
      */
     public static boolean isCoin(ItemStack stack) {

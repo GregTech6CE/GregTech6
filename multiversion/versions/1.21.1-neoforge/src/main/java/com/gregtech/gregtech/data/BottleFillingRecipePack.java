@@ -40,7 +40,7 @@ public final class BottleFillingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:bottle_filling_recipes",Component.literal("GregTech original bottle filling crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:bottle_filling_recipes",Component.literal("GregTech original bottle filling crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new BottleFillingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new BottleFillingRecipePack(info);}
@@ -52,7 +52,7 @@ public final class BottleFillingRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data(){
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
-        for(var family:com.gregtech.gregtech.content.food.BottleFillingRows.all())for(int count=4;count>=1;count--){var ingredients=new ArrayList<Map<String,Object>>();ingredients.add(Map.of("type","gregtech:finite_fluid_container_1000","fluid",family.fluidKey()));for(int i=0;i<count;i++)ingredients.add(Map.of("item",BuiltInRegistries.ITEM.getKey(com.gregtech.gregtech.item.BottleItem.emptyBottle().getItem()).toString()));var recipe=Map.of("type","gregtech:finite_bottle_filling","group","gt.bottles","category","misc","ingredients",ingredients,"result",Map.of("id","gregtech:"+family.bottleId(),"count",count));generated.put(ResourceLocation.fromNamespaceAndPath("gregtech","recipe/bottles/"+family.bottleId()+"_x"+count+".json"),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}
+        for(var family:com.gregtech.gregtech.content.food.BottleFillingRows.all())for(int count=4;count>=1;count--){var ingredients=new ArrayList<Map<String,Object>>();ingredients.add(Map.of("type","gt6ce:finite_fluid_container_1000","fluid",family.fluidKey()));for(int i=0;i<count;i++)ingredients.add(Map.of("item",BuiltInRegistries.ITEM.getKey(com.gregtech.gregtech.item.BottleItem.emptyBottle().getItem()).toString()));var recipe=Map.of("type","gt6ce:finite_bottle_filling","group","gt.bottles","category","misc","ingredients",ingredients,"result",Map.of("id","gt6ce:"+family.bottleId(),"count",count));generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/bottles/"+family.bottleId()+"_x"+count+".json"),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original finite bottle filling datapack: {} rows",generated.size());resources=Map.copyOf(generated);return resources;
     }
 
@@ -83,7 +83,7 @@ public final class BottleFillingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

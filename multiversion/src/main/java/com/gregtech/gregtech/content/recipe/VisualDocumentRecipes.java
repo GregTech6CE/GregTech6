@@ -36,7 +36,7 @@ public final class VisualDocumentRecipes {
         ItemStack medium=null,paper=null;
         for(var stack:items)if(!stack.isEmpty()) {
             if(medium==null&&(UsbDataMedia.stickTier(stack)>=1||UsbDataMedia.cableTier(stack)>=1))medium=stack;
-            else if(paper==null&&(stack.is(Items.MAP)||stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","book_binding/paper")))))paper=stack;
+            else if(paper==null&&(stack.is(Items.MAP)||stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","book_binding/paper")))))paper=stack;
         }
         if(medium==null||paper==null)return null;
         var data=UsbDataMedia.cableTier(medium)>=1?UsbDataCable.readAdjacent(machine,medium,1):UsbDataMedia.readStick(medium,1);
@@ -50,7 +50,7 @@ public final class VisualDocumentRecipes {
         if(VisualDocumentData.title(data).isBlank()||data.getString("author").isBlank())return null;
         data=VisualDocumentData.resolve(level,data);
         var plan=VisualDocumentRules.bookPrint(VisualDocumentData.pages(data));if(paper.getCount()<plan.sheets())return null;
-        var output=new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",plan.path())));
+        var output=new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",plan.path())));
         if(!VisualDocumentData.applyBook(level,output,data))return null;
         var dye=GTFluids.stack("Dye_Chemical_Black",plan.blackDye());if(dye==null||dye.isEmpty())return null;
         return exact(new Recipe(new ItemStack[]{paper.copyWithCount(plan.sheets()),medium.copyWithCount(1)},new ItemStack[]{output},null,null,new FluidStack[]{dye},null,plan.ticks(),VisualDocumentRules.POWER,0).withCatalystInputs(1));

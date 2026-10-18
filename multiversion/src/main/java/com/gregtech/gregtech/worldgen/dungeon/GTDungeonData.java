@@ -676,7 +676,7 @@ public final class GTDungeonData {
 *///?} else {
         Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //? if >=1.21.1 {
         /*return block == null ? DungeonBindings.block("wood_barrel") : block;
 *///?} else {
@@ -1021,7 +1021,7 @@ public final class GTDungeonData {
         if (fluidField != null && fluid == null) return false;
 //? if >=1.21.1 {
         /*Block cup = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","fluid_cup"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_cup"));
 *///?} else {
         Block cup = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
                 com.gregtech.gregtech.GregTech.id("fluid_cup"));

@@ -10,7 +10,7 @@ from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 
 def read(path): return json.loads((ASSETS / path).read_text(encoding='utf-8'))
 
@@ -48,6 +48,6 @@ class ManualRebuildTests(unittest.TestCase):
     def test_chest_items_use_shared_custom_mesh(self):
         self.assertEqual('builtin/entity', read('models/item/metal_chest.json')['parent'])
         for path in (ASSETS / 'models/item').glob('chest_*.json'):
-            self.assertEqual('gregtech:item/metal_chest', json.loads(path.read_text(encoding='utf-8'))['parent'])
+            self.assertEqual('gt6ce:item/metal_chest', json.loads(path.read_text(encoding='utf-8'))['parent'])
 
 if __name__ == '__main__': unittest.main()

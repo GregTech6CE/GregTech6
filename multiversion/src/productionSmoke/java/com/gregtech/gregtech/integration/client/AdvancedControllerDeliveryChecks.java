@@ -12,10 +12,10 @@ final class AdvancedControllerDeliveryChecks {
         int controllers=0,rows=0;
         for(var block:BuiltInRegistries.BLOCK) {
             var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(!id.getNamespace().equals("gregtech"))continue;
+            if(!id.getNamespace().equals("gt6ce"))continue;
             var spec=block instanceof BasicMachineBlock basic&&OriginalAdvancedControllerData.handles(basic.basicSpec().machineName())?basic.basicSpec():id.getPath().equals("implosion_compressor_main")?com.gregtech.gregtech.content.machine.BasicMachineDefinitions.from(com.gregtech.gregtech.content.multiblock.OriginalMultiblockMachineParameters.implosionCompressor()):null;
             if(spec==null)continue;
-            require(new ItemStack(block).getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gregtech."+id.getPath())),"original localized controller name "+id);
+            require(new ItemStack(block).getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gt6ce."+id.getPath())),"original localized controller name "+id);
 //? if >=1.21.1 {
             /*var stack=new ItemStack(block);var lines=stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.NORMAL);
 *///?} else {
@@ -29,9 +29,9 @@ final class AdvancedControllerDeliveryChecks {
             require(count(lines,"gt.lang.efficiency")==0&&count(lines,"gt.lang.use.builder.wand.to.ease.building")==1,"source full efficiency omitted and inherited builder wand "+id);
             require(count(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.inputs")==0&&count(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.outputs")== (spec.machineName().equals("fusionreactor")?0:1),"source conditional auto tools "+id);
 //? if >=1.21.1 {
-            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1,"one precise advanced material section "+id);controllers++;
+            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1,"one precise advanced material section "+id);controllers++;
 *///?} else {
-            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1,"one precise advanced material section "+id);controllers++;
+            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1,"one precise advanced material section "+id);controllers++;
 //?}
         }
         require(controllers==3&&rows==17,"actual three registered controller items /17 specialized rows");

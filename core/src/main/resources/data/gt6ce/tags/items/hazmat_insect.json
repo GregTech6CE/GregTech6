@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:insect_suit_helmet",
+    "gt6ce:insect_suit_chestplate",
+    "gt6ce:insect_suit_leggings",
+    "gt6ce:insect_suit_boots",
+    "gt6ce:universal_suit_helmet",
+    "gt6ce:universal_suit_chestplate",
+    "gt6ce:universal_suit_leggings",
+    "gt6ce:universal_suit_boots"
+  ]
+}

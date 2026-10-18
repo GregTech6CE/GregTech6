@@ -226,7 +226,7 @@ def write_noise(cells) -> None:
     content = f"""package com.gregtech.gregtech.worldgen;
 
 /**
- * Cellular (Worley) noise, ported from GT6 {{@code gregtech.worldgen.NoiseGenerator}}.
+ * Cellular (Worley) noise, ported from GT6 {{@code gt6ce.worldgen.NoiseGenerator}}.
  * Horizontal frequency 0.009 (~110-block regions), vertical 0.075 (~13-block strata):
  * this is what makes stone layers vary regionally instead of by fixed height bands.
  *

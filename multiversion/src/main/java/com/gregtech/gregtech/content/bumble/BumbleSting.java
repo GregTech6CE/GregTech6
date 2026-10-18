@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 /** GT6 MultiItemBumbles:440-456. Species damage is independent of the aggression roll. */
 public final class BumbleSting {
     private static final ResourceKey<DamageType> FIRE = ResourceKey.create(Registries.DAMAGE_TYPE,
-            ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_fire"));
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "bumble_fire"));
 
     private BumbleSting() {}
 

@@ -8,7 +8,7 @@ public class MaterialBaselineProbe {
         Locale.setDefault(Locale.ROOT);
         try {
             com.gregtech.gregtech.api.mod.ModData.class.getMethod("bindPresence", java.util.function.Predicate.class)
-                    .invoke(null, (java.util.function.Predicate<String>) id -> id.equals("minecraft") || id.equals("gregtech"));
+                    .invoke(null, (java.util.function.Predicate<String>) id -> id.equals("minecraft") || id.equals("gt6ce"));
         } catch (NoSuchMethodException originalPlatformBinding) {}
         PrefixRegistry.ensurePrefixesLoaded();
         com.gregtech.gregtech.data.ModReferences.UNKNOWN.getClass();

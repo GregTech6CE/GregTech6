@@ -33,7 +33,7 @@ import os
 import sys
 
 SRC_RES = os.path.join(str(native_path("src")), "main", "resources")
-ASSETS = os.path.join(SRC_RES, "assets", "gregtech")
+ASSETS = os.path.join(SRC_RES, "assets", "gt6ce")
 TEXTURE_ROOT = os.path.join(ASSETS, "textures", "block", "machines", "redstone", "sensors")
 MODEL_ROOT = os.path.join(ASSETS, "models", "block", "machine", "sensor")
 BLOCKSTATE_ROOT = os.path.join(ASSETS, "blockstates")
@@ -142,7 +142,7 @@ def block_model(folder):
 def blockstate(model, block_id):
     variants = {}
     for facing in FACINGS:
-        entry = {"model": "gregtech:block/machine/sensor/%s" % model}
+        entry = {"model": "gt6ce:block/machine/sensor/%s" % model}
         entry.update(ROTATIONS[facing])
         variants["facing=" + facing] = entry
     return json.dumps({"variants": variants}, indent=2, ensure_ascii=False) + "\n"
@@ -191,13 +191,13 @@ def main():
         write_if_changed(os.path.join(BLOCKSTATE_ROOT, block_id + ".json"),
                          blockstate(folder, block_id), check)
         write_if_changed(os.path.join(ITEM_MODEL_ROOT, block_id + ".json"),
-                         json.dumps({"parent": "gregtech:block/machine/sensor/%s" % folder},
+                         json.dumps({"parent": "gt6ce:block/machine/sensor/%s" % folder},
                                     indent=2) + "\n", check)
 
     insert_lang(os.path.join(LANG_ROOT, "en_us.json"),
-                [("block.gregtech." + b, en) for _, b, en, _, _ in SENSORS], check)
+                [("block.gt6ce." + b, en) for _, b, en, _, _ in SENSORS], check)
     insert_lang(os.path.join(LANG_ROOT, "zh_cn.json"),
-                [("block.gregtech." + b, zh) for _, b, _, zh, _ in SENSORS], check)
+                [("block.gt6ce." + b, zh) for _, b, _, zh, _ in SENSORS], check)
 
     print("textures copied: %d (unchanged: %d)" % (copied, skipped))
     print("files written: %d (unchanged: %d)" % (written, skipped))

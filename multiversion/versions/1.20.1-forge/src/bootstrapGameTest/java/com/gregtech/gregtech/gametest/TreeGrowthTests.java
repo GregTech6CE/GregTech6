@@ -36,7 +36,7 @@ import java.util.function.Predicate;
  * 20000+) and above any terrain (the GameTest level is a real world, so y=100 is not guaranteed to
  * be open air) so they cannot interact with any other test.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class TreeGrowthTests {
     private static final int BASE_X = 20000;
@@ -258,7 +258,7 @@ public final class TreeGrowthTests {
         helper.assertTrue(GTFeatures.TREES.getId().getPath().equals("gt_trees"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTTreesFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_trees.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_trees.json is loaded");
         helper.assertTrue(GTTreeShapes.shapeOf(WoodSpecies.PINE) == GTTreeShapes.Shape.BLUE_SPRUCE
                         && GTTreeShapes.shapeOf(WoodSpecies.EBONY) == GTTreeShapes.Shape.MAPLE
                         && GTTreeShapes.shapeOf(WoodSpecies.WHITE_MAHOE) == GTTreeShapes.Shape.BLUE_MAHOE,

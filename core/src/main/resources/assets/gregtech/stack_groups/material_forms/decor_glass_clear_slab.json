@@ -1,8 +1,0 @@
-{
-  "type": "remi:group",
-  "name": "emi.group.gregtech.decor_glass_clear_slab",
-  "contents": [
-    "item:gregtech:glass_clear_slab"
-  ],
-  "priority": 120
-}

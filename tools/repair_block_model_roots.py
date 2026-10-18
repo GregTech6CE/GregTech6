@@ -13,7 +13,7 @@ from native_layout import native_path
 import json
 from pathlib import Path
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block')
+ROOT = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gt6ce/models/block')
 
 
 def repair(model):

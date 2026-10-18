@@ -16,7 +16,7 @@ public final class AdvancedCraftingScreen extends AbstractContainerScreen<Advanc
     @Override protected void renderLabels(GuiGraphics graphics,int x,int y){}
     @Override protected void renderBg(GuiGraphics graphics,float tick,int x,int y){
 //? if >=1.21.1 {
-        /*graphics.blit(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",(menu.modes()&32)!=0?"textures/gui/machines/advanced_crafting_table_charging.png":"textures/gui/machines/advanced_crafting_table.png"),leftPos,topPos,0,0,imageWidth,imageHeight);
+        /*graphics.blit(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",(menu.modes()&32)!=0?"textures/gui/machines/advanced_crafting_table_charging.png":"textures/gui/machines/advanced_crafting_table.png"),leftPos,topPos,0,0,imageWidth,imageHeight);
 *///?} else {
         graphics.blit(GregTech.id((menu.modes()&32)!=0?"textures/gui/machines/advanced_crafting_table_charging.png":"textures/gui/machines/advanced_crafting_table.png"),leftPos,topPos,0,0,imageWidth,imageHeight);
 //?}

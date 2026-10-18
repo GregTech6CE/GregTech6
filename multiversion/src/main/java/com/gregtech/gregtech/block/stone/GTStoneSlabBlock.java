@@ -110,7 +110,7 @@ public final class GTStoneSlabBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public String getDescriptionId() {
-        return "block.gregtech." + registryId();
+        return "block.gt6ce." + registryId();
     }
 
     @Override

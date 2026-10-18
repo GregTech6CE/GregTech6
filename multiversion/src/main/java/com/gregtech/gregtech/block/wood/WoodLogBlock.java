@@ -55,7 +55,7 @@ public class WoodLogBlock extends RotatedPillarBlock {
 *///?} else {
             Item bark = ForgeRegistries.ITEMS.getValue(
 //?}
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "cinnamon_bark"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark"));
 //? if >=1.21.1 {
             /*if (bark != null && bark != net.minecraft.world.item.Items.AIR) return new ItemStack(bark);
 *///?} else {

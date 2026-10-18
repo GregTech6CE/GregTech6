@@ -13,7 +13,7 @@ import json
 import os
 
 FEATURES = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTFeatures.java")
-DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech")
+DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gt6ce")
 
 
 def write_json(path, obj):
@@ -39,9 +39,9 @@ else:
     print("GTFeatures: already wired")
 
 write_json(os.path.join(DATA, "worldgen", "configured_feature", "gt_coltan.json"),
-           {"type": "gregtech:gt_coltan", "config": {}})
+           {"type": "gt6ce:gt_coltan", "config": {}})
 write_json(os.path.join(DATA, "worldgen", "placed_feature", "gt_coltan.json"),
-           {"feature": "gregtech:gt_coltan", "placement": []})
+           {"feature": "gt6ce:gt_coltan", "placement": []})
 write_json(os.path.join(DATA, "forge", "biome_modifier", "gt_coltan.json"),
            {"type": "forge:add_features", "biomes": "#minecraft:is_overworld",
-            "features": ["gregtech:gt_coltan"], "step": "underground_ores"})
+            "features": ["gt6ce:gt_coltan"], "step": "underground_ores"})

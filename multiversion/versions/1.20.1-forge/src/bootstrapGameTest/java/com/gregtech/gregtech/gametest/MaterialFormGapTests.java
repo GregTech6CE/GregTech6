@@ -24,7 +24,7 @@ import java.util.TreeMap;
  * materials GT6 gives a form to that the port skips, so the decision to widen the port's prefix
  * conditions is made from numbers instead of from a guess.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialFormGapTests {
 

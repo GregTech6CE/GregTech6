@@ -55,10 +55,10 @@ public final class ColoredBookItem extends WrittenBookItem {
     @Override public void appendHoverText(ItemStack stack,net.minecraft.world.level.Level level,List<Component> tooltip,TooltipFlag flag){
         var tag=stack.getTag();String title=tag==null?"":tag.getString(tag.contains("gt.book.title")?"gt.book.title":"title");String author=tag==null?"":tag.getString("author");
 //?}
-        if(title.isBlank())tooltip.add(Component.translatable("gregtech.book.empty").withStyle(ChatFormatting.AQUA));
+        if(title.isBlank())tooltip.add(Component.translatable("gt6ce.book.empty").withStyle(ChatFormatting.AQUA));
         else {tooltip.add(Component.literal(title).withStyle(ChatFormatting.AQUA));if(!author.isBlank())tooltip.add(Component.translatable("book.byAuthor",author).withStyle(ChatFormatting.AQUA));}
-        if(variant.emblem().equals("bronze"))tooltip.add(Component.translatable("gregtech.book.bronze"));
-        if(variant.emblem().equals("radiation"))tooltip.add(Component.translatable("gregtech.book.radiation"));
+        if(variant.emblem().equals("bronze"))tooltip.add(Component.translatable("gt6ce.book.bronze"));
+        if(variant.emblem().equals("radiation"))tooltip.add(Component.translatable("gt6ce.book.radiation"));
     }
     @Override public int getBurnTime(ItemStack stack,net.minecraft.world.item.crafting.RecipeType<?> type){return variant.large()||variant.emblem().equals("radiation")?400:200;}
 }

@@ -39,7 +39,7 @@ import json
 import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-OUT = native_path(ROOT / "src/main/resources/data/gregtech/recipes/tool_blocks")
+OUT = native_path(ROOT / "src/main/resources/data/gt6ce/recipes/tool_blocks")
 
 
 def item(id: str) -> dict:
@@ -48,35 +48,35 @@ def item(id: str) -> dict:
 
 def recipe(comment: str, pattern: list[str], key: dict, result: str) -> dict:
     return {
-        "type": "gregtech:tool_shaped",
+        "type": "gt6ce:tool_shaped",
         "_comment": f"GT6 {comment}",
         "pattern": pattern,
         "key": key,
         # GT6's DEF_REV_NCC does not set MIR; 1.20.1 would mirror by default (see §18.2)
         "allow_mirror": False,
-        "result": {"item": f"gregtech:{result}"},
+        "result": {"item": f"gt6ce:{result}"},
     }
 
 
 RECIPES = {
     "rope_silk": recipe("Loader_MultiTileEntities:2087", [" S", "SS", "Sq"],
                         {"S": item("minecraft:string"),
-                         "q": item("gregtech:tool_scissors")}, "rope_silk"),
+                         "q": item("gt6ce:tool_scissors")}, "rope_silk"),
     "rope_grass": recipe("Loader_MultiTileEntities:2088", [" GG", "GGG", "GGq"],
-                         {"G": item("gregtech:dry_grass"),
-                          "q": item("gregtech:tool_scissors")}, "rope_grass"),
+                         {"G": item("gt6ce:dry_grass"),
+                          "q": item("gt6ce:tool_scissors")}, "rope_grass"),
     "rope_vine": recipe("Loader_MultiTileEntities:2089", [" V", "VV", "Vb"],
                         {"V": item("minecraft:vine"),
-                         "b": item("gregtech:tool_sword")}, "rope_vine"),
+                         "b": item("gt6ce:tool_sword")}, "rope_vine"),
     "rope_steel": recipe("Loader_MultiTileEntities:2091", [" P", "PP", "Px"],
-                         {"P": item("gregtech:wire_fine_steel"),
-                          "x": item("gregtech:tool_wire_cutter")}, "rope_steel"),
+                         {"P": item("gt6ce:wire_fine_steel"),
+                          "x": item("gt6ce:tool_wire_cutter")}, "rope_steel"),
     "boomstick": recipe("Loader_MultiTileEntities:2235", [" S ", "PGP", "DGD"],
                         {"S": item("minecraft:string"), "P": item("minecraft:paper"),
                          # GT6 dust.mat(MT.Gunpowder) / dust.mat(ANY.SiO2): the port registers the
                          # silicon dioxide dust under its own material id, dust_silicondioxide
-                         "G": item("gregtech:dust_gunpowder"),
-                         "D": item("gregtech:dust_silicondioxide")},
+                         "G": item("gt6ce:dust_gunpowder"),
+                         "D": item("gt6ce:dust_silicondioxide")},
                         "boomstick"),
 }
 

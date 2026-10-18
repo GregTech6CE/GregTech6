@@ -20,8 +20,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java"
 OUT = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated")
-MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/item/material")
-TEXTURES = native_path(ROOT / "src/main/resources/assets/gregtech/textures/item/material_icons")
+MODELS = native_path(ROOT / "src/main/resources/assets/gt6ce/models/item/material")
+TEXTURES = native_path(ROOT / "src/main/resources/assets/gt6ce/textures/item/material_icons")
 PREFIXES = ("dust", "ingot", "nugget", "plate", "oreraw", "gem")
 
 SKIP_FACTORIES = {
@@ -1161,8 +1161,8 @@ def generate_material_models() -> int:
             content = f"""{{
   "parent": "minecraft:item/generated",
   "textures": {{
-    "layer0": "gregtech:item/material_icons/{set_name}/{prefix}",
-    "layer1": "gregtech:item/material_icons/{set_name}/{overlay}"
+    "layer0": "gt6ce:item/material_icons/{set_name}/{prefix}",
+    "layer1": "gt6ce:item/material_icons/{set_name}/{overlay}"
   }}
 }}
 """

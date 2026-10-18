@@ -26,7 +26,7 @@ public final class JuicerInteractionTests {
                 null,null,null,new FluidStack[]{new FluidStack(Fluids.WATER,200)},20,16,0);
     }
     private static ProcessingToolBlockEntity place(GameTestHelper h) {
-        h.setBlock(POS,ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gregtech:juicer")));
+        h.setBlock(POS,ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gt6ce:juicer")));
         return (ProcessingToolBlockEntity)h.getBlockEntity(POS);
     }
     private static int count(net.minecraft.world.entity.player.Player p,Item item) {

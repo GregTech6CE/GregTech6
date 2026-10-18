@@ -7,7 +7,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 
-/** Simple decorative block that renders its texture from {@code gregtech:block/iconsets/<iconName>}. */
+/** Simple decorative block that renders its texture from {@code gt6ce:block/iconsets/<iconName>}. */
 public class IconSetBlock extends Block {
     private final String iconName;
 

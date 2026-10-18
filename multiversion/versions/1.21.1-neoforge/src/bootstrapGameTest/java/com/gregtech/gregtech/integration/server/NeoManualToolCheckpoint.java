@@ -26,7 +26,7 @@ import java.util.*;
 public final class NeoManualToolCheckpoint {
  private NeoManualToolCheckpoint(){}
  private static void require(boolean ok,String message){if(!ok)throw new IllegalStateException("Manual tool checkpoint: "+message);}
- private static CraftingRecipe recipe(ServerLevel level,String id){var holder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech",id)).orElseThrow(()->new IllegalStateException("Missing actual datapack recipe "+id));require(holder.value() instanceof CraftingRecipe,"recipe kind "+id);return (CraftingRecipe)holder.value();}
+ private static CraftingRecipe recipe(ServerLevel level,String id){var holder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",id)).orElseThrow(()->new IllegalStateException("Missing actual datapack recipe "+id));require(holder.value() instanceof CraftingRecipe,"recipe kind "+id);return (CraftingRecipe)holder.value();}
  private static ItemStack form(MaterialPrefix prefix){var stack=GTItems.getStack(prefix,Materials.Bronze,1);require(!stack.isEmpty(),"missing Bronze form "+prefix);return stack;}
  private static ItemStack tool(GTToolType type){var stack=GTToolItem.create(type,Materials.Bronze,WoodMaterials.Wood);require(GTToolHelper.isUsable(stack),"usable assembled "+type);return stack;}
  @SuppressWarnings({"unchecked","rawtypes"})
@@ -57,7 +57,7 @@ public final class NeoManualToolCheckpoint {
   com.mojang.logging.LogUtils.getLogger().info("MANUAL_TOOL_CHECKPOINT_SUCCESS {}","{\"shapedWrench\":true,\"rejectWrongShape\":true,\"hammerWear\":400,\"headHandleAssembly\":true,\"headCrafting\":true,\"nativeStackComponentRoundTrip\":true,\"threeSerializerNetworkRoundTrips\":true}");
  }
  private static ItemStack equipmentItem(String path) {
-  var id=ResourceLocation.fromNamespaceAndPath("gregtech",path);
+  var id=ResourceLocation.fromNamespaceAndPath("gt6ce",path);
   require(net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(id),"registered equipment/input "+id);
   return new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id));
  }
@@ -203,7 +203,7 @@ public final class NeoManualToolCheckpoint {
   int loaded=0;
   for(String file:com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES) {
    String id=file.substring(0,file.length()-5);
-   var holder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech",id))
+   var holder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",id))
        .orElseThrow(()->new IllegalStateException("Missing retained equipment recipe "+id));
    require(!holder.value().getResultItem(level.registryAccess()).isEmpty(),"nonempty equipment result "+id);
    for(var ingredient:holder.value().getIngredients())
@@ -248,7 +248,7 @@ public final class NeoManualToolCheckpoint {
   require(clay.matches(clayInput,level),"clay balls, knife and rolling pin craft unfired crucible");
   ItemStack unfired=clay.assemble(clayInput,level.registryAccess());
   require(ItemStack.isSameItemSameComponents(unfired,equipmentItem("clay_crucible")),"clay crucible result");
-  var fired=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech","smeltery_survival/ceramic_crucible_firing")).orElseThrow();
+  var fired=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","smeltery_survival/ceramic_crucible_firing")).orElseThrow();
   require(fired.value() instanceof SmeltingRecipe,"actual native firing recipe kind");
   var firing=(SmeltingRecipe)fired.value();
   require(firing.matches(new SingleRecipeInput(unfired),level) && ItemStack.isSameItemSameComponents(
@@ -410,7 +410,7 @@ public final class NeoManualToolCheckpoint {
   }
   var reversedWood=CraftingInput.of(2,1,List.of(blueSpruce.copy(),tool(GTToolType.AXE)));
   require(recipe(level,"wood/slab_bluespruce").matches(reversedWood,level),"wood recipe original mirror permission");
-  var bowlHolder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech","tools/ceramic_bowl_firing")).orElseThrow();
+  var bowlHolder=level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","tools/ceramic_bowl_firing")).orElseThrow();
   require(bowlHolder.value() instanceof SmeltingRecipe,"bowl original firing kind");
   var bowl=(SmeltingRecipe)bowlHolder.value();var bowlInput=new SingleRecipeInput(equipmentItem("clay_bowl"));
   require(bowl.matches(bowlInput,level) && ItemStack.isSameItemSameComponents(bowl.assemble(bowlInput,level.registryAccess()),

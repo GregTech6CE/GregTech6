@@ -21,7 +21,7 @@ import java.util.List;
  * Guards GT6's ammunition rows: the Press bullet handlers ({@code Loader_Recipes_Handlers:254-258}) and
  * the Unboxinator recovery rows ({@code :454-456}) — the port had no way to produce or recycle bullets.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class AmmunitionRecipesTests {
 

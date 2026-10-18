@@ -6,7 +6,7 @@ Sources, all from the original:
 * the ten keys are the multi-items 30000..30009 of
   ``gregtech6-master/.../gregtech/items/MultiItemRandomTools.java:589-598`` ("Iron Key" .. "Plastic
   Key"); their textures are the 16x16 files ``<id>.png`` of the resource pack folder
-  ``assets/gregtech/textures/items/gt.multiitem.randomtools``. 30000 Iron, 30001 Gold, 30002 Copper,
+  ``assets/gt6ce/textures/items/gt.multiitem.randomtools``. 30000 Iron, 30001 Gold, 30002 Copper,
   30003 Tin, 30004 Bronze, 30005 Brass, 30006 Silver, 30007 Platinum, 30008 Lead, 30009 Plastic.
 * the portal frame shapes are GT6's own twelve render passes
   (``MultiTileEntityMiniPortal.java:282-297``, ``sBlockBounds`` index 0 is the inner portal cube and
@@ -45,12 +45,12 @@ from PIL import Image, ImageChops
 
 ROOT = Path(__file__).resolve().parents[1]
 RESOURCES = native_path(ROOT / "src/main/resources")
-ASSETS = RESOURCES / "assets/gregtech"
+ASSETS = RESOURCES / "assets/gt6ce"
 LANG = ASSETS / "lang"
 
 # The port's GT6 resource pack, whose "gt6" profile is the original's own texture set.
 DEFAULT_PACK = Path(r"F:\Dev\GregTech6\GT6resourcepack")
-KEY_TEXTURES = "gt6/resources/assets/gregtech/textures/items/gt.multiitem.randomtools"
+KEY_TEXTURES = "gt6/resources/assets/gt6ce/textures/items/gt.multiitem.randomtools"
 # Any profile of the pack that ships the 1.7.10 vanilla textures; the first one found is used.
 VANILLA_TEXTURES = "*/assets/minecraft/textures/blocks"
 
@@ -94,28 +94,28 @@ FACES = ("down", "up", "north", "south", "west", "east")
 PORTALS = [
     ("dungeon_portal_nether", "minecraft:block/obsidian", "minecraft:block/nether_portal",
      "Dungeon Nether Portal", "\u5730\u7262\u4e0b\u754c\u4f20\u9001\u95e8"),
-    ("dungeon_portal_end", "minecraft:block/end_portal_frame_top", "gregtech:block/dungeon/portal_end",
+    ("dungeon_portal_end", "minecraft:block/end_portal_frame_top", "gt6ce:block/dungeon/portal_end",
      "Dungeon End Portal", "\u5730\u7262\u672b\u5730\u4f20\u9001\u95e8"),
 ]
 
 # Everything the two new item types and the two blocks need in both languages.
 TOOLTIPS = [
-    ("tooltip.gregtech.key.lock", "Can open certain regular Locks", "\u53ef\u4ee5\u6253\u5f00\u67d0\u4e9b\u5e38\u89c4\u7684\u9501"),
-    ("tooltip.gregtech.key.id", "Key ID: %s", "\u94a5\u5319\u7f16\u53f7: %s"),
-    ("tooltip.gregtech.key.blank", "*BLANK*", "*\u7a7a\u767d*"),
-    ("tooltip.gregtech.portal.nether.range",
+    ("tooltip.gt6ce.key.lock", "Can open certain regular Locks", "\u53ef\u4ee5\u6253\u5f00\u67d0\u4e9b\u5e38\u89c4\u7684\u9501"),
+    ("tooltip.gt6ce.key.id", "Key ID: %s", "\u94a5\u5319\u7f16\u53f7: %s"),
+    ("tooltip.gt6ce.key.blank", "*BLANK*", "*\u7a7a\u767d*"),
+    ("tooltip.gt6ce.portal.nether.range",
      "Only works between the Nether and the Overworld with a x8 Distance Factor!",
      "\u4ec5\u5728\u4e0b\u754c\u4e0e\u4e3b\u4e16\u754c\u4e4b\u95f4\u751f\u6548\uff0c\u8ddd\u79bb\u7f29\u653e\u500d\u7387\u4e3a 8 \u500d\uff01"),
-    ("tooltip.gregtech.portal.nether.margin", "Margin of Error to still work: 128 Meters.",
+    ("tooltip.gt6ce.portal.nether.margin", "Margin of Error to still work: 128 Meters.",
      "\u4ecd\u80fd\u751f\u6548\u7684\u8bef\u5dee\u8303\u56f4: 128 \u683c\u3002"),
-    ("tooltip.gregtech.portal.end.range",
+    ("tooltip.gt6ce.portal.end.range",
      "Only works between the End and the Overworld with a x128 Distance Factor!",
      "\u4ec5\u5728\u672b\u5730\u4e0e\u4e3b\u4e16\u754c\u4e4b\u95f4\u751f\u6548\uff0c\u8ddd\u79bb\u7f29\u653e\u500d\u7387\u4e3a 128 \u500d\uff01"),
-    ("tooltip.gregtech.portal.end.margin", "Margin of Error to still work: 512 Meters.",
+    ("tooltip.gt6ce.portal.end.margin", "Margin of Error to still work: 512 Meters.",
      "\u4ecd\u80fd\u751f\u6548\u7684\u8bef\u5dee\u8303\u56f4: 512 \u683c\u3002"),
-    ("tooltip.gregtech.portal.key", "Requires the matching Dungeon Key for activation",
+    ("tooltip.gt6ce.portal.key", "Requires the matching Dungeon Key for activation",
      "\u9700\u8981\u5bf9\u5e94\u7684\u5730\u7262\u94a5\u5319\u624d\u80fd\u6fc0\u6d3b"),
-    ("tooltip.gregtech.portal.ignite", "Flint and Steel opens and closes the Portal",
+    ("tooltip.gt6ce.portal.ignite", "Flint and Steel opens and closes the Portal",
      "\u6253\u706b\u77f3\u53ef\u4ee5\u5f00\u542f\u6216\u5173\u95ed\u4f20\u9001\u95e8"),
 ]
 
@@ -192,11 +192,11 @@ def portal_models() -> int:
                                   + [element(BOUNDS[0], "#portal")]}
         written += write_json(ASSETS / "models/block/dungeon" / (block_id + ".json"), open_model)
         state = {"variants": {
-            "active=false": {"model": "gregtech:block/dungeon/%s_frame" % block_id},
-            "active=true": {"model": "gregtech:block/dungeon/%s" % block_id}}}
+            "active=false": {"model": "gt6ce:block/dungeon/%s_frame" % block_id},
+            "active=true": {"model": "gt6ce:block/dungeon/%s" % block_id}}}
         written += write_json(ASSETS / "blockstates" / (block_id + ".json"), state)
         written += write_json(ASSETS / "models/item" / (block_id + ".json"),
-                              {"parent": "gregtech:block/dungeon/%s" % block_id})
+                              {"parent": "gt6ce:block/dungeon/%s" % block_id})
     return written
 
 
@@ -205,18 +205,18 @@ def key_models() -> int:
     for _item_id, port_id, _en, _zh in KEYS:
         written += write_json(ASSETS / "models/item" / (port_id + ".json"),
                               {"parent": "minecraft:item/generated",
-                               "textures": {"layer0": "gregtech:item/" + port_id}})
+                               "textures": {"layer0": "gt6ce:item/" + port_id}})
     return written
 
 
 def lang_entries() -> tuple[dict, dict]:
     english, chinese = {}, {}
     for _item_id, port_id, en, zh in KEYS:
-        english["item.gregtech." + port_id] = en
-        chinese["item.gregtech." + port_id] = zh
+        english["item.gt6ce." + port_id] = en
+        chinese["item.gt6ce." + port_id] = zh
     for block_id, _frame, _plane, en, zh in PORTALS:
-        english["block.gregtech." + block_id] = en
-        chinese["block.gregtech." + block_id] = zh
+        english["block.gt6ce." + block_id] = en
+        chinese["block.gt6ce." + block_id] = zh
     for key, en, zh in TOOLTIPS:
         english[key] = en
         chinese[key] = zh

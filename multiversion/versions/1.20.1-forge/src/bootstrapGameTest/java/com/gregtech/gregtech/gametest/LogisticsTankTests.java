@@ -38,7 +38,7 @@ public final class LogisticsTankTests {
         var tank = new LogisticsTankBlockEntity(helper.absolutePos(new BlockPos(1, 2, 1)),
                 block.defaultBlockState());
         var heliumPlasma = ForgeRegistries.FLUIDS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "heliumplasma"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "heliumplasma"));
         helper.assertTrue(heliumPlasma != null, "GT6 helium plasma exists");
         if (heliumPlasma == null) return;
         var plasma = new FluidStack(heliumPlasma, 1000);
@@ -98,7 +98,7 @@ public final class LogisticsTankTests {
                         && restored.fill(new FluidStack(Fluids.WATER, 1000), IFluidHandler.FluidAction.EXECUTE) == 1000,
                 "the retained type survives save and reload and still accepts its own fluid");
         helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                        "gregtech", "logistics/logistics_tank")).isPresent(),
+                        "gt6ce", "logistics/logistics_tank")).isPresent(),
                 "GT6 logistics tank has its screw, tungsten drum, bus and field-generator recipe");
         helper.succeed();
     }
@@ -118,9 +118,9 @@ public final class LogisticsTankTests {
         var drum = (TankBlockEntity) helper.getLevel().getBlockEntity(wirePos.east());
         var storage = (LogisticsTankBlockEntity) helper.getLevel().getBlockEntity(storagePos);
         var importItem = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", LogisticsCoverType.GENERIC_IMPORT.id()));
+                "gt6ce", LogisticsCoverType.GENERIC_IMPORT.id()));
         var exportItem = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", LogisticsCoverType.GENERIC_EXPORT.id()));
+                "gt6ce", LogisticsCoverType.GENERIC_EXPORT.id()));
         helper.assertTrue(wire != null && drum != null && storage != null
                         && importItem != null && exportItem != null
                         && wire.logisticsCovers().attach(Direction.EAST, new ItemStack(importItem))

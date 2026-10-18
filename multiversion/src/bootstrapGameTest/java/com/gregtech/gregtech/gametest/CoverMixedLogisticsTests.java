@@ -21,7 +21,7 @@ public final class CoverMixedLogisticsTests {
     @GameTest(template="test_empty",timeoutTicks=40)
     public static void logisticsCoverKeepsStoppedAcrossControllerRemovalAndSave(GameTestHelper h){
         var level=h.getLevel();var pos=h.absolutePos(new BlockPos(4,4,4));
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_wire"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire"));
         level.setBlockAndUpdate(pos,Blocks.AIR.defaultBlockState());level.setBlockAndUpdate(pos,block.defaultBlockState());
         var owner=level.getBlockEntity(pos);var host=(PanelCoverHost)owner;var logistics=(LogisticsCoverHost)owner;
         h.assertTrue(logistics.logisticsCovers().attach(Direction.EAST,new ItemStack(GTTechnological.get(LogisticsCoverType.CPU_LOGIC.id()))),"logistics attachment occupies its own face");

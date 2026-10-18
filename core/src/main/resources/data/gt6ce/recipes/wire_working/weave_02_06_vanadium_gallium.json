@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_02_vanadium_gallium"
+    },
+    {
+      "item": "gt6ce:wire_02_vanadium_gallium"
+    },
+    {
+      "item": "gt6ce:wire_02_vanadium_gallium"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_06_vanadium_gallium",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

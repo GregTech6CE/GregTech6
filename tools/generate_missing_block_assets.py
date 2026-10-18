@@ -1,7 +1,7 @@
 """Writes the blockstate / block model / item model of blocks that have none.
 
-A client logs `Exception loading blockstate definition: 'gregtech:blockstates/<id>.json' missing model
-for variant: 'gregtech:<id>#'` for every registered block whose blockstate file is absent, and draws
+A client logs `Exception loading blockstate definition: 'gt6ce:blockstates/<id>.json' missing model
+for variant: 'gt6ce:<id>#'` for every registered block whose blockstate file is absent, and draws
 the block with the missing-model placeholder. The 2026-09-18 crash report contained 2,068 of those -
 whole families of *material* blocks (dust/raw/ingot/plate/gem/crate/casing of materials the asset
 generator's material list never covered, mostly ore-dictionary materials from other mods) plus a few
@@ -12,7 +12,7 @@ and rewrites the id inside it:
 
     blockstates/<id>.json                the sibling's variant list, re-pointed at the block id
     models/.../<id>.json                 the sibling's model, at the path the cloned blockstate names
-    models/item/<id>.json                {"parent": "gregtech:block/.../<id>"}
+    models/item/<id>.json                {"parent": "gt6ce:block/.../<id>"}
 
 The model target is taken from the *template's own* model reference, not assumed to be
 `block/blocks/<id>`: material families point at `block/blocks/<id>`, structural parts at
@@ -47,7 +47,7 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gt6ce')
 BLOCKSTATES = os.path.join(ASSETS, 'blockstates')
 BLOCK_MODELS = os.path.join(ASSETS, 'models', 'block', 'blocks')
 ITEM_MODELS = os.path.join(ASSETS, 'models', 'item')
@@ -109,7 +109,7 @@ def find_template(block_id, families, known):
 
 
 def referenced_models(blockstate_path):
-    """The model references a blockstate variant list points at (`gregtech:block/...`)."""
+    """The model references a blockstate variant list points at (`gt6ce:block/...`)."""
     data = json.loads(io.open(blockstate_path, encoding='utf-8-sig').read())
     refs = []
     for variant in data.get('variants', {}).values():
@@ -120,7 +120,7 @@ def referenced_models(blockstate_path):
 
 
 def model_file(reference):
-    """Repository path of a `gregtech:block/...` model reference."""
+    """Repository path of a `gt6ce:block/...` model reference."""
     return os.path.join(ASSETS, 'models', reference.split(':', 1)[1] + '.json')
 
 

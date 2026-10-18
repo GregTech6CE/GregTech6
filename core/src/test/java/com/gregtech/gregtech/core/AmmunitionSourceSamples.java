@@ -49,7 +49,7 @@ final class AmmunitionSourceSamples {
         var replacement = com.gregtech.gregtech.content.recipe.VanillaCraftingReplacements.rows().stream()
                 .filter(row -> row.id().equals("minecraft:arrow")).findFirst().orElseThrow();
         check(replacement.pattern() == null && replacement.count() == 4
-                && replacement.keys().values().stream().filter("item:gregtech:arrow_gt_wood_empty"::equals).count() == 4
+                && replacement.keys().values().stream().filter("item:gt6ce:arrow_gt_wood_empty"::equals).count() == 4
                 && replacement.keys().values().contains("item:minecraft:flint"), "vanilla arrow shortcut is replaced by four shafts and one flint");
         return checks;
     }

@@ -96,7 +96,7 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
             if (!level.isClientSide) {
                 drawer.toggleSidedAccess();
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
-                player.displayClientMessage(Component.translatable(drawer.sidedAccess() ? "message.gregtech.drawer.sided" : "message.gregtech.drawer.anywhere"),true);
+                player.displayClientMessage(Component.translatable(drawer.sidedAccess() ? "message.gt6ce.drawer.sided" : "message.gt6ce.drawer.anywhere"),true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -104,7 +104,7 @@ public class DrawerQuadBlock extends DirectionalBlock implements EntityBlock, Si
         if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         int page = quadrant(state.getValue(FACING), pos, hit.getLocation());
         if (!level.isClientSide) player.openMenu(new net.minecraft.world.SimpleMenuProvider(
-                (id, inv, p) -> drawer.createMenu(page,id,inv), Component.translatable("gui.gregtech.drawer.page", Component.translatable(getDescriptionId()), page+1)));
+                (id, inv, p) -> drawer.createMenu(page,id,inv), Component.translatable("gui.gt6ce.drawer.page", Component.translatable(getDescriptionId()), page+1)));
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 

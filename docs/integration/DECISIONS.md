@@ -1,5 +1,13 @@
 # 实现选择记录
 
+## 2026-10-18 / 注册、资源与模组容器统一为 gt6ce
+
+用户明确要求实际物品资源 ID 使用 `gt6ce:`，撤销下方“只改加载器、保留 gregtech 注册命名空间”的阶段决策。`GregTechIdentity` 统一声明加载器、注册命名空间与完整显示名称；双版全部本模组注册、资源引用、配方／标签、网络通道、查看器分组、活动语言键及生成／自检工具随之迁移，不增加旧 ID 别名。
+
+固定 EMI 1.1.24 的本地实现按物品注册 namespace 查询模组容器的 displayName；原 `gregtech:` 与 `gt6ce` 容器不一致时会回退显示 `Gregtech`。统一身份使查看器直接获取 `GregTech 6 Community Edition`，另将引擎提示中写死的蓝色页脚改用同一名称常量。`ModReferences.GT` 的归属同步迁移；GT5U／GT6U 的外部 `gregtech` 身份保留，避免覆盖本模组所有者。
+
+原始来源快照、作者／许可证目录、Java 包、Mixin/refmap 文件名、原版 `gt.*` 翻译原文和内部测试 JVM 属性不属于本模组注册命名空间，保持原样。冻结 Stonecutter 迁移清单不改写；后续正常业务变化由当前树检查验收。旧 `gregtech:` 存档及脚本没有兼容映射，本批面向新世界测试。
+
 ## 2026-10-18 / 加载器 ID 使用 gt6ce
 
 模组容器 ID 为 `gt6ce`，显示名称为 `GregTech 6 Community Edition`；Java 包、来源身份、现有 `gregtech:` 注册与资源命名空间独立保留。`ModReferences.GT` 继续用物品 namespace 判定归属，再通过两版入口绑定加载器 presence；模型几何加载器等实际属于模组容器的标识随统一 `MOD_ID` 改名。构建与工具从当前属性确定正式包名，避免本地同时存在旧包时选错。

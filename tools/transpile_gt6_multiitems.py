@@ -20,7 +20,7 @@ import shutil
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 ITEM_TEX = os.path.join(ASSETS, "textures", "item")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
 OUT_JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech",
@@ -105,7 +105,7 @@ def cleanup_previous():
         with open(lang_path, encoding="utf-8-sig") as f:
             lang = json.load(f)
         for item_id in old_ids:
-            lang.pop("item.gregtech." + item_id, None)
+            lang.pop("item.gt6ce." + item_id, None)
         with open(lang_path, "w", encoding="utf-8") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False, sort_keys=True)
             f.write("\n")
@@ -169,7 +169,7 @@ def main():
             if not copy_texture(src_dir, tex_id, dst_dir, item_id):
                 continue
             used.add(item_id)
-            write_model(item_id, [f"gregtech:item/{category}/{item_id}"])
+            write_model(item_id, [f"gt6ce:item/{category}/{item_id}"])
             registered.append((item_id, display, category, tooltip))
             count += 1
         print(f"{category}: {count} items")
@@ -195,7 +195,7 @@ def main():
         if not copy_texture(bee_dir, species_id, dst_dir, base):
             continue
         used.add(base)
-        base_tex = f"gregtech:item/bumblebee/{base}"
+        base_tex = f"gt6ce:item/bumblebee/{base}"
         for suffix, overlay, label in (
                 ("_drone", None, " Drone"),
                 ("_princess", "overlay_princess", " Princess"),
@@ -203,7 +203,7 @@ def main():
                 ("_dead", "overlay_dead", " (Dead)")):
             item_id = unique_id(base + suffix, used)
             used.add(item_id)
-            layers = [base_tex] + ([f"gregtech:item/bumblebee/{overlay}"] if overlay else [])
+            layers = [base_tex] + ([f"gt6ce:item/bumblebee/{overlay}"] if overlay else [])
             write_model(item_id, layers)
             registered.append((item_id, display + label, "bumblebee", ""))
             bee_count += 1
@@ -240,9 +240,9 @@ final class GTMultiItemsGen {{
         with open(lang_path, encoding="utf-8-sig") as f:
             lang = json.load(f)
         for item_id, display, category, tooltip in registered:
-            lang.setdefault("item.gregtech." + item_id, display)
+            lang.setdefault("item.gt6ce." + item_id, display)
             if tooltip:
-                lang.setdefault("item.gregtech." + item_id + ".tooltip", tooltip)
+                lang.setdefault("item.gt6ce." + item_id + ".tooltip", tooltip)
         with open(lang_path, "w", encoding="utf-8") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False, sort_keys=True)
             f.write("\n")

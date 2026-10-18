@@ -1,9 +1,0 @@
-{
-  "type": "remi:group",
-  "name": "emi.group.gregtech.functional_flux_motor",
-  "contents": [
-    "item:gregtech:flux_motor_lv",
-    "item:gregtech:flux_motor_mv"
-  ],
-  "priority": 110
-}

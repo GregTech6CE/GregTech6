@@ -19,7 +19,7 @@ public final class MachineSpecBehaviorContracts {
 
     public static void main(String[] args) {
         // Bind before any domain holder; the probe uses the same domain graph as both loaders.
-        ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gregtech"));
+        ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gt6ce"));
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
@@ -704,11 +704,11 @@ public final class MachineSpecBehaviorContracts {
             }
             if (rf) expected.merge(fluxMaterials[i], 8*u, Long::sum);
             composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.block(id).orElseThrow(), expected);
-            var recipe = recipes.stream().filter(r -> r.output().equals("gregtech:" + id)).findFirst().orElseThrow();
+            var recipe = recipes.stream().filter(r -> r.output().equals("gt6ce:" + id)).findFirst().orElseThrow();
             check(recipe.pattern().equals(rf ? (cooler ? java.util.List.of("PSP", "PMP", "PSP") : java.util.List.of("SSS", "SMS", "SSS"))
                             : (cooler ? java.util.List.of("WPw", "CMC", "xPW") : java.util.List.of("TCT", "CMC", "TCd")))
                             && recipe.count() == 1 && recipe.empty() && !recipe.unpack(), "Original thermal shaped pattern and stored input protection " + id);
-            if (rf) check(recipe.key().get('M').name().equals("gregtech:" + id.replace("flux_", "electric_")), "Source RF upgrade exact electric tier " + id);
+            if (rf) check(recipe.key().get('M').name().equals("gt6ce:" + id.replace("flux_", "electric_")), "Source RF upgrade exact electric tier " + id);
             else check(recipe.key().get(cooler ? 'W' : 'C').kind().equals(cooler ? "cable" : "wire")
                             && recipe.key().get(cooler ? 'W' : 'C').name().equals(Integer.toString(cooler ? 1 : 1 << i)),
                     "Source thermal cable/wire widths " + id);
@@ -761,10 +761,10 @@ public final class MachineSpecBehaviorContracts {
             expected.put(hulls[tier], 8*u); expected.put(tier < 2 ? "Copper" : "AnnealedCopper", (3L << tier)*u);
             if (rf) expected.merge(fluxHulls[tier], 8*u, Long::sum);
             composition(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.block(id).orElseThrow(), expected);
-            var row = rows.stream().filter(r -> r.output().equals("gregtech:" + id)).findFirst().orElseThrow();
+            var row = rows.stream().filter(r -> r.output().equals("gt6ce:" + id)).findFirst().orElseThrow();
             check(row.path().equals("magnets/" + id) && row.empty() && row.count() == 1 && !row.unpack()
                     && row.pattern().equals(rf ? java.util.List.of("SSS", "SMS", "SSS") : java.util.List.of("CxC", "CMC", "CwC")), "Source crafting pattern and retained recipe identity " + id);
-            if (rf) check(row.key().get('M').name().equals("gregtech:electromagnet_" + tiers[tier])
+            if (rf) check(row.key().get('M').name().equals("gt6ce:electromagnet_" + tiers[tier])
                     && row.key().get('S').name().equals("stickLong"), "Source eight long rods and exact base tier " + id);
             else check(row.key().get('C').kind().equals("wire") && row.key().get('C').name().equals(Integer.toString(1 << tier))
                             && row.key().get('C').material() == (tier < 2 ? MaterialGroups.Cu : Materials.AnnealedCopper), "Source bare wire width and ANY.Cu group " + id);

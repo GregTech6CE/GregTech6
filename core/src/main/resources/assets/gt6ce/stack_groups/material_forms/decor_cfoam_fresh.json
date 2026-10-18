@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_cfoam_fresh",
+  "contents": [
+    "item:gt6ce:cfoam_fresh",
+    "item:gt6ce:cfoam_fresh_owned"
+  ],
+  "priority": 120
+}

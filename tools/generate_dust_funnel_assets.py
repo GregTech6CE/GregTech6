@@ -22,16 +22,16 @@ def model(loader):
             if layer=="colored":
                 for face in faces.values():face["tintindex"]=0
             elements.append({"from":low,"to":high,"faces":faces})
-        textures={key:f"gregtech:block/machines/tools/dust_funnel/{layer}/{key}" for key in ("top","bottom","sides","hole")}
+        textures={key:f"gt6ce:block/machines/tools/dust_funnel/{layer}/{key}" for key in ("top","bottom","sides","hole")}
         children[layer]={"textures":textures,"elements":elements,"render_type":"minecraft:cutout"}
         # The original input face overlays its hole on top, never on the bottom nozzle.
         face={"texture":"#hole","uv":[0,0,16,16]}
         if layer=="colored":face["tintindex"]=0
         children[layer+"_hole"]={"textures":textures,"elements":[{"from":[0,16.001,0],"to":[16,16.001,16],"faces":{"up":face}}],"render_type":"minecraft:cutout"}
     return {"parent":"minecraft:block/block","loader":loader+":composite","children":children,
-            "textures":{"particle":"gregtech:block/machines/tools/dust_funnel/colored/top"},
+            "textures":{"particle":"gt6ce:block/machines/tools/dust_funnel/colored/top"},
             "display":{"gui":{"rotation":[30,225,0],"translation":[0,0,0],"scale":[.625,.625,.625]}}}
 if __name__=="__main__":
     for base,loader in ((str(native_path("src")),"forge"),(str(native_path("neoforge/src")),"neoforge")):
-        path=ROOT/base/"main/resources/assets/gregtech/models/block/machine/tool/dust_funnel.json"
+        path=ROOT/base/"main/resources/assets/gt6ce/models/block/machine/tool/dust_funnel.json"
         path.write_text(json.dumps(model(loader),indent=2)+"\n",encoding="utf-8")

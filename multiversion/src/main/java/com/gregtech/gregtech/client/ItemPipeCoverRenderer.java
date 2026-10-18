@@ -28,7 +28,7 @@ public final class ItemPipeCoverRenderer implements BlockEntityRenderer<ItemPipe
             var vertices = buffers.getBuffer(RenderType.cutout());
             boolean layered = com.gregtech.gregtech.content.cover.MachineCoverSpec.of(cover) != null;
             if (layered) CoverSurfaceRenderer.draw(pose, vertices, side, ArmRenderHelper.getSprite(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/covers/base")), light, 0);
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/covers/base")), light, 0);
             CoverSurfaceRenderer.draw(pose, vertices, side, sprite, light, layered ? 1 : 0);
         }
     }

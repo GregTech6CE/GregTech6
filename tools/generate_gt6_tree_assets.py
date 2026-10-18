@@ -22,7 +22,7 @@ from native_layout import native_path
 import json
 import os
 
-ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 SPECIES = ["rubber", "maple", "rainbowood", "willow", "blue_mahoe",
            "hazel", "cinnamon", "coconut", "bluespruce",
            "pine", "ebony", "white_mahoe"]
@@ -44,12 +44,12 @@ def leaves_blockstate(species):
     for distance in range(1, 8):
         for persistent in ("false", "true"):
             variants["distance=%d,persistent=%s" % (distance, persistent)] = {
-                "model": "gregtech:block/iconsets/leaves_%s" % species}
+                "model": "gt6ce:block/iconsets/leaves_%s" % species}
     return {"variants": variants}
 
 
 def sapling_blockstate(species):
-    return {"variants": {"stage=%d" % stage: {"model": "gregtech:block/wood/sapling_%s" % species}
+    return {"variants": {"stage=%d" % stage: {"model": "gt6ce:block/wood/sapling_%s" % species}
                          for stage in (0, 1)}}
 
 
@@ -58,10 +58,10 @@ for species in SPECIES:
     write_json(os.path.join(ASSETS, "blockstates", "sapling_%s.json" % species), sapling_blockstate(species))
     write_json(os.path.join(ASSETS, "models", "block", "wood", "sapling_%s.json" % species),
                {"parent": "minecraft:block/cross",
-                "textures": {"cross": "gregtech:block/iconsets/sapling_small_%s" % species}})
+                "textures": {"cross": "gt6ce:block/iconsets/sapling_small_%s" % species}})
     write_json(os.path.join(ASSETS, "models", "item", "sapling_%s.json" % species),
                {"parent": "minecraft:item/generated",
-                "textures": {"layer0": "gregtech:block/iconsets/sapling_small_%s" % species}})
+                "textures": {"layer0": "gt6ce:block/iconsets/sapling_small_%s" % species}})
 
 print("species: %d (new: %s)" % (len(SPECIES), ", ".join(NEW_SPECIES)))
 print("wrote %d files" % len(written))

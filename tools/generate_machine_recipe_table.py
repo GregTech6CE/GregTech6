@@ -242,19 +242,19 @@ IL_COMPONENT = {
 
 # IL.* single items -> port item id
 IL_ITEM = {
-    "IL.Processor_Crystal_Diamond": "gregtech:crystal_processor_diamond",
-    "IL.Processor_Crystal_Sapphire": "gregtech:crystal_processor_sapphire",
-    "IL.Processor_Crystal_Ruby": "gregtech:crystal_processor_ruby",
-    "IL.Processor_Crystal_Emerald": "gregtech:crystal_processor_emerald",
-    "IL.Comp_Laser_Gas_Ar": "gregtech:laser_emitter_argon",
-    "IL.Comp_Laser_Gas_Kr": "gregtech:laser_emitter_krypton",
-    "IL.Comp_Laser_Gas_Xe": "gregtech:laser_emitter_xenon",
-    "IL.Comp_Laser_Gas_He": "gregtech:laser_emitter_helium",
-    "IL.Comp_Laser_Gas_Ne": "gregtech:laser_emitter_neon",
-    "IL.Comp_Laser_Gas_HeNe": "gregtech:laser_emitter_heliumneon",
-    "IL.Comp_Laser_Gas_CO": "gregtech:laser_emitter_carbonmonoxide",
-    "IL.Comp_Laser_Gas_CO2": "gregtech:laser_emitter_carbondioxide",
-    "IL.Comp_Laser_Gas_Empty": "gregtech:laser_emitter_emptygas",
+    "IL.Processor_Crystal_Diamond": "gt6ce:crystal_processor_diamond",
+    "IL.Processor_Crystal_Sapphire": "gt6ce:crystal_processor_sapphire",
+    "IL.Processor_Crystal_Ruby": "gt6ce:crystal_processor_ruby",
+    "IL.Processor_Crystal_Emerald": "gt6ce:crystal_processor_emerald",
+    "IL.Comp_Laser_Gas_Ar": "gt6ce:laser_emitter_argon",
+    "IL.Comp_Laser_Gas_Kr": "gt6ce:laser_emitter_krypton",
+    "IL.Comp_Laser_Gas_Xe": "gt6ce:laser_emitter_xenon",
+    "IL.Comp_Laser_Gas_He": "gt6ce:laser_emitter_helium",
+    "IL.Comp_Laser_Gas_Ne": "gt6ce:laser_emitter_neon",
+    "IL.Comp_Laser_Gas_HeNe": "gt6ce:laser_emitter_heliumneon",
+    "IL.Comp_Laser_Gas_CO": "gt6ce:laser_emitter_carbonmonoxide",
+    "IL.Comp_Laser_Gas_CO2": "gt6ce:laser_emitter_carbondioxide",
+    "IL.Comp_Laser_Gas_Empty": "gt6ce:laser_emitter_emptygas",
 }
 
 # Vanilla / ore-dictionary references.
@@ -265,38 +265,38 @@ OD_ITEM = {
     "OD.sandstone": "tag:forge:sandstone",
     "OD.container1000honey": "item:minecraft:honey_bottle",
     "OD.itemRedstone": "item:minecraft:redstone",
-    "OP.treeSapling": "tag:gregtech:saplings",
-    "DYE_OREDICTS_LENS[DYE_INDEX_Yellow]": "tag:gregtech:lens",
-    "DYE_OREDICTS_LENS[DYE_INDEX_White]": "tag:gregtech:lens",
-    "DYE_OREDICTS_LENS[DYE_INDEX_Red]": "tag:gregtech:lens",
-    "DYE_OREDICTS_LENS[DYE_INDEX_Green]": "tag:gregtech:lens",
-    "DYE_OREDICTS_LENS[DYE_INDEX_Blue]": "tag:gregtech:lens",
+    "OP.treeSapling": "tag:gt6ce:saplings",
+    "DYE_OREDICTS_LENS[DYE_INDEX_Yellow]": "tag:gt6ce:lens",
+    "DYE_OREDICTS_LENS[DYE_INDEX_White]": "tag:gt6ce:lens",
+    "DYE_OREDICTS_LENS[DYE_INDEX_Red]": "tag:gt6ce:lens",
+    "DYE_OREDICTS_LENS[DYE_INDEX_Green]": "tag:gt6ce:lens",
+    "DYE_OREDICTS_LENS[DYE_INDEX_Blue]": "tag:gt6ce:lens",
 }
 
 # aRegistry.getItem(<id>) -> GT6 smelting crucible of a specific material.
 CRUCIBLE_IDS = {
-    "1005": "gregtech:smelting_crucible_ceramic",
-    "1018": "gregtech:smelting_crucible_quartz",
-    "1019": "gregtech:smelting_crucible_carbon",
-    "1024": "gregtech:smelting_crucible_tungsten",
-    "1039": "gregtech:smelting_crucible_iridium",
-    "1043": "gregtech:smelting_crucible_ta4hfc5",
+    "1005": "gt6ce:smelting_crucible_ceramic",
+    "1018": "gt6ce:smelting_crucible_quartz",
+    "1019": "gt6ce:smelting_crucible_carbon",
+    "1024": "gt6ce:smelting_crucible_tungsten",
+    "1039": "gt6ce:smelting_crucible_iridium",
+    "1043": "gt6ce:smelting_crucible_ta4hfc5",
 }
 
 # GT6 shaped recipes let tool characters stand in for a tool without declaring a key
 # (gregapi/recipes/CR.java: b/c/d/h/k/p/r/s/w/x/y). The port needs the key spelled out.
 TOOL_CHARS = {
-    "b": "gregtech:tool_saw",           # GT6 "blade"
-    "c": "gregtech:tool_crowbar",
-    "d": "gregtech:tool_screwdriver",
-    "h": "gregtech:tool_hammer",
-    "k": "gregtech:tool_knife",
-    "p": "gregtech:tool_file",          # GT6 "drawplate": nearest port tool
-    "r": "gregtech:tool_soft_hammer",
-    "s": "gregtech:tool_saw",
-    "w": "gregtech:tool_wrench",
-    "x": "gregtech:tool_wire_cutter",
-    "y": "gregtech:tool_chisel",
+    "b": "gt6ce:tool_saw",           # GT6 "blade"
+    "c": "gt6ce:tool_crowbar",
+    "d": "gt6ce:tool_screwdriver",
+    "h": "gt6ce:tool_hammer",
+    "k": "gt6ce:tool_knife",
+    "p": "gt6ce:tool_file",          # GT6 "drawplate": nearest port tool
+    "r": "gt6ce:tool_soft_hammer",
+    "s": "gt6ce:tool_saw",
+    "w": "gt6ce:tool_wrench",
+    "x": "gt6ce:tool_wire_cutter",
+    "y": "gt6ce:tool_chisel",
 }
 
 UNMAPPED: dict[str, int] = {}
@@ -331,7 +331,7 @@ def translate(expr: str) -> str:
             kind = "cable" if prefix.startswith("cableGt") else "wire"
             family = {"ANY.Iron": "any_iron_or_steel", "ANY.Cu": "any_copper"}.get(mat_expr)
             if family:
-                return "tag:gregtech:%s_%02d/%s" % (kind, size, family)
+                return "tag:gt6ce:%s_%02d/%s" % (kind, size, family)
             return "%s:%d@%s" % (kind, size, material)
         return "mat:%s@%s" % (prefix, material)
 
@@ -404,8 +404,8 @@ def main() -> int:
         keys = {k: translate(v) for k, v in entry["keys"].items()}
         if port_name == "melter":
             # aMat is ANY.Iron here, including the source's steel pipe/casing forms.
-            keys["M"] = "tag:gregtech:casing_machine/any_iron_or_steel"
-            keys["P"] = "tag:gregtech:pipe_medium/any_iron_or_steel"
+            keys["M"] = "tag:gt6ce:casing_machine/any_iron_or_steel"
+            keys["P"] = "tag:gt6ce:pipe_medium/any_iron_or_steel"
         # Tool characters are implicit in GT6's shaped recipes; make them explicit here.
         for symbol in set("".join(entry["pattern"])) - {" "}:
             if symbol in keys:

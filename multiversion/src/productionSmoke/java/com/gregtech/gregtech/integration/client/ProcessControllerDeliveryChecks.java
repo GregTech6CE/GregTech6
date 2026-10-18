@@ -22,7 +22,7 @@ final class ProcessControllerDeliveryChecks {
         var paths=Map.of("coke_oven_main",Family.COKE_OVEN,"distillation_tower_main",Family.DISTILLATION_TOWER,
                 "cryo_distillation_main",Family.CRYO_DISTILLATION_TOWER,"logistics_core",Family.LOGISTICS_CORE,"bedrock_mining_drill_controller",Family.BEDROCK_DRILL);
         for(var entry:paths.entrySet()) {
-            var id=ResourceLocation.parse("gregtech:"+entry.getKey());var family=entry.getValue();
+            var id=ResourceLocation.parse("gt6ce:"+entry.getKey());var family=entry.getValue();
             var block=BuiltInRegistries.BLOCK.get(id);var stack=new ItemStack(block);
             require(stack.getItem() instanceof BlockItem,"installed original controller "+id);
 //? if >=1.21.1 {
@@ -47,17 +47,17 @@ final class ProcessControllerDeliveryChecks {
             var expected=com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(entry.getKey()).orElseThrow();
             require(ItemMaterialRegistry.get(stack).orElseThrow().components().equals(expected.components()),"native exact source REV components "+id);
 //? if >=1.21.1 {
-            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1
+            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1
 *///?} else {
-            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1
+            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1
 //?}
-                    && count(normal,"tooltip.gregtech.contained_materials")==0,"advanced quantities once "+id);
+                    && count(normal,"tooltip.gt6ce.contained_materials")==0,"advanced quantities once "+id);
             if(block instanceof BasicMachineBlock machine) {
                 var spec=machine.basicSpec();
                 require(count(normal,"gt.lang.recipes")==1 && count(normal,"gt.lang.use.screwdriver.to.toggle")==1
                         && count(normal,"gt.lang.use.soft.hammer.to.reset")==1,"source basic inheritance once "+id);
-                require(count(normal,"tooltip.gregtech.machine.recipes")==0
-                        && count(normal,"tooltip.gregtech.machine.tool.screwdriver")==0,"old port generic rows not duplicated "+id);
+                require(count(normal,"tooltip.gt6ce.machine.recipes")==0
+                        && count(normal,"tooltip.gt6ce.machine.tool.screwdriver")==0,"old port generic rows not duplicated "+id);
                 var entity=(com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity)
                         machine.newBlockEntity(BlockPos.ZERO,block.defaultBlockState());
                 require(entity.getEnergySizeInputMin(spec.energyTag(),Direction.NORTH)==spec.energyInMin()

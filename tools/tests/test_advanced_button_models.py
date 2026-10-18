@@ -12,7 +12,7 @@ import math
 from pathlib import Path
 import unittest
 
-ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gt6ce')
 
 class AdvancedButtonModelTests(unittest.TestCase):
     def test_legacy_regeneration_preserves_specialized_states(self):
@@ -25,7 +25,7 @@ class AdvancedButtonModelTests(unittest.TestCase):
         import generate_scaffold_models as scaffold
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            assets = native_path(root / 'src/main/resources/assets/gregtech')
+            assets = native_path(root / 'src/main/resources/assets/gt6ce')
             with patch.object(legacy, 'ROOT', root), patch.object(legacy, 'ASSETS', assets), \
                     patch.object(button, 'ASSETS', assets), \
                     patch.object(button, 'TARGET', assets / 'textures/block/machines/redstone/buttons/advanced/0/0'), \

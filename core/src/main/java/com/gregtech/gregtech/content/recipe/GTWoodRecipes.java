@@ -15,7 +15,7 @@ package com.gregtech.gregtech.content.recipe;
  *
  * <p>The rows iterate GT6's {@code WoodDictionary} entries. Only the entries backed by GT6's own nine
  * trees ({@code BlocksGT.LogA/LogB/LogC} metas 0-3/0-3/0) can be expressed: the port registers exactly
- * those species as {@code gregtech:log_*} / {@code gregtech:planks_*} / {@code gregtech:beam_*} blocks
+ * those species as {@code gt6ce:log_*} / {@code gt6ce:planks_*} / {@code gt6ce:beam_*} blocks
  * ({@code registry/GTWoods.java}, {@code block/wood/WoodSpecies.java}). Every row below is registered
  * with the numbers GT6's own table carries for that species, with {@code CS.NERFED_WOOD = true}
  * ({@code gregapi/data/CS.java:866} in the original), i.e. the hand/saw counts rather than the

@@ -56,7 +56,7 @@ public final class CrystalOreRepairTests {
 
         for (String kind : KINDS) {
             Block block = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "crystal_ore_" + kind));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "crystal_ore_" + kind));
             h.assertTrue(block instanceof CrystalOreBlock, kind + " is the GT6 mining block, not an icon shell");
             CrystalOreBlock crystal = (CrystalOreBlock) block;
             var state = crystal.defaultBlockState();
@@ -118,7 +118,7 @@ public final class CrystalOreRepairTests {
         silkPick.enchant(Enchantments.SILK_TOUCH, 1);
         for (String[] row : expected) {
             String id = "block_ore_" + row[0];
-            Block registered = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            Block registered = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             h.assertTrue(registered instanceof RockOreBlock, id + " is a GT6 rock ore, not a texture shell");
             RockOreBlock rock = (RockOreBlock) registered;
             var state = rock.defaultBlockState();
@@ -182,7 +182,7 @@ public final class CrystalOreRepairTests {
         };
         for (int i = 0; i < expected.length; i++) {
             String id = expected[i][0];
-            Block registered = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            Block registered = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             h.assertTrue(registered instanceof BlackSandBlock && registered instanceof FallingBlock,
                     id + " is a falling GT6 sand, not a decorative icon block");
             BlackSandBlock sand = (BlackSandBlock) registered;
@@ -199,7 +199,7 @@ public final class CrystalOreRepairTests {
                             && crucible.get(0).amount == com.gregtech.gregtech.api.material.GTValues.U * 9,
                     id + " supplies its mineral sand to a crucible");
             String materialTag = com.gregtech.gregtech.api.material.MaterialEquivalence.materialName(sand.material());
-            ResourceLocation formTag = ResourceLocation.fromNamespaceAndPath("gregtech", "block_dust/" + materialTag);
+            ResourceLocation formTag = ResourceLocation.fromNamespaceAndPath("gt6ce", "block_dust/" + materialTag);
             h.assertTrue(sandItem.is(ItemTags.create(formTag)) && state.is(BlockTags.create(formTag)),
                     id + " has matching GT6 blockDust item and block tags");
             h.assertTrue(state.is(BlockTags.MINEABLE_WITH_SHOVEL), id + " is mined with a shovel");
@@ -215,7 +215,7 @@ public final class CrystalOreRepairTests {
         h.runAfterDelay(40, () -> {
             for (int i = 0; i < expected.length; i++) {
                 Block sand = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath(
-                        "gregtech", expected[i][0]));
+                        "gt6ce", expected[i][0]));
                 BlockPos ground = h.absolutePos(new BlockPos(i + 2, 1, 2));
                 h.assertTrue(h.getLevel().getBlockState(ground.above()).is(sand),
                         expected[i][0] + " falls to the ground");
@@ -242,7 +242,7 @@ public final class CrystalOreRepairTests {
                 id + " crucible uses GT6's twice-standard dense-ore crushing target");
 
         String name = MaterialEquivalence.materialName(material);
-        var denseTag = ResourceLocation.fromNamespaceAndPath("gregtech", "ore_dense/" + name);
+        var denseTag = ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_dense/" + name);
         var commonTag = ResourceLocation.fromNamespaceAndPath("forge", "ores/" + name);
         h.assertTrue(silkBlock.is(ItemTags.create(denseTag)) && block.defaultBlockState().is(BlockTags.create(denseTag))
                         && silkBlock.is(ItemTags.create(commonTag)) && block.defaultBlockState().is(BlockTags.create(commonTag)),

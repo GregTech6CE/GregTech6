@@ -6,13 +6,13 @@ GT6's scanned variants are the meta offsets +5/+6/+7/+9 of the same species item
 living bee gets four scanned siblings. English uses the display names the multi-item table already
 carries for those ids ("Wild Bumblebee Drone (Scanned)", "Wild Bumblebee (Dead, Scanned)"); Chinese
 is built from the port's own Chinese name of the matching *living* bee plus the scanned suffix, so it
-can never contradict `item.gregtech.<living id>`.
+can never contradict `item.gt6ce.<living id>`.
 
 Keys are inserted at their sorted position and the file's own line endings are preserved, so a run
 touches nothing but the new lines and a second run is a no-op.
 
 Inputs : src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java  (the item ids + English)
-         src/main/resources/assets/gregtech/lang/{en_us,zh_cn}.json
+         src/main/resources/assets/gt6ce/lang/{en_us,zh_cn}.json
 Output : same two language files, +320 keys each
 """
 
@@ -31,7 +31,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANG = native_path(ROOT / "src/main/resources/assets/gregtech/lang")
+LANG = native_path(ROOT / "src/main/resources/assets/gt6ce/lang")
 ITEMS = native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java")
 
 # (scanned suffix, the living suffix it is written from) - GT6's bumbleScan adds 5 to the type.
@@ -105,9 +105,9 @@ def main() -> int:
             if not item_id.endswith("_scanned_" + kind):
                 continue
             living_id = item_id[: -len("_scanned_" + kind)] + "_" + kind
-            key = "item.gregtech." + item_id
+            key = "item.gt6ce." + item_id
             english[key] = display
-            living_name = zh.get("item.gregtech." + living_id)
+            living_name = zh.get("item.gt6ce." + living_id)
             if not isinstance(living_name, str) or not living_name.strip():
                 # No Chinese name to build on: fall back to the English living name so the key
                 # exists (the localization guard only checks presence).

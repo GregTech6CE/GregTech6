@@ -14,7 +14,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /** GT6's plant pot supports any plant above it, including plants that reject ordinary dirt. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PlantPotTests {
     @GameTest(template = "test_empty")

@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "gt6ce:gt_small_ores",
+    "gt6ce:gt_nether_deposits"
+  ],
+  "step": "underground_ores"
+}

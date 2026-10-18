@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_baguette"
+    },
+    {
+      "item": "gt6ce:sliced_baguette"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:baguettes",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

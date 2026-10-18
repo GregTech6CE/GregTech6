@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_special_ores",
+  "contents": [
+    "item:gt6ce:block_ore_amber",
+    "item:gt6ce:block_ore_amethyst",
+    "item:gt6ce:block_ore_apatite",
+    "item:gt6ce:block_ore_bastnasite",
+    "item:gt6ce:block_ore_borax",
+    "item:gt6ce:block_ore_cassiterite",
+    "item:gt6ce:block_ore_galena",
+    "item:gt6ce:block_ore_graphite",
+    "item:gt6ce:block_ore_pentlandite",
+    "item:gt6ce:block_ore_pitchblende",
+    "item:gt6ce:block_ore_ruby",
+    "item:gt6ce:block_ore_rutile",
+    "item:gt6ce:block_ore_scheelite",
+    "item:gt6ce:block_ore_sheldonite",
+    "item:gt6ce:block_ore_sulfur",
+    "item:gt6ce:block_ore_tetrahedrite"
+  ],
+  "priority": 110
+}

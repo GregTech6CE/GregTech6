@@ -12,10 +12,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class FluidAttachmentInteractionTests {
-    private static Block block(String id){return net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));}
+    private static Block block(String id){return net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));}
     @GameTest(template="test_empty") public static void funnelTopPlacementAndWrenchPolicy(GameTestHelper h){
         var p=h.absolutePos(new BlockPos(1,1,1));h.getLevel().setBlockAndUpdate(p,Blocks.STONE.defaultBlockState());
         var player=h.makeMockPlayer();
@@ -24,7 +24,7 @@ public final class FluidAttachmentInteractionTests {
         var context=new BlockPlaceContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(funnel),hit);
         var state=funnel.getStateForPlacement(context);
         h.assertTrue(state!=null&&state.getValue(FluidAttachmentBlock.FACING)==Direction.DOWN,"top placement points into tank below");
-        var tool=new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","tool_wrench")));
+        var tool=new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tool_wrench")));
         var policy=funnel.toolInteraction(state,tool);
         h.assertTrue(policy!=null&&policy.allows(Direction.DOWN)&&!policy.allows(Direction.UP),"rendered wrench grid agrees with five allowed funnel faces");
         var tap=(FluidAttachmentBlock)block("tap");

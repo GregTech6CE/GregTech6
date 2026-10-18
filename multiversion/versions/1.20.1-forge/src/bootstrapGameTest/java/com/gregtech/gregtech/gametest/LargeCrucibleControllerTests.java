@@ -74,7 +74,7 @@ public final class LargeCrucibleControllerTests {
                     com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock,
                     variant.path() + " is a controller, not an inert port");
             helper.assertTrue(helper.getLevel().getRecipeManager().byKey(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "machines/multiblock/" + variant.path())).isPresent(),
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "machines/multiblock/" + variant.path())).isPresent(),
                     variant.path() + " has a survival recipe");
             helper.assertTrue(variant.crucible().thermalMassKg() > 0, variant.path() + " has thermal mass");
         }

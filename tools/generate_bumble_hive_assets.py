@@ -10,7 +10,7 @@ so the `colored/*` icon is multiplied by the hive's NBT colour and the `overlay/
 top of it. The port has no on-the-fly tinting (the colour is a block state), so this tool bakes the
 combination: for every one of the sixteen dye colours and every face it writes
 
-    assets/gregtech/textures/block/nature/bumblehive/<colour>/<face>.png
+    assets/gt6ce/textures/block/nature/bumblehive/<colour>/<face>.png
 
 plus the blockstate, the sixteen block models, the item model and the two lang entries.
 GT6's colour ints are CS.java:403-418 (`DYE_*` -> `DYE_INT_*`), and its own overlays in the resource
@@ -35,7 +35,7 @@ import sys
 from PIL import Image, ImageChops
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 SOURCE = os.path.join(ASSETS, "textures", "block", "nature", "bumblehive")
 FACES = ("bottom", "top", "side")
 
@@ -103,12 +103,12 @@ def write_if_changed(path: str, data, check: bool, written: list) -> None:
 def blockstate() -> dict:
     variants = {}
     for color in DYE_COLORS:
-        variants["color=" + color] = {"model": "gregtech:block/bumble_hive_" + color}
+        variants["color=" + color] = {"model": "gt6ce:block/bumble_hive_" + color}
     return {"variants": variants}
 
 
 def block_model(color: str) -> dict:
-    base = "gregtech:block/nature/bumblehive/" + color + "/"
+    base = "gt6ce:block/nature/bumblehive/" + color + "/"
     return {
         "parent": "minecraft:block/cube_bottom_top",
         "textures": {
@@ -120,26 +120,26 @@ def block_model(color: str) -> dict:
 
 
 def item_model() -> dict:
-    return {"parent": "gregtech:block/bumble_hive_" + DEFAULT_COLOR}
+    return {"parent": "gt6ce:block/bumble_hive_" + DEFAULT_COLOR}
 
 
 def lang_entry(path: str, value: str, check: bool, written: list) -> None:
-    """Insert `block.gregtech.bumble_hive` in sorted position (the port's lang files are sorted)."""
+    """Insert `block.gt6ce.bumble_hive` in sorted position (the port's lang files are sorted)."""
     with open(path, "r", encoding="utf-8") as handle:
         lines = handle.read().split("\n")
-    key = "block.gregtech.bumble_hive"
+    key = "block.gt6ce.bumble_hive"
     if any(('"' + key + '"') in line for line in lines):
         return
     entry = '  "%s": %s,' % (key, json.dumps(value, ensure_ascii=False))
     anchor = None
     for index, line in enumerate(lines):
-        if line.startswith('  "block.gregtech.'):
+        if line.startswith('  "block.gt6ce.'):
             current = line.split('"')[1]
             if current > key and anchor is None:
                 anchor = index
                 break
     if anchor is None:
-        raise SystemExit("no block.gregtech.* anchor found in " + path)
+        raise SystemExit("no block.gt6ce.* anchor found in " + path)
     lines.insert(anchor, entry)
     written.append(os.path.relpath(path, ROOT).replace("\\", "/"))
     if not check:

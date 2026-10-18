@@ -45,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * uses ({@code grep -r "BASE_X" gametest}); the neighbouring reservations are 58000 and 60000. Every
  * site is cleared before use, blocks <em>and</em> entities, so the file is re-runnable.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PipeCoverTests {
     private static final int BASE_X = 59000;
@@ -81,12 +81,12 @@ public final class PipeCoverTests {
     /** Places a pipe of the given id; the caller owns the surrounding clearing. */
     private static FluidPipeBlockEntity setPipe(GameTestHelper helper, BlockPos pos, String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
-        helper.assertTrue(block != null && block != Blocks.AIR, "gregtech:" + id + " is registered");
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+        helper.assertTrue(block != null && block != Blocks.AIR, "gt6ce:" + id + " is registered");
         ServerLevel level = helper.getLevel();
         level.setBlock(pos, block.defaultBlockState(), 3);
         helper.assertTrue(level.getBlockEntity(pos) instanceof FluidPipeBlockEntity,
-                "gregtech:" + id + " carries its pipe block entity");
+                "gt6ce:" + id + " carries its pipe block entity");
         return (FluidPipeBlockEntity) level.getBlockEntity(pos);
     }
 
@@ -358,7 +358,7 @@ public final class PipeCoverTests {
         FluidPipeBlockEntity pipe = pipe(helper, pos, PIPE);
 
         var air = GTFluids.still("Air_Nether");
-        helper.assertTrue(air != null && air.isPresent(), "gregtech:netherair is registered, got " + air);
+        helper.assertTrue(air != null && air.isPresent(), "gt6ce:netherair is registered, got " + air);
         int capacity = (int) pipe.getTankCapacity(0);
         helper.assertTrue(capacity > 0, "the pipe has a capacity, got " + capacity);
         FluidStack gas = new FluidStack(air.get(), capacity);

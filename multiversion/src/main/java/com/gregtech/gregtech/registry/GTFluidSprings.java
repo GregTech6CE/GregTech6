@@ -40,7 +40,7 @@ public final class GTFluidSprings {
                 if (spring == null) return super.getName(stack);
                 var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(
                         net.minecraft.resources.ResourceLocation.tryParse(spring.fluidId()));
-                return net.minecraft.network.chat.Component.translatable("block.gregtech.fluid_spring")
+                return net.minecraft.network.chat.Component.translatable("block.gt6ce.fluid_spring")
 //? if >=1.21.1 {
                         /*.append(" (").append(new net.neoforged.neoforge.fluids.FluidStack(fluid, 1000).getDisplayName()).append(")");
 *///?} else {

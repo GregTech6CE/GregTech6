@@ -42,18 +42,18 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class GTStructures {
 
-    /** {@code gregtech:gt_dungeon} as a structure type ({@code data/gregtech/worldgen/structure/gt_dungeon.json}). */
+    /** {@code gt6ce:gt_dungeon} as a structure type ({@code data/gt6ce/worldgen/structure/gt_dungeon.json}). */
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES =
 //? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_TYPE, "gregtech");
+            /*DeferredRegister.create(Registries.STRUCTURE_TYPE, "gt6ce");
 *///?} else {
             DeferredRegister.create(Registries.STRUCTURE_TYPE, GregTech.NAMESPACE);
 //?}
 
-    /** {@code gregtech:gt_dungeon_lattice} as a placement type, registered like vanilla's {@code random_spread}. */
+    /** {@code gt6ce:gt_dungeon_lattice} as a placement type, registered like vanilla's {@code random_spread}. */
     public static final DeferredRegister<StructurePlacementType<?>> PLACEMENT_TYPES =
 //? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, "gregtech");
+            /*DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, "gt6ce");
 *///?} else {
             DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, GregTech.NAMESPACE);
 //?}
@@ -61,7 +61,7 @@ public final class GTStructures {
     /** The anchor marker piece ({@link GTDungeonAnchorPiece}) needs a piece id to be saved with its chunk. */
     public static final DeferredRegister<StructurePieceType> PIECE_TYPES =
 //? if >=1.21.1 {
-            /*DeferredRegister.create(Registries.STRUCTURE_PIECE, "gregtech");
+            /*DeferredRegister.create(Registries.STRUCTURE_PIECE, "gt6ce");
 *///?} else {
             DeferredRegister.create(Registries.STRUCTURE_PIECE, GregTech.NAMESPACE);
 //?}
@@ -91,31 +91,31 @@ public final class GTStructures {
             PIECE_TYPES.register("gt_dungeon_anchor",
                     () -> (StructurePieceType.ContextlessType) GTDungeonAnchorPiece::new);
 
-    /** Key of the dungeon structure ({@code data/gregtech/worldgen/structure/gt_dungeon.json}). */
+    /** Key of the dungeon structure ({@code data/gt6ce/worldgen/structure/gt_dungeon.json}). */
     public static final ResourceKey<Structure> DUNGEON = ResourceKey.create(Registries.STRUCTURE,
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech", "gt_dungeon"));
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 *///?} else {
             ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
 //?}
 
-    /** Key of the structure set that carries the dungeon ({@code data/gregtech/worldgen/structure_set/gt_dungeons.json}). */
+    /** Key of the structure set that carries the dungeon ({@code data/gt6ce/worldgen/structure_set/gt_dungeons.json}). */
     public static final ResourceKey<StructureSet> DUNGEON_SET = ResourceKey.create(Registries.STRUCTURE_SET,
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech", "gt_dungeons"));
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeons"));
 *///?} else {
             ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeons"));
 //?}
 
     /**
-     * The dungeon in a tag of its own ({@code data/gregtech/tags/worldgen/structure/gt_dungeon.json}), so
-     * {@code /locate structure #gregtech:gt_dungeon} and
+     * The dungeon in a tag of its own ({@code data/gt6ce/tags/worldgen/structure/gt_dungeon.json}), so
+     * {@code /locate structure #gt6ce:gt_dungeon} and
      * {@code ServerLevel.findNearestMapStructure(TagKey, ...)} - the only public locate entry point
      * ({@code ServerLevel:1121-1134}) - can ask for it.
      */
     public static final TagKey<Structure> DUNGEON_TAG = TagKey.create(Registries.STRUCTURE,
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech", "gt_dungeon"));
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 *///?} else {
             ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "gt_dungeon"));
 //?}

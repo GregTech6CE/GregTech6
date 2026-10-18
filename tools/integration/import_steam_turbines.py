@@ -24,14 +24,14 @@ def main():
     loader=native_path(ns.source/'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')
     rows=re.findall(r'aRegistry\.add\(([^,\n]+),\s*"([^"]+)"\s*,\s*([^,]+)\s*,\s*(\d+)\s*,\s*([\w.]+)',loader.read_text(encoding='utf-8'))
     chinese=dict(line.lstrip()[2:].split('=',1) for line in ns.zh_patch.read_text(encoding='utf-8').splitlines() if line.lstrip().startswith('S:') and '=' in line)
-    langs={k:json.loads((ns.repo/f'core/src/main/resources/assets/gregtech/lang/{k}.json').read_text(encoding='utf-8')) for k in ('en_us','zh_cn')}
+    langs={k:json.loads((ns.repo/f'core/src/main/resources/assets/gt6ce/lang/{k}.json').read_text(encoding='utf-8')) for k in ('en_us','zh_cn')}
     assets,variants,models={},{},{}
     for layer in ('colored','overlay','overlay_active_ls','overlay_active_lf','overlay_active_rs','overlay_active_rf'):
         for face in ('front','back','side'):
-            rel=f'assets/gregtech/textures/blocks/machines/turbines/rotation_steam/{layer}/{face}.png'
+            rel=f'assets/gt6ce/textures/blocks/machines/turbines/rotation_steam/{layer}/{face}.png'
             canonical=native_path(ns.source/'src/main/resources'/rel)
             donor=canonical if canonical.is_file() else native_path(ns.comparison/'src/main/resources'/rel)
-            target=ns.repo/f'core/src/main/resources/assets/gregtech/textures/block/machines/turbines/rotation_steam/{layer}/{face}.png'
+            target=ns.repo/f'core/src/main/resources/assets/gt6ce/textures/block/machines/turbines/rotation_steam/{layer}/{face}.png'
             for orig,out in [(donor,target),(Path(str(donor)+'.mcmeta'),Path(str(target)+'.mcmeta'))]:
                 if not orig.is_file():
                     if orig==donor:raise ValueError('Missing source steam texture '+str(orig))
@@ -43,10 +43,10 @@ def main():
         ordinal,row=next((i,r) for i,r in enumerate(rows) if r[2].strip()==str(source_id))
         if row[1]!='Turbines' or not row[0].startswith('"Steam Turbine ("'):raise ValueError(row)
         source_key=f'gt.multitileentity.{source_id}'
-        langs['en_us']['block.gregtech.'+id]='Steam Turbine ('+name+')';langs['zh_cn']['block.gregtech.'+id]=chinese[source_key]
+        langs['en_us']['block.gt6ce.'+id]='Steam Turbine ('+name+')';langs['zh_cn']['block.gt6ce.'+id]=chinese[source_key]
         variants[id]={'source_id':source_id,'source_key':source_key,'name':'Steam Turbine ('+name+')','zh_cn':chinese[source_key],'source_order':ordinal}
         for platform in (str(native_path('src')),str(native_path('neoforge/src'))):
-            root=ns.repo/platform/'main/resources/assets/gregtech'
+            root=ns.repo/platform/'main/resources/assets/gt6ce'
             base=json.loads((root/'models/block/machine/energy/steam_turbine_bronze.json').read_text(encoding='utf-8'))
             if base['loader']!=('forge:composite' if platform=='src' else 'neoforge:composite'):raise ValueError('platform loader')
             for kind in ('','ls','lf','rs','rf'):
@@ -60,10 +60,10 @@ def main():
                 for activity,left,fast in itertools.product(range(3),(False,True),(False,True)):
                     key=f'facing={face},activity={activity},counter_clockwise={str(left).lower()},fast={str(fast).lower()}'
                     ext='_'+('l' if left else 'r')+('f' if fast else 's') if activity else ''
-                    states[key]={'model':f'gregtech:block/machine/energy/{id}{ext}',**rotation}
+                    states[key]={'model':f'gt6ce:block/machine/energy/{id}{ext}',**rotation}
             out=root/f'blockstates/{id}.json';write(out,{'variants':states});models[str(out.relative_to(ns.repo))]=sha(out)
-            out=root/f'models/item/{id}.json';write(out,{'parent':f'gregtech:block/machine/energy/{id}'});models[str(out.relative_to(ns.repo))]=sha(out)
-    for key,data in langs.items():write(ns.repo/f'core/src/main/resources/assets/gregtech/lang/{key}.json',data)
+            out=root/f'models/item/{id}.json';write(out,{'parent':f'gt6ce:block/machine/energy/{id}'});models[str(out.relative_to(ns.repo))]=sha(out)
+    for key,data in langs.items():write(ns.repo/f'core/src/main/resources/assets/gt6ce/lang/{key}.json',data)
     p=ns.repo/'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'
     s=p.read_text(encoding='utf-8')
     if 'initSteamTurbines();' not in s:s=s.replace('initMagnets();','initMagnets();\ninitSteamTurbines();')

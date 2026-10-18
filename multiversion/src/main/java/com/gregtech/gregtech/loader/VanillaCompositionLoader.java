@@ -17,7 +17,7 @@ import java.util.*;
 public final class VanillaCompositionLoader {
     private VanillaCompositionLoader() {}
     public static void register() {
-        try (var stream = VanillaCompositionLoader.class.getResourceAsStream("/data/gregtech/materials/vanilla_compositions.json")) {
+        try (var stream = VanillaCompositionLoader.class.getResourceAsStream("/data/gt6ce/materials/vanilla_compositions.json")) {
             if (stream == null) throw new IllegalStateException("Missing vanilla compositions");
             var json = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
             var errors = new ArrayList<String>();

@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
  * <p>Both C-Foam blocks are foamable, and both answer {@code removeFoam} by setting the block to air
  * ({@code BlockCFoamFresh:115-117} for the wet one, {@code BlockCFoam:63-65} for the hardened one), so
  * the spray removes hardened foam too. The wet/hardened pair is in the port as
- * {@code gregtech:cfoam_fresh} / {@code gregtech:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks:96-97}).</p>
+ * {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks:96-97}).</p>
  *
  * <h2>Port limits</h2>
  *
@@ -61,9 +61,9 @@ public final class BehaviorSprayFoamRemover {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable cFoamRemovalSpray() {
-        return new Consumable(ItemBehaviors.stack("gregtech:empty_spray_can"),
-                ItemBehaviors.stack("gregtech:c_foam_removal_spray_2"),
-                ItemBehaviors.stack("gregtech:c_foam_removal_spray"),
+        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+                ItemBehaviors.stack("gt6ce:c_foam_removal_spray_2"),
+                ItemBehaviors.stack("gt6ce:c_foam_removal_spray"),
                 USES * USES_MULTIPLIER);
     }
 

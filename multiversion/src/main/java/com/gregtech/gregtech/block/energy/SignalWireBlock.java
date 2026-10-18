@@ -83,7 +83,7 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 //?}
             if(!level.isClientSide && player.mayBuild() && level.mayInteract(player,pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity wire){
                 wire.setMode((wire.mode()+(player.isShiftKeyDown()?15:1))&15);
-                player.displayClientMessage(Component.translatable("message.gregtech.signal_wire.mode",wire.mode()),true);
+                player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode",wire.mode()),true);
 //? if >=1.21.1 {
                 /*NeoToolBindings.damageForUse(player.getItemInHand(hand),1,player);
 *///?} else {
@@ -138,8 +138,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
 *///?} else {
     @Override public void appendHoverText(ItemStack stack,BlockGetter level,List<Component> text,TooltipFlag flag){
 //?}
-        text.add(Component.translatable("tooltip.gregtech.signal_wire.range",range));
-        text.add(Component.translatable("tooltip.gregtech.signal_wire.controls"));
+        text.add(Component.translatable("tooltip.gt6ce.signal_wire.range",range));
+        text.add(Component.translatable("tooltip.gt6ce.signal_wire.controls"));
     }
     @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){
 //? if >=1.21.1 {

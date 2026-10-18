@@ -112,7 +112,7 @@ public final class ResinConservationTests {
     private static ItemStack stackableContainer(FluidStack fluid) {
         for(var item:net.minecraftforge.registries.ForgeRegistries.ITEMS) {
             var id=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item);
-            if(id==null || !id.getNamespace().equals("gregtech") || !id.getPath().startsWith("fluid_")) continue;
+            if(id==null || !id.getNamespace().equals("gt6ce") || !id.getPath().startsWith("fluid_")) continue;
             var stack=new ItemStack(item); if(stack.getMaxStackSize()<3) continue;
             if(com.gregtech.gregtech.api.fluid.HandContainerTransfer.prepare(stack,fluid,true)!=null) return stack;
         }

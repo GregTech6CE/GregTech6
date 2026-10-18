@@ -9,7 +9,7 @@ from native_layout import native_path
 
 import json, os
 
-BASE = str(native_path("src/main/resources/assets/gregtech/lang"))
+BASE = str(native_path("src/main/resources/assets/gt6ce/lang"))
 
 # Material display names (same as solid variants)
 MATERIAL_NAMES = {
@@ -57,12 +57,12 @@ def generate_entries():
     for fuel_key, (fuel_en, fuel_zh) in FUEL_TYPE_LABEL.items():
         for mat_key, mat_en in MATERIAL_NAMES.items():
             block_id = f"burning_box_{fuel_key}_{mat_key}"
-            entries_en[f"block.gregtech.{block_id}"] = f"Burning Box ({fuel_en}, {mat_en})"
-            entries_zh[f"block.gregtech.{block_id}"] = f"燃烧室 ({fuel_zh}, {MATERIAL_NAMES_ZH[mat_key]})"
+            entries_en[f"block.gt6ce.{block_id}"] = f"Burning Box ({fuel_en}, {mat_en})"
+            entries_zh[f"block.gt6ce.{block_id}"] = f"燃烧室 ({fuel_zh}, {MATERIAL_NAMES_ZH[mat_key]})"
         for mat_key, mat_en in MATERIAL_NAMES.items():
             block_id = f"burning_box_{fuel_key}_dense_{mat_key}"
-            entries_en[f"block.gregtech.{block_id}"] = f"Dense Burning Box ({fuel_en}, {mat_en})"
-            entries_zh[f"block.gregtech.{block_id}"] = f"致密燃烧室 ({fuel_zh}, {MATERIAL_NAMES_ZH[mat_key]})"
+            entries_en[f"block.gt6ce.{block_id}"] = f"Dense Burning Box ({fuel_en}, {mat_en})"
+            entries_zh[f"block.gt6ce.{block_id}"] = f"致密燃烧室 ({fuel_zh}, {MATERIAL_NAMES_ZH[mat_key]})"
     return entries_en, entries_zh
 
 

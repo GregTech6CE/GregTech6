@@ -28,7 +28,7 @@ import java.util.Set;
  * {@code Loader_Worldgen:576-578}): the water of oceans, rivers and swamps becomes GT6's own sea,
  * river and swamp water, whose blocks the port had to add first.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class WaterBodyTests {
     private static final int BASE_X = 50000;
@@ -63,9 +63,9 @@ public final class WaterBodyTests {
             }
             // The block must be a source block of the GT6 fluid with the same name.
             var fluidState = liquid.getFluidState(block.defaultBlockState());
-            String expected = kind.blockId().substring("gregtech:".length());
+            String expected = kind.blockId().substring("gt6ce:".length());
             ResourceLocation fluidId = ForgeRegistries.FLUIDS.getKey(fluidState.getType());
-            if (fluidId == null || !fluidId.toString().equals("gregtech:" + expected)) {
+            if (fluidId == null || !fluidId.toString().equals("gt6ce:" + expected)) {
                 problems.add(kind.blockId() + " carries " + fluidId);
             } else if (!fluidState.isSource()) {
                 problems.add(kind.blockId() + " does not default to a source block");
@@ -76,7 +76,7 @@ public final class WaterBodyTests {
         helper.assertTrue(GTFeatures.WATER_BODIES.getId().getPath().equals("gt_water_bodies"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTWaterBodyFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_water_bodies.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_water_bodies.json is loaded");
         helper.succeed();
     }
 
@@ -200,7 +200,7 @@ public final class WaterBodyTests {
     @Nullable
     private static BlockState state(String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 }

@@ -144,7 +144,7 @@ public final class CoinMoldBlock extends ShapedToolBlock implements EntityBlock 
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gregtech.coin_mold.1"));
-        tooltip.add(Component.translatable("tooltip.gregtech.coin_mold.2"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.coin_mold.1"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.coin_mold.2"));
     }
 }

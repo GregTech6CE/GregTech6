@@ -37,7 +37,7 @@ public final class CoverIssueTests {
     @GameTest(template="test_empty",timeoutTicks=60)
     public static void solarHasNoWaterAndCoverPlateHasDepth(GameTestHelper h) {
         var level=h.getLevel();var pos=site(120);
-        var solar=(SolarPanelBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","solar_panel_silicon"));
+        var solar=(SolarPanelBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","solar_panel_silicon"));
         var state=solar.defaultBlockState();
         h.assertTrue(!state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED),"solar has no waterlogged property");
         level.setBlockAndUpdate(pos,Blocks.WATER.defaultBlockState());
@@ -98,7 +98,7 @@ public final class CoverIssueTests {
     }
     private static BlockHitResult hit(BlockPos pos,Direction side) { return new BlockHitResult(Vec3.atCenterOf(pos),side,pos,false); }
     private static PanelCoverHost host(GameTestHelper h,BlockPos pos,String id) {
-        return (PanelCoverHost)place(h,pos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)));
+        return (PanelCoverHost)place(h,pos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)));
     }
     private static BasicMachineBlockEntity machine(GameTestHelper h,int x) {
 //? if >=1.21.1 {
@@ -111,7 +111,7 @@ public final class CoverIssueTests {
     @GameTest(template="test_empty",timeoutTicks=60)
     public static void coreTickInputAndDisplayDirection(GameTestHelper h) {
 //? if >=1.21.1 {
-        /*var core=(LogisticsCoreControllerBlockEntity)place(h,site(0),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_core")));
+        /*var core=(LogisticsCoreControllerBlockEntity)place(h,site(0),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_core")));
 *///?} else {
         var core=(LogisticsCoreControllerBlockEntity)place(h,site(0),GTLasers.LOGISTICS_CORE.get());
 //?}
@@ -131,7 +131,7 @@ public final class CoverIssueTests {
         var wallCell=LogisticsCoreStructure.cells().stream().filter(c->c.kind()==LogisticsCoreStructure.Kind.WALL).findFirst().orElseThrow();
         var wall=(MultiblockPortBlockEntity)h.getLevel().getBlockEntity(wallCell.at(core.getBlockPos(),front));
 //? if >=1.21.1 {
-        /*var wire=(com.gregtech.gregtech.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_wire")));
+        /*var wire=(com.gregtech.gregtech.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));
 *///?} else {
         var wire=(com.gregtech.gregtech.blockentity.machine.LogisticsWireBlockEntity)place(h,site(10),GTIconSetBlocks.LOGISTICS_WIRE.get());
 //?}
@@ -151,7 +151,7 @@ public final class CoverIssueTests {
     @GameTest(template="test_empty",timeoutTicks=40)
     public static void logisticsStorageAndCoveredWireStayDisconnected(GameTestHelper h) {
 //? if >=1.21.1 {
-        /*var tank=place(h,site(30),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_tank")));
+        /*var tank=place(h,site(30),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_tank")));
         var mass=place(h,site(34),BuiltInRegistries.BLOCK.stream().filter(b->b instanceof com.gregtech.gregtech.block.inventory.LogisticsMassStorageBlock).findFirst().orElseThrow());
 *///?} else {
         var tank=place(h,site(30),GTTanks.LOGISTICS_TANK.get());
@@ -169,13 +169,13 @@ public final class CoverIssueTests {
             h.assertTrue(!((PanelCoverHost)owner).attachCover(Direction.NORTH,cover("blank_cover")),"face cannot contain two cover families");
         }
 //? if >=1.21.1 {
-        /*var owner=place(h,site(40),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_wire")));var logistics=(LogisticsCoverHost)owner;
+        /*var owner=place(h,site(40),BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));var logistics=(LogisticsCoverHost)owner;
 *///?} else {
         var owner=place(h,site(40),GTIconSetBlocks.LOGISTICS_WIRE.get());var logistics=(LogisticsCoverHost)owner;
 //?}
         h.assertTrue(logistics.logisticsCovers().attach(Direction.EAST,cover(LogisticsCoverType.CPU_LOGIC.id())),"display attaches");
 //? if >=1.21.1 {
-        /*var adjacent=owner.getBlockPos().east();place(h,adjacent,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_wire")));
+        /*var adjacent=owner.getBlockPos().east();place(h,adjacent,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire")));
         h.getLevel().setBlockAndUpdate(adjacent,h.getLevel().getBlockState(adjacent).setValue(com.gregtech.gregtech.api.transport.PipeConnections.propFor(Direction.WEST),true));
         h.assertTrue(!owner.getBlockState().getValue(com.gregtech.gregtech.api.transport.PipeConnections.propFor(Direction.EAST)),"neighbor placement cannot open covered face");
 *///?} else {
@@ -312,7 +312,7 @@ public final class CoverIssueTests {
         for(int i=0;i<21;i++)UtilityCoverInteraction.use(host,p,InteractionHand.MAIN_HAND,hit(host.coverOwner().getBlockPos(),Direction.UP));
         h.assertTrue(CoverUtilityBehaviors.design(host.getCover(Direction.UP))==1,"held chisel cycles all twenty original designs");
         host.removeCover(Direction.UP);
-        var basaltPlate=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","plate_basalt")));
+        var basaltPlate=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","plate_basalt")));
         h.assertTrue(!basaltPlate.isEmpty()&&host.attachCover(Direction.UP,basaltPlate),"registered basalt plate accepts decorative cover");
         for(int i=0;i<17;i++)UtilityCoverInteraction.use(host,p,InteractionHand.MAIN_HAND,hit(host.coverOwner().getBlockPos(),Direction.UP));
         h.assertTrue(CoverUtilityBehaviors.design(host.getCover(Direction.UP))==1&&MaterialCoverRules.designCount("plate","Basalt")==16,"stone plate cycles sixteen original masonry designs");
@@ -329,7 +329,7 @@ public final class CoverIssueTests {
     @GameTest(template="test_empty",timeoutTicks=60)
     public static void drainBulkExperienceWalkAndFilterConnectionBoundary(GameTestHelper h) {
 //? if >=1.21.1 {
-        /*var pos=h.absolutePos(new BlockPos(4,4,4));clearOldItems(h,pos);var tank=(TankBlockEntity)place(h,pos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","drum_steel")));
+        /*var pos=h.absolutePos(new BlockPos(4,4,4));clearOldItems(h,pos);var tank=(TankBlockEntity)place(h,pos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","drum_steel")));
 *///?} else {
         var pos=h.absolutePos(new BlockPos(4,4,4));clearOldItems(h,pos);var tank=(TankBlockEntity)place(h,pos,GTTanks.DRUM_STEEL.get());
 //?}

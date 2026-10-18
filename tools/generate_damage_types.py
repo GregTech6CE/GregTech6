@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate GT6's damage types for 1.20.1 (data/gregtech/damage_type + vanilla damage-type tags + death messages).
+"""Generate GT6's damage types for 1.20.1 (data/gt6ce/damage_type + vanilla damage-type tags + death messages).
 
 Source of truth: GT6 `gregapi/damage/DamageSource*.java` and `gregapi/damage/DamageSources.java`.
 Every GT6 damage source is a `DamageSource` subclass whose only content is the source name and the
@@ -19,9 +19,9 @@ classes themselves do not exist in 1.20.1: `DamageSource` is a thin holder aroun
 `com.gregtech.gregtech.damage.GTDamageTypes` is the port of `DamageSources`.
 
 Generated (do not edit by hand):
-  - src/main/resources/data/gregtech/damage_type/<id>.json
+  - src/main/resources/data/gt6ce/damage_type/<id>.json
   - src/main/resources/data/minecraft/tags/damage_type/<tag>.json
-  - the `death.attack.gregtech.<id>` keys of assets/gregtech/lang/{en_us,zh_cn}.json  (merged, sorted)
+  - the `death.attack.gt6ce.<id>` keys of assets/gt6ce/lang/{en_us,zh_cn}.json  (merged, sorted)
 
 Usage: python tools/generate_damage_types.py [--check]
 """
@@ -110,12 +110,12 @@ TYPES = {
 }
 
 # message_id namespace: 1.20.1 death messages are `death.attack.<message_id>`, and the port already
-# ships `gregtech.heat` (see heat.json / lang), so every GT6 id is namespaced the same way.
-MESSAGE_NS = "gregtech"
+# ships `gt6ce.heat` (see heat.json / lang), so every GT6 id is namespaced the same way.
+MESSAGE_NS = "gt6ce"
 
 TAG_DIR = os.path.join(RES, "data", "minecraft", "tags", "damage_type")
-TYPE_DIR = os.path.join(RES, "data", "gregtech", "damage_type")
-LANG_DIR = os.path.join(RES, "assets", "gregtech", "lang")
+TYPE_DIR = os.path.join(RES, "data", "gt6ce", "damage_type")
+LANG_DIR = os.path.join(RES, "assets", "gt6ce", "lang")
 
 
 def dump(obj) -> str:
@@ -155,7 +155,7 @@ def main() -> int:
             body["effects"] = effects
         stale |= write(os.path.join(TYPE_DIR, type_id + ".json"), dump(body), check)
         for tag in type_tags:
-            tags.setdefault(tag, []).append("gregtech:" + type_id)
+            tags.setdefault(tag, []).append("gt6ce:" + type_id)
 
     for tag, values in sorted(tags.items()):
         stale |= write(os.path.join(TAG_DIR, tag + ".json"),

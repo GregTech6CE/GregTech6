@@ -23,7 +23,7 @@ import net.minecraftforge.items.IItemHandler;
  * allocated a fresh handle plus a fresh handler wrapper on every query, which is one object per neighbor per
  * tick for anything that caches the handle.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CapabilityHandleTests {
     private static final int BASE_X = 72000;

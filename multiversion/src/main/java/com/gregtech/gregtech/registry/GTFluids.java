@@ -52,8 +52,8 @@ import java.util.function.Consumer;
 //?}
 public final class GTFluids {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, "gregtech");
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, "gregtech");
+    /*public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, "gt6ce");
+    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, "gt6ce");
     private static final Map<String, DeferredHolder<Fluid, ? extends Fluid>> STILL = new LinkedHashMap<>(), FLOWING = new LinkedHashMap<>();
     private static final Map<ResourceLocation, RegisteredFluids.FluidEntry> ENTRIES = new LinkedHashMap<>();
     private GTFluids() {}

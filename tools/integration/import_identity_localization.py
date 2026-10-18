@@ -126,7 +126,7 @@ def resolve_material_collision(key, originals, proofs):
     # getTranslationKey() belongs to the actual material's internal name. A
     # same-named field in another category (e.g. Woods.Gold) must not replace it.
     canonical={original for _,original in proofs.get(key,set())
-               if original in originals and key=='material.gregtech.'+original.removeprefix('gt.material.').lower()}
+               if original in originals and key=='material.gt6ce.'+original.removeprefix('gt.material.').lower()}
     return canonical if len(canonical)==1 else originals
 
 
@@ -182,7 +182,7 @@ def numbered_item_identities(original):
             if native is None: continue
             native=aliases.get(native,native)
             if ':' in native: continue
-            key='item.gregtech.'+native
+            key='item.gt6ce.'+native
             value=f'gt.multiitem.{category}.{args[0]}'
             if key in result and result[key]!=value: raise ValueError('Ambiguous original item: '+key)
             result[key]=value
@@ -307,7 +307,7 @@ def material_fluid_english(original, identity_rows, material_data=None):
     if not all(any(formula in raw for formula in values) for values in formulas.values()):
         raise ValueError('Unsupported original generated fluid name formula')
     ids,names,files,_=material_identities(original) if material_data is None else material_data
-    targets={key:value for key,value,_ in identity_rows if key.startswith('fluid_type.gregtech.')}
+    targets={key:value for key,value,_ in identity_rows if key.startswith('fluid_type.gt6ce.')}
     result={}
     for key,_,ident in identity_rows:
         if not key.startswith('@fluid-proof.') or not ident.isdigit() or int(ident)<=0:continue
@@ -828,11 +828,11 @@ def main():
         if key.startswith('gt.lang.') and key in source and value:
             shared_phrases[value].add(key)
     for key,value in english.items():
-        if key.startswith('tooltip.gregtech.') and key not in aliases and len(shared_phrases[value])==1:
+        if key.startswith('tooltip.gt6ce.') and key not in aliases and len(shared_phrases[value])==1:
             candidates[key].update(shared_phrases[value])
-    shelves = ROOT/'core/src/main/resources/data/gregtech/bookshelf_variants.json'
+    shelves = ROOT/'core/src/main/resources/data/gt6ce/bookshelf_variants.json'
     for shelf in read_json(shelves)['variants']:
-        key = 'block.gregtech.'+shelf['path']
+        key = 'block.gt6ce.'+shelf['path']
         original = 'gt.multitileentity.'+str(shelf['gt6_id'])
         if original in source_en:
             candidates[key].add(original)
@@ -860,7 +860,7 @@ def main():
     files = sorted(set(files + pipe_files + wire_files))
     for key,original,fallback in identity_rows:
         if key.startswith(('@symbol.','@material-proof.','@fluid-proof.','@prefix-template.','@empty-template.')): continue
-        if key.startswith('material.gregtech.') and original.startswith('gt.material.'):
+        if key.startswith('material.gt6ce.') and original.startswith('gt.material.'):
             original=material_key(original.removeprefix('gt.material.'))
         original = pipes.get(original, original)
         candidates[key].add(original)
@@ -883,7 +883,7 @@ def main():
         original=next(iter(originals))
         if key not in english:
             if key in template_bindings:continue  # Compatibility-only prefixes need no unused language keys.
-            if key.startswith('fluid_type.gregtech.') and original not in source and key not in aliases:
+            if key.startswith('fluid_type.gt6ce.') and original not in source and key not in aliases:
                 # Native describe() already localizes the material when no complete
                 # fluid name is declared. Adding English here would shadow that
                 # Chinese fallback (e.g. Water / C-Foam / Molten Graphene).
@@ -893,11 +893,11 @@ def main():
                 continue
             if original in source_en:
                 english[key]=source_en[original]
-            elif len(fallbacks[key]) == 1 and key.startswith(('material.gregtech.','item.gregtech.tab_icon_', 'block.gregtech.bookshelf','itemGroup.gregtech.')):
+            elif len(fallbacks[key]) == 1 and key.startswith(('material.gt6ce.','item.gt6ce.tab_icon_', 'block.gt6ce.bookshelf','itemGroup.gt6ce.')):
                 english[key]=source_en.get(original,next(iter(fallbacks[key])))
             # Modern fluid paths are sanitized; reuse the existing English declaration.
-            elif key.startswith('fluid_type.gregtech.'):
-                legacy='fluid_type.gregtech.'+original.removeprefix('fluid.')
+            elif key.startswith('fluid_type.gt6ce.'):
+                legacy='fluid_type.gt6ce.'+original.removeprefix('fluid.')
                 if legacy not in english:continue
                 english[key]=english[legacy]
             else:continue
@@ -909,9 +909,9 @@ def main():
                 ident=next(iter(material_proofs[key]))[0]
                 conflicts[key]={'before':aliases[key],'after':original,'source_material_id':ident,
                                 'reason':'Actual shared material ID matches original MT declaration; old field alias is not the material internal name'}
-            elif key=='block.gregtech.mortar_block':
+            elif key=='block.gt6ce.mortar_block':
                 conflicts[key]={'before':aliases[key],'after':original,'reason':'Original ceramic mortar:32735; sapphire tool variant:32075'}
-            elif key=='block.gregtech.wood_barrel' and original=='gt.multitileentity.32733':
+            elif key=='block.gt6ce.wood_barrel' and original=='gt.multitileentity.32733':
                 conflicts[key]={'before':aliases[key],'after':original,'reason':'CheapWoodBarrelCatalog retains the original lead-rod cheap barrel, not the normal barrel 32714'}
             elif key.endswith('.tooltip') and aliases.get(key[:-8], '') + '.tooltip' == original:
                 conflicts[key]={'before':aliases[key],'after':original,'reason':'Description belongs to the accepted original item number, even when multiple items share its text'}
@@ -921,7 +921,7 @@ def main():
             added[key]=original;aliases[key]=original
     added_tooltips={}
     for key,original in list(aliases.items()):
-        if not key.startswith('item.gregtech.') or key.endswith('.tooltip') or not original.startswith('gt.multiitem.'):continue
+        if not key.startswith('item.gt6ce.') or key.endswith('.tooltip') or not original.startswith('gt.multiitem.'):continue
         native,legacy=key+'.tooltip',original+'.tooltip'
         if key in english and native not in english and legacy in source and legacy in source_en:
             english[native]=source_en[legacy];aliases[native]=legacy;added_tooltips[native]=legacy

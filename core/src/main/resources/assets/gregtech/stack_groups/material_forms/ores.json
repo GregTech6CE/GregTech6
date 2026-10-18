@@ -1,6 +1,0 @@
-{
-  "type": "remi:group",
-  "name": "itemGroup.gregtech.ore",
-  "regex": "^item:gregtech:(?:ore_|ore_small_|ore_broken_|ore_bedrock_)[a-z0-9_]+$",
-  "priority": 110
-}

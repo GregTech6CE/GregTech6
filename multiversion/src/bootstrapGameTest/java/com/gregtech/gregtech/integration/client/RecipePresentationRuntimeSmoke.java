@@ -34,7 +34,7 @@ public final class RecipePresentationRuntimeSmoke {
         catch(ReflectiveOperationException e){throw new IllegalStateException(e);}
         var actualRows=new HashMap<String,java.util.List<dev.emi.emi.api.recipe.EmiRecipe>>();
         if(EMI)for(var row:dev.emi.emi.api.EmiApi.getRecipeManager().getRecipes()) {
-            var id=row.getCategory().getId();if(id.getNamespace().equals("gregtech"))actualRows.computeIfAbsent(id.getPath(),key->new ArrayList<>()).add(row);
+            var id=row.getCategory().getId();if(id.getNamespace().equals("gt6ce"))actualRows.computeIfAbsent(id.getPath(),key->new ArrayList<>()).add(row);
         }
         int projected=0,hidden=0,categories=0;long jeiRows=0,emiRows=0,retained=0;
         var hiddenPools=new JsonObject();
@@ -77,7 +77,7 @@ public final class RecipePresentationRuntimeSmoke {
         require(selected.mViewerAllowed&&selected.mRecipeList.stream().anyMatch(r->r.mEnabled&&!r.mHidden),"actual displayed source recipe");
         if(EMI) {
             Recipe wanted=compat;
-            var row=dev.emi.emi.api.EmiApi.getRecipeManager().getRecipes().stream().filter(r->r.getCategory().getId().getNamespace().equals("gregtech")&&r.getCategory().getId().getPath().equals(selected.mNameInternal)&&outputsWanted(r,wanted)).findFirst().orElseThrow();
+            var row=dev.emi.emi.api.EmiApi.getRecipeManager().getRecipes().stream().filter(r->r.getCategory().getId().getNamespace().equals("gt6ce")&&r.getCategory().getId().getPath().equals(selected.mNameInternal)&&outputsWanted(r,wanted)).findFirst().orElseThrow();
             dev.emi.emi.api.EmiApi.displayRecipe(row);
         } else {
             var row=compat!=null?compat:selected.mRecipeList.stream().filter(r->r.mEnabled&&!r.mHidden).findFirst().orElseThrow();

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_nanofab",
+  "contents": [
+    "item:gt6ce:nanofab_aluminium",
+    "item:gt6ce:nanofab_chromium",
+    "item:gt6ce:nanofab_galvanized_steel",
+    "item:gt6ce:nanofab_stainless_steel",
+    "item:gt6ce:nanofab_titanium"
+  ],
+  "priority": 110
+}

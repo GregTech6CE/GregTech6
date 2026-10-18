@@ -20,10 +20,10 @@ import java.util.concurrent.atomic.AtomicReference;
 /** Native registrations from the shared catalog; original large recipe/matter/distillation factories are bound. */
 public final class BasicMachineRegistries {
  private BasicMachineRegistries(){}
- public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gregtech");
- public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gregtech");
- public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
- public static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(Registries.MENU,"gregtech");
+ public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
+ public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
+ public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
+ public static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(Registries.MENU,"gt6ce");
  public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.BasicMachineContainerMenu>> MENU=MENUS.register("basic_machine",()->IMenuTypeExtension.create(com.gregtech.gregtech.client.gui.BasicMachineContainerMenu::new));
  private static final List<DeferredHolder<Block,BasicMachineBlock>> MACHINES=new ArrayList<>();
  private static final List<DeferredHolder<BlockEntityType<?>,BlockEntityType<BasicMachineBlockEntity>>> TYPES=new ArrayList<>();

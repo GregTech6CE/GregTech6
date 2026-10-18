@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "gregtech:block/iconsets/zpm_top",
-    "side": "gregtech:block/iconsets/zpm_sides",
-    "bottom": "gregtech:block/iconsets/zpm_bottom"
-  }
-}

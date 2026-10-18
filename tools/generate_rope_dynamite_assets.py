@@ -22,7 +22,7 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 LANG = ASSETS / "lang"
 
 # port id -> (existing blockstate to copy, english name, chinese name)
@@ -52,13 +52,13 @@ def main() -> None:
             variant["model"] = variant["model"].replace(f"/{template}", f"/{template}")
         write(ASSETS / "blockstates" / f"{new_id}.json", state)
         write(ASSETS / "models/item" / f"{new_id}.json",
-              {"parent": f"gregtech:block/machine/tool/{template}"})
+              {"parent": f"gt6ce:block/machine/tool/{template}"})
 
     for name, key_en, key_zh in (("en_us.json", "english", "chinese"), ("zh_cn.json", "chinese", "english")):
         path = LANG / name
         data = json.loads(path.read_text(encoding="utf-8"))
         for new_id, (_template, english, chinese) in NEW.items():
-            data.setdefault(f"block.gregtech.{new_id}", english if name == "en_us.json" else chinese)
+            data.setdefault(f"block.gt6ce.{new_id}", english if name == "en_us.json" else chinese)
         path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                         encoding="utf-8")
     print(f"wrote {len(NEW)} blockstates, item models and lang keys")

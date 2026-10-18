@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.gametest.*;
 import java.util.ArrayList;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MachineFluidMenuTests {
     private static final class RecordingMenu extends BasicMachineContainerMenu {

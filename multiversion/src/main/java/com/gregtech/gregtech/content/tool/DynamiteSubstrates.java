@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.Block;
 /** GT6 BlocksGT.drillableDynamite + natural stone/ore; shared by placement and support checks. */
 public final class DynamiteSubstrates {
     public static final TagKey<Block> DRILLABLE = TagKey.create(Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("gregtech", "drillable_dynamite"));
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "drillable_dynamite"));
     private DynamiteSubstrates() {}
 
     public static boolean canDrill(BlockGetter level, BlockPos pos) {

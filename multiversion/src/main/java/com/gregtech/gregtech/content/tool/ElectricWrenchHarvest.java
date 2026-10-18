@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** GT_Tool_Wrench_LV: original wrench targets, material quality, and twice material speed. */
 public final class ElectricWrenchHarvest {
-    private static final net.minecraft.tags.TagKey<Block> WRENCH=BlockTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","mineable/wrench"));
-    private static final net.minecraft.tags.TagKey<Block> MONKEY_WRENCH=BlockTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","mineable/monkey_wrench"));
+    private static final net.minecraft.tags.TagKey<Block> WRENCH=BlockTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","mineable/wrench"));
+    private static final net.minecraft.tags.TagKey<Block> MONKEY_WRENCH=BlockTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","mineable/monkey_wrench"));
     private ElectricWrenchHarvest() {}
     public static boolean target(BlockState state) {
         Block block=state.getBlock();

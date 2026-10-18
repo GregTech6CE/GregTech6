@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @PrefixGameTestTemplate(false)
 public final class LogisticsCpuDisplayTests {
     private static ItemStack cover(LogisticsCoverType type) {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", type.id()));
+        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", type.id()));
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 

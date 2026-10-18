@@ -24,9 +24,9 @@ Forge 和 NeoForge 的注册、网络、能力、物品组件及客户端 API �
 
 ## 模组名称与 ID
 
-两版显示名称均为 `GregTech 6 Community Edition`，加载 ID 均为 `gregtech6`，元数据读取根目录 `gradle.properties`。两平台入口和事件订阅使用共享的 `GregTechIdentity.MOD_ID`。
+两版显示名称均为 `GregTech 6 Community Edition`，加载 ID 均为 `gt6ce`，元数据读取根目录 `gradle.properties`。两平台入口和事件订阅使用共享的 `GregTechIdentity.MOD_ID`。
 
-现有物品、方块、配方、模型、翻译和网络通道仍使用 `gregtech:` 内部命名空间。这与加载 ID 是不同用途；本次不批量改动注册身份和保存数据。配置文件默认名称可能随加载 ID 改变，原有自定义配置需手动核对迁移。旧世界和跨版本升级兼容仍未验证。
+物品、方块、流体、配方、模型和网络通道统一使用 `gt6ce:`，资源目录为 `assets/gt6ce`、`data/gt6ce`，移植版翻译键使用对应的 `gt6ce` 前缀。原版汉化来源键与文本、Java 包及许可证目录保持原样。原 `gregtech:` 身份不保留兼容映射，旧存档与引用旧 ID 的脚本需要另行迁移。
 
 ## 环境准备
 
@@ -55,7 +55,7 @@ Forge 1.20.1：
 .\gradlew.bat --console=plain :multiversion:1.20.1-forge:distributionJar
 ```
 
-当前输出：`multiversion/versions/1.20.1-forge/build/libs/gregtech6-1.20.1-forge-0.0.0.jar`。
+当前输出：`multiversion/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-0.0.0.jar`。
 
 NeoForge 1.21.1：
 
@@ -63,7 +63,7 @@ NeoForge 1.21.1：
 .\gradlew.bat --console=plain :multiversion:1.21.1-neoforge:jar
 ```
 
-当前输出：`multiversion/versions/1.21.1-neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar`。
+当前输出：`multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-0.0.0.jar`。
 
 一次生成两个版本：
 

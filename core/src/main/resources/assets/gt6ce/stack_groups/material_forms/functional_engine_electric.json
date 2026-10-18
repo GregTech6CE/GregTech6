@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_engine_electric",
+  "contents": [
+    "item:gt6ce:engine_electric_aluminium",
+    "item:gt6ce:engine_electric_chromium",
+    "item:gt6ce:engine_electric_galvanized_steel",
+    "item:gt6ce:engine_electric_stainless_steel",
+    "item:gt6ce:engine_electric_titanium"
+  ],
+  "priority": 110
+}

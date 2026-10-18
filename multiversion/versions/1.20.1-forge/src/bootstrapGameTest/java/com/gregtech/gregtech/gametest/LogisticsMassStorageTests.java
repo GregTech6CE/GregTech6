@@ -55,7 +55,7 @@ public final class LogisticsMassStorageTests {
                             == spec.material().getToolQuality(),
                     "both storages of " + spec.suffix() + " require the GT6 wrench and material quality");
             helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                    "gregtech", "hand/storage/logistics_mass_storage_" + spec.suffix())).isPresent(),
+                    "gt6ce", "hand/storage/logistics_mass_storage_" + spec.suffix())).isPresent(),
                     "variant " + spec.suffix() + " has its GT6 survival recipe");
         }
         helper.succeed();
@@ -68,7 +68,7 @@ public final class LogisticsMassStorageTests {
                 .findFirst().orElseThrow();
         var spec = GTStorageMetals.ALL.get(index);
         var block = GTStorage.LOGISTICS_MASS_STORAGES.get(index).get();
-        var wrenchTag = BlockTags.create(ResourceLocation.fromNamespaceAndPath("gregtech", "mineable/wrench"));
+        var wrenchTag = BlockTags.create(ResourceLocation.fromNamespaceAndPath("gt6ce", "mineable/wrench"));
         helper.assertTrue(block.defaultBlockState().is(wrenchTag)
                         && !block.defaultBlockState().is(BlockTags.MINEABLE_WITH_PICKAXE),
                 "the logistics casing is dismantled with a wrench, not a pickaxe");
@@ -112,9 +112,9 @@ public final class LogisticsMassStorageTests {
         var source = (ChestBlockEntity) helper.getLevel().getBlockEntity(sourcePos.east());
         var storage = (LogisticsMassStorageBlockEntity) helper.getLevel().getBlockEntity(storagePos);
         var importItem = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", LogisticsCoverType.GENERIC_IMPORT.id()));
+                "gt6ce", LogisticsCoverType.GENERIC_IMPORT.id()));
         var exportItem = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", LogisticsCoverType.GENERIC_EXPORT.id()));
+                "gt6ce", LogisticsCoverType.GENERIC_EXPORT.id()));
         helper.assertTrue(importItem != null && exportItem != null
                         && sourceWire.logisticsCovers().attach(Direction.EAST, new ItemStack(importItem))
                         && storage.itemStoragePriority() == 1 && storage.fluidStoragePriority() == 0

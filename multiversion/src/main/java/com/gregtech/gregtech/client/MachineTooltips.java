@@ -123,7 +123,7 @@ public final class MachineTooltips {
         // Energy IN: None
         tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.none")
+                /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.none")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.none")
 //?}
@@ -154,7 +154,7 @@ public final class MachineTooltips {
     public static void appendFurnaceFuelRecipes(List<Component> tooltip) {
         tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.recipes.furnace_fuels")
+                /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.recipes.furnace_fuels")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.recipes.furnace_fuels")
 //?}
@@ -182,7 +182,7 @@ public final class MachineTooltips {
 
     public static void appendRequiresAirFront(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.requirement.air_front")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.air_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.air_front")
 //?}
@@ -191,7 +191,7 @@ public final class MachineTooltips {
 
     public static void appendRequiresAshesFront(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.requirement.ashes_front")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ashes_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ashes_front")
 //?}
@@ -200,7 +200,7 @@ public final class MachineTooltips {
 
     public static void appendRequiresIgnitionFront(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.requirement.ignite_front")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ignite_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ignite_front")
 //?}
@@ -209,7 +209,7 @@ public final class MachineTooltips {
 
     public static void appendNoGuiClickFront(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.nogui.click_front")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.nogui.click_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.nogui.click_front")
 //?}
@@ -218,7 +218,7 @@ public final class MachineTooltips {
 
     public static void appendHazardFire(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.hazard.fire", 4)
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.fire", 4)
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.fire", 4)
 //?}
@@ -227,7 +227,7 @@ public final class MachineTooltips {
 
     public static void appendHazardContactTop(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.hazard.contact_top")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.contact_top")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.contact_top")
 //?}
@@ -236,7 +236,7 @@ public final class MachineTooltips {
 
     public static void appendShovelEmpty(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.tool.shovel_empty")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.shovel_empty")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.shovel_empty")
 //?}
@@ -245,7 +245,7 @@ public final class MachineTooltips {
 
     public static void appendWrenchFacing(List<Component> tooltip) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".machine.tool.wrench_facing")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.wrench_facing")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.wrench_facing")
 //?}

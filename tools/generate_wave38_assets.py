@@ -10,7 +10,7 @@ from native_layout import native_path
 
 import json, os
 
-ASSETS = str(native_path("src/main/resources/assets/gregtech"))
+ASSETS = str(native_path("src/main/resources/assets/gt6ce"))
 BLOCKSTATES = f"{ASSETS}/blockstates"
 MODELS_BLOCK = f"{ASSETS}/models/block"
 MODELS_ITEM = f"{ASSETS}/models/item"
@@ -35,7 +35,7 @@ for mat in AXLE_MATERIALS:
         tint = 0 if mat == "wood" else 1
 
         # Blockstate: simple variant fallback (dynamic model replaces at runtime)
-        bs = {"variants": {"": {"model": f"gregtech:block/{id_str}"}}}
+        bs = {"variants": {"": {"model": f"gt6ce:block/{id_str}"}}}
         write_json(f"{BLOCKSTATES}/{id_str}.json", bs)
 
         # Block model: thin rod core
@@ -57,7 +57,7 @@ for mat in AXLE_MATERIALS:
         write_json(f"{MODELS_BLOCK}/{id_str}.json", model)
 
         # Item model
-        item = {"parent": f"gregtech:block/{id_str}"}
+        item = {"parent": f"gt6ce:block/{id_str}"}
         write_json(f"{MODELS_ITEM}/{id_str}.json", item)
 
 # ── Gearboxes ──────────────────────────────────────────────────────────────
@@ -67,12 +67,12 @@ for mat in AXLE_MATERIALS:
 
     # Blockstate with FACING
     bs = {"variants": {
-        "facing=down":  {"model": f"gregtech:block/{id_str}", "x": 90},
-        "facing=up":    {"model": f"gregtech:block/{id_str}", "x": 270},
-        "facing=north": {"model": f"gregtech:block/{id_str}"},
-        "facing=south": {"model": f"gregtech:block/{id_str}", "y": 180},
-        "facing=west":  {"model": f"gregtech:block/{id_str}", "y": 270},
-        "facing=east":  {"model": f"gregtech:block/{id_str}", "y": 90},
+        "facing=down":  {"model": f"gt6ce:block/{id_str}", "x": 90},
+        "facing=up":    {"model": f"gt6ce:block/{id_str}", "x": 270},
+        "facing=north": {"model": f"gt6ce:block/{id_str}"},
+        "facing=south": {"model": f"gt6ce:block/{id_str}", "y": 180},
+        "facing=west":  {"model": f"gt6ce:block/{id_str}", "y": 270},
+        "facing=east":  {"model": f"gt6ce:block/{id_str}", "y": 90},
     }}
     write_json(f"{BLOCKSTATES}/{id_str}.json", bs)
 
@@ -89,7 +89,7 @@ for mat in AXLE_MATERIALS:
         }
     }
     write_json(f"{MODELS_BLOCK}/{id_str}.json", model)
-    item = {"parent": f"gregtech:block/{id_str}"}
+    item = {"parent": f"gt6ce:block/{id_str}"}
     write_json(f"{MODELS_ITEM}/{id_str}.json", item)
 
 # ── Rotation Transformers ──────────────────────────────────────────────────
@@ -100,12 +100,12 @@ for mat in RT_MATS:
     tex = "block/material_icons/metallic/machine_bottom"
 
     bs = {"variants": {
-        "facing=down":  {"model": f"gregtech:block/{id_str}", "x": 90},
-        "facing=up":    {"model": f"gregtech:block/{id_str}", "x": 270},
-        "facing=north": {"model": f"gregtech:block/{id_str}"},
-        "facing=south": {"model": f"gregtech:block/{id_str}", "y": 180},
-        "facing=west":  {"model": f"gregtech:block/{id_str}", "y": 270},
-        "facing=east":  {"model": f"gregtech:block/{id_str}", "y": 90},
+        "facing=down":  {"model": f"gt6ce:block/{id_str}", "x": 90},
+        "facing=up":    {"model": f"gt6ce:block/{id_str}", "x": 270},
+        "facing=north": {"model": f"gt6ce:block/{id_str}"},
+        "facing=south": {"model": f"gt6ce:block/{id_str}", "y": 180},
+        "facing=west":  {"model": f"gt6ce:block/{id_str}", "y": 270},
+        "facing=east":  {"model": f"gt6ce:block/{id_str}", "y": 90},
     }}
     write_json(f"{BLOCKSTATES}/{id_str}.json", bs)
 
@@ -119,7 +119,7 @@ for mat in RT_MATS:
         }
     }
     write_json(f"{MODELS_BLOCK}/{id_str}.json", model)
-    item = {"parent": f"gregtech:block/{id_str}"}
+    item = {"parent": f"gt6ce:block/{id_str}"}
     write_json(f"{MODELS_ITEM}/{id_str}.json", item)
 
 # ── Pumps ──────────────────────────────────────────────────────────────────
@@ -130,12 +130,12 @@ for mat in PUMP_MATS:
     tex = "block/material_icons/metallic/machine_bottom"
 
     bs = {"variants": {
-        "facing=down":  {"model": f"gregtech:block/{id_str}", "x": 90},
-        "facing=up":    {"model": f"gregtech:block/{id_str}", "x": 270},
-        "facing=north": {"model": f"gregtech:block/{id_str}"},
-        "facing=south": {"model": f"gregtech:block/{id_str}", "y": 180},
-        "facing=west":  {"model": f"gregtech:block/{id_str}", "y": 270},
-        "facing=east":  {"model": f"gregtech:block/{id_str}", "y": 90},
+        "facing=down":  {"model": f"gt6ce:block/{id_str}", "x": 90},
+        "facing=up":    {"model": f"gt6ce:block/{id_str}", "x": 270},
+        "facing=north": {"model": f"gt6ce:block/{id_str}"},
+        "facing=south": {"model": f"gt6ce:block/{id_str}", "y": 180},
+        "facing=west":  {"model": f"gt6ce:block/{id_str}", "y": 270},
+        "facing=east":  {"model": f"gt6ce:block/{id_str}", "y": 90},
     }}
     write_json(f"{BLOCKSTATES}/{id_str}.json", bs)
 
@@ -149,7 +149,7 @@ for mat in PUMP_MATS:
         }
     }
     write_json(f"{MODELS_BLOCK}/{id_str}.json", model)
-    item = {"parent": f"gregtech:block/{id_str}"}
+    item = {"parent": f"gt6ce:block/{id_str}"}
     write_json(f"{MODELS_ITEM}/{id_str}.json", item)
 
 print("\nDone! Generated all Wave 38 asset files.")

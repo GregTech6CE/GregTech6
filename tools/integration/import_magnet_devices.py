@@ -34,7 +34,7 @@ def main():
     rows = re.findall(r'aRegistry\.add\(([^,\n]+),\s*"([^"]+)"\s*,\s*([^,]+)\s*,\s*(\d+)\s*,\s*([\w.]+)', loader.read_text(encoding='utf-8'))
     chinese = dict(line.lstrip()[2:].split('=', 1) for line in ns.zh_patch.read_text(encoding='utf-8').splitlines()
                    if line.lstrip().startswith('S:') and '=' in line)
-    locales = {locale: json.loads((ns.repo/f'core/src/main/resources/assets/gregtech/lang/{locale}.json').read_text(encoding='utf-8'))
+    locales = {locale: json.loads((ns.repo/f'core/src/main/resources/assets/gt6ce/lang/{locale}.json').read_text(encoding='utf-8'))
                for locale in ('en_us', 'zh_cn')}
     variants, assets, models = [], {}, {}
     tiers = ('lv', 'mv', 'hv', 'ev', 'iv')
@@ -43,10 +43,10 @@ def main():
         folder = 'magnets/magnet_' + ('flux' if rf else 'electric')
         for layer in ('colored', 'overlay', 'overlay_active'):
             for face in ('front', 'back', 'side'):
-                rel = f'assets/gregtech/textures/blocks/machines/{folder}/{layer}/{face}.png'
+                rel = f'assets/gt6ce/textures/blocks/machines/{folder}/{layer}/{face}.png'
                 canonical = native_path(ns.source/'src/main/resources'/rel)
                 donor = canonical if canonical.is_file() else native_path(ns.comparison/'src/main/resources'/rel)
-                target = ns.repo/f'core/src/main/resources/assets/gregtech/textures/block/machines/{folder}/{layer}/{face}.png'
+                target = ns.repo/f'core/src/main/resources/assets/gt6ce/textures/block/machines/{folder}/{layer}/{face}.png'
                 if not target.is_file() or not donor.is_file() or sha(target) != sha(donor):
                     raise ValueError('Existing magnet asset needs inspection: ' + str(target))
                 assets[str(target.relative_to(ns.repo))] = {'source': str(donor), 'sha256': sha(donor), 'canonical_available': canonical.is_file()}
@@ -55,21 +55,21 @@ def main():
             ordinal, row = next((n, r) for n, r in enumerate(rows) if r[2].strip() == str(source_id))
             name = ('Flux Magnet (' + flux[i] if rf else 'Electromagnet (' + tier.upper()) + ')'
             id = ('flux_magnet_' if rf else 'electromagnet_') + tier
-            source_key, key = f'gt.multitileentity.{source_id}', 'block.gregtech.'+id
+            source_key, key = f'gt.multitileentity.{source_id}', 'block.gt6ce.'+id
             if row[1] != 'Magnets' or not row[0].lstrip().startswith('"' + ('Flux Magnet (' if rf else 'Electromagnet (')):
                 raise ValueError(row)
             locales['en_us'][key], locales['zh_cn'][key] = name, chinese[source_key]
             variants.append({'id': id, 'source_id': source_id, 'source_key': source_key, 'en_us': name,
                              'zh_cn': chinese[source_key], 'source_order': ordinal, 'creative_family': 'magnets'})
             for platform in (str(native_path('src')), str(native_path('neoforge/src'))):
-                root = ns.repo/platform/'main/resources/assets/gregtech'
+                root = ns.repo/platform/'main/resources/assets/gt6ce'
                 state_path = root/f'blockstates/{id}.json'
                 states = json.loads(state_path.read_text())['variants']
                 # These twelve selectors intentionally omit waterlogged and cover both native values.
                 if len(states) != 12: raise ValueError('Expected six facing / two overlay selectors')
                 for key, state in states.items():
                     properties = dict(pair.split('=') for pair in key.split(','))
-                    if state['model'] != f'gregtech:block/machine/energy/{id}' + ('_active' if properties['active'] == 'true' else ''):
+                    if state['model'] != f'gt6ce:block/machine/energy/{id}' + ('_active' if properties['active'] == 'true' else ''):
                         raise ValueError((key,state))
                 for active in (False, True):
                     model_path = root/f'models/block/machine/energy/{id}{"_active" if active else ""}.json'
@@ -83,10 +83,10 @@ def main():
                     models[str(model_path.relative_to(ns.repo))] = sha(model_path)
                 models[str(state_path.relative_to(ns.repo))] = sha(state_path)
                 item_path = root/f'models/item/{id}.json'
-                if json.loads(item_path.read_text())['parent'] != f'gregtech:block/machine/energy/{id}': raise ValueError(item_path)
+                if json.loads(item_path.read_text())['parent'] != f'gt6ce:block/machine/energy/{id}': raise ValueError(item_path)
                 models[str(item_path.relative_to(ns.repo))] = sha(item_path)
     for locale, data in locales.items():
-        (ns.repo/f'core/src/main/resources/assets/gregtech/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+        (ns.repo/f'core/src/main/resources/assets/gt6ce/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     catalog = ns.repo/'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'
     text = catalog.read_text(encoding='utf-8')
     if 'initMagnets();' not in text: text = text.replace('initThermal();', 'initThermal();\ninitMagnets();')

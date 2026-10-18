@@ -34,10 +34,10 @@ def model(texture, front=None, secondary=None):
             if layer == 'colored':
                 faces[side]['tintindex'] = 0
         keys = {face['texture'][1:] for face in faces.values()}
-        children[layer] = {'textures': {k: f'gregtech:block/machines/extenders/{texture}/{layer}/{k}' for k in sorted(keys)},
+        children[layer] = {'textures': {k: f'gt6ce:block/machines/extenders/{texture}/{layer}/{k}' for k in sorted(keys)},
                            'elements': [{'from': [0, 0, 0], 'to': [16, 16, 16], 'faces': faces}], 'render_type': 'minecraft:cutout'}
     return {'parent': 'minecraft:block/block', 'loader': 'forge:composite', 'render_type': 'minecraft:cutout',
-            'textures': {'particle': f'gregtech:block/machines/extenders/{texture}/colored/side'}, 'children': children}
+            'textures': {'particle': f'gt6ce:block/machines/extenders/{texture}/colored/side'}, 'children': children}
 
 
 def main():
@@ -46,15 +46,15 @@ def main():
         variants = {}
         if bridge:
             write(f'models/block/logistics/{name}.json', model(texture))
-            variants[''] = {'model': f'gregtech:block/logistics/{name}'}
-            inventory = f'gregtech:block/logistics/{name}'
+            variants[''] = {'model': f'gt6ce:block/logistics/{name}'}
+            inventory = f'gt6ce:block/logistics/{name}'
         else:
             for front in DIRECTIONS:
                 for secondary in DIRECTIONS:
                     target = f'block/logistics/{name}/{front}_{secondary}'
                     write(f'models/{target}.json', model(texture, front, secondary))
-                    variants[f'facing={front},secondary={secondary}'] = {'model': 'gregtech:' + target}
-            inventory = f'gregtech:block/logistics/{name}/north_south'
+                    variants[f'facing={front},secondary={secondary}'] = {'model': 'gt6ce:' + target}
+            inventory = f'gt6ce:block/logistics/{name}/north_south'
         write(f'blockstates/{name}.json', {'variants': variants})
         write(f'models/item/{name}.json', {'parent': inventory})
         keys = {'M': 'casing_machine_double_steel' if 'inventory_tank' in name else 'casing_machine_steel',
@@ -64,9 +64,9 @@ def main():
                     'Y': 'item_pipe_medium_platinum', 'S': 'spring_stainlesssteel',
                     'G': 'gear_gt_stainlesssteel', 'R': 'rotor_stainlesssteel', 'C': 'circuit_advanced'}
         used = set(''.join(pattern)) - {' '}
-        recipe = {'type': 'gregtech:tool_shaped', 'pattern': pattern,
-                  'key': {k: {'item': 'gregtech:' + keys[k]} for k in sorted(used)}, 'result': {'item': 'gregtech:' + name}}
-        path = native_path(ROOT / f'src/main/resources/data/gregtech/recipes/logistics/{name}.json')
+        recipe = {'type': 'gt6ce:tool_shaped', 'pattern': pattern,
+                  'key': {k: {'item': 'gt6ce:' + keys[k]} for k in sorted(used)}, 'result': {'item': 'gt6ce:' + name}}
+        path = native_path(ROOT / f'src/main/resources/data/gt6ce/recipes/logistics/{name}.json')
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(recipe, indent=2) + '\n', encoding='utf-8')
 

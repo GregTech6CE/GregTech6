@@ -41,9 +41,9 @@ import java.util.List;
 public final class GTEnergyNodes {
 //? if >=1.21.1 {
  /*private GTEnergyNodes(){}
- public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gregtech");
- public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gregtech");
- public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
+ public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
+ public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
+ public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
  public static final DeferredHolder<Block,ReactorCoreBlock> REACTOR_CORE_BLOCK=BLOCKS.register("reactor_core",()->new ReactorCoreBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(8,12).requiresCorrectToolForDrops()));
  public static final DeferredHolder<Block,ReactorCore2x2Block> REACTOR_CORE_2X2=BLOCKS.register("reactor_core_2x2",ReactorCore2x2Block::new);
  public static final DeferredHolder<Block,ReactorCasingBlock> REACTOR_CASING=BLOCKS.register("reactor_casing",ReactorCasingBlock::new);

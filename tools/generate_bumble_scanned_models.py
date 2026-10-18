@@ -2,7 +2,7 @@
 
 GT6 keeps one bee item per species+type and shows the scan state through the item's meta; the port
 registers one item per (species, type), so the four scanned types added in §77 need their own
-`assets/gregtech/models/item/<id>.json`. GT6 has no separate scanned artwork in the resource pack
+`assets/gt6ce/models/item/<id>.json`. GT6 has no separate scanned artwork in the resource pack
 (only `overlay_princess/queen/dead`), so a scanned bee reuses its living sibling's model - layer0 is
 the species texture and layer1 the type overlay.
 
@@ -25,7 +25,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ITEMS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech", "models", "item")
+ITEMS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce", "models", "item")
 SPECIES = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "content", "bumble",
                        "GTBumbleSpecies.java")
 

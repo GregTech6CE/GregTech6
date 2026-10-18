@@ -290,7 +290,7 @@ public final class WorldCreationSmoke {
         var registry=net.minecraft.core.registries.BuiltInRegistries.ITEM;
         int decoded=0,assemblies=0;
         for(var spec:com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all()) {
-            var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",spec.id());
+            var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",spec.id());
             var item=registry.get(targetId);
             if(!(item instanceof com.gregtech.gregtech.item.ChemicalBatteryItem battery)
                     ||!registry.getKey(item).equals(targetId))
@@ -335,12 +335,12 @@ public final class WorldCreationSmoke {
         for(var spec:com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all()) {
             var item=com.gregtech.gregtech.registry.GTChemicalBatteries.item(spec.chemistry(),spec.tier());
             var tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","rechargeable_batteries/"+new String[]{"ulv","lv","mv","hv","ev"}[spec.tier()]));
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","rechargeable_batteries/"+new String[]{"ulv","lv","mv","hv","ev"}[spec.tier()]));
             if(!new ItemStack(item).is(tag))throw new IllegalStateException("Source chemical battery missing from exact-tier group: "+spec.id());
 
             for(var tool:com.gregtech.gregtech.content.tool.ElectricToolAssembly.values()) {
                 if(tool.definition().tier()!=spec.tier())continue;
-                var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+tool.id+"/steel/"+spec.id());
+                var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/"+tool.id+"/steel/"+spec.id());
                 var holder=server.getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing actual chemical assembly "+id));
 //? if >=1.21.1 {
                 /*var recipe=holder.value();
@@ -351,7 +351,7 @@ public final class WorldCreationSmoke {
                 if(!(output.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric)
                         ||electric.getEnergyCapacity(output,com.gregtech.gregtech.data.GregTechTags.Energy.EU)!=spec.capacity())
                     throw new IllegalStateException("Assembly lost source chemical capacity: "+id);
-                var obsolete=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+tool.id+"/steel");
+                var obsolete=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/"+tool.id+"/steel");
                 if(server.getRecipeManager().byKey(obsolete).isPresent())throw new IllegalStateException("Placeholder assembly survived: "+obsolete);
                 assemblies++;
             }

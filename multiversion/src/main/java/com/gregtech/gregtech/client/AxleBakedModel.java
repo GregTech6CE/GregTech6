@@ -49,13 +49,13 @@ public final class AxleBakedModel extends BakedModelWrapper<PipeWireBakedModel> 
         for(var face:Direction.values()) {
             String suffix=TEXTURES[axis][face.ordinal()][rotation];
 //? if >=1.21.1 {
-            /*faces.put(face,ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
+            /*faces.put(face,ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
 *///?} else {
             faces.put(face,GregTech.id("block/iconsets/axle"+(suffix.isEmpty()?"":"_"+suffix)));
 //?}
         }
 //? if >=1.21.1 {
-        /*var base=ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/axle");
+        /*var base=ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/axle");
 *///?} else {
         var base=GregTech.id("block/iconsets/axle");
 //?}

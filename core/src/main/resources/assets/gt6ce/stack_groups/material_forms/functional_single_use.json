@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_single_use",
+  "contents": [
+    "item:gt6ce:single_use_blade",
+    "item:gt6ce:single_use_chisel",
+    "item:gt6ce:single_use_cutter",
+    "item:gt6ce:single_use_drill",
+    "item:gt6ce:single_use_file",
+    "item:gt6ce:single_use_hammer",
+    "item:gt6ce:single_use_rubber_hammer",
+    "item:gt6ce:single_use_saw",
+    "item:gt6ce:single_use_screwdriver",
+    "item:gt6ce:single_use_wrench"
+  ],
+  "priority": 110
+}

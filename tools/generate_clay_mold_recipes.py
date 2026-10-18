@@ -16,7 +16,7 @@ MT = SRC / 'gregapi/data/MT.java'
 ANY = SRC / 'gregapi/data/ANY.java'
 MOLD = SRC / 'gregtech/tileentity/tools/MultiTileEntityMold.java'
 LINES = RANDOM.read_text(encoding='utf-8').splitlines()
-OUT = ROOT / 'core/src/main/resources/data/gregtech/recipes/clay_molds'
+OUT = ROOT / 'core/src/main/resources/data/gt6ce/recipes/clay_molds'
 JAVA = ROOT / 'core/src/main/java/com/gregtech/gregtech/content/recipe'
 ROWS = {}
 FORMS = {}
@@ -26,8 +26,8 @@ def write(path, text):
     if not path.exists() or path.read_text(encoding='utf-8') != text:
         path.write_text(text, encoding='utf-8')
 
-def item(name): return {'item': name if ':' in name else 'gregtech:' + name}
-def tag(name): return {'tag': name if ':' in name else 'gregtech:' + name}
+def item(name): return {'item': name if ':' in name else 'gt6ce:' + name}
+def tag(name): return {'tag': name if ':' in name else 'gt6ce:' + name}
 
 raw = {}
 for line in LINES[79:110] + LINES[112:120]:
@@ -64,7 +64,7 @@ def ingredient(expr, material='all', loop_prefix=None):
     if m: return form(m[1], material if m[2] == 'tMat' else m[2][3:])
     raise ValueError(expr)
 
-def add(name, line, inputs, output, count=1, kind='gregtech:tool_shapeless'):
+def add(name, line, inputs, output, count=1, kind='gt6ce:tool_shapeless'):
     assert name not in ROWS, name
     ROWS[name] = {'type': kind, '_comment': f'GT6 MultiItemRandomTools:{line}',
                   'ingredients': inputs, 'result': {**item(output), 'count': count}}
@@ -79,7 +79,7 @@ for n, line in enumerate(LINES, 1):
 
 line = LINES[126]
 assert 'IL.Ceramic_Mold_Raw' in line and '"C C", "CCC", "k R"' in line
-ROWS['form_clay_mold'] = {'type': 'gregtech:tool_shaped', '_comment': 'GT6 MultiItemRandomTools:127',
+ROWS['form_clay_mold'] = {'type': 'gt6ce:tool_shaped', '_comment': 'GT6 MultiItemRandomTools:127',
     'allow_mirror': False, 'pattern': ['C C', 'CCC', 'k R'],
     'key': {'C': tag('forge:clay_balls'), 'k': tag('forge:tools/knife'),
             'R': tag('forge:tools/rolling_pin')}, 'result': item('clay_mold')}

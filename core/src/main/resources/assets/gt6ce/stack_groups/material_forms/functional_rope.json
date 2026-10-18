@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rope",
+  "contents": [
+    "item:gt6ce:rope",
+    "item:gt6ce:rope_grass",
+    "item:gt6ce:rope_plastic",
+    "item:gt6ce:rope_silk",
+    "item:gt6ce:rope_steel",
+    "item:gt6ce:rope_vine"
+  ],
+  "priority": 110
+}

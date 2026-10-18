@@ -8,8 +8,8 @@ keys, and copies GT6's own chest texture:
   * `textures/block/machines/lootchest/colored.png`  ← GT6 `model/gt.multitileentity/lootchest.colored.png`
   * `models/block/machine/storage/loot_chest.json`   — the metal-chest model with the loot-chest texture
   * `blockstates/loot_chest_<suffix>.json`           — facing variants → the shared model
-  * `models/item/loot_chest_<suffix>.json`           — parent `gregtech:item/metal_chest`
-  * lang (en_us + zh_cn): `block.gregtech.loot_chest_<suffix>`
+  * `models/item/loot_chest_<suffix>.json`           — parent `gt6ce:item/metal_chest`
+  * lang (en_us + zh_cn): `block.gt6ce.loot_chest_<suffix>`
 
 The English labels are GT6's own (`LH.java` `loot.*`: "+Random Books+", "+Library+", …).
 
@@ -31,7 +31,7 @@ import pathlib
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gregtech")
+ASSETS = native_path(ROOT / "src" / "main" / "resources" / "assets" / "gt6ce")
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech")
 CHEST_MODEL = ASSETS / "models" / "block" / "machine" / "storage" / "metal_chest.json"
 LOOT_MODEL = ASSETS / "models" / "block" / "machine" / "storage" / "loot_chest.json"
@@ -89,24 +89,24 @@ def main() -> None:
 
     model = json.loads(CHEST_MODEL.read_text(encoding="utf-8"))
     model["children"]["layer0"]["textures"] = {
-        "all": "gregtech:block/machines/lootchest/colored",
-        "particle": "gregtech:block/machines/lootchest/colored",
+        "all": "gt6ce:block/machines/lootchest/colored",
+        "particle": "gt6ce:block/machines/lootchest/colored",
     }
     write_json(LOOT_MODEL, model)
 
     for suffix in TABLES:
         write_json(ASSETS / "blockstates" / f"loot_chest_{suffix}.json", {
             "variants": {
-                f"facing={facing}": {"model": "gregtech:block/machine/storage/loot_chest", **({"y": y} if y else {})}
+                f"facing={facing}": {"model": "gt6ce:block/machine/storage/loot_chest", **({"y": y} if y else {})}
                 for facing, y in FACINGS.items()
             },
         })
         write_json(ASSETS / "models" / "item" / f"loot_chest_{suffix}.json",
-                   {"parent": "gregtech:item/metal_chest"})
+                   {"parent": "gt6ce:item/metal_chest"})
 
     lang = ASSETS / "lang"
-    print(f"en_us: {add_lang(lang / 'en_us.json', {f'block.gregtech.loot_chest_{s}': e[1] for s, e in TABLES.items()})} keys added")
-    print(f"zh_cn: {add_lang(lang / 'zh_cn.json', {f'block.gregtech.loot_chest_{s}': e[2] for s, e in TABLES.items()})} keys added")
+    print(f"en_us: {add_lang(lang / 'en_us.json', {f'block.gt6ce.loot_chest_{s}': e[1] for s, e in TABLES.items()})} keys added")
+    print(f"zh_cn: {add_lang(lang / 'zh_cn.json', {f'block.gt6ce.loot_chest_{s}': e[2] for s, e in TABLES.items()})} keys added")
     print(f"wrote {len(TABLES)} blockstates + item models, the shared model and the texture")
 
 

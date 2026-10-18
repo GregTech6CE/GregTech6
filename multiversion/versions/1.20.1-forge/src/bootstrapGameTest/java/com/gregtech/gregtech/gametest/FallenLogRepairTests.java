@@ -119,10 +119,10 @@ public final class FallenLogRepairTests {
     }
 
     private static Block block(String path) {
-        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", path));
+        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
     }
 
     private static Item item(String path) {
-        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", path));
+        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
     }
 }

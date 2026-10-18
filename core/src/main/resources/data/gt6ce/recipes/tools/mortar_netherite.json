@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "item": "gt6ce:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gt6ce:mortar_netherite"
+  }
+}

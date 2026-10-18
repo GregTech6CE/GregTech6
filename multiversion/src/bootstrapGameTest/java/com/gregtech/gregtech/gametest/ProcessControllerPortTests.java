@@ -33,7 +33,7 @@ public final class ProcessControllerPortTests {
     @GameTest(template="test_empty",timeoutTicks=100)
     public static void originalTowerAnyFaceDefaultsPreserveStructurePortRoles(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(2,0,2)).atY(260);
-        var block=(MultiblockControllerBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:distillation_tower_main"));
+        var block=(MultiblockControllerBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:distillation_tower_main"));
         var cells=LargeMachineLayouts.fromShared(SharedDistillationTowerStructure.CELLS);
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         for(var cell:cells) h.getLevel().setBlock(cell.at(pos,Direction.NORTH),cell.block().defaultBlockState(),3);

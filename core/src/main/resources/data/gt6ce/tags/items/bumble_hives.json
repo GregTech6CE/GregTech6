@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:bumble_hive_white",
+    "gt6ce:bumble_hive_orange",
+    "gt6ce:bumble_hive_magenta",
+    "gt6ce:bumble_hive_light_blue",
+    "gt6ce:bumble_hive_yellow",
+    "gt6ce:bumble_hive_lime",
+    "gt6ce:bumble_hive_pink",
+    "gt6ce:bumble_hive_gray",
+    "gt6ce:bumble_hive_light_gray",
+    "gt6ce:bumble_hive_cyan",
+    "gt6ce:bumble_hive_purple",
+    "gt6ce:bumble_hive_blue",
+    "gt6ce:bumble_hive_brown",
+    "gt6ce:bumble_hive_green",
+    "gt6ce:bumble_hive_red",
+    "gt6ce:bumble_hive_black"
+  ]
+}

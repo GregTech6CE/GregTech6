@@ -1,7 +1,7 @@
 """Creates the leaf models and textures of the wood species GT6 has no art for.
 
 `tools/generate_gt6_tree_assets.py` emits a `blockstates/leaves_<species>.json` for **every** wood
-species, each pointing at `gregtech:block/iconsets/leaves_<species>`. The model (and the texture) was
+species, each pointing at `gt6ce:block/iconsets/leaves_<species>`. The model (and the texture) was
 only ever written for the species GT6 itself ships art for, so four species referenced a model that
 does not exist:
 
@@ -40,7 +40,7 @@ import sys
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gregtech')
+ASSETS = os.path.join(ROOT, str(native_path('src')), 'main', 'resources', 'assets', 'gt6ce')
 GT6_ICONS = os.path.join('F:\\', 'Dev', 'GregTech6', 'gregtech6-master', 'gregtech6-master', str(native_path('src')),
                          'main', 'resources', 'assets', 'gregtech', 'textures', 'blocks', 'iconsets')
 
@@ -54,7 +54,7 @@ SPECIES = {
 
 MODEL = {
     'parent': 'minecraft:block/cube_all',
-    'textures': {'all': 'gregtech:block/iconsets/leaves_%s'},
+    'textures': {'all': 'gt6ce:block/iconsets/leaves_%s'},
     'render_type': 'minecraft:cutout',
 }
 

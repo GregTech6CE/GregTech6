@@ -1,0 +1,107 @@
+{
+  "loader": "forge:composite",
+  "children": {
+    "layer0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gt6ce:block/material_icons/fine/pipehuge",
+        "up": "gt6ce:block/material_icons/fine/pipehuge",
+        "north": "gt6ce:block/material_icons/fine/pipehuge",
+        "south": "gt6ce:block/material_icons/fine/pipehuge",
+        "west": "gt6ce:block/material_icons/fine/pipehuge",
+        "east": "gt6ce:block/material_icons/fine/pipehuge"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:solid"
+    },
+    "layer1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "down": "gt6ce:block/material_icons/fine/pipehuge_overlay",
+        "up": "gt6ce:block/material_icons/fine/pipehuge_overlay",
+        "north": "gt6ce:block/material_icons/fine/pipehuge_overlay",
+        "south": "gt6ce:block/material_icons/fine/pipehuge_overlay",
+        "west": "gt6ce:block/material_icons/fine/pipehuge_overlay",
+        "east": "gt6ce:block/material_icons/fine/pipehuge_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "down": {
+              "texture": "#down"
+            },
+            "up": {
+              "texture": "#up"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "west": {
+              "texture": "#west"
+            },
+            "east": {
+              "texture": "#east"
+            }
+          }
+        }
+      ],
+      "render_type": "minecraft:cutout"
+    }
+  },
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gt6ce:block/material_icons/fine/pipehuge"
+  }
+}

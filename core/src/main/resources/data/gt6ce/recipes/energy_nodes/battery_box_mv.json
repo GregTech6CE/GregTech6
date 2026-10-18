@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "tag": "gt6ce:wire_01/any_copper"
+    },
+    "C": {
+      "tag": "gt6ce:cable_01/any_copper"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_2_plus"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_aluminium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:battery_box_mv"
+  }
+}

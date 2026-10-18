@@ -17,7 +17,7 @@ from native_layout import native_path
 import json
 import os
 
-ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 
 # (block id, species, drilled texture, filled texture)
@@ -48,10 +48,10 @@ def model(species, drilled):
     return {
         "parent": "minecraft:block/block",
         "textures": {
-            "particle": "gregtech:block/iconsets/log_side_%s" % species,
-            "drilled": "gregtech:block/iconsets/%s" % drilled,
-            "side": "gregtech:block/iconsets/log_side_%s" % species,
-            "top": "gregtech:block/iconsets/log_top_%s" % species,
+            "particle": "gt6ce:block/iconsets/log_side_%s" % species,
+            "drilled": "gt6ce:block/iconsets/%s" % drilled,
+            "side": "gt6ce:block/iconsets/log_side_%s" % species,
+            "top": "gt6ce:block/iconsets/log_top_%s" % species,
         },
         "elements": [{
             "from": [0, 0, 0],
@@ -72,7 +72,7 @@ def blockstate(block_id):
     variants = {}
     for facing, rotation in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
         for resin, suffix in ((False, "hole"), (True, "resin")):
-            entry = {"model": "gregtech:block/wood/%s_%s" % (block_id, suffix)}
+            entry = {"model": "gt6ce:block/wood/%s_%s" % (block_id, suffix)}
             if rotation:
                 entry["y"] = rotation
             variants["facing=%s,resin=%s" % (facing, "true" if resin else "false")] = entry
@@ -89,14 +89,14 @@ for name, index in (("en_us.json", 1), ("zh_cn.json", 2)):
     path = os.path.join(LANG, name)
     with open(path, encoding="utf-8") as handle:
         lines = handle.readlines()
-    if any('"block.gregtech.%s"' % LANG_KEYS[0][0] in line for line in lines):
+    if any('"block.gt6ce.%s"' % LANG_KEYS[0][0] in line for line in lines):
         print("%s: tree-hole keys already present" % name)
         continue
-    anchor = next((i for i, line in enumerate(lines) if '"block.gregtech.rock"' in line), None)
+    anchor = next((i for i, line in enumerate(lines) if '"block.gt6ce.rock"' in line), None)
     if anchor is None:
         raise SystemExit("%s: no anchor line for the tree-hole keys" % name)
     indent = lines[anchor][:len(lines[anchor]) - len(lines[anchor].lstrip())]
-    block = ["%s\"block.gregtech.%s\": \"%s\",\n" % (indent, key, values[index - 1]) for key, *values in LANG_KEYS]
+    block = ["%s\"block.gt6ce.%s\": \"%s\",\n" % (indent, key, values[index - 1]) for key, *values in LANG_KEYS]
     lines[anchor:anchor] = block
     with open(path, "w", encoding="utf-8", newline="\n") as handle:
         handle.writelines(lines)

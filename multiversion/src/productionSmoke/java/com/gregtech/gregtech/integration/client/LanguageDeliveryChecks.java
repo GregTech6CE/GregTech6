@@ -25,7 +25,7 @@ import java.util.Map;
 
 /** Installed item callbacks with the real resource-manager zh_cn locale; isolated delivery probe only. */
 final class LanguageDeliveryChecks {
-    private static final String FLUID = "gregtech.fluid_display.";
+    private static final String FLUID = "gt6ce.fluid_display.";
     private static final java.util.regex.Pattern UNRESOLVED_NAME=java.util.regex.Pattern.compile("(?:item|block|fluid_type|material)\\.gregtech\\.[a-z_]");
     private static final java.util.regex.Pattern LATIN_WORD=java.util.regex.Pattern.compile("[A-Za-z]{3}");
     private static final Map<String,String> ANVILS = Map.ofEntries(
@@ -79,7 +79,7 @@ final class LanguageDeliveryChecks {
             var unresolved=new ArrayList<String>();
             for(var registered:BuiltInRegistries.ITEM) {
                 var id=BuiltInRegistries.ITEM.getKey(registered);
-                if(!id.getNamespace().equals("gregtech"))continue;
+                if(!id.getNamespace().equals("gt6ce"))continue;
                 String name=new ItemStack(registered).getHoverName().getString();
                 if(name.isBlank()||UNRESOLVED_NAME.matcher(name).find())
                     unresolved.add(id+" = "+name);
@@ -174,7 +174,7 @@ final class LanguageDeliveryChecks {
                 require(!stack.getHoverName().getString().contains("%s"),"No unexpanded assembled tool format");
             }
 
-            var ironFluid=new FluidStack(BuiltInRegistries.FLUID.get(ResourceLocation.parse("gregtech:molten_iron")),144);
+            var ironFluid=new FluidStack(BuiltInRegistries.FLUID.get(ResourceLocation.parse("gt6ce:molten_iron")),144);
             var oxygen=GTFluids.stack("Oxygen",1000);
             var swamp=GTFluids.stack("Swampwater",1000);
             require(!ironFluid.isEmpty()&&!oxygen.isEmpty()&&!swamp.isEmpty(),"Native fluid fixture identities");
@@ -293,7 +293,7 @@ final class LanguageDeliveryChecks {
         int tabs=0;
         for(var tab:BuiltInRegistries.CREATIVE_MODE_TAB) {
             var id=BuiltInRegistries.CREATIVE_MODE_TAB.getKey(tab);
-            if(!id.getNamespace().equals("gregtech"))continue;
+            if(!id.getNamespace().equals("gt6ce"))continue;
             Component title=tab.getDisplayName();
             require(title.getContents() instanceof TranslatableContents,"Creative category uses a language key "+id);
             String key=((TranslatableContents)title.getContents()).getKey();
@@ -379,14 +379,14 @@ final class LanguageDeliveryChecks {
                 require(lines.stream().anyMatch(c->has(c,"gt.lang.energy.capacity")),"Engine source capacity label");
             }
             if(engine.engineType()==com.gregtech.gregtech.api.machine.EngineType.STEAM) {
-                require(lines.stream().anyMatch(c->has(c,"fluid_type.gregtech.steam")),"Steam input uses localized fluid name");
+                require(lines.stream().anyMatch(c->has(c,"fluid_type.gt6ce.steam")),"Steam input uses localized fluid name");
                 require(lines.stream().filter(c->has(c,"gt.lang.energy.input")||has(c,"gt.lang.energy.capacity"))
                         .noneMatch(c->c.getString().contains(" Steam"))
-                        ||net.minecraft.locale.Language.getInstance().getOrDefault("fluid_type.gregtech.steam").equals("Steam"),
+                        ||net.minecraft.locale.Language.getInstance().getOrDefault("fluid_type.gt6ce.steam").equals("Steam"),
                         "Steam tooltip has no hardcoded fluid name");
             }
-            require(lines.stream().noneMatch(c->has(c,"tooltip.gregtech.machine.energy_in")
-                    ||has(c,"tooltip.gregtech.machine.energy_out")),"Engine has no obsolete untranslated energy title");
+            require(lines.stream().noneMatch(c->has(c,"tooltip.gt6ce.machine.energy_in")
+                    ||has(c,"tooltip.gt6ce.machine.energy_out")),"Engine has no obsolete untranslated energy title");
             count++;
         }
         require(count>=10,"Registered engine tooltip family");return count;
@@ -424,7 +424,7 @@ final class LanguageDeliveryChecks {
             require(block.defaultBlockState().getProperties().stream().anyMatch(p -> p.getName().equals("color")),
                     "Colored fixture must have a real color state: "+entry.getKey());
             var stack=com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(block,color);
-            String key="block.gregtech."+entry.getKey()+"."+color.getName();
+            String key="block.gt6ce."+entry.getKey()+"."+color.getName();
             String actual=stack.getHoverName().getString();
             String expected=original(key);
             if(chinese) require(expected.equals(original("gt.block."+entry.getValue()+"."+(15-color.getId()))),
@@ -447,7 +447,7 @@ final class LanguageDeliveryChecks {
             require(tooltip(stack).stream().filter(c -> c.getString().equals(label)).count()==1,"Loot table label once "+entry);
             var data=new net.minecraft.nbt.CompoundTag();data.putBoolean("GTLootGenerated",true);
 //? if >=1.21.1 {
-            /*data.putString("id","gregtech:metal_chest");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
+            /*data.putString("id","gt6ce:metal_chest");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             net.minecraft.world.item.BlockItem.setBlockEntityData(stack,com.gregtech.gregtech.registry.GTBlockEntities.METAL_CHEST.get(),data);
 //?}
@@ -463,7 +463,7 @@ final class LanguageDeliveryChecks {
 *///?} else {
         for(var registered:BuiltInRegistries.ITEM)if(registered instanceof com.gregtech.gregtech.item.FluidItem fluidItem) {
 //?}
-            String key="fluid_type.gregtech."+com.gregtech.gregtech.data.FluidCatalog.sanitizePath(fluidItem.fluidEntry().registryName());
+            String key="fluid_type.gt6ce."+com.gregtech.gregtech.data.FluidCatalog.sanitizePath(fluidItem.fluidEntry().registryName());
             if(!Language.getInstance().has(key))continue;
             var stack=new ItemStack(registered);
             require(stack.getHoverName().getString().equals(original(key)),"Installed declared fluid name "+key);
@@ -484,10 +484,10 @@ final class LanguageDeliveryChecks {
                 "uumatter|UU-Matter|UUMatter","waterdistilled|Distilled Water|WaterDistilled"};
         for(String row:rows) {
             String[] parts=row.split("\\|");var stack=item("fluid_item_"+parts[0]);
-            require(!Language.getInstance().has("fluid_type.gregtech."+parts[0]),"Material fluid fallback remains available "+parts[0]);
+            require(!Language.getInstance().has("fluid_type.gt6ce."+parts[0]),"Material fluid fallback remains available "+parts[0]);
             String expected=chinese?original("gt.material."+parts[2]):parts[1];
             if(chinese && parts[0].startsWith("molten_"))
-                expected=Component.translatable("fluid_type.gregtech.molten_material",expected).getString();
+                expected=Component.translatable("fluid_type.gt6ce.molten_material",expected).getString();
             require(stack.getHoverName().getString().equals(expected),"Source formula/material fluid name "+parts[0]);
         }
         return rows.length;
@@ -498,7 +498,7 @@ final class LanguageDeliveryChecks {
             if(definition.tooltipKey()==null)continue;
             var type=com.gregtech.gregtech.api.tool.GTToolType.valueOf(definition.name());
             var stack=com.gregtech.gregtech.api.tool.GTToolHelper.displayTool(type);
-            String key="tooltip.gregtech.tool_hint."+definition.tooltipKey();
+            String key="tooltip.gt6ce.tool_hint."+definition.tooltipKey();
             String expected=original(key);
             String source=definition==com.gregtech.gregtech.api.tool.ToolDefinition.BUILDER_WAND
                     ? "gt.lang.use.builder.wand.to.ease.building" : "gt.metatool.01."+definition.gt6Id()+".tooltip";
@@ -534,7 +534,7 @@ final class LanguageDeliveryChecks {
 //?}
         var canonicalIds = ids.stream().distinct().toList();
         for(String id:canonicalIds) {
-            var stack=item(id);String key="block.gregtech."+id;
+            var stack=item(id);String key="block.gt6ce."+id;
             require(stack.getDescriptionId().equals(key),"Source-bound registry description identity "+id);
             // Exact English/source-Chinese resource contents are independently pinned by the language gate.
             require(stack.getHoverName().getString().equals(original(key)),"Installed complete source block name "+id);
@@ -586,7 +586,7 @@ final class LanguageDeliveryChecks {
         require(count==86,"Complete source-bound technology and dye bottle catalog");return count;
     }
     private static int verifyCoins(boolean chinese) {
-        String expected=original("item.gregtech.coin");int count=0;
+        String expected=original("item.gt6ce.coin");int count=0;
         if(chinese)require(expected.equals(original("gt.multitileentity.32700")),"Original coin family name");
         for(var registered:BuiltInRegistries.ITEM)if(registered instanceof com.gregtech.gregtech.item.CoinItem coin) {
             var stack=new ItemStack(registered);
@@ -617,7 +617,7 @@ final class LanguageDeliveryChecks {
                 Map.entry("oredict.oreRawGold", "Raw Native Gold Ore"), Map.entry("oredict.dustBone", "Bonemeal"));
         var found = new java.util.HashSet<String>();
         for (var registered : BuiltInRegistries.ITEM) {
-            if (!BuiltInRegistries.ITEM.getKey(registered).getNamespace().equals("gregtech")) continue;
+            if (!BuiltInRegistries.ITEM.getKey(registered).getNamespace().equals("gt6ce")) continue;
             var stack = new ItemStack(registered);
             String source = materialSourceKey(stack);
             if (source == null || !expected.containsKey(source)) continue;
@@ -642,7 +642,7 @@ final class LanguageDeliveryChecks {
         var candidates=new JsonArray();var missingForms=new JsonArray();int checked=0,sourceForms=0,matchedForms=0,sourceCasings=0;
         for(var registered:BuiltInRegistries.ITEM) {
             var id=BuiltInRegistries.ITEM.getKey(registered);
-            if(!id.getNamespace().equals("gregtech"))continue;
+            if(!id.getNamespace().equals("gt6ce"))continue;
             var stack=new ItemStack(registered);
             String name=stack.getHoverName().getString();
             require(!name.isBlank()&&!UNRESOLVED_NAME.matcher(name).find(),"Unresolved installed Chinese name "+id+" = "+name);
@@ -690,7 +690,7 @@ final class LanguageDeliveryChecks {
             for(var variant:com.gregtech.gregtech.block.stone.StoneVariant.values())for(boolean slab:new boolean[]{false,true}) {
                 String id=stone.registryId()+"_"+variant.registrySuffix()+(slab?"_slab":"");
                 var stack=item(id);
-                String expected=original("block.gregtech."+id);
+                String expected=original("block.gt6ce."+id);
                 if(chinese)require(expected.equals(original(stone.textureFolder()+(slab?".slab.0.":".")+variant.meta())),
                         "Exact original stone phrase "+id);
                 require(stack.getHoverName().getString().equals(expected),"Installed stone item name "+id);
@@ -702,7 +702,7 @@ final class LanguageDeliveryChecks {
         return count;
     }
     private static int verifyBushes(boolean chinese) {
-        String expected=original("block.gregtech.bush");
+        String expected=original("block.gt6ce.bush");
         if(chinese)require(expected.equals(original("gt.multitileentity.32759")),"Original bush family name");
         var blocks=com.gregtech.gregtech.registry.GTBushes.allBlocks();
         require(blocks.length==10+com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants().size(),
@@ -714,7 +714,7 @@ final class LanguageDeliveryChecks {
                     "Bush keeps original family name "+bush.berryId());
             var key=com.gregtech.gregtech.content.plant.GTBerryBushes.itemId(bush.berryId());
             String output;
-            if(key==null)output=original("tooltip.gregtech.bush.set_output");
+            if(key==null)output=original("tooltip.gt6ce.bush.set_output");
             else {
                 var berry=new ItemStack(BuiltInRegistries.ITEM.get(key));
                 require(!berry.isEmpty(),"Bush output item exists "+key);
@@ -747,7 +747,7 @@ final class LanguageDeliveryChecks {
     }
     private static ItemStack item(String path) {
         var canonical=path;
-        var id=ResourceLocation.parse("gregtech:"+canonical);require(BuiltInRegistries.ITEM.containsKey(id),"Registered item "+id);
+        var id=ResourceLocation.parse("gt6ce:"+canonical);require(BuiltInRegistries.ITEM.containsKey(id),"Registered item "+id);
         return new ItemStack(BuiltInRegistries.ITEM.get(id));
     }
     private static ItemStack icon(FluidStack fluid) {

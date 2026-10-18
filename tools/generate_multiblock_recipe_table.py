@@ -191,11 +191,11 @@ FIXED_MATERIAL = {
 }
 
 IL_ITEMS = {
-    "IL.Processor_Crystal_Ruby": "gregtech:crystal_processor_ruby",
-    "IL.Processor_Crystal_Sapphire": "gregtech:crystal_processor_sapphire",
-    "IL.Processor_Crystal_Diamond": "gregtech:crystal_processor_diamond",
-    "IL.Processor_Crystal_Emerald": "gregtech:crystal_processor_emerald",
-    "IL.Cover_Vent": "gregtech:air_vent",
+    "IL.Processor_Crystal_Ruby": "gt6ce:crystal_processor_ruby",
+    "IL.Processor_Crystal_Sapphire": "gt6ce:crystal_processor_sapphire",
+    "IL.Processor_Crystal_Diamond": "gt6ce:crystal_processor_diamond",
+    "IL.Processor_Crystal_Emerald": "gt6ce:crystal_processor_emerald",
+    "IL.Cover_Vent": "gt6ce:air_vent",
 }
 
 VANILLA_GEMS = {
@@ -219,13 +219,13 @@ OD_ITEMS = {
 }
 
 TOOL_CHARS = {
-    "d": "gregtech:tool_screwdriver",
-    "h": "gregtech:tool_hammer",
-    "r": "gregtech:tool_soft_hammer",
-    "s": "gregtech:tool_saw",
-    "w": "gregtech:tool_wrench",
-    "x": "gregtech:tool_wire_cutter",
-    "y": "gregtech:tool_chisel",
+    "d": "gt6ce:tool_screwdriver",
+    "h": "gt6ce:tool_hammer",
+    "r": "gt6ce:tool_soft_hammer",
+    "s": "gt6ce:tool_saw",
+    "w": "gt6ce:tool_wrench",
+    "x": "gt6ce:tool_wire_cutter",
+    "y": "gt6ce:tool_chisel",
 }
 
 UNMAPPED: dict[str, int] = {}
@@ -283,7 +283,7 @@ def translate(expr: str, default_material: str | None = None) -> str | None:
     m = re.fullmatch(r"aRegistry\.getItem\((\d+)\)", e)
     if m:
         block = PART_BLOCKS.get(m.group(1))
-        return "item:gregtech:" + block if block else None
+        return "item:gt6ce:" + block if block else None
 
     m = re.fullmatch(r'"?(gt:re-battery\d+)"?', e)
     if m:
@@ -353,10 +353,10 @@ def main() -> int:
         fixed_robot_arm = gt6_name == "Large Bathing Vat"
         for symbol, value in entry["keys"].items():
             if fixed_robot_arm and norm(value) == "IL.ROBOT_ARMS[2]":
-                keys[symbol] = "item:gregtech:compact_robot_arm_mv"
+                keys[symbol] = "item:gt6ce:compact_robot_arm_mv"
                 continue
             if allow_m_override and symbol == "M":
-                keys[symbol] = "item:gregtech:" + structural
+                keys[symbol] = "item:gt6ce:" + structural
                 continue
             spec = translate(value, material)
             if spec is None:

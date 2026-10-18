@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 import unittest
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 class ScaffoldFamilyTests(unittest.TestCase):
     def test_all_sixty_families_have_models_and_recipes(self):
         source = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java')).read_text(encoding='utf-8')
@@ -27,18 +27,18 @@ class ScaffoldFamilyTests(unittest.TestCase):
                 base = model.get('children', {}).get('base', model)
                 for ref in base['textures'].values():
                     self.assertTrue((ASSETS / ('textures/' + ref.split(':')[1] + '.png')).is_file(), ref)
-            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gregtech/recipes/scaffolds/{name}.json')).read_text())
-            self.assertEqual('gregtech:tool_shaped', recipe['type'])
+            recipe = json.loads((native_path(ROOT / f'src/main/resources/data/gt6ce/recipes/scaffolds/{name}.json')).read_text())
+            self.assertEqual('gt6ce:tool_shaped', recipe['type'])
             self.assertEqual(['TPT', 'SdS'], recipe['pattern'])
-            self.assertEqual('gregtech:' + name, recipe['result']['item'])
+            self.assertEqual('gt6ce:' + name, recipe['result']['item'])
             self.assertFalse(recipe['allow_mirror'])
     def test_chinese_names_match_original_ids(self):
         names = dict(re.findall(r'^\s*S:gt.multitileentity\.(\d+)=(.*)$', (ROOT.parent / 'GregTech.lang').read_text(encoding='utf-8'), re.M))
         lang = json.loads((ASSETS / 'lang/zh_cn.json').read_text(encoding='utf-8'))
-        recipes = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/scaffolds')
+        recipes = native_path(ROOT / 'src/main/resources/data/gt6ce/recipes/scaffolds')
         for path in recipes.glob('*.json'):
             data = json.loads(path.read_text())
             old_id = re.search(r'\((\d+)\)', data['_comment'])[1]
-            self.assertEqual(names[old_id].strip(), lang['block.gregtech.' + path.stem])
+            self.assertEqual(names[old_id].strip(), lang['block.gt6ce.' + path.stem])
 if __name__ == '__main__':
     unittest.main()

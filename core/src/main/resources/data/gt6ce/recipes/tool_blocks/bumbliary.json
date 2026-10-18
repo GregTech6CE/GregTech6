@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2221 (32741)",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "TdT"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/wood_treated"
+    },
+    "B": {
+      "tag": "gt6ce:bumble_hives"
+    },
+    "T": {
+      "tag": "gt6ce:screws/any_iron_or_steel"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:bumbliary"
+  }
+}

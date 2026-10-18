@@ -49,7 +49,7 @@ public final class PortableContainerBlock extends Block implements EntityBlock {
                     &&com.gregtech.gregtech.content.tool.PortableContainerLimits.adjustable(spec)){
                 if(!level.isClientSide){
                     int limit=vessel.adjustLimit(hit.getLocation().y-pos.getY(),player.isShiftKeyDown());
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.portable_fluid.limit",limit),true);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.portable_fluid.limit",limit),true);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }

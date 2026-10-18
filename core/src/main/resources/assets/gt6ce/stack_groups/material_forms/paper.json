@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "item.minecraft.paper",
+  "contents": [
+    "item:gt6ce:plate_paper"
+  ],
+  "priority": 120
+}

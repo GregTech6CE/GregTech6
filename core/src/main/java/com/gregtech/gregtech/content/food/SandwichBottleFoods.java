@@ -45,7 +45,7 @@ public final class SandwichBottleFoods {
         new Food("bottle_of_poison", 0, 0.0f, 0, 0, 0, 0, 0, 0, false, false, false) // Loader_Fluids.java:629; MultiItemBottles.java:358
     );
     public static Food forItem(String item) {
-        if (!item.startsWith("gregtech:")) return null;
-        return ROWS.stream().filter(row -> row.item().equals(item.substring(9))).findFirst().orElse(null);
+        if (!item.startsWith("gt6ce:")) return null;
+        return ROWS.stream().filter(row -> row.item().equals(item.substring("gt6ce:".length()))).findFirst().orElse(null);
     }
 }

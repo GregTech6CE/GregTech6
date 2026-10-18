@@ -33,7 +33,7 @@ import java.util.Map;
  * down to the first solid ground, and finally rolls a 1-in-24 table whose result depends on what the
  * item lies on (nether brick → Ancient Debris, soul sand → Gloomstone/quartz, gravel → flint).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class NetherScatterTests {
     private static final int BASE_X = 34000;
@@ -78,7 +78,7 @@ public final class NetherScatterTests {
         helper.assertTrue(GTFeatures.NETHER_SCATTER.getId().getPath().equals("gt_nether_scatter"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTNetherScatterFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_nether_scatter.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_nether_scatter.json is loaded");
         helper.assertTrue(problems.isEmpty(), "nether scatter table (" + problems.size() + "): "
                 + problems.subList(0, Math.min(5, problems.size())));
         helper.succeed();

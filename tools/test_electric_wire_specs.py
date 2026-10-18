@@ -29,13 +29,13 @@ class WireSpecs(unittest.TestCase):
    self.assertEqual(16 if kind=='wire' else 5,len(rows))
    for size,width in rows:
     width=int(width)
-    model=json.loads((native_path(ROOT/f'src/main/resources/assets/gregtech/models/block/blocks/{kind}_item_{size}.json')).read_text())
+    model=json.loads((native_path(ROOT/f'src/main/resources/assets/gt6ce/models/block/blocks/{kind}_item_{size}.json')).read_text())
     elements=model['elements']
     self.assertEqual(width,max(e['to'][0] for e in elements)-min(e['from'][0] for e in elements))
     self.assertEqual(width,max(e['to'][1] for e in elements)-min(e['from'][1] for e in elements))
     self.assertEqual(0,min(e['from'][2] for e in elements));self.assertEqual(16,max(e['to'][2] for e in elements))
  def test_generated_model_dependencies(self):
-  base=native_path(ROOT/'src/main/resources/assets/gregtech/models/block')
+  base=native_path(ROOT/'src/main/resources/assets/gt6ce/models/block')
   paths=[]
   for kind,sizes in [('wire',range(1,17)),('cable',[1,2,4,8,12])]:
    for size in sizes:
@@ -43,9 +43,9 @@ class WireSpecs(unittest.TestCase):
   issues,_=check(paths)
   self.assertEqual([],issues)
  def test_no_recipe_references_removed_cables(self):
-  invalid=re.compile(r'gregtech:cable_(?:16_[a-z_]+|(?:01|02|04|08|12)_(?:graphene|superconductor))(?![a-z_])')
+  invalid=re.compile(r'gt6ce:cable_(?:16_[a-z_]+|(?:01|02|04|08|12)_(?:graphene|superconductor))(?![a-z_])')
   for path in (native_path(ROOT/'src/main/resources/data')).rglob('*.json'):
    self.assertIsNone(invalid.search(path.read_text(encoding='utf-8')),str(path))
-  recipe=json.loads((native_path(ROOT/'src/main/resources/data/gregtech/recipes/hand_components/usb4_cable.json')).read_text())
-  self.assertEqual({'item':'gregtech:wire_01_graphene'},recipe['key']['C'])
+  recipe=json.loads((native_path(ROOT/'src/main/resources/data/gt6ce/recipes/hand_components/usb4_cable.json')).read_text())
+  self.assertEqual({'item':'gt6ce:wire_01_graphene'},recipe['key']['C'])
 if __name__=='__main__':unittest.main()

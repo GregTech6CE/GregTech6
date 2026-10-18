@@ -8,7 +8,7 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class DyeProcessingTests {
     @GameTest(template="test_empty") public static void allDyeRecipesConsumeActualRegisteredInputs(GameTestHelper h){
         h.assertTrue(DyeProcessingRecipes.entries().size()==348,"304 dye mixers, 26 flowers, and 18 oil/foam precursors");

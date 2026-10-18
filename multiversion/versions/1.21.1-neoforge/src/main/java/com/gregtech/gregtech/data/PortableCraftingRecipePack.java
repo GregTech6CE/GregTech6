@@ -40,7 +40,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:portable_crafting_recipes",Component.literal("GregTech original equipment crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:portable_crafting_recipes",Component.literal("GregTech original equipment crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new PortableCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new PortableCraftingRecipePack(info);}
@@ -67,7 +67,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
 
     /** The resource owns balance and tools; this boundary only adapts native JSON shape/path. */
     private static void addOriginal(Map<ResourceLocation, byte[]> generated, String file) {
-        String path = "data/gregtech/recipes/" + file;
+        String path = "data/gt6ce/recipes/" + file;
         try (var stream = PortableCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)) {
             if (stream == null) throw new IllegalStateException("Missing shared equipment recipe " + path);
             var recipe = com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(), StandardCharsets.UTF_8)).getAsJsonObject();
@@ -87,7 +87,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
                     object.add("components", components);
                 }
             }
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + file);
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/" + file);
             if (generated.putIfAbsent(id, GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8)) != null)
                 throw new IllegalStateException("Duplicate original equipment recipe " + id);
         } catch (java.io.IOException failure) {
@@ -138,7 +138,7 @@ public final class PortableCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech", "forge") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce", "forge") : Set.of();
     }
 
     @Override

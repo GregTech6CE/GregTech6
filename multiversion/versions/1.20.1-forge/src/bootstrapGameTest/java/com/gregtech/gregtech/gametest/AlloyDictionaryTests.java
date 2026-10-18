@@ -18,7 +18,7 @@ import java.util.List;
  * alloys a material takes part in) — built from the port's own alloying table
  * ({@link GTAlloyTable}, transcribed from {@code Loader_Recipes_Alloys}).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class AlloyDictionaryTests {
 

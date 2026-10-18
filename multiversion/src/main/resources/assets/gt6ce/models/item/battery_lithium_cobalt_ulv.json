@@ -1,0 +1,29 @@
+{
+  "parent": "gt6ce:block/chemical_battery/advanced_8_0",
+  "overrides": [
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.25
+      },
+      "model": "gt6ce:block/chemical_battery/advanced_8_1"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.5
+      },
+      "model": "gt6ce:block/chemical_battery/advanced_8_2"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.75
+      },
+      "model": "gt6ce:block/chemical_battery/advanced_8_3"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 1.0
+      },
+      "model": "gt6ce:block/chemical_battery/advanced_8_4"
+    }
+  ]
+}

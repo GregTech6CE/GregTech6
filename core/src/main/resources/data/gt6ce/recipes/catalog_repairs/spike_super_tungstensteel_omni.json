@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "TBT",
+    "BPB",
+    "TBT"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:tool_head_sword/tungsten_steel"
+    },
+    "T": {
+      "tag": "gt6ce:screw/tungsten_steel"
+    },
+    "P": {
+      "tag": "gt6ce:plate/tungsten_steel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:spike_super",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "omni",
+        "secondary": "false"
+      }
+    }
+  }
+}

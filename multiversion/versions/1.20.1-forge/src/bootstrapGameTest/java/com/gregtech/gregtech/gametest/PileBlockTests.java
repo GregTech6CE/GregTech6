@@ -51,7 +51,7 @@ import java.util.List;
  * (32084 / 32085 / 32086). Every assertion names the GT6 line it pins down, so a later change that
  * walks away from the original shows up here.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PileBlockTests {
     private static final int BASE_X = 64000;
@@ -259,13 +259,13 @@ public final class PileBlockTests {
         PileBlock gemPlatePile = (PileBlock) GTDecorBlocks.PLATE_GEM_PILE.get();
         helper.assertTrue(ingotPile.kind() == PileBlock.Kind.INGOT
                         && ingotPile.kind().prefix() == MaterialPrefix.ingot,
-                "gregtech:ingot_pile is GT6's ingot pile (OP.ingot)");
+                "gt6ce:ingot_pile is GT6's ingot pile (OP.ingot)");
         helper.assertTrue(platePile.kind() == PileBlock.Kind.PLATE
                         && platePile.kind().prefix() == MaterialPrefix.plate,
-                "gregtech:plate_pile is GT6's plate pile (OP.plate)");
+                "gt6ce:plate_pile is GT6's plate pile (OP.plate)");
         helper.assertTrue(gemPlatePile.kind() == PileBlock.Kind.GEM_PLATE
                         && gemPlatePile.kind().prefix() == MaterialPrefix.plateGem,
-                "gregtech:plate_gem_pile is GT6's gem plate pile (OP.plateGem)");
+                "gt6ce:plate_gem_pile is GT6's gem plate pile (OP.plateGem)");
 
         // GT6 exposes no automation and no comparator for these multi-tiles: neither
         // MultiTileEntityCoin nor MultiTileEntityPlaceable implements getAccessibleSlotsFromSide2, and

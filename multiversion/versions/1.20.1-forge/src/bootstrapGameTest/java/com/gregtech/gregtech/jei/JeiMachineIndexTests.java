@@ -8,7 +8,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /** The machine index is common data and can be checked without starting the JEI client. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class JeiMachineIndexTests {
     @GameTest(template = "test_empty")

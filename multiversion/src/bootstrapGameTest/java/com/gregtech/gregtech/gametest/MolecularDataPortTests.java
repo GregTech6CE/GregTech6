@@ -26,7 +26,7 @@ import java.util.*;
 
 @GameTestHolder("gregtech_material_data") @PrefixGameTestTemplate(false)
 public final class MolecularDataPortTests {
-    private static ItemStack item(String path) { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path))); }
+    private static ItemStack item(String path) { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path))); }
     private static GTMaterial material(int id) { return GTMaterialRegistry.get(id).resolve(); }
     private static ItemStack usb(int id) { return GTMaterialDataRecipes.withMaterialData(item("usb3_stick"),material(id)); }
     private static List<FluidStack> matter(int id) {
@@ -87,7 +87,7 @@ public final class MolecularDataPortTests {
     @GameTest(template="test_empty",timeoutTicks=80)
     public static void lowTierQuantumMachineAndSelectedHddFile(GameTestHelper h) {
         var machine=machine(h,new BlockPos(8,2,3));var portPos=machine.getBlockPos().north();
-        h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","hdd_switch")).defaultBlockState());
+        h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","hdd_switch")).defaultBlockState());
         var port=(com.gregtech.gregtech.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
         var drive=item("usb3_hdd");UsbDataMedia.writeDrive(drive,9,3,UsbDataMedia.readStick(usb(260),3));port.items().setStackInSlot(0,drive);port.setMode(9);
         var cable=item("usb3_cable");var direction=com.gregtech.gregtech.content.cover.CoverStackData.readOrEmpty(cable);direction.putByte(UsbDataCable.NBT_DIRECTION,(byte)Direction.NORTH.ordinal());com.gregtech.gregtech.content.cover.CoverStackData.write(cable,direction);

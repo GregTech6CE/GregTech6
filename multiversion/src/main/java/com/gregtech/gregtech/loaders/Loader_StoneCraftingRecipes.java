@@ -223,7 +223,7 @@ public final class Loader_StoneCraftingRecipes {
             }
         }
 //? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", "stone/" + path);
+        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
         OriginalCraftingJson.shaped(recipes, id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), pattern, key, allowMirror);
 *///?} else {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);
@@ -255,7 +255,7 @@ public final class Loader_StoneCraftingRecipes {
             ingredients.add(Ingredient.of(stacks[i]));
         }
 //? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", "stone/" + path);
+        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
         OriginalCraftingJson.shapeless(recipes, id, "gt.stone", CraftingBookCategory.BUILDING, output.copy(), ingredients);
 *///?} else {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, "stone/" + path);

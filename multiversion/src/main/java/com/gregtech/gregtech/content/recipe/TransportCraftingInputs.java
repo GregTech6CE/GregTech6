@@ -61,7 +61,7 @@ public final class TransportCraftingInputs {
 *///?} else {
         var result=new JsonObject(); result.addProperty("item",row.output()); result.addProperty("count",row.count());
 //?}
-        var json=new JsonObject(); json.addProperty("type",row.unpack()?"gregtech:tool_shapeless":"gregtech:tool_shaped");
+        var json=new JsonObject(); json.addProperty("type",row.unpack()?"gt6ce:tool_shapeless":"gt6ce:tool_shaped");
         json.addProperty("group","gt.hand");json.addProperty("allow_mirror",false);
         json.addProperty("require_empty_fluid_containers",row.empty());
         if(row.unpack())json.add("ingredients",ingredients);else {var pattern=new JsonArray();row.pattern().forEach(pattern::add);json.add("pattern",pattern);json.add("key",key);}

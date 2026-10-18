@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_04_graphene"
+    },
+    "C": {
+      "item": "gt6ce:wire_04_graphene"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_8_plus"
+    },
+    "M": {
+      "item": "gt6ce:transformer_uv_xv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:energy_storage_uv"
+  }
+}

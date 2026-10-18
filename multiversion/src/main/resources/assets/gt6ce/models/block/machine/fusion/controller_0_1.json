@@ -1,0 +1,107 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gt6ce:block/machines/basicmachines/fusionreactor/colored/front"
+  },
+  "children": {
+    "base": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gt6ce:block/machines/basicmachines/fusionreactor/colored/top",
+        "down": "gt6ce:block/machines/basicmachines/fusionreactor/colored/bottom",
+        "north": "gt6ce:block/machines/basicmachines/fusionreactor/colored/front",
+        "south": "gt6ce:block/machines/basicmachines/fusionreactor/colored/back",
+        "east": "gt6ce:block/machines/basicmachines/fusionreactor/colored/left",
+        "west": "gt6ce:block/machines/basicmachines/fusionreactor/colored/right"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up",
+              "tintindex": 0
+            },
+            "down": {
+              "texture": "#down",
+              "tintindex": 0
+            },
+            "north": {
+              "texture": "#north",
+              "tintindex": 0
+            },
+            "south": {
+              "texture": "#south",
+              "tintindex": 0
+            },
+            "east": {
+              "texture": "#east",
+              "tintindex": 0
+            },
+            "west": {
+              "texture": "#west",
+              "tintindex": 0
+            }
+          }
+        }
+      ]
+    },
+    "overlay": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "up": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/top",
+        "down": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/bottom",
+        "north": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/front",
+        "south": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/back",
+        "east": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/left",
+        "west": "gt6ce:block/machines/basicmachines/fusionreactor/overlay_running/right"
+      },
+      "elements": [
+        {
+          "from": [
+            0,
+            0,
+            0
+          ],
+          "to": [
+            16,
+            16,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

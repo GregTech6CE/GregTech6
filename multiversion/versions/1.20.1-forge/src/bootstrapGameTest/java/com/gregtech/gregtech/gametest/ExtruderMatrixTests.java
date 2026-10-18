@@ -26,7 +26,7 @@ import java.util.List;
  * players could not shape a pickaxe head or a block of metal, and JEI showed no low-heat alternative.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ExtruderMatrixTests {
 

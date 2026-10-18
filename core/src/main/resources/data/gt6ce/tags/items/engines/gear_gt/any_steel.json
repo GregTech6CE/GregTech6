@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:gear_gt/steel",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:gear_gt/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:gear_gt/meteoric_steel",
+      "required": false
+    }
+  ]
+}

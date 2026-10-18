@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GT6 = ROOT.parent / "gregtech6-master" / "gregtech6-master"
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 TEXTURE_SOURCE = native_path(GT6 / "src/main/resources/assets/gregtech/textures/blocks/machines/massstorage/logistics")
 TEXTURE_TARGET = ASSETS / "textures/block/machines/massstorage/logistics"
 
@@ -41,7 +41,7 @@ def expected_files() -> dict[Path, bytes]:
 
     standard = json.loads((ASSETS / "models/block/machine/storage/mass_storage.json").read_text(encoding="utf-8"))
     logistics = json.loads(json.dumps(standard).replace("massstorage/standard/", "massstorage/logistics/"))
-    model_path = "gregtech:block/machine/storage/logistics_mass_storage"
+    model_path = "gt6ce:block/machine/storage/logistics_mass_storage"
     expected[ASSETS / "models/block/machine/storage/logistics_mass_storage.json"] = (
         json.dumps(logistics, indent=2, ensure_ascii=False) + "\n"
     ).encode("utf-8")

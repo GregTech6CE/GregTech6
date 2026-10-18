@@ -32,7 +32,7 @@ import java.util.Map;
  * Both reuse the 48x48 {@link GTPitShape} mask and the {@code waterLevel + 1 .. waterLevel - 12}
  * window, but stop after two blocks per column.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BlackSandTurfTests {
     private static final int BASE_X = 48000;
@@ -55,8 +55,8 @@ public final class BlackSandTurfTests {
         List<String> problems = new ArrayList<>();
         for (String id : GTBlackSandFeature.BLACK_SANDS) {
             Block block = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", id));
-            if (block == null || block == Blocks.AIR) problems.add("gregtech:" + id);
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+            if (block == null || block == Blocks.AIR) problems.add("gt6ce:" + id);
         }
         Block turf = ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse(GTTurfFeature.TURF));
         if (turf == null || turf == Blocks.AIR) problems.add(GTTurfFeature.TURF);
@@ -66,10 +66,10 @@ public final class BlackSandTurfTests {
         helper.assertTrue(GTFeatures.TURF.getId().getPath().equals("gt_turf"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTBlackSandFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_black_sand.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_black_sand.json is loaded");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTTurfFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_turf.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_turf.json is loaded");
 
         // GT6's biome sets: rivers drive the black sands, swamps the turf.
         helper.assertTrue(GTWorldgenBiomes.RIVER.contains(ResourceLocation.withDefaultNamespace("river"))
@@ -104,7 +104,7 @@ public final class BlackSandTurfTests {
         int upper = sea + GTBlackSandFeature.ABOVE_SEA;
         int lower = sea - GTBlackSandFeature.BELOW_SEA;
         BlockState fill = state("sand_magnetite");
-        helper.assertTrue(fill != null, "gregtech:sand_magnetite is registered");
+        helper.assertTrue(fill != null, "gt6ce:sand_magnetite is registered");
 
         // A river bed: two sand layers over stone.
         int x = BASE_X, z = BASE_Z;
@@ -200,7 +200,7 @@ public final class BlackSandTurfTests {
         int upper = sea + GTTurfFeature.ABOVE_SEA;
         int lower = sea - GTTurfFeature.BELOW_SEA;
         BlockState turf = state("turf");
-        helper.assertTrue(turf != null, "gregtech:turf is registered");
+        helper.assertTrue(turf != null, "gt6ce:turf is registered");
 
         // Swamp soil: three dirt layers over stone.
         int x = BASE_X + 1, z = BASE_Z + 1;
@@ -264,7 +264,7 @@ public final class BlackSandTurfTests {
 
     private static BlockState state(String id) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 

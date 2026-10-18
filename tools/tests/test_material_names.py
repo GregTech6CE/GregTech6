@@ -48,15 +48,15 @@ if (aMaterial == MT.Empty) {if (aPrefix == OP.bulletGtSmall) return "Small Bulle
             (base/'data/OP.java').write_text('dust = create("dust", "Dusts", "", " Dust");')
             (base/'oredict/OreDictPrefix.java').write_text('add(MATERIAL_BASED, UNIFICATABLE, ORE, TOOLTIP_ENCHANTS);')
             (base/'lang/LanguageHandler.java').write_text('return aPrefix.mMaterialPre + aMaterial.mNameLocal + aPrefix.mMaterialPost;')
-            rows=[('@prefix-template.item.gregtech.dust','dust','%s Dust'),
-                  ('@prefix-template.item.gregtech.unit','unit','')]
+            rows=[('@prefix-template.item.gt6ce.dust','dust','%s Dust'),
+                  ('@prefix-template.item.gt6ce.unit','unit','')]
             values,bindings,unsupported,_=material_prefix_templates(root,rows)
             self.assertEqual(values,{'@material-form.default.dust':'%s Dust'})
-            self.assertEqual(bindings,{'item.gregtech.dust':'@material-form.default.dust'})
-            self.assertEqual(unsupported,{'item.gregtech.unit':'unit'})
-            for wrong in [[('@prefix-template.item.gregtech.dust','dust','Dust %s')],
-                          [('@prefix-template.item.gregtech.unit','unit','%s')],
-                          [('@empty-template.item.gregtech.dust_empty','dust','Empty')]]:
+            self.assertEqual(bindings,{'item.gt6ce.dust':'@material-form.default.dust'})
+            self.assertEqual(unsupported,{'item.gt6ce.unit':'unit'})
+            for wrong in [[('@prefix-template.item.gt6ce.dust','dust','Dust %s')],
+                          [('@prefix-template.item.gt6ce.unit','unit','%s')],
+                          [('@empty-template.item.gt6ce.dust_empty','dust','Empty')]]:
                 with self.assertRaises(ValueError):material_prefix_templates(root,wrong)
 
     def test_braces_inside_java_strings_do_not_close_method(self):

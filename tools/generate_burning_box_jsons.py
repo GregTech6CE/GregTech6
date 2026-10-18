@@ -9,7 +9,7 @@ from native_layout import native_path
 
 import json, os, shutil
 
-BASE = str(native_path("src/main/resources/assets/gregtech"))
+BASE = str(native_path("src/main/resources/assets/gt6ce"))
 BS_DIR = os.path.join(BASE, "blockstates")
 MODEL_DIR = os.path.join(BASE, "models/block/machine")
 
@@ -36,7 +36,7 @@ DIR_TEX = {
     "east":  {"north": "left", "south": "right", "west": "front", "east": "back"},
 }
 
-TEX_BASE = "gregtech:block/machines/generators"
+TEX_BASE = "gt6ce:block/machines/generators"
 
 
 def make_direction_model(tex_set, facing, lit):
@@ -94,7 +94,7 @@ def make_model_dir(tex_set):
 
 def make_model_id(tex_set):
     """Generate the base model ID for use in blockstates."""
-    return f"gregtech:block/machine/{tex_set}"
+    return f"gt6ce:block/machine/{tex_set}"
 
 
 def make_blockstate(tex_set):

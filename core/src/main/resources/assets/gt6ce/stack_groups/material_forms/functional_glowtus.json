@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_glowtus",
+  "contents": [
+    "item:gt6ce:glowtus_black",
+    "item:gt6ce:glowtus_blue",
+    "item:gt6ce:glowtus_brown",
+    "item:gt6ce:glowtus_cyan",
+    "item:gt6ce:glowtus_gray",
+    "item:gt6ce:glowtus_green",
+    "item:gt6ce:glowtus_light_blue",
+    "item:gt6ce:glowtus_light_gray",
+    "item:gt6ce:glowtus_lime",
+    "item:gt6ce:glowtus_magenta",
+    "item:gt6ce:glowtus_orange",
+    "item:gt6ce:glowtus_pink",
+    "item:gt6ce:glowtus_purple",
+    "item:gt6ce:glowtus_red",
+    "item:gt6ce:glowtus_white",
+    "item:gt6ce:glowtus_yellow"
+  ],
+  "priority": 110
+}

@@ -86,14 +86,14 @@ public class LongDistEndpointBlockEntity extends com.gregtech.gregtech.blockenti
     public void describe(net.minecraft.world.entity.player.Player player){
         var sender=link.senderOwner();
         if(sender!=null){
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.long_distance.receiver"),false);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance.receiver"),false);
             coordinates(player,"sender",sender.worldPosition);
         }else{
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.long_distance."+(receiver()!=null?"target":"no_target")),false);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance."+(receiver()!=null?"target":"no_target")),false);
             var target=link.targetPosition();if(target!=null&&!target.equals(worldPosition))coordinates(player,"target_position",target);
         }
     }
-    private void coordinates(net.minecraft.world.entity.player.Player player,String name,BlockPos pos){player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.long_distance."+name,pos.getX(),pos.getY(),pos.getZ()),false);}
+    private void coordinates(net.minecraft.world.entity.player.Player player,String name,BlockPos pos){player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.long_distance."+name,pos.getX(),pos.getY(),pos.getZ()),false);}
 
 
     private boolean fluid(){return ((LongDistEndpointBlock)getBlockState().getBlock()).isFluid();}

@@ -17,7 +17,7 @@ public final class SixCellDisplayRenderer {
         var pose=poses.last();
         for (int i=0;i<6;i++) {
             var cell=cells[i]; if(cell==null) continue;
-            var texture=TEXTURES.computeIfAbsent(cell.texture(), name -> ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/overlays/characters/"+name+".png"));
+            var texture=TEXTURES.computeIfAbsent(cell.texture(), name -> ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/overlays/characters/"+name+".png"));
             var vertices=buffers.getBuffer(RenderType.entityCutoutNoCull(texture));
             float left=(2+2*i)/16f-.5f, right=left+2/16f, top=.5f-2/16f, bottom=top-2/16f;
             int r=cell.rgb()>>16&255,g=cell.rgb()>>8&255,b=cell.rgb()&255;

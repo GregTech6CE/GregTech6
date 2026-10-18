@@ -81,8 +81,8 @@ return create("plasma."+aMaterial.mNameInternal.toLowerCase(), aTexture, aMateri
             for native,source,ident in [('gas','examplegas','42'),('molten','molten.examplegas','42'),
                     ('undocumented','plasma.examplegas','42'),('wrong','othergas','42'),
                     ('zero','zero','0'),('wrongphase','unknown.examplegas','42')]:
-                rows.extend([('fluid_type.gregtech.'+native,'fluid.'+source,''),
-                             ('@fluid-proof.fluid_type.gregtech.'+native,'ExampleGas',ident)])
+                rows.extend([('fluid_type.gt6ce.'+native,'fluid.'+source,''),
+                             ('@fluid-proof.fluid_type.gt6ce.'+native,'ExampleGas',ident)])
             values,_=material_fluid_english(root,rows)
             self.assertEqual(values,{'fluid.examplegas':'Original Gas','fluid.molten.examplegas':'Molten Original Gas',
                                      'fluid.plasma.examplegas':'Original Gas Plasma'})
@@ -135,16 +135,16 @@ Duplicate = metal(99, "Second", 0);
             self.assertNotIn('gt.material.Dynamic',english)
             self.assertIn(material,files)
             proofs=verified_material_proofs([
-                ('@material-proof.material.gregtech.moonstone','gt.material.MoonStone','8513'),
-                ('@material-proof.material.gregtech.wrong_case','gt.material.Moonstone','8513'),
-                ('@material-proof.material.gregtech.zero','gt.material.Moonstone','0'),
-                ('@material-proof.material.gregtech.ambiguous','gt.material.First','99'),
-                ('@material-proof.material.gregtech.crudesteel','gt.material.ClayCompound','8806'),
-                ('material.gregtech.gem','gt.material.Moonstone','8452'),
+                ('@material-proof.material.gt6ce.moonstone','gt.material.MoonStone','8513'),
+                ('@material-proof.material.gt6ce.wrong_case','gt.material.Moonstone','8513'),
+                ('@material-proof.material.gt6ce.zero','gt.material.Moonstone','0'),
+                ('@material-proof.material.gt6ce.ambiguous','gt.material.First','99'),
+                ('@material-proof.material.gt6ce.crudesteel','gt.material.ClayCompound','8806'),
+                ('material.gt6ce.gem','gt.material.Moonstone','8452'),
             ],ids)
             self.assertEqual(dict(proofs),{
-                'material.gregtech.moonstone':{(8513,'gt.material.MoonStone')},
-                'material.gregtech.crudesteel':{(8806,'gt.material.ClayCompound')},
+                'material.gt6ce.moonstone':{(8513,'gt.material.MoonStone')},
+                'material.gt6ce.crudesteel':{(8806,'gt.material.ClayCompound')},
             })
 
     def test_antimatter_ids_and_placeholder_names_keep_different_proof_rules(self):
@@ -174,20 +174,20 @@ Clash=create(4020,"Antimatter Test");'''
             self.assertEqual(ambiguous['4020'],['gt.material.AntimatterTest','gt.material.OrdinaryTest'])
             self.assertIn(anti,files)
             self.assertEqual(dict(verified_material_proofs([
-                ('@material-proof.material.gregtech.placeholder','gt.material.ExampleGem','0')],ids)),{})
+                ('@material-proof.material.gt6ce.placeholder','gt.material.ExampleGem','0')],ids)),{})
             anti.write_text(declaration.replace('aID,aNameOreDict,aNameOreDict','aID,aNameOreDict,"Changed"'),encoding='utf-8')
             with self.assertRaisesRegex(ValueError,'antimatter display-name factory'):
                 material_identities(root)
 
     def test_actual_material_key_takes_precedence_over_another_categories_field_alias(self):
         candidates={'gt.material.Gold','gt.material.Goldwood'}
-        proofs={'material.gregtech.gold':{(790,'gt.material.Gold'),(9369,'gt.material.Goldwood')}}
-        self.assertEqual(resolve_material_collision('material.gregtech.gold',candidates,proofs),{'gt.material.Gold'})
-        self.assertEqual(resolve_material_collision('material.gregtech.gold',candidates,{}),candidates)
+        proofs={'material.gt6ce.gold':{(790,'gt.material.Gold'),(9369,'gt.material.Goldwood')}}
+        self.assertEqual(resolve_material_collision('material.gt6ce.gold',candidates,proofs),{'gt.material.Gold'})
+        self.assertEqual(resolve_material_collision('material.gt6ce.gold',candidates,{}),candidates)
         candidates={'gt.material.Cobalt','gt.material.CarbonMonoxide'}
-        proofs={'material.gregtech.co':{(270,'gt.material.Cobalt'),(9838,'gt.material.CarbonMonoxide')}}
+        proofs={'material.gt6ce.co':{(270,'gt.material.Cobalt'),(9838,'gt.material.CarbonMonoxide')}}
         # Neither abbreviation is an actual registered material translation key.
-        self.assertEqual(resolve_material_collision('material.gregtech.co',candidates,proofs),candidates)
+        self.assertEqual(resolve_material_collision('material.gt6ce.co',candidates,proofs),candidates)
 
     def test_lazy_unused_names_do_not_replace_active_names_or_prove_ids(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
@@ -464,11 +464,11 @@ IL.Shape_Slicer_Eigths_Hollow.set(addItem(10904,"Hollow eighths",""));
 // IL.Shape_Extruder_Pipe_Tiny.set(addItem(99999,"Wrong",""));
 ''',encoding='utf-8')
             result,_=numbered_item_identities(root)
-            self.assertEqual(result['item.gregtech.extruder_shape_tinypipe'],'gt.multiitem.technological.10009')
-            self.assertEqual(result['item.gregtech.low_heat_extruder_shape_capsulecellcontainer'],'gt.multiitem.technological.10228')
+            self.assertEqual(result['item.gt6ce.extruder_shape_tinypipe'],'gt.multiitem.technological.10009')
+            self.assertEqual(result['item.gt6ce.low_heat_extruder_shape_capsulecellcontainer'],'gt.multiitem.technological.10228')
             for native,ident in [('usb1_stick',32001),('usb4_hdd',32024),('crystal_circuit_ruby',30402),
                     ('crystal_processor_diamond',30501),('foodmold_shape_baguette',10803),('slicer_shape_eights_hollow',10904)]:
-                self.assertEqual(result['item.gregtech.'+native],'gt.multiitem.technological.'+str(ident))
+                self.assertEqual(result['item.gt6ce.'+native],'gt.multiitem.technological.'+str(ident))
 
     def test_paired_spray_metadata_and_selector_constructor_names(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:

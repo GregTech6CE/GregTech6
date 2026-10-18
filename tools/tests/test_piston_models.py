@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 import unittest
 
-ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gt6ce')
 
 
 class PistonModelTests(unittest.TestCase):

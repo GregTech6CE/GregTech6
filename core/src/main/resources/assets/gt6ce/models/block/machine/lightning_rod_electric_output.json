@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
+    "side": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
+    "top": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
+    "bottom": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side"
+  }
+}

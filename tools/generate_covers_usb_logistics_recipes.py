@@ -37,18 +37,18 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "core/src/main/resources/data/gregtech"
+DATA = ROOT / "core/src/main/resources/data/gt6ce"
 
 SHAPED = "minecraft:crafting_shaped"
 SHAPELESS = "minecraft:crafting_shapeless"
-TOOL_SHAPED = "gregtech:tool_shaped"
+TOOL_SHAPED = "gt6ce:tool_shaped"
 
 TOOL = {
-    "w": "gregtech:tool_wrench",
-    "d": "gregtech:tool_screwdriver",
-    "h": "gregtech:tool_hammer",
-    "x": "gregtech:tool_wire_cutter",
-    "r": "gregtech:tool_soft_hammer",
+    "w": "gt6ce:tool_wrench",
+    "d": "gt6ce:tool_screwdriver",
+    "h": "gt6ce:tool_hammer",
+    "x": "gt6ce:tool_wire_cutter",
+    "r": "gt6ce:tool_soft_hammer",
 }
 
 
@@ -62,39 +62,39 @@ def tag(t: str) -> dict:
 
 def circuits(tier: int) -> dict:
     """GT6 high-to-low re-registration accepts tier N and every higher tier."""
-    return tag("gregtech:circuits_tier_" + str(tier) + "_plus")
+    return tag("gt6ce:circuits_tier_" + str(tier) + "_plus")
 
 
 # ── covers (MultiItemTechnological:139-178, :419-422) ─────────────────────────────────────────────
 
 # IL.PISTONS[1] - the item retriever cover uses the LV piston (MultiItemTechnological:170)
-LV_PISTON = "gregtech:compact_electric_piston_lv"
+LV_PISTON = "gt6ce:compact_electric_piston_lv"
 
 COVERS = [
     # id, gt6, type, pattern, key
     ("crafting_table_cover", "MultiItemTechnological:140", SHAPED,
      ["C", "Q"],
-     {"C": item("minecraft:crafting_table"), "Q": item("gregtech:blank_cover")}),
+     {"C": item("minecraft:crafting_table"), "Q": item("gt6ce:blank_cover")}),
     # GT6's row is "GB"/"YQ" but never defines 'B' (CR.shaped would leave the slot empty), so the
     # port crafts the cover from the glue and the dye that GT6 does define.
     ("warning_cover", "MultiItemTechnological:167", SHAPED,
      ["G ", "YQ"],
      {"G": tag("forge:slimeballs"), "Y": tag("forge:dyes/yellow"),
-      "Q": item("gregtech:blank_cover")}),
+      "Q": item("gt6ce:blank_cover")}),
     ("item_retriever_cover", "MultiItemTechnological:170", SHAPED,
      ["RPR", "CQC"],
-     {"R": item("gregtech:plate_curved_electrum"), "P": item(LV_PISTON),
-      "C": circuits(3), "Q": item("gregtech:item_filter")}),
+     {"R": item("gt6ce:plate_curved_electrum"), "P": item(LV_PISTON),
+      "C": circuits(3), "Q": item("gt6ce:item_filter")}),
     ("drain", "MultiItemTechnological:159", TOOL_SHAPED,
      ["RRR", "RwR", "RRR"],
      {"R": tag("forge:rods/iron"), "w": item(TOOL["w"])}),
     ("air_vent", "MultiItemTechnological:161", SHAPED,
      ["RRR", "RXR", "RRR"],
-     {"R": tag("forge:rods/iron"), "X": item("gregtech:rotor_iron")}),
+     {"R": tag("forge:rods/iron"), "X": item("gt6ce:rotor_iron")}),
     ("pressure_value", "MultiItemTechnological:178", TOOL_SHAPED,
      ["TCT", "wPd"],
-     {"T": tag("forge:screws/brass"), "C": item("gregtech:plate_curved_brass"),
-      "P": item("gregtech:plate_brass"), "w": item(TOOL["w"]), "d": item(TOOL["d"])}),
+     {"T": tag("forge:screws/brass"), "C": item("gt6ce:plate_curved_brass"),
+      "P": item("gt6ce:plate_brass"), "w": item(TOOL["w"]), "d": item(TOOL["d"])}),
 ]
 
 # IL.PUMPS / IL.CONVEYERS / IL.ROBOT_ARMS (MultiItemTechnological:419-422): GT6's compact electric
@@ -125,46 +125,46 @@ for index, wire, cable, plate, tier in USB_TIERS:
     USB.append((f"usb{index}_stick", f"MultiItemTechnological:{795 + index}", TOOL_SHAPED,
                 ["xWd", "PCP", "TCT"],
                 {"x": item(TOOL["x"]), "d": item(TOOL["d"]),
-                 "W": item(f"gregtech:wire_01_{wire}"), "C": circuits(tier),
+                 "W": item(f"gt6ce:wire_01_{wire}"), "C": circuits(tier),
                  "P": tag(f"forge:plates/{plate}"), "T": tag(f"forge:screws/{plate}")}))
 for index, wire, cable, plate, tier in USB_TIERS:
     USB.append((f"usb{index}_cable", f"MultiItemTechnological:{807 + index}", TOOL_SHAPED,
                 ["xWd", "PCP", "TCT"],
                 {"x": item(TOOL["x"]), "d": item(TOOL["d"]),
-                 "W": item(f"gregtech:wire_01_{wire}"), "C": item(f"gregtech:{'wire' if cable == 'graphene' else 'cable'}_01_{cable}"),
+                 "W": item(f"gt6ce:wire_01_{wire}"), "C": item(f"gt6ce:{'wire' if cable == 'graphene' else 'cable'}_01_{cable}"),
                  "P": tag(f"forge:plates/{plate}"), "T": tag(f"forge:screws/{plate}")}))
 for index, wire, cable, plate, tier in USB_TIERS:
     USB.append((f"usb{index}_hdd", f"MultiItemTechnological:{818 + index}", TOOL_SHAPED,
                 ["PLT", "dRW", "TCP"],
-                {"P": tag(f"forge:plates/{plate}"), "L": item("gregtech:laser_emitter_helium"),
+                {"P": tag(f"forge:plates/{plate}"), "L": item("gt6ce:laser_emitter_helium"),
                  "T": tag(f"forge:screws/{plate}"), "d": item(TOOL["d"]),
-                 "R": tag("minecraft:music_discs"), "W": item(f"gregtech:usb{index}_cable"),
+                 "R": tag("minecraft:music_discs"), "W": item(f"gt6ce:usb{index}_cable"),
                  "C": circuits(tier)}))
 
 # ── logistics (MultiItemTechnological:773-787 shaped, :117-131 shapeless cycle) ───────────────────
 
-BUS_KEYS = {"Q": item("gregtech:blank_cover"),
-            "P": item("gregtech:crystal_processor_emerald"),
+BUS_KEYS = {"Q": item("gt6ce:blank_cover"),
+            "P": item("gt6ce:crystal_processor_emerald"),
             "C": circuits(4),
-            "W": item("gregtech:wire_fine_osmiumelemental")}
+            "W": item("gt6ce:wire_fine_osmiumelemental")}
 
 LOGISTICS = [
     ("logistics_display_cpu_logic", "MultiItemTechnological:773", TOOL_SHAPED,
      ["dL ", " Q ", " C "],
-     {"d": item(TOOL["d"]), "L": item("gregtech:wire_01_lumium"),
-      "Q": item("gregtech:blank_cover"), "C": circuits(2)}),
+     {"d": item(TOOL["d"]), "L": item("gt6ce:wire_01_lumium"),
+      "Q": item("gt6ce:blank_cover"), "C": circuits(2)}),
     ("logistics_display_cpu_control", "MultiItemTechnological:774", TOOL_SHAPED,
      [" Ld", " Q ", " C "],
-     {"d": item(TOOL["d"]), "L": item("gregtech:wire_01_lumium"),
-      "Q": item("gregtech:blank_cover"), "C": circuits(2)}),
+     {"d": item(TOOL["d"]), "L": item("gt6ce:wire_01_lumium"),
+      "Q": item("gt6ce:blank_cover"), "C": circuits(2)}),
     ("logistics_display_cpu_storage", "MultiItemTechnological:775", TOOL_SHAPED,
      [" L ", " Q ", "dC "],
-     {"d": item(TOOL["d"]), "L": item("gregtech:wire_01_lumium"),
-      "Q": item("gregtech:blank_cover"), "C": circuits(2)}),
+     {"d": item(TOOL["d"]), "L": item("gt6ce:wire_01_lumium"),
+      "Q": item("gt6ce:blank_cover"), "C": circuits(2)}),
     ("logistics_display_cpu_conversion", "MultiItemTechnological:776", TOOL_SHAPED,
      [" L ", " Q ", " Cd"],
-     {"d": item(TOOL["d"]), "L": item("gregtech:wire_01_lumium"),
-      "Q": item("gregtech:blank_cover"), "C": circuits(2)}),
+     {"d": item(TOOL["d"]), "L": item("gt6ce:wire_01_lumium"),
+      "Q": item("gt6ce:blank_cover"), "C": circuits(2)}),
     ("filtered_logistics_export_bus_fluid", "MultiItemTechnological:778", TOOL_SHAPED,
      ["  w", "WQW", "CPC"], dict(BUS_KEYS, w=item(TOOL["w"]))),
     ("filtered_logistics_import_bus_fluid", "MultiItemTechnological:779", TOOL_SHAPED,
@@ -252,7 +252,7 @@ def entry(gt6: str, kind: str, pattern: list, key: dict,
             recipe["allow_mirror"] = False
     else:
         recipe["ingredients"] = shapeless
-    recipe["result"] = {"item": f"gregtech:{result}"}
+    recipe["result"] = {"item": f"gt6ce:{result}"}
     return recipe
 
 
@@ -266,7 +266,7 @@ def generated() -> dict:
             gt6, SHAPELESS, [], {}, result, shapeless)
     for result, gt6, component in COVER_FROM_COMPONENT:
         files[DATA / f"recipes/hand_covers/{result}.json"] = entry(
-            gt6, SHAPELESS, [], {}, result, [item("gregtech:" + component)])
+            gt6, SHAPELESS, [], {}, result, [item("gt6ce:" + component)])
     for result, gt6, kind, pattern, key in USB:
         files[DATA / f"recipes/hand_components/{result}.json"] = entry(
             gt6, kind, pattern, key, result)
@@ -275,18 +275,18 @@ def generated() -> dict:
             gt6, kind, pattern, key, result)
     for recipe_id, gt6, result, source in LOGISTICS_CYCLE:
         files[DATA / f"recipes/logistics/{recipe_id}.json"] = entry(
-            gt6, SHAPELESS, [], {}, result, [item("gregtech:" + source)])
+            gt6, SHAPELESS, [], {}, result, [item("gt6ce:" + source)])
     files[DATA / "recipes/hand_components/integrated_circuit_0.json"] = entry(
         "ItemIntegratedCircuit:58", TOOL_SHAPED,
         ["GhG", "SSS", "GwG"],
-        {"G": item("gregtech:gear_gt_small_iron"), "S": tag("forge:rods/iron"),
+        {"G": item("gt6ce:gear_gt_small_iron"), "S": tag("forge:rods/iron"),
          "h": item(TOOL["h"]), "w": item(TOOL["w"])},
         "integrated_circuit_0")
     for variant, pattern in PROGRAMMING.items():
         files[DATA / f"recipes/hand_components/integrated_circuit_{variant}.json"] = entry(
             f"ItemIntegratedCircuit:{60 + variant - 1}",
             TOOL_SHAPED, pattern,
-            {"P": tag("gregtech:integrated_circuits"), "d": item(TOOL["d"])},
+            {"P": tag("gt6ce:integrated_circuits"), "d": item(TOOL["d"])},
             f"integrated_circuit_{variant}")
     return files
 
@@ -298,7 +298,7 @@ def main() -> None:
     # The selector tag: GT6's wildcard variant ("any programmed circuit") as a real tag file.
     write(DATA / "tags/items/integrated_circuits.json",
           {"replace": False,
-           "values": [f"gregtech:integrated_circuit_{i}" for i in range(25)]})
+           "values": [f"gt6ce:integrated_circuit_{i}" for i in range(25)]})
     groups = {}
     for path in files:
         groups[path.parent.name] = groups.get(path.parent.name, 0) + 1

@@ -47,8 +47,8 @@ final class MultiblockTankDeliveryChecks {
                         && c.getString().endsWith(" ("+spec.meltingPoint()+" K)")),"material melting point without crucible bonus "+id);
                 var expected=com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath()).orElseThrow();
                 require(ItemMaterialRegistry.get(stack).orElseThrow().components().equals(expected.components()),"exact existing controller REV components "+id);
-                require(count(tooltip(stack,true),"tooltip.gregtech.contained_materials")==1
-                        && count(normal,"tooltip.gregtech.contained_materials")==0,"single source advanced material header "+id);
+                require(count(tooltip(stack,true),"tooltip.gt6ce.contained_materials")==1
+                        && count(normal,"tooltip.gt6ce.contained_materials")==0,"single source advanced material header "+id);
                 original++;
             } else legacy++;
             for(int sample=0;sample<6;sample++) {

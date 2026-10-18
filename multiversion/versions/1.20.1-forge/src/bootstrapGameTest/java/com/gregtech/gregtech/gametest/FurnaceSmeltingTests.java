@@ -25,7 +25,7 @@ import java.util.TreeMap;
  * GT6's formula, and the rows have to reach the vanilla furnace as well (GT6 {@code RM.add_smelting}
  * writes into {@code FurnaceRecipes}).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class FurnaceSmeltingTests {
 

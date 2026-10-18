@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "_comment": "GT6 MultiItemTechnological:170",
+  "pattern": [
+    "RPR",
+    "CQC"
+  ],
+  "key": {
+    "R": {
+      "item": "gt6ce:plate_curved_electrum"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_lv"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_3_plus"
+    },
+    "Q": {
+      "item": "gt6ce:item_filter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:item_retriever_cover"
+  }
+}

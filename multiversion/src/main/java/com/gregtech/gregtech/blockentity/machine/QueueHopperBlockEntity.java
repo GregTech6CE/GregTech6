@@ -686,7 +686,7 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gregtech." + spec.id());
+        return Component.translatable("block.gt6ce." + spec.id());
     }
 
     @Nullable

@@ -41,7 +41,7 @@ public final class SourceStorageRecipeTests {
             }
             h.assertTrue(recipe.matches(grid(stacks),h.getLevel()),"native source grid "+entry.getKey());
             var result=recipe.assemble(grid(stacks),h.getLevel().registryAccess());
-            h.assertTrue(result.is(item("gregtech:"+entry.getValue()).getItem()) && result.getCount()==1,"native source result "+entry.getKey());
+            h.assertTrue(result.is(item("gt6ce:"+entry.getValue()).getItem()) && result.getCount()==1,"native source result "+entry.getKey());
             h.assertTrue(wire(h,recipe).matches(grid(stacks),h.getLevel()),"real storage recipe synchronization "+entry.getKey());
             var remains=recipe.getRemainingItems(grid(stacks));
             for(int i=0;i<stacks.size();i++)if(stacks.get(i).getItem() instanceof GTToolItem tool)
@@ -73,11 +73,11 @@ public final class SourceStorageRecipeTests {
 //? if >=1.21.1 {
     /*private static net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput> lookup(GameTestHelper h,String path) {
         return (net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput>)h.getLevel().getRecipeManager()
-                .byKey(ResourceLocation.parse("gregtech:"+path)).orElseThrow().value();
+                .byKey(ResourceLocation.parse("gt6ce:"+path)).orElseThrow().value();
 *///?} else {
     private static net.minecraft.world.item.crafting.Recipe<net.minecraft.world.inventory.CraftingContainer> lookup(GameTestHelper h,String path) {
         return (net.minecraft.world.item.crafting.Recipe<net.minecraft.world.inventory.CraftingContainer>)h.getLevel().getRecipeManager()
-                .byKey(ResourceLocation.parse("gregtech:"+path)).orElseThrow();
+                .byKey(ResourceLocation.parse("gt6ce:"+path)).orElseThrow();
 //?}
     }
 }

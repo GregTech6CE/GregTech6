@@ -23,7 +23,7 @@ public final class NeoItemLogisticsCheckpoint {
  private static ItemStack named(Item item,int count,String name){var stack=new ItemStack(item,count);stack.set(DataComponents.CUSTOM_NAME,Component.literal(name));return stack;}
  private static void require(boolean ok,String message){if(!ok)throw new IllegalStateException("Item logistics checkpoint: "+message);}
  private static int count(ChestBlockEntity chest){int count=0;for(int i=0;i<chest.getContainerSize();i++)count+=chest.getItem(i).getCount();return count;}
- private static Block block(String id){return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",id));}
+ private static Block block(String id){return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id));}
  private static void put(BlockPos pos,net.minecraft.world.level.block.state.BlockState state){require(world.getBlockState(pos).isAir(),"fresh fixture position "+pos);require(world.setBlock(pos,state,Block.UPDATE_ALL),"place "+pos);}
  @SubscribeEvent public static void started(ServerStartedEvent event){
   if(!Boolean.getBoolean("gregtech.integration.itemLogisticsSmoke"))return;

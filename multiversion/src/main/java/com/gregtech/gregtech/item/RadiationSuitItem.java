@@ -27,12 +27,12 @@ public final class RadiationSuitItem extends ArmorItem {
         this.family=family;
     }
 //? if >=1.21.1 {
- /*@Override public net.minecraft.resources.ResourceLocation getArmorTexture(ItemStack stack,net.minecraft.world.entity.Entity entity,net.minecraft.world.entity.EquipmentSlot slot,ArmorMaterial.Layer layer,boolean innerModel){int index=switch(slot){case HEAD->0;case CHEST->1;case LEGS->2;default->3;};return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","textures/armor/" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + "/"+index+".png");}
+ /*@Override public net.minecraft.resources.ResourceLocation getArmorTexture(ItemStack stack,net.minecraft.world.entity.Entity entity,net.minecraft.world.entity.EquipmentSlot slot,ArmorMaterial.Layer layer,boolean innerModel){int index=switch(slot){case HEAD->0;case CHEST->1;case LEGS->2;default->3;};return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/armor/" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + "/"+index+".png");}
  @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> lines,TooltipFlag flags){lines.add(net.minecraft.network.chat.Component.translatable(com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.tooltip(family)));}
 *///?} else {
     @Override public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String layer) {
         int index = switch (slot) { case HEAD -> 0; case CHEST -> 1; case LEGS -> 2; default -> 3; };
-        return "gregtech:textures/armor/" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + "/" + index + ".png";
+        return "gt6ce:textures/armor/" + com.gregtech.gregtech.content.hazard.HazmatSuitCatalog.texture(family) + "/" + index + ".png";
     }
     @Override public void appendHoverText(ItemStack stack, net.minecraft.world.level.Level level,
             java.util.List<net.minecraft.network.chat.Component> lines, TooltipFlag flags) {
@@ -45,7 +45,7 @@ public final class RadiationSuitItem extends ArmorItem {
         public int getEnchantmentValue() { return 0; }
         public SoundEvent getEquipSound() { return SoundEvents.ARMOR_EQUIP_LEATHER; }
         public Ingredient getRepairIngredient() { return Ingredient.EMPTY; }
-        public String getName() { return "gregtech:radiation_suit"; }
+        public String getName() { return "gt6ce:radiation_suit"; }
         public float getToughness() { return 0; }
         public float getKnockbackResistance() { return 0; }
     }

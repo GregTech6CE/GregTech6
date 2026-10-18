@@ -14,8 +14,8 @@ import net.minecraft.world.item.*;
 /** Source pages with native JEI scroll grids; every rule remains indexed as an output. */
 public final class LootInfoCategories {
     private LootInfoCategories() {}
-    public static final RecipeType<LootViewerData.Group> LOOT = RecipeType.create("gregtech", "loot_tables", LootViewerData.Group.class);
-    public static final RecipeType<LootViewerData.Group> MOBS = RecipeType.create("gregtech", "mob_drops", LootViewerData.Group.class);
+    public static final RecipeType<LootViewerData.Group> LOOT = RecipeType.create("gt6ce", "loot_tables", LootViewerData.Group.class);
+    public static final RecipeType<LootViewerData.Group> MOBS = RecipeType.create("gt6ce", "mob_drops", LootViewerData.Group.class);
     public static final class Category implements IRecipeCategory<LootViewerData.Group> {
         private final RecipeType<LootViewerData.Group> type;
         private final IDrawable background, icon, slot;
@@ -26,7 +26,7 @@ public final class LootInfoCategories {
             slot = gui.getSlotDrawable();
         }
         @Override public RecipeType<LootViewerData.Group> getRecipeType() { return type; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category." + type.getUid().getPath()); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category." + type.getUid().getPath()); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
         @Override public void setRecipe(IRecipeLayoutBuilder builder, LootViewerData.Group group, IFocusGroup focuses) {

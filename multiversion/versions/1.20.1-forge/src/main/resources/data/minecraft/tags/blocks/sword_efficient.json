@@ -1,13 +1,13 @@
 {
   "replace": false,
   "values": [
-    "gregtech:bale_grass",
-    "gregtech:bale_grass_dry",
-    "gregtech:bale_grass_moldy",
-    "gregtech:bale_grass_rotten",
-    "gregtech:bale_barley",
-    "gregtech:bale_oat",
-    "gregtech:bale_rice",
-    "gregtech:bale_rye"
+    "gt6ce:bale_grass",
+    "gt6ce:bale_grass_dry",
+    "gt6ce:bale_grass_moldy",
+    "gt6ce:bale_grass_rotten",
+    "gt6ce:bale_barley",
+    "gt6ce:bale_oat",
+    "gt6ce:bale_rice",
+    "gt6ce:bale_rye"
   ]
 }

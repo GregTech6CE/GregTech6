@@ -14,10 +14,10 @@ import json,re
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master/src/main/java'
 def write(folder,name,data):
-    path=native_path(ROOT/'src/main/resources/data/gregtech/recipes'/folder/(name+'.json'))
+    path=native_path(ROOT/'src/main/resources/data/gt6ce/recipes'/folder/(name+'.json'))
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(data,indent=2)+'\n',encoding='utf8')
-def item(name):return {'item':'gregtech:'+name}
+def item(name):return {'item':'gt6ce:'+name}
 def shapeless(name,inputs,output,count=1):
     write('wire_working',name,{'type':'minecraft:crafting_shapeless','ingredients':[item(x) for x in inputs],'result':item(output)|{'count':count}})
 def main():
@@ -46,7 +46,7 @@ def main():
             else:
                 parent=re.search(r"'P', IL.Shape_"+family+r'_(\w+)',body).group(1)
                 keys={'P':item(prefix+names[parent]),'x':item('tool_wire_cutter')}
-            write('extruder_shapes',prefix+names[result],{'type':'gregtech:tool_shaped','allow_mirror':False,'pattern':rows,'key':keys,'result':item(prefix+names[result])|{'count':1}})
+            write('extruder_shapes',prefix+names[result],{'type':'gt6ce:tool_shaped','allow_mirror':False,'pattern':rows,'key':keys,'result':item(prefix+names[result])|{'count':1}})
             count+=1
     print(f'{len(materials)} conductor materials; {count} extruder shapes')
 if __name__=='__main__':main()

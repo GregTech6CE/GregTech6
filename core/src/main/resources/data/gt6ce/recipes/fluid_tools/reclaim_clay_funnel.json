@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:clay_funnel"
+    }
+  ],
+  "result": {
+    "item": "minecraft:clay_ball",
+    "count": 3
+  }
+}

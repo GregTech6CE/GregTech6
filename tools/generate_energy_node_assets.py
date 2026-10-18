@@ -20,7 +20,7 @@ from pathlib import Path
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech\textures\blocks\machines"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 TEX = os.path.join(ASSETS, "textures", "block", "machines")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "energy")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
@@ -106,7 +106,7 @@ def copy_textures(folders=None):
 
 def tex_ref(folder, sub, name):
     path = f"{folder}/{sub}/{name}" if sub else f"{folder}/{name}"
-    return f"gregtech:block/machines/{path}"
+    return f"gt6ce:block/machines/{path}"
 
 
 def faces_for(layout, folder, sub, facing="down"):
@@ -205,7 +205,7 @@ def main(battery_only=False, storage_transformers_only=False):
             print(f"!! {device_id}: missing textures in {folder}")
             continue
         write(os.path.join(MODELS, device_id + ".json"), model)
-        model_ref = f"gregtech:block/machine/energy/{device_id}"
+        model_ref = f"gt6ce:block/machine/energy/{device_id}"
         states=blockstate(model_ref, rotate)
         if layout == "tbs":
             for facing in ("north", "south", "west", "east"):
@@ -245,8 +245,8 @@ def main(battery_only=False, storage_transformers_only=False):
             zh=match.group(1).strip()
         write(os.path.join(BLOCKSTATES, device_id + ".json"), states)
         write(os.path.join(ITEM_MODELS, device_id + ".json"), {"parent": model_ref})
-        lang_en[f"block.gregtech.{device_id}"] = en
-        lang_zh[f"block.gregtech.{device_id}"] = zh
+        lang_en[f"block.gt6ce.{device_id}"] = en
+        lang_zh[f"block.gt6ce.{device_id}"] = zh
         models += 1
 
     for lang_path, entries in ((os.path.join(ASSETS, "lang", "en_us.json"), lang_en),
@@ -254,7 +254,7 @@ def main(battery_only=False, storage_transformers_only=False):
         with open(lang_path, encoding="utf-8-sig") as f:
             lang = json.load(f)
         for key,value in entries.items():
-            if key.startswith(("block.gregtech.battery_box_","block.gregtech.energy_storage_","block.gregtech.transformer_")):lang[key]=value
+            if key.startswith(("block.gt6ce.battery_box_","block.gt6ce.energy_storage_","block.gt6ce.transformer_")):lang[key]=value
             else:lang.setdefault(key,value)
         write(lang_path, dict(sorted(lang.items())))
     print(f"devices: {models}, lang: {len(lang_en)}")

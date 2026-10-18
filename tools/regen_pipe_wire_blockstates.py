@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS_MACHINE = ASSETS / "models/block/machine"
 
@@ -102,8 +102,8 @@ def main():
             base = f"{kind}_{nn}"
         core = MODELS_MACHINE / f"{base}_core.json"
         side = MODELS_MACHINE / f"{base}_side.json"
-        core_ref = f"gregtech:block/machine/{base}_core"
-        side_ref = f"gregtech:block/machine/{base}_side"
+        core_ref = f"gt6ce:block/machine/{base}_core"
+        side_ref = f"gt6ce:block/machine/{base}_side"
         if is_full_cube(core) or not side.exists():
             write_json(bs, {"variants": {"": {"model": core_ref}}})
             full += 1

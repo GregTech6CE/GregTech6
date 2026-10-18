@@ -10,7 +10,7 @@ import json
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 class LegacyBatteryAssets(unittest.TestCase):
     def test_alias_models_names_and_charge_overrides_match_canonical_chemistry(self):
         langs=[json.loads((ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8')) for lang in ['en_us','zh_cn']]
@@ -18,7 +18,7 @@ class LegacyBatteryAssets(unittest.TestCase):
             old='battery_eu_'+str(8*4**tier);canonical='battery_lithium_cobalt_'+suffix
             for folder in ['blockstates','models/item']:
                 self.assertEqual(json.loads((ASSETS/f'{folder}/{old}.json').read_text()),json.loads((ASSETS/f'{folder}/{canonical}.json').read_text()))
-            for lang in langs:self.assertEqual(lang['block.gregtech.'+old],lang['block.gregtech.'+canonical])
+            for lang in langs:self.assertEqual(lang['block.gt6ce.'+old],lang['block.gt6ce.'+canonical])
     def test_old_generators_do_not_restore_active_energy_node_or_waterlogging(self):
         for name in ['generate_energy_node_assets','add_waterlogged_variants']:
             spec=importlib.util.spec_from_file_location(name,ROOT/f'tools/{name}.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)

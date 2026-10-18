@@ -64,7 +64,7 @@ public final class DungeonBottleSupplies {
 
     private static ItemStack bottle(String id) {
 //? if >=1.21.1 {
-        /*var item=BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+        /*var item=BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
         var item=ForgeRegistries.ITEMS.getValue(GregTech.id(id));
 //?}

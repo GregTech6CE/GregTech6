@@ -60,10 +60,10 @@ public final class IssueVanillaTests {
 //?}
         h.assertTrue(furnace.matches(input,h.getLevel()),"firestarter completes GT furnace recipe");
 //? if >=1.21.1 {
-        /*var saw=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gregtech:vanilla/oak_planks_saw")).orElseThrow().value();
+        /*var saw=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gt6ce:vanilla/oak_planks_saw")).orElseThrow().value();
         var wood=net.minecraft.world.item.crafting.CraftingInput.of(1,2,List.of(GTToolItem.create(GTToolType.SAW,GTMaterialRegistry.get("Iron"),GTMaterialRegistry.get("Wood")),new ItemStack(Blocks.OAK_LOG)));
 *///?} else {
-        var saw=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(new ResourceLocation("gregtech:vanilla/oak_planks_saw")).orElseThrow();
+        var saw=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(new ResourceLocation("gt6ce:vanilla/oak_planks_saw")).orElseThrow();
         var wood=new net.minecraft.world.inventory.TransientCraftingContainer(menu,1,2);wood.setItem(0,GTToolItem.create(GTToolType.SAW,GTMaterialRegistry.get("Iron"),GTMaterialRegistry.get("Wood")));wood.setItem(1,new ItemStack(Blocks.OAK_LOG));
 //?}
         h.assertTrue(saw.matches(wood,h.getLevel()),"real saw plus oak log");

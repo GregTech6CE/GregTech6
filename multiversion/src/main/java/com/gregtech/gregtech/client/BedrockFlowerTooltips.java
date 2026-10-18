@@ -35,18 +35,18 @@ public final class BedrockFlowerTooltips {
     public static void onItemTooltip(ItemTooltipEvent event) {
 //? if >=1.21.1 {
         /*var id = BuiltInRegistries.ITEM.getKey(event.getItemStack().getItem());
-        if (id == null || !"gregtech".equals(id.getNamespace())) return;
+        if (id == null || !"gt6ce".equals(id.getNamespace())) return;
 *///?} else {
         var id = ForgeRegistries.ITEMS.getKey(event.getItemStack().getItem());
         if (id == null || !GregTech.NAMESPACE.equals(id.getNamespace())) return;
 //?}
         BedrockFlowers.Flower flower = BedrockFlowers.byId(id.getPath());
         if (flower == null) return;
-        event.getToolTip().add(Component.translatable("tooltip.gregtech.bedrock_flower.indicates",
-                Component.translatable("tooltip.gregtech.bedrock_flower.deposit." + flower.indicator()))
+        event.getToolTip().add(Component.translatable("tooltip.gt6ce.bedrock_flower.indicates",
+                Component.translatable("tooltip.gt6ce.bedrock_flower.deposit." + flower.indicator()))
                 .withStyle(ChatFormatting.GRAY));
         if (flower.occursInRealLife())
-            event.getToolTip().add(Component.translatable("tooltip.gregtech.bedrock_flower.real_life")
+            event.getToolTip().add(Component.translatable("tooltip.gt6ce.bedrock_flower.real_life")
                     .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS_MACHINE = ASSETS / "models/block/machine"
 MODELS_BLOCKS = ASSETS / "models/block/blocks"
@@ -113,7 +113,7 @@ def _g(g, i): return [g[i], g[i+1], g[i+2]]
 def build_core(tex: str, size: str) -> dict:
     face = CORE_FACE[size]
     geo = CORE_GEO[size]
-    t = f"gregtech:block/material_icons/{tex}"
+    t = f"gt6ce:block/material_icons/{tex}"
     return {
         "loader": "forge:composite",
         "children": {
@@ -162,7 +162,7 @@ def build_side(tex: str, size: str) -> dict:
     end = SIDE_END[size]
     side = "pipeside"
     geo = SIDE_GEO[size]
-    t = f"gregtech:block/material_icons/{tex}"
+    t = f"gt6ce:block/material_icons/{tex}"
     return {
         "loader": "forge:composite",
         "children": {
@@ -210,7 +210,7 @@ def build_item_block(tex: str, size: str) -> dict:
     """Simple north-south bar model (Z=0→16), matching shared pipe_item_{size}.json."""
     end = SIDE_END[size]
     side = "pipeside"
-    t = f"gregtech:block/material_icons/{tex}"
+    t = f"gt6ce:block/material_icons/{tex}"
     x1 = CORE_GEO[size][0]
     y1 = CORE_GEO[size][1]
     x2 = CORE_GEO[size][3]
@@ -271,8 +271,8 @@ def main() -> None:
             write_json(MODELS_MACHINE / f"pipe_{size}_{mat}_{suffix}.json", builder(tex, size))
             gen += 1
 
-        core_ref = f"gregtech:block/machine/pipe_{size}_{mat}_core"
-        side_ref = f"gregtech:block/machine/pipe_{size}_{mat}_side"
+        core_ref = f"gt6ce:block/machine/pipe_{size}_{mat}_core"
+        side_ref = f"gt6ce:block/machine/pipe_{size}_{mat}_side"
         write_json(bs_file, {
             "multipart": [
                 {"apply": {"model": core_ref}},
@@ -291,7 +291,7 @@ def main() -> None:
 
         item_model = MODELS_ITEM / f"pipe_{size}_{mat}.json"
         if item_model.exists():
-            write_json(item_model, {"parent": f"gregtech:block/blocks/pipe_item_{size}_{mat}"})
+            write_json(item_model, {"parent": f"gt6ce:block/blocks/pipe_item_{size}_{mat}"})
             item_count += 1
 
     # ── Item pipes (transport items) ───────────────────────────────────
@@ -309,8 +309,8 @@ def main() -> None:
                 write_json(path, builder(tex, size))
                 gen += 1
 
-        core_ref = f"gregtech:block/machine/pipe_{size}_{mat}_core"
-        side_ref = f"gregtech:block/machine/pipe_{size}_{mat}_side"
+        core_ref = f"gt6ce:block/machine/pipe_{size}_{mat}_core"
+        side_ref = f"gt6ce:block/machine/pipe_{size}_{mat}_side"
         write_json(bs_file, {
             "multipart": [
                 {"apply": {"model": core_ref}},
@@ -331,7 +331,7 @@ def main() -> None:
 
         item_model = MODELS_ITEM / f"item_pipe_{size}_{mat}.json"
         if item_model.exists():
-            write_json(item_model, {"parent": f"gregtech:block/blocks/pipe_item_{size}_{mat}"})
+            write_json(item_model, {"parent": f"gt6ce:block/blocks/pipe_item_{size}_{mat}"})
             item_count += 1
 
     print(f"Generated {gen} model files")

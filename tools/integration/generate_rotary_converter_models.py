@@ -40,7 +40,7 @@ def main():
     args = parser.parse_args()
     texture_pins, generated = {}, []
     for platform in [str(native_path('src')), str(native_path('neoforge/src'))]:
-        assets = args.repo / platform / 'main/resources/assets/gregtech'
+        assets = args.repo / platform / 'main/resources/assets/gt6ce'
         for ident, motor in DEVICES:
             model_path = assets / 'models/block/machine/energy' / (ident + '.json')
             base = json.loads(model_path.read_text(encoding='utf-8'))
@@ -54,7 +54,7 @@ def main():
                 for face, reference in target.items():
                     assert '/overlay/' in reference
                     target[face] = reference.replace('/overlay/', '/overlay_active' + ('_' + kind if motor else '') + '/')
-                    texture = args.repo / 'core/src/main/resources/assets/gregtech/textures' / (target[face].split(':', 1)[1] + '.png')
+                    texture = args.repo / 'core/src/main/resources/assets/gt6ce/textures' / (target[face].split(':', 1)[1] + '.png')
                     assert texture.is_file(), texture
                     texture_pins[str(texture)] = hashlib.sha256(texture.read_bytes()).hexdigest()
                 path = model_path.with_name(ident + '_' + kind + '.json')
@@ -71,7 +71,7 @@ def main():
                             key += f',counter_clockwise={str(left).lower()},fast={str(fast).lower()}'
                             if activity > 0: suffix = '_' + ('l' if left else 'r') + ('f' if fast else 's')
                         elif activity > 0: suffix = '_active'
-                        variants[key] = {'model': 'gregtech:block/machine/energy/' + ident + suffix, **rot}
+                        variants[key] = {'model': 'gt6ce:block/machine/energy/' + ident + suffix, **rot}
             state = assets / 'blockstates' / (ident + '.json')
             write(state, {'variants': variants})
             generated.append(str(state.relative_to(args.repo)))

@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "B B",
+    "sRf",
+    "BOB"
+  ],
+  "key": {
+    "O": {
+      "item": "gt6ce:slicer_shape_empty"
+    },
+    "B": {
+      "item": "gt6ce:plate_tiny_stainlesssteel"
+    },
+    "f": {
+      "item": "gt6ce:tool_file"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "R": {
+      "tag": "forge:rings/stainless_steel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:slicer_shape_eights_hollow",
+    "count": 1
+  }
+}

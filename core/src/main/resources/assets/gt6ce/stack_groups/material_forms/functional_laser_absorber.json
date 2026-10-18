@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_laser_absorber",
+  "contents": [
+    "item:gt6ce:laser_absorber_ev",
+    "item:gt6ce:laser_absorber_hv",
+    "item:gt6ce:laser_absorber_iv",
+    "item:gt6ce:laser_absorber_lv",
+    "item:gt6ce:laser_absorber_mv"
+  ],
+  "priority": 110
+}

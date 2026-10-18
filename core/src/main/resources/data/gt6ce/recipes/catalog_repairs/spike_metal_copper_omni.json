@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "TBT",
+    "BPB",
+    "TBT"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:tool_head_sword/copper"
+    },
+    "T": {
+      "tag": "gt6ce:screw/copper"
+    },
+    "P": {
+      "tag": "gt6ce:plate/copper"
+    }
+  },
+  "result": {
+    "item": "gt6ce:spike_metal",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "omni",
+        "secondary": "false"
+      }
+    }
+  }
+}

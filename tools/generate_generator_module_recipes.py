@@ -29,20 +29,20 @@ ROOT = Path(__file__).resolve().parents[1]
 # recipe_keys/, not components/ or extruder_shapes/: ElectronicsTests counts the component crafting
 # recipes (84) and ManufacturingTests owns extruder_shapes/ for the 78 molds, so the generator modules
 # — which are recipe keys rather than components — get their own directory.
-OUT = ROOT / "core/src/main/resources/data/gregtech/recipes/recipe_keys"
+OUT = ROOT / "core/src/main/resources/data/gt6ce/recipes/recipe_keys"
 
 # GT6 OD_CIRCUITS[4]: the cumulative gt:circuitN chain (LoaderOreDictReRegistrations:375-383).
-CIRCUITS = {"tag": "gregtech:circuits_tier_4_plus"}
+CIRCUITS = {"tag": "gt6ce:circuits_tier_4_plus"}
 
 
 def recipe(result: str, source: str, pattern: list, key: dict) -> dict:
     return {
-        "type": "gregtech:tool_shaped",
+        "type": "gt6ce:tool_shaped",
         "allow_mirror": False,
         "_comment": f"GT6 {source}",
         "pattern": pattern,
         "key": key,
-        "result": {"item": f"gregtech:{result}"},
+        "result": {"item": f"gt6ce:{result}"},
     }
 
 
@@ -51,19 +51,19 @@ RECIPES = {
         "stone_generator_module", "MultiItemRandomTools:424", ["CPC", "LMW", "COC"],
         {"C": CIRCUITS,
          "P": [{"item": "minecraft:piston"}, {"item": "minecraft:sticky_piston"}],
-         "M": {"item": "gregtech:casing_machine_steelgalvanized"},
-         "O": {"item": "gregtech:extruder_shape_block"},
-         "L": {"type": "gregtech:finite_fluid_container_1000", "fluid": "Lava"},
-         "W": {"type": "gregtech:finite_fluid_container_1000", "fluid": "Water"}}),
+         "M": {"item": "gt6ce:casing_machine_steelgalvanized"},
+         "O": {"item": "gt6ce:extruder_shape_block"},
+         "L": {"type": "gt6ce:finite_fluid_container_1000", "fluid": "Lava"},
+         "W": {"type": "gt6ce:finite_fluid_container_1000", "fluid": "Water"}}),
     "basalt_generator_module": recipe(
         "basalt_generator_module", "MultiItemRandomTools:425", ["S", "M", "I"],
         {"S": {"item": "minecraft:soul_sand"},
-         "M": {"item": "gregtech:stone_generator_module"},
+         "M": {"item": "gt6ce:stone_generator_module"},
          "I": {"item": "minecraft:packed_ice"}}),
     "blackstone_generator_module": recipe(
         "blackstone_generator_module", "MultiItemRandomTools:426", ["S", "M", "O"],
         {"S": {"item": "minecraft:soul_sand"},
-         "M": {"item": "gregtech:stone_generator_module"},
+         "M": {"item": "gt6ce:stone_generator_module"},
          "O": {"item": "minecraft:obsidian"}}),
 }
 

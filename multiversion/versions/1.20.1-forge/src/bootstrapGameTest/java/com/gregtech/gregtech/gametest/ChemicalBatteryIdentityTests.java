@@ -46,11 +46,11 @@ public final class ChemicalBatteryIdentityTests {
     @GameTest(template="test_empty")
     public static void canonicalBatteryNbtPreservesCharge(GameTestHelper h){
         var p=new BlockPos(1,2,1);var pos=h.absolutePos(p);var block=ForgeRegistries.BLOCKS.getValue(GregTech.id("battery_lithium_cobalt_mv"));h.setBlock(p,block);
-        var state=block.defaultBlockState();var saved=new CompoundTag();saved.putString("id","gregtech:chemical_battery");saved.putInt("x",pos.getX());saved.putInt("y",pos.getY());saved.putInt("z",pos.getZ());saved.putLong(ChemicalBatteryItem.CHARGE,123456);
+        var state=block.defaultBlockState();var saved=new CompoundTag();saved.putString("id","gt6ce:chemical_battery");saved.putInt("x",pos.getX());saved.putInt("y",pos.getY());saved.putInt("z",pos.getZ());saved.putLong(ChemicalBatteryItem.CHARGE,123456);
         var loaded=BlockEntity.loadStatic(pos,state,saved);
         h.assertTrue(loaded instanceof ChemicalBatteryBlockEntity&&loaded.getType().isValid(state),"canonical battery block entity loads");
         h.getLevel().setBlockEntity(loaded);loaded.onLoad();
         h.assertTrue(((ChemicalBatteryBlockEntity)loaded).stored()==123456,"canonical load preserves charge");
-        h.assertTrue(loaded.saveWithFullMetadata().getString("id").equals("gregtech:chemical_battery"),"save keeps canonical chemical block entity type");h.succeed();
+        h.assertTrue(loaded.saveWithFullMetadata().getString("id").equals("gt6ce:chemical_battery"),"save keeps canonical chemical block entity type");h.succeed();
     }
 }

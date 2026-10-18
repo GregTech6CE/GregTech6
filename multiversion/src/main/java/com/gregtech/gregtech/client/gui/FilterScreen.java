@@ -11,7 +11,7 @@ public class FilterScreen extends AbstractContainerScreen<FilterMenu> {
     @Override protected void init() {
         super.init();mode=addRenderableWidget(Button.builder(modeText(),button->minecraft.gameMode.handleInventoryButtonClick(menu.containerId,0)).bounds(leftPos+92,topPos+3,76,13).build());
     }
-    private Component modeText() { return Component.translatable(menu.blacklist()?"gregtech.filter.blacklist":"gregtech.filter.whitelist"); }
+    private Component modeText() { return Component.translatable(menu.blacklist()?"gt6ce.filter.blacklist":"gt6ce.filter.whitelist"); }
     @Override protected void renderBg(GuiGraphics graphics,float partial,int mouseX,int mouseY) {
         var texture=ResourceLocation.parse("minecraft:textures/gui/container/generic_54.png");
         if(menu.prefixMode()){

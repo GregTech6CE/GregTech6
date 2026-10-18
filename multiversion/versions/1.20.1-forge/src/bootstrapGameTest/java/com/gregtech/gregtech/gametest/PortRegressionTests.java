@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PortRegressionTests {
     @GameTest(template="test_blueprint_empty")
@@ -276,12 +276,12 @@ public final class PortRegressionTests {
             if (entry.get().kind()!=com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity.Kind.MORTAR) continue;
             mortars++;
             helper.assertTrue(entry.get().tint(0)==Materials.Ceramic.getColor(), "ceramic bowl tint");
-            var recipe=helper.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","tools/"+entry.getId().getPath())).orElseThrow();
+            var recipe=helper.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tools/"+entry.getId().getPath())).orElseThrow();
             helper.assertTrue(recipe.getResultItem(helper.getLevel().registryAccess()).is(entry.get().asItem()), "mortar has a loaded survival crafting recipe");
             helper.assertTrue(GTBlockEntities.MANUAL_TOOL.get().isValid(entry.get().defaultBlockState()), "variant supports the working manual-tool block entity");
         }
         helper.assertTrue(mortars==5, "all five original mortar designs registered");
-        helper.assertTrue(helper.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","tools/ceramic_bowl_firing")).isPresent(), "ceramic bowl firing recipe loaded");
+        helper.assertTrue(helper.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tools/ceramic_bowl_firing")).isPresent(), "ceramic bowl firing recipe loaded");
         helper.succeed();
     }
 
@@ -341,7 +341,7 @@ public final class PortRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void manualJuicerProcessingAndReload(GameTestHelper helper) {
-        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.parse("gregtech:juicer"));
+        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.parse("gt6ce:juicer"));
         var pos=new net.minecraft.core.BlockPos(1,2,1); helper.setBlock(pos,block);
         var tool=(com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var player=helper.makeMockSurvivalPlayer();
@@ -363,7 +363,7 @@ public final class PortRegressionTests {
         helper.assertTrue(sift.tint(0)==Materials.Steel.getColor(),"sifting table has steel tint");
         for(String id:List.of("mixing_bowl","mixing_bowl_table","bathing_pot","bathing_pot_table",
                 "bathing_pot_wood","bathing_pot_table_wood","juicer")) {
-            var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+            var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
             helper.assertTrue(com.gregtech.gregtech.registry.GTBlockEntities.PROCESSING_TOOL.get().isValid(block.defaultBlockState()),"manual processing block entity attached: "+id);
         }
         helper.succeed();
@@ -377,11 +377,11 @@ public final class PortRegressionTests {
                         net.minecraft.resources.ResourceLocation.parse("forge:long_rods/lead"))),
                 "the wooden bathing pot's lead long rod is registered under its shared Forge tag");
         helper.assertTrue(helper.getLevel().getRecipeManager().byKey(
-                        net.minecraft.resources.ResourceLocation.parse("gregtech:tools/bathing_pot_wood")).isPresent(),
+                        net.minecraft.resources.ResourceLocation.parse("gt6ce:tools/bathing_pot_wood")).isPresent(),
                 "the wooden bathing pot recipe loads with a registered lead rod ingredient");
         for (String id : List.of("mixing_bowl_table", "bathing_pot_table", "bathing_pot_wood", "bathing_pot_table_wood")) {
             var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             helper.assertTrue(block instanceof com.gregtech.gregtech.block.tool.ProcessingToolBlock,
                     "GT6 vessel has an active processing block: " + id);
             helper.setBlock(pos, block);
@@ -417,7 +417,7 @@ public final class PortRegressionTests {
             }
         }
         var bowl = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "mixing_bowl_table"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "mixing_bowl_table"));
         helper.setBlock(pos, bowl);
         var tool = (com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity)
                 helper.getLevel().getBlockEntity(helper.absolutePos(pos));

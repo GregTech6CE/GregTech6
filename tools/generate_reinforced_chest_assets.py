@@ -16,7 +16,7 @@ import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
 
 
@@ -44,15 +44,15 @@ def generate(assets=ASSETS):
     zh = json.loads((ASSETS / 'lang/zh_cn.json').read_text(encoding='utf-8'))
     family = list(specs())
     write('models/block/machine/storage/reinforced_wood_chest.json', {
-        'parent': 'minecraft:block/block', 'textures': {'particle': 'gregtech:block/machines/woodchest/overlay'}})
+        'parent': 'minecraft:block/block', 'textures': {'particle': 'gt6ce:block/machines/woodchest/overlay'}})
     write('models/item/reinforced_wood_chest.json', {
-        'parent': 'gregtech:item/metal_chest', 'textures': {'particle': 'gregtech:block/machines/woodchest/overlay'}})
+        'parent': 'gt6ce:item/metal_chest', 'textures': {'particle': 'gt6ce:block/machines/woodchest/overlay'}})
     for suffix, old_id in family:
         name = 'reinforced_wood_chest_' + suffix
-        write('blockstates/' + name + '.json', {'variants': {'': {'model': 'gregtech:block/machine/storage/reinforced_wood_chest'}}})
-        write('models/item/' + name + '.json', {'parent': 'gregtech:item/reinforced_wood_chest'})
-        en['block.gregtech.' + name] = en['block.gregtech.chest_' + suffix].removesuffix(' Chest') + ' Reinforced Wooden Chest'
-        zh['block.gregtech.' + name] = names[str(old_id)].strip()
+        write('blockstates/' + name + '.json', {'variants': {'': {'model': 'gt6ce:block/machine/storage/reinforced_wood_chest'}}})
+        write('models/item/' + name + '.json', {'parent': 'gt6ce:item/reinforced_wood_chest'})
+        en['block.gt6ce.' + name] = en['block.gt6ce.chest_' + suffix].removesuffix(' Chest') + ' Reinforced Wooden Chest'
+        zh['block.gt6ce.' + name] = names[str(old_id)].strip()
     write('lang/en_us.json', en)
     write('lang/zh_cn.json', zh)
     for shell in ('woodchest', 'lootchest'):
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     family = generate()
     tag = native_path(ROOT / 'src/main/resources/data/forge/tags/items/chests/wooden.json')
     data = json.loads(tag.read_text(encoding='utf-8')) if tag.exists() else {'replace': False, 'values': []}
-    data['values'] = sorted(set(data['values']) | {'gregtech:reinforced_wood_chest_' + suffix for suffix, _ in family})
+    data['values'] = sorted(set(data['values']) | {'gt6ce:reinforced_wood_chest_' + suffix for suffix, _ in family})
     tag.parent.mkdir(parents=True, exist_ok=True)
     tag.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
     manifest = ROOT / 'tools/gt6_texture_sources.json'
@@ -78,6 +78,6 @@ if __name__ == '__main__':
         for source_layer, layer in (('colored', 'colored'), ('plain', 'overlay')):
             relative = f'textures/block/machines/{shell}/{layer}.png'
             data[relative] = {'sha256': hashlib.sha256((ASSETS / relative).read_bytes()).hexdigest(),
-                             'source': str(native_path(f'src/main/resources/assets/gregtech/textures/model/gt.multitileentity/{shell}.{source_layer}.png'))}
+                             'source': str(native_path(f'src/main/resources/assets/gt6ce/textures/model/gt.multitileentity/{shell}.{source_layer}.png'))}
     manifest.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     print(f'Generated {len(family)} chest variants, four original texture layers, bilingual names and wooden chest tags.')

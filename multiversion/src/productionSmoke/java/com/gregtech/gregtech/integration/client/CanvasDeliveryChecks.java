@@ -24,10 +24,10 @@ final class CanvasDeliveryChecks {
 *///?} else {
             for(var pass:model.getRenderPasses(stack,false))for(var layer:pass.getRenderTypes(stack,false))for(int side=-1;side<6;side++)for(var quad:pass.getQuads(null,side<0?null:Direction.from3DDataValue(side),RandomSource.create(1),net.minecraftforge.client.model.data.ModelData.EMPTY,layer)){
 //?}
-                require(quad.getSprite().contents().name().equals(ResourceLocation.fromNamespaceAndPath("gregtech","item/canvas/"+variant.dye())),"original colored item sprite "+variant.path());count++;
+                require(quad.getSprite().contents().name().equals(ResourceLocation.fromNamespaceAndPath("gt6ce","item/canvas/"+variant.dye())),"original colored item sprite "+variant.path());count++;
             }
             require(count>0,"nonempty item mesh "+variant.path());meshes++;
-            require(!stack.getHoverName().getString().contains("item.gregtech."),"localized canvas name");
+            require(!stack.getHoverName().getString().contains("item.gt6ce."),"localized canvas name");
             int i=variant.originalId()-7030,x=8+(i%8)*50,y=24+(i/8)*28;graphics.renderItem(stack,x+16,y);graphics.drawString(client.font,client.font.plainSubstrByWidth(stack.getHoverName().getString(),48),x,y+17,0xffffff,false);
         }
         var equipment=new java.util.ArrayList<>(com.gregtech.gregtech.loaders.b.OriginCreativeContents.contents("equipment"));
@@ -46,7 +46,7 @@ final class CanvasDeliveryChecks {
         CanvasData.write(printed,CanvasData.fromState(Blocks.GLOWSTONE.defaultBlockState()));require(CanvasCoverRenderer.imageFace(printed,Direction.SOUTH,null,null).bright(),"glowstone image retains bright rendering");
         int pageModels=0;
         for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
-            var pages=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path)));
+            var pages=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path)));
             require(pages.getItem() instanceof com.gregtech.gregtech.item.PrintedPagesItem,"native printed-page behavior "+path);
             var model=client.getItemRenderer().getModel(pages,null,null,0);
             int count=0;
@@ -55,10 +55,10 @@ final class CanvasDeliveryChecks {
 *///?} else {
             for(var pass:model.getRenderPasses(pages,false))for(var layer:pass.getRenderTypes(pages,false))for(int side=-1;side<6;side++)for(var quad:pass.getQuads(null,side<0?null:Direction.from3DDataValue(side),RandomSource.create(1),net.minecraftforge.client.model.data.ModelData.EMPTY,layer)) {
 //?}
-                require(quad.getSprite().contents().name().equals(ResourceLocation.fromNamespaceAndPath("gregtech","item/randomtools/"+path)),"original paper bundle sprite "+path);count++;
+                require(quad.getSprite().contents().name().equals(ResourceLocation.fromNamespaceAndPath("gt6ce","item/randomtools/"+path)),"original paper bundle sprite "+path);count++;
             }
             require(count>0,"visible printed-page item mesh "+path);
-            require(!pages.getHoverName().getString().contains("item.gregtech."),"localized page name "+path);
+            require(!pages.getHoverName().getString().contains("item.gt6ce."),"localized page name "+path);
             graphics.renderItem(pages,140+pageModels*30,88);pageModels++;
         }
         int bookHints=0;
@@ -67,11 +67,11 @@ final class CanvasDeliveryChecks {
             require(com.gregtech.gregtech.data.MachineRecipeMaps.ScannerVisuals.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mDuration==512&&r.mEUt==16&&r.mInputs.length==2&&r.mInputs[0].is(book.getItem())),"source scanner viewer row "+variant.path());bookHints++;
         }
         for(String path:java.util.List.of("printed_pages","many_printed_pages")) {
-            var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path));
+            var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path));
             require(com.gregtech.gregtech.data.MachineRecipeMaps.Printer.mRecipeList.stream().anyMatch(r->r.mFakeRecipe&&r.mOutputs.length==1&&r.mOutputs[0].is(item)&&r.mEUt==16&&r.mDuration==(path.equals("printed_pages")?512:1024)),"source printer viewer row "+path);
         }
         var iron=com.gregtech.gregtech.api.material.GTMaterialRegistry.get(260).resolve();
-        var dataStick=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","usb3_stick"))),iron);
+        var dataStick=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","usb3_stick"))),iron);
         var matter=java.util.List.of(com.gregtech.gregtech.registry.GTFluids.stack("MatterNeutral",(int)iron.getNeutrons()),com.gregtech.gregtech.registry.GTFluids.stack("MatterCharged",(int)iron.getProtons()));
         var replication=com.gregtech.gregtech.data.MachineRecipeMaps.Replicator.findRecipe(java.util.List.of(dataStick),matter,false,3,3);
         require(replication!=null&&replication.mEUt==1&&replication.mDuration==(iron.getProtons()+iron.getNeutrons())*256L&&!replication.mCanBeBuffered,"installed original molecular work fields");
@@ -80,9 +80,9 @@ final class CanvasDeliveryChecks {
         require(mercury!=null&&!mercury.isEmpty()&&BuiltInRegistries.FLUID.getKey(mercury.getFluid()).getPath().equals("mercury"),"installed ordinary mercury liquid");
         int electricalRows=0;
         for(int tier=0;tier<10;tier++) {
-            var key="gregtech:circuits_tier_"+tier+"_plus";
+            var key="gt6ce:circuits_tier_"+tier+"_plus";
             require(com.gregtech.gregtech.data.MachineRecipeIngredients.resolve("circuit:"+tier,iron,1).equals(java.util.Map.of("tag",key)),"installed original circuit grade "+tier);
-            String path="data/gregtech/tags/items/circuits_tier_"+tier+"_plus.json";
+            String path="data/gt6ce/tags/items/circuits_tier_"+tier+"_plus.json";
             try(var stream=CanvasDeliveryChecks.class.getClassLoader().getResourceAsStream(path)) {
                 require(stream!=null,"shared installed circuit tag "+tier);
                 var tag=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
@@ -90,7 +90,7 @@ final class CanvasDeliveryChecks {
                 boolean external=false,next=tier==9;
                 for(var value:tag.getAsJsonArray("values")) {
                     if(value.isJsonObject()&&value.getAsJsonObject().get("id").getAsString().equals("#gt:circuit"+tier))external=true;
-                    if(value.isJsonPrimitive()&&value.getAsString().equals("#gregtech:circuits_tier_"+(tier+1)+"_plus"))next=true;
+                    if(value.isJsonPrimitive()&&value.getAsString().equals("#gt6ce:circuits_tier_"+(tier+1)+"_plus"))next=true;
                 }
                 require(external&&next,"installed external circuit key and cumulative inheritance");
             }catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}
@@ -99,7 +99,7 @@ final class CanvasDeliveryChecks {
             if(large&&suffix.equals("xv"))continue;
             String id=(large?"energy_storage_":"battery_box_")+suffix;
             require(com.gregtech.gregtech.content.recipe.EquipmentCraftingCatalog.FILES.contains("energy_nodes/"+id+".json"),"native recipe pack includes high box "+id);
-            var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)));
+            var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)));
             require(stack.getItem() instanceof net.minecraft.world.item.BlockItem b&&b.getBlock() instanceof com.gregtech.gregtech.block.energy.EnergyNodeBlock node&&node.spec().batterySlots()==(large?16:4),"installed high box original slots "+id);electricalRows++;
         }
         graphics.pose().popPose();var result=new JsonObject();result.addProperty("originalCircuitTagGrades",10);result.addProperty("externalHighBatteryBoxRecipes",electricalRows);result.addProperty("originalMolecularDataFields",true);result.addProperty("mercuryAmbientUnitMb",1000);result.addProperty("originalCanvasItemModels",meshes);result.addProperty("printedPageModels",pageModels);result.addProperty("coloredBookScanHints",bookHints);result.addProperty("directionalAndFluidFaces",4);result.addProperty("brightImage",true);return result;

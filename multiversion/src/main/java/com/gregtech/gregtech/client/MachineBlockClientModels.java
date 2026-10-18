@@ -67,7 +67,7 @@ public final class MachineBlockClientModels {
 //?}
             for (String suffix : new String[]{"", "_running", "_active"}) {
 //? if >=1.21.1 {
-                /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", "block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
+                /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
                 if (registered.add(id)) event.register(ModelResourceLocation.standalone(id));
 *///?} else {
                 var id = GregTech.id("block/machine/basic/" + entry.get().basicSpec().machineName() + suffix);
@@ -90,7 +90,7 @@ public final class MachineBlockClientModels {
             for (String directory : new String[]{"burning_liquid", "burning_gas", "burning_fluidbed"}) {
                 for (String active : new String[]{"_on", "_off"}) {
 //? if >=1.21.1 {
-                    /*event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/" + directory + "/" + facing.getSerializedName() + active)));
+                    /*event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + directory + "/" + facing.getSerializedName() + active)));
 *///?} else {
                     event.register(GregTech.id("block/machine/" + directory + "/" + facing.getSerializedName() + active));
 //?}
@@ -255,7 +255,7 @@ public final class MachineBlockClientModels {
 
             // Idle model (base overlay, used for off state)
 //? if >=1.21.1 {
-            /*ResourceLocation staticModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName());
+            /*ResourceLocation staticModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/basic/" + spec.machineName());
 *///?} else {
             ResourceLocation staticModelId = GregTech.id("block/machine/basic/" + spec.machineName());
 //?}
@@ -268,7 +268,7 @@ public final class MachineBlockClientModels {
 
             // Running model (standby overlay, used when powered but idle)
 //? if >=1.21.1 {
-            /*ResourceLocation runningModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName() + "_running");
+            /*ResourceLocation runningModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/basic/" + spec.machineName() + "_running");
 *///?} else {
             ResourceLocation runningModelId = GregTech.id("block/machine/basic/" + spec.machineName() + "_running");
 //?}
@@ -277,7 +277,7 @@ public final class MachineBlockClientModels {
 
             // Active model (working overlay, used when processing recipe)
 //? if >=1.21.1 {
-            /*ResourceLocation activeModelId = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/basic/" + spec.machineName() + "_active");
+            /*ResourceLocation activeModelId = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/basic/" + spec.machineName() + "_active");
 *///?} else {
             ResourceLocation activeModelId = GregTech.id("block/machine/basic/" + spec.machineName() + "_active");
 //?}
@@ -345,7 +345,7 @@ public final class MachineBlockClientModels {
 
         LOGGER.info("[{}] Machine model aliasing: {} solid burning boxes, {} new burning boxes, {} basic machines, {} engines ({} solid missing, {} new missing, {} basic missing)",
 //? if >=1.21.1 {
-                /*"gregtech", aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
+                /*"gt6ce", aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
 *///?} else {
                 GregTech.NAMESPACE, aliased, newBurningAliased, basicAliased, engineAliased, missing, newBurningMissing, basicMissing);
 //?}
@@ -377,7 +377,7 @@ public final class MachineBlockClientModels {
         for (Direction facing : Direction.Plane.HORIZONTAL) {
             String variant = facing.getSerializedName() + (active ? "_on" : "_off");
 //? if >=1.21.1 {
-            /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/" + modelDir + "/" + variant);
+            /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + modelDir + "/" + variant);
 *///?} else {
             ResourceLocation id = GregTech.id("block/machine/" + modelDir + "/" + variant);
 //?}

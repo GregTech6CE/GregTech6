@@ -21,7 +21,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 GT6 = ROOT.parent / "gregtech6-master/gregtech6-master"
 GT6_SOURCE = native_path(GT6 / "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java")
 CHINESE = ROOT.parent / "GregTech.lang"
@@ -68,11 +68,11 @@ def resource_sets() -> tuple[dict[Path, str], dict[str, str], dict[str, str]]:
             if original_id not in names:
                 raise ValueError(f"GregTech.lang has no original name for {original_id}")
             resource_id = f"axle_{family}_{size}"
-            block_key = f"block.gregtech.{resource_id}"
+            block_key = f"block.gt6ce.{resource_id}"
             english[block_key] = f"{size_name} {material} Axle"
             chinese[block_key] = names[original_id]
 
-            blockstate = {"variants": {"": {"model": f"gregtech:block/{resource_id}"}}}
+            blockstate = {"variants": {"": {"model": f"gt6ce:block/{resource_id}"}}}
             files[ASSETS / "blockstates" / f"{resource_id}.json"] = pretty(blockstate)
 
             lo = (16 - diameter) / 2
@@ -91,15 +91,15 @@ def resource_sets() -> tuple[dict[Path, str], dict[str, str], dict[str, str]]:
             model = {
                 "parent": "block/block",
                 "textures": {
-                    "rod": "gregtech:block/iconsets/axle",
-                    "horizontal": "gregtech:block/iconsets/axle_horizontal",
-                    "vertical": "gregtech:block/iconsets/axle_vertical",
+                    "rod": "gt6ce:block/iconsets/axle",
+                    "horizontal": "gt6ce:block/iconsets/axle_horizontal",
+                    "vertical": "gt6ce:block/iconsets/axle_vertical",
                 },
                 "elements": [{"from": [lo, lo, 0], "to": [hi, hi, 16], "faces": faces}],
             }
             files[ASSETS / "models/block" / f"{resource_id}.json"] = pretty(model)
             files[ASSETS / "models/item" / f"{resource_id}.json"] = pretty(
-                {"parent": f"gregtech:block/{resource_id}"}
+                {"parent": f"gt6ce:block/{resource_id}"}
             )
 
     if len(english) != 52 or len(chinese) != 52 or len(files) != 156:
@@ -115,7 +115,7 @@ def lang_bytes(path: Path, translations: dict[str, str]) -> bytes:
     raw = path.read_bytes()
     newline = "\r\n" if b"\r\n" in raw else "\n"
     lines = raw.decode("utf-8").splitlines(keepends=True)
-    matching = [i for i, line in enumerate(lines) if re.match(r'  "block\.gregtech\.axle_[^" ]+":', line)]
+    matching = [i for i, line in enumerate(lines) if re.match(r'  "block\.gt6ce\.axle_[^" ]+":', line)]
     if not matching:
         raise ValueError(f"{path} has no axle insertion point")
     first = matching[0]

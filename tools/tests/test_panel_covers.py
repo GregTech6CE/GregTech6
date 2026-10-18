@@ -30,17 +30,17 @@ class PanelCoverResources(unittest.TestCase):
         for lang in ['en_us','zh_cn']:
             strings=json.loads((ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8'))
             for name in ids:
-                self.assertTrue(strings[f'item.gregtech.{name}'])
-                self.assertTrue(strings[f'item.gregtech.{name}.tooltip'])
+                self.assertTrue(strings[f'item.gt6ce.{name}'])
+                self.assertTrue(strings[f'item.gt6ce.{name}.tooltip'])
             for key in ['unsupported','style','reset','latch']:
-                self.assertTrue(strings[f'message.gregtech.panel.{key}'])
+                self.assertTrue(strings[f'message.gt6ce.panel.{key}'])
 
     def test_shaped_patterns_and_source_component_distinctions(self):
         for name,(pattern,_) in RECIPES.items():
-            data=json.loads((native_path(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json')).read_text(encoding='utf-8'))
+            data=json.loads((native_path(ROOT/f'src/main/resources/data/gt6ce/recipes/panel_covers/{name}.json')).read_text(encoding='utf-8'))
             self.assertEqual(data['pattern'],pattern)
             self.assertEqual(set(data['key']),set(''.join(pattern))-{' '})
-            self.assertEqual(data['result']['item'],'gregtech:'+name)
+            self.assertEqual(data['result']['item'],'gt6ce:'+name)
         source=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java')).read_text(encoding='utf-8')
         # Dedicated client snapshots are required: these blocks have no open menu for syncing covers.
         extender=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java')).read_text(encoding='utf-8')

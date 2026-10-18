@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:block/machines/covers/base",
+    "layer1": "gt6ce:block/machines/covers/redstoneemitter/underlay",
+    "layer2": "gt6ce:block/machines/covers/redstoneemitter/0",
+    "particle": "gt6ce:block/machines/covers/base"
+  }
+}

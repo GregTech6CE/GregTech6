@@ -38,7 +38,7 @@ import java.util.List;
  * {@code tools/extract_gt6_food_items.py} / {@code tools/extract_gt6_food_stats.py} and can be checked
  * against the line named in the message.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class FoodItemTests {
     private static final int BASE_X = 29000;
@@ -85,7 +85,7 @@ public final class FoodItemTests {
                 continue;
             }
             ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
-            if (key == null || !"gregtech".equals(key.getNamespace()) || !key.getPath().equals(entry.id())) {
+            if (key == null || !"gt6ce".equals(key.getNamespace()) || !key.getPath().equals(entry.id())) {
                 missing.add(entry.id() + " -> " + key);
             }
         }
@@ -235,9 +235,9 @@ public final class FoodItemTests {
         // so GT6's OP.scrapGt.mat(MT.Al, 2) is gregtech:scrap_gt_aluminium - and getValue returns AIR
         // (not null) for an unknown id, which is why the assertion below also checks it is not air.
         Item scrap = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "scrap_gt_aluminium"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "scrap_gt_aluminium"));
         helper.assertTrue(scrap != null && scrap != Items.AIR,
-                "the port registers gregtech:scrap_gt_aluminium, got " + scrap);
+                "the port registers gt6ce:scrap_gt_aluminium, got " + scrap);
         if (scrap != null) {
             helper.assertTrue(count(player, scrap) == 2,
                     "and a bag of potato chips returns GT6's 2 aluminium scraps (MultiItemFood.java:366), got "
@@ -310,7 +310,7 @@ public final class FoodItemTests {
                 com.gregtech.gregtech.registry.GTTechnological.get("slicer_shape_split"));
         ItemStack slicedBread = food("sliced_bread");
         helper.assertTrue(!splitBlade.isEmpty() && !slicedBread.isEmpty(),
-                "gregtech:slicer_shape_split and gregtech:sliced_bread are registered");
+                "gt6ce:slicer_shape_split and gt6ce:sliced_bread are registered");
         helper.assertTrue(MachineRecipeMaps.Slicer.mRecipeList.stream().anyMatch(recipe ->
                         hasInput(recipe, new ItemStack(Items.BREAD)) && hasOutput(recipe, slicedBread)),
                 "and the Slicer's recipe table answers a lookup for vanilla bread plus the split blade "

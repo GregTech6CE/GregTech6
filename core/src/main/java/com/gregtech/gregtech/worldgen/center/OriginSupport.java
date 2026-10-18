@@ -35,21 +35,21 @@ public final class OriginSupport {
     }
     public static final class BlocksGT {
         private BlocksGT() {}
-        public static final OriginWorld.Block Concrete=new OriginWorld.Block("gregtech:concrete"),
-                CFoam=new OriginWorld.Block("gregtech:cfoam"),Asphalt=new OriginWorld.Block("gregtech:asphalt"),
-                Glass=new OriginWorld.Block("gregtech:glass_clear",-1,false,false,false,false,false),
-                RailRoad=new OriginWorld.Block("gregtech:railroad",-1,false,false,false,false,false);
-        public static final OriginWorld.Block GlowGlass=new OriginWorld.Block("gregtech:glass_glow"),
+        public static final OriginWorld.Block Concrete=new OriginWorld.Block("gt6ce:concrete"),
+                CFoam=new OriginWorld.Block("gt6ce:cfoam"),Asphalt=new OriginWorld.Block("gt6ce:asphalt"),
+                Glass=new OriginWorld.Block("gt6ce:glass_clear",-1,false,false,false,false,false),
+                RailRoad=new OriginWorld.Block("gt6ce:railroad",-1,false,false,false,false,false);
+        public static final OriginWorld.Block GlowGlass=new OriginWorld.Block("gt6ce:glass_glow"),
                 River=new OriginWorld.Block("source:river"), Sands=new OriginWorld.Block("source:sands"),
                 Diggables=new OriginWorld.Block("source:diggables"), Glowtus=new OriginWorld.Block("source:glowtus"),
-                SchistGreen=new OriginWorld.Block("gregtech:stone_greenschist"), SchistBlue=new OriginWorld.Block("gregtech:stone_blueschist"),
-                Kimberlite=new OriginWorld.Block("gregtech:stone_kimberlite"), Quartzite=new OriginWorld.Block("gregtech:stone_quartzite"),
-                Limestone=new OriginWorld.Block("gregtech:stone_limestone"), Marble=new OriginWorld.Block("gregtech:stone_marble"),
-                GraniteRed=new OriginWorld.Block("gregtech:stone_granite_red"), GraniteBlack=new OriginWorld.Block("gregtech:stone_granite_black"),
-                Komatiite=new OriginWorld.Block("gregtech:stone_komatiite"), Basalt=new OriginWorld.Block("gregtech:stone_basalt");
+                SchistGreen=new OriginWorld.Block("gt6ce:stone_greenschist"), SchistBlue=new OriginWorld.Block("gt6ce:stone_blueschist"),
+                Kimberlite=new OriginWorld.Block("gt6ce:stone_kimberlite"), Quartzite=new OriginWorld.Block("gt6ce:stone_quartzite"),
+                Limestone=new OriginWorld.Block("gt6ce:stone_limestone"), Marble=new OriginWorld.Block("gt6ce:stone_marble"),
+                GraniteRed=new OriginWorld.Block("gt6ce:stone_granite_red"), GraniteBlack=new OriginWorld.Block("gt6ce:stone_granite_black"),
+                Komatiite=new OriginWorld.Block("gt6ce:stone_komatiite"), Basalt=new OriginWorld.Block("gt6ce:stone_basalt");
         public static final OriginWorld.Block[] GLOW_GLASS_SLABS={GlowGlass.slab(0),GlowGlass.slab(1),GlowGlass.slab(2),GlowGlass.slab(3),GlowGlass.slab(4),GlowGlass.slab(5)};
         public static final OriginWorld.Block[] FOAM_SLABS={CFoam.slab(0),CFoam.slab(1),CFoam.slab(2),CFoam.slab(3),CFoam.slab(4),CFoam.slab(5)};
-        public static final OriginWorld.Block[] stones=java.util.Arrays.stream(new String[]{"granite_black","granite_red","basalt","marble","limestone","granite","diorite","andesite","komatiite","greenschist","blueschist","kimberlite","quartzite","prismarine_light","prismarine_dark","slate","shale"}).map(name->new OriginWorld.Block("gregtech:stone_"+name)).toArray(OriginWorld.Block[]::new);
+        public static final OriginWorld.Block[] stones=java.util.Arrays.stream(new String[]{"granite_black","granite_red","basalt","marble","limestone","granite","diorite","andesite","komatiite","greenschist","blueschist","kimberlite","quartzite","prismarine_light","prismarine_dark","slate","shale"}).map(name->new OriginWorld.Block("gt6ce:stone_"+name)).toArray(OriginWorld.Block[]::new);
     }
     public static final class BlockStones {private BlockStones(){}public static final int TILES=10,CHISL=6,STILE=11;}
     public static boolean set(OriginWorld world,int x,int y,int z,OriginWorld.Block block,int meta,int flags){return set(world,x,y,z,block,meta,flags,block.opaque());}

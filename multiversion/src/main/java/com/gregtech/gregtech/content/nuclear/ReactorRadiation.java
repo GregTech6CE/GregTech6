@@ -7,7 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 /** GT6 UT.Entities.applyRadioactivity: player tracker, potion fallback for other living entities. */
 public final class ReactorRadiation {
-    public static final TagKey<Item> PROTECTION=TagKey.create(Registries.ITEM,ResourceLocation.fromNamespaceAndPath("gregtech","radiation_protection"));
+    public static final TagKey<Item> PROTECTION=TagKey.create(Registries.ITEM,ResourceLocation.fromNamespaceAndPath("gt6ce","radiation_protection"));
     private ReactorRadiation(){}
     public static boolean protectedByArmor(LivingEntity entity){
         for(var slot:new EquipmentSlot[]{EquipmentSlot.HEAD,EquipmentSlot.CHEST,EquipmentSlot.LEGS,EquipmentSlot.FEET})if(entity.getItemBySlot(slot).isEmpty()||!entity.getItemBySlot(slot).is(PROTECTION))return false;

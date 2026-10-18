@@ -31,7 +31,7 @@ class PileTextureBindings(unittest.TestCase):
     def test_generated_model_binds_every_face(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "test.json"
-            generator.write_model(target, "gregtech:block/machines/placeables/ingot/top",
+            generator.write_model(target, "gt6ce:block/machines/placeables/ingot/top",
                                   generator.ingot_elements(9, generator.material_faces("ingot")))
             self.assert_bound(json.loads(target.read_text()))
 

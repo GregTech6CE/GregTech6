@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:book_binding",
+  "category": "misc",
+  "group": "gt6ce.books.copy",
+  "ingredients": [
+    {
+      "item": "gt6ce:large_book_magenta"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:writable_book"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:large_book_magenta",
+    "count": 3
+  }
+}

@@ -32,7 +32,7 @@ public final class UsbDataMedia {
 *///?} else {
         var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        if (key == null || !key.getNamespace().equals("gregtech")) return -1;
+        if (key == null || !key.getNamespace().equals("gt6ce")) return -1;
         return UsbDataRules.tier(key.getNamespace(),key.getPath(),suffix);
     }
 

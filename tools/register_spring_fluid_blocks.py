@@ -19,7 +19,7 @@ import json
 import os
 
 LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "a", "Loader_Fluids.java")
-ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 
 # path (sanitized registry name) -> (texture, english, chinese)
@@ -127,11 +127,11 @@ else:
 
 # Blockstate + models: a LiquidBlock uses vanilla water's 16 level variants.
 for path, (texture, _, _) in FLUIDS.items():
-    still = "gregtech:block/fluids/" + texture
+    still = "gt6ce:block/fluids/" + texture
     variants = {}
     for level in range(16):
         variants["level=%d" % level] = {
-            "model": "gregtech:block/fluid/%s%s" % (path, "" if level == 0 else "_flow")}
+            "model": "gt6ce:block/fluid/%s%s" % (path, "" if level == 0 else "_flow")}
     write_json(os.path.join(ASSETS, "blockstates", path + ".json"), {"variants": variants})
     for suffix in ("", "_flow"):
         write_json(os.path.join(ASSETS, "models", "block", "fluid", path + suffix + ".json"), {
@@ -150,14 +150,14 @@ for path, (texture, _, _) in FLUIDS.items():
 for name, index in (("en_us.json", 1), ("zh_cn.json", 2)):
     file = os.path.join(LANG, name)
     lines = io.open(file, encoding="utf-8").readlines()
-    anchor = next((i for i, line in enumerate(lines) if '"block.gregtech.loot_crate"' in line), None)
+    anchor = next((i for i, line in enumerate(lines) if '"block.gt6ce.loot_crate"' in line), None)
     if anchor is None:
         raise SystemExit("%s: no anchor" % name)
     indent = lines[anchor][:len(lines[anchor]) - len(lines[anchor].lstrip())]
     added = 0
     inserts = []
     for path, values in FLUIDS.items():
-        key = '"block.gregtech.%s"' % path
+        key = '"block.gt6ce.%s"' % path
         if any(key in line for line in lines):
             continue
         inserts.append('%s%s: "%s",\n' % (indent, key, values[index]))

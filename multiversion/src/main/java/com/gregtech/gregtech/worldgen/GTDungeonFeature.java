@@ -240,5 +240,5 @@ public class GTDungeonFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_dungeon.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_dungeon"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_dungeon"));
 }

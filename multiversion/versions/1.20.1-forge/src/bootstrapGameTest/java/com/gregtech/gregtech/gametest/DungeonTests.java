@@ -51,7 +51,7 @@ import java.util.Set;
  *
  * <p>See {@link GTDungeonLayout} for the port's cell-by-cell generation.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DungeonTests {
 
@@ -82,17 +82,17 @@ public final class DungeonTests {
         helper.assertTrue(GTFeatures.DUNGEON.getId().getPath().equals("gt_dungeon"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTDungeonFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_dungeon.json is loaded");
-        JsonObject placed = resourceJson("data/gregtech/worldgen/placed_feature/gt_dungeon.json");
-        helper.assertTrue(placed.get("feature").getAsString().equals("gregtech:gt_dungeon"),
+                "data/gt6ce/worldgen/configured_feature/gt_dungeon.json is loaded");
+        JsonObject placed = resourceJson("data/gt6ce/worldgen/placed_feature/gt_dungeon.json");
+        helper.assertTrue(placed.get("feature").getAsString().equals("gt6ce:gt_dungeon"),
                 "the placed feature points at the dungeon");
         helper.assertTrue(placed.getAsJsonArray("placement").isEmpty(),
                 "an empty placement list is GT6's one attempt per chunk");
-        JsonObject modifier = resourceJson("data/gregtech/forge/biome_modifier/gt_dungeon.json");
+        JsonObject modifier = resourceJson("data/gt6ce/forge/biome_modifier/gt_dungeon.json");
         helper.assertTrue(modifier.get("biomes").getAsString().equals("#minecraft:is_overworld"),
                 "the dungeon is an overworld structure");
         JsonArray features = modifier.getAsJsonArray("features");
-        helper.assertTrue(features.size() == 1 && features.get(0).getAsString().equals("gregtech:gt_dungeon"),
+        helper.assertTrue(features.size() == 1 && features.get(0).getAsString().equals("gt6ce:gt_dungeon"),
                 "the biome modifier adds the dungeon feature");
         helper.assertTrue(modifier.get("step").getAsString().equals("underground_ores"),
                 "the dungeon runs before the surface decoration");
@@ -429,7 +429,7 @@ public final class DungeonTests {
                     "workshop shelf has GT6 manual " + expectedManuals[i] + " in original slot");
         }
         var ductTape = net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "duct_tape"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
         helper.assertTrue(shelfItems.getStackInSlot(8).is(ductTape)
                         && shelfItems.getStackInSlot(9).is(ductTape),
                 "workshop shelf retains both original duct tapes");
@@ -786,8 +786,8 @@ public final class DungeonTests {
                             if (state.isAir()) continue;
                             String id = String.valueOf(
                                     net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock()));
-                            helper.assertTrue(id.startsWith("gregtech:"), "a port block, got " + id);
-                            String name = id.substring("gregtech:".length());
+                            helper.assertTrue(id.startsWith("gt6ce:"), "a port block, got " + id);
+                            String name = id.substring("gt6ce:".length());
                             if (name.equals("fluid_barometer_gas_cylinder")
                                     || name.equals("fluid_barometer_gas_cylinder_stainless_steel")) {
                                 cylinders++;
@@ -1040,15 +1040,15 @@ public final class DungeonTests {
                             net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock()));
                     helper.assertTrue(id.endsWith("_sapling") || id.contains("sapling"),
                             "a garden sapling, got " + id);
-                    if (id.startsWith("gregtech:")) {
+                    if (id.startsWith("gt6ce:")) {
                         gt++;
-                        helper.assertTrue(java.util.Set.of("gregtech:sapling_rubber", "gregtech:sapling_maple",
-                                        "gregtech:sapling_willow", "gregtech:sapling_blue_mahoe",
-                                        "gregtech:sapling_hazel", "gregtech:sapling_cinnamon",
-                                        "gregtech:sapling_coconut", "gregtech:sapling_rainbowood",
-                                        "gregtech:sapling_bluespruce").contains(id),
+                        helper.assertTrue(java.util.Set.of("gt6ce:sapling_rubber", "gt6ce:sapling_maple",
+                                        "gt6ce:sapling_willow", "gt6ce:sapling_blue_mahoe",
+                                        "gt6ce:sapling_hazel", "gt6ce:sapling_cinnamon",
+                                        "gt6ce:sapling_coconut", "gt6ce:sapling_rainbowood",
+                                        "gt6ce:sapling_bluespruce").contains(id),
                                 "GT6 dungeon gardens only choose AB 0..7 or CD 0, got " + id);
-                        if (id.equals("gregtech:sapling_bluespruce")) blueSpruce++;
+                        if (id.equals("gt6ce:sapling_bluespruce")) blueSpruce++;
                     } else {
                         vanilla++;
                     }

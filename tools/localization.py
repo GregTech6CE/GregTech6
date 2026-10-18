@@ -12,7 +12,7 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-LANG_PATH = Path('core/src/main/resources/assets/gregtech/lang')
+LANG_PATH = Path('core/src/main/resources/assets/gt6ce/lang')
 CONFIG_PATH = Path('tools/localization')
 FORMAT = re.compile(r'%(?:(\d+)\$)?([A-Za-z%]|$)')
 NUMERIC_FORMAT = re.compile(r'%(\d+\$)?[\d.]*[df]')
@@ -157,7 +157,7 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
         if native in source and native != original:
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
-    if any(k.startswith('emi.group.gregtech.') for k in english):
+    if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
         result.update(headings(repo, result))
     return result
@@ -180,7 +180,7 @@ def synchronize(repo=ROOT, *, write=False, external=None):
     # Viewer headings have an explicitly requested presentation-only projection:
     # use generic category headings derived from source names or the requested UI vocabulary.
     # Native item/block translations remain under the exact-source rules above.
-    if any(k.startswith('emi.group.gregtech.') for k in english):
+    if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
         derived_titles = headings(repo, expected)
         expected.update(derived_titles)

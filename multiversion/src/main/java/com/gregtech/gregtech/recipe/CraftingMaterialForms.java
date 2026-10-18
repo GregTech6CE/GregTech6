@@ -115,7 +115,7 @@ public final class CraftingMaterialForms {
     }
     private static Form tagged(ItemStack stack) {
         // Prefer explicit GT prefix tags over common tags (dense ores can also be in ordinary ores tags).
-        var tags = stack.getTags().map(tag -> tag.location()).sorted(Comparator.comparing(id -> id.getNamespace().equals("gregtech") ? 0 : 1)).toList();
+        var tags = stack.getTags().map(tag -> tag.location()).sorted(Comparator.comparing(id -> id.getNamespace().equals("gt6ce") ? 0 : 1)).toList();
         for (var tag : tags) {
             var form = formOf(tag);
             if (form != null) return form;
@@ -138,7 +138,7 @@ public final class CraftingMaterialForms {
 
     private static Form formOf(ResourceLocation tag) {
         String namespace = tag.getNamespace(), path = tag.getPath();
-        if (!Set.of("gregtech", "forge", "c").contains(namespace)) return null;
+        if (!Set.of("gt6ce", "forge", "c").contains(namespace)) return null;
         int slash = path.lastIndexOf('/');
         if (slash < 0) return null;
         String material = materialNames.get(path.substring(slash + 1));
@@ -157,10 +157,10 @@ public final class CraftingMaterialForms {
             var value = new JsonObject(); value.addProperty("item", BuiltInRegistries.ITEM.getKey(item).toString()); choices.add(value);
         }
         String material = MaterialEquivalence.materialName(GTMaterialRegistry.get(expected.material()));
-        addTag(choices, "gregtech:" + MaterialPrefix.camelToSnake(expected.prefix()) + "/" + material);
+        addTag(choices, "gt6ce:" + MaterialPrefix.camelToSnake(expected.prefix()) + "/" + material);
         var nativePrefix = PrefixRegistry.byName(expected.prefix());
         if (nativePrefix != null && !nativePrefix.getName().equals(expected.prefix()))
-            addTag(choices, "gregtech:" + MaterialPrefix.camelToSnake(nativePrefix.getName()) + "/" + material);
+            addTag(choices, "gt6ce:" + MaterialPrefix.camelToSnake(nativePrefix.getName()) + "/" + material);
         String common = COMMON.get(expected.prefix());
         if (common != null) {
             addTag(choices, "forge:" + common + "/" + material);

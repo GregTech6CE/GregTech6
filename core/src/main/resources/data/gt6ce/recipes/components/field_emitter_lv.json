@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WPW",
+    "CGC",
+    "WPW"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_01_osmium"
+    },
+    "P": {
+      "item": "gt6ce:plate_double_steelgalvanized"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "G": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_force_field_emitter_lv",
+    "count": 1
+  }
+}

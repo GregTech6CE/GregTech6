@@ -1,17 +1,19 @@
 """Failure cases for the fast gate: ensure a green receipt cannot hide bad inputs."""
 import gzip
 import hashlib
+import io
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'integration'))
 from localization import (CONFIG_PATH, LANG_PATH, expected_chinese,
                           json_text, load_source, parse_patch, read_json, synchronize, format_arguments)
 from check_source import boundary_errors, check, literal_language_calls
-from verify_artifacts import is_test_entry
+from verify_artifacts import is_test_entry, check_resource_namespace
 
 
 class SourcePolicyTests(unittest.TestCase):
@@ -23,8 +25,8 @@ class SourcePolicyTests(unittest.TestCase):
         self.assertEqual(self.repo.resolve().parent, workspace.resolve())
         self.addCleanup(self.temp.cleanup)
         self.source = {'gt.name': ' 原文§a%s ', 'gt.empty': ''}
-        self.english = {'item.gregtech.name': 'Name %s', 'tooltip.gregtech.port': 'Port-only %s'}
-        self.aliases = {'item.gregtech.name': 'gt.name'}
+        self.english = {'item.gt6ce.name': 'Name %s', 'tooltip.gt6ce.port': 'Port-only %s'}
+        self.aliases = {'item.gt6ce.name': 'gt.name'}
         raw = 'S:gt.name= 原文§a%s \nS:gt.empty=\n'.encode('utf8')
         config = self.repo / CONFIG_PATH
         config.mkdir(parents=True)
@@ -44,11 +46,11 @@ class SourcePolicyTests(unittest.TestCase):
 
     def test_spaces_formatting_empty_values_and_english_fallback_are_preserved(self):
         self.assertEqual(synchronize(self.repo)['changes'], {'missing': 0, 'unexpected': 0, 'changed': 0})
-        self.assertEqual(self.good['item.gregtech.name'], ' 原文§a%s ')
+        self.assertEqual(self.good['item.gt6ce.name'], ' 原文§a%s ')
         self.assertEqual(self.good['gt.empty'], '')
 
     def test_modified_direct_key_alias_and_fallback_are_rejected(self):
-        for key in ('gt.name', 'item.gregtech.name', 'tooltip.gregtech.port'):
+        for key in ('gt.name', 'item.gt6ce.name', 'tooltip.gt6ce.port'):
             with self.subTest(key=key):
                 self.write_json(LANG_PATH / 'zh_cn.json', {**self.good, key: '自行翻译'})
                 with self.assertRaisesRegex(ValueError, 'Chinese differs'):
@@ -56,7 +58,7 @@ class SourcePolicyTests(unittest.TestCase):
 
     def test_missing_and_unbound_extra_keys_are_rejected(self):
         for data in ({k: v for k, v in self.good.items() if k != 'gt.name'},
-                     {**self.good, 'item.gregtech.guessed': ' 原文§a%s '}):
+                     {**self.good, 'item.gt6ce.guessed': ' 原文§a%s '}):
             self.write_json(LANG_PATH / 'zh_cn.json', data)
             with self.assertRaises(ValueError):
                 synchronize(self.repo)
@@ -153,19 +155,19 @@ String encoded = "\\u4e2d";
             check(self.repo)
 
     def test_shadow_language_copy_fails(self):
-        self.write_json(Path('neoforge/src/main/resources/assets/gregtech/lang/zh_cn.json'), self.good)
+        self.write_json(Path('neoforge/src/main/resources/assets/gt6ce/lang/zh_cn.json'), self.good)
         with self.assertRaisesRegex(ValueError, 'shadows'):
             check(self.repo)
 
     def test_english_source_drift_is_rejected_even_if_chinese_is_regenerated(self):
         self.write_json(CONFIG_PATH / 'english_source.json', {'values': {
-            'item.gregtech.name': {'source_key': 'gt.name', 'value': 'Name %s'}}})
-        self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gregtech.name': 'Invented name %s'})
+            'item.gt6ce.name': {'source_key': 'gt.name', 'value': 'Name %s'}}})
+        self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gt6ce.name': 'Invented name %s'})
         with self.assertRaisesRegex(ValueError, 'English differs'):
             synchronize(self.repo, write=True)
 
     def test_english_and_chinese_format_arguments_must_match(self):
-        self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gregtech.name': 'Name %s %s'})
+        self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gt6ce.name': 'Name %s %s'})
         with self.assertRaisesRegex(ValueError, 'format arguments differ'):
             synchronize(self.repo, write=True)
         self.assertEqual(format_arguments('%2$s %1$.2f / %2$s %%'), {1, 2})
@@ -195,10 +197,10 @@ Component.translatable("gt." + suffix);
     def test_english_encoding_empty_names_and_supplementary_chinese_are_rejected(self):
         for value in ('\ufffd', '', '\u0001'):
             with self.subTest(value=value):
-                self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gregtech.name': value})
+                self.write_json(LANG_PATH / 'en_us.json', {**self.english, 'item.gt6ce.name': value})
                 with self.assertRaises(ValueError): synchronize(self.repo, write=True)
         with self.assertRaisesRegex(ValueError, 'bypasses'):
-            expected_chinese({'item.gregtech.name':'\U00020000'}, self.source, {})
+            expected_chinese({'item.gt6ce.name':'\U00020000'}, self.source, {})
 
     def test_test_resources_and_nested_classes_are_forbidden_in_production(self):
         stems = {'com/gregtech/gregtech/jei/JeiMachineIndexTests'}
@@ -206,3 +208,28 @@ Component.translatable("gt." + suffix);
         self.assertTrue(is_test_entry('com/gregtech/gregtech/gametest/NewTest.class', set(), set()))
         self.assertTrue(is_test_entry('data/gregtech_repair/structures/test_empty.nbt', set(), set()))
         self.assertFalse(is_test_entry('com/gregtech/gregtech/registry/GTBlocks.class', stems, set()))
+
+    def test_resource_namespace_gate_rejects_stale_roots_and_encoded_references(self):
+        valid = {'assets/gt6ce/models/item/example.json': '{"parent":"gt6ce:item/example"}',
+                 'data/minecraft/tags/items/example.json': '{"values":["gt6ce:example"]}',
+                 'META-INF/gregtech6/NOTICE': 'Source assets/gregtech/ and gregtech: are historical evidence',
+                 'com/gregtech/gregtech/Example.class': 'Java package identity stays unchanged'}
+
+        def inspect_files(files):
+            buffer = io.BytesIO()
+            with zipfile.ZipFile(buffer, 'w') as archive:
+                for name, data in files.items():
+                    archive.writestr(name, data)
+            buffer.seek(0)
+            with zipfile.ZipFile(buffer) as archive:
+                return check_resource_namespace(archive)
+
+        self.assertEqual(inspect_files(valid)['json_documents_checked'], 2)
+        for name, data in (
+                ('assets/gregtech/models/item/old.json', '{}'),
+                ('data/gregtech/recipes/old.json', '{}'),
+                ('data/minecraft/tags/items/old.json', '{"values":["gregtech:old"]}'),
+                ('assets/gt6ce/stack_groups/old.json', '{"contents":["item:gregtech:old"]}'),
+                ('assets/gt6ce/models/item/old.json', '{"parent":"\\u0067regtech:item/old"}')):
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, 'Retired gregtech'):
+                inspect_files({**valid, name: data})

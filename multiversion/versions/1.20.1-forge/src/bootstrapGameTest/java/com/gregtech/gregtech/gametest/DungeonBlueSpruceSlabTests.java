@@ -47,7 +47,7 @@ public final class DungeonBlueSpruceSlabTests {
                         .get(0).getCount() == 2,
                 "one upper slab drops one item and a combined double slab drops two");
         helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                        "gregtech", "wood/slab_bluespruce")).isPresent(),
+                        "gt6ce", "wood/slab_bluespruce")).isPresent(),
                 "GT6's saw-and-plank survival recipe for two slabs is loaded");
         helper.succeed();
     }
@@ -55,7 +55,7 @@ public final class DungeonBlueSpruceSlabTests {
     /** GT6's recipe letter v is craftingToolSawAxe: axe and saw both work, and remain after crafting. */
     @GameTest(template = "test_empty", timeoutTicks = 80)
     public static void blueSpruceSlabAcceptsGt6SawAxeFamily(GameTestHelper helper) {
-        var id = ResourceLocation.fromNamespaceAndPath("gregtech", "wood/slab_bluespruce");
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "wood/slab_bluespruce");
         var loaded = helper.getLevel().getRecipeManager().byKey(id).orElse(null);
         helper.assertTrue(loaded instanceof ToolShapedRecipe, "Blue Spruce slab uses the GT tool recipe");
         var recipe = (ToolShapedRecipe) loaded;

@@ -59,10 +59,10 @@ public final class BehaviorDuctTape {
     public static final long BRAIN_TAPE_QUALITY = 2L, BRAIN_TAPE_USES = 10000000L;
 
     /** Port item ids of the three used rolls (the {@code _2} half of each registration pair). */
-    public static final String TAPE_USED_ITEM = "gregtech:tape_2", TAPE_FULL_ITEM = "gregtech:tape";
-    public static final String DUCT_TAPE_USED_ITEM = "gregtech:duct_tape_2", DUCT_TAPE_FULL_ITEM = "gregtech:duct_tape";
-    public static final String BRAIN_TAPE_USED_ITEM = "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2";
-    public static final String BRAIN_TAPE_FULL_ITEM = "gregtech:braintech_aerospace_advanced_reinforced_duct_tape_fal_84";
+    public static final String TAPE_USED_ITEM = "gt6ce:tape_2", TAPE_FULL_ITEM = "gt6ce:tape";
+    public static final String DUCT_TAPE_USED_ITEM = "gt6ce:duct_tape_2", DUCT_TAPE_FULL_ITEM = "gt6ce:duct_tape";
+    public static final String BRAIN_TAPE_USED_ITEM = "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2";
+    public static final String BRAIN_TAPE_FULL_ITEM = "gt6ce:braintech_aerospace_advanced_reinforced_duct_tape_fal_84";
 
     private BehaviorDuctTape() {}
 

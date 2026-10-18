@@ -17,9 +17,9 @@ import java.util.List;
 
 /** Complete original metalset mass-storage variants; connected network variants follow separately. */
 public final class StorageRegistries {
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(BuiltInRegistries.BLOCK,"gregtech");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(BuiltInRegistries.ITEM,"gregtech");
-    public static final DeferredRegister<BlockEntityType<?>> TYPES=DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE,"gregtech");
+    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(BuiltInRegistries.BLOCK,"gt6ce");
+    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(BuiltInRegistries.ITEM,"gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> TYPES=DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE,"gt6ce");
     private static final List<java.util.function.Supplier<? extends Block>> STORAGES=new ArrayList<>();
     private static final List<java.util.function.Supplier<? extends Block>> LOGISTICS_STORAGES=new ArrayList<>();
     public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE=TYPES.register("mass_storage",()->BlockEntityType.Builder.of(MassStorageBlockEntity::new,STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));

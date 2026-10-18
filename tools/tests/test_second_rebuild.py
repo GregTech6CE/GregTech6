@@ -13,7 +13,7 @@ import sys
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 sys.path.insert(0, str(ROOT / 'tools'))
 
 def read(path):
@@ -62,7 +62,7 @@ class SecondRebuildTests(unittest.TestCase):
                     layer = 'overlay_active' if state == 'on' else 'overlay'
                     for face, name in [('up', 'top'), ('down', 'bottom')]:
                         self.assertEqual(model['children']['layer1']['textures'][face],
-                                         f'gregtech:block/machines/generators/burning_{family}/{layer}/{name}')
+                                         f'gt6ce:block/machines/generators/burning_{family}/{layer}/{name}')
                     for part in ('colored', layer):
                         texture = ASSETS / f'textures/block/machines/generators/burning_{family}/{part}/top.png'
                         solid = ASSETS / f'textures/block/machines/generators/burning_solid/{part}/top.png'
@@ -95,7 +95,7 @@ class SecondRebuildTests(unittest.TestCase):
             name = 'anvil' if spec['material'] == 'Steel' else 'anvil_' + spec['material'].lower()
             variants = read(ASSETS / f'blockstates/{name}.json')['variants']
             self.assertEqual(len(variants), 4)
-            self.assertEqual(read(ASSETS / f'models/item/{name}.json')['parent'], 'gregtech:block/tool/anvil')
+            self.assertEqual(read(ASSETS / f'models/item/{name}.json')['parent'], 'gt6ce:block/tool/anvil')
 
     def test_sensor_geometry_is_not_full_cube(self):
         for path in (ASSETS / 'models/block/machine/sensor').glob('*.json'):

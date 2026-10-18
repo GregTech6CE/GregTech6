@@ -79,13 +79,13 @@ public final class BasicMachineRecipePack extends AbstractPackResources {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:basic_machine_recipes",Component.literal("GregTech basic machine manufacturing recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            /*var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:basic_machine_recipes",Component.literal("GregTech basic machine manufacturing recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new BasicMachineRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new BasicMachineRecipePack(info);}
             },PackType.SERVER_DATA,new net.minecraft.server.packs.PackSelectionConfig(true,Pack.Position.BOTTOM,true));
 *///?} else {
-            Pack pack = Pack.readMetaAndCreate("gregtech:basic_machine_recipes",
+            Pack pack = Pack.readMetaAndCreate("gt6ce:basic_machine_recipes",
                     Component.literal("GregTech basic machine manufacturing recipes"), true,
                     BasicMachineRecipePack::new, PackType.SERVER_DATA, Pack.Position.BOTTOM,
                     PackSource.BUILT_IN);
@@ -122,7 +122,7 @@ public final class BasicMachineRecipePack extends AbstractPackResources {
             Map<String, Object> recipe = buildRecipe(table, spec.material(), spec.tier(), outputId);
             if (recipe == null) continue;
 
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech",
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
 //? if >=1.21.1 {
                     /*"recipe/machines/basic/" + spec.id() + ".json"),
 *///?} else {
@@ -154,7 +154,7 @@ public final class BasicMachineRecipePack extends AbstractPackResources {
         if (pattern.isEmpty()) return null;
 
         Map<String, Object> recipe = new HashMap<>();
-        recipe.put("type", "gregtech:tool_shaped");
+        recipe.put("type", "gt6ce:tool_shaped");
         recipe.put("pattern", pattern);
         recipe.put("key", key);
         // GT6's machine patterns are aRegistry.add(...) recipes, i.e. CR.DEF_REV without the MIR
@@ -200,7 +200,7 @@ public final class BasicMachineRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

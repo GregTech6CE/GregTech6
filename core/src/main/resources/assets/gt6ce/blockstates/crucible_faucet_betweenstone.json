@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_betweenstone"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_betweenstone"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_betweenstone"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_betweenstone"
+    }
+  }
+}

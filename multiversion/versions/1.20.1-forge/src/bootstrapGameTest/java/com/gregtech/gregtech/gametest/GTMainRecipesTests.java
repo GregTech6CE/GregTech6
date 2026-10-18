@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * printer recipe that hands out the "Scanner &amp; Printer Manual": the port's printer map used to be
  * empty, so the machine was unusable and that manual unobtainable outside loot.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class GTMainRecipesTests {
 
@@ -30,7 +30,7 @@ public final class GTMainRecipesTests {
     }
 
     private static ItemStack item(String id) {
-        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return item == null ? ItemStack.EMPTY : new ItemStack(item);
     }
 

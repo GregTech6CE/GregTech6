@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_electricsifter",
+  "contents": [
+    "item:gt6ce:electricsifter_aluminium",
+    "item:gt6ce:electricsifter_chromium",
+    "item:gt6ce:electricsifter_galvanized_steel",
+    "item:gt6ce:electricsifter_stainless_steel",
+    "item:gt6ce:electricsifter_titanium"
+  ],
+  "priority": 110
+}

@@ -29,13 +29,13 @@ def main():
                     face['tintindex'] = 0
             inside.append(element)
         model['children']['inside_' + layer] = {
-            'textures': {'insides': f'gregtech:block/machines/tanks/cell/{layer}/insides'},
+            'textures': {'insides': f'gt6ce:block/machines/tanks/cell/{layer}/insides'},
             'elements': inside, 'render_type': 'minecraft:cutout'}
     write(path, model)
     for row in rows:
         name = 'fluid_' + row['id']
-        write(f'models/item/{name}.json', {'parent': 'gregtech:block/machine/container/cell'})
-        write(f'blockstates/{name}.json', {'variants': {'': {'model': 'gregtech:block/machine/container/cell'}}})
+        write(f'models/item/{name}.json', {'parent': 'gt6ce:block/machine/container/cell'})
+        write(f'blockstates/{name}.json', {'variants': {'': {'model': 'gt6ce:block/machine/container/cell'}}})
 
 
 if __name__ == '__main__':

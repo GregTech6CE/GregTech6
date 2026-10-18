@@ -28,7 +28,7 @@ import java.util.TreeMap;
  * ({@code Loader_Recipes_Other:644-655}, already transpiled into {@code GTOtherGen}), the ropes are
  * crafted with the registration patterns ({@code tools/generate_rope_dynamite_recipes.py}).</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ToolBlockTests {
 
@@ -49,7 +49,7 @@ public final class ToolBlockTests {
     }
 
     private static Item item(String id) {
-        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
     }
 
     /** The six ropes exist, are tinted like the original's materials and carry the shared model. */
@@ -99,14 +99,14 @@ public final class ToolBlockTests {
         }
         for (Item candidate : ForgeRegistries.ITEMS) {
             var key = ForgeRegistries.ITEMS.getKey(candidate);
-            if (key == null || !key.getNamespace().equals("gregtech")) continue;
+            if (key == null || !key.getNamespace().equals("gt6ce")) continue;
             String path = key.getPath();
             if (path.startsWith("dust") && (path.contains("sio") || path.contains("silicon"))) {
                 dustIds.add(path);
             }
         }
         for (String id : List.of("rope_silk", "rope_grass", "rope_vine", "rope_steel", "boomstick")) {
-            var recipe = manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech", "tool_blocks/" + id));
+            var recipe = manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_blocks/" + id));
             h.assertTrue(recipe.isPresent(), id + " keeps GT6's crafting recipe"
                     + (id.equals("boomstick") ? " (silicon dioxide dust ids: " + dustIds + ")" : ""));
             for (var ingredient : recipe.get().getIngredients()) {

@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_circuit_plate",
+  "contents": [
+    "item:gt6ce:circuit_plate",
+    "item:gt6ce:circuit_plate_copper",
+    "item:gt6ce:circuit_plate_enderium",
+    "item:gt6ce:circuit_plate_gold",
+    "item:gt6ce:circuit_plate_hsla",
+    "item:gt6ce:circuit_plate_magic",
+    "item:gt6ce:circuit_plate_platinum",
+    "item:gt6ce:circuit_plate_signalum"
+  ],
+  "priority": 110
+}

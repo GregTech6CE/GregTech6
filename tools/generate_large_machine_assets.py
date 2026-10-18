@@ -17,7 +17,7 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 TEX = os.path.join(ASSETS, "textures", "block", "machines", "basicmachines")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "basic")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
@@ -77,7 +77,7 @@ def layer(name, folder, tinted):
         png = os.path.join(TEX, name, folder, tex_name + ".png")
         if not os.path.exists(png):
             continue
-        textures[face] = f"gregtech:block/machines/basicmachines/{name}/{folder}/{tex_name}"
+        textures[face] = f"gt6ce:block/machines/basicmachines/{name}/{folder}/{tex_name}"
         face_def = {"texture": "#" + face, "cullface": face}
         if tinted:
             face_def["tintindex"] = 0
@@ -104,7 +104,7 @@ def build_model(name, overlay_folder):
 
 
 def blockstate(name, has_running, has_active):
-    base = f"gregtech:block/machine/basic/{name}"
+    base = f"gt6ce:block/machine/basic/{name}"
     running = base + "_running" if has_running else base
     active = base + "_active" if has_active else running
     variants = {}
@@ -142,10 +142,10 @@ def main():
         blockstates += 1
         item_parent = name + ("_active" if has["_active"] else "")
         write(os.path.join(ITEM_MODELS, machine_id + ".json"),
-              {"parent": f"gregtech:block/machine/basic/{item_parent}"})
+              {"parent": f"gt6ce:block/machine/basic/{item_parent}"})
         items += 1
-        lang_en[f"block.gregtech.{machine_id}"] = f"{en} ({MAT_EN[mat]})"
-        lang_zh[f"block.gregtech.{machine_id}"] = f"{zh}({MAT_ZH[mat]})"
+        lang_en[f"block.gt6ce.{machine_id}"] = f"{en} ({MAT_EN[mat]})"
+        lang_zh[f"block.gt6ce.{machine_id}"] = f"{zh}({MAT_ZH[mat]})"
 
     for lang_path, entries in ((os.path.join(ASSETS, "lang", "en_us.json"), lang_en),
                                (os.path.join(ASSETS, "lang", "zh_cn.json"), lang_zh)):

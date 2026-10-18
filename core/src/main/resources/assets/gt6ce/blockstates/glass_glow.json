@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=orange": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=magenta": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=light_blue": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=yellow": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=lime": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=pink": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=gray": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=light_gray": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=cyan": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=purple": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=blue": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=brown": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=green": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=red": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    },
+    "color=black": {
+      "model": "gt6ce:block/decoration/glass_glow"
+    }
+  }
+}

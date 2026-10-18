@@ -7,7 +7,7 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class FluidVisualTests {
     private static boolean exists(ResourceLocation id){
         return FluidVisualTests.class.getResource("/assets/"+id.getNamespace()+"/textures/"+id.getPath()+".png")!=null;

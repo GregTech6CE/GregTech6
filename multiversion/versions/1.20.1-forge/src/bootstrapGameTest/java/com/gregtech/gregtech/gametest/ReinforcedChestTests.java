@@ -48,7 +48,7 @@ public final class ReinforcedChestTests {
             h.assertTrue(chest.inventory().getStackInSlot(53).getCount() == 7, "last slot survives reload");
             chest.inventory().setStackInSlot(53, ItemStack.EMPTY);
 
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", "hand/storage/reinforced_wood_chest_" + spec.suffix());
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "hand/storage/reinforced_wood_chest_" + spec.suffix());
             var recipe = level.getRecipeManager().byKey(id).orElseThrow();
             h.assertTrue(recipe instanceof ShapedRecipe, "real shaped recipe registered: " + spec.suffix());
             var shaped = (ShapedRecipe) recipe;

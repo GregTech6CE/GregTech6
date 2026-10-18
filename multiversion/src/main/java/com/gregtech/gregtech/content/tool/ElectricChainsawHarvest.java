@@ -20,7 +20,7 @@ import net.minecraftforge.common.IForgeShearable;
 public final class ElectricChainsawHarvest {
     private static final net.minecraft.tags.TagKey<Block> SAW = BlockTags.create(
 //? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","mineable/saw"));
+            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","mineable/saw"));
 *///?} else {
             com.gregtech.gregtech.GregTech.id("mineable/saw"));
 //?}

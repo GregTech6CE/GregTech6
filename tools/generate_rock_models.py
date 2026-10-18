@@ -14,7 +14,7 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block")
 
@@ -89,7 +89,7 @@ def main():
                 "elements": [element(b) for b in shape],
             })
             for rot in (0, 90, 180, 270):
-                entry = {"model": "gregtech:block/" + name}
+                entry = {"model": "gt6ce:block/" + name}
                 if rot:
                     entry["y"] = rot
                 models.append(entry)
@@ -129,7 +129,7 @@ def main():
             "elements": elements,
         })
         for rot in (0, 90, 180, 270):
-            entry = {"model": "gregtech:block/" + name}
+            entry = {"model": "gt6ce:block/" + name}
             if rot:
                 entry["y"] = rot
             twig_variants.append(entry)

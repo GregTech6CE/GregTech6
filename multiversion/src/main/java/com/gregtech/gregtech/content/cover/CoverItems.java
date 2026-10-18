@@ -79,7 +79,7 @@ public final class CoverItems {
             };
         }
 //? if >=1.21.1 {
-        /*if (!key.getNamespace().equals("gregtech")) return null;
+        /*if (!key.getNamespace().equals("gt6ce")) return null;
 *///?} else {
         if (!key.getNamespace().equals(GregTech.NAMESPACE)) return null;
 //?}
@@ -165,7 +165,7 @@ public final class CoverItems {
         if (stack.isEmpty()) return null;
 //? if >=1.21.1 {
         /*ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return key != null && key.getNamespace().equals("gregtech") ? key.getPath() : null;
+        return key != null && key.getNamespace().equals("gt6ce") ? key.getPath() : null;
 *///?} else {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
         return key != null && key.getNamespace().equals(GregTech.NAMESPACE) ? key.getPath() : null;

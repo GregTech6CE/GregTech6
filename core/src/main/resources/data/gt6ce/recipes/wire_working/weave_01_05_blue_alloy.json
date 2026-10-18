@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_01_blue_alloy"
+    },
+    {
+      "item": "gt6ce:wire_01_blue_alloy"
+    },
+    {
+      "item": "gt6ce:wire_01_blue_alloy"
+    },
+    {
+      "item": "gt6ce:wire_01_blue_alloy"
+    },
+    {
+      "item": "gt6ce:wire_01_blue_alloy"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_05_blue_alloy",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

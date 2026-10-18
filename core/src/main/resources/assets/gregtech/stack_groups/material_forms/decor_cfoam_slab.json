@@ -1,8 +1,0 @@
-{
-  "type": "remi:group",
-  "name": "emi.group.gregtech.decor_cfoam_slab",
-  "contents": [
-    "item:gregtech:cfoam_slab"
-  ],
-  "priority": 120
-}

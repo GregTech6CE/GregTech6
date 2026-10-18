@@ -1,0 +1,34 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PwP",
+    "BMC",
+    "PEP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_dense_invar"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    },
+    "B": {
+      "tag": "gt6ce:rechargeable_batteries/lv"
+    },
+    "M": {
+      "item": "gt6ce:magnalium_steam_turbine_main_housing"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_6_plus"
+    },
+    "E": {
+      "item": "gt6ce:compact_electric_motor_lv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:magnalium_gas_turbine_main_housing",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

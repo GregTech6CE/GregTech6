@@ -86,7 +86,7 @@ public final class SandwichBlockItem extends BlockItem {
 *///?} else {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
-        tooltip.add(Component.translatable("tooltip.gregtech.sandwich.food",
+        tooltip.add(Component.translatable("tooltip.gt6ce.sandwich.food",
 //? if >=1.21.1 {
                 /*SandwichBlockEntity.itemFood(stack,context.registries()), SandwichBlockEntity.itemSaturation(stack,context.registries()))
 *///?} else {

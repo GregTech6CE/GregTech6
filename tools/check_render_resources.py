@@ -16,8 +16,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
-CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gregtech'
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
+CORE_ASSETS = ROOT / 'core/src/main/resources/assets/gt6ce'
 CONTROLLERS = ('bedrock_mining_drill_controller', 'fusion_reactor_main', 'implosion_compressor_main', 'lightning_rod_electric_output')
 
 
@@ -42,7 +42,7 @@ def check(paths, assets=ASSETS):
             continue
 
         def reference(value, kind):
-            if not isinstance(value, str) or not value.startswith('gregtech:'):
+            if not isinstance(value, str) or not value.startswith('gt6ce:'):
                 return
             relative = value.split(':', 1)[1]
             target = assets / ('models' if kind == 'model' else 'textures') / (relative + ('.json' if kind == 'model' else '.png'))

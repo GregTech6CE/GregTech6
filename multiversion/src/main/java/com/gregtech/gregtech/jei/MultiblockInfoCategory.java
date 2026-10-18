@@ -18,7 +18,7 @@ import java.util.*;
 /** Assembly diagrams are derived from the same geometry used by the controllers. */
 public final class MultiblockInfoCategory extends MultiblockInfoData implements IRecipeCategory<MultiblockInfoCategory.Info> {
 
-    public static final RecipeType<Info> TYPE=RecipeType.create("gregtech","multiblock_assembly",Info.class);
+    public static final RecipeType<Info> TYPE=RecipeType.create("gt6ce","multiblock_assembly",Info.class);
     private final IDrawable background,icon,slot;
     private final Map<Info, com.gregtech.gregtech.client.MultiblockPreviewPanel> views = new IdentityHashMap<>();
     private com.gregtech.gregtech.client.MultiblockPreviewPanel view(Info info) {
@@ -36,7 +36,7 @@ public final class MultiblockInfoCategory extends MultiblockInfoData implements 
 
 
     @Override public RecipeType<Info> getRecipeType() {return TYPE;}
-    @Override public Component getTitle() {return Component.translatable("gregtech.jei.assembly");}
+    @Override public Component getTitle() {return Component.translatable("gt6ce.jei.assembly");}
     @Override public IDrawable getBackground() {return background;}
     @Override public IDrawable getIcon() {return icon;}
     @Override public void createRecipeExtras(mezz.jei.api.gui.widgets.IRecipeExtrasBuilder builder, Info info, IFocusGroup focuses) {

@@ -49,7 +49,7 @@ public final class FluidVisualPolicy {
         var material=material(entry);
         if(material.isValid() && (kind==FluidTexturePolicy.Kind.MOLTEN || kind==FluidTexturePolicy.Kind.PLASMA)){
 //? if >=1.21.1 {
-            /*template=ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/"+material.getTextureSet().folder()+
+            /*template=ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/"+material.getTextureSet().folder()+
 *///?} else {
             template=GregTech.id("block/material_icons/"+material.getTextureSet().folder()+
 //?}

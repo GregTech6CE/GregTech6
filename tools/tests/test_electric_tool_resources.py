@@ -10,7 +10,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 
 class ElectricToolResources(unittest.TestCase):
     def test_all_four_layered_models_resolve_textures(self):
@@ -19,16 +19,16 @@ class ElectricToolResources(unittest.TestCase):
             self.assertEqual(set(model["textures"]), {f"layer{i}" for i in range(4)})
             for texture in model["textures"].values():
                 namespace, path = texture.split(":", 1)
-                self.assertEqual(namespace, "gregtech")
+                self.assertEqual(namespace, "gt6ce")
                 self.assertTrue((ASSETS / "textures" / (path + ".png")).is_file(), texture)
 
     def test_material_name_and_charge_have_bilingual_placeholders(self):
         for lang in ("en_us", "zh_cn"):
             text = json.loads((ASSETS / f"lang/{lang}.json").read_text(encoding="utf-8"))
-            for key in ("item.gregtech.electric_tool.named", "tooltip.gregtech.electric_tool.energy"):
+            for key in ("item.gt6ce.electric_tool.named", "tooltip.gt6ce.electric_tool.energy"):
                 self.assertEqual(text[key].count("%s"), 2)
             for tool in ("drill", "chainsaw", "wrench", "screwdriver"):
-                self.assertTrue(text[f"item.gregtech.electric_{tool}"])
+                self.assertTrue(text[f"item.gt6ce.electric_{tool}"])
 
 if __name__ == "__main__":
     unittest.main()

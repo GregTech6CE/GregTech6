@@ -21,7 +21,7 @@ import java.util.*;
 public final class SandwichFeedbackChecks {
  private static final List<ItemStack> PREVIEWS = new ArrayList<>();
  private static void require(boolean ok, String reason) { if(!ok) throw new IllegalStateException("Sandwich checkpoint: "+reason); }
- private static ItemStack item(String id, int count) { var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)),count);require(!stack.isEmpty(),"missing "+id);return stack; }
+ private static ItemStack item(String id, int count) { var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)),count);require(!stack.isEmpty(),"missing "+id);return stack; }
  private static SandwichBlockEntity entity(net.minecraft.world.level.Level level, BlockPos pos) {return (SandwichBlockEntity)level.getBlockEntity(pos);}
  public static void server(MinecraftServer server, JsonObject receipt) {
   var level=server.overworld();var pos=new BlockPos(220,210,200);var target=pos.offset(4,0,0);

@@ -91,7 +91,7 @@ public final class GTBumbleProducts {
         if (comb == null) comb = "honey_comb";                      // GT6 :211 `default: Comb_Honey`
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(
-                ResourceLocation.fromNamespaceAndPath("gregtech", comb));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", comb));
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(
                 ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, comb));

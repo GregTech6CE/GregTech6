@@ -21,14 +21,14 @@ class SignalWireResources(unittest.TestCase):
             self.assertEqual(model['elements'][0]['to'][2],16)
             for locale in ['en_us','zh_cn']:
                 lang=json.loads((ASSETS/f'lang/{locale}.json').read_text(encoding='utf-8'))
-                self.assertTrue(lang['block.gregtech.'+name])
+                self.assertTrue(lang['block.gt6ce.'+name])
         issues,_=check(paths)
         self.assertEqual(issues,[])
 
     def test_panels_use_source_wire_ingredients(self):
         for name,key,material in [('energy_display_cover','L','lumium'),('machine_status_display_cover','L','lumium'),
                                   ('redstone_conductor_cover_accept','R','redalloy'),('redstone_conductor_cover_emit','R','redalloy')]:
-            recipe=json.loads((native_path(ROOT/f'src/main/resources/data/gregtech/recipes/panel_covers/{name}.json')).read_text())
-            self.assertEqual(recipe['key'][key],{'item':'gregtech:wire_01_'+material})
+            recipe=json.loads((native_path(ROOT/f'src/main/resources/data/gt6ce/recipes/panel_covers/{name}.json')).read_text())
+            self.assertEqual(recipe['key'][key],{'item':'gt6ce:wire_01_'+material})
 
 if __name__=='__main__':unittest.main()

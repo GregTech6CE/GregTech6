@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/tool/nozzle",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "gt6ce:block/tool/nozzle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/tool/nozzle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/tool/nozzle",
+      "y": 270
+    },
+    "facing=down": {
+      "model": "gt6ce:block/tool/nozzle",
+      "y": 0
+    }
+  }
+}

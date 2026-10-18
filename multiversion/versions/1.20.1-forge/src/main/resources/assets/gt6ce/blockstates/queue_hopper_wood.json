@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down":  {"model": "gt6ce:block/machine/queuehopper_down"},
+    "facing=up":    {"model": "gt6ce:block/machine/queuehopper_up"},
+    "facing=north": {"model": "gt6ce:block/machine/queuehopper_north"},
+    "facing=south": {"model": "gt6ce:block/machine/queuehopper_south"},
+    "facing=west":  {"model": "gt6ce:block/machine/queuehopper_west"},
+    "facing=east":  {"model": "gt6ce:block/machine/queuehopper_east"}
+  }
+}

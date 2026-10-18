@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BTB",
+    "TPT",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:tool_head_sword/adamantium"
+    },
+    "T": {
+      "tag": "gt6ce:screw/adamantium"
+    },
+    "P": {
+      "tag": "gt6ce:plate/adamantium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:spike_super",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "wall",
+        "secondary": "true"
+      }
+    }
+  }
+}

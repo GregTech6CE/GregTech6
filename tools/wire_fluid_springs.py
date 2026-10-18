@@ -67,14 +67,14 @@ if "FLUID_SPRINGS" not in text:
     io.open(features, "w", encoding="utf-8", newline="\n").write(text.replace(old, new))
     print("GTFeatures: gt_fluid_springs registered")
 
-data = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech")
+data = os.path.join(str(native_path("src")), "main", "resources", "data", "gt6ce")
 write_json(os.path.join(data, "worldgen", "configured_feature", "gt_fluid_springs.json"),
-           {"type": "gregtech:gt_fluid_springs", "config": {}})
+           {"type": "gt6ce:gt_fluid_springs", "config": {}})
 write_json(os.path.join(data, "worldgen", "placed_feature", "gt_fluid_springs.json"),
-           {"feature": "gregtech:gt_fluid_springs", "placement": []})
+           {"feature": "gt6ce:gt_fluid_springs", "placement": []})
 write_json(os.path.join(data, "forge", "biome_modifier", "gt_fluid_springs.json"),
            {"type": "forge:add_features", "biomes": "#minecraft:is_overworld",
-            "features": ["gregtech:gt_fluid_springs"], "step": "underground_decoration"})
+            "features": ["gt6ce:gt_fluid_springs"], "step": "underground_decoration"})
 
 print("wrote %d data files" % len(written))
 for path in written:

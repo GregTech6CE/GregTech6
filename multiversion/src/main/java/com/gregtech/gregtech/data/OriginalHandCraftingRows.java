@@ -40,7 +40,7 @@ public final class OriginalHandCraftingRows {
         var result=new ArrayList<RegisteredBlock<T>>();
         for(var block:BuiltInRegistries.BLOCK){
             var key=BuiltInRegistries.BLOCK.getKey(block);
-            if(type.isInstance(block)&&key.getNamespace().equals("gregtech"))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
+            if(type.isInstance(block)&&key.getNamespace().equals("gt6ce"))result.add(RegisteredBlock.wrap(key.getPath(),()->type.cast(block)));
         }
         result.sort(Comparator.comparing(entry->entry.getId().toString()));
         return List.copyOf(result);
@@ -63,7 +63,7 @@ public final class OriginalHandCraftingRows {
         return ingredient.toJson();
         //?}
     }
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
 
     private static int customGearboxes(Map<ResourceLocation, byte[]> recipes) {
         if (GTGearboxes.allGearboxes().size() != 13)
@@ -323,7 +323,7 @@ public final class OriginalHandCraftingRows {
         String type = MaterialEquivalence.materialName(material);
         for (String candidate : new String[]{type, type.replace("_", "")}) {
             Item item = BuiltInRegistries.ITEM.get(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "stone_" + candidate + "_stone"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "stone_" + candidate + "_stone"));
             if (item != null && item != Items.AIR) return new ItemStack(item);
         }
         return GTItems.getStack(MaterialPrefix.ingot, material, 1);
@@ -674,8 +674,8 @@ public final class OriginalHandCraftingRows {
             String[] pattern;
             if (creosote) {
                 pattern = new String[]{"rS", "Bf"};
-                keys.put("S", Map.of("tag", "gregtech:wooden_beams"));
-                keys.put("B", Map.of("type", "gregtech:creosote_container_1000"));
+                keys.put("S", Map.of("tag", "gt6ce:wooden_beams"));
+                keys.put("B", Map.of("type", "gt6ce:creosote_container_1000"));
             } else {
                 var form = switch (spec.size()) {
                     case 1 -> MaterialPrefix.stick;
@@ -696,11 +696,11 @@ public final class OriginalHandCraftingRows {
                         : new String[]{"  S", wood ? " r " : " h ", "S f"};
             }
             var json = new java.util.LinkedHashMap<String, Object>();
-            json.put("type", creosote ? "gregtech:creosote_axle" : "gregtech:tool_shaped");
+            json.put("type", creosote ? "gt6ce:creosote_axle" : "gt6ce:tool_shaped");
             json.put("category", "misc"); json.put("group", "gt.hand");
             json.put("pattern", pattern); json.put("key", keys); json.put("allow_mirror", false);
             json.put("result", Map.of(resultItemKey(), holder.getId().toString(), "count", 1));
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/hand/axle/" + spec.id() + ".json");
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/hand/axle/" + spec.id() + ".json");
             if (data.putIfAbsent(id, new com.google.gson.Gson().toJson(json).getBytes(StandardCharsets.UTF_8)) != null)
                 throw new IllegalStateException("Duplicate axle recipe " + id);
         }
@@ -735,7 +735,7 @@ public final class OriginalHandCraftingRows {
             key.add(String.valueOf(symbol), ingredientJson(ingredient));
         }
         var json = new JsonObject();
-        json.addProperty("type", "gregtech:tool_shaped"); json.addProperty("category", "misc");
+        json.addProperty("type", "gt6ce:tool_shaped"); json.addProperty("category", "misc");
         json.addProperty("group", "gt.hand"); json.addProperty("allow_mirror", mirror);
         var rows = new com.google.gson.JsonArray(); for (String row : pattern) rows.add(row);
         json.add("pattern", rows); json.add("key", key);

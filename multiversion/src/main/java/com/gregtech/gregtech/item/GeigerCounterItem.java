@@ -11,8 +11,8 @@ public final class GeigerCounterItem extends TechItem {
     public GeigerCounterItem() { super("Geiger Counter", new Properties().stacksTo(1)); }
     public static Component reading(ReactorCoreBlockEntity core) {
         String values=java.util.Arrays.stream(core.neutrons).mapToObj(n->n+" n").collect(java.util.stream.Collectors.joining("; "));
-        return Component.translatable("message.gregtech.geiger.reading",values,
-                Component.translatable(core.stopped?"message.gregtech.reactor.stopped":"message.gregtech.reactor.running"));
+        return Component.translatable("message.gt6ce.geiger.reading",values,
+                Component.translatable(core.stopped?"message.gt6ce.reactor.stopped":"message.gt6ce.reactor.running"));
     }
     @Override public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         if (!(context.getLevel().getBlockEntity(context.getClickedPos()) instanceof ReactorCoreBlockEntity core)) return InteractionResult.PASS;

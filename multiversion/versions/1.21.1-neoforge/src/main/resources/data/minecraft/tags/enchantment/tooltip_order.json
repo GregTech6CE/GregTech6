@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "gregtech:disjunction",
-    "gregtech:butchery",
-    "gregtech:gt_haste",
-    "gregtech:sharpness_multi",
-    "gregtech:smite_multi"
+    "gt6ce:disjunction",
+    "gt6ce:butchery",
+    "gt6ce:gt_haste",
+    "gt6ce:sharpness_multi",
+    "gt6ce:smite_multi"
   ]
 }

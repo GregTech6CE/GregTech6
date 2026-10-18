@@ -30,7 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * that only take books, click to store and take back, enchanting power from the stored books, and
  * the contents dropping when the shelf is broken.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BookShelfTests {
     private static final int BASE_X = 56000;
@@ -55,7 +55,7 @@ public final class BookShelfTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void bookShelfRegistration(GameTestHelper helper) {
         helper.assertTrue(GTDecorBlocks.BOOKSHELF != null && GTDecorBlocks.BOOKSHELF.isPresent(),
-                "gregtech:bookshelf is registered");
+                "gt6ce:bookshelf is registered");
         helper.assertTrue(GTDecorBlocks.BOOKSHELF.get() instanceof BookShelfBlock,
                 "it is the GT book shelf block");
         helper.assertTrue(GTBlockEntities.BOOKSHELF != null && GTBlockEntities.BOOKSHELF.isPresent(),

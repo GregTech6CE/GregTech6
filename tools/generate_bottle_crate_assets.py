@@ -15,7 +15,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech"
 
 
@@ -33,11 +33,11 @@ def generate(assets=ASSETS):
     faces = {side: {"texture": "#wood"} for side in ("up", "down", "north", "south", "east", "west")}
     write("models/block/inventory/bottle_crate.json", {
         "parent": "minecraft:block/block", "ambientocclusion": False,
-        "textures": {"wood": "gregtech:block/iconsets/planks_treated", "particle": "#wood"},
+        "textures": {"wood": "gt6ce:block/iconsets/planks_treated", "particle": "#wood"},
         "elements": [{"from": a, "to": b, "faces": faces} for a, b in bounds]})
-    write("models/item/bottle_crate.json", {"parent": "gregtech:block/inventory/bottle_crate"})
+    write("models/item/bottle_crate.json", {"parent": "gt6ce:block/inventory/bottle_crate"})
     write("blockstates/bottle_crate.json", {"variants": {
-        "facing="+face: {"model": "gregtech:block/inventory/bottle_crate", "y": angle}
+        "facing="+face: {"model": "gt6ce:block/inventory/bottle_crate", "y": angle}
         for face, angle in (("north", 0), ("south", 0), ("east", 90), ("west", 90))}})
     target = assets / "textures/block/iconsets"
     target.mkdir(parents=True, exist_ok=True)

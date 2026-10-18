@@ -1,0 +1,13 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:breads"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:sliced_bread",
+    "count": 2
+  },
+  "gregtech_autocraftable": true
+}

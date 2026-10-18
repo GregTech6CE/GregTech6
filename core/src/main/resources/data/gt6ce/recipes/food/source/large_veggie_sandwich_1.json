@@ -1,0 +1,34 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:baguettes"
+    },
+    {
+      "item": "gt6ce:cucumber_slice"
+    },
+    {
+      "item": "gt6ce:cucumber_slice"
+    },
+    {
+      "item": "gt6ce:cucumber_slice"
+    },
+    {
+      "item": "gt6ce:tomato_slice"
+    },
+    {
+      "item": "gt6ce:tomato_slice"
+    },
+    {
+      "item": "gt6ce:tomato_slice"
+    },
+    {
+      "item": "gt6ce:onion_slice"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:large_veggie_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

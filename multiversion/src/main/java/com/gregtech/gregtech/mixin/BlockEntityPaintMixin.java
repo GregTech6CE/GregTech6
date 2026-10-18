@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.*;import org.spongepowered.asm.mixin.injectio
 public abstract class BlockEntityPaintMixin implements Paintable {
 @Unique private final PaintState gregtech$paint=new PaintState();
 @Unique private BlockEntity gregtech$self(){return (BlockEntity)(Object)this;}
-@Unique private boolean gregtech$own(){return BuiltInRegistries.BLOCK.getKey(gregtech$self().getBlockState().getBlock()).getNamespace().equals("gregtech");}
+@Unique private boolean gregtech$own(){return BuiltInRegistries.BLOCK.getKey(gregtech$self().getBlockState().getBlock()).getNamespace().equals("gt6ce");}
 @Unique private void gregtech$changed(){var self=gregtech$self();self.setChanged();self.requestModelDataUpdate();var level=self.getLevel();if(level==null)return;var state=self.getBlockState();level.sendBlockUpdated(self.getBlockPos(),state,state,Block.UPDATE_CLIENTS);if(level instanceof ServerLevel server){var packet=ClientboundBlockEntityDataPacket.create(self);BlockPos pos=self.getBlockPos();for(var player:server.players())if(player.distanceToSqr(pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5)<=4096)player.connection.send(packet);}}
 @Override public boolean paint(int rgb){if(!gregtech$own()||!gregtech$paint.paint(rgb))return false;gregtech$changed();return true;}
 @Override public boolean mixPaint(int rgb){if(!gregtech$own()||!gregtech$paint.mix(rgb))return false;gregtech$changed();return true;}

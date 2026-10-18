@@ -29,7 +29,7 @@ import java.util.TreeSet;
  * flags Iron {@code NEVER_FURNACE} and rewrites those recipes to scrap.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CrucibleTemperatureTests {
 

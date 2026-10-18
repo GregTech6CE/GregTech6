@@ -28,7 +28,7 @@ import java.util.List;
  *
  * <p>Every GT6 tool is a data recipe without a fixed grid — the head decides the tool's material and
  * the handle only decides the durability — so the vanilla recipe viewer shows the 43
- * {@code data/gregtech/recipes/tools/*.json} entries as "special" items with no ingredients at all.
+ * {@code data/gt6ce/recipes/tools/*.json} entries as "special" items with no ingredients at all.
  * This category shows the actual contract instead: one ingredient slot per required material form,
  * each cycling through every item that satisfies it, and the assembled tool as the output. The rows
  * come from {@link ToolAssemblyCatalog}, which reads the same requirement table the crafting recipe
@@ -39,7 +39,7 @@ public final class ToolAssemblyCategory {
 
     public static final RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> TYPE =
 //? if >=1.21.1 {
-            /*RecipeType.create("gregtech", "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
+            /*RecipeType.create("gt6ce", "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 *///?} else {
             RecipeType.create(GregTech.NAMESPACE, "tool_assembly", ToolAssemblyCatalog.ToolAssemblyInfo.class);
 //?}
@@ -56,7 +56,7 @@ public final class ToolAssemblyCategory {
         }
 
         @Override public RecipeType<ToolAssemblyCatalog.ToolAssemblyInfo> getRecipeType() { return TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category.tool_assembly"); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.tool_assembly"); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
 
@@ -84,12 +84,12 @@ public final class ToolAssemblyCategory {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             int y = 58;
             if (info.headAssembly()) {
-                g.drawString(font, Component.translatable("gregtech.jei.info.tool_head_and_handle"), 1, y, 0xFF404040, false);
+                g.drawString(font, Component.translatable("gt6ce.jei.info.tool_head_and_handle"), 1, y, 0xFF404040, false);
             } else {
-                g.drawString(font, Component.translatable("gregtech.jei.info.tool_material_forms",
+                g.drawString(font, Component.translatable("gt6ce.jei.info.tool_material_forms",
                         info.inputs().size()), 1, y, 0xFF404040, false);
             }
-            g.drawString(font, Component.translatable("gregtech.jei.info.tool_any_material"), 1, y + 10, 0xFF707070, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.tool_any_material"), 1, y + 10, 0xFF707070, false);
         }
     }
 }

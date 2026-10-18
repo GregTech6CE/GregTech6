@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gt6ce:wire_04_platinum"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_titanium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_master"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_platinum"
+    },
+    "Q": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_signal_emitter_iv",
+    "count": 1
+  }
+}

@@ -47,10 +47,10 @@ public final class SandwichNutrition {
     public static void apply(ItemStack stack, Player player) {
         String item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
         var bottle = bottleFood(stack);
-        var can = item.startsWith("gregtech:") ? CannedFoodCatalog.forId(item.substring(9)) : null;
+        var can = item.startsWith("gt6ce:") ? CannedFoodCatalog.forId(item.substring("gt6ce:".length())) : null;
         if (can != null && can.rebreathe() > 0) player.setAirSupply(player.getAirSupply() + can.rebreathe());
-        if (item.equals("gregtech:cure_all") || bottle != null && bottle.extinguish()) player.clearFire();
-        if (item.equals("gregtech:cure_all") || bottle != null && bottle.milk()) {
+        if (item.equals("gt6ce:cure_all") || bottle != null && bottle.extinguish()) player.clearFire();
+        if (item.equals("gt6ce:cure_all") || bottle != null && bottle.milk()) {
 //? if >=1.21.1 {
             /*player.removeEffectsCuredBy(net.neoforged.neoforge.common.EffectCures.MILK);
 *///?} else {

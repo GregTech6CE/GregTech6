@@ -24,15 +24,15 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT_DIR = os.path.join(ROOT, str(native_path("src")), "main", "resources", "data", "gregtech", "recipes", "extruder_shapes")
+OUT_DIR = os.path.join(ROOT, str(native_path("src")), "main", "resources", "data", "gt6ce", "recipes", "extruder_shapes")
 
-HAMMER = {"item": "gregtech:tool_hammer"}
-FILE = {"item": "gregtech:tool_file"}
-SAW = {"item": "gregtech:tool_saw"}
-WIRE_CUTTER = {"item": "gregtech:tool_wire_cutter"}
+HAMMER = {"item": "gt6ce:tool_hammer"}
+FILE = {"item": "gt6ce:tool_file"}
+SAW = {"item": "gt6ce:tool_saw"}
+WIRE_CUTTER = {"item": "gt6ce:tool_wire_cutter"}
 # OP.plateDouble / plateTiny / stick / ring of MT.StainlessSteel
-PLATE_DOUBLE = {"item": "gregtech:plate_double_stainlesssteel"}
-PLATE_TINY = {"item": "gregtech:plate_tiny_stainlesssteel"}
+PLATE_DOUBLE = {"item": "gt6ce:plate_double_stainlesssteel"}
+PLATE_TINY = {"item": "gt6ce:plate_tiny_stainlesssteel"}
 STICK = {"tag": "forge:rods/stainless_steel"}
 RING = {"tag": "forge:rings/stainless_steel"}
 
@@ -65,8 +65,8 @@ def shaped(pattern: list[str], key: dict, result: str) -> dict:
     # allow_mirror stays off, exactly like the port's 64 extruder shapes: GT6's CR.DEF_REV adds a
     # mirrored variant, which makes some of these patterns (food mold bun vs baguette) ambiguous, and
     # ManufacturingTests requires every mold to have exactly one orientation.
-    return {"type": "gregtech:tool_shaped", "allow_mirror": False, "pattern": pattern, "key": key,
-            "result": {"item": f"gregtech:{result}", "count": 1}}
+    return {"type": "gt6ce:tool_shaped", "allow_mirror": False, "pattern": pattern, "key": key,
+            "result": {"item": f"gt6ce:{result}", "count": 1}}
 
 
 def main() -> None:
@@ -78,11 +78,11 @@ def main() -> None:
     pattern, key, result = FOODMOLD_EMPTY
     recipes[result] = shaped(pattern, key, result)
     for result, pattern in FOODMOLDS.items():
-        recipes[result] = shaped(pattern, {"h": HAMMER, "P": {"item": "gregtech:foodmold_shape_empty"}}, result)
+        recipes[result] = shaped(pattern, {"h": HAMMER, "P": {"item": "gt6ce:foodmold_shape_empty"}}, result)
     pattern, key, result = SLICER_EMPTY
     recipes[result] = shaped(pattern, key, result)
     for result, (pattern, hollow) in SLICERS.items():
-        key = {"O": {"item": "gregtech:slicer_shape_empty"}, "B": PLATE_TINY, "f": FILE, "s": SAW}
+        key = {"O": {"item": "gt6ce:slicer_shape_empty"}, "B": PLATE_TINY, "f": FILE, "s": SAW}
         if hollow:
             key["R"] = RING
         recipes[result] = shaped(pattern, key, result)

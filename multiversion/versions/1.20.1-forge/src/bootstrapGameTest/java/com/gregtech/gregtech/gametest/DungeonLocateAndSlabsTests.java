@@ -120,7 +120,7 @@ import java.util.Set;
  * {@link #reset} empties it before every test, so the file is re-runnable against a world it already ran
  * in.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DungeonLocateAndSlabsTests {
 
@@ -256,21 +256,21 @@ public final class DungeonLocateAndSlabsTests {
 
         // The structure itself, with the type that names its codec (data/gregtech/worldgen/structure/...).
         var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
-        check(problems, structures.containsKey(GTStructures.DUNGEON), "gregtech:gt_dungeon is not registered");
+        check(problems, structures.containsKey(GTStructures.DUNGEON), "gt6ce:gt_dungeon is not registered");
         Structure dungeon = structures.get(GTStructures.DUNGEON);
         check(problems, dungeon instanceof GTDungeonStructure, "gt_dungeon is not the port's structure");
         check(problems, dungeon != null && dungeon.type() == GTStructures.DUNGEON_TYPE.get(),
                 "gt_dungeon does not use the registered structure type");
         check(problems, BuiltInRegistries.STRUCTURE_TYPE.containsKey(GTStructures.DUNGEON_TYPE.getId()),
-                "gregtech:gt_dungeon is not a registered structure type");
+                "gt6ce:gt_dungeon is not a registered structure type");
         check(problems, BuiltInRegistries.STRUCTURE_PLACEMENT.containsKey(GTStructures.DUNGEON_LATTICE.getId()),
-                "gregtech:gt_dungeon_lattice is not a registered placement type");
+                "gt6ce:gt_dungeon_lattice is not a registered placement type");
         check(problems, BuiltInRegistries.STRUCTURE_PIECE.containsKey(GTStructures.DUNGEON_PIECE.getId()),
-                "gregtech:gt_dungeon_anchor is not a registered piece type");
+                "gt6ce:gt_dungeon_anchor is not a registered piece type");
 
         // The structure set, holding exactly that structure at weight 1.
         var sets = level.registryAccess().registryOrThrow(Registries.STRUCTURE_SET);
-        check(problems, sets.containsKey(GTStructures.DUNGEON_SET), "gregtech:gt_dungeons is not registered");
+        check(problems, sets.containsKey(GTStructures.DUNGEON_SET), "gt6ce:gt_dungeons is not registered");
         StructureSet set = sets.get(GTStructures.DUNGEON_SET);
         check(problems, set != null && set.structures().size() == 1
                         && set.structures().get(0).structure().is(GTStructures.DUNGEON)
@@ -279,7 +279,7 @@ public final class DungeonLocateAndSlabsTests {
         // Locate only ever searches these two placement types (ChunkGenerator:142 and :153-156), so the
         // dungeon's placement has to be a random spread - see GTDungeonPlacement's javadoc.
         check(problems, set != null && set.placement() instanceof GTDungeonPlacement,
-                "the dungeon's structure set does not use gregtech:gt_dungeon_lattice");
+                "the dungeon's structure set does not use gt6ce:gt_dungeon_lattice");
         check(problems, set != null && set.placement() instanceof RandomSpreadStructurePlacement,
                 "vanilla's locate does not search this placement type");
         RandomSpreadStructurePlacement spread = set != null && set.placement() instanceof RandomSpreadStructurePlacement s
@@ -310,15 +310,15 @@ public final class DungeonLocateAndSlabsTests {
 
         // The tag ServerLevel.findNearestMapStructure looks up before it calls the generator (:1126-1129).
         var tag = structures.getTag(GTStructures.DUNGEON_TAG);
-        check(problems, tag.isPresent(), "gregtech:gt_dungeon is not in the structure tag of the same name");
+        check(problems, tag.isPresent(), "gt6ce:gt_dungeon is not in the structure tag of the same name");
         check(problems, tag.isPresent() && tag.get().size() == 1 && tag.get().contains(structures.getHolderOrThrow(GTStructures.DUNGEON)),
                 "the dungeon's structure tag does not hold exactly the dungeon");
 
         // The data files themselves, with the exact values the placement and the structure need.
-        JsonObject structureJson = resourceJson("data/gregtech/worldgen/structure/gt_dungeon.json");
-        check(problems, structureJson.get("type").getAsString().equals("gregtech:gt_dungeon"),
+        JsonObject structureJson = resourceJson("data/gt6ce/worldgen/structure/gt_dungeon.json");
+        check(problems, structureJson.get("type").getAsString().equals("gt6ce:gt_dungeon"),
                 "the structure's type is " + structureJson.get("type").getAsString());
-        check(problems, structureJson.get("biomes").getAsString().equals("#gregtech:has_structure/gt_dungeon"),
+        check(problems, structureJson.get("biomes").getAsString().equals("#gt6ce:has_structure/gt_dungeon"),
                 "the structure does not use the has_structure tag");
         check(problems, structureJson.get("step").getAsString().equals("underground_structures"),
                 "the structure is not in the underground structures step");
@@ -326,9 +326,9 @@ public final class DungeonLocateAndSlabsTests {
                         && structureJson.getAsJsonObject("spawn_overrides").size() == 0,
                 "the dungeon spawns nothing of its own");
 
-        JsonObject setJson = resourceJson("data/gregtech/worldgen/structure_set/gt_dungeons.json");
+        JsonObject setJson = resourceJson("data/gt6ce/worldgen/structure_set/gt_dungeons.json");
         JsonObject placementJson = setJson.getAsJsonObject("placement");
-        check(problems, placementJson.get("type").getAsString().equals("gregtech:gt_dungeon_lattice"),
+        check(problems, placementJson.get("type").getAsString().equals("gt6ce:gt_dungeon_lattice"),
                 "the structure set's placement type is " + placementJson.get("type").getAsString());
         check(problems, placementJson.get("spacing").getAsInt() == GTDungeonLayout.GRID_PERIOD,
                 "the placement's spacing is not GT6's grid period of 11");
@@ -338,7 +338,7 @@ public final class DungeonLocateAndSlabsTests {
                 "the placement's salt is " + placementJson.get("salt").getAsInt());
         check(problems, setJson.getAsJsonArray("structures").size() == 1
                         && setJson.getAsJsonArray("structures").get(0).getAsJsonObject()
-                        .get("structure").getAsString().equals("gregtech:gt_dungeon"),
+                        .get("structure").getAsString().equals("gt6ce:gt_dungeon"),
                 "the structure set points somewhere else");
         // The codec has to be read the way the loader reads it, and it has to be a MapCodecCodec: DFU's
         // KeyDispatchCodec (behind StructurePlacement.CODEC) only hands the JSON object to a MapCodecCodec,
@@ -367,13 +367,13 @@ public final class DungeonLocateAndSlabsTests {
                         && loaded.result().get().placement() instanceof GTDungeonPlacement,
                 "the loaded structure set does not hold the dungeon and the lattice: " + loaded);
 
-        JsonObject biomeTag = resourceJson("data/gregtech/tags/worldgen/biome/has_structure/gt_dungeon.json");
+        JsonObject biomeTag = resourceJson("data/gt6ce/tags/worldgen/biome/has_structure/gt_dungeon.json");
         check(problems, biomeTag.getAsJsonArray("values").size() == 1
                         && biomeTag.getAsJsonArray("values").get(0).getAsString().equals("#minecraft:is_overworld"),
                 "the has_structure biome tag is not GT6's overworld");
-        JsonObject structureTag = resourceJson("data/gregtech/tags/worldgen/structure/gt_dungeon.json");
+        JsonObject structureTag = resourceJson("data/gt6ce/tags/worldgen/structure/gt_dungeon.json");
         check(problems, structureTag.getAsJsonArray("values").size() == 1
-                        && structureTag.getAsJsonArray("values").get(0).getAsString().equals("gregtech:gt_dungeon"),
+                        && structureTag.getAsJsonArray("values").get(0).getAsString().equals("gt6ce:gt_dungeon"),
                 "the structure tag does not name the dungeon");
 
         helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
@@ -392,7 +392,7 @@ public final class DungeonLocateAndSlabsTests {
         ServerLevel level = helper.getLevel();
         List<String> problems = new ArrayList<>();
         StructureSet set = level.registryAccess().registryOrThrow(Registries.STRUCTURE_SET).get(GTStructures.DUNGEON_SET);
-        helper.assertTrue(set != null, "gregtech:gt_dungeons is not loaded");
+        helper.assertTrue(set != null, "gt6ce:gt_dungeons is not loaded");
         StructurePlacement placement = set.placement();
         ChunkGeneratorStructureState state = level.getChunkSource().getGeneratorState();
         long seed = level.getSeed();

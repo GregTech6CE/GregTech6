@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:buns"
+    },
+    {
+      "tag": "gt6ce:ingot/meat_cooked"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:hamburger",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

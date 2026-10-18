@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_quantum_energizer",
+  "contents": [
+    "item:gt6ce:quantum_energizer_ev",
+    "item:gt6ce:quantum_energizer_iv",
+    "item:gt6ce:quantum_energizer_luv",
+    "item:gt6ce:quantum_energizer_uv",
+    "item:gt6ce:quantum_energizer_zpm"
+  ],
+  "priority": 110
+}

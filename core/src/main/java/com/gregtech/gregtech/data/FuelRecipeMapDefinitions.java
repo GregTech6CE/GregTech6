@@ -2,7 +2,7 @@ package com.gregtech.gregtech.data;
 import com.gregtech.gregtech.api.recipe.RecipeMapSpec;
 /** Exact original GT6 fuel-map schemas; MC stacks belong to the platforms. */
 public final class FuelRecipeMapDefinitions {private FuelRecipeMapDefinitions(){}
-    private static final String GUI = "gregtech:textures/gui/machines/";
+    private static final String GUI = "gt6ce:textures/gui/machines/";
 
     public static final RecipeMapSpec
             FluidBed = new RecipeMapSpec(null, "gt.recipe.fuels.fluidbed", "Fluidized Bed Fuels", GUI + "Default", 1, 1, 0, 1, 1, 0, 1, false, false, true, true).viewer(true, true),

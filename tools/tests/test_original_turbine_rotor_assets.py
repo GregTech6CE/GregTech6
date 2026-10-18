@@ -13,7 +13,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PORT = native_path(ROOT / "src/main/resources/assets/gregtech")
+PORT = native_path(ROOT / "src/main/resources/assets/gt6ce")
 SOURCE = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech"
 
 ORIGINALS = (
@@ -54,7 +54,7 @@ class OriginalTurbineRotorAssets(unittest.TestCase):
                                   for facing, entry in states.items()}, expected)
                 for entry in states.values():
                     namespace, model = entry["model"].split(":", 1)
-                    self.assertEqual(namespace, "gregtech")
+                    self.assertEqual(namespace, "gt6ce")
                     self.assertTrue((PORT / "models" / (model + ".json")).is_file())
 
 

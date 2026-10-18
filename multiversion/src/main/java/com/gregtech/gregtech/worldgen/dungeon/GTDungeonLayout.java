@@ -86,7 +86,7 @@ public final class GTDungeonLayout {
      * {@code Math.abs(chunk) % GRID_PERIOD == ANCHOR_OFFSET}, i.e. {@code 5, 16, 27, ...} and
      * {@code -5, -16, -27, ...}. This is the very rule {@link #anchorFor} snaps a chunk to; the structure
      * placement ({@code com.gregtech.gregtech.worldgen.GTDungeonPlacement}) declares exactly these chunks
-     * as its structure chunks, so {@code /locate structure gregtech:gt_dungeon} answers with the same
+     * as its structure chunks, so {@code /locate structure gt6ce:gt_dungeon} answers with the same
      * anchors the feature builds a dungeon from. Public because it is that shared rule.
      */
     public static boolean isAnchor(int chunk) {return DungeonLayoutRules.isAnchor(chunk);}

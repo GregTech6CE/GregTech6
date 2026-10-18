@@ -17,7 +17,7 @@ from census_gt6_recipe_mirror_flags import split_top_level
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java'
-RECIPES = ROOT / 'core/src/main/resources/data/gregtech/recipes'
+RECIPES = ROOT / 'core/src/main/resources/data/gt6ce/recipes'
 MARKER = '_autocrafting_source'
 
 
@@ -76,7 +76,7 @@ def snake(value: str) -> str:
 def form(ingredient: dict, prefixes: set[str]) -> tuple | None:
     if not isinstance(ingredient, dict):
         return None
-    if set(ingredient) == {'item'} and ingredient['item'].startswith('gregtech:'):
+    if set(ingredient) == {'item'} and ingredient['item'].startswith('gt6ce:'):
         value = ingredient['item'][9:]
         wire = re.fullmatch(r'wire_(\d{2})_(.+)', value)
         if wire and 1 <= int(wire[1]) <= 16:
@@ -88,7 +88,7 @@ def form(ingredient: dict, prefixes: set[str]) -> tuple | None:
     if set(ingredient) == {'tag'}:
         tag = ingredient['tag']
         for prefix in prefixes:
-            for namespace in ('forge:', 'gregtech:'):
+            for namespace in ('forge:', 'gt6ce:'):
                 stem = namespace + snake(prefix) + 's/'
                 if tag.startswith(stem):
                     return prefix, tag[len(stem):]
@@ -97,7 +97,7 @@ def form(ingredient: dict, prefixes: set[str]) -> tuple | None:
 
 def cells(data: dict) -> list[dict]:
     if data.get('type') == 'minecraft:crafting_shapeless' or (
-            data.get('type') == 'gregtech:tool_shapeless' and MARKER in data):
+            data.get('type') == 'gt6ce:tool_shapeless' and MARKER in data):
         return data.get('ingredients', [])
     if data.get('type') == 'minecraft:crafting_shaped':
         key = data.get('key', {})
@@ -147,9 +147,9 @@ def run(source: Path, check: bool, report_path: Path | None) -> int:
         marker = f"GT6 Loader_Recipes_Handlers:{row['line']} ({'allowed' if row['autocraftable'] else 'disabled'})"
         selector = {}
         if row['kind'] == '1ToY':
-            if data['type'] not in ('minecraft:crafting_shapeless', 'gregtech:tool_shapeless'):
+            if data['type'] not in ('minecraft:crafting_shapeless', 'gt6ce:tool_shapeless'):
                 raise ValueError(f'Single-input source conversion needs a native selector: {path}')
-            selector = {'type': 'gregtech:tool_shapeless',
+            selector = {'type': 'gt6ce:tool_shapeless',
                         'gregtech_form_variants': row['selector_variants'],
                         'gregtech_form_offset': row['selector_offset']}
         if (data.get('gregtech_autocraftable') is not row['autocraftable'] or data.get(MARKER) != marker

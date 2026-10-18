@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CFC",
+    "SME",
+    "CFC"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:crystal_processor_sapphire"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_osmiridium"
+    },
+    "F": {
+      "item": "gt6ce:compact_force_field_emitter_ev"
+    },
+    "S": {
+      "item": "gt6ce:compact_sensor_ev"
+    },
+    "E": {
+      "item": "gt6ce:compact_signal_emitter_ev"
+    }
+  },
+  "result": {
+    "item": "gt6ce:quantum_energizer_zpm"
+  }
+}

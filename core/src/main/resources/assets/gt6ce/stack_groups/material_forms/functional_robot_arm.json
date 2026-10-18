@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_robot_arm",
+  "contents": [
+    "item:gt6ce:robot_arm_blade_tip",
+    "item:gt6ce:robot_arm_chisel_tip",
+    "item:gt6ce:robot_arm_cutter_tip",
+    "item:gt6ce:robot_arm_drill_tip",
+    "item:gt6ce:robot_arm_file_tip",
+    "item:gt6ce:robot_arm_hammer_tip",
+    "item:gt6ce:robot_arm_rubber_hammer_tip",
+    "item:gt6ce:robot_arm_saw_tip",
+    "item:gt6ce:robot_arm_screwdriver_tip",
+    "item:gt6ce:robot_arm_wrench_tip"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_engine_flux",
+  "contents": [
+    "item:gt6ce:engine_flux_electrum",
+    "item:gt6ce:engine_flux_enderium",
+    "item:gt6ce:engine_flux_enderium_base",
+    "item:gt6ce:engine_flux_invar",
+    "item:gt6ce:engine_flux_lead"
+  ],
+  "priority": 110
+}

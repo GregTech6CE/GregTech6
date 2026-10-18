@@ -15,7 +15,7 @@ final class EmiCatalogRepair {
         var original = (java.util.List<EmiStack>) field.get(null);
         var sorted = new ArrayList<EmiStack>();
         for (var stack : original) {
-            if (!stack.getId().getNamespace().equals("gregtech")) continue;
+            if (!stack.getId().getNamespace().equals("gt6ce")) continue;
             var item = stack.getItemStack();
 //? if >=1.21.1 {
             /*var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(item);
@@ -35,7 +35,7 @@ final class EmiCatalogRepair {
         // Keep other mods and vanilla in place, replacing just the GT subsequence.
         var result = new ArrayList<EmiStack>(original.size());
         var next = sorted.iterator();
-        for (var stack : original) result.add(stack.getId().getNamespace().equals("gregtech") ? next.next() : stack);
+        for (var stack : original) result.add(stack.getId().getNamespace().equals("gt6ce") ? next.next() : stack);
         field.set(null, result);
         } catch (ReflectiveOperationException failure) {
             throw new IllegalStateException("EMI index integration needs updating", failure);

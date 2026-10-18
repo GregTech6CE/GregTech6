@@ -45,7 +45,7 @@ public final class ToolIconSets {
 
     public static ResourceLocation icon(String name) {
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech","item/iconsets/" + name);
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/iconsets/" + name);
 *///?} else {
         return GregTech.id("item/iconsets/" + name);
 //?}

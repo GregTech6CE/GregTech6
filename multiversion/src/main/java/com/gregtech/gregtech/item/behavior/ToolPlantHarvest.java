@@ -39,7 +39,7 @@ public final class ToolPlantHarvest {
             Block.popResource(level, pos, new ItemStack(Blocks.VINE));
             return;
         } else return;
-        var grass = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "grass_2"));
+        var grass = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "grass_2"));
         if (grass == net.minecraft.world.item.Items.AIR) throw new IllegalStateException("Missing source cut grass item");
         Block.popResource(level, pos, new ItemStack(grass, count));
     }

@@ -37,7 +37,7 @@ public final class GTToolTooltips {
         long remaining = Math.max(0, max - damage);
 
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_durability",
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_durability",
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_durability",
 //?}
@@ -53,7 +53,7 @@ public final class GTToolTooltips {
         float combat = statsType.baseDamage() + head.getToolQuality();
         float hearts = (combat + 1.0F) / 2.0F;
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_melee_damage",
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_melee_damage",
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_melee_damage",
 //?}
@@ -63,7 +63,7 @@ public final class GTToolTooltips {
 
         float attackSpeed = statsType.attackSpeed();
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_attack_speed",
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_attack_speed",
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_attack_speed",
 //?}
@@ -72,7 +72,7 @@ public final class GTToolTooltips {
 
         float miningSpeed = Math.max(Float.MIN_NORMAL, statsType.speedMultiplier() * head.getToolSpeed());
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_mining_speed",
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_mining_speed",
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_mining_speed",
 //?}
@@ -81,7 +81,7 @@ public final class GTToolTooltips {
 
         long craftingUses = GTCodeFormat.divUp(remaining, statsType.damagePerCraft());
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_crafting_uses",
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_crafting_uses",
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_crafting_uses",
 //?}
@@ -90,7 +90,7 @@ public final class GTToolTooltips {
 
         if (type.canPenetrate()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_penetrate_armor")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_penetrate_armor")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_penetrate_armor")
 //?}
@@ -98,7 +98,7 @@ public final class GTToolTooltips {
         }
         if (type.canCollect()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".tool_autocollect")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".tool_autocollect")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_autocollect")
 //?}
@@ -106,7 +106,7 @@ public final class GTToolTooltips {
         }
         if (type.tooltipKey() != null) {
 //? if >=1.21.1 {
-            /*var hint = Component.translatable("tooltip." + "gregtech" + ".tool_hint." + type.tooltipKey());
+            /*var hint = Component.translatable("tooltip." + "gt6ce" + ".tool_hint." + type.tooltipKey());
 *///?} else {
             var hint = Component.translatable("tooltip." + GregTech.NAMESPACE + ".tool_hint." + type.tooltipKey());
 //?}

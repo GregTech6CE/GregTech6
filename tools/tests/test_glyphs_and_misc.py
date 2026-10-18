@@ -9,7 +9,7 @@ import json, sys, unittest
 from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 sys.path.insert(0,str(ROOT/'tools'))
 from restore_misc_block_textures import MAPPING
 from check_render_resources import check
@@ -64,6 +64,6 @@ class GlyphAndMiscTests(unittest.TestCase):
               'part.heat_input','part.fluid_input','part.fluid_output','part.fluid_io']
         for lang in ['en_us','zh_cn']:
             values=json.loads((ASSETS/f'lang/{lang}.json').read_text(encoding='utf-8'))
-            for key in keys: self.assertTrue(values.get('gregtech.jei.'+key),key)
+            for key in keys: self.assertTrue(values.get('gt6ce.jei.'+key),key)
 
 if __name__=='__main__': unittest.main()

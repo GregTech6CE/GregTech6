@@ -12,7 +12,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech"
 BOOKS = ("book_vanilla", "book_enchanted", "book_matdict", "book_dusty", "folder", "folder_red", "frame")
 
@@ -45,9 +45,9 @@ def generate(assets=ASSETS):
             # GT6 PlankData.PLANK_ICONS[0] starts as Blocks.planks:0 (oak).
             "wood": "minecraft:block/oak_planks", "particle": "#wood"},
         "elements": elements})
-    write("models/item/bookshelf.json", {"parent": "gregtech:block/bookshelf"})
+    write("models/item/bookshelf.json", {"parent": "gt6ce:block/bookshelf"})
     write("blockstates/bookshelf.json", {"variants": {
-        "facing=" + facing: {"model": "gregtech:block/bookshelf", "y": angle}
+        "facing=" + facing: {"model": "gt6ce:block/bookshelf", "y": angle}
         for facing, angle in (("north", 0), ("east", 90), ("south", 180), ("west", 270))}})
     target = assets / "textures/block/books"
     target.mkdir(parents=True, exist_ok=True)

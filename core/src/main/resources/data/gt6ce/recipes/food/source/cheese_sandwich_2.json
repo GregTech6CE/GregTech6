@@ -1,0 +1,31 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_bread"
+    },
+    {
+      "item": "gt6ce:sliced_bread"
+    },
+    {
+      "item": "gt6ce:cheese_slice"
+    },
+    {
+      "item": "gt6ce:cheese_slice"
+    },
+    {
+      "item": "gt6ce:cheese_slice"
+    },
+    {
+      "item": "gt6ce:cheese_slice"
+    },
+    {
+      "item": "gt6ce:cheese_slice"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:cheese_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

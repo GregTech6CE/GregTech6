@@ -40,7 +40,7 @@ import java.util.Map;
  * (tint 0 → material color via the registered color handlers).
  *
  * <p>§103.B: because the host rock became a state property, the baking result holds one model location
- * per state ({@code gregtech:ore_iron#stone=granite}) instead of a single {@code #}; each gets the
+ * per state ({@code gt6ce:ore_iron#stone=granite}) instead of a single {@code #}; each gets the
  * stone-pinned {@link OreBakedModel#stoneModel} view. The blockstate JSON still only needs its one
  * {@code ""} variant.
  */
@@ -76,7 +76,7 @@ public final class OreClientModels {
         BakedModel template = BakedModelLookup.find(models, TEMPLATE);
         if (template == null) {
 //? if >=1.21.1 {
-            /*LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", "gregtech");
+            /*LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", "gt6ce");
 *///?} else {
             LOGGER.error("[{}] vanilla stone model missing — ore models not replaced", GregTech.NAMESPACE);
 //?}
@@ -110,7 +110,7 @@ public final class OreClientModels {
         }
         LOGGER.info("[{}] Ore model replacement: {} ore blocks, {} state models from {} shared models",
 //? if >=1.21.1 {
-                /*"gregtech", mapped, states, sharedModels.size());
+                /*"gt6ce", mapped, states, sharedModels.size());
 *///?} else {
                 GregTech.NAMESPACE, mapped, states, sharedModels.size());
 //?}
@@ -127,13 +127,13 @@ public final class OreClientModels {
         return cache.computeIfAbsent(cacheKey, key -> {
             for (MaterialTextureSet set : new MaterialTextureSet[]{primary, MaterialTextureSet.DULL, MaterialTextureSet.METALLIC}) {
 //? if >=1.21.1 {
-                /*ResourceLocation texture = ResourceLocation.fromNamespaceAndPath("gregtech",
+                /*ResourceLocation texture = ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
                 ResourceLocation texture = new ResourceLocation(GregTech.NAMESPACE,
 //?}
                         "block/material_icons/" + set.folder() + "/" + file);
 //? if >=1.21.1 {
-                /*ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath("gregtech",
+                /*ResourceLocation file_png = ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
                 ResourceLocation file_png = new ResourceLocation(GregTech.NAMESPACE,
 //?}
@@ -143,7 +143,7 @@ public final class OreClientModels {
                 }
             }
 //? if >=1.21.1 {
-            /*return ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/metallic/" + file);
+            /*return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/" + file);
 *///?} else {
             return new ResourceLocation(GregTech.NAMESPACE, "block/material_icons/metallic/" + file);
 //?}

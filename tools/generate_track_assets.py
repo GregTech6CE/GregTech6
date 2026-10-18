@@ -7,13 +7,13 @@ side for them:
 * one blockstate per track, following vanilla's `rail.json` / `powered_rail.json` /
   `detector_rail.json` shape (and `powered` on/off) variants,
 * the per-material model stubs that re-texture vanilla's rail geometry with the GT6 iconset
-  texture of that material (`assets/gregtech/textures/block/iconsets/rail_*.png`, already in the
+  texture of that material (`assets/gt6ce/textures/block/iconsets/rail_*.png`, already in the
   repo). Vanilla's rail models take the texture variable `rail`, so every stub is a one-liner.
 
 Inputs : none (the table below mirrors `GTTrackBlocks.java` / GT6 `Loader_Rails:41-72`)
-Output : src/main/resources/assets/gregtech/blockstates/track*.json
-         src/main/resources/assets/gregtech/models/block/tracks/*.json
-         src/main/resources/assets/gregtech/models/item/track*.json
+Output : src/main/resources/assets/gt6ce/blockstates/track*.json
+         src/main/resources/assets/gt6ce/models/block/tracks/*.json
+         src/main/resources/assets/gt6ce/models/item/track*.json
 """
 
 from __future__ import annotations
@@ -30,9 +30,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BLOCKSTATES = native_path(ROOT / "src/main/resources/assets/gregtech/blockstates")
-MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/block/tracks")
-ITEM_MODELS = native_path(ROOT / "src/main/resources/assets/gregtech/models/item")
+BLOCKSTATES = native_path(ROOT / "src/main/resources/assets/gt6ce/blockstates")
+MODELS = native_path(ROOT / "src/main/resources/assets/gt6ce/models/block/tracks")
+ITEM_MODELS = native_path(ROOT / "src/main/resources/assets/gt6ce/models/item")
 
 # material slug -> the GT6 iconset texture stem (upper case, as in the resource pack)
 # `LoadTracks.java` uses RAIL_STRAIGHT_/RAIL_TURNED_/RAIL_BOOSTER(_ACTIVE)_/RAIL_DETECTOR(_ACTIVE)_.
@@ -83,7 +83,7 @@ def model(name: str, shape: str, texture_stem: str) -> None:
         "parent": parent,
         # Rails cut the texture out; without it the transparent pixels render black.
         "render_type": "minecraft:cutout",
-        "textures": {"rail": "gregtech:block/iconsets/" + texture_stem.lower()},
+        "textures": {"rail": "gt6ce:block/iconsets/" + texture_stem.lower()},
     }, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
@@ -96,12 +96,12 @@ def item_model(name: str) -> None:
     """Use the idle flat track sprite as its inventory preview."""
     ITEM_MODELS.mkdir(parents=True, exist_ok=True)
     (ITEM_MODELS / (name + ".json")).write_text(json.dumps({
-        "parent": "gregtech:block/tracks/" + name + "_flat",
+        "parent": "gt6ce:block/tracks/" + name + "_flat",
     }, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 def variant(model_name: str, y: int) -> dict:
-    entry = {"model": "gregtech:block/tracks/" + model_name}
+    entry = {"model": "gt6ce:block/tracks/" + model_name}
     if y:
         entry["y"] = y
     return entry

@@ -1,5 +1,13 @@
 # 验证账本
 
+## 2026-10-18 / GT6CE 内容、资源和 EMI 归属名称
+
+源码／资源迁移检查、两版主代码与探针编译、四组核心合约、54 项工具定向测试通过；严格双语保留原始来源文本，451 份 REMI 分组资源与生成器一致。材料摘要先因身份字段变化失败，经未修改的 HEAD 观察器隔离对比后确认仅翻译键、归属与身份存在性字段改变，再更新期望并通过；见[材料差分回执](verification/gt6ce-material-differential-20261018.json)。
+
+NeoForge + EMI 1.1.24 + Reliable EMI 4.7.12 开发新世界单次运行 3m11s 成功。实际注册样本为 `gt6ce:copper_key`、`gt6ce:clay_brown`、`gt6ce:seawater`，旧样本均不存在；材料 owner 映射、加载器名称和真实 EMI 名称均为 `GregTech 6 Community Edition`。运行观察到 434 组，全部列表／搜索折叠和 60 个保险箱成员展开收起通过；451 是静态分组资源数量。见[运行回执](verification/gt6ce-namespace-runtime-20261018.json)。
+
+首次正式包生成成功，但验包拒绝 Forge 1,420／NeoForge 1,699 个旧命名空间空目录项，旧文件数均为 0；根构建已设置 `Jar.includeEmptyDirs=false`，最终重打 7m24s 成功，双版正式包与 SDK 的身份常量、实际注解、当前字节码、资源、蓝色页脚与 ZIP CRC 均通过，旧目录和引用为零；见[最终验包回执](verification/gt6ce-namespace-packaging-20261018.json)。本次运行是开发类路径，不能作为新成品安装、Forge 运行、专用服务器、旧存档重载或完整生存证据。详见[本批范围与证据](verification/gt6ce-namespace-20261018.md)。
+
 ## 2026-10-18 / GT6CE 模组身份
 
 双版正式包与 SDK 构建通过（最终 5m46s）。成品声明 `modId=gt6ce`、`displayName=GregTech 6 Community Edition`，依赖表属于 `dependencies.gt6ce`；两版入口各 1、事件订阅 68／123 全部核对为新 ID，包括修正后的流体提示回调。`gt6ce:shared_inventory` 几何加载器、818 个共享类、当前原生字节码、ZIP 完整性和 SDK 通过。未启动游戏、未跑全套测试或验证旧存档。见[范围与证据](verification/gt6ce-identity-20261018.md)。

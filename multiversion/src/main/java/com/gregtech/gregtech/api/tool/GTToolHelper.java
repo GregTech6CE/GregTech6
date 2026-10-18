@@ -381,7 +381,7 @@ public final class GTToolHelper {
 *///?} else {
         var id=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
-        if(id==null || !id.getNamespace().equals("gregtech")) return false;
+        if(id==null || !id.getNamespace().equals("gt6ce")) return false;
         return switch(tool) {
             case SWORD -> matchesTool(stack, GTToolType.SWORD);
             case WRENCH -> isMachineWrench(stack) && (!state.requiresCorrectToolForDrops()

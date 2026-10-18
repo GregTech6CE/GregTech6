@@ -50,7 +50,7 @@ import java.util.Map;
 
 public final class GTCreativeTabs {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "gregtech");
+    /*public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "gt6ce");
 *///?} else {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, GregTech.NAMESPACE);
 //?}
@@ -139,7 +139,7 @@ private GTCreativeTabs() {}
             MaterialPrefix bound = prefix;
 //? if >=1.21.1 {
             /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup." + "gregtech" + "." + bound.getRegistryName()))
+                    .title(Component.translatable("itemGroup." + "gt6ce" + "." + bound.getRegistryName()))
 *///?} else {
             RegistryObject<CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + GregTech.NAMESPACE + "." + bound.getRegistryName()))
@@ -164,7 +164,7 @@ private GTCreativeTabs() {}
             BlockMaterialPrefix bound = prefix;
 //? if >=1.21.1 {
             /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = TABS.register("block_" + bound.getRegistryName(), () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup." + "gregtech" + "." + bound.getRegistryName()))
+                    .title(Component.translatable("itemGroup." + "gt6ce" + "." + bound.getRegistryName()))
 *///?} else {
             RegistryObject<CreativeModeTab> tab = TABS.register("block_" + bound.getRegistryName(), () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + GregTech.NAMESPACE + "." + bound.getRegistryName()))

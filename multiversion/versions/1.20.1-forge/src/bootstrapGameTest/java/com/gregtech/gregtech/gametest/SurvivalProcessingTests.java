@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SurvivalProcessingTests {
     @GameTest(template="test_empty")
     public static void publishedSurvivalRecipesConsumeInputsAndRetainTools(GameTestHelper h) {

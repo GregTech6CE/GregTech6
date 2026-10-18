@@ -740,7 +740,7 @@ public final class GregTechClient {
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(()->com.gregtech.gregtech.registry.GTChemicalBatteries.allRegistered().forEach(entry->
                 net.minecraft.client.renderer.item.ItemProperties.register(entry.get().asItem(),
-                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","battery_charge"),
+                        net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","battery_charge"),
                         (stack,level,entity,seed)->{
                             var item=(com.gregtech.gregtech.item.ChemicalBatteryItem)stack.getItem();
                             return item.spec().display(item.stored(stack))/(float)item.spec().scale();

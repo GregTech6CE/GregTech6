@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_log_hole",
+  "contents": [
+    "item:gt6ce:log_hole_maple",
+    "item:gt6ce:log_hole_rainbowood",
+    "item:gt6ce:log_hole_rubber",
+    "item:gt6ce:log_resin_rubber",
+    "item:gt6ce:log_sap_maple",
+    "item:gt6ce:log_sap_rainbowood",
+    "item:gt6ce:resin_hole_rubber",
+    "item:gt6ce:tapped_maple",
+    "item:gt6ce:tapped_rainbowood"
+  ],
+  "priority": 110
+}

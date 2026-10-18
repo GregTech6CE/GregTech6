@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 /**
  * GT6 {@code Behavior_Worldgen_Debugger} ({@code Behavior_Worldgen_Debugger.java:43-55}) — the
  * "Worldgen Debug Wand" ({@code MultiItemRandomTools:520}; the port registers it as
- * {@code gregtech:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES:129}), the tool that makes an
+ * {@code gt6ce:worldgen_debug_wand} in {@code GTMultiItemsGen.ENTRIES:129}), the tool that makes an
  * ore vein visible by deleting everything around it.
  *
  * <h2>What the original does</h2>

@@ -36,7 +36,7 @@ public final class MaterialDataBrowserSmoke {
     private static Throwable failure;
     private static boolean separated;
     private static void require(boolean ok,String message){if(!ok)throw new IllegalStateException("Material data browser: "+message);}
-    private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+id)));}
+    private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+id)));}
     private static RecipeMap currentMap(){return stage==1?MachineRecipeMaps.ScannerMolecular:stage==2?MachineRecipeMaps.Printer:MachineRecipeMaps.Replicator;}
     private static List<Recipe> currentRows(){return stage==1?MaterialDataViewerRecipes.scans():stage==2?MaterialDataViewerRecipes.prints():MaterialDataViewerRecipes.replications();}
     public static boolean frame(Minecraft minecraft,JsonObject result){

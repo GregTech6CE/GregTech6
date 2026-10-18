@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    " R ",
+    "RhR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:rods/stainless_steel"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    }
+  },
+  "result": {
+    "item": "gt6ce:slicer_shape_empty",
+    "count": 1
+  }
+}

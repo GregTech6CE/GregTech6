@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_fluid_spring",
+  "contents": [
+    "item:gt6ce:fluid_spring",
+    "item:gt6ce:fluid_spring_gas_natural_gas",
+    "item:gt6ce:fluid_spring_lava",
+    "item:gt6ce:fluid_spring_liquid_extra_heavy_oil",
+    "item:gt6ce:fluid_spring_liquid_heavy_oil",
+    "item:gt6ce:fluid_spring_liquid_light_oil",
+    "item:gt6ce:fluid_spring_liquid_medium_oil",
+    "item:gt6ce:fluid_spring_watergeothermal"
+  ],
+  "priority": 110
+}

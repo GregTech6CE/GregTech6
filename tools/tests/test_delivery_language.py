@@ -27,7 +27,7 @@ class DeliveryLanguageTests(unittest.TestCase):
 
     def test_language_inventory_rejects_inconsistent_or_duplicate_source_gap_rows(self):
         forms = {'registered': 50002, 'exactOriginal': 50000, 'missingOriginal': 2, 'originalCasingNames': 300}
-        missing = [{'id': 'gregtech:example_' + str(i), 'sourceKey': 'oredict.example' + str(i),
+        missing = [{'id': 'gt6ce:example_' + str(i), 'sourceKey': 'oredict.example' + str(i),
                     'sourceNameAvailable': False} for i in range(2)]
         language = {'englishItemNames': 70000, 'chineseItemNames': 70000,
                     'latinNameCandidates': 0, 'materialFormNames': forms}

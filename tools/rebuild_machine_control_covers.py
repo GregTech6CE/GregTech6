@@ -12,7 +12,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 SPECS = [
     ('automatic_machine_switch', 'autoswitch', ['BW', 'CQ'], 1, 'lever', None),
     ('redstone_machine_switch', 'redstoneswitch', ['BW', 'CQ'], 1, 'redstone_torch', None),
@@ -52,18 +52,18 @@ def main(original=None):
                 shutil.copy2(source.with_suffix('.png.mcmeta'), target.with_suffix('.png.mcmeta'))
         write(ledger_path, ledger)
     for name, texture, pattern, tier, component, extra in SPECS:
-        foreground = f'gregtech:block/machines/covers/{texture}/circuit'
+        foreground = f'gt6ce:block/machines/covers/{texture}/circuit'
         write(ASSETS / f'models/item/{name}.json', {'parent': 'minecraft:item/generated',
-              'textures': {'layer0': 'gregtech:block/machines/covers/base', 'layer1': foreground, 'particle': foreground}})
-        keys = {'Q': 'gregtech:blank_cover', 'C': 'gregtech:circuit_' + CIRCUITS[tier],
-                'W': 'gregtech:cable_01_' + ('copper' if name == 'auto_redstone_machine_switch' else 'tin'),
-                'B': 'minecraft:' + component, 'd': 'gregtech:tool_screwdriver'}
+              'textures': {'layer0': 'gt6ce:block/machines/covers/base', 'layer1': foreground, 'particle': foreground}})
+        keys = {'Q': 'gt6ce:blank_cover', 'C': 'gt6ce:circuit_' + CIRCUITS[tier],
+                'W': 'gt6ce:cable_01_' + ('copper' if name == 'auto_redstone_machine_switch' else 'tin'),
+                'B': 'minecraft:' + component, 'd': 'gt6ce:tool_screwdriver'}
         if extra:
             keys['X'] = 'minecraft:' + extra
         used = set(''.join(pattern)) - {' '}
-        write(native_path(ROOT / f'src/main/resources/data/gregtech/recipes/control_covers/{name}.json'), {
-            'type': 'gregtech:tool_shaped', 'pattern': pattern,
-            'key': {k: {'item': keys[k]} for k in sorted(used)}, 'result': {'item': 'gregtech:' + name}})
+        write(native_path(ROOT / f'src/main/resources/data/gt6ce/recipes/control_covers/{name}.json'), {
+            'type': 'gt6ce:tool_shaped', 'pattern': pattern,
+            'key': {k: {'item': keys[k]} for k in sorted(used)}, 'result': {'item': 'gt6ce:' + name}})
 
 
 if __name__ == '__main__':

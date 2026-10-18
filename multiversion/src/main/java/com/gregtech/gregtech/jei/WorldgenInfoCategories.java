@@ -43,9 +43,9 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
     // ── data records shown as "recipes" ─────────────────────────────────────
 
 //? if >=1.21.1 {
-    /*public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create("gregtech", "ore_veins", VeinInfo.class);
-    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create("gregtech", "small_ores_info", SmallOreInfo.class);
-    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create("gregtech", "stone_layers_info", LayerInfo.class);
+    /*public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create("gt6ce", "ore_veins", VeinInfo.class);
+    public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create("gt6ce", "small_ores_info", SmallOreInfo.class);
+    public static final RecipeType<LayerInfo> LAYER_TYPE = RecipeType.create("gt6ce", "stone_layers_info", LayerInfo.class);
 *///?} else {
     public static final RecipeType<VeinInfo> VEIN_TYPE = RecipeType.create(GregTech.NAMESPACE, "ore_veins", VeinInfo.class);
     public static final RecipeType<SmallOreInfo> SMALL_ORE_TYPE = RecipeType.create(GregTech.NAMESPACE, "small_ores_info", SmallOreInfo.class);
@@ -65,7 +65,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         }
 
         @Override public RecipeType<VeinInfo> getRecipeType() { return VEIN_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category.ore_veins"); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.ore_veins"); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
 
@@ -86,11 +86,11 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             int maxY = vein.remapped() ? GTWorldgenScale.remapY(vein.maxY()) : vein.maxY();
             double pct = 100.0 * vein.weight() / Math.max(1, vein.totalWeight());
             int y = 22;
-            g.drawString(font, Component.translatable("gregtech.jei.info.vein_name", vein.name()), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.dimension", vein.dimension()), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.height", minY, maxY), 1, y + 20, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.chance", String.format("%.1f", pct)), 1, y + 30, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.biome_none"), 1, y + 40, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.vein_name", vein.name()), 1, y, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", vein.dimension()), 1, y + 10, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.height", minY, maxY), 1, y + 20, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.chance", String.format("%.1f", pct)), 1, y + 30, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.biome_none"), 1, y + 40, 0xFF404040, false);
         }
     }
 
@@ -105,7 +105,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         }
 
         @Override public RecipeType<SmallOreInfo> getRecipeType() { return SMALL_ORE_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category.small_ores"); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.small_ores"); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
 
@@ -122,9 +122,9 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
             int minY = ore.remapped() ? GTWorldgenScale.remapY(ore.minY()) : ore.minY();
             int maxY = ore.remapped() ? GTWorldgenScale.remapY(ore.maxY()) : ore.maxY();
             int y = 22;
-            g.drawString(font, Component.translatable("gregtech.jei.info.dimension", ore.dimension()), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.height", minY, maxY), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.per_chunk", ore.amount()), 1, y + 20, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", ore.dimension()), 1, y, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.height", minY, maxY), 1, y + 10, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.per_chunk", ore.amount()), 1, y + 20, 0xFF404040, false);
         }
     }
 
@@ -139,7 +139,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         }
 
         @Override public RecipeType<LayerInfo> getRecipeType() { return LAYER_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category.stone_layers"); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.stone_layers"); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
 
@@ -161,11 +161,11 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         @Override
         public void draw(LayerInfo layer, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
-            g.drawString(font, Component.translatable("gregtech.jei.info.layer_stone", layer.stoneDisplay()), 22, 5, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.layer_stone", layer.stoneDisplay()), 22, 5, 0xFF404040, false);
             if (!layer.ores().isEmpty()) {
-                g.drawString(font, Component.translatable("gregtech.jei.info.layer_ores"), 22, 14, 0xFF707070, false);
+                g.drawString(font, Component.translatable("gt6ce.jei.info.layer_ores"), 22, 14, 0xFF707070, false);
             } else {
-                g.drawString(font, Component.translatable("gregtech.jei.info.layer_no_ores"), 22, 14, 0xFF707070, false);
+                g.drawString(font, Component.translatable("gt6ce.jei.info.layer_no_ores"), 22, 14, 0xFF707070, false);
             }
         }
     }
@@ -175,7 +175,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
 
 
 //? if >=1.21.1 {
-    /*public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create("gregtech", "bedrock_ores", BedrockInfo.class);
+    /*public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create("gt6ce", "bedrock_ores", BedrockInfo.class);
 *///?} else {
     public static final RecipeType<BedrockInfo> BEDROCK_TYPE = RecipeType.create(GregTech.NAMESPACE, "bedrock_ores", BedrockInfo.class);
 //?}
@@ -193,7 +193,7 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         }
 
         @Override public RecipeType<BedrockInfo> getRecipeType() { return BEDROCK_TYPE; }
-        @Override public Component getTitle() { return Component.translatable("gregtech.jei.category.bedrock_ores"); }
+        @Override public Component getTitle() { return Component.translatable("gt6ce.jei.category.bedrock_ores"); }
         @Override public IDrawable getBackground() { return background; }
         @Override public IDrawable getIcon() { return icon; }
 
@@ -211,9 +211,9 @@ public final class WorldgenInfoCategories extends WorldgenInfoData {
         public void draw(BedrockInfo info, IRecipeSlotsView view, GuiGraphics g, double mx, double my) {
             var font = net.minecraft.client.Minecraft.getInstance().font;
             int y = 24;
-            g.drawString(font, Component.translatable("gregtech.jei.info.dimension", "minecraft:overworld"), 1, y, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.bedrock_rarity", info.chance()), 1, y + 10, 0xFF404040, false);
-            g.drawString(font, Component.translatable("gregtech.jei.info.bedrock_flower"), 1, y + 20, 0xFF707070, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.dimension", "minecraft:overworld"), 1, y, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.bedrock_rarity", info.chance()), 1, y + 10, 0xFF404040, false);
+            g.drawString(font, Component.translatable("gt6ce.jei.info.bedrock_flower"), 1, y + 20, 0xFF707070, false);
         }
     }
 }

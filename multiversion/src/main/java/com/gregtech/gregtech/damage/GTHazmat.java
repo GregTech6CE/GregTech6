@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
  * insects, gas) and answers "protected?" by testing all four armour slots against it, plus a
  * hard-coded immunity list per hazard (a blaze cannot be boiled, an iron golem cannot be poisoned).
  * In 1.20.1 the sets become item tags, which is also how the port already ships its lead hazard suit
- * ({@code gregtech:radiation_protection}, see {@link ReactorRadiation#PROTECTION}).
+ * ({@code gt6ce:radiation_protection}, see {@link ReactorRadiation#PROTECTION}).
  *
  * <p>All six original Loader_Tools suits populate the corresponding shared tags. Protection
  * requires four equipped pieces in the hazard set; universal pieces belong to every set.
@@ -61,7 +61,7 @@ public final class GTHazmat {
     private GTHazmat() {}
 
     private static TagKey<Item> tag(String path) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gregtech", path));
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", path));
     }
 
     /** GT6 {@code UT.Entities.isCreative}/{@code isInvincible}: creative mode ignores every hazard. */

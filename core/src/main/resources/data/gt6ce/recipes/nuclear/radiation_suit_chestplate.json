@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "LxL",
+    "LLL",
+    "LLL"
+  ],
+  "key": {
+    "L": {
+      "tag": "forge:plates/lead"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:radiation_suit_chestplate"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

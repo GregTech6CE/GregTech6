@@ -103,7 +103,7 @@ public final class SmelteryModelHelper {
 
     public static ResourceLocation modelPath(String subfolder, MaterialTextureSet set) {
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
 *///?} else {
         return GregTech.id("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid");
 //?}
@@ -111,7 +111,7 @@ public final class SmelteryModelHelper {
 
     public static ResourceLocation modelPath(String subfolder, MaterialTextureSet set, String suffix) {
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
 *///?} else {
         return GregTech.id("block/machine/" + subfolder + "/" + set.folder() + "/blocksolid_" + suffix);
 //?}
@@ -323,12 +323,12 @@ public final class SmelteryModelHelper {
                     "layer0": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gregtech:block/machines/%s/colored/bottom",
-                        "up": "gregtech:block/machines/%s/colored/top",
-                        "north": "gregtech:block/machines/%s/colored/side",
-                        "south": "gregtech:block/machines/%s/colored/side",
-                        "west": "gregtech:block/machines/%s/colored/side",
-                        "east": "gregtech:block/machines/%s/colored/side"
+                        "down": "gt6ce:block/machines/%s/colored/bottom",
+                        "up": "gt6ce:block/machines/%s/colored/top",
+                        "north": "gt6ce:block/machines/%s/colored/side",
+                        "south": "gt6ce:block/machines/%s/colored/side",
+                        "west": "gt6ce:block/machines/%s/colored/side",
+                        "east": "gt6ce:block/machines/%s/colored/side"
                       },
                       "elements": %s,
                       "render_type": "minecraft:solid"
@@ -336,12 +336,12 @@ public final class SmelteryModelHelper {
                     "layer1": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gregtech:block/machines/%s/overlay/bottom",
-                        "up": "gregtech:block/machines/%s/overlay/top",
-                        "north": "gregtech:block/machines/%s/overlay/side",
-                        "south": "gregtech:block/machines/%s/overlay/side",
-                        "west": "gregtech:block/machines/%s/overlay/side",
-                        "east": "gregtech:block/machines/%s/overlay/side"
+                        "down": "gt6ce:block/machines/%s/overlay/bottom",
+                        "up": "gt6ce:block/machines/%s/overlay/top",
+                        "north": "gt6ce:block/machines/%s/overlay/side",
+                        "south": "gt6ce:block/machines/%s/overlay/side",
+                        "west": "gt6ce:block/machines/%s/overlay/side",
+                        "east": "gt6ce:block/machines/%s/overlay/side"
                       },
                       "elements": %s,
                       "render_type": "minecraft:cutout"
@@ -357,12 +357,12 @@ public final class SmelteryModelHelper {
                     "layer0": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gregtech:block/machines/%s/colored/bottom",
-                        "up": "gregtech:block/machines/%s/colored/top",
-                        "north": "gregtech:block/machines/%s/colored/side",
-                        "south": "gregtech:block/machines/%s/colored/side",
-                        "west": "gregtech:block/machines/%s/colored/side",
-                        "east": "gregtech:block/machines/%s/colored/side"
+                        "down": "gt6ce:block/machines/%s/colored/bottom",
+                        "up": "gt6ce:block/machines/%s/colored/top",
+                        "north": "gt6ce:block/machines/%s/colored/side",
+                        "south": "gt6ce:block/machines/%s/colored/side",
+                        "west": "gt6ce:block/machines/%s/colored/side",
+                        "east": "gt6ce:block/machines/%s/colored/side"
                       },
                       "elements": %s,
                       "render_type": "minecraft:solid"
@@ -370,12 +370,12 @@ public final class SmelteryModelHelper {
                     "layer1": {
                       "parent": "minecraft:block/block",
                       "textures": {
-                        "down": "gregtech:block/machines/%s/overlay/bottom",
-                        "up": "gregtech:block/machines/%s/overlay/top",
-                        "north": "gregtech:block/machines/%s/overlay/side",
-                        "south": "gregtech:block/machines/%s/overlay/side",
-                        "west": "gregtech:block/machines/%s/overlay/side",
-                        "east": "gregtech:block/machines/%s/overlay/side"
+                        "down": "gt6ce:block/machines/%s/overlay/bottom",
+                        "up": "gt6ce:block/machines/%s/overlay/top",
+                        "north": "gt6ce:block/machines/%s/overlay/side",
+                        "south": "gt6ce:block/machines/%s/overlay/side",
+                        "west": "gt6ce:block/machines/%s/overlay/side",
+                        "east": "gt6ce:block/machines/%s/overlay/side"
                       },
                       "elements": %s,
                       "render_type": "minecraft:cutout"

@@ -22,11 +22,11 @@ import org.joml.Matrix4f;
 public final class OriginalLargeBoilerBarometerRenderer
         implements BlockEntityRenderer<OriginalLargeBoilerControllerBlockEntity> {
     private static final ResourceLocation BASE = ResourceLocation.fromNamespaceAndPath(
-            "gregtech", "block/machines/barometer/base");
+            "gt6ce", "block/machines/barometer/base");
     private static final ResourceLocation[] SCALE = new ResourceLocation[32];
     static {
         for (int i = 0; i < SCALE.length; i++) SCALE[i] = ResourceLocation.fromNamespaceAndPath(
-                "gregtech", "block/machines/barometer/" + String.format(java.util.Locale.ROOT, "%02d", i));
+                "gt6ce", "block/machines/barometer/" + String.format(java.util.Locale.ROOT, "%02d", i));
     }
     public OriginalLargeBoilerBarometerRenderer(BlockEntityRendererProvider.Context context) {}
 

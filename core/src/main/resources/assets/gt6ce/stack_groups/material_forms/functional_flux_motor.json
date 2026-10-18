@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_flux_motor",
+  "contents": [
+    "item:gt6ce:flux_motor_lv",
+    "item:gt6ce:flux_motor_mv"
+  ],
+  "priority": 110
+}

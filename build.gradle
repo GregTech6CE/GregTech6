@@ -3,6 +3,12 @@ plugins { id 'base' }
 version = mod_version
 group = mod_group_id
 
+// Incremental resource moves can leave empty old directories in build outputs.
+// Only files define mod content; never retain those directories in a delivered jar.
+subprojects {
+    tasks.withType(org.gradle.jvm.tasks.Jar).configureEach { includeEmptyDirs = false }
+}
+
 apply from: 'gradle/stonecutter-native.gradle'
 
 tasks.register('sourcePolicyCheck', Exec) {

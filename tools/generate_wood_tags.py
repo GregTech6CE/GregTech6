@@ -33,8 +33,8 @@ def write_json(name, values):
     written.append(name)
 
 
-write_json("logs.json", sorted("gregtech:log_%s" % species for species in SPECIES))
-write_json("leaves.json", sorted("gregtech:leaves_%s" % species for species in SPECIES))
+write_json("logs.json", sorted("gt6ce:log_%s" % species for species in SPECIES))
+write_json("leaves.json", sorted("gt6ce:leaves_%s" % species for species in SPECIES))
 
 print("wrote %d tag files" % len(written))
 for name in written:

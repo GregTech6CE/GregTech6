@@ -39,7 +39,7 @@ import java.util.Optional;
  * <p>The port's own surface clay seams ({@link GTSurfaceDepositFeature}) share the columns: both of
  * the port's clay deposits have to show their clay at the top, so the seam tests live here too.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PitTests {
     private static final int BASE_X = 32000;
@@ -64,8 +64,8 @@ public final class PitTests {
         helper.assertTrue(GTPitFeature.MAX_DEPTH == 7, "GT6 stops a column after seven pit blocks");
         helper.assertTrue(GTPitFeature.PITS.size() == 5,
                 "Loader_Worldgen registers 6 overworld pits, one of them disabled by default (red clay)");
-        String[] expected = {"minecraft:clay", "gregtech:clay_brown", "gregtech:clay_yellow",
-                "gregtech:clay_blue", "gregtech:clay_white"};
+        String[] expected = {"minecraft:clay", "gt6ce:clay_brown", "gt6ce:clay_yellow",
+                "gt6ce:clay_blue", "gt6ce:clay_white"};
         for (int i = 0; i < expected.length; i++) {
             if (i < GTPitFeature.PITS.size() && !GTPitFeature.PITS.get(i).blockId().equals(expected[i])) {
                 problems.add("pit " + i + ": expected " + expected[i] + ", got " + GTPitFeature.PITS.get(i).blockId());
@@ -89,7 +89,7 @@ public final class PitTests {
         helper.assertTrue(GTFeatures.PITS.getId().getPath().equals("gt_pits"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTPitFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_pits.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_pits.json is loaded");
         helper.assertTrue(problems.isEmpty(), "pit table (" + problems.size() + "): "
                 + problems.subList(0, Math.min(5, problems.size())));
         helper.succeed();
@@ -173,7 +173,7 @@ public final class PitTests {
         int depth = 3;
         int spread = radius + 3;
         BlockState clay = seamClay();
-        helper.assertTrue(clay != null, "gregtech:clay_blue is registered");
+        helper.assertTrue(clay != null, "gt6ce:clay_blue is registered");
 
         // A flat grass shore: grass over five dirt layers over stone, clear air above every column.
         for (int dx = -spread; dx <= spread; dx++) {
@@ -199,7 +199,7 @@ public final class PitTests {
                 if (top.is(Blocks.GRASS_BLOCK)) {
                     problems.add("grass left on top of the seam at " + dx + "/" + dz);
                 } else if (!top.is(clay.getBlock())) {
-                    problems.add("not gregtech:clay_blue at " + dx + "/" + dz + ": " + top);
+                    problems.add("not gt6ce:clay_blue at " + dx + "/" + dz + ": " + top);
                 }
                 if (!level.getBlockState(new BlockPos(SEAM_X + dx, sea - depth + 1, SEAM_Z + dz))
                         .is(clay.getBlock())) {
@@ -325,7 +325,7 @@ public final class PitTests {
     /** The port's GT clay the test drives: GT6 {@code BlocksGT.Diggables} meta 5 (Blue Clay). */
     private static BlockState seamClay() {
         var block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", GTSurfaceDepositFeature.CLAYS[0]));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", GTSurfaceDepositFeature.CLAYS[0]));
         return block == null || block == Blocks.AIR ? null : block.defaultBlockState();
     }
 
@@ -392,7 +392,7 @@ public final class PitTests {
     /** GT6's colored clays as the port's icon-set blocks: {@code gregtech:clay_*}. */
     private static boolean isGtClay(BlockState state) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-        return id != null && id.getNamespace().equals("gregtech") && id.getPath().startsWith("clay_");
+        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().startsWith("clay_");
     }
 
     /**

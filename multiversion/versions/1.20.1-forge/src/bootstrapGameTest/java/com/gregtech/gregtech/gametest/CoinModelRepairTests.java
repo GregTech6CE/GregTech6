@@ -43,21 +43,21 @@ public final class CoinModelRepairTests {
 
     @GameTest(template = "test_empty")
     public static void everyRegisteredCoinHasMintModelAndTextures(GameTestHelper helper) throws Exception {
-        JsonObject mint = json("assets/gregtech/models/item/coin_minted.json");
+        JsonObject mint = json("assets/gt6ce/models/item/coin_minted.json");
         helper.assertTrue(mint.get("parent").getAsString().equals("minecraft:block/block"),
                 "minted coin inherits the vanilla 3D block item transforms");
         helper.assertTrue(mint.getAsJsonArray("elements").size() > 100,
                 "minted coin has the original pixel relief rather than a flat missing model");
         for (String texture : List.of("coin", "coin_side")) {
-            helper.assertTrue(exists("assets/gregtech/textures/block/iconsets/" + texture + ".png"),
+            helper.assertTrue(exists("assets/gt6ce/textures/block/iconsets/" + texture + ".png"),
                     "GT6 coin texture " + texture + " is bundled");
         }
-        helper.assertTrue(json("assets/gregtech/models/item/coin_pile.json").get("parent").getAsString()
-                .equals("gregtech:item/coin_minted"), "the bare pile item previews its mint geometry");
+        helper.assertTrue(json("assets/gt6ce/models/item/coin_pile.json").get("parent").getAsString()
+                .equals("gt6ce:item/coin_minted"), "the bare pile item previews its mint geometry");
 
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
-            String modelPath = "assets/gregtech/models/item/material/" + set.folder() + "/coin.json";
-            helper.assertTrue(json(modelPath).get("parent").getAsString().equals("gregtech:item/coin_minted"),
+            String modelPath = "assets/gt6ce/models/item/material/" + set.folder() + "/coin.json";
+            helper.assertTrue(json(modelPath).get("parent").getAsString().equals("gt6ce:item/coin_minted"),
                     modelPath + " inherits minted geometry");
         }
 
@@ -106,7 +106,7 @@ public final class CoinModelRepairTests {
                         && CoinGeometry.pattern(plain) == CoinGeometry.defaultPattern(),
                 "an ordinary coin keeps the shared baked default model");
 
-        var baked = json("assets/gregtech/models/item/coin_minted.json").getAsJsonArray("elements");
+        var baked = json("assets/gt6ce/models/item/coin_minted.json").getAsJsonArray("elements");
         var defaultBoxes = CoinGeometry.defaultPattern().inventoryPixelBoxes();
         helper.assertTrue(defaultBoxes.size() == baked.size(),
                 "dynamic coin geometry has the same number of default mint pixels as the baked item");

@@ -1,0 +1,37 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "CWM",
+    "WGx",
+    "MTd"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:circuit_advanced"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_copper"
+    },
+    "M": {
+      "tag": "forge:plates/silver"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "T": {
+      "tag": "forge:screws/stainless_steel"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:laser_emitter_emptygas",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -24,9 +24,9 @@ class BookShelfFamilyAssets(unittest.TestCase):
         for variant in variants:
             self.assertGreater(variant["hardness"], 0)
             self.assertGreater(variant["resistance"], 0)
-            if variant["texture"].startswith("gregtech:block/"):
+            if variant["texture"].startswith("gt6ce:block/"):
                 texture = (family.ASSETS / "textures/block"
-                           / (variant["texture"].removeprefix("gregtech:block/") + ".png"))
+                           / (variant["texture"].removeprefix("gt6ce:block/") + ".png"))
                 self.assertTrue(texture.is_file(), str(texture))
 
     def test_regeneration_matches_every_shipped_variant(self):
@@ -52,17 +52,17 @@ class BookShelfFamilyAssets(unittest.TestCase):
                 self.assertEqual(file.read_bytes(), (family.RECIPES / file.name).read_bytes())
                 recipe = json.loads(file.read_text(encoding="utf-8"))
                 variant = next(v for v in variants if v["path"] == file.stem)
-                self.assertEqual(recipe["type"], "gregtech:tool_shaped")
+                self.assertEqual(recipe["type"], "gt6ce:tool_shaped")
                 self.assertIs(recipe["allow_mirror"], False)
-                self.assertEqual(recipe["result"], {"item": f"gregtech:{file.stem}", "count": 1})
+                self.assertEqual(recipe["result"], {"item": f"gt6ce:{file.stem}", "count": 1})
                 if variant["kind"] == "wood":
                     self.assertEqual(recipe["pattern"], ["PPP", "sfr", "PPP"])
-                    self.assertEqual(recipe["key"]["f"], {"item": "gregtech:tool_file"})
-                    self.assertEqual(recipe["key"]["r"], {"item": "gregtech:tool_soft_hammer"})
+                    self.assertEqual(recipe["key"]["f"], {"item": "gt6ce:tool_file"})
+                    self.assertEqual(recipe["key"]["r"], {"item": "gt6ce:tool_soft_hammer"})
                 else:
                     self.assertEqual(recipe["pattern"], ["PTP", "sdh", "PTP"])
-                    self.assertEqual(recipe["key"]["d"], {"item": "gregtech:tool_screwdriver"})
-                    self.assertEqual(recipe["key"]["h"], {"item": "gregtech:tool_hammer"})
+                    self.assertEqual(recipe["key"]["d"], {"item": "gt6ce:tool_screwdriver"})
+                    self.assertEqual(recipe["key"]["h"], {"item": "gt6ce:tool_hammer"})
                     material = family.re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", variant["material"]).lower()
                     self.assertEqual(recipe["key"]["P"], {"tag": f"forge:plates/{material}"})
                     self.assertEqual(recipe["key"]["T"], {"tag": f"forge:screws/{material}"})

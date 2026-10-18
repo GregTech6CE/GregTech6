@@ -68,7 +68,7 @@ public final class VanillaOreRepairTests {
         for (Object[] row : ORIGINAL) {
             String slug = (String) row[0];
             String id = "block_ore_" + slug;
-            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             h.assertTrue(block instanceof VanillaOreBlock, id + " is an ore block, not an icon shell");
             VanillaOreBlock ore = (VanillaOreBlock) block;
             int tier = (int) row[2];
@@ -128,7 +128,7 @@ public final class VanillaOreRepairTests {
         for (Object[] row : ORIGINAL) {
             String id = "block_ore_" + row[0];
             var ore = (VanillaOreBlock) ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             ItemStack item = new ItemStack(ore);
             var data = ItemMaterialRegistry.get(item).orElseThrow();
             h.assertTrue(data.prefix() == MaterialPrefix.oreVanillastone
@@ -142,7 +142,7 @@ public final class VanillaOreRepairTests {
                                     * ore.material().getOreMultiplier(),
                     id + " enters a crucible as one GT6 ore payload");
             String name = MaterialEquivalence.materialName(ore.material());
-            var formTag = ResourceLocation.fromNamespaceAndPath("gregtech", "ore_vanillastone/" + name);
+            var formTag = ResourceLocation.fromNamespaceAndPath("gt6ce", "ore_vanillastone/" + name);
             var commonTag = ResourceLocation.fromNamespaceAndPath("forge", "ores/" + name);
             h.assertTrue(item.is(ItemTags.create(formTag)) && ore.defaultBlockState().is(BlockTags.create(formTag))
                             && item.is(ItemTags.create(commonTag))

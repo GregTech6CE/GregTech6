@@ -1,0 +1,229 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "forge:composite",
+  "textures": {
+    "particle": "gt6ce:block/iconsets/logistics_wire"
+  },
+  "children": {
+    "0": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gt6ce:block/iconsets/logistics_wire",
+        "east": "gt6ce:block/iconsets/logistics_wire",
+        "south": "gt6ce:block/iconsets/logistics_wire",
+        "west": "gt6ce:block/iconsets/logistics_wire",
+        "up": "gt6ce:block/iconsets/logistics_wire",
+        "down": "gt6ce:block/iconsets/logistics_wire"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            5
+          ],
+          "to": [
+            11,
+            11,
+            11
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            5
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            11
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    },
+    "1": {
+      "parent": "minecraft:block/block",
+      "render_type": "minecraft:cutout",
+      "textures": {
+        "north": "gt6ce:block/iconsets/logistics_wire_overlay",
+        "east": "gt6ce:block/iconsets/logistics_wire_overlay",
+        "south": "gt6ce:block/iconsets/logistics_wire_overlay",
+        "west": "gt6ce:block/iconsets/logistics_wire_overlay",
+        "up": "gt6ce:block/iconsets/logistics_wire_overlay",
+        "down": "gt6ce:block/iconsets/logistics_wire_overlay"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            5,
+            5
+          ],
+          "to": [
+            11,
+            11,
+            11
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            0
+          ],
+          "to": [
+            11,
+            11,
+            5
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        },
+        {
+          "from": [
+            5,
+            5,
+            11
+          ],
+          "to": [
+            11,
+            11,
+            16
+          ],
+          "faces": {
+            "up": {
+              "texture": "#up"
+            },
+            "down": {
+              "texture": "#down"
+            },
+            "north": {
+              "texture": "#north"
+            },
+            "south": {
+              "texture": "#south"
+            },
+            "east": {
+              "texture": "#east"
+            },
+            "west": {
+              "texture": "#west"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

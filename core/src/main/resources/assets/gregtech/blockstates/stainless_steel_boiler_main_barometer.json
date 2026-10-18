@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": {"model": "gregtech:block/machine/multiblock/stainless_steel_boiler_main_barometer"},
-    "facing=east": {"model": "gregtech:block/machine/multiblock/stainless_steel_boiler_main_barometer", "y": 90},
-    "facing=south": {"model": "gregtech:block/machine/multiblock/stainless_steel_boiler_main_barometer", "y": 180},
-    "facing=west": {"model": "gregtech:block/machine/multiblock/stainless_steel_boiler_main_barometer", "y": 270}
-  }
-}

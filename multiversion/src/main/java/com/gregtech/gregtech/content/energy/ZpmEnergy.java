@@ -23,7 +23,7 @@ public final class ZpmEnergy {
     public static void set(ItemStack stack,long charge){
         if(!isModule(stack))throw new IllegalArgumentException("Not a ZPM");
 //? if >=1.21.1 {
-        /*var data=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();data.putString("id","gregtech:zpm_module");data.putLong(KEY,ZpmWorkRules.charge(charge));stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
+        /*var data=stack.getOrDefault(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag();data.putString("id","gt6ce:zpm_module");data.putLong(KEY,ZpmWorkRules.charge(charge));stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
         var data=stack.getOrCreateTagElement("BlockEntityTag");data.putLong(KEY,ZpmWorkRules.charge(charge));
 //?}

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "block.gt6ce.bush",
+  "regex": "^gt6ce:bush_plant_gt_berry_[a-z0-9_]+$",
+  "priority": 110
+}

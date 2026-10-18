@@ -42,7 +42,7 @@ public final class FluidPipeMagicTests {
             for (int i = 0; i < previous.getTanks(); i++) previous.drain(Integer.MAX_VALUE, FluidAction.EXECUTE);
         }
         level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_" + kind));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_" + kind));
         h.assertTrue(block instanceof FluidPipeBlock, "registered pipe " + kind);
         var state = block.defaultBlockState();
         level.setBlockAndUpdate(pos, state);

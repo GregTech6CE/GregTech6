@@ -1,0 +1,62 @@
+{
+  "snapshots": {
+    "gt6_anvil_specs.json": {
+      "sha256": "e1b9ee257b8daa93250aa5a784236f046aa9431b14b359a71ebf7dcc1e4468f8",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_basic_machine_recipes.json": {
+      "sha256": "bae17356771f4076d6bb5db5e46f1b9ce7e887b68d138b1e0a3a165504d51099",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_basic_machine_recipes.prev.json": {
+      "sha256": "bae17356771f4076d6bb5db5e46f1b9ce7e887b68d138b1e0a3a165504d51099",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_logistics_core_recipe.json": {
+      "sha256": "fedba4c534efb8396f3d56ef8a28cc4e2c08ffd9213b1f01c3f5baec1f5a3738",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_logistics_wire_recipe.json": {
+      "sha256": "c2e2f30ace539cc2dc0169264c0c1165576334ef397d12983c9b8565d8218185",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_multiblock_recipes.json": {
+      "sha256": "cbddfcde2ad30c4c3cfd68674eb94062ed64691bd158f3c6537fd88404b97524",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    },
+    "gt6_texture_sources.json": {
+      "sha256": "70b5b4efcb6828048d237469ac8c03402ffaf298f0eeeb4e1a49740ce38b2e8c",
+      "unchanged_from_head": true,
+      "old_namespace_fields": 0,
+      "new_namespace_fields": 0
+    }
+  },
+  "isolated_pure_translator_comparison": {
+    "generate_machine_recipe_table.py": {
+      "calls": 1061,
+      "namespace_outputs_changed": 94,
+      "preexisting_unresolved_calls_unchanged": 0,
+      "unexpected_differences": []
+    },
+    "generate_multiblock_recipe_table.py": {
+      "calls": 834,
+      "namespace_outputs_changed": 216,
+      "preexisting_unresolved_calls_unchanged": 94,
+      "unexpected_differences": []
+    }
+  },
+  "food_container_examples_passed": true,
+  "scope": "Read-only input scan and isolated pure functions; no generator, resource write or Gradle invocation"
+}

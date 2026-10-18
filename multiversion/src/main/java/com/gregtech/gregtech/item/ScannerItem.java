@@ -153,11 +153,11 @@ public final class ScannerItem extends TechItem implements IItemEnergy {
 *///?} else {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
-        if (spec.debug()) tooltip.add(Component.translatable("tooltip.gregtech.scanner.infinite"));
-        else tooltip.add(Component.translatable("tooltip.gregtech.scanner.energy",
+        if (spec.debug()) tooltip.add(Component.translatable("tooltip.gt6ce.scanner.infinite"));
+        else tooltip.add(Component.translatable("tooltip.gt6ce.scanner.energy",
                 Math.min(spec.capacity(), stored(stack)), spec.capacity(), spec.voltage()));
-        if (spec.scansBlocks()) tooltip.add(Component.translatable("tooltip.gregtech.scanner.blocks"));
-        tooltip.add(Component.translatable("tooltip.gregtech.scanner.crops"));
+        if (spec.scansBlocks()) tooltip.add(Component.translatable("tooltip.gt6ce.scanner.blocks"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.scanner.crops"));
     }
 }
 

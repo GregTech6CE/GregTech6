@@ -24,7 +24,7 @@ import os
 import re
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block", "iconsets")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
@@ -85,7 +85,7 @@ REMOVED -= KEEP_IDS
 
 
 def tex(name: str) -> str:
-    return name if name.startswith("minecraft:") else "gregtech:block/iconsets/" + name
+    return name if name.startswith("minecraft:") else "gt6ce:block/iconsets/" + name
 
 
 def write(path: str, data: dict) -> None:
@@ -108,7 +108,7 @@ def delete_component_assets() -> int:
 
 def write_composites() -> None:
     for bid, side, top in COLUMN:
-        model = "gregtech:block/iconsets/" + bid
+        model = "gt6ce:block/iconsets/" + bid
         write(os.path.join(BLOCK_MODELS, bid + ".json"), {
             "parent": "minecraft:block/cube_column",
             "textures": {"end": tex(top), "side": tex(side)},
@@ -127,7 +127,7 @@ def write_composites() -> None:
         write(os.path.join(ITEM_MODELS, bid + ".json"), {"parent": model})
 
     for bid, side, top, bottom in BOTTOM_TOP:
-        model = "gregtech:block/iconsets/" + bid
+        model = "gt6ce:block/iconsets/" + bid
         write(os.path.join(BLOCK_MODELS, bid + ".json"), {
             "parent": "minecraft:block/cube_bottom_top",
             "textures": {"top": tex(top), "side": tex(side), "bottom": tex(bottom)},
@@ -203,7 +203,7 @@ def update_lang() -> int:
         with open(path, encoding="utf-8-sig") as f:
             lang = json.load(f)
         for bid in ids:
-            lang["block.gregtech." + bid] = namer(bid)
+            lang["block.gt6ce." + bid] = namer(bid)
         with open(path, "w", encoding="utf-8") as f:
             json.dump(lang, f, indent=2, ensure_ascii=False, sort_keys=True)
             f.write("\n")

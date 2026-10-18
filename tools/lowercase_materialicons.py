@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1] / (
-    'run/resourcepacks/Gregtech/assets/gregtech/textures/block/materialicons'
+    'run/resourcepacks/Gregtech/assets/gt6ce/textures/block/materialicons'
 )
 
 

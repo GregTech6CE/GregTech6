@@ -185,7 +185,7 @@ public class GTNetherDepositFeature extends Feature<NoneFeatureConfiguration> {
     private static BlockState blockState(String id) {
 //? if >=1.21.1 {
         /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(
                 new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, id));

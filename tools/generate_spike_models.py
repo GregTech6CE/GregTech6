@@ -20,7 +20,7 @@ import json
 from pathlib import Path
 
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech")
+ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gt6ce")
 MODELS = ROOT / "models/block/decoration"
 STATES = ROOT / "blockstates"
 ITEMS = ROOT / "models/item"
@@ -73,7 +73,7 @@ def rotate_box(box: tuple[int, ...], facing: str) -> tuple[int, ...]:
 def model(boxes: list[tuple[int, ...]]) -> dict:
     return {
         "textures": {
-            "all": "gregtech:block/machines/multiblockparts/metalwall/0/colored/side",
+            "all": "gt6ce:block/machines/multiblockparts/metalwall/0/colored/side",
             "particle": "#all",
         },
         "elements": [
@@ -101,16 +101,16 @@ def main() -> None:
 
     multipart = [
         {"when": {"mode": "wall", "facing": facing},
-         "apply": {"model": f"gregtech:block/decoration/spike_wall_{facing}"}}
+         "apply": {"model": f"gt6ce:block/decoration/spike_wall_{facing}"}}
         for facing in ("down", "up", "north", "south", "west", "east")
     ]
     multipart.extend({"when": {"mode": mode},
-                      "apply": {"model": "gregtech:block/decoration/spike_omni"}}
+                      "apply": {"model": "gt6ce:block/decoration/spike_omni"}}
                      for mode in ("omni", "falling"))
     for family in FAMILIES:
         write(STATES / f"spike_{family}.json", {"multipart": multipart})
         write(ITEMS / f"spike_{family}.json",
-              {"parent": "gregtech:block/decoration/spike_omni"})
+              {"parent": "gt6ce:block/decoration/spike_omni"})
 
 
 if __name__ == "__main__":

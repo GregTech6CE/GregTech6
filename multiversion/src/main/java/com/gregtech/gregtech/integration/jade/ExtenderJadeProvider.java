@@ -9,7 +9,7 @@ import snownee.jade.api.config.IPluginConfig;
 
 public enum ExtenderJadeProvider implements IBlockComponentProvider,IServerDataProvider<BlockAccessor> {
     INSTANCE;
-    @Override public ResourceLocation getUid(){return ResourceLocation.fromNamespaceAndPath("gregtech","extender");}
+    @Override public ResourceLocation getUid(){return ResourceLocation.fromNamespaceAndPath("gt6ce","extender");}
     @Override public void appendServerData(CompoundTag tag,BlockAccessor accessor){
         if(!(accessor.getBlockEntity() instanceof ExtenderBlockEntity relay)||!relay.universal())return;
         var block=(SourceExtenderBlock)relay.getBlockState().getBlock();
@@ -25,10 +25,10 @@ public enum ExtenderJadeProvider implements IBlockComponentProvider,IServerDataP
     @Override public void appendTooltip(ITooltip tooltip,BlockAccessor accessor,IPluginConfig config){
         if(!accessor.getServerData().contains("gt.extender.control"))return;
         var data=accessor.getServerData().getCompound("gt.extender.control");
-        if(!data.getBoolean("available")){tooltip.add(Component.translatable("message.gregtech.extender.unavailable"));return;}
-        tooltip.add(Component.translatable("message.gregtech.extender."+(data.getBoolean("enabled")?"enabled":"disabled")));
-        tooltip.add(Component.translatable("jade.gregtech.extender."+(data.getBoolean("active")?"active":data.getBoolean("running")?"running":"idle")));
-        if(data.contains("mode"))tooltip.add(Component.translatable("message.gregtech.extender.mode",data.getInt("mode")));
-        if(data.contains("maximum")&&data.getLong("maximum")>0)tooltip.add(Component.translatable("jade.gregtech.extender.progress",data.getLong("progress"),data.getLong("maximum")));
+        if(!data.getBoolean("available")){tooltip.add(Component.translatable("message.gt6ce.extender.unavailable"));return;}
+        tooltip.add(Component.translatable("message.gt6ce.extender."+(data.getBoolean("enabled")?"enabled":"disabled")));
+        tooltip.add(Component.translatable("jade.gt6ce.extender."+(data.getBoolean("active")?"active":data.getBoolean("running")?"running":"idle")));
+        if(data.contains("mode"))tooltip.add(Component.translatable("message.gt6ce.extender.mode",data.getInt("mode")));
+        if(data.contains("maximum")&&data.getLong("maximum")>0)tooltip.add(Component.translatable("jade.gt6ce.extender.progress",data.getLong("progress"),data.getLong("maximum")));
     }
 }

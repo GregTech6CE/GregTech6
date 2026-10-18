@@ -15,14 +15,14 @@ public final class TransportMaterialRegistration {
     private static final Set<Item> RECOVERY_ITEMS=Collections.newSetFromMap(new IdentityHashMap<>());
     public static Set<Item> recoveryItems(){return Collections.unmodifiableSet(RECOVERY_ITEMS);}
     private static void bind(String id,ItemComposition data){
-        var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+id));
+        var item=BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+id));
         if(item==Items.AIR)throw new IllegalStateException("Missing native transport material item "+id);
         ItemMaterialRegistry.register(item,data); RECOVERY_ITEMS.add(item);
         if(data.prefix()!=null) com.gregtech.gregtech.registry.GTItems.bind(data.prefix(),data.material(),
 //? if >=1.21.1 {
-                /*net.neoforged.neoforge.registries.DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM,ResourceLocation.parse("gregtech:"+id)));
+                /*net.neoforged.neoforge.registries.DeferredHolder.create(net.minecraft.core.registries.Registries.ITEM,ResourceLocation.parse("gt6ce:"+id)));
 *///?} else {
-                net.minecraftforge.registries.RegistryObject.create(ResourceLocation.parse("gregtech:"+id),net.minecraftforge.registries.ForgeRegistries.ITEMS));
+                net.minecraftforge.registries.RegistryObject.create(ResourceLocation.parse("gt6ce:"+id),net.minecraftforge.registries.ForgeRegistries.ITEMS));
 //?}
     }
     public static int register(){
@@ -33,7 +33,7 @@ public final class TransportMaterialRegistration {
         }
         for(var spec:FluidTransportDefinitions.tanks())TransportMaterialRules.tank(spec).ifPresent(data->bind(spec.id(),data));
         TransportMaterialRules.logisticsComponents().forEach((id, data) -> {
-            var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:" + id));
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:" + id));
             if (item == Items.AIR) throw new IllegalStateException("Missing logistics component " + id);
             ItemMaterialRegistry.register(item, data);
         });

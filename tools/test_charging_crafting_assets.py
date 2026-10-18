@@ -16,9 +16,9 @@ class ChargingCraftingAssetsTest(unittest.TestCase):
                 variants=json.loads((root/f'blockstates/{name}.json').read_text())['variants']
                 self.assertEqual(len(variants),4)
                 for facing in ('north','south','west','east'):
-                    model=variants['facing='+facing]['model'].removeprefix('gregtech:')
+                    model=variants['facing='+facing]['model'].removeprefix('gt6ce:')
                     self.assertTrue((root/f'models/{model}.json').exists())
-                self.assertIn('block.gregtech.'+name,json.loads((root/'lang/zh_cn.json').read_text(encoding='utf-8')))
+                self.assertIn('block.gt6ce.'+name,json.loads((root/'lang/zh_cn.json').read_text(encoding='utf-8')))
 
     def test_front_back_and_physical_top_bottom_on_horizontal_facings(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -36,7 +36,7 @@ class ChargingCraftingAssetsTest(unittest.TestCase):
                         self.assertEqual('tintindex' in data,layer=='colored')
                         if face not in (facing,opposite[facing]):
                             self.assertEqual(data['texture'],{'up':'#top','down':'#bottom'}.get(face,'#side'))
-                        texture=child['textures'][data['texture'][1:]].removeprefix('gregtech:')
+                        texture=child['textures'][data['texture'][1:]].removeprefix('gt6ce:')
                         self.assertTrue((root/f'textures/{texture}.png').exists())
 
 if __name__=='__main__': unittest.main()

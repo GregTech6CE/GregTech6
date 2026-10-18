@@ -28,7 +28,7 @@ public final class MultiblockTankTooltipStateTests {
     public static void actualValveLoadingAndItemTooltipPreserveLongContents(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(2,0,2)).atY(240);
         for(String path:new String[]{"wood_tank_main_valve","small_stainless_steel_tank_main_valve","large_dense_adamantium_tank_main_valve"}) {
-            var block=(TankControllerBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",path));
+            var block=(TankControllerBlock)BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path));
             h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
             var entity=(MultiblockTankControllerBlockEntity)h.getLevel().getBlockEntity(pos);
             long nominal=block.valveSpec().capacity(), amount=3500000000L;

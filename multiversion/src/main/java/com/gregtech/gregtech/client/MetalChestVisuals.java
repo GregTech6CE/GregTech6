@@ -18,8 +18,8 @@ final class MetalChestVisuals {
     static {
         for (var shell : com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell.values()) {
             String path = "textures/block/machines/" + shell.texture() + "/";
-            TEXTURES.put(shell, new ResourceLocation[]{ResourceLocation.fromNamespaceAndPath("gregtech", path + "colored.png"),
-                    ResourceLocation.fromNamespaceAndPath("gregtech", path + "overlay.png")});
+            TEXTURES.put(shell, new ResourceLocation[]{ResourceLocation.fromNamespaceAndPath("gt6ce", path + "colored.png"),
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", path + "overlay.png")});
         }
     }
     private final ModelPart root = createLayer().bakeRoot();

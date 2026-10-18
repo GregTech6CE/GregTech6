@@ -113,7 +113,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 *///?} else {
         var key = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
-        boolean ownBlock = key != null && key.getNamespace().equals("gregtech");
+        boolean ownBlock = key != null && key.getNamespace().equals("gt6ce");
         // Sneaking skips Block.use. Give the machine's existing tool handling first chance.
         if (ownBlock) {
             var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
@@ -134,7 +134,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 //?}
             player.getInventory().setChanged();
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(monkeyWrenchMode(stack)
-                    ? "item.gregtech.tool.monkey_wrench" : "item.gregtech.tool.wrench"), true);
+                    ? "item.gt6ce.tool.monkey_wrench" : "item.gt6ce.tool.wrench"), true);
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -242,7 +242,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 *///?} else {
         return stack.hasTag() && stack.getTag().contains("GT.ToolStats")
 //?}
-                ? net.minecraft.network.chat.Component.translatable("item.gregtech.electric_tool.named",
+                ? net.minecraft.network.chat.Component.translatable("item.gt6ce.electric_tool.named",
                     MaterialPresentation.name(headMaterial(stack)),super.getName(stack)) : super.getName(stack);
     }
 
@@ -270,17 +270,17 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 *///?} else {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
-        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.electric_tool.energy",
+        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",
                 getEnergyStored(stack,GregTechTags.Energy.EU),getEnergyCapacity(stack,GregTechTags.Energy.EU)));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.electric_tool.tier",definition().tierName().toUpperCase(java.util.Locale.ROOT),definition().voltage()));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.electric_tool.use."+toolName.replace(" ","_").toLowerCase(java.util.Locale.ROOT)));
+        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.tier",definition().tierName().toUpperCase(java.util.Locale.ROOT),definition().voltage()));
+        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.use."+toolName.replace(" ","_").toLowerCase(java.util.Locale.ROOT)));
         long maximum = ElectricToolWear.maximum(this, stack);
-        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.tool_durability",
+        tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.tool_durability",
                 Math.max(0, maximum - ElectricToolWear.damage(stack)), maximum));
         if (toolName.equals("Wrench")) {
             tooltip.add(net.minecraft.network.chat.Component.translatable(monkeyWrenchMode(stack)
-                    ? "item.gregtech.tool.monkey_wrench" : "item.gregtech.tool.wrench"));
-            tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.electric_wrench.switch"));
+                    ? "item.gt6ce.tool.monkey_wrench" : "item.gt6ce.tool.wrench"));
+            tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_wrench.switch"));
         }
         if (toolName.equals("Drill")) tooltip.add(net.minecraft.network.chat.Component.translatable("gt.behaviour.placedynamite"));
     }
@@ -305,7 +305,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
 
     @Override public boolean hurtEnemy(ItemStack stack,net.minecraft.world.entity.LivingEntity target,net.minecraft.world.entity.LivingEntity attacker){if(isPoweredUsable(stack))consumeInteractionEnergy(stack,definition().attackCost(),attacker);return true;}
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if(!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
+    /*@Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if(!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
 *///?} else {
     @Override public com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute,net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(net.minecraft.world.entity.EquipmentSlot slot,ItemStack stack){if(slot!=net.minecraft.world.entity.EquipmentSlot.MAINHAND||!isPoweredUsable(stack))return com.google.common.collect.ImmutableMultimap.of();return com.google.common.collect.ImmutableMultimap.of(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(java.util.UUID.fromString("CB3F55D3-645C-4FBC-A695-84CC934974"),"GT powered tool damage",definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));}
 //?}

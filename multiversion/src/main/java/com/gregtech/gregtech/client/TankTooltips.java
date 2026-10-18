@@ -211,7 +211,7 @@ public final class TankTooltips {
         if (mat.hasToolStats()) {
             tooltip.add(Component.empty()
 //? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest.tool_label")
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.tool_label")
 *///?} else {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.tool_label")
 //?}
@@ -223,14 +223,14 @@ public final class TankTooltips {
         } else {
             tooltip.add(Component.empty()
 //? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.hand_harvest")
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.hand_harvest")
 *///?} else {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hand_harvest")
 //?}
                             .withStyle(ChatFormatting.GRAY))
                     .append(Component.literal(", "))
 //? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest.but_label")
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.but_label")
 *///?} else {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.but_label")
 //?}
@@ -238,7 +238,7 @@ public final class TankTooltips {
                     .append(Component.translatable(toolKey)
                             .withStyle(ChatFormatting.WHITE))
 //? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gregtech" + ".machine.harvest.faster")
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.harvest.faster")
 *///?} else {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.harvest.faster")
 //?}
@@ -249,20 +249,20 @@ public final class TankTooltips {
     private static String resolveHarvestToolKey(MaterialTextureSet texSet) {
         if (texSet == MaterialTextureSet.RUBBER) {
 //? if >=1.21.1 {
-            /*return "tooltip." + "gregtech" + ".machine.harvest_shears";
+            /*return "tooltip." + "gt6ce" + ".machine.harvest_shears";
 *///?} else {
             return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_shears";
 //?}
         }
         if (texSet == MaterialTextureSet.WOOD) {
 //? if >=1.21.1 {
-            /*return "tooltip." + "gregtech" + ".machine.harvest_axe";
+            /*return "tooltip." + "gt6ce" + ".machine.harvest_axe";
 *///?} else {
             return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_axe";
 //?}
         }
 //? if >=1.21.1 {
-        /*return "tooltip." + "gregtech" + ".machine.harvest_wrench";
+        /*return "tooltip." + "gt6ce" + ".machine.harvest_wrench";
 *///?} else {
         return "tooltip." + GregTech.NAMESPACE + ".machine.harvest_wrench";
 //?}
@@ -282,8 +282,8 @@ public final class TankTooltips {
                 .append(autoOutput
 //? if >=1.21.1 {
 /*// Version-specific branch.
-                        ? Component.translatable("tooltip." + "gregtech" + ".tank.info.auto_output")
-                        : Component.translatable("tooltip." + "gregtech" + ".tank.info.no_auto_output"))
+                        ? Component.translatable("tooltip." + "gt6ce" + ".tank.info.auto_output")
+                        : Component.translatable("tooltip." + "gt6ce" + ".tank.info.no_auto_output"))
 *///?} else {
 // Version-specific branch.
                         ? Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.auto_output")
@@ -314,7 +314,7 @@ public final class TankTooltips {
         if (fluid.isEmpty()) {
             player.sendSystemMessage(Component.empty()
 //? if >=1.21.1 {
-                    /*.append(Component.translatable("tooltip." + "gregtech" + ".tank.info.capacity")
+                    /*.append(Component.translatable("tooltip." + "gt6ce" + ".tank.info.capacity")
 *///?} else {
                     .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".tank.info.capacity")
 //?}

@@ -26,13 +26,13 @@ public class BumbliaryScreen extends AbstractContainerScreen<BumbliaryContainerM
 
     private static final ResourceLocation STANDARD =
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech", "textures/gui/machines/bumbliary.png");
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary.png");
 *///?} else {
             GregTech.id("textures/gui/machines/bumbliary.png");
 //?}
     private static final ResourceLocation ADVANCED =
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech", "textures/gui/machines/bumbliary_advanced.png");
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce", "textures/gui/machines/bumbliary_advanced.png");
 *///?} else {
             GregTech.id("textures/gui/machines/bumbliary_advanced.png");
 //?}

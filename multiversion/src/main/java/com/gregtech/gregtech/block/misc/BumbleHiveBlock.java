@@ -106,7 +106,7 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gregtech.crucible.thermometer"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer"));
 //? if >=1.21.1 {
         /*super.appendHoverText(stack, context, tooltip, flag);
 *///?} else {

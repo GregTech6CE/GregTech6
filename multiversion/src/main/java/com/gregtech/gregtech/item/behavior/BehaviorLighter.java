@@ -113,24 +113,24 @@ public final class BehaviorLighter {
 
     /** GT6 {@code MultiItemRandomTools:358}: match box, 64 matches at 90%. */
     public static LighterSpec matchBox() {
-        return spec(null, "gregtech:match_box", "gregtech:match_box_full", 64, 9000);
+        return spec(null, "gt6ce:match_box", "gt6ce:match_box_full", 64, 9000);
     }
 
     /** GT6 {@code MultiItemRandomTools:368}: Invar lighter, 100 uses, never fails. */
     public static LighterSpec invar() {
-        return spec("gregtech:lighter_empty", "gregtech:lighter", "gregtech:lighter_full", 100, 10000);
+        return spec("gt6ce:lighter_empty", "gt6ce:lighter", "gt6ce:lighter_full", 100, 10000);
     }
 
     /** GT6 {@code MultiItemRandomTools:377}: platinum lighter, 1000 uses, never fails. */
     public static LighterSpec platinum() {
-        return spec("gregtech:shiny_lighter_empty", "gregtech:shiny_lighter", "gregtech:shiny_lighter_full",
+        return spec("gt6ce:shiny_lighter_empty", "gt6ce:shiny_lighter", "gt6ce:shiny_lighter_full",
                 1000, 10000);
     }
 
     /** GT6 {@code MultiItemRandomTools:387}: plastic lighter, 100 uses at 90%, breaks when empty. */
     public static LighterSpec plastic() {
-        return spec("gregtech:plastic_lighter_broken", "gregtech:plastic_lighter",
-                "gregtech:plastic_lighter_full", 100, 9000);
+        return spec("gt6ce:plastic_lighter_broken", "gt6ce:plastic_lighter",
+                "gt6ce:plastic_lighter_full", 100, 9000);
     }
 
     /** GT6 {@code MultiItemRandomTools:394}: fire starter from dry grass, one use at 50%. */

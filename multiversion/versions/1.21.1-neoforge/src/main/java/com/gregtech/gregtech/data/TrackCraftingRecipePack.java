@@ -40,7 +40,7 @@ public final class TrackCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:track_crafting_recipes",Component.literal("GregTech original track crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:track_crafting_recipes",Component.literal("GregTech original track crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new TrackCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new TrackCraftingRecipePack(info);}
@@ -60,7 +60,7 @@ public final class TrackCraftingRecipePack extends AbstractPackResources {
             }
             if(missing){skipped++;com.mojang.logging.LogUtils.getLogger().warn("[gregtech] Missing source rail crafting identity {}",row.id());continue;}
             var json=Map.of("type","minecraft:crafting_shaped","category","misc","group","gt.tracks","pattern",row.pattern().split("\\|"),"key",keys,"result",Map.of("id",row.output(),"count",row.count()));
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech","recipe/"+row.id()+".json"),GSON.toJson(json).getBytes(StandardCharsets.UTF_8));
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/"+row.id()+".json"),GSON.toJson(json).getBytes(StandardCharsets.UTF_8));
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native original track crafting rows: {}; missing={}",generated.size(),skipped);
         resources=Map.copyOf(generated);return resources;
@@ -99,7 +99,7 @@ public final class TrackCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

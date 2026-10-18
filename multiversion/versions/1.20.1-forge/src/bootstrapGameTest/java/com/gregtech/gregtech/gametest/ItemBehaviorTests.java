@@ -75,7 +75,7 @@ import java.util.List;
  * {@code false}, which is what the consumption assertions need; the creative branch is then exercised
  * by setting the flag on the same player.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ItemBehaviorTests {
     private static final int BASE_X = 33000;
@@ -181,7 +181,7 @@ public final class ItemBehaviorTests {
         for (ItemBehaviors.Entry entry : ItemBehaviors.PORTED) {
             if (entry.behaviour() == null) continue;
             behaviours++;
-            if (!ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse("gregtech:" + entry.itemId()))) {
+            if (!ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse("gt6ce:" + entry.itemId()))) {
                 missing.add(entry.itemId());
             }
         }
@@ -211,16 +211,16 @@ public final class ItemBehaviorTests {
         helper.assertFalse(ItemBehaviors.useOn(level, pos, Direction.UP, player,
                         new ItemStack(Blocks.STONE.asItem()), 0.5F, 0.5F, 0.5F).acted(),
                 "an item without a behaviour is refused");
-        helper.assertTrue(ItemBehaviors.itemId(ItemBehaviors.stack("gregtech:duct_tape")).equals("duct_tape"),
-                "itemId() reports the registry path, got " + ItemBehaviors.itemId(ItemBehaviors.stack("gregtech:duct_tape")));
+        helper.assertTrue(ItemBehaviors.itemId(ItemBehaviors.stack("gt6ce:duct_tape")).equals("duct_tape"),
+                "itemId() reports the registry path, got " + ItemBehaviors.itemId(ItemBehaviors.stack("gt6ce:duct_tape")));
 
         ItemBehaviors.Outcome tape = ItemBehaviors.useOn(level, pos, Direction.UP, player,
-                ItemBehaviors.stack("gregtech:duct_tape"), 0.5F, 0.5F, 0.5F);
-        helper.assertTrue(tape.stack().is(ItemBehaviors.stack("gregtech:duct_tape_2").getItem()),
+                ItemBehaviors.stack("gt6ce:duct_tape"), 0.5F, 0.5F, 0.5F);
+        helper.assertTrue(tape.stack().is(ItemBehaviors.stack("gt6ce:duct_tape_2").getItem()),
                 "the dispatcher reaches the duct tape (Behavior_Duct_Tape:63-67), got " + tape.stack());
 
         ItemBehaviors.Outcome lit = ItemBehaviors.useOn(level, pos, Direction.UP, player,
-                ItemBehaviors.stack("gregtech:lighter_full"), 0.5F, 0.5F, 0.5F);
+                ItemBehaviors.stack("gt6ce:lighter_full"), 0.5F, 0.5F, 0.5F);
         helper.assertTrue(lit.acted() && level.getBlockState(pos.above()).is(Blocks.FIRE),
                 "the dispatcher reaches the Invar lighter, which never fails, got "
                         + level.getBlockState(pos.above()) + " and " + lit.stack());
@@ -230,7 +230,7 @@ public final class ItemBehaviorTests {
         BehaviorScanner.scan(level, pos, Direction.UP, BehaviorScanner.PORTABLE_LEVEL, player, ignored);
         helper.assertFalse(ignored.isEmpty(), "the scanner produces lines");
         helper.assertTrue(ItemBehaviors.useOn(level, pos, Direction.UP, player,
-                        ItemBehaviors.stack("gregtech:portable_scanner"), 0.5F, 0.5F, 0.5F).acted(),
+                        ItemBehaviors.stack("gt6ce:portable_scanner"), 0.5F, 0.5F, 0.5F).acted(),
                 "the dispatcher reaches the portable scanner (Behavior_Scanner:54)");
         helper.assertTrue(ItemBehaviors.lastScanCost() == 0L,
                 "a plain block's scan is free (WD.java:939 onwards only charges sections), got "
@@ -245,7 +245,7 @@ public final class ItemBehaviorTests {
         level.setBlock(wet.below(), Blocks.STONE.defaultBlockState(), 3);
         level.setBlock(wet, GTDecorBlocks.CFOAM_FRESH.get().defaultBlockState(), 3);
         helper.assertTrue(ItemBehaviors.useOn(level, wet, Direction.UP, player,
-                        ItemBehaviors.stack("gregtech:hardening_spray"), 0.5F, 0.5F, 0.5F).acted(),
+                        ItemBehaviors.stack("gt6ce:hardening_spray"), 0.5F, 0.5F, 0.5F).acted(),
                 "the dispatcher reaches the hardening spray");
         helper.assertTrue(level.getBlockState(wet).is(GTDecorBlocks.CFOAM.get()),
                 "and the foam dried, got " + level.getBlockState(wet));
@@ -266,7 +266,7 @@ public final class ItemBehaviorTests {
         helper.assertTrue(creeper.isIgnited(), "the creeper is lit");
 
         Creeper second = spawn(level, net.minecraft.world.entity.EntityType.CREEPER, pos.above().east());
-        helper.assertFalse(ItemBehaviors.useOnEntity(second, player, ItemBehaviors.stack("gregtech:match")).acted(),
+        helper.assertFalse(ItemBehaviors.useOnEntity(second, player, ItemBehaviors.stack("gt6ce:match")).acted(),
                 "a single-use match cannot light a creeper (Behavior_Lighter:69)");
         helper.assertFalse(second.isIgnited(), "so the creeper stays unlit");
 
@@ -413,9 +413,9 @@ public final class ItemBehaviorTests {
         Player player = survival(helper);
 
         ItemStack roll = new ItemStack(ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.parse("gregtech:duct_tape")));
+                ResourceLocation.parse("gt6ce:duct_tape")));
         ItemStack usedRoll = new ItemStack(ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.parse("gregtech:duct_tape_2")));
+                ResourceLocation.parse("gt6ce:duct_tape_2")));
         helper.assertTrue(!roll.isEmpty() && !usedRoll.isEmpty(),
                 "both duct tape variants are registered, got " + roll + " / " + usedRoll);
 
@@ -657,13 +657,13 @@ public final class ItemBehaviorTests {
                         && BehaviorLighter.plastic().chance() == 9000,
                 "platinum holds 1000 (:377), plastic fails one in ten (:387)");
 
-        ItemStack full = ItemBehaviors.stack("gregtech:lighter_full");
+        ItemStack full = ItemBehaviors.stack("gt6ce:lighter_full");
         helper.assertTrue(!full.isEmpty(), "the full Invar lighter is registered, got " + full);
         ItemBehaviors.Outcome used = BehaviorLighter.useOn(level, pos, Direction.UP, player, full, invar,
                 RandomSource.create(seedForRoll(10000, true, 10000)), 0.5F, 0.5F, 0.5F);
 
         helper.assertTrue(used.acted(), "a lighter that never fails always acts");
-        helper.assertTrue(used.stack().is(ItemBehaviors.stack("gregtech:lighter").getItem()),
+        helper.assertTrue(used.stack().is(ItemBehaviors.stack("gt6ce:lighter").getItem()),
                 "a full lighter becomes the used one (Behavior_Lighter:122-128), got " + used.stack());
         helper.assertTrue(level.getBlockState(pos.above()).is(Blocks.FIRE),
                 "the click lights a fire in front, got " + level.getBlockState(pos.above()));
@@ -673,12 +673,12 @@ public final class ItemBehaviorTests {
                         + (used.stack().getTag() == null ? "no tag" : used.stack().getTag().getLong("gt.lighter")));
 
         // The last fuel unit empties the lighter into its empty variant (:114,130-137).
-        ItemStack last = ItemBehaviors.stack("gregtech:lighter");
+        ItemStack last = ItemBehaviors.stack("gt6ce:lighter");
         last.getOrCreateTag().putLong("gt.lighter", 1L);
         level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
         ItemBehaviors.Outcome empty = BehaviorLighter.useOn(level, pos, Direction.UP, player, last, invar,
                 RandomSource.create(seedForRoll(10000, true, 10000)), 0.5F, 0.5F, 0.5F);
-        helper.assertTrue(empty.stack().is(ItemBehaviors.stack("gregtech:lighter_empty").getItem()),
+        helper.assertTrue(empty.stack().is(ItemBehaviors.stack("gt6ce:lighter_empty").getItem()),
                 "the last use turns it into the empty lighter (:130-136), got " + empty.stack());
 
         // A stacked multi-use lighter is refused (:83).
@@ -693,7 +693,7 @@ public final class ItemBehaviorTests {
                 "the match is the single-use shape (MultiItemRandomTools:343)");
         long failure = seedForRoll(10000, false, 9000);
         level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
-        ItemStack matchStack = ItemBehaviors.stack("gregtech:match");
+        ItemStack matchStack = ItemBehaviors.stack("gt6ce:match");
         ItemBehaviors.Outcome burned = BehaviorLighter.useOn(level, pos, Direction.UP, player, matchStack, match,
                 RandomSource.create(failure), 0.5F, 0.5F, 0.5F);
         helper.assertTrue(burned.stack().isEmpty(),
@@ -704,7 +704,7 @@ public final class ItemBehaviorTests {
 
         // A successful match on a block with no air in front costs nothing at all (:96).
         level.setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
-        ItemStack kept = ItemBehaviors.stack("gregtech:match");
+        ItemStack kept = ItemBehaviors.stack("gt6ce:match");
         ItemBehaviors.Outcome nothing = BehaviorLighter.useOn(level, pos, Direction.UP, player, kept, match,
                 RandomSource.create(seedForRoll(10000, true, 9000)), 0.5F, 0.5F, 0.5F);
         helper.assertFalse(nothing.acted(),
@@ -714,7 +714,7 @@ public final class ItemBehaviorTests {
 
         // Creative burns no fuel (:111).
         level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
-        ItemStack creativeStack = ItemBehaviors.stack("gregtech:lighter");
+        ItemStack creativeStack = ItemBehaviors.stack("gt6ce:lighter");
         creativeStack.getOrCreateTag().putLong("gt.lighter", 50L);
         player.getAbilities().instabuild = true;
         ItemBehaviors.Outcome free = BehaviorLighter.useOn(level, pos, Direction.UP, player, creativeStack, invar,
@@ -745,13 +745,13 @@ public final class ItemBehaviorTests {
         helper.assertTrue(level.getBlockEntity(wet) instanceof CFoamBlockEntity,
                 "wet foam owns its block entity, got " + level.getBlockEntity(wet));
 
-        ItemStack hardener = ItemBehaviors.stack("gregtech:hardening_spray");
+        ItemStack hardener = ItemBehaviors.stack("gt6ce:hardening_spray");
         ItemBehaviors.Outcome hardened = BehaviorSprayFoamHardener.useOn(level, wet, Direction.UP, player,
                 hardener, 0.5F, 0.5F, 0.5F);
         helper.assertTrue(hardened.acted(), "the hardening spray dries wet foam (BlockCFoamFresh:110-112)");
         helper.assertTrue(level.getBlockState(wet).is(GTDecorBlocks.CFOAM.get()),
                 "the wet block became the hardened one, got " + level.getBlockState(wet));
-        helper.assertTrue(hardened.stack().is(ItemBehaviors.stack("gregtech:hardening_spray_2").getItem()),
+        helper.assertTrue(hardened.stack().is(ItemBehaviors.stack("gt6ce:hardening_spray_2").getItem()),
                 "a full can becomes its used can, got " + hardened.stack());
         long remaining = hardened.stack().getTag() == null ? -1
                 : hardened.stack().getTag().getLong("gt.remaining");
@@ -760,7 +760,7 @@ public final class ItemBehaviorTests {
                 "256 * 10 uses minus the 10 this one cost (Behavior_Spray_Foam_Hardener:101), got " + remaining);
 
         // Already hardened: dryFoam answers F (BlockCFoam:57-60), so nothing happens.
-        ItemStack can = ItemBehaviors.stack("gregtech:hardening_spray_2");
+        ItemStack can = ItemBehaviors.stack("gt6ce:hardening_spray_2");
         can.getOrCreateTag().putLong("gt.remaining", 100L);
         helper.assertFalse(BehaviorSprayFoamHardener.useOn(level, wet, Direction.UP, player, can,
                 0.5F, 0.5F, 0.5F).acted(), "hardened foam cannot be hardened again");
@@ -768,7 +768,7 @@ public final class ItemBehaviorTests {
                 "and the can keeps its uses, got " + can.getTag().getLong("gt.remaining"));
 
         // The remover takes the hardened block away (BlockCFoam:63-65).
-        ItemStack remover = ItemBehaviors.stack("gregtech:c_foam_removal_spray");
+        ItemStack remover = ItemBehaviors.stack("gt6ce:c_foam_removal_spray");
         ItemBehaviors.Outcome removed = BehaviorSprayFoamRemover.useOn(level, wet, Direction.UP, player,
                 remover, 0.5F, 0.5F, 0.5F);
         helper.assertTrue(removed.acted(), "the C-Foam removal spray removes hardened foam too");
@@ -782,11 +782,11 @@ public final class ItemBehaviorTests {
 
         // Neither spray does anything to a block that is not C-Foam.
         BlockPos stone = floorAndAir(level, site(108, 0));
-        ItemStack remover2 = ItemBehaviors.stack("gregtech:c_foam_removal_spray_2");
+        ItemStack remover2 = ItemBehaviors.stack("gt6ce:c_foam_removal_spray_2");
         remover2.getOrCreateTag().putLong("gt.remaining", 100L);
         helper.assertFalse(BehaviorSprayFoamRemover.useOn(level, stone, Direction.UP, player, remover2,
                 0.5F, 0.5F, 0.5F).acted(), "stone is not foam (Behavior_Spray_Foam_Remover:101)");
-        ItemStack hardener2 = ItemBehaviors.stack("gregtech:hardening_spray_2");
+        ItemStack hardener2 = ItemBehaviors.stack("gt6ce:hardening_spray_2");
         hardener2.getOrCreateTag().putLong("gt.remaining", 100L);
         helper.assertFalse(BehaviorSprayFoamHardener.useOn(level, stone, Direction.UP, player, hardener2,
                 0.5F, 0.5F, 0.5F).acted(), "stone has no block entity to dry (:99)");
@@ -796,7 +796,7 @@ public final class ItemBehaviorTests {
                         + hardener2.getTag().getLong("gt.remaining"));
 
         // A stacked can is refused (:59).
-        ItemStack stacked = new ItemStack(ItemBehaviors.stack("gregtech:c_foam_removal_spray").getItem(), 2);
+        ItemStack stacked = new ItemStack(ItemBehaviors.stack("gt6ce:c_foam_removal_spray").getItem(), 2);
         helper.assertFalse(BehaviorSprayFoamRemover.useOn(level, stone, Direction.UP, player, stacked,
                 0.5F, 0.5F, 0.5F).acted(), "a stacked spray can is refused (Behavior_Spray_Foam_Remover:59)");
         helper.assertTrue(BehaviorSprayFoamRemover.SLAB_REMOVE_COST == 5
@@ -831,7 +831,7 @@ public final class ItemBehaviorTests {
         BlockPos[] fires = {front.offset(-1, 0, -1), front.offset(1, 0, 1), front.offset(-1, 0, 1)};
         for (BlockPos fire : fires) level.setBlock(fire, Blocks.FIRE.defaultBlockState(), 3);
 
-        ItemStack can = ItemBehaviors.stack("gregtech:fire_extinguisher_co2");
+        ItemStack can = ItemBehaviors.stack("gt6ce:fire_extinguisher_co2");
         ItemBehaviors.Outcome out = BehaviorSprayExtinguisher.useOn(level, pos, Direction.UP, player, can,
                 0.5F, 0.5F, 0.5F);
 
@@ -856,7 +856,7 @@ public final class ItemBehaviorTests {
         Cow calm = spawn(level, net.minecraft.world.entity.EntityType.COW, front.east());
         helper.assertTrue(!calm.isOnFire(), "the cow is not on fire");
 
-        ItemStack can2 = ItemBehaviors.stack("gregtech:fire_extinguisher_co2_2");
+        ItemStack can2 = ItemBehaviors.stack("gt6ce:fire_extinguisher_co2_2");
         can2.getOrCreateTag().putLong("gt.remaining", 100L);
         long spent = BehaviorSprayExtinguisher.extinguishEntity(level, burning, player);
         helper.assertTrue(spent == BehaviorSprayExtinguisher.EXTINGUISH_COST,
@@ -900,7 +900,7 @@ public final class ItemBehaviorTests {
         clearSite(level, glass, 3);
         level.setBlock(glass, Blocks.RED_STAINED_GLASS.defaultBlockState(), 3);
         ItemBehaviors.Outcome cleared = BehaviorSprayColorRemover.useOn(level, glass, Direction.UP, player,
-                ItemBehaviors.stack("gregtech:paint_removal_spray"), 0.5F, 0.5F, 0.5F);
+                ItemBehaviors.stack("gt6ce:paint_removal_spray"), 0.5F, 0.5F, 0.5F);
         helper.assertTrue(cleared.acted(), "stained glass is decolorised (Behavior_Spray_Color_Remover:103)");
         helper.assertTrue(level.getBlockState(glass).is(Blocks.GLASS),
                 "the replacement is plain glass, got " + level.getBlockState(glass));
@@ -933,7 +933,7 @@ public final class ItemBehaviorTests {
         helper.assertTrue(BehaviorSprayColorRemover.decolorize(level, stone, Direction.UP, 100L, player,
                         ItemStack.EMPTY, 0.5F, 0.5F, 0.5F) == 0L,
                 "stone is not decolorable (:101-104)");
-        ItemStack can = ItemBehaviors.stack("gregtech:paint_removal_spray_2");
+        ItemStack can = ItemBehaviors.stack("gt6ce:paint_removal_spray_2");
         can.getOrCreateTag().putLong("gt.remaining", 100L);
         helper.assertFalse(BehaviorSprayColorRemover.useOn(level, stone, Direction.UP, player, can,
                 0.5F, 0.5F, 0.5F).acted(), "so the click reports false");

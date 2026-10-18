@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:778",
+  "pattern": [
+    "  w",
+    "WQW",
+    "CPC"
+  ],
+  "key": {
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "P": {
+      "item": "gt6ce:crystal_processor_emerald"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_4_plus"
+    },
+    "W": {
+      "item": "gt6ce:wire_fine_osmiumelemental"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:filtered_logistics_export_bus_fluid"
+  }
+}

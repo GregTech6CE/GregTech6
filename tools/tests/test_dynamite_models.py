@@ -12,7 +12,7 @@ import math
 from pathlib import Path
 import unittest
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/resources/assets/gregtech/textures/blocks/machines/tools/dynamite'
 class DynamiteModelTests(unittest.TestCase):
     def test_all_states_match_the_visible_and_collision_bounds(self):

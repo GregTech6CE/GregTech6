@@ -29,10 +29,10 @@ for order, (expr, group, legacy, tab, cls) in enumerate(rows):
             suffix = ''.join(re.findall(r'"([^"]*)"', expr.split('aMat.getLocal()')[1]))
             patterns.append((normal(prefix),normal(suffix),family,order))
 
-lang = json.loads((ROOT/'core/src/main/resources/assets/gregtech/lang/en_us.json').read_text(encoding='utf-8'))
+lang = json.loads((ROOT/'core/src/main/resources/assets/gt6ce/lang/en_us.json').read_text(encoding='utf-8'))
 bound = {}
 for key, text in lang.items():
-    if not key.startswith(('block.gregtech.','item.gregtech.')) or not isinstance(text,str): continue
+    if not key.startswith(('block.gt6ce.','item.gt6ce.')) or not isinstance(text,str): continue
     item = key.split('.',2)[2]
     text = normal(text)
     match = names.get(text)

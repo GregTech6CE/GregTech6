@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_sluice",
+  "contents": [
+    "item:gt6ce:sluice_bronze",
+    "item:gt6ce:sluice_steel",
+    "item:gt6ce:sluice_titanium",
+    "item:gt6ce:sluice_tungsten_steel"
+  ],
+  "priority": 110
+}

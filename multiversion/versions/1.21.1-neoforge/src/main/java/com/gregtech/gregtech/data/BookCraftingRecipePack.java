@@ -40,7 +40,7 @@ public final class BookCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:book_crafting_recipes",Component.literal("GregTech original book crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:book_crafting_recipes",Component.literal("GregTech original book crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new BookCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new BookCraftingRecipePack(info);}
@@ -52,8 +52,8 @@ public final class BookCraftingRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data(){
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
-        for(String file:com.gregtech.gregtech.content.book.BookCraftingCatalog.FILES){String path="data/gregtech/recipes/books/"+file;try(var stream=BookCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)){if(stream==null)throw new IllegalStateException("Missing shared book recipe "+path);var recipe=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();var result=recipe.get("result");if(result.isJsonPrimitive()){var obj=new com.google.gson.JsonObject();obj.addProperty("id",result.getAsString());recipe.add("result",obj);}else{var obj=result.getAsJsonObject();if(obj.has("item")){obj.add("id",obj.remove("item"));}}
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech","recipe/books/"+file),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}}
+        for(String file:com.gregtech.gregtech.content.book.BookCraftingCatalog.FILES){String path="data/gt6ce/recipes/books/"+file;try(var stream=BookCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)){if(stream==null)throw new IllegalStateException("Missing shared book recipe "+path);var recipe=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();var result=recipe.get("result");if(result.isJsonPrimitive()){var obj=new com.google.gson.JsonObject();obj.addProperty("id",result.getAsString());recipe.add("result",obj);}else{var obj=result.getAsJsonObject();if(obj.has("item")){obj.add("id",obj.remove("item"));}}
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/books/"+file),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}}
         for(String tag:com.gregtech.gregtech.content.book.BookCraftingCatalog.TAGS){
             var key=ResourceLocation.parse(tag);
             String path="data/"+key.getNamespace()+"/tags/items/"+key.getPath()+".json";
@@ -92,7 +92,7 @@ public final class BookCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech","minecraft") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce","minecraft") : Set.of();
     }
 
     @Override

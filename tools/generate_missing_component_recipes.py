@@ -30,7 +30,7 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-OUT_DIR = os.path.join(ROOT, str(native_path("src")), "main", "resources", "data", "gregtech", "recipes", "components")
+OUT_DIR = os.path.join(ROOT, str(native_path("src")), "main", "resources", "data", "gt6ce", "recipes", "components")
 
 # MT.DATA.Electric_T (MT.java:3690) - the port's material *name* per GT6 voltage tier
 ELECTRIC_T_NAME = ["TinAlloy", "SteelGalvanized", "Aluminium", "StainlessSteel", "Chromium",
@@ -76,13 +76,13 @@ def tag(material: str, group: str) -> dict:
 ROD = lambda m: tag(m, "rods")                      # noqa: E731
 SCREW = lambda m: tag(m, "screws")                  # noqa: E731
 PLATE = lambda m: tag(m, "plates")                  # noqa: E731
-CURVED = lambda m: {"item": f"gregtech:plate_curved_{m}"}       # noqa: E731
-DOUBLE = lambda m: {"item": f"gregtech:plate_double_{m}"}       # noqa: E731
-WIRE = lambda size, m: {"item": f"gregtech:wire_{size:02d}_{m}"}   # noqa: E731
-CABLE = lambda m: {"item": f"gregtech:{CABLE_ITEM[m]}"}            # noqa: E731
-GEAR_SMALL = lambda m: {"item": f"gregtech:gear_gt_small_{m}"}     # noqa: E731
-ROTOR = lambda m: {"item": f"gregtech:rotor_{m}"}                  # noqa: E731
-ITEM = lambda i: {"item": f"gregtech:{i}"}                         # noqa: E731
+CURVED = lambda m: {"item": f"gt6ce:plate_curved_{m}"}       # noqa: E731
+DOUBLE = lambda m: {"item": f"gt6ce:plate_double_{m}"}       # noqa: E731
+WIRE = lambda size, m: {"item": f"gt6ce:wire_{size:02d}_{m}"}   # noqa: E731
+CABLE = lambda m: {"item": f"gt6ce:{CABLE_ITEM[m]}"}            # noqa: E731
+GEAR_SMALL = lambda m: {"item": f"gt6ce:gear_gt_small_{m}"}     # noqa: E731
+ROTOR = lambda m: {"item": f"gt6ce:rotor_{m}"}                  # noqa: E731
+ITEM = lambda i: {"item": f"gt6ce:{i}"}                         # noqa: E731
 
 RUBBER_RING = {"tag": "forge:rings/rubber"}
 RUBBER_PLATE = {"tag": "forge:plates/rubber"}
@@ -92,7 +92,7 @@ WRENCH = ITEM("tool_wrench")
 
 def motor(i: int) -> dict:
     """MultiItemTechnological:405-416 - wire size grows with the tier."""
-    wire = {"item": "gregtech:wire_fine_copper"} if i == 0 else WIRE(i, "annealed_copper" if i >= 4 else "copper")
+    wire = {"item": "gt6ce:wire_fine_copper"} if i == 0 else WIRE(i, "annealed_copper" if i >= 4 else "copper")
     magnet = {"tag": "forge:bolts/iron_magnetic"} if i == 0 else (
         ROD("iron_magnetic") if i == 1 else ROD("neodymium_magnetic") if i < 6 else {"tag": "forge:long_rods/neodymium_magnetic"})
     return shaped("minecraft:crafting_shaped", ["CWR", "WIW", "PWC"], {
@@ -101,7 +101,7 @@ def motor(i: int) -> dict:
 
 
 def pump(i: int) -> dict:
-    return shaped("gregtech:tool_shaped", ["TXO", "dPw", "OMT"], {
+    return shaped("gt6ce:tool_shaped", ["TXO", "dPw", "OMT"], {
         "T": SCREW(ELECTRIC_T[i]), "X": ROTOR(ELECTRIC_T[i]), "O": RUBBER_RING,
         "d": SCREWDRIVER, "w": WRENCH, "P": CURVED(ELECTRIC_T[i]),
         "M": ITEM(f"compact_electric_motor_{TIER_NAME[i]}")}, f"compact_electric_pump_{TIER_NAME[i]}")
@@ -114,7 +114,7 @@ def conveyor(i: int) -> dict:
 
 
 def piston(i: int) -> dict:
-    return shaped("gregtech:tool_shaped", ["TPP", "dSS", "TMG"], {
+    return shaped("gt6ce:tool_shaped", ["TPP", "dSS", "TMG"], {
         "T": SCREW(ELECTRIC_T[i]), "P": PLATE(ELECTRIC_T[i]), "d": SCREWDRIVER,
         "S": ROD(ELECTRIC_T[i]), "M": ITEM(f"compact_electric_motor_{TIER_NAME[i]}"),
         "G": GEAR_SMALL(ELECTRIC_T[i])}, f"compact_electric_piston_{TIER_NAME[i]}")
@@ -130,7 +130,7 @@ def robot_arm(i: int) -> dict:
 def field_emitter(i: int) -> dict:
     """MultiItemTechnological:425-434 - wireFine(Os) at ULV, then 1/2/4/6/…/16x wire for the rest."""
     # the port calls GT6's Os "OsmiumElemental", and its material items use that name
-    wire = {"item": "gregtech:wire_fine_osmiumelemental"} if i == 0 else WIRE(FIELD_WIRE_SIZE[i], "osmium")
+    wire = {"item": "gt6ce:wire_fine_osmiumelemental"} if i == 0 else WIRE(FIELD_WIRE_SIZE[i], "osmium")
     return shaped("minecraft:crafting_shaped", ["WPW", "CGC", "WPW"], {
         "W": wire, "P": DOUBLE(ELECTRIC_T[i]), "C": ITEM(CIRCUIT[i]),
         "G": FIELD_GEM[i]}, f"compact_force_field_emitter_{TIER_NAME[i]}")
@@ -152,7 +152,7 @@ def sensor(i: int) -> dict:
 
 def shaped(recipe_type: str, pattern: list[str], key: dict, result: str) -> dict:
     return {"type": recipe_type, "pattern": pattern, "key": key,
-            "result": {"item": f"gregtech:{result}", "count": 1}}
+            "result": {"item": f"gt6ce:{result}", "count": 1}}
 
 
 def main() -> None:

@@ -12,7 +12,7 @@ import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-CORE = ROOT / "core/src/main/resources/assets/gregtech"
+CORE = ROOT / "core/src/main/resources/assets/gt6ce"
 
 
 class GearboxItemRoots(unittest.TestCase):
@@ -20,10 +20,10 @@ class GearboxItemRoots(unittest.TestCase):
         catalog = (ROOT / "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java").read_text()
         tiers = re.findall(r'new Tier\("([^"]+)"', catalog)
         for platform in (str(native_path("src")), str(native_path("neoforge/src"))):
-            assets = ROOT / platform / "main/resources/assets/gregtech"
+            assets = ROOT / platform / "main/resources/assets/gt6ce"
 
             def geometry(model_id):
-                relative = Path("models") / (model_id.removeprefix("gregtech:") + ".json")
+                relative = Path("models") / (model_id.removeprefix("gt6ce:") + ".json")
                 file = next(p for p in (assets / relative, CORE / relative) if p.is_file())
                 model = json.loads(file.read_text())
                 self.assertNotIn("model", model, str(file))
@@ -38,7 +38,7 @@ class GearboxItemRoots(unittest.TestCase):
             for family in ("gearbox", "rotation_transformer"):
                 for tier in tiers:
                     with self.subTest(platform=platform, family=family, tier=tier):
-                        self.assertGreaterEqual(geometry(f"gregtech:item/{family}_{tier}"), 6)
+                        self.assertGreaterEqual(geometry(f"gt6ce:item/{family}_{tier}"), 6)
 
 
 if __name__ == "__main__":

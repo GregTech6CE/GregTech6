@@ -33,18 +33,18 @@ public final class PanelMaterialRegistration {
                 default -> com.gregtech.gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
             };
             long amount = kind.endsWith("_slab") ? GTValues.U / 2 : GTValues.U;
-            known(item("gregtech:" + kind), new ItemComposition(null, material, amount));
+            known(item("gt6ce:" + kind), new ItemComposition(null, material, amount));
         }
-        known(item("gregtech:concrete_reinforced"), new ItemComposition(null, List.of(
+        known(item("gt6ce:concrete_reinforced"), new ItemComposition(null, List.of(
                 MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
                 MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
                 "GT6 BlockConcreteReinforced", true));
         for (var spec : PanelCatalog.ALL) {
             var input = item(spec.input());
-            if (spec.kind().equals("wood") && spec.input().startsWith("gregtech:"))
+            if (spec.kind().equals("wood") && spec.input().startsWith("gt6ce:"))
                 known(input, new ItemComposition(null, PanelMaterialRules.plankMaterial(spec), GTValues.U));
             var inputData = ItemMaterialRegistry.base(input).orElse(null);
-            known(item("gregtech:" + spec.id()), PanelMaterialRules.panel(inputData));
+            known(item("gt6ce:" + spec.id()), PanelMaterialRules.panel(inputData));
         }
     }
 }

@@ -61,7 +61,7 @@ public final class MaterialArrowItem extends ArrowItem implements MaterialFormIt
     }
 
     @Override
-    public String getDescriptionId() { return "item.gregtech." + prefix.getRegistryName(); }
+    public String getDescriptionId() { return "item.gt6ce." + prefix.getRegistryName(); }
 
     @Override
 //? if >=1.21.1 {

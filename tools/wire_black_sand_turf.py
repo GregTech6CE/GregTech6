@@ -13,7 +13,7 @@ import json
 import os
 
 FEATURES = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTFeatures.java")
-DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech")
+DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gt6ce")
 
 REGISTRATIONS = [
     ("BLACK_SAND", "gt_black_sand", "GTBlackSandFeature",
@@ -52,9 +52,9 @@ io.open(FEATURES, "w", encoding="utf-8", newline="\n").write(text)
 
 for field, feature_id, feature_class, comment, anchor, step in REGISTRATIONS:
     write_json(os.path.join(DATA, "worldgen", "configured_feature", feature_id + ".json"),
-               {"type": "gregtech:" + feature_id, "config": {}})
+               {"type": "gt6ce:" + feature_id, "config": {}})
     write_json(os.path.join(DATA, "worldgen", "placed_feature", feature_id + ".json"),
-               {"feature": "gregtech:" + feature_id, "placement": []})
+               {"feature": "gt6ce:" + feature_id, "placement": []})
     write_json(os.path.join(DATA, "forge", "biome_modifier", feature_id + ".json"),
                {"type": "forge:add_features", "biomes": "#minecraft:is_overworld",
-                "features": ["gregtech:" + feature_id], "step": step})
+                "features": ["gt6ce:" + feature_id], "step": step})

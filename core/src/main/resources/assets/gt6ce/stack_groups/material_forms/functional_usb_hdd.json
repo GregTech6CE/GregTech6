@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_usb_hdd",
+  "contents": [
+    "item:gt6ce:usb1_hdd",
+    "item:gt6ce:usb2_hdd",
+    "item:gt6ce:usb3_hdd",
+    "item:gt6ce:usb4_hdd"
+  ],
+  "priority": 110
+}

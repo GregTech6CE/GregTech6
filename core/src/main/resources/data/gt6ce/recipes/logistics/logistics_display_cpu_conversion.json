@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:776",
+  "pattern": [
+    " L ",
+    " Q ",
+    " Cd"
+  ],
+  "key": {
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "L": {
+      "item": "gt6ce:wire_01_lumium"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_2_plus"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:logistics_display_cpu_conversion"
+  }
+}

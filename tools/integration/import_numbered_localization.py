@@ -73,7 +73,7 @@ def extract(repo, original):
                 raise ValueError('Unregistered bumble identity: ' + native)
             consumed.add(native)
             legacy = 'gt.multiitem.bumblebee.' + str(int(ident) + meta)
-            key = 'item.gregtech.' + native
+            key = 'item.gt6ce.' + native
             detail = {'species_id': int(ident), 'state_meta': meta}
             bind(key, legacy, detail, original_name + original_types[meta])
             bind(key + '.tooltip', legacy + '.tooltip', detail, tooltip)
@@ -106,7 +106,7 @@ def extract(repo, original):
         raise ValueError('Anvil material catalog differs from original registrations')
     for native, material, _ in variants:
         ident = anvils[material.lower()]
-        bind('block.gregtech.' + native, 'gt.multitileentity.' + str(ident),
+        bind('block.gt6ce.' + native, 'gt.multitileentity.' + str(ident),
              {'original_id': ident, 'material': material})
     return aliases, english, evidence, sources
 

@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "WQW",
+    "BCB"
+  ],
+  "key": {
+    "B": {
+      "item": "gt6ce:gear_gt_small_brass"
+    },
+    "C": {
+      "item": "gt6ce:circuit_good"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gt6ce:progress_sensor"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

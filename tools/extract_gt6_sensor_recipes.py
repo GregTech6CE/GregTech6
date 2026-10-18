@@ -42,7 +42,7 @@ PORT_IDS = {
 #   * OP.<prefix>.dat(MT.<material>) is the material item form -> mat:<prefix>@<port material name>,
 #   * OP.wireGt01.dat(X) is the 1x wire -> wire:1@X (the multiblock table spells it the same way),
 #   * the oredict constants are vanilla items in 1.20.1 -> item:minecraft:<name>,
-#   * IL.<instrument> are the port's own technological items -> item:gregtech:<id>,
+#   * IL.<instrument> are the port's own technological items -> item:gt6ce:<id>,
 #   * IL.SENSORS[1] is the tiered sensor component -> il:SENSORS (the resolver appends the tier).
 KEY_MAP = {
     "OP.plateDouble.dat(MT.TinAlloy)": "mat:plateDouble@TinAlloy",
@@ -71,10 +71,10 @@ KEY_MAP = {
     "Items.comparator": "item:minecraft:comparator",
     "Items.bucket": "item:minecraft:bucket",
     "Items.clock": "item:minecraft:clock",
-    "IL.Thermometer_Quicksilver": "item:gregtech:quicksilver_thermometer",
-    "IL.Geiger_Counter": "item:gregtech:geiger_counter",
-    "IL.Electro_Meter": "item:gregtech:electrometer",
-    "IL.Tacho_Meter": "item:gregtech:tachometer",
+    "IL.Thermometer_Quicksilver": "item:gt6ce:quicksilver_thermometer",
+    "IL.Geiger_Counter": "item:gt6ce:geiger_counter",
+    "IL.Electro_Meter": "item:gt6ce:electrometer",
+    "IL.Tacho_Meter": "item:gt6ce:tachometer",
     "IL.SENSORS[1]": "il:SENSORS",
 }
 

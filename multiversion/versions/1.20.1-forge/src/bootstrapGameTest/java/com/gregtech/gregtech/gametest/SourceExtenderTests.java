@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SourceExtenderTests {
     private static final BlockPos CENTER=new BlockPos(3,3,3);
     @GameTest(template="test_blueprint_empty") public static void sourceItemRoutingAndCapabilitySeparation(GameTestHelper h){
@@ -42,7 +42,7 @@ public final class SourceExtenderTests {
         h.succeed();
     }
     @GameTest(template="test_blueprint_empty") public static void sourceFluidRoutingAndLiveReplacement(GameTestHelper h){
-        var jug=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","fluid_jug"));
+        var jug=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_jug"));
         for(var spec:ExtenderSpec.values())if(spec.fluids){
             var block=GTMiscBlocks.SOURCE_EXTENDERS.get(spec).get();
             h.setBlock(CENTER,block.defaultBlockState().setValue(SourceExtenderBlock.FACING,Direction.UP).setValue(SourceExtenderBlock.SECONDARY,Direction.WEST));
@@ -90,7 +90,7 @@ public final class SourceExtenderTests {
                 h.assertTrue(block.toolInteraction(state,wrench).facing()==SourceExtenderBlock.FACING&&block.toolInteraction(state,monkey).facing()==SourceExtenderBlock.SECONDARY,"tools share overlay spec and select separate faces");
                 for(var side:Direction.values())h.assertTrue(block.toolInteraction(state,monkey).allows(state,side),"secondary face supports all six directions");
             }
-            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","logistics/"+spec.id);
+            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","logistics/"+spec.id);
             var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
             h.assertTrue(recipe.getResultItem(h.getLevel().registryAccess()).is(block.asItem()),"source survival recipe loaded: "+spec.id);
             var shaped=(com.gregtech.gregtech.recipe.ToolShapedRecipe)recipe;

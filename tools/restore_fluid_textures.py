@@ -15,7 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def restore(original):
     source=native_path(original/'src/main/resources/assets/gregtech/textures/blocks/fluids')
-    assets=native_path(ROOT/'src/main/resources/assets/gregtech')
+    assets=native_path(ROOT/'src/main/resources/assets/gt6ce')
     ledger_path=ROOT/'tools/gt6_texture_sources.json'
     ledger=json.loads(ledger_path.read_text(encoding='utf-8'))
     changed=0

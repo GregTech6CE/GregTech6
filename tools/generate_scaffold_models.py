@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech")
+ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gt6ce")
 
 
 def cube(bounds, texture="plate"):
@@ -46,9 +46,9 @@ def main():
     # platforms and rails use PLATE. Design 1 adds HATCH on their vertical faces.
     for design, bounds in variants.items():
         rods = {0: {1, 2, 3}, 1: {1, 2, 3, 4}, 2: {0, 1, 2, 3}, 3: set()}[design]
-        textures = {"particle": "gregtech:block/iconsets/plate",
-                    "plate": "gregtech:block/iconsets/plate",
-                    "rod": "gregtech:block/material_icons/metallic/blocksolid"}
+        textures = {"particle": "gt6ce:block/iconsets/plate",
+                    "plate": "gt6ce:block/iconsets/plate",
+                    "rod": "gt6ce:block/material_icons/metallic/blocksolid"}
         base_model = {"textures": textures, "elements": [
             cube(box, "rod" if i in rods else "plate") for i, box in enumerate(bounds)]}
         model = {"parent": "minecraft:block/block", **base_model}
@@ -60,7 +60,7 @@ def main():
             model = {"parent": "minecraft:block/block", "loader": "forge:composite",
                      "textures": {"particle": textures["particle"]},
                      "children": {"base": base_model, "hatch": {
-                         "textures": {"hatch": "gregtech:block/iconsets/hatch"},
+                         "textures": {"hatch": "gt6ce:block/iconsets/hatch"},
                          "elements": overlays, "render_type": "minecraft:cutout"}}}
         write(base / f"scaffold{'_' + str(design) if design else ''}.json", model)
 
@@ -68,11 +68,11 @@ def main():
     for design in range(4):
         for facing, rotation in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
             blockstates[f"design={design},facing={facing}"] = {
-                "model": f"gregtech:block/tool/scaffold{f'_{design}' if design else ''}",
+                "model": f"gt6ce:block/tool/scaffold{f'_{design}' if design else ''}",
                 "y": rotation,
             }
     write(ROOT / "blockstates/scaffold.json", {"variants": blockstates})
-    write(ROOT / "models/item/scaffold.json", {"parent": "gregtech:block/tool/scaffold_1"})
+    write(ROOT / "models/item/scaffold.json", {"parent": "gt6ce:block/tool/scaffold_1"})
 
 
 if __name__ == "__main__":

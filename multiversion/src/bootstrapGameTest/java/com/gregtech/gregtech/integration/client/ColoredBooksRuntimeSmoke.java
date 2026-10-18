@@ -24,7 +24,7 @@ final class ColoredBooksRuntimeSmoke {
     private static final String MANUAL="Manual_Steam";
     private static void require(boolean value,String message){if(!value)throw new IllegalStateException(message);}
 //? if >=1.21.1 {
-    /*private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gregtech",path);}
+    /*private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}
     private static ItemStack payload(ItemStack target,ItemStack source){target.applyComponents(source.getComponentsPatch());return target;}
     private static int generation(ItemStack stack){return stack.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT).generation();}
     private static void generation(ItemStack stack,int value){var content=stack.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT,new net.minecraft.world.item.component.WrittenBookContent(content.title(),content.author(),value,content.pages(),content.resolved()));}
@@ -32,7 +32,7 @@ final class ColoredBooksRuntimeSmoke {
     private static CraftingInput input(List<ItemStack> stacks){while(stacks.size()<9)stacks.add(ItemStack.EMPTY);return CraftingInput.of(3,3,stacks);}
     private static CraftingRecipe recipe(net.minecraft.server.MinecraftServer server,String path){return (CraftingRecipe)server.getRecipeManager().byKey(id("books/"+path)).orElseThrow(()->new IllegalStateException("Missing native book recipe "+path)).value();}
 *///?} else {
-    private static ResourceLocation id(String path){return new ResourceLocation("gregtech",path);}
+    private static ResourceLocation id(String path){return new ResourceLocation("gt6ce",path);}
     private static ItemStack payload(ItemStack target,ItemStack source){if(source.hasTag())target.setTag(source.getTag().copy());return target;}
     private static int generation(ItemStack stack){return WrittenBookItem.getGeneration(stack);}
     private static void generation(ItemStack stack,int value){stack.getOrCreateTag().putInt("generation",value);}
@@ -65,7 +65,7 @@ final class ColoredBooksRuntimeSmoke {
             require(composition.components().get(0).amount()==com.gregtech.gregtech.api.material.GTValues.U*(variant.large()?6:3),"Paper composition "+variant.path());
             require(composition.components().size()==(variant.emblem().equals("bronze")||variant.emblem().equals("radiation")?2:1),"Emblem composition "+variant.path());
             require(book.getBurnTime(stack,RecipeType.SMELTING)==(variant.large()||variant.emblem().equals("radiation")?400:200),"Source burn time "+variant.path());
-            require(BookShelfRules.enchantPower("gregtech:"+variant.path())==1,"Shelf rejects book "+variant.path());
+            require(BookShelfRules.enchantPower("gt6ce:"+variant.path())==1,"Shelf rejects book "+variant.path());
             require(stack.is(net.minecraft.tags.ItemTags.LECTERN_BOOKS)&&stack.is(net.minecraft.tags.ItemTags.BOOKSHELF_BOOKS),"Native book tags missing "+variant.path());
             var conversion=com.gregtech.gregtech.data.MachineRecipeMaps.Generifier.findRecipe(List.of(stack),List.of(),false,1,9);
             require(conversion!=null&&conversion.mOutputs[0].is(Items.WRITTEN_BOOK)&&conversion.mDuration==1&&conversion.mEUt==0,"Missing source generifier "+variant.path());

@@ -38,7 +38,7 @@ import java.util.Set;
  * {@code item.gregtech.<id>} keys every other bee uses - and {@code MaterialCompatibilityTests}
  * demands one in both languages for every registered item.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleBeeScanningTests {
 
@@ -56,7 +56,7 @@ public final class BumbleBeeScanningTests {
     }
 
     private static JsonObject lang(String language) throws Exception {
-        String path = "assets/gregtech/lang/" + language + ".json";
+        String path = "assets/gt6ce/lang/" + language + ".json";
         try (InputStream stream = BumbleBeeScanningTests.class.getClassLoader().getResourceAsStream(path)) {
             if (stream == null) throw new IllegalStateException("missing resource " + path);
             return GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8));
@@ -109,7 +109,7 @@ public final class BumbleBeeScanningTests {
                     problems.add("living " + BumbleBeeType.itemId(species, living) + " is gone or misread");
                 }
                 // Every registered item needs both names (the port's localization guard).
-                String key = "item.gregtech." + id;
+                String key = "item.gt6ce." + id;
                 if (!english.has(key) || !chinese.has(key)) {
                     problems.add("no translation for " + key);
                 } else {
@@ -123,10 +123,10 @@ public final class BumbleBeeScanningTests {
         helper.assertTrue(translated == 320, "both languages name all 320 scanned bees: " + translated);
         // GT6's own naming: the living name plus the scanned marker, the dead one inside its parens.
         helper.assertTrue("Wild Bumblebee Drone (Scanned)"
-                        .equals(english.get("item.gregtech.wild_bumblebee_scanned_drone").getAsString()),
+                        .equals(english.get("item.gt6ce.wild_bumblebee_scanned_drone").getAsString()),
                 "the scanned drone is GT6's \"<name> Drone (Scanned)\"");
         helper.assertTrue("Wild Bumblebee (Dead, Scanned)"
-                        .equals(english.get("item.gregtech.wild_bumblebee_scanned_dead").getAsString()),
+                        .equals(english.get("item.gt6ce.wild_bumblebee_scanned_dead").getAsString()),
                 "the scanned dead bee keeps one pair of parentheses");
         helper.succeed();
     }

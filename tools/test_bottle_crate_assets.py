@@ -19,7 +19,7 @@ class BottleCrateAssetsTest(unittest.TestCase):
             self.assertEqual(boxes[3], ([5, 1, 1], [6, 4, 15]))
             self.assertEqual(boxes[5], ([0, 0, 0], [1, 8, 16]))
             self.assertEqual(boxes[7], ([1, 5, 0], [15, 7, 1]))
-            self.assertEqual(model['textures']['wood'], 'gregtech:block/iconsets/planks_treated')
+            self.assertEqual(model['textures']['wood'], 'gt6ce:block/iconsets/planks_treated')
             self.assertFalse(model['ambientocclusion'])
             states = json.loads((root / 'blockstates/bottle_crate.json').read_text())['variants']
             self.assertEqual([states['facing='+f]['y'] for f in ('north','south','east','west')], [0,0,90,90])

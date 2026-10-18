@@ -16,7 +16,7 @@ import java.util.Map;
 public class FuelRecipeMaps {
     protected FuelRecipeMaps() {}
 
-    private static final String GUI = "gregtech:textures/gui/machines/";
+    private static final String GUI = "gt6ce:textures/gui/machines/";
 
     public static final RecipeMap
             FluidBed = fromDefinition(FuelRecipeMapDefinitions.FluidBed),

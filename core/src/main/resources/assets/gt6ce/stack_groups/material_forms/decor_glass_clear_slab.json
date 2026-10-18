@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_glass_clear_slab",
+  "contents": [
+    "item:gt6ce:glass_clear_slab"
+  ],
+  "priority": 120
+}

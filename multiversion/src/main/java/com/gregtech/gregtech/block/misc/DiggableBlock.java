@@ -118,7 +118,7 @@ public final class DiggableBlock extends FallingBlock {
             return List.of(peat);
         }
 //? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", variant.dropItemId));
+        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", variant.dropItemId));
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(variant.dropItemId));
 //?}

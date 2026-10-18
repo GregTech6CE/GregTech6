@@ -34,7 +34,7 @@ public final class GTSounds {
     /*private GTSounds() {}
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return REGISTRY.register(name, () -> SoundEvent.createVariableRangeEvent(
-                ResourceLocation.fromNamespaceAndPath("gregtech", name)));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", name)));
 *///?} else {
     public static final RegistryObject<SoundEvent> WRENCH   = register("wrench");
     public static final RegistryObject<SoundEvent> SCREWDRIVER = register("screwdriver");

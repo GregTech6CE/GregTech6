@@ -20,13 +20,13 @@ public final class CrucibleContentIcons {
     /** Fixed gray solid fill — always metallic {@code blockraw}. */
     public static final ResourceLocation SOLID_GRAY_BASE =
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blockraw");
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw");
 *///?} else {
             GregTech.id("block/material_icons/metallic/blockraw");
 //?}
     public static final ResourceLocation SOLID_GRAY_OVERLAY =
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blockraw_overlay");
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw_overlay");
 *///?} else {
             GregTech.id("block/material_icons/metallic/blockraw_overlay");
 //?}
@@ -61,7 +61,7 @@ public final class CrucibleContentIcons {
     public static ResourceLocation blockIcon(MaterialTextureSet set, String prefix, boolean overlay) {
         String file = prefix + (overlay ? "_overlay" : "");
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/" + set.folder() + "/" + file);
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/" + set.folder() + "/" + file);
 *///?} else {
         return GregTech.id("block/material_icons/" + set.folder() + "/" + file);
 //?}

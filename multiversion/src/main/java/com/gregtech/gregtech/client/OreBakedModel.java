@@ -98,15 +98,15 @@ public final class OreBakedModel implements IDynamicBakedModel {
         for (StoneType type : StoneType.values()) {
             STONE_TEXTURES.put(type.registryId(),
 //? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gregtech", "block/stones/" + type.textureFolder() + "/stone"));
+                    /*ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/stone"));
 *///?} else {
-                    new ResourceLocation("gregtech", "block/stones/" + type.textureFolder() + "/stone"));
+                    new ResourceLocation("gt6ce", "block/stones/" + type.textureFolder() + "/stone"));
 //?}
             BROKEN_TEXTURES.put(type.registryId(),
 //? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gregtech", "block/stones/" + type.textureFolder() + "/cobble"));
+                    /*ResourceLocation.fromNamespaceAndPath("gt6ce", "block/stones/" + type.textureFolder() + "/cobble"));
 *///?} else {
-                    new ResourceLocation("gregtech", "block/stones/" + type.textureFolder() + "/cobble"));
+                    new ResourceLocation("gt6ce", "block/stones/" + type.textureFolder() + "/cobble"));
 //?}
         }
     }

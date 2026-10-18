@@ -54,7 +54,7 @@ import java.util.Set;
  * {@code gramm} (x1000), {@code kilogramm} (x1), {@code ton} (/1000) and {@code kiloton} (/1000000),
  * each saturating at {@code B[16]-1 = 65535}.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class SensorMatrixTests {
     private static final int BASE_X = 37000;
@@ -91,8 +91,8 @@ public final class SensorMatrixTests {
     };
 
     private static Block block(GameTestHelper helper, String path) {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", path));
-        helper.assertTrue(block != null, "gregtech:" + path + " is a registered block, got null");
+        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
+        helper.assertTrue(block != null, "gt6ce:" + path + " is a registered block, got null");
         return block;
     }
 
@@ -116,8 +116,8 @@ public final class SensorMatrixTests {
         StringBuilder registered = new StringBuilder();
         for (String[] row : GT6_SENSORS) {
             helper.assertTrue(ForgeRegistries.BLOCKS.containsKey(
-                            ResourceLocation.fromNamespaceAndPath("gregtech", row[2])),
-                    "GT6's " + row[1] + " (" + row[0] + ") has a port block gregtech:" + row[2]);
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", row[2])),
+                    "GT6's " + row[1] + " (" + row[0] + ") has a port block gt6ce:" + row[2]);
             registered.append(row[2]).append(' ');
         }
         int count = 0;
@@ -300,13 +300,13 @@ public final class SensorMatrixTests {
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
             // ForgeRegistries.*.getValue(an unknown id) returns AIR rather than null in 1.20.1.
             Block block = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", row.blockId()));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", row.blockId()));
             if (block == null || block == Blocks.AIR) {
-                broken.add(row.name() + " (" + row.machineId() + "): no block gregtech:" + row.blockId());
+                broken.add(row.name() + " (" + row.machineId() + "): no block gt6ce:" + row.blockId());
                 continue;
             }
             if (block.asItem() == Items.AIR) {
-                broken.add(row.name() + ": block gregtech:" + row.blockId() + " has no item form");
+                broken.add(row.name() + ": block gt6ce:" + row.blockId() + " has no item form");
                 continue;
             }
             if (row.pattern().size() != 3 || row.pattern().stream().allMatch(String::isBlank)) {
@@ -383,7 +383,7 @@ public final class SensorMatrixTests {
         // the whole table at tier 1.
         Object laser = MachineRecipeIngredients.resolve("il:SENSORS", steel, SensorRecipePack.SENSOR_TIER);
         helper.assertTrue(laser instanceof Map<?, ?> sensorMap
-                        && "gregtech:compact_sensor_lv".equals(sensorMap.get("item")),
+                        && "gt6ce:compact_sensor_lv".equals(sensorMap.get("item")),
                 "IL.SENSORS[1] resolves to the LV compact sensor, got " + laser);
 
         Set<String> emitted = SensorRecipePack.emittedBlockIds();
@@ -400,14 +400,14 @@ public final class SensorMatrixTests {
                 "rows fully resolved: " + resolved + " of " + GTSensorRecipesGen.ROWS.size());
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
             helper.assertTrue(emitted.contains(row.blockId()),
-                    "SensorRecipePack emitted no recipe for gregtech:" + row.blockId());
+                    "SensorRecipePack emitted no recipe for gt6ce:" + row.blockId());
         }
         helper.assertTrue(emitted.size() == GTSensorRecipesGen.ROWS.size(),
                 "SensorRecipePack emitted " + emitted.size() + " recipes: " + emitted);
         // Every emitted recipe must have loaded: a JSON that vanilla's ShapedRecipe rejects (an unused
         // key, a pattern symbol without a key) fails at pack load, not at crafting time.
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
-            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech",
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce",
                     "machines/sensors/" + row.blockId());
             helper.assertTrue(helper.getLevel().getRecipeManager().byKey(id).isPresent(),
                     "recipe " + id + " loaded from the sensor data pack");

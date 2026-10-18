@@ -47,11 +47,11 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     /** One GT6 water-body pass: the registration name, the fluid block and the biome gate. */
     public enum Kind {
         /** {@code WorldgenOcean("ocean.seawater")} — {@code BIOMES_OCEAN}. */
-        OCEAN("ocean.seawater", "gregtech:seawater"),
+        OCEAN("ocean.seawater", "gt6ce:seawater"),
         /** {@code WorldgenRiver("river.riverwater")} — {@code BIOMES_RIVER} without {@code BIOMES_OCEAN}. */
-        RIVER("river.riverwater", "gregtech:riverwater"),
+        RIVER("river.riverwater", "gt6ce:riverwater"),
         /** {@code WorldgenSwamp("swamp.dirtywater")} — {@code BIOMES_SWAMP}. */
-        SWAMP("swamp.dirtywater", "gregtech:swampwater");
+        SWAMP("swamp.dirtywater", "gt6ce:swampwater");
 
         private final String name;
         private final String blockId;
@@ -165,7 +165,7 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
 *///?} else {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
-        if (id == null || !id.getNamespace().equals("gregtech")) return false;
+        if (id == null || !id.getNamespace().equals("gt6ce")) return false;
         return id.getPath().equals("seawater") || id.getPath().equals("riverwater")
                 || id.getPath().equals("swampwater");
     }
@@ -184,5 +184,5 @@ public class GTWaterBodyFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_water_bodies.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_water_bodies"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_water_bodies"));
 }

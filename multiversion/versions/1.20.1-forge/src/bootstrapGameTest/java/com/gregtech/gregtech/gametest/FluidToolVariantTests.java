@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class FluidToolVariantTests {
     @GameTest(template="test_empty") public static void finalizedFluidDeclarations(GameTestHelper h){
         var declared=com.gregtech.gregtech.data.RegisteredFluids.Steam;
@@ -31,13 +31,13 @@ public final class FluidToolVariantTests {
             boolean gas=spec.shapeId().equals("barometer_gas_cylinder");
             h.assertTrue(spec.material().isValid()&&spec.maxTemperature()>0,"valid material and temperature "+spec.id());
             h.assertTrue(spec.accepts(spec.maxTemperature(),gas,false,false,false)&&(spec.maxTemperature()==Integer.MAX_VALUE||!spec.accepts(spec.maxTemperature()+1,gas,false,false,false)),"original inclusive temperature boundary "+spec.id());
-            var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id()));
+            var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id()));
             h.assertTrue(block instanceof PortableContainerBlock,"registered placeable vessel "+spec.id());
         }
         h.assertTrue(pots==4&&cylinders==4,"four source variants for each family");
         var acid=new FluidStack(GTFluids.still("GenLiquid_SulfuricAcid").get(),100);
-        var ceramic=(com.gregtech.gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_measuring_pot"));
-        var stainless=(com.gregtech.gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_measuring_pot_stainless_steel"));
+        var ceramic=(com.gregtech.gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot"));
+        var stainless=(com.gregtech.gregtech.item.PortableFluidContainerItem)net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_measuring_pot_stainless_steel"));
         h.assertTrue(!ceramic.accepts(acid)&&stainless.accepts(acid),"actual acid fluid obeys material resistance in item handler");
 
         h.assertTrue(!PortableFluidContainerSpec.BAROMETER_GAS_CYLINDER.accepts(300,false,false,false,false),"gas cylinder rejects liquids");
@@ -47,7 +47,7 @@ public final class FluidToolVariantTests {
     @GameTest(template="test_empty") public static void attachmentPhaseAndFlowRules(GameTestHelper h){
         var tank=new FluidTankGT(8000);var water=new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000);
         for(var spec:com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all()){
-            var raw=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",spec.id()));
+            var raw=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",spec.id()));
             h.assertTrue(raw instanceof FluidAttachmentBlock,"registered material attachment "+spec.id());var b=(FluidAttachmentBlock)raw;var port=b.access(tank);
             tank.setFluid(water);boolean nozzle=spec.shape().equals("cap_nozzle"),funnel=spec.shape().equals("fluid_funnel");
             h.assertTrue(port.fill(water,FluidAction.SIMULATE)==(funnel?1000:0)&&tank.getAmount()==1000,"fill direction and simulation "+spec.id());
@@ -55,12 +55,12 @@ public final class FluidToolVariantTests {
             tank.setFluid(new FluidStack(GTFluids.still("Steam").get(),1000));
             h.assertTrue(port.drain(100,FluidAction.EXECUTE).getAmount()==(nozzle?100:0),"gas drain rule "+spec.id());
         }
-        var preferred=ResourceLocation.fromNamespaceAndPath("gregtech","block/fluids/arbitrary");
+        var preferred=ResourceLocation.fromNamespaceAndPath("gt6ce","block/fluids/arbitrary");
         h.assertTrue(FluidTexturePolicy.select(preferred,FluidTexturePolicy.Kind.GAS,x->true).equals(preferred),"existing dedicated gas texture wins; only missing textures use the solid standard");
         h.succeed();
     }
     @GameTest(template="test_empty") public static void fluidToolRecipesAndChestSlots(GameTestHelper h){
-        long count=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gregtech")&&r.getId().getPath().startsWith("fluid_tools/")).count();
+        long count=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gt6ce")&&r.getId().getPath().startsWith("fluid_tools/")).count();
         h.assertTrue(count==38,"23 material tool recipes plus five forming/firing/reclaiming ceramic chains decode and load");
         var player=net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
         var menu=new com.gregtech.gregtech.client.gui.HopperContainerMenu(1,player.getInventory(),54);

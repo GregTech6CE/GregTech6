@@ -10,7 +10,7 @@ from native_layout import native_path
 import os
 from PIL import Image
 
-ROOT = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech", "textures", "block", "iconsets")
+ROOT = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce", "textures", "block", "iconsets")
 SPECIES = {
     "rubber": 0xC4A46B, "maple": 0xE0A860, "willow": 0x8DBD60, "blue_mahoe": 0x9EB9D4,
     "rainbowood": 0x88CC88, "pine": 0xBC9862, "ebony": 0x3C2A1E, "white_mahoe": 0xE8DCC8,

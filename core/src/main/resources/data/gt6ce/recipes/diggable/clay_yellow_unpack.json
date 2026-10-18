@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "gt6ce:clay_yellow"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:yellow_clay",
+    "count": 4
+  }
+}

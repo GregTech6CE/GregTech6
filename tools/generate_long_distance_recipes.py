@@ -11,21 +11,21 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "core/src/main/resources/data/gregtech"
+DATA = ROOT / "core/src/main/resources/data/gt6ce"
 
 def write(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 def item(name):
-    return {"item": "gregtech:" + name}
+    return {"item": "gt6ce:" + name}
 
 def tag(name):
-    return {"tag": "gregtech:" + name}
+    return {"tag": "gt6ce:" + name}
 
 def recipe(name, pattern, keys):
     write(DATA / f"recipes/long_distance/{name}.json", {
-        "type": "gregtech:tool_shaped", "allow_mirror": False,
+        "type": "gt6ce:tool_shaped", "allow_mirror": False,
         "pattern": pattern, "key": keys, "result": item(name),
     })
 
@@ -37,7 +37,7 @@ def run():
         prefix = family.split("/")[0]
         write(DATA / f"tags/items/long_distance/{family}.json", {
             "replace": False,
-            "values": [{"id": f"#gregtech:{prefix}/{material}", "required": False} for material in materials],
+            "values": [{"id": f"#gt6ce:{prefix}/{material}", "required": False} for material in materials],
         })
     families = {
         "wire_16/any_copper": ["wire_16_copper", "wire_16_annealed_copper"],
@@ -47,7 +47,7 @@ def run():
     }
     for family, members in families.items():
         write(DATA / f"tags/items/long_distance/{family}.json", {
-            "replace": False, "values": [{"id": "gregtech:" + name, "required": False} for name in members],
+            "replace": False, "values": [{"id": "gt6ce:" + name, "required": False} for name in members],
         })
     catalog = (ROOT / "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceCatalog.java").read_text(encoding="utf-8")
     slugs = {"BlueAlloy": "blue_alloy", "ElectrotineAlloy": "electrotine_alloy", "TungstenSteel": "tungsten_steel", "StainlessSteel": "stainless_steel"}

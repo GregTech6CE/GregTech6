@@ -9,7 +9,7 @@ from native_layout import native_path
 import json
 from pathlib import Path
 import unittest
-ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gt6ce')
 class ScaffoldModelTests(unittest.TestCase):
     def test_all_structural_designs(self):
         variants = json.loads((ASSETS / 'blockstates/scaffold.json').read_text())['variants']
@@ -49,6 +49,6 @@ class ScaffoldModelTests(unittest.TestCase):
 
     def test_item_uses_standing_hatch(self):
         item = json.loads((ASSETS / 'models/item/scaffold.json').read_text())
-        self.assertEqual('gregtech:block/tool/scaffold_1', item['parent'])
+        self.assertEqual('gt6ce:block/tool/scaffold_1', item['parent'])
 if __name__ == '__main__':
     unittest.main()

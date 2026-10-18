@@ -52,7 +52,7 @@ from pathlib import Path
 from modular_materials import parse_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS = ASSETS / "models/block/ores"
 ITEM_MODELS = ASSETS / "models/item"
@@ -232,14 +232,14 @@ def main() -> int:
     for prefix in ("ore", "ore_small"):
         for mat in ids:
             created += write_json(BLOCKSTATES / f"{prefix}_{mat}.json", {
-                "variants": {"": {"model": f"gregtech:block/ores/{prefix}_{mat}"}}
+                "variants": {"": {"model": f"gt6ce:block/ores/{prefix}_{mat}"}}
             })
             created += write_json(MODELS / f"{prefix}_{mat}.json", {
                 "parent": "minecraft:block/cube_all",
                 "textures": {"all": "minecraft:block/stone"}
             })
             created += write_json(ITEM_MODELS / f"{prefix}_{mat}.json", {
-                "parent": f"gregtech:block/ores/{prefix}_{mat}"
+                "parent": f"gt6ce:block/ores/{prefix}_{mat}"
             })
 
     print(f"Wrote {created} ore block asset files")

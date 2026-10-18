@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "FCF"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:crystal_processor_ruby"
+    },
+    "C": {
+      "item": "gt6ce:circuit_ultimate"
+    },
+    "F": {
+      "item": "gt6ce:compact_force_field_emitter_luv"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_dense_osmiridium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:zpm_discharger_basic"
+  }
+}

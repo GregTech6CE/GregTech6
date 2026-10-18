@@ -29,7 +29,7 @@ import java.util.List;
  * <p>These tests check that the transpiled rows resolve and that the loot really reaches the loaded
  * chest tables — a silently empty pool would look like "GT loot just never spawns".</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class LootInjectionTests {
 
@@ -91,7 +91,7 @@ public final class LootInjectionTests {
             for (int roll = 0; roll < 12; roll++) {
                 for (ItemStack stack : table.getRandomItems(params)) {
                     ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-                    if (key != null && key.getNamespace().equals("gregtech")) gtItems++;
+                    if (key != null && key.getNamespace().equals("gt6ce")) gtItems++;
                 }
             }
             h.assertTrue(gtItems > 0, "GT loot in " + chest + " (" + category + "), rows: "
@@ -114,14 +114,14 @@ public final class LootInjectionTests {
         };
         for (String[] bag : expected) {
             Item item = ForgeRegistries.ITEMS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", bag[0]));
-            h.assertTrue(item != null, "registered loot bag gregtech:" + bag[0]);
-            h.assertTrue(item instanceof LootBagItem, "gregtech:" + bag[0] + " is a LootBagItem");
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", bag[0]));
+            h.assertTrue(item != null, "registered loot bag gt6ce:" + bag[0]);
+            h.assertTrue(item instanceof LootBagItem, "gt6ce:" + bag[0] + " is a LootBagItem");
             String[] tables = ((LootBagItem) item).tables();
-            h.assertTrue(tables.length == bag.length - 1, "gregtech:" + bag[0] + " table count: "
+            h.assertTrue(tables.length == bag.length - 1, "gt6ce:" + bag[0] + " table count: "
                     + tables.length);
             for (int i = 0; i < tables.length; i++) {
-                h.assertTrue(tables[i].equals(bag[i + 1]), "gregtech:" + bag[0] + " table " + i
+                h.assertTrue(tables[i].equals(bag[i + 1]), "gt6ce:" + bag[0] + " table " + i
                         + ": " + tables[i] + " (GT6: " + bag[i + 1] + ")");
             }
         }
@@ -160,7 +160,7 @@ public final class LootInjectionTests {
             }
             h.assertTrue(suffix != null, "a chest block carries the table " + table);
             var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", suffix));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", suffix));
             h.assertTrue(block != null, "registered loot chest block " + suffix);
             var pos = new net.minecraft.core.BlockPos(1 + (index % 4), 2, 1 + (index / 4));
             h.setBlock(pos, block.defaultBlockState()
@@ -192,8 +192,8 @@ public final class LootInjectionTests {
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void guideBookRollsGt6Manuals(GameTestHelper h) {
         Item guide = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "dusty_guide_book"));
-        h.assertTrue(guide instanceof LootBagItem, "gregtech:dusty_guide_book is a LootBagItem");
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "dusty_guide_book"));
+        h.assertTrue(guide instanceof LootBagItem, "gt6ce:dusty_guide_book is a LootBagItem");
         String[] tables = ((LootBagItem) guide).tables();
         h.assertTrue(tables.length == 1 && tables[0].equals("gt.books"),
                 "the guide book rolls gt.books: " + java.util.Arrays.toString(tables));
@@ -293,7 +293,7 @@ public final class LootInjectionTests {
         }
         h.assertTrue(perTable.containsKey("gt.books"), "the report lists the gt.books table");
         h.assertTrue(BuiltInRegistries.ITEM.containsKey(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "loot_pouch")), "loot pouch is registered");
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "loot_pouch")), "loot pouch is registered");
         h.succeed();
     }
 }

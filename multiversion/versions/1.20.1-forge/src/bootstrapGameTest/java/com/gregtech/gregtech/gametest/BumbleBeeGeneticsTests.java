@@ -15,7 +15,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * a {@code gt.bumble} compound per bee stack with clamped genes, environmental defaults and
  * per-gene inheritance from the two parents.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleBeeGeneticsTests {
 

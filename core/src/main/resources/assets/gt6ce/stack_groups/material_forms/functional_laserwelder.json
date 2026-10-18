@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_laserwelder",
+  "contents": [
+    "item:gt6ce:laserwelder_aluminium",
+    "item:gt6ce:laserwelder_chromium",
+    "item:gt6ce:laserwelder_galvanized_steel",
+    "item:gt6ce:laserwelder_stainless_steel",
+    "item:gt6ce:laserwelder_titanium"
+  ],
+  "priority": 110
+}

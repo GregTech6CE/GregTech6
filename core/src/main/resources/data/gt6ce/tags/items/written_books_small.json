@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:written_book",
+    "gt6ce:book_black",
+    "gt6ce:book_white",
+    "gt6ce:book_red",
+    "gt6ce:book_green",
+    "gt6ce:book_blue",
+    "gt6ce:book_cyan",
+    "gt6ce:book_magenta",
+    "gt6ce:book_yellow",
+    "gt6ce:book_brown",
+    "gt6ce:book_orange",
+    "gt6ce:book_purple",
+    "gt6ce:book_bronze",
+    "gt6ce:book_dictionary",
+    "gt6ce:book_radiation"
+  ]
+}

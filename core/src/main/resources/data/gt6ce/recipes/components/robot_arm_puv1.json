@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_puv1"
+    },
+    "S": {
+      "tag": "forge:rods/trinaquadalloy"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_puv1"
+    },
+    "E": {
+      "item": "gt6ce:integrated_circuit_9"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_robot_arm_puv1",
+    "count": 1
+  }
+}

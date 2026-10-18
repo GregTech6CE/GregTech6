@@ -169,7 +169,7 @@ public class GTNetherScatterFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_nether_scatter.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_nether_scatter"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_nether_scatter"));
 
     /** GT6 registers {@code nether.rocks} through {@code GEN_NETHER}. */
     public static String featureId() {

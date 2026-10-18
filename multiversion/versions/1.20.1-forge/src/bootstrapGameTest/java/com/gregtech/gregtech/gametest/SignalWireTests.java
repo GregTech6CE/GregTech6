@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SignalWireTests {
     private static SignalWireBlock block(String material,boolean insulated){
         return GTSignalWires.all().stream().map(r->r.get()).filter(b->b.material().getName().equalsIgnoreCase(material)&&b.insulated()==insulated).findFirst().orElseThrow();

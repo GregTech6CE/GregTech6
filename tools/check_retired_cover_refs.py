@@ -9,9 +9,9 @@ from native_layout import native_path
 import json
 import pathlib
 
-RETIRED = ("gregtech:cover_pump", "gregtech:cover_conveyor", "gregtech:cover_robot_arm",
-           "gregtech:cover_redstone_torch", "gregtech:cover_redstone_repeater",
-           "gregtech:cover_tag_selector")
+RETIRED = ("gt6ce:cover_pump", "gt6ce:cover_conveyor", "gt6ce:cover_robot_arm",
+           "gt6ce:cover_redstone_torch", "gt6ce:cover_redstone_repeater",
+           "gt6ce:cover_tag_selector")
 
 hits = []
 for path in native_path(pathlib.Path("src/main/resources/data")).rglob("*.json"):

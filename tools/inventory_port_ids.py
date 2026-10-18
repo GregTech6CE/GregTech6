@@ -18,7 +18,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANG = native_path(ROOT / "src/main/resources/assets/gregtech/lang/en_us.json")
+LANG = native_path(ROOT / "src/main/resources/assets/gt6ce/lang/en_us.json")
 
 
 def main() -> int:
@@ -29,8 +29,8 @@ def main() -> int:
     args = ap.parse_args()
 
     data = json.loads(LANG.read_text(encoding="utf-8"))
-    items = sorted(k.split(".", 2)[2] for k in data if k.startswith("item.gregtech."))
-    blocks = sorted(k.split(".", 2)[2] for k in data if k.startswith("block.gregtech."))
+    items = sorted(k.split(".", 2)[2] for k in data if k.startswith("item.gt6ce."))
+    blocks = sorted(k.split(".", 2)[2] for k in data if k.startswith("block.gt6ce."))
     pool = items + (blocks if args.blocks else [])
 
     for pat in args.patterns:

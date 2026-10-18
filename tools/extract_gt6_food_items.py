@@ -216,7 +216,7 @@ def parse_container(expr: str, meta_to_id: dict):
         return 'minecraft:stick', int(match.group(1))
     match = re.fullmatch(r'OP\.scrapGt\.mat\(\s*MT\.(\w+)\s*,\s*(\d+)\s*\)', expr)
     if match:
-        return 'gregtech:scrap_gt_' + port_material_id(match.group(1)), int(match.group(2))
+        return 'gt6ce:scrap_gt_' + port_material_id(match.group(1)), int(match.group(2))
     return None, 0
 
 

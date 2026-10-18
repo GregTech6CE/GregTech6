@@ -33,7 +33,7 @@ def main():
         shutil.copyfile(source,dest)
         entries[relative]={'source':source.relative_to(ORIGINAL).as_posix(),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
         if source.with_suffix('.png.mcmeta').exists():shutil.copyfile(source.with_suffix('.png.mcmeta'),dest.with_suffix('.png.mcmeta'))
-        return 'gregtech:'+relative.removeprefix('textures/').removesuffix('.png')
+        return 'gt6ce:'+relative.removeprefix('textures/').removesuffix('.png')
     def model(folder,overlay,controller=False):
         children={}
         for name,part in [('base','colored'),('overlay',overlay)]:
@@ -46,8 +46,8 @@ def main():
     for name,(folder,en,zh) in PARTS.items():
         path='block/machine/fusion/'+name
         write('models/'+path+'.json',model(SOURCE/'machines/multiblockparts'/folder/'0','overlay'))
-        write('models/item/'+name+'.json',{'parent':'gregtech:'+path})
-        write('blockstates/'+name+'.json',{'variants':{'':{'model':'gregtech:'+path}}})
+        write('models/item/'+name+'.json',{'parent':'gt6ce:'+path})
+        write('blockstates/'+name+'.json',{'variants':{'':{'model':'gt6ce:'+path}}})
     variants={}
     for lit in [False,True]:
         for running in [False,True]:
@@ -55,28 +55,28 @@ def main():
             path=f'block/machine/fusion/controller_{int(lit)}_{int(running)}'
             write('models/'+path+'.json',model(SOURCE/'machines/basicmachines/fusionreactor',overlay,True))
             for direction,rotation in [('north',0),('east',90),('south',180),('west',270)]:
-                variants[f'facing={direction},lit={str(lit).lower()},running={str(running).lower()}']={'model':'gregtech:'+path,'y':rotation}
+                variants[f'facing={direction},lit={str(lit).lower()},running={str(running).lower()}']={'model':'gt6ce:'+path,'y':rotation}
     write('blockstates/fusion_reactor_main.json',{'variants':variants})
-    write('models/item/fusion_reactor_main.json',{'parent':'gregtech:block/machine/fusion/controller_0_0'})
+    write('models/item/fusion_reactor_main.json',{'parent':'gt6ce:block/machine/fusion/controller_0_0'})
     manifest.write_text(json.dumps(entries,indent=2,sort_keys=True)+'\n',encoding='utf8')
     translations={
-        'gregtech.fusion.startup':('Startup remaining: %s LU','启动还需：%s LU'),
-        'gregtech.fusion.output':('Output: %s EU/t','输出：%s EU/t'),
-        'gregtech.jei.assembly_fusion':('19 x 19 x 5. Core: 3 versatile, 12 logic, 12 control processors in any order. LU: middle ring except four outer cardinal EU outlets. Items/fluids: upper/lower ring. Identical continuous reactions keep startup charge.','19×19×5。核心内放置 3 通用、12 逻辑、12 控制处理器，可交换位置。中层环壁输入 LU，四个最外侧轴线端口输出 EU；上下环壁输入输出物品和流体。连续同配方无需重复启动。'),
+        'gt6ce.fusion.startup':('Startup remaining: %s LU','启动还需：%s LU'),
+        'gt6ce.fusion.output':('Output: %s EU/t','输出：%s EU/t'),
+        'gt6ce.jei.assembly_fusion':('19 x 19 x 5. Core: 3 versatile, 12 logic, 12 control processors in any order. LU: middle ring except four outer cardinal EU outlets. Items/fluids: upper/lower ring. Identical continuous reactions keep startup charge.','19×19×5。核心内放置 3 通用、12 逻辑、12 控制处理器，可交换位置。中层环壁输入 LU，四个最外侧轴线端口输出 EU；上下环壁输入输出物品和流体。连续同配方无需重复启动。'),
     }
-    for name,(_,en,zh) in PARTS.items():translations['block.gregtech.'+name]=(en,zh)
+    for name,(_,en,zh) in PARTS.items():translations['block.gt6ce.'+name]=(en,zh)
     for i,locale in enumerate(['en_us','zh_cn']):
         path=ASSETS/f'lang/{locale}.json';data=json.loads(path.read_text(encoding='utf8'))
         data.update({k:v[i] for k,v in translations.items()});path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     path=native_path(ROOT/'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json')
     data=json.loads(path.read_text(encoding='utf8'))
     for name in PARTS:
-        if 'gregtech:'+name not in data['values']:data['values'].append('gregtech:'+name)
+        if 'gt6ce:'+name not in data['values']:data['values'].append('gt6ce:'+name)
     path.write_text(json.dumps(data,indent=2)+'\n',encoding='utf8')
     # Empty GameTest region large enough for the full ring and all four external receivers.
     def string(s):return struct.pack('>H',len(s))+s.encode()
     def named(kind,name,data):return bytes([kind])+string(name)+data
     nbt=named(10,'',named(3,'DataVersion',struct.pack('>i',3465))+named(9,'size',bytes([3])+struct.pack('>iiii',3,25,9,25))+named(9,'entities',bytes([10])+struct.pack('>i',0))+named(9,'blocks',bytes([10])+struct.pack('>i',0))+named(9,'palette',bytes([10])+struct.pack('>i',1)+named(8,'Name',string('minecraft:air'))+b'\x00')+b'\x00')
-    path=native_path(ROOT/'src/main/resources/data/gregtech/structures/test_fusion_empty.nbt');path.write_bytes(gzip.compress(nbt,mtime=0))
+    path=native_path(ROOT/'src/main/resources/data/gt6ce/structures/test_fusion_empty.nbt');path.write_bytes(gzip.compress(nbt,mtime=0))
 
 if __name__=='__main__':main()

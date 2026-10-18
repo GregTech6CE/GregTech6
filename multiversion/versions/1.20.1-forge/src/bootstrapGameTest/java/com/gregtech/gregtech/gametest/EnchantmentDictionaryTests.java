@@ -22,7 +22,7 @@ import java.util.Map;
  * prints the enchantments a material grants per use, transcribed from {@code MT.java}'s
  * {@code addEnchantmentForTools/Damage/Weapons/Ammo/Ranged/Fishing/Armors} calls.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class EnchantmentDictionaryTests {
 

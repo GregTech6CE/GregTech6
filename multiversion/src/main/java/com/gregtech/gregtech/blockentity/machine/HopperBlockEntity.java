@@ -725,7 +725,7 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gregtech." + spec.id());
+        return Component.translatable("block.gt6ce." + spec.id());
     }
 
     @Nullable

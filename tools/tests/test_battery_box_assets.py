@@ -12,7 +12,7 @@ import re
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 TIERS=['ulv','lv','mv','hv','ev','iv','luv','zpm','uv','xv']
 class BatteryBoxAssets(unittest.TestCase):
     def test_all_faces_water_states_and_three_original_layers(self):
@@ -41,7 +41,7 @@ class BatteryBoxAssets(unittest.TestCase):
         cn=(ROOT.parent/'GregTech.lang').read_text(encoding='utf-8')
         for i,tier in enumerate(TIERS):
             expected=re.search(r'^\s*S:gt\.multitileentity\.'+str(10080+i)+r'=(.*)$',cn,re.M).group(1).strip()
-            self.assertEqual(lang['block.gregtech.battery_box_'+tier],expected)
+            self.assertEqual(lang['block.gt6ce.battery_box_'+tier],expected)
     def test_selective_generator_is_idempotent_and_preserves_other_language_keys(self):
         spec=importlib.util.spec_from_file_location('energy_assets',ROOT/'tools/generate_energy_node_assets.py')
         mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)

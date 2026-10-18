@@ -42,7 +42,7 @@ import java.util.List;
  * tests cover the automated path. The bag collects on its block entity tick, so the assertions run a
  * few ticks after placement.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class SapBagTests {
     private static final int BASE_X = 28000;
@@ -194,7 +194,7 @@ public final class SapBagTests {
                     hit(rubberBag, Direction.EAST));
             helper.assertTrue(be.stored().isEmpty(), "the item was handed out");
             helper.assertTrue(player.getInventory().countItem(ForgeRegistries.ITEMS.getValue(
-                            ResourceLocation.fromNamespaceAndPath("gregtech", "rubber_resin"))) > 0,
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "rubber_resin"))) > 0,
                     "the player received the resin item");
 
             // Sap in the tank goes into the container the player holds.
@@ -240,7 +240,7 @@ public final class SapBagTests {
     private static ItemStack containerAccepting(FluidStack sap) {
         for (var item : ForgeRegistries.ITEMS) {
             ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-            if (id == null || !id.getNamespace().equals("gregtech") || !id.getPath().startsWith("fluid_")) continue;
+            if (id == null || !id.getNamespace().equals("gt6ce") || !id.getPath().startsWith("fluid_")) continue;
             ItemStack stack = new ItemStack(item);
             IFluidHandlerItem handler = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
             if (handler == null) continue;

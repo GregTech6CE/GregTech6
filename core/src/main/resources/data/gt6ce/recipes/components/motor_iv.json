@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CWR",
+    "WIW",
+    "PWC"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:cable_01_platinum"
+    },
+    "W": {
+      "item": "gt6ce:wire_05_annealed_copper"
+    },
+    "R": {
+      "tag": "forge:rods/titanium"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_titanium"
+    },
+    "I": {
+      "tag": "forge:rods/neodymium_magnetic"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_electric_motor_iv",
+    "count": 1
+  }
+}

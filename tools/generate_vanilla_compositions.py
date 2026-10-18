@@ -224,7 +224,7 @@ def build():
                 new[name]={'components':components,'source':'Minecraft 1.20.1 recipe: '+key,'recoverable':False}
         if not new:break
         rows.update(new)
-    path=native_path(ROOT/'src/main/resources/data/gregtech/materials/vanilla_compositions.json')
+    path=native_path(ROOT/'src/main/resources/data/gt6ce/materials/vanilla_compositions.json')
     path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(rows,indent=2,ensure_ascii=False,sort_keys=True)+'\n',encoding='utf-8')
     (ROOT/'docs/vanilla-composition-render-variants.txt').write_text('\n'.join(sorted(ids-rows.keys())),encoding='utf-8')
     print(f'{len(rows)} mapped model/item IDs; {len(ids-rows.keys())} unclassified models (includes render variants)')

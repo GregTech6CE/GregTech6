@@ -98,9 +98,9 @@ public final class BehaviorSprayExtinguisher {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable fireExtinguisher() {
-        return new Consumable(ItemBehaviors.stack("gregtech:empty_spray_can"),
-                ItemBehaviors.stack("gregtech:fire_extinguisher_co2_2"),
-                ItemBehaviors.stack("gregtech:fire_extinguisher_co2"),
+        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+                ItemBehaviors.stack("gt6ce:fire_extinguisher_co2_2"),
+                ItemBehaviors.stack("gt6ce:fire_extinguisher_co2"),
                 USES * USES_MULTIPLIER);
     }
 

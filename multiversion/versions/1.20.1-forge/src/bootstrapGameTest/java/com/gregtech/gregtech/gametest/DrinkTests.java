@@ -22,7 +22,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * GT6's drinks: the {@code DrinksGT} table (registered per fluid in {@code Loader_Fluids} as
  * {@code FoodStatDrink}) and drinking one, which is what a GT6 bottle does ({@code MultiItemBottles}, 250 mB).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DrinkTests {
     private static final int BASE_X = 70000;

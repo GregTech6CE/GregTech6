@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:compact_electric_piston_ev"
+    },
+    "C": {
+      "item": "gt6ce:circuit_master"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_dense_lead"
+    }
+  },
+  "result": {
+    "item": "gt6ce:reactor_core_2x2"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -2,8 +2,8 @@
 """Scan Minecraft Anvil region files and count gregtech block palette usage.
 
 Verifies worldgen wiring: if GT ore veins / small ores / stone layers ran during
-chunk generation, the chunk section palettes contain gregtech:ore_* /
-gregtech:stone_* entries. Counts actual placed blocks by decoding the packed
+chunk generation, the chunk section palettes contain gt6ce:ore_* /
+gt6ce:stone_* entries. Counts actual placed blocks by decoding the packed
 block-state indices.
 
 Usage: python scan_region_ores.py <world>/region [more region dirs...]
@@ -123,7 +123,7 @@ def count_blocks(section, counter):
     if not bs or "palette" not in bs:
         return
     palette = [e.get("Name", "") for e in bs["palette"]]
-    gt = {i: name for i, name in enumerate(palette) if name.startswith("gregtech:")}
+    gt = {i: name for i, name in enumerate(palette) if name.startswith("gt6ce:")}
     if not gt:
         return
     data = bs.get("data")

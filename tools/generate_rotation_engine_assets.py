@@ -17,7 +17,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master/src/main/java"
 SOURCE = ORIGINAL / "gregtech/loaders/b/Loader_MultiTileEntities.java"
 VOLTAGES = ORIGINAL / "gregapi/data/CS.java"
@@ -80,7 +80,7 @@ def expected() -> tuple[dict[Path, bytes], dict[str, str], dict[str, str]]:
             raise ValueError(f"Missing GregTech.lang translation for {original_id}")
 
         block_id = f"engine_rotation_{suffix}"
-        key = f"block.gregtech.{block_id}"
+        key = f"block.gt6ce.{block_id}"
         english[key] = f"{name} Rotation Engine"
         chinese[key] = translations[original_id]
         files[ASSETS / "blockstates" / f"{block_id}.json"] = blockstate_template
@@ -95,7 +95,7 @@ def lang_bytes(path: Path, entries: dict[str, str]) -> bytes:
     raw = path.read_bytes()
     newline = "\r\n" if b"\r\n" in raw else "\n"
     lines = raw.decode("utf-8").splitlines(keepends=True)
-    matching = {i for i, line in enumerate(lines) if re.match(r'  "block\.gregtech\.engine_rotation_[^" ]+":', line)}
+    matching = {i for i, line in enumerate(lines) if re.match(r'  "block\.gt6ce\.engine_rotation_[^" ]+":', line)}
     if not matching:
         raise ValueError(f"No rotation-engine insertion point in {path}")
     start = min(matching)

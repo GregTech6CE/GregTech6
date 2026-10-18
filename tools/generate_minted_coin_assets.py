@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 
 
 def generate(assets=ASSETS):
@@ -35,7 +35,7 @@ def generate(assets=ASSETS):
                     faces[side] = {"texture": "#side", "tintindex": 0}
             elements.append({"from": [x, 7, z], "to": [x + 1, 9 - pixel_depth / 4, z + 1], "faces": faces})
     model = {"parent": "minecraft:block/block", "textures": {
-        "top": "gregtech:block/iconsets/coin", "side": "gregtech:block/iconsets/coin_side", "particle": "#top"},
+        "top": "gt6ce:block/iconsets/coin", "side": "gt6ce:block/iconsets/coin_side", "particle": "#top"},
         "elements": elements}
     root = assets / "models/item/coin_minted.json"
     root.parent.mkdir(parents=True, exist_ok=True)
@@ -43,7 +43,7 @@ def generate(assets=ASSETS):
     for path in (ASSETS / "models/item/material").glob("*/coin.json"):
         target = assets / path.relative_to(ASSETS)
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text('{"parent": "gregtech:item/coin_minted"}\n', encoding="utf-8")
+        target.write_text('{"parent": "gt6ce:item/coin_minted"}\n', encoding="utf-8")
 
 
 if __name__ == "__main__":

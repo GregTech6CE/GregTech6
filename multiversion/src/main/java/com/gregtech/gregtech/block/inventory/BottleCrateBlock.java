@@ -34,7 +34,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     private final com.gregtech.gregtech.api.material.GTMaterial material;
     private final String woodTexture;
     public BottleCrateBlock(Properties properties) {
-        this(null, "gregtech:block/iconsets/planks_treated", properties);
+        this(null, "gt6ce:block/iconsets/planks_treated", properties);
     }
     public BottleCrateBlock(com.gregtech.gregtech.api.material.GTMaterial material,
                             String woodTexture, Properties properties) {
@@ -47,7 +47,7 @@ public class BottleCrateBlock extends HorizontalDirectionalBlock implements Enti
     public boolean metal() { return material != null; }
     public int tintRgb() { return metal() ? material.getColor() : 0xFFFFFF; }
     public String frameTexture() {
-        return metal() ? "gregtech:block/material_icons/"
+        return metal() ? "gt6ce:block/material_icons/"
                 + com.gregtech.gregtech.api.material.MaterialIconDefinitions.resolveTextureSet(material).folder()
                 + "/" + com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachine.getTextureFileName()
                 : woodTexture;

@@ -60,7 +60,7 @@ import java.util.Map;
  *       ({@code gregapi/util/CR.java:161-163}) while 1.20.1 mirrors shaped recipes by default, so every
  *       row is wrapped in {@link ToolShapedRecipe} with {@code allowMirror = false}.</li>
  *   <li>The tool keys are GT tools ({@code 's'} saw, {@code 'f'} file; {@code CR.java:344-360}), i.e.
- *       the port's {@code gregtech:tool_saw}/{@code tool_file} items that wear on use.</li>
+ *       the port's {@code gt6ce:tool_saw}/{@code tool_file} items that wear on use.</li>
  * </ul>
  *
  * <p>A spec that does not resolve (a missing material form, a missing tool type) skips that single row
@@ -80,7 +80,7 @@ public final class Loader_WoodCraftingRecipes {
     private Loader_WoodCraftingRecipes() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
-    public static List<String> registeredIds() { return REGISTERED.stream().filter(id -> !id.startsWith("gregtech:wood/natural/")).toList(); }
+    public static List<String> registeredIds() { return REGISTERED.stream().filter(id -> !id.startsWith("gt6ce:wood/natural/")).toList(); }
     public static List<String> treatedRegisteredIds() { return List.copyOf(TREATED_REGISTERED); }
 
     /** Rows whose specs did not resolve in this port, with the reason. */

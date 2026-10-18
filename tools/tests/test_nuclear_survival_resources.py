@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 sys.path.insert(0, str(ROOT / 'tools'))
 from check_render_resources import check
 
@@ -35,24 +35,24 @@ class NuclearSurvivalResources(unittest.TestCase):
             self.assertEqual([(e['from'], e['to']) for e in child['elements']], expected)
         for p in (ASSETS / 'blockstates').glob('fluid_funnel*.json'):
             d = json.loads(p.read_text(encoding='utf-8'))
-            self.assertEqual(d['variants']['facing=down']['model'], 'gregtech:block/tool/fluid_funnel_down')
+            self.assertEqual(d['variants']['facing=down']['model'], 'gt6ce:block/tool/fluid_funnel_down')
             issues, _ = check([p])
             self.assertFalse(issues)
 
     def test_suit_recipes_use_exactly_the_declared_pattern_keys(self):
-        for p in (native_path(ROOT / 'src/main/resources/data/gregtech/recipes/nuclear')).glob('radiation_suit_*.json'):
+        for p in (native_path(ROOT / 'src/main/resources/data/gt6ce/recipes/nuclear')).glob('radiation_suit_*.json'):
             d = json.loads(p.read_text(encoding='utf-8'))
             symbols = set(''.join(d['pattern'])) - {' '}
             self.assertEqual(symbols, set(d['key']))
             self.assertEqual(d['key']['L'], {'tag': 'forge:plates/lead'})
 
     def test_new_messages_and_protection_tag(self):
-        tag = json.loads((native_path(ROOT / 'src/main/resources/data/gregtech/tags/items/radiation_protection.json')).read_text(encoding='utf-8'))
+        tag = json.loads((native_path(ROOT / 'src/main/resources/data/gt6ce/tags/items/radiation_protection.json')).read_text(encoding='utf-8'))
         self.assertEqual(len(set(tag['values'])), 4)
         for locale in ['zh_cn', 'en_us']:
             lang = json.loads((ASSETS / f'lang/{locale}.json').read_text(encoding='utf-8'))
             for name in tag['values']:
                 self.assertIn('item.' + name.replace(':', '.'), lang)
-            for key in ['gt.tooltip.radiation_suit', 'message.gregtech.geiger.reading',
-                        'message.gregtech.portable_fluid.limit', 'tooltip.gregtech.portable_fluid.limit_use']:
+            for key in ['gt.tooltip.radiation_suit', 'message.gt6ce.geiger.reading',
+                        'message.gt6ce.portable_fluid.limit', 'tooltip.gt6ce.portable_fluid.limit_use']:
                 self.assertIn(key, lang)

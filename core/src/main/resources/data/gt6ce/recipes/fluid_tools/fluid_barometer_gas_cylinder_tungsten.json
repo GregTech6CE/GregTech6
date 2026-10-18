@@ -1,0 +1,36 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "RCR",
+    "BCh",
+    "TPd"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tungsten"
+    },
+    "C": {
+      "item": "gt6ce:plate_curved_tungsten"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "R": {
+      "tag": "forge:rings/tungsten"
+    },
+    "B": {
+      "item": "gt6ce:round_tungsten"
+    },
+    "T": {
+      "tag": "forge:screws/tungsten"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:fluid_barometer_gas_cylinder_tungsten"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

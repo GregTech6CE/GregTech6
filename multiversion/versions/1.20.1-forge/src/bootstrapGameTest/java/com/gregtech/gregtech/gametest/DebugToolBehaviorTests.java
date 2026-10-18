@@ -43,7 +43,7 @@ import java.util.List;
  * another suite would take that suite's blocks with it. Every site is cleared before use, blocks
  * <em>and</em> entities, so the file is re-runnable on a reused world.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DebugToolBehaviorTests {
     private static final int BASE_X = 55000;
@@ -78,14 +78,14 @@ public final class DebugToolBehaviorTests {
 
     /** The wand item of {@code GTToolType.BUILDER_WAND} ({@code GTToolItems:24}, id {@code tool_…}). */
     private static ItemStack wand() {
-        return ItemBehaviors.stack("gregtech:tool_builder_wand");
+        return ItemBehaviors.stack("gt6ce:tool_builder_wand");
     }
 
     /** A dynamite block — GT6 {@code MultiTileEntityDynamite}, the port's one {@code RemoteActivatable}. */
     private static Block dynamite(GameTestHelper helper) {
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "dynamite"));
-        helper.assertTrue(block != null && block != Blocks.AIR, "gregtech:dynamite is registered");
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "dynamite"));
+        helper.assertTrue(block != null && block != Blocks.AIR, "gt6ce:dynamite is registered");
         return block;
     }
 
@@ -273,7 +273,7 @@ public final class DebugToolBehaviorTests {
 
         // The click entry point uses the GT6 range and reports the click as handled.
         helper.assertTrue(BehaviorChunkEraser.useOn(level, centre, Direction.UP, player,
-                        ItemBehaviors.stack("gregtech:chunk_eraser"), 0.5F, 0.5F, 0.5F).acted(),
+                        ItemBehaviors.stack("gt6ce:chunk_eraser"), 0.5F, 0.5F, 0.5F).acted(),
                 "the Chunk Eraser handles the click (Behavior_Chunk_Remover:44)");
         helper.succeed();
     }
@@ -308,7 +308,7 @@ public final class DebugToolBehaviorTests {
                         + level.getBlockState(orePos));
 
         helper.assertTrue(BehaviorWorldgenDebugger.useOn(level, centre, Direction.UP, player,
-                        ItemBehaviors.stack("gregtech:worldgen_debug_wand"), 0.5F, 0.5F, 0.5F).acted(),
+                        ItemBehaviors.stack("gt6ce:worldgen_debug_wand"), 0.5F, 0.5F, 0.5F).acted(),
                 "the Worldgen Debug Wand handles the click (Behavior_Worldgen_Debugger:54)");
         helper.assertTrue(level.getBlockState(orePos).getBlock() == ore,
                 "and a second sweep still keeps the ore");
@@ -332,7 +332,7 @@ public final class DebugToolBehaviorTests {
         BlockPos charge = site(40, 120);
         clearSite(level, charge, 3);
         level.setBlock(charge, dynamite(helper).defaultBlockState(), 3);
-        ItemStack remote = ItemBehaviors.stack("gregtech:remote_activator");
+        ItemStack remote = ItemBehaviors.stack("gt6ce:remote_activator");
 
         player.setShiftKeyDown(true);
         helper.assertTrue(BehaviorRemote.useOn(level, charge, Direction.UP, player, remote,
@@ -418,8 +418,8 @@ public final class DebugToolBehaviorTests {
     public static void edibleMultiItemsStillStartEatingThroughUse(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         Player player = survival(helper);
-        ItemStack food = ItemBehaviors.stack("gregtech:lemon");
-        helper.assertTrue(food.isEdible(), "gregtech:lemon carries GT6's own food values");
+        ItemStack food = ItemBehaviors.stack("gt6ce:lemon");
+        helper.assertTrue(food.isEdible(), "gt6ce:lemon carries GT6's own food values");
         helper.assertFalse(ItemBehaviors.isPorted("lemon"),
                 "no behaviour claims the food, so its click has to fall through to Item#use");
 

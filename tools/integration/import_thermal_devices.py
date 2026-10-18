@@ -43,7 +43,7 @@ def main():
         if row.startswith('S:') and '=' in row:
             key, value = row[2:].split('=', 1)
             chinese[key] = value
-    locales = {name: json.loads((ns.repo / f'core/src/main/resources/assets/gregtech/lang/{name}.json').read_text(encoding='utf-8'))
+    locales = {name: json.loads((ns.repo / f'core/src/main/resources/assets/gt6ce/lang/{name}.json').read_text(encoding='utf-8'))
                for name in ('en_us', 'zh_cn')}
     variants, assets = [], {}
     tiers = ('lv', 'mv', 'hv', 'ev', 'iv')
@@ -53,10 +53,10 @@ def main():
             folder = ('cooler/cryo_' if cooler else 'heaters/heat_') + ('flux' if rf else 'electric')
             for layer in ('colored', 'overlay', 'overlay_active'):
                 for face in ('front', 'back', 'side'):
-                    rel = f'assets/gregtech/textures/blocks/machines/{folder}/{layer}/{face}.png'
+                    rel = f'assets/gt6ce/textures/blocks/machines/{folder}/{layer}/{face}.png'
                     canonical = native_path(ns.source / 'src/main/resources' / rel)
                     donor = canonical if canonical.is_file() else native_path(ns.comparison / 'src/main/resources' / rel)
-                    target = ns.repo / f'core/src/main/resources/assets/gregtech/textures/block/machines/{folder}/{layer}/{face}.png'
+                    target = ns.repo / f'core/src/main/resources/assets/gt6ce/textures/block/machines/{folder}/{layer}/{face}.png'
                     if not donor.is_file():
                         raise ValueError('Missing original asset: ' + str(donor))
                     target.parent.mkdir(parents=True, exist_ok=True)
@@ -79,21 +79,21 @@ def main():
                 expression, group, _ = next(row for row in source_rows if int(row[2]) == source_id)
                 if not expression.strip().startswith('"' + base_name + ' ("'):
                     raise ValueError('Unexpected source name expression: ' + expression)
-                key = 'block.gregtech.' + id
+                key = 'block.gt6ce.' + id
                 locales['en_us'][key] = name
                 locales['zh_cn'][key] = chinese[source_key]
                 variants.append({'id': id, 'source_id': source_id, 'source_key': source_key,
                                  'en_us': name, 'zh_cn': chinese[source_key], 'folder': folder,
                                  'creative_family': group.lower(), 'source_order': order[source_id]})
                 for platform in (str(native_path('src')), str(native_path('neoforge/src'))):
-                    root = ns.repo / platform / 'main/resources/assets/gregtech'
+                    root = ns.repo / platform / 'main/resources/assets/gt6ce'
                     model_path = root / f'models/block/machine/energy/{id}.json'
                     template_id = 'electric_' + ('cooler_' if cooler else 'heater_') + tier
                     template = json.loads((root / f'models/block/machine/energy/{template_id}.json').read_text(encoding='utf-8'))
                     if rf:
                         template = json.loads(json.dumps(template).replace('/cryo_electric/', '/cryo_flux/').replace('/heat_electric/', '/heat_flux/'))
                         model_path.write_text(json.dumps(template, indent=2) + '\n', encoding='utf-8')
-                        (root / f'models/item/{id}.json').write_text(json.dumps({'parent': f'gregtech:block/machine/energy/{id}'}, indent=2)+'\n', encoding='utf-8')
+                        (root / f'models/item/{id}.json').write_text(json.dumps({'parent': f'gt6ce:block/machine/energy/{id}'}, indent=2)+'\n', encoding='utf-8')
                     active = copy.deepcopy(template)
                     textures = active['children']['layer1']['textures']
                     for face, texture in textures.items():
@@ -101,11 +101,11 @@ def main():
                     (root / f'models/block/machine/energy/{id}_active.json').write_text(json.dumps(active, indent=2)+'\n', encoding='utf-8')
                     rotations = {'north': {}, 'east': {'y': 90}, 'south': {'y': 180}, 'west': {'y': 270}, 'up': {'x': 270}, 'down': {'x': 90}}
                     states = {f'activity={activity},facing={face},waterlogged={str(water).lower()}':
-                              {'model': f'gregtech:block/machine/energy/{id}' + ('_active' if activity else ''), **rotation}
+                              {'model': f'gt6ce:block/machine/energy/{id}' + ('_active' if activity else ''), **rotation}
                               for activity in range(3) for face, rotation in rotations.items() for water in (False, True)}
                     (root / f'blockstates/{id}.json').write_text(json.dumps({'variants': states}, indent=2)+'\n', encoding='utf-8')
     for locale, data in locales.items():
-        (ns.repo / f'core/src/main/resources/assets/gregtech/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
+        (ns.repo / f'core/src/main/resources/assets/gt6ce/lang/{locale}.json').write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     catalog = ns.repo / 'core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java'
     text = catalog.read_text(encoding='utf-8')
     # An explicit original ordinal prevents equal names or fallback classification from dropping flux variants.

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_electrolyzer",
+  "contents": [
+    "item:gt6ce:electrolyzer_aluminium",
+    "item:gt6ce:electrolyzer_chromium",
+    "item:gt6ce:electrolyzer_galvanized_steel",
+    "item:gt6ce:electrolyzer_stainless_steel",
+    "item:gt6ce:electrolyzer_titanium"
+  ],
+  "priority": 110
+}

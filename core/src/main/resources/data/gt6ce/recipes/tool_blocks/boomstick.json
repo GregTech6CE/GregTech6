@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2235",
+  "pattern": [
+    " S ",
+    "PGP",
+    "DGD"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "item": "gt6ce:dust_gunpowder"
+    },
+    "D": {
+      "item": "gt6ce:dust_silicondioxide"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:boomstick"
+  }
+}

@@ -31,7 +31,7 @@ import java.util.Map;
  * re-emits its own input, and an optimized self-cancelling row poisons {@link RecipeMap#findCollision}).
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class StoneExtrusionTests {
 

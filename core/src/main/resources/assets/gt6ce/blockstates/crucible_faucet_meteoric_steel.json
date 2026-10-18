@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_meteoric_steel"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_meteoric_steel"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_meteoric_steel"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_meteoric_steel"
+    }
+  }
+}

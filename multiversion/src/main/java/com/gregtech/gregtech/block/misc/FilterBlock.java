@@ -27,9 +27,9 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
 *///?} else {
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.level.BlockGetter level,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag flag){
 //?}
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.filter.routing"));
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.filter.tools"));
-        if(filterType.equals("oredict"))lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.filter.prefix"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.routing"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.tools"));
+        if(filterType.equals("oredict"))lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.filter.prefix"));
     }
 
 //? if >=1.21.1 {
@@ -51,7 +51,7 @@ public class FilterBlock extends net.minecraft.world.level.block.DirectionalBloc
             if(!level.isClientSide&&level.getBlockEntity(pos) instanceof FilterBlockEntity filter){
                 if(com.gregtech.gregtech.api.tool.GTToolHelper.isSoftHammer(tool))filter.clearFilter();else filter.toggleMode();
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(tool,1,player);
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter.blacklist()?"gregtech.filter.blacklist":"gregtech.filter.whitelist"),true);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter.blacklist()?"gt6ce.filter.blacklist":"gt6ce.filter.whitelist"),true);
             }
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         }

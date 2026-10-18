@@ -28,7 +28,7 @@ import java.util.Set;
  * its mutation, and the cross branch rolls {@code rng(4)}, so a child may be either parent or the
  * combination. Counts, types, genomes, the queen and the drone cost are pinned exactly.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleBreedingTests {
 

@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "hf",
+    "xP"
+  ],
+  "key": {
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "f": {
+      "item": "gt6ce:tool_file"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "P": {
+      "item": "gt6ce:plate_double_stainlesssteel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:foodmold_shape_empty",
+    "count": 1
+  }
+}

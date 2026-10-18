@@ -1,0 +1,51 @@
+{
+  "base_commit": "1e1069ab91ac29af73983d6dcd8c6ae14b04d2e8",
+  "current_source": "core/build/classes/java/main (current namespace build)",
+  "observer_source": "HEAD:core/src/test/java/com/gregtech/gregtech/core/MaterialCatalogSnapshot.java",
+  "scope": "Isolated Java 17 comparison with the unchanged HEAD observer; identity fields only",
+  "full_differential_sha256": "66267cf679473265bce6d88c2282d42adbb2694cccc37ce7db1236169f0882df",
+  "phases": {
+    "definitions": {
+      "row_count": 155935,
+      "old_sha256": "9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146",
+      "new_sha256": "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb",
+      "changed_rows": 1160,
+      "unchanged_rows": 154775,
+      "row_types": {
+        "M": 1160
+      },
+      "unexpected": [],
+      "normalization_reproduces_old_sha256": "9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146",
+      "translation_key_changes": 1160,
+      "own_source_identity_changes": 53,
+      "external_presence_changes": [
+        "8103:PlatinumGroupSludge",
+        "8796:HSSG",
+        "8797:HSSE",
+        "8798:HSSS"
+      ],
+      "no_physical_or_form_delta": true
+    },
+    "post_init": {
+      "row_count": 155935,
+      "old_sha256": "149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe",
+      "new_sha256": "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80",
+      "changed_rows": 1160,
+      "unchanged_rows": 154775,
+      "row_types": {
+        "M": 1160
+      },
+      "unexpected": [],
+      "normalization_reproduces_old_sha256": "149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe",
+      "translation_key_changes": 1160,
+      "own_source_identity_changes": 53,
+      "external_presence_changes": [
+        "8103:PlatinumGroupSludge",
+        "8796:HSSG",
+        "8797:HSSE",
+        "8798:HSSS"
+      ],
+      "no_physical_or_form_delta": true
+    }
+  }
+}

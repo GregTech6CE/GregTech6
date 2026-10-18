@@ -1,0 +1,131 @@
+{
+  "status": "passed",
+  "scope": "packaging and current bytecode only; no game execution",
+  "build_log": "work/gt6ce-namespace-20261018/build-final.log",
+  "shared_classes": 818,
+  "platforms": {
+    "forge": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.20.1-forge\\build\\libs\\gt6ce-1.20.1-forge-0.0.0.jar",
+      "sha256": "cad9ef723d90cd5055d3e4e4b2b82bb28c1cf9237ba133238b01339809965b3f",
+      "bytes": 40019454,
+      "zip_entries": 83727,
+      "metadata_path": "META-INF/mods.toml",
+      "metadata": {
+        "mod_id": "gt6ce",
+        "mod_version": "0.0.0",
+        "minecraft": "1.20.1",
+        "loader": "forge",
+        "loader_version_range": "[47,)",
+        "dependency_ranges": {
+          "minecraft": "[1.20.1]",
+          "forge": "[47,)"
+        },
+        "license": "LGPL-3.0-or-later"
+      },
+      "zip_crc_checked": true,
+      "mixin_verification": {
+        "refmap": "gregtech.refmap.json",
+        "mapped_classes": 24,
+        "sha256": "c727fdaefba2b8aaa8dde727051378aaa5033e84858a5d46fd3cbde43d09254c",
+        "unmapped_forge_api_mixins": [
+          "ComponentCoverCapabilitiesMixin",
+          "ReliableEmiGearboxIconMixin",
+          "ReliableEmiNamespaceMixin",
+          "WaterContainerMixin"
+        ]
+      },
+      "resource_namespace_verification": {
+        "namespace": "gt6ce",
+        "json_documents_checked": 61081,
+        "retired_resource_roots_rejected": true,
+        "retired_resource_references_rejected": true
+      },
+      "current_platform_classes_checked": 1514,
+      "current_platform_classes_sha256": "0f4fb6bc938dc5bde5c23df5776a2565134948c427d81c7637caad100f10fa37",
+      "display_name": "GregTech 6 Community Edition",
+      "entrypoint_annotation": [
+        "com/gregtech/gregtech/GregTech.class"
+      ],
+      "event_subscriber_annotations_checked": 68,
+      "fluid_display_tooltips_annotation": "gt6ce",
+      "geometry_loader": "gt6ce:shared_inventory",
+      "identity_field_constants": {
+        "MOD_ID": "gt6ce",
+        "MOD_NAME": "GregTech 6 Community Edition",
+        "REGISTRY_NAMESPACE": "gt6ce"
+      },
+      "engine_tooltips_packaged_footer": {
+        "method": "appendEngine",
+        "exact_name": "GregTech 6 Community Edition",
+        "blue_style_checked": false,
+        "compiled_footer_verified": true
+      },
+      "engine_tooltips_compiled_blue_footer": {
+        "method": "appendEngine",
+        "exact_name": "GregTech 6 Community Edition",
+        "blue_style_checked": true,
+        "compiled_footer_verified": true
+      }
+    },
+    "neoforge": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\libs\\gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "80045e1900cf19cc11fd6ae9cfc05a764727ea16c2c9d6dcddb6bf40938b849d",
+      "bytes": 39869574,
+      "zip_entries": 83006,
+      "metadata_path": "META-INF/neoforge.mods.toml",
+      "metadata": {
+        "mod_id": "gt6ce",
+        "mod_version": "0.0.0",
+        "minecraft": "1.21.1",
+        "loader": "neoforge",
+        "loader_version_range": "[1,)",
+        "dependency_ranges": {
+          "minecraft": "[1.21.1]",
+          "neoforge": "[21.1.243,)"
+        },
+        "license": "LGPL-3.0-or-later"
+      },
+      "zip_crc_checked": true,
+      "mixin_verification": null,
+      "resource_namespace_verification": {
+        "namespace": "gt6ce",
+        "json_documents_checked": 60260,
+        "retired_resource_roots_rejected": true,
+        "retired_resource_references_rejected": true
+      },
+      "current_platform_classes_checked": 1612,
+      "current_platform_classes_sha256": "9e66691de4086b10db5aba68a49528c87ec782386f30e66f38c2a908749a28af",
+      "display_name": "GregTech 6 Community Edition",
+      "entrypoint_annotation": [
+        "com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.class"
+      ],
+      "event_subscriber_annotations_checked": 123,
+      "fluid_display_tooltips_annotation": "gt6ce",
+      "geometry_loader": "gt6ce:shared_inventory",
+      "identity_field_constants": {
+        "MOD_ID": "gt6ce",
+        "MOD_NAME": "GregTech 6 Community Edition",
+        "REGISTRY_NAMESPACE": "gt6ce"
+      },
+      "engine_tooltips_packaged_footer": {
+        "method": "appendEngine",
+        "exact_name": "GregTech 6 Community Edition",
+        "blue_style_checked": false,
+        "compiled_footer_verified": true
+      },
+      "engine_tooltips_compiled_blue_footer": {
+        "method": "appendEngine",
+        "exact_name": "GregTech 6 Community Edition",
+        "blue_style_checked": true,
+        "compiled_footer_verified": true
+      }
+    }
+  },
+  "invalid_mod_annotations": [],
+  "sdk": {
+    "path": "C:\\Dev\\GregTech6\\core\\build\\libs\\gt6ce-addon-api-0.0.0.jar",
+    "bytes": 1920643,
+    "sha256": "e0889717a6e5bbd19837dc25db7fa60ff86e84d3592b71729865fad382cd5de7",
+    "current_core_classes_checked": 818
+  }
+}

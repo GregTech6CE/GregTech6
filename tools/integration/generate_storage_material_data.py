@@ -114,7 +114,7 @@ def main():
  suffixes=re.findall(r'new Spec\("([^"]+)"',catalog)
  metalsets=[(pos,a) for pos,a in calls(mte,'metalset') if len(a)==10 and norm(a[5]).startswith(('MT.','ANY.'))]
  assert len(metalsets)==len(suffixes)==60
- shelves=json.loads((REPO/'core/src/main/resources/data/gregtech/bookshelf_variants.json').read_text(encoding='utf-8'))['variants']
+ shelves=json.loads((REPO/'core/src/main/resources/data/gt6ce/bookshelf_variants.json').read_text(encoding='utf-8'))['variants']
  shelves={v['gt6_id']:v for v in shelves if v['kind']=='metal'}
  assert len(shelves)==60
  rows=[]

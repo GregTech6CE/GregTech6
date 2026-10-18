@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WMW",
+    "MxM",
+    "WMW"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:cable_04_annealed_copper"
+    },
+    "M": {
+      "item": "gt6ce:transformer_uv_xv"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:long_dist_transformer_uv"
+  }
+}

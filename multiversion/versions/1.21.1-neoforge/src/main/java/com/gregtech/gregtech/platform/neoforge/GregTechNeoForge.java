@@ -129,7 +129,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.registerCompositions();
         for (var block : net.minecraft.core.registries.BuiltInRegistries.BLOCK) {
             var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gregtech")) continue;
+            if (!id.getNamespace().equals("gt6ce")) continue;
             com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath())
                     .ifPresent(data -> ItemMaterialRegistry.register(block.asItem(), data));
         }

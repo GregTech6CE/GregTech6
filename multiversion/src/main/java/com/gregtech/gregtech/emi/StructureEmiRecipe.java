@@ -14,9 +14,9 @@ import java.util.*;
 /** Actual controller geometry and parts, available without JEI installed. */
 public final class StructureEmiRecipe implements EmiRecipe {
     private static final EmiRecipeCategory CATEGORY = new EmiRecipeCategory(
-            ResourceLocation.fromNamespaceAndPath("gregtech", "multiblock_assembly"),
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock_assembly"),
             EmiStack.of(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BRICKS))) {
-        @Override public Component getName() { return Component.translatable("gregtech.jei.assembly"); }
+        @Override public Component getName() { return Component.translatable("gt6ce.jei.assembly"); }
     };
     private final MultiblockInfoData.Info info;
     private final List<EmiIngredient> inputs;
@@ -35,7 +35,7 @@ public final class StructureEmiRecipe implements EmiRecipe {
         }
     }
     @Override public EmiRecipeCategory getCategory() { return CATEGORY; }
-    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gregtech",
+    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gt6ce",
             "/structure/" + BuiltInRegistries.ITEM.getKey(info.controller().getItem()).getPath()); }
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiStack> getOutputs() { return outputs; }

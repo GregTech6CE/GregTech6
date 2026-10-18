@@ -20,7 +20,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /** Exact damage and collision regression for GT6 BlockBaseSpike's port. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class SpikeBlockTests {
     private static final BlockPos ORIGIN = new BlockPos(2, 2, 2);

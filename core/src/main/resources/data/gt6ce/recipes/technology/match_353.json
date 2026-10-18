@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:353",
+  "allow_mirror": false,
+  "pattern": [
+    "P",
+    "S"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:technology/any_phosphorus_dust_small"
+    },
+    "S": {
+      "tag": "gt6ce:technology/any_wood_bolt"
+    }
+  },
+  "result": {
+    "item": "gt6ce:match",
+    "count": 1
+  }
+}

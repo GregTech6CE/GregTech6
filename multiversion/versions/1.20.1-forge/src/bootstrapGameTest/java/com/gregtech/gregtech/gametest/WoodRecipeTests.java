@@ -54,11 +54,11 @@ import java.util.TreeSet;
  *       {@code Loader_WoodCraftingRecipes} wraps the rows in {@code ToolShapedRecipe}.</li>
  * </ul>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class WoodRecipeTests {
 
-    private static final String PREFIX = "gregtech:wood/";
+    private static final String PREFIX = "gt6ce:wood/";
 
     /**
      * Row count of the generated table: nine GT6 tree species x the eight dictionary rows
@@ -345,7 +345,7 @@ public final class WoodRecipeTests {
             ItemStack beam = new ItemStack(GTWoods.beam(resolved));
             h.assertTrue(!log.isEmpty() && !planks.isEmpty() && !beam.isEmpty(),
                     "the species'" + " blocks are registered: " + species);
-            h.assertTrue(ForgeRegistries.ITEMS.getKey(log.getItem()).getNamespace().equals("gregtech"),
+            h.assertTrue(ForgeRegistries.ITEMS.getKey(log.getItem()).getNamespace().equals("gt6ce"),
                     "the species' log is a gregtech block: " + species);
 
             String material = material(species);

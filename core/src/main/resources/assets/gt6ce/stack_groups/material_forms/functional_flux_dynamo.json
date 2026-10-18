@@ -1,0 +1,9 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_flux_dynamo",
+  "contents": [
+    "item:gt6ce:flux_dynamo_lv",
+    "item:gt6ce:flux_dynamo_mv"
+  ],
+  "priority": 110
+}

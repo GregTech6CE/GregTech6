@@ -1,4 +1,4 @@
-"""Give every ``gregtech:tool_shaped`` recipe the mirror rule its GT6 row actually uses.
+"""Give every ``gt6ce:tool_shaped`` recipe the mirror rule its GT6 row actually uses.
 
 GT6 sets ``MIR`` per row (``gregapi/util/CR.java:131-163``: ``DEF = BUF|NO_REM``, ``DEF_MIR =
 DEF|MIR``), and 93 of its 1188 ``CR.shaped`` rows opt in — the rest do not mirror. 1.20.1 mirrors
@@ -30,9 +30,9 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-RECIPES = native_path(ROOT / "src/main/resources/data/gregtech/recipes")
+RECIPES = native_path(ROOT / "src/main/resources/data/gt6ce/recipes")
 CENSUS = ROOT / "docs/gt6-crafting-mirror-flags.json"
-TOOL_SHAPED = "gregtech:tool_shaped"
+TOOL_SHAPED = "gt6ce:tool_shaped"
 MARKER = "_mirror_flags"
 MARKER_VALUE = "gt6-census"
 

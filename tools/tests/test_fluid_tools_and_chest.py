@@ -11,7 +11,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 
 class FluidToolsAndChest(unittest.TestCase):
     def test_chest_pixels_match_slot_coordinates(self):
@@ -34,6 +34,6 @@ class FluidToolsAndChest(unittest.TestCase):
         for locale in ["en_us","zh_cn"]:
             lang=json.loads((ASSETS/"lang"/(locale+".json")).read_text(encoding="utf-8"))
             for name in ids:
-                self.assertIn("block.gregtech."+name,lang)
+                self.assertIn("block.gt6ce."+name,lang)
                 for folder in ["blockstates","models/item"]:
                     self.assertTrue((ASSETS/folder/(name+".json")).is_file(), name)

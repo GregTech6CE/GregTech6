@@ -62,7 +62,7 @@ public final class SurvivalUtilityRecipes extends OriginalRecipeBatch {
         int[] counts = {1, 2, 2, 1};
         for (int i = 0; i < armor.length; i++)
             add("leather_recovery/" + i, MachineRecipeMaps.Slicer, 16, 16,
-                    items(new ItemStack(armor[i]), item("gregtech:slicer_shape_split", 1)), items(new ItemStack(Items.LEATHER, counts[i])), null, null);
+                    items(new ItemStack(armor[i]), item("gt6ce:slicer_shape_split", 1)), items(new ItemStack(Items.LEATHER, counts[i])), null, null);
     }
     private void mix(String id, int ticks, ItemStack output, ItemStack... inputs) {
         add("mix/" + id, MachineRecipeMaps.Mixer, ticks, 16, inputs, items(output), null, null);

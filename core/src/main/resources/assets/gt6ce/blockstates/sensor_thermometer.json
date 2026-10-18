@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/sensor/thermometer"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/sensor/thermometer",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/sensor/thermometer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/sensor/thermometer",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/sensor/thermometer",
+      "x": 270,
+      "y": 180
+    },
+    "facing=down": {
+      "model": "gt6ce:block/machine/sensor/thermometer",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

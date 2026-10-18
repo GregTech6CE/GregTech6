@@ -325,10 +325,10 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 *///?} else {
         var heldId = ForgeRegistries.ITEMS.getKey(held.getItem());
 //?}
-        if (heldId != null && heldId.getNamespace().equals("gregtech")
+        if (heldId != null && heldId.getNamespace().equals("gt6ce")
                 && heldId.getPath().equals("quicksilver_thermometer")) {
             if (!level.isClientSide)
-                player.displayClientMessage(Component.translatable("message.gregtech.large_boiler.heat",
+                player.displayClientMessage(Component.translatable("message.gt6ce.large_boiler.heat",
                         heat, variant.heatCapacity()), false);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }

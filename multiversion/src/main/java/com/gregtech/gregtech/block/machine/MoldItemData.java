@@ -42,7 +42,7 @@ public final class MoldItemData {
                 return stack;
             }
         }
-        tag.putString("id","gregtech:mold");
+        tag.putString("id","gt6ce:mold");
         if(shape!=0)tag.putInt(ClayMoldCatalog.SHAPE_KEY,shape);
 //? if >=1.21.1 {
         /*stack.set(DataComponents.BLOCK_ENTITY_DATA,CustomData.of(tag));

@@ -2,7 +2,7 @@ package com.gregtech.gregtech.content.book;
 /** Shared original shelf metadata/28-slot picker/book classification and cuboid layout. */
 public final class BookShelfRules {private BookShelfRules(){}public static final int SLOTS=28,COLUMNS=7;
  public record VariantSpec(String path,int originalId,String kind,String materialName,String displayMaterialName,String texture,float hardness,float resistance,int flammability){}
- private static final java.util.Set<String> NORMAL=java.util.Set.of("minecraft:book","minecraft:writable_book","minecraft:written_book","gregtech:dusty_guide_book","gregtech:dusty_material_dictionary");
+ private static final java.util.Set<String> NORMAL=java.util.Set.of("minecraft:book","minecraft:writable_book","minecraft:written_book","gt6ce:dusty_guide_book","gt6ce:dusty_material_dictionary");
  private static final java.util.Set<String> DISPLAY=java.util.Set.of("minecraft:paper","minecraft:map","minecraft:filled_map","minecraft:name_tag","minecraft:item_frame","minecraft:painting","minecraft:oak_button","minecraft:stone_button","minecraft:lever","minecraft:redstone_torch","minecraft:cobblestone");
  private static final java.util.Set<String> CONTROLS=java.util.Set.of("minecraft:oak_button","minecraft:stone_button","minecraft:lever","minecraft:redstone_torch","minecraft:cobblestone");
  public static int enchantPower(String id){return id.equals("minecraft:enchanted_book")?2:(NORMAL.contains(id)||ColoredBookRules.isBook(id))?1:0;}

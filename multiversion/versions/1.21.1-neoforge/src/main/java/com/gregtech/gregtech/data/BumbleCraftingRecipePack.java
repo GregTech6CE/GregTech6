@@ -40,7 +40,7 @@ public final class BumbleCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:bumble_crafting_recipes",Component.literal("GregTech original bumble crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:bumble_crafting_recipes",Component.literal("GregTech original bumble crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new BumbleCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new BumbleCraftingRecipePack(info);}
@@ -52,8 +52,8 @@ public final class BumbleCraftingRecipePack extends AbstractPackResources {
     private synchronized Map<ResourceLocation,byte[]> data(){
         if(resources!=null)return resources;
         Map<ResourceLocation,byte[]> generated=new HashMap<>();
-        for(String file:com.gregtech.gregtech.content.bumble.BumbleCraftingCatalog.FILES){String path="data/gregtech/recipes/tool_blocks/"+file;try(var stream=BumbleCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)){if(stream==null)throw new IllegalStateException("Missing shared portable recipe "+path);var recipe=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();var result=recipe.get("result");if(result.isJsonPrimitive()){var obj=new com.google.gson.JsonObject();obj.addProperty("id",result.getAsString());recipe.add("result",obj);}else{var obj=result.getAsJsonObject();if(obj.has("item")){obj.add("id",obj.remove("item"));}}
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech","recipe/tool_blocks/"+file),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}}
+        for(String file:com.gregtech.gregtech.content.bumble.BumbleCraftingCatalog.FILES){String path="data/gt6ce/recipes/tool_blocks/"+file;try(var stream=BumbleCraftingRecipePack.class.getClassLoader().getResourceAsStream(path)){if(stream==null)throw new IllegalStateException("Missing shared portable recipe "+path);var recipe=com.google.gson.JsonParser.parseString(new String(stream.readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();var result=recipe.get("result");if(result.isJsonPrimitive()){var obj=new com.google.gson.JsonObject();obj.addProperty("id",result.getAsString());recipe.add("result",obj);}else{var obj=result.getAsJsonObject();if(obj.has("item")){obj.add("id",obj.remove("item"));}}
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/tool_blocks/"+file),GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));}catch(java.io.IOException failure){throw new java.io.UncheckedIOException(failure);}}
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original portable crafting datapack: {} rows",generated.size());resources=Map.copyOf(generated);return resources;
     }
 
@@ -84,7 +84,7 @@ public final class BumbleCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_fluid_measure",
+  "contents": [
+    "item:gt6ce:fluid_measuring_pot",
+    "item:gt6ce:fluid_measuring_pot_stainless_steel",
+    "item:gt6ce:fluid_measuring_pot_tantalum_hafnium_carbide",
+    "item:gt6ce:fluid_measuring_pot_tungsten"
+  ],
+  "priority": 110
+}

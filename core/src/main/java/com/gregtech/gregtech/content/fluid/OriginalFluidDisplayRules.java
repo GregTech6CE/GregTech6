@@ -31,7 +31,7 @@ import java.util.List;
  * properties and recipe values; neither material RGB nor furnace time is a fluid property.
  */
 public final class OriginalFluidDisplayRules {
-    public static final String PREFIX = "gregtech.fluid_display.";
+    public static final String PREFIX = "gt6ce.fluid_display.";
     private static final BigInteger UNIT = BigInteger.valueOf(GTValues.U);
 
     private OriginalFluidDisplayRules() {}

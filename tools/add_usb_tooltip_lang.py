@@ -17,7 +17,7 @@ import io
 import json
 import os
 
-ASSETS = os.path.join(str(native_path('src')), 'main', 'resources', 'assets', 'gregtech', 'lang')
+ASSETS = os.path.join(str(native_path('src')), 'main', 'resources', 'assets', 'gt6ce', 'lang')
 
 EN = {
     "gt.tooltip.usb.tier": "Data: USB %s.0",

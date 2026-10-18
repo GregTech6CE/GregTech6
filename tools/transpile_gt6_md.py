@@ -63,7 +63,7 @@ def main() -> None:
             continue
         mod_id = resolve_mod_id(id_token, mod_ids)
         if field == "GT":
-            mod_id = "gregtech"  # matches GregTech.MODID
+            mod_id = "gt6ce"  # matches GregTech.MODID
         entries.append((field, mod_id, display))
 
     body_lines = [

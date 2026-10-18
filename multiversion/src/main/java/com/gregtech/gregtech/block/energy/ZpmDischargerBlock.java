@@ -34,7 +34,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
             if(held.isEmpty()&&player.isShiftKeyDown())z.toggleStopped();
             else if(ZpmEnergy.isModule(held))player.setItemInHand(hand,z.inventory().insertItem(0,held,false));
             else if(held.isEmpty()){var extracted=z.inventory().extractItem(0,1,false);if(!player.addItem(extracted))player.drop(extracted,false);}
-            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gregtech.zpm.status",z.totalEnergy(),z.stopped()?"OFF":"ON",z.outputType().getShortName()),true);
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.status",z.totalEnergy(),z.stopped()?"OFF":"ON",z.outputType().getShortName()),true);
         }
         return InteractionResult.sidedSuccess(l.isClientSide);
     }
@@ -52,7 +52,7 @@ public final class ZpmDischargerBlock extends AutoToolBlock {
 *///?} else {
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack s,net.minecraft.world.level.BlockGetter w,java.util.List<net.minecraft.network.chat.Component> lines,net.minecraft.world.item.TooltipFlag f){
 //?}
-        lines.add(net.minecraft.network.chat.Component.translatable("gregtech.zpm.output",ZpmEnergy.PACKET,electric?"EU":"QU"));
-        lines.add(net.minecraft.network.chat.Component.translatable("gregtech.zpm.controls"));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.output",ZpmEnergy.PACKET,electric?"EU":"QU"));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.controls"));
     }
 }

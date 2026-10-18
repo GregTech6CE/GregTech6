@@ -28,12 +28,12 @@ def generate(assets=ASSETS):
             entries={}
             for face in ('front','back','side'):
                 relative=f'textures/block/machines/safes/{kind}/{layer}{phase}/{face}.png'
-                source=str(native_path(f'src/main/resources/assets/gregtech/textures/blocks/machines/safes/{kind}/{layer}{phase}/{face}.png'))
+                source=str(native_path(f'src/main/resources/assets/gt6ce/textures/blocks/machines/safes/{kind}/{layer}{phase}/{face}.png'))
                 p=assets/relative
                 p.parent.mkdir(parents=True,exist_ok=True)
                 p.write_bytes((ORIGINAL/source).read_bytes())
                 textures[relative]={'source':source,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
-                entries[face]='gregtech:'+relative.removeprefix('textures/').removesuffix('.png')
+                entries[face]='gt6ce:'+relative.removeprefix('textures/').removesuffix('.png')
             faces={}
             for face in ('up','down','east','west','north','south'):
                 slot='front' if face=='north' else 'back' if face=='south' else 'side'
@@ -50,13 +50,13 @@ def generate(assets=ASSETS):
             variants={}
             for facing,rotation in [('north',0),('east',90),('south',180),('west',270),('up',0),('down',0)]:
                 for opened in (False,True):
-                    variants[f'facing={facing},open={str(opened).lower()}']={'model':f'gregtech:block/machine/storage/safe_{kind}'+('_open' if keyed and opened else ''),'y':rotation}
+                    variants[f'facing={facing},open={str(opened).lower()}']={'model':f'gt6ce:block/machine/storage/safe_{kind}'+('_open' if keyed and opened else ''),'y':rotation}
                     if facing in ('up','down'): variants[f'facing={facing},open={str(opened).lower()}']['x'] = 270 if facing == 'up' else 90
             write(f'blockstates/{name}.json',{'variants':variants})
-            write(f'models/item/{name}.json',{'parent':f'gregtech:block/machine/storage/safe_{kind}'})
+            write(f'models/item/{name}.json',{'parent':f'gt6ce:block/machine/storage/safe_{kind}'})
             standard=wood_id-500+(3000 if keyed else 2000)
-            lang['zh_cn']['block.gregtech.'+name]=chinese[str(standard)].strip()
-            lang['en_us']['block.gregtech.'+name]=('Key Locked ' if keyed else 'Mechanical ')+lang['en_us']['block.gregtech.chest_'+suffix].removesuffix(' Chest')+' Safe'
+            lang['zh_cn']['block.gt6ce.'+name]=chinese[str(standard)].strip()
+            lang['en_us']['block.gt6ce.'+name]=('Key Locked ' if keyed else 'Mechanical ')+lang['en_us']['block.gt6ce.chest_'+suffix].removesuffix(' Chest')+' Safe'
     standard_text = dict(re.findall(r"^\s*S:(gt.lang.(?:owner|key).controlled)=(.*)$", (ROOT.parent/"GregTech.lang").read_text(encoding="utf-8"), re.M))
     for locale,data in lang.items():
         data["gt.tooltip.safe.1"] = "15 slots" if locale == "en_us" else "15 格存储空间"

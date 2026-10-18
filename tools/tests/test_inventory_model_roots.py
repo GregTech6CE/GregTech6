@@ -9,7 +9,7 @@ import json
 import unittest
 from pathlib import Path
 
-ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(Path(__file__).resolve().parents[2] / 'src/main/resources/assets/gt6ce')
 
 
 class InventoryRootTests(unittest.TestCase):
@@ -34,7 +34,7 @@ class InventoryRootTests(unittest.TestCase):
 
     def test_axle_sprite_is_available_in_dynamic_block_atlas(self):
         atlas = json.loads((ASSETS.parent / 'minecraft/atlases/blocks.json').read_text(encoding='utf-8'))
-        self.assertTrue(any(source.get('resource') == 'gregtech:block/iconsets/axle'
+        self.assertTrue(any(source.get('resource') == 'gt6ce:block/iconsets/axle'
                             or (source.get('source') == 'block/iconsets') for source in atlas['sources']))
 
 

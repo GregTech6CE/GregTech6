@@ -7,9 +7,9 @@ public record Activator(String material,int count){} public static final List<Ac
 public record Row(String id,String output,int count,String pattern,Map<String,String> ingredients){}
 public static List<Row> rows(){List<Row> rows=new ArrayList<>();
  for(var m:TrackCatalog.MATERIALS){String slug=m.slug();var base=Map.of("R","rail:"+m.name(),"S","stick:WoodTreated");
-  rows.add(new Row("tracks/track_"+slug,"gregtech:track_"+slug,4,PLAIN,base));
-  rows.add(new Row("tracks/track_booster_"+slug,"gregtech:track_booster_"+slug,4,BOOSTER,Map.of("R","rail:"+m.name(),"S","stick:WoodTreated","G","rail:"+m.booster(),"D","item:minecraft:redstone")));
-  rows.add(new Row("tracks/track_detector_"+slug,"gregtech:track_detector_"+slug,4,DETECTOR,Map.of("R","rail:"+m.name(),"S","stick:WoodTreated","P","item:minecraft:stone_pressure_plate","D","item:minecraft:redstone")));
+  rows.add(new Row("tracks/track_"+slug,"gt6ce:track_"+slug,4,PLAIN,base));
+  rows.add(new Row("tracks/track_booster_"+slug,"gt6ce:track_booster_"+slug,4,BOOSTER,Map.of("R","rail:"+m.name(),"S","stick:WoodTreated","G","rail:"+m.booster(),"D","item:minecraft:redstone")));
+  rows.add(new Row("tracks/track_detector_"+slug,"gt6ce:track_detector_"+slug,4,DETECTOR,Map.of("R","rail:"+m.name(),"S","stick:WoodTreated","P","item:minecraft:stone_pressure_plate","D","item:minecraft:redstone")));
  }
  rows.add(new Row("tracks/vanilla/rail","minecraft:rail",4,PLAIN,Map.of("R","rail:Iron","S","stick:WoodTreated")));
  rows.add(new Row("tracks/vanilla/golden_rail","minecraft:powered_rail",4,BOOSTER,Map.of("R","rail:Iron","S","stick:WoodTreated","G","rail:Gold","D","item:minecraft:redstone")));

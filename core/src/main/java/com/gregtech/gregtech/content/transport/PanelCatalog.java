@@ -33,8 +33,8 @@ public final class PanelCatalog {
     private static Spec colored(String suffix, String kind, String color, int index, boolean canonical) {
         return new Spec(suffix, kind, ConstructionRules.tint(color), kind.equals("cfoam") ? "WOOL" : "STONE",
                 kind.equals("cfoam") ? 1F : kind.equals("asphalt") ? 3F : 4F,
-                "gregtech:block/iconsets/" + (kind.equals("cfoam") ? "cfoam_hardened" : kind),
-                "gregtech:" + kind, color, index, canonical);
+                "gt6ce:block/iconsets/" + (kind.equals("cfoam") ? "cfoam_hardened" : kind),
+                "gt6ce:" + kind, color, index, canonical);
     }
     private static List<Spec> specs() {
         var result = new ArrayList<Spec>();
@@ -53,7 +53,7 @@ public final class PanelCatalog {
                     wood.texture(), wood.plank(), "", woodIndex(wood.suffix()), true));
         }
         result.add(new Spec("wood_treated", "wood", 0xFFFFFF, "WOOD", 2F,
-                "gregtech:block/iconsets/planks_treated", "gregtech:planks_treated", "", 62, true));
+                "gt6ce:block/iconsets/planks_treated", "gt6ce:planks_treated", "", 62, true));
         return List.copyOf(result);
     }
     private static int woodIndex(String wood) {

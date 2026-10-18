@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "   ",
+    " Px",
+    "   "
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:low_heat_extruder_shape_ingot"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:low_heat_extruder_shape_hoehead",
+    "count": 1
+  }
+}

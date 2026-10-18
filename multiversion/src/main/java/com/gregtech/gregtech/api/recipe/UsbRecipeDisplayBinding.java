@@ -17,7 +17,7 @@ public final class UsbRecipeDisplayBinding {
     public static List<Item> sticks() {
         var items=new ArrayList<Item>(4);
         for(int tier=1;tier<=4;tier++) {
-            var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","usb"+tier+"_stick"));
+            var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","usb"+tier+"_stick"));
             if(item!=Items.AIR)items.add(item);
         }
         return List.copyOf(items);

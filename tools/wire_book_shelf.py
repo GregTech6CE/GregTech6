@@ -14,7 +14,7 @@ import os
 
 DECOR = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry", "GTDecorBlocks.java")
 BE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "registry", "GTBlockEntities.java")
-ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 
 FIELD = """    // N12: Misc placeables
@@ -77,10 +77,10 @@ generate()
 for name, label in (("en_us.json", "Book Shelf"), ("zh_cn.json", "书架")):
     file = os.path.join(LANG, name)
     lines = io.open(file, encoding="utf-8").readlines()
-    anchor = next((i for i, line in enumerate(lines) if '"block.gregtech.loot_crate"' in line), None)
+    anchor = next((i for i, line in enumerate(lines) if '"block.gt6ce.loot_crate"' in line), None)
     if anchor is None:
         raise SystemExit("%s: no anchor" % name)
-    key = '"block.gregtech.bookshelf"'
+    key = '"block.gt6ce.bookshelf"'
     if any(key in line for line in lines):
         print("%s: key present" % name)
         continue

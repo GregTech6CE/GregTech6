@@ -47,7 +47,7 @@ import java.util.Map;
  * fresh {@code ItemStack} ingredients, which never match a real tool because an assembled GT tool
  * carries {@code GT.ToolStats} NBT — hence {@link GTToolTags} and this test.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class StoneVariantRecipesTests {
 
@@ -330,7 +330,7 @@ public final class StoneVariantRecipesTests {
     }
 
     private static void assertMirror(GameTestHelper helper, String path, boolean expected) {
-        var id = ResourceLocation.fromNamespaceAndPath("gregtech", "stone/" + path);
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", "stone/" + path);
         var recipe = helper.getLevel().getRecipeManager().byKey(id).orElse(null);
         helper.assertTrue(recipe instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe,
                 "masonry row " + id + " is a tool-shaped recipe");

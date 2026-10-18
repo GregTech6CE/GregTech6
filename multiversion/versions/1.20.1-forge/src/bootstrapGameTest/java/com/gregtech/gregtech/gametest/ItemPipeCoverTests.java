@@ -40,7 +40,7 @@ import java.util.List;
  * <p>{@link #BASE_X}/{@link #BASE_Z} are {@code 61000}, free between the 60000 (bumbliary) and 62000
  * (dungeon keys) reservations. Every site is cleared before use, blocks <em>and</em> entities.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ItemPipeCoverTests {
     private static final int BASE_X = 61000;

@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class DynamiteSubstrateAssets(unittest.TestCase):
     def test_original_soils_and_all_stained_clays_are_drillable(self):
-        data = json.loads((native_path(ROOT / 'src/main/resources/data/gregtech/tags/blocks/drillable_dynamite.json')).read_text())
+        data = json.loads((native_path(ROOT / 'src/main/resources/data/gt6ce/tags/blocks/drillable_dynamite.json')).read_text())
         self.assertFalse(data['replace'])
         values = data['values']
         self.assertEqual(len(values), len(set(values)))
@@ -29,7 +29,7 @@ class DynamiteSubstrateAssets(unittest.TestCase):
             self.assertNotIn('minecraft:' + name, values)
 
     def test_tool_hint_uses_supplied_gt6_chinese(self):
-        path = native_path(ROOT / 'src/main/resources/assets/gregtech/lang')
+        path = native_path(ROOT / 'src/main/resources/assets/gt6ce/lang')
         cn = json.loads((path / 'zh_cn.json').read_text(encoding='utf-8'))
         en = json.loads((path / 'en_us.json').read_text(encoding='utf-8'))
         self.assertEqual('放置炸药并绑定到快捷栏中的远程激活器', cn['gt.behaviour.placedynamite'])

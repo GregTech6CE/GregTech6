@@ -21,7 +21,9 @@ GregTech 6 以科技、资源加工和工业发展为核心。本项目重点整
 
 两个平台在同一仓库开发，共用 `core` 模块，并分别生成包含共享核心的模组 JAR。安装时选择与 Minecraft 版本和加载器对应的产物，无需额外安装 core JAR。
 
-模组名称为 **GregTech 6 Community Edition**，加载 ID 为 **`gregtech6`**。既有内容与资源标识继续使用 `gregtech:` 命名空间。
+模组名称为 **GregTech 6 Community Edition**，加载 ID 与内容／资源命名空间统一为 **`gt6ce`**；物品、方块、流体和配方 ID 均使用 `gt6ce:`。
+
+原 `gregtech:` 身份不保留兼容映射，引用它们的旧存档和脚本需要另行迁移。
 
 ## 项目状态
 

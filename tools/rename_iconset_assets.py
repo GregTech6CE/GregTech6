@@ -19,7 +19,7 @@ import os
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block", "iconsets")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
@@ -45,7 +45,7 @@ def main() -> None:
             data = json.load(f)
         for variant in data.get("variants", {}).values():
             if isinstance(variant, dict) and variant.get("model", "").endswith("iconset_" + icon):
-                variant["model"] = "gregtech:block/iconsets/" + nid
+                variant["model"] = "gt6ce:block/iconsets/" + nid
         with open(os.path.join(BLOCKSTATES, nid + ".json"), "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
             f.write("\n")
@@ -62,7 +62,7 @@ def main() -> None:
             with open(isrc, encoding="utf-8") as f:
                 idata = json.load(f)
             if idata.get("parent", "").endswith("iconset_" + icon):
-                idata["parent"] = "gregtech:block/iconsets/" + nid
+                idata["parent"] = "gt6ce:block/iconsets/" + nid
             with open(os.path.join(ITEM_MODELS, nid + ".json"), "w", encoding="utf-8") as f:
                 json.dump(idata, f, indent=2)
                 f.write("\n")

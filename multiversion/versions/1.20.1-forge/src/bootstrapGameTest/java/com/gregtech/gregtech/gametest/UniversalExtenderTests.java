@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class UniversalExtenderTests {
     private static final BlockPos CENTER=new BlockPos(4,3,4);
     private static ExtenderBlockEntity relay(GameTestHelper h,BlockPos pos,ExtenderSpec spec,Direction front,Direction secondary){

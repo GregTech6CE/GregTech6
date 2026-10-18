@@ -32,7 +32,7 @@ import java.util.List;
  * ({@code IForgeAbstractMinecart.getMaxCartSpeedOnRail()}, 1.2) still caps the three fastest rails,
  * which the last test pins so the difference can never drift silently.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class TrackTests {
 
@@ -86,7 +86,7 @@ public final class TrackTests {
         for (String material : materials) {
             for (String icon : icons) {
                 String id = icon + material;
-                ResourceLocation key = new ResourceLocation("gregtech", id);
+                ResourceLocation key = new ResourceLocation("gt6ce", id);
                 h.assertTrue(!ForgeRegistries.BLOCKS.containsKey(key)
                                 && !ForgeRegistries.ITEMS.containsKey(key),
                         id + " is a rail texture, not a GT6 BlockRailBase registration");
@@ -97,7 +97,7 @@ public final class TrackTests {
         h.assertTrue(GTIconSetBlocks.all().stream().noneMatch(entry ->
                         entry.getId().getPath().startsWith("rail_")),
                 "the iconset registry does not expose rail textures as blocks");
-        h.assertTrue(ForgeRegistries.BLOCKS.containsKey(new ResourceLocation("gregtech", "railroad")),
+        h.assertTrue(ForgeRegistries.BLOCKS.containsKey(new ResourceLocation("gt6ce", "railroad")),
                 "GT6's separate Road Stripe rail remains registered");
         h.succeed();
     }
@@ -228,7 +228,7 @@ public final class TrackTests {
             h.assertTrue(recipes.stream().anyMatch(r -> r.getId().toString().equals(id)),
                     "the crafting manager holds " + id);
         }
-        boolean plain = recipes.stream().anyMatch(r -> r.getId().toString().equals("gregtech:tracks/track_steel")
+        boolean plain = recipes.stream().anyMatch(r -> r.getId().toString().equals("gt6ce:tracks/track_steel")
                 && r.getResultItem(h.getLevel().registryAccess()).getCount() == 4);
         h.assertTrue(plain, "GT6's plain track row yields four tracks");
 
@@ -310,7 +310,7 @@ public final class TrackTests {
             var result = recipe.getResultItem(access);
             if (result.isEmpty() || !VANILLA_RAILS.contains(result.getItem())) continue;
             vanillaRails++;
-            h.assertTrue(recipe.getId().getNamespace().equals("gregtech"),
+            h.assertTrue(recipe.getId().getNamespace().equals("gt6ce"),
                     "no vanilla recipe for " + result.getItem() + " survives: " + recipe.getId());
         }
         h.assertTrue(vanillaRails == 15,
@@ -318,7 +318,7 @@ public final class TrackTests {
 
         // minecraft:rail is now four tracks from three iron tracks and three treated sticks.
         var rail = recipes.stream()
-                .filter(r -> r.getId().toString().equals("gregtech:tracks/vanilla/rail"))
+                .filter(r -> r.getId().toString().equals("gt6ce:tracks/vanilla/rail"))
                 .findFirst().orElse(null);
         h.assertTrue(rail != null, "GT6's minecraft:rail row is registered");
         h.assertTrue(rail.getResultItem(access).getCount() == 4,
@@ -332,7 +332,7 @@ public final class TrackTests {
 
         // The activator rail's yield climbs with the material, up to GT6's 64 adamantium tracks.
         var adamantium = recipes.stream()
-                .filter(r -> r.getId().toString().equals("gregtech:tracks/vanilla/activator_rail_adamantium"))
+                .filter(r -> r.getId().toString().equals("gt6ce:tracks/vanilla/activator_rail_adamantium"))
                 .findFirst().orElse(null);
         h.assertTrue(adamantium != null, "GT6's adamantium activator rail row is registered");
         h.assertTrue(adamantium.getResultItem(access).getCount() == 64,

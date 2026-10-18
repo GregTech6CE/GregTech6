@@ -45,7 +45,7 @@ public final class CheapTankSourceTests {
     public static void fourSourceCheapBarrelsCraftStoreAndRecover(GameTestHelper h) {
         var pos=h.absolutePos(new BlockPos(4,4,4));var player=TankItemLifecycleTests.player(h,pos);
         for(var entry:CheapWoodBarrelCatalog.ENTRIES){
-            var description=TransportCraftingCatalog.rows().stream().filter(r->r.output().equals("gregtech:"+entry.id())).findFirst().orElseThrow();
+            var description=TransportCraftingCatalog.rows().stream().filter(r->r.output().equals("gt6ce:"+entry.id())).findFirst().orElseThrow();
             var recipe=row(h,description.path());var stacks=inputs(description);
             for(var plank:List.of(Items.OAK_PLANKS,Items.SPRUCE_PLANKS)) {
                 for(int slot:List.of(3,5,6,8))stacks.set(slot,new ItemStack(plank));
@@ -54,7 +54,7 @@ public final class CheapTankSourceTests {
             wear(h,stacks,recipe.getRemainingItems(grid(stacks)));
             var decoded=wire(h,recipe);h.assertTrue(decoded.matches(grid(stacks),h.getLevel()),"cheap barrel native recipe synchronization");
             var crafted=recipe.assemble(grid(stacks),h.getLevel().registryAccess());
-            h.assertTrue(crafted.is(item("gregtech:"+entry.id()).getItem())&&crafted.getCount()==1&&crafted.getMaxStackSize()==16,"four distinct outputs / source empty stacking");
+            h.assertTrue(crafted.is(item("gt6ce:"+entry.id()).getItem())&&crafted.getCount()==1&&crafted.getMaxStackSize()==16,"four distinct outputs / source empty stacking");
             h.assertTrue(units(ItemMaterialRegistry.get(crafted).orElseThrow()).equals(Map.of(GT6Materials.Woods.Wood,GTValues.U*4,entry.rod(),GTValues.U*2)),"four wood and two rod units");
             recover(h,crafted);
             var tank=TankItemLifecycleTests.place(h,player,pos,crafted);
@@ -70,7 +70,7 @@ public final class CheapTankSourceTests {
                 tank.getFluidTank().fill(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1),FluidAction.EXECUTE);
                 var legacy=TankItemLifecycleTests.worldData(h,tank);
                 legacy.getCompound("gt.tank").putLong("Capacity",16000);legacy.getCompound("gt.tank").putLong("Amount",12000);
-                var oldItem=item("gregtech:wood_barrel");TankItemLifecycleTests.setItemData(oldItem,legacy);
+                var oldItem=item("gt6ce:wood_barrel");TankItemLifecycleTests.setItemData(oldItem,legacy);
                 tank=TankItemLifecycleTests.place(h,player,pos,oldItem);
                 h.assertTrue(tank.getFluidTank().baseCapacity()==16000&&tank.getFluidTank().getAmount()==12000,"generated former 16k item shape preserves capacity and water");
                 var oldDrop=TankItemLifecycleTests.harvest(h,player,tank);
@@ -83,15 +83,15 @@ public final class CheapTankSourceTests {
     }
     @GameTest(template="test_empty",timeoutTicks=100)
     public static void logisticsSourceCompositionAndFilledInputProtection(GameTestHelper h) {
-        long u=GTValues.U;var output=item("gregtech:logistics_tank");
+        long u=GTValues.U;var output=item("gt6ce:logistics_tank");
         var expected=Map.of(GT6Materials.Elements.W,u*6+u/9*4,GT6Materials.Compounds.TinAlloy,u*4,
                 GT6Materials.Elements.Os,u/8*6,GT6Materials.Compounds.EnderPearl,u,
                 GT6Materials.Elements.Al,u+u/9,GT6Materials.Elements.Pt,u,GT6Materials.Compounds.Emerald,u);
         h.assertTrue(units(ItemMaterialRegistry.get(output).orElseThrow()).equals(expected),"source recursive known REV inputs; no invented circuit data");recover(h,output);
 //? if >=1.21.1 {
-        /*var recipe=(net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput>)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gregtech:logistics/logistics_tank")).orElseThrow().value();
+        /*var recipe=(net.minecraft.world.item.crafting.Recipe<net.minecraft.world.item.crafting.CraftingInput>)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gt6ce:logistics/logistics_tank")).orElseThrow().value();
 *///?} else {
-        var recipe=(net.minecraft.world.item.crafting.Recipe<net.minecraft.world.inventory.CraftingContainer>)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gregtech:logistics/logistics_tank")).orElseThrow();
+        var recipe=(net.minecraft.world.item.crafting.Recipe<net.minecraft.world.inventory.CraftingContainer>)h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gt6ce:logistics/logistics_tank")).orElseThrow();
 //?}
         var stacks=new ArrayList<ItemStack>();
         for(var ingredient:recipe.getIngredients()) {var stack=ingredient.getItems()[0].copyWithCount(1);

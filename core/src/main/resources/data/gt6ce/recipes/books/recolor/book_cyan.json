@@ -1,0 +1,17 @@
+{
+  "type": "gt6ce:book_binding",
+  "category": "misc",
+  "group": "gt6ce.books.binding",
+  "ingredients": [
+    {
+      "tag": "gt6ce:written_books_small"
+    },
+    {
+      "tag": "gt6ce:book_binding/dyes/cyan"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:book_cyan",
+    "count": 1
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_concrete_reinforced",
+  "contents": [
+    "item:gt6ce:concrete_reinforced"
+  ],
+  "priority": 120
+}

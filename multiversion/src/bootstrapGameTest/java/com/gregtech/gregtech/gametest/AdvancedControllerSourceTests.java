@@ -22,7 +22,7 @@ public final class AdvancedControllerSourceTests {
         BasicMachineBlock matter=null;
         for(var block:BuiltInRegistries.BLOCK) {
             var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(!id.getNamespace().equals("gregtech"))continue;
+            if(!id.getNamespace().equals("gt6ce"))continue;
             boolean eligible=block instanceof BasicMachineBlock b&&OriginalAdvancedControllerData.handles(b.basicSpec().machineName())||id.getPath().equals("implosion_compressor_main");
             if(!eligible)continue;
             var nativeFactory=(net.minecraft.world.level.block.EntityBlock)block;

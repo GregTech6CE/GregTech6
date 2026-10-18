@@ -50,7 +50,7 @@ public final class BehaviorPlaceDynamite {
             }
             for (int hotbar = 0; hotbar < 9; hotbar++) {
                 var remote = player.getInventory().items.get(hotbar);
-                if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "remote_activator")
+                if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "remote_activator")
 //? if >=1.21.1 {
                         /*.equals(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remote.getItem()))
 *///?} else {

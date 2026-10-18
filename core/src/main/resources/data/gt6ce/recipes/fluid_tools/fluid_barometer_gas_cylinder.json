@@ -1,0 +1,36 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "RCR",
+    "BCh",
+    "TPd"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/steel"
+    },
+    "C": {
+      "item": "gt6ce:plate_curved_steel"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "R": {
+      "tag": "forge:rings/steel"
+    },
+    "B": {
+      "item": "gt6ce:round_steel"
+    },
+    "T": {
+      "tag": "forge:screws/steel"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:fluid_barometer_gas_cylinder"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

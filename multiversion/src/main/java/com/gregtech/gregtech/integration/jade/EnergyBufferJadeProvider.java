@@ -17,7 +17,7 @@ import java.util.Locale;
 public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "energy_buffer");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "energy_buffer");
     private static final String NBT_UNIT = "gt_unit";
     private static final String NBT_STORED = "gt_stored";
     private static final String NBT_CAPACITY = "gt_capacity";
@@ -57,7 +57,7 @@ public enum EnergyBufferJadeProvider implements IBlockComponentProvider, IServer
         String unit = data.getString(NBT_UNIT);
         int pct = percent(stored, capacity);
         tooltip.add(Component.translatable(
-                "jade.gregtech.energy.stored",
+                "jade.gt6ce.energy.stored",
                 format(stored),
                 format(capacity),
                 unit,

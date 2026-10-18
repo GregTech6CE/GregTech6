@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_trinitanium"
+    },
+    "Q": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "C": {
+      "item": "gt6ce:integrated_circuit_8"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_sensor_uv",
+    "count": 1
+  }
+}

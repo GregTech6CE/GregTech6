@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compressor",
+  "contents": [
+    "item:gt6ce:compressor_bronze",
+    "item:gt6ce:compressor_steel",
+    "item:gt6ce:compressor_titanium",
+    "item:gt6ce:compressor_tungsten_steel"
+  ],
+  "priority": 110
+}

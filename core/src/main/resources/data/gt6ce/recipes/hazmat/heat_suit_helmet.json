@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MGM",
+    "x l"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:foil/aluminium"
+    },
+    "G": {
+      "item": "minecraft:black_stained_glass_pane"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:heat_suit_helmet"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

@@ -37,7 +37,7 @@ def shell(folder, sub, hot, cold):
     for face in FACES:
         texture = 'face1' if face == hot else 'face2' if face == cold else \
                   'bottom' if face == 'down' else 'top' if face == 'up' else 'side1'
-        textures[face] = f'gregtech:block/machines/generators/{folder}/{sub}/{texture}'
+        textures[face] = f'gt6ce:block/machines/generators/{folder}/{sub}/{texture}'
         quad = {'texture': '#' + face, 'uv': [0, 0, 16, 16]}
         if sub == 'colored':
             quad['tintindex'] = 0
@@ -51,7 +51,7 @@ def shell(folder, sub, hot, cold):
 
 def main():
     for platform in (str(native_path('src/main')), str(native_path('neoforge/src/main'))):
-        assets = ROOT / platform / 'resources/assets/gregtech'
+        assets = ROOT / platform / 'resources/assets/gt6ce'
         for name, folder in (('reactor_core', 'reactor_core_1x1'),
                              ('reactor_core_2x2', 'reactor_core_2x2')):
             path = assets / f'models/block/machine/energy/{name}.json'
@@ -66,9 +66,9 @@ def main():
                                           'overlay': shell(folder, 'overlay', hot, cold)}}
                     write(path.parent / (ident + '.json'), model)
                     variants[f'hot_outlet={hot},cold_outlet={cold}'] = {
-                        'model': 'gregtech:block/machine/energy/' + ident}
+                        'model': 'gt6ce:block/machine/energy/' + ident}
             # Identical state JSON is shared; native loader IDs only occur in platform models.
-            write(ROOT / f'core/src/main/resources/assets/gregtech/blockstates/{name}.json',
+            write(ROOT / f'core/src/main/resources/assets/gt6ce/blockstates/{name}.json',
                   {'variants': variants})
     print('Restored six reactor shell passes and 36 hot/cold texture states per core and loader.')
 

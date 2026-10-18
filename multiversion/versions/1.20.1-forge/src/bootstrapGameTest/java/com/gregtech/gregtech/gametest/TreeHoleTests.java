@@ -47,7 +47,7 @@ import java.util.List;
  * {@code TreeGrowthTests}). The tests run far outside the test structures, like the other worldgen
  * tests, and clear their sites first because the GameTest world persists between runs.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class TreeHoleTests {
     private static final int BASE_X = 26000;
@@ -107,9 +107,9 @@ public final class TreeHoleTests {
                 problems.add(ids[i] + ": not covered by the tree_hole block entity type");
             }
             for (String asset : new String[]{
-                    "assets/gregtech/blockstates/" + ids[i] + ".json",
-                    "assets/gregtech/models/block/wood/" + ids[i] + "_hole.json",
-                    "assets/gregtech/models/block/wood/" + ids[i] + "_resin.json"}) {
+                    "assets/gt6ce/blockstates/" + ids[i] + ".json",
+                    "assets/gt6ce/models/block/wood/" + ids[i] + "_hole.json",
+                    "assets/gt6ce/models/block/wood/" + ids[i] + "_resin.json"}) {
                 if (TreeHoleTests.class.getClassLoader().getResource(asset) == null) {
                     problems.add(ids[i] + ": missing " + asset);
                 }
@@ -240,7 +240,7 @@ public final class TreeHoleTests {
                 InteractionHand.MAIN_HAND, hit(resinPos, Direction.NORTH));
         helper.assertTrue(result.consumesAction(), "tapping a full hole is an interaction");
         helper.assertTrue(player.getInventory().countItem(ForgeRegistries.ITEMS.getValue(
-                        ResourceLocation.fromNamespaceAndPath("gregtech", "rubber_resin"))) > 0,
+                        ResourceLocation.fromNamespaceAndPath("gt6ce", "rubber_resin"))) > 0,
                 "the player receives GT6's rubber resin");
         helper.assertFalse(level.getBlockState(resinPos).getValue(TreeHoleBlock.RESIN),
                 "GT6 extractResin() empties the hole");
@@ -334,7 +334,7 @@ public final class TreeHoleTests {
         List<ItemStack> out = new ArrayList<>();
         for (var entry : ForgeRegistries.ITEMS) {
             ResourceLocation id = ForgeRegistries.ITEMS.getKey(entry);
-            if (id == null || !id.getNamespace().equals("gregtech")) continue;
+            if (id == null || !id.getNamespace().equals("gt6ce")) continue;
             if (!id.getPath().startsWith("fluid_")) continue;
             out.add(new ItemStack(entry));
         }

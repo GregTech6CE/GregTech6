@@ -15,8 +15,8 @@ public final class TransportCraftingCatalog {
     private static Input form(String prefix,GTMaterial material){return new Input("form",prefix,material);}
     private static Input item(String id){return new Input("item",id,null);}
     private static Input tag(String id){return new Input("tag",id,null);}
-    private static Input tool(String id){return item("gregtech:tool_"+id);}
-    private static Row shaped(String path,List<String> pattern,Map<Character,Input> key,String output,boolean empty){return new Row(path,pattern,key,"gregtech:"+output,1,false,empty);}
+    private static Input tool(String id){return item("gt6ce:tool_"+id);}
+    private static Row shaped(String path,List<String> pattern,Map<Character,Input> key,String output,boolean empty){return new Row(path,pattern,key,"gt6ce:"+output,1,false,empty);}
     private static Row plain(String path,String output,GTMaterial material,PipeSpec.PipeSize size){
         var pattern=switch(size){case TINY->List.of("sP ","wzh");case SMALL->List.of(" P ","wzh");case MEDIUM->List.of("PPP","wzh");default->List.of("PPP","wzh","PPP");};
         return shaped("pipe/"+path,pattern,Map.of('P',form(size==PipeSpec.PipeSize.HUGE?"plateDouble":"plateCurved",material),
@@ -28,9 +28,9 @@ public final class TransportCraftingCatalog {
             String suffix=spec.id().substring(("pipe_"+spec.size().name().toLowerCase(Locale.ROOT)+"_").length());
             if(spec.size()==PipeSpec.PipeSize.QUADRUPLE||spec.size()==PipeSpec.PipeSize.NONUPLE){
                 boolean quad=spec.size()==PipeSpec.PipeSize.QUADRUPLE;
-                String plain="gregtech:pipe_"+(quad?"medium_":"small_")+suffix;
+                String plain="gt6ce:pipe_"+(quad?"medium_":"small_")+suffix;
                 rows.add(shaped("pipe/fluid/"+spec.id(),quad?List.of("PP","PP"):List.of("PPP","PPP","PPP"),Map.of('P',item(plain)),spec.id(),true));
-                rows.add(new Row("pipe/unpack/"+spec.id(),List.of(),Map.of('P',item("gregtech:"+spec.id())),plain,quad?4:9,true,true));
+                rows.add(new Row("pipe/unpack/"+spec.id(),List.of(),Map.of('P',item("gt6ce:"+spec.id())),plain,quad?4:9,true,true));
             }else if(!Set.of("wood","treated_wood","plastic","rubber","carbon").contains(suffix)){
                 // Original aRecipe=false for these five: ordinary Wood has its separate existing patterns.
                 rows.add(plain("fluid/"+spec.id(),spec.id(),spec.material(),spec.size()));
@@ -41,7 +41,7 @@ public final class TransportCraftingCatalog {
             if(size.restrictive()){
                 var base=switch(size){case RESTRICTIVE_MEDIUM->"medium";case RESTRICTIVE_LARGE->"large";default->"huge";};
                 var pattern=switch(size){case RESTRICTIVE_MEDIUM->List.of(" h ","RPR"," R ");case RESTRICTIVE_LARGE->List.of("hR ","RPR"," R ");default->List.of(" h ","RPR","RRR");};
-                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item("gregtech:item_pipe_"+base+"_"+mat.idSuffix()),'R',form("ring",com.gregtech.gregtech.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
+                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item("gt6ce:item_pipe_"+base+"_"+mat.idSuffix()),'R',form("ring",com.gregtech.gregtech.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
             }else rows.add(plain("item/"+id,id,mat.material(),PipeSpec.PipeSize.valueOf(size.name())));
         }
         for(var spec:FluidTransportDefinitions.tanks()){
@@ -51,7 +51,7 @@ public final class TransportCraftingCatalog {
             if(spec.type()==TankSpec.TankType.METAL_DRUM)
                 rows.add(shaped("tank/"+spec.id(),List.of(" h ","PSP","PSP"),Map.of('h',tool("hammer"),'P',form("plateCurved",hull),'S',form("stickLong",hull)),spec.id(),false));
             else if(spec.type()==TankSpec.TankType.WOOD_BARREL)
-                rows.add(shaped("tank/"+spec.id(),List.of("rGs","PSP","PSP"),Map.of('r',tool("soft_hammer"),'s',tool("saw"),'G',tag("forge:glue"),'P',com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(spec.id()).isPresent()?tag("gregtech:wooden_planks"):form("plate",spec.material()),'S',form("stickLong",TransportMaterialRules.barrelRod(spec))),spec.id(),false));
+                rows.add(shaped("tank/"+spec.id(),List.of("rGs","PSP","PSP"),Map.of('r',tool("soft_hammer"),'s',tool("saw"),'G',tag("forge:glue"),'P',com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.entry(spec.id()).isPresent()?tag("gt6ce:wooden_planks"):form("plate",spec.material()),'S',form("stickLong",TransportMaterialRules.barrelRod(spec))),spec.id(),false));
             // PlasticCan is an existing extruder mold output, not a made-up shaped recipe.
         }
         rows.addAll(com.gregtech.gregtech.content.energy.OriginalThermalCrafting.rows());

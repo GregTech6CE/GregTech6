@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_reactor_rod_breeder",
+  "contents": [
+    "item:gt6ce:reactor_rod_9410",
+    "item:gt6ce:reactor_rod_9420",
+    "item:gt6ce:reactor_rod_9430",
+    "item:gt6ce:reactor_rod_9440"
+  ],
+  "priority": 110
+}

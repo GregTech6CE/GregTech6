@@ -39,7 +39,7 @@ public final class ModList {
     private static final ModList INSTANCE = new ModList();
     public static ModList get() { return INSTANCE; }
     public boolean isLoaded(String name) {
-        return java.util.Set.of("minecraft", "forge", "gregtech").contains(name);
+        return java.util.Set.of("minecraft", "forge", "gt6ce").contains(name);
     }
 }
 ''', encoding='utf-8')

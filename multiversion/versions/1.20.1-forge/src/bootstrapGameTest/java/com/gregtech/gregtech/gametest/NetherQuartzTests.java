@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * rock ore. The port used to gate a full-height noise sweep instead, which produced scattered quartz
  * instead of GT6's two thin layers; the tests pin GT6's formula.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class NetherQuartzTests {
     private static final int BASE_X = 44000;
@@ -44,7 +44,7 @@ public final class NetherQuartzTests {
         ServerLevel level = helper.getLevel();
         WorldGenLevel gen = (WorldGenLevel) level;
         var quartz = ForgeRegistries.BLOCKS.getValue(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "block_ore_netherquartz"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block_ore_netherquartz"));
         helper.assertTrue(quartz != null && quartz != Blocks.AIR,
                 "the port registers block_ore_netherquartz for GT6's RockOres meta 8");
         var noise = new GTCellNoise(level.getSeed());

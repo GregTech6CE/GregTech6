@@ -71,7 +71,7 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
  * </ol>
  *
  * <p>The GT6 {@code FluidType} the port registers for these fluids stays registered (it is what
- * {@code GTFluids.FLUID_TYPES} holds for {@code gregtech:seawater} and friends, and it is what
+ * {@code GTFluids.FLUID_TYPES} holds for {@code gt6ce:seawater} and friends, and it is what
  * {@code GTFluids.entryForTypeId} and the port's own item/tank/GUI metadata lookups resolve), so the
  * GT6 entry of a world water - its name, tooltip, flags and phase - is unchanged; it is simply not
  * what the engine's water identity checks consult any more. The port's own visual copy of vanilla
@@ -130,7 +130,7 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
  * </ol>
  *
  * <p>The GT6 {@code FluidType} the port registers for these fluids stays registered (it is what
- * {@code GTFluids.FLUID_TYPES} holds for {@code gregtech:seawater} and friends, and it is what
+ * {@code GTFluids.FLUID_TYPES} holds for {@code gt6ce:seawater} and friends, and it is what
  * {@code GTFluids.entryForTypeId} and the port's own item/tank/GUI metadata lookups resolve), so the
  * GT6 entry of a world water - its name, tooltip, flags and phase - is unchanged; it is simply not
  * what the engine's water identity checks consult any more. The port's own visual copy of vanilla

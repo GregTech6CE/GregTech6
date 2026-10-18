@@ -27,8 +27,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /** Saltnya full fluid table and IDs with masson's Neo BaseFlowingFluid registration boundary. */
 public final class FluidRegistries {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gregtech");
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gregtech");
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
     private FluidRegistries() {}
     public static void register(IEventBus bus) {
         FluidDefinitions.prepare();
@@ -47,7 +47,7 @@ public final class FluidRegistries {
             var still = GTFluids.FLUIDS.register(path, () -> water ? new GTWorldWaterFluid.Source(properties(field, type, blockRef, true)) : new BaseFlowingFluid.Source(properties(field, type, blockRef, false)));
             stillRef.set(still);
             var flowing = GTFluids.FLUIDS.register(path + "_flowing", () -> water ? new GTWorldWaterFluid.Flowing(properties(field, type, blockRef, true)) : new BaseFlowingFluid.Flowing(properties(field, type, blockRef, false)));
-            GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath("gregtech", path), entry);
+            GTFluids.bindFluid(field, still, flowing, ResourceLocation.fromNamespaceAndPath("gt6ce", path), entry);
             ITEMS.register("fluid_item_" + path, () -> new FluidDisplayItem(entry, new Item.Properties()));
         }
         RegisteredFluids.closeDefinitions();

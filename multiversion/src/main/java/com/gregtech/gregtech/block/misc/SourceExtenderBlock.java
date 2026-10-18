@@ -60,15 +60,15 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
             if(!level.isClientSide){
                 var control=relay.machineControl(spec.bridge?hit.getDirection():null);
                 if(!control.available()||(GTToolHelper.isScrewdriver(tool)&&!control.supportsMode())){
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.extender.unavailable"),true);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.unavailable"),true);
                     return InteractionResult.CONSUME;
                 }
                 if(GTToolHelper.isScrewdriver(tool)){
                     int mode=control.setMode((control.mode()+1)&15);
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.extender.mode",mode),true);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender.mode",mode),true);
                 }else{
                     boolean enabled=control.setEnabled(!control.enabled());
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.extender."+(enabled?"enabled":"disabled")),true);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.extender."+(enabled?"enabled":"disabled")),true);
                 }
                 GTToolHelper.damageForUse(tool,1,player);
             }
@@ -81,9 +81,9 @@ public final class SourceExtenderBlock extends DirectionalBlock implements Entit
 *///?} else {
     @Override public void appendHoverText(ItemStack stack,BlockGetter level,java.util.List<net.minecraft.network.chat.Component> lines,TooltipFlag flag){
 //?}
-        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.extender."+(spec.bridge?"bridge":"routing")));
-        if(!spec.bridge)lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.extender.tools"));
-        if(spec.universal())lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.extender.control"));
+        lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender."+(spec.bridge?"bridge":"routing")));
+        if(!spec.bridge)lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender.tools"));
+        if(spec.universal())lines.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.extender.control"));
     }
     @Override public void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving){
         if(!state.is(next.getBlock())&&!level.isClientSide&&level.getBlockEntity(pos) instanceof ExtenderBlockEntity host){host.dropContents();level.updateNeighborsAt(pos,this);}

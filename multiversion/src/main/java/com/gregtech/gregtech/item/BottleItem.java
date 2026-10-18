@@ -82,7 +82,7 @@ public class BottleItem extends Item {
     /** GT6's empty bottle stack ({@code bottle_empty}), or a vanilla glass bottle when it is absent. */
     public static ItemStack emptyBottle() {
 //? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",EMPTY_BOTTLE_ID));
+        /*Item item = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",EMPTY_BOTTLE_ID));
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(EMPTY_BOTTLE_ID));
 //?}

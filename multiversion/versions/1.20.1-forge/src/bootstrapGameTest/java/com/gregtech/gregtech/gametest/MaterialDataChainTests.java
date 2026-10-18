@@ -35,7 +35,7 @@ import java.util.List;
  * while the scanner recipe asks for 512 QU/t, so the machine could never run a single scan. These
  * tests pin the machine's original T3 registration and run the scanner end to end.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialDataChainTests {
 
@@ -328,7 +328,7 @@ public final class MaterialDataChainTests {
     @GameTest(template = "test_empty", timeoutTicks = 100)
     public static void aDriveStoresSixteenFilesAndReadsThemBack(GameTestHelper h) {
         ItemStack drive = drive(3);
-        h.assertTrue(!drive.isEmpty(), "gregtech:usb3_hdd is registered");
+        h.assertTrue(!drive.isEmpty(), "gt6ce:usb3_hdd is registered");
         h.assertTrue(GTMaterialDataRecipes.isDrive(drive) && GTMaterialDataRecipes.driveTier(drive) == 3,
                 "the item id carries the drive's tier");
         List<GTMaterial> materials = threeMaterials();

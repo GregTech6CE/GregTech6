@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 /** Focused feedback checks in the one already-required fresh-world launch. */
 public final class OriginFeedbackChecks {
     private OriginFeedbackChecks() {}
-    private static ResourceLocation id(String name){return ResourceLocation.fromNamespaceAndPath("gregtech",name);}
+    private static ResourceLocation id(String name){return ResourceLocation.fromNamespaceAndPath("gt6ce",name);}
     private static final java.util.List<String> failures=new java.util.concurrent.CopyOnWriteArrayList<>();
     private static void require(boolean value,String message){if(!value)failures.add(message);}
     public static void registry() {

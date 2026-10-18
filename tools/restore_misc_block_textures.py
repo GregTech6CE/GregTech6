@@ -10,7 +10,7 @@ from pathlib import Path
 import json, shutil, hashlib
 ROOT=Path(__file__).resolve().parents[1]
 ORIGINAL=ROOT.parent/'gregtech6-master/gregtech6-master'
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 MAPPING={
  'advanced_crafting_table':'craftingtables/advanced', 'charging_crafting_table':'craftingtables/charging',
  'filter_items':'extenders/filter_slots', 'filter_fluids':'extenders/filter_slots',
@@ -43,7 +43,7 @@ def main():
     if wanted not in available: wanted=({'front':'in','back':'out'}.get(wanted,'side'))
     if wanted not in available: wanted='side'
     assert wanted in available,(name,layer,face)
-    textures[face]=f'gregtech:block/machines/{folder}/{layer}/{wanted}'
+    textures[face]=f'gt6ce:block/machines/{folder}/{layer}/{wanted}'
     faces[face]={'texture':'#'+face,'cullface':face}
     if layer=='colored': faces[face]['tintindex']=0
    children[layer]={'textures':textures,'elements':[{'from':[0,0,0],'to':[16,16,16],'faces':faces}],'render_type':'minecraft:cutout'}
@@ -52,7 +52,7 @@ def main():
  for name,icon in {'asphalt':'ASPHALT','concrete':'CONCRETE','concrete_reinforced':'CONCRETE_REINFORCED','cfoam':'CFOAM_HARDENED','cfoam_fresh':'CFOAM_FRESH'}.items():
   source=native_path(ORIGINAL/f'src/main/resources/assets/gregtech/textures/blocks/iconsets/{icon}.png')
   copy(source,ASSETS/f'textures/block/iconsets/{icon.lower()}.png')
-  texture=f'gregtech:block/iconsets/{icon.lower()}'
+  texture=f'gt6ce:block/iconsets/{icon.lower()}'
   write(ASSETS/f'models/block/decoration/{name}.json',{'parent':'minecraft:block/cube_all','textures':{'all':texture}})
   panel=ASSETS/f'models/block/misc/panel_{name}.json'
   if panel.exists():

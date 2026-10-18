@@ -23,7 +23,7 @@ import java.util.*;
 public final class GTTechnological {
     public static final DeferredRegister<Item> ITEMS =
 //? if >=1.21.1 {
-            /*DeferredRegister.create(BuiltInRegistries.ITEM, "gregtech");
+            /*DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
 *///?} else {
             DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 //?}

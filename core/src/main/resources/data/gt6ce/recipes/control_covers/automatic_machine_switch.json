@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BW",
+    "CQ"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:lever"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_tin"
+    }
+  },
+  "result": {
+    "item": "gt6ce:automatic_machine_switch"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -28,7 +28,7 @@ final class PlantIconSmoke {
 //?}
     static void check(Minecraft client, List<ItemStack> gallery) {
         for (var color : DyeColor.values()) {
-            var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_hive_" + color.getName()));
+            var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "bumble_hive_" + color.getName()));
             var stack = new ItemStack(item);
 //? if >=1.21.1 {
             /*LayeredItemSmoke.requireOpaque(client, stack, LayeredItemSmoke.quads(client, stack));
@@ -72,7 +72,7 @@ final class PlantIconSmoke {
         var bush = new ItemStack(GTBushes.byBerry("blueberry"));
         gallery.add(bush);
         for (String color : new String[]{"white", "red", "blue"})
-            gallery.add(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "glowtus_" + color))));
+            gallery.add(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "glowtus_" + color))));
         com.mojang.logging.LogUtils.getLogger().info("PLANT_ICON_SMOKE_SUCCESS 16 hive inventory models, {} bush state geometries", states);
     }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_clustermill",
+  "contents": [
+    "item:gt6ce:clustermill_bronze",
+    "item:gt6ce:clustermill_steel",
+    "item:gt6ce:clustermill_titanium",
+    "item:gt6ce:clustermill_tungsten_steel"
+  ],
+  "priority": 110
+}

@@ -76,7 +76,7 @@ public final class GTStoneBlock extends Block {
 
     @Override
     public String getDescriptionId() {
-        return "block.gregtech." + registryId();
+        return "block.gt6ce." + registryId();
     }
 
     @Override

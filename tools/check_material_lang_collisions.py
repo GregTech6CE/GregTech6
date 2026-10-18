@@ -1,8 +1,8 @@
-"""Find `material.gregtech.<key>` lang entries whose key belongs to a *different* material.
+"""Find `material.gt6ce.<key>` lang entries whose key belongs to a *different* material.
 
 GT6's material field names are sometimes the local name of another material (the field `Gold` is the
 BiomesOPlenty wood "Goldwood", the metal gold is `Au`). `tools/import_gt_lang.py` used to write a
-`material.gregtech.<field>` alias for every field, so such an alias could overwrite the entry of the
+`material.gt6ce.<field>` alias for every field, so such an alias could overwrite the entry of the
 material that actually owns that key — gold showed up as "Goldwood" in game.
 
 This checks the two lang files against the registry names the port creates and reports every key whose
@@ -27,7 +27,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-LANG = native_path(ROOT / "src/main/resources/assets/gregtech/lang")
+LANG = native_path(ROOT / "src/main/resources/assets/gt6ce/lang")
 GENERATED = native_path(ROOT / "src/main/java/com/gregtech/gregtech/data/generated")
 
 DISPLAY = re.compile(r'GTMaterialRegistry\.setDisplayName\("([^"]+)",\s*"([^"]*)"\)')
@@ -53,9 +53,9 @@ def main() -> None:
         data = json.loads(path.read_text(encoding="utf-8"))
         bad = []
         for key, value in data.items():
-            if not key.startswith("material.gregtech."):
+            if not key.startswith("material.gt6ce."):
                 continue
-            material = key[len("material.gregtech."):]
+            material = key[len("material.gt6ce."):]
             owner = names.get(material) or names.get(material.capitalize())
             if owner is None:
                 continue

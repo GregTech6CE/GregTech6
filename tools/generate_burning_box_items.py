@@ -9,7 +9,7 @@ from native_layout import native_path
 
 import json, os
 
-ITEM_DIR = str(native_path("src/main/resources/assets/gregtech/models/item"))
+ITEM_DIR = str(native_path("src/main/resources/assets/gt6ce/models/item"))
 
 MATERIALS = [
     "lead", "bismuth", "bronze", "arsenic_copper", "arsenic_bronze",
@@ -30,7 +30,7 @@ def main():
         for mat in MATERIALS:
             # Normal
             path = os.path.join(ITEM_DIR, f"burning_box_{fuel_key}_{mat}.json")
-            model = {"parent": f"gregtech:block/machine/{tex_set}/north_off"}
+            model = {"parent": f"gt6ce:block/machine/{tex_set}/north_off"}
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(model, f, indent=2)
                 f.write("\n")

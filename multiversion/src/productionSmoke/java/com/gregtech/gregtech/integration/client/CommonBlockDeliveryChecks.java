@@ -21,7 +21,7 @@ final class CommonBlockDeliveryChecks {
         var representatives = new LinkedHashMap<Class<?>, BlockItem>();
         for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof BlockItem blockItem)
-                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")) continue;
+                    || !BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
             var block = blockItem.getBlock();
             representatives.putIfAbsent(block.getClass(), blockItem);
             var source = BlockHarvestPolicy.source(block);
@@ -52,7 +52,7 @@ final class CommonBlockDeliveryChecks {
                 "all adopted original metadata identities present: blocks="+sourceBlocks+", basicMachines="+sourceMachines+", missing="+missing);
         for (var item : representatives.values()) verifyRows(new ItemStack(item));
         int storedCovers = 0;
-        var machine = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:electric_motor_lv")));
+        var machine = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:electric_motor_lv")));
         var emptyData = new CompoundTag(); emptyData.putBoolean("gt.component_covers",true);
         write(machine,emptyData);
         require(!CommonBlockTooltips.hasAttachedCover(machine) && !CommonBlockTooltips.containsKey(tooltip(machine),"gt.lang.use.crowbar.to.uncover"),
@@ -107,7 +107,7 @@ final class CommonBlockDeliveryChecks {
         int safes=0,drawers=0,tables=0,crates=0,mass=0,hoppers=0,shelves=0,scaffolds=0;
         for (var item : BuiltInRegistries.ITEM) {
             if (!(item instanceof BlockItem nativeItem)) continue;
-            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")) continue;
+            if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")) continue;
             var type=nativeItem.getBlock();
             if (!(type instanceof com.gregtech.gregtech.block.inventory.SafeBlock
                     || type instanceof com.gregtech.gregtech.block.inventory.DrawerQuadBlock
@@ -126,9 +126,9 @@ final class CommonBlockDeliveryChecks {
                         && countKey(lines,"gt.lang.use.magnifyingglass.to.detail")==1,"original shelf interaction rows");
                 require(lines.stream().anyMatch(row->CommonBlockTooltips.containsKey(List.of(row),"gt.lang.nogui.rightclick.interact")
                         && row.getStyle().getColor().getValue()==net.minecraft.ChatFormatting.GOLD.getColor()),"original shelf no-GUI orange tone");
-                require(countKey(lines,"tooltip.gregtech.machine.nogui.click_front")==0
-                        && countKey(lines,"tooltip.gregtech.smeltery.tool.pincers")==0
-                        && countKey(lines,"tooltip.gregtech.machine.tool.magnifying_glass")==0,"obsolete guessed shelf rows absent");
+                require(countKey(lines,"tooltip.gt6ce.machine.nogui.click_front")==0
+                        && countKey(lines,"tooltip.gt6ce.smeltery.tool.pincers")==0
+                        && countKey(lines,"tooltip.gt6ce.machine.tool.magnifying_glass")==0,"obsolete guessed shelf rows absent");
                 if(shelf.variant().metal())require(BlockHarvestPolicy.source(block).orElseThrow().sourceId()==shelf.variant().originalId(),"actual metal shelf source ID");
                 shelves++;facing=true;
             } else if (block instanceof com.gregtech.gregtech.block.tool.ScaffoldBlock) {
@@ -174,7 +174,7 @@ final class CommonBlockDeliveryChecks {
         require(safes==120 && drawers==60 && tables==120 && hoppers==120,"all original native storage/tool families");
         require(mass==120 && crates==61+com.gregtech.gregtech.content.storage.BottleCrateVariants.WOODS.size(),"canonical ordinary/logistics storage and wooden crate variants");
         require(shelves==com.gregtech.gregtech.content.book.BookShelfVariants.all().size() && scaffolds==60,"all actual native shelf/scaffold variants");
-        var packed=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:mass_storage_steel")));
+        var packed=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:mass_storage_steel")));
         var template=new ItemStack(Items.APPLE); name(template,Component.literal("Storage probe"));
         for (int mode : new int[]{0,8}) for (long count : new long[]{0,1_000_257}) {
             var data=new CompoundTag();data.putInt("gt.mode",mode);data.putLong("gt.stored",count);data.put("gt.template",save(template));write(packed,data);
@@ -189,7 +189,7 @@ final class CommonBlockDeliveryChecks {
                     && countKey(lines,"gt.lang.use.soft.hammer.to.reset")== (mode==8?0:1),"actual tape state controls");
             require(read(packed).equals(data) && !com.gregtech.gregtech.api.material.ItemMaterialRegistry.canRecover(packed),"hover preserves stored items and recovery rejects them");
         }
-        var safe=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:safe")));
+        var safe=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:safe")));
         for (boolean explicit : new boolean[]{false,true}) {
             var data=new CompoundTag();
             data.putInt("gt.mode",0);if (explicit) data.putString("gt.dungeonloot","");write(safe,data);
@@ -221,19 +221,19 @@ final class CommonBlockDeliveryChecks {
         if (!BlockHarvestPolicy.handHarvestable(block) && level > 1) {
             var references = Map.of(2,"iron",3,"diamond",4,"netherite",5,"adamantium",15,"infinity");
             String suffix = references.containsKey(level)
-                    ? " (" + level + ", " + Component.translatable("material.gregtech." + references.get(level)).getString() + ")"
+                    ? " (" + level + ", " + Component.translatable("material.gt6ce." + references.get(level)).getString() + ")"
                     : " (" + level + ")";
             require(row.endsWith(suffix), "source LH tier reference is a translated material name " + stack);
         }
         require(lines.stream().filter(line -> line.getString().equals(row)).count() == 1,
                 "single source harvest row " + stack + "; expected=" + row + "; actual=" + lines);
         require(countKey(lines,"gt.lang.blastresistance") <= 1, "blast row appended once " + stack);
-        require(countKey(lines,"gt.lang.flammable") <= 1 && countKey(lines,"tooltip.gregtech.flammable") == 0,
+        require(countKey(lines,"gt.lang.flammable") <= 1 && countKey(lines,"tooltip.gt6ce.flammable") == 0,
                 "single canonical source flame row " + stack);
-        require(countKey(lines,"tooltip.gregtech.machine.harvest_wrench") == 0
-                && countKey(lines,"tooltip.gregtech.machine.harvest.tool_label") == 0
-                && countKey(lines,"tooltip.gregtech.crucible.harvest_pickaxe") == 0
-                && countKey(lines,"tooltip.gregtech.wire.harvest_tool") == 0, "obsolete generic harvest instructions removed " + stack);
+        require(countKey(lines,"tooltip.gt6ce.machine.harvest_wrench") == 0
+                && countKey(lines,"tooltip.gt6ce.machine.harvest.tool_label") == 0
+                && countKey(lines,"tooltip.gt6ce.crucible.harvest_pickaxe") == 0
+                && countKey(lines,"tooltip.gt6ce.wire.harvest_tool") == 0, "obsolete generic harvest instructions removed " + stack);
         if (block instanceof com.gregtech.gregtech.block.BookShelfBlock)
             require(countKey(lines,"gt.lang.enchantment.bonus") == 1,"original bookshelf interface hint");
         var second = new ArrayList<>(lines); CommonBlockTooltips.append(stack,second);

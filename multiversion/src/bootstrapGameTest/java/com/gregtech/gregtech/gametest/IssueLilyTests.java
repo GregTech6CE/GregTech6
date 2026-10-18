@@ -31,7 +31,7 @@ public final class IssueLilyTests {
         var pos = water.above();
         int checked = 0;
         for (var block : BuiltInRegistries.BLOCK) {
-            if (!(block instanceof WaterlilyBlock) || !BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gregtech")) continue;
+            if (!(block instanceof WaterlilyBlock) || !BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) continue;
             h.assertTrue(block.asItem() instanceof PlaceOnWaterBlockItem, "water surface item: " + block);
             level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
             level.setBlockAndUpdate(water, Blocks.WATER.defaultBlockState());
@@ -61,7 +61,7 @@ public final class IssueLilyTests {
         var level = h.getLevel();
         var water = h.absolutePos(new BlockPos(2, 2, 2));
         var pos = water.above();
-        var block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "glowtus_white"));
+        var block = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "glowtus_white"));
         level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         level.setBlockAndUpdate(water, Blocks.WATER.defaultBlockState().setValue(LiquidBlock.LEVEL, 1));
 //? if >=1.21.1 {

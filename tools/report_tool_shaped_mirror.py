@@ -1,6 +1,6 @@
 """Summarise docs/tool-shaped-mirror-report.json (written by HandCraftingTests).
 
-The report has one entry per ``gregtech:tool_shaped`` recipe in the running game: whether it mirrors,
+The report has one entry per ``gt6ce:tool_shaped`` recipe in the running game: whether it mirrors,
 its pattern shape, whether the pattern is symmetric and how many ingredients match no item at all.
 This tool turns that into the numbers the mirror work is judged by.
 

@@ -6,6 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 public class RegisteredFluids extends FluidCatalog {
     protected RegisteredFluids() {}
     public static ResourceLocation fluidTexture(String registryName) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech", "block/fluids/" + sanitizeTextureId(registryName));
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/fluids/" + sanitizeTextureId(registryName));
     }
 }

@@ -43,7 +43,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
     }
     public static RecipeType<Recipe> recipeType(RecipeMap map) {
 //? if >=1.21.1 {
-        /*return RecipeType.create("gregtech",map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
+        /*return RecipeType.create("gt6ce",map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
 *///?} else {
         return RecipeType.create(GregTech.NAMESPACE,map.mNameInternal.toLowerCase(Locale.ROOT),Recipe.class);
 //?}
@@ -58,7 +58,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
         var special = RecipeSpecialItems.display(recipe.mSpecialItems);
         if (!special.isEmpty()) builder.addSlot(RecipeIngredientRole.CATALYST, 80, 43)
                 .setSlotName("special_tool").setBackground(slot, -1, -1).addItemStacks(special)
-                .addTooltipCallback((view, tooltip) -> tooltip.add(Component.translatable("gregtech.jei.catalyst")));
+                .addTooltipCallback((view, tooltip) -> tooltip.add(Component.translatable("gt6ce.jei.catalyst")));
     }
     private void addSide(IRecipeLayoutBuilder builder,boolean input,ItemStack[] items,FluidStack[] fluids,Recipe recipe) {
         var role=input?RecipeIngredientRole.INPUT:RecipeIngredientRole.OUTPUT;
@@ -73,7 +73,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);
             if(!input&&chance<10000) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
-                    Component.translatable("gregtech.jei.chance",chance/100.0).withStyle(net.minecraft.ChatFormatting.YELLOW)));
+                    Component.translatable("gt6ce.jei.chance",chance/100.0).withStyle(net.minecraft.ChatFormatting.YELLOW)));
         }
         for(int i=0;i<fluids.length;i++) {
             var fluid=fluids[i];if(fluid==null||fluid.isEmpty()) continue;
@@ -85,7 +85,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
 //?}
             var fluidSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_fluid_"+i);
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
-                    tooltip.add(Component.translatable("gregtech.fluid.amount",fluid.getAmount())));
+                    tooltip.add(Component.translatable("gt6ce.fluid.amount",fluid.getAmount())));
 //? if >=1.21.1 {
             /*else fluidSlot.addIngredient(NeoForgeTypes.FLUID_STACK,fluid).setFluidRenderer(Math.max(1000,fluid.getAmount()),false,16,16);
             builder.addInvisibleIngredients(role).addIngredient(NeoForgeTypes.FLUID_STACK,fluid);
@@ -120,7 +120,7 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             for(int i=0;i<recipe.mInputs.length;i++) if(recipe.mInputs[i]==null || recipe.mInputs[i].isEmpty()) {
                 var point=MachineGuiLayout.item(true,i,map.mInputItemsCount,0);
                 if(mouseX>=point.x()&&mouseX<point.x()+16&&mouseY>=point.y()&&mouseY<point.y()+16)
-                    return java.util.List.of(Component.translatable("gregtech.jei.empty_workpiece"));
+                    return java.util.List.of(Component.translatable("gt6ce.jei.empty_workpiece"));
             }
         }
         return java.util.List.of();

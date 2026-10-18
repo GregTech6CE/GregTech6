@@ -36,7 +36,7 @@ public final class TreatedWoodSurvivalTests {
         h.assertTrue(plate.getItem() instanceof BlockItem, "GT6 treated wood plate resolves to a block item");
         Block block = ((BlockItem) plate.getItem()).getBlock();
         h.assertTrue(net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block)
-                        .equals(ResourceLocation.fromNamespaceAndPath("gregtech", "planks_treated")),
+                        .equals(ResourceLocation.fromNamespaceAndPath("gt6ce", "planks_treated")),
                 "Treated wood plate is the registered plank block");
         MaterialEquivalence.Form materialForm = MaterialEquivalence.form(plate);
         h.assertTrue(materialForm != null && materialForm.prefix() == MaterialPrefix.plate
@@ -128,7 +128,7 @@ public final class TreatedWoodSurvivalTests {
     }
 
     private static ToolShapedRecipe crafting(net.minecraft.world.item.crafting.RecipeManager manager, String path) {
-        var recipe = manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech", "wood/treated/" + path))
+        var recipe = manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", "wood/treated/" + path))
                 .orElseThrow(() -> new IllegalStateException("Missing treated wood crafting row " + path));
         if (recipe instanceof ToolShapedRecipe shaped) return shaped;
         throw new IllegalStateException("Wrong treated wood recipe type " + path);

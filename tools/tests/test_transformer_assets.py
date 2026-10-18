@@ -9,7 +9,7 @@ import json
 import unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 class TransformerAssets(unittest.TestCase):
     def test_nine_transformers_three_layers_all_faces_and_water_states(self):
         steps=['ulv_lv','lv_mv','mv_hv','hv_ev','ev_iv','iv_luv','luv_zpm','zpm_uv','uv_xv']

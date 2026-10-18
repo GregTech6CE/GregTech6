@@ -41,7 +41,7 @@ import java.util.TreeMap;
  * + handle tools shapeless ({@code AdvancedCraftingTool extends ShapelessOreRecipe}); these tests pin
  * that split, the patterns, and that the catalog's input sets really craft.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ToolAssemblyTests {
 
@@ -201,7 +201,7 @@ public final class ToolAssemblyTests {
     }
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech", path);
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", path);
     }
 
     /** Grid contents as item ids, for failure messages. */

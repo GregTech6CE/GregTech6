@@ -91,7 +91,7 @@ public final class CanvasPortTests {
         h.assertTrue(UsbDataMedia.readStick(written,1)!=null,"powered registered scanner writes output USB");
         h.assertTrue(CanvasData.read(UsbDataMedia.readStick(written,1)).block().equals("minecraft:crafting_table"),"actual machine output is the scanned block");
         var printer=machine(h,new BlockPos(10,2,3),MachineRecipeMaps.Printer);
-        var portPos=printer.getBlockPos().north();h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","hdd_switch")).defaultBlockState());
+        var portPos=printer.getBlockPos().north();h.getLevel().setBlockAndUpdate(portPos,BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","hdd_switch")).defaultBlockState());
         var port=(com.gregtech.gregtech.blockentity.inventory.UsbSwitchBlockEntity)h.getLevel().getBlockEntity(portPos);
         var drive=item("usb3_hdd");UsbDataMedia.writeDrive(drive,7,1,UsbDataMedia.readStick(written,1));port.items().setStackInSlot(0,drive);port.setMode(7);
         var cable=item("usb3_cable");var cableData=CoverStackData.readOrEmpty(cable);cableData.putByte(UsbDataCable.NBT_DIRECTION,(byte)Direction.NORTH.ordinal());CoverStackData.write(cable,cableData);
@@ -108,7 +108,7 @@ public final class CanvasPortTests {
     }
     @GameTest(template="test_empty",timeoutTicks=40)
     public static void imageCoverSurvivesNativeSaveButCrowbarResetsIt(GameTestHelper h){
-        var pos=h.absolutePos(new BlockPos(4,2,10));var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","drum_steel"));h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
+        var pos=h.absolutePos(new BlockPos(4,2,10));var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","drum_steel"));h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         var owner=h.getLevel().getBlockEntity(pos);var host=(PanelCoverHost)owner;var canvas=item("canvas_red");
         var image=CanvasData.fromState(Blocks.OAK_LOG.defaultBlockState().setValue(BlockStateProperties.AXIS,Direction.Axis.Z));CanvasData.write(canvas,image);
 //? if >=1.21.1 {

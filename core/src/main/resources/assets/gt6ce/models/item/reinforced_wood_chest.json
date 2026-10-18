@@ -1,0 +1,6 @@
+{
+  "parent": "gt6ce:item/metal_chest",
+  "textures": {
+    "particle": "gt6ce:block/machines/woodchest/overlay"
+  }
+}

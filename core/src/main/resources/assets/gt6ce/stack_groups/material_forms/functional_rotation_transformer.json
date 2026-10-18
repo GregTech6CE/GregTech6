@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rotation_transformer",
+  "contents": [
+    "item:gt6ce:rotation_transformer_adamantium",
+    "item:gt6ce:rotation_transformer_arsenic_bronze",
+    "item:gt6ce:rotation_transformer_arsenic_copper",
+    "item:gt6ce:rotation_transformer_brass",
+    "item:gt6ce:rotation_transformer_bronze",
+    "item:gt6ce:rotation_transformer_iridium",
+    "item:gt6ce:rotation_transformer_iritanium",
+    "item:gt6ce:rotation_transformer_steel",
+    "item:gt6ce:rotation_transformer_titanium",
+    "item:gt6ce:rotation_transformer_trinaquadalloy",
+    "item:gt6ce:rotation_transformer_trinitanium",
+    "item:gt6ce:rotation_transformer_tungstensteel",
+    "item:gt6ce:rotation_transformer_wood"
+  ],
+  "priority": 110
+}

@@ -147,7 +147,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
 *///?} else {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
-        if (id == null || !id.getNamespace().equals("gregtech")) return false;
+        if (id == null || !id.getNamespace().equals("gt6ce")) return false;
         if (id.getPath().startsWith("sand_")) return true;
         return state.getBlock() instanceof OreBlock && OreBlock.stoneOf(state).isSediment();
     }
@@ -161,7 +161,7 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     private static BlockState blockState(String id) {
 //? if >=1.21.1 {
         /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(
                 ResourceLocation.fromNamespaceAndPath(com.gregtech.gregtech.GregTech.NAMESPACE, id));
@@ -172,5 +172,5 @@ public class GTBlackSandFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_black_sand.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_black_sand"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_black_sand"));
 }

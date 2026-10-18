@@ -74,13 +74,13 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:multiblock_recipes",Component.literal("GregTech multiblock machine manufacturing recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            /*var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:multiblock_recipes",Component.literal("GregTech multiblock machine manufacturing recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new MultiblockRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new MultiblockRecipePack(info);}
             },PackType.SERVER_DATA,new net.minecraft.server.packs.PackSelectionConfig(true,Pack.Position.BOTTOM,true));
 *///?} else {
-            Pack pack = Pack.readMetaAndCreate("gregtech:multiblock_recipes",
+            Pack pack = Pack.readMetaAndCreate("gt6ce:multiblock_recipes",
                     Component.literal("GregTech multiblock machine manufacturing recipes"), true,
                     MultiblockRecipePack::new, PackType.SERVER_DATA, Pack.Position.BOTTOM,
                     PackSource.BUILT_IN);
@@ -100,7 +100,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
-            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
+            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.blockId());
 //? if >=1.21.1 {
             /*Block block = BuiltInRegistries.BLOCK.get(blockId);
 *///?} else {
@@ -114,7 +114,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
             Map<String, Object> recipe = buildRecipe(entry, material, item);
             if (recipe == null) continue;
 
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech",
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
 //? if >=1.21.1 {
                     /*"recipe/machines/multiblock/" + entry.blockId() + ".json"),
 *///?} else {
@@ -129,7 +129,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
 *///?} else {
 //?}
         for (var row : java.util.stream.Stream.concat(OriginalSurvivalRecipes.ROWS.stream(), UtilityCraftingRows.ROWS.stream()).toList()) {
-            var blockId = ResourceLocation.fromNamespaceAndPath("gregtech", row.id());
+            var blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.id());
 //? if >=1.21.1 {
             /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(blockId);
 *///?} else {
@@ -140,11 +140,11 @@ public final class MultiblockRecipePack extends AbstractPackResources {
             var recipe = buildRecipe(row.entry(), row.material(), item);
             if (recipe == null) throw new IllegalStateException("Unresolved original recipe " + row.id());
 //? if >=1.21.1 {
-            /*recipe.put("result", Map.of("id", row.id().contains(":") ? row.id() : "gregtech:" + row.id(), "count", row.count()));
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/survival_repairs/" + row.id() + ".json"),
+            /*recipe.put("result", Map.of("id", row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), "count", row.count()));
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/survival_repairs/" + row.id() + ".json"),
 *///?} else {
-            recipe.put("result", Map.of("item", row.id().contains(":") ? row.id() : "gregtech:" + row.id(), "count", row.count()));
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech", "recipes/survival_repairs/" + row.id() + ".json"),
+            recipe.put("result", Map.of("item", row.id().contains(":") ? row.id() : "gt6ce:" + row.id(), "count", row.count()));
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce", "recipes/survival_repairs/" + row.id() + ".json"),
 //?}
                     GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
             EMITTED.add(row.id());
@@ -184,7 +184,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
         if (resultId == null) return null;
 
         Map<String, Object> recipe = new HashMap<>();
-        recipe.put("type", "gregtech:tool_shaped");
+        recipe.put("type", "gt6ce:tool_shaped");
         recipe.put("pattern", pattern);
         recipe.put("key", key);
         // Multiblock recipes come from GT6's aRegistry.add(...) rows as well: CR.DEF_REV, no MIR.
@@ -229,7 +229,7 @@ public final class MultiblockRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

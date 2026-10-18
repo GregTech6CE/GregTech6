@@ -17,7 +17,7 @@ class StandardChineseTests(unittest.TestCase):
             accepted=config/'english_source.json'
             accepted.write_text('{"values": {}}',encoding='utf-8')
             before=accepted.read_bytes()
-            key='tooltip.gregtech.example'
+            key='tooltip.gt6ce.example'
             english={key:'Original %s'}
             aliases={key:'gt.original'}
             source={'gt.original':'原文 %s'}
@@ -26,8 +26,8 @@ class StandardChineseTests(unittest.TestCase):
                              ['exact_original_declarations'],1)
             for en,zh in [({key:'Wrong %s'},{key:'原文 %s'}),
                           (english,{key:'丢失参数'}),
-                          ({key:'Original %s', 'item.gregtech.empty':''},
-                           {key:'原文 %s', 'item.gregtech.empty':''})]:
+                          ({key:'Original %s', 'item.gt6ce.empty':''},
+                           {key:'原文 %s', 'item.gt6ce.empty':''})]:
                 with self.subTest(en=en,zh=zh),self.assertRaises(ValueError):
                     check_english(repo,en,zh,aliases,source,pinned=proposal)
             self.assertEqual(accepted.read_bytes(),before)
@@ -35,7 +35,7 @@ class StandardChineseTests(unittest.TestCase):
     def test_english_source_check_does_not_require_a_missing_chinese_translation(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'work') as folder:
             repo=Path(folder);config=repo/CONFIG_PATH;config.mkdir(parents=True)
-            key='block.gregtech.example';original='gt.multitileentity.1'
+            key='block.gt6ce.example';original='gt.multitileentity.1'
             row={'source_key':original,'value':'Original Name','chinese_source_missing':True}
             (config/'english_source.json').write_text(json.dumps({'values':{key:row}}),encoding='utf-8')
             english={key:'Original Name'}
@@ -57,12 +57,12 @@ class StandardChineseTests(unittest.TestCase):
 
     def test_sensor_and_canvas_bindings_keep_original_identity(self):
         aliases = read_json(ROOT / CONFIG_PATH / 'aliases.json')
-        self.assertEqual(aliases['block.gregtech.sensor_electrometer'], 'gt.multitileentity.31015')
-        self.assertEqual(aliases['item.gregtech.canvas_white.tooltip'], 'gt.multiitem.randomtools.7045.tooltip')
+        self.assertEqual(aliases['block.gt6ce.sensor_electrometer'], 'gt.multitileentity.31015')
+        self.assertEqual(aliases['item.gt6ce.canvas_white.tooltip'], 'gt.multiitem.randomtools.7045.tooltip')
         # XV has no original family registration; do not manufacture a translated tier.
         english = read_json(ROOT / LANG_PATH / 'en_us.json')
         chinese = read_json(ROOT / LANG_PATH / 'zh_cn.json')
-        key = 'item.gregtech.compact_electric_conveyor_xv'
+        key = 'item.gt6ce.compact_electric_conveyor_xv'
         self.assertNotIn(key, aliases)
         self.assertEqual(chinese[key], english[key])
 
@@ -80,7 +80,7 @@ class StandardChineseTests(unittest.TestCase):
                          'Regeneration must not drop the scanned bee items')
         for ident, prefix in species:
             for state, meta in states.items():
-                key = 'item.gregtech.' + prefix + '_' + state
+                key = 'item.gt6ce.' + prefix + '_' + state
                 original = 'gt.multiitem.bumblebee.' + str(int(ident) + meta)
                 self.assertEqual(aliases.get(key), original, key)
                 self.assertEqual(aliases.get(key + '.tooltip'), original + '.tooltip', key)
@@ -91,4 +91,4 @@ class StandardChineseTests(unittest.TestCase):
         for native, ident in {'anvil': 32031, 'anvil_lead': 32050, 'anvil_arsenicbronze': 32107,
                               'anvil_tungsten': 32045, 'anvil_hslatungstenalloy': 32091,
                               'anvil_draconiumawakened': 32068}.items():
-            self.assertEqual(aliases['block.gregtech.' + native], 'gt.multitileentity.' + str(ident))
+            self.assertEqual(aliases['block.gt6ce.' + native], 'gt.multitileentity.' + str(ident))

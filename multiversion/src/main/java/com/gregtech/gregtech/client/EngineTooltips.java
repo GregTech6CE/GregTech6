@@ -27,7 +27,7 @@ public final class EngineTooltips {
     private static final int FLUID_OUT_FACES  = ENERGY_OUT_FACES;
 
 //? if >=1.21.1 {
-    /*private static final String MOD = "gregtech";
+    /*private static final String MOD = "gt6ce";
 *///?} else {
     private static final String MOD = GregTech.NAMESPACE;
 //?}
@@ -63,7 +63,7 @@ public final class EngineTooltips {
         }
 
         // Footer
-        tooltip.add(Component.literal("GregTech").withStyle(ChatFormatting.BLUE));
+        tooltip.add(Component.literal(com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_NAME).withStyle(ChatFormatting.BLUE));
     }
 
     // ========================================================================
@@ -101,10 +101,10 @@ public final class EngineTooltips {
     }
 
     private static void appendPistonRates(String unit, long input, long output, List<Component> tooltip) {
-        tooltip.add(Component.translatable("tooltip.gregtech.engine.piston.rates", input, unit, output));
+        tooltip.add(Component.translatable("tooltip.gt6ce.engine.piston.rates", input, unit, output));
         appendCapacityLine(unit, input * 2, ChatFormatting.GREEN, tooltip);
-        tooltip.add(Component.translatable("tooltip.gregtech.engine.piston.faces"));
-        tooltip.add(Component.translatable("tooltip.gregtech.engine.piston.modes",
+        tooltip.add(Component.translatable("tooltip.gt6ce.engine.piston.faces"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.engine.piston.modes",
                 (input + 15) / 16, input * 2, unit, output / 16, output * 2));
     }
 
@@ -129,10 +129,10 @@ public final class EngineTooltips {
         tooltip.add(Component.empty()
                 .append(Component.translatable("gt.lang.energy.input").append(": ").withStyle(ChatFormatting.GREEN))
                 .append(Component.literal(steamMin + " - " + steamMax + " ")
-                        .append(Component.translatable("fluid_type.gregtech.steam")).append("/t")
+                        .append(Component.translatable("fluid_type.gt6ce.steam")).append("/t")
                         .withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + dirsIn + ")").withStyle(ChatFormatting.WHITE)));
-        appendCapacityLine(Component.translatable("fluid_type.gregtech.steam").getString(), spec.steamCapacity(), ChatFormatting.GREEN, tooltip);
+        appendCapacityLine(Component.translatable("fluid_type.gt6ce.steam").getString(), spec.steamCapacity(), ChatFormatting.GREEN, tooltip);
 
         // Energy OUT: KU range
         long kuMin = out / 2;
@@ -236,7 +236,7 @@ public final class EngineTooltips {
     private static void appendToolHints(EngineType type, List<Component> tooltip) {
         ChatFormatting g = ChatFormatting.WHITE;
         if (type == EngineType.ELECTRIC || type == EngineType.FLUX) {
-            tooltip.add(Component.translatable("tooltip.gregtech.engine.piston.tools").withStyle(g));
+            tooltip.add(Component.translatable("tooltip.gt6ce.engine.piston.tools").withStyle(g));
         } else if (type == EngineType.STEAM) {
             tooltip.add(Component.translatable("tooltip." + MOD + ".engine.hint.soft_hammer_toggle").withStyle(g));
         } else {

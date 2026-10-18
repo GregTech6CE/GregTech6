@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_injector",
+  "contents": [
+    "item:gt6ce:injector_aluminium",
+    "item:gt6ce:injector_chromium",
+    "item:gt6ce:injector_galvanized_steel",
+    "item:gt6ce:injector_stainless_steel",
+    "item:gt6ce:injector_titanium"
+  ],
+  "priority": 110
+}

@@ -26,16 +26,16 @@ public final class BottleCrateVariants {
                 case "white_mahoe" -> "wood";
                 default -> species.id();
             };
-            result.add(new Wood(species.id(), "gregtech:planks_" + species.id(),
+            result.add(new Wood(species.id(), "gt6ce:planks_" + species.id(),
                     switch (species.id()) {
                         case "pine" -> "minecraft:block/spruce_planks";
                         case "ebony" -> "minecraft:block/dark_oak_planks";
                         case "white_mahoe" -> "minecraft:block/birch_planks";
-                        default -> "gregtech:block/iconsets/planks_" + texture;
+                        default -> "gt6ce:block/iconsets/planks_" + texture;
                     }));
         }
         for (String wood : List.of("compressed", "dry", "rotten", "mossy", "frozen", "wood"))
-            result.add(new Wood(wood, "gregtech:planks_" + wood, "gregtech:block/iconsets/planks_" + wood));
+            result.add(new Wood(wood, "gt6ce:planks_" + wood, "gt6ce:block/iconsets/planks_" + wood));
         return List.copyOf(result);
     }
 }

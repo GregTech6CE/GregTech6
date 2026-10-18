@@ -24,14 +24,14 @@ def make_core_model(size, insulated):
     mx = 8.0 + half
 
     if insulated:
-        overlay_tex = 'gregtech:block/material_icons/rubber/pipeside'
+        overlay_tex = 'gt6ce:block/material_icons/rubber/pipeside'
         overlay_tint = 1
     else:
-        overlay_tex = 'gregtech:block/material_icons/metallic/wire_overlay'
+        overlay_tex = 'gt6ce:block/material_icons/metallic/wire_overlay'
         overlay_tint = None
 
     textures = {
-        'wire': 'gregtech:block/material_icons/metallic/wire',
+        'wire': 'gt6ce:block/material_icons/metallic/wire',
         'overlay': overlay_tex
     }
 
@@ -62,14 +62,14 @@ def make_item_model(size, insulated):
     mx = 8.0 + half
 
     if insulated:
-        overlay_tex = 'gregtech:block/material_icons/rubber/pipeside'
+        overlay_tex = 'gt6ce:block/material_icons/rubber/pipeside'
         overlay_tint = 1
     else:
-        overlay_tex = 'gregtech:block/material_icons/metallic/wire_overlay'
+        overlay_tex = 'gt6ce:block/material_icons/metallic/wire_overlay'
         overlay_tint = None
 
     textures = {
-        'wire': 'gregtech:block/material_icons/metallic/wire',
+        'wire': 'gt6ce:block/material_icons/metallic/wire',
         'overlay': overlay_tex
     }
 
@@ -136,14 +136,14 @@ def make_side_model(size, insulated):
     mx = 8.0 + half
 
     if insulated:
-        overlay_tex = 'gregtech:block/material_icons/rubber/pipeside'
+        overlay_tex = 'gt6ce:block/material_icons/rubber/pipeside'
         overlay_tint = 1
     else:
-        overlay_tex = 'gregtech:block/material_icons/metallic/wire_overlay'
+        overlay_tex = 'gt6ce:block/material_icons/metallic/wire_overlay'
         overlay_tint = None
 
     textures = {
-        'wire': 'gregtech:block/material_icons/metallic/wire',
+        'wire': 'gt6ce:block/material_icons/metallic/wire',
         'overlay': overlay_tex
     }
 
@@ -170,8 +170,8 @@ def make_side_model(size, insulated):
 
     return {'parent': 'block/block', 'textures': textures, 'elements': elements}
 
-base_blocks = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/blocks')
-base_machine = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gregtech/models/block/machine')
+base_blocks = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gt6ce/models/block/blocks')
+base_machine = native_path(Path(__file__).resolve().parents[1] / 'src/main/resources/assets/gt6ce/models/block/machine')
 
 count = 0
 

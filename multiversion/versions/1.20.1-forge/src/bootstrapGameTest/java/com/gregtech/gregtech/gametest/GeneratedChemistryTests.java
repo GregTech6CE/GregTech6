@@ -23,7 +23,7 @@ import java.util.TreeSet;
  * and keep the remaining "missing content" list visible.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class GeneratedChemistryTests {
 
@@ -113,10 +113,10 @@ public final class GeneratedChemistryTests {
         for (String id : new String[]{"stone_generator_module", "basalt_generator_module",
                 "blackstone_generator_module"}) {
             var item = ForgeRegistries.ITEMS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             helper.assertTrue(item != null && item != Items.AIR, id + " is registered");
             helper.assertTrue(helper.getLevel().getRecipeManager()
-                            .byKey(ResourceLocation.fromNamespaceAndPath("gregtech", "recipe_keys/" + id))
+                            .byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe_keys/" + id))
                             .isPresent(),
                     id + " keeps GT6's crafting recipe");
         }

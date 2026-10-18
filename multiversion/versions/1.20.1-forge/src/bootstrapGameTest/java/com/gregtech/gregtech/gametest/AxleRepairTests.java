@@ -43,7 +43,7 @@ public final class AxleRepairTests {
     public static void everyOriginalAxleHasObtainableHandRecipe(GameTestHelper h){
         var manager=h.getLevel().getRecipeManager();
         long generated=com.gregtech.gregtech.loaders.Loader_HandToolCraftingRecipes.registeredIds()
-                .stream().filter(id->id.startsWith("gregtech:hand/axle/")).count();
+                .stream().filter(id->id.startsWith("gt6ce:hand/axle/")).count();
         h.assertTrue(generated==52,"all 52 axle recipes are generated, not skipped for missing forms");
         for(var entry:GTAxles.all()){
             AxleBlock axle=entry.get();

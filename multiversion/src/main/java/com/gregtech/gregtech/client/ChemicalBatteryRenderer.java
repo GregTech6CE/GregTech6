@@ -15,7 +15,7 @@ public final class ChemicalBatteryRenderer implements BlockEntityRenderer<Chemic
         if(displayed==0)return;
         int color=spec.chemistry().color;
         float lo=spec.inset()/16f-0.002f,hi=1-spec.inset()/16f+0.002f;
-        var texture=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",spec.texture()+"/bar"));
+        var texture=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",spec.texture()+"/bar"));
         ArmRenderHelper.drawCuboid(poses.last().pose(),buffers.getBuffer(RenderType.cutout()),lo,1/16f,lo,hi,(displayed+1)/16f,hi,
                 ((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,texture,light,Direction.Axis.Y);
     }

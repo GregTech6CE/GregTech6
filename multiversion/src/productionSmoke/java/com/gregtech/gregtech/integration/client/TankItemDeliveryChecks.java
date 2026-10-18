@@ -71,7 +71,7 @@ final class TankItemDeliveryChecks {
         require(clean == 35 && stored == 35, "installed existing tank identities");
         int cheap = 0;
         for (var entry : com.gregtech.gregtech.content.transport.fluid.CheapWoodBarrelCatalog.ENTRIES) {
-            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:" + entry.id())));
+            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:" + entry.id())));
             require(item.getMaxStackSize() == 16, "installed empty barrel stack limit");
             var block = (TankBlock) ((net.minecraft.world.item.BlockItem) item.getItem()).getBlock();
             require(block.spec().capacity() == 8000 && block.spec().maxTemperature() == 340, "installed cheap barrel specification");
@@ -82,7 +82,7 @@ final class TankItemDeliveryChecks {
             require(model != net.minecraft.client.Minecraft.getInstance().getModelManager().getMissingModel(), "installed cheap barrel item model");
             cheap++;
         }
-        var logistics = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:logistics_tank")));
+        var logistics = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:logistics_tank")));
         require(ItemMaterialRegistry.get(logistics).orElseThrow().components().size() == 7, "installed complete known logistics composition");
         var result = new JsonObject();
         result.addProperty("cheapSourceVariants", cheap);
@@ -110,7 +110,7 @@ final class TankItemDeliveryChecks {
         var checked = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
         for (var entry : com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().entrySet()) {
             var canonical = entry.getKey();
-            var id = net.minecraft.resources.ResourceLocation.parse("gregtech:" + canonical);
+            var id = net.minecraft.resources.ResourceLocation.parse("gt6ce:" + canonical);
             if (!checked.add(id)) continue;
             require(BuiltInRegistries.ITEM.containsKey(id), "installed source material item exists " + id);
             verifyComposition(new ItemStack(BuiltInRegistries.ITEM.get(id)), entry.getValue());
@@ -138,7 +138,7 @@ final class TankItemDeliveryChecks {
         var actual = ItemMaterialRegistry.get(stack).orElseThrow(() -> new IllegalStateException("installed source material data " + id));
         require(actual.components().equals(expected.components()), "installed exact source components " + id);
         var lines = tooltip(stack, net.minecraft.world.item.TooltipFlag.ADVANCED);
-        String header = net.minecraft.network.chat.Component.translatable("tooltip.gregtech.contained_materials").getString();
+        String header = net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.contained_materials").getString();
         require(lines.stream().filter(header::equals).count() == 1, "installed single material header " + id);
         for (var part : expected.components()) {
             String prefix = com.gregtech.gregtech.client.MaterialTooltips.displayUnits(part.amount()) + " "
@@ -192,7 +192,7 @@ final class TankItemDeliveryChecks {
                 "grindstone_block", "sifting_table", "mixing_bowl", "mixing_bowl_table", "juicer", "bathing_pot",
                 "bathing_pot_table", "bathing_pot_wood", "bathing_pot_table_wood");
         for (String id : ids) {
-            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:" + id)));
+            var item = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:" + id)));
             var lines = tooltip(item, net.minecraft.world.item.TooltipFlag.NORMAL);
             var source = com.gregtech.gregtech.content.machine.OriginalFunctionalTooltipData.manual(id);
             String recipes = tr("gt.lang.recipes") + ": " + tr(source.recipeKey());
@@ -204,7 +204,7 @@ final class TankItemDeliveryChecks {
             var block = ((net.minecraft.world.item.BlockItem) item.getItem()).getBlock();
             String blast = tr("gt.lang.blastresistance") + com.gregtech.gregtech.api.block.OriginalBlockTooltipRules.blastNumber(block.getExplosionResistance());
             require(lines.stream().anyMatch(s -> s.startsWith(blast)), "installed manual blast resistance " + id);
-            require(lines.stream().noneMatch(s -> s.contains("tooltip.gregtech.manual.")), "installed no unresolved old manual key " + id);
+            require(lines.stream().noneMatch(s -> s.contains("tooltip.gt6ce.manual.")), "installed no unresolved old manual key " + id);
         }
         int boilers = 0;
         for (var block : BuiltInRegistries.BLOCK) {
@@ -493,7 +493,7 @@ final class TankItemDeliveryChecks {
             verifySourceEnergyLines(spec, source, lines);
             require(lines.stream().filter((tr("gt.lang.efficiency") + ": 100.00%")::equals).count() == 1,
                     "installed one original bipolar efficiency line " + spec.id());
-            require(lines.contains(tr("gt.lang.reminder.extenders")) && !lines.contains(tr("tooltip.gregtech.magnet.controls")),
+            require(lines.contains(tr("gt.lang.reminder.extenders")) && !lines.contains(tr("tooltip.gt6ce.magnet.controls")),
                     "installed source extender reminder replaces invented monkey mode hint " + spec.id());
             verifyComposition(item, com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(spec.id()).orElseThrow());
             var entry = com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry(spec.id());

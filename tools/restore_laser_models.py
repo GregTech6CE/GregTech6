@@ -13,7 +13,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 SOURCE = native_path(ORIGINAL / 'src/main/resources/assets/gregtech/textures/blocks')
 FAMILIES = {
     'co2_laser': ('machines/lasers/laser_electric', ['lv', 'mv', 'hv', 'ev', 'iv']),
@@ -46,7 +46,7 @@ def main():
         shutil.copyfile(source, target)
         entries[relative] = {'source': source.relative_to(ORIGINAL).as_posix(),
                              'sha256': hashlib.sha256(source.read_bytes()).hexdigest()}
-        return 'gregtech:' + relative.removeprefix('textures/').removesuffix('.png')
+        return 'gt6ce:' + relative.removeprefix('textures/').removesuffix('.png')
     rotations = {'north': {}, 'east': {'y': 90}, 'south': {'y': 180}, 'west': {'y': 270},
                  'up': {'x': 270}, 'down': {'x': 90}}
     for prefix, (folder, tiers) in FAMILIES.items():
@@ -57,20 +57,20 @@ def main():
         for active in (False, True):
             children = {}
             for name, source in [('colored', 'colored'), ('overlay', 'overlay_active' if active else 'overlay')]:
-                textures = {face: f'gregtech:block/{folder}/{source}/' +
+                textures = {face: f'gt6ce:block/{folder}/{source}/' +
                             ('front' if face == 'north' else 'back' if face == 'south' else 'side')
                             for face in rotations}
                 children[name] = layer(textures, [cube([0, 0, 0], [16, 16, 16], name == 'colored')])
             model = 'block/machine/energy/' + prefix + ('_active' if active else '')
             write('models/' + model + '.json', {'parent': 'minecraft:block/block', 'loader': 'forge:composite',
-                  'textures': {'particle': f'gregtech:block/{folder}/colored/side'}, 'children': children})
+                  'textures': {'particle': f'gt6ce:block/{folder}/colored/side'}, 'children': children})
         for tier in tiers:
             name = prefix + '_' + tier
             write(f'blockstates/{name}.json', {'variants': {
                 f'facing={facing},active={str(active).lower()}': dict(
-                    model='gregtech:block/machine/energy/' + prefix + ('_active' if active else ''), **rotation)
+                    model='gt6ce:block/machine/energy/' + prefix + ('_active' if active else ''), **rotation)
                 for facing, rotation in rotations.items() for active in (False, True)}})
-            write(f'models/item/{name}.json', {'parent': 'gregtech:block/machine/energy/' + prefix})
+            write(f'models/item/{name}.json', {'parent': 'gt6ce:block/machine/energy/' + prefix})
     # Original textures are named after the BlockIcons enum, including their case.
     fiber = next(SOURCE.rglob('FIBER_WIRE.png'))
     overlay = next(SOURCE.rglob('FIBER_WIRE_OVERLAY.png'))
@@ -88,7 +88,7 @@ def main():
         write(f'models/block/machine/energy/laser_fiber_{name}.json', cable_model([bounds]))
     write('blockstates/laser_fiber_wire.json', {'multipart': [
         dict(**({} if name == 'center' else {'when': {name: 'true'}}),
-             apply={'model': f'gregtech:block/machine/energy/laser_fiber_{name}'}) for name in parts]})
+             apply={'model': f'gt6ce:block/machine/energy/laser_fiber_{name}'}) for name in parts]})
     write('models/item/laser_fiber_wire.json', cable_model([parts[k] for k in ('center', 'north', 'south')]))
     manifest.write_text(json.dumps(entries, indent=2, sort_keys=True) + '\n', encoding='utf8')
 

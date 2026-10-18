@@ -195,7 +195,7 @@ public class GTWorldFluidBlock extends LiquidBlock {
     /**
      * {@code LiquidBlock.pickupBlock} with the fluid read through the supplier. GT6 fluids have no
      * vanilla bucket of their own (GT6 uses its own cells, the port uses the creative-only
-     * {@code gregtech:fluid_item_*} items), so this still yields {@code Items.AIR} - the same result
+     * {@code gt6ce:fluid_item_*} items), so this still yields {@code Items.AIR} - the same result
      * vanilla water gives for a fluid without a bucket - instead of crashing.
      */
     @Override

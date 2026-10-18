@@ -81,7 +81,7 @@ public final class MaterialBushRuntimeSmoke {
         for(var variant:MaterialBerryBushCatalog.variants()) {
             var block=GTBushes.byBerry(variant.berryItemId());var stack=new ItemStack(block);
             OriginFeedbackChecks.checkModel(minecraft,stack,true);
-            require(!stack.getHoverName().getString().contains("block.gregtech.")&&!stack.getHoverName().getString().contains("item.gregtech."),"localized material bush name "+variant);
+            require(!stack.getHoverName().getString().contains("block.gt6ce.")&&!stack.getHoverName().getString().contains("item.gt6ce."),"localized material bush name "+variant);
             require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==0x009000 && (minecraft.getItemColors().getColor(stack,1)&0xffffff)==variant.colour(),"source inventory layers "+variant);
             for(int stage=0;stage<4;stage++) {
                 int expected=new int[]{0x009000,0xff9090,0x80ff80,variant.colour()}[stage];

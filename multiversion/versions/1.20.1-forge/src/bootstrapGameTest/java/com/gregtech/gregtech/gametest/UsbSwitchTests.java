@@ -16,7 +16,7 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 /** GT6 19000 and 19001 data-switch regression tests. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class UsbSwitchTests {
     private UsbSwitchTests() {}

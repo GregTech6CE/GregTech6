@@ -23,7 +23,7 @@ public final class BatteryBoxInventoryTests {
         return (EnergyNodeBlockEntity) h.getBlockEntity(new BlockPos(1, 2, 1));
     }
     private static ItemStack cell(String name, int count) {
-        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("gregtech", "battery_" + (name.equals("alkaline_button") ? "alkaline" : name) + "_lv"));
+        var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("gt6ce", "battery_" + (name.equals("alkaline_button") ? "alkaline" : name) + "_lv"));
         if (item == null || item == Items.AIR) throw new IllegalStateException(name);
         return new ItemStack(item, count);
     }
@@ -87,7 +87,7 @@ public final class BatteryBoxInventoryTests {
                     "circuit:" + required, com.gregtech.gregtech.content.material.Materials.Steel, 1);
             var ingredient = net.minecraft.world.item.crafting.Ingredient.fromJson(new com.google.gson.Gson().toJsonTree(resolved));
             for (int actual = 1; actual <= names.length; actual++) {
-                var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("gregtech", "circuit_" + names[actual - 1]));
+                var item = ForgeRegistries.ITEMS.getValue(new ResourceLocation("gt6ce", "circuit_" + names[actual - 1]));
                 h.assertTrue(ingredient.test(new ItemStack(item)) == (actual >= required),
                         "machine circuit requirement " + required + " actual tier " + actual);
             }

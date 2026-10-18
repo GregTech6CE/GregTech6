@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    },
+    {
+      "item": "gt6ce:wire_01_tungsten"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_07_tungsten",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

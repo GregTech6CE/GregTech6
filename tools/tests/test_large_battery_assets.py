@@ -22,20 +22,20 @@ class LargeBatteryAssets(unittest.TestCase):
         items=(source/'gregtech/items/MultiItemTechnological.java').read_text(encoding='utf-8')
         self.assertNotRegex(items,r'addItem\(3030[789]')
     def test_twenty_eight_patterns_and_transformer_dependency(self):
-        recipes=list((ROOT/'core/src/main/resources/data/gregtech/recipes/energy_nodes').glob('*.json'))
+        recipes=list((ROOT/'core/src/main/resources/data/gt6ce/recipes/energy_nodes').glob('*.json'))
         self.assertEqual(len(recipes),28)
         for p in recipes:
             r=json.loads(p.read_text(encoding='utf-8'))
             self.assertEqual(r['pattern'],['WIW','XMx','WIW'] if p.stem.startswith('transformer_') else ['WCW','WCW','XMX'])
-            if p.stem.startswith('energy_storage_'):self.assertTrue(r['key']['M']['item'].startswith('gregtech:transformer_'))
+            if p.stem.startswith('energy_storage_'):self.assertTrue(r['key']['M']['item'].startswith('gt6ce:transformer_'))
     def test_cumulative_tags_and_generator_idempotence(self):
         import importlib.util
-        data=ROOT/'core/src/main/resources/data/gregtech'
+        data=ROOT/'core/src/main/resources/data/gt6ce'
         tags={i:json.loads((data/f'tags/items/circuits_tier_{i}_plus.json').read_text()) for i in range(10)}
         for i,tag in tags.items():
             self.assertFalse(tag['replace'])
             self.assertIn({'id':f'#gt:circuit{i}','required':False},tag['values'])
-            self.assertEqual(f'#gregtech:circuits_tier_{i+1}_plus' in tag['values'],i<9)
+            self.assertEqual(f'#gt6ce:circuits_tier_{i+1}_plus' in tag['values'],i<9)
             self.assertFalse(any(isinstance(v,str) and 'quantum' in v for v in tag['values']))
         paths=list((data/'recipes/energy_nodes').glob('*.json'))+list((data/'tags/items').glob('circuits_tier_*.json'))
         before={p:p.read_bytes() for p in paths}

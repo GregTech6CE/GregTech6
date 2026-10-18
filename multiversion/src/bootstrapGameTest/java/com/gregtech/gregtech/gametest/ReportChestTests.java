@@ -21,7 +21,7 @@ public final class ReportChestTests {
     @GameTest(template="test_empty", timeoutTicks=60)
     public static void placedLootChestDefersLootAndExperienceUntilOpening(GameTestHelper h) {
         var level=h.getLevel();var pos=h.absolutePos(new BlockPos(2,2,2));
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","loot_chest_dungeon"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","loot_chest_dungeon"));
         level.setBlockAndUpdate(pos,block.defaultBlockState());
         var chest=(MetalChestBlockEntity)level.getBlockEntity(pos);
         chest.setDungeonLoot(ResourceLocation.fromNamespaceAndPath("gregtech_reports","paper"),12345);

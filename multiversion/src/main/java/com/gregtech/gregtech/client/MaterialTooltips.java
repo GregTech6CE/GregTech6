@@ -83,7 +83,7 @@ public final class MaterialTooltips {
             List<Integer> shapeless = ShapelessRecipeTooltipIndex.inputAmounts(prefix, mat);
             if (!shapeless.isEmpty()) {
 //? if >=1.21.1 {
-                /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".shapeless_recipes")
+                /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".shapeless_recipes")
 *///?} else {
                 tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".shapeless_recipes")
 //?}
@@ -94,7 +94,7 @@ public final class MaterialTooltips {
 
         if (flag.isAdvanced()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".contained_materials")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
 //?}
@@ -106,7 +106,7 @@ public final class MaterialTooltips {
             }
         } else {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".f3h_hint")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
 //?}
@@ -116,9 +116,9 @@ public final class MaterialTooltips {
         if(flag.isAdvanced() && prefix!=null) {
             var form = new com.gregtech.gregtech.api.material.MaterialEquivalence.Form(prefix,mat);
             String tag = com.gregtech.gregtech.api.material.MaterialEquivalence.tagPath(form);
-            if(tag!=null) tooltip.add(Component.translatable("tooltip.gregtech.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
+            if(tag!=null) tooltip.add(Component.translatable("tooltip.gt6ce.material_tag","forge:"+tag).withStyle(ChatFormatting.DARK_GRAY));
             GTMaterial target = prefix==MaterialPrefix.oreRaw ? mat.getTargetCrushingMaterial() : mat.getTargetPulverMaterial();
-            if(target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gregtech.crushing_result" : "tooltip.gregtech.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
+            if(target.resolve()!=mat) tooltip.add(Component.translatable(prefix==MaterialPrefix.oreRaw ? "tooltip.gt6ce.crushing_result" : "tooltip.gt6ce.pulver_result",MaterialPresentation.name(target)).withStyle(ChatFormatting.GRAY));
         }
         appendSourceModTooltip(tooltip, mat);
     }
@@ -133,7 +133,7 @@ public final class MaterialTooltips {
         ModData source = mat.getSourceMod();
         if (source == null || source == ModReferences.UNKNOWN) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".material_from_gt")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
 //?}
@@ -142,7 +142,7 @@ public final class MaterialTooltips {
         }
         if (source == ModReferences.MC) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".vanilla_material")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".vanilla_material")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".vanilla_material")
 //?}
@@ -151,7 +151,7 @@ public final class MaterialTooltips {
         }
         if ((source == ModReferences.GT || source == ModReferences.GAPI) && isPeriodicTableElement(mat)) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".material_from_periodic_table")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_periodic_table")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_periodic_table")
 //?}
@@ -160,7 +160,7 @@ public final class MaterialTooltips {
         }
         if (source == ModReferences.GT || source == ModReferences.GAPI) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".material_from_gt")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
 //?}
@@ -168,7 +168,7 @@ public final class MaterialTooltips {
             return;
         }
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".material_from_mod", source.name)
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_mod", source.name)
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_mod", source.name)
 //?}
@@ -191,7 +191,7 @@ public final class MaterialTooltips {
         }
         GTMaterial mat = data.material();
         if (mat.getId() <= 0) {
-            if (flag.isAdvanced()) tooltip.add(Component.translatable("tooltip.gregtech.composition_nonmaterial").withStyle(ChatFormatting.GRAY));
+            if (flag.isAdvanced()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_nonmaterial").withStyle(ChatFormatting.GRAY));
             return;
         }
 
@@ -204,11 +204,11 @@ public final class MaterialTooltips {
             appendFuelTooltip(mat, data.prefix(), data.amount(), tooltip);
             appendFlammableTooltip(mat, tooltip);
         }
-        if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gregtech.composition_descriptive").withStyle(ChatFormatting.GRAY));
+        if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
 
         if (flag.isAdvanced()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".contained_materials")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
 //?}
@@ -220,7 +220,7 @@ public final class MaterialTooltips {
             }
         } else {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".f3h_hint")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
 //?}
@@ -228,9 +228,9 @@ public final class MaterialTooltips {
         }
 
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gregtech.vanilla_material" : "tooltip.gregtech.foreign_material")
+        /*tooltip.add(Component.translatable(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 *///?} else {
-        tooltip.add(Component.translatable(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gregtech.vanilla_material" : "tooltip.gregtech.foreign_material")
+        tooltip.add(Component.translatable(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 //?}
                 .withStyle(ChatFormatting.BLUE));
     }
@@ -240,7 +240,7 @@ public final class MaterialTooltips {
             return Component.empty();
         }
         if (mat.getId() >= 7900 && mat.getId() <= 7912) return Component.literal(displayUnits(amount) + " ")
-                .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gregtech.composition_category"));
+                .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gt6ce.composition_category"));
         double weightKg = weightKg(mat, amount);
         long frac = ((long) (weightKg * 1000)) % 1000;
 
@@ -316,7 +316,7 @@ public final class MaterialTooltips {
         long heat = burnValue * GregTechConstants.EU_PER_FURNACE_TICK;
         tooltip.add(Component.empty()
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gregtech" + ".fuel_value.label")
+                /*.append(Component.translatable("tooltip." + "gt6ce" + ".fuel_value.label")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".fuel_value.label")
 //?}
@@ -330,7 +330,7 @@ public final class MaterialTooltips {
     public static void appendFlammableTooltip(GTMaterial material, List<Component> tooltip) {
         if (material.resolve().has(MaterialProperty.FLAMMABLE)) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".flammable")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".flammable")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".flammable")
 //?}

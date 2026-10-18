@@ -16,12 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 TIERS = ['lv', 'mv', 'hv', 'ev', 'iv']
 
 def main():
-    folder = native_path(ROOT / 'src/main/resources/data/gregtech/recipes/optical')
+    folder = native_path(ROOT / 'src/main/resources/data/gt6ce/recipes/optical')
     folder.mkdir(parents=True, exist_ok=True)
     def recipe(name, pattern, ingredients):
         data = {'type': 'minecraft:crafting_shaped', 'pattern': pattern,
-                'key': {key: {'item': 'gregtech:' + value} for key, value in ingredients.items()},
-                'result': {'item': 'gregtech:' + name}}
+                'key': {key: {'item': 'gt6ce:' + value} for key, value in ingredients.items()},
+                'result': {'item': 'gt6ce:' + name}}
         (folder / (name + '.json')).write_text(json.dumps(data, indent=2) + '\n', encoding='utf8')
     metals = ['steelgalvanized', 'aluminium', 'stainlesssteel', 'chromium', 'titanium']
     flux = ['lead', 'invar', 'electrum', 'enderiumbase', 'enderium']
@@ -40,8 +40,8 @@ def main():
             'E': 'compact_signal_emitter_' + tier})
     tag_path = native_path(ROOT / 'src/main/resources/data/minecraft/tags/blocks/mineable/pickaxe.json')
     tag = json.loads(tag_path.read_text(encoding='utf8'))
-    blocks = ['gregtech:' + family + '_' + tier for family in ['co2_laser', 'flux_laser', 'laser_absorber'] for tier in TIERS]
-    blocks += ['gregtech:quantum_energizer_' + tier for tier in quantum_ids] + ['gregtech:laser_fiber_wire']
+    blocks = ['gt6ce:' + family + '_' + tier for family in ['co2_laser', 'flux_laser', 'laser_absorber'] for tier in TIERS]
+    blocks += ['gt6ce:quantum_energizer_' + tier for tier in quantum_ids] + ['gt6ce:laser_fiber_wire']
     tag['values'] += [block for block in blocks if block not in tag['values']]
     tag_path.write_text(json.dumps(tag, indent=2) + '\n', encoding='utf8')
     print('Generated 15 optical crafting recipes and optical harvest tags')

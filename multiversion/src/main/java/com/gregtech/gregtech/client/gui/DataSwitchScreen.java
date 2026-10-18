@@ -14,8 +14,8 @@ import net.minecraft.world.entity.player.Inventory;
 /** GT6's USBSwitch.png and HDDSwitch.png, with the selected data position displayed. */
 public final class DataSwitchScreen extends AbstractContainerScreen<DataSwitchMenu> {
 //? if >=1.21.1 {
-    /*private static final ResourceLocation USB = ResourceLocation.fromNamespaceAndPath("gregtech","textures/gui/machines/usb_switch.png");
-    private static final ResourceLocation HDD = ResourceLocation.fromNamespaceAndPath("gregtech","textures/gui/machines/hdd_switch.png");
+    /*private static final ResourceLocation USB = ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/machines/usb_switch.png");
+    private static final ResourceLocation HDD = ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/machines/hdd_switch.png");
 *///?} else {
     private static final ResourceLocation USB = GregTech.id("textures/gui/machines/usb_switch.png");
     private static final ResourceLocation HDD = GregTech.id("textures/gui/machines/hdd_switch.png");
@@ -31,7 +31,7 @@ public final class DataSwitchScreen extends AbstractContainerScreen<DataSwitchMe
         // GT6 omits the title for 16-slot screens: the first USB slot begins at x=53, y=8.
         if (menu.kind() != UsbSwitchBlock.Kind.USB)
             graphics.drawString(font, title, 8, 6, 0x404040, false);
-        graphics.drawString(font, Component.translatable("gui.gregtech.data_switch.slot", menu.selectedSlot()),
+        graphics.drawString(font, Component.translatable("gui.gt6ce.data_switch.slot", menu.selectedSlot()),
                 8, 20, 0x404040, false);
         graphics.drawString(font, playerInventoryTitle, 8, 72, 0x404040, false);
     }

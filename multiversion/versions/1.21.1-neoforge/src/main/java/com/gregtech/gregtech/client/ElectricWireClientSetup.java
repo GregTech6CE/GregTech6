@@ -18,7 +18,7 @@ public final class ElectricWireClientSetup {
  @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event){
   var models=event.getModels();ItemTransforms transforms=ItemTransforms.NO_TRANSFORMS;
   for(String path:new String[]{"iron_block","stone","dirt"}){var model=models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));if(model!=null&&model.isGui3d()&&model.getTransforms()!=ItemTransforms.NO_TRANSFORMS){transforms=model.getTransforms();break;}}
-  var wire=ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/wire");var rubber=ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/rubber/pipeside");
+  var wire=ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/wire");var rubber=ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/rubber/pipeside");
   for(var entry:GTWires.all()){
    var block=entry.get();var spec=block.spec();double half=spec.halfThickness();double ring=Math.max(1,Math.min(2,half/4));
    var model=(spec.insulated()?new PipeWireBakedModel(half,rubber,1,wire,0,ring,null):new PipeWireBakedModel(half,wire,0,wire,0,0,null)).itemTransforms(transforms);

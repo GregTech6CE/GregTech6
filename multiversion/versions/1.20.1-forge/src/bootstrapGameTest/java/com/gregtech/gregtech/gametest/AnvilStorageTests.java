@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class AnvilStorageTests {
     @GameTest(template="test_empty")

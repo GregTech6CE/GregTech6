@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gt6ce:block/stones/gt.stone.gypsum/bricks"
+  }
+}

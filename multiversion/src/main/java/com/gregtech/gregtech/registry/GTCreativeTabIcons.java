@@ -34,7 +34,7 @@ import java.util.Map;
 
 public final class GTCreativeTabIcons {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Item> ICONS = DeferredRegister.create(Registries.ITEM, "gregtech");
+    /*public static final DeferredRegister<Item> ICONS = DeferredRegister.create(Registries.ITEM, "gt6ce");
 *///?} else {
     public static final DeferredRegister<Item> ICONS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
 //?}

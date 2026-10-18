@@ -15,7 +15,7 @@ import shutil
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\resources\assets\gregtech\textures\blocks\machines\multiblockparts"
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 TEX = os.path.join(ASSETS, "textures", "block", "machines", "multiblockparts")
 MODELS = os.path.join(ASSETS, "models", "block", "machine", "multiblock")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
@@ -45,7 +45,7 @@ def write(path, data):
 
 
 def layer(folder, sub, tinted):
-    tex = lambda n: f"gregtech:block/machines/multiblockparts/{folder}/{sub}/{n}"
+    tex = lambda n: f"gt6ce:block/machines/multiblockparts/{folder}/{sub}/{n}"
     faces = {}
     textures = {}
     for face, name in (("up", "top"), ("down", "bottom"), ("north", "side"),
@@ -83,16 +83,16 @@ def main():
                  "children": {"layer0": layer(folder, "colored", True),
                               "layer1": layer(folder, "overlay", False)}}
         write(os.path.join(MODELS, part_id + ".json"), model)
-        ref = f"gregtech:block/machine/multiblock/{part_id}"
+        ref = f"gt6ce:block/machine/multiblock/{part_id}"
         write(os.path.join(BLOCKSTATES, part_id + ".json"), {"variants": {"": {"model": ref}}})
         write(os.path.join(ITEM_MODELS, part_id + ".json"), {"parent": ref})
-        lang_en[f"block.gregtech.{part_id}"] = en
-        lang_zh[f"block.gregtech.{part_id}"] = zh
+        lang_en[f"block.gt6ce.{part_id}"] = en
+        lang_zh[f"block.gt6ce.{part_id}"] = zh
 
     # controller: reuse the basic machine distillationtower models
     cid = "distillation_tower_main"
     variants = {}
-    base = "gregtech:block/machine/basic/distillationtower"
+    base = "gt6ce:block/machine/basic/distillationtower"
     for facing, rot in (("north", 0), ("east", 90), ("south", 180), ("west", 270)):
         for lit in ("false", "true"):
             for run in ("false", "true"):
@@ -103,8 +103,8 @@ def main():
                 variants[f"facing={facing},lit={lit},running={run}"] = entry
     write(os.path.join(BLOCKSTATES, cid + ".json"), {"variants": variants})
     write(os.path.join(ITEM_MODELS, cid + ".json"), {"parent": base + "_active"})
-    lang_en[f"block.gregtech.{cid}"] = "Distillation Tower (Multiblock Main)"
-    lang_zh[f"block.gregtech.{cid}"] = "蒸馏塔(多方块主机)"
+    lang_en[f"block.gt6ce.{cid}"] = "Distillation Tower (Multiblock Main)"
+    lang_zh[f"block.gt6ce.{cid}"] = "蒸馏塔(多方块主机)"
     lang_en["gt.tooltip.multiblock.distillationtower.1"] = "3x3 Base of Heat Transmitters"
     lang_zh["gt.tooltip.multiblock.distillationtower.1"] = "底部 3x3 热传输器"
     lang_en["gt.tooltip.multiblock.distillationtower.2"] = "3x3x8 of Distillation Tower Parts"

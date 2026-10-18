@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
 
 /**
- * The structure that vanilla's {@code /locate structure gregtech:gt_dungeon} can find, and that builds
+ * The structure that vanilla's {@code /locate structure gt6ce:gt_dungeon} can find, and that builds
  * <b>nothing</b>.
  *
  * <p>GT6 has no structure for its dungeon: {@code WorldgenDungeonGT} was a 1.7.10 world generator entry
@@ -26,22 +26,22 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
  * {@code StructureCheck} and {@code StructureStart} need). So a structure exists exactly where a dungeon
  * does, and {@code /locate} therefore reports dungeons rather than one anchor out of a hundred.</p>
  *
- * <p>The data files that go with it (all under {@code data/gregtech/}):</p>
+ * <p>The data files that go with it (all under {@code data/gt6ce/}):</p>
  * <ul>
- *   <li>{@code worldgen/structure/gt_dungeon.json} - {@code "type": "gregtech:gt_dungeon"} (this class'
+ *   <li>{@code worldgen/structure/gt_dungeon.json} - {@code "type": "gt6ce:gt_dungeon"} (this class'
  *       {@link #type()}), the biome tag below as its {@code biomes} and vanilla's
  *       {@code underground_structures} step, which is where 1.20.1 keeps its own dungeons and mineshafts.
  *       The port's dungeon <em>feature</em> runs in the {@code underground_ores} decoration step
- *       ({@code data/gregtech/forge/biome_modifier/gt_dungeon.json}); the two are independent - a structure
+ *       ({@code data/gt6ce/forge/biome_modifier/gt_dungeon.json}); the two are independent - a structure
  *       start is created at the chunk's {@code STRUCTURE_STARTS} status, long before any decoration.</li>
  *   <li>{@code tags/worldgen/biome/has_structure/gt_dungeon.json} - {@code #minecraft:is_overworld},
  *       GT6's {@code GEN_OVERWORLD} of {@code Loader_Worldgen:652}. The tag is also what
  *       {@code ChunkGeneratorStructureState.hasBiomesForStructureSet} ({@code ChunkGeneratorStructureState:59-65})
  *       reads to decide whether the structure set belongs to a dimension at all.</li>
  *   <li>{@code worldgen/structure_set/gt_dungeons.json} - one entry, this structure at weight 1, with the
- *       {@code gregtech:gt_dungeon_lattice} placement (see {@link GTDungeonPlacement}).</li>
+ *       {@code gt6ce:gt_dungeon_lattice} placement (see {@link GTDungeonPlacement}).</li>
  *   <li>{@code tags/worldgen/structure/gt_dungeon.json} - the structure in its own tag, so
- *       {@code /locate structure #gregtech:gt_dungeon} works as well as the plain id.</li>
+ *       {@code /locate structure #gt6ce:gt_dungeon} works as well as the plain id.</li>
  * </ul>
  */
 public class GTDungeonStructure extends Structure {
@@ -90,7 +90,7 @@ public class GTDungeonStructure extends Structure {
                 (StructurePiecesBuilder pieces) -> pieces.addPiece(new GTDungeonAnchorPiece(box))));
     }
 
-    /** The registered type, {@code gregtech:gt_dungeon} (see {@link GTStructures}). */
+    /** The registered type, {@code gt6ce:gt_dungeon} (see {@link GTStructures}). */
     @Override
     public StructureType<?> type() {
         return GTStructures.DUNGEON_TYPE.get();

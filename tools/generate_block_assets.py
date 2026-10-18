@@ -16,7 +16,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 BLOCKSTATES = ASSETS / "blockstates"
 MODELS = ASSETS / "models/block"
 ITEM_MODELS = ASSETS / "models/item"
@@ -65,7 +65,7 @@ CRATE_TEXTURE_STUB = {
     "crateGt64Plate": "crategtplate",
     "crateGt64PlateGem": "crategtplategem",
 }
-CRATE_BOTTOM_TEXTURE = "gregtech:block/iconsets/crate"
+CRATE_BOTTOM_TEXTURE = "gt6ce:block/iconsets/crate"
 
 STONE_TYPES = [
     "granite_black", "granite_red", "basalt", "marble", "limestone", "granite", "diorite", "andesite",
@@ -334,22 +334,22 @@ def write_slab_templates() -> None:
 
 def write_stone_slab_assets(stone: str, variant: str, folder: str, tex: str) -> None:
     block_id = f"stone_{stone}_{variant}_slab"
-    texture = f"gregtech:block/stones/{folder}/{tex}"
+    texture = f"gt6ce:block/stones/{folder}/{tex}"
     write_json(MODELS / "stones" / f"{block_id}.json", {
-        "parent": "gregtech:block/stones/slab/down",
+        "parent": "gt6ce:block/stones/slab/down",
         "textures": {"all": texture},
     })
     write_json(MODELS / "stones" / f"{block_id}_side.json", {
-        "parent": "gregtech:block/stones/slab/side",
+        "parent": "gt6ce:block/stones/slab/side",
         "textures": {"all": texture},
     })
     variants = {
-        "facing=down": {"model": f"gregtech:block/stones/{block_id}"},
-        "facing=up": {"model": f"gregtech:block/stones/{block_id}", "x": 180},
-        "facing=north": {"model": f"gregtech:block/stones/{block_id}_side"},
-        "facing=south": {"model": f"gregtech:block/stones/{block_id}_side", "y": 180},
-        "facing=east": {"model": f"gregtech:block/stones/{block_id}_side", "y": 90},
-        "facing=west": {"model": f"gregtech:block/stones/{block_id}_side", "y": 270},
+        "facing=down": {"model": f"gt6ce:block/stones/{block_id}"},
+        "facing=up": {"model": f"gt6ce:block/stones/{block_id}", "x": 180},
+        "facing=north": {"model": f"gt6ce:block/stones/{block_id}_side"},
+        "facing=south": {"model": f"gt6ce:block/stones/{block_id}_side", "y": 180},
+        "facing=east": {"model": f"gt6ce:block/stones/{block_id}_side", "y": 90},
+        "facing=west": {"model": f"gt6ce:block/stones/{block_id}_side", "y": 270},
     }
     write_json(BLOCKSTATES / f"{block_id}.json", {"variants": variants})
     write_json(ITEM_MODELS / f"{block_id}.json", {
@@ -382,7 +382,7 @@ def main() -> None:
         ]:
             model_path = MODELS / "material" / tex_set / f"{tex_stub}.json"
             if is_crate or not model_path.exists():
-                layer0 = f"gregtech:block/material_icons/{tex_set}/{tex_stub}"
+                layer0 = f"gt6ce:block/material_icons/{tex_set}/{tex_stub}"
                 if is_crate:
                     write_crate_shared_model(model_path, layer0, CRATE_BOTTOM_TEXTURE)
                 else:
@@ -407,13 +407,13 @@ def main() -> None:
             if not valid(rule if prefix_id != "blockSolid" else "ingot", classify(block), registry):
                 continue
             block_id = f"{snake}_{registry.lower()}"
-            write_json(BLOCKSTATES / f"{block_id}.json", {"variants": {"": {"model": f"gregtech:block/blocks/{block_id}"}}})
+            write_json(BLOCKSTATES / f"{block_id}.json", {"variants": {"": {"model": f"gt6ce:block/blocks/{block_id}"}}})
             write_json(MODELS / "blocks" / f"{block_id}.json", {
                 "parent": "minecraft:block/cube_all",
                 "textures": {"all": "minecraft:block/iron_block"},
             })
             write_json(ITEM_MODELS / f"{block_id}.json", {
-                "parent": f"gregtech:block/blocks/{block_id}",
+                "parent": f"gt6ce:block/blocks/{block_id}",
             })
             blockstates += 1
             item_models += 1
@@ -428,13 +428,13 @@ def main() -> None:
         for variant in STONE_VARIANTS:
             block_id = f"stone_{stone}_{variant}"
             tex = VARIANT_TEXTURE[variant]
-            write_json(BLOCKSTATES / f"{block_id}.json", {"variants": {"": {"model": f"gregtech:block/stones/{block_id}"}}})
+            write_json(BLOCKSTATES / f"{block_id}.json", {"variants": {"": {"model": f"gt6ce:block/stones/{block_id}"}}})
             write_json(MODELS / "stones" / f"{block_id}.json", {
                 "parent": "minecraft:block/cube_all",
-                "textures": {"all": f"gregtech:block/stones/{folder}/{tex}"},
+                "textures": {"all": f"gt6ce:block/stones/{folder}/{tex}"},
             })
             write_json(ITEM_MODELS / f"{block_id}.json", {
-                "parent": f"gregtech:block/stones/{block_id}",
+                "parent": f"gt6ce:block/stones/{block_id}",
             })
             stone_count += 1
             item_models += 1
@@ -446,45 +446,45 @@ def main() -> None:
     zh_lang = json.loads(LANG_ZH.read_text(encoding="utf-8")) if LANG_ZH.exists() else {}
     for prefix_id, en, zh, _rule in BLOCK_PREFIXES:
         snake = camel_to_snake(prefix_id)
-        en_lang[f"block.gregtech.{snake}"] = f"%s {en}"
-        zh_lang[f"block.gregtech.{snake}"] = f"%s{zh}"
-        en_lang[f"itemGroup.gregtech.{snake}"] = f"GregTech {en}s"
-        zh_lang[f"itemGroup.gregtech.{snake}"] = f"格雷科技·{zh}"
-    en_lang["block.gregtech.stone"] = "%s %s"
-    zh_lang["block.gregtech.stone"] = "%s%s"
-    en_lang["block.gregtech.stone_slab"] = "%s %s Slab"
-    zh_lang["block.gregtech.stone_slab"] = "%s%s半砖"
-    en_lang["itemGroup.gregtech.stones"] = "GregTech Stones"
-    zh_lang["itemGroup.gregtech.stones"] = "格雷科技·石头"
-    en_lang["itemGroup.gregtech.tools"] = "GregTech Tools"
-    zh_lang["itemGroup.gregtech.tools"] = "格雷科技·工具"
+        en_lang[f"block.gt6ce.{snake}"] = f"%s {en}"
+        zh_lang[f"block.gt6ce.{snake}"] = f"%s{zh}"
+        en_lang[f"itemGroup.gt6ce.{snake}"] = f"GregTech {en}s"
+        zh_lang[f"itemGroup.gt6ce.{snake}"] = f"格雷科技·{zh}"
+    en_lang["block.gt6ce.stone"] = "%s %s"
+    zh_lang["block.gt6ce.stone"] = "%s%s"
+    en_lang["block.gt6ce.stone_slab"] = "%s %s Slab"
+    zh_lang["block.gt6ce.stone_slab"] = "%s%s半砖"
+    en_lang["itemGroup.gt6ce.stones"] = "GregTech Stones"
+    zh_lang["itemGroup.gt6ce.stones"] = "格雷科技·石头"
+    en_lang["itemGroup.gt6ce.tools"] = "GregTech Tools"
+    zh_lang["itemGroup.gt6ce.tools"] = "格雷科技·工具"
     write_json_lang(LANG_EN, en_lang)
     write_json_lang(LANG_ZH, zh_lang)
 
     print(f"Shared material block models: {shared_models}, blockstates: {blockstates}, partial crate assets updated: {partial_assets}, stone blocks: {stone_count}, stone slabs: {slab_count}, item models: {item_models}")
 
     tags_root = native_path(ROOT / "src/main/resources/data")
-    stone_ids = [f"gregtech:stone_{stone}_{variant}" for stone in STONE_TYPES for variant in STONE_VARIANTS]
-    slab_ids = [f"gregtech:stone_{stone}_{variant}_slab" for stone in STONE_TYPES for variant in STONE_VARIANTS]
-    write_json(tags_root / "gregtech/tags/blocks/stone_blocks.json", {"values": stone_ids + slab_ids})
+    stone_ids = [f"gt6ce:stone_{stone}_{variant}" for stone in STONE_TYPES for variant in STONE_VARIANTS]
+    slab_ids = [f"gt6ce:stone_{stone}_{variant}_slab" for stone in STONE_TYPES for variant in STONE_VARIANTS]
+    write_json(tags_root / "gt6ce/tags/blocks/stone_blocks.json", {"values": stone_ids + slab_ids})
     write_json(tags_root / "minecraft/tags/blocks/mineable/pickaxe.json", {
         "replace": False,
-        "values": [{"id": "#gregtech:stone_blocks", "required": False}],
+        "values": [{"id": "#gt6ce:stone_blocks", "required": False}],
     })
     diamond_stones = [
-        f"gregtech:stone_{stone}_{variant}" + suffix
+        f"gt6ce:stone_{stone}_{variant}" + suffix
         for stone in ("granite_black", "granite_red")
         for variant in STONE_VARIANTS
         for suffix in ("", "_slab")
     ]
     iron_stones = [
-        f"gregtech:stone_{stone}_{variant}" + suffix
+        f"gt6ce:stone_{stone}_{variant}" + suffix
         for stone in ("basalt", "komatiite", "kimberlite")
         for variant in STONE_VARIANTS
         for suffix in ("", "_slab")
     ]
     stone_tool_stones = [
-        f"gregtech:stone_{stone}_{variant}" + suffix
+        f"gt6ce:stone_{stone}_{variant}" + suffix
         for stone in ("granite", "slate", "prismarine_dark")
         for variant in STONE_VARIANTS
         for suffix in ("", "_slab")

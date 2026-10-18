@@ -11,11 +11,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class PortableContainerLimitTests {
     private static ItemStack vessel(PortableFluidContainerSpec spec){return new ItemStack(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(
-            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())));}
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));}
     @GameTest(template="test_empty") public static void originalMeasuringClickBands(GameTestHelper h){
         for(var spec:PortableFluidContainerSpec.values())if(PortableContainerLimits.adjustable(spec)){
             var stack=vessel(spec);boolean gas=spec.shapeId().equals("barometer_gas_cylinder");

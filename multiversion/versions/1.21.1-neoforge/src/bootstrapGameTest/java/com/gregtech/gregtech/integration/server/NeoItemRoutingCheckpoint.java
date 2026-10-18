@@ -43,7 +43,7 @@ public final class NeoItemRoutingCheckpoint {
         stack.set(DataComponents.CUSTOM_NAME,Component.literal(name));return stack;
     }
     private static ItemPipeBlock pipe(String name) {
-        Block block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",name));
+        Block block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",name));
         require(block instanceof ItemPipeBlock,"actual factory "+name);return (ItemPipeBlock)block;
     }
     private static void place(BlockPos pos,net.minecraft.world.level.block.state.BlockState state) {

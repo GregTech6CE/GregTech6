@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / 'src/main/resources/assets/gregtech')
+ASSETS = native_path(ROOT / 'src/main/resources/assets/gt6ce')
 DIRECTIONS = ('west', 'east', 'north', 'south', 'up', 'down')
 
 
@@ -71,13 +71,13 @@ VESSELS = {
 }
 
 TOOLS = {
-    'anvil': ('@gregtech:block/material_icons/metallic/blocksolid', [
+    'anvil': ('@gt6ce:block/material_icons/metallic/blocksolid', [
         box([2,0,4],[14,4,12]), box([4,4,6],[12,8,10]), box([1,8,4],[15,12,12]),
         box([15,8,5],[16,12,11]), box([0,9,4],[1,11,12])]),
-    'scaffold': ('@gregtech:block/iconsets/plate', [
+    'scaffold': ('@gt6ce:block/iconsets/plate', [
         box([0,14,0],[16,16,16]), box([2,12,0],[4,14,16]),
         box([6,10,0],[10,14,16]), box([12,12,0],[14,14,16])]),
-    'advanced_button': ('@gregtech:block/machines/redstone/buttons/advanced/0/0/colored_off',
+    'advanced_button': ('@gt6ce:block/machines/redstone/buttons/advanced/0/0/colored_off',
                         [box([4,4,14],[12,12,16])]),
     'mixing_bowl': ('tools/mixing_bowl', bowl(0,16,0,8,2)),
     'mixing_bowl_table': ('tools/mixing_bowl', bowl_table()),
@@ -122,7 +122,7 @@ def layered(path, texture, parts):
     for layer in ('colored', 'overlay'):
         elements = json.loads(json.dumps(parts))
         keys = {face['texture'][1:] for part in elements for face in part['faces'].values()}
-        textures = {key: f'gregtech:block/machines/{texture}/{layer}/{key}' for key in sorted(keys)}
+        textures = {key: f'gt6ce:block/machines/{texture}/{layer}/{key}' for key in sorted(keys)}
         if layer == 'colored':
             for part in elements:
                 for face in part['faces'].values(): face['tintindex'] = 0
@@ -134,7 +134,7 @@ def layered(path, texture, parts):
 def main():
     for name, (texture, parts) in VESSELS.items():
         layered(f'models/block/machine/container/{name}.json', texture, parts)
-        write(f'models/item/fluid_{name}.json', {'parent': f'gregtech:block/machine/container/{name}'})
+        write(f'models/item/fluid_{name}.json', {'parent': f'gt6ce:block/machine/container/{name}'})
     for name, (texture, parts) in TOOLS.items():
         # Specialized stateful models must not be replaced by the legacy four-face mesh.
         if name == 'advanced_button':
@@ -154,10 +154,10 @@ def main():
         else:
             layered(f'models/block/tool/{name}.json', texture, parts)
         variants = {
-            f'facing={face}': {'model': f'gregtech:block/tool/{name}', 'y': turn}
+            f'facing={face}': {'model': f'gt6ce:block/tool/{name}', 'y': turn}
             for face, turn in [('north',0),('east',90),('south',180),('west',270)]}
         if name in {'tap', 'fluid_funnel', 'cap_nozzle'}:
-            variants['facing=down'] = {'model': 'gregtech:block/tool/' + ('fluid_funnel_down' if name == 'fluid_funnel' else name)}
+            variants['facing=down'] = {'model': 'gt6ce:block/tool/' + ('fluid_funnel_down' if name == 'fluid_funnel' else name)}
         write(f'blockstates/{name}.json', {'variants': variants})
     layered('models/block/tool/fluid_funnel_down.json', 'tools/funnel', [
         box([5,2,5],[11,3,11],'side',up='top',down='bottom'),
@@ -180,11 +180,11 @@ def main():
     layered('models/block/machine/container/reactor_rod.json', 'generators/reactor_rods',
             [box([6,0,6],[10,16,10],up='top',down='top')])
     for path in (ASSETS/'models/item').glob('fuel_rod_*.json'):
-        write(path.relative_to(ASSETS), {'parent': 'gregtech:block/machine/container/reactor_rod'})
+        write(path.relative_to(ASSETS), {'parent': 'gt6ce:block/machine/container/reactor_rod'})
     for name, voltage, inset, height in [('lv',32,5,11),('mv',128,4,11),('hv',512,3,11),('ev',2048,2,13),('iv',2048,2,13)]:
         # The old port's extra IV item retains the largest GT6 standard battery shell.
         parts = [box([inset,0,inset],[16-inset,height,16-inset],up='top',down='bottom')]
-        textures = {f: f'gregtech:block/machines/batteries/eu/standard/{voltage}/{f}' for f in ('top','bottom','sides')}
+        textures = {f: f'gt6ce:block/machines/batteries/eu/standard/{voltage}/{f}' for f in ('top','bottom','sides')}
         write(f'models/item/battery_{name}.json', {'parent':'minecraft:block/block','textures':textures,'elements':parts})
     tools = {
         'electric_drill': ('iconsets/handle_electric_drill', 'iconsets/tip_electric_drill'),
@@ -194,7 +194,7 @@ def main():
     }
     for name, (body, tip) in tools.items():
         write(f'models/item/{name}.json', {'parent':'minecraft:item/handheld', 'textures': {
-            f'layer{i}': 'gregtech:item/' + texture for i,texture in enumerate([body,body+'_overlay',tip,tip+'_overlay'])}})
+            f'layer{i}': 'gt6ce:item/' + texture for i,texture in enumerate([body,body+'_overlay',tip,tip+'_overlay'])}})
     for path in (ASSETS/'models/block/magnet').glob('magnet_*.json'):
         if 'electromagnetic' in path.stem:
             layered(path.relative_to(ASSETS), 'magnets/magnet_electric',
@@ -203,7 +203,7 @@ def main():
             parts = [box([0,0,0],[16,16,16])]
             for face in parts[0]['faces'].values(): face['tintindex'] = 0
             write(path.relative_to(ASSETS), {'parent':'minecraft:block/block',
-                  'textures':{'sides':'gregtech:block/material_icons/magnetic/blocksolid'}, 'elements':parts})
+                  'textures':{'sides':'gt6ce:block/material_icons/magnetic/blocksolid'}, 'elements':parts})
     print(f'Rebuilt {len(VESSELS)} portable vessels, {len(TOOLS)} tool meshes, fuel rods, batteries, electric tools and magnets')
 
 

@@ -19,7 +19,7 @@ public final class SandwichLayerCatalog {
 
     private static void layer(int id, String texture, int footprint, int thickness, String... items) {
         LAYERS[id] = new Layer(id, texture, footprint, thickness, 0xFFFFFF);
-        for (String item : items) register("gregtech:"+item,id);
+        for (String item : items) register("gt6ce:"+item,id);
     }
 
     /** Other mods can register an equivalent food without coupling themselves to a GT6 class. */
@@ -89,20 +89,20 @@ public final class SandwichLayerCatalog {
         ITEMS.put("minecraft:cooked_cod", 25);
         ITEMS.put("minecraft:salmon", 24);
         ITEMS.put("minecraft:cooked_salmon", 25);
-        register("gregtech:mayo", 15);
-        register("gregtech:dressing", 15);
-        register("gregtech:tomato_ketchup", 1);
-        register("gregtech:butter", 11);
-        register("gregtech:salted_butter", 11);
-        register("gregtech:chili_sauce", 1);
-        register("gregtech:hot_sauce", 1);
-        register("gregtech:barbecue_sauce", 3);
-        register("gregtech:olive_oil", 2);
-        register("gregtech:egg_yolk", 211);
-        register("gregtech:egg_white", 215);
-        register("gregtech:scrambled_egg", 211);
+        register("gt6ce:mayo", 15);
+        register("gt6ce:dressing", 15);
+        register("gt6ce:tomato_ketchup", 1);
+        register("gt6ce:butter", 11);
+        register("gt6ce:salted_butter", 11);
+        register("gt6ce:chili_sauce", 1);
+        register("gt6ce:hot_sauce", 1);
+        register("gt6ce:barbecue_sauce", 3);
+        register("gt6ce:olive_oil", 2);
+        register("gt6ce:egg_yolk", 211);
+        register("gt6ce:egg_white", 215);
+        register("gt6ce:scrambled_egg", 211);
         // Source rows override historical guessed aliases, including sauce and pill colors.
         for (var row : SandwichSourceIngredients.ROWS) register(row.item(), row.layer());
-        for (var can : CannedFoodCatalog.ROWS) if (can.layer() > 0) register("gregtech:" + can.id(), can.layer());
+        for (var can : CannedFoodCatalog.ROWS) if (can.layer() > 0) register("gt6ce:" + can.id(), can.layer());
     }
 }

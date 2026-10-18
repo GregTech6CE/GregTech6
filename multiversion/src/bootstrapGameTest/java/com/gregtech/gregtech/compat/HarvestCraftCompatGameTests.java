@@ -70,7 +70,7 @@ public final class HarvestCraftCompatGameTests {
         var doughRow = MachineRecipeMaps.Mixer.findRecipe(List.of(item("pamhc2foodcore:flouritem")),
                 List.of(DyeProcessingRecipes.fluid("Water", 1000)), false,
                 MachineRecipeMaps.Mixer.mInputItemsCount, MachineRecipeMaps.Mixer.mOutputItemsCount);
-        helper.assertTrue(doughRow != null && doughRow.mOutputs[0].is(item("gregtech:dough").getItem()),
+        helper.assertTrue(doughRow != null && doughRow.mOutputs[0].is(item("gt6ce:dough").getItem()),
                 "food-core flour and water mix into GT dough");
         helper.assertTrue(manager.byKey(jerky).isEmpty(), "HarvestCraft beef jerky crafting is disabled");
         helper.assertTrue(manager.byKey(dough).isEmpty(), "HarvestCraft dough crafting is disabled");

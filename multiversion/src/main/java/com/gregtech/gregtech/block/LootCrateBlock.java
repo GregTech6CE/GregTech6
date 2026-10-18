@@ -104,7 +104,7 @@ public class LootCrateBlock extends Block {
         return InteractionResult.CONSUME;
     }
 
-    /** GT6's {@code IL.Crate} — the port's {@code gregtech:crate} block. */
+    /** GT6's {@code IL.Crate} — the port's {@code gt6ce:crate} block. */
 //? if >=1.21.1 {
     /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit)==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);}
 
@@ -116,7 +116,7 @@ public class LootCrateBlock extends Block {
 *///?} else {
         var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", "crate"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "crate"));
         return block == null ? ItemStack.EMPTY : new ItemStack(block);
     }
 
@@ -126,6 +126,6 @@ public class LootCrateBlock extends Block {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
-        tooltip.add(Component.translatable("block.gregtech.loot_crate.tooltip").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("block.gt6ce.loot_crate.tooltip").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

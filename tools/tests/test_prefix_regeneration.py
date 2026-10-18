@@ -12,9 +12,9 @@ spec.loader.exec_module(generator)
 class PrefixRegenerationTests(unittest.TestCase):
     def generate(self, root):
         en, zh = root / 'en_us.json', root / 'zh_cn.json'
-        original = {'item.gregtech.custom_device': 'existing device',
-                    'item.gregtech.coin': 'curated coin name',
-                    'itemGroup.gregtech.coin': 'curated tab', 'jade.gregtech.example': 'existing jade'}
+        original = {'item.gt6ce.custom_device': 'existing device',
+                    'item.gt6ce.coin': 'curated coin name',
+                    'itemGroup.gt6ce.coin': 'curated tab', 'jade.gt6ce.example': 'existing jade'}
         for path in (en, zh):
             path.write_text(json.dumps(original), encoding='utf-8')
         with patch.object(generator, 'MODELS', root / 'models'), \
@@ -28,7 +28,7 @@ class PrefixRegenerationTests(unittest.TestCase):
             self.generate(root)
             for texture_set in generator.TEXTURE_SETS:
                 coin = json.loads((root / 'models' / texture_set / 'coin.json').read_text())
-                self.assertEqual('gregtech:item/coin_minted', coin['parent'])
+                self.assertEqual('gt6ce:item/coin_minted', coin['parent'])
                 self.assertNotIn('textures', coin)
     def test_existing_translations_survive_and_missing_ones_are_added(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -37,6 +37,6 @@ class PrefixRegenerationTests(unittest.TestCase):
                 result = json.loads(path.read_text(encoding='utf-8'))
                 for key, value in original.items():
                     self.assertEqual(value, result.get(key), key)
-                self.assertIn('item.gregtech.dust', result)
+                self.assertIn('item.gt6ce.dust', result)
 if __name__ == '__main__':
     unittest.main()

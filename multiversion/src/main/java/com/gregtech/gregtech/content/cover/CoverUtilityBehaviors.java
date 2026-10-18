@@ -44,28 +44,28 @@ public final class CoverUtilityBehaviors {
 
     // ── Behaviour ids (the registry paths of the port's own cover items) ─────────────
 
-    /** Behaviour id of {@code gregtech:crafting_table_cover} — GT6 {@code IL.Cover_Crafting}. */
+    /** Behaviour id of {@code gt6ce:crafting_table_cover} — GT6 {@code IL.Cover_Crafting}. */
     public static final String CRAFTING_TABLE = "crafting_table_cover";
 
-    /** Behaviour id of {@code gregtech:item_retriever_cover} — GT6 {@code IL.Cover_Retriever_Item}. */
+    /** Behaviour id of {@code gt6ce:item_retriever_cover} — GT6 {@code IL.Cover_Retriever_Item}. */
     public static final String RETRIEVER_ITEM = "item_retriever_cover";
 
-    /** Behaviour id of {@code gregtech:item_filter} — GT6 {@code IL.Cover_Filter_Item}. */
+    /** Behaviour id of {@code gt6ce:item_filter} — GT6 {@code IL.Cover_Filter_Item}. */
     public static final String FILTER_ITEM = "item_filter";
 
-    /** Behaviour id of {@code gregtech:fluid_filter} — GT6 {@code IL.Cover_Filter_Fluid}. */
+    /** Behaviour id of {@code gt6ce:fluid_filter} — GT6 {@code IL.Cover_Filter_Fluid}. */
     public static final String FILTER_FLUID = "fluid_filter";
 
-    /** Behaviour id of {@code gregtech:pressure_value} — GT6 {@code IL.Cover_Pressure_Valve}. */
+    /** Behaviour id of {@code gt6ce:pressure_value} — GT6 {@code IL.Cover_Pressure_Valve}. */
     public static final String PRESSURE_VALVE = "pressure_value";
 
-    /** Behaviour id of {@code gregtech:panel_asphalt} — GT6's "Asphalt Panel" cover. */
+    /** Behaviour id of {@code gt6ce:panel_asphalt} — GT6's "Asphalt Panel" cover. */
     public static final String ASPHALT_PANEL = "panel_asphalt";
 
-    /** Behaviour id of {@code gregtech:blank_cover} — GT6 {@code IL.Cover_Blank}. */
+    /** Behaviour id of {@code gt6ce:blank_cover} — GT6 {@code IL.Cover_Blank}. */
     public static final String BLANK_COVER = "blank_cover";
 
-    /** Behaviour id of {@code gregtech:warning_cover} — GT6 {@code IL.Cover_Warning}. */
+    /** Behaviour id of {@code gt6ce:warning_cover} — GT6 {@code IL.Cover_Warning}. */
     public static final String WARNING_COVER = "warning_cover";
 
     // ── NBT keys, spelled exactly as GT6 spells them ────────────────────────────────

@@ -62,7 +62,7 @@ import java.util.Map;
 //?}
 public final class FluidItemClientModels {
 //? if >=1.21.1 {
-    /*private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath("gregtech","item/fluid_item");
+    /*private static final ResourceLocation SHARED_MODEL = ResourceLocation.fromNamespaceAndPath("gt6ce","item/fluid_item");
 *///?} else {
     private static final ResourceLocation SHARED_MODEL = GregTech.id("item/fluid_item");
 //?}

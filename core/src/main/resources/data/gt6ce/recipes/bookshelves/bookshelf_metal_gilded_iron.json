@@ -1,0 +1,31 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:143, multi-tile 7120",
+  "pattern": [
+    "PTP",
+    "sdh",
+    "PTP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/gilded_iron"
+    },
+    "T": {
+      "tag": "forge:screws/gilded_iron"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:bookshelf_metal_gilded_iron",
+    "count": 1
+  }
+}

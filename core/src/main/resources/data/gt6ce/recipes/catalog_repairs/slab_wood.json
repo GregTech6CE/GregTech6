@@ -1,0 +1,19 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "sP"
+  ],
+  "key": {
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "P": {
+      "item": "gt6ce:planks_wood"
+    }
+  },
+  "result": {
+    "item": "gt6ce:slab_wood",
+    "count": 2
+  },
+  "allow_mirror": false
+}

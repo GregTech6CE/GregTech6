@@ -28,11 +28,11 @@ for species, icon in [('rubber','rubber'), ('maple','maple'), ('rainbowood','rai
     for old, new in [(f'log_{species}_top', f'log_top_{icon}'), (f'log_{species}', f'log_side_{icon}'),
                      (f'leaves_{species}', f'leaves_{icon}'), (f'planks_{species}', f'planks_{icon}'),
                      (f'sapling_{species}', f'sapling_small_{icon}')]:
-        RENAMES[f'gregtech:block/wood/{old}"'] = f'gregtech:block/iconsets/{new}"'
+        RENAMES[f'gt6ce:block/wood/{old}"'] = f'gt6ce:block/iconsets/{new}"'
 
 
 def original_path(resource):
-    path = resource.removeprefix('gregtech:')
+    path = resource.removeprefix('gt6ce:')
     head, tail = path.split('/', 1)
     return ({'block': 'blocks', 'item': 'items'}.get(head, head) + '/' + tail + '.png').replace('/material_icons/', '/materialicons/')
 

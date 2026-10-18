@@ -34,7 +34,7 @@ public final class MaterialIconDefinitions {
     }
 
     public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
-        if (prefix == MaterialPrefix.coin) return "{\"parent\":\"gregtech:item/coin_minted\"}";
+        if (prefix == MaterialPrefix.coin) return "{\"parent\":\"gt6ce:item/coin_minted\"}";
         return generatedModelJson(set, prefix);
     }
 
@@ -53,7 +53,7 @@ public final class MaterialIconDefinitions {
                     "layer1": "%s"
                   }
                 }
-                """.formatted("gregtech:" + texturePath(set, prefix, false),
-                "gregtech:" + texturePath(set, prefix, true));
+                """.formatted("gt6ce:" + texturePath(set, prefix, false),
+                "gt6ce:" + texturePath(set, prefix, true));
     }
 }

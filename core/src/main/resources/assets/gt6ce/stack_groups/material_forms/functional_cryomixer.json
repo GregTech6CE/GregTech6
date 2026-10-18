@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_cryomixer",
+  "contents": [
+    "item:gt6ce:cryomixer_aluminium",
+    "item:gt6ce:cryomixer_chromium",
+    "item:gt6ce:cryomixer_galvanized_steel",
+    "item:gt6ce:cryomixer_stainless_steel",
+    "item:gt6ce:cryomixer_titanium"
+  ],
+  "priority": 110
+}

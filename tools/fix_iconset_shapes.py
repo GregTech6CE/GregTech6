@@ -24,7 +24,7 @@ import os
 from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block", "iconsets")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
@@ -83,7 +83,7 @@ def main():
         model_path = os.path.join(BLOCK_MODELS, bid + ".json")
         if not os.path.exists(model_path):
             continue  # composite/component textures without a standalone block
-        tex = "gregtech:block/iconsets/" + icon
+        tex = "gt6ce:block/iconsets/" + icon
 
         if icon == "flower_hexalily":
             write(model_path, {

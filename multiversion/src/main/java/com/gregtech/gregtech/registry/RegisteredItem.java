@@ -8,6 +8,6 @@ public record RegisteredItem<T extends Item>(ResourceLocation getId, Supplier<T>
     public boolean isPresent() { return net.minecraft.core.registries.BuiltInRegistries.ITEM.containsKey(getId); }
     public boolean isBound() { return isPresent(); }
     public static <T extends Item> RegisteredItem<T> register(String path, Supplier<T> factory) {
-        return new RegisteredItem<>(ResourceLocation.fromNamespaceAndPath("gregtech", path), GTItems.ITEMS.register(path, factory));
+        return new RegisteredItem<>(ResourceLocation.fromNamespaceAndPath("gt6ce", path), GTItems.ITEMS.register(path, factory));
     }
 }

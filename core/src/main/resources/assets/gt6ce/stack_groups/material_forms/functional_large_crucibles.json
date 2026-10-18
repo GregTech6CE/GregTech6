@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_large_crucibles",
+  "contents": [
+    "item:gt6ce:large_adamantium_crucible",
+    "item:gt6ce:large_invar_crucible",
+    "item:gt6ce:large_stainless_steel_crucible",
+    "item:gt6ce:large_steel_crucible",
+    "item:gt6ce:large_tantalum_hafnium_carbide_crucible",
+    "item:gt6ce:large_titanium_crucible",
+    "item:gt6ce:large_tungsten_crucible",
+    "item:gt6ce:large_tungstensteel_crucible"
+  ],
+  "priority": 110
+}

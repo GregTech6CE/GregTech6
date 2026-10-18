@@ -10,7 +10,7 @@ import java.util.Optional;
 public final class OreHostStateAdapter {
     private OreHostStateAdapter() {}
     public static Optional<BlockState> adapt(BlockState selected, BlockState replaced) {
-        if (!"gregtech".equals(BuiltInRegistries.BLOCK.getKey(selected.getBlock()).getNamespace())
+        if (!"gt6ce".equals(BuiltInRegistries.BLOCK.getKey(selected.getBlock()).getNamespace())
                 || !(selected.getBlock() instanceof OreBlock ore)) return Optional.of(selected);
         OreHostStone host = GTOreBlockResolver.stoneOf(replaced);
         if (host == null && ore.isSmall()) host = GTOreBlockResolver.sedimentOf(replaced);

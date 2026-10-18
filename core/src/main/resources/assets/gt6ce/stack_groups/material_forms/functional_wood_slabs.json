@@ -1,0 +1,27 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_wood_slabs",
+  "contents": [
+    "item:gt6ce:slab_blue_mahoe",
+    "item:gt6ce:slab_bluemahoe",
+    "item:gt6ce:slab_bluespruce",
+    "item:gt6ce:slab_cinnamon",
+    "item:gt6ce:slab_coconut",
+    "item:gt6ce:slab_compressed",
+    "item:gt6ce:slab_dry",
+    "item:gt6ce:slab_ebony",
+    "item:gt6ce:slab_frozen",
+    "item:gt6ce:slab_hazel",
+    "item:gt6ce:slab_maple",
+    "item:gt6ce:slab_mossy",
+    "item:gt6ce:slab_pine",
+    "item:gt6ce:slab_rainbowood",
+    "item:gt6ce:slab_rotten",
+    "item:gt6ce:slab_rubber",
+    "item:gt6ce:slab_treated",
+    "item:gt6ce:slab_white_mahoe",
+    "item:gt6ce:slab_willow",
+    "item:gt6ce:slab_wood"
+  ],
+  "priority": 110
+}

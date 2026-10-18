@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FMF",
+    "FFF"
+  ],
+  "key": {
+    "F": {
+      "item": "gt6ce:compact_force_field_emitter_iv"
+    },
+    "M": {
+      "item": "gt6ce:dense_lead_wall"
+    }
+  },
+  "result": {
+    "item": "gt6ce:largemassfab_lead"
+  }
+}

@@ -12,11 +12,11 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 public final class CrankClientColors {
     private CrankClientColors() {}
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","crank"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","crank"));
         event.register((state,level,pos,index)->index==0?CrankBlock.tintRgb():0xFFFFFF,block);
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-        var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","crank"));
+        var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","crank"));
         event.register(ItemColorARGB.opaque((stack,index)->index==0?CrankBlock.tintRgb():0xFFFFFF),item);
     }
 }

@@ -20,7 +20,7 @@ public final class WorkshopFluidStation {
     private WorkshopFluidStation() {}
     public static void place(GTDungeonData data,int x,int y,int z) {
 //? if >=1.21.1 {
-        /*var drum=java.util.Objects.requireNonNull(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","drum_stainless_steel")));
+        /*var drum=java.util.Objects.requireNonNull(BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","drum_stainless_steel")));
 *///?} else {
         var drum=java.util.Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(GregTech.id("drum_stainless_steel")));
 //?}
@@ -31,7 +31,7 @@ public final class WorkshopFluidStation {
     }
     private static void attachment(GTDungeonData data,int x,int y,int z,String id,Direction direction) {
 //? if >=1.21.1 {
-        /*var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+        /*var block=BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
         var block=ForgeRegistries.BLOCKS.getValue(GregTech.id(id));
 //?}

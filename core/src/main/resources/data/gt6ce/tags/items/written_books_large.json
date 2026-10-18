@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:large_book_black",
+    "gt6ce:large_book_white",
+    "gt6ce:large_book_red",
+    "gt6ce:large_book_green",
+    "gt6ce:large_book_blue",
+    "gt6ce:large_book_cyan",
+    "gt6ce:large_book_magenta",
+    "gt6ce:large_book_yellow",
+    "gt6ce:large_book_brown",
+    "gt6ce:large_book_orange",
+    "gt6ce:large_book_purple",
+    "gt6ce:large_book_bronze",
+    "gt6ce:large_book_dictionary",
+    "gt6ce:large_book_radiation"
+  ]
+}

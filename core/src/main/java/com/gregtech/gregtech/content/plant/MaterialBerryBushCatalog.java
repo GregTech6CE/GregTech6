@@ -37,7 +37,7 @@ public final class MaterialBerryBushCatalog {
     private static final class Ready {
         private static final List<Variant> VARIANTS = MaterialItemDefinitions.all().stream()
                 .filter(d -> d.prefix() == MaterialPrefix.plantGtBerry)
-                .map(d -> new Variant("bush_" + d.itemId(), "gregtech:" + d.itemId(),
+                .map(d -> new Variant("bush_" + d.itemId(), "gt6ce:" + d.itemId(),
                         d.material().getId(), d.material().getColor() & 0xffffff)).toList();
     }
 
@@ -52,7 +52,7 @@ public final class MaterialBerryBushCatalog {
         for (int stage = 0; stage < 4; stage++) for (int support = 0; support < 7; support++) {
             if (stage != 0 || support != 0) json.append(',');
             json.append("\"stage=").append(stage).append(",support=").append(support)
-                    .append("\":{\"model\":\"gregtech:block/plants/bush_stage").append(stage);
+                    .append("\":{\"model\":\"gt6ce:block/plants/bush_stage").append(stage);
             if (support != 6) json.append("_support").append(support);
             json.append("\"}");
         }

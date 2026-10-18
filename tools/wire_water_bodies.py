@@ -13,7 +13,7 @@ import json
 import os
 
 FEATURES = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "worldgen", "GTFeatures.java")
-DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech")
+DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gt6ce")
 FEATURE_ID = "gt_water_bodies"
 FIELD = "WATER_BODIES"
 CLASS = "GTWaterBodyFeature"
@@ -42,11 +42,11 @@ else:
     print("GTFeatures: %s registered" % FEATURE_ID)
 
 write_json(os.path.join(DATA, "worldgen", "configured_feature", FEATURE_ID + ".json"),
-           {"type": "gregtech:" + FEATURE_ID, "config": {}})
+           {"type": "gt6ce:" + FEATURE_ID, "config": {}})
 write_json(os.path.join(DATA, "worldgen", "placed_feature", FEATURE_ID + ".json"),
-           {"feature": "gregtech:" + FEATURE_ID, "placement": []})
+           {"feature": "gt6ce:" + FEATURE_ID, "placement": []})
 # Last step of the chunk pipeline: every other feature still sees vanilla water, like before this
 # batch, and the conversion happens once the terrain and its decoration are complete.
 write_json(os.path.join(DATA, "forge", "biome_modifier", FEATURE_ID + ".json"),
            {"type": "forge:add_features", "biomes": "#minecraft:is_overworld",
-            "features": ["gregtech:" + FEATURE_ID], "step": "top_layer_modification"})
+            "features": ["gt6ce:" + FEATURE_ID], "step": "top_layer_modification"})

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:clay_juicer"
+  },
+  "result": "gt6ce:juicer",
+  "experience": 0.0,
+  "cookingtime": 200
+}

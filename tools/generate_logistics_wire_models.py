@@ -20,7 +20,7 @@ import json
 import sys
 from pathlib import Path
 
-ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gregtech")
+ROOT = native_path(Path(__file__).resolve().parents[1] / "src/main/resources/assets/gt6ce")
 SOURCE = ROOT / "models/block/machine/energy"
 TARGET = ROOT / "models/block/machine/logistics"
 

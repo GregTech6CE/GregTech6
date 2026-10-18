@@ -11,9 +11,9 @@ import unittest
 
 
 PORT = Path(__file__).resolve().parents[2]
-ASSETS = PORT / "core/src/main/resources/assets/gregtech"
+ASSETS = PORT / "core/src/main/resources/assets/gt6ce"
 SOURCE = (PORT.parent / "gregtech6-master/gregtech6-master/src/main/resources"
-          / "assets/gregtech/textures/blocks/iconsets")
+          / "assets/gt6ce/textures/blocks/iconsets")
 ICONS = ("mud", "clay_brown", "turf", "clay_red", "clay_yellow",
          "clay_blue", "clay_white")
 
@@ -27,11 +27,11 @@ class DiggableAssets(unittest.TestCase):
             item = ASSETS / f"models/item/{icon}.json"
             self.assertTrue(texture.is_file(), str(texture))
             self.assertEqual(json.loads(model.read_text(encoding="utf-8"))["textures"]["all"],
-                             f"gregtech:block/iconsets/{icon}")
+                             f"gt6ce:block/iconsets/{icon}")
             self.assertEqual(json.loads(state.read_text(encoding="utf-8"))["variants"][""]["model"],
-                             f"gregtech:block/iconsets/{icon}")
+                             f"gt6ce:block/iconsets/{icon}")
             self.assertEqual(json.loads(item.read_text(encoding="utf-8"))["parent"],
-                             f"gregtech:block/iconsets/{icon}")
+                             f"gt6ce:block/iconsets/{icon}")
             if SOURCE.is_dir():
                 self.assertEqual(texture.read_bytes(), (SOURCE / f"{icon.upper()}.png").read_bytes(),
                                  f"{icon}: GT6 icon set differs")
@@ -40,7 +40,7 @@ class DiggableAssets(unittest.TestCase):
         for block_id in ("diggable_clay", "diggable_peat"):
             for relative in (f"models/block/decoration/{block_id}.json",
                              f"models/item/{block_id}.json", f"blockstates/{block_id}.json"):
-                for base in (ASSETS, native_path(PORT / "src/main/resources/assets/gregtech")):
+                for base in (ASSETS, native_path(PORT / "src/main/resources/assets/gt6ce")):
                     self.assertFalse((base / relative).exists(), str(base / relative))
 
 

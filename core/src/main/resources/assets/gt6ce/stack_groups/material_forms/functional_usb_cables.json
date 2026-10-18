@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_usb_cables",
+  "contents": [
+    "item:gt6ce:usb1_cable",
+    "item:gt6ce:usb2_cable",
+    "item:gt6ce:usb3_cable",
+    "item:gt6ce:usb4_cable"
+  ],
+  "priority": 110
+}

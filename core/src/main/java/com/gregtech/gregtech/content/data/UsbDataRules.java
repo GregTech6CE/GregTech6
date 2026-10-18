@@ -8,5 +8,5 @@ public final class UsbDataRules {
  public static boolean writable(int mediumTier,int requestedTier){return requestedTier>=0&&requestedTier<=4&&mediumTier>=requestedTier;}
  public static boolean readable(int mediumTier,int requestedTier,int fileTier){return writable(mediumTier,requestedTier)&&fileTier<=requestedTier;}
  public static String slotData(int slot){return DATA+slot;} public static String slotTier(int slot){return TIER+slot;}
- public static int tier(String namespace,String id,String suffix){if(!"gregtech".equals(namespace)||!id.startsWith("usb")||!id.endsWith(suffix)||id.length()!=4+suffix.length())return -1;char n=id.charAt(3);return n>='1'&&n<='4'?n-'0':-1;}
+ public static int tier(String namespace,String id,String suffix){if(!"gt6ce".equals(namespace)||!id.startsWith("usb")||!id.endsWith(suffix)||id.length()!=4+suffix.length())return -1;char n=id.charAt(3);return n>='1'&&n<='4'?n-'0':-1;}
 }

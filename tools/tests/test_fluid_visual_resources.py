@@ -11,7 +11,7 @@ import json
 import unittest
 
 ROOT=Path(__file__).resolve().parents[2]
-ASSETS=native_path(ROOT/'src/main/resources/assets/gregtech')
+ASSETS=native_path(ROOT/'src/main/resources/assets/gt6ce')
 
 class FluidVisualResources(unittest.TestCase):
     def test_all_original_named_fluids_keep_their_png_and_animation_bytes(self):

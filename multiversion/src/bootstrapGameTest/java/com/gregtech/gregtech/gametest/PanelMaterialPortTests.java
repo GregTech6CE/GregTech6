@@ -20,12 +20,12 @@ public final class PanelMaterialPortTests {
  private static Map<GTMaterial,Long> units(ItemComposition data){var map=new LinkedHashMap<GTMaterial,Long>();for(var c:data.components())map.merge(c.material(),c.amount(),Math::addExact);return map;}
  @GameTest(template="test_empty",timeoutTicks=60)
  public static void originalPanelMaterialAmountsReachCrucibleAndRespectExistingBindings(GameTestHelper h){
-  for(String id:List.of("concrete","asphalt","cfoam","cfoam_fresh"))h.assertTrue(ItemMaterialRegistry.get(item("gregtech:"+id)).orElseThrow().amount()==GTValues.U,"source full construction block 1U "+id);
-  h.assertTrue(ItemMaterialRegistry.get(item("gregtech:cfoam_slab")).orElseThrow().amount()==GTValues.U/2,"source half slab material");
-  var reinforced=units(ItemMaterialRegistry.get(item("gregtech:concrete_reinforced")).orElseThrow());
+  for(String id:List.of("concrete","asphalt","cfoam","cfoam_fresh"))h.assertTrue(ItemMaterialRegistry.get(item("gt6ce:"+id)).orElseThrow().amount()==GTValues.U,"source full construction block 1U "+id);
+  h.assertTrue(ItemMaterialRegistry.get(item("gt6ce:cfoam_slab")).orElseThrow().amount()==GTValues.U/2,"source half slab material");
+  var reinforced=units(ItemMaterialRegistry.get(item("gt6ce:concrete_reinforced")).orElseThrow());
   h.assertTrue(reinforced.get(GTMaterialRegistry.get("Concrete"))==GTValues.U&&reinforced.get(GTMaterialRegistry.get("Iron"))==GTValues.U/2,"source reinforcement is one rod");
   for(var spec:PanelCatalog.ALL){
-   var stack=item("gregtech:"+spec.id());var data=ItemMaterialRegistry.get(stack).orElseThrow();
+   var stack=item("gt6ce:"+spec.id());var data=ItemMaterialRegistry.get(stack).orElseThrow();
    var expected=new LinkedHashMap<GTMaterial,Long>();
    for(var c:ItemMaterialRegistry.get(item(spec.input())).orElseThrow().components())expected.merge(c.material(),c.amount()/6,Math::addExact);
    expected.merge(GTMaterialRegistry.get("Iron"),GTValues.U/9,Math::addExact);
@@ -42,7 +42,7 @@ public final class PanelMaterialPortTests {
  }
  @GameTest(template="test_empty",timeoutTicks=60)
  public static void everyPanelShredderEntryConsumesSafelyAndNeverManufacturesMaterial(GameTestHelper h){
-  for(var spec:PanelCatalog.ALL){var stack=item("gregtech:"+spec.id());
+  for(var spec:PanelCatalog.ALL){var stack=item("gt6ce:"+spec.id());
    var recipe=VanillaRecoveryRecipes.recipes().stream().filter(r->r.mInputs[0].is(stack.getItem())).findFirst().orElseThrow(()->new IllegalStateException("Missing shredder entry "+spec.id()));
    h.assertTrue(recipe.mEUt==16&&recipe.mMaterialRecovery&&RecipeInputs.consume(recipe,List.of(stack),List.of(),1)!=null,"registered source recovery executes "+spec.id());
    var available=new HashMap<GTMaterial,Long>();

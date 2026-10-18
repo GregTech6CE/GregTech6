@@ -7,7 +7,7 @@ costs ~10 log lines *per blockstate variant that references it* - the 2026-09-18
 contained 59,192 of those exceptions (~590k log lines, a 99 MB `latest.log` for an 8 minute session),
 which is both a log flood and a lot of allocation churn at startup.
 
-This tool walks every JSON under `assets/gregtech/` and checks each gregtech-namespaced reference:
+This tool walks every JSON under `assets/gt6ce/` and checks each gregtech-namespaced reference:
 
   * `blockstates/*.json`        -> `variants.*.model`, `multipart[].apply.model`
   * `models/**/*.json`          -> `parent`, `textures.*` values that are model paths? (no - textures
@@ -46,7 +46,7 @@ MODEL_DIRS = ('blockstates', 'models/block', 'models/item')
 def model_path_exists(reference):
     """Whether `namespace:path` names a model file this repository ships.
 
-    A reference without a namespace means `minecraft:` (vanilla), not `gregtech:`.
+    A reference without a namespace means `minecraft:` (vanilla), not `gt6ce:`.
     """
     if ':' in reference:
         namespace, path = reference.split(':', 1)
@@ -101,7 +101,7 @@ def main():
                         help='strip leading byte-order marks from JSON files instead of reporting')
     args = parser.parse_args()
 
-    gregtech_dir = os.path.join(ASSETS, 'gregtech')
+    gregtech_dir = os.path.join(ASSETS, 'gt6ce')
     if args.fix_bom:
         return strip_boms(gregtech_dir)
     missing = collections.Counter()
@@ -136,7 +136,7 @@ def main():
                 checked_refs += 1
                 namespace = reference.split(':', 1)[0] if ':' in reference else 'minecraft'
                 if not model_path_exists(reference):
-                    if namespace != 'gregtech':
+                    if namespace != 'gt6ce':
                         external[reference] += 1
                     else:
                         missing[reference] += 1

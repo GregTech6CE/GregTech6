@@ -35,7 +35,7 @@ import java.util.Map;
 public final class BurningBoxBakedModel implements BakedModel {
     private static final ResourceLocation PARTICLE =
 //? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/generators/burning_solid/colored/top");
+            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/generators/burning_solid/colored/top");
 *///?} else {
             GregTech.id("block/machines/generators/burning_solid/colored/top");
 //?}

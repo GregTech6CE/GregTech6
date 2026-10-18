@@ -27,7 +27,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("gregtech_watercompat")
 @PrefixGameTestTemplate(false)
 public final class WaterCompatibilityTests {
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static java.util.List<Block> waters() {
         var result = new java.util.ArrayList<Block>();
         result.add(Blocks.WATER);
@@ -37,7 +37,7 @@ public final class WaterCompatibilityTests {
     private static java.util.List<Block> lilies() {
         var result = new java.util.ArrayList<Block>(); result.add(Blocks.LILY_PAD);
         for (Block b : BuiltInRegistries.BLOCK)
-            if (b instanceof WaterlilyBlock && BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gregtech")) result.add(b);
+            if (b instanceof WaterlilyBlock && BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gt6ce")) result.add(b);
         return result;
     }
     @GameTest(template="test_empty", timeoutTicks=80)

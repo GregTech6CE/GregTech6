@@ -22,7 +22,7 @@ class RestoredContainerTests(unittest.TestCase):
                 self.assertFalse(any(all(a < x < b for a, x, b in zip(part['from'], point, part['to']))
                                      for part in child['elements']), name)
             self.assertEqual(read(f'models/item/fluid_{name}.json')['parent'],
-                             f'gregtech:block/machine/container/{name}')
+                             f'gt6ce:block/machine/container/{name}')
 
     def test_tool_facing_resources(self):
         for name in TOOLS:

@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bale",
+  "contents": [
+    "item:gt6ce:bale_barley",
+    "item:gt6ce:bale_grass",
+    "item:gt6ce:bale_grass_dry",
+    "item:gt6ce:bale_grass_moldy",
+    "item:gt6ce:bale_grass_rotten",
+    "item:gt6ce:bale_oat",
+    "item:gt6ce:bale_rice",
+    "item:gt6ce:bale_rye"
+  ],
+  "priority": 110
+}

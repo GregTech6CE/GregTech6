@@ -27,7 +27,7 @@ public final class WorkshopCraftingSupplies {
             if(stack.isEmpty())throw new IllegalStateException("Missing workshop part "+forms[i]);table.items().setStackInSlot(slot,stack);}
         String lighter=data.next1in2()?"lighter_full":"lighter_empty";
 //? if >=1.21.1 {
-        /*ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",lighter))));
+        /*ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",lighter))));
 *///?} else {
         ItemStack stack=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(com.gregtech.gregtech.GregTech.id(lighter))));
 //?}

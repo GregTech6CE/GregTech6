@@ -1,0 +1,36 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:819",
+  "pattern": [
+    "PLT",
+    "dRW",
+    "TCP"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "L": {
+      "item": "gt6ce:laser_emitter_helium"
+    },
+    "T": {
+      "tag": "forge:screws/aluminium"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "R": {
+      "tag": "minecraft:music_discs"
+    },
+    "W": {
+      "item": "gt6ce:usb1_cable"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_3_plus"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:usb1_hdd"
+  }
+}

@@ -20,7 +20,7 @@ import snownee.jade.api.config.IPluginConfig;
 public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "mold");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "mold");
     private static final String NBT_TEMPERATURE = "gt_mold_temp";
     private static final String NBT_MATERIAL = "gt_mold_material";
     private static final String NBT_AMOUNT = "gt_mold_amount";
@@ -103,15 +103,15 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
         if (!data.contains(NBT_TEMPERATURE, CompoundTag.TAG_LONG)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.gregtech.mold.temperature",
+        tooltip.add(Component.translatable("jade.gt6ce.mold.temperature",
                 data.getLong(NBT_TEMPERATURE), data.getLong(NBT_MAX_TEMP)));
 
         if (data.contains(NBT_MATERIAL)) {
             String state = data.getString(NBT_STATE);
-            tooltip.add(Component.translatable("jade.gregtech.mold.content",
+            tooltip.add(Component.translatable("jade.gt6ce.mold.content",
                     data.getString(NBT_MATERIAL),
                     format(data.getLong(NBT_AMOUNT)),
-                    Component.translatable("jade.gregtech.mold.state." + state)));
+                    Component.translatable("jade.gt6ce.mold.state." + state)));
         }
 
         if (data.contains(NBT_SOLID_OUTPUT, CompoundTag.TAG_COMPOUND)) {
@@ -121,13 +121,13 @@ public enum MoldJadeProvider implements IBlockComponentProvider, IServerDataProv
             ItemStack output = ItemStack.of(data.getCompound(NBT_SOLID_OUTPUT));
 //?}
             if (!output.isEmpty()) {
-                tooltip.add(Component.translatable("jade.gregtech.mold.solid_output",
+                tooltip.add(Component.translatable("jade.gt6ce.mold.solid_output",
                         output.getHoverName(), output.getCount()));
             }
         }
 
         if (data.contains(NBT_MOLD_OUTPUT, CompoundTag.TAG_STRING)) {
-            tooltip.add(Component.translatable("jade.gregtech.mold.output",
+            tooltip.add(Component.translatable("jade.gt6ce.mold.output",
                     data.getString(NBT_MOLD_OUTPUT)));
         }
     }

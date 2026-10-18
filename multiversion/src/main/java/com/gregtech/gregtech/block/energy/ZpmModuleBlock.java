@@ -31,7 +31,7 @@ public final class ZpmModuleBlock extends Block implements EntityBlock {
 *///?} else {
     @Override public void appendHoverText(ItemStack s,BlockGetter w,java.util.List<net.minecraft.network.chat.Component> lines,TooltipFlag f){
 //?}
-        lines.add(net.minecraft.network.chat.Component.translatable("gregtech.zpm.charge",ZpmEnergy.stored(s),ZpmEnergy.CAPACITY));
-        lines.add(net.minecraft.network.chat.Component.translatable("gregtech.zpm.non_rechargeable"));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.charge",ZpmEnergy.stored(s),ZpmEnergy.CAPACITY));
+        lines.add(net.minecraft.network.chat.Component.translatable("gt6ce.zpm.non_rechargeable"));
     }
 }

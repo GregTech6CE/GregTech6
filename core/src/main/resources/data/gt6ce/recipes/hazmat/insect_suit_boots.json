@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MlM",
+    "MqM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:technology/any_rubber_foil"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gt6ce:insect_suit_boots"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

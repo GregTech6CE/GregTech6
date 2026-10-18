@@ -11,10 +11,10 @@ public final class BookBindingRecipe extends ShapelessRecipe {
 *///?} else {
     public BookBindingRecipe(ShapelessRecipe base){super(base.getId(),base.getGroup(),base.category(),base.getResultItem(null),base.getIngredients());this.base=base;}
 //?}
-    private boolean copies(){return getGroup().equals("gregtech.books.copy");}
+    private boolean copies(){return getGroup().equals("gt6ce.books.copy");}
     private static boolean payload(ItemStack stack){
         if(stack.getItem() instanceof com.gregtech.gregtech.item.ColoredBookItem||stack.is(Items.WRITTEN_BOOK))return true;
-        var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());return id.getNamespace().equals("gregtech")&&(id.getPath().equals("printed_pages")||id.getPath().equals("many_printed_pages"));
+        var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());return id.getNamespace().equals("gt6ce")&&(id.getPath().equals("printed_pages")||id.getPath().equals("many_printed_pages"));
     }
 //? if >=1.21.1 {
     /*private static int generation(ItemStack stack){var content=stack.get(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT);return content==null?3:content.generation();}

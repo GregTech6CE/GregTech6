@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_crystallisationcrucible",
+  "contents": [
+    "item:gt6ce:crystallisationcrucible_invar",
+    "item:gt6ce:crystallisationcrucible_steel",
+    "item:gt6ce:crystallisationcrucible_titanium",
+    "item:gt6ce:crystallisationcrucible_tungsten_carbide"
+  ],
+  "priority": 110
+}

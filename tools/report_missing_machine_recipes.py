@@ -2,7 +2,7 @@
 """Report which registered single-block machines have no crafting recipe.
 
 The machine crafting recipes live in code (`data/BasicMachineCraftingRecipes.java`, registered as
-data-pack recipes when the server starts), not as JSON under `data/gregtech/recipes/`, so this
+data-pack recipes when the server starts), not as JSON under `data/gt6ce/recipes/`, so this
 compares the generated tables instead of scanning for recipe files:
 
 * `data/BasicMachineOriginalParams.java` — every registered machine variant (`machine`, `tier`),

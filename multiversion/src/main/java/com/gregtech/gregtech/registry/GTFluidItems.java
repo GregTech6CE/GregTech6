@@ -27,7 +27,7 @@ import java.util.Map;
 public final class GTFluidItems {
 //? if >=1.21.1 {
  /*private GTFluidItems(){}
- public static Item get(String field){var entry=RegisteredFluids.get(field);if(entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
+ public static Item get(String field){var entry=RegisteredFluids.get(field);if(entry==null)return null;var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_item_"+RegisteredFluids.sanitizePath(entry.registryName())));return item==Items.AIR?null:item;}
 *///?} else {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);

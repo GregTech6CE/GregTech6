@@ -11,7 +11,7 @@ import java.util.*;
 
 /** Finite native recipe, live registry and baked model checks for both platform deliveries. */
 final class MachineFeedbackChecks {
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static void require(boolean value, String message) { if(!value) throw new IllegalStateException(message); }
     private static ItemStack usable(ItemStack sample) {
         var stack=sample.copyWithCount(1);
@@ -113,7 +113,7 @@ final class MachineFeedbackChecks {
             OriginFeedbackChecks.checkModel(minecraft,stack,true);
             var spec=((BasicMachineBlock)((BlockItem)stack.getItem()).getBlock()).basicSpec();
             require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==(spec.material().getColor()&0xffffff),"Lightning inventory material tint absent "+suffix);
-            require(!stack.getHoverName().getString().startsWith("block.gregtech."),"Lightning item missing language "+suffix);count++;
+            require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"Lightning item missing language "+suffix);count++;
         }
         OriginFeedbackChecks.checkModel(minecraft,new ItemStack(BuiltInRegistries.ITEM.get(id("melter_stainless_steel"))),true);
         receipt.addProperty("sourceMachineInventoryModelsChecked",count+1);

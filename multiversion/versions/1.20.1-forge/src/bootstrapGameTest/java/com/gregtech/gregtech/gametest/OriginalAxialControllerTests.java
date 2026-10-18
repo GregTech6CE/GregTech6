@@ -56,7 +56,7 @@ public final class OriginalAxialControllerTests {
                 helper.assertTrue((steam ? GTBlockEntities.LARGE_TURBINE : GTBlockEntities.LARGE_DYNAMO).get()
                                 .isValid(machine.getBlockState()), originalId + " belongs to a ticking block entity type");
                 var recipe = helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                        "gregtech", "axial/" + (steam ? STEAM_RECIPES : DYNAMO_RECIPES)[gradeIndex]));
+                        "gt6ce", "axial/" + (steam ? STEAM_RECIPES : DYNAMO_RECIPES)[gradeIndex]));
                 helper.assertTrue(recipe.isPresent() && recipe.get().getResultItem(helper.getLevel().registryAccess()).is(block.asItem()),
                         originalId + " is the canonical survival recipe output");
                 var drops = Block.getDrops(machine.getBlockState(), helper.getLevel(), helper.absolutePos(origin), machine);
@@ -85,7 +85,7 @@ public final class OriginalAxialControllerTests {
             helper.assertTrue(GTBlockEntities.LARGE_GAS_TURBINE.get().isValid(machine.getBlockState()),
                     originalId + " belongs to the ticking gas turbine block entity type");
             var recipe = helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                    "gregtech", "axial/" + GAS_RECIPES[gradeIndex]));
+                    "gt6ce", "axial/" + GAS_RECIPES[gradeIndex]));
             helper.assertTrue(recipe.isPresent() && recipe.get().getResultItem(helper.getLevel().registryAccess()).is(block.asItem()),
                     originalId + " is the canonical survival recipe output");
             var requiredHousing = recipe.orElseThrow().getIngredients().get(4);

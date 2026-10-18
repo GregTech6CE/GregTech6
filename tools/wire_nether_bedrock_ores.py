@@ -11,13 +11,13 @@ import io
 import json
 import os
 
-DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gregtech", "forge", "biome_modifier")
+DATA = os.path.join(str(native_path("src")), "main", "resources", "data", "gt6ce", "forge", "biome_modifier")
 PATH = os.path.join(DATA, "gt_nether_bedrock_ores.json")
 
 payload = {
     "type": "forge:add_features",
     "biomes": "#minecraft:is_nether",
-    "features": ["gregtech:gt_bedrock_ores"],
+    "features": ["gt6ce:gt_bedrock_ores"],
     "step": "underground_ores",
 }
 

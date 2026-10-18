@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_gas_turbine_cores",
+  "contents": [
+    "item:gt6ce:graphene_gas_turbine_main_housing",
+    "item:gt6ce:magnalium_gas_turbine_main_housing",
+    "item:gt6ce:trinitanium_gas_turbine_main_housing",
+    "item:gt6ce:vibramantium_gas_turbine_main_housing"
+  ],
+  "priority": 110
+}

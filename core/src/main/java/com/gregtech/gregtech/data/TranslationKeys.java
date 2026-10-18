@@ -11,12 +11,12 @@ public class TranslationKeys {
 
     public static final class Item {
         private Item() {}
-        public static final String MATERIAL = "item.gregtech.material.";
+        public static final String MATERIAL = "item.gt6ce.material.";
     }
 
     public static final class Block {
         private Block() {}
-        public static final String MACHINE = "block.gregtech.machine.";
+        public static final String MACHINE = "block.gt6ce.machine.";
     }
 
     public static void bootstrap() {

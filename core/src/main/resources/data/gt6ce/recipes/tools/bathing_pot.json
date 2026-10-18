@@ -1,0 +1,11 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [" f ", "PhP", "PPP"],
+  "key": {
+    "f": {"item": "gt6ce:tool_file"},
+    "h": {"item": "gt6ce:tool_hammer"},
+    "P": {"item": "gt6ce:plate_stainlesssteel"}
+  },
+  "result": {"item": "gt6ce:bathing_pot"}
+}

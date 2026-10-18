@@ -12,7 +12,7 @@ import json
 import os
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gregtech")
+ASSETS = os.path.join(ROOT, str(native_path("src")), "main", "resources", "assets", "gt6ce")
 BLOCKSTATES = os.path.join(ASSETS, "blockstates")
 BLOCK_MODELS = os.path.join(ASSETS, "models", "block", "iconsets")
 ITEM_MODELS = os.path.join(ASSETS, "models", "item")
@@ -49,7 +49,7 @@ def main():
                 deleted += 1
 
     for name in GLOWTUS:
-        tex = "gregtech:block/iconsets/" + name
+        tex = "gt6ce:block/iconsets/" + name
         write(os.path.join(BLOCK_MODELS, name + ".json"), {
             "parent": "minecraft:block/lily_pad",
             "render_type": "minecraft:cutout",

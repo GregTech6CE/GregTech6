@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    {
+      "item": "gt6ce:wire_01_graphene"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_04_graphene",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:624 (disabled)"
+}

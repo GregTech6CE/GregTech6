@@ -17,8 +17,8 @@ public final class NaturalWoodCraftingRows {
     private static List<String> rows() {
         List<String> result = new ArrayList<>();
         for (Spec wood : SPECIES) {
-            String path = "natural/" + wood.kind(), log = "item:gregtech:log_" + wood.kind();
-            String plank = "item:gregtech:planks_" + wood.kind();
+            String path = "natural/" + wood.kind(), log = "item:gt6ce:log_" + wood.kind();
+            String plank = "item:gt6ce:planks_" + wood.kind();
             result.add(path + "/log_to_planks_hand|shapeless|nomirror||L=" + log + "|" + plank + "*1|Loader_Recipes_Woods.java:185");
             result.add(path + "/log_to_planks_saw|shaped|nomirror|s/L|s=tool:saw;L=" + log + "|" + plank + "*2|Loader_Recipes_Woods.java:184");
             result.add(path + "/planks_to_sticks_hand|shaped|nomirror|P/P|P=" + plank + "|rod:" + wood.material() + "*2|Loader_Recipes_Woods.java:243");

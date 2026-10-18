@@ -48,11 +48,11 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 ORIGINAL = ROOT.parent / "gregtech6-master/gregtech6-master"
 MANIFEST = ROOT / "tools/gt6_texture_sources.json"
 MODELS = ASSETS / "models/block/decoration/pile"
-MODEL_ROOT = "gregtech:block/decoration/pile"
+MODEL_ROOT = "gt6ce:block/decoration/pile"
 
 # port texture folder -> GT6 texture folder
 PILE_TEXTURES = {"ingot": "ingot", "plate": "plate", "plategem": "plateGem"}
@@ -88,8 +88,8 @@ def all_faces(top: str, side: str) -> dict:
 def material_faces(kind: str) -> dict:
     """GT6's per-face textures: the top and the bottom of a pile item carry its "top" icon, the four
     horizontal sides its "sides" icon (``getTexture``, MultiTileEntityPlaceable.java:127)."""
-    return all_faces(f"gregtech:block/machines/placeables/{kind}/top",
-                     f"gregtech:block/machines/placeables/{kind}/sides")
+    return all_faces(f"gt6ce:block/machines/placeables/{kind}/top",
+                     f"gt6ce:block/machines/placeables/{kind}/sides")
 
 
 def empty_mat(faces: dict) -> list:
@@ -160,7 +160,7 @@ def coin_elements(coins: int, fill: int, faces: dict) -> list:
             for i in range(coins)]
 
 
-COIN_FACES = all_faces("gregtech:block/iconsets/coin", "gregtech:block/iconsets/coin_side")
+COIN_FACES = all_faces("gt6ce:block/iconsets/coin", "gt6ce:block/iconsets/coin_side")
 
 
 def write_json(path: Path, data, sort: bool = False) -> None:
@@ -229,7 +229,7 @@ def material_pile(block_id: str, kind: str, folder: str, faces: dict, build) -> 
     folder (``plategem``), which differ for that one family.
     """
     written = 0
-    particle = f"gregtech:block/machines/placeables/{folder}/top"
+    particle = f"gt6ce:block/machines/placeables/{folder}/top"
     variants = {"stack=0": {"model": f"{MODEL_ROOT}/{kind}_0"}}
     write_model(MODELS / f"{kind}_0.json", particle, empty_mat(faces))
     written += 1
@@ -249,18 +249,18 @@ def material_pile(block_id: str, kind: str, folder: str, faces: dict, build) -> 
 def coin_pile() -> int:
     """GT6's coin pile: 64 models plus the empty mat, its block state and its item model."""
     written = 0
-    write_model(MODELS / "coin_0.json", "gregtech:block/iconsets/coin", empty_mat(COIN_FACES))
+    write_model(MODELS / "coin_0.json", "gt6ce:block/iconsets/coin", empty_mat(COIN_FACES))
     written += 1
     variants = {f"coins=0,fill={fill}": {"model": f"{MODEL_ROOT}/coin_0"} for fill in range(1, 5)}
     for coins in range(1, 17):
         for fill in range(1, 5):
-            write_model(MODELS / f"coin_{coins}_{fill}.json", "gregtech:block/iconsets/coin",
+            write_model(MODELS / f"coin_{coins}_{fill}.json", "gt6ce:block/iconsets/coin",
                         coin_elements(coins, fill, COIN_FACES))
             variants[f"coins={coins},fill={fill}"] = {"model": f"{MODEL_ROOT}/coin_{coins}_{fill}"}
             written += 1
     write_json(ASSETS / "blockstates/coin_pile.json", {"variants": variants})
     written += 1
-    write_json(ASSETS / "models/item/coin_pile.json", {"parent": "gregtech:item/coin_minted"})
+    write_json(ASSETS / "models/item/coin_pile.json", {"parent": "gt6ce:item/coin_minted"})
     written += 1
     return written
 

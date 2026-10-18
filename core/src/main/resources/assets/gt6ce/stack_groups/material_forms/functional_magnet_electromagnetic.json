@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_magnet_electromagnetic",
+  "contents": [
+    "item:gt6ce:magnet_electromagnetic_aluminium",
+    "item:gt6ce:magnet_electromagnetic_galvanized",
+    "item:gt6ce:magnet_electromagnetic_steel"
+  ],
+  "priority": 110
+}

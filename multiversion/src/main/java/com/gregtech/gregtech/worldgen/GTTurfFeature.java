@@ -30,7 +30,7 @@ import java.util.Set;
  * swamp biome in the chunk, and then carves the same 48x48 {@link GTPitShape} mask as the clay pits
  * — anchored 16 blocks before the chunk — between {@code waterLevel + 1} and
  * {@code waterLevel - 12}. Per column it turns dirt into {@code BlocksGT.Diggables} meta 2 (Turf,
- * the port's {@code gregtech:turf}), at most two blocks deep, and only continues through rock once
+ * the port's {@code gt6ce:turf}), at most two blocks deep, and only continues through rock once
  * it is inside the bog; dirt under wood or gourds is left alone.
  */
 public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
@@ -42,7 +42,7 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 stops a column after two turf blocks ({@code tGenerated < 2}). */
     public static final int MAX_DEPTH = TerrainWorldgenRules.TURF_MAX_DEPTH;
     /** GT6 {@code BlocksGT.Diggables} meta 2 = "Turf" (material Peat). */
-    public static final String TURF = "gregtech:turf";
+    public static final String TURF = "gt6ce:turf";
 
     public GTTurfFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -135,5 +135,5 @@ public class GTTurfFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_turf.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_turf"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_turf"));
 }

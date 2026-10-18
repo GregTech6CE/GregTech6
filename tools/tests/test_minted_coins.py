@@ -13,7 +13,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = native_path(ROOT / "src/main/resources/assets/gregtech")
+ASSETS = native_path(ROOT / "src/main/resources/assets/gt6ce")
 spec = importlib.util.spec_from_file_location("minted_coins", ROOT / "tools/generate_minted_coin_assets.py")
 generator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(generator)

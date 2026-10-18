@@ -10,7 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.gametest.*;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class MaterialCompatibilityTests {
     @GameTest(template="test_empty") public static void forgeTagsAndVanillaFormsAreBound(GameTestHelper h) {
         for(var pair:List.of(Map.entry("Iron",Items.IRON_INGOT),Map.entry("Gold",Items.GOLD_INGOT),Map.entry("Copper",Items.COPPER_INGOT))) {
@@ -40,11 +40,11 @@ public final class MaterialCompatibilityTests {
         var gson=new com.google.gson.Gson();
         var missing=new TreeSet<String>();
         var languages=new ArrayList<Map<String,String>>();
-        for(String language:List.of("en_us","zh_cn")) try(var stream=MaterialCompatibilityTests.class.getResourceAsStream("/assets/gregtech/lang/"+language+".json")) {
+        for(String language:List.of("en_us","zh_cn")) try(var stream=MaterialCompatibilityTests.class.getResourceAsStream("/assets/gt6ce/lang/"+language+".json")) {
             languages.add(gson.fromJson(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8),new com.google.gson.reflect.TypeToken<Map<String,String>>(){}.getType()));
         }
         for(var item:net.minecraftforge.registries.ForgeRegistries.ITEMS.getValues())
-            if(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).getNamespace().equals("gregtech")) inspect(item.getName(new ItemStack(item)),languages,missing);
+            if(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(item).getNamespace().equals("gt6ce")) inspect(item.getName(new ItemStack(item)),languages,missing);
         for(var mat:GTMaterialRegistry.allMaterials()) inspect(MaterialPresentation.name(mat),languages,missing);
         java.nio.file.Files.writeString(java.nio.file.Path.of("../../docs/localization-runtime-missing.json"),gson.toJson(missing));
         h.assertTrue(missing.isEmpty(),"Missing registered names: "+missing);
@@ -73,7 +73,7 @@ public final class MaterialCompatibilityTests {
     @GameTest(template="test_empty") public static void smallOreMiningDropsProductsRatherThanItself(GameTestHelper h) {
         var material=GTMaterialRegistry.get("Diamond");
         var prefix=com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.oreSmall;
-        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",prefix.getBlockId(material)));
+        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",prefix.getBlockId(material)));
         var position=h.absolutePos(new net.minecraft.core.BlockPos(1,1,1));
         h.getLevel().setBlockAndUpdate(position,block.defaultBlockState());
         var be=h.getLevel().getBlockEntity(position);
@@ -109,7 +109,7 @@ public final class MaterialCompatibilityTests {
         var type=com.gregtech.gregtech.api.tool.GTToolType.PICKAXE;
         grid.setItem(0,GTItems.getStack(type.headPrefix(),GTMaterialRegistry.get("Iron")));
         grid.setItem(1,new ItemStack(Items.STICK));
-        var recipe=new com.gregtech.gregtech.recipe.GTToolAssemblyRecipe(ResourceLocation.parse("gregtech:test_vanilla_handle"),type);
+        var recipe=new com.gregtech.gregtech.recipe.GTToolAssemblyRecipe(ResourceLocation.parse("gt6ce:test_vanilla_handle"),type);
         h.assertTrue(recipe.matches(grid,h.getLevel())&&!recipe.assemble(grid,h.getLevel().registryAccess()).isEmpty(),"Vanilla stick is a real GT wood handle");
         grid.setItem(1,new ItemStack(Items.IRON_INGOT));
         h.assertTrue(!recipe.matches(grid,h.getLevel()),"An ingot is not a rod");
@@ -131,7 +131,7 @@ public final class MaterialCompatibilityTests {
         grid.setItem(7,GTItems.getStack(MaterialPrefix.plate,steel));
         var type=com.gregtech.gregtech.api.tool.GTToolType.WRENCH;
         var recipe=new com.gregtech.gregtech.recipe.GTToolCraftingRecipe(
-                ResourceLocation.parse("gregtech:test_direct_wrench"),type,0);
+                ResourceLocation.parse("gt6ce:test_direct_wrench"),type,0);
         h.assertTrue(recipe.matches(grid,h.getLevel()),"Three same-material plates and a hammer craft a wrench");
         var output=recipe.assemble(grid,h.getLevel().registryAccess());
         h.assertTrue(!output.isEmpty()&&com.gregtech.gregtech.api.tool.GTToolHelper.getHead(output)==steel,
@@ -150,7 +150,7 @@ public final class MaterialCompatibilityTests {
             var spec=entry.get().basicSpec();
             if(com.gregtech.gregtech.data.BasicMachineRecipePack.MULTIBLOCK_CONTROLLERS.contains(spec.machineName()))continue;
             expected++;
-            var id=ResourceLocation.fromNamespaceAndPath("gregtech","machines/basic/"+spec.id());
+            var id=ResourceLocation.fromNamespaceAndPath("gt6ce","machines/basic/"+spec.id());
             var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
             // GT6 patterns contain empty cells on purpose (e.g. Rolling Mill "M "), so count
             // filled pattern cells and require exactly that many real ingredients.
@@ -167,7 +167,7 @@ public final class MaterialCompatibilityTests {
     }
     private static void inspect(net.minecraft.network.chat.Component c,List<Map<String,String>> langs,Set<String> missing) {
         if(c.getContents() instanceof net.minecraft.network.chat.contents.TranslatableContents t) {
-            if(t.getKey().contains("gregtech")) for(int i=0;i<langs.size();i++) if(!langs.get(i).containsKey(t.getKey())) missing.add((i==0?"en_us:":"zh_cn:")+t.getKey());
+            if(t.getKey().contains("gt6ce")) for(int i=0;i<langs.size();i++) if(!langs.get(i).containsKey(t.getKey())) missing.add((i==0?"en_us:":"zh_cn:")+t.getKey());
             for(var arg:t.getArgs())if(arg instanceof net.minecraft.network.chat.Component nested)inspect(nested,langs,missing);
         }
         for(var sibling:c.getSiblings())inspect(sibling,langs,missing);

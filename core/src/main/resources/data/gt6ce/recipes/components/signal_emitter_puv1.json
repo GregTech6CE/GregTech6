@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gt6ce:wire_04_graphene"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_trinaquadalloy"
+    },
+    "C": {
+      "item": "gt6ce:integrated_circuit_9"
+    },
+    "W": {
+      "item": "gt6ce:wire_01_graphene"
+    },
+    "Q": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_signal_emitter_puv1",
+    "count": 1
+  }
+}
