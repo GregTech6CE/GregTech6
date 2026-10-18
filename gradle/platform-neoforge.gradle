@@ -1,0 +1,207 @@
+// NeoForge boundary configuration for the Stonecutter 1.21.1 node.
+apply plugin: 'java-library'
+apply plugin: 'net.neoforged.moddev'
+
+evaluationDependsOn(':core')
+
+group = rootProject.property('mod_group_id')
+version = rootProject.property('mod_version')
+
+base {
+    archivesName = "${rootProject.property('mod_id')}-neoforge-1.21.1"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+sourceSets {
+    bootstrapGameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+    productionSmoke {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
+repositories {
+    maven { name = 'BlameJared'; url = 'https://maven.blamejared.com' }
+    maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+    maven { name = 'EMI'; url = 'https://maven.terraformersmc.com/releases' }
+}
+
+dependencies {
+    compileOnly "dev.emi:emi-neoforge:1.1.24+1.21.1:api"
+    if (rootProject.findProperty('emiSmoke') == 'true') {
+        runtimeOnly "dev.emi:emi-neoforge:1.1.24+1.21.1"
+    }
+    compileOnly "mezz.jei:jei-1.21.1-common-api:${rootProject.property('neoforge_jei_version')}"
+    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:${rootProject.property('neoforge_jei_version')}"
+    if (rootProject.findProperty('emiOnlySmoke') != 'true') {
+        runtimeOnly "mezz.jei:jei-1.21.1-neoforge:${rootProject.property('neoforge_jei_version')}"
+    }
+    compileOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+    runtimeOnly "maven.modrinth:jade:${rootProject.property('neoforge_jade_version')}"
+    if (rootProject.findProperty('compatRuntime') == 'ie') {
+        runtimeOnly "maven.modrinth:immersiveengineering:${rootProject.property('neoforge_ie_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'mek') {
+        runtimeOnly "maven.modrinth:mekanism:${rootProject.property('neoforge_mek_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'ae') {
+        runtimeOnly "maven.modrinth:ae2:${rootProject.property('neoforge_ae_version')}"
+        runtimeOnly "maven.modrinth:guideme:${rootProject.property('neoforge_guideme_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'pr') {
+        runtimeOnly "maven.modrinth:project-red-core:${rootProject.property('neoforge_pr_version')}"
+        runtimeOnly "maven.modrinth:codechicken-lib:${rootProject.property('neoforge_ccl_version')}"
+        runtimeOnly "maven.modrinth:cb-multipart:${rootProject.property('neoforge_cbm_version')}"
+    }
+    if (rootProject.findProperty('compatRuntime') == 'hc') {
+        runtimeOnly "maven.modrinth:pams-harvestcraft-2-food-core:${rootProject.property('neoforge_hc_version')}"
+    }
+
+    if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
+        // Local development can use the same compiled core output directly.
+        // This avoids rebuilding its large resource archive before an ordinary run.
+        implementation files(project(':core').sourceSets.main.output)
+    } else {
+        implementation project(':core')
+    }
+}
+
+neoForge {
+    version = '21.1.243'
+    addModdingDependenciesTo sourceSets.bootstrapGameTest
+    addModdingDependenciesTo sourceSets.productionSmoke
+
+    runs {
+        client {
+            systemProperty 'gregtech.integration.clientCreateWorldSmoke', (rootProject.findProperty('clientCreateWorldSmoke') ?: 'false').toString()
+            client()
+            gameDirectory = project.file('run-client')
+            systemProperty 'gregtech.integration.viewerFeedbackOnly', (rootProject.findProperty('viewerFeedbackOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.remiGroupingOnly', (rootProject.findProperty('remiGroupingOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.recipePresentationRuntimeOnly', (rootProject.findProperty('recipePresentationRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.materialDataBrowserRuntimeOnly', (rootProject.findProperty('materialDataBrowserRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.materialBushRuntimeOnly', (rootProject.findProperty('materialBushRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.newIssuesRuntimeOnly', (rootProject.findProperty('newIssuesRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.longDistanceRuntimeOnly', (rootProject.findProperty('longDistanceRuntimeOnly') ?: 'false').toString()
+            systemProperty 'gregtech.integration.cokeRuntimeSmoke', (rootProject.findProperty('cokeRuntimeSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientSmoke', (rootProject.findProperty('clientSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientSmokeTimeoutSeconds', (rootProject.findProperty('clientSmokeTimeout') ?: '120').toString()
+            systemProperty 'gregtech.integration.clientModelSmoke', (rootProject.findProperty('clientModelSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientWorldSmoke', (rootProject.findProperty('clientWorldSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.clientWorldPhase', (rootProject.findProperty('clientWorldPhase') ?: '').toString()
+            systemProperty 'gregtech.integration.clientWorldName', (rootProject.findProperty('clientWorldName') ?: '').toString()
+            systemProperty 'gregtech.integration.clientWorldId', (rootProject.findProperty('clientWorldId') ?: '').toString()
+            if (rootProject.findProperty('clientSmoke') == 'true' || rootProject.findProperty('clientWorldSmoke') == 'true' || rootProject.findProperty('clientCreateWorldSmoke') == 'true') {
+                sourceSet = sourceSets.bootstrapGameTest
+                gameDirectory = project.file(rootProject.findProperty('clientWorldSmoke') == 'true'
+                        ? 'build/client-world-smoke-run' : 'build/client-smoke-run')
+                if (rootProject.findProperty('clientCreateWorldSmoke') == 'true') gameDirectory = project.file('build/world-creation-smoke-run')
+                jvmArgument '-Xmx' + (rootProject.findProperty('clientSmokeHeap') ?: '2g').toString()
+                programArguments.addAll('--width', '1280', '--height', '720')
+            }
+        }
+        server {
+            systemProperty 'gregtech.integration.toolAssemblySmoke', (rootProject.findProperty('toolAssemblySmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.engineCraftingSmoke', (rootProject.findProperty('engineCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.electricFluxCraftingSmoke', (rootProject.findProperty('electricFluxCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselCraftingSmoke', (rootProject.findProperty('dieselCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerSmoke', (rootProject.findProperty('dieselPowerSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.earlyToolChainSmoke', (rootProject.findProperty('earlyToolChainSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerBaseline', (rootProject.findProperty('dieselPowerBaseline') ?: 'false').toString()
+            systemProperty 'gregtech.integration.dieselPowerReadOnly', (rootProject.findProperty('dieselPowerReadOnly') ?: 'false').toString()
+            server()
+            sourceSet = sourceSets.bootstrapGameTest
+            systemProperty 'gregtech.integration.serverSmokePhase', (rootProject.findProperty('serverSmokePhase') ?: '').toString()
+            systemProperty 'gregtech.integration.serverSmokeId', (rootProject.findProperty('serverSmokeId') ?: '').toString()
+            systemProperty 'gregtech.integration.smelteryWorldSmoke', (rootProject.findProperty('smelteryWorldSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.machineWorldSmoke', (rootProject.findProperty('machineWorldSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.steamChainSmoke', (rootProject.findProperty('steamChainSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.manualToolSmoke', (rootProject.findProperty('manualToolSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.equipmentCraftingSmoke', (rootProject.findProperty('equipmentCraftingSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.poweredToolSmoke', (rootProject.findProperty('poweredToolSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.itemLogisticsSmoke', (rootProject.findProperty('itemLogisticsSmoke') ?: 'false').toString()
+            systemProperty 'gregtech.integration.itemRoutingSmoke', (rootProject.findProperty('itemRoutingSmoke') ?: 'false').toString()
+            ['X', 'Y', 'Z'].each { axis ->
+                def coordinate = rootProject.findProperty('serverSmoke' + axis)
+                if (coordinate != null) systemProperty 'gregtech.integration.serverSmoke' + axis, coordinate.toString()
+            }
+            gameDirectory = project.file('run-server')
+            if (rootProject.findProperty('serverDirectory')) {
+                gameDirectory = project.file(rootProject.property('serverDirectory'))
+            }
+            jvmArgument '-Xmx2g'
+            programArgument '--nogui'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+            sourceSet = sourceSets.bootstrapGameTest
+            gameDirectory = project.file(rootProject.findProperty('neoforgeGameTestDirectory') ?: 'build/bootstrap-gametest-run')
+            systemProperty 'neoforge.enabledGameTestNamespaces', (rootProject.findProperty('gameTestNamespaces') ?: 'gregtech_bootstrap').toString()
+            jvmArgument '-Xmx' + (rootProject.findProperty('gameTestHeap') ?: '1536m').toString()
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${rootProject.property('mod_id')}" {
+            sourceSet sourceSets.main
+            sourceSet project(':core').sourceSets.main
+            sourceSet sourceSets.bootstrapGameTest
+        }
+    }
+}
+
+def modProperties = [
+        mod_id: rootProject.property('mod_id'),
+        mod_name: rootProject.property('mod_name'),
+        mod_version: project.version.toString(),
+        mod_license: rootProject.property('mod_license'),
+        mod_description: rootProject.property('mod_description'),
+        mod_authors: 'saltnya, brokestar233, Lorbineitte Masson, GregTech 6 team'
+]
+
+tasks.named('processResources', ProcessResources).configure {
+    inputs.properties(modProperties)
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(modProperties)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// NeoForge-only builds must enforce the same shared contracts/source policy.
+tasks.named('check').configure { dependsOn ':core:check' }
+
+tasks.named('jar', Jar).configure {
+    // Embedding the complete shared resource catalog requires ZIP64 too.
+    zip64 = true
+    // The same Java 17 output used by Forge is embedded exactly once.
+    from project(':core').sourceSets.main.output
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    manifest.attributes('Implementation-Version': project.version.toString())
+}
+
+// Separate test mod for launching the actual distribution in an isolated instance.
+tasks.register("productionSmokeJar", Jar) {
+    dependsOn tasks.named("productionSmokeClasses")
+    archiveBaseName = "gregtech-delivery-probe"
+    destinationDirectory = layout.buildDirectory.dir("production-probe")
+    from(sourceSets.productionSmoke.output) {
+        include "com/gregtech/gregtech/integration/client/ProductionClientSmoke*.class"
+        include "com/gregtech/gregtech/integration/client/*DeliveryChecks*.class"
+    }
+    from(rootProject.file("tools/integration/production-probe/neoforge"))
+}

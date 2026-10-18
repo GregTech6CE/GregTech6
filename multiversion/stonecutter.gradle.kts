@@ -1,5 +1,8 @@
 plugins {
     id("dev.kikugie.stonecutter")
+    id("net.minecraftforge.gradle") version "6.0.54" apply false
+    id("org.spongepowered.mixin") version "0.7.38" apply false
+    id("net.neoforged.moddev") version "2.0.142" apply false
 }
 
 stonecutter active "1.20.1-forge"

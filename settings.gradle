@@ -18,9 +18,9 @@ plugins {
 }
 
 rootProject.name = 'gregtech6'
-include 'core', 'neoforge'
+include 'core'
 
-// Pilot: preprocess shared native EMI sources, then compile them with the existing loaders.
+// All native Java source sets are managed by Stonecutter version nodes.
 include 'multiversion'
 stonecutter {
     create(project(':multiversion')) {

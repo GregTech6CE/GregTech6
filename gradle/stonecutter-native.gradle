@@ -1,0 +1,51 @@
+// Root entry points for the complete Stonecutter build.
+tasks.register('compileBothPlatforms') {
+    group = 'build'
+    description = 'Generate all Stonecutter main sources and compile both native platforms.'
+    dependsOn ':multiversion:1.20.1-forge:compileJava', ':multiversion:1.21.1-neoforge:compileJava'
+}
+tasks.register('assembleBothPlatforms') {
+    group = 'build'
+    description = 'Generate sources and assemble the Forge and NeoForge distribution jars.'
+    dependsOn ':multiversion:1.20.1-forge:assemble', ':multiversion:1.21.1-neoforge:assemble'
+}
+tasks.register('verifyStonecutterSources', Exec) {
+    group = 'verification'
+    description = 'Check the complete current native inventory and tooling projections.'
+    for (def version : ['1.20.1-forge', '1.21.1-neoforge'])
+        for (def suffix : ['', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
+            dependsOn ":multiversion:${version}:stonecutterGenerate${suffix}"
+    workingDir rootProject.projectDir
+    commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
+            'tools/integration/check_stonecutter_sources.py'
+}
+tasks.register('verifyStonecutterEmiSources') {
+    group = 'verification'
+    description = 'Compatibility alias for the complete native source verification.'
+    dependsOn 'verifyStonecutterSources'
+}
+tasks.register('verifyStonecutterMigration', Exec) {
+    group = 'verification'
+    description = 'Frozen migration audit: compare all generated native outputs with the old baseline.'
+    dependsOn 'verifyStonecutterSources'
+    workingDir rootProject.projectDir
+    commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
+            'tools/integration/check_stonecutter_sources.py', '--baseline'
+}
+
+// A complete clean native view is only for legacy text-based audits/generators.
+// Minecraft compilation always consumes Stonecutter's own generated source sets.
+tasks.register('prepareNativeTools', Exec) {
+    group = 'build setup'
+    for (def node : ['1.20.1-forge', '1.21.1-neoforge'])
+        for (def suffix : ['', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
+            dependsOn ":multiversion:${node}:stonecutterGenerate${suffix}"
+    workingDir rootProject.projectDir
+    commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
+            'tools/native_tool.py', '--prepare'
+}
+// Backward-compatible root CLI entries delegate to the Forge node.
+['compileJava', 'processResources', 'distributionJar', 'productionSmokeJar', 'runClient', 'runServer',
+ 'runGameTestServer', 'runData', 'genIntellijRuns'].each { entry ->
+    tasks.register(entry) { dependsOn ":multiversion:1.20.1-forge:${entry}" }
+}

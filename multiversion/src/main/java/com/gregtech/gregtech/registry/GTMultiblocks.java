@@ -1,0 +1,121 @@
+package com.gregtech.gregtech.registry;
+//? if >=1.21.1 {
+/*import net.minecraft.world.level.block.*;import net.minecraft.world.level.block.state.BlockBehaviour;import net.minecraft.world.item.*;import net.neoforged.neoforge.registries.*;import net.neoforged.bus.api.IEventBus;import java.util.*;
+/^* Real original structural part registrations; controllers remain in their own typed machine registries. ^/
+public final class GTMultiblocks {private GTMultiblocks(){}private static final Map<Integer,DeferredHolder<Block,Block>> NAMED=new LinkedHashMap<>();private static final List<DeferredHolder<Block,Block>> CONTROLLERS=new ArrayList<>();private static final List<DeferredHolder<Block,Block>> ALL=new ArrayList<>();private static final List<DeferredHolder<Block,Block>> TANKS=new ArrayList<>();private static final List<DeferredHolder<Block,Block>> CRUCIBLES=new ArrayList<>();private static final List<DeferredHolder<Block,Block>> BOILERS=new ArrayList<>();
+ public static DeferredHolder<Block,Block> CENTRIFUGE_PART,ELECTROLYZER_PART,HEAT_TRANSMITTER,DISTILLATION_TOWER_PART,TANK_WALL,TANK_WALL_DENSE,IMPLOSION_COMPRESSOR_WALL,LARGE_NIOBIUM_TITANIUM_COIL,COKE_OVEN_WALL,COKE_OVEN_MAIN,CRYO_DISTILLATION_WALL,CRYO_DISTILLATION_MAIN,TANK_3X3,TANK_5X5,LARGE_GAS_TURBINE_MAIN,LARGE_TURBINE_MAIN,LARGE_DYNAMO_MAIN,LARGE_GAS_TURBINE_WALL,TURBINE_WALL,LARGE_DYNAMO_WALL,HEAT_EXCHANGER_WALL,LARGE_HEAT_EXCHANGER_MAIN,LARGE_CRUCIBLE_MAIN,LARGE_CRUCIBLE_WALL,LOGISTICS_CORE,LARGE_BOILER_MAIN,BOILER_WALL,BEDROCK_DRILL_MAIN,BEDROCK_DRILL_WALL,LIGHTNING_ROD_MAIN,LIGHTNING_ROD_WALL,LIGHTNING_ROD_PILLAR;
+ private static DeferredHolder<Block,Block> part(String id,float hardness){if(id.equals("coke_oven_wall")) return part("fire_bricks",hardness);if(LegacyContentAliases.legacy(id))return DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",LegacyContentAliases.canonical(id)));var source=com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.byPath(id);var holder=GTBlocks.BLOCKS.<Block>register(id,()->new com.gregtech.gregtech.block.machine.MultiblockPortBlock(BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(source.map(com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.Part::hardness).orElse(hardness),source.map(com.gregtech.gregtech.content.multiblock.OriginalMultiblockPartData.Part::resistance).orElse(hardness))));GTBlocks.registerBlockItem(id,holder);ALL.add(holder);return holder;}
+ public static DeferredHolder<Block,Block> registerController(String id,java.util.function.Supplier<Block> factory){if(LegacyContentAliases.legacy(id))return DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",LegacyContentAliases.canonical(id)));var holder=GTBlocks.BLOCKS.register(id,factory);GTBlocks.registerBlockItem(id,holder);CONTROLLERS.add(holder);return holder;}
+ public static void registerAll(){for(var alias:LegacyContentAliases.ALIASES.entrySet()){var old=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.getKey());var target=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.getValue());GTBlocks.BLOCK_ITEMS.addAlias(old,target);if(!alias.getKey().startsWith("key_"))GTBlocks.BLOCKS.addAlias(old,target);}for(var def:com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts.DEFINITIONS){if(def.originalId()>=17201&&def.originalId()<=17205){var boiler=com.gregtech.gregtech.content.multiblock.OriginalLargeBoilerSpecs.byOriginalId(def.originalId());var holder=registerController(def.name(),()->new com.gregtech.gregtech.block.machine.OriginalLargeBoilerControllerBlock(boiler,BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(boiler.hardness(),boiler.hardness())));NAMED.put(def.originalId(),holder);BOILERS.add(holder);continue;}var valve=com.gregtech.gregtech.content.multiblock.TankValveSpec.find(def.originalId());if(valve!=null){var holder=registerController(def.name(),()->new com.gregtech.gregtech.block.machine.TankControllerBlock(valve,BlockBehaviour.Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(valve.hardness(),valve.hardness())));NAMED.put(def.originalId(),holder);TANKS.add(holder);continue;}if(def.originalId()>=17211&&def.originalId()<=17214){var grade=com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.STEAM.get(def.originalId()-17211);NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.LargeTurbineControllerBlock(grade,BlockBehaviour.Properties.of().strength(grade.materials().hardness(),grade.materials().hardness()))));continue;}if(def.originalId()>=17221&&def.originalId()<=17224){var grade=com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.DYNAMO.get(def.originalId()-17221);NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.LargeDynamoControllerBlock(grade,BlockBehaviour.Properties.of().strength(grade.materials().hardness(),grade.materials().hardness()))));continue;}if(def.originalId()>=17231&&def.originalId()<=17234){var grade=com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.GRADES.get(def.originalId()-17231);NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.LargeGasTurbineControllerBlock(grade,BlockBehaviour.Properties.of().strength(grade.hardness(),grade.hardness()))));continue;}var crucible=com.gregtech.gregtech.content.multiblock.LargeCrucibleSpecs.all().stream().filter(v->v.originalId()==def.originalId()).findFirst().orElse(null);if(crucible!=null){var holder=registerController(def.name(),()->new com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock(crucible,BlockBehaviour.Properties.of().strength(crucible.hardness(),crucible.hardness()).noOcclusion()));NAMED.put(def.originalId(),holder);CRUCIBLES.add(holder);continue;}if(def.originalId()==17996){NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.VonDaGraaggControllerBlock(BlockBehaviour.Properties.of().strength(6,6))));continue;}if(def.originalId()==17998){NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.OriginalLightningRodControllerBlock(BlockBehaviour.Properties.of().strength(10,10))));continue;}if(def.originalId()==17999){NAMED.put(def.originalId(),registerController(def.name(),()->new com.gregtech.gregtech.block.machine.OriginalBedrockDrillControllerBlock(BlockBehaviour.Properties.of().strength(9,9))));continue;}if(def.originalId()<18000)continue;float hardness=def.originalId()==18025?100:def.originalId()==18023?12.5f:8;NAMED.put(def.originalId(),part(def.name(),hardness));}
+ CENTRIFUGE_PART=part("centrifuge_part",6);ELECTROLYZER_PART=part("electrolyzer_part",6);HEAT_TRANSMITTER=part("heat_transmitter",6);DISTILLATION_TOWER_PART=part("distillation_tower_part",6);TANK_WALL=part("tank_wall",6);TANK_WALL_DENSE=part("tank_wall_dense",6);IMPLOSION_COMPRESSOR_WALL=part("implosion_compressor_wall",6);LARGE_NIOBIUM_TITANIUM_COIL=part("large_niobium_titanium_coil",6);
+ TANK_3X3=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","small_stainless_steel_tank_main_valve"));TANK_5X5=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","large_stainless_steel_tank_main_valve"));
+ COKE_OVEN_WALL=part("coke_oven_wall",6);CRYO_DISTILLATION_WALL=part("cryo_distillation_wall",6);COKE_OVEN_MAIN=registerController("coke_oven_main",()->new com.gregtech.gregtech.block.machine.CokeOvenControllerBlock(BlockBehaviour.Properties.of().strength(6,6)));CRYO_DISTILLATION_MAIN=registerController("cryo_distillation_main",()->new com.gregtech.gregtech.block.machine.CryoDistillationControllerBlock(BlockBehaviour.Properties.of().strength(6,6)));
+ LARGE_GAS_TURBINE_WALL=part("large_gas_turbine_wall",6);TURBINE_WALL=part("turbine_wall",6);LARGE_DYNAMO_WALL=part("large_dynamo_wall",6);HEAT_EXCHANGER_WALL=part("heat_exchanger_wall",6);com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.register();com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.registerSteam();com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.registerDynamos();LARGE_HEAT_EXCHANGER_MAIN=registerController("heat_exchanger_main",()->new com.gregtech.gregtech.block.machine.LargeHeatExchangerControllerBlock(BlockBehaviour.Properties.of().strength(6,6)));
+ LARGE_CRUCIBLE_WALL=part("large_crucible_wall",6);LARGE_CRUCIBLE_MAIN=registerController("large_crucible_main",()->new com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock());
+ LOGISTICS_CORE=registerController("logistics_core",()->new com.gregtech.gregtech.block.machine.LogisticsCoreControllerBlock(BlockBehaviour.Properties.of().strength(6,6)));BOILER_WALL=part("boiler_wall",6);LARGE_BOILER_MAIN=registerController("large_boiler_main",()->new com.gregtech.gregtech.block.machine.LargeBoilerControllerBlock(BlockBehaviour.Properties.of().strength(6,6)));
+ BEDROCK_DRILL_WALL=part("bedrock_drill_wall",9);LIGHTNING_ROD_WALL=part("lightning_rod_wall",10);LIGHTNING_ROD_PILLAR=part("lightning_rod_pillar",6);BEDROCK_DRILL_MAIN=registerController("bedrock_drill_main",()->new com.gregtech.gregtech.block.machine.BedrockDrillControllerBlock(BlockBehaviour.Properties.of().strength(9,9)));LIGHTNING_ROD_MAIN=registerController("lightning_rod_main",()->new com.gregtech.gregtech.block.machine.LightningRodControllerBlock(BlockBehaviour.Properties.of().strength(10,10)));
+ com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native original multiblock structural parts: {}",ALL.size());}
+ public static DeferredHolder<Block,Block> findPart(int id){var hosted=switch(id){case 18000->COKE_OVEN_WALL;case 18002->TANK_WALL;case 18022->TANK_WALL_DENSE;case 18023->IMPLOSION_COMPRESSOR_WALL;case 18041->LARGE_NIOBIUM_TITANIUM_COIL;case 18100->CENTRIFUGE_PART;case 18101->HEAT_TRANSMITTER;case 18102->DISTILLATION_TOWER_PART;case 18105->ELECTROLYZER_PART;default->null;};return hosted==null?NAMED.get(id):hosted;}
+ public static List<DeferredHolder<Block,Block>> texturedBlocks(){var result=new LinkedHashSet<DeferredHolder<Block,Block>>(ALL);result.addAll(CONTROLLERS);return List.copyOf(result);}
+ public static int tintOf(Block block){if(block instanceof com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock crucible)return crucible.variant().material().getColor();if(block instanceof com.gregtech.gregtech.block.machine.LargeGasTurbineControllerBlock turbine)return turbine.grade().tint();if(block instanceof com.gregtech.gregtech.block.machine.AxialGeneratorBlock generator)return generator.grade().tint();Integer named=com.gregtech.gregtech.content.multiblock.LargeMachineParts.tint(block);if(named!=null)return named;if(block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine)return machine.basicSpec().material().getColor();var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);return id==null?0xFFFFFF:com.gregtech.gregtech.api.material.GTMaterialRegistry.get(com.gregtech.gregtech.content.multiblock.OriginalMultiblockTintPolicy.material(id.getPath())).getColor();}
+ public static List<DeferredHolder<Block,Block>> crucibles(){return List.copyOf(CRUCIBLES);}
+ public static List<DeferredHolder<Block,Block>> boilers(){return List.copyOf(BOILERS);}
+ public static List<DeferredHolder<Block,Block>> tanks(){return List.copyOf(TANKS);}
+ public static List<DeferredHolder<Block,Block>> parts(){return List.copyOf(ALL);}
+*///?} else {
+
+import com.gregtech.gregtech.block.machine.BasicMachineBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
+
+import static com.gregtech.gregtech.api.energy.FaceConfig.*;
+
+/**
+ * GT6 multiblock machines: part blocks plus the Distillation Tower controller
+ * (3×3 heat transmitter base + 3×3×8 tower, controller front-center bottom).
+ */
+public final class GTMultiblocks {
+
+    public static RegistryObject<Block> CENTRIFUGE_PART;
+    public static RegistryObject<Block> ELECTROLYZER_PART;
+    public static RegistryObject<Block> HEAT_TRANSMITTER;
+    public static RegistryObject<Block> DISTILLATION_TOWER_PART;
+    public static RegistryObject<Block> BOILER_WALL;
+    public static RegistryObject<Block> TURBINE_WALL;
+    public static RegistryObject<Block> LARGE_TURBINE_MAIN;
+    public static RegistryObject<BasicMachineBlock> DISTILLATION_TOWER_MAIN;
+    public static RegistryObject<Block> LARGE_BOILER_MAIN;
+    public static RegistryObject<Block> TANK_WALL;
+    public static RegistryObject<Block> TANK_WALL_DENSE;
+    public static RegistryObject<Block> COKE_OVEN_WALL;
+    public static RegistryObject<Block> COKE_OVEN_MAIN;
+    public static RegistryObject<Block> TANK_3X3;
+    public static RegistryObject<Block> TANK_5X5;
+    public static RegistryObject<Block> LARGE_CRUCIBLE_WALL;
+    public static RegistryObject<Block> LARGE_CRUCIBLE_MAIN;
+    public static RegistryObject<Block> CRYO_DISTILLATION_WALL;
+    public static RegistryObject<Block> CRYO_DISTILLATION_MAIN;
+    public static RegistryObject<Block> LARGE_GAS_TURBINE_WALL;
+    public static RegistryObject<Block> LARGE_GAS_TURBINE_MAIN;
+    public static RegistryObject<Block> LARGE_DYNAMO_WALL;
+    public static RegistryObject<Block> LARGE_DYNAMO_MAIN;
+    public static RegistryObject<Block> HEAT_EXCHANGER_WALL;
+    public static RegistryObject<Block> HEAT_EXCHANGER_MAIN;
+    // Wave 49: F6.9-12 multiblock parts and controllers
+    public static RegistryObject<Block> BEDROCK_DRILL_WALL;
+    public static RegistryObject<Block> BEDROCK_DRILL_MAIN;
+    public static RegistryObject<Block> LIGHTNING_ROD_WALL;
+    public static RegistryObject<Block> LIGHTNING_ROD_PILLAR;
+    public static RegistryObject<Block> LARGE_NIOBIUM_TITANIUM_COIL;
+    public static RegistryObject<Block> LIGHTNING_ROD_MAIN;
+    public static RegistryObject<Block> IMPLOSION_COMPRESSOR_WALL;
+    public static RegistryObject<Block> IMPLOSION_COMPRESSOR_MAIN;
+    public static RegistryObject<Block> FUSION_REACTOR_WALL;
+    public static RegistryObject<Block> FUSION_REACTOR_MAIN;
+
+    /** Part block tints (tintindex 0 on the colored layer). */
+    public static final int PART_TINT = MTColor.STAINLESS;
+
+    private static final class MTColor {
+        static final int STAINLESS = 0xC8C8DC;
+    }
+
+    private GTMultiblocks() {}
+    public static int tintOf(Block block) {
+        if(block instanceof com.gregtech.gregtech.block.machine.LargeGasTurbineControllerBlock turbine) return turbine.grade().tint();
+        if(block instanceof com.gregtech.gregtech.block.machine.AxialGeneratorBlock generator) return generator.grade().tint();
+        Integer extra=com.gregtech.gregtech.content.multiblock.LargeMachineParts.tint(block);
+        if(extra!=null)return extra;
+        if(block instanceof BasicMachineBlock machine) return machine.basicSpec().material().getColor();
+        var id = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block);
+        if (id == null) return 0xFFFFFF;
+        return com.gregtech.gregtech.api.material.GTMaterialRegistry.get(com.gregtech.gregtech.content.multiblock.OriginalMultiblockTintPolicy.material(id.getPath())).getColor();
+    }
+
+    public static List<RegistryObject<? extends Block>> texturedBlocks() {
+        var result=new java.util.ArrayList<RegistryObject<? extends Block>>(parts());
+        result.addAll(List.of(DISTILLATION_TOWER_MAIN,LARGE_BOILER_MAIN,LARGE_TURBINE_MAIN,COKE_OVEN_MAIN,
+                TANK_3X3,TANK_5X5,LARGE_CRUCIBLE_MAIN,CRYO_DISTILLATION_MAIN,LARGE_GAS_TURBINE_MAIN,
+                LARGE_DYNAMO_MAIN,HEAT_EXCHANGER_MAIN,BEDROCK_DRILL_MAIN,LIGHTNING_ROD_MAIN,
+                IMPLOSION_COMPRESSOR_MAIN,FUSION_REACTOR_MAIN));
+        result.addAll(com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.blocks().subList(1,4));
+        for(boolean steam:new boolean[]{true,false})result.addAll(com.gregtech.gregtech.content.multiblock.AxialGeneratorDefinitions.blocks(steam).subList(1,4));
+        return result;
+    }
+
+    public static List<RegistryObject<Block>> parts() {
+        var result=new java.util.ArrayList<RegistryObject<Block>>(List.of(CENTRIFUGE_PART, ELECTROLYZER_PART, HEAT_TRANSMITTER, DISTILLATION_TOWER_PART, BOILER_WALL, TURBINE_WALL,
+                TANK_WALL, TANK_WALL_DENSE, COKE_OVEN_WALL, LARGE_CRUCIBLE_WALL,
+                CRYO_DISTILLATION_WALL, LARGE_GAS_TURBINE_WALL, LARGE_DYNAMO_WALL, HEAT_EXCHANGER_WALL,
+                BEDROCK_DRILL_WALL, LIGHTNING_ROD_WALL, LIGHTNING_ROD_PILLAR, LARGE_NIOBIUM_TITANIUM_COIL, IMPLOSION_COMPRESSOR_WALL, FUSION_REACTOR_WALL));
+        result.addAll(com.gregtech.gregtech.content.multiblock.LargeMachineParts.blocks());
+        return List.copyOf(result);
+    }
+
+    public static void registerAll() {
+        com.gregtech.gregtech.content.multiblock.MultiblockDefinitions.registerAll();
+    }
+//?}
+}

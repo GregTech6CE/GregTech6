@@ -295,7 +295,7 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1543, "689 fixed source identities plus120 hoppers/720 storage/12 generator aliases/2 utility aliases");
+        check(properties.size() == 1603, "689 fixed source identities plus120 hoppers/780 storage/12 generator aliases/2 utility aliases");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -335,9 +335,9 @@ public final class MachineSpecBehaviorContracts {
     private static void originalStorageMaterialsAndTooltips() {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
-        check(storage.size() == 720 && harvest.size() == 720, "Twelve existing original storage families across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1501,
-                "647 fixed plus120 hoppers plus720 storage plus12 source generator aliases plus2 utility aliases");
+        check(storage.size() == 780 && harvest.size() == 780, "Thirteen original storage families including lockers across60 metalsets");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1561,
+                "647 fixed plus120 hoppers plus780 storage plus12 source generator aliases plus2 utility aliases");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();
@@ -347,6 +347,7 @@ public final class MachineSpecBehaviorContracts {
                     suffix.equals("steel")?"safe":"safe_"+suffix,55*u/2,
                     "key_safe_"+suffix,55*u/2,
                     suffix.equals("stainless_steel")?"drawer_quad":"drawer_quad_"+suffix,20*u+4*u/9,
+                    suffix.equals("stainless_steel")?"locker":"locker_"+suffix,14*u+2*u/9,
                     "mass_storage_"+suffix,18*u+4*u/9,
                     "bottle_crate_"+suffix,3*u/2+2*u/9).entrySet()) {
                 var record = storage.get(row.getKey());
@@ -432,7 +433,13 @@ public final class MachineSpecBehaviorContracts {
             shelves++;
         }
         check(shelves==60 && harvest.get("bookshelf_metal_stainless_steel").sourceId()==7111,"All original metal shelves including native split-word paths");
-        check(!storage.containsKey("locker") && !storage.containsKey("charging_locker"),"Unported original locker variants cannot give a false identity to the legacy mixed recipe");
+        for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
+            String suffix = spec.suffix();
+            var locker = harvest.get(suffix.equals("stainless_steel") ? "locker" : "locker_"+suffix);
+            check(locker.sourceId() == harvest.get("chest_"+suffix).sourceId()+7300,
+                    "Restored locker retains original metalset7300 offset " + suffix);
+        }
+        check(!storage.containsKey("charging_locker"),"Unported charging locker cannot claim an original material identity");
         check(com.gregtech.gregtech.content.storage.OriginalStorageTooltipData.bookShelfTools().equals(java.util.List.of(
                 "gt.lang.use.pincers.to.take","gt.lang.use.magnifyingglass.to.detail")),"Book shelf original take/detail tools without fabricated loot rows");
     }

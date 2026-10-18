@@ -27,19 +27,17 @@ jobs:
         include:
           - minecraft: '1.20.1'
             loader: forge
-            task: ':build'
-            libs: build/libs
+            task: ':multiversion:1.20.1-forge:build'
+            libs: multiversion/versions/1.20.1-forge/build/libs
           - minecraft: '1.21.1'
             loader: neoforge
-            task: ':neoforge:build'
-            libs: neoforge/build/libs
+            task: ':multiversion:1.21.1-neoforge:build'
+            libs: multiversion/versions/1.21.1-neoforge/build/libs
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check Reliable EMI grouping resources
-        run: python -X utf8 tools/integration/generate_remi_material_groups.py --check
       - name: Install JDK 21 toolchain
         uses: actions/setup-java@v4
         with:
@@ -55,6 +53,12 @@ jobs:
       - name: Record JDK 17
         run: echo "JAVA17_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
       - uses: gradle/actions/setup-gradle@v4
+      - name: Generate complete Stonecutter tooling views
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon prepareNativeTools
+      - name: Check Reliable EMI grouping resources
+        run: python -X utf8 tools/integration/generate_remi_material_groups.py --check
       - name: Build platform and execute shared-core behavior contracts
         env:
           JAVA_HOME: ${{ env.JAVA17_HOME }}
@@ -66,7 +70,7 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :verifyStonecutterEmiSources :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
+            :verifyStonecutterSources :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
       - name: Verify current platform packaging and preserve its checksum
         env:
           LIBS_DIR: ${{ matrix.libs }}
@@ -131,12 +135,13 @@ jobs:
           path: |
             work/ci-build.log
             build/reports/
-            build/test-results/
+            multiversion/versions/1.20.1-forge/build/test-results/
             core/build/reports/
             core/build/test-results/
             build/reports/source-policy.json
-            neoforge/build/reports/
-            neoforge/build/test-results/
+            multiversion/versions/1.20.1-forge/build/reports/
+            multiversion/versions/1.21.1-neoforge/build/reports/
+            multiversion/versions/1.21.1-neoforge/build/test-results/
           if-no-files-found: ignore
 
   required-builds:
