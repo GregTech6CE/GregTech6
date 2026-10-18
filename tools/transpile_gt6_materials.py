@@ -334,9 +334,13 @@ def factory_kind(factory: str) -> str:
     return "dust"
 
 
-def infer_texture(kind: str, parsed: dict) -> str:
+def infer_texture(kind: str, parsed: dict, factory: str | None = None) -> str:
     if parsed.get("texture"):
         return SET_MAP.get(parsed["texture"], "DULL")
+    # MT:187-190: the stone helpers inherit SET_STONE even when their
+    # processing kind is emitted as elec/cent rather than a plain stone.
+    if factory in {"stone", "stonedcmp", "stonecent", "stoneelec"}:
+        return "STONE"
     defaults = {
         "metal": "METALLIC",
         "alloy": "METALLIC",
@@ -653,7 +657,7 @@ def emit_material(
     if parsed["name"] in {"NULL", "Empty", "Organic", "Crystal", "Unknown", "Cobblestone", "Magic"}:
         return None
 
-    tex = infer_texture(kind, parsed)
+    tex = infer_texture(kind, parsed, factory)
     color = parsed["color"]
     name = parsed["name"]
     local = parsed["local"] or name

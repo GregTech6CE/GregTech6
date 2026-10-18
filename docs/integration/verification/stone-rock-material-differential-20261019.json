@@ -1,0 +1,115 @@
+{
+  "base_commit": "f55ae337541a1840bbaf7382a3726009d61ea460",
+  "scope": "Read-only Java 17 observer over the compiled current core classes; only three material TextureSet fields are normalized. No Gradle or game invocation.",
+  "observer_source": "core/src/test/java/com/gregtech/gregtech/core/MaterialCatalogSnapshot.java",
+  "observer_source_sha256": "99fc61e59500741c578473e05f8b05e363dc86f3fe3b43affe053a6a1dd8d214",
+  "current_source": "core/build/classes/java/api;core/build/classes/java/main",
+  "source_author": "Gregorius Techneticies / GregTech-6 Team",
+  "source_license": "LGPL-3.0-or-later",
+  "source_reference": {
+    "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+    "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "default_factory_lines": [
+      187,
+      188,
+      189,
+      190
+    ],
+    "declaration_lines": {
+      "8507:GraniteRed": 3829,
+      "8508:GraniteBlack": 3830,
+      "8518:Granite": 3831
+    }
+  },
+  "phases": {
+    "definitions": {
+      "row_count": 155935,
+      "old_sha256": "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb",
+      "new_sha256": "76eed54866c620858a6c5419cb666e84aa8e52a40b5ef839c89476e2e665c3f1",
+      "changed_rows": 3,
+      "unchanged_rows": 155932,
+      "added_rows": 0,
+      "removed_rows": 0,
+      "row_types": {
+        "M": 3
+      },
+      "changes": [
+        {
+          "material": "8507:GraniteRed",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "de468509501502fafb3b9b0693a5d6709028db610c167ed5721de4b289f1bd88",
+          "new_row_sha256": "87946da4fb7a2a4b4705a837525356ec02cadfcd296389df87e433c2ea035ac1"
+        },
+        {
+          "material": "8508:GraniteBlack",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "aab56e19f7d397ec5b0cf82c7d92e6389ef5808c8c0ea3655cd93dab9f003461",
+          "new_row_sha256": "13ddf308ce0b00323be729a99da930b391f33a3ef164def2e0233ad1d3a9168c"
+        },
+        {
+          "material": "8518:Granite",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "b08dfee2fa1b6797dbf27aaa8af0ec5ca4f8da0a992146d84fce1ddc34e56211",
+          "new_row_sha256": "b28cee17b2a512aa52f8ef7e7f00d5d4cc73675b48d75b4f37db3ff5a0b0a390"
+        }
+      ],
+      "unexpected": [],
+      "normalization_reproduces_old_sha256": "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb",
+      "no_other_material_or_form_delta": true
+    },
+    "post_init": {
+      "row_count": 155935,
+      "old_sha256": "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80",
+      "new_sha256": "2e64c03ab65dce53a23500c1ebde6fde8aa86460eb0a33e2bea9864b620104a7",
+      "changed_rows": 3,
+      "unchanged_rows": 155932,
+      "added_rows": 0,
+      "removed_rows": 0,
+      "row_types": {
+        "M": 3
+      },
+      "changes": [
+        {
+          "material": "8507:GraniteRed",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "de468509501502fafb3b9b0693a5d6709028db610c167ed5721de4b289f1bd88",
+          "new_row_sha256": "87946da4fb7a2a4b4705a837525356ec02cadfcd296389df87e433c2ea035ac1"
+        },
+        {
+          "material": "8508:GraniteBlack",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "aab56e19f7d397ec5b0cf82c7d92e6389ef5808c8c0ea3655cd93dab9f003461",
+          "new_row_sha256": "13ddf308ce0b00323be729a99da930b391f33a3ef164def2e0233ad1d3a9168c"
+        },
+        {
+          "material": "8518:Granite",
+          "field": "texture_set",
+          "old": "SHINY",
+          "new": "STONE",
+          "old_row_sha256": "b08dfee2fa1b6797dbf27aaa8af0ec5ca4f8da0a992146d84fce1ddc34e56211",
+          "new_row_sha256": "b28cee17b2a512aa52f8ef7e7f00d5d4cc73675b48d75b4f37db3ff5a0b0a390"
+        }
+      ],
+      "unexpected": [],
+      "normalization_reproduces_old_sha256": "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80",
+      "no_other_material_or_form_delta": true
+    }
+  },
+  "full_differential_sha256": "312430c7d56e938abf4eec1e7c7aa4a7e3ac65abfe140baad2f71e1353ad7fc1",
+  "maintenance": {
+    "material_catalog_snapshot": "unchanged observer",
+    "material_behavior_contracts": "Both full graph fingerprints updated only after exact normalization recovered the previous expected values.",
+    "generator_intermediate": "tools/generated/materials-source.java.txt entries 8507, 8508 and 8518 changed from SHINY to STONE; all other intermediate text retained.",
+    "item_id_fingerprint": "unchanged; no item identities or forms changed."
+  }
+}

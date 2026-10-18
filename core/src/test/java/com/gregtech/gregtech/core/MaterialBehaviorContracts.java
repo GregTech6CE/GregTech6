@@ -51,10 +51,13 @@ public final class MaterialBehaviorContracts {
     // Exact identity normalization reproduces the prior definitions fingerprint
     // 9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146
     // and post-init fingerprint 149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe.
-    private static final String DEFINITIONS_SHA256 = "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb";
+    // Restore MT.stoneelec's original STONE texture on the three granite materials only.
+    // Normalizing just those fields reproduces both prior full graph fingerprints:
+    // docs/integration/verification/stone-rock-material-differential-20261019.json.
+    private static final String DEFINITIONS_SHA256 = "76eed54866c620858a6c5419cb666e84aa8e52a40b5ef839c89476e2e665c3f1";
     /** MaterialItemDefinitions.all() before addon materials existed, 56085 rows, zero suffixes. */
     private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
-    private static final String POST_INIT_SHA256 = "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80";
+    private static final String POST_INIT_SHA256 = "2e64c03ab65dce53a23500c1ebde6fde8aa86460eb0a33e2bea9864b620104a7";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 

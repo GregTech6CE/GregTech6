@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-19",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "source_base": "f55ae3375",
+  "fix": {
+    "materials": [
+      "GraniteRed",
+      "GraniteBlack",
+      "Granite"
+    ],
+    "old_texture_set": "SHINY",
+    "new_texture_set": "STONE",
+    "stone_defaults_audited": 67,
+    "other_defaults_already_correct": 64,
+    "stone_rock_visible_grays": 44,
+    "original_png_modified": false,
+    "transpiler_default_fixed": true,
+    "explicit_texture_sets_preserved": true
+  },
+  "sources": {
+    "author": "Gregorius Techneticies and GT6 contributors",
+    "license": "LGPL-3.0-or-later; notices retained",
+    "files": [
+      {
+        "path": "gregapi/data/MT.java",
+        "lines": "187-190;3829-3831",
+        "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+      },
+      {
+        "path": "gregapi/item/prefixitem/PrefixItem.java",
+        "lines": "125-150",
+        "sha256": "28b7ce821756919a3140e6e4e61bd03e8b716a13e3f29cb0367bae9bef9cd843"
+      },
+      {
+        "path": "gregapi/render/TextureSet.java",
+        "lines": "116-118;205",
+        "sha256": "3d00fa12ae674474795a2203ba196a593181ed1fcd6f67807234864415541166"
+      },
+      {
+        "path": "gregtech/loaders/a/Loader_Items.java",
+        "lines": "99",
+        "sha256": "1784f1aeccc3d8e70f214c9eb06de81f2f2f28f17b4f57b24acc05d049605c07"
+      }
+    ],
+    "existing_stone_png_sha256": "95dbae416dfb756c10b94a2403417ca4c9ce07c7cd9895197a2e82246ec63d78"
+  },
+  "build": {
+    "tasks": [
+      ":multiversion:1.20.1-forge:distributionJar",
+      ":multiversion:1.21.1-neoforge:jar"
+    ],
+    "log": "work/stone-rock-build-20261019/build.log",
+    "log_sha256": "6be984ebd575970e4eb23d5eae3739986d2216c8c3a6aa6da2aedd238321cc14",
+    "result": "BUILD SUCCESSFUL in 5m 25s"
+  },
+  "package_checks": [
+    "ZIP CRC",
+    "version metadata",
+    "current material bytecode",
+    "stone rock model and original texture",
+    "14-member firestarter tags",
+    "NeoForge current tool enchantment bytecode"
+  ],
+  "files": [
+    {
+      "loader": "Forge",
+      "minecraft": "1.20.1",
+      "source": "multiversion/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-0.0.0.jar",
+      "path": "build/deliveries/20261019-stone-rocks/gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 40277716,
+      "sha256": "88727bc766dc7b488c94062189276f28414254a7b64893461a37f2f2bfa3e4bd"
+    },
+    {
+      "loader": "NeoForge",
+      "minecraft": "1.21.1",
+      "source": "multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "path": "build/deliveries/20261019-stone-rocks/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40129574,
+      "sha256": "02c52cbb8f06736cfed15524f60820fe8fcccad17e02dd67f337ffff61869a00"
+    }
+  ],
+  "not_run": [
+    "full check/test suites",
+    "game startup",
+    "manual client visual verification",
+    "saved-world restart"
+  ],
+  "previous_batch_tests": "Seven targeted NeoForge GameTests passed before this texture-only follow-up; not repeated"
+}
