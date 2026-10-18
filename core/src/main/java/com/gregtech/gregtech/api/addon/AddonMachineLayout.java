@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * @deprecated Use {@link MachineLayout}. Removal is 0.8.
  */
-@Deprecated(since = "0.4", forRemoval = true)
+@Deprecated(since = "0.0", forRemoval = true)
 @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineLayout", removeAt = "0.8")
 public record AddonMachineLayout(String machineName, List<Cell> cells) {
     public AddonMachineLayout {

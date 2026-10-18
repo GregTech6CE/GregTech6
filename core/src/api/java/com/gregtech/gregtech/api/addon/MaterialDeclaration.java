@@ -38,7 +38,7 @@ public record MaterialDeclaration(
     /**
      * @deprecated Use {@link #builder(String)}. The numeric id is ignored. Removal is 0.9.
      */
-    @Deprecated(since = "0.5", forRemoval = true)
+    @Deprecated(since = "0.0", forRemoval = true)
     @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MaterialDeclaration#builder", removeAt = "0.9")
     public static Builder builder(int id, String name) {
         if (id <= 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
