@@ -5,6 +5,7 @@ import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
+import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
 import com.gregtech.gregtech.api.machine.MachineControllerKind;
@@ -53,6 +54,13 @@ public final class AddonMachineContracts {
             case "bconflict" -> behaviorConflict();
             case "bslots" -> behaviorSlots();
             case "blayout" -> behaviorLayout();
+            case "fuelok" -> fuelOk();
+            case "fuelmap" -> unknownFuelMap();
+            case "fuelenergy" -> unknownFuelEnergy();
+            case "fuelstruct" -> fuelWithoutStructure();
+            case "fuelname" -> fuelNameCollision();
+            case "fuelmachine" -> recipeMachineCannotUseFuelMap();
+            case "fuelbounds" -> fuelBounds();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -271,6 +279,104 @@ public final class AddonMachineContracts {
                 .toggle("aa.irrigator.water", 26, 64, true);
         if (!blockEntity.isEmpty()) builder.blockEntityId(blockEntity);
         return builder.build();
+    }
+
+    private static void fuelOk() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(),
+                List.of(new AddonMachineLayout("sampleturbine", List.of(
+                        new AddonMachineLayout.Cell(0, 0, 1, "tank_wall", StructureGrid.Role.FLUID_INPUT)))),
+                List.of(), List.of(fuelMap("aa.fuel.gas")),
+                List.of(engine("aa.fuel.gas"), turbine("gt.recipe.fuels.engine")));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.fuelMaps().size() == 1, "one fuel map accepted");
+        check("aa.fuel.gas".equals(AddonMachines.fuelMaps().get(0).spec().mNameInternal), "fuel map name kept");
+        check(AddonMachines.fuelGenerators().size() == 2, "engine and turbine accepted");
+        check(AddonMachines.fuelGenerators().get(1).declaration().output().distance() == 4, "turbine outputs four blocks behind");
+        var cells = SharedLargeMachineLayouts.cells("sampleturbine");
+        check(cells != null && cells.size() == 1 && cells.get(0).part() == 18002, "turbine layout uses the tank wall");
+        boolean closed = false;
+        try {
+            AddonMachines.accept("aa_late", List.of(), List.of(), List.of());
+        } catch (IllegalStateException failure) {
+            closed = failure.getMessage().contains("closed");
+        }
+        check(closed, "the queue closes after install");
+    }
+
+    private static void unknownFuelMap() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(engine("aa.fuel.missing")));
+        expectInstall("aa_sample", "unknown", "fuel", "aa.fuel.missing");
+    }
+
+    private static void unknownFuelEnergy() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(), List.of(fuelMap("aa.fuel.gas")),
+                List.of(FuelGeneratorDeclaration.builder("engine", "Steel").fuelMap("aa.fuel.gas")
+                        .energy("ZZ", 16).single().build()));
+        expectInstall("aa_sample", "unknown", "energy", "ZZ");
+    }
+
+    private static void fuelWithoutStructure() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(turbine("gt.recipe.fuels.gas")));
+        expectInstall("aa_sample", "sampleturbine", "no", "structure");
+    }
+
+    private static void fuelNameCollision() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(),
+                List.of(fuelMap("gt.recipe.fuels.gas")), List.of());
+        expectInstall("aa_sample", "fuel", "gt.recipe.fuels.gas", "already exists");
+    }
+
+    private static void recipeMachineCannotUseFuelMap() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(machine("sample_press", "samplepress", "aa.fuel.gas")),
+                List.of(), List.of(), List.of(fuelMap("aa.fuel.gas")), List.of());
+        expectInstall("aa_sample", "unknown", "recipe", "aa.fuel.gas");
+    }
+
+    private static void fuelBounds() {
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 16).efficiency(0).build(), "efficiency");
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 16).efficiency(100_001).build(), "efficiency");
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 0).build(), "parameters");
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 16).tank(0).build(), "parameters");
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 16).outputBehind(0).build(), "distance");
+        expectThrows(IllegalArgumentException.class, () -> FuelGeneratorDeclaration.builder("engine", "Steel")
+                .fuelMap("aa.fuel.gas").energy("RU", 16).outputBehind(9).build(), "distance");
+        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.FuelMapDeclaration(
+                "Not A Map", "Gas", "aa_sample:textures/gui/machines/gas",
+                0, 0, 0, 1, 1, 1, 1, false, false, false, false), "fuel");
+    }
+
+    private static RecipeMapSpec fuelMap(String name) {
+        return new RecipeMapSpec(null, name, "Gas", "aa_sample:textures/gui/machines/gas",
+                0, 0, 0, 1, 1, 1, 1, false, false, false, false);
+    }
+
+    private static FuelGeneratorDeclaration engine(String fuelMap) {
+        return FuelGeneratorDeclaration.builder("engine", "Steel").machineType("sampleengine")
+                .fuelMap(fuelMap).efficiency(10_000).energy("RU", 16).tank(4000).outputFront().single().build();
+    }
+
+    private static FuelGeneratorDeclaration turbine(String fuelMap) {
+        return FuelGeneratorDeclaration.builder("turbine", "Steel").machineType("sampleturbine")
+                .fuelMap(fuelMap).efficiency(5_000).energy("RU", 32).tank(8000).outputBehind(4).multi().build();
     }
 
     private static void prepare() {
