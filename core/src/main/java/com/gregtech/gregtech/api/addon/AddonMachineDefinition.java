@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * @deprecated Use {@link MachineDeclaration}. Removal is 0.8.
  */
-@Deprecated(since = "0.4", forRemoval = true)
+@Deprecated(since = "0.0", forRemoval = true)
 @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineDefinition", removeAt = "0.8")
 public record AddonMachineDefinition(
         BasicMachineParameters parameters,

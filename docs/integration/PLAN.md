@@ -1,5 +1,7 @@
 # GregTech 6 整合计划与验收合同
 
+当前追加范围（2026-10-19，版本纠正）：用户明确当前模组仍为 `0.0.0`，API 号也改为 `0`。将主线版本声明、示例依赖与活动文档同步归零，保留所有已移植 API 能力；上游 1–7 仅作为来源开发历史，不代表本项目发版。此轮不重新构建或运行检验，前次 0.7.0 交付记录保持原状。
+
 当前追加范围（2026-10-19）：用户认可 Stonecutter，明确要求先将 GitHub 原 `main` 改名 `old`，再将 `experiment/stonecutter` 改名 `main`，并直接交付双版本模组包，不运行额外检验。两次分支重命名及默认分支设置已完成；本地同名分支同步，后续开发主线为 `main`。本轮只执行 Forge `distributionJar` 与 NeoForge `jar`，不安排 check／verify／GameTest／客户端／验包。此前分支试验和“不自动合并 main”的阶段限制由本次明确授权取代。
 
 当前追加范围（2026-10-18）：按用户要求，将 lombinaxmasson 已合入 main 的最终附属 API 栈（PR #45，`c899462a6`，含 #29–#44 的功能）接入 `experiment/stonecutter`，并提供逐 PR 内容说明。保留完整 `gt6ce:` 身份、既有重复注册清理和 Stonecutter 架构；上游共用目录搬迁由现有结构取代。仅做双版编译、SDK／API 和新增功能定向验证；不扩大为完整生存、旧存档兼容或全部测试。见[来源、PR 清单与验证边界](verification/main-addon-stack-20261018.md)。

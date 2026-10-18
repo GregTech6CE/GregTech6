@@ -2,13 +2,13 @@
 
 [English](ADDON_API.md) | [中文](ADDON_API.zh-CN.md)
 
-API 版本 **7** 就是模组版本 **0.7.0**，平台是 Forge 1.20.1 与 NeoForge 1.21.1。按目标加载器编译对应的 SDK。SDK 里只有附属接口，没有 GT 内部类。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT 完成材料/物品关联和内置机器配方后，在 common setup 调用一次 `onRecipesReady`。按 Addon 模组 ID 排序调用；重复 ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为 FAILED。
+API 版本 **0** 对应模组版本 **0.0.0**，平台是 Forge 1.20.1 与 NeoForge 1.21.1。按目标加载器编译对应的 SDK。SDK 里只有附属接口，没有 GT 内部类。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT 完成材料/物品关联和内置机器配方后，在 common setup 调用一次 `onRecipesReady`。按 Addon 模组 ID 排序调用；重复 ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为 FAILED。
 
-版本 3 的材料入口和机器入口在已安装的 GT 里仍会加载。它们已弃用，不在 SDK 里。新代码用 `AddonMaterialContributor` 和 `AddonMachineContributor`。
+旧的材料入口和机器入口在已安装的 GT 里仍会加载。它们已弃用，不在 SDK 里。新代码用 `AddonMaterialContributor` 和 `AddonMachineContributor`。
 
 ## 版本
 
-依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.7,)"`。GregTech 太旧时，加载器在附属的类加载之前拒绝。`context.apiVersion()` 返回 MINOR，只用于可选分支，例如 `context.apiVersion() >= 2`。它不能代替 `versionRange`，也不要要求等于某一个版本。
+依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.0.0,)"`。`context.apiVersion()` 当前返回 **0**。本开发基线包含本文列出的全部能力，不要按导入代码的上游版本号屏蔽现有功能。API 号不能代替加载器依赖范围。
 
 `gradle.properties` 的 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 就是这个 MINOR。PATCH 不改这份 API。1.0 之前，MINOR 升级可以破坏附属调用。破坏一个已经写明的入口，要么等下面的移除表到期，要么在同一版的变更表里写明。
 
@@ -16,27 +16,31 @@ API 版本 **7** 就是模组版本 **0.7.0**，平台是 Forge 1.20.1 与 NeoFo
 
 ## 变更
 
-| MINOR | 变更 |
+API **0** 是 GT6CE 的开发基线，包含下表全部能力。下列 1–7 只记录导入代码的上游开发阶段，不是 GT6CE 发版记录，也不是运行时功能门槛。
+
+| 上游 MINOR | 导入内容 |
 | --- | --- |
-| 7 | 燃料能源机器。附属声明燃料表和一台流体燃料机器：效率、每 tick 一个能量包、储罐容量，以及正面、背面或背后 1 到 8 格。单方块和多方块都由 GT 注册并运行。模组版本从 0.7.0 起。材料数字入口保留到 0.9，避免在新增模板的同一 MINOR 里删掉它们。 |
-| 6 | 行为型机器。附属声明槽、储罐、开关、能源和 GUI 贴图，并提供 `MachineBehavior`。方块、物品栏、能源、菜单和存档由 GT 持有。模组版本从 0.6.0 起。版本 3 的入口保留到 0.8，避免在新增外壳的同一 MINOR 里删掉它们。 |
-| 4 | 附属接口单独成源码集，每个加载器一个只供编译的 SDK。材料、前缀、物品、流体、配方、工具和能源走下面的门面。模组版本从 0.4.0 起。版本 3 的注册和 `onRecipesReady` 保留。 |
-| 5 | 附属材料只按名字声明。GT 在启动时从 10000 起分配数字 id，不写入存档。同名且字段一致就合并；字段不一致或只差大小写则启动失败。`builder(int, String)` 忽略传入的数字。模组版本从 0.5.0 起。 |
-| 3 | 配方机器和大型配方机器。模组版本从 0.3.0 起。版本 2 的注册、材料和 `onRecipesReady` 保留。 |
+| 7 | 燃料能源机器。附属声明燃料表和一台流体燃料机器：效率、每 tick 一个能量包、储罐容量，以及正面、背面或背后 1 到 8 格。单方块和多方块都由 GT 注册并运行。上游模组版本从 0.7.0 起。材料数字入口保留到 0.9，避免在新增模板的同一 MINOR 里删掉它们。 |
+| 6 | 行为型机器。附属声明槽、储罐、开关、能源和 GUI 贴图，并提供 `MachineBehavior`。方块、物品栏、能源、菜单和存档由 GT 持有。上游模组版本从 0.6.0 起。版本 3 的入口保留到 0.8，避免在新增外壳的同一 MINOR 里删掉它们。 |
+| 4 | 附属接口单独成源码集，每个加载器一个只供编译的 SDK。材料、前缀、物品、流体、配方、工具和能源走下面的门面。上游模组版本从 0.4.0 起。版本 3 的注册和 `onRecipesReady` 保留。 |
+| 5 | 附属材料只按名字声明。GT 在启动时从 10000 起分配数字 id，不写入存档。同名且字段一致就合并；字段不一致或只差大小写则启动失败。`builder(int, String)` 忽略传入的数字。上游模组版本从 0.5.0 起。 |
+| 3 | 配方机器和大型配方机器。上游模组版本从 0.3.0 起。版本 2 的注册、材料和 `onRecipesReady` 保留。 |
 | 2 | 排队材料和追加形态。 |
 | 1 | 附属注册和 `onRecipesReady`。 |
 
 ## 弃用与移除
 
+旧入口的弃用起点统一记为 CE 基线 `0.0`；原先约定的最早移除期限 `0.8`、`0.9` 保留，当前版本归零不提前移除任何入口。
+
 | 入口 | 弃用版本 | 替代 | 计划移除 |
 | --- | --- | --- | --- |
-| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.4 | AddonMachineContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.4 | AddonMaterialContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.4 | MachineDeclaration | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.4 | MachineLayout | 0.8 |
-| com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
-| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
+| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.8 |
+| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.8 |
+| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.0 | MachineDeclaration | 0.8 |
+| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.0 | MachineLayout | 0.8 |
+| com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
+| com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 
 新材料和追加形态走单独的 `ServiceLoader` 入口，见下文。不要在模组构造方法里提交材料：Forge 1.20.1 上附属构造和 GT 构造会重叠。
 
@@ -46,7 +50,7 @@ GregTechAddons.register(new GregTechAddon() {
     public void onRecipesReady(Context context) {
         // context.platform(): forge / neoforge
         // context.minecraftVersion(): 1.20.1 / 1.21.1
-        // context.apiVersion(): 7，只用于可选功能分支
+        // context.apiVersion(): 0，包含本文列出的全部能力
         // 用 GregTechMaterials 和 AddonItems 查询，用 AddonRecipes.map(name).add(...) 加行。
     }
 });
@@ -188,7 +192,7 @@ GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures
 
 新配方表在 `onRecipesReady`、JEI、EMI 和数据包基线之前创建，并进入 `RecipeMap.RECIPE_MAP_LIST`。配方行从 `onRecipesReady` 加入，或用 `gt6ce:machine` 数据包。JEI 催化剂和多方块预览跟着已注册的机器列表；有结构的大型机器会出现在预览里。合成配方由附属自己的数据包提供，GT 不生成。
 
-版本 5 会给附属材料分配 id，并在坩埚和 USB 里存材料名字。已经注册的 GT 流体字段名可以通过 `AddonFluids` 取到。KubeJS 仍用 `gt6ce:machine` 给已经存在的配方表加行，包括这个入口创建的表。内置机器继续走 `OriginalLargeRecipeMachineData` 的名字分支。附属大型机器走默认端口。
+API 0 会给附属材料分配 id，并在坩埚和 USB 里存材料名字。已经注册的 GT 流体字段名可以通过 `AddonFluids` 取到。KubeJS 仍用 `gt6ce:machine` 给已经存在的配方表加行，包括这个入口创建的表。内置机器继续走 `OriginalLargeRecipeMachineData` 的名字分支。附属大型机器走默认端口。
 
 ## 行为型机器
 
@@ -238,9 +242,9 @@ GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures
 
 ## 构建附属
 
-按目标加载器构建。Forge 运行 `gradlew.bat :multiversion:1.20.1-forge:addonSdkJar`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.7.0.jar`。NeoForge 运行 `gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar`，得到 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.7.0.jar`。每个 jar 是该加载器的只供编译 SDK：核心接口加上该加载器的平台接口，用 Mojang 名，并带许可声明。没有素材，也没有模组描述文件。用 `compileOnly files(...)` 依赖这一个 jar。不要再次打包或 shade 这些类。运行时由已安装的 GT 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从构建目录或 CI 产物取 jar。
+按目标加载器构建。Forge 运行 `gradlew.bat :multiversion:1.20.1-forge:addonSdkJar`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.0.0.jar`。NeoForge 运行 `gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar`，得到 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.0.0.jar`。每个 jar 是该加载器的只供编译 SDK：核心接口加上该加载器的平台接口，用 Mojang 名，并带许可声明。没有素材，也没有模组描述文件。用 `compileOnly files(...)` 依赖这一个 jar。不要再次打包或 shade 这些类。运行时由已安装的 GT 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从构建目录或 CI 产物取 jar。
 
-附属须声明必需依赖模组 **`gt6ce`**，并写 `versionRange="[0.7,)"`。GT 内容和存档命名空间仍是 **`gt6ce`**。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
+附属须声明必需依赖模组 **`gt6ce`**，并写 `versionRange="[0.0.0,)"`。GT 内容和存档命名空间仍是 **`gt6ce`**。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
 
 ## 支持范围
 
@@ -248,6 +252,6 @@ GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
-`onRecipesReady` 仍不是数据包重载事件。API 版本 7 增加流体燃料能源机器，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、新前缀、附属外壳、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含流体燃料能源机器，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、新前缀、附属外壳、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。

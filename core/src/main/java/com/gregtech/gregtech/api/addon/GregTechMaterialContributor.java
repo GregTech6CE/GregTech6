@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @deprecated Use {@link AddonMaterialContributor}. Removal is 0.8.
  */
-@Deprecated(since = "0.4", forRemoval = true)
+@Deprecated(since = "0.0", forRemoval = true)
 @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.GregTechMaterialContributor", removeAt = "0.8")
 public interface GregTechMaterialContributor {
     /** The addon's own loader mod id, not {@code gt6ce} or {@code gregtech6}. */

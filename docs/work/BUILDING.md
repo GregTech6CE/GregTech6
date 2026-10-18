@@ -55,7 +55,7 @@ Forge 1.20.1：
 .\gradlew.bat --console=plain :multiversion:1.20.1-forge:distributionJar
 ```
 
-当前输出：`multiversion/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-0.7.0.jar`。
+当前输出：`multiversion/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-0.0.0.jar`。
 
 NeoForge 1.21.1：
 
@@ -63,7 +63,7 @@ NeoForge 1.21.1：
 .\gradlew.bat --console=plain :multiversion:1.21.1-neoforge:jar
 ```
 
-当前输出：`multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-0.7.0.jar`。
+当前输出：`multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-0.0.0.jar`。
 
 一次生成两个版本：
 
@@ -81,7 +81,7 @@ Forge 应使用 `distributionJar` 的最终产物，它包含重混淆后的平�
 
 ## 附属 SDK 与公开源码
 
-API 版本 7 对应模组版本 0.7.0。`core/src/api` 仅依赖 JDK；`multiversion/src/api` 和版本节点的 `src/api` 仅依赖公开核心 API、Minecraft 与加载器。实现仍在 `main`，正式模组和开发运行均包含 API 输出。
+API 版本 0 对应模组版本 0.0.0。当前 API 0 是开发中接口，保留既有扩展能力，版本标号不代表删除功能。`core/src/api` 仅依赖 JDK；`multiversion/src/api` 和版本节点的 `src/api` 仅依赖公开核心 API、Minecraft 与加载器。实现仍在 `main`，正式模组和开发运行均包含 API 输出。
 
 ```powershell
 .\gradlew.bat :core:addonApiJar
@@ -89,7 +89,7 @@ API 版本 7 对应模组版本 0.7.0。`core/src/api` 仅依赖 JDK；`multiver
 .\gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar :multiversion:1.21.1-neoforge:addonApiClosureCheck
 ```
 
-纯核心 SDK 位于 `core/build/libs/gt6ce-addon-api-0.7.0.jar`；对应加载器 SDK 位于节点的 `build/addon-sdk/gt6ce-addon-sdk-<Minecraft>-<loader>-0.7.0.jar`。后者包含核心与原生公开 API，不含实现类、素材或模组元数据。`compileAddonSample` 用 SDK 与 Minecraft／加载器依赖编译 [examples/addon-sample](../../examples/addon-sample/README.md)，`addonApiClosureCheck` 同时拒绝 API 或示例引用内部实现。`check` 已接入闭包检查，`assemble` 会构建对应 SDK。
+纯核心 SDK 位于 `core/build/libs/gt6ce-addon-api-0.0.0.jar`；对应加载器 SDK 位于节点的 `build/addon-sdk/gt6ce-addon-sdk-<Minecraft>-<loader>-0.0.0.jar`。后者包含核心与原生公开 API，不含实现类、素材或模组元数据。`compileAddonSample` 用 SDK 与 Minecraft／加载器依赖编译 [examples/addon-sample](../../examples/addon-sample/README.md)，`addonApiClosureCheck` 同时拒绝 API 或示例引用内部实现。`check` 已接入闭包检查，`assemble` 会构建对应 SDK。
 
 ## 完整构建与开发运行
 

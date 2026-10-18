@@ -25,14 +25,14 @@ public final class AddonMaterials {
     /**
      * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
      */
-    @Deprecated(since = "0.5", forRemoval = true)
+    @Deprecated(since = "0.0", forRemoval = true)
     @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN", removeAt = "0.9")
     public static final int ADDON_ID_MIN = 4291;
 
     /**
      * @deprecated Addon materials no longer pick a numeric id. Use {@code MaterialDeclaration.builder(String)}. Removal is 0.9.
      */
-    @Deprecated(since = "0.5", forRemoval = true)
+    @Deprecated(since = "0.0", forRemoval = true)
     @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX", removeAt = "0.9")
     public static final int ADDON_ID_MAX = 7899;
 
