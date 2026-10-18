@@ -59,8 +59,8 @@ public final class BehaviorDataStorage {
         com.gregtech.gregtech.content.cover.CanvasData.tooltip(data,lines);
         if(com.gregtech.gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
-        GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
-                .get(data.getShort(GTMaterialDataRecipes.NBT_REPLICATOR_DATA));
+        GTMaterial material = com.gregtech.gregtech.api.material.StoredMaterial
+                .read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
         if (!material.isValid()) return;
         String name = material.getLocalName();
         if (!material.has(com.gregtech.gregtech.api.material.MaterialProperty.UUM)) {

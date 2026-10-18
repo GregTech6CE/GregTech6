@@ -1,5 +1,139 @@
 # 验证账本
 
+## 2026-10-18 / 附属燃料能源模板
+
+`mod_version` 是 `0.7.0`，`GregTechAddons.API_VERSION` 是 7。启动器是已安装的 Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 Temurin 21.0.6。本机默认 `java` 是 JDK 25，Gradle 8.8 不能跑。命令都是 `--offline`，`GRADLE_USER_HOME` 用用户目录里已有的缓存。ForgeGradle 证书检查加了 `-Dnet.minecraftforge.gradle.check.certs=false`。这不是项目配置。
+
+`:core:check` 通过，20 秒。`sourcePolicyCheck` 是 2414 个 Java 源文件。`addonApiClosureCheck` 输出 `Addon API closure passed (core): 49 API classes`。`addonApiVersionContracts` 输出 `addon API version contracts passed: 84 assertions, 7 scheduled removals`。燃料契约每个场景单独一个 JVM：`fuelok` 6、`fuelmap` 1、`fuelenergy` 1、`fuelstruct` 1、`fuelname` 1、`fuelmachine` 1、`fuelbounds` 7。在这之前，`:core:compileJava`、`:core:compileTestJava`、`:compileJava`、`:neoforge:compileJava`、两边的 `compileBootstrapGameTestJava`，以及两边只对着 SDK 的 `compileAddonSample`，一次通过，2 分 40 秒。
+
+`gregtech_card17_fuel` 带 `-PaddonSample=true`，堆是 2560m，SerialGC。Forge 先跑样例四项，19:20:47 是 `All 4 required tests passed`，`GT addon API 7 ready: [addon_sample]`，Gradle 5 分 19 秒，目录 `build/card17-gametest`。同一命名空间补上 `GasTurbineGradeTests` 的三项后，20:06:06 是 `All 7 required tests passed`，ready 仍是 `[addon_sample]`，Gradle 4 分 34 秒，目录相同。NeoForge 跑样例四项，19:23:30 是 `All 4 required tests passed`，19:22:26 ready `[addon_sample]`，Gradle 2 分 24 秒。属性写成 `neoforge/build/card17-gametest`，NeoForge 工程按自己的目录解析，实际目录是 `neoforge/neoforge/build/card17-gametest`。NeoForge 没有 `GasTurbineGradeTests`。
+
+样例燃料表是 `addon_sample.fuel.gas`。数据包熔岩 100 mB、水 10 mB、`eu_per_tick` 16、持续 20 tick，读进配方表后 `mEUt` 是 -16。单方块 `addon_sample:sample_engine` 效率 10000，每 tick 一个 32 RU 的包，从正面送出。第一 tick 没有接收方，缓冲是 320，熔岩用完，废液水 10 mB 留下，方块没有点亮。关掉开关后再装 100 mB，下一 tick 燃料和缓冲都不变。打开开关后，北面的机器收到 32 RU，缓冲少 32。多方块 `addon_sample:sample_turbine` 效率 5000，从正面背后 4 格送出。没有外壳时不烧燃料。放上 (0,0,1) 的 `tank_wall` 后成形，缓冲 160。南面 4 格外的机器收到 32，缓冲剩 128。拆掉外壳后不再燃烧，缓冲停在 128。`RecipeMachines.collect` 把两台机器列为这张燃料表的催化剂。`MultiblockInfoData` 里涡轮预览的 (0,0,1) 是储罐壁。JEI 和 EMI 用的就是这张配方表和催化剂索引，这次没有打开查看器界面。
+
+存档用方块实体自己的 `saveWithoutMetadata` 再读进新放的方块实体：燃料 50 mB、废液水 10 mB、能量 160、关掉的开关、已成形都在。这是同一局测试里的存读，不是第二个进程。
+
+`GasTurbineGradeTests` 的 `structuralPartsDropThemselves`、`fourGradesConsumeConserveAndBind`、`newWallsHaveOriginalWeldingRecipes` 在上面的 7 项里通过。`MachineControlTests.generatorFamiliesControlAndSave` 先走到电动引擎。延长器的 `machineControl` 固定 `supportsProgress()` 为 true，断言在 `gregtech:engine_electric_galvanized_steel` 停住，柴油引擎还没轮到。`ExtenderBlockEntity`、柴油引擎和燃气涡轮的方块实体都不在本卡改动里。整组 `gregtech` 命名空间约 695 项开过一次，约 8 分钟后停掉；停之前已经有延长器掉落、选择器、迷你末地门和面坐标几项失败，和燃料模板无关，没有再跑完。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒，`-PclientSmokeHeap=3g`。带样例：Forge `CLIENT_SMOKE_SUCCESS` 125235 毫秒，19:28:15，5 帧，`TitleScreen`，ready `[addon_sample]`，Gradle 3 分 19 秒。NeoForge 64626 毫秒，19:33:50，151 帧，同一画面，ready `[addon_sample]`，Gradle 1 分 50 秒。不带样例：Forge 104285 毫秒，19:31:16，ready `[]`，Gradle 2 分 33 秒。NeoForge 61506 毫秒，19:35:55，ready `[]`，Gradle 1 分 46 秒。没有打开样例引擎或涡轮的界面。
+
+专服带样例并 `-PaddonSampleHalt=true`。Forge 目录 `build/card17-forge-server`，19:37:28 ready `[addon_sample]`，`Done (24.814s)` 后 `dust_ammoniumnitrate=true`，Gradle 1 分 48 秒。NeoForge 属性 `build/card17-neo-server` 落在 `neoforge/build/card17-neo-server`，19:41:30 ready `[addon_sample]`，`Done (7.456s)` 后同样的粉尘行，Gradle 1 分 16 秒。两处都写了 `eula=true`。不带样例的专服不会自己停。Forge `build/card17-forge-plain`，19:39:36 ready `[]`，`Done (26.100s)`。NeoForge `neoforge/build/card17-neo-plain`，19:42:56 ready `[]`，`Done (7.567s)`。看到 Done 后结束进程。
+
+旧存档备份不涉及。内置柴油引擎和燃气涡轮的行为、注册名和存档格式都保持原样。
+
+## 2026-10-18 / 附属行为型机器外壳
+
+`mod_version` 是 `0.6.0`，`GregTechAddons.API_VERSION` 是 6。启动器是 Temurin 21.0.6，因为本机默认 `java` 是 JDK 25，Gradle 8.8 不能跑。命令都是 `--offline`，`GRADLE_USER_HOME` 用用户目录里已有的缓存。一次 NeoForge 专服在守护进程被停掉后重新校验 ForgeGradle 证书失败，补了 `-Dnet.minecraftforge.gradle.check.certs=false` 才启动。这不是项目配置。
+
+`:core:check` 通过。里面包含原有契约，以及行为机器的八个场景：`overlap`、`bounds`、`benergy`、`factory`、`share`、`bconflict`、`bslots`、`blayout`。同一次构建编译了 Forge 和 NeoForge 的主源码，以及两边只对着 SDK 的 `compileAddonSample`。GameTest 源码第一次有两处编译错误：Forge 的 `LazyOptional.orElseThrow()` 要一个异常供应者，NeoForge 的 `makeMockPlayer` 要 `GameType`。改完后两个 `compileBootstrapGameTestJava` 通过。
+
+`gregtech_card11_sample` 和 `gregtech_card16_behavior` 一起跑，`-PaddonSample=true`，堆是 2560m，SerialGC。1536m 的第一次在准备出生区域时 `OutOfMemoryError`，不算通过。通过的一次 Forge 17:47:39、NeoForge 17:49:11 都是 `All 8 required tests passed`，两边都有 `dust_ammoniumnitrate=true` 和 `GT addon API 6 ready: [addon_sample]`。整次 7 分 1 秒。目录是 `build/card16-gametest` 和 `neoforge/build/card16-gametest`。
+
+样例灌溉机 `addon_sample:irrigator` 的四项是：注册成行为方块，方块实体 `addon_sample:be_irrigator`，菜单 `gregtech:behavior_machine`，不进配方表，也不是配方催化剂。正面拒绝 EU。水槽先装 1000 mB，向上送电 12 tick 后，东边耕地湿度变成 7，行为状态 `watered` 是 1，水剩 900 mB。第 5 tick 菜单进度是 0.5。关掉开关后再跑 12 tick，耕地保持干燥，`watered` 仍是 1。管道拒绝圆石和熔岩，接受骨粉和水；输出槽拒绝插入；输入储罐抽不走。菜单槽在 (44,26) 和 (116,26)，玩家物品栏 y 是 84，按钮能翻开关。存档用方块实体自己的 `saveWithoutMetadata` 再读进新放的方块实体：骨粉 3 个、水 500 mB、能量、关掉的开关、`watered` 4、字符串 `kept` 都在。这是同一局测试里的存读，不是第二个进程。卡 11 的四项同时通过。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒，`-PclientSmokeHeap=3g`。Forge 的客户端烟雾原来写死 6g，这次改成读取已有的 `clientSmokeHeap`，不写这个属性时仍是 6g。带样例：Forge `CLIENT_SMOKE_SUCCESS` 86955 毫秒，NeoForge 53624 毫秒，ready 都是 `[addon_sample]`。不带样例：Forge 81771 毫秒、NeoForge 51833 毫秒，ready 都是 `[]`。两边都停在标题画面。没有打开灌溉机界面。界面上的槽位、流体、开关和进度由菜单数据测到，屏幕类按这些数据画。
+
+专服带样例并 `-PaddonSampleHalt=true`。属性 `serverDirectory` 在各自工程下解析：Forge `build/card16-forge-server`，NeoForge `neoforge/build/card16-forge-server`，两处都写了 `eula=true`。Forge `Done (26.689s)` 后 `dust_ammoniumnitrate=true`，NeoForge `Done (7.948s)` 后同样的粉尘行，ready 都含 `addon_sample`。不带样例的专服不会自己停，目录是 `build/card16-forge-plain` 和 `neoforge/build/card16-forge-plain`。Forge `Done (28.539s)`、NeoForge `Done (8.872s)`，ready 是 `[]`，看到 Done 后结束进程。
+
+旧存档备份不涉及。这是新控制器，内置机器没有改存档格式。
+
+## 2026-10-18 / 附属材料按名字标识
+
+`mod_version` 是 `0.5.0`，`GregTechAddons.API_VERSION` 是 5。Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。ForgeGradle 证书检查仍加 `-Dnet.minecraftforge.gradle.check.certs=false`，这不是项目配置。
+
+`:core:check` 通过，1 分 51 秒。`sourcePolicyCheck` 是 2384 个 Java 源文件。`addon API version contracts passed: 84 assertions, 7 scheduled removals`。材料契约每个场景单独一个 JVM：`service` 23、`name` 1、`id` 4、`addons` 3、`range` 2、`form` 1、`invalid` 1、`late` 4、`mismatch` 1、`casefold` 1、`corecase` 1、`order` 2、`named` 5。`service` 打印 `ammonium nitrate items=6 iron automatic items=96`。`materialBehaviorContracts` 仍是 1160 种材料、1105 个正数 id。
+
+`:core:addonMaterialScale` 不在 `check` 里。1000 种 `dust()` 加 1000 种金属，core 里数定义列表，不启动游戏：粉物品 6000，金属物品 41000，内置物品 56085。材料初始化 147 毫秒，列出物品定义 263 毫秒，一次 `System.gc()` 后已用堆约 6 MB。这不是客户端堆，也没有 JEI 或 EMI。每种金属是 41 个物品，不是先前估计的约 100 个。
+
+`:compileJava`、`:compileBootstrapGameTestJava`、`:compileAddonSample`、`:neoforge:compileJava`、`:neoforge:compileBootstrapGameTestJava`、`:neoforge:compileAddonSample` 一次通过，5 分 37 秒。样例编译只对着 SDK。
+
+`gregtech_card15` 的 `namesRoundTripAndOldIdsStillRead` 用铜核对三种存档字段。新格式写名字，旧的坩埚 int、USB short、显示 int 仍读回这次启动的内置 id。Forge 12:47:03、NeoForge 12:48:17 都打印 `All 1 required tests passed`。整次 `:runGameTestServer :neoforge:runGameTestServer` 是 26 分 47 秒。第一次 Forge 专服因为 `gregtech_card15` 没有 `test_empty` 结构而崩溃；结构补进该命名空间后，同一次命令两边都通过。目录是 `build/card15-gametest` 和 `neoforge/build/card15-gametest`。
+
+带 `-PaddonSample=true` 的同命名空间再跑一次，Forge 13:23:24、NeoForge 13:24:25 都是 `All 4 required tests passed`。`meltAddonIngotAndPourIt` 把样例金属 `SampleAlloy` 的锭丢进碳坩埚，加热到熔点以上，倒进碳模具的锭腔，冷却后掉出一块 `ingot`。坩埚存档条目是 `{name:SampleAlloy}`，没有 `id`。同一测试把旧的铜 `{id:int, amount}` 交给坩埚方块实体，再存成名字。`scanAddonMaterialAndReplicateNamedIron` 扫描硝酸铵粉，输出 USB 的 `gt.replicator.data` 是字符串 `AmmoniumNitrate`；复制配方返回 null，因为 `dust()` 和 `metal()` 不设置 UUM，公开 API 也不能给附属材料加 UUM。同一测试把名字格式的铁 USB 放进 T1 复制机，产出铁锭，USB 仍指着铁。`builtinTooltipFlagsMatchTheOldRanges` 对每种材料比对旧规则：附属材料两个旗标都没有；其余材料的周期表旗标等于「元素、id 在 1 到 7999、不是反物质」，原版物质旗标等于 id 在 7900 到 7912。
+
+重启用新目录 `build/card15-restart` 和 `neoforge/build/card15-restart`，标记文件是 `addon-sample-persistence.txt`。准备进程放入一单位 `SampleAlloy` 和一个装着 `AmmoniumNitrate` 名字的 USB 后退出，两边打印 `CARD15_RESTART_PREPARED`。Forge 第一次因为没有 `eula=true` 停在协议页，补上以后 13:31:24 准备完成。NeoForge 准备是 13:28:02。新的进程不重新放置方块，Forge 13:33:32、NeoForge 13:34:50 打印 `CARD15_RESTART_VERIFIED`。
+
+旧档是卡 11 世界的副本，原目录没有打开。Forge 副本 `build/card15-oldsave-forge`，复制机 (48, -58, 3)，硬盘开关在 z 少 1。NeoForge 副本 `neoforge/build/card15-oldsave-neo`，复制机 (-9806961, -58, -11702620)，开关同样在 z 少 1。Forge 13:37:11、NeoForge 13:38:40 都打印 `OLD_SAVE_USB item gregtech:usb3_hdd type 2 material Iron` 和 `OLD_SAVE_VERIFIED`。type 2 是 NBT short。仓库里没有本卡之前写下的坩埚内容，旧数字坩埚列表只在上面的 GameTest 里用真实方块实体读过。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒。带样例：Forge `CLIENT_SMOKE_SUCCESS` 68450 毫秒，`GT addon API 5 ready: [addon_sample]`；NeoForge 61507 毫秒，同一行。不带样例：Forge 89272 毫秒、NeoForge 62512 毫秒，ready 都是 `[]`。专服带样例并 `-PaddonSampleHalt=true`：Forge `Done (22.315s)` 后 `dust_ammoniumnitrate=true`，NeoForge `Done (6.637s)` 后同样的粉尘行，两边 ready 都含 `addon_sample`。不带样例的专服不会自己停：Forge `Done (24.502s)`、NeoForge `Done (8.125s)`，ready 是 `[]`，看到 Done 后结束进程。
+
+`-PmaterialScale=2000` 让样例再声明 1000 种粉和 1000 种金属，系统属性是 `gregtech.materialScale`。Forge 开发客户端带 JEI、不带 EMI，`-PclientSmokeTimeout=300`。300014 毫秒时仍是 `ForgeLoadingOverlay`，`renderedFrames` 为 0，`CLIENT_SMOKE_FAILED` 的原因是标题画面截图超时。`GT addon API 5 ready: [addon_sample]` 出现在超时前一秒。机器配方还在注册，粉碎回收已经到 72142 行。`JEI_SCALE` 没有打印。EMI 没有另开，因为同一段配方注册还没走完，EMI 的 `register` 也还没被调用。这超出本卡能接受的启动时间。后续是卡 19，本卡不改物品或配方生成。core 的 147 毫秒和 6 MB 仍然只是定义列表，不是这次客户端。
+
+## 2026-10-18 / 附属 API 源码集与分加载器 SDK
+
+`mod_version` 是 `0.4.0`，`GregTechAddons.API_VERSION` 是 4。本机 Gradle 走用户目录里的代理，ForgeGradle 的证书检查对这个代理失败，所以下面的 Gradle 命令都加了 `-Dnet.minecraftforge.gradle.check.certs=false`。这不是项目配置。启动器是已安装的 Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。
+
+`:core:check` 通过，22 秒。`sourcePolicyCheck` 是 2383 个 Java 源文件。`:core:addonApiClosureCheck` 输出 `Addon API closure passed (core): 34 API classes`。`:core:addonApiVersionContracts` 输出 `addon API version contracts passed: 69 assertions, 4 scheduled removals`。`coreBehaviorContracts` 输出 `2806 assertions in 33 groups`。生命周期断言改为读取 `GregTechAddons.API_VERSION`，不再写死 3。
+
+`:build :neoforge:build` 通过，1 分 12 秒。Forge 闭包 `49 API classes`，NeoForge 闭包 `49 API classes`。样例编译任务的类路径只有 SDK jar、Minecraft 和加载器，没有 core 的 main 类，也没有本项目打出来的模组 jar。NeoForge 的加载器文件在 `neoforge/build/moddev`，样例类路径保留这一段。样例的 NeoForge 编译使用 JDK 21。
+
+验包脚本与 CI 工作流相同。`verify_artifacts.py`：833 个共享 core 类，Forge 1542 个平台类，NeoForge 1626 个平台类，其中 306 个算平台共享。两份报告的 `mod_version` 都是 `0.4.0`，34 个核心 API 类的哈希一致。`verify_addon_api.py`：两份 SDK 都是 34 个核心 API 类加 15 个平台 API 类，没有运行时资源。jar 是 `build/libs/gregtech6-1.20.1-forge-0.4.0.jar`、`neoforge/build/libs/gregtech6-neoforge-1.21.1-0.4.0.jar`、`build/addon-sdk/gregtech6-addon-sdk-1.20.1-forge-0.4.0.jar`、`neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-0.4.0.jar`。GitHub Actions 没有跑。
+
+闭包失败证明：把一个引用 `GTMaterial` 的 `ClosureProbe.class` 放进 `core/build/classes/java/api` 后，`:core:addonApiClosureCheck` 失败，输出 `ClosureProbe.class -> com/gregtech/gregtech/api/material/GTMaterial`。探针源文件和 class 已删除。随后同一任务通过，仍是 34 个类。
+
+`gregtech_card11_sample` 带 `-PaddonSample=true`。Forge 02:26:04、NeoForge 02:27:07 都打印 `All 4 required tests passed`，两边都有 `[addon-sample] dust_ammoniumnitrate=true`。整次 `:runGameTestServer :neoforge:runGameTestServer` 是 3 分 29 秒。
+
+开发专服目录是 `build/card14-forge-server` 和 `neoforge/build/card14-neo-server`，只在这两处写了 `eula=true`。`-PaddonSampleHalt=true` 让样例在确认硝酸铵粉尘后停服。Forge 1 分 47 秒，NeoForge 1 分 13 秒，两边都是 `dust_ammoniumnitrate=true` 后 `BUILD SUCCESSFUL`。
+
+开发客户端用 `-PclientSmoke=true`。Forge `CLIENT_SMOKE_SUCCESS`，66011 毫秒，1280×720，24 帧，`TitleScreen`，并打印 `GT addon API 4 ready: [addon_sample]`。NeoForge 43232 毫秒，1280×720，152 帧，同样是标题画面和 `GT addon API 4 ready: [addon_sample]`。
+
+成品 jar 没有在已安装的加载器里启动。`tools/integration/launch_production_smoke.py` 需要一份完整的启动器版本目录，仓库里没有这份路径。没有做保存后重启，也没有开旧档。
+
+## 2026-10-17 / 附属 API 版本号与加载器拦截
+
+`mod_version` 是 `0.3.0`。`:core:addonApiVersionContracts` 通过，输出 `addon API version contracts passed: 49 assertions, 0 scheduled removals`。随后 `:core:check` 通过，里面包含 `sourcePolicyCheck`、这项版本契约，以及原有的 core 契约和 `test`。同一次构建还编译了 Forge、NeoForge，以及两边带 `-PaddonSample=true` 的样例源码集。`BUILD SUCCESSFUL`，用时 3 分 48 秒。
+
+样例 addon 的 `versionRange` 是 `[0.3,)`。开发客户端到达标题画面后自行退出：Forge `CLIENT_SMOKE_SUCCESS`，222 秒，1280×720；NeoForge 43 秒，1280×720。两边都打印 `GT addon API 3 ready: [addon_sample]`。专服目录是 `build/card13-forge-server` 和 `neoforge/build/card13-neo-server`。Forge 打印 `Done (26.934s)`，NeoForge 打印 `Done (7.717s)`，两边同样是 `ready: [addon_sample]`。专服没有自行退出，看到 `Done` 后结束进程。
+
+把两边样例临时改成 `[0.4,)` 后再开专服。Forge 加载器打印 `Missing or unsupported mandatory dependencies: Mod ID: 'gregtech6', Requested by: 'addon_sample', Expected range: '[0.4,)', Actual version: '0.3.0'`，随后在 mixin 初始化时因为读不到 `gregtech.mixins.json` 退出，进程码 1。没有 `GT addon API` 日志，也没有进到 GregTech 的模组代码。NeoForge 先打印同一句缺依赖，然后 `Mod addon_sample requires gregtech6 0.4 or above` / `Currently, gregtech6 is 0.3.0`，`ModLoadingException` 后服务器没有启动。NeoForge 的 Gradle 任务本身返回 0。样例范围已改回 `[0.3,)`。
+
+成品是 `build/libs/gregtech6-1.20.1-forge-0.3.0.jar` 和 `neoforge/build/libs/gregtech6-neoforge-1.21.1-0.3.0.jar`。`tools/integration/verify_artifacts.py` 通过：845 个共享 core 类，Forge 1520 个平台类，NeoForge 1619 个平台类，报告里的 `mod_version` 是 `0.3.0`。这次没有启动成品 jar，也没有做玩法、重启或旧档。
+
+## 2026-10-17 / C 步之前的单方块存档
+
+打开的是副本，原世界没有改。两份都来自 2026-10-15 的 `card03-material-data`，早于这张卡的注册改动。Forge 副本在 `build/card11-oldsave-forge`，机器在 (48, -58, 3)。NeoForge 副本在 `neoforge/build/card11-oldsave-neo`，机器在 (-9806961, -58, -11702620)。专服在进入主循环前读方块并退出。
+
+两边日志都是 `OLD_SAVE_VERIFIED`：方块 `gregtech:replicator_osmium`，方块实体 `gregtech:be_replicator_osmium`，能量 0，进度 0/0，0 号槽一个 `gregtech:usb3_cable` 且 `gt.usb.dir` 为 2，3 号槽一个 `gregtech:ingot_iron`。这与区块里的原 NBT 一致。
+
+2026-10-16 之前写下的世界里，带 `gt.energy` 的内置机器只有这台复制机，以及 NeoForge 上的一台 `crusher_bronze`。没有 `largeoven`、`largecrusher`、蒸馏塔、聚变或焦炉控制器。多方块旧档这一项没有对应的存档可开。
+
+这张卡不再把成品 jar 启动算进验收。`work/production-smoke.json` 不在仓库里，它指向的 Forge 47.4.26 / NeoForge 21.1.252 安装也不在这台机器上。
+
+C 步之前的存档用 HEAD 代码现写，因为仓库里没有更早的多方块世界。Forge 写在 `GregTech6-prec/build/prec-forge`，NeoForge 写在同一次检出的 `neoforge/build/prec-neo`。两台机器是 `gregtech:press_steel`（木棍，能量 0，进度 0/0）和 `gregtech:largecentrifuge_tungsten_steel`（端口铁锭，能量 4096，进度 0/0，17 格离心外壳）。当前代码打开副本后，Forge 与 NeoForge 都打印 `PRE_C_SAVE_VERIFIED`，方块、方块实体、物品、能量、进度和离心机结构与写下时一致。
+
+`RegistrationContracts` 在 Forge 主源码 classpath 上通过，输出 `PASS registration contracts: 260 machine variants; 80 energy devices`。测试原先在 `init()` 之前调用 `register()`，而 `definitionsOpen` 只在 `init()` 内部为 true，所以抛出 `Material definitions are closed (DEFINITIONS)`。材料注册表保持这个窗口。测试改为把这次调用当成关闭错误，并在入口绑定 `minecraft`、`forge`、`gregtech` 的存在性，否则 `init()` 在 `ModReferences` 处停住。
+
+## 2026-10-17 / 附属样例机器的注册表、配方和重启
+
+带样例 addon 的 GameTest 命名空间 `gregtech_card11_sample` 在 Forge 和 NeoForge 各 4 项通过。单方块 `sample_press` 消耗铁锭和 EU，产出金粒。`large_sample_press` 放上 17 块 `tank_wall` 后成形，铁块和 EU 从外壳端口进入，金锭从物品端口取出。两张数据包配方在 `RecipeMap.RECIPE_MAP_LIST` 里。`RecipeMachines.collect` 把两台机器列为催化剂，`MultiblockInfoData.recipes` 包含大型压机和 17 个外壳格。JEI 和 EMI 用的就是这张机器索引和配方表，这次没有打开查看器界面。
+
+带样例的注册表快照：
+
+- Forge：`build/card11-sample-forge/card11-registry.txt`，264 个 `gregtech` 机器方块、2 个 `addon_sample` 方块。方块实体同数。`gregtech:coke_oven`、`gregtech:cryo_distillation`、`gregtech:fusion_reactor` 仍是原来的方块实体 id，其余机器是 `be_<方块路径>`。
+- NeoForge：`neoforge/build/card11-sample-neo/card11-registry.txt`，265 个 `gregtech` 机器方块、2 个样例方块。多出来的是 `implosion_compressor_main`，聚变方块实体是 `gregtech:be_fusion_reactor_main`。这是两边原来的注册差异。
+- 无样例的 `specifications()` 260 条 id 都在两份快照里。`BasicMachineCatalog` 相对 HEAD 只增加 `machineTypeNames()`。样例方块和方块实体只出现在 `addon_sample:sample_press`、`addon_sample:large_sample_press` 和对应的 `be_` id。菜单只有 `gregtech:basic_machine`。
+
+独立重启用专服目录里的 `addon-sample-persistence.txt`。准备进程放好两台机器后立刻保存退出。Forge 记下单方块进度 64/640、能量 64，大型进度 4096/10240、能量 4096，物品槽是木棍。新的 Forge 进程和 NeoForge 的同样两次进程都读回了结构、进度、能量和木棍。
+
+成品 jar、`RegistrationContracts`、`productionSmoke` 和 C 步之前的旧存档没有跑。
+
+## 2026-10-17 / 附属配方机器的 GameTest 和开发环境启动
+
+Forge 窄 GameTest 命名空间 `gregtech_large_recipe`、`gregtech_basic_source`、`gregtech_multiblock_tanks` 共 4 项通过。NeoForge 同一组 4 项通过。Forge 上 `GasTurbineGradeTests`、`JeiMachineIndexTests`、`MultiblockCraftingTests`、`MultiblockCoverageTests`、`BasicMachineCraftingTests` 临时改到独立命名空间后共 15 项通过，注解已改回 `gregtech`。`:core:check` 里的 `machineSpecBehaviorContracts` 已覆盖 `LargeRecipeControllerContracts` 和 `BasicMachineSourceContracts`。
+
+`tools/check_registration.py --offline` 没有跑到 `RegistrationContracts` 的机器断言。它的 classpath 任务写在 `allprojects` 上，最后被 NeoForge 工程覆盖，测试源码按 1.21.1 编译失败。改用 Forge 测试 classpath 单独跑 `RegistrationContracts.main` 时，在材料 `register()` 就停了：`definitionsOpen` 默认是 false，定义窗口只在 `GTMaterialRegistry.init()` 内部打开。`GTMaterialRegistry` 不在本卡 diff 里。`productionSmoke` 的 `LargeRecipeControllerDeliveryChecks` 没有跑。
+
+无样例的开发客户端到达标题画面后自行退出：Forge 用时 92 秒，NeoForge 用时 51 秒。带样例时，Forge 第一次停在 `LoadingErrorScreen`，样例资源没有 `pack.mcmeta`，模型也没有进资源包。补上 `pack.mcmeta` 之后，Forge 带样例的客户端 195 秒到达标题画面，NeoForge 带样例 98 秒到达标题画面，两边日志都是 `GT addon API 3 ready: [addon_sample]`。这次 Forge 日志里没有出现跨命名空间的 "Potentially Dangerous alternative prefix"。
+
+专服都打印了 `Done`：Forge 无样例 77.6 秒、`ready: []`；Forge 带样例 76.5 秒、`ready: [addon_sample]`；NeoForge 无样例 20.7 秒、`ready: []`；NeoForge 带样例 20.2 秒、`ready: [addon_sample]`。
+
+没有导出启动前后的注册表快照。无样例时 `BasicMachineDefinitions.specifications()` 导出 260 条，命名空间都是 `gregtech`，id 不重复；`BasicMachineCatalog` 相对 HEAD 只多了 `machineTypeNames()`。成品 jar、游戏内成形和跑配方、JEI/EMI/预览、重启持久化、旧存档都没有做。
+
+## 2026-10-16 / 附属配方机器编译和 core 契约
+
+Forge 1.20.1 与 NeoForge 1.21.1 的主源码，以及 `-PaddonSample=true` 下的样例 addon，都编译通过。`:core:check` 通过。其中七个 `addonMachineContracts_*` 场景（控制器种类、重复机器名、未知零件、未知配方表、未知能量、没有控制器的结构、ServiceLoader）各自在独立 JVM 里通过。`coreBehaviorContracts` 里的 addon 生命周期断言改为当前 API 版本 3。
+
+没有导出注册表快照，没有跑卡片列出的 GameTest，没有启动开发客户端、专服或成品 jar，没有带样例 addon 进游戏，也没有做重启或旧存档对照。注册命名空间是按两个加载器的 `DeferredRegister` API 定的，没有用启动游戏确认 Forge 的跨命名空间警告。
+
 ## 2026-10-16 / 共享平台源码的成品对照和验包
 
 这是打包和字节对照，不是玩法通过。

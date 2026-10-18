@@ -1,0 +1,8 @@
+{
+  "type": "gregtech:machine",
+  "map": "addon_sample.recipe.large_press",
+  "item_inputs": [{ "item": "minecraft:iron_block" }],
+  "item_outputs": [{ "item": "minecraft:gold_ingot" }],
+  "eu_per_tick": 512,
+  "duration": 20
+}

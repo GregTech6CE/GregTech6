@@ -54,7 +54,7 @@ public final class OriginCreativeContents {
             if(id.startsWith("pipe_")||id.startsWith("fluid_pipe_"))return "pipes";
             if(id.startsWith("item_pipe"))return "item_pipes";
             if(id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
-            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock"))return "basic_machines";
+            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock")||type.equals("FuelGeneratorBlock"))return "basic_machines";
             if(id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
         }
         var source=SourceCreativeCatalog.entry(id);
@@ -80,7 +80,12 @@ public final class OriginCreativeContents {
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
         for(var item:BuiltInRegistries.ITEM) {
-            if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            var itemId = BuiltInRegistries.ITEM.getKey(item);
+            boolean addonMachine = item instanceof BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
+                    && !"gregtech".equals(machine.basicSpec().namespace());
+            if ((!itemId.getNamespace().equals("gregtech") && !addonMachine)
+                    || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","bumble_hive","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
             if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;

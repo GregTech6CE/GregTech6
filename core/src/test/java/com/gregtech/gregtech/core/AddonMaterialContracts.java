@@ -1,7 +1,9 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
 import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.addon.GregTechMaterialContributor;
+import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -18,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -36,12 +39,18 @@ public final class AddonMaterialContracts {
         switch (args[0]) {
             case "service" -> service();
             case "name" -> nameCollision();
-            case "id" -> idCollision();
-            case "addons" -> addonCollision();
-            case "range" -> outsideRange();
+            case "id" -> ignoredId();
+            case "addons" -> addonMerge();
+            case "range" -> ignoredHighId();
             case "form" -> ungeneratedForm();
             case "invalid" -> invalidForm();
             case "late" -> lateSubmitAndEmptyBand();
+            case "mismatch" -> fieldMismatch();
+            case "casefold" -> caseConflict();
+            case "corecase" -> coreCaseConflict();
+            case "order" -> nameOrder();
+            case "named" -> namedDeclaration();
+            case "scale" -> scale();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -59,7 +68,8 @@ public final class AddonMaterialContracts {
         }
         GTMaterialRegistry.init();
         GTMaterial added = GTMaterialRegistry.get("AmmoniumNitrate");
-        check(added.isValid() && added.getId() == 4291, "queued material is installed at its declared id");
+        check(added.isValid() && added.getId() == GTMaterialRegistry.ADDON_ID_START,
+                "queued material is assigned the first addon id");
         check(!GTMaterialRegistry.isCoreMaterial(added), "queued material stays out of the core snapshot");
         check(GTMaterialRegistry.isCoreMaterial(GTMaterialRegistry.get("Iron")), "Iron remains core");
         check("aa_sample".equals(AddonMaterials.owner(added)), "the addon id is recorded on the material");
@@ -82,10 +92,7 @@ public final class AddonMaterialContracts {
         }
         check(nitrate > 0, "ammonium nitrate generates dust forms");
         check(ironDust == 1, "an already generated form is not emitted again");
-        for (int id = AddonMaterials.ADDON_ID_MIN + 1; id <= AddonMaterials.ADDON_ID_MAX; id++) {
-            GTMaterial occupant = GTMaterialRegistry.get(id);
-            check(!occupant.isValid(), "addon band stays free aside from the sample, found " + id + " " + occupant.getName());
-        }
+        check(oldBandEmpty(), "addon ids stay above the old band");
         System.out.println("ammonium nitrate items=" + nitrate + " iron automatic items=" + iron);
     }
 
@@ -95,24 +102,129 @@ public final class AddonMaterialContracts {
         expectThrows("same name", "core material", "Iron", "aa_name");
     }
 
-    private static void idCollision() {
+    private static void ignoredId() {
         prepare();
+        var warnings = new ArrayList<String>();
+        GTMaterialRegistry.setLogSink((warning, message) -> { if (warning) warnings.add(message); });
         AddonMaterials.submit("aa_id", List.of(MaterialDefinition.builder(260, "AddonIron").dust().build()), List.of(), null);
-        expectThrows("same id", "core material", "Iron", "aa_id");
+        GTMaterialRegistry.init();
+        GTMaterial added = GTMaterialRegistry.get("AddonIron");
+        check(added.isValid() && added.getId() == GTMaterialRegistry.ADDON_ID_START, "a built-in id is not claimed");
+        check(GTMaterialRegistry.get(260).getName().equals("Iron"), "Iron keeps id 260");
+        check(!GTMaterialRegistry.get(260).getName().equals("AddonIron"), "the declared number is not the addon id");
+        check(warnings.stream().anyMatch(message -> message.contains("260") && message.contains("ignored")),
+                "the ignored id is logged");
     }
 
-    private static void addonCollision() {
+    private static void addonMerge() {
         prepare();
-        AddonMaterials.submit("aa_pair", List.of(MaterialDefinition.builder(4291, "SharedName").dust().build()), List.of(), null);
-        AddonMaterials.submit("zz_pair", List.of(MaterialDefinition.builder(4292, "SharedName").dust().build()), List.of(), null);
-        expectThrows("same name", "addon 'aa_pair'", "SharedName", "zz_pair");
+        AddonMaterials.submit("aa_pair", List.of(MaterialDefinition.builder(4291, "SharedName").dust().build()),
+                List.of(new MaterialFormRequest("Iron", "dust")), null);
+        AddonMaterials.submit("zz_pair", List.of(MaterialDefinition.builder(4292, "SharedName").color(0xFFFFFF).dust().build()),
+                List.of(new MaterialFormRequest("Iron", "dustSmall")), null);
+        GTMaterialRegistry.init();
+        GTMaterial shared = GTMaterialRegistry.get("SharedName");
+        check(shared.isValid() && shared.getId() == GTMaterialRegistry.ADDON_ID_START, "matching declarations merge");
+        check(AddonMaterials.owners(shared).equals(List.of("aa_pair", "zz_pair")), "both addons are recorded, in addon-id order");
+        check(AddonMaterials.acceptedForms().stream().anyMatch(form -> form.prefixName().equals("dust"))
+                        && AddonMaterials.acceptedForms().stream().anyMatch(form -> form.prefixName().equals("dustSmall")),
+                "forms() is the union");
     }
 
-    private static void outsideRange() {
+    private static void ignoredHighId() {
         prepare();
         AddonMaterials.submit("aa_range", List.of(MaterialDefinition.builder(9998, "RangeProbe").dust().build()), List.of(), null);
-        expectThrows(IllegalArgumentException.class, GTMaterialRegistry::init,
-                "outside the addon range 4291 7899 aa_range");
+        GTMaterialRegistry.init();
+        GTMaterial added = GTMaterialRegistry.get("RangeProbe");
+        check(added.isValid() && added.getId() == GTMaterialRegistry.ADDON_ID_START, "an old out-of-band id is not stored");
+        check(!GTMaterialRegistry.get(9998).isValid(), "9998 stays empty");
+    }
+
+    private static void fieldMismatch() {
+        prepare();
+        AddonMaterials.submit("aa_pair", List.of(MaterialDefinition.builder(4291, "SharedName").color(0x111111).dust().build()), List.of(), null);
+        AddonMaterials.submit("zz_pair", List.of(MaterialDefinition.builder(4292, "SharedName").color(0x222222).dust().build()), List.of(), null);
+        expectThrows("field color", "aa_pair", "zz_pair", "SharedName");
+    }
+
+    private static void caseConflict() {
+        prepare();
+        AddonMaterials.submit("aa_case", List.of(MaterialDefinition.builder(1, "AddonCase").dust().build()), List.of(), null);
+        AddonMaterials.submit("zz_case", List.of(MaterialDefinition.builder(1, "addoncase").dust().build()), List.of(), null);
+        expectThrows("differs only by case", "AddonCase", "addoncase", "aa_case", "zz_case");
+    }
+
+    private static void nameOrder() {
+        prepare();
+        AddonMaterials.submit("aa_order", List.of(MaterialDefinition.builder(1, "OrderZeta").dust().build()), List.of(), null);
+        AddonMaterials.submit("zz_order", List.of(MaterialDefinition.builder(9, "OrderAlpha").dust().build()), List.of(), null);
+        GTMaterialRegistry.init();
+        check(GTMaterialRegistry.get("OrderAlpha").getId() == GTMaterialRegistry.ADDON_ID_START, "names sort before addon-id order");
+        check(GTMaterialRegistry.get("OrderZeta").getId() == GTMaterialRegistry.ADDON_ID_START + 1, "the later name gets the next id");
+    }
+
+    private static void coreCaseConflict() {
+        prepare();
+        AddonMaterials.submit("aa_iron", List.of(MaterialDefinition.builder(1, "iron").dust().build()), List.of(), null);
+        expectThrows("differs only by case", "core material", "Iron", "aa_iron");
+    }
+
+    private static void namedDeclaration() throws Exception {
+        prepare();
+        var warnings = new ArrayList<String>();
+        GTMaterialRegistry.setLogSink((warning, message) -> { if (warning) warnings.add(message); });
+        Path root = Files.createTempDirectory("gt-addon-named");
+        Path service = root.resolve("META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor");
+        Files.createDirectories(service.getParent());
+        Files.writeString(service, NamedContributor.class.getName() + "\n", StandardCharsets.UTF_8);
+        try (URLClassLoader loader = new URLClassLoader(new URL[]{root.toUri().toURL()},
+                AddonMaterialContracts.class.getClassLoader())) {
+            AddonMaterials.collectContributors(loader);
+        }
+        GTMaterialRegistry.init();
+        GTMaterial named = GTMaterialRegistry.get("NamedDust");
+        GTMaterial numbered = GTMaterialRegistry.get("FromNumber");
+        check(named.isValid() && named.getId() == GTMaterialRegistry.ADDON_ID_START + 1, "name order places FromNumber first");
+        check(numbered.isValid() && numbered.getId() == GTMaterialRegistry.ADDON_ID_START, "the deprecated builder does not keep 7777");
+        check(!GTMaterialRegistry.get(7777).isValid(), "7777 is not registered");
+        check(warnings.stream().anyMatch(message -> message.contains("7777") && message.contains("FromNumber")),
+                "the deprecated builder logs the ignored id");
+        check(warnings.stream().noneMatch(message -> message.contains("NamedDust")), "the name builder does not warn");
+    }
+
+    private static void scale() {
+        prepare();
+        int dusts = 1000;
+        int metals = 1000;
+        var materials = new ArrayList<MaterialDefinition>();
+        for (int i = 0; i < dusts; i++) {
+            materials.add(MaterialDefinition.builder(1, String.format("ScaleDust%04d", i)).dust().build());
+        }
+        var metal = AddonMaterials.metalFlags();
+        for (int i = 0; i < metals; i++) {
+            materials.add(MaterialDefinition.builder(1, String.format("ScaleMetal%04d", i)).properties(metal).build());
+        }
+        AddonMaterials.submit("aa_scale", materials, List.of(), null);
+        long started = System.nanoTime();
+        GTMaterialRegistry.init();
+        long initMs = (System.nanoTime() - started) / 1_000_000L;
+        long itemsStarted = System.nanoTime();
+        var definitions = MaterialItemDefinitions.all();
+        long itemsMs = (System.nanoTime() - itemsStarted) / 1_000_000L;
+        int dustItems = 0;
+        int metalItems = 0;
+        int coreItems = 0;
+        for (var definition : definitions) {
+            String name = definition.material().getName();
+            if (name.startsWith("ScaleDust")) dustItems++;
+            else if (name.startsWith("ScaleMetal")) metalItems++;
+            else coreItems++;
+        }
+        System.gc();
+        long heapMb = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024L * 1024L);
+        System.out.println("scale dustMaterials=" + dusts + " metalMaterials=" + metals
+                + " dustItems=" + dustItems + " metalItems=" + metalItems + " coreItems=" + coreItems
+                + " initMs=" + initMs + " itemListMs=" + itemsMs + " heapMb=" + heapMb);
     }
 
     private static void ungeneratedForm() {
@@ -136,10 +248,7 @@ public final class AddonMaterialContracts {
         expectThrows(IllegalStateException.class,
                 () -> GTMaterialRegistry.registerDefinition(MaterialDefinition.builder(4291, "LateDefinition").dust().build()),
                 "Material definitions are closed");
-        for (int id = AddonMaterials.ADDON_ID_MIN; id <= AddonMaterials.ADDON_ID_MAX; id++) {
-            GTMaterial occupant = GTMaterialRegistry.get(id);
-            check(!occupant.isValid(), "empty startup leaves the addon band free, found " + id + " " + occupant.getName());
-        }
+        check(oldBandEmpty(), "empty startup leaves the old addon band free");
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "an empty addon queue keeps the core item id sample");
     }
 
@@ -187,6 +296,14 @@ public final class AddonMaterialContracts {
         return text.toString();
     }
 
+    private static boolean oldBandEmpty() {
+        for (int id = AddonMaterials.ADDON_ID_MIN; id <= AddonMaterials.ADDON_ID_MAX; id++) {
+            GTMaterial occupant = GTMaterialRegistry.get(id);
+            if (occupant.isValid()) return false;
+        }
+        return true;
+    }
+
     private static void check(boolean valid, String message) {
         assertions++;
         if (!valid) throw new AssertionError(message);
@@ -210,5 +327,18 @@ public final class AddonMaterialContracts {
             GTMaterialRegistry.get("AmmoniumNitrate").setPulver(GTMaterialRegistry.get("Iron"), 1);
             linked = true;
         }
+    }
+
+    /** Loaded only through a temporary service file, never from the shared test classpath. */
+    public static final class NamedContributor implements AddonMaterialContributor {
+        @Override public String addonId() { return "aa_named"; }
+
+        @Override public List<MaterialDeclaration> materials() {
+            return List.of(
+                    MaterialDeclaration.builder("NamedDust").dust().build(),
+                    MaterialDeclaration.builder(7777, "FromNumber").dust().build());
+        }
+
+        @Override public List<MaterialFormRequest> forms() { return List.of(); }
     }
 }

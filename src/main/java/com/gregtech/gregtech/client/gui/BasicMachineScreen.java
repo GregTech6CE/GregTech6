@@ -36,8 +36,7 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
     }
 
     private static ResourceLocation resolveTexture(BasicMachineContainerMenu menu) {
-        return com.gregtech.gregtech.api.recipe.MachineGuiLayout.texture(
-                com.gregtech.gregtech.data.MachineRecipeMaps.byMachineName(menu.machineName()));
+        return com.gregtech.gregtech.api.recipe.MachineGuiLayout.texture(menu.recipeMap());
     }
 
     @Override

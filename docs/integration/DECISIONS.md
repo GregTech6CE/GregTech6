@@ -1,5 +1,81 @@
 # 实现选择记录
 
+## 2026-10-18 / 自己的 Stonecutter 迁移停在阶段一
+
+卡 09 和卡 12 关闭，不再补 09 没跑完的验收，也不做 12 的换构建工具和源码合并。saltnya 的 `experiment/stonecutter` 已经用 Stonecutter 0.7.11 把两份平台源码收进 `multiversion/`，Forge 节点仍用 ForgeGradle 6。那个分支还没进 main，而且不含 #29 到 #36。
+
+main 在它合进来之前保持现在的目录：`core`、`platform-shared`、两边的平台源码。见 2026-10-16 的“平台实现分成共享源码和加载器专有源码”。
+
+## 2026-10-18 / 附属燃料能源机器按声明烧流体燃料
+
+燃料表和机器表分开声明。`FuelMapDeclaration` 的字段和 `FuelRecipeMapDefinitions` 里的 `RecipeMapSpec` 一样，名字规则也一样。和机器表、内置燃料表或其他附属的燃料表重名，启动失败并写出附属。燃料表在数据包基线之前建好，进入 `RecipeMap.RECIPE_MAP_LIST`，所以 JEI、EMI 和数据包覆盖层都能看见。覆盖层里燃料表的 `eu_per_tick` 是产出的能量，存成负数；这一行仍要有输出。机器表的正数 EU 不变。
+
+燃料能源机器声明燃料表、效率（1 到 100000，10000 是 100%）、能量短名、每 tick 一个包、储罐容量、方向，以及单方块或多方块。方向是正面、背面，或正面背后 1 到 8 格。背后注入对应燃气涡轮的 4 格，没有任意坐标。单方块和多方块各一个方块实体，都用 `FluidFuelBatch.plan`。包只在对方收下之后才从缓冲里扣。多方块用现有的大型配方结构表和 GT 零件。没有附属外壳，没有固体燃料。内置柴油引擎和燃气涡轮仍走自己的方块实体。
+
+`API_VERSION` 是 7，`mod_version` 是 `0.7.0`。材料数字入口原定 0.7 移除，这一版改到 0.9，避免和燃料模板放在同一次移除里。
+
+## 2026-10-18 / 附属行为型机器用外壳，不继承
+
+行为机器是单方块。附属提交 `BehaviorMachineDeclaration` 和 `MachineBehavior`，不继承 GT 的方块或方块实体。GT 持有方块、物品、储罐、能源、菜单、掉落和存档。行为通过 `MachineBehaviorContext` 读写这些东西和世界。种子机也走这层外壳：它不消耗原种子、按第一种够量的催化剂计费，待输出和工作量放进行为状态，不适合动态配方表。多方块行为机器不在这一版。
+
+方块实体路径默认 `be_<id>`。写明 `blockEntityId` 时，同一附属、同一机器类型、同一槽角色和开关键的多台机器可以共用一种方块实体。容量、等级和位置可以不同。签名不一致就启动失败。
+
+行为状态是 int、long、boolean、字符串和物品的键值表，由 GT 写入 `gt.behavior`。附属不接触 `CompoundTag`，因为两个加载器的 NBT 签名不同。流体仍用各加载器自己的 `FluidStack`，所以行为接口在加载器 API 里。
+
+GUI 由声明驱动。GT 按固定控件表画槽、储罐、能量、进度和开关，附属只提供贴图。没有附属自绘 GUI。能源复用 `BasicMachineEnergy`：每 tick 先从相邻输出端取能，行为运行后再按额定上限清空缓冲。
+
+工厂在 `AddonMachines.install` 之前用平台 `ServiceLoader` 收集。缺工厂、重叠、越界、未知能源都启动失败并写出附属。行为机器不是 `BasicMachineSpec`，也不进入配方表。`API_VERSION` 是 6，`mod_version` 是 `0.6.0`。版本 3 的机器和材料入口原定 0.6 移除，这一版改到 0.8，避免和新增外壳放在同一次移除里。
+
+## 2026-10-18 / 附属材料按名字标识
+
+附属用 `MaterialDeclaration.builder(String)` 声明材料，不再提交数字 id。`builder(int, String)` 从 0.5 起忽略数字并记警告，0.7 移除。`ADDON_ID_MIN` / `ADDON_ID_MAX` 同样弃用。`API_VERSION` 是 5，`mod_version` 是 `0.5.0`。
+
+同名按原文合并。比较 `MaterialDefinition` 里除 id 以外的全部字段：显示名、颜色、贴图、熔点、沸点、密度、化学式、属性、原子数、透明度。`forms()` 取并集。字段不一致就启动失败，写出双方附属和字段名。只差大小写也失败，因为物品 id 会转小写。和内置材料同名，或只差大小写，同样失败。翻译键仍是 `material.gregtech.<小写名>`，不另加规则。
+
+内置材料保持原 id。附属材料在内置目录之后按名字排序，从 10000 起分配，注册表按需增长，不再有 10000 的数组上限。这个数字只在内存里用。`GregTechMaterials.find(int)` 解析的是这次启动的 id。
+
+周期表元素和原版物质不再比较 id。内置目录 link 之后、附属 link 之前，按原来的 `id < 8000` 且为元素、以及 `7900..7912`，给材料打上标记。提示读标记。附属材料不会被打上这些标记，所以运行时 id 落进旧区间也不会改变提示。材料词典的属性页不列出这两个标记。
+
+坩埚 `gt.materials` 写成 `{name, amount}`。`gt.display.material` 写成名字，没有显示材料时写空字符串。`gt.replicator.data` 键名不变，值改成字符串。读取时字符串按名字找；旧的数字按内置 id 找；找不到就跳过。写出只写新格式。
+
+规模没有预设接受线。实测数字记在 `VERIFICATION.md`。超出可接受范围时另开卡，不在这次里改物品生成。
+
+## 2026-10-18 / 计划卡不再验收成品 jar 启动
+
+本机没有已安装的 Forge / NeoForge 加载器目录，`launch_production_smoke.py` 跑不了。计划卡的验收清单不再写「成品 jar 启动」。成品仍然用 `verify_artifacts.py` 核对 jar 内容。启动证据用开发环境的客户端和专服。
+
+## 2026-10-17 / 附属接口放进独立源码集，每个加载器一个 SDK
+
+附属编译只看见接口。GT 内部依赖接口。接口不依赖内部。这个边界由 Gradle classpath 执行：核心接口在 `core/src/api/java`，两边共用且带 Minecraft 类型的接口在 `platform-shared/src/api/java`，流体和配方因为 `FluidStack` 不同而各有一份，放在 `src/api/java` 和 `neoforge/src/api/java`。平台接口的编译 classpath 含核心接口、Minecraft 和该加载器，不含核心 main，也不含该平台的 main。
+
+SDK 按加载器出 jar，不放进 `build/libs`（那里只能有一个模组 jar）。Forge 是 `build/addon-sdk/gregtech6-addon-sdk-1.20.1-forge-<version>.jar`，NeoForge 是 `neoforge/build/addon-sdk/gregtech6-addon-sdk-1.21.1-neoforge-<version>.jar`。内容是核心接口加上该加载器的平台接口，Mojang 名，外加 `META-INF/gregtech6` 的许可文件。没有素材，没有模组描述。附属 `compileOnly` 这一个 jar。不发布 Maven，CI 上传这个 jar。运行时用的是 GT 模组，不是 SDK。Forge 生产 jar 里的平台接口类随平台 jar 一起 reobf；核心接口在 reobf 之后加入，和原来的核心类一样。
+
+`API_VERSION` 升到 4，`mod_version` 是 `0.4.0`。附属 `versionRange` 写成 `[0.4,)`。旧的 `GregTechMaterialContributor`、`GregTechMachineContributor`、`AddonMachineDefinition`、`AddonMachineLayout` 留在 main，`@Deprecated(since = "0.4", forRemoval = true)`，`removeAt = "0.6"`。旧二进制在运行时仍能找到它们。它们不进 SDK。新入口是 `AddonMaterialContributor` 和 `AddonMachineContributor`。
+
+纯 JDK 类型按原包名挪进接口源码集：`GregTechAddon`、`GregTechAddons`、`AddonApiRemoval`、`MaterialFormRequest`、`CropScanSource`、信号线三个接口、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`、`GTValues`。带内部依赖的类型不搬。材料用 `GregTechMaterials` 句柄，未知名字是 id 为 -1、`valid()` 为 false 的哨兵。前缀用名字字符串，`GregTechPrefixes.exists`。物品用 `AddonItems.stack`。流体用 `AddonFluids`，名字是 GT 流体字段（`DistW`），不是材料名。配方用 `AddonRecipes`。工具只开 `SPADE`、`UNIVERSAL_SPADE` 和放大镜。能源方块用 `EnergyBlock`，能源类型是短名。EU 电缆的插入和抽出通过 `EnergyBlockViews` 同时接受旧的 `IEnergyBlock` 和新接口。其他网络不改。
+
+GT 在材料初始化之前装三个静态绑定：`AddonRuntime`、`AddonPlatform`、`AddonLoader`。没装就调用会抛 “GregTech addon API is not installed”。GT 自己的实现不走 `ServiceLoader`。附属入口仍走 `ServiceLoader`。
+
+不开放，并写明原因：`BasicMachineBlock` / `BasicMachineBlockEntity` 只给 GameTest 用，附属机器是声明不是子类；`Recipe.mRecipeList` 只给测试查看，正式添加用 `add` 的返回值；`GTMaterial`、`GTMaterialRegistry`、材料哨兵由 `GregTechMaterials` 代替；`GregTechTags` 由能源短名代替；`MachineRecipeMaps` 字段由配方表名代替；`MaterialPrefix` 常量由前缀名代替。不迁移 gt6-crops。
+
+闭包检查读 class 常量池和字段、方法描述符。核心接口只能引用接口自身和 JDK。平台接口还可以引用 Minecraft 和本加载器。样例附属的 class 只能引用 SDK、JDK、Minecraft 和该加载器。检查脚本每次先用一个合成类确认它能看见 `GTMaterial` 并拒绝它。
+
+## 2026-10-17 / 附属 API 用 0.x 版本，加载器拦版本
+
+`mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 等于 MINOR，现在是 3，所以版本是 `0.3.0`。只改实现时升 PATCH。文档列出的入口有增删改时升 MINOR，并同时改 `API_VERSION`。1.0 之前不承诺兼容。不兼容的改动要么先走弃用，要么在同一版写进 `ADDON_API` 的变更表。
+
+附属在 `mods.toml` / `neoforge.mods.toml` 里对 `gregtech6` 写 `versionRange="[0.3,)"`。版本不够由加载器在加载类之前拒绝。GT 不做运行时协商。`context.apiVersion()` 只给可选功能分支用。
+
+弃用在入口上同时标 `@Deprecated(since = "0.N", forRemoval = true)` 和 `@AddonApiRemoval(id = "...", removeAt = "0.M")`。Javadoc 的 `@deprecated` 写出替代和 `0.M`。`M` 至少是 `N + 2`：`0.N` 弃用的入口在 `0.(N+1)` 仍在，最早 `0.(N+2)` 删除。两份 `ADDON_API` 的弃用表必须和源码一致。`:core:addonApiVersionContracts` 在计划移除的 MINOR 小于等于当前 MINOR 时失败。到期后要么删掉入口，要么把 `removeAt` 改晚并在文档里写原因。没有 `forRemoval = true` 的旧 `@Deprecated` 不进入这张表。
+
+版本一致性不把 `mod_version` 写进资源。core 契约的 classpath 不含主资源，core 的 `processResources` 也不展开 `${mod_version}`。契约直接读 `gradle.properties`。
+
+## 2026-10-16 / 附属配方机器由 GT 注册到附属命名空间
+
+附属通过 `GregTechMachineContributor` 交配方表、机器参数和结构格子。GT 在材料初始化之后、方块注册之前收集一次，再在自己的模组总线上为每个附属命名空间建 `DeferredRegister`。方块和物品 id 是 `附属:路径`，方块实体是 `附属:be_路径`。内置 id 不变。Forge 的 API 允许这样注册，并可能打出跨命名空间警告；NeoForge 的 `DeferredRegister.create` 接受另一个命名空间。这一步按加载器 API 决定，没有启动游戏。
+
+内置机器原来按名字选方块实体、效率、恒定耗能和配方表。这些值改成 spec 上的字段，内置机器在构造时按原来的规则填上。`OriginalLargeRecipeMachineData` 的名字分支留给内置机器。附属只能交 `BASIC` 和 `LARGE_RECIPE`，大型机器引用现有 GT 零件名，不新增外壳，也不开放自定义方块实体。燃料产能模板不在这次范围里。
+
 ## 2026-10-16 / 平台实现分成共享源码和加载器专有源码
 
 `core` 仍是纯 Java 17，编译一次，两个成品里的字节相同，不放 Minecraft 或加载器类型。

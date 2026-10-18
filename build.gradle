@@ -25,6 +25,13 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 sourceSets {
+    api {
+        java {
+            srcDir 'src/api/java'
+            srcDir 'platform-shared/src/api/java'
+        }
+        compileClasspath += project(':core').sourceSets.api.output
+    }
     bootstrapGameTest {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -37,8 +44,6 @@ sourceSets {
         addonSample {
             java { srcDir 'work/addon-sample/forge/java' }
             resources { srcDir 'work/addon-sample/forge/resources' }
-            compileClasspath += sourceSets.main.compileClasspath + project(':core').sourceSets.main.output
-            runtimeClasspath += sourceSets.main.runtimeClasspath + project(':core').sourceSets.main.output
         }
     }
 }
@@ -99,11 +104,14 @@ minecraft {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
+            if (findProperty('materialScale')) jvmArgs "-Dgregtech.materialScale=${findProperty('materialScale')}"
 
             mods {
                 "${mod_id}" {
                     source sourceSets.main
+                    source sourceSets.api
                     source project(':core').sourceSets.main
+                    source project(':core').sourceSets.api
                     source sourceSets.bootstrapGameTest
                 }
                 if (findProperty('addonSample') == 'true') {
@@ -140,7 +148,7 @@ minecraft {
             property 'gregtech.integration.clientSmokeTimeoutSeconds', (project.findProperty('clientSmokeTimeout') ?: '120').toString()
             if (project.findProperty('clientSmoke') == 'true') {
                 workingDirectory project.file('build/client-smoke-run')
-                jvmArgs '-Xmx6g', '-XX:+UseSerialGC'
+                jvmArgs '-Xmx' + (project.findProperty('clientSmokeHeap') ?: '6g').toString(), '-XX:+UseSerialGC'
                 args '--width', '1280', '--height', '720'
             }
             if (project.findProperty('clientCreateWorldSmoke') == 'true') {
@@ -171,6 +179,7 @@ minecraft {
                 workingDirectory project.file(project.property('serverDirectory'))
             }
             jvmArgs '-Xmx4g', '-XX:+UseSerialGC'
+            if (findProperty('addonSampleHalt') == 'true') jvmArgs '-DaddonSampleHalt=true'
             property 'forge.enabledGameTestNamespaces', 'gregtech,gregtech_bumble_scan'
             args '--nogui'
         }
@@ -231,7 +240,7 @@ repositories {
 dependencies {
     if (project.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Optional local development path, matching NeoForge; production builds keep the core archive.
-        implementation files(project(':core').sourceSets.main.output)
+        implementation files(project(':core').sourceSets.main.output, project(':core').sourceSets.api.output)
     } else {
         implementation project(':core')
     }
@@ -363,6 +372,8 @@ apply from: 'gradle/platform-shared.gradle'
 tasks.named('jar', Jar).configure {
     // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
     // Keep core out of that pass and add its untouched output in distributionJar below.
+    // Platform API classes stay in this jar so their Minecraft names are reobfuscated.
+    from sourceSets.api.output
     destinationDirectory = layout.buildDirectory.dir('forge-intermediates')
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
@@ -400,6 +411,7 @@ def distributionJar = tasks.register('distributionJar', Jar) {
         exclude 'META-INF/MANIFEST.MF'
     }
     from(project(':core').sourceSets.main.output)
+    from(project(':core').sourceSets.api.output)
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
@@ -486,4 +498,76 @@ tasks.register('ensureRunClasspaths') {
  'prepareRunGameTestServerCompile'].each { prepTask ->
     tasks.matching { it.name == prepTask }.configureEach { finalizedBy 'ensureRunClasspaths' }
 }
+
+// The API source set sees core API classes plus Minecraft and the loader, not GregTech internals.
+def addonExternalCompile = configurations.compileClasspath.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def core = project(':core').projectDir.absolutePath.replace('\\', '/')
+    !path.startsWith(core + '/')
+}
+sourceSets.api.compileClasspath += addonExternalCompile
+// Project dependencies expose core's main classes, not classes that only the core jar copies in.
+def addonApiOutputs = files(sourceSets.api.output, project(':core').sourceSets.api.output)
+sourceSets.main.compileClasspath += addonApiOutputs
+sourceSets.main.runtimeClasspath += addonApiOutputs
+['bootstrapGameTest', 'productionSmoke', 'test'].each { name ->
+    sourceSets.named(name) {
+        compileClasspath += addonApiOutputs
+        runtimeClasspath += addonApiOutputs
+    }
+}
+
+def addonSdkJar = tasks.register('addonSdkJar', Jar) {
+    description = 'Compile-only Forge addon SDK: core API plus this loader API, Mojang names.'
+    group = 'build'
+    dependsOn tasks.named('compileApiJava'), project(':core').tasks.named('compileApiJava')
+    archiveBaseName = 'gregtech6-addon-sdk-1.20.1-forge'
+    archiveVersion = project.version.toString()
+    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
+    from project(':core').sourceSets.api.output
+    from sourceSets.api.output
+    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+def addonSampleClasspath = files(addonSdkJar.flatMap { it.archiveFile }) + configurations.compileClasspath.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def core = project(':core').projectDir.absolutePath.replace('\\', '/')
+    def build = layout.buildDirectory.get().asFile.absolutePath.replace('\\', '/')
+    // Compiled GregTech classes stay out. NeoForge keeps its loader artifacts under build/moddev.
+    def loaderArtifact = path.startsWith(build + '/moddev/') || path.startsWith(build + '/addon-sdk/')
+    !path.startsWith(core + '/') && (!path.startsWith(build + '/') || loaderArtifact)
+}
+def compileAddonSample = tasks.register('compileAddonSample', JavaCompile) {
+    description = 'Compiles the Forge sample addon against the SDK jar and the loader, without GregTech internals.'
+    group = 'verification'
+    dependsOn addonSdkJar
+    source = fileTree(rootProject.file('work/addon-sample/forge/java'))
+    classpath = addonSampleClasspath
+    destinationDirectory = layout.buildDirectory.dir('classes/addon-sample')
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+if (findProperty('addonSample') == 'true') {
+    sourceSets.addonSample.compileClasspath = addonSampleClasspath
+    sourceSets.addonSample.runtimeClasspath = sourceSets.main.runtimeClasspath + sourceSets.addonSample.output
+}
+
+def addonApiClosureCheck = tasks.register('addonApiClosureCheck', Exec) {
+    description = 'Fails when the Forge API or the sample addon references a GregTech internal class.'
+    group = 'verification'
+    dependsOn tasks.named('compileApiJava'), compileAddonSample
+    workingDir rootProject.projectDir
+    def python = findProperty('pythonExecutable') ?: 'python'
+    def platformApi = layout.buildDirectory.dir('classes/java/api').get().asFile.absolutePath
+    def coreApi = project(':core').layout.buildDirectory.dir('classes/java/api').get().asFile.absolutePath
+    def sample = layout.buildDirectory.dir('classes/addon-sample').get().asFile.absolutePath
+    def sdk = addonSdkJar.flatMap { it.archiveFile }.get().asFile.absolutePath
+    commandLine python, '-X', 'utf8', 'tools/integration/check_addon_api_closure.py',
+            '--check', platformApi, '--allow', platformApi, '--allow', coreApi,
+            '--kind', 'forge', '--sample', sample, '--sdk', sdk
+}
+tasks.named('check').configure { dependsOn addonApiClosureCheck }
 

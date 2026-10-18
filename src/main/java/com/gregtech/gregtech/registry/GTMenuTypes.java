@@ -52,6 +52,10 @@ public final class GTMenuTypes {
             MENU_TYPES.register("basic_machine",
                     () -> IForgeMenuType.create((w, i, b) -> new BasicMachineContainerMenu(w, i, b)));
 
+    public static final RegistryObject<MenuType<com.gregtech.gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MACHINE =
+            MENU_TYPES.register("behavior_machine",
+                    () -> IForgeMenuType.create((w, i, b) -> new com.gregtech.gregtech.client.gui.BehaviorMachineMenu(w, i, b)));
+
     public static final RegistryObject<MenuType<HopperContainerMenu>> GARBAGE_DUMP =
             MENU_TYPES.register("garbage_dump",
                     () -> IForgeMenuType.create((w, i, b) -> (HopperContainerMenu)

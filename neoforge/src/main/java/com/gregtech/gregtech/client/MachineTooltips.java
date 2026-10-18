@@ -27,7 +27,8 @@ public final class MachineTooltips {
         if(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.handles(spec.machineName())) {
             AdvancedControllerTooltips.append(spec,tooltip);return;
         }
-        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())
+                || spec.controllerKind()==com.gregtech.gregtech.api.machine.MachineControllerKind.LARGE_RECIPE) {
             if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) LargeRecipeMachineTooltips.append(spec,tooltip);
             return;
         }
@@ -42,7 +43,7 @@ public final class MachineTooltips {
         FaceConfig fc = spec.faceConfig();
 
         // Recipes
-        var recipeMap = MachineRecipeMaps.byMachineName(spec.machineName());
+        var recipeMap = spec.recipeMap();
         Component recipeName = recipeMap != null
                 ? Component.translatableWithFallback(recipeMap.mNameInternal, recipeMap.mNameLocal)
                 : Component.literal(spec.machineName());
