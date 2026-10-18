@@ -118,7 +118,7 @@ Read the [collaboration guide](docs/integration/COLLABORATION.md), [integration 
 
 ## Addon development
 
-Both platforms expose the shared `GregTechAddon` / `GregTechAddons` recipe lifecycle. Build the compile-only SDK for the loader you target: `:addonSdkJar` on Forge, `:neoforge:addonSdkJar` on NeoForge. Do not bundle its classes into an addon. See [the addon API guide](docs/ADDON_API.md) and [voltage tiers](docs/VOLTAGE_TIERS.md). API version 5 is mod version 0.5.0.
+Both platforms expose the shared `GregTechAddon` / `GregTechAddons` recipe lifecycle. Build the compile-only SDK for the loader you target: `:addonSdkJar` on Forge, `:neoforge:addonSdkJar` on NeoForge. Do not bundle its classes into an addon. See [the addon API guide](docs/ADDON_API.md) and [voltage tiers](docs/VOLTAGE_TIERS.md). API version 6 is mod version 0.6.0.
 
 ## License
 

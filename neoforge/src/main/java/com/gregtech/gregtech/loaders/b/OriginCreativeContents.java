@@ -54,7 +54,7 @@ public final class OriginCreativeContents {
             if(id.startsWith("pipe_")||id.startsWith("fluid_pipe_"))return "pipes";
             if(id.startsWith("item_pipe"))return "item_pipes";
             if(id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
-            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock"))return "basic_machines";
+            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock"))return "basic_machines";
             if(id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
         }
         var source=SourceCreativeCatalog.entry(id);

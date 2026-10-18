@@ -8,10 +8,10 @@ import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 /**
- * @deprecated Use {@link MachineDeclaration}. Removal is 0.6.
+ * @deprecated Use {@link MachineDeclaration}. Removal is 0.8.
  */
 @Deprecated(since = "0.4", forRemoval = true)
-@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineDefinition", removeAt = "0.6")
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineDefinition", removeAt = "0.8")
 public record AddonMachineDefinition(
         BasicMachineParameters parameters,
         String recipeMapName,

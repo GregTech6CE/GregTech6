@@ -18,4 +18,7 @@ public interface AddonMachineContributor {
     default List<MachineDeclaration> machines() { return List.of(); }
 
     default List<MachineLayout> layouts() { return List.of(); }
+
+    /** Behavior machines. Pair each machine type with a platform {@code BehaviorMachineContributor}. */
+    default List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(); }
 }

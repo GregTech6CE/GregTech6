@@ -1,5 +1,17 @@
 # 实现选择记录
 
+## 2026-10-18 / 附属行为型机器用外壳，不继承
+
+行为机器是单方块。附属提交 `BehaviorMachineDeclaration` 和 `MachineBehavior`，不继承 GT 的方块或方块实体。GT 持有方块、物品、储罐、能源、菜单、掉落和存档。行为通过 `MachineBehaviorContext` 读写这些东西和世界。种子机也走这层外壳：它不消耗原种子、按第一种够量的催化剂计费，待输出和工作量放进行为状态，不适合动态配方表。多方块行为机器不在这一版。
+
+方块实体路径默认 `be_<id>`。写明 `blockEntityId` 时，同一附属、同一机器类型、同一槽角色和开关键的多台机器可以共用一种方块实体。容量、等级和位置可以不同。签名不一致就启动失败。
+
+行为状态是 int、long、boolean、字符串和物品的键值表，由 GT 写入 `gt.behavior`。附属不接触 `CompoundTag`，因为两个加载器的 NBT 签名不同。流体仍用各加载器自己的 `FluidStack`，所以行为接口在加载器 API 里。
+
+GUI 由声明驱动。GT 按固定控件表画槽、储罐、能量、进度和开关，附属只提供贴图。没有附属自绘 GUI。能源复用 `BasicMachineEnergy`：每 tick 先从相邻输出端取能，行为运行后再按额定上限清空缓冲。
+
+工厂在 `AddonMachines.install` 之前用平台 `ServiceLoader` 收集。缺工厂、重叠、越界、未知能源都启动失败并写出附属。行为机器不是 `BasicMachineSpec`，也不进入配方表。`API_VERSION` 是 6，`mod_version` 是 `0.6.0`。版本 3 的机器和材料入口原定 0.6 移除，这一版改到 0.8，避免和新增外壳放在同一次移除里。
+
 ## 2026-10-18 / 附属材料按名字标识
 
 附属用 `MaterialDeclaration.builder(String)` 声明材料，不再提交数字 id。`builder(int, String)` 从 0.5 起忽略数字并记警告，0.7 移除。`ADDON_ID_MIN` / `ADDON_ID_MAX` 同样弃用。`API_VERSION` 是 5，`mod_version` 是 `0.5.0`。

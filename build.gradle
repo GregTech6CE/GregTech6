@@ -148,7 +148,7 @@ minecraft {
             property 'gregtech.integration.clientSmokeTimeoutSeconds', (project.findProperty('clientSmokeTimeout') ?: '120').toString()
             if (project.findProperty('clientSmoke') == 'true') {
                 workingDirectory project.file('build/client-smoke-run')
-                jvmArgs '-Xmx6g', '-XX:+UseSerialGC'
+                jvmArgs '-Xmx' + (project.findProperty('clientSmokeHeap') ?: '6g').toString(), '-XX:+UseSerialGC'
                 args '--width', '1280', '--height', '720'
             }
             if (project.findProperty('clientCreateWorldSmoke') == 'true') {

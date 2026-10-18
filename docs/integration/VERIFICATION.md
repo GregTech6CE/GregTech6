@@ -1,5 +1,21 @@
 # 验证账本
 
+## 2026-10-18 / 附属行为型机器外壳
+
+`mod_version` 是 `0.6.0`，`GregTechAddons.API_VERSION` 是 6。启动器是 Temurin 21.0.6，因为本机默认 `java` 是 JDK 25，Gradle 8.8 不能跑。命令都是 `--offline`，`GRADLE_USER_HOME` 用用户目录里已有的缓存。一次 NeoForge 专服在守护进程被停掉后重新校验 ForgeGradle 证书失败，补了 `-Dnet.minecraftforge.gradle.check.certs=false` 才启动。这不是项目配置。
+
+`:core:check` 通过。里面包含原有契约，以及行为机器的八个场景：`overlap`、`bounds`、`benergy`、`factory`、`share`、`bconflict`、`bslots`、`blayout`。同一次构建编译了 Forge 和 NeoForge 的主源码，以及两边只对着 SDK 的 `compileAddonSample`。GameTest 源码第一次有两处编译错误：Forge 的 `LazyOptional.orElseThrow()` 要一个异常供应者，NeoForge 的 `makeMockPlayer` 要 `GameType`。改完后两个 `compileBootstrapGameTestJava` 通过。
+
+`gregtech_card11_sample` 和 `gregtech_card16_behavior` 一起跑，`-PaddonSample=true`，堆是 2560m，SerialGC。1536m 的第一次在准备出生区域时 `OutOfMemoryError`，不算通过。通过的一次 Forge 17:47:39、NeoForge 17:49:11 都是 `All 8 required tests passed`，两边都有 `dust_ammoniumnitrate=true` 和 `GT addon API 6 ready: [addon_sample]`。整次 7 分 1 秒。目录是 `build/card16-gametest` 和 `neoforge/build/card16-gametest`。
+
+样例灌溉机 `addon_sample:irrigator` 的四项是：注册成行为方块，方块实体 `addon_sample:be_irrigator`，菜单 `gregtech:behavior_machine`，不进配方表，也不是配方催化剂。正面拒绝 EU。水槽先装 1000 mB，向上送电 12 tick 后，东边耕地湿度变成 7，行为状态 `watered` 是 1，水剩 900 mB。第 5 tick 菜单进度是 0.5。关掉开关后再跑 12 tick，耕地保持干燥，`watered` 仍是 1。管道拒绝圆石和熔岩，接受骨粉和水；输出槽拒绝插入；输入储罐抽不走。菜单槽在 (44,26) 和 (116,26)，玩家物品栏 y 是 84，按钮能翻开关。存档用方块实体自己的 `saveWithoutMetadata` 再读进新放的方块实体：骨粉 3 个、水 500 mB、能量、关掉的开关、`watered` 4、字符串 `kept` 都在。这是同一局测试里的存读，不是第二个进程。卡 11 的四项同时通过。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒，`-PclientSmokeHeap=3g`。Forge 的客户端烟雾原来写死 6g，这次改成读取已有的 `clientSmokeHeap`，不写这个属性时仍是 6g。带样例：Forge `CLIENT_SMOKE_SUCCESS` 86955 毫秒，NeoForge 53624 毫秒，ready 都是 `[addon_sample]`。不带样例：Forge 81771 毫秒、NeoForge 51833 毫秒，ready 都是 `[]`。两边都停在标题画面。没有打开灌溉机界面。界面上的槽位、流体、开关和进度由菜单数据测到，屏幕类按这些数据画。
+
+专服带样例并 `-PaddonSampleHalt=true`。属性 `serverDirectory` 在各自工程下解析：Forge `build/card16-forge-server`，NeoForge `neoforge/build/card16-forge-server`，两处都写了 `eula=true`。Forge `Done (26.689s)` 后 `dust_ammoniumnitrate=true`，NeoForge `Done (7.948s)` 后同样的粉尘行，ready 都含 `addon_sample`。不带样例的专服不会自己停，目录是 `build/card16-forge-plain` 和 `neoforge/build/card16-forge-plain`。Forge `Done (28.539s)`、NeoForge `Done (8.872s)`，ready 是 `[]`，看到 Done 后结束进程。
+
+旧存档备份不涉及。这是新控制器，内置机器没有改存档格式。
+
 ## 2026-10-18 / 附属材料按名字标识
 
 `mod_version` 是 `0.5.0`，`GregTechAddons.API_VERSION` 是 5。Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。ForgeGradle 证书检查仍加 `-Dnet.minecraftforge.gradle.check.certs=false`，这不是项目配置。

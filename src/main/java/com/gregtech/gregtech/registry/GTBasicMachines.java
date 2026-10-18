@@ -15,6 +15,7 @@ public final class GTBasicMachines {
             if ("gregtech".equals(spec.namespace())) MachineRegistry.registerBasicMachine(spec);
             else AddonMachineRegistration.register(spec, bus);
         }
+        BehaviorMachineRegistration.register(bus);
     }
     public static List<RegistryObject<BasicMachineBlock>> all() {
         return MachineRegistry.basicMachines();

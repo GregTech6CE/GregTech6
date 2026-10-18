@@ -21,6 +21,7 @@ public final class AddonMachineRuntime {
 
     public static void install() {
         if (installed) return;
+        BehaviorMachineHosts.collect();
         installed = true;
         var reserved = new HashSet<>(BasicMachineCatalog.machineTypeNames());
         reserved.addAll(SharedLargeMachineLayouts.machines());

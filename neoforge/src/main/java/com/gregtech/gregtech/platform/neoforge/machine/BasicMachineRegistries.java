@@ -25,6 +25,7 @@ public final class BasicMachineRegistries {
  public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
  public static final DeferredRegister<MenuType<?>> MENUS=DeferredRegister.create(Registries.MENU,"gregtech");
  public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.BasicMachineContainerMenu>> MENU=MENUS.register("basic_machine",()->IMenuTypeExtension.create(com.gregtech.gregtech.client.gui.BasicMachineContainerMenu::new));
+ public static final DeferredHolder<MenuType<?>,MenuType<com.gregtech.gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MENU=MENUS.register("behavior_machine",()->IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.BehaviorMachineMenu(id,inventory,buffer)));
  private static final List<DeferredHolder<Block,BasicMachineBlock>> MACHINES=new ArrayList<>();
  private static final List<DeferredHolder<BlockEntityType<?>,BlockEntityType<BasicMachineBlockEntity>>> TYPES=new ArrayList<>();
  public static List<DeferredHolder<Block,BasicMachineBlock>> all(){return Collections.unmodifiableList(MACHINES);}
@@ -49,6 +50,7 @@ public final class BasicMachineRegistries {
    });TYPES.add(type);
   }
   BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);MENUS.register(bus);
+  BehaviorMachineRegistration.register(bus);
   bus.addListener(BasicMachineRegistries::capabilities);
   bus.addListener(com.gregtech.gregtech.network.MachinePayloads::register);
  }

@@ -2,13 +2,18 @@ package com.gregtech.gregtech.api.machine;
 
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
 
-/** Which block entity a basic-machine block creates. Addon machines may only use {@link #BASIC} and {@link #LARGE_RECIPE}. */
+/**
+     * Which block entity a basic-machine block creates. Addon recipe machines may only use
+     * {@link #BASIC} and {@link #LARGE_RECIPE}. {@link #BEHAVIOR} is the addon shell and is
+     * created by {@code BehaviorMachineBlock}, not by a recipe controller.
+     */
 public enum MachineControllerKind {
     BASIC,
     LARGE_RECIPE,
     DISTILLATION,
     COMPACT_MATTER,
-    MATTER;
+    MATTER,
+    BEHAVIOR;
 
     /**
      * Built-in selection. Special controllers win over a layout of the same name, matching the
