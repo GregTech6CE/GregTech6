@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:engines/plate_dense/any_steel"
+    },
+    "S": {
+      "tag": "gt6ce:engines/stick/any_steel"
+    },
+    "I": {
+      "tag": "gt6ce:engines/spring/any_steel"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_strong_steel"
+  },
+  "allow_mirror": false
+}

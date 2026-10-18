@@ -43,7 +43,7 @@ import java.util.Set;
  * the state round-trips every host rock, bedrock deposits stay unbreakable/undroppable, and a legacy
  * entity migrates into the state instead of being kept.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class OreBlockStateTests {
     private static final int BASE_X = 22000;

@@ -202,7 +202,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                 if (node.isRotationTransformer() || node.isElectricTransformer()) GTToolHelper.damageForUse(held, 1, player);
 //?}
                 player.displayClientMessage(Component.translatable(
-                        up ? "message.gregtech.transformer.step_up" : "message.gregtech.transformer.step_down"), true);
+                        up ? "message.gt6ce.transformer.step_up" : "message.gt6ce.transformer.step_down"), true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -294,18 +294,18 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                         .append(Component.literal(" (+ ").append(Component.translatable("gt.lang.face.front"))
                                 .append(", - ").append(Component.translatable("gt.lang.face.back")).append(")")
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
-                tooltip.add(Component.translatable("tooltip.gregtech.magnet.controls")
+                tooltip.add(Component.translatable("tooltip.gt6ce.magnet.controls")
                         .withStyle(net.minecraft.ChatFormatting.GRAY));
             }
             case SOLAR -> {
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit)
-                        .append(Component.translatable("tooltip.gregtech.solar.output_range", spec.outputRate() / 8, spec.outputRate())
+                        .append(Component.translatable("tooltip.gt6ce.solar.output_range", spec.outputRate() / 8, spec.outputRate())
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
             }
             case TURBINE -> {
                 tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
                         .withStyle(net.minecraft.ChatFormatting.GREEN)
-                        .append(Component.literal(spec.inputRate() + " L/t ").append(Component.translatable("fluid_type.gregtech.steam"))
+                        .append(Component.literal(spec.inputRate() + " L/t ").append(Component.translatable("fluid_type.gt6ce.steam"))
                                 .withStyle(net.minecraft.ChatFormatting.WHITE)));
                 tooltip.add(com.gregtech.gregtech.client.TooltipHelper.energyOutLine(spec.outputRate(), outUnit));
             }
@@ -321,7 +321,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                                 .append(")").withStyle(net.minecraft.ChatFormatting.WHITE)));
                 if (spec.kind() == EnergyNodeSpec.Kind.STORAGE) {
                     if (spec.batterySlots() > 0) {
-                        tooltip.add(Component.translatable("tooltip.gregtech.node.battery_slots",spec.batterySlots())
+                        tooltip.add(Component.translatable("tooltip.gt6ce.node.battery_slots",spec.batterySlots())
                                 .withStyle(net.minecraft.ChatFormatting.GRAY));
                     } else {
                         tooltip.add(Component.translatable("gt.lang.energy.capacity").append(": "
@@ -329,7 +329,7 @@ public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, Si
                                 .withStyle(net.minecraft.ChatFormatting.YELLOW));
                     }
                 } else if (spec.inType() == spec.outType()) {
-                    tooltip.add(Component.translatable(spec.id().startsWith("transformer_") ? "tooltip.gregtech.transformer.controls" : "tooltip.gregtech.node.invert")
+                    tooltip.add(Component.translatable(spec.id().startsWith("transformer_") ? "tooltip.gt6ce.transformer.controls" : "tooltip.gt6ce.node.invert")
                             .withStyle(net.minecraft.ChatFormatting.GRAY));
                 }
             }

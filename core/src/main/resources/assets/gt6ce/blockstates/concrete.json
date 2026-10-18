@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "color=white": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=orange": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=magenta": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=light_blue": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=yellow": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=lime": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=pink": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=gray": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=light_gray": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=cyan": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=purple": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=blue": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=brown": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=green": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=red": {
+      "model": "gt6ce:block/iconsets/concrete"
+    },
+    "color=black": {
+      "model": "gt6ce:block/iconsets/concrete"
+    }
+  }
+}

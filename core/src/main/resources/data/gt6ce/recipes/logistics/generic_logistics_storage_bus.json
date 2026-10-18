@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:786",
+  "pattern": [
+    "d  ",
+    "WQW",
+    "CPC"
+  ],
+  "key": {
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "P": {
+      "item": "gt6ce:crystal_processor_emerald"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_4_plus"
+    },
+    "W": {
+      "item": "gt6ce:wire_fine_osmiumelemental"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:generic_logistics_storage_bus"
+  }
+}

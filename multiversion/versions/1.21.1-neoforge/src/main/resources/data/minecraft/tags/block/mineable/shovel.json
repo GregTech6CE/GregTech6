@@ -1,15 +1,15 @@
 {
   "replace": false,
   "values": [
-    "gregtech:sand_magnetite",
-    "gregtech:sand_basalt_magnetite",
-    "gregtech:sand_granite_magnetite",
-    "gregtech:bale_grass",
-    "gregtech:grassblock_brown",
-    "gregtech:grassblock_dark",
-    "gregtech:grassblock_light",
-    "gregtech:grassblock_medium",
-    "gregtech:grassblock_normal",
-    "gregtech:grassblock_yellow"
+    "gt6ce:sand_magnetite",
+    "gt6ce:sand_basalt_magnetite",
+    "gt6ce:sand_granite_magnetite",
+    "gt6ce:bale_grass",
+    "gt6ce:grassblock_brown",
+    "gt6ce:grassblock_dark",
+    "gt6ce:grassblock_light",
+    "gt6ce:grassblock_medium",
+    "gt6ce:grassblock_normal",
+    "gt6ce:grassblock_yellow"
   ]
 }

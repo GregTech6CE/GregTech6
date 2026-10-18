@@ -21,7 +21,7 @@ public final class MaterialDataViewerRecipes {
 
     public static synchronized int register() {
         if (registered) return 0;
-        var usb = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gregtech:usb3_stick")));
+        var usb = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse("gt6ce:usb3_stick")));
         if (usb.isEmpty()) throw new IllegalStateException("Missing molecular scanner USB medium");
         var forms = new TreeMap<GTMaterial,List<ItemStack>>(Comparator.comparingInt(GTMaterial::getId).thenComparing(GTMaterial::getName));
         for (var entry : ItemMaterialRegistry.entries().entrySet()) {

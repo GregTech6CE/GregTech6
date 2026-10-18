@@ -2,9 +2,9 @@
   "replace": false,
   "values": [
     {
-      "id": "#gregtech:stone_blocks",
+      "id": "#gt6ce:stone_blocks",
       "required": false
     },
-    "gregtech:cfoam_slab"
+    "gt6ce:cfoam_slab"
   ]
 }

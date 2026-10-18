@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gregtech:block/stones/gt.stone.diorite/smooth",
-    "top": "gregtech:block/stones/gt.stone.diorite/smooth",
-    "side": "gregtech:block/stones/gt.stone.diorite/smooth"
-  }
-}

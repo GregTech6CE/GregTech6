@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:clay_jug"
+  },
+  "result": "gt6ce:fluid_jug",
+  "experience": 0,
+  "cookingtime": 200
+}

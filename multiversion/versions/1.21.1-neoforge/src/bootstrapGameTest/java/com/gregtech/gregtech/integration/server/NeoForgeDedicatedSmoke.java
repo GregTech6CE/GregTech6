@@ -223,7 +223,7 @@ public final class NeoForgeDedicatedSmoke {
                 if(!level.getBlockState(target).isAir()||!level.getBlockState(target.below()).isAir())throw new IllegalStateException("Tool assembly refuses overwrite");
                 level.setBlockAndUpdate(target.below(),Blocks.STONE.defaultBlockState());
             }
-            var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","grindstone_block"));
+            var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","grindstone_block"));
             if(!(block instanceof com.gregtech.gregtech.block.tool.ManualToolBlock))throw new IllegalStateException("Missing actual grindstone");
             level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(bench,Blocks.CRAFTING_TABLE.defaultBlockState());
             var station=(com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity)level.getBlockEntity(pos);
@@ -462,7 +462,7 @@ public final class NeoForgeDedicatedSmoke {
     }
 
     private static Block steamBlock(String id) {
-        var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id);
+        var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id);
         if (!net.minecraft.core.registries.BuiltInRegistries.BLOCK.containsKey(key))
             throw new IllegalStateException("Missing steam-chain block " + key);
         return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(key);
@@ -661,7 +661,7 @@ public final class NeoForgeDedicatedSmoke {
                 throw new IllegalStateException("Machine prepare refuses to overwrite " + pos);
             String id = offset == 6 ? "crusher_bronze" : "mixer_bronze";
             var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (!(block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock))
                 throw new IllegalStateException("Missing registered machine " + id);
             level.setBlockAndUpdate(pos.below(), Blocks.STONE.defaultBlockState());

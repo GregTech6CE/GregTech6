@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_crusher",
+  "contents": [
+    "item:gt6ce:crusher_bronze",
+    "item:gt6ce:crusher_steel",
+    "item:gt6ce:crusher_titanium",
+    "item:gt6ce:crusher_tungsten_steel"
+  ],
+  "priority": 110
+}

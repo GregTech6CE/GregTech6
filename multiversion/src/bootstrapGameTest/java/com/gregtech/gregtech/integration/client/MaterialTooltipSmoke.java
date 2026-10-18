@@ -35,11 +35,11 @@ final class MaterialTooltipSmoke {
 
     private static void check(ItemStack stack) {
 //? if >=1.21.1 {
-        /*require(stack, stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL), "tooltip.gregtech.f3h_hint");
-        require(stack, stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.ADVANCED), "tooltip.gregtech.contained_materials");
+        /*require(stack, stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.NORMAL), "tooltip.gt6ce.f3h_hint");
+        require(stack, stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.ADVANCED), "tooltip.gt6ce.contained_materials");
 *///?} else {
-        require(stack, stack.getTooltipLines(null, TooltipFlag.NORMAL), "tooltip.gregtech.f3h_hint");
-        require(stack, stack.getTooltipLines(null, TooltipFlag.ADVANCED), "tooltip.gregtech.contained_materials");
+        require(stack, stack.getTooltipLines(null, TooltipFlag.NORMAL), "tooltip.gt6ce.f3h_hint");
+        require(stack, stack.getTooltipLines(null, TooltipFlag.ADVANCED), "tooltip.gt6ce.contained_materials");
 //?}
     }
 

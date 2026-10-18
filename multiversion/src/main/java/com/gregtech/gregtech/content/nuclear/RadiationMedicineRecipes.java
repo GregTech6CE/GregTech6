@@ -45,9 +45,9 @@ public final class RadiationMedicineRecipes {
     }
     private static ItemStack item(String id) {
 //? if >=1.21.1 {
-        /*return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", id)));
+        /*return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
 *///?} else {
-        return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id)));
+        return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id)));
 //?}
     }
     private static void add(RecipeMap map, ItemStack[] inputs, ItemStack output, int ticks) {

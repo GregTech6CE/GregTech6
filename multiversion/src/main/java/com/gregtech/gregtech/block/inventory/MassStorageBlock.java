@@ -136,7 +136,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
             if (!level.isClientSide) {
                 store.toggleFilterReset();
                 player.displayClientMessage(net.minecraft.network.chat.Component.translatable(store.resetsFilter()
-                        ? "message.gregtech.storage.filter_reset" : "message.gregtech.storage.filter_keep"), true);
+                        ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep"), true);
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
             }
             return true;
@@ -156,7 +156,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         }
         if (!held.isEmpty()) { if (!level.isClientSide) { int count=store.insert(held); if(count>0&&!player.getAbilities().instabuild)held.shrink(count); } return true; }
         if (player.isShiftKeyDown()) {
-            if (!level.isClientSide) player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.mass_storage.status",store.stored(),store.template().isEmpty()?net.minecraft.network.chat.Component.translatable("gui.gregtech.empty"):store.template().getHoverName()),true); return true;
+            if (!level.isClientSide) player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.mass_storage.status",store.stored(),store.template().isEmpty()?net.minecraft.network.chat.Component.translatable("gui.gt6ce.empty"):store.template().getHoverName()),true); return true;
         }
         if (!level.isClientSide && !store.template().isEmpty() && MassStorageFace.depositInventory(x,y)) {
             for(var stack:player.getInventory().items) { int inserted=store.insert(stack); if(inserted>0&&!player.getAbilities().instabuild)stack.shrink(inserted); }
@@ -280,7 +280,7 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         if (com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.SCREWDRIVER)) {
             if (!level.isClientSide) {
                 store.toggleFilterReset();
-                player.displayClientMessage(Component.translatable(store.resetsFilter() ? "message.gregtech.storage.filter_reset" : "message.gregtech.storage.filter_keep"), true);
+                player.displayClientMessage(Component.translatable(store.resetsFilter() ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep"), true);
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
@@ -315,9 +315,9 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         }
         if (player.isShiftKeyDown()) {
             if (!level.isClientSide) {
-                player.displayClientMessage(Component.translatable("message.gregtech.mass_storage.status",
+                player.displayClientMessage(Component.translatable("message.gt6ce.mass_storage.status",
                         store.stored(), store.template().isEmpty()
-                                ? Component.translatable("gui.gregtech.empty")
+                                ? Component.translatable("gui.gt6ce.empty")
                                 : store.template().getHoverName()), true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

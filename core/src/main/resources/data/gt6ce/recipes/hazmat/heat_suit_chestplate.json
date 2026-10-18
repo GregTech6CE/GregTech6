@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MxM",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:foil/aluminium"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:heat_suit_chestplate"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

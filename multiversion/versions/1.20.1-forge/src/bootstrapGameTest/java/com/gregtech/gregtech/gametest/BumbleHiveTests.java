@@ -53,7 +53,7 @@ import java.util.List;
  * <p>The colony chain is checked against the biome it is given ({@link GTBumbleHivesFeature#colonyFor})
  * rather than against whatever biome the test world happens to have at the test column.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleHiveTests {
     private static final int BASE_X = 31000;
@@ -118,7 +118,7 @@ public final class BumbleHiveTests {
             problems.add("the feature is registered as gt_bumble_hives");
         }
         // GT6 tints one pair of icons at runtime; the port bakes all sixteen colours.
-        JsonObject variants = resourceJson("assets/gregtech/blockstates/bumble_hive.json").getAsJsonObject("variants");
+        JsonObject variants = resourceJson("assets/gt6ce/blockstates/bumble_hive.json").getAsJsonObject("variants");
         if (variants.size() != 16) problems.add("16 baked hive colours expected, got " + variants.size());
         for (DyeColor color : DyeColor.values()) {
             String name = color.getName();
@@ -128,26 +128,26 @@ public final class BumbleHiveTests {
                 continue;
             }
             String model = variant.getAsJsonObject().get("model").getAsString();
-            String path = model.startsWith("gregtech:") ? model.substring("gregtech:".length()) : model;
+            String path = model.startsWith("gt6ce:") ? model.substring("gt6ce:".length()) : model;
             // The model id's path already starts with "block/", e.g. gregtech:block/bumble_hive_white.
-            if (!resourceExists("assets/gregtech/models/" + path + ".json")) {
+            if (!resourceExists("assets/gt6ce/models/" + path + ".json")) {
                 problems.add("missing model " + model);
             }
             for (String face : new String[]{"bottom", "top", "side"}) {
-                if (!resourceExists("assets/gregtech/textures/block/nature/bumblehive/" + name + "/" + face + ".png")) {
+                if (!resourceExists("assets/gt6ce/textures/block/nature/bumblehive/" + name + "/" + face + ".png")) {
                     problems.add("missing texture " + name + "/" + face + ".png");
                 }
             }
         }
         for (String asset : new String[]{
-                "assets/gregtech/models/item/bumble_hive.json",
+                "assets/gt6ce/models/item/bumble_hive.json",
                 // GT6's own tint sources, kept next to the baked colours.
-                "assets/gregtech/textures/block/nature/bumblehive/colored/side.png",
-                "assets/gregtech/textures/block/nature/bumblehive/overlay/side.png"}) {
+                "assets/gt6ce/textures/block/nature/bumblehive/colored/side.png",
+                "assets/gt6ce/textures/block/nature/bumblehive/overlay/side.png"}) {
             if (!resourceExists(asset)) problems.add("missing " + asset);
         }
-        if (!resourceJson("assets/gregtech/lang/en_us.json").has("block.gregtech.bumble_hive")
-                || !resourceJson("assets/gregtech/lang/zh_cn.json").has("block.gregtech.bumble_hive")) {
+        if (!resourceJson("assets/gt6ce/lang/en_us.json").has("block.gt6ce.bumble_hive")
+                || !resourceJson("assets/gt6ce/lang/zh_cn.json").has("block.gt6ce.bumble_hive")) {
             problems.add("the hive needs its en_us and zh_cn name");
         }
         // Every colony species GT6's table can pick has to exist, with its comb and its four bee types.
@@ -158,7 +158,7 @@ public final class BumbleHiveTests {
                 continue;
             }
             if (ForgeRegistries.ITEMS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", species.comb())) == null) {
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", species.comb())) == null) {
                 problems.add("the comb " + species.comb() + " is missing");
             }
             for (BumbleBeeType type : new BumbleBeeType[]{BumbleBeeType.DRONE, BumbleBeeType.PRINCESS,
@@ -356,9 +356,9 @@ public final class BumbleHiveTests {
     public static void hiveWorldgenDataMatchesGt6(GameTestHelper helper) throws Exception {
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTBumbleHivesFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_bumble_hives.json is loaded");
-        JsonObject placed = resourceJson("data/gregtech/worldgen/placed_feature/gt_bumble_hives.json");
-        helper.assertTrue(placed.get("feature").getAsString().equals("gregtech:gt_bumble_hives"),
+                "data/gt6ce/worldgen/configured_feature/gt_bumble_hives.json is loaded");
+        JsonObject placed = resourceJson("data/gt6ce/worldgen/placed_feature/gt_bumble_hives.json");
+        helper.assertTrue(placed.get("feature").getAsString().equals("gt6ce:gt_bumble_hives"),
                 "the placed feature points at the feature");
         helper.assertTrue(placed.getAsJsonArray("placement").isEmpty(),
                 "an empty placement list is GT6's one attempt per chunk");
@@ -367,12 +367,12 @@ public final class BumbleHiveTests {
                 {"gt_bumble_hives_nether", "#minecraft:is_nether"},
                 {"gt_bumble_hives_end", "#minecraft:is_end"}};
         for (String[] entry : modifiers) {
-            JsonObject modifier = resourceJson("data/gregtech/forge/biome_modifier/" + entry[0] + ".json");
+            JsonObject modifier = resourceJson("data/gt6ce/forge/biome_modifier/" + entry[0] + ".json");
             helper.assertTrue(modifier.get("biomes").getAsString().equals(entry[1]),
                     entry[0] + " targets " + entry[1]);
             JsonArray features = modifier.getAsJsonArray("features");
             helper.assertTrue(features.size() == 1
-                            && features.get(0).getAsString().equals("gregtech:gt_bumble_hives"),
+                            && features.get(0).getAsString().equals("gt6ce:gt_bumble_hives"),
                     entry[0] + " adds the hive feature");
             helper.assertTrue(modifier.get("step").getAsString().equals("vegetal_decoration"),
                     entry[0] + " runs after the terrain");

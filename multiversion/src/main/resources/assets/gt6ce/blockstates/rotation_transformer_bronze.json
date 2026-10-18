@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer",
+      "x": 270
+    },
+    "facing=north": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/transformer/rotation_transformer",
+      "y": 90
+    }
+  }
+}

@@ -28,7 +28,7 @@ import java.util.List;
  * spring kinds and their rarities, the crater, the spring tile entity and the fluid blocks the port
  * had to add first (no GT6 fluid could exist in the world before this batch).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class FluidSpringTests {
     private static final int BASE_X = 40000;
@@ -74,7 +74,7 @@ public final class FluidSpringTests {
         helper.assertTrue(GTFeatures.FLUID_SPRINGS.getId().getPath().equals("gt_fluid_springs"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTFluidSpringsFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_fluid_springs.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_fluid_springs.json is loaded");
         helper.assertTrue(problems.isEmpty(), "spring table (" + problems.size() + "): "
                 + problems.subList(0, Math.min(5, problems.size())));
         helper.succeed();

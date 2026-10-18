@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WIW",
+    "XMx",
+    "WIW"
+  ],
+  "key": {
+    "W": {
+      "tag": "gt6ce:wire_01/any_copper"
+    },
+    "X": {
+      "tag": "gt6ce:wire_04/any_copper"
+    },
+    "I": {
+      "tag": "gt6ce:plate_double/any_iron_or_steel"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_aluminium"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:transformer_mv_hv"
+  }
+}

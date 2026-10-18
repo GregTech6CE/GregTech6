@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.entity.*;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BlueprintRegressionTests {
     @GameTest(template="test_blueprint_empty")

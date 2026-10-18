@@ -6,13 +6,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraftforge.gametest.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class BlockHarvestTests {
  @GameTest(template="test_empty") public static void allOrdinaryBlocksHaveLoot(GameTestHelper h) throws Exception {
   var missing=new TreeSet<String>(); int checked=0;
   for(var b:ForgeRegistries.BLOCKS.getValues()) {
    var id=ForgeRegistries.BLOCKS.getKey(b);
-   if(!id.getNamespace().equals("gregtech") || b.asItem()==Items.AIR || b instanceof LiquidBlock) continue;
+   if(!id.getNamespace().equals("gt6ce") || b.asItem()==Items.AIR || b instanceof LiquidBlock) continue;
    // Specialized drops (ore, rocks, stateful machines) have their own regression tests.
    if(b.getClass().getMethod("getDrops",net.minecraft.world.level.block.state.BlockState.class,net.minecraft.world.level.storage.loot.LootParams.Builder.class).getDeclaringClass()!=net.minecraft.world.level.block.state.BlockBehaviour.class) continue;
    var state=b.defaultBlockState(); if(state.getDestroySpeed(h.getLevel(),h.absolutePos(BlockPos.ZERO))<0)continue;
@@ -27,14 +27,14 @@ public final class BlockHarvestTests {
   int count=0;
   for(var b:ForgeRegistries.BLOCKS.getValues()) {
    var id=ForgeRegistries.BLOCKS.getKey(b);
-   if(!id.getNamespace().equals("gregtech")||b instanceof LiquidBlock)continue;
+   if(!id.getNamespace().equals("gt6ce")||b instanceof LiquidBlock)continue;
    var tag=net.minecraft.tags.BlockTags.create(net.minecraft.resources.ResourceLocation.parse(com.gregtech.gregtech.data.BlockHarvestPolicy.tag(com.gregtech.gregtech.data.BlockHarvestPolicy.tool(b))));
    h.assertTrue(b.defaultBlockState().is(tag),"Missing harvest tag: "+id);count++;
   }
   h.assertTrue(count>2000,"Audit must cover actual registry");h.succeed();
  }
  @GameTest(template="test_empty") public static void survivalBreakDropsOneBlock(GameTestHelper h) {
-  var block=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","axle_steel_1"));
+  var block=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","axle_steel_1"));
   var pos=h.absolutePos(new BlockPos(1,2,1)); h.getLevel().setBlock(pos,block.defaultBlockState(),3);
   var player=net.minecraftforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
   player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
@@ -50,7 +50,7 @@ public final class BlockHarvestTests {
   var high=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof com.gregtech.gregtech.block.MaterialBlockLike && com.gregtech.gregtech.data.BlockHarvestPolicy.level(b)>=3).findFirst().orElseThrow();
   player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(Items.WOODEN_PICKAXE));
   h.assertTrue(!high.defaultBlockState().canHarvestBlock(h.getLevel(),pos,player),"Wood pickaxe cannot bypass material tier");
-  var wood=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","wood_barrel"));
+  var wood=ForgeRegistries.BLOCKS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","wood_barrel"));
   h.assertTrue(wood.defaultBlockState().is(net.minecraft.tags.BlockTags.MINEABLE_WITH_AXE),"Wood barrel axe tag");
   var wire=ForgeRegistries.BLOCKS.getValues().stream().filter(b->b instanceof com.gregtech.gregtech.block.energy.ElectricWireBlock).findFirst().orElseThrow();
   var cutter=com.gregtech.gregtech.item.GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.WIRE_CUTTER,com.gregtech.gregtech.content.material.Materials.Steel,com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));

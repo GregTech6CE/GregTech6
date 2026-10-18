@@ -52,7 +52,7 @@ public class BumbleHiveBlockEntity extends BlockEntity {
     public void migrateLegacyVariant() {
         if (level == null || level.isClientSide || !getBlockState().hasProperty(com.gregtech.gregtech.block.misc.BumbleHiveBlock.COLOR)) return;
         var color = getBlockState().getValue(com.gregtech.gregtech.block.misc.BumbleHiveBlock.COLOR);
-        var target = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_hive_" + color.getName()));
+        var target = net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "bumble_hive_" + color.getName()));
         if (!(target instanceof com.gregtech.gregtech.block.misc.FixedBumbleHiveBlock)) return;
         var contents = new ItemStack[SLOTS];
         for (int i = 0; i < SLOTS; i++) contents[i] = inventory.getStackInSlot(i).copy();

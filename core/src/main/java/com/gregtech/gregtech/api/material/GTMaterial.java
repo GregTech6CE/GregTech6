@@ -416,7 +416,7 @@ public final class GTMaterial {
     }
 
     public String getTranslationKey() {
-        return "material.gregtech." + name.toLowerCase();
+        return "material.gt6ce." + name.toLowerCase();
     }
 
     @Override

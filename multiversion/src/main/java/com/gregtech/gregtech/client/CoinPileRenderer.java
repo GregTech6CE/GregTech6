@@ -21,8 +21,8 @@ import net.minecraft.world.phys.AABB;
 /** Each occupied cell uses its own position and exact height, with the stored coin's GT6 die relief. */
 public final class CoinPileRenderer implements BlockEntityRenderer<CoinPileBlockEntity> {
 //? if >=1.21.1 {
-    /*static final net.minecraft.resources.ResourceLocation TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/iconsets/coin.png");
-    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","textures/block/iconsets/coin_side.png");
+    /*static final net.minecraft.resources.ResourceLocation TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/coin.png");
+    static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","textures/block/iconsets/coin_side.png");
 *///?} else {
     static final net.minecraft.resources.ResourceLocation TEXTURE = GregTech.id("textures/block/iconsets/coin.png");
     static final net.minecraft.resources.ResourceLocation SIDE_TEXTURE = GregTech.id("textures/block/iconsets/coin_side.png");

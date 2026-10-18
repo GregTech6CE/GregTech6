@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:plate/plastic",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate/polycarbonate",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate/pvc",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate/teflon",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate/bakelite",
+      "required": false
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "gregtech:bullet",
-    "gregtech:bullet_piercing"
+    "gt6ce:bullet",
+    "gt6ce:bullet_piercing"
   ]
 }

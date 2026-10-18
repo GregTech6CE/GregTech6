@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P Q",
+    "PS ",
+    "CPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_steelgalvanized"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
+    "S": {
+      "item": "gt6ce:wire_01_tin"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_sensor_lv",
+    "count": 1
+  }
+}

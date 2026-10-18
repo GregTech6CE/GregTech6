@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_circuit_part",
+  "contents": [
+    "item:gt6ce:circuit_part_advanced",
+    "item:gt6ce:circuit_part_basic",
+    "item:gt6ce:circuit_part_elite",
+    "item:gt6ce:circuit_part_endereye",
+    "item:gt6ce:circuit_part_enderium",
+    "item:gt6ce:circuit_part_enderpearl",
+    "item:gt6ce:circuit_part_good",
+    "item:gt6ce:circuit_part_magic",
+    "item:gt6ce:circuit_part_master",
+    "item:gt6ce:circuit_part_signalum",
+    "item:gt6ce:circuit_part_ultimate"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "  s",
+    "PRP",
+    "x  "
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_curved_plastic"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    },
+    "R": {
+      "tag": "forge:rings/rubber"
+    }
+  },
+  "result": {
+    "item": "gt6ce:cap_nozzle_plastic"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gt6ce:wire_04_copper"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_aluminium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_good"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_copper"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_signal_emitter_mv",
+    "count": 1
+  }
+}

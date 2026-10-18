@@ -49,11 +49,11 @@ public final class DrillDynamiteTests {
     public static void survivalDrillUsesLastChargeAndBindsFirstAvailableHotbarRemote(GameTestHelper h) {
         h.setBlock(SUPPORT, Blocks.DIRT);
         var player = player(h, false);
-        var full = ItemBehaviors.stack("gregtech:remote_activator");
+        var full = ItemBehaviors.stack("gt6ce:remote_activator");
         var coords = new java.util.ArrayList<BlockPos>();
         for (int i=0;i<64;i++) coords.add(new BlockPos(i,0,0));
         BehaviorRemote.setCoords(full.getOrCreateTag(), h.getLevel(), coords);
-        var remote = ItemBehaviors.stack("gregtech:remote_activator");
+        var remote = ItemBehaviors.stack("gt6ce:remote_activator");
         player.getInventory().items.set(1,full); player.getInventory().items.set(2,remote);
         player.getInventory().items.set(10,new ItemStack(GTToolBlocks.BOOMSTICK.get(),2));
         var charge = player.getInventory().items.get(35);
@@ -109,7 +109,7 @@ public final class DrillDynamiteTests {
     @GameTest(template="test_empty")
     public static void cancelledForgePlacementRollsBackWithoutChargingDrill(GameTestHelper h) {
         h.setBlock(SUPPORT,Blocks.STONE);var player=player(h,false);
-        var remote=ItemBehaviors.stack("gregtech:remote_activator");player.getInventory().items.set(1,remote);
+        var remote=ItemBehaviors.stack("gt6ce:remote_activator");player.getInventory().items.set(1,remote);
         var protection=new Protection();net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(protection);
         boolean placed;
         try {placed=place(h,player,Direction.UP);}

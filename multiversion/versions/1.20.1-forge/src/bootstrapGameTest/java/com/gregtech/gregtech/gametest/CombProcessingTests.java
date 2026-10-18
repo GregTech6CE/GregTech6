@@ -25,7 +25,7 @@ import java.util.List;
  * nothing could be done with a comb. §73 generated those rows into
  * {@code loaders/c/GTCombGen.java}.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CombProcessingTests {
 
@@ -37,7 +37,7 @@ public final class CombProcessingTests {
             "aero_comb", "tera_comb"};
 
     private static Item item(String id) {
-        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        return ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
     }
 
     /** The centrifuge row that consumes a given item, or null. */

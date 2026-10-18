@@ -97,14 +97,14 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
         // GT6 :283 `SIDES_TOP[aSide]`: the bees are only reachable from above.
 //? if >=1.21.1 {
         /*var heldId = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(player.getItemInHand(hand).getItem());
-        if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "quicksilver_thermometer").equals(heldId)
+        if (net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "quicksilver_thermometer").equals(heldId)
 *///?} else {
         var heldId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(player.getItemInHand(hand).getItem());
         if (com.gregtech.gregtech.GregTech.id("quicksilver_thermometer").equals(heldId)
 //?}
                 && level.getBlockEntity(pos) instanceof BumbliaryBlockEntity machine) {
             if (!level.isClientSide) player.displayClientMessage(Component.translatable(
-                    "message.gregtech.bumbliary.climate", machine.temperature(), Float.toString(machine.humidity())), false);
+                    "message.gt6ce.bumbliary.climate", machine.temperature(), Float.toString(machine.humidity())), false);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (hit.getDirection() == Direction.UP
@@ -183,9 +183,9 @@ public class BumbliaryBlock extends ShapedToolBlock implements EntityBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
                                 TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.range", advanced ? "3x3x3" : "7x7x7"));
-        tooltip.add(Component.translatable("tooltip.gregtech.machine.tool.scoop"));
-        tooltip.add(Component.translatable("tooltip.gregtech.crucible.thermometer"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.machine.range", advanced ? "3x3x3" : "7x7x7"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.machine.tool.scoop"));
+        tooltip.add(Component.translatable("tooltip.gt6ce.crucible.thermometer"));
 //? if >=1.21.1 {
         /*super.appendHoverText(stack, context, tooltip, flag);
 *///?} else {

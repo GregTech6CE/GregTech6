@@ -41,10 +41,10 @@ public final class BlockLootPack extends AbstractPackResources {
         if(event.getPackType()!=PackType.SERVER_DATA) return;
         event.addRepositorySource(output->{
 //? if >=1.21.1 {
-            /*var location=new PackLocationInfo("gregtech:block_loot",Component.literal("GregTech block loot and harvest tags"),PackSource.BUILT_IN,Optional.empty());
+            /*var location=new PackLocationInfo("gt6ce:block_loot",Component.literal("GregTech block loot and harvest tags"),PackSource.BUILT_IN,Optional.empty());
             var pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){public PackResources openPrimary(PackLocationInfo info){return new BlockLootPack(info);}public PackResources openFull(PackLocationInfo info,Pack.Metadata metadata){return new BlockLootPack(info);}},PackType.SERVER_DATA,new PackSelectionConfig(true,Pack.Position.BOTTOM,true));
 *///?} else {
-            var pack=Pack.readMetaAndCreate("gregtech:block_loot",Component.literal("GregTech block loot and harvest tags"),true,
+            var pack=Pack.readMetaAndCreate("gt6ce:block_loot",Component.literal("GregTech block loot and harvest tags"),true,
                     BlockLootPack::new,PackType.SERVER_DATA,Pack.Position.BOTTOM,PackSource.BUILT_IN);
 //?}
             if(pack!=null) output.accept(pack);
@@ -62,7 +62,7 @@ public final class BlockLootPack extends AbstractPackResources {
         for(var block:ForgeRegistries.BLOCKS.getValues()) {
             var id=ForgeRegistries.BLOCKS.getKey(block);
 //?}
-            if(id==null || !id.getNamespace().equals("gregtech") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
+            if(id==null || !id.getNamespace().equals("gt6ce") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
             String tag=BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));
             tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id.toString());
             int level=BlockHarvestPolicy.level(block);
@@ -120,6 +120,6 @@ public final class BlockLootPack extends AbstractPackResources {
     public void listResources(PackType type,String ns,String path,ResourceOutput out) {
         if(type==PackType.SERVER_DATA)data().forEach((id,bytes)->{if(id.getNamespace().equals(ns)&&id.getPath().startsWith(path+"/"))out.accept(id,()->new ByteArrayInputStream(bytes));});
     }
-    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("minecraft","gregtech"):Set.of(); }
+    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("minecraft","gt6ce"):Set.of(); }
     public void close() { resources=null; }
 }

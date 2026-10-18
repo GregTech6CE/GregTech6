@@ -89,7 +89,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
         side(widgets, false, recipe.mOutputs, recipe.mFluidOutputs,scale,offset);
         var special = RecipeSpecialItems.display(recipe.mSpecialItems);
         if (!special.isEmpty()) widgets.add(new FittedSlot(EmiIngredient.of(special.stream().map(EmiStack::of).toList()),79,42,scale,offset))
-                .catalyst(true).appendTooltip(Component.translatable("gregtech.jei.catalyst"));
+                .catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
     }
     /** Retain SlotWidget identity, recipe context, shortcuts and tooltips at the fitted coordinates. */
     private static final class FittedSlot extends dev.emi.emi.api.widget.SlotWidget {
@@ -122,7 +122,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
             if (items[i] == null || items[i].isEmpty()) continue;
             var p = MachineGuiLayout.item(input, i, count, input ? map.mInputFluidCount : map.mOutputFluidCount);
             var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(recipe.getOutputChance(i) / 10000f),p.x()-1,p.y()-1,scale,offset));
-            if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gregtech.jei.catalyst"));
+            if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
             if (!input) slot.recipeContext(this);
         }
         for (int i = 0; i < fluids.length; i++) {

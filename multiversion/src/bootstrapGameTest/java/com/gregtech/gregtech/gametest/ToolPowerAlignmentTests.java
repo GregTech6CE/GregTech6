@@ -36,9 +36,9 @@ public final class ToolPowerAlignmentTests {
     private static ItemStack tool(GTToolType type) { return GTToolHelper.displayTool(type); }
     private static CraftingRecipe recipe(GameTestHelper h, String path) {
 //? if >=1.21.1 {
-        /*return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech",path)).orElseThrow().value();
+        /*return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",path)).orElseThrow().value();
 *///?} else {
-        return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech",path)).orElseThrow();
+        return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",path)).orElseThrow();
 //?}
     }
 //? if >=1.21.1 {
@@ -125,7 +125,7 @@ public final class ToolPowerAlignmentTests {
         h.assertTrue(recipe(h,"tools/knife").matches(knife,h.getLevel()),"one-piece bronze knife uses bronze handle");
         h.succeed();
     }
-    private static Block block(String id) {var key=ResourceLocation.fromNamespaceAndPath("gregtech",id);if(!BuiltInRegistries.BLOCK.containsKey(key))throw new IllegalStateException("Missing block "+id);return BuiltInRegistries.BLOCK.get(key);}
+    private static Block block(String id) {var key=ResourceLocation.fromNamespaceAndPath("gt6ce",id);if(!BuiltInRegistries.BLOCK.containsKey(key))throw new IllegalStateException("Missing block "+id);return BuiltInRegistries.BLOCK.get(key);}
 //? if >=1.21.1 {
     /*private static IFluidHandler fluid(GameTestHelper h, BlockPos pos, Direction side) { return h.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,side); }
 *///?} else {

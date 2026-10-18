@@ -28,7 +28,7 @@ public final class GTFluidType {
     private GTFluidType() {}
 
     public static Component describe(RegisteredFluids.FluidEntry entry, String langPath) {
-        String key = "fluid_type.gregtech." + langPath;
+        String key = "fluid_type.gt6ce." + langPath;
         if (Language.getInstance().has(key)) return Component.translatable(key);
         String originalKey = "fluid." + entry.registryName();
         if (Language.getInstance().has(originalKey)) return Component.translatable(originalKey);
@@ -36,7 +36,7 @@ public final class GTFluidType {
         if (!material.isValid()) return Component.translatableWithFallback(key, entry.registryName());
         Component name = Component.translatableWithFallback(material.getTranslationKey(), material.getDisplayNameFallback());
         return entry.registryName().startsWith("molten.")
-                ? Component.translatable("fluid_type.gregtech.molten_material", name) : name;
+                ? Component.translatable("fluid_type.gt6ce.molten_material", name) : name;
     }
 
     /** Amount is zero for an unbound creative icon; bound recipe/tank stacks retain their amount. */
@@ -50,7 +50,7 @@ public final class GTFluidType {
         long flags = entry == null ? 0 : entry.flags();
         String registry = entry == null ? id.toString() : entry.registryName();
         boolean industrial = "lubricant".equals(registry) || "rc lubricant".equals(registry);
-        Owner owner = id.getNamespace().equals("gregtech") ? Owner.GT6
+        Owner owner = id.getNamespace().equals("gt6ce") ? Owner.GT6
                 : fluid == net.minecraft.world.level.material.Fluids.WATER
                 || fluid == net.minecraft.world.level.material.Fluids.FLOWING_WATER
                 || fluid == net.minecraft.world.level.material.Fluids.LAVA

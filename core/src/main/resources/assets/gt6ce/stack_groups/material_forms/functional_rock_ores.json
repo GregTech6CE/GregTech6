@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rock_ores",
+  "contents": [
+    "item:gt6ce:block_ore_anthracite",
+    "item:gt6ce:block_ore_bauxite",
+    "item:gt6ce:block_ore_gypsum",
+    "item:gt6ce:block_ore_lignite",
+    "item:gt6ce:block_ore_milkyquartz",
+    "item:gt6ce:block_ore_netherquartz",
+    "item:gt6ce:block_ore_oil",
+    "item:gt6ce:block_ore_rocksalt",
+    "item:gt6ce:block_ore_salt"
+  ],
+  "priority": 110
+}

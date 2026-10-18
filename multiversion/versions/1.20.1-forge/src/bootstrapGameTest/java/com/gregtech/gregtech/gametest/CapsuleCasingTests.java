@@ -17,9 +17,9 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.*;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class CapsuleCasingTests {
-    private static ItemStack item(String id){return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",id)));}
+    private static ItemStack item(String id){return new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",id)));}
     @GameTest(template="test_empty") public static void allCapsulesKeepFluidAcrossPlacement(GameTestHelper h){
         int count=0;var p=new BlockPos(1,2,1);
         for(var spec:PortableFluidContainerSpec.values())if(spec.shapeId().equals("cell")) {
@@ -102,7 +102,7 @@ public final class CapsuleCasingTests {
             for(var r:routes)h.assertTrue(r.mDuration==expected&&r.mEUt==16&&r.mInputs[0].getCount()==6,"source welding work and six plates");
             grade++;
         }
-        var id=ResourceLocation.fromNamespaceAndPath("gregtech","nuclear/reactor_core_2x2");
+        var id=ResourceLocation.fromNamespaceAndPath("gt6ce","nuclear/reactor_core_2x2");
         var recipe=h.getLevel().getRecipeManager().byKey(id).orElseThrow();
         h.assertTrue(recipe.getIngredients().get(4).test(GTBlocks.getStack(BlockMaterialPrefix.casingMachineDense,lead)),"core uses dense lead casing, not large machine wall");
         h.assertTrue(recipe.getIngredients().get(0).test(item("compact_electric_piston_ev"))&&recipe.getIngredients().get(1).test(item("circuit_master")),"source EV piston and T5 circuit");h.succeed();
@@ -110,7 +110,7 @@ public final class CapsuleCasingTests {
     @GameTest(template="test_empty") public static void geigerCraftingRejectsFilledCellAfterNetwork(GameTestHelper h){
         var menu=new AbstractContainerMenu(null,0){public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player p,int i){return ItemStack.EMPTY;}public boolean stillValid(net.minecraft.world.entity.player.Player p){return true;}};
         var grid=new TransientCraftingContainer(menu,3,3);
-        var id=ResourceLocation.fromNamespaceAndPath("gregtech","nuclear/geiger_counter_empty");
+        var id=ResourceLocation.fromNamespaceAndPath("gt6ce","nuclear/geiger_counter_empty");
         var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow();
         for(int i=0;i<9;i++){
             var stack=recipe.getIngredients().get(i).getItems()[0].copy();

@@ -79,7 +79,7 @@ public final class GTWaterParity {
     /**
      * The same six paths as a set, so a lookup can ask "is this one of the world waters?" for the
      * flowing variant as well: a flowing world water is a registered fluid of its own
-     * ({@code gregtech:seawater_flowing}) and it is what most positions of a GT6 water body actually
+     * ({@code gt6ce:seawater_flowing}) and it is what most positions of a GT6 water body actually
      * hold, so anything keyed by fluid name has to cover it.
      */
     private static final Set<String> ALL_WORLD_WATER_PATHS = Set.copyOf(WORLD_WATER_REGISTRY_PATHS);
@@ -93,7 +93,7 @@ public final class GTWaterParity {
      *
      * <p>The flowing variants have to be accepted: {@link GTWaterParity#WORLD_WATER_PATHS} names the
      * three GT6 waters (which is what the fluid definitions and the {@code #minecraft:water} tag are
-     * built from), but {@code gregtech:seawater_flowing} and friends are separate registered fluids
+     * built from), but {@code gt6ce:seawater_flowing} and friends are separate registered fluids
      * and every flowing block in a GT6 water body reports one of them, so a predicate that only knew
      * the three still names would answer "not a world water" for most of the water in the world.
      */

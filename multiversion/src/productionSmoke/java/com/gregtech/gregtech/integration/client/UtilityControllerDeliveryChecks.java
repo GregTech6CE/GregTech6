@@ -19,7 +19,7 @@ final class UtilityControllerDeliveryChecks {
         for (var path : List.of("heat_exchanger_main", "lightning_rod_electric_output", "von_da_graagg_generator")) {
             boolean heat = path.equals("heat_exchanger_main");
             boolean inhibitor = path.equals("von_da_graagg_generator");
-            var id = ResourceLocation.parse("gregtech:" + path);
+            var id = ResourceLocation.parse("gt6ce:" + path);
             require(BuiltInRegistries.ITEM.containsKey(id), "Registered utility item " + id);
             var stack = new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block = ((BlockItem) stack.getItem()).getBlock();
@@ -82,15 +82,15 @@ final class UtilityControllerDeliveryChecks {
             require(BlockHarvestPolicy.source(block).orElseThrow().sourceId() == (inhibitor ? 17996 : heat ? 17197 : 17998), "Actual source harvest identity " + id);
             require(ItemMaterialRegistry.get(stack).orElseThrow().components().equals(MachineConstructionMaterials.block(path).orElseThrow().components()),
                     "Actual precise controller material registration " + id);
-            require(count(lines, "tooltip.gregtech.contained_materials") == 0
+            require(count(lines, "tooltip.gt6ce.contained_materials") == 0
 //? if >=1.21.1 {
-                    /*&& count(stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.ADVANCED), "tooltip.gregtech.contained_materials") == 1,
+                    /*&& count(stack.getTooltipLines(Item.TooltipContext.EMPTY, null, TooltipFlag.ADVANCED), "tooltip.gt6ce.contained_materials") == 1,
 *///?} else {
-                    && count(stack.getTooltipLines(null, TooltipFlag.ADVANCED), "tooltip.gregtech.contained_materials") == 1,
+                    && count(stack.getTooltipLines(null, TooltipFlag.ADVANCED), "tooltip.gt6ce.contained_materials") == 1,
 //?}
                     "Only one advanced quantity section " + id);
-            require(net.minecraft.client.resources.language.I18n.exists("block.gregtech." + path)
-                    && stack.getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gregtech." + path)), "Original localized item name " + id);
+            require(net.minecraft.client.resources.language.I18n.exists("block.gt6ce." + path)
+                    && stack.getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gt6ce." + path)), "Original localized item name " + id);
             items++;
         }
         require(items == 3 && rows == 17, "Three canonical utility identities /17 source structure rows");
@@ -121,7 +121,7 @@ final class UtilityControllerDeliveryChecks {
             var fluid=com.gregtech.gregtech.registry.GTFluids.stack(key,1);
             require(fluid!=null&&!fluid.isEmpty()&&fluid.getFluid()!=net.minecraft.world.level.material.Fluids.LAVA,
                     "Distinct installed lava identity "+key);
-            var id=ResourceLocation.parse("gregtech:fluid_item_"+entry.registryName());
+            var id=ResourceLocation.parse("gt6ce:fluid_item_"+entry.registryName());
             require(BuiltInRegistries.ITEM.containsKey(id),"Registered display item "+id);
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(id));
             var model=net.minecraft.client.Minecraft.getInstance().getItemRenderer().getModel(stack,null,null,0);
@@ -138,7 +138,7 @@ final class UtilityControllerDeliveryChecks {
             var model=net.minecraft.client.Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
             for(var face:net.minecraft.core.Direction.values()) {
                 var suffix=face==net.minecraft.core.Direction.DOWN?"_front/bottom":face==net.minecraft.core.Direction.UP?"/top":"/side";
-                var prefix="gregtech:block/machines/multiblockmains/largeheatexchanger/";
+                var prefix="gt6ce:block/machines/multiblockmains/largeheatexchanger/";
                 var quads=model.getQuads(state,face,net.minecraft.util.RandomSource.create(0),
 //? if >=1.21.1 {
                         /*net.neoforged.neoforge.client.model.data.ModelData.EMPTY,net.minecraft.client.renderer.RenderType.cutout());

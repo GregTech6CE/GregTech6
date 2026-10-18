@@ -28,7 +28,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * ({@code MaterialAnvilBlockEntity#interact}) are two different code paths, so a test on the table
  * alone does not prove that smashing ore actually works in game.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class AnvilSmashingTests {
 

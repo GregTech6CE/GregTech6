@@ -1,0 +1,42 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "AlB",
+    "CqD",
+    "ExF"
+  ],
+  "key": {
+    "A": {
+      "item": "gt6ce:biochemgas_suit_helmet"
+    },
+    "B": {
+      "item": "gt6ce:insect_suit_helmet"
+    },
+    "C": {
+      "item": "gt6ce:frost_suit_helmet"
+    },
+    "D": {
+      "item": "gt6ce:heat_suit_helmet"
+    },
+    "E": {
+      "item": "gt6ce:radiation_suit_helmet"
+    },
+    "F": {
+      "item": "minecraft:chainmail_helmet"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:universal_suit_helmet"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

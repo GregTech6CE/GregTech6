@@ -50,7 +50,7 @@ public final class FallenLogBlock extends RotatedPillarBlock {
 *///?} else {
                 Item bark = ForgeRegistries.ITEMS.getValue(
 //?}
-                        ResourceLocation.fromNamespaceAndPath("gregtech", "dry_bark"));
+                        ResourceLocation.fromNamespaceAndPath("gt6ce", "dry_bark"));
                 yield bark == null ? ItemStack.EMPTY : new ItemStack(bark);
             }
             case ROTTEN -> GTItems.getStack(MaterialPrefix.dust, WoodMaterials.WoodRotten);

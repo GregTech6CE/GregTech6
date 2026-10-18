@@ -39,13 +39,13 @@ magic_research_paper""".split()
 
 def catalog(root):
     java = root / "core/src/main/java/com/gregtech/gregtech"
-    en = json.loads((root / "core/src/main/resources/assets/gregtech/lang/en_us.json").read_text(encoding="utf-8"))
+    en = json.loads((root / "core/src/main/resources/assets/gt6ce/lang/en_us.json").read_text(encoding="utf-8"))
     # Only actual name keys, never .tooltip entries or %s material templates.
     ids = {k.split('.')[2]: k for k, v in en.items()
-           if re.fullmatch(r"(?:item|block)\.gregtech\.[a-z0-9_]+", k) and "%" not in v}
+           if re.fullmatch(r"(?:item|block)\.gt6ce\.[a-z0-9_]+", k) and "%" not in v}
     machine_source = (java / "content/machine/BasicMachineCatalog.java").read_text(encoding="utf-8")
     machines = set(re.findall(r'new MachineDef\("([^"]+)"', machine_source))
-    materials = {k.removeprefix("material.gregtech.").replace("_", "") for k in en if k.startswith("material.gregtech.")}
+    materials = {k.removeprefix("material.gt6ce.").replace("_", "") for k in en if k.startswith("material.gt6ce.")}
     materials.update(v.replace("_", "") for v in re.findall(r'MAT_SHORT.put\(Materials.\w+, "([^"]+)"', machine_source))
     # Restrict basic-machine groups to exact tier/material registry identities;
     # machine parts and extruder shape items are not machines.
@@ -119,7 +119,7 @@ def catalog(root):
 def resources(root):
     groups, ids = catalog(root)
     from remi_group_titles import headings
-    language = json.loads((root / "core/src/main/resources/assets/gregtech/lang/en_us.json").read_text(encoding="utf-8"))
+    language = json.loads((root / "core/src/main/resources/assets/gt6ce/lang/en_us.json").read_text(encoding="utf-8"))
     titles = headings(root, language)
     for group, items in groups.items():
         chosen = next((i for i in items if i.endswith("_bronze")), items[0])
@@ -127,12 +127,12 @@ def resources(root):
             chosen = "stone_basalt_" + group.removeprefix("stone_")
         # Reuse an exact existing label, including its source-bound translation.
         # The representative's material never limits membership of the group.
-        title_key = "emi.group.gregtech.functional_" + group
+        title_key = "emi.group.gt6ce.functional_" + group
         yield "functional_" + group, {"type": "remi:group", "name": title_key if title_key in titles else ids[chosen],
-                "contents": ["item:gregtech:" + item for item in items], "priority": 110}
-    yield "functional_material_bush", {"type": "remi:group", "name": "block.gregtech.bush",
-            "regex": "^gregtech:bush_plant_gt_berry_[a-z0-9_]+$", "priority": 110}
-    yield "fluid_item", {"type": "remi:group", "name": "itemGroup.gregtech.fluids",
-            "regex": "^gregtech:fluid_item_[a-z0-9_]+$", "priority": 110}
+                "contents": ["item:gt6ce:" + item for item in items], "priority": 110}
+    yield "functional_material_bush", {"type": "remi:group", "name": "block.gt6ce.bush",
+            "regex": "^gt6ce:bush_plant_gt_berry_[a-z0-9_]+$", "priority": 110}
+    yield "fluid_item", {"type": "remi:group", "name": "itemGroup.gt6ce.fluids",
+            "regex": "^gt6ce:fluid_item_[a-z0-9_]+$", "priority": 110}
     from remi_extra_groups import resources as extra_resources
     yield from extra_resources(root)

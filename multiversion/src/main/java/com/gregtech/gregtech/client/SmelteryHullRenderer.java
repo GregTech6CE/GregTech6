@@ -27,7 +27,7 @@ public final class SmelteryHullRenderer implements BlockEntityRenderer<BlockEnti
 
     private static final ResourceLocation SOLID_BASE =
 //? if >=1.21.1 {
-            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blocksolid");
+            /*net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blocksolid");
 *///?} else {
             GregTech.id("block/material_icons/metallic/blocksolid");
 //?}

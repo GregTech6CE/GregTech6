@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 Loader_MultiTileEntities:2089",
+  "pattern": [
+    " V",
+    "VV",
+    "Vb"
+  ],
+  "key": {
+    "V": {
+      "item": "minecraft:vine"
+    },
+    "b": {
+      "item": "gt6ce:tool_sword"
+    }
+  },
+  "allow_mirror": false,
+  "result": {
+    "item": "gt6ce:rope_vine"
+  }
+}

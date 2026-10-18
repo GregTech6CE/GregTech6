@@ -41,7 +41,7 @@ public final class FluidPipeChannelTests {
             for (int i = 0; i < previous.getTanks(); i++) previous.drain(Integer.MAX_VALUE, FluidAction.EXECUTE);
         }
         level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_" + size + "_steel"));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_" + size + "_steel"));
         h.assertTrue(block instanceof FluidPipeBlock, "registered steel pipe " + size);
         level.setBlockAndUpdate(pos, block.defaultBlockState());
         // onPlace can reconnect to old neighbours; each fixture declares its own connections below.
@@ -168,7 +168,7 @@ public final class FluidPipeChannelTests {
     }
 
     private static com.gregtech.gregtech.blockentity.machine.TankBlockEntity drum(GameTestHelper h, BlockPos pos) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "drum_stainless_steel"));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "drum_stainless_steel"));
         h.getLevel().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
         var be = h.getLevel().getBlockEntity(pos);

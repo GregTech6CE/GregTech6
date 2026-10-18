@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /** Regression for GT6's global-RNG drink selection in the workshop cellar. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DungeonWorkshopDrinkRandomTests {
     private static final Set<String> DRINKS = Set.of("Purple_Drink", "Vodka", "Mead",
@@ -56,13 +56,13 @@ public final class DungeonWorkshopDrinkRandomTests {
             for (int i = 1; i <= 2; i++) for (int j = 12; j <= 13; j++) for (int k = 1; k <= 3; k++) {
                 BlockPos pos = new BlockPos(x + i, y + k, z + j);
                 String name = String.valueOf(ForgeRegistries.BLOCKS.getKey(level.getBlockState(pos).getBlock()));
-                if (!name.equals("gregtech:wood_barrel_treated")
-                        && !name.equals("gregtech:wood_barrel_ironwood")) continue;
+                if (!name.equals("gt6ce:wood_barrel_treated")
+                        && !name.equals("gt6ce:wood_barrel_ironwood")) continue;
                 barrels++;
                 helper.assertTrue(level.getBlockEntity(pos) instanceof TankBlockEntity,
                         "a GT6 drink barrel has its tank entity");
                 var fluid = ((TankBlockEntity) level.getBlockEntity(pos)).getFluidTank().getFluid();
-                int expectedAmount = name.equals("gregtech:wood_barrel_ironwood") ? 32000 : 16000;
+                int expectedAmount = name.equals("gt6ce:wood_barrel_ironwood") ? 32000 : 16000;
                 helper.assertTrue(fluid.getAmount() == expectedAmount,
                         "GT6 cellar barrel holds " + expectedAmount + " mB");
                 boolean allowed = false;

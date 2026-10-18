@@ -33,7 +33,7 @@ import java.util.List;
  * way to make any of them, so the Nanofab was unreachable in survival.</p>
  *
  * <p>The empty emitter's crafting recipe is a datapack recipe
- * ({@code data/gregtech/recipes/components/laser_emitter_emptygas.json}) because it is an ordinary
+ * ({@code data/gt6ce/recipes/components/laser_emitter_emptygas.json}) because it is an ordinary
  * shaped recipe; the gas filling lives here because it is a machine recipe.</p>
  */
 public final class LaserEmitterRecipes {
@@ -110,7 +110,7 @@ public final class LaserEmitterRecipes {
 
     private static ItemStack item(String id) {
 //? if >=1.21.1 {
-        /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        /*var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
         var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, id));
 //?}

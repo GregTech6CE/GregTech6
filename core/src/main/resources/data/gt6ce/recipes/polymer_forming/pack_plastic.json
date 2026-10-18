@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    },
+    {
+      "tag": "forge:nuggets/plastic"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:ingot_plastic",
+    "count": 1
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:599 (disabled)"
+}

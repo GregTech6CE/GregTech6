@@ -1,0 +1,34 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PLP",
+    "SMS",
+    "GPC"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:casing_machine_double/invar"
+    },
+    "P": {
+      "tag": "gt6ce:plate_curved/invar"
+    },
+    "S": {
+      "tag": "gt6ce:stick/invar"
+    },
+    "G": {
+      "tag": "gt6ce:gear_gt/invar"
+    },
+    "C": {
+      "tag": "gt6ce:gear_gt_small/invar"
+    },
+    "L": {
+      "type": "gt6ce:finite_fluid_container_1000",
+      "fluid": "Lubricant",
+      "allow_lubricant_bottle": true
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_diesel_invar"
+  },
+  "allow_mirror": false
+}

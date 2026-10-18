@@ -20,7 +20,7 @@ import java.util.List;
 public final class GTItemPipes {
 //? if >=1.21.1 {
  /*private GTItemPipes(){}
- public static final DeferredRegister.Blocks BLOCKS=DeferredRegister.createBlocks("gregtech");public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gregtech");
+ public static final DeferredRegister.Blocks BLOCKS=DeferredRegister.createBlocks("gt6ce");public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gt6ce");
  private static final java.util.List<DeferredBlock<ItemPipeBlock>> ALL=new java.util.ArrayList<>();public static DeferredBlock<ItemPipeBlock> PIPE_MEDIUM_BRASS;
  public static DeferredBlock<ItemPipeBlock> register(String id,GTMaterial material,ItemPipeSpec.ItemPipeSize size,long step,int inv,boolean routing){var spec=ItemPipeSpec.of(id,material,size,step,inv,routing);var block=BLOCKS.register(id,()->new ItemPipeBlock(spec,ItemPipeBlock.defaultProperties(spec)));ALL.add(block);ITEMS.register(id,()->new com.gregtech.gregtech.block.machine.ItemPipeBlockItem(block.get(),new Item.Properties().stacksTo(stackSize(size))));return block;}
  public static int stackSize(ItemPipeSpec.ItemPipeSize size){return switch(size){case MEDIUM,RESTRICTIVE_MEDIUM->64;case LARGE,RESTRICTIVE_LARGE->32;case HUGE,RESTRICTIVE_HUGE->16;};}

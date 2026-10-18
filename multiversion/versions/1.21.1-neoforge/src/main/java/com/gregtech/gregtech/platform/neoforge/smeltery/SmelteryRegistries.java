@@ -14,9 +14,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 /** Real GT6 block/BE identities; domain specifications come exclusively from core. */
 public final class SmelteryRegistries {
     private SmelteryRegistries() {}
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gregtech");
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gregtech");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gregtech");
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
     public static final DeferredItem<SmelteryToolItem> CHISEL = com.gregtech.gregtech.registry.GTToolItems.CHISEL;
     public static final DeferredItem<SmelteryToolItem> PINCERS = com.gregtech.gregtech.registry.GTToolItems.PINCERS;
 

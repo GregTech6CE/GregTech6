@@ -59,7 +59,7 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
     public static final BooleanProperty RESIN = BooleanProperty.create("resin");
 
     private final WoodSpecies species;
-    /** {@code item:gregtech:rubber_resin} for rubber, {@code fluid:<name>} for the sap holes. */
+    /** {@code item:gt6ce:rubber_resin} for rubber, {@code fluid:<name>} for the sap holes. */
     private final String yield;
 
     public TreeHoleBlock(WoodSpecies species, String yield, Properties properties) {

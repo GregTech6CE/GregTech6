@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 /** Block-atlas sprites for crucible interior fill (atlas-safe, with fallbacks). */
 public final class CrucibleRenderSprites {
 //? if >=1.21.1 {
-    /*private static final ResourceLocation FALLBACK = ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/metallic/blockraw");
+    /*private static final ResourceLocation FALLBACK = ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/metallic/blockraw");
 *///?} else {
     private static final ResourceLocation FALLBACK = GregTech.id("block/material_icons/metallic/blockraw");
 //?}

@@ -8,7 +8,7 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class VanillaBlockProcessingTests {
     @GameTest(template="test_empty")
     public static void blockProcessingIsReachableAndConsumesExactCoolant(GameTestHelper h) {

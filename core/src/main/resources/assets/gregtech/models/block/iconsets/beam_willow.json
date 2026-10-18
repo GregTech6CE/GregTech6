@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "gregtech:block/iconsets/beam_top_willow",
-    "side": "gregtech:block/iconsets/beam_side_willow"
-  }
-}

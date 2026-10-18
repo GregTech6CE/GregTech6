@@ -97,7 +97,7 @@ public final class LogisticsNetworkTests {
                         && restored.bufferTank(107).getFluidInTank(0).getAmount() == 8000,
                 "both ends of the fixed tank array survive save/load");
         helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", "machines/multiblock/logistics_wire")).isPresent(),
+                "gt6ce", "machines/multiblock/logistics_wire")).isPresent(),
                 "GT6 PEP/dFx/POP Logistics Wire recipe is available in survival");
         helper.succeed();
     }

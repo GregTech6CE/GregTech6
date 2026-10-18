@@ -39,7 +39,7 @@ public class WorldgenInfoData {
     public static ItemStack oreStack(GTMaterial material) {
         if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
 //? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",
+        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE,
 //?}
@@ -50,7 +50,7 @@ public class WorldgenInfoData {
     public static ItemStack smallOreStack(GTMaterial material) {
         if (material == null || !material.resolve().isValid()) return new ItemStack(Items.STONE);
 //? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",
+        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE,
 //?}
@@ -94,7 +94,7 @@ public class WorldgenInfoData {
             if (def.stoneType() != null) {
                 String id = "stone_" + def.stoneType().toLowerCase() + "_stone";
 //? if >=1.21.1 {
-                /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, id));
 //?}
@@ -103,7 +103,7 @@ public class WorldgenInfoData {
                 display = def.material();
             } else if (def.blockId() != null) {
 //? if >=1.21.1 {
-                /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", def.blockId()));
+                /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", def.blockId()));
 *///?} else {
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, def.blockId()));
 //?}
@@ -131,7 +131,7 @@ public static List<BedrockInfo> buildBedrockOres() {
         for (com.gregtech.gregtech.worldgen.GTBedrockOres.BedrockOre ore
                 : com.gregtech.gregtech.worldgen.GTBedrockOres.OVERWORLD) {
 //? if >=1.21.1 {
-            /*Item flower = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", ore.flowerId()));
+            /*Item flower = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", ore.flowerId()));
 *///?} else {
             Item flower = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GregTech.NAMESPACE, ore.flowerId()));
 //?}

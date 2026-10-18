@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_printer",
+  "contents": [
+    "item:gt6ce:printer_aluminium",
+    "item:gt6ce:printer_chromium",
+    "item:gt6ce:printer_galvanized_steel",
+    "item:gt6ce:printer_stainless_steel",
+    "item:gt6ce:printer_titanium"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_clay_molds",
+  "regex": "^item:gt6ce:clay_(?:(?:[a-z0-9_]+_)?mold|tap|funnel|jug|measuring_pot|juicer|bowl|basin|crossing|crucible|faucet)$",
+  "priority": 120
+}

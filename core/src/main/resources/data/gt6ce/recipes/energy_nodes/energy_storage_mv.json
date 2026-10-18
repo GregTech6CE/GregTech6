@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "tag": "gt6ce:wire_04/any_copper"
+    },
+    "C": {
+      "tag": "gt6ce:cable_04/any_copper"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_2_plus"
+    },
+    "M": {
+      "item": "gt6ce:transformer_mv_hv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:energy_storage_mv"
+  }
+}

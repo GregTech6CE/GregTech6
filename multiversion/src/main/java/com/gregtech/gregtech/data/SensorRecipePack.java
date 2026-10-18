@@ -72,7 +72,7 @@ import java.util.TreeMap;
  * with a {@code null} material argument, and the only tiered key in the twenty rows is
  * {@code IL.SENSORS[1]} (the Laser-O-Meter's centre, {@code :1998}), which is the <b>LV</b> compact
  * sensor. {@link #SENSOR_TIER} is therefore 1: it makes {@code il:SENSORS} resolve to
- * {@code gregtech:compact_sensor_lv} exactly as GT6's index does, and no other key is tier-sensitive.
+ * {@code gt6ce:compact_sensor_lv} exactly as GT6's index does, and no other key is tier-sensitive.
  * </p>
  *
  * <h2>4. Unused keys are dropped</h2>
@@ -81,7 +81,7 @@ import java.util.TreeMap;
  * {@code C} even where the pattern has no such cell. GT6's own recipe handler ignores extra keys, but
  * vanilla's does not: {@code ShapedRecipe.dissolvePattern} throws
  * {@code JsonSyntaxException("Key defines symbols that aren't used in pattern: […]")}
- * ({@code ShapedRecipe.java:174-175}), and the port's {@code gregtech:tool_shaped} serializer
+ * ({@code ShapedRecipe.java:174-175}), and the port's {@code gt6ce:tool_shaped} serializer
  * delegates straight to it. Emitting the rows verbatim therefore made all twenty recipes fail to
  * load. {@link #usedSymbols(List)} is the filter, and the key map is resolved
  * <em>after</em> filtering so an unused key cannot log a substitution it never needed.
@@ -116,7 +116,7 @@ public final class SensorRecipePack extends AbstractPackResources {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location = new net.minecraft.server.packs.PackLocationInfo("gregtech:sensor_recipes",
+            /*var location = new net.minecraft.server.packs.PackLocationInfo("gt6ce:sensor_recipes",
                     Component.literal("GregTech sensor machine manufacturing recipes"),
                     PackSource.BUILT_IN, java.util.Optional.empty());
             Pack pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
@@ -128,7 +128,7 @@ public final class SensorRecipePack extends AbstractPackResources {
                 }
             }, PackType.SERVER_DATA, new net.minecraft.server.packs.PackSelectionConfig(true, Pack.Position.BOTTOM, true));
 *///?} else {
-            Pack pack = Pack.readMetaAndCreate("gregtech:sensor_recipes",
+            Pack pack = Pack.readMetaAndCreate("gt6ce:sensor_recipes",
                     Component.literal("GregTech sensor machine manufacturing recipes"), true,
                     SensorRecipePack::new, PackType.SERVER_DATA, Pack.Position.BOTTOM,
                     PackSource.BUILT_IN);
@@ -167,7 +167,7 @@ public final class SensorRecipePack extends AbstractPackResources {
         EMITTED.clear();
 
         for (GTSensorRecipesGen.Row row : GTSensorRecipesGen.ROWS) {
-            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", row.blockId());
+            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", row.blockId());
 //? if >=1.21.1 {
             /*Block block = BuiltInRegistries.BLOCK.get(blockId);
 *///?} else {
@@ -180,7 +180,7 @@ public final class SensorRecipePack extends AbstractPackResources {
             Map<String, Object> recipe = buildRecipe(row, item);
             if (recipe == null) continue;
 
-            generated.put(ResourceLocation.fromNamespaceAndPath("gregtech",
+            generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",
 //? if >=1.21.1 {
                     /*"recipe/machines/sensors/" + row.blockId() + ".json"),
 *///?} else {
@@ -231,7 +231,7 @@ public final class SensorRecipePack extends AbstractPackResources {
         if (resultId == null) return null;
 
         Map<String, Object> recipe = new HashMap<>();
-        recipe.put("type", "gregtech:tool_shaped");
+        recipe.put("type", "gt6ce:tool_shaped");
         recipe.put("pattern", pattern);
         recipe.put("key", key);
         recipe.put("allow_mirror", false);
@@ -275,7 +275,7 @@ public final class SensorRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

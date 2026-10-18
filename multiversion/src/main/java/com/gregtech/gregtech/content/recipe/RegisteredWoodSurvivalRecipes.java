@@ -17,9 +17,9 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
            com.gregtech.gregtech.api.material.MaterialComponent.of(bark,unit));
    // WoodEntry:175-176 upgrades the original generic 4U log to 5U wood + 1U bark,
    // or 6U of the same material for rotten/mossy wood. PlankEntry contributes 1U.
-   com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(item("gregtech:log_"+wood.kind(),1).getItem(),
+   com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(item("gt6ce:log_"+wood.kind(),1).getItem(),
            new com.gregtech.gregtech.api.material.ItemComposition(null,components,"GT6 WoodEntry Log1",true));
-   com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(item("gregtech:planks_"+wood.kind(),1).getItem(),null,material,unit);
+   com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(item("gt6ce:planks_"+wood.kind(),1).getItem(),null,material,unit);
   }
  }
  public static int register(){
@@ -29,7 +29,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS)
    for(var coolant:SawingCoolants.variants(false))
     INSTANCE.add("saw/slab/"+wood+"/"+coolant.field(),MachineRecipeMaps.Cutter,72L*coolant.multiplier(),16,
-     items(item("gregtech:planks_"+wood,1)),items(item("gregtech:slab_"+wood,2)),
+     items(item("gt6ce:planks_"+wood,1)),items(item("gt6ce:slab_"+wood,2)),
      fluids(fluid(coolant.field(),3*coolant.multiplier())),null);
   for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS) INSTANCE.slabUses(wood);
   return INSTANCE.entries().size();
@@ -47,7 +47,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
  private void slabUses(String wood){
   String name=com.gregtech.gregtech.content.plant.WoodSlabCatalog.material(wood);
   var material=com.gregtech.gregtech.api.material.GTMaterialRegistry.get(name);
-  var slab=item("gregtech:slab_"+wood,1);
+  var slab=item("gt6ce:slab_"+wood,1);
   com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(slab.getItem(),null,material,
           com.gregtech.gregtech.api.material.GTValues.U/2);
   var dust=MortarGrindingRecipes.pulverize(material,com.gregtech.gregtech.api.material.GTValues.U/2);
@@ -55,7 +55,7 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   if(dust.isEmpty())throw new IllegalStateException("Missing wood slab pulverization material "+name);
   MachineRecipeMaps.pulverizing(slab,dust);
   MachineRecipeMaps.generify(slab,new ItemStack(net.minecraft.world.level.block.Blocks.OAK_SLAB));
-  add("petrify/slab/"+wood,MachineRecipeMaps.Injector,64,16,items(item("gregtech:slab_"+wood,9)),
+  add("petrify/slab/"+wood,MachineRecipeMaps.Injector,64,16,items(item("gt6ce:slab_"+wood,9)),
           items(mat(MaterialPrefix.rockGt,"PetrifiedWood",2)),fluids(fluid("MnWtr",500)),null);
  }
  private void saw(String id,ItemStack input,ItemStack... output){
@@ -72,10 +72,10 @@ public final class RegisteredWoodSurvivalRecipes extends OriginalRecipeBatch {
   add("lathe/planks/"+s.id(),MachineRecipeMaps.Lathe,16,16,items(new ItemStack(GTWoods.planks(s))),items(new ItemStack(net.minecraft.world.item.Items.STICK,2)),null,null);
  }
  private void naturalWood(NaturalWoodCraftingRows.Spec wood){
-  var log=item("gregtech:log_"+wood.kind(),1);
-  var plank=item("gregtech:planks_"+wood.kind(),1);
-  var bark=wood.kind().equals("dry")?item("gregtech:dry_bark",1):mat(MaterialPrefix.dust,wood.barkMaterial(),1);
-  saw("natural/"+wood.kind(),log,item("gregtech:planks_"+wood.kind(),3),bark);
+  var log=item("gt6ce:log_"+wood.kind(),1);
+  var plank=item("gt6ce:planks_"+wood.kind(),1);
+  var bark=wood.kind().equals("dry")?item("gt6ce:dry_bark",1):mat(MaterialPrefix.dust,wood.barkMaterial(),1);
+  saw("natural/"+wood.kind(),log,item("gt6ce:planks_"+wood.kind(),3),bark);
   // The source explicitly sets the log's stick count to zero, leaving only the dust output.
   add("lathe/natural/"+wood.kind(),MachineRecipeMaps.Lathe,80,16,items(log),items(mat(MaterialPrefix.dust,wood.material(),1)),null,null);
   add("lathe/natural_plank/"+wood.kind(),MachineRecipeMaps.Lathe,16,16,items(plank),items(mat(MaterialPrefix.stick,wood.material(),2)),null,null);

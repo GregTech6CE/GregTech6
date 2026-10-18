@@ -27,12 +27,12 @@ import java.util.TreeMap;
  * reference all of them is deliberately gone: resolving it enumerates every material item in the mod
  * (tens of thousands), which cost JEI several seconds on every open.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialTagTests {
 
     private static TagKey<Item> tag(String path) {
-        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gregtech", path));
+        return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", path));
     }
 
     private static int sizeOf(String path) {
@@ -47,9 +47,9 @@ public final class MaterialTagTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void umbrellaMaterialTagIsGone(GameTestHelper helper) {
         helper.assertTrue(BuiltInRegistries.ITEM.getTag(tag("material")).isEmpty(),
-                "gregtech:material (all materials) must not be registered");
+                "gt6ce:material (all materials) must not be registered");
         int iron = sizeOf("material/iron");
-        helper.assertTrue(iron > 0, "the per-material tag still exists (gregtech:material/iron)");
+        helper.assertTrue(iron > 0, "the per-material tag still exists (gt6ce:material/iron)");
         helper.assertTrue(iron < 200, "one material's tag stays small: iron has " + iron + " entries");
         helper.succeed();
     }
@@ -99,8 +99,8 @@ public final class MaterialTagTests {
         GTMaterial iron = GTMaterialRegistry.get("Iron");
         ItemStack ingot = GTItems.getStack(MaterialPrefix.ingot, iron, 1);
         helper.assertTrue(!ingot.isEmpty() && ingot.getItem() instanceof MaterialItem, "iron ingot exists");
-        helper.assertTrue(inTag("ingot/iron", ingot), "gregtech:ingot/iron contains the ingot");
-        helper.assertTrue(sizeOf("ingot/iron") > 0, "gregtech:ingot/iron is published");
+        helper.assertTrue(inTag("ingot/iron", ingot), "gt6ce:ingot/iron contains the ingot");
+        helper.assertTrue(sizeOf("ingot/iron") > 0, "gt6ce:ingot/iron is published");
         helper.succeed();
     }
 }

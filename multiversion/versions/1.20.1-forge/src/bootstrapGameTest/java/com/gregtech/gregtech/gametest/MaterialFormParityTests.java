@@ -28,7 +28,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  *       pseudo-material.</li>
  * </ul>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialFormParityTests {
 

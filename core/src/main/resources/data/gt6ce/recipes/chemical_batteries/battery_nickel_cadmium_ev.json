@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": [
+    "WPW",
+    "BCB",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_batteryalloy"
+    },
+    "B": {
+      "item": "gt6ce:nickel_cadmium_cell_filled"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_aluminium"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_4_plus"
+    }
+  },
+  "result": {
+    "item": "gt6ce:battery_nickel_cadmium_ev"
+  }
+}

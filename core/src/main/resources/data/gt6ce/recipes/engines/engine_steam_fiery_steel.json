@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_double/fiery_steel"
+    },
+    "S": {
+      "tag": "gt6ce:stick/fiery_steel"
+    },
+    "I": {
+      "tag": "gt6ce:spring_small/fiery_steel"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_fiery_steel"
+  },
+  "allow_mirror": false
+}

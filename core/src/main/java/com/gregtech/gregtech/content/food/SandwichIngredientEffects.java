@@ -136,7 +136,7 @@ public final class SandwichIngredientEffects {
         new Effect("huge_food_can_chum", "minecraft:nausea", 300, 1, 80, false)
     );
     public static List<Effect> forItem(String item) {
-        return item.startsWith("gregtech:")
-                ? java.util.stream.Stream.concat(ROWS.stream(), CANNED.stream()).filter(row -> row.item().equals(item.substring(9))).toList() : List.of();
+        return item.startsWith("gt6ce:")
+                ? java.util.stream.Stream.concat(ROWS.stream(), CANNED.stream()).filter(row -> row.item().equals(item.substring("gt6ce:".length()))).toList() : List.of();
     }
 }

@@ -13,7 +13,7 @@ import java.util.*;
 /** Uses the final installed native item renderer and actual serialized layers. */
 final class SandwichDeliveryChecks {
  private static void require(boolean ok,String why){if(!ok)throw new IllegalStateException("Delivered sandwich: "+why);}
- private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id)));}
+ private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id)));}
  static JsonObject capture(Minecraft minecraft,net.minecraft.client.gui.GuiGraphics graphics){
   var block=((BlockItem)item("sandwich_block").getItem()).getBlock();var custom=new SandwichBlockEntity(BlockPos.ZERO,block.defaultBlockState());
   custom.seedBase(item("toasted_toast").copyWithCount(16));require(custom.addIngredient(item("tofu_bar").copyWithCount(16))==16,"tofu ingredient");require(custom.addIngredient(item("tomato_ketchup").copyWithCount(4))==4,"ketchup ingredient");require(custom.addIngredient(item("toasted_toast").copyWithCount(16))==16,"top bread");

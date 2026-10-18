@@ -1,6 +1,0 @@
-{
-  "type": "remi:group",
-  "name": "emi.group.gregtech.functional_extruder_shape",
-  "regex": "^item:gregtech:extruder_shape_[a-z0-9_]+$",
-  "priority": 120
-}

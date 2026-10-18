@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compact_sensor",
+  "contents": [
+    "item:gt6ce:compact_sensor_ev",
+    "item:gt6ce:compact_sensor_hv",
+    "item:gt6ce:compact_sensor_iv",
+    "item:gt6ce:compact_sensor_luv",
+    "item:gt6ce:compact_sensor_lv",
+    "item:gt6ce:compact_sensor_mv",
+    "item:gt6ce:compact_sensor_puv1",
+    "item:gt6ce:compact_sensor_ulv",
+    "item:gt6ce:compact_sensor_uv",
+    "item:gt6ce:compact_sensor_xv",
+    "item:gt6ce:compact_sensor_zpm"
+  ],
+  "priority": 110
+}

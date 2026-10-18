@@ -61,7 +61,7 @@ public final class WoodLogToolClickTests {
                     species.id() + " is paired with its own log and beam");
             ItemStack expected = species == WoodSpecies.CINNAMON
                     ? new ItemStack(ForgeRegistries.ITEMS.getValue(
-                            ResourceLocation.fromNamespaceAndPath("gregtech", "cinnamon_bark")))
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "cinnamon_bark")))
                     : GTItems.getStack(MaterialPrefix.dust, Materials.Bark);
             helper.assertTrue(!expected.isEmpty() && log.toolProduct().is(expected.getItem()),
                     species.id() + " has the GT6 bark or cinnamon product");

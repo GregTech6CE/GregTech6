@@ -136,7 +136,7 @@ public final class DiggableRecipes {
 
     private static Item item(String id) {
 //? if >=1.21.1 {
-        /*Item value = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+        /*Item value = BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
         Item value = ForgeRegistries.ITEMS.getValue(GregTech.id(id));
 //?}

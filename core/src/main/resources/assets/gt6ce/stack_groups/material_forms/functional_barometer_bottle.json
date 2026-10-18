@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_barometer_bottle",
+  "contents": [
+    "item:gt6ce:fluid_barometer_gas_cylinder",
+    "item:gt6ce:fluid_barometer_gas_cylinder_stainless_steel",
+    "item:gt6ce:fluid_barometer_gas_cylinder_tantalum_hafnium_carbide",
+    "item:gt6ce:fluid_barometer_gas_cylinder_tungsten"
+  ],
+  "priority": 110
+}

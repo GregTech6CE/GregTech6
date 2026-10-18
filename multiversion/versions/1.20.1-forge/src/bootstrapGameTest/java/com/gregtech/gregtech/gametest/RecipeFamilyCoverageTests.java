@@ -32,7 +32,7 @@ import java.util.TreeMap;
  * (grindstone) rows, the welder rows, the autoclave crystallisation and the anvil ore grinding.
  * Each family carries the original file:line reference in its own class.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class RecipeFamilyCoverageTests {
 

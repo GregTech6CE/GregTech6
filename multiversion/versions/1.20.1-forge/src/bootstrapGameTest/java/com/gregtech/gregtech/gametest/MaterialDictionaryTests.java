@@ -26,7 +26,7 @@ import java.util.List;
  * registered materials, so these tests pin both: a dictionary has readable pages about its material,
  * the table has one row per material, and the loot item really rolls it.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialDictionaryTests {
 
@@ -95,7 +95,7 @@ public final class MaterialDictionaryTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void dustyDictionaryRollsDictionaries(GameTestHelper helper) {
         var item = ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "dusty_material_dictionary"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "dusty_material_dictionary"));
         helper.assertTrue(item != null, "the dusty material dictionary is registered");
         helper.assertTrue(item instanceof com.gregtech.gregtech.content.loot.LootBagItem bag
                         && bag.tables().length == 1 && bag.tables()[0].equals("gt.matdicts"),

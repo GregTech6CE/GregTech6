@@ -207,6 +207,6 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
                                 TooltipFlag flag) {
         for (String operation : new String[]{"screwdriver", "cutter", "monkey_wrench",
                 "soft_hammer", "magnifying_glass", "sneak"})
-            tooltip.add(Component.translatable("tooltip.gregtech.advanced_button." + operation));
+            tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation));
     }
 }

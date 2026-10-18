@@ -919,7 +919,7 @@ public final class CoreBehaviorContracts {
         rejects(IllegalArgumentException.class,
                 () -> DefinitionCatalog.validated(List.of("same", "same"), id -> id), "duplicate registration IDs");
         rejects(IllegalArgumentException.class,
-                () -> DefinitionCatalog.validated(List.of("gregtech:oven"), id -> id), "namespace cannot enter a path ID");
+                () -> DefinitionCatalog.validated(List.of("gt6ce:oven"), id -> id), "namespace cannot enter a path ID");
     }
 
     private static void multiblockOwnershipLifecycle() {

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_unboxinator",
+  "contents": [
+    "item:gt6ce:unboxinator_aluminium",
+    "item:gt6ce:unboxinator_chromium",
+    "item:gt6ce:unboxinator_galvanized_steel",
+    "item:gt6ce:unboxinator_stainless_steel",
+    "item:gt6ce:unboxinator_titanium"
+  ],
+  "priority": 110
+}

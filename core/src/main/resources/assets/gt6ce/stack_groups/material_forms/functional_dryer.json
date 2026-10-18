@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_dryer",
+  "contents": [
+    "item:gt6ce:dryer_invar",
+    "item:gt6ce:dryer_steel",
+    "item:gt6ce:dryer_titanium",
+    "item:gt6ce:dryer_tungsten_carbide"
+  ],
+  "priority": 110
+}

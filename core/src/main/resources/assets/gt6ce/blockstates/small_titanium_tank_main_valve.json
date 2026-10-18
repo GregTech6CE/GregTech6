@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "gt6ce:block/machine/multiblock/small_titanium_tank_main_valve",
+      "x": 90
+    }
+  }
+}

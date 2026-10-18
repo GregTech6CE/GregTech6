@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_coils",
+  "contents": [
+    "item:gt6ce:large_carborundum_coil",
+    "item:gt6ce:large_copper_coil",
+    "item:gt6ce:large_iridium_coil",
+    "item:gt6ce:large_nichrome_coil",
+    "item:gt6ce:large_niobium_titanium_coil",
+    "item:gt6ce:large_osmium_coil"
+  ],
+  "priority": 110
+}

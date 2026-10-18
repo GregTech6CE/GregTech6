@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:tool_saw",
+    "gt6ce:tool_axe",
+    "gt6ce:tool_double_axe",
+    "gt6ce:tool_universal_spade"
+  ]
+}

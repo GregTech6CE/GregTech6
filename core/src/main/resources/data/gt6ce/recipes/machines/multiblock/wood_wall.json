@@ -1,0 +1,12 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": ["W W", "sPh", "W W"],
+  "key": {
+    "W": {"item": "gt6ce:planks_treated"},
+    "P": {"tag": "forge:plates/lead"},
+    "s": {"item": "gt6ce:tool_saw"},
+    "h": {"item": "gt6ce:tool_hammer"}
+  },
+  "result": {"item": "gt6ce:wood_wall"},
+  "allow_mirror": false
+}

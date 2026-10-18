@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SPC",
+    "WQP",
+    "CWS"
+  ],
+  "key": {
+    "S": {
+      "item": "gt6ce:wire_04_aluminium"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_chromium"
+    },
+    "C": {
+      "item": "gt6ce:circuit_elite"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_aluminium"
+    },
+    "Q": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_signal_emitter_ev",
+    "count": 1
+  }
+}

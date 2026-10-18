@@ -49,7 +49,7 @@ import net.minecraftforge.registries.RegistryObject;
 public final class GTBlockEntities {
 //? if >=1.21.1 {
     /*public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gregtech");
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, "gt6ce");
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.ReactorCoreBlockEntity>> REACTOR_CORE=BLOCK_ENTITIES.register("reactor_core",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.ReactorCoreBlockEntity::new,GTEnergyNodes.REACTOR_CORE_BLOCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.ReactorCore2x2BlockEntity>> REACTOR_CORE_2X2=BLOCK_ENTITIES.register("reactor_core_2x2",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.ReactorCore2x2BlockEntity::new,GTEnergyNodes.REACTOR_CORE_2X2.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.PlacedReactorRodBlockEntity>> PLACED_REACTOR_ROD=BLOCK_ENTITIES.register("placed_reactor_rod",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.PlacedReactorRodBlockEntity::new,GTFuelRods.BLOCKS.values().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));

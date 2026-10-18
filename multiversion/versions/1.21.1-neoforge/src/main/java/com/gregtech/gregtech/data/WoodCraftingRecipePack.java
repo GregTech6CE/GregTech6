@@ -40,7 +40,7 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:wood_crafting_recipes",Component.literal("GregTech original wood crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:wood_crafting_recipes",Component.literal("GregTech original wood crafting recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new WoodCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new WoodCraftingRecipePack(info);}
@@ -77,11 +77,11 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
         int star=parts[5].lastIndexOf('*');String outputSpec=star<0?parts[5]:parts[5].substring(0,star);int count=star<0?1:Integer.parseInt(parts[5].substring(star+1));
         var output=resolve(outputSpec);if(output.isEmpty())throw new IllegalStateException("Unresolved original wood output "+outputSpec);
         Map<String,Object> recipe=new java.util.LinkedHashMap<>();boolean shaped=parts[1].equals("shaped");
-        recipe.put("type",shaped?"gregtech:tool_shaped":"minecraft:crafting_shapeless");recipe.put("group","gt.wood");recipe.put("category",parts[0].startsWith("treated/")?"misc":"building");
+        recipe.put("type",shaped?"gt6ce:tool_shaped":"minecraft:crafting_shapeless");recipe.put("group","gt.wood");recipe.put("category",parts[0].startsWith("treated/")?"misc":"building");
         if(shaped){recipe.put("pattern",parts[3].split("/",-1));recipe.put("key",keys);recipe.put("allow_mirror",parts[2].equals("mirror"));}
         else recipe.put("ingredients",new ArrayList<>(keys.values()));
         recipe.put("result",Map.of("id",BuiltInRegistries.ITEM.getKey(output.getItem()).toString(),"count",count));
-        var key=ResourceLocation.fromNamespaceAndPath("gregtech","recipe/wood/"+parts[0]+".json");
+        var key=ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/wood/"+parts[0]+".json");
         if(data.putIfAbsent(key,GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8))!=null)throw new IllegalStateException("Duplicate wood recipe "+key);
     }
 
@@ -116,7 +116,7 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

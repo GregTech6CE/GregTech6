@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_oven",
+  "contents": [
+    "item:gt6ce:oven_invar",
+    "item:gt6ce:oven_steel",
+    "item:gt6ce:oven_titanium",
+    "item:gt6ce:oven_tungsten_carbide"
+  ],
+  "priority": 110
+}

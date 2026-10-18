@@ -93,7 +93,7 @@ public final class SmelteryClientModels {
 //?}
         LOGGER.info("[{}] Smeltery hull aliasing: {} basins, {} molds, {} crossings, {} faucets",
 //? if >=1.21.1 {
-                /*"gregtech", basins, molds, crossings, faucets);
+                /*"gt6ce", basins, molds, crossings, faucets);
 *///?} else {
                 GregTech.NAMESPACE, basins, molds, crossings, faucets);
 //?}
@@ -133,7 +133,7 @@ public final class SmelteryClientModels {
             }
             MaterialTextureSet textureSet = MaterialIcons.resolveTextureSet(spec.material());
 //? if >=1.21.1 {
-            /*ResourceLocation blockModelId = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/blocks/" + blockId.getPath());
+            /*ResourceLocation blockModelId = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath());
             ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(block.asItem());
 *///?} else {
             ResourceLocation blockModelId = GregTech.id("block/blocks/" + blockId.getPath());

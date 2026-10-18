@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "_comment": "GT6 MultiItemRandomTools:167",
+  "ingredients": [
+    {
+      "item": "gt6ce:clay_mold"
+    },
+    {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:clay_screwdriver_mold",
+    "count": 1
+  }
+}

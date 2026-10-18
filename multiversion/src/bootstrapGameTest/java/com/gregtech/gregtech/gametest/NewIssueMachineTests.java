@@ -28,7 +28,7 @@ import java.util.*;
 @GameTestHolder("gregtech_alignment") @PrefixGameTestTemplate(false)
 public final class NewIssueMachineTests {
     private static net.minecraft.world.level.block.Block block(String path) {
-        var id=ResourceLocation.fromNamespaceAndPath("gregtech",path);
+        var id=ResourceLocation.fromNamespaceAndPath("gt6ce",path);
         if (!BuiltInRegistries.BLOCK.containsKey(id)) throw new IllegalStateException("Missing fixture " + id);
         return BuiltInRegistries.BLOCK.get(id);
     }

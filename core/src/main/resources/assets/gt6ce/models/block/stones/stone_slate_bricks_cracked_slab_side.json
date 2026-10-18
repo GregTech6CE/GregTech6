@@ -1,0 +1,6 @@
+{
+  "parent": "gt6ce:block/stones/slab/side",
+  "textures": {
+    "all": "gt6ce:block/stones/gt.stone.slate/bricks_cracked"
+  }
+}

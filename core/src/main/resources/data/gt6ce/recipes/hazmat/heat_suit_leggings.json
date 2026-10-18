@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MxM",
+    "MlM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:foil/aluminium"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:heat_suit_leggings"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:stone_oilshale_stone"
+  },
+  "result": "gt6ce:stone_oilshale_smooth",
+  "experience": 0.0,
+  "cookingtime": 200
+}

@@ -76,6 +76,6 @@ public class LootBagItem extends Item {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
         // GT6: Behavior_Drop_Loot.getAdditionalToolTips -> "Rightclick this on a Block to loot"
-        tooltip.add(Component.translatable("gregtech.tooltip.loot_bag").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt6ce.tooltip.loot_bag").withStyle(ChatFormatting.GRAY));
     }
 }

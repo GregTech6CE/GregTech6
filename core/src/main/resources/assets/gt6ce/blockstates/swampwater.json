@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "gt6ce:block/fluid/swampwater"
+    },
+    "level=1": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=2": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=3": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=4": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=5": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=6": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=7": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=8": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=9": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=10": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=11": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=12": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=13": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=14": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    },
+    "level=15": {
+      "model": "gt6ce:block/fluid/swampwater_flow"
+    }
+  }
+}

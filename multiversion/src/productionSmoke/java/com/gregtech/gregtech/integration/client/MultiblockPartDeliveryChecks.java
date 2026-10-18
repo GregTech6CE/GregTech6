@@ -14,7 +14,7 @@ final class MultiblockPartDeliveryChecks {
     static JsonObject verify() {
         int parts = 0, rows = 0;
         for (var source : OriginalMultiblockPartData.ALL) {
-            var id = ResourceLocation.parse("gregtech:" + source.path());
+            var id = ResourceLocation.parse("gt6ce:" + source.path());
             require(BuiltInRegistries.ITEM.containsKey(id), "Original part registered " + id);
             var stack = new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block = ((BlockItem) stack.getItem()).getBlock();
@@ -41,14 +41,14 @@ final class MultiblockPartDeliveryChecks {
             var expected = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(source.path()).orElseThrow();
             var actual = com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
             require(actual.components().equals(expected.components()), "Actual known material quantities " + id);
-            require(!CommonBlockTooltips.containsKey(lines,"tooltip.gregtech.contained_materials")
+            require(!CommonBlockTooltips.containsKey(lines,"tooltip.gt6ce.contained_materials")
 //? if >=1.21.1 {
-                    /*&& stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED).stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c),"tooltip.gregtech.contained_materials")).count() == 1,
+                    /*&& stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED).stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c),"tooltip.gt6ce.contained_materials")).count() == 1,
 *///?} else {
-                    && stack.getTooltipLines(null,TooltipFlag.ADVANCED).stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c),"tooltip.gregtech.contained_materials")).count() == 1,
+                    && stack.getTooltipLines(null,TooltipFlag.ADVANCED).stream().filter(c -> CommonBlockTooltips.containsKey(List.of(c),"tooltip.gt6ce.contained_materials")).count() == 1,
 //?}
                     "One advanced material section " + id);
-            require(net.minecraft.client.resources.language.I18n.exists("block.gregtech." + source.path()), "Original part name " + id);
+            require(net.minecraft.client.resources.language.I18n.exists("block.gt6ce." + source.path()), "Original part name " + id);
             parts++;
         }
         require(parts == 45 && rows == 90,"All 45 source parts /two rows");

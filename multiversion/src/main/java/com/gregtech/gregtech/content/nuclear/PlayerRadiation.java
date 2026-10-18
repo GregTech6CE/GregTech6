@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class PlayerRadiation {
-    private static final String KEY = "gregtech.radiation";
+    private static final String KEY = "gt6ce.radiation";
     /** Dose from which the symptoms turn lethal in GT6 (wither instead of poison). */
     public static final int SEVERE_DOSE = 100;
     private PlayerRadiation() {}

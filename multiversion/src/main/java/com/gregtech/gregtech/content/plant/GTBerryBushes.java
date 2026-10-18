@@ -16,7 +16,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
     public static ResourceLocation itemId(String id) {
         if (id == null || id.isEmpty()) return null;
         if ("default".equals(id) || "string".equals(id)) return ResourceLocation.withDefaultNamespace("string");
-        return ResourceLocation.tryParse(id.contains(":") ? id : "gregtech:" + id);
+        return ResourceLocation.tryParse(id.contains(":") ? id : "gt6ce:" + id);
     }
 
     public static BerryType of(ItemStack stack) {
@@ -28,7 +28,7 @@ public final class GTBerryBushes extends BerryBushCatalog {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
         if (id == null) return null;
-        var known = id.getNamespace().equals("gregtech") ? BerryBushCatalog.byId(id.getPath()) : null;
+        var known = id.getNamespace().equals("gt6ce") ? BerryBushCatalog.byId(id.getPath()) : null;
         if (known != null) return known;
         var form = com.gregtech.gregtech.api.material.MaterialEquivalence.form(stack);
         if (form == null || form.prefix() != com.gregtech.gregtech.data.MaterialPrefix.plantGtBerry) return null;

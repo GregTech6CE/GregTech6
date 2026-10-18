@@ -81,7 +81,7 @@ public final class DungeonMobFarmRepairTests {
         var woodenArrows = helper.getLevel().getBlockEntity(origin.offset(9, 2, 8));
         helper.assertTrue(woodenArrows instanceof MassStorageBlockEntity
                 && ((MassStorageBlockEntity) woodenArrows).stored() >= 1
-                && ((MassStorageBlockEntity) woodenArrows).template().getDescriptionId().contains("gregtech"),
+                && ((MassStorageBlockEntity) woodenArrows).template().getDescriptionId().contains("gt6ce"),
                 "last storage has GT wooden arrows");
 
         Boolean redSteel = null;

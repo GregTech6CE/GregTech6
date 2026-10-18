@@ -67,9 +67,9 @@ public final class GTTreeHoles {
     }
 
     public static void registerAll() {
-        hole("resin_hole_rubber", WoodSpecies.RUBBER, "item:gregtech:rubber_resin");
-        hole("tapped_maple", WoodSpecies.MAPLE, "fluid:gregtech:maplesap");
-        hole("tapped_rainbowood", WoodSpecies.RAINBOWOOD, "fluid:gregtech:rainbowsap");
+        hole("resin_hole_rubber", WoodSpecies.RUBBER, "item:gt6ce:rubber_resin");
+        hole("tapped_maple", WoodSpecies.MAPLE, "fluid:gt6ce:maplesap");
+        hole("tapped_rainbowood", WoodSpecies.RAINBOWOOD, "fluid:gt6ce:rainbowsap");
     }
 
     private static void hole(String id, WoodSpecies species, String yield) {

@@ -77,14 +77,14 @@ public final class CompatCraftingPack extends AbstractPackResources {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location = new net.minecraft.server.packs.PackLocationInfo("gregtech:compat_crafting",
+            /*var location = new net.minecraft.server.packs.PackLocationInfo("gt6ce:compat_crafting",
                     Component.literal("GregTech mod compat crafting"), PackSource.BUILT_IN, java.util.Optional.empty());
             Pack pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info) { return new CompatCraftingPack(info); }
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info, Pack.Metadata metadata) { return new CompatCraftingPack(info); }
             }, PackType.SERVER_DATA, new net.minecraft.server.packs.PackSelectionConfig(true, Pack.Position.TOP, true));
 *///?} else {
-            Pack pack = Pack.readMetaAndCreate("gregtech:compat_crafting",
+            Pack pack = Pack.readMetaAndCreate("gt6ce:compat_crafting",
                     Component.literal("GregTech mod compat crafting"), true,
                     CompatCraftingPack::new, PackType.SERVER_DATA, Pack.Position.TOP, PackSource.BUILT_IN);
 //?}
@@ -121,10 +121,10 @@ public final class CompatCraftingPack extends AbstractPackResources {
         json.put("ingredients", ingredients);
 //? if >=1.21.1 {
         /*json.put("result", Map.of("id", result.get("item"), "count", row.output().count()));
-        put(generated, ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + row.id() + ".json"), json);
+        put(generated, ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/" + row.id() + ".json"), json);
 *///?} else {
         json.put("result", Map.of("item", result.get("item"), "count", row.output().count()));
-        put(generated, new ResourceLocation("gregtech", "recipes/" + row.id() + ".json"), json);
+        put(generated, new ResourceLocation("gt6ce", "recipes/" + row.id() + ".json"), json);
 //?}
     }
 
@@ -138,7 +138,7 @@ public final class CompatCraftingPack extends AbstractPackResources {
         var output = ingredient(row.output());
         if (!(output instanceof Map<?, ?> result)) return;
         var json = new LinkedHashMap<String, Object>();
-        json.put("type", row.toolRecipe() ? "gregtech:tool_shaped" : "minecraft:crafting_shaped");
+        json.put("type", row.toolRecipe() ? "gt6ce:tool_shaped" : "minecraft:crafting_shaped");
         if (row.toolRecipe()) {
             json.put("allow_mirror", false);
         }
@@ -147,10 +147,10 @@ public final class CompatCraftingPack extends AbstractPackResources {
         json.put("key", key);
 //? if >=1.21.1 {
         /*json.put("result", Map.of("id", result.get("item"), "count", row.output().count()));
-        put(generated, ResourceLocation.fromNamespaceAndPath("gregtech", "recipe/" + row.id() + ".json"), json);
+        put(generated, ResourceLocation.fromNamespaceAndPath("gt6ce", "recipe/" + row.id() + ".json"), json);
 *///?} else {
         json.put("result", Map.of("item", result.get("item"), "count", row.output().count()));
-        put(generated, new ResourceLocation("gregtech", "recipes/" + row.id() + ".json"), json);
+        put(generated, new ResourceLocation("gt6ce", "recipes/" + row.id() + ".json"), json);
 //?}
     }
 
@@ -244,7 +244,7 @@ public final class CompatCraftingPack extends AbstractPackResources {
         if (type != PackType.SERVER_DATA) return Set.of();
         var names = new java.util.HashSet<String>();
         data().keySet().forEach(id -> names.add(id.getNamespace()));
-        if (names.isEmpty()) names.add("gregtech");
+        if (names.isEmpty()) names.add("gt6ce");
         return names;
     }
 

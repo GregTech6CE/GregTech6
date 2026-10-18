@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_rotational_pump",
+  "contents": [
+    "item:gt6ce:rotational_pump_bronze",
+    "item:gt6ce:rotational_pump_steel",
+    "item:gt6ce:rotational_pump_titanium",
+    "item:gt6ce:rotational_pump_tungstensteel"
+  ],
+  "priority": 110
+}

@@ -15,14 +15,14 @@ public final class VisualDocumentData {
     private VisualDocumentData() {}
     public static boolean isPages(ItemStack stack) {
         var id=BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gregtech")&&(id.getPath().equals("printed_pages")||id.getPath().equals("many_printed_pages"));
+        return id.getNamespace().equals("gt6ce")&&(id.getPath().equals("printed_pages")||id.getPath().equals("many_printed_pages"));
     }
     public static boolean isBook(ItemStack stack) {
         return stack.getItem() instanceof WrittenBookItem || isPages(stack)
             || stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","written_books_small")))
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","written_books_small")))
             || stack.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","written_books_large")));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","written_books_large")));
     }
     public static String title(CompoundTag data) { return data==null?"":data.getString("title"); }
     public static int pages(CompoundTag data) { return data==null?0:data.getList("pages",Tag.TAG_STRING).size(); }
@@ -36,7 +36,7 @@ public final class VisualDocumentData {
         var data=new CompoundTag();data.putInt(VisualDocumentRules.MAP_ID,id);return data;
     }
     public static ItemStack printedPages(ItemStack book,boolean many) {
-        var output=new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",many?"many_printed_pages":"printed_pages")));
+        var output=new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",many?"many_printed_pages":"printed_pages")));
 //? if >=1.21.1 {
         /*output.applyComponents(book.getComponentsPatch());
 *///?} else {

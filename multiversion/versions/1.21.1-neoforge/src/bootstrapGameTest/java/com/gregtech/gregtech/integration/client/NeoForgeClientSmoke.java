@@ -181,7 +181,7 @@ public final class NeoForgeClientSmoke {
             MaterialTooltipSmoke.check();
             var ids = new com.google.gson.JsonArray();
             for (String id : new String[]{"ingot_iron", "plate_copper", "gear_gt_bronze", "coin_gold", "fluid_item_reedwater"}) {
-                var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id);
+                var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id);
                 var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key);
                 if (item == net.minecraft.world.item.Items.AIR) throw new IllegalStateException("Missing gallery item: " + key);
                 gallery.add(new net.minecraft.world.item.ItemStack(item));
@@ -621,7 +621,7 @@ public final class NeoForgeClientSmoke {
             if(worldStage!=3)return;
             if (minecraft.screen!=null || minecraft.level==null || minecraft.player==null
                     || minecraft.player.getY()<239 || !minecraft.level.getBlockState(CRUSHER).is(
-                            net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","crusher_bronze"))))return;
+                            net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","crusher_bronze"))))return;
             if(settle(30))captureWorld(minecraft,event.getGuiGraphics(),"world",4);
         } catch(Throwable failure) { fail("world_render",failure); }
     }

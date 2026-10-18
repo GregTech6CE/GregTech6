@@ -50,12 +50,12 @@ final class FluidDisplayEmiStack extends EmiStack {
     }
     @Override public List<Component> getTooltipText() {
         var lines = new ArrayList<>(icon.getTooltipText());
-        lines.add(Component.translatable("gregtech.fluid.amount", amount));
+        lines.add(Component.translatable("gt6ce.fluid.amount", amount));
         return lines;
     }
     @Override public List<ClientTooltipComponent> getTooltip() {
         var lines = new ArrayList<>(icon.getTooltip());
-        lines.add(ClientTooltipComponent.create(Component.translatable("gregtech.fluid.amount", amount).getVisualOrderText()));
+        lines.add(ClientTooltipComponent.create(Component.translatable("gt6ce.fluid.amount", amount).getVisualOrderText()));
         return lines;
     }
 }

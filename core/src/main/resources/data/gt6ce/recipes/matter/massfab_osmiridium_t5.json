@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RFS",
+    "FMF",
+    "RFS"
+  ],
+  "key": {
+    "R": {
+      "item": "gt6ce:crystal_processor_ruby"
+    },
+    "S": {
+      "item": "gt6ce:crystal_processor_sapphire"
+    },
+    "F": {
+      "item": "gt6ce:compact_force_field_emitter_iv"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_osmiridium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:massfab_osmiridium_t5"
+  }
+}

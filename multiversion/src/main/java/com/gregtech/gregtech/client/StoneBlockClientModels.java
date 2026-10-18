@@ -88,7 +88,7 @@ public final class StoneBlockClientModels {
                 itemId = blockId;
             }
 //? if >=1.21.1 {
-            /*BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath("gregtech",modelPath), shared, itemModel);
+            /*BlockItemClientModels.alias(models, itemId, ResourceLocation.fromNamespaceAndPath("gt6ce",modelPath), shared, itemModel);
 *///?} else {
             BlockItemClientModels.alias(models, itemId, GregTech.id(modelPath), shared, itemModel);
 //?}
@@ -96,7 +96,7 @@ public final class StoneBlockClientModels {
         }
 
 //? if >=1.21.1 {
-        /*LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", "gregtech", aliased, missing);
+        /*LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
         LOGGER.info("[{}] Stone block model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
 //?}
@@ -104,7 +104,7 @@ public final class StoneBlockClientModels {
 
 //? if >=1.21.1 {
     /*private static BakedModel lookupStoneModel(Map<ModelResourceLocation, BakedModel> models, String modelPath) {
-        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath("gregtech",modelPath);
+        ResourceLocation modelId = ResourceLocation.fromNamespaceAndPath("gt6ce",modelPath);
         return BakedModelLookup.find(models, modelId);
     }
 
@@ -112,7 +112,7 @@ public final class StoneBlockClientModels {
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         for (var entry : GTBlocks.allEntries()) {
             if (entry.isBound() && entry.get() instanceof GTStoneBlock stone) {
-                event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gregtech", stone.modelId())));
+                event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath("gt6ce", stone.modelId())));
 *///?} else {
     private static BakedModel lookupStoneModel(Map<ResourceLocation, BakedModel> models, String modelPath) {
         ResourceLocation modelId = GregTech.id(modelPath);

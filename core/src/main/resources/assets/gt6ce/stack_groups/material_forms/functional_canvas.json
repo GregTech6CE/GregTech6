@@ -1,0 +1,23 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_canvas",
+  "contents": [
+    "item:gt6ce:canvas_black",
+    "item:gt6ce:canvas_blue",
+    "item:gt6ce:canvas_brown",
+    "item:gt6ce:canvas_cyan",
+    "item:gt6ce:canvas_gray",
+    "item:gt6ce:canvas_green",
+    "item:gt6ce:canvas_light_blue",
+    "item:gt6ce:canvas_light_gray",
+    "item:gt6ce:canvas_lime",
+    "item:gt6ce:canvas_magenta",
+    "item:gt6ce:canvas_orange",
+    "item:gt6ce:canvas_pink",
+    "item:gt6ce:canvas_purple",
+    "item:gt6ce:canvas_red",
+    "item:gt6ce:canvas_white",
+    "item:gt6ce:canvas_yellow"
+  ],
+  "priority": 110
+}

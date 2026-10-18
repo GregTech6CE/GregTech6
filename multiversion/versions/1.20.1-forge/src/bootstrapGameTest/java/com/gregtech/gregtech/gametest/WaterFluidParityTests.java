@@ -91,7 +91,7 @@ import java.util.TreeSet;
  *       seagrass and kelp, which carry vanilla water internally like they do in vanilla.</li>
  * </ul>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class WaterFluidParityTests {
     private static final List<String> WORLD_WATERS =

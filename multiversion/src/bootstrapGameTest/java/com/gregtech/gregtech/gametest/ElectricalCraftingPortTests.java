@@ -27,7 +27,7 @@ public final class ElectricalCraftingPortTests {
     private static final List<String> METALS=List.of("lead","tin","copper","gold","aluminium","platinum","graphene","graphene","graphene","graphene");
     private static final List<String> CASINGS=List.of("tinalloy","steelgalvanized","aluminium","stainlesssteel","chromium","titanium","iridium","osmiumelemental","trinitanium","trinaquadalloy");
     private static ItemStack item(String path) {
-        var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",path)));
+        var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path)));
         if(stack.isEmpty())throw new IllegalStateException("Missing electrical fixture item "+path);return stack;
     }
     private static ItemStack circuit(int tier) {
@@ -39,9 +39,9 @@ public final class ElectricalCraftingPortTests {
     }
     private static CraftingRecipe recipe(GameTestHelper h,String path) {
 //? if >=1.21.1 {
-        /*return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech","energy_nodes/"+path)).orElseThrow().value();
+        /*return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","energy_nodes/"+path)).orElseThrow().value();
 *///?} else {
-        return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech","energy_nodes/"+path)).orElseThrow();
+        return (CraftingRecipe)h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","energy_nodes/"+path)).orElseThrow();
 //?}
     }
 //? if >=1.21.1 {
@@ -66,7 +66,7 @@ public final class ElectricalCraftingPortTests {
     public static void cumulativeCircuitTagsKeepExactSourceGrades(GameTestHelper h) {
         for(int required=0;required<10;required++) {
             var resolved=MachineRecipeIngredients.resolve("circuit:"+required,GTMaterialRegistry.get("Iron"),1);
-            h.assertTrue(resolved.equals(Map.of("tag","gregtech:circuits_tier_"+required+"_plus")),"no T0 shift or high-tier clamp");
+            h.assertTrue(resolved.equals(Map.of("tag","gt6ce:circuits_tier_"+required+"_plus")),"no T0 shift or high-tier clamp");
             for(int supplied=1;supplied<10;supplied++)h.assertTrue(accepts(required,circuit(supplied))==(supplied>=required),"one-way original circuit inheritance "+supplied+" -> "+required);
             h.assertTrue(accepts(required,new ItemStack(Items.AMETHYST_SHARD))==(required<=6),"existing optional Forge ultimate provider enters the same chain");
             h.assertTrue(!accepts(required,new ItemStack(Items.IRON_INGOT)),"untyped vanilla item refused");
@@ -101,7 +101,7 @@ public final class ElectricalCraftingPortTests {
         }
         h.assertTrue(count==19,"ten ordinary plus nine source-resolvable large recipes");
         for(int tier=0;tier<9;tier++)recipe(h,"transformer_"+TIERS.get(tier)+"_"+TIERS.get(tier+1));
-        h.assertTrue(h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gregtech:energy_nodes/energy_storage_xv")).isEmpty(),"source-missing transformer 10049 has no guessed recipe");h.succeed();
+        h.assertTrue(h.getLevel().getRecipeManager().byKey(ResourceLocation.parse("gt6ce:energy_nodes/energy_storage_xv")).isEmpty(),"source-missing transformer 10049 has no guessed recipe");h.succeed();
     }
     @GameTest(template="test_empty",timeoutTicks=50)
     public static void sourceWireArraysAndCraftedHighBoxesUseRegisteredForms(GameTestHelper h) {
@@ -110,8 +110,8 @@ public final class ElectricalCraftingPortTests {
             for(boolean cable:new boolean[]{false,true}){
                 String kind=cable?"cabletier:":"wiretier:";
                 var resolved=MachineRecipeIngredients.resolve(kind+tier,GTMaterialRegistry.get("Iron"),1);
-                String expected=tier==2?"gregtech:"+(cable?"cable_01":"wire_04")+"/any_copper"
-                    :"gregtech:"+(cable&&tier<6?"cable_":"wire_")+(cable?"01":"04")+"_"+metal;
+                String expected=tier==2?"gt6ce:"+(cable?"cable_01":"wire_04")+"/any_copper"
+                    :"gt6ce:"+(cable&&tier<6?"cable_":"wire_")+(cable?"01":"04")+"_"+metal;
                 h.assertTrue(resolved.equals(Map.of(tier==2?"tag":"item",expected)),"source wire array and exact form "+kind+tier);
                 if(tier!=2)h.assertTrue(!new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse(expected))).isEmpty(),"actual registered source form");
             }

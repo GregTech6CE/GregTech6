@@ -37,7 +37,7 @@ public final class NativeOriginItems {
             };
             int tier=original.endsWith("_HV")?3:original.endsWith("_MV")?2:1;
             if(electric!=null&&tier>1)electric+="_"+(tier==2?"mv":"hv");
-            if(electric!=null && BuiltInRegistries.ITEM.get(id("gregtech:"+electric)) instanceof ElectricToolItem item) {
+            if(electric!=null && BuiltInRegistries.ITEM.get(id("gt6ce:"+electric)) instanceof ElectricToolItem item) {
                 long capacity=(8L<<(2*tier))*1000;var stack=item.assembled(head,capacity);
 //? if >=1.21.1 {
                 /*com.gregtech.gregtech.api.tool.GTToolHelper.write(stack,head,handle);stack.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);stack.remove(net.minecraft.core.component.DataComponents.DAMAGE);
@@ -62,7 +62,7 @@ public final class NativeOriginItems {
             if(form.group(1).equals("wireGt01") || form.group(1).equals("cableGt01")) {
                 boolean insulated=form.group(1).equals("cableGt01");
                 for(var family:com.gregtech.gregtech.content.energy.SignalWireCatalog.families())
-                    if(family.material()==selected)return new ItemStack(BuiltInRegistries.ITEM.get(id("gregtech:"+(insulated?"cable_01_":"wire_01_")+family.name())),count);
+                    if(family.material()==selected)return new ItemStack(BuiltInRegistries.ITEM.get(id("gt6ce:"+(insulated?"cable_01_":"wire_01_")+family.name())),count);
                 for(var entry:com.gregtech.gregtech.registry.GTWires.all()) {
                     var spec=entry.get().spec();
                     if(spec.material()==selected && spec.size()==1 && spec.insulated()==insulated)return new ItemStack(entry.get(),count);
@@ -82,7 +82,7 @@ public final class NativeOriginItems {
             }
         }
         var motor=Pattern.compile("MOTORS\\[(\\d+)\\]").matcher(row);
-        if(motor.find()) return new ItemStack(BuiltInRegistries.ITEM.get(id("gregtech:compact_electric_motor_"+
+        if(motor.find()) return new ItemStack(BuiltInRegistries.ITEM.get(id("gt6ce:compact_electric_motor_"+
                 switch(Integer.parseInt(motor.group(1))){case 1->"lv";case 2->"mv";default->"hv";})),64);
         var selector=Pattern.compile("Circuit_Selector.getWithDamage\\(1, (\\d+)\\)").matcher(row);
         if(selector.find())return new ItemStack(com.gregtech.gregtech.registry.GTTechnological.selectorTag(Integer.parseInt(selector.group(1))));
@@ -90,7 +90,7 @@ public final class NativeOriginItems {
                 row.contains("Brain_Tape")?"braintech_aerospace_advanced_reinforced_duct_tape_fal_84":row.contains("Dynamite_Strong")?"strong_dynamite":
                 row.contains("Tool_Chunk_Remover")?"chunk_eraser":row.contains("Tool_Worldgen_Debugger")?"worldgen_debug_wand":
                 row.contains("Tool_Cheat")?"debug_scanner":row.contains("Tool_Remote_Activator")?"remote_activator":null;
-        if(name!=null) return new ItemStack(BuiltInRegistries.ITEM.get(id("gregtech:"+name)),row.contains("64")?64:1);
+        if(name!=null) return new ItemStack(BuiltInRegistries.ITEM.get(id("gt6ce:"+name)),row.contains("64")?64:1);
         // Source NI rows and integrations absent from this installation remain empty slots.
         return ItemStack.EMPTY;
     }

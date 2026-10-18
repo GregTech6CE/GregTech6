@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "gregtech:block/iconsets/cfoam_fresh"
-  },
-  "render_type": "minecraft:cutout"
-}

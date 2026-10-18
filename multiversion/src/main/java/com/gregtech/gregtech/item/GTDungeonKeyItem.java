@@ -110,11 +110,11 @@ public class GTDungeonKeyItem extends Item {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 //?}
-        tooltip.add(Component.translatable("tooltip.gregtech.key.lock").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.gt6ce.key.lock").withStyle(ChatFormatting.GRAY));
         long keyId = keyId(stack);
         tooltip.add(keyId == 0
-                ? Component.translatable("tooltip.gregtech.key.blank").withStyle(ChatFormatting.DARK_GRAY)
-                : Component.translatable("tooltip.gregtech.key.id", Long.toString(keyId))
+                ? Component.translatable("tooltip.gt6ce.key.blank").withStyle(ChatFormatting.DARK_GRAY)
+                : Component.translatable("tooltip.gt6ce.key.id", Long.toString(keyId))
                         .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["sGh", "PLP", "PPP"],
+  "key": {
+    "s": {"item": "gt6ce:tool_saw"},
+    "G": {"tag": "forge:glue"},
+    "h": {"item": "gt6ce:tool_hammer"},
+    "P": {"tag": "minecraft:planks"},
+    "L": {"tag": "forge:long_rods/lead"}
+  },
+  "result": {"item": "gt6ce:bathing_pot_wood"}
+}

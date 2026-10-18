@@ -1,0 +1,75 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "gt6ce:block/machines/batteries/eu/standard/32/bottom",
+    "top": "gt6ce:block/machines/batteries/eu/standard/32/top",
+    "sides": "gt6ce:block/machines/batteries/eu/standard/32/sides",
+    "bar": "gt6ce:block/machines/batteries/eu/standard/32/bar",
+    "particle": "gt6ce:block/machines/batteries/eu/standard/32/sides"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#sides"
+        },
+        "south": {
+          "texture": "#sides"
+        },
+        "east": {
+          "texture": "#sides"
+        },
+        "west": {
+          "texture": "#sides"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "down": {
+          "texture": "#bottom"
+        }
+      }
+    },
+    {
+      "from": [
+        4.968,
+        1,
+        4.968
+      ],
+      "to": [
+        11.032,
+        4,
+        11.032
+      ],
+      "faces": {
+        "north": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#bar",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#bar",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

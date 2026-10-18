@@ -1,0 +1,8 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.decor_asphalt",
+  "contents": [
+    "item:gt6ce:asphalt"
+  ],
+  "priority": 120
+}

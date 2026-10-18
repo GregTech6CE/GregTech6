@@ -29,7 +29,7 @@ import java.util.List;
  * {@code CS.FoodsGT} for the table), including the two config defaults GT6 ships with
  * ({@code DeathByOverdosingCertainFoods} and {@code NutritionSystem}, both true).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class FoodStatsTests {
     private static final int BASE_X = 68000;

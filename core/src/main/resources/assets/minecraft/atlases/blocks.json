@@ -7,7 +7,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "gregtech:block/iconsets/void"
+      "resource": "gt6ce:block/iconsets/void"
     },
     {
       "type": "minecraft:directory",
@@ -21,11 +21,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "gregtech:block/system/error"
+      "resource": "gt6ce:block/system/error"
     },
     {
       "type": "minecraft:single",
-      "resource": "gregtech:block/iconsets/pipe_restrictor"
+      "resource": "gt6ce:block/iconsets/pipe_restrictor"
     },
     {
       "type": "minecraft:directory",
@@ -64,7 +64,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "gregtech:block/iconsets/axle"
+      "resource": "gt6ce:block/iconsets/axle"
     },
     {
       "type": "minecraft:directory",
@@ -93,7 +93,7 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "gregtech:block/machines/covers/canvas"
+      "resource": "gt6ce:block/machines/covers/canvas"
     },
     {
       "type": "minecraft:directory",

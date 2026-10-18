@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_burning_box_fluidbed",
+  "contents": [
+    "item:gt6ce:burning_box_fluidbed_arsenic_bronze",
+    "item:gt6ce:burning_box_fluidbed_arsenic_copper",
+    "item:gt6ce:burning_box_fluidbed_bismuth",
+    "item:gt6ce:burning_box_fluidbed_bronze",
+    "item:gt6ce:burning_box_fluidbed_chromium",
+    "item:gt6ce:burning_box_fluidbed_invar",
+    "item:gt6ce:burning_box_fluidbed_lead",
+    "item:gt6ce:burning_box_fluidbed_netherite",
+    "item:gt6ce:burning_box_fluidbed_steel",
+    "item:gt6ce:burning_box_fluidbed_ta4hfc5",
+    "item:gt6ce:burning_box_fluidbed_titanium",
+    "item:gt6ce:burning_box_fluidbed_tungsten",
+    "item:gt6ce:burning_box_fluidbed_tungsten_steel",
+    "item:gt6ce:burning_box_fluidbed_ultimet"
+  ],
+  "priority": 110
+}

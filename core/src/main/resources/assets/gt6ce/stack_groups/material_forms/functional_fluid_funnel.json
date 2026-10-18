@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_fluid_funnel",
+  "contents": [
+    "item:gt6ce:fluid_funnel",
+    "item:gt6ce:fluid_funnel_adamantium",
+    "item:gt6ce:fluid_funnel_ceramic",
+    "item:gt6ce:fluid_funnel_plastic",
+    "item:gt6ce:fluid_funnel_stainless_steel",
+    "item:gt6ce:fluid_funnel_tantalum_hafnium_carbide",
+    "item:gt6ce:fluid_funnel_tungsten"
+  ],
+  "priority": 110
+}

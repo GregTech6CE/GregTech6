@@ -1,0 +1,14 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_nozzle",
+  "contents": [
+    "item:gt6ce:nozzle",
+    "item:gt6ce:nozzle_adamantium",
+    "item:gt6ce:nozzle_plastic",
+    "item:gt6ce:nozzle_stainless_steel",
+    "item:gt6ce:nozzle_steel",
+    "item:gt6ce:nozzle_tantalum_hafnium_carbide",
+    "item:gt6ce:nozzle_tungsten"
+  ],
+  "priority": 110
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/lily_pad",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gt6ce:block/iconsets/glowtus_cyan",
+    "texture": "gt6ce:block/iconsets/glowtus_cyan"
+  }
+}

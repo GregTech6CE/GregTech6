@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "gregtech:block/iconsets/ore_amethyst"
-  }
-}

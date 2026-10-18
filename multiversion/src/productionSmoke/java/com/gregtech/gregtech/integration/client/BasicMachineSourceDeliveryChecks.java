@@ -36,11 +36,11 @@ final class BasicMachineSourceDeliveryChecks {
             for(int i=0;i<ioKeys.length;i++)require(count(lines,ioKeys[i])==(OriginalBasicMachineRules.io(slots[i],masks[i],auto[i])==null?0:1),"actual conditional source IO "+ioKeys[i]+" "+spec.id());
             require(count(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.inputs")== (fc.itemAutoInput()>=0||fc.fluidAutoInput()>=0?1:0),"conditional source input tools "+spec.id());
             require(count(lines,"gt.lang.use.monkey.wrench.to.toggle.auto.outputs")== (fc.itemAutoOutput()>=0||fc.fluidAutoOutput()>=0?1:0),"conditional source output tools "+spec.id());
-            require(count(lines,"tooltip.gregtech.machine.recipes")==0,"no old generic duplicates "+spec.id());
+            require(count(lines,"tooltip.gt6ce.machine.recipes")==0,"no old generic duplicates "+spec.id());
 //? if >=1.21.1 {
-            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1&&count(lines,"tooltip.gregtech.contained_materials")==0,"one exact advanced material section "+spec.id());count++;
+            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1&&count(lines,"tooltip.gt6ce.contained_materials")==0,"one exact advanced material section "+spec.id());count++;
 *///?} else {
-            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1&&count(lines,"tooltip.gregtech.contained_materials")==0,"one exact advanced material section "+spec.id());count++;
+            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1&&count(lines,"tooltip.gt6ce.contained_materials")==0,"one exact advanced material section "+spec.id());count++;
 //?}
         }
         require(count==247&&magnetic==10,"actual all247 source basic items including10 magnetic processors");var result=new JsonObject();result.addProperty("sourceBasicMachines",count);result.addProperty("magneticMachines",magnetic);result.addProperty("exactAdvancedMaterialSections",count);result.addProperty("scope","installed actual tooltip calls/events at title screen; not player hover or world operations");return result;

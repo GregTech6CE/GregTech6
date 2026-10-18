@@ -41,7 +41,7 @@ public final class ManualToolRecipePack extends AbstractPackResources {
     public static void packs(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
-            var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:manual_tool_recipes",Component.literal("GregTech original manual tool recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
+            var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:manual_tool_recipes",Component.literal("GregTech original manual tool recipes"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new ManualToolRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new ManualToolRecipePack(info);}
@@ -69,8 +69,8 @@ public final class ManualToolRecipePack extends AbstractPackResources {
          for(var entry:com.gregtech.gregtech.registry.GTChemicalBatteries.all())if(entry.get().spec().tier()==spec.definition().tier())batteries.add(new net.minecraft.world.item.ItemStack(entry.get().asItem()));
          for(var battery:batteries){if(spec.recipe(material,battery,"")==null)continue;
           var batteryId=BuiltInRegistries.ITEM.getKey(battery.getItem());String suffix="/"+batteryId.getPath();
-          var id=ResourceLocation.fromNamespaceAndPath("gregtech","recipe/electric_tools/"+spec.id+"/"+material.getName().toLowerCase(java.util.Locale.ROOT)+suffix+".json");
-          var bytes=GSON.toJson(Map.of("type","gregtech:electric_tool_assembly","tool",spec.id,"material",material.getName(),"battery",batteryId.toString())).getBytes(StandardCharsets.UTF_8);
+          var id=ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/electric_tools/"+spec.id+"/"+material.getName().toLowerCase(java.util.Locale.ROOT)+suffix+".json");
+          var bytes=GSON.toJson(Map.of("type","gt6ce:electric_tool_assembly","tool",spec.id,"material",material.getName(),"battery",batteryId.toString())).getBytes(StandardCharsets.UTF_8);
           if(generated.putIfAbsent(id,bytes)!=null)throw new IllegalStateException("Duplicate powered assembly "+id);powered++;
          }
         }
@@ -82,8 +82,8 @@ public final class ManualToolRecipePack extends AbstractPackResources {
         resources=Map.copyOf(generated);return resources;
     }
     private static void add(Map<ResourceLocation,byte[]> data,String id,String serializer,String tool,int pattern){
-        var key=ResourceLocation.fromNamespaceAndPath("gregtech","recipe/"+id+".json");
-        byte[] value=GSON.toJson(Map.of("type","gregtech:"+serializer,"tool",tool,"pattern",pattern)).getBytes(StandardCharsets.UTF_8);
+        var key=ResourceLocation.fromNamespaceAndPath("gt6ce","recipe/"+id+".json");
+        byte[] value=GSON.toJson(Map.of("type","gt6ce:"+serializer,"tool",tool,"pattern",pattern)).getBytes(StandardCharsets.UTF_8);
         if(data.putIfAbsent(key,value)!=null)throw new IllegalStateException("Duplicate manual tool recipe "+id);
     }
 
@@ -114,7 +114,7 @@ public final class ManualToolRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

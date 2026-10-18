@@ -26,7 +26,7 @@ import static com.gregtech.gregtech.gametest.TransportMaterialPortTests.*;
 //?}
 public final class ThermalConverterSourceTests {
     private static EnergyNodeBlockEntity place(GameTestHelper h, BlockPos pos, String id, Direction front) {
-        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:" + id));
+        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:" + id));
         h.setBlock(pos, block.defaultBlockState().setValue(EnergyNodeBlock.FACING, front));
         return (EnergyNodeBlockEntity) h.getBlockEntity(pos);
     }
@@ -141,7 +141,7 @@ public final class ThermalConverterSourceTests {
                         "source OM.dust rounding never creates material " + description.output() + " " + form.material());
             }
             h.assertTrue(recoveredMaterials.equals(available.keySet()),"thermal recovery includes every registered pulverizing target");
-            if (description.output().equals("gregtech:electric_heater_lv"))
+            if (description.output().equals("gt6ce:electric_heater_lv"))
                 h.assertTrue(Arrays.stream(recovery.mOutputs).anyMatch(out -> MaterialEquivalence.form(out).prefix() == com.gregtech.gregtech.data.MaterialPrefix.dustSmall && out.getCount() == 57),
                         "original heater14+1/3U hull yields57 quarter dust piles");
             checkCrucible(h,result);

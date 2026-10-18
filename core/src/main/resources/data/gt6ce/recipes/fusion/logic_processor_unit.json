@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PCP",
+    "CMC",
+    "PCP"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:casing_machine_steelgalvanized"
+    },
+    "C": {
+      "item": "gt6ce:circuit_ultimate"
+    },
+    "P": {
+      "item": "gt6ce:crystal_processor_diamond"
+    }
+  },
+  "result": {
+    "item": "gt6ce:logic_processor_unit"
+  }
+}

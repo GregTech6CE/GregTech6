@@ -17,7 +17,7 @@ import net.minecraftforge.gametest.*;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class AxialGeneratorTests {
     private static AxialGeneratorBlockEntity assemble(GameTestHelper h,BlockPos pos,Block block,Direction front) {
@@ -144,21 +144,21 @@ public final class AxialGeneratorTests {
     public static void axialRecipesLoadAndToolsRemain(GameTestHelper h) {
         var manager=h.getLevel().getRecipeManager();
         for(boolean steam:new boolean[]{true,false})for(var entry:AxialGeneratorDefinitions.blocks(steam)) {
-            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/"+entry.getId().getPath()));
+            var recipe=manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath()));
             h.assertTrue(recipe.isPresent(),"manufacturing recipe loads: "+entry.getId());
             var wall=AxialGeneratorDefinitions.grade(entry.get()).wall().asItem();
             h.assertTrue(com.gregtech.gregtech.data.MachineRecipeMaps.Welder.mRecipeList.stream().anyMatch(r->r.mOutputs.length==1&&r.mOutputs[0].is(wall)),"JEI's canonical wall has a welding route");
             h.assertTrue(recipe.get().getIngredients().stream().allMatch(ingredient->ingredient.isEmpty()||ingredient.getItems().length>0),"all ingredients resolve");
         }
-        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/"+entry.getId().getPath())).isPresent(),"gas turbine upgrade route");
-        var copperCoil = manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/large_dynamo_wall"));
+        for(var entry:GasTurbineDefinitions.blocks())h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/"+entry.getId().getPath())).isPresent(),"gas turbine upgrade route");
+        var copperCoil = manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_wall"));
         h.assertTrue(copperCoil.isPresent()&&copperCoil.get().getResultItem(h.getLevel().registryAccess()).is(LargeMachineParts.block(18040).asItem()),
                 "GT6 annealed copper coil recipe crafts original 18040 part");
         for(String material:new String[]{"magnalium","trinitanium","graphene","vibramantium"}) {
-            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/block_plate_"+material)).isPresent(),"rotor plate packing loads");
-            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/unpack_"+material+"_plates")).isPresent(),"rotor plate unpacking loads");
+            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/block_plate_"+material)).isPresent(),"rotor plate packing loads");
+            h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/unpack_"+material+"_plates")).isPresent(),"rotor plate unpacking loads");
         }
-        var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech","axial/large_dynamo_main")).orElseThrow();
+        var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce","axial/large_dynamo_main")).orElseThrow();
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
             @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
             @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}

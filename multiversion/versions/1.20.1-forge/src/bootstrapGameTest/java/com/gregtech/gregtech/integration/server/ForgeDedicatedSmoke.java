@@ -202,7 +202,7 @@ public final class ForgeDedicatedSmoke {
                 if(!level.getBlockState(target).isAir()||!level.getBlockState(target.below()).isAir())throw new IllegalStateException("Tool assembly refuses overwrite");
                 level.setBlockAndUpdate(target.below(),Blocks.STONE.defaultBlockState());
             }
-            var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(new net.minecraft.resources.ResourceLocation("gregtech","grindstone_block"));
+            var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(new net.minecraft.resources.ResourceLocation("gt6ce","grindstone_block"));
             if(!(block instanceof com.gregtech.gregtech.block.tool.ManualToolBlock))throw new IllegalStateException("Missing actual grindstone");
             level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(bench,Blocks.CRAFTING_TABLE.defaultBlockState());
             var station=(com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity)level.getBlockEntity(pos);
@@ -359,7 +359,7 @@ public final class ForgeDedicatedSmoke {
     }
 
     private static Block steamBlock(String id) {
-        var key = new net.minecraft.resources.ResourceLocation("gregtech", id);
+        var key = new net.minecraft.resources.ResourceLocation("gt6ce", id);
         if (!net.minecraft.core.registries.BuiltInRegistries.BLOCK.containsKey(key))
             throw new IllegalStateException("Missing steam-chain block " + key);
         return net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(key);
@@ -570,13 +570,13 @@ public final class ForgeDedicatedSmoke {
             var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             var stacks=java.util.List.of(plate.copy(),hammer,plate.copy(),rod.copy(),spring,rod.copy(),plate.copy(),wrench,plate.copy());
             for(int slot=0;slot<9;slot++)input.setItem(slot,stacks.get(slot));
-            var recipe=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","engines/"+id)).orElseThrow();
+            var recipe=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gt6ce","engines/"+id)).orElseThrow();
             if(!(recipe instanceof net.minecraft.world.item.crafting.CraftingRecipe craft))throw new IllegalStateException("Wrong steam crafting recipe type "+id);
             for(var ingredient:craft.getIngredients())
                 if(ingredient!=net.minecraft.world.item.crafting.Ingredient.EMPTY && ingredient.getItems().length==0)
                     throw new IllegalStateException("Unresolved steam ingredient "+id);
             var result=craft.assemble(input,level.registryAccess());
-            var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech",id));
+            var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce",id));
             if(expected==null || !craft.matches(input,level) || result.getItem()!=expected || result.getCount()!=1)
                 throw new IllegalStateException("Original steam crafting shape/output "+id);
             var remains=craft.getRemainingItems(input);
@@ -607,9 +607,9 @@ public final class ForgeDedicatedSmoke {
             @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}
             @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
         };
-        var bottle=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","lubricant_bottle"))));
-        var early=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","olive_oil"))));
-        var cell=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","fluid_cell_tin"))));
+        var bottle=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","lubricant_bottle"))));
+        var early=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","olive_oil"))));
+        var cell=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","fluid_cell_tin"))));
         var handler=net.minecraftforge.fluids.FluidUtil.getFluidHandler(cell).resolve().orElseThrow();
         var fluid=com.gregtech.gregtech.registry.GTFluids.still("Lubricant");
         if(fluid==null || !fluid.isPresent() || handler.fill(new net.minecraftforge.fluids.FluidStack(fluid.get(),1000),net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE)!=1000)throw new IllegalStateException("Missing finite lubricant vessel");
@@ -623,7 +623,7 @@ public final class ForgeDedicatedSmoke {
             var small=steamForm(com.gregtech.gregtech.data.MaterialPrefix.gearGtSmall,material);
             var casing=com.gregtech.gregtech.registry.GTBlocks.getStack(com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.casingMachineDouble,material);
             if(casing.isEmpty())throw new IllegalStateException("Missing diesel double casing "+id);
-            var actual=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","engines/"+id)).orElseThrow();
+            var actual=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gt6ce","engines/"+id)).orElseThrow();
             if(!(actual instanceof net.minecraft.world.item.crafting.CraftingRecipe craft))throw new IllegalStateException("Wrong diesel crafting type");
             for(var ingredient:craft.getIngredients())if(ingredient!=net.minecraft.world.item.crafting.Ingredient.EMPTY&&ingredient.getItems().length==0)throw new IllegalStateException("Missing diesel ingredient "+id);
             for(var lubricant:java.util.List.of(bottle,cell)) {
@@ -631,7 +631,7 @@ public final class ForgeDedicatedSmoke {
                 var slots=java.util.List.of(plate.copy(),lubricant.copy(),plate.copy(),rod.copy(),casing.copy(),rod.copy(),gear.copy(),plate.copy(),small.copy());
                 for(int s=0;s<9;s++)input.setItem(s,slots.get(s));
                 var result=craft.assemble(input,level.registryAccess());
-                var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech",id));
+                var expected=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce",id));
                 if(!craft.matches(input,level)||result.getItem()!=expected||result.getCount()!=1)throw new IllegalStateException("Original diesel shape/output "+id);
                 var decoded=dieselPacket(craft);if(!decoded.matches(input,level))throw new IllegalStateException("Diesel ingredient network policy lost "+id);
                 var remains=decoded.getRemainingItems(input);var returned=remains.get(1);
@@ -643,7 +643,7 @@ public final class ForgeDedicatedSmoke {
             }
             checked++;
         }
-        var filling=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gregtech","bottles/lubricant_bottle_x4")).orElseThrow();
+        var filling=level.getRecipeManager().byKey(new net.minecraft.resources.ResourceLocation("gt6ce","bottles/lubricant_bottle_x4")).orElseThrow();
         var input=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,2);input.setItem(0,cell.copy());
         for(int s=1;s<=4;s++)input.setItem(s,com.gregtech.gregtech.item.BottleItem.emptyBottle());
         if(!(filling instanceof net.minecraft.world.item.crafting.CraftingRecipe craft)||!craft.matches(input,level)||craft.assemble(input,level.registryAccess()).getCount()!=4||!dieselPacket(craft).matches(input,level))throw new IllegalStateException("Legacy filling 1000mB recipe regression");

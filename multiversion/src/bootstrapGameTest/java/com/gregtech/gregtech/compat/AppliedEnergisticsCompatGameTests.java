@@ -46,10 +46,10 @@ public final class AppliedEnergisticsCompatGameTests {
         var manager = helper.getLevel().getServer().getRecipeManager();
 //? if >=1.21.1 {
         /*var replaced = ResourceLocation.parse("ae2:decorative/quartz_glass");
-        var added = ResourceLocation.parse("gregtech:compat/ae2/quartz_glass");
+        var added = ResourceLocation.parse("gt6ce:compat/ae2/quartz_glass");
 *///?} else {
         var replaced = new ResourceLocation("ae2", "decorative/quartz_glass");
-        var added = new ResourceLocation("gregtech", "compat/ae2/quartz_glass");
+        var added = new ResourceLocation("gt6ce", "compat/ae2/quartz_glass");
 //?}
         if (!loaded) {
             helper.assertTrue(manager.byKey(replaced).isEmpty(), "quartz glass recipe must stay absent without AE2");

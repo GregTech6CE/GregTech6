@@ -7,7 +7,7 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class SurvivalExtensionTests {
  @GameTest(template="test_empty") public static void unitSearchAliasesIncludeVanillaIron(GameTestHelper h) {
   var unit=GTItems.getStack(MaterialPrefix.unit,GTMaterialRegistry.get("Iron"));
@@ -18,7 +18,7 @@ public final class SurvivalExtensionTests {
  }
  @GameTest(template="test_empty") public static void stoneAnvilAndToolRoutesAreReachable(GameTestHelper h) {
   for(String path:List.of("stone_granite_black_stone","stone_granite_black_cobble","block_ore_bauxite")) {
-   var item=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",path));
+   var item=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",path));
    h.assertTrue(item!=null&&item!=Items.AIR,"Real worldgen block "+path);
    h.assertTrue(MachineRecipeMaps.Crusher.findRecipe(List.of(new ItemStack(item)),List.of(),false,12,12)!=null,"Crusher handles "+path);
   }
@@ -27,7 +27,7 @@ public final class SurvivalExtensionTests {
   h.assertTrue(MachineRecipeMaps.Sharpening.findRecipe(List.of(raw),List.of(),false,12,12)!=null,"Cast pickaxe head can be finished");
   var rock=GTItems.getStack(MaterialPrefix.rockGt,GTMaterialRegistry.get("GraniteBlack"));
   h.assertTrue(MachineRecipeMaps.Anvil.findRecipe(Arrays.asList(rock,ItemStack.EMPTY),List.of(),false,12,12)!=null,"Granite rock has anvil crushing");
-  var stoneRecipes=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gregtech")&&r.getId().getPath().startsWith("stone_survival/")).toList();
+  var stoneRecipes=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gt6ce")&&r.getId().getPath().startsWith("stone_survival/")).toList();
   h.assertTrue(stoneRecipes.size()==81,"81 stone furnace/crafting recipes loaded");
   for(var recipe:stoneRecipes) {
    h.assertTrue(!recipe.getResultItem(h.getLevel().registryAccess()).isEmpty(),"Stone recipe result");

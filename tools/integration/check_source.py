@@ -120,7 +120,7 @@ def literal_language_calls(path, source, english, *, parsed=None):
         if not args or not re.fullmatch(r'"[\w.:-]+"', args[0]):
             dynamic += 1; continue
         key = args[0][1:-1]
-        if not (key.startswith(('gt.', 'gregtech.', 'oredict.')) or '.gregtech.' in key): continue
+        if not (key.startswith(('gt.', 'gt6ce.', 'oredict.')) or '.gt6ce.' in key): continue
         line = code.count('\n', 0, start)+1
         where = f'{path}:{line}'
         checked += 1
@@ -161,7 +161,7 @@ def check(repo):
                 errors.append('Test namespace belongs in bootstrapGameTest: ' + str(path.relative_to(repo)))
         if not name.startswith('core/'):
             for locale in ('en_us', 'zh_cn'):
-                path = resources / f'assets/gregtech/lang/{locale}.json'
+                path = resources / f'assets/gt6ce/lang/{locale}.json'
                 if path.exists():
                     errors.append('Platform language shadows shared core: ' + str(path.relative_to(repo)))
     tag_catalog = repo / 'core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java'

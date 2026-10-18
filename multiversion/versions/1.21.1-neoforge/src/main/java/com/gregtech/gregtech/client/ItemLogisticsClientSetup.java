@@ -17,7 +17,7 @@ import net.neoforged.neoforge.client.event.*;
 @EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
 public final class ItemLogisticsClientSetup {
  private ItemLogisticsClientSetup(){}
- private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gregtech",path);}
+ private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}
  @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(GTBlockEntities.ITEM_PIPE.get(),ItemPipeCoverRenderer::new);}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){
   for(var entry:GTItemPipes.all()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}

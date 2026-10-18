@@ -18,7 +18,7 @@ final class GeneratorTooltipDeliveryChecks {
         int items=0,rows=0;
         for(var data:OriginalGeneratorTooltipData.ALL) {
             var path=data.sourcePath();
-            var id=ResourceLocation.parse("gregtech:"+path);
+            var id=ResourceLocation.parse("gt6ce:"+path);
             require(BuiltInRegistries.ITEM.containsKey(id),"source generator item exists "+id);
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block=((BlockItem)stack.getItem()).getBlock();
@@ -39,11 +39,11 @@ final class GeneratorTooltipDeliveryChecks {
             var expected=MachineConstructionMaterials.block(path).orElseThrow();
             require(ItemMaterialRegistry.get(stack).orElseThrow().components().equals(expected.components()),"actual source controller material registration "+id);
 //? if >=1.21.1 {
-            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1,"precise quantities shown once in advanced mode "+id);
+            /*require(count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1,"precise quantities shown once in advanced mode "+id);
 *///?} else {
-            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials")==1,"precise quantities shown once in advanced mode "+id);
+            require(count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials")==1,"precise quantities shown once in advanced mode "+id);
 //?}
-            require(net.minecraft.client.resources.language.I18n.exists("block.gregtech."+path)&&stack.getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gregtech."+path)),"original localized source name "+id);
+            require(net.minecraft.client.resources.language.I18n.exists("block.gt6ce."+path)&&stack.getHoverName().getString().equals(net.minecraft.client.resources.language.I18n.get("block.gt6ce."+path)),"original localized source name "+id);
             items++;
         }
         require(items==12&&rows==44,"12 canonical source converters /44 structure rows");

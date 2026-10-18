@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_shapes",
+  "contents": [
+    "item:gt6ce:foodmold_shape_baguette",
+    "item:gt6ce:foodmold_shape_bread",
+    "item:gt6ce:foodmold_shape_bun",
+    "item:gt6ce:foodmold_shape_cylinder",
+    "item:gt6ce:foodmold_shape_empty",
+    "item:gt6ce:foodmold_shape_toast",
+    "item:gt6ce:slicer_shape_eights",
+    "item:gt6ce:slicer_shape_eights_hollow",
+    "item:gt6ce:slicer_shape_empty",
+    "item:gt6ce:slicer_shape_flat",
+    "item:gt6ce:slicer_shape_grid",
+    "item:gt6ce:slicer_shape_quaters",
+    "item:gt6ce:slicer_shape_quaters_hollow",
+    "item:gt6ce:slicer_shape_split"
+  ],
+  "priority": 110
+}

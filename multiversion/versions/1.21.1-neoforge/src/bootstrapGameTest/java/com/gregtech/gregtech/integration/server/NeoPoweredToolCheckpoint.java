@@ -16,7 +16,7 @@ public final class NeoPoweredToolCheckpoint {
  @SuppressWarnings({"unchecked","rawtypes"})
  @SubscribeEvent public static void started(ServerStartedEvent event){
   if(!Boolean.getBoolean("gregtech.integration.poweredToolSmoke"))return;
-  var level=event.getServer().overworld();var id=ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/electric_wrench/bronze/battery_nickel_cadmium_lv");
+  var level=event.getServer().overworld();var id=ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/electric_wrench/bronze/battery_nickel_cadmium_lv");
   var recipe=(CraftingRecipe)level.getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing actual powered recipe "+id)).value();
   var parts=new java.util.ArrayList<ItemStack>();for(var ingredient:recipe.getIngredients()){require(ingredient.getItems().length>0,"resolved assembly ingredient");parts.add(ingredient.getItems()[0].copy());}
   var input=CraftingInput.of(3,3,parts);require(recipe.matches(input,level),"original powered wrench shape");
@@ -34,7 +34,7 @@ public final class NeoPoweredToolCheckpoint {
   require(fuse.onIgnite(level,pos,Direction.UP,null,ItemStack.EMPTY,false,0,0,0)==10000&&fuse.remainingTicks()==100,"actual ignition fuse");fuse.serverTick();require(fuse.remainingTicks()==99,"actual fuse tick");
   var fuseTag=fuse.saveWithoutMetadata(level.registryAccess());var parsed=new com.gregtech.gregtech.blockentity.tool.DynamiteBlockEntity(pos,level.getBlockState(pos));parsed.loadWithComponents(fuseTag,level.registryAccess());require(parsed.remainingTicks()==99,"native fuse save/load");
   require(fuse.onExtinguish(level,pos,Direction.UP,null,ItemStack.EMPTY,false,0,0,0)==10000&&fuse.remainingTicks()==0,"actual fuse defusing");
-  var remote=new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","remote_activator")));require(remote.getItem() instanceof com.gregtech.gregtech.item.RemoteActivatorItem,"real remote factory");require(BehaviorRemote.addCoords(remote,level,pos)&&BehaviorRemote.getCoords(StackCustomData.read(remote),level).contains(pos),"actual binding writes item components");
+  var remote=new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","remote_activator")));require(remote.getItem() instanceof com.gregtech.gregtech.item.RemoteActivatorItem,"real remote factory");require(BehaviorRemote.addCoords(remote,level,pos)&&BehaviorRemote.getCoords(StackCustomData.read(remote),level).contains(pos),"actual binding writes item components");
   require(!GTToolBlocks.DYNAMITE.get().remoteActivate(level,pos)&&fuse.remainingTicks()==20,"remote fuse and deliberate unbind response");level.removeBlock(pos,false);
   require(GTToolBlocks.BOOMSTICK.get().fortune()==3&&GTToolBlocks.DYNAMITE_STRONG.get().maxExplosionResistance()==40,"original charge variants");
   com.mojang.logging.LogUtils.getLogger().info("POWERED_TOOL_CHECKPOINT_SUCCESS {}","{\"actualAssembly\":true,\"capacityAndCharge\":true,\"partialCharge\":true,\"materialWear\":true,\"componentRoundTrip\":true,\"networkRoundTrip\":true,\"worldIgnitionTickDefuse\":true,\"fuseNbtRoundTrip\":true,\"remoteBinding\":true}");

@@ -145,18 +145,18 @@ public class DungeonPortalBlock extends Block implements EntityBlock {
 //?}
                                 TooltipFlag flag) {
         if (target == Target.NETHER) {
-            tooltip.add(Component.translatable("tooltip.gregtech.portal.nether.range")
+            tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.range")
                     .withStyle(ChatFormatting.AQUA));
-            tooltip.add(Component.translatable("tooltip.gregtech.portal.nether.margin")
+            tooltip.add(Component.translatable("tooltip.gt6ce.portal.nether.margin")
                     .withStyle(ChatFormatting.AQUA));
         } else {
-            tooltip.add(Component.translatable("tooltip.gregtech.portal.end.range")
+            tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.range")
                     .withStyle(ChatFormatting.AQUA));
-            tooltip.add(Component.translatable("tooltip.gregtech.portal.end.margin")
+            tooltip.add(Component.translatable("tooltip.gt6ce.portal.end.margin")
                     .withStyle(ChatFormatting.AQUA));
         }
-        tooltip.add(Component.translatable("tooltip.gregtech.portal.relay").withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable(target == Target.NETHER ? "tooltip.gregtech.portal.ignite" : "tooltip.gregtech.portal.eye")
+        tooltip.add(Component.translatable("tooltip.gt6ce.portal.relay").withStyle(ChatFormatting.AQUA));
+        tooltip.add(Component.translatable(target == Target.NETHER ? "tooltip.gt6ce.portal.ignite" : "tooltip.gt6ce.portal.eye")
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 

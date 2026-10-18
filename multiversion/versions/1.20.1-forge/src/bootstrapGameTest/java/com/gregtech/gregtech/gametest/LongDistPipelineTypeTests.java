@@ -32,7 +32,7 @@ public final class LongDistPipelineTypeTests {
     private LongDistPipelineTypeTests() {}
 
     private static LongDistPipeBlock pipe(String id) {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         if (!(block instanceof LongDistPipeBlock pipe)) throw new AssertionError(id + " is not a live pipeline block");
         return pipe;
     }

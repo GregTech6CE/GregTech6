@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_strong_steam_boiler",
+  "contents": [
+    "item:gt6ce:strong_steam_boiler_arsenic_bronze",
+    "item:gt6ce:strong_steam_boiler_arsenic_copper",
+    "item:gt6ce:strong_steam_boiler_bismuth",
+    "item:gt6ce:strong_steam_boiler_bronze",
+    "item:gt6ce:strong_steam_boiler_chromium",
+    "item:gt6ce:strong_steam_boiler_invar",
+    "item:gt6ce:strong_steam_boiler_lead",
+    "item:gt6ce:strong_steam_boiler_netherite",
+    "item:gt6ce:strong_steam_boiler_steel",
+    "item:gt6ce:strong_steam_boiler_titanium",
+    "item:gt6ce:strong_steam_boiler_tungsten",
+    "item:gt6ce:strong_steam_boiler_tungsten_steel",
+    "item:gt6ce:strong_steam_boiler_ultimet"
+  ],
+  "priority": 110
+}

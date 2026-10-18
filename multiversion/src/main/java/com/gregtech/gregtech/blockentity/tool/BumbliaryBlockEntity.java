@@ -715,7 +715,7 @@ public class BumbliaryBlockEntity extends BlockEntity implements MenuProvider,
     @Override
     public Component getDisplayName() {
         return Component.translatable(layout.advanced()
-                ? "block.gregtech.advanced_bumbliary" : "block.gregtech.bumbliary");
+                ? "block.gt6ce.advanced_bumbliary" : "block.gt6ce.bumbliary");
     }
 
     @Nullable

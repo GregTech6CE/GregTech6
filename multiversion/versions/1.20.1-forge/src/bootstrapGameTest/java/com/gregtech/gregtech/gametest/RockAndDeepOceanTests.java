@@ -26,7 +26,7 @@ import java.util.List;
  * §52: GT6's surface rock litter ({@code WorldgenRocks}, {@code Loader_Worldgen:618}) and its deep
  * ocean prismarine pylons ({@code WorldgenDeepOcean}, {@code Loader_Worldgen:580}).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class RockAndDeepOceanTests {
     private static final int BASE_X = 54000;
@@ -59,7 +59,7 @@ public final class RockAndDeepOceanTests {
         helper.assertTrue(GTFeatures.ROCKS.getId().getPath().equals("gt_rocks"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTRocksFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_rocks.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_rocks.json is loaded");
         helper.succeed();
     }
 
@@ -95,9 +95,9 @@ public final class RockAndDeepOceanTests {
         helper.assertTrue(ForgeRegistries.ITEMS.containsKey(ResourceLocation.parse(GTRocksFeature.FLINT)),
                 "minecraft:flint is a real item");
         Block rockBlock = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "rock"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "rock"));
         helper.assertTrue(rockBlock != null && rockBlock != Blocks.AIR,
-                "gregtech:rock carries every litter variant");
+                "gt6ce:rock carries every litter variant");
         helper.succeed();
     }
 
@@ -109,7 +109,7 @@ public final class RockAndDeepOceanTests {
         int minHeight = level.getSeaLevel() - 1;
         int maxHeight = minHeight * 2 + 16;
         Block rockBlock = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "rock"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "rock"));
 
         // Grass at the test site: the ray finds it and puts a rock on top.
         int x = BASE_X, z = BASE_Z;
@@ -195,7 +195,7 @@ public final class RockAndDeepOceanTests {
         helper.assertTrue(GTFeatures.DEEP_OCEAN.getId().getPath().equals("gt_deep_ocean"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTDeepOceanFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_deep_ocean.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_deep_ocean.json is loaded");
 
         // Build a pylon on a prepared water column and check the shape.
         ServerLevel level = helper.getLevel();

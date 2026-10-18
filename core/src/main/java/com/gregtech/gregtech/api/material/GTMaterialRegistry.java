@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public final class GTMaterialRegistry {
     private static java.util.function.BiConsumer<Boolean, String> logSink = (warning, message) ->
-            System.getLogger("gregtech.materials").log(
+            System.getLogger("gt6ce.materials").log(
                     warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
     public static final int MAX_MATERIALS = 10000;
 

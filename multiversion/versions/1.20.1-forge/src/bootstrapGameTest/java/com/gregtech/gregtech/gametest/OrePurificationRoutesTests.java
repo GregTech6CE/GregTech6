@@ -22,7 +22,7 @@ import java.util.List;
  * all in this port, and the ore chain skipped straight from purified ore to the centrifuge.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class OrePurificationRoutesTests {
 

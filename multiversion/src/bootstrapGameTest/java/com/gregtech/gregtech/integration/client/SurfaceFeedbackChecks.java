@@ -36,7 +36,7 @@ public final class SurfaceFeedbackChecks {
   actor.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);actor.moveTo(200.5,210,202.5);actor.getInventory().clearContent();
   var bushes=new JsonArray();var springs=new JsonArray();int attachments=0;
   require(GTBushes.allBlocks().length==10+com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants().size()&&GTFluidSprings.allBlocks().length==8,"native variant registry counts");
-  var certificate=ResourceLocation.fromNamespaceAndPath("gregtech","supporter_certificate");
+  var certificate=ResourceLocation.fromNamespaceAndPath("gt6ce","supporter_certificate");
   require(!BuiltInRegistries.BLOCK.containsKey(certificate)&&!BuiltInRegistries.ITEM.containsKey(certificate),"certificate remains registered");
   require(!BuiltInRegistries.BLOCK_ENTITY_TYPE.containsKey(certificate),"certificate BE remains registered");
   for(var berry:BerryBushCatalog.worldgenTypes()) {
@@ -94,9 +94,9 @@ public final class SurfaceFeedbackChecks {
   // Old saved species becomes a registered variant, preserving growth and block-state stage/support.
   level.setBlock(pos,GTBushes.BUSH.get().defaultBlockState().setValue(BushBlock.STAGE,2),3);
 //? if >=1.21.1 {
-  /*var oldBush=(BushBlockEntity)level.getBlockEntity(pos);var oldTag=new CompoundTag();oldTag.putString("berry","gregtech:blueberry");oldTag.putInt("growth",37);oldBush.loadWithComponents(oldTag,level.registryAccess());oldBush.tick();
+  /*var oldBush=(BushBlockEntity)level.getBlockEntity(pos);var oldTag=new CompoundTag();oldTag.putString("berry","gt6ce:blueberry");oldTag.putInt("growth",37);oldBush.loadWithComponents(oldTag,level.registryAccess());oldBush.tick();
 *///?} else {
-  var oldBush=(BushBlockEntity)level.getBlockEntity(pos);var oldTag=new CompoundTag();oldTag.putString("berry","gregtech:blueberry");oldTag.putInt("growth",37);oldBush.load(oldTag);oldBush.tick();
+  var oldBush=(BushBlockEntity)level.getBlockEntity(pos);var oldTag=new CompoundTag();oldTag.putString("berry","gt6ce:blueberry");oldTag.putInt("growth",37);oldBush.load(oldTag);oldBush.tick();
 //?}
   require(level.getBlockState(pos).is(GTBushes.byBerry("blueberry"))&&((BushBlockEntity)level.getBlockEntity(pos)).growth()==37&&level.getBlockState(pos).getValue(BushBlock.STAGE)==2,"legacy bush migration");
   for(var definition:GTFluidSpringsFeature.SPRINGS) {
@@ -123,11 +123,11 @@ public final class SurfaceFeedbackChecks {
   }
   level.setBlock(pos,GTFluidSprings.FLUID_SPRING.get().defaultBlockState(),3);var oldSpring=(FluidSpringBlockEntity)level.getBlockEntity(pos);
 //? if >=1.21.1 {
-  /*var oldFluidTag=new CompoundTag();oldFluidTag.putString("spring","gregtech:liquid_light_oil");oldFluidTag.putInt("amount",6000);oldFluidTag.putBoolean("active",true);oldSpring.loadWithComponents(oldFluidTag,level.registryAccess());oldSpring.tick();
+  /*var oldFluidTag=new CompoundTag();oldFluidTag.putString("spring","gt6ce:liquid_light_oil");oldFluidTag.putInt("amount",6000);oldFluidTag.putBoolean("active",true);oldSpring.loadWithComponents(oldFluidTag,level.registryAccess());oldSpring.tick();
 *///?} else {
-  var oldFluidTag=new CompoundTag();oldFluidTag.putString("spring","gregtech:liquid_light_oil");oldFluidTag.putInt("amount",6000);oldFluidTag.putBoolean("active",true);oldSpring.load(oldFluidTag);oldSpring.tick();
+  var oldFluidTag=new CompoundTag();oldFluidTag.putString("spring","gt6ce:liquid_light_oil");oldFluidTag.putInt("amount",6000);oldFluidTag.putBoolean("active",true);oldSpring.load(oldFluidTag);oldSpring.tick();
 //?}
-  var migrated=(FluidSpringBlockEntity)level.getBlockEntity(pos);require(level.getBlockState(pos).is(GTFluidSprings.byFluid("gregtech:liquid_light_oil"))&&migrated.active()&&migrated.amount()==6000,"legacy spring migration");
+  var migrated=(FluidSpringBlockEntity)level.getBlockEntity(pos);require(level.getBlockState(pos).is(GTFluidSprings.byFluid("gt6ce:liquid_light_oil"))&&migrated.active()&&migrated.amount()==6000,"legacy spring migration");
   receipt.add("flatBushVariantsChecked",bushes);receipt.add("flatSpringVariantsChecked",springs);receipt.addProperty("flatGeneratedBranchesChecked",attachments);receipt.addProperty("flatLegacyWorldConversionsChecked",2);receipt.addProperty("supporterCertificateRemoved",true);
   // Leave a palette checkpoint in the isolated save; this is a saved sample, not a restart assertion.
   for(int i=0;i<BerryBushCatalog.worldgenSize();i++){var checkpoint=pos.offset(i*2,0,12);level.setBlock(checkpoint.below(),Blocks.DIRT.defaultBlockState(),3);level.setBlock(checkpoint,GTBushes.byBerry(BerryBushCatalog.worldgenByIndex(i).id()).defaultBlockState().setValue(BushBlock.STAGE,3),3);}
@@ -140,7 +140,7 @@ public final class SurfaceFeedbackChecks {
    var block=GTBushes.byBerry(berry.id());var stack=new ItemStack(block);OriginFeedbackChecks.checkModel(minecraft,stack,true);
    int tint=minecraft.getItemColors().getColor(stack,1);require((tint&0xffffff)==BerryBushCatalog.inventoryColour(berry),"native bush inventory color");
    for(int stage=0;stage<=3;stage++) {var state=block.defaultBlockState().setValue(BushBlock.STAGE,stage);int world=minecraft.getBlockColors().getColor(state,minecraft.level,null,1);require((world&0xffffff)==BerryBushCatalog.stageColour(berry,stage),"native stage color without BE");}
-   require(!stack.getHoverName().getString().startsWith("block.gregtech."),"untranslated bush variant");models++;colors.addProperty(BuiltInRegistries.BLOCK.getKey(block).getPath(),Integer.toHexString(tint));
+   require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"untranslated bush variant");models++;colors.addProperty(BuiltInRegistries.BLOCK.getKey(block).getPath(),Integer.toHexString(tint));
   }
   for(var definition:GTFluidSpringsFeature.SPRINGS) {
    var block=GTFluidSprings.byFluid(definition.fluidId());var stack=new ItemStack(block);OriginFeedbackChecks.checkModel(minecraft,stack,true);
@@ -157,7 +157,7 @@ public final class SurfaceFeedbackChecks {
 *///?} else {
    for(var pass:model.getRenderPasses(stack,false))for(var layer:pass.getRenderTypes(stack,false))for(int face=-1;face<6;face++)for(var quad:pass.getQuads(null,face<0?null:Direction.from3DDataValue(face),net.minecraft.util.RandomSource.create(1),net.minecraftforge.client.model.data.ModelData.EMPTY,layer))if(quad.isTinted()&&quad.getSprite().contents().name().equals(expected.getStillTexture()))fluidSprite=true;
 //?}
-   require(fluidSprite,"spring inventory has wrong fluid sprite");require(!stack.getHoverName().getString().startsWith("block.gregtech."),"untranslated spring variant");models++;
+   require(fluidSprite,"spring inventory has wrong fluid sprite");require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"untranslated spring variant");models++;
   }
   var pages=com.gregtech.gregtech.loaders.b.OriginCreativeContents.pages();require(pages.values().stream().flatMap(Collection::stream).filter(s->s.is(GTFluidSprings.FLUID_SPRING.get().asItem())).count()==0,"empty legacy spring in creative page");
   require(pages.get("untyped").stream().filter(s->s.getItem() instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.FluidSpringBlock).count()==7,"typed creative spring count");

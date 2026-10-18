@@ -19,7 +19,7 @@ public final class NeoCoverToolBoundaryTests {
     @GameTest(template="test_empty",timeoutTicks=40)
     public static void logisticsToolPreviewAndOppositeCoverGate(GameTestHelper h){
         var level=h.getLevel();var pos=h.absolutePos(new BlockPos(4,4,4));var neighbor=pos.east();
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","logistics_wire"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","logistics_wire"));
         level.setBlockAndUpdate(pos,Blocks.AIR.defaultBlockState());level.setBlockAndUpdate(neighbor,Blocks.AIR.defaultBlockState());
         level.setBlockAndUpdate(pos,block.defaultBlockState());level.setBlockAndUpdate(neighbor,block.defaultBlockState());
         var host=(LogisticsCoverHost)level.getBlockEntity(pos);

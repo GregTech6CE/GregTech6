@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "facing=down,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=down,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_active"
+    },
+    "facing=north,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_north"
+    },
+    "facing=north,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_north_active"
+    },
+    "facing=south,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_south"
+    },
+    "facing=south,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_south_active"
+    },
+    "facing=east,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_east"
+    },
+    "facing=east,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_east_active"
+    },
+    "facing=west,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_west"
+    },
+    "facing=west,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_west_active"
+    },
+    "facing=up,solar_active=false": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium"
+    },
+    "facing=up,solar_active=true": {
+      "model": "gt6ce:block/machine/energy/solar_panel_germanium_active"
+    }
+  }
+}

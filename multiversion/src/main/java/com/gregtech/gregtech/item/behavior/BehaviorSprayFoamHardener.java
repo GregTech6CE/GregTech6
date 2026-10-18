@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
  * <h2>Why this one is a clean port</h2>
  *
  * <p>The port's wet foam already owns exactly that operation: {@link CFoamBlockEntity#dry()} is
- * documented as GT6's {@code dryFoam} and swaps the block for {@code gregtech:cfoam}
+ * documented as GT6's {@code dryFoam} and swaps the block for {@code gt6ce:cfoam}
  * ({@code CFoamBlockEntity:43-54}), reporting whether it did. GT6's {@code MultiTileEntityCFoam}
  * reaches it through {@code ITileEntityFoamable} ({@code MultiTileEntityCFoam:118-124}), which is the
  * first branch {@code :99} tests — so the port's hardener is that branch and nothing else, and a
@@ -58,9 +58,9 @@ public final class BehaviorSprayFoamHardener {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable hardeningSpray() {
-        return new Consumable(ItemBehaviors.stack("gregtech:empty_spray_can"),
-                ItemBehaviors.stack("gregtech:hardening_spray_2"),
-                ItemBehaviors.stack("gregtech:hardening_spray"),
+        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+                ItemBehaviors.stack("gt6ce:hardening_spray_2"),
+                ItemBehaviors.stack("gt6ce:hardening_spray"),
                 USES * USES_MULTIPLIER);
     }
 

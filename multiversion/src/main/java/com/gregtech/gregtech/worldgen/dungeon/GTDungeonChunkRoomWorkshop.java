@@ -416,9 +416,9 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
             shelf.inventory().setStackInSlot(i, book);
         }
 //? if >=1.21.1 {
-        /*var tape = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", "duct_tape"));
+        /*var tape = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
 *///?} else {
-        var tape = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", "duct_tape"));
+        var tape = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", "duct_tape"));
 //?}
         if (tape == null) throw new IllegalStateException("Missing GT6 workshop duct tape");
         shelf.inventory().setStackInSlot(8, new ItemStack(tape));
@@ -499,7 +499,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //? if >=1.21.1 {
         /*return block == null ? DungeonBindings.block("wood_barrel") : block;
 *///?} else {
@@ -514,7 +514,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? null : block.defaultBlockState();
     }
 

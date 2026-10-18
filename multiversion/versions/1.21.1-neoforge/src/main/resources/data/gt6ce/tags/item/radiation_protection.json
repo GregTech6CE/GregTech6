@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:radiation_suit_helmet",
+    "gt6ce:radiation_suit_chestplate",
+    "gt6ce:radiation_suit_leggings",
+    "gt6ce:radiation_suit_boots"
+  ]
+}

@@ -31,7 +31,7 @@ import static com.gregtech.gregtech.gametest.TransportMaterialPortTests.*;
 //?}
 public final class SteamTurbineSourceTests {
     private static EnergyNodeBlockEntity place(GameTestHelper h, BlockPos pos, String id) {
-        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:" + id));
+        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:" + id));
         h.setBlock(pos,block.defaultBlockState().setValue(EnergyNodeBlock.FACING,Direction.EAST));
         return (EnergyNodeBlockEntity) h.getBlockEntity(pos);
     }
@@ -44,9 +44,9 @@ public final class SteamTurbineSourceTests {
         var turbine = place(h,pos,"steam_turbine_steel");
         var dynamo = place(h,pos.east(),"electric_dynamo_lv");
         var battery = place(h,pos.east(2),"battery_box_lv");
-        h.assertTrue(battery.installBattery(item("gregtech:battery_lead_acid_lv")),"actual complete battery installed");
+        h.assertTrue(battery.installBattery(item("gt6ce:battery_lead_acid_lv")),"actual complete battery installed");
         battery.batteryEnergy().tick(2,null,null);
-        h.setBlock(pos.south(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:drum_stainless_steel")).defaultBlockState());
+        h.setBlock(pos.south(),BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:drum_stainless_steel")).defaultBlockState());
         var drum = (com.gregtech.gregtech.blockentity.machine.TankBlockEntity) h.getBlockEntity(pos.south());
         var steam = com.gregtech.gregtech.registry.GTFluids.stack("Steam",384);
 //? if >=1.21.1 {

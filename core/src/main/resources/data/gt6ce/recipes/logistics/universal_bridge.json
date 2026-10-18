@@ -1,0 +1,36 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "SYR",
+    "XMX",
+    "CYG"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:circuit_advanced"
+    },
+    "G": {
+      "tag": "forge:gears/stainless_steel"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_quadruple_stainlesssteel"
+    },
+    "R": {
+      "item": "gt6ce:rotor_stainlesssteel"
+    },
+    "S": {
+      "item": "gt6ce:spring_stainlesssteel"
+    },
+    "X": {
+      "item": "gt6ce:pipe_medium_stainless_steel"
+    },
+    "Y": {
+      "item": "gt6ce:item_pipe_medium_platinum"
+    }
+  },
+  "result": {
+    "item": "gt6ce:universal_bridge"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

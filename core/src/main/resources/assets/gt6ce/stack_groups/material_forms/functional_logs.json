@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_logs",
+  "contents": [
+    "item:gt6ce:log_blue_mahoe",
+    "item:gt6ce:log_bluemahoe",
+    "item:gt6ce:log_bluespruce",
+    "item:gt6ce:log_cinnamon",
+    "item:gt6ce:log_coconut",
+    "item:gt6ce:log_dry",
+    "item:gt6ce:log_ebony",
+    "item:gt6ce:log_frozen",
+    "item:gt6ce:log_hazel",
+    "item:gt6ce:log_maple",
+    "item:gt6ce:log_mossy",
+    "item:gt6ce:log_pine",
+    "item:gt6ce:log_rainbowood",
+    "item:gt6ce:log_rotten",
+    "item:gt6ce:log_rubber",
+    "item:gt6ce:log_white_mahoe",
+    "item:gt6ce:log_willow"
+  ],
+  "priority": 110
+}

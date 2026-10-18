@@ -7,7 +7,7 @@ final class EngineMaterialTooltips {private EngineMaterialTooltips(){}
             return Component.empty();
         }
         if (mat.getId() >= 7900 && mat.getId() <= 7912) return Component.literal(displayUnits(amount) + " ")
-                .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gregtech.composition_category"));
+                .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gt6ce.composition_category"));
         double weightKg = weightKg(mat, amount);
         long frac = ((long) (weightKg * 1000)) % 1000;
 

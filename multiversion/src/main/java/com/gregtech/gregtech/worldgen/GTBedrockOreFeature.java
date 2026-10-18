@@ -59,7 +59,7 @@ public class GTBedrockOreFeature extends Feature<NoneFeatureConfiguration> {
         if (pick.flowerId() != null) {
 //? if >=1.21.1 {
             /*Block flower = BuiltInRegistries.BLOCK.get(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", pick.flowerId()));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", pick.flowerId()));
 *///?} else {
             Block flower = ForgeRegistries.BLOCKS.getValue(
                     new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, pick.flowerId()));

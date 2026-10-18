@@ -10,13 +10,13 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ElectronicsTests {
     @GameTest(template="test_blueprint_empty")
     public static void componentRecipesLoadAndCraft(GameTestHelper h) {
         var manager=h.getLevel().getRecipeManager();
-        var recipes=manager.getRecipes().stream().filter(r->r.getId().getNamespace().equals("gregtech")&&r.getId().getPath().startsWith("components/")).toList();
+        var recipes=manager.getRecipes().stream().filter(r->r.getId().getNamespace().equals("gt6ce")&&r.getId().getPath().startsWith("components/")).toList();
         h.assertTrue(recipes.size()==84,"84 component crafting recipes actually loaded; found "+recipes.size());
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0) {
             @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int slot){return ItemStack.EMPTY;}

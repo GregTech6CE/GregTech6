@@ -1,0 +1,20 @@
+{
+  "type": "gt6ce:book_binding",
+  "category": "misc",
+  "group": "gt6ce.books.binding",
+  "ingredients": [
+    {
+      "item": "gt6ce:printed_pages"
+    },
+    {
+      "tag": "gt6ce:book_binding/leather"
+    },
+    {
+      "tag": "gt6ce:book_binding/dyes/green"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:book_green",
+    "count": 1
+  }
+}

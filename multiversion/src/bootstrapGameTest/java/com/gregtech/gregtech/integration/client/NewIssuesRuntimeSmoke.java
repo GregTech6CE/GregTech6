@@ -24,7 +24,7 @@ import java.util.*;
 
 /** Finite checks for issues 13–18 against loaded native registries and capabilities. */
 final class NewIssuesRuntimeSmoke {
-    private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gregtech",path);}
+    private static ResourceLocation id(String path){return ResourceLocation.fromNamespaceAndPath("gt6ce",path);}
     private static ItemStack item(String path){var key=id(path);require(BuiltInRegistries.ITEM.containsKey(key),"missing item "+path);return new ItemStack(BuiltInRegistries.ITEM.get(key));}
     private static Block block(String path){return BuiltInRegistries.BLOCK.get(id(path));}
     private static void require(boolean value,String message){if(!value)throw new IllegalStateException("New issues: "+message);}
@@ -129,7 +129,7 @@ final class NewIssuesRuntimeSmoke {
 
         int fluidPipes=0,itemPipes=0,machines=0,batteries=0;
         for(var b:BuiltInRegistries.BLOCK){
-            if(!BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gregtech"))continue;
+            if(!BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gt6ce"))continue;
             if(b instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock&&fluidPipes==0){
                 place(level,pos,b);var pipe=(FluidPipeBlockEntity)level.getBlockEntity(pos);
                 require(pipe.attachCover(Direction.EAST,pump),"fluid pipe pump attach");require(ComponentCoverRuntime.visual(pipe.getCover(Direction.EAST))==1,"pipe must force input");
@@ -152,10 +152,10 @@ final class NewIssuesRuntimeSmoke {
 //? if >=1.21.1 {
         /*for(var holder:server.getRecipeManager().getRecipes()){
             var recipe=holder.value();
-            if(!holder.id().getNamespace().equals("gregtech"))continue;
+            if(!holder.id().getNamespace().equals("gt6ce"))continue;
 *///?} else {
         for(var recipe:server.getRecipeManager().getRecipes()){
-            if(!recipe.getId().getNamespace().equals("gregtech"))continue;
+            if(!recipe.getId().getNamespace().equals("gt6ce"))continue;
 //?}
             for(var ingredient:recipe.getIngredients()){
                 if(ingredient==net.minecraft.world.item.crafting.Ingredient.EMPTY)continue;
@@ -185,7 +185,7 @@ final class NewIssuesRuntimeSmoke {
     private static void fallbackHosts(ServerLevel level,BlockPos pos,MinecraftServer server,JsonObject receipt){
         var classes=new HashSet<Class<?>>();var rows=new JsonArray();int faces=0;
         for(var b:BuiltInRegistries.BLOCK){
-            if(!BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gregtech")||!(b instanceof EntityBlock entity))continue;
+            if(!BuiltInRegistries.BLOCK.getKey(b).getNamespace().equals("gt6ce")||!(b instanceof EntityBlock entity))continue;
             var owner=entity.newBlockEntity(pos,b.defaultBlockState());
             if(owner==null||!ComponentCoverFallback.uses(owner)||!classes.add(owner.getClass()))continue;
             owner.setLevel(level);if(!ComponentCoverFallback.eligible(owner))continue;
@@ -263,7 +263,7 @@ final class NewIssuesRuntimeSmoke {
     static boolean client(net.minecraft.client.Minecraft minecraft,JsonObject receipt){
         if(reload==null){minecraft.options.languageCode="zh_cn";minecraft.getLanguageManager().setSelected("zh_cn");minecraft.getLanguageManager().onResourceManagerReload(minecraft.getResourceManager());reload=java.util.concurrent.CompletableFuture.completedFuture(null);return false;}
         if(!reload.isDone()||minecraft.getOverlay()!=null)return false;reload.join();
-        var language=net.minecraft.locale.Language.getInstance();var resource=ResourceLocation.fromNamespaceAndPath("gregtech","lang/zh_cn.json");
+        var language=net.minecraft.locale.Language.getInstance();var resource=ResourceLocation.fromNamespaceAndPath("gt6ce","lang/zh_cn.json");
         JsonObject entries;try(var reader=minecraft.getResourceManager().getResource(resource).orElseThrow().openAsReader()){entries=JsonParser.parseReader(reader).getAsJsonObject();}catch(java.io.IOException error){throw new RuntimeException(error);}
         int stones=0,tabs=0,forms=0;
         for(var nativeItem:BuiltInRegistries.ITEM){
@@ -279,7 +279,7 @@ final class NewIssuesRuntimeSmoke {
         for(var b:BuiltInRegistries.BLOCK)if(b instanceof com.gregtech.gregtech.block.stone.GTStoneBlock||b instanceof com.gregtech.gregtech.block.stone.GTStoneSlabBlock){
             var key=b.getDescriptionId();require(entries.has(key),"missing typed stone name "+key);require(new ItemStack(b).getHoverName().getString().equals(entries.get(key).getAsString()),"stone item name still generic "+key);stones++;
         }
-        for(var key:entries.keySet())if(key.startsWith("itemGroup.gregtech.")){require(language.has(key),"missing native tab "+key);tabs++;}
+        for(var key:entries.keySet())if(key.startsWith("itemGroup.gt6ce.")){require(language.has(key),"missing native tab "+key);tabs++;}
         for(var kind:ComponentCoverRules.Kind.values())for(int mode=0;mode<2;mode++){
             var texture=id("block/machines/covers/"+ComponentCoverRules.texture(kind,mode));
             var sprite=minecraft.getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).apply(texture);

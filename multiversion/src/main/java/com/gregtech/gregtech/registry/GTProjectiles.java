@@ -32,14 +32,14 @@ import net.minecraftforge.registries.RegistryObject;
 public final class GTProjectiles {
     private GTProjectiles() {}
 //? if >=1.21.1 {
-    /*private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, "gregtech");
+    /*private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(Registries.ENTITY_TYPE, "gt6ce");
     public static final DeferredHolder<EntityType<?>, EntityType<MaterialArrowEntity>> MATERIAL_ARROW = TYPES.register("material_arrow",
 *///?} else {
-    private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "gregtech");
+    private static final DeferredRegister<EntityType<?>> TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, "gt6ce");
     public static final RegistryObject<EntityType<MaterialArrowEntity>> MATERIAL_ARROW = TYPES.register("material_arrow",
 //?}
             () -> EntityType.Builder.<MaterialArrowEntity>of(MaterialArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("gregtech:material_arrow"));
+                    .sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("gt6ce:material_arrow"));
 
     public static void register(IEventBus bus) { TYPES.register(bus); }
 

@@ -25,7 +25,7 @@ import java.util.Locale;
 public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "basic_machine");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "basic_machine");
     private static final String NBT_NAME = "gt_bm_name";
     private static final String NBT_TIER = "gt_bm_tier";
     private static final String NBT_UNIT = "gt_bm_unit";
@@ -104,7 +104,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
 
         String name = data.getString(NBT_NAME);
         int tier = data.getInt(NBT_TIER);
-        tooltip.add(Component.translatable("jade.gregtech.basic_machine.label", name, tier));
+        tooltip.add(Component.translatable("jade.gt6ce.basic_machine.label", name, tier));
 
         if (data.contains(NBT_ENERGY_IN, CompoundTag.TAG_LONG)) {
             long energyIn = data.getLong(NBT_ENERGY_IN);
@@ -113,22 +113,22 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             long current = data.getLong(NBT_STORED);
             boolean running = data.getBoolean(NBT_RUNNING);
             String unit = data.getString(NBT_UNIT);
-            tooltip.add(Component.translatable("jade.gregtech.energy.in",
+            tooltip.add(Component.translatable("jade.gt6ce.energy.in",
                     format(energyIn), unit));
-            tooltip.add(Component.translatable("jade.gregtech.energy.range",
+            tooltip.add(Component.translatable("jade.gt6ce.energy.range",
                     format(energyMin), format(energyMax), unit));
             if (running) {
-                tooltip.add(Component.translatable("jade.gregtech.energy.active",
+                tooltip.add(Component.translatable("jade.gt6ce.energy.active",
                         format(current), unit));
             } else {
-                tooltip.add(Component.translatable("jade.gregtech.energy.idle"));
+                tooltip.add(Component.translatable("jade.gt6ce.energy.idle"));
             }
         }
 
         if (data.contains(NBT_ITEMS_TOTAL, CompoundTag.TAG_INT)) {
             int occupied = data.getInt(NBT_ITEMS_IN);
             int total = data.getInt(NBT_ITEMS_TOTAL);
-            tooltip.add(Component.translatable("jade.gregtech.basic_machine.items", occupied, total));
+            tooltip.add(Component.translatable("jade.gt6ce.basic_machine.items", occupied, total));
         }
 
         int fluidCount = data.getInt(NBT_FLUID_COUNT);
@@ -140,9 +140,9 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
                 int amount = ft.getInt("amount");
                 long cap = ft.getLong("cap");
                 int pct = cap > 0 ? (int) Math.min(100, amount * 100 / cap) : 0;
-                String type = isInput ? Component.translatable("jade.gregtech.basic_machine.fluid_in").getString()
-                                      : Component.translatable("jade.gregtech.basic_machine.fluid_out").getString();
-                tooltip.add(Component.translatable("jade.gregtech.basic_machine.fluid",
+                String type = isInput ? Component.translatable("jade.gt6ce.basic_machine.fluid_in").getString()
+                                      : Component.translatable("jade.gt6ce.basic_machine.fluid_out").getString();
+                tooltip.add(Component.translatable("jade.gt6ce.basic_machine.fluid",
                         type, fName, format(amount), format(cap), Integer.toString(pct)));
             }
             }

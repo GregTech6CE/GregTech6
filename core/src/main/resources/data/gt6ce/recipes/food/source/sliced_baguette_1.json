@@ -1,0 +1,20 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "kX"
+  ],
+  "key": {
+    "X": {
+      "item": "gt6ce:baguette"
+    },
+    "k": {
+      "tag": "forge:tools/knife"
+    }
+  },
+  "result": {
+    "item": "gt6ce:sliced_baguette",
+    "count": 2
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

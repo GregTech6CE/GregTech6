@@ -47,6 +47,6 @@ public final class OriginalSteamTurbines {
         return VARIANTS.stream().map(v -> new Row("turbines/"+v.id(),List.of("TwT","GSG","TMT"),Map.of(
                 'T',new Input("form","rotor",v.rotor()),'G',new Input("form","gearGt",v.hull()),
                 'S',new Input("form","stickLong",v.hull()),'M',new Input("casing","casingMachineDouble",v.hull()),
-                'w',new Input("item","gregtech:tool_wrench",null)),"gregtech:"+v.id(),1,false,true)).toList();
+                'w',new Input("item","gt6ce:tool_wrench",null)),"gt6ce:"+v.id(),1,false,true)).toList();
     }
 }

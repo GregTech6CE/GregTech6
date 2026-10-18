@@ -92,14 +92,14 @@ public final class AdvancedButtonBlockEntity extends BlockEntity {
     }
 
     public Component status() {
-        Component mode = Component.translatable("message.gregtech.advanced_button.mode."
+        Component mode = Component.translatable("message.gt6ce.advanced_button.mode."
                 + (lampMode ? "lamp" : maxLength > 0 ? "button" : "switch"));
-        Component polarity = Component.translatable("message.gregtech.advanced_button.polarity."
+        Component polarity = Component.translatable("message.gt6ce.advanced_button.polarity."
                 + (inverted ? "inverted" : "normal"));
         return maxLength > 0
-                ? Component.translatable("message.gregtech.advanced_button.status_timed",
+                ? Component.translatable("message.gt6ce.advanced_button.status_timed",
                         mode, strength, maxLength, polarity)
-                : Component.translatable("message.gregtech.advanced_button.status", mode, strength, polarity);
+                : Component.translatable("message.gt6ce.advanced_button.status", mode, strength, polarity);
     }
 
     private void refresh(boolean neighbors) {

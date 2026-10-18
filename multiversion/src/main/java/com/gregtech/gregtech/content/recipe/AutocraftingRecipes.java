@@ -26,11 +26,11 @@ import java.util.*;
 public final class AutocraftingRecipes {
     private AutocraftingRecipes() {}
 //? if >=1.21.1 {
-    /*public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gregtech", "autocrafter/blueprints"));
-    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gregtech", "autocrafter/infinite"));
+    /*public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/blueprints"));
+    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("gt6ce", "autocrafter/infinite"));
 *///?} else {
-    public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, new ResourceLocation("gregtech", "autocrafter/blueprints"));
-    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, new ResourceLocation("gregtech", "autocrafter/infinite"));
+    public static final TagKey<Item> BLUEPRINTS = TagKey.create(Registries.ITEM, new ResourceLocation("gt6ce", "autocrafter/blueprints"));
+    public static final TagKey<Item> INFINITE = TagKey.create(Registries.ITEM, new ResourceLocation("gt6ce", "autocrafter/infinite"));
 //?}
 
     private static final class Cache {
@@ -64,7 +64,7 @@ public final class AutocraftingRecipes {
 
     private static String id(ItemStack stack) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gregtech") ? id.getPath() : "";
+        return id.getNamespace().equals("gt6ce") ? id.getPath() : "";
     }
     public static boolean isProgram(ItemStack stack) {
         return !stack.isEmpty() && (id(stack).equals("blueprint") || UsbDataMedia.stickTier(stack) >= 1

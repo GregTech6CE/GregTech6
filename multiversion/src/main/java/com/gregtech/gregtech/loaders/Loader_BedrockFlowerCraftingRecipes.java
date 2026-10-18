@@ -124,12 +124,12 @@ public final class Loader_BedrockFlowerCraftingRecipes {
 *///?} else {
         var item = ForgeRegistries.ITEMS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", entry.id()));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", entry.id()));
         if (item == null) throw new IllegalStateException("Missing GT6 flower " + entry.id());
         return new ItemStack(item);
     }
 
     private static ResourceLocation id(BedrockFlowers.Flower flower, String process) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech", "bedrock_flowers/" + flower.id() + "/" + process);
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "bedrock_flowers/" + flower.id() + "/" + process);
     }
 }

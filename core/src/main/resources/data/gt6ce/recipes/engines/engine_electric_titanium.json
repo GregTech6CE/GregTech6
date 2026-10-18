@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "CIC",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_triple/titanium"
+    },
+    "I": {
+      "tag": "gt6ce:stick_long/neodymium_magnetic"
+    },
+    "C": {
+      "item": "gt6ce:wire_16_annealed_copper"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_electric_titanium"
+  },
+  "allow_mirror": false
+}

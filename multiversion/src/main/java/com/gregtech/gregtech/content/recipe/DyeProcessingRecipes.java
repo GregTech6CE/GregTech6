@@ -83,12 +83,12 @@ public final class DyeProcessingRecipes {
         for(var prefix:new MaterialPrefix[]{MaterialPrefix.ingot,MaterialPrefix.plate,MaterialPrefix.dust})
             for(String mold:new String[]{"extruder_shape_cell","low_heat_extruder_shape_cell"}) {
                 var feed=GTItems.getStack(prefix,GTMaterialRegistry.get("Plastic"),3);
-                if(!feed.isEmpty())add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{feed,item("gregtech:"+mold,1)},
-                        new ItemStack[]{item("gregtech:plastic_canister",1)},null,null,null,null,192,16,0).withCatalystInputs(1));
+                if(!feed.isEmpty())add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{feed,item("gt6ce:"+mold,1)},
+                        new ItemStack[]{item("gt6ce:plastic_canister",1)},null,null,null,null,192,16,0).withCatalystInputs(1));
             }
         var co2=com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid("CarbonDioxide",16000);
         if(co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
-        add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gregtech:empty_spray_can",1)},new ItemStack[]{item("gregtech:fire_extinguisher_co2",1)},null,null,
+        add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},new ItemStack[]{item("gt6ce:fire_extinguisher_co2",1)},null,null,
                 new FluidStack[]{co2},null,256,16,0));
         UtilityProcessingRecipes.register();
         return ENTRIES.size();
@@ -114,13 +114,13 @@ public final class DyeProcessingRecipes {
         return GTItems.getStack(MaterialPrefix.dust,GTMaterialRegistry.get(material),count);
     }
     private static void flower(String name,String color,boolean large){
-        add(MachineRecipeMaps.Squeezer,new Recipe(new ItemStack[]{item("minecraft:"+name,1)},new ItemStack[]{item("gregtech:plant_remains",1)},
+        add(MachineRecipeMaps.Squeezer,new Recipe(new ItemStack[]{item("minecraft:"+name,1)},new ItemStack[]{item("gt6ce:plant_remains",1)},
                 null,new long[]{large?4000:2000},null,new FluidStack[]{fluid("Dye_Flower_"+color,large?432:288)},16,16,0));
-        add(MachineRecipeMaps.Juicer,new Recipe(new ItemStack[]{item("minecraft:"+name,1)},new ItemStack[]{item("gregtech:plant_remains",1)},
+        add(MachineRecipeMaps.Juicer,new Recipe(new ItemStack[]{item("minecraft:"+name,1)},new ItemStack[]{item("gt6ce:plant_remains",1)},
                 null,new long[]{large?6000:3000},null,new FluidStack[]{fluid("Dye_Flower_"+color,large?288:144)},16,16,0));
     }
     private static ItemStack colored(String id,net.minecraft.world.item.DyeColor color,int count){
-        var block=((net.minecraft.world.item.BlockItem)item("gregtech:"+id,1).getItem()).getBlock();
+        var block=((net.minecraft.world.item.BlockItem)item("gt6ce:"+id,1).getItem()).getBlock();
         var stack=com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(block,color);stack.setCount(count);return stack;
     }
     private static ItemStack item(String id,int count){

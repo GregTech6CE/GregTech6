@@ -21,7 +21,7 @@ import java.util.*;
 
 @GameTestHolder("gregtech_data_viewer") @PrefixGameTestTemplate(false)
 public final class MaterialDataViewerPortTests {
- private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+id)));}
+ private static ItemStack item(String id){return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+id)));}
 //? if >=1.21.1 {
  /*private static Recipe lookup(GameTestHelper h,RecipeMap map,List<ItemStack> items,List<net.neoforged.neoforge.fluids.FluidStack> fluids){return map.findRecipe(items,fluids,false,3,3,h.getLevel(),null,ItemStack.EMPTY);}
 *///?} else {

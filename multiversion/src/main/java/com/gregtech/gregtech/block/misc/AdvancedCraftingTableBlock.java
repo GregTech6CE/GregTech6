@@ -48,7 +48,7 @@ public class AdvancedCraftingTableBlock extends HorizontalDirectionalBlock imple
                 boolean filter=com.gregtech.gregtech.api.tool.GTToolHelper.isScrewdriver(tool);
                 table.toggleMode(upper,filter);com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(tool,10000,player);
                 boolean enabled=(table.modes()&(filter?(upper?4:8):(upper?1:2)))!=0;
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter?"message.gregtech.crafting.filter":"message.gregtech.crafting.access",upper?"4×4":"9×4",
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(filter?"message.gt6ce.crafting.filter":"message.gt6ce.crafting.access",upper?"4×4":"9×4",
                         net.minecraft.network.chat.Component.translatable((filter?enabled:!enabled)?"options.on":"options.off")),true);
             }
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);

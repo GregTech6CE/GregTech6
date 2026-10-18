@@ -101,9 +101,9 @@ public class WoodLeavesBlock extends LeavesBlock {
         var random=builder.getLevel().random;
         if(random.nextInt(chance)==0) {
 //? if >=1.21.1 {
-            /*var sapling=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","sapling_"+species.id()));
+            /*var sapling=net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","sapling_"+species.id()));
 *///?} else {
-            var sapling=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gregtech","sapling_"+species.id()));
+            var sapling=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(new net.minecraft.resources.ResourceLocation("gt6ce","sapling_"+species.id()));
 //?}
             return java.util.List.of(new net.minecraft.world.item.ItemStack(sapling));
         }

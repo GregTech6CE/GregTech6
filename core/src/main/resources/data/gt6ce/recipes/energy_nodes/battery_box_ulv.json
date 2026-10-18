@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_01_lead"
+    },
+    "C": {
+      "item": "gt6ce:cable_01_lead"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_0_plus"
+    },
+    "M": {
+      "item": "gt6ce:casing_machine_tinalloy"
+    }
+  },
+  "result": {
+    "item": "gt6ce:battery_box_ulv"
+  }
+}

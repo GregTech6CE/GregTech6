@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_centrifuge",
+  "contents": [
+    "item:gt6ce:centrifuge_bronze",
+    "item:gt6ce:centrifuge_steel",
+    "item:gt6ce:centrifuge_titanium",
+    "item:gt6ce:centrifuge_tungsten_steel"
+  ],
+  "priority": 110
+}

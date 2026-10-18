@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "CIC",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_triple/steel_galvanized"
+    },
+    "I": {
+      "tag": "gt6ce:stick_long/iron_magnetic"
+    },
+    "C": {
+      "tag": "gt6ce:wire_01/any_copper"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_electric_galvanized_steel"
+  },
+  "allow_mirror": false
+}

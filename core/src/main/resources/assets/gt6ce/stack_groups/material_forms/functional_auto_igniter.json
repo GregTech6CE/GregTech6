@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_auto_igniter",
+  "contents": [
+    "item:gt6ce:auto_igniter_aluminium",
+    "item:gt6ce:auto_igniter_stainless",
+    "item:gt6ce:auto_igniter_steel",
+    "item:gt6ce:auto_igniter_titanium",
+    "item:gt6ce:auto_igniter_tungsten",
+    "item:gt6ce:auto_igniter_ultimet"
+  ],
+  "priority": 110
+}

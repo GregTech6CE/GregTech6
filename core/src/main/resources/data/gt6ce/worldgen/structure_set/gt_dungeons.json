@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "gt6ce:gt_dungeon_lattice",
+    "spacing": 11,
+    "separation": 0,
+    "salt": 0
+  },
+  "structures": [
+    {
+      "structure": "gt6ce:gt_dungeon",
+      "weight": 1
+    }
+  ]
+}

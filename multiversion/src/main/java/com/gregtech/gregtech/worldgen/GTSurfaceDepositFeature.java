@@ -28,8 +28,8 @@ import javax.annotation.Nullable;
  * {@code WorldgenPit} ({@code Loader_Worldgen:592-597}, ported as {@link GTPitFeature}) and the
  * river placer black sands are {@link GTBlackSandFeature} - so this feature is the port's own
  * substitute for vanilla's round clay discs. Its clay blocks are GT6's {@code BlocksGT.Diggables}
- * metas 1/4/5/6 (Brown/Yellow/Blue/White Clay), i.e. the port's {@code gregtech:clay_brown},
- * {@code gregtech:clay_yellow}, {@code gregtech:clay_blue} and {@code gregtech:clay_white}
+ * metas 1/4/5/6 (Brown/Yellow/Blue/White Clay), i.e. the port's {@code gt6ce:clay_brown},
+ * {@code gt6ce:clay_yellow}, {@code gt6ce:clay_blue} and {@code gt6ce:clay_white}
  * icon-set blocks; GT6's meta 3 (Red Clay) stays Nether-only ({@link GTNetherDepositFeature}).
  *
  * <p>PORT DIFFERENCE, fixed here: the seam used to start one block <em>below</em> the top ground
@@ -160,7 +160,7 @@ public class GTSurfaceDepositFeature extends Feature<NoneFeatureConfiguration> {
     private static BlockState blockState(String id) {
 //? if >=1.21.1 {
         /*Block block = BuiltInRegistries.BLOCK.get(
-                ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
         Block block = ForgeRegistries.BLOCKS.getValue(
                 new ResourceLocation(com.gregtech.gregtech.GregTech.NAMESPACE, id));

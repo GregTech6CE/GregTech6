@@ -24,18 +24,18 @@ import net.minecraftforge.registries.RegistryObject;
  * <p>WIRING: call {@code GTFeatures.register(modEventBus)} from the {@code GregTech} mod
  * constructor (alongside the other DeferredRegister registrations). The configured/placed
  * features and the overworld biome modifier are data-defined under
- * {@code data/gregtech/worldgen/} and {@code data/gregtech/forge/biome_modifier/}.
+ * {@code data/gt6ce/worldgen/} and {@code data/gt6ce/forge/biome_modifier/}.
  *
  * <p>This is also where {@link GTStructures} is registered: the dungeon's structure type, its placement
  * type and its anchor piece ({@code ServerLevel.findNearestMapStructure} and {@code /locate structure
- * gregtech:gt_dungeon} need those, while the dungeon itself stays this feature, see
+ * gt6ce:gt_dungeon} need those, while the dungeon itself stays this feature, see
  * {@link GTDungeonStructure}).</p>
  */
 
 /** Original ore-vein/small-ore/stone-layer features; other feature modules await source migration. */
 public final class GTFeatures {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, "gregtech");
+    /*public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, "gt6ce");
     public static final DeferredHolder<Feature<?>, Feature<NoneFeatureConfiguration>> ORE_VEIN =
 *///?} else {
     public static final DeferredRegister<Feature<?>> FEATURES =

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class ExtenderEnergyTests {
     private static final BlockPos CENTER=new BlockPos(4,3,4);
     private static ExtenderBlockEntity relay(GameTestHelper h,BlockPos pos,ExtenderSpec spec){
@@ -61,7 +61,7 @@ public final class ExtenderEnergyTests {
     }
     @GameTest(template="test_blueprint_empty") public static void fluxCapabilityTracksReplacementAndInvalidation(GameTestHelper h){
         var relay=relay(h,CENTER,ExtenderSpec.UNIVERSAL_BRIDGE);
-        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","engine_flux_lead"));
+        var block=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","engine_flux_lead"));
         h.setBlock(CENTER.east(),block.defaultBlockState().setValue(com.gregtech.gregtech.block.machine.EngineBlock.FACING,Direction.EAST));
         var optional=relay.getCapability(ForgeCapabilities.ENERGY,Direction.WEST);var flux=optional.orElseThrow(IllegalStateException::new);
         h.assertTrue(flux.canReceive()&&flux.receiveEnergy(128,true)==128&&flux.getEnergyStored()==0,"FE simulation reaches real flux engine without mutation");

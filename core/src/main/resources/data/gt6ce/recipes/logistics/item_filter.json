@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Z ",
+    "ZQZ",
+    " Z "
+  ],
+  "key": {
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "Z": {
+      "tag": "forge:foils/zinc"
+    }
+  },
+  "result": {
+    "item": "gt6ce:item_filter"
+  }
+}

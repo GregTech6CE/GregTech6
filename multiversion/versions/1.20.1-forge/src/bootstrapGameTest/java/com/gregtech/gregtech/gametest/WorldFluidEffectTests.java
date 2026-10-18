@@ -48,7 +48,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * come from {@code Fluid#defaultFluidState().createLegacyBlock()}, which is the port's
  * {@code GTWorldFluidBlock} for exactly these nine fluids ({@code Loader_Fluids.WORLD_FLUID_PATHS}).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class WorldFluidEffectTests {
     private static final int BASE_X = 35000;
@@ -61,8 +61,8 @@ public final class WorldFluidEffectTests {
 
     /** A world fluid by the registry path the port registers it under ({@code Loader_Fluids:39-42}). */
     private static Fluid worldFluid(GameTestHelper helper, String path) {
-        Fluid fluid = ForgeRegistries.FLUIDS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", path));
-        helper.assertTrue(fluid != null, "gregtech:" + path + " is a registered fluid, got null");
+        Fluid fluid = ForgeRegistries.FLUIDS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
+        helper.assertTrue(fluid != null, "gt6ce:" + path + " is a registered fluid, got null");
         return fluid;
     }
 

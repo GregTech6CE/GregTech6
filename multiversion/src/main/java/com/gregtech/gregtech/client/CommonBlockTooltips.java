@@ -33,17 +33,17 @@ public final class CommonBlockTooltips {
     private static final String ENCHANT = "gt.lang.enchantment.bonus";
     private static final Component HAND_HARVEST = Component.literal("Hand-Harvestable").withStyle(ChatFormatting.DARK_GRAY);
     private static final Set<String> OLD_HARVEST = Set.of(HARVEST,
-            "tooltip.gregtech.machine.harvest_wrench", "tooltip.gregtech.machine.harvest_wrench_short",
-            "tooltip.gregtech.machine.harvest_axe", "tooltip.gregtech.machine.harvest_shears",
-            "tooltip.gregtech.machine.harvest.tool_label", "tooltip.gregtech.machine.hand_harvest",
-            "tooltip.gregtech.crucible.harvest_pickaxe", "tooltip.gregtech.wire.harvest_tool",
+            "tooltip.gt6ce.machine.harvest_wrench", "tooltip.gt6ce.machine.harvest_wrench_short",
+            "tooltip.gt6ce.machine.harvest_axe", "tooltip.gt6ce.machine.harvest_shears",
+            "tooltip.gt6ce.machine.harvest.tool_label", "tooltip.gt6ce.machine.hand_harvest",
+            "tooltip.gt6ce.crucible.harvest_pickaxe", "tooltip.gt6ce.wire.harvest_tool",
             "gt.lang.harvest.shovel");
-    private static final Set<String> FLAME_KEYS = Set.of(FLAMMABLE, "tooltip.gregtech.flammable");
+    private static final Set<String> FLAME_KEYS = Set.of(FLAMMABLE, "tooltip.gt6ce.flammable");
 
     public static void append(ItemStack stack, List<Component> lines) {
         if (stack.isEmpty() || !(stack.getItem() instanceof BlockItem item)) return;
         Block block = item.getBlock();
-        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gregtech")) return;
+        if (!BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce")) return;
         boolean flammable = lines.stream().anyMatch(line -> containsAnyKey(line, FLAME_KEYS));
         var state = block.defaultBlockState();
         for (var side : Direction.values())
@@ -68,7 +68,7 @@ public final class CommonBlockTooltips {
         rows.add(harvestLine(block));
         int insertion = lines.size();
         for (int i = 0; i < lines.size(); i++) if (containsAnyKey(lines.get(i),
-                Set.of("tooltip.gregtech.contained_materials", "tooltip.gregtech.f3h_hint"))) {
+                Set.of("tooltip.gt6ce.contained_materials", "tooltip.gt6ce.f3h_hint"))) {
             insertion = i; break;
         }
         lines.addAll(insertion, rows);
@@ -91,7 +91,7 @@ public final class CommonBlockTooltips {
         if (toolKey != null && OriginalBlockTooltipRules.showHarvestLevel(level)) {
             var tier = Component.literal(" (" + level).withStyle(ChatFormatting.WHITE);
             String material = OriginalBlockTooltipRules.harvestTierMaterial(level);
-            if (material != null) tier.append(", ").append(Component.translatable("material.gregtech." + material));
+            if (material != null) tier.append(", ").append(Component.translatable("material.gt6ce." + material));
             row.append(tier.append(")"));
         }
         return row;

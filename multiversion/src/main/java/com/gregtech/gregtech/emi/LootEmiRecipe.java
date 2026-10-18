@@ -27,15 +27,15 @@ public final class LootEmiRecipe implements EmiRecipe {
     public static void register(EmiRegistry registry) {
         for (boolean mobs : new boolean[]{false,true}) {
             String path=mobs?"mob_drops":"loot_tables";
-            var category=new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gregtech",path),EmiStack.of(new ItemStack(mobs?Items.ZOMBIE_SPAWN_EGG:Items.CHEST))) {
-                @Override public Component getName() { return Component.translatable("gregtech.jei.category."+path); }
+            var category=new EmiRecipeCategory(ResourceLocation.fromNamespaceAndPath("gt6ce",path),EmiStack.of(new ItemStack(mobs?Items.ZOMBIE_SPAWN_EGG:Items.CHEST))) {
+                @Override public Component getName() { return Component.translatable("gt6ce.jei.category."+path); }
             };
             registry.addCategory(category);
             for (var group : mobs?LootViewerData.mobGroups():LootViewerData.lootGroups()) registry.addRecipe(new LootEmiRecipe(category,group));
         }
     }
     @Override public EmiRecipeCategory getCategory() { return category; }
-    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gregtech","/loot/"+group.id()); }
+    @Override public ResourceLocation getId() { return ResourceLocation.fromNamespaceAndPath("gt6ce","/loot/"+group.id()); }
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
     @Override public boolean supportsRecipeTree() { return false; }

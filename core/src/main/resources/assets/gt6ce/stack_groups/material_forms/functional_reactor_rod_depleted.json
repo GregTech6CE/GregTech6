@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_reactor_rod_depleted",
+  "contents": [
+    "item:gt6ce:reactor_rod_9310",
+    "item:gt6ce:reactor_rod_9319",
+    "item:gt6ce:reactor_rod_9320",
+    "item:gt6ce:reactor_rod_9321",
+    "item:gt6ce:reactor_rod_9322",
+    "item:gt6ce:reactor_rod_9329",
+    "item:gt6ce:reactor_rod_9330",
+    "item:gt6ce:reactor_rod_9331",
+    "item:gt6ce:reactor_rod_9332",
+    "item:gt6ce:reactor_rod_9333",
+    "item:gt6ce:reactor_rod_9339",
+    "item:gt6ce:reactor_rod_9340",
+    "item:gt6ce:reactor_rod_9341",
+    "item:gt6ce:reactor_rod_9349",
+    "item:gt6ce:reactor_rod_9350",
+    "item:gt6ce:reactor_rod_9360",
+    "item:gt6ce:reactor_rod_9361"
+  ],
+  "priority": 110
+}

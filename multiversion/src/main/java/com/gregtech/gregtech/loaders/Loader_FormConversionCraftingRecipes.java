@@ -118,11 +118,11 @@ public final class Loader_FormConversionCraftingRecipes {
         // Rebind existing generated rows too: their JSON ingredient aliases were indexed before
         // this reload's tags existed. Only this loader's own form-conversion rows are rebuilt.
         int beforeRebind = recipes.size();
-        recipes.removeIf(holder -> holder.id().getNamespace().equals("gregtech")
+        recipes.removeIf(holder -> holder.id().getNamespace().equals("gt6ce")
                 && holder.id().getPath().startsWith("form_conversion/")
                 && holder.value() instanceof com.gregtech.gregtech.recipe.ToolShapelessRecipe);
         int rebound = beforeRebind - recipes.size();
-        REGISTERED.removeIf(id -> id.startsWith("gregtech:form_conversion/"));
+        REGISTERED.removeIf(id -> id.startsWith("gt6ce:form_conversion/"));
         var ids = new java.util.HashSet<ResourceLocation>();
         for (var holder : recipes) ids.add(holder.id());
         int added = 0;
@@ -308,7 +308,7 @@ public final class Loader_FormConversionCraftingRecipes {
                 autocraftable ? Ingredient.of(input) : CraftingMaterialForms.ingredient(input));
         var inputForm = autocraftable ? null : CraftingMaterialForms.form(input);
 //? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", path);
+        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
         if (!autocraftable && inputForm != null)
             OriginalCraftingJson.formConversion(recipes, id, "gt.wire_sizes", CraftingBookCategory.MISC,
                     CraftingMaterialForms.canonical(output.copy()), ingredients, selector, inputForm.prefix(), inputForm.material());
@@ -341,7 +341,7 @@ public final class Loader_FormConversionCraftingRecipes {
     }
 
     private static ResourceLocation conversionId(Conversion conversion, GTMaterial material) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech",
+        return ResourceLocation.fromNamespaceAndPath("gt6ce",
 *///?} else {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE,
 //?}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WCW",
+    "WCW",
+    "XMX"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_04_lead"
+    },
+    "C": {
+      "item": "gt6ce:cable_04_lead"
+    },
+    "X": {
+      "tag": "gt6ce:circuits_tier_0_plus"
+    },
+    "M": {
+      "item": "gt6ce:transformer_ulv_lv"
+    }
+  },
+  "result": {
+    "item": "gt6ce:energy_storage_ulv"
+  }
+}

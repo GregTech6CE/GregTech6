@@ -80,7 +80,7 @@ public final class VanillaRecoveryRecipes {
 *///?} else {
         var id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
 //?}
-        if (!id.getNamespace().equals("gregtech")) return false;
+        if (!id.getNamespace().equals("gt6ce")) return false;
         var expected = com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(id.getPath());
         if (expected.isEmpty() && block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine)
             expected = com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.find(machine.basicSpec().machineName(), machine.basicSpec().tier());

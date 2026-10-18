@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_filters",
+  "contents": [
+    "item:gt6ce:filter_fluids",
+    "item:gt6ce:filter_items",
+    "item:gt6ce:filter_items_fluids",
+    "item:gt6ce:filter_oredict"
+  ],
+  "priority": 110
+}

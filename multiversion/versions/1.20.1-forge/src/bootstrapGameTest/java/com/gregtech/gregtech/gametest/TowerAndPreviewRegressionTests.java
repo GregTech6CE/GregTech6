@@ -8,7 +8,7 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class TowerAndPreviewRegressionTests {
     @GameTest(template="test_blueprint_empty")
@@ -85,7 +85,7 @@ public final class TowerAndPreviewRegressionTests {
         for(String id:java.util.List.of("mixing_bowl","bathing_pot","juicer")){
             sequence.thenExecute(()->checked.accept(()->{
                 world.setRainLevel(1);world.setThunderLevel(0);data.setRaining(true);data.setThundering(false);
-                world.setBlockAndUpdate(pos,net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id)).defaultBlockState());
+                world.setBlockAndUpdate(pos,net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id)).defaultBlockState());
             }));
             // isRainingAt reads SKY light, which the threaded light engine updates asynchronously.
             // Heightmap + 4 is not sufficient after placing/removing the preceding test roof.

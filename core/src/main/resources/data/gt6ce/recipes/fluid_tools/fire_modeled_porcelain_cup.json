@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "gt6ce:modeled_porcelain_cup"
+  },
+  "result": "gt6ce:fluid_cup",
+  "experience": 0,
+  "cookingtime": 200
+}

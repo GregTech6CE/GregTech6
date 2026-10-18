@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_sander",
+  "contents": [
+    "item:gt6ce:sander_bronze",
+    "item:gt6ce:sander_steel",
+    "item:gt6ce:sander_titanium",
+    "item:gt6ce:sander_tungsten_steel"
+  ],
+  "priority": 110
+}

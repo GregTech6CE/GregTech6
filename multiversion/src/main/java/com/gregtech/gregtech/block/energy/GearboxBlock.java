@@ -100,7 +100,7 @@ public class GearboxBlock extends Block implements EntityBlock {
         ItemStack stack = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof GearboxBlockEntity gearbox) {
 //? if >=1.21.1 {
-            /*var data=gearbox.saveForItem();data.putString("id","gregtech:gearbox");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
+            /*var data=gearbox.saveForItem();data.putString("id","gt6ce:gearbox");stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
 *///?} else {
             stack.addTagElement("BlockEntityTag", gearbox.saveForItem());
 //?}

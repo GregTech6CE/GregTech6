@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:circuit_advanced",
+    "#gt6ce:circuits_tier_4_plus",
+    {
+      "id": "#gt:circuit3",
+      "required": false
+    },
+    {
+      "id": "#forge:circuits/advanced",
+      "required": false
+    }
+  ]
+}

@@ -34,7 +34,7 @@ public final class OriginalTankAndAxialRecipeTests {
             String path = ForgeRegistries.ITEMS.getKey(output).getPath();
             var entry = MultiblockCraftingRecipes.find(path);
             h.assertTrue(entry != null, "source recipe table covers valve " + id);
-            h.assertTrue(entry.keys().get('M').equals("item:gregtech:"
+            h.assertTrue(entry.keys().get('M').equals("item:gt6ce:"
                     + ForgeRegistries.ITEMS.getKey(mainIngredient).getPath()),
                     "valve " + id + " preserves GT6's wall/prior-valve M ingredient");
 
@@ -56,7 +56,7 @@ public final class OriginalTankAndAxialRecipeTests {
                         .is(LargeMachineParts.block(18001).asItem())
                         && wood.getIngredients().get(0).test(new ItemStack(
                         ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                                "gregtech", "planks_treated")))),
+                                "gt6ce", "planks_treated")))),
                 "wood tank wall consumes GT6's treated plank plate");
         for (int wallId : new int[]{18002, 18003, 18004, 18005, 18006, 18007,
                 18022, 18023, 18024, 18025, 18026, 18027}) {
@@ -74,7 +74,7 @@ public final class OriginalTankAndAxialRecipeTests {
         h.assertTrue(entry != null && entry.pattern().equals("CSC|PMP|CEC"),
                 "17996 preserves GT6's CSC/PMP/CEC pattern");
         h.assertTrue(entry.keys().get('M').equals("block:casingMachine@SteelGalvanized")
-                        && entry.keys().get('P').equals("item:gregtech:crystal_processor_ruby"),
+                        && entry.keys().get('P').equals("item:gt6ce:crystal_processor_ruby"),
                 "17996 uses galvanized casing and ruby crystal processor");
         ShapedRecipe recipe = recipe(h, "machines/multiblock/von_da_graagg_generator");
         h.assertTrue(recipe.getResultItem(h.getLevel().registryAccess())
@@ -102,7 +102,7 @@ public final class OriginalTankAndAxialRecipeTests {
                 Map.entry("vibramantium_gas_turbine_main_housing", 17234));
         for (var conversion : originals.entrySet()) {
             Item legacy = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
-                    "gregtech", conversion.getKey()));
+                    "gt6ce", conversion.getKey()));
             Item original = LargeMachineParts.block(conversion.getValue()).asItem();
             h.assertTrue(legacy != null, "legacy axial controller registered: " + conversion.getKey());
             ShapedRecipe recipe = recipe(h, "machines/multiblock/" + conversion.getKey());
@@ -139,7 +139,7 @@ public final class OriginalTankAndAxialRecipeTests {
     }
 
     private static ShapedRecipe recipe(GameTestHelper h, String path) {
-        var id = ResourceLocation.fromNamespaceAndPath("gregtech", path);
+        var id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
         return (ShapedRecipe) h.getLevel().getRecipeManager().byKey(id)
                 .orElseThrow(() -> new AssertionError("Missing recipe " + id));
     }

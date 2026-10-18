@@ -30,7 +30,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * distance 7 and vanished. The port now implements GT6's check and tags its logs/leaves, so both
  * paths keep a standing tree intact.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class LeafDecayTests {
     private static final int BASE_X = 36000;

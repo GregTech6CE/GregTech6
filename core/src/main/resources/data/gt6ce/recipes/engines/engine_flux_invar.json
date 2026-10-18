@@ -1,0 +1,20 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "G",
+    "M",
+    "G"
+  ],
+  "key": {
+    "G": {
+      "tag": "gt6ce:gear_gt/invar"
+    },
+    "M": {
+      "item": "gt6ce:engine_electric_aluminium"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_flux_invar"
+  },
+  "allow_mirror": false
+}

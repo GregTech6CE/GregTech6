@@ -36,7 +36,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
             if (!map.mViewerAllowed || map.mRecipeList.stream().noneMatch(r -> r.mEnabled && !r.mHidden)) continue;
             var workstations = machines.getOrDefault(map, java.util.List.of());
             ItemStack icon = workstations.isEmpty() ? new ItemStack(Items.ANVIL) : workstations.get(0);
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", map.mNameInternal.toLowerCase(Locale.ROOT));
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", map.mNameInternal.toLowerCase(Locale.ROOT));
             var category = new EmiRecipeCategory(id, EmiStack.of(icon)) {
                 @Override public Component getName() { return Component.literal(map.mNameLocal); }
             };
@@ -51,7 +51,7 @@ public final class GregTechEMIPlugin implements EmiPlugin {
                 if (!recipe.mEnabled || recipe.mHidden) continue;
                 registry.addRecipe(new MachineEmiRecipe(category, map, recipe,
                         // EMI reserves leading '/' for recipes outside vanilla RecipeManager.
-                        ResourceLocation.fromNamespaceAndPath("gregtech", "/machine/" + id.getPath() + "/" + recipeIndex), ingredients));
+                        ResourceLocation.fromNamespaceAndPath("gt6ce", "/machine/" + id.getPath() + "/" + recipeIndex), ingredients));
                 rows++;
             }
             categories++;

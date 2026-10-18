@@ -16,7 +16,7 @@ import snownee.jade.api.config.IPluginConfig;
 public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "steam_boiler");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "steam_boiler");
     private static final String STEAM_AMT   = "gt_steam_amt";
     private static final String STEAM_CAP   = "gt_steam_cap";
     private static final String WATER_AMT   = "gt_water_amt";
@@ -56,47 +56,47 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         long steamAmt = data.getLong(STEAM_AMT);
         long steamCap = data.getLong(STEAM_CAP);
         int steamPct = steamCap > 0 ? (int) (steamAmt * 100 / steamCap) : 0;
-        tooltip.add(Component.translatable("jade.gregtech.boiler.steam",
+        tooltip.add(Component.translatable("jade.gt6ce.boiler.steam",
                 steamAmt, steamCap, steamPct));
 
         long waterAmt = data.getLong(WATER_AMT);
         long waterCap = data.getLong(WATER_CAP);
         int waterPct = waterCap > 0 ? (int) (waterAmt * 100 / waterCap) : 0;
-        tooltip.add(Component.translatable("jade.gregtech.boiler.water",
+        tooltip.add(Component.translatable("jade.gt6ce.boiler.water",
                 waterAmt, waterCap, waterPct));
 
         long heat = data.getLong(HEAT);
         long maxHeat = data.contains(MAX_HEAT) ? data.getLong(MAX_HEAT) : 0;
         if (maxHeat > 0) {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.heat",
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.heat",
                     heat, maxHeat));
         } else {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.heat_nocap", heat));
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.heat_nocap", heat));
         }
 
         short eff = data.getShort(EFFICIENCY);
         if (eff < 10000) {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.calcified",
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.calcified",
                     String.format("%.1f", eff / 100.0)));
         }
 
         int pressure = data.getInt("gt_pressure");
         float power = data.getFloat("gt_explosion_power");
-        tooltip.add(Component.translatable("jade.gregtech.boiler.pressure",pressure));
-        tooltip.add(Component.translatable(pressure > 4 ? "jade.gregtech.boiler.dismantle_danger" : "jade.gregtech.boiler.dismantle_safe",
+        tooltip.add(Component.translatable("jade.gt6ce.boiler.pressure",pressure));
+        tooltip.add(Component.translatable(pressure > 4 ? "jade.gt6ce.boiler.dismantle_danger" : "jade.gt6ce.boiler.dismantle_safe",
                 power, power * 2));
-        tooltip.add(Component.translatable("jade.gregtech.boiler.contact_damage",data.getFloat("gt_contact_damage")));
-        if (eff < 10000) tooltip.add(Component.translatable(pressure > 15 ? "jade.gregtech.boiler.descaling_explosion"
-                : "jade.gregtech.boiler.descaling_damage",data.getFloat("gt_descaling_damage")));
+        tooltip.add(Component.translatable("jade.gt6ce.boiler.contact_damage",data.getFloat("gt_contact_damage")));
+        if (eff < 10000) tooltip.add(Component.translatable(pressure > 15 ? "jade.gt6ce.boiler.descaling_explosion"
+                : "jade.gt6ce.boiler.descaling_damage",data.getFloat("gt_descaling_damage")));
 
         if (steamPct >= 100) {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.warn_overpressure"));
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_overpressure"));
         }
         if (maxHeat > 0 && heat >= maxHeat) {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.warn_overheat"));
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_overheat"));
         }
         if (waterAmt <= 0 && heat > 0) {
-            tooltip.add(Component.translatable("jade.gregtech.boiler.warn_dry"));
+            tooltip.add(Component.translatable("jade.gt6ce.boiler.warn_dry"));
         }
     }
 

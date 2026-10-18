@@ -18,7 +18,7 @@ final class ViewerGlassChecks {
     static boolean capture(Minecraft mc,JsonObject receipt) {
         if(failure!=null)throw new IllegalStateException("Actual glass scene failed",failure);
         if(phase==3)return true;
-        var slab=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","glass_glow_slab"));
+        var slab=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glass_glow_slab"));
         if(phase==0) {
             if(!(slab instanceof ColoredGlassSlabBlock))throw new IllegalStateException("Glass half uses opaque foam class");
             var glass=(ColoredGlassSlabBlock)slab;var white=slab.defaultBlockState().setValue(CFoamSlabBlock.COLOR,DyeColor.WHITE);
@@ -44,7 +44,7 @@ final class ViewerGlassChecks {
                 var player=server.getPlayerList().getPlayers().get(0);var level=player.serverLevel();var origin=player.blockPosition().offset(0,15,20);
                 for(int x=-10;x<=10;x++)for(int y=-1;y<=5;y++)for(int z=-7;z<=11;z++)level.setBlock(origin.offset(x,y,z),Blocks.AIR.defaultBlockState(),3);
                 for(int x=-9;x<=9;x++)for(int y=0;y<=4;y++)level.setBlock(origin.offset(x,y,-6),((x+y)%2==0?Blocks.BLUE_WOOL:Blocks.YELLOW_WOOL).defaultBlockState(),3);
-                var full=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech","glass_glow")).defaultBlockState();
+                var full=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glass_glow")).defaultBlockState();
                 if(!full.hasProperty(ColoredGlassBlock.COLOR))throw new IllegalStateException("Source full glass unavailable");full=full.setValue(ColoredGlassBlock.COLOR,DyeColor.WHITE);
                 for(int lane=0;lane<3;lane++)for(int row=0;row<3;row++)for(int x=0;x<3;x++)for(int y=1;y<=3;y++) {
                     var state=lane==0?full:lane==1?down:white.setValue(CFoamSlabBlock.FACING,Direction.WEST);

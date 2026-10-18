@@ -1,0 +1,22 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PS",
+    "sP"
+  ],
+  "key": {
+    "S": {
+      "tag": "gt6ce:ammunition/sticks_plastic"
+    },
+    "P": {
+      "tag": "gt6ce:ammunition/tiny_plastic_plates"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    }
+  },
+  "result": {
+    "item": "gt6ce:arrow_gt_plastic_empty"
+  },
+  "_comment": "GT6 Loader_Recipes_Vanilla:475-484 (Gregorius Techneticies)"
+}

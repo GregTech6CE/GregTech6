@@ -21,7 +21,7 @@ import snownee.jade.api.config.IPluginConfig;
 public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "crucible");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "crucible");
     private static final String NBT_TEMPERATURE = "gt_crucible_temp";
     private static final String NBT_BUFFER = "gt_crucible_buffer";
     private static final String NBT_CONTENT = "gt_crucible_content";
@@ -84,24 +84,24 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         if (!data.contains(NBT_TEMPERATURE, CompoundTag.TAG_LONG)) {
             return;
         }
-        tooltip.add(Component.translatable("jade.gregtech.crucible.temperature", data.getLong(NBT_TEMPERATURE)));
-        tooltip.add(Component.translatable("jade.gregtech.crucible.buffer", format(data.getLong(NBT_BUFFER))));
+        tooltip.add(Component.translatable("jade.gt6ce.crucible.temperature", data.getLong(NBT_TEMPERATURE)));
+        tooltip.add(Component.translatable("jade.gt6ce.crucible.buffer", format(data.getLong(NBT_BUFFER))));
         if (data.contains(NBT_MELT_LIMIT)) {
-            tooltip.add(Component.translatable("jade.gregtech.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.melt_limit", data.getLong(NBT_MELT_LIMIT)));
         }
         if (data.contains(NBT_FILL)) {
-            tooltip.add(Component.translatable("jade.gregtech.crucible.fill", data.getInt(NBT_FILL)));
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
         }
         if (data.contains(NBT_DISPLAY_MAT)) {
             String stateKey = data.getBoolean(NBT_MOLTEN) ? "molten" : "solid";
-            tooltip.add(Component.translatable("jade.gregtech.crucible.display", data.getString(NBT_DISPLAY_MAT),
-                    Component.translatable("jade.gregtech.crucible.state." + stateKey)));
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.display", data.getString(NBT_DISPLAY_MAT),
+                    Component.translatable("jade.gt6ce.crucible.state." + stateKey)));
         }
         if (data.getBoolean(NBT_WARNING)) {
-            tooltip.add(Component.translatable("jade.gregtech.crucible.warning"));
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.warning"));
         }
         if (data.contains(NBT_CONTENT)) {
-            tooltip.add(Component.translatable("jade.gregtech.crucible.content", data.getString(NBT_CONTENT)));
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.content", data.getString(NBT_CONTENT)));
         }
         if (data.contains(NBT_CACHE, CompoundTag.TAG_COMPOUND)) {
 //? if >=1.21.1 {
@@ -109,7 +109,7 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
 *///?} else {
             ItemStack cache = ItemStack.of(data.getCompound(NBT_CACHE));
 //?}
-            tooltip.add(Component.translatable("jade.gregtech.crucible.cache",
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.cache",
                     cache.getHoverName(), cache.getCount()));
         }
     }

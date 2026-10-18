@@ -80,8 +80,8 @@ public final class ChemicalBatteryItem extends BlockItem implements IItemEnergy 
     @Override public void appendHoverText(ItemStack stack,@javax.annotation.Nullable Level level,List<Component> tip,TooltipFlag flags){
         super.appendHoverText(stack,level,tip,flags);
 //?}
-        tip.add(Component.translatable("tooltip.gregtech.electric_tool.energy",stored(stack),spec().capacity()));
-        tip.add(Component.translatable("tooltip.gregtech.chemical_battery.packet",spec().minimumPacket(),spec().maximumPacket()));
-        tip.add(Component.translatable("tooltip.gregtech.chemical_battery.place"));
+        tip.add(Component.translatable("tooltip.gt6ce.electric_tool.energy",stored(stack),spec().capacity()));
+        tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.packet",spec().minimumPacket(),spec().maximumPacket()));
+        tip.add(Component.translatable("tooltip.gt6ce.chemical_battery.place"));
     }
 }

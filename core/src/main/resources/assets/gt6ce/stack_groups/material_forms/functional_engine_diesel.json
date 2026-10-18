@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_engine_diesel",
+  "contents": [
+    "item:gt6ce:engine_diesel_arsenic_bronze",
+    "item:gt6ce:engine_diesel_arsenic_copper",
+    "item:gt6ce:engine_diesel_bronze",
+    "item:gt6ce:engine_diesel_invar",
+    "item:gt6ce:engine_diesel_iridium",
+    "item:gt6ce:engine_diesel_steel",
+    "item:gt6ce:engine_diesel_titanium",
+    "item:gt6ce:engine_diesel_tungsten_steel"
+  ],
+  "priority": 110
+}

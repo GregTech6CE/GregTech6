@@ -45,13 +45,13 @@ public final class MaterialTagPack extends AbstractPackResources {
         if(event.getPackType()!=PackType.SERVER_DATA) return;
         event.addRepositorySource(output->{
 //? if >=1.21.1 {
-            /*var location=new PackLocationInfo("gregtech:material_tags",Component.literal("GregTech material tags"),PackSource.BUILT_IN,Optional.empty());
+            /*var location=new PackLocationInfo("gt6ce:material_tags",Component.literal("GregTech material tags"),PackSource.BUILT_IN,Optional.empty());
             var pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(PackLocationInfo info){return new MaterialTagPack(info);}
                 public PackResources openFull(PackLocationInfo info,Pack.Metadata metadata){return new MaterialTagPack(info);}
             },PackType.SERVER_DATA,new PackSelectionConfig(true,Pack.Position.BOTTOM,true));
 *///?} else {
-            var pack=Pack.readMetaAndCreate("gregtech:material_tags",Component.literal("GregTech material tags"),true,
+            var pack=Pack.readMetaAndCreate("gt6ce:material_tags",Component.literal("GregTech material tags"),true,
                     MaterialTagPack::new,PackType.SERVER_DATA,Pack.Position.BOTTOM,PackSource.BUILT_IN);
 //?}
             if(pack!=null) output.accept(pack);
@@ -63,21 +63,21 @@ public final class MaterialTagPack extends AbstractPackResources {
         var copperMaterials=MaterialGroups.Cu.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         var ironMaterials=MaterialGroups.Iron.getReRegistrations().stream().map(m->m.resolve()).collect(java.util.stream.Collectors.toSet());
         // Per-material tag: every form of one material (gear, rod, ingot, dust, block, fluid, unit...)
-        // shares "gregtech:material/<material>", which is what recipe filtering and pack scripts want.
+        // shares "gt6ce:material/<material>", which is what recipe filtering and pack scripts want.
         // Per-form tags drop the "items" directory from their name: the tag is
 
 // Per-form tags drop the "item" directory from their name: the tag is
-        // "gregtech:<prefix registry name>/<material>" (e.g. gregtech:ingot/iron).
-        // There is deliberately NO umbrella "gregtech:material" tag that lists all of them: resolving it
+        // "gt6ce:<prefix registry name>/<material>" (e.g. gt6ce:ingot/iron).
+        // There is deliberately NO umbrella "gt6ce:material" tag that lists all of them: resolving it
         // enumerates every material item in the mod, which costs JEI several seconds on each open.
 //? if >=1.21.1 {
-        /*add(tags,"gregtech","item","ammunition/sticks_wood","minecraft:stick");
+        /*add(tags,"gt6ce","item","ammunition/sticks_wood","minecraft:stick");
 *///?} else {
-        add(tags,"gregtech","items","ammunition/sticks_wood","minecraft:stick");
+        add(tags,"gt6ce","items","ammunition/sticks_wood","minecraft:stick");
 //?}
         add(tags,"forge","items","clay_balls","minecraft:clay_ball");
-        add(tags,"gregtech","items","molds/forms/ingot/brick","minecraft:brick");
-        add(tags,"gregtech","items","ingot/brick","minecraft:brick");
+        add(tags,"gt6ce","items","molds/forms/ingot/brick","minecraft:brick");
+        add(tags,"gt6ce","items","ingot/brick","minecraft:brick");
         add(tags,"forge","items","chests/wooden","minecraft:chest");
         add(tags,"forge","items","chests/wooden","minecraft:trapped_chest");
         add(tags,"forge","items","slimeballs","minecraft:slime_ball");
@@ -104,13 +104,13 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(form!=null) {
                 for(var moldForm:moldForms.getOrDefault(form.prefix().getName(),java.util.List.of()))
                     if(moldForm.accepts(form.prefix(),form.material()))
-                        add(tags,"gregtech","items",moldForm.tag(),id.toString());
+                        add(tags,"gt6ce","items",moldForm.tag(),id.toString());
                 for(var family:com.gregtech.gregtech.content.recipe.TechnologyIngredients.FAMILIES)
                     if(family.accepts(form.prefix(),form.material()))
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item","technology/"+family.tag(),id.toString());
+                        /*add(tags,"gt6ce","item","technology/"+family.tag(),id.toString());
 *///?} else {
-                        add(tags,"gregtech","items","technology/"+family.tag(),id.toString());
+                        add(tags,"gt6ce","items","technology/"+family.tag(),id.toString());
 //?}
                 if(form.prefix()==MaterialPrefix.stick || form.prefix()==MaterialPrefix.plateTiny) {
                     var material=form.material().resolve();
@@ -118,15 +118,15 @@ public final class MaterialTagPack extends AbstractPackResources {
                     boolean plastic=com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(material,"Plastic");
                     if(form.prefix()==MaterialPrefix.stick && wood)
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item","ammunition/sticks_wood",id.toString());
+                        /*add(tags,"gt6ce","item","ammunition/sticks_wood",id.toString());
 *///?} else {
-                        add(tags,"gregtech","items","ammunition/sticks_wood",id.toString());
+                        add(tags,"gt6ce","items","ammunition/sticks_wood",id.toString());
 //?}
                     if(plastic)
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item",form.prefix()==MaterialPrefix.stick
+                        /*add(tags,"gt6ce","item",form.prefix()==MaterialPrefix.stick
 *///?} else {
-                        add(tags,"gregtech","items",form.prefix()==MaterialPrefix.stick
+                        add(tags,"gt6ce","items",form.prefix()==MaterialPrefix.stick
 //?}
                                 ? "ammunition/sticks_plastic" : "ammunition/tiny_plastic_plates",id.toString());
                 }
@@ -147,9 +147,9 @@ public final class MaterialTagPack extends AbstractPackResources {
                 // The canonical WoodTreated plate is a placeable BlockItem. Material
                 // forms backed by blocks still need the same GT prefix tag as an item.
 //? if >=1.21.1 {
-                /*add(tags,"gregtech","item",form.prefix().getRegistryName()+"/"
+                /*add(tags,"gt6ce","item",form.prefix().getRegistryName()+"/"
 *///?} else {
-                add(tags,"gregtech","items",form.prefix().getRegistryName()+"/"
+                add(tags,"gt6ce","items",form.prefix().getRegistryName()+"/"
 //?}
                         +MaterialEquivalence.materialName(form.material()),id.toString());
             } else {
@@ -170,15 +170,15 @@ public final class MaterialTagPack extends AbstractPackResources {
                     }
                 }
             }
-            if(id.getNamespace().equals("gregtech"))
+            if(id.getNamespace().equals("gt6ce"))
                 for(String tag:com.gregtech.gregtech.content.recipe.TechnologyIngredients.usbTags(id.getPath()))
 //? if >=1.21.1 {
-                    /*add(tags,"gregtech","item",tag,id.toString());
+                    /*add(tags,"gt6ce","item",tag,id.toString());
 *///?} else {
-                    add(tags,"gregtech","items",tag,id.toString());
+                    add(tags,"gt6ce","items",tag,id.toString());
 //?}
             for(var tool:com.gregtech.gregtech.content.tool.CraftingToolDefinitions.ALL)
-                if(id.getNamespace().equals("gregtech") && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
+                if(id.getNamespace().equals("gt6ce") && (tool.tip().equals(id.getPath()) || tool.token().equals(id.getPath())))
 //? if >=1.21.1 {
                     /*for(String toolKind:tool.kinds()) add(tags,"forge","item","tools/"+toolKind,id.toString());
 *///?} else {
@@ -210,9 +210,9 @@ public final class MaterialTagPack extends AbstractPackResources {
                     if(material!=null&&material.isValid()) {
                         String name=MaterialEquivalence.materialName(material);
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item","fluid/"+name,id.toString());
+                        /*add(tags,"gt6ce","item","fluid/"+name,id.toString());
 *///?} else {
-                        add(tags,"gregtech","items","fluid/"+name,id.toString());
+                        add(tags,"gt6ce","items","fluid/"+name,id.toString());
 //?}
                         addMaterial(byMaterial,material,id.toString());
                     }
@@ -223,7 +223,7 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.BlackSandBlock sand) {
                 String name=MaterialEquivalence.materialName(sand.material());
                 for(String kind:List.of("item","block")) {
-                    add(tags,"gregtech",kind,"block_dust/"+name,id.toString());
+                    add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
                     add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
                 }
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
@@ -243,14 +243,14 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                 for(String kind:List.of("items","blocks")) {
 //?}
-                    add(tags,"gregtech",kind,m.prefix().getRegistryName()+"/"+name,id.toString());
+                    add(tags,"gt6ce",kind,m.prefix().getRegistryName()+"/"+name,id.toString());
                     if(group!=null) add(tags,"forge",kind,group.equals("storage_blocks/raw")?"storage_blocks/raw_"+name:group+"/"+name,id.toString());
                 }
                 if(ironMaterials.contains(m.material().resolve()))
 //? if >=1.21.1 {
-                    /*add(tags,"gregtech","item",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
+                    /*add(tags,"gt6ce","item",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
 *///?} else {
-                    add(tags,"gregtech","items",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
+                    add(tags,"gt6ce","items",m.prefix().getRegistryName()+"/any_iron_or_steel",id.toString());
 //?}
                 addMaterial(blocksByMaterial,m.material(),id.toString());
             }
@@ -260,7 +260,7 @@ public final class MaterialTagPack extends AbstractPackResources {
             if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.BlackSandBlock sand) {
                 String name=MaterialEquivalence.materialName(sand.material());
                 for(String kind:List.of("items","blocks")) {
-                    add(tags,"gregtech",kind,"block_dust/"+name,id.toString());
+                    add(tags,"gt6ce",kind,"block_dust/"+name,id.toString());
                     add(tags,"forge",kind,"storage_blocks/"+name,id.toString());
                 }
                 addMaterial(blocksByMaterial,sand.material(),id.toString());
@@ -271,35 +271,35 @@ public final class MaterialTagPack extends AbstractPackResources {
                 if(block instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()))
 //? if >=1.21.1 {
-                    /*add(tags,"gregtech","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                    /*add(tags,"gt6ce","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
 *///?} else {
-                    add(tags,"gregtech","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                    add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
 //?}
                 if(block instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock pipe
                         && ironMaterials.contains(pipe.spec().material().resolve()) && !pipe.spec().size().restrictive())
 //? if >=1.21.1 {
-                    /*add(tags,"gregtech","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                    /*add(tags,"gt6ce","item","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if(block instanceof com.gregtech.gregtech.api.energy.WireMaterialLike wire) {
 *///?} else {
-                    add(tags,"gregtech","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
+                    add(tags,"gt6ce","items","pipe_"+pipe.spec().size().name().toLowerCase(java.util.Locale.ROOT)+"/any_iron_or_steel",id.toString());
                 if(block instanceof com.gregtech.gregtech.block.energy.ElectricWireBlock wire) {
 //?}
                     String wireForm=(wire.spec().insulated()?"cable_":"wire_")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
                     String wireMaterial=MaterialEquivalence.materialName(wire.spec().material());
-                    add(tags,"gregtech","items",wireForm+"/"+wireMaterial,id.toString());
+                    add(tags,"gt6ce","items",wireForm+"/"+wireMaterial,id.toString());
                     String sourceForm=(wire.spec().insulated()?"cable_gt":"wire_gt")+String.format(java.util.Locale.ROOT,"%02d",wire.spec().size());
-                    add(tags,"gregtech","items",sourceForm+"/"+wireMaterial,id.toString());
+                    add(tags,"gt6ce","items",sourceForm+"/"+wireMaterial,id.toString());
                     if(copperMaterials.contains(wire.spec().material().resolve()))
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item",wireForm+"/any_copper",id.toString());
+                        /*add(tags,"gt6ce","item",wireForm+"/any_copper",id.toString());
 *///?} else {
-                        add(tags,"gregtech","items",wireForm+"/any_copper",id.toString());
+                        add(tags,"gt6ce","items",wireForm+"/any_copper",id.toString());
 //?}
                     if(ironMaterials.contains(wire.spec().material().resolve()))
 //? if >=1.21.1 {
-                        /*add(tags,"gregtech","item",wireForm+"/any_iron_or_steel",id.toString());
+                        /*add(tags,"gt6ce","item",wireForm+"/any_iron_or_steel",id.toString());
 *///?} else {
-                        add(tags,"gregtech","items",wireForm+"/any_iron_or_steel",id.toString());
+                        add(tags,"gt6ce","items",wireForm+"/any_iron_or_steel",id.toString());
 //?}
                 }
                 if(block instanceof com.gregtech.gregtech.block.DenseOreBlock denseOre
@@ -311,7 +311,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                     for(String kind:List.of("items","blocks")) {
 //?}
-                        add(tags,"gregtech",kind,"ore_dense/"+name,id.toString());
+                        add(tags,"gt6ce",kind,"ore_dense/"+name,id.toString());
                         add(tags,"forge",kind,"ores/"+name,id.toString());
                     }
                     addMaterial(blocksByMaterial,denseOre.material(),id.toString());
@@ -324,7 +324,7 @@ public final class MaterialTagPack extends AbstractPackResources {
 *///?} else {
                     for(String kind:List.of("items","blocks")) {
 //?}
-                        add(tags,"gregtech",kind,"ore_vanillastone/"+name,id.toString());
+                        add(tags,"gt6ce",kind,"ore_vanillastone/"+name,id.toString());
                         add(tags,"forge",kind,"ores/"+name,id.toString());
                     }
                     addMaterial(blocksByMaterial,ore.material(),id.toString());
@@ -333,9 +333,9 @@ public final class MaterialTagPack extends AbstractPackResources {
         }
         // GT6 ANY.Iron includes ten iron/steel materials, not just vanilla iron.
 //? if >=1.21.1 {
-        /*var ironScrews = tags.computeIfAbsent("gregtech:tags/item/screws/any_iron_or_steel.json", k -> new TreeSet<>());
+        /*var ironScrews = tags.computeIfAbsent("gt6ce:tags/item/screws/any_iron_or_steel.json", k -> new TreeSet<>());
 *///?} else {
-        var ironScrews = tags.computeIfAbsent("gregtech:tags/items/screws/any_iron_or_steel.json", k -> new TreeSet<>());
+        var ironScrews = tags.computeIfAbsent("gt6ce:tags/items/screws/any_iron_or_steel.json", k -> new TreeSet<>());
 //?}
         for (var material : MaterialGroups.Iron.getReRegistrations()) {
             String path = "screws/" + MaterialEquivalence.materialName(material.resolve());
@@ -346,23 +346,23 @@ public final class MaterialTagPack extends AbstractPackResources {
 //?}
         }
 //? if >=1.21.1 {
-        /*var ironDoublePlates=tags.computeIfAbsent("gregtech:tags/item/plate_double/any_iron_or_steel.json",k->new TreeSet<>());
+        /*var ironDoublePlates=tags.computeIfAbsent("gt6ce:tags/item/plate_double/any_iron_or_steel.json",k->new TreeSet<>());
 *///?} else {
-        var ironDoublePlates=tags.computeIfAbsent("gregtech:tags/items/plate_double/any_iron_or_steel.json",k->new TreeSet<>());
+        var ironDoublePlates=tags.computeIfAbsent("gt6ce:tags/items/plate_double/any_iron_or_steel.json",k->new TreeSet<>());
 //?}
         for(var material:MaterialGroups.Iron.getReRegistrations()) {
             String path="plate_double/"+MaterialEquivalence.materialName(material.resolve());
 //? if >=1.21.1 {
-            /*if(tags.containsKey("gregtech:tags/item/"+path+".json"))ironDoublePlates.add("#gregtech:"+path);
+            /*if(tags.containsKey("gt6ce:tags/item/"+path+".json"))ironDoublePlates.add("#gt6ce:"+path);
 *///?} else {
-            if(tags.containsKey("gregtech:tags/items/"+path+".json"))ironDoublePlates.add("#gregtech:"+path);
+            if(tags.containsKey("gt6ce:tags/items/"+path+".json"))ironDoublePlates.add("#gt6ce:"+path);
 //?}
         }
         byMaterial.forEach((name,values)->{
 //? if >=1.21.1 {
-            /*var tag=tags.computeIfAbsent("gregtech:tags/item/material/"+name+".json",k->new TreeSet<>());
+            /*var tag=tags.computeIfAbsent("gt6ce:tags/item/material/"+name+".json",k->new TreeSet<>());
 *///?} else {
-            var tag=tags.computeIfAbsent("gregtech:tags/items/material/"+name+".json",k->new TreeSet<>());
+            var tag=tags.computeIfAbsent("gt6ce:tags/items/material/"+name+".json",k->new TreeSet<>());
 //?}
             tag.addAll(values);
             tag.addAll(blocksByMaterial.getOrDefault(name,Set.of()));
@@ -370,15 +370,15 @@ public final class MaterialTagPack extends AbstractPackResources {
         // Wood form tags for the wooden-pipe recipes (GT6's OD.plankAnyWood / OD.beamWood): vanilla
         // planks and slabs join through nested tag references, the port's own species are listed.
 //? if >=1.21.1 {
-        /*tags.computeIfAbsent("gregtech:tags/item/wooden_planks.json", k -> new TreeSet<>())
+        /*tags.computeIfAbsent("gt6ce:tags/item/wooden_planks.json", k -> new TreeSet<>())
 *///?} else {
-        tags.computeIfAbsent("gregtech:tags/items/wooden_planks.json", k -> new TreeSet<>())
+        tags.computeIfAbsent("gt6ce:tags/items/wooden_planks.json", k -> new TreeSet<>())
 //?}
                 .add("#minecraft:planks");
 //? if >=1.21.1 {
-        /*tags.computeIfAbsent("gregtech:tags/item/wooden_slabs.json", k -> new TreeSet<>())
+        /*tags.computeIfAbsent("gt6ce:tags/item/wooden_slabs.json", k -> new TreeSet<>())
 *///?} else {
-        tags.computeIfAbsent("gregtech:tags/items/wooden_slabs.json", k -> new TreeSet<>())
+        tags.computeIfAbsent("gt6ce:tags/items/wooden_slabs.json", k -> new TreeSet<>())
 //?}
                 .add("#minecraft:wooden_slabs");
 //? if >=1.21.1 {
@@ -388,30 +388,30 @@ public final class MaterialTagPack extends AbstractPackResources {
         for (var item : ForgeRegistries.ITEMS.getValues()) {
             var id = ForgeRegistries.ITEMS.getKey(item);
 //?}
-            if (id == null || !id.getNamespace().equals("gregtech")) continue;
+            if (id == null || !id.getNamespace().equals("gt6ce")) continue;
 //? if >=1.21.1 {
             /*if(item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodPlanksBlock)
-                tags.computeIfAbsent("gregtech:tags/item/wooden_planks.json",key->new TreeSet<>()).add(id.toString());
+                tags.computeIfAbsent("gt6ce:tags/item/wooden_planks.json",key->new TreeSet<>()).add(id.toString());
             if(item instanceof net.minecraft.world.item.BlockItem blockItem
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodBeamBlock)
-                tags.computeIfAbsent("gregtech:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
+                tags.computeIfAbsent("gt6ce:tags/item/wooden_beams.json",key->new TreeSet<>()).add(id.toString());
 *///?} else {
             if (item instanceof BlockItem blockItem
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodPlanksBlock) {
-                tags.computeIfAbsent("gregtech:tags/items/wooden_planks.json", k -> new TreeSet<>())
+                tags.computeIfAbsent("gt6ce:tags/items/wooden_planks.json", k -> new TreeSet<>())
                         .add(id.toString());
             }
             if (item instanceof BlockItem beamItem
                     && beamItem.getBlock() instanceof com.gregtech.gregtech.block.wood.WoodBeamBlock) {
-                tags.computeIfAbsent("gregtech:tags/items/wooden_beams.json", k -> new TreeSet<>())
+                tags.computeIfAbsent("gt6ce:tags/items/wooden_beams.json", k -> new TreeSet<>())
                         .add(id.toString());
             }
 //?}
         }
         // GT6 LIST_SLABS / slabAnyWood: native slabs participate in normal slab crafting.
         for(String wood:com.gregtech.gregtech.content.plant.WoodSlabCatalog.WOODS){
-            String id="gregtech:slab_"+wood;
+            String id="gt6ce:slab_"+wood;
 //? if >=1.21.1 {
             /*for(String tag:new String[]{"minecraft:tags/item/wooden_slabs.json","minecraft:tags/item/slabs.json",
                     "minecraft:tags/block/wooden_slabs.json","minecraft:tags/block/slabs.json"})
@@ -440,10 +440,10 @@ public final class MaterialTagPack extends AbstractPackResources {
         var gson=new com.google.gson.Gson(); var result=new HashMap<ResourceLocation,byte[]>();
 //? if >=1.21.1 {
         /*tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",compatibleValues(path,values,aliases))).getBytes(StandardCharsets.UTF_8)));
-        result.put(ResourceLocation.parse("gregtech:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
+        result.put(ResourceLocation.parse("gt6ce:tags/item/ammunition/feathers.json"),gson.toJson(Map.of(
 *///?} else {
         tags.forEach((path,values)->result.put(ResourceLocation.parse(path),gson.toJson(Map.of("replace",false,"values",values)).getBytes(StandardCharsets.UTF_8)));
-        result.put(ResourceLocation.parse("gregtech:tags/items/ammunition/feathers.json"),gson.toJson(Map.of(
+        result.put(ResourceLocation.parse("gt6ce:tags/items/ammunition/feathers.json"),gson.toJson(Map.of(
 //?}
                 "replace",false,"values",List.of("minecraft:feather",
                         Map.of("id","#forge:feathers","required",false),
@@ -515,9 +515,9 @@ public final class MaterialTagPack extends AbstractPackResources {
         if(type==PackType.SERVER_DATA)data().forEach((id,bytes)->{if(id.getNamespace().equals(ns)&&id.getPath().startsWith(path+"/"))out.accept(id,()->new ByteArrayInputStream(bytes));});
     }
 //? if >=1.21.1 {
-    /*public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gregtech","minecraft"):Set.of(); }
+    /*public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","c","gt6ce","minecraft"):Set.of(); }
 *///?} else {
-    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","gregtech","minecraft"):Set.of(); }
+    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("forge","gt6ce","minecraft"):Set.of(); }
 //?}
     public void close() { resources=null; }
 }

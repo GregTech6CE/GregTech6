@@ -90,7 +90,7 @@ public final class Loader_OvenRecipes {
 *///?} else {
             var recipeId = recipe.getId();
 //?}
-            if (recipeId.getNamespace().equals("gregtech") && recipeId.getPath().startsWith("clay_molds/imprint_")
+            if (recipeId.getNamespace().equals("gt6ce") && recipeId.getPath().startsWith("clay_molds/imprint_")
                     && recipe.getIngredients().stream().anyMatch(input -> input != Ingredient.EMPTY
                     && java.util.Arrays.stream(input.getItems()).noneMatch(stack -> !stack.isEmpty()
                     && !stack.is(net.minecraft.world.item.Items.BARRIER)))) continue;
@@ -196,7 +196,7 @@ public final class Loader_OvenRecipes {
             float experience = cooking.map(data -> data.experience()).orElse(0.0F);
             var category = cooking.map(data -> data.food()).orElse(false) ? CookingBookCategory.FOOD : CookingBookCategory.MISC;
 //? if >=1.21.1 {
-            /*var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",
+            /*var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
                     "furnace/" + BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace()
                             + "/" + BuiltInRegistries.ITEM.getKey(input.getItem()).getPath());
             recipes.add(new RecipeHolder<>(id, new SmeltingRecipe(
@@ -241,7 +241,7 @@ public final class Loader_OvenRecipes {
             var input=com.gregtech.gregtech.content.recipe.ClayMoldRecipes.input(raw);
             if(!covered.add(input.getItem()))continue;
             var output=com.gregtech.gregtech.content.recipe.ClayMoldRecipes.output(raw);
-            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","clay_molds/blast_"+raw.id());
+            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","clay_molds/blast_"+raw.id());
 //? if >=1.21.1 {
             /*recipes.add(new RecipeHolder<>(id,new net.minecraft.world.item.crafting.BlastingRecipe(
                     "",CookingBookCategory.MISC,Ingredient.of(input),output,0.0F,100)));
@@ -355,7 +355,7 @@ public final class Loader_OvenRecipes {
 *///?} else {
             var itemId = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(input.getItem());
 //?}
-            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",
+            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",
                     "material_cooking/" + (data.food() ? "smoking/" : "blasting/") + itemId.getNamespace() + "/" + itemId.getPath());
             Recipe<?> recipe = data.food()
 //? if >=1.21.1 {

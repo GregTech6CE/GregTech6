@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.*;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class GasTurbineGradeTests {
     @GameTest(template="test_blueprint_empty")

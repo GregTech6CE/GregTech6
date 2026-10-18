@@ -61,7 +61,7 @@ public class MaterialBlock extends Block implements MaterialBlockLike {
     @Override
     public String getDescriptionId() {
 //? if >=1.21.1 {
-        /*return "block." + "gregtech" + "." + prefix.getRegistryName();
+        /*return "block." + "gt6ce" + "." + prefix.getRegistryName();
 *///?} else {
         return "block." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
 //?}
@@ -155,7 +155,7 @@ public class MaterialBlock extends Block implements MaterialBlockLike {
         @Override
         public String getDescriptionId() {
 //? if >=1.21.1 {
-            /*return "block." + "gregtech" + "." + prefix.getRegistryName();
+            /*return "block." + "gt6ce" + "." + prefix.getRegistryName();
 *///?} else {
             return "block." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
 //?}

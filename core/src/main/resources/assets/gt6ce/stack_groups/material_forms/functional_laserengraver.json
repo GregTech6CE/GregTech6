@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_laserengraver",
+  "contents": [
+    "item:gt6ce:laserengraver_aluminium",
+    "item:gt6ce:laserengraver_chromium",
+    "item:gt6ce:laserengraver_galvanized_steel",
+    "item:gt6ce:laserengraver_stainless_steel",
+    "item:gt6ce:laserengraver_titanium"
+  ],
+  "priority": 110
+}

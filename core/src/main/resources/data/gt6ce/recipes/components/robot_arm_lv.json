@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "MSM",
+    "PES"
+  ],
+  "key": {
+    "C": {
+      "item": "gt6ce:cable_01_tin"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_lv"
+    },
+    "S": {
+      "tag": "forge:rods/steel_galvanized"
+    },
+    "P": {
+      "item": "gt6ce:compact_electric_piston_lv"
+    },
+    "E": {
+      "item": "gt6ce:circuit_basic"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_robot_arm_lv",
+    "count": 1
+  }
+}

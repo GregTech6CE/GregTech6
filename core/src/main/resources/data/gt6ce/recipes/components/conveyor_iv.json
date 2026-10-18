@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "MCM",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:plates/rubber"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_iv"
+    },
+    "C": {
+      "item": "gt6ce:cable_01_platinum"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_electric_conveyor_iv",
+    "count": 1
+  }
+}

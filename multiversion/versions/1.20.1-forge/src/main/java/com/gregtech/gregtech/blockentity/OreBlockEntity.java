@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * {@code BlockEntityInfo} are counted).
  *
  * <p>Nothing creates one any more ({@link OreBlock} deliberately does not implement
- * {@code EntityBlock}); the class and its {@code gregtech:ore} block-entity type stay registered for
+ * {@code EntityBlock}); the class and its {@code gt6ce:ore} block-entity type stay registered for
  * one reason: a world generated before §103.B has an entity per ore, and vanilla loads them from the
  * chunk tag ({@code BlockEntity#loadStatic}).
  *

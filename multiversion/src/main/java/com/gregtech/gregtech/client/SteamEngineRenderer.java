@@ -21,7 +21,7 @@ import org.joml.Matrix4f;
 /** Renders engine core heat color every frame. */
 public class SteamEngineRenderer implements BlockEntityRenderer<KineticSteamEngineBlockEntity> {
     private static final ResourceLocation ENGINE_TEX =
-            ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/engines/kinetic_steam/colored/engine");
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/engines/kinetic_steam/colored/engine");
 
     // Core box in model space (facing NORTH): [4,4,0] to [12,12,16]
     private static final float X0 = 4f / 16f, X1 = 12f / 16f;

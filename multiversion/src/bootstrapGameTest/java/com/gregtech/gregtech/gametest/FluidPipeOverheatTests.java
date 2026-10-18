@@ -51,7 +51,7 @@ public final class FluidPipeOverheatTests {
     }
 
     private static Pipe pipe(GameTestHelper h, BlockPos pos, String kind, boolean destroy) {
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_" + kind));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_" + kind));
         h.assertTrue(block instanceof FluidPipeBlock, "registered fixture " + kind);
         h.getLevel().setBlockAndUpdate(pos.below(), Blocks.OBSIDIAN.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos, block.defaultBlockState());
@@ -103,7 +103,7 @@ public final class FluidPipeOverheatTests {
         level.setBlockAndUpdate(pos.east(), Blocks.WHITE_CARPET.defaultBlockState());
         level.setBlockAndUpdate(pos.north(), Blocks.LAVA.defaultBlockState());
         var fluid = GTFluids.still("Swampwater").get().defaultFluidState().createLegacyBlock();
-        h.assertTrue(BuiltInRegistries.BLOCK.getKey(fluid.getBlock()).getNamespace().equals("gregtech")
+        h.assertTrue(BuiltInRegistries.BLOCK.getKey(fluid.getBlock()).getNamespace().equals("gt6ce")
                 && fluid.getCollisionShape(level, pos.south()).isEmpty(), "noncolliding registered GT fluid fixture");
         level.setBlockAndUpdate(pos.south(), fluid);
         level.setBlockAndUpdate(pos.above(), Blocks.FIRE.defaultBlockState().setValue(FireBlock.AGE, 7));

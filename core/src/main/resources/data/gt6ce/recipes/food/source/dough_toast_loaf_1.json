@@ -1,0 +1,22 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:food/fooddough"
+    },
+    {
+      "tag": "gt6ce:food/fooddough"
+    },
+    {
+      "tag": "gt6ce:food/fooddough"
+    },
+    {
+      "tag": "gt6ce:food/fooddough"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:dough_toast_loaf",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

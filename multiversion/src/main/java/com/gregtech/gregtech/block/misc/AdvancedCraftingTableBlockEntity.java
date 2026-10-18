@@ -86,7 +86,7 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
 *///?} else {
         var id=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        return id!=null && id.getNamespace().equals("gregtech") && (id.getPath().equals("empty_blueprint")||id.getPath().equals("blueprint"));
+        return id!=null && id.getNamespace().equals("gt6ce") && (id.getPath().equals("empty_blueprint")||id.getPath().equals("blueprint"));
     }
     public boolean writeBlueprint() {
         ItemStack blank=inventory.getStackInSlot(30);
@@ -95,9 +95,9 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
 *///?} else {
         var id=net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(blank.getItem());
 //?}
-        if(id==null || !id.toString().equals("gregtech:empty_blueprint"))return false;
+        if(id==null || !id.toString().equals("gt6ce:empty_blueprint"))return false;
 //? if >=1.21.1 {
-        /*ItemStack written=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","blueprint"))));
+        /*ItemStack written=new ItemStack(java.util.Objects.requireNonNull(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","blueprint"))));
 *///?} else {
         ItemStack written=new ItemStack(java.util.Objects.requireNonNull(net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(com.gregtech.gregtech.GregTech.id("blueprint"))));
 //?}

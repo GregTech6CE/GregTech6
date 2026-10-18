@@ -1,0 +1,19 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_bun"
+    },
+    {
+      "item": "gt6ce:sliced_bun"
+    },
+    {
+      "tag": "gt6ce:ingot/soylent_green"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:soylent_burger",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

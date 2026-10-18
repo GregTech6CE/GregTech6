@@ -7,7 +7,7 @@ public static void initialize(){
  SharedDecorBlocks.initialize();
  for(var v:com.gregtech.gregtech.content.transport.PanelCatalog.ALL)if(java.util.Set.of("wood","concrete","cfoam","asphalt","colored_gray","colored_black").contains(v.material()))PANELS.add(reg(v.id(),()->new PanelBlock(v.material(),v.tint(),BlockBehaviour.Properties.of().mapColor(switch(v.mapColor()){case "WOOD"->MapColor.WOOD;case "STONE"->MapColor.STONE;case "WOOL"->MapColor.WOOL;case "COLOR_BLACK"->MapColor.COLOR_BLACK;default->MapColor.COLOR_GRAY;}).strength(v.hardness(),v.hardness()).requiresCorrectToolForDrops())));
  for(var v:com.gregtech.gregtech.content.transport.PanelCatalog.ALL)if(!java.util.Set.of("wood","concrete","cfoam","asphalt","colored_gray","colored_black").contains(v.material()))GTBlocks.BLOCK_ITEMS.register(v.id(),()->new com.gregtech.gregtech.item.PanelItem(v,new net.minecraft.world.item.Item.Properties()));
- RAILROAD=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","railroad"));
- GREG_LANTERN=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","greg_lantern"));
+ RAILROAD=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","railroad"));
+ GREG_LANTERN=DeferredHolder.create(net.minecraft.core.registries.Registries.BLOCK,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","greg_lantern"));
 }
 }

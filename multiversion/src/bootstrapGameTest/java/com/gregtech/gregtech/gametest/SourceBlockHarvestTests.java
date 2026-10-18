@@ -29,7 +29,7 @@ public final class SourceBlockHarvestTests {
         var player = player(h); int x=2;
         for (String name : new String[]{"gearbox_wood","mortar_diamond","engine_steam_ironwood"}) {
             var pos = h.absolutePos(new BlockPos(x,3,3));
-            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:"+name));
+            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:"+name));
             var state = block.defaultBlockState();
             h.getLevel().setBlockAndUpdate(pos,state);
             player.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);
@@ -49,7 +49,7 @@ public final class SourceBlockHarvestTests {
     @GameTest(template="test_empty",timeoutTicks=60)
     public static void originalIridiumMachineRejectsHandWrongToolAndLowerWrenchTier(GameTestHelper h) {
         var player = player(h); var pos = h.absolutePos(new BlockPos(3,3,3));
-        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:gearbox_iridium"));
+        var block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:gearbox_iridium"));
         var state = block.defaultBlockState(); h.getLevel().setBlockAndUpdate(pos,state);
         var low = GTToolItem.create(GTToolType.WRENCH,GTMaterialRegistry.get("Steel"),GTMaterialRegistry.get("Wood"));
         var high = GTToolItem.create(GTToolType.WRENCH,GTMaterialRegistry.get("Iridium"),GTMaterialRegistry.get("Wood"));

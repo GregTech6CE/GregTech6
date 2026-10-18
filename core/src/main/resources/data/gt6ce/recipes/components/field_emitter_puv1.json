@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WPW",
+    "CGC",
+    "WPW"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_16_osmium"
+    },
+    "P": {
+      "item": "gt6ce:plate_double_trinaquadalloy"
+    },
+    "C": {
+      "item": "gt6ce:integrated_circuit_9"
+    },
+    "G": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_force_field_emitter_puv1",
+    "count": 1
+  }
+}

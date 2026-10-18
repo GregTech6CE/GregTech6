@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PCP",
+    "PwP",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:plates/tantalum_hafnium_carbide"
+    },
+    "C": {
+      "tag": "gt6ce:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:burning_box_solid_ta4hfc5"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

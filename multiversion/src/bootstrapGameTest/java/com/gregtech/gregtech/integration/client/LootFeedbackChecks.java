@@ -82,9 +82,9 @@ final class LootFeedbackChecks {
         int crafted = 0;
         for (String name : List.of("bathing_pot", "loot_crate", "crate")) {
 //? if >=1.21.1 {
-            /*var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "tools/" + name);
+            /*var key = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "tools/" + name);
 *///?} else {
-            var key = new net.minecraft.resources.ResourceLocation("gregtech", "tools/" + name);
+            var key = new net.minecraft.resources.ResourceLocation("gt6ce", "tools/" + name);
 //?}
             var loaded = server.getRecipeManager().byKey(key).orElseThrow(() -> new IllegalStateException("Missing source crafting: " + key));
 //? if >=1.21.1 {

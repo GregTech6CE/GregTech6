@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MatterFabricatorRegressionTests {
     private static MatterFabricatorBlockEntity build(GameTestHelper h,Direction front) {
@@ -96,10 +96,10 @@ public final class MatterFabricatorRegressionTests {
         var special=MachineRecipeMaps.Massfab.findRecipe(java.util.List.of(new ItemStack(GTTechnological.selectorTag(0)),dilithium),java.util.List.of(),false,2,1);
         h.assertTrue(special!=null&&special.mDuration==10368&&special.mEUt==16&&special.mFluidOutputs[0].getAmount()==103680,"original dilithium ender-matter conversion is retained");
         for(String id:java.util.List.of("largemassfab_lead","large_osmium_coil","conversion_processor_unit"))
-            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","matter/"+id)).isPresent(),"matter manufacturing recipe loaded: "+id);
+            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","matter/"+id)).isPresent(),"matter manufacturing recipe loaded: "+id);
         for(int tier=1;tier<=5;tier++) {
             String id=tier==1?"massfab_osmium":"massfab_osmiridium_t"+tier;
-            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","matter/"+id)).isPresent(),"compact machine crafting loaded: "+id);
+            h.assertTrue(h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","matter/"+id)).isPresent(),"compact machine crafting loaded: "+id);
         }
         h.succeed();
     }

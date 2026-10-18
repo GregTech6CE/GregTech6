@@ -24,7 +24,7 @@ import java.util.List;
  * {@code PARTS} — so a regression in the condition shows up as a missing form rather than as a
  * silently missing item in the world.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class PrefixConditionParityTests {
 

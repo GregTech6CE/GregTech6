@@ -23,7 +23,7 @@ public final class LootViewerData {
     }
     public static List<Group> lootGroups() { return groups(lootTables()); }
     public static List<Group> mobGroups() { return groups(mobDrops()); }
-    private static Component text(String key, Object... args) { return Component.translatable("gregtech.loot." + key, args); }
+    private static Component text(String key, Object... args) { return Component.translatable("gt6ce.loot." + key, args); }
     private static ItemStack item(String id) {
         var item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));
         return item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
@@ -36,7 +36,7 @@ public final class LootViewerData {
             for (String entry : LootChestCatalog.ENTRIES) {
                 String[] parts = entry.split("\\|");
                 if (parts[1].equals(table)) {
-                    var chest = item("gregtech:loot_chest_" + parts[0]);
+                    var chest = item("gt6ce:loot_chest_" + parts[0]);
                     if (!chest.isEmpty()) inputs.add(chest);
                 }
             }

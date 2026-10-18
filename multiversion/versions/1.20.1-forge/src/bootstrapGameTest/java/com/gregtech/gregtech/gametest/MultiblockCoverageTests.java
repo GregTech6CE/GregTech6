@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * leaving an unbuildable structure. Original numeric IDs still backed only by passive port blocks are
  * counted separately as placeholders, not as completed parts.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockCoverageTests {
 
@@ -95,7 +95,7 @@ public final class MultiblockCoverageTests {
                 boolean found = portId != null && (paths.contains(portId)
                         || paths.stream().anyMatch(path -> path.startsWith(portId + "_")));
                 if (!found) {
-                    broken.add(row.gt6Id() + " " + row.gt6Name() + ": no block gregtech:" + portId
+                    broken.add(row.gt6Id() + " " + row.gt6Name() + ": no block gt6ce:" + portId
                             + " (nor a " + portId + "_<material> variant)");
                     continue;
                 }

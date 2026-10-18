@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_grassblock",
+  "contents": [
+    "item:gt6ce:grassblock_brown",
+    "item:gt6ce:grassblock_dark",
+    "item:gt6ce:grassblock_light",
+    "item:gt6ce:grassblock_medium",
+    "item:gt6ce:grassblock_normal",
+    "item:gt6ce:grassblock_yellow"
+  ],
+  "priority": 110
+}

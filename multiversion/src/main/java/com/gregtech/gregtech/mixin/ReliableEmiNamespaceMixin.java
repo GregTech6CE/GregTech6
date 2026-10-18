@@ -19,7 +19,7 @@ public abstract class ReliableEmiNamespaceMixin {
     @Inject(method = "registerMatch", at = @At("HEAD"), cancellable = true, require = 0, remap = false)
     private static void gregtech$ownFamilies(@Coerce Object group, EmiStack stack,
             Map<?, ?> groups, Map<?, ?> items, Map<?, ?> stacks, CallbackInfo ci) {
-        if (!"gregtech".equals(stack.getId().getNamespace())) return;
+        if (!"gt6ce".equals(stack.getId().getNamespace())) return;
         try {
             ResourceLocation id = (ResourceLocation) group.getClass().getMethod("getId").invoke(group);
             if (id.getNamespace().equals("minecraft") || id.getNamespace().equals("c")) ci.cancel();

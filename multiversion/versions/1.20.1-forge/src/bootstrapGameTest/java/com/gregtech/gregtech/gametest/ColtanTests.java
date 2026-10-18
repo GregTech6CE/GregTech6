@@ -28,7 +28,7 @@ import java.util.Random;
  * world seed ({@code new Random(seed + 5).nextGaussian() * 1500}), small Coltan/Columbite/Tantalite
  * ores within 480 blocks of it and full blocks within 64, all between y = 20 and y = 40.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ColtanTests {
     private static final int BASE_X = 46000;
@@ -49,7 +49,7 @@ public final class ColtanTests {
         helper.assertTrue(GTFeatures.COLTAN.getId().getPath().equals("gt_coltan"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTColtanFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_coltan.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_coltan.json is loaded");
         helper.succeed();
     }
 
@@ -105,7 +105,7 @@ public final class ColtanTests {
         List<String> missing = new ArrayList<>();
         for (GTMaterial material : table) {
             for (String prefix : new String[] {"ore", "ore_small"}) {
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech",
+                ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce",
                         prefix + "_" + material.getName().toLowerCase());
                 Block block = ForgeRegistries.BLOCKS.getValue(id);
                 if (block == null || block == Blocks.AIR) missing.add(id.toString());
@@ -197,7 +197,7 @@ public final class ColtanTests {
 
     private static boolean isColtanOre(BlockState state) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-        if (id == null || !id.getNamespace().equals("gregtech")) return false;
+        if (id == null || !id.getNamespace().equals("gt6ce")) return false;
         String path = id.getPath();
         return (path.startsWith("ore_") || path.startsWith("ore_small_"))
                 && (path.endsWith("_coltan") || path.endsWith("_columbite") || path.endsWith("_tantalite"));

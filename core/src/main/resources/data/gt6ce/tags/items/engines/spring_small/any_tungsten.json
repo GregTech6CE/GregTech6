@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:spring_small/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:spring_small/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

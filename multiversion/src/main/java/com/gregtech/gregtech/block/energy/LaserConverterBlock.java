@@ -58,8 +58,8 @@ public final class LaserConverterBlock extends AutoToolBlock {
     @Override public void appendHoverText(net.minecraft.world.item.ItemStack stack,net.minecraft.world.level.BlockGetter world,
 //?}
             java.util.List<net.minecraft.network.chat.Component> tooltip,net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gregtech.laser.conversion",spec.input(),spec.inputType().getShortName(),spec.output(),spec.outputType().getShortName()));
-        tooltip.add(net.minecraft.network.chat.Component.translatable(spec.backInputOnly()?"gregtech.laser.back_input":"gregtech.laser.sides_input"));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("gregtech.laser.waste"));
+        tooltip.add(net.minecraft.network.chat.Component.translatable("gt6ce.laser.conversion",spec.input(),spec.inputType().getShortName(),spec.output(),spec.outputType().getShortName()));
+        tooltip.add(net.minecraft.network.chat.Component.translatable(spec.backInputOnly()?"gt6ce.laser.back_input":"gt6ce.laser.sides_input"));
+        tooltip.add(net.minecraft.network.chat.Component.translatable("gt6ce.laser.waste"));
     }
 }

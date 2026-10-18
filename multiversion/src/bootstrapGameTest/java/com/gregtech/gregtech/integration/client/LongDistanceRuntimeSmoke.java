@@ -21,7 +21,7 @@ import java.util.*;
 
 /** Finite actual-world native recipes and routing checks. Never shipped in a production jar. */
 final class LongDistanceRuntimeSmoke {
-    private static ResourceLocation id(String s){return ResourceLocation.fromNamespaceAndPath("gregtech",s);}
+    private static ResourceLocation id(String s){return ResourceLocation.fromNamespaceAndPath("gt6ce",s);}
     private static Block block(String s){return BuiltInRegistries.BLOCK.get(id(s));}
     private static void require(boolean ok,String reason){if(!ok)throw new IllegalStateException("Long distance: "+reason);}
     private static void build(ServerLevel level,BlockPos start,Direction facing,boolean fluid,Block line){
@@ -226,13 +226,13 @@ final class LongDistanceRuntimeSmoke {
         int models=0,tips=0;
         for(var spec:LongDistanceCatalog.LINES){
             var stack=new ItemStack(block(spec.id()));OriginFeedbackChecks.checkModel(mc,stack,false);
-            require(!stack.getHoverName().getString().startsWith("block.gregtech."),"missing line language "+spec.id());
+            require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"missing line language "+spec.id());
 //? if >=1.21.1 {
             /*var tooltip=stack.getTooltipLines(Item.TooltipContext.of(mc.level),mc.player,TooltipFlag.NORMAL);
 *///?} else {
             var tooltip=stack.getTooltipLines(mc.player,TooltipFlag.NORMAL);
 //?}
-            require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gregtech.long_distance")||c.getString().contains("material.gregtech.")),"missing tooltip translation "+spec.id());
+            require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gt6ce.long_distance")||c.getString().contains("material.gt6ce.")),"missing tooltip translation "+spec.id());
             require(tooltip.size()>=(spec.kind().equals("ITEM_PIPE")?2:spec.kind().equals("WIRE")?5:3),"line has no real stats "+spec.id());models++;tips++;
         }
 
@@ -243,10 +243,10 @@ final class LongDistanceRuntimeSmoke {
             int actual=mc.getItemColors().getColor(stack,0);require((actual&0xffffff)==(expected&0xffffff),"endpoint item RGB "+name);require((mc.getItemColors().getColor(stack,1)&0xffffff)==0xffffff,"endpoint overlay tinted "+name);
 //? if >=1.21.1 {
             /*require((actual>>>24)==255,"Neo endpoint RGB has no opaque alpha "+name);
-            var tooltip=stack.getTooltipLines(Item.TooltipContext.of(mc.level),mc.player,TooltipFlag.NORMAL);require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gregtech.")||c.getString().contains("material.gregtech.")),"endpoint tooltip language "+name);
+            var tooltip=stack.getTooltipLines(Item.TooltipContext.of(mc.level),mc.player,TooltipFlag.NORMAL);require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gt6ce.")||c.getString().contains("material.gt6ce.")),"endpoint tooltip language "+name);
 *///?} else {
 
-            var tooltip=stack.getTooltipLines(mc.player,TooltipFlag.NORMAL);require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gregtech.")||c.getString().contains("material.gregtech.")),"endpoint tooltip language "+name);
+            var tooltip=stack.getTooltipLines(mc.player,TooltipFlag.NORMAL);require(tooltip.stream().noneMatch(c->c.getString().contains("tooltip.gt6ce.")||c.getString().contains("material.gt6ce.")),"endpoint tooltip language "+name);
 //?}
             colors.addProperty(name,String.format(java.util.Locale.ROOT,"%06x",actual&0xffffff));endpoints++;
             for(var face:Direction.values())for(int activity=0;activity<(b instanceof LongDistanceTransformerBlock?4:1);activity++){

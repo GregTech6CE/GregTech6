@@ -1,0 +1,17 @@
+{
+  "type": "gt6ce:book_binding",
+  "category": "misc",
+  "group": "gt6ce.books.binding",
+  "ingredients": [
+    {
+      "tag": "gt6ce:written_books_large"
+    },
+    {
+      "tag": "gt6ce:book_binding/dyes/white"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:large_book_white",
+    "count": 1
+  }
+}

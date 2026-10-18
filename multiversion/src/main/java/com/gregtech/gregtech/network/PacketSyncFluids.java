@@ -16,7 +16,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 /*import net.neoforged.neoforge.fluids.FluidStack;
 /^* Original menu/slot addressed fluid sync using 1.21 native registry-aware component codecs. ^/
 public record PacketSyncFluids(int containerId,int slotIndex,FluidStack fluid) implements CustomPacketPayload {
- public static final Type<PacketSyncFluids> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gregtech","sync_fluids"));
+ public static final Type<PacketSyncFluids> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gt6ce","sync_fluids"));
  public static final StreamCodec<RegistryFriendlyByteBuf,PacketSyncFluids> STREAM_CODEC=StreamCodec.of(PacketSyncFluids::encode,PacketSyncFluids::decode);
  public PacketSyncFluids{fluid=fluid.copy();}
  private static void encode(RegistryFriendlyByteBuf buf,PacketSyncFluids packet){buf.writeVarInt(packet.containerId);buf.writeVarInt(packet.slotIndex);FluidStack.OPTIONAL_STREAM_CODEC.encode(buf,packet.fluid);}

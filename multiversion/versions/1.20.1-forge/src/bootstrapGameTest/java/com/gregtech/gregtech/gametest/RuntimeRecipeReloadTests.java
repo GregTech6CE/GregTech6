@@ -47,7 +47,7 @@ public final class RuntimeRecipeReloadTests {
 
         Path root=server.getWorldPath(LevelResource.DATAPACK_DIR).resolve("gt-repair-reload-probe");
         h.assertTrue(!Files.exists(root),"temporary probe pack must not overwrite an existing pack");
-        Path override=root.resolve("data/gregtech/recipes/hand/storage/bottle_crate.json");
+        Path override=root.resolve("data/gt6ce/recipes/hand/storage/bottle_crate.json");
         Path probe=root.resolve("data/gregtech_repair/recipes/reload_probe.json");
         Path never=root.resolve("data/gregtech_repair/recipes/reload_never_furnace.json");
         Path rail=root.resolve("data/minecraft/recipes/rail.json");

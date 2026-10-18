@@ -33,7 +33,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * the forest floor was empty. The tests run far outside the test structures and above the terrain,
  * like {@code TreeGrowthTests}.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class SurfaceFloraTests {
     private static final int BASE_X = 24000;
@@ -77,7 +77,7 @@ public final class SurfaceFloraTests {
         helper.assertTrue(GTFeatures.SURFACE_FLORA.getId().getPath().equals("gt_surface_flora"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTSurfaceFloraFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_surface_flora.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_surface_flora.json is loaded");
         helper.succeed();
     }
 

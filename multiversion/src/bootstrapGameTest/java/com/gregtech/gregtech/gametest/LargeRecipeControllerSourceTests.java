@@ -49,7 +49,7 @@ public final class LargeRecipeControllerSourceTests {
             var sources=new ArrayList<EnergyNodeBlockEntity>();
             for(var s:OriginalLargeRecipeMachineData.sources(name)) {
                 var pos=point(main,front,s.right(),s.up(),s.back());var ef=face(front,s.outputFace());
-                var source=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:"+(energy==GregTechTags.Energy.RU?"electric_motor_lv":"electric_dynamo_lv")));
+                var source=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:"+(energy==GregTechTags.Energy.RU?"electric_motor_lv":"electric_dynamo_lv")));
                 h.getLevel().setBlockAndUpdate(pos,source.defaultBlockState().setValue(EnergyNodeBlock.FACING,ef));
                 sources.add((EnergyNodeBlockEntity)h.getLevel().getBlockEntity(pos));
             }
@@ -90,7 +90,7 @@ public final class LargeRecipeControllerSourceTests {
 //?}
             h.assertTrue(machine.getTanksOutput()[0].baseCapacity()==Long.MAX_VALUE,"source output limit restored from old port tank "+name);
             var out=OriginalLargeRecipeMachineData.output(name,false);var targetPos=point(main,front,out.right(),out.up(),out.back());
-            var drum=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:drum_stainless_steel"));
+            var drum=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:drum_stainless_steel"));
             h.getLevel().setBlockAndUpdate(targetPos,drum.defaultBlockState());
             machine.machineControl(null).setEnabled(false);h.assertTrue(!machine.isStructureOk(),"fixture deliberately unformed "+name);
             tick(h,machine);

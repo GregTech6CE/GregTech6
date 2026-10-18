@@ -26,7 +26,7 @@ import java.util.TreeSet;
  * the machine nor the barrel had a working food chain.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BarrelFermentationTests {
 

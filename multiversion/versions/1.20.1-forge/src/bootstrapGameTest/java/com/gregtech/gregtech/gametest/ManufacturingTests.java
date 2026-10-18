@@ -15,7 +15,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.gametest.*;
 import java.util.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ManufacturingTests {
     private static TransientCraftingContainer grid() {
@@ -33,7 +33,7 @@ public final class ManufacturingTests {
     @GameTest(template="test_blueprint_empty")
     public static void wireCraftingPreservesConductorAmount(GameTestHelper h) {
         int count=0;
-        for(var raw:h.getLevel().getRecipeManager().getRecipes())if(raw.getId().getNamespace().equals("gregtech")&&raw.getId().getPath().startsWith("wire_working/")) {
+        for(var raw:h.getLevel().getRecipeManager().getRecipes())if(raw.getId().getNamespace().equals("gt6ce")&&raw.getId().getPath().startsWith("wire_working/")) {
             var recipe=(ShapelessRecipe)raw;var grid=grid();int slot=0;long amount=0;String material=null;
             for(var ingredient:recipe.getIngredients()) {
                 h.assertTrue(ingredient.getItems().length>0,"wire ingredient resolves");
@@ -53,7 +53,7 @@ public final class ManufacturingTests {
     }
     @GameTest(template="test_blueprint_empty")
     public static void moldsHaveUniqueOrientationAndSurviveNetwork(GameTestHelper h) {
-        var molds=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gregtech")&&r.getId().getPath().startsWith("extruder_shapes/"))
+        var molds=h.getLevel().getRecipeManager().getRecipes().stream().filter(r->r.getId().getNamespace().equals("gt6ce")&&r.getId().getPath().startsWith("extruder_shapes/"))
                 .map(r->(com.gregtech.gregtech.recipe.ToolShapedRecipe)r).toList();
         // 64 extruder shapes + the 14 shape items GT6 crafts the same way (food molds and slicer
         // blades, MultiItemTechnological:336-380), all registered as gregtech:tool_shaped recipes

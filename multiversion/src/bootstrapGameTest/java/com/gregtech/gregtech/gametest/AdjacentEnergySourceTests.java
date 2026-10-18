@@ -27,7 +27,7 @@ import java.util.*;
 public final class AdjacentEnergySourceTests {
     private static BlockPos origin(GameTestHelper h) {return h.absolutePos(new BlockPos(2,0,2)).atY(250);}
     private static DistillationTowerControllerBlockEntity tower(GameTestHelper h,BlockPos pos,boolean cold,Direction front) {
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:"+(cold?"cryo_distillation_main":"distillation_tower_main")));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:"+(cold?"cryo_distillation_main":"distillation_tower_main")));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState().setValue(BasicMachineBlock.FACING,front));
         return (DistillationTowerControllerBlockEntity)h.getLevel().getBlockEntity(pos);
     }
@@ -35,7 +35,7 @@ public final class AdjacentEnergySourceTests {
         return pos.relative(front.getClockWise(),cell.right()).above(cell.up()).relative(front.getOpposite(),cell.back());
     }
     private static EnergyNodeBlockEntity source(GameTestHelper h,BlockPos pos,boolean cold,Direction front) {
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:electric_"+(cold?"cooler_lv":"heater_lv")));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:electric_"+(cold?"cooler_lv":"heater_lv")));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState().setValue(EnergyNodeBlock.FACING,front));
         return (EnergyNodeBlockEntity)h.getLevel().getBlockEntity(pos);
     }

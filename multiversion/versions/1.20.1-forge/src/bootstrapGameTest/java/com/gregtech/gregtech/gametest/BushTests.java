@@ -36,7 +36,7 @@ import java.util.List;
  * <p>GT6 tints the bush per stage from the {@code BushesGT} colour table and grows one stage per 256
  * growth increments in 128-tick cycles (rain and light give extra increments).
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BushTests {
     private static final int BASE_X = 30000;
@@ -75,12 +75,12 @@ public final class BushTests {
             problems.add("the bush block entity type must cover the bush");
         }
         for (String asset : new String[]{
-                "assets/gregtech/blockstates/bush.json",
-                "assets/gregtech/models/block/plants/bush_stage0.json",
-                "assets/gregtech/models/block/plants/bush_stage3.json",
-                "assets/gregtech/models/item/bush.json",
-                "assets/gregtech/textures/block/plants/bush/colored/bush.png",
-                "assets/gregtech/textures/block/plants/bush/overlay/berries.png"}) {
+                "assets/gt6ce/blockstates/bush.json",
+                "assets/gt6ce/models/block/plants/bush_stage0.json",
+                "assets/gt6ce/models/block/plants/bush_stage3.json",
+                "assets/gt6ce/models/item/bush.json",
+                "assets/gt6ce/textures/block/plants/bush/colored/bush.png",
+                "assets/gt6ce/textures/block/plants/bush/overlay/berries.png"}) {
             if (BushTests.class.getClassLoader().getResource(asset) == null) problems.add("missing " + asset);
         }
         // GT6's BushesGT table: 8 berries with GT6's own colours.
@@ -176,7 +176,7 @@ public final class BushTests {
         var bareBush = (BushBlockEntity) level.getBlockEntity(bare);
         Player planter = helper.makeMockPlayer();
         planter.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ForgeRegistries.ITEMS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "cranberry"))));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "cranberry"))));
         InteractionResult planted = GTBushes.BUSH.get().use(level.getBlockState(bare), level, bare, planter,
                 InteractionHand.MAIN_HAND, hit(bare));
         helper.assertTrue(planted.consumesAction(), "setting the berry type is an interaction");
@@ -202,7 +202,7 @@ public final class BushTests {
         helper.assertTrue(GTFeatures.BUSHES.getId().getPath().equals("gt_bushes"), "feature id");
         helper.assertTrue(helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
                         .containsKey(GTBushesFeature.CONFIGURED),
-                "data/gregtech/worldgen/configured_feature/gt_bushes.json is loaded");
+                "data/gt6ce/worldgen/configured_feature/gt_bushes.json is loaded");
         // GT6 picks the berry with its value noise at (x/2, 300, z/2) — deterministic per position.
         int first = GTBushesFeature.berryIndex((net.minecraft.world.level.WorldGenLevel) helper.getLevel(),
                 BASE_X, BASE_Z);

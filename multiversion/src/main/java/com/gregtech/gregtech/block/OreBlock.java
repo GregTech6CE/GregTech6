@@ -68,7 +68,7 @@ import java.util.List;
  *       the first lookup — exactly what §103.B removes.</li>
  * </ul>
  *
- * <p>Worlds generated before §103.B are still handled: the {@code gregtech:ore} block-entity type stays
+ * <p>Worlds generated before §103.B are still handled: the {@code gt6ce:ore} block-entity type stays
  * registered, so the chunk loader creates the entity from its saved tag, sets its level
  * ({@code LevelChunk:538}) and calls {@link OreBlockEntity#onLoad()}, which folds the stone into this
  * block's {@link #STONE} property before the entity is dropped — {@code LevelChunk#setBlockEntity}
@@ -142,7 +142,7 @@ public class OreBlock extends Block implements MaterialBlockLike {
     @Override
     public String getDescriptionId() {
 //? if >=1.21.1 {
-        /*return "block." + "gregtech" + "." + prefix.getRegistryName();
+        /*return "block." + "gt6ce" + "." + prefix.getRegistryName();
 *///?} else {
         return "block." + GregTech.NAMESPACE + "." + prefix.getRegistryName();
 //?}

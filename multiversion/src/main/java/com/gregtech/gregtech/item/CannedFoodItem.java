@@ -18,7 +18,7 @@ public final class CannedFoodItem extends TechItem {
     private final CannedFoodCatalog.Can spec;
     public CannedFoodItem(String id, String name, Properties props) { super(name,props); spec=java.util.Objects.requireNonNull(CannedFoodCatalog.forId(id),id); }
     public CannedFoodCatalog.Can spec() { return spec; }
-    public static ItemStack emptyCan() { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","empty_food_can"))); }
+    public static ItemStack emptyCan() { return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","empty_food_can"))); }
     @Override public boolean hasCraftingRemainingItem(ItemStack stack) { return true; }
     @Override public ItemStack getCraftingRemainingItem(ItemStack stack) { return emptyCan(); }
     @Override public UseAnim getUseAnimation(ItemStack stack) { return spec.rebreathe()>0 ? UseAnim.DRINK : UseAnim.EAT; }
@@ -62,7 +62,7 @@ public final class CannedFoodItem extends TechItem {
     /** Preserves stack quantity and custom data, as MultiItemCans.getRotten does. */
     public ItemStack getRotten(ItemStack stack) {
         String target=CannedFoodCatalog.rottenId(spec.id()); if(target.equals(spec.id())) return stack;
-        Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",target));
+        Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",target));
 //? if >=1.21.1 {
         /*return stack.transmuteCopy(item, stack.getCount());
 *///?} else {
@@ -77,9 +77,9 @@ public final class CannedFoodItem extends TechItem {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
         var food=spec.food().food();
-        if (food.level()>0 || food.saturation()>0) tooltip.add(Component.translatable("tooltip.gregtech.sandwich.food",food.level(),food.saturation()).withStyle(net.minecraft.ChatFormatting.RED));
-        if (food.rotten()) tooltip.add(Component.translatable("tooltip.gregtech.food.rotten").withStyle(net.minecraft.ChatFormatting.DARK_RED));
-        if (spec.catFood()) tooltip.add(Component.translatable("tooltip.gregtech.food.cat"));
-        if (spec.dogFood()) tooltip.add(Component.translatable("tooltip.gregtech.food.dog"));
+        if (food.level()>0 || food.saturation()>0) tooltip.add(Component.translatable("tooltip.gt6ce.sandwich.food",food.level(),food.saturation()).withStyle(net.minecraft.ChatFormatting.RED));
+        if (food.rotten()) tooltip.add(Component.translatable("tooltip.gt6ce.food.rotten").withStyle(net.minecraft.ChatFormatting.DARK_RED));
+        if (spec.catFood()) tooltip.add(Component.translatable("tooltip.gt6ce.food.cat"));
+        if (spec.dogFood()) tooltip.add(Component.translatable("tooltip.gt6ce.food.dog"));
     }
 }

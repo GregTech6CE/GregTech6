@@ -120,7 +120,7 @@ public final class MaterialBlockClientModels {
             }
             BlockItemClientModels.alias(models, itemId,
 //? if >=1.21.1 {
-                    /*ResourceLocation.fromNamespaceAndPath("gregtech","block/blocks/" + blockId.getPath()), worldModel, itemModel);
+                    /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/blocks/" + blockId.getPath()), worldModel, itemModel);
 *///?} else {
                     GregTech.id("block/blocks/" + blockId.getPath()), worldModel, itemModel);
 //?}
@@ -130,7 +130,7 @@ public final class MaterialBlockClientModels {
         }
 
 //? if >=1.21.1 {
-        /*LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", "gregtech", aliased, missing);
+        /*LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", "gt6ce", aliased, missing);
 *///?} else {
         LOGGER.info("[{}] Material block model aliasing: {} mapped, {} missing", GregTech.NAMESPACE, aliased, missing);
 //?}

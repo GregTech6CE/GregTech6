@@ -56,7 +56,7 @@ import java.util.TreeSet;
  * registering a material form. These tests pin the item count, the pile's accept/refuse rule, the
  * dungeon's coins and the whole asset chain the four pile blocks reference.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CoinAndPileAssetTests {
     private static final int BASE_X = 65000;
@@ -223,10 +223,10 @@ public final class CoinAndPileAssetTests {
         // One coin per material is one *item* per material: the coin's texture is GT6's COIN icon in
         // every texture set, so the shared model has to exist for all of them.
         for (String set : new String[]{"metallic", "dull", "shiny", "fine", "stone", "wood", "ruby", "copper"}) {
-            if (!resourceExists("assets/gregtech/models/item/material/" + set + "/coin.json")) {
+            if (!resourceExists("assets/gt6ce/models/item/material/" + set + "/coin.json")) {
                 problems.add("missing shared coin model for the " + set + " texture set");
             }
-            if (!resourceExists("assets/gregtech/textures/item/material_icons/" + set + "/coin.png")) {
+            if (!resourceExists("assets/gt6ce/textures/item/material_icons/" + set + "/coin.png")) {
                 problems.add("missing coin icon for the " + set + " texture set");
             }
         }
@@ -428,7 +428,7 @@ public final class CoinAndPileAssetTests {
         Set<String> models = new HashSet<>();
         for (Map.Entry<String, Integer> entry : PILE_BLOCKS.entrySet()) {
             String block = entry.getKey();
-            JsonObject variants = resourceJson("assets/gregtech/blockstates/" + block + ".json")
+            JsonObject variants = resourceJson("assets/gt6ce/blockstates/" + block + ".json")
                     .getAsJsonObject("variants");
             if (variants.size() != entry.getValue()) {
                 problems.add(block + " has " + variants.size() + " variants, expected " + entry.getValue());
@@ -436,30 +436,30 @@ public final class CoinAndPileAssetTests {
             for (Map.Entry<String, JsonElement> variant : variants.entrySet()) {
                 String model = variant.getValue().getAsJsonObject().get("model").getAsString();
                 models.add(model);
-                if (model.startsWith("gregtech:block/decoration/pile/")
-                        && !resourceExists("assets/gregtech/models/" + model.substring("gregtech:".length())
+                if (model.startsWith("gt6ce:block/decoration/pile/")
+                        && !resourceExists("assets/gt6ce/models/" + model.substring("gt6ce:".length())
                         + ".json")) {
                     problems.add(block + " " + variant.getKey() + " names the missing model " + model);
                 }
             }
             // The block/item name of the block, in both languages.
             for (String language : new String[]{"en_us", "zh_cn"}) {
-                if (!resourceJson("assets/gregtech/lang/" + language + ".json").has("block.gregtech." + block)) {
-                    problems.add(language + " has no name for block.gregtech." + block);
+                if (!resourceJson("assets/gt6ce/lang/" + language + ".json").has("block.gt6ce." + block)) {
+                    problems.add(language + " has no name for block.gt6ce." + block);
                 }
             }
             // The item model of the block points at one of those models.
-            JsonObject item = resourceJson("assets/gregtech/models/item/" + block + ".json");
+            JsonObject item = resourceJson("assets/gt6ce/models/item/" + block + ".json");
             String parent = item.get("parent").getAsString();
-            if (!resourceExists("assets/gregtech/models/" + parent.substring("gregtech:".length()) + ".json")) {
+            if (!resourceExists("assets/gt6ce/models/" + parent.substring("gt6ce:".length()) + ".json")) {
                 problems.add("the item model of " + block + " names the missing parent " + parent);
             }
             models.add(parent);
         }
 
         for (String model : models) {
-            if (!model.startsWith("gregtech:")) continue;   // vanilla parents are not in this resource tree
-            JsonObject json = resourceJson("assets/gregtech/models/" + model.substring("gregtech:".length())
+            if (!model.startsWith("gt6ce:")) continue;   // vanilla parents are not in this resource tree
+            JsonObject json = resourceJson("assets/gt6ce/models/" + model.substring("gt6ce:".length())
                     + ".json");
             List<String> textures = new ArrayList<>();
             if (json.has("textures")) {
@@ -480,9 +480,9 @@ public final class CoinAndPileAssetTests {
                 }
             }
             for (String texture : textures) {
-                if (texture.startsWith("#") || !texture.startsWith("gregtech:")) continue;
-                String path = texture.substring("gregtech:".length());
-                if (!resourceExists("assets/gregtech/textures/" + path + ".png")) {
+                if (texture.startsWith("#") || !texture.startsWith("gt6ce:")) continue;
+                String path = texture.substring("gt6ce:".length());
+                if (!resourceExists("assets/gt6ce/textures/" + path + ".png")) {
                     problems.add(model + " names the missing texture " + texture);
                 }
             }
@@ -492,14 +492,14 @@ public final class CoinAndPileAssetTests {
         for (String[] texture : new String[][]{
                 {"ingot", "top"}, {"ingot", "sides"}, {"plate", "top"}, {"plate", "sides"},
                 {"plategem", "top"}, {"plategem", "sides"}}) {
-            if (!resourceExists("assets/gregtech/textures/block/machines/placeables/"
+            if (!resourceExists("assets/gt6ce/textures/block/machines/placeables/"
                     + texture[0] + "/" + texture[1] + ".png")) {
                 problems.add("GT6's " + texture[0] + "/" + texture[1] + " pile texture is missing");
             }
         }
         // GT6's coin face and rim, which the coin pile's model puts on its faces.
         for (String icon : new String[]{"coin", "coin_side"}) {
-            if (!resourceExists("assets/gregtech/textures/block/iconsets/" + icon + ".png")) {
+            if (!resourceExists("assets/gt6ce/textures/block/iconsets/" + icon + ".png")) {
                 problems.add("GT6's " + icon + " icon is missing");
             }
         }
@@ -508,9 +508,9 @@ public final class CoinAndPileAssetTests {
         // icon item GTCreativeTabIcons registers per prefix, whose name the suite's translation guard
         // (MaterialCompatibilityTests.registeredNamesHaveTranslations) reads like any other item's.
         for (String language : new String[]{"en_us", "zh_cn"}) {
-            JsonObject lang = resourceJson("assets/gregtech/lang/" + language + ".json");
-            for (String key : new String[]{"item.gregtech.coin", "itemGroup.gregtech.coin",
-                    "item.gregtech.tab_icon_coin"}) {
+            JsonObject lang = resourceJson("assets/gt6ce/lang/" + language + ".json");
+            for (String key : new String[]{"item.gt6ce.coin", "itemGroup.gt6ce.coin",
+                    "item.gt6ce.tab_icon_coin"}) {
                 if (!lang.has(key)) problems.add(language + " has no " + key);
             }
         }

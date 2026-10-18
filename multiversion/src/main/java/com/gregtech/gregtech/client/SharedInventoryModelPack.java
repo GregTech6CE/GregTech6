@@ -55,13 +55,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location = new PackLocationInfo("gregtech:shared_inventory", Component.literal("GregTech shared inventory models"), PackSource.BUILT_IN, Optional.empty());
+            /*var location = new PackLocationInfo("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), PackSource.BUILT_IN, Optional.empty());
             var pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
                 public PackResources openPrimary(PackLocationInfo info) { return new SharedInventoryModelPack(info); }
                 public PackResources openFull(PackLocationInfo info, Pack.Metadata metadata) { return new SharedInventoryModelPack(info); }
             }, PackType.CLIENT_RESOURCES, new PackSelectionConfig(true, Pack.Position.BOTTOM, true));
 *///?} else {
-            var pack = Pack.readMetaAndCreate("gregtech:shared_inventory", Component.literal("GregTech shared inventory models"), true,
+            var pack = Pack.readMetaAndCreate("gt6ce:shared_inventory", Component.literal("GregTech shared inventory models"), true,
                     SharedInventoryModelPack::new, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
 //?}
             if (pack != null) output.accept(pack);
@@ -86,20 +86,20 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
-            if (id.getNamespace().equals("gregtech") && !id.getPath().equals("bottle_crate")
+            if (id.getNamespace().equals("gt6ce") && !id.getPath().equals("bottle_crate")
                     && item instanceof BlockItem crateItem
                     && crateItem.getBlock() instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock crate) {
                 String model = "block/inventory/" + id.getPath();
-                String blockJson = "{\"parent\":\"gregtech:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\"" + crate.frameTexture() + "\"}}";
+                String blockJson = "{\"parent\":\"gt6ce:block/inventory/bottle_crate_tinted\",\"textures\":{\"wood\":\"" + crate.frameTexture() + "\"}}";
                 result.put(location("models/" + model + ".json"), blockJson.getBytes(StandardCharsets.UTF_8));
                 result.put(location("blockstates/" + id.getPath() + ".json"),
-                        ("{\"variants\":{\"\":{\"model\":\"gregtech:" + model + "\"}}}").getBytes(StandardCharsets.UTF_8));
+                        ("{\"variants\":{\"\":{\"model\":\"gt6ce:" + model + "\"}}}").getBytes(StandardCharsets.UTF_8));
                 result.put(location("models/item/" + id.getPath() + ".json"),
-                        ("{\"parent\":\"gregtech:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
+                        ("{\"parent\":\"gt6ce:" + model + "\"}").getBytes(StandardCharsets.UTF_8));
                 continue;
             }
-            if (!id.getNamespace().equals("gregtech") || SharedInventoryModelPack.class.getResource(
-                    "/assets/gregtech/models/item/" + id.getPath() + ".json") != null) continue;
+            if (!id.getNamespace().equals("gt6ce") || SharedInventoryModelPack.class.getResource(
+                    "/assets/gt6ce/models/item/" + id.getPath() + ".json") != null) continue;
             ResourceLocation parent = null;
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material) {
                 parent = MaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.getMaterial()), material.getPrefix());
@@ -132,13 +132,13 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         }
         // Material bushes share the existing 28 geometries; resource packs can override each identity.
         byte[] bushStates=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.blockstateJson().getBytes(StandardCharsets.UTF_8);
-        byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gregtech:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
+        byte[] bushItem=MaterialIconDefinitions.sharedInventoryJson("gt6ce:block/plants/bush_stage3").getBytes(StandardCharsets.UTF_8);
         for(var block:com.gregtech.gregtech.registry.GTBushes.allBlocks()) {
-            if(!((com.gregtech.gregtech.block.plant.BushBlock)block).berryId().startsWith("gregtech:plant_gt_berry_"))continue;
+            if(!((com.gregtech.gregtech.block.plant.BushBlock)block).berryId().startsWith("gt6ce:plant_gt_berry_"))continue;
             var id=BuiltInRegistries.BLOCK.getKey(block);
-            if(SharedInventoryModelPack.class.getResource("/assets/gregtech/blockstates/"+id.getPath()+".json")==null)
+            if(SharedInventoryModelPack.class.getResource("/assets/gt6ce/blockstates/"+id.getPath()+".json")==null)
                 result.put(location("blockstates/"+id.getPath()+".json"),bushStates);
-            if(SharedInventoryModelPack.class.getResource("/assets/gregtech/models/item/"+id.getPath()+".json")==null)
+            if(SharedInventoryModelPack.class.getResource("/assets/gt6ce/models/item/"+id.getPath()+".json")==null)
                 result.put(location("models/item/"+id.getPath()+".json"),bushItem);
         }
         // Registration gained material forms after the original static data generation.
@@ -147,10 +147,10 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var block : BuiltInRegistries.BLOCK) {
             if (!(block instanceof MaterialBlockLike material)) continue;
             ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gregtech") || SharedInventoryModelPack.class.getResource(
-                    "/assets/gregtech/blockstates/" + id.getPath() + ".json") != null) continue;
+            if (!id.getNamespace().equals("gt6ce") || SharedInventoryModelPack.class.getResource(
+                    "/assets/gt6ce/blockstates/" + id.getPath() + ".json") != null) continue;
             var parent = BlockMaterialIcons.sharedModelLocation(MaterialIcons.resolveTextureSet(material.material()), material.prefix());
-            if (SharedInventoryModelPack.class.getResource("/assets/gregtech/models/" + parent.getPath() + ".json") == null) continue;
+            if (SharedInventoryModelPack.class.getResource("/assets/gt6ce/models/" + parent.getPath() + ".json") == null) continue;
             byte[] json = ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8);
             result.put(location("blockstates/" + id.getPath() + ".json"), json);
             states++;
@@ -162,9 +162,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
     }
 
 //? if >=1.21.1 {
-    /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
 *///?} else {
-    private static ResourceLocation location(String path) { return new ResourceLocation("gregtech", path); }
+    private static ResourceLocation location(String path) { return new ResourceLocation("gt6ce", path); }
 //?}
 
     @Override
@@ -195,7 +195,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.CLIENT_RESOURCES ? Set.of("gregtech") : Set.of();
+        return type == PackType.CLIENT_RESOURCES ? Set.of("gt6ce") : Set.of();
     }
 
     @Override

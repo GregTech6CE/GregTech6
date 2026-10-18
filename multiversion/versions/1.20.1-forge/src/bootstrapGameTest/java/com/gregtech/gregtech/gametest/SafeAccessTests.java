@@ -114,7 +114,7 @@ public final class SafeAccessTests {
             var block=GTStorage.safe(spec.material(),keyed);
             h.assertTrue(GTBlockEntities.SAFE.get().isValid(block.defaultBlockState()),"safe entity includes every variant");
             h.assertTrue(block.getExplosionResistance()==spec.resistance()*2,"GT6 doubled resistance");
-            var id=ResourceLocation.fromNamespaceAndPath("gregtech","hand/storage/"+(keyed?"key_safe_":"safe_")+spec.suffix());
+            var id=ResourceLocation.fromNamespaceAndPath("gt6ce","hand/storage/"+(keyed?"key_safe_":"safe_")+spec.suffix());
             var recipe=(ShapedRecipe)h.getLevel().getRecipeManager().byKey(id).orElseThrow(()->new IllegalStateException("Missing "+id));
             var grid=new TransientCraftingContainer(new CraftingMenu(0,player.getInventory()),3,3);
             for(int i=0;i<9;i++) { var options=recipe.getIngredients().get(i).getItems(); h.assertTrue(options.length>0,"safe ingredient exists: "+id); grid.setItem(i,options[0].copy()); }

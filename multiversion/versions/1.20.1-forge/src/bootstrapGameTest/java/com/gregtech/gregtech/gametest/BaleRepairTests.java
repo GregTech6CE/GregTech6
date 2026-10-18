@@ -35,7 +35,7 @@ public final class BaleRepairTests {
     };
 
     private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath("gregtech", path);
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", path);
     }
 
     private static TransientCraftingContainer grid() {
@@ -69,7 +69,7 @@ public final class BaleRepairTests {
             for (String path : new String[]{"blockstates/" + name + ".json",
                     "models/block/iconsets/" + name + ".json", "models/item/" + name + ".json"}) {
                 helper.assertTrue(BaleRepairTests.class.getClassLoader()
-                                .getResource("assets/gregtech/" + path) != null, name + " has " + path);
+                                .getResource("assets/gt6ce/" + path) != null, name + " has " + path);
             }
 
             var pack = manager.byKey(id("bales/" + name + "_pack")).orElse(null);

@@ -17,8 +17,8 @@ import net.minecraft.world.phys.BlockHitResult;
 /** GT6 Behavior_Place_Sapling followed by Behavior_Place_Workbench. */
 public final class BehaviorPlaceWoodworkingSupplies {
 //? if >=1.21.1 {
-    /*private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","saplings"));
-    private static final TagKey<Item> WORKBENCHES=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","crafting_workbenches"));
+    /*private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","saplings"));
+    private static final TagKey<Item> WORKBENCHES=ItemTags.create(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","crafting_workbenches"));
 *///?} else {
     private static final TagKey<Item> GT_SAPLINGS=ItemTags.create(GregTech.id("saplings"));
     private static final TagKey<Item> WORKBENCHES=ItemTags.create(GregTech.id("crafting_workbenches"));

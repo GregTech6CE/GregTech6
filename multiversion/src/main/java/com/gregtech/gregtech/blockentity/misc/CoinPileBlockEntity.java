@@ -35,7 +35,7 @@ import java.util.List;
  * keys {@code gt.material} ({@code :83}/{@code :90}), {@code gt.coin.unique} ({@code :82}) and the two
  * 16x16 shape bitsets {@code gt.coin.shape.0.<i>}/{@code gt.coin.shape.1.<i>} ({@code :79-80}), which
  * only its own 3D coin renderer reads. The port's coin is a real item
- * ({@code gregtech:coin_<i>&lt;material&gt;</i>}, see {@link CoinPileBlock}), so the coin stack replaces
+ * ({@code gt6ce:coin_<i>&lt;material&gt;</i>}, see {@link CoinPileBlock}), so the coin stack replaces
  * the material string and carries the optional shape bitsets. The renderer reads that coin's die
  * pattern and the block entity packet synchronizes it together with the face counts.</p>
  */

@@ -1,0 +1,23 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemTechnological:167",
+  "allow_mirror": false,
+  "pattern": [
+    "G ",
+    "YQ"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:slimeballs"
+    },
+    "Y": {
+      "tag": "forge:dyes/yellow"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    }
+  },
+  "result": {
+    "item": "gt6ce:warning_cover"
+  }
+}

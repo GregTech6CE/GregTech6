@@ -68,7 +68,7 @@ public final class LargeBatteryTransformerTests {
         b.toggleInverted();h.assertTrue(b.stored()==0&&b.isEnergyEmittingTo(eu,Direction.NORTH,false)&&!b.isEnergyAcceptingFrom(eu,Direction.NORTH,false),"reversal clears buffer and swaps faces");
         int count=0;
         for(var recipe:h.getLevel().getRecipeManager().getRecipes()){
-            if(!recipe.getId().getNamespace().equals("gregtech")||!recipe.getId().getPath().startsWith("energy_nodes/"))continue;
+            if(!recipe.getId().getNamespace().equals("gt6ce")||!recipe.getId().getPath().startsWith("energy_nodes/"))continue;
             count++;
             int tier=java.util.List.of("ulv","lv","mv","hv","ev","iv","luv","zpm","uv","xv").indexOf(recipe.getId().getPath().substring(recipe.getId().getPath().lastIndexOf('_')+1));
             for(int i=0;i<recipe.getIngredients().size();i++){

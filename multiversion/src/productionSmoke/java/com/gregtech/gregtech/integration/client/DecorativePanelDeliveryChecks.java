@@ -16,7 +16,7 @@ final class DecorativePanelDeliveryChecks {
   int count=0,wood=0,colored=0;var page=com.gregtech.gregtech.loaders.b.OriginCreativeContents.contents("panels");
   var foam=com.gregtech.gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
   require(com.gregtech.gregtech.content.recipe.MaterialRecoveryRules.shredderWork(foam)==2L*Math.max(1,foam.getToolQuality()+1),"source BRITTLE foam recovery work");
-  for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
+  for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
    require(stack.getItem() instanceof PanelItemView&&stack.getMaxStackSize()==16,"source stack identity "+spec.id());
    var data=com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow();
    require(data.components().size()==2&&data.amount()==com.gregtech.gregtech.api.material.GTValues.U/6,"per-panel original construction/plank amount "+spec.id());
@@ -60,7 +60,7 @@ final class DecorativePanelDeliveryChecks {
   }
   long unit=com.gregtech.gregtech.api.material.GTValues.U;long[] weights={unit/2,unit,unit*3,unit*6,unit*12,unit*12,unit*9};
   for(var spec:com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes()) {
-   var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
+   var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
    require(com.gregtech.gregtech.api.material.ItemMaterialRegistry.get(stack).orElseThrow().amount()==weights[spec.size().ordinal()],"original installed pipe prefix weight "+spec.id());
   }
   for(var row:com.gregtech.gregtech.content.transport.TransportCraftingCatalog.rows())require(com.gregtech.gregtech.content.recipe.TransportCraftingInputs.json(row).isPresent(),"installed source crafting inputs "+row.path());
@@ -71,9 +71,9 @@ final class DecorativePanelDeliveryChecks {
   require(preferred==406,"all original native pipe targets");
   int usbFileTypes=0;
   var steelFile=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.usbData(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
-          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Steel")));
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Steel")));
   var ironFile=com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.usbData(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
-          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Iron")));
+          new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:usb3_stick"))),com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Iron")));
   for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks()) {
    var steel=new ItemStack(item);var iron=new ItemStack(item);var blank=new ItemStack(item);
    require(com.gregtech.gregtech.content.data.UsbDataMedia.writeStick(steel,1,steelFile)&&com.gregtech.gregtech.content.data.UsbDataMedia.writeStick(iron,1,ironFile),"installed legal USB file writer");
@@ -97,7 +97,7 @@ final class DecorativePanelDeliveryChecks {
    }
   }
   g.pose().pushPose();g.pose().translate(0,0,1000);g.fill(2,2,424,238,0xff14141c);g.drawString(client.font,"GT6 panels: concrete / foam / asphalt",8,7,0xffffff,false);
-  for(var spec:PanelCatalog.CANONICAL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:"+spec.id())));
+  for(var spec:PanelCatalog.CANONICAL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));
    int x,y;if(spec.kind().equals("wood")){x=9+(wood%15)*27;y=154+(wood/15)*34;wood++;}
    else{x=8+spec.sourceIndex()*25;y=27+(spec.kind().equals("concrete")?0:spec.kind().equals("cfoam")?1:2)*35;colored++;}
    g.renderItem(stack,x,y);

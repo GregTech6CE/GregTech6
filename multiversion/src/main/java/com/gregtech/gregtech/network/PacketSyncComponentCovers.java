@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 //? if >=1.21.1 {
 /*/^* Cover-only sync preserves native inventories and uses registry-aware stack storage. ^/
 public record PacketSyncComponentCovers(BlockPos pos,ResourceLocation entityType,CompoundTag tag) implements CustomPacketPayload {
-    public static final Type<PacketSyncComponentCovers> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gregtech","sync_component_covers"));
+    public static final Type<PacketSyncComponentCovers> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("gt6ce","sync_component_covers"));
     public static final StreamCodec<RegistryFriendlyByteBuf,PacketSyncComponentCovers> STREAM_CODEC=StreamCodec.of(PacketSyncComponentCovers::encode,PacketSyncComponentCovers::decode);
 *///?} else {
 /** Cover-only sync preserves the native inventory/menu packet contract. */

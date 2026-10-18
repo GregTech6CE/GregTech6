@@ -48,8 +48,8 @@ public final class PanelCoverRenderer {
             boolean lit=torch?wire.signal()<=0:wire.signal()>0;
             String path="block/machines/covers/"+(torch?"redstonetorch/":"redstonerepeater/")+(lit?"on/":"off/");
             CoverSurfaceRenderer.torch(pose,buffers.getBuffer(RenderType.cutout()),side,
-                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path+"side")),
-                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path+"front")),fallbackLight);
+                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"side")),
+                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"front")),fallbackLight);
             return true;
         }
         if(CanvasData.isCanvas(stack)) {
@@ -57,7 +57,7 @@ public final class PanelCoverRenderer {
             int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
             var canvas=(com.gregtech.gregtech.item.CanvasItem)stack.getItem();
             CoverSurfaceRenderer.attachment(owner,side,pose,buffers.getBuffer(RenderType.cutout()),
-                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/canvas")),light,canvas.variant().rgb());
+                    ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/canvas")),light,canvas.variant().rgb());
             CanvasCoverRenderer.render(stack,side,pose,buffers,light,level,owner.getBlockPos());return true;
         }
         if(stack.getItem() instanceof com.gregtech.gregtech.item.PanelItemView panel) {
@@ -79,11 +79,11 @@ public final class PanelCoverRenderer {
                 var set=MaterialIcons.resolveTextureSet(material.getMaterial());
                 String path="block/material_icons/"+set.folder()+"/"+file;
                 var vertices=buffers.getBuffer(RenderType.cutout());
-                CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path)),fallbackLight,material.getMaterial().getColor());
-                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path)),fallbackLight,0,material.getMaterial().getColor());
-                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path+"_overlay")),fallbackLight,1);
+                CoverSurfaceRenderer.attachment(host.coverOwner(),side,pose,vertices,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path)),fallbackLight,material.getMaterial().getColor());
+                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path)),fallbackLight,0,material.getMaterial().getColor());
+                CoverSurfaceRenderer.draw(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"_overlay")),fallbackLight,1);
                 if(CoverSurfaceRenderer.needsAttachment(host.coverOwner(),side))
-                    CoverSurfaceRenderer.drawBack(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech",path+"_overlay")),fallbackLight,1,-1);
+                    CoverSurfaceRenderer.drawBack(pose,vertices,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce",path+"_overlay")),fallbackLight,1,-1);
                 return true;
             }
         }
@@ -97,17 +97,17 @@ public final class PanelCoverRenderer {
         var owner=host.coverOwner();var level=owner.getLevel();
         int light=level==null?fallbackLight:LevelRenderer.getLightColor(level,owner.getBlockPos().relative(side));
         var vc=buffers.getBuffer(RenderType.cutout());var matrix=pose.last().pose();
-        var base=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/base"));
+        var base=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/base"));
         CoverSurfaceRenderer.attachment(owner,side,pose,vc,base,light,-1);
         CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
         var component=ComponentCoverRuntime.kind(stack);
         if(component!=null && CoverSurfaceRenderer.needsAttachment(owner,side)) {
             var inward=ComponentCoverRules.texture(component,ComponentCoverRuntime.visual(stack)==0?1:0);
-            CoverSurfaceRenderer.drawBack(pose,vc,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/"+inward)),light,1,-1);
+            CoverSurfaceRenderer.drawBack(pose,vc,side,ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/"+inward)),light,1,-1);
         }
         int layer=1;
         for(String texture:layers(stack)){
-            var sprite=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech","block/machines/covers/"+texture));
+            var sprite=ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce","block/machines/covers/"+texture));
             CoverSurfaceRenderer.draw(pose,vc,side,sprite,light,layer++);
         }
         return true;

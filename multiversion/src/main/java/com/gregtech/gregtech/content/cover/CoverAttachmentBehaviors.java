@@ -27,10 +27,10 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
  */
 public final class CoverAttachmentBehaviors {
 
-    /** Behaviour id of the drain cover, i.e. the registry path of {@code gregtech:drain}. */
+    /** Behaviour id of the drain cover, i.e. the registry path of {@code gt6ce:drain}. */
     public static final String DRAIN = "drain";
 
-    /** Behaviour id of the air vent, i.e. the registry path of {@code gregtech:air_vent}. */
+    /** Behaviour id of the air vent, i.e. the registry path of {@code gt6ce:air_vent}. */
     public static final String AIR_VENT = "air_vent";
 
     /** GT6 {@code CoverDrain:109}: {@code SERVER_TIME % 20 == 5}. */
@@ -266,7 +266,7 @@ public final class CoverAttachmentBehaviors {
         String field=ventAirField(level.dimension());
         if(!Level.OVERWORLD.equals(level.dimension())&&!Level.NETHER.equals(level.dimension())&&!Level.END.equals(level.dimension())){
             var biome=level.getBiome(front);
-            if(biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","no_collectable_air")))
+            if(biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","no_collectable_air")))
                     ||biome.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("c","is_void"))))return false;
             if(biome.is(net.minecraft.tags.BiomeTags.IS_END))field="Air_End";
             else if(biome.is(net.minecraft.tags.BiomeTags.IS_NETHER))field="Air_Nether";

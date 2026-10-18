@@ -110,9 +110,9 @@ public abstract class PistonEngineBlockEntity extends EngineBaseBlockEntity impl
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 8);
     }
     public net.minecraft.network.chat.Component statusDescription() {
-        return net.minecraft.network.chat.Component.translatable("message.gregtech.engine.piston.status",
+        return net.minecraft.network.chat.Component.translatable("message.gt6ce.engine.piston.status",
                 pistonState.mode() + 1, operatingInput(), inputEnergyType().getShortName(), operatingOutput(),
-                net.minecraft.network.chat.Component.translatable("message.gregtech.engine.piston."
+                net.minecraft.network.chat.Component.translatable("message.gt6ce.engine.piston."
                         + (pistonState.stopped() ? "stopped" : pistonState.active() ? "running" : "idle")));
     }
     protected void tickPiston() {

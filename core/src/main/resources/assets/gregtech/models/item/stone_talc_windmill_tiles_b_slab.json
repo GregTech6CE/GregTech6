@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gregtech:block/stones/gt.stone.talc/windmill_tiles_b",
-    "top": "gregtech:block/stones/gt.stone.talc/windmill_tiles_b",
-    "side": "gregtech:block/stones/gt.stone.talc/windmill_tiles_b"
-  }
-}

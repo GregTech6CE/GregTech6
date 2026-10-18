@@ -58,7 +58,7 @@ import java.util.Set;
  * Miniature portal capabilities are driven directly, independently of entity movement.
  * These optional game contracts are compiled but need not run for every development batch.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class DungeonKeysAndPortalsTests {
 
@@ -90,7 +90,7 @@ public final class DungeonKeysAndPortalsTests {
 
     private static JsonObject lang(String language) throws Exception {
         try (InputStream stream = DungeonKeysAndPortalsTests.class.getClassLoader()
-                .getResourceAsStream("assets/gregtech/lang/" + language + ".json")) {
+                .getResourceAsStream("assets/gt6ce/lang/" + language + ".json")) {
             if (stream == null) throw new IllegalStateException("missing " + language + " language file");
             return GsonHelper.parse(new InputStreamReader(stream, StandardCharsets.UTF_8));
         }
@@ -207,15 +207,15 @@ public final class DungeonKeysAndPortalsTests {
         for (int index = 0; index < KEY_MATERIALS.length; index++) {
             String id = "key_" + KEY_MATERIALS[index];
             String name = KEY_NAMES[index];
-            var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            var item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (item == null || item == Items.AIR) {
                 problems.add("the item " + id + " is not registered");
                 continue;
             }
             check(problems, item instanceof GTDungeonKeyItem, id + " is not a dungeon key item");
-            check(problems, english.has("item.gregtech." + id), "en_us has no name for " + id);
-            check(problems, chinese.has("item.gregtech." + id), "zh_cn has no name for " + id);
-            check(problems, name.equals(english.get("item.gregtech." + id).getAsString()),
+            check(problems, english.has("item.gt6ce." + id), "en_us has no name for " + id);
+            check(problems, chinese.has("item.gt6ce." + id), "zh_cn has no name for " + id);
+            check(problems, name.equals(english.get("item.gt6ce." + id).getAsString()),
                     id + " is not GT6's " + name);
             check(problems, new ItemStack(item).getHoverName().getString().equals(name),
                     id + " does not name itself " + name);
@@ -228,7 +228,7 @@ public final class DungeonKeysAndPortalsTests {
         // Both portal blocks and their items, with a name in both languages (the localization guard
         // reads the block item's name for a block).
         for (String id : new String[]{"dungeon_portal_nether", "dungeon_portal_end"}) {
-            var block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            var block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (block == null || block == Blocks.AIR) {
                 problems.add("the block " + id + " is not registered");
                 continue;
@@ -238,8 +238,8 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, com.gregtech.gregtech.registry.GTBlockEntities.DUNGEON_PORTAL.get()
                             .isValid(block.defaultBlockState()),
                     "the dungeon portal block entity type covers " + id);
-            check(problems, english.has("block.gregtech." + id), "en_us has no name for " + id);
-            check(problems, chinese.has("block.gregtech." + id), "zh_cn has no name for " + id);
+            check(problems, english.has("block.gt6ce." + id), "en_us has no name for " + id);
+            check(problems, chinese.has("block.gt6ce." + id), "zh_cn has no name for " + id);
         }
         helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
         helper.succeed();
@@ -253,7 +253,7 @@ public final class DungeonKeysAndPortalsTests {
         for (String material : KEY_MATERIALS) {
             for (String asset : new String[]{"models/item/key_" + material + ".json",
                     "textures/item/key_" + material + ".png"}) {
-                if (loader.getResource("assets/gregtech/" + asset) == null) problems.add("missing " + asset);
+                if (loader.getResource("assets/gt6ce/" + asset) == null) problems.add("missing " + asset);
             }
         }
         for (String id : new String[]{"dungeon_portal_nether", "dungeon_portal_end"}) {
@@ -261,15 +261,15 @@ public final class DungeonKeysAndPortalsTests {
                     "models/block/dungeon/" + id + ".json",
                     "models/block/dungeon/" + id + "_frame.json",
                     "models/item/" + id + ".json"}) {
-                if (loader.getResource("assets/gregtech/" + asset) == null) problems.add("missing " + asset);
+                if (loader.getResource("assets/gt6ce/" + asset) == null) problems.add("missing " + asset);
             }
         }
         // GT6's End portal plane: its own black multiply of the portal texture, 32 frames with the
         // animation metadata the pack ships.
-        if (loader.getResource("assets/gregtech/textures/block/dungeon/portal_end.png") == null) {
+        if (loader.getResource("assets/gt6ce/textures/block/dungeon/portal_end.png") == null) {
             problems.add("missing the End portal texture");
         }
-        if (loader.getResource("assets/gregtech/textures/block/dungeon/portal_end.png.mcmeta") == null) {
+        if (loader.getResource("assets/gt6ce/textures/block/dungeon/portal_end.png.mcmeta") == null) {
             problems.add("missing the End portal texture's animation metadata");
         }
         helper.assertTrue(problems.isEmpty(), String.join("; ", problems));
@@ -418,7 +418,7 @@ public final class DungeonKeysAndPortalsTests {
             check(problems, inventory.getStackInSlot(33).is(Items.BLAZE_ROD)
                             && inventory.getStackInSlot(33).getCount() == 4,
                     "slot 33 holds GT6's four blaze rods");
-            check(problems, ResourceLocation.fromNamespaceAndPath("gregtech", "match_box_full")
+            check(problems, ResourceLocation.fromNamespaceAndPath("gt6ce", "match_box_full")
                             .equals(ForgeRegistries.ITEMS.getKey(inventory.getStackInSlot(40).getItem()))
                             && inventory.getStackInSlot(40).getCount() == 1,
                     "slot 40 holds GT6's full matchbox");

@@ -98,7 +98,7 @@ public final class GTToolModel {
 
     public static ResourceLocation iconsetModelId(ResourceLocation icon) {
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech","item/tool_iconset/" + ToolIconSets.baseName(icon));
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon));
 *///?} else {
         return GregTech.id("item/tool_iconset/" + ToolIconSets.baseName(icon));
 //?}
@@ -106,7 +106,7 @@ public final class GTToolModel {
 
     public static ResourceLocation iconsetOverlayModelId(ResourceLocation icon) {
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech","item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
 *///?} else {
         return GregTech.id("item/tool_iconset/" + ToolIconSets.baseName(icon) + "_overlay");
 //?}

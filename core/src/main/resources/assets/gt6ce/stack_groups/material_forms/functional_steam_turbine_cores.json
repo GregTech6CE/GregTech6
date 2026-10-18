@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_steam_turbine_cores",
+  "contents": [
+    "item:gt6ce:graphene_steam_turbine_main_housing",
+    "item:gt6ce:magnalium_steam_turbine_main_housing",
+    "item:gt6ce:trinitanium_steam_turbine_main_housing",
+    "item:gt6ce:vibramantium_steam_turbine_main_housing"
+  ],
+  "priority": 110
+}

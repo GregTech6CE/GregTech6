@@ -27,8 +27,8 @@ public final class GTToolBlocks {
 //? if >=1.21.1 {
  /*private GTToolBlocks(){}
  public static final java.util.List<DeferredBlock<com.gregtech.gregtech.block.tool.PortableContainerBlock>> PORTABLE=new java.util.ArrayList<>();
- public static final DeferredRegister.Blocks BLOCKS=DeferredRegister.createBlocks("gregtech");
- public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gregtech");
+ public static final DeferredRegister.Blocks BLOCKS=DeferredRegister.createBlocks("gt6ce");
+ public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gt6ce");
  public static final DeferredBlock<DynamiteBlock> DYNAMITE=dynamite("dynamite",10,5,Materials.Red),BOOMSTICK=dynamite("boomstick",10,3,Materials.Orange),DYNAMITE_STRONG=dynamite("strong_dynamite",40,5,Materials.Purple);
  private static DeferredBlock<DynamiteBlock> dynamite(String id,float resistance,int fortune,GTMaterial material){var block=BLOCKS.register(id,()->new DynamiteBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(.2f,0).sound(SoundType.GRASS).noOcclusion().instabreak(),resistance,fortune,material.getColor()));ITEMS.register(id,()->new BlockItem(block.get(),new Item.Properties().stacksTo(64)));return block;}
  public static java.util.List<DeferredBlock<DynamiteBlock>> explosives(){return java.util.List.of(DYNAMITE,BOOMSTICK,DYNAMITE_STRONG);}

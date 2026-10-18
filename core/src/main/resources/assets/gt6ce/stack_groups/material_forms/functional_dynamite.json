@@ -1,0 +1,10 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_dynamite",
+  "contents": [
+    "item:gt6ce:boomstick",
+    "item:gt6ce:dynamite",
+    "item:gt6ce:strong_dynamite"
+  ],
+  "priority": 110
+}

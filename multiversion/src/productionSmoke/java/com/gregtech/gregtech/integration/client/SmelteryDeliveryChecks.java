@@ -24,7 +24,7 @@ final class SmelteryDeliveryChecks {
     static JsonObject verify() {
         int vessels=0, companions=0, positive=0, undefined=0, shapes=0;
         for (var spec : OriginalSmelteryDefinitions.all()) {
-            var id=ResourceLocation.parse("gregtech:"+spec.id());
+            var id=ResourceLocation.parse("gt6ce:"+spec.id());
             require(BuiltInRegistries.ITEM.containsKey(id),"native smeltery item exists "+id);
             var item=BuiltInRegistries.ITEM.get(id);
             var stack=new ItemStack(item);
@@ -82,8 +82,8 @@ final class SmelteryDeliveryChecks {
                 var parsed=CrucibleItemInput.parse(stack);
                 for(var part:expected.get().components()) require(parsed.stream().anyMatch(p->p.material.resolve()==part.material().resolve()
                         && p.amount==part.amount()),"native crucible parser keeps original component "+id+" "+part);
-                require(count(tooltip(stack,true),"tooltip.gregtech.contained_materials")==1
-                        && count(normal,"tooltip.gregtech.contained_materials")==0,"single advanced composition header "+id);
+                require(count(tooltip(stack,true),"tooltip.gt6ce.contained_materials")==1
+                        && count(normal,"tooltip.gt6ce.contained_materials")==0,"single advanced composition header "+id);
                 var saved=stack.copy();write(saved,new CompoundTag());
                 require(!ItemMaterialRegistry.canRecover(saved) && CrucibleItemInput.parse(saved).isEmpty(),"protected block-item data "+id);
                 positive++;
@@ -96,7 +96,7 @@ final class SmelteryDeliveryChecks {
         var variants=new ArrayList<>(com.gregtech.gregtech.content.multiblock.LargeCrucibleSpecs.all());
         variants.add(com.gregtech.gregtech.content.multiblock.LargeCrucibleSpecs.LEGACY);
         for(var variant:variants) {
-            var id=ResourceLocation.parse("gregtech:"+variant.path());
+            var id=ResourceLocation.parse("gt6ce:"+variant.path());
             require(BuiltInRegistries.ITEM.containsKey(id),"large vessel item exists "+id);
             var stack=new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block=(com.gregtech.gregtech.block.machine.LargeCrucibleControllerBlock)((BlockItem)stack.getItem()).getBlock();
@@ -127,7 +127,7 @@ final class SmelteryDeliveryChecks {
                 require(data.components().size()==1 && data.components().get(0).material().resolve()==variant.material().resolve()
                         && data.components().get(0).amount()==4L*com.gregtech.gregtech.api.material.GTValues.U,
                         "controller REV4U remains separate from100U thermal mass "+id);
-                require(count(tooltip(stack,true),"tooltip.gregtech.contained_materials")==1,"single large advanced composition row "+id);
+                require(count(tooltip(stack,true),"tooltip.gt6ce.contained_materials")==1,"single large advanced composition row "+id);
             }
             large++;
         }

@@ -142,7 +142,7 @@ public final class GTMaterialRegistration {
         for (var flower : com.gregtech.gregtech.content.plant.BedrockFlowers.ALL) {
             if (flower.material() == null) continue;
             Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", flower.id()));
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", flower.id()));
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR)
                 throw new IllegalStateException("Missing GT6 bedrock flower " + flower.id());
             ItemMaterialRegistry.register(block.asItem(), null, flower.material(), GTValues.U);

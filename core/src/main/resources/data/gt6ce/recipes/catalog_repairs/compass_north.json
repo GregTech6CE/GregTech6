@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:compass"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:compass_north"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_clothing",
+  "contents": [
+    "item:gt6ce:biochemgas_suit_boots",
+    "item:gt6ce:biochemgas_suit_chestplate",
+    "item:gt6ce:biochemgas_suit_helmet",
+    "item:gt6ce:biochemgas_suit_leggings",
+    "item:gt6ce:frost_suit_boots",
+    "item:gt6ce:frost_suit_chestplate",
+    "item:gt6ce:frost_suit_helmet",
+    "item:gt6ce:frost_suit_leggings",
+    "item:gt6ce:heat_suit_boots",
+    "item:gt6ce:heat_suit_chestplate",
+    "item:gt6ce:heat_suit_helmet",
+    "item:gt6ce:heat_suit_leggings",
+    "item:gt6ce:insect_suit_boots",
+    "item:gt6ce:insect_suit_chestplate",
+    "item:gt6ce:insect_suit_helmet",
+    "item:gt6ce:insect_suit_leggings",
+    "item:gt6ce:radiation_suit_boots",
+    "item:gt6ce:radiation_suit_chestplate",
+    "item:gt6ce:radiation_suit_helmet",
+    "item:gt6ce:radiation_suit_leggings",
+    "item:gt6ce:universal_suit_boots",
+    "item:gt6ce:universal_suit_chestplate",
+    "item:gt6ce:universal_suit_helmet",
+    "item:gt6ce:universal_suit_leggings"
+  ],
+  "priority": 110
+}

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 
 /**
  * GT6 {@code Behavior_Chunk_Remover} ({@code Behavior_Chunk_Remover.java:39-45}) — the "Chunk Eraser"
- * debug item ({@code MultiItemRandomTools:519}; the port registers it as {@code gregtech:chunk_eraser}
+ * debug item ({@code MultiItemRandomTools:519}; the port registers it as {@code gt6ce:chunk_eraser}
  * in {@code GTMultiItemsGen.ENTRIES:128}).
  *
  * <h2>What the original does</h2>

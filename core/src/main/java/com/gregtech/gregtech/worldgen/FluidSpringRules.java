@@ -4,18 +4,18 @@ public final class FluidSpringRules {
  private FluidSpringRules(){}
  public record Spring(String name,String fluidId,String blockId,int probability,int indicatorType,int amount){}
     public static final java.util.List<Spring> SPRINGS = java.util.List.of(
-            new Spring("overworld.fluid.oil.extraheavy", "gregtech:liquid_extra_heavy_oil",
-                    "gregtech:liquid_extra_heavy_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.heavy", "gregtech:liquid_heavy_oil",
-                    "gregtech:liquid_heavy_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.medium", "gregtech:liquid_medium_oil",
-                    "gregtech:liquid_medium_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.oil.light", "gregtech:liquid_light_oil",
-                    "gregtech:liquid_light_oil", 400, 2, 6000),
-            new Spring("overworld.fluid.gas.natural", "gregtech:gas_natural_gas",
-                    "gregtech:gas_natural_gas", 200, 1, 3000),
-            new Spring("overworld.fluid.water", "gregtech:watergeothermal",
-                    "gregtech:watergeothermal", 100, 3, 500),
+            new Spring("overworld.fluid.oil.extraheavy", "gt6ce:liquid_extra_heavy_oil",
+                    "gt6ce:liquid_extra_heavy_oil", 400, 2, 6000),
+            new Spring("overworld.fluid.oil.heavy", "gt6ce:liquid_heavy_oil",
+                    "gt6ce:liquid_heavy_oil", 400, 2, 6000),
+            new Spring("overworld.fluid.oil.medium", "gt6ce:liquid_medium_oil",
+                    "gt6ce:liquid_medium_oil", 400, 2, 6000),
+            new Spring("overworld.fluid.oil.light", "gt6ce:liquid_light_oil",
+                    "gt6ce:liquid_light_oil", 400, 2, 6000),
+            new Spring("overworld.fluid.gas.natural", "gt6ce:gas_natural_gas",
+                    "gt6ce:gas_natural_gas", 200, 1, 3000),
+            new Spring("overworld.fluid.water", "gt6ce:watergeothermal",
+                    "gt6ce:watergeothermal", 100, 3, 500),
             new Spring("overworld.fluid.lava", "minecraft:lava", "minecraft:lava", 200, 1, 1000));
  public static Spring byFluid(String id){return SPRINGS.stream().filter(s->s.fluidId().equals(id)).findFirst().orElse(null);}
  public static String blockPath(Spring spring){return "fluid_spring_"+spring.fluidId().substring(spring.fluidId().indexOf(':')+1);}

@@ -1,11 +1,11 @@
 {
   "replace": false,
   "values": [
-    "gregtech:alcohol",
-    "gregtech:caffeine",
-    "gregtech:dehydration",
-    "gregtech:exploded",
-    "gregtech:fat",
-    "gregtech:sugar"
+    "gt6ce:alcohol",
+    "gt6ce:caffeine",
+    "gt6ce:dehydration",
+    "gt6ce:exploded",
+    "gt6ce:fat",
+    "gt6ce:sugar"
   ]
 }

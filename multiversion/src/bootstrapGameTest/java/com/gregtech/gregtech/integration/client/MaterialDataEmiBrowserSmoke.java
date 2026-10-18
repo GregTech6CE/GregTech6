@@ -20,7 +20,7 @@ final class MaterialDataEmiBrowserSmoke {
     }
     static long scanUses(ItemStack stack){return EmiApi.getRecipeManager().getRecipesByInput(EmiStack.of(stack)).stream().filter(r->r.getCategory().getId().getPath().equals(MachineRecipeMaps.ScannerMolecular.mNameInternal)).count();}
     private static EmiRecipe row(RecipeMap map,Recipe row){
-        var id=ResourceLocation.fromNamespaceAndPath("gregtech","/machine/"+map.mNameInternal+"/"+new ArrayList<>(map.mRecipeList).indexOf(row));
+        var id=ResourceLocation.fromNamespaceAndPath("gt6ce","/machine/"+map.mNameInternal+"/"+new ArrayList<>(map.mRecipeList).indexOf(row));
         var found=EmiApi.getRecipeManager().getRecipe(id);require(found!=null,"native row "+id);return found;
     }
     static boolean fileFocus(Recipe print,ItemStack usb,ItemStack blank,ItemStack other,ItemStack named){

@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/misc/panel_concrete"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/misc/panel_concrete",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "gt6ce:block/misc/panel_concrete",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gt6ce:block/misc/panel_concrete",
+      "y": 270
+    },
+    "facing=down": {
+      "model": "gt6ce:block/misc/panel_concrete",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "gt6ce:block/misc/panel_concrete",
+      "x": 270
+    }
+  }
+}

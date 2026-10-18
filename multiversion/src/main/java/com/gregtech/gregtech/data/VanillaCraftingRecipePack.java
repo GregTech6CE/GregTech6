@@ -53,13 +53,13 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
         if (event.getPackType() != PackType.SERVER_DATA) return;
         event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location=new net.minecraft.server.packs.PackLocationInfo("gregtech:vanilla_replacements",Component.literal("GregTech original vanilla replacements"),PackSource.BUILT_IN,java.util.Optional.empty());
+            /*var location=new net.minecraft.server.packs.PackLocationInfo("gt6ce:vanilla_replacements",Component.literal("GregTech original vanilla replacements"),PackSource.BUILT_IN,java.util.Optional.empty());
             Pack pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){
                 public PackResources openPrimary(net.minecraft.server.packs.PackLocationInfo info){return new VanillaCraftingRecipePack(info);}
                 public PackResources openFull(net.minecraft.server.packs.PackLocationInfo info,Pack.Metadata metadata){return new VanillaCraftingRecipePack(info);}
             },PackType.SERVER_DATA,new net.minecraft.server.packs.PackSelectionConfig(true,Pack.Position.TOP,true));
 *///?} else {
-            Pack pack = Pack.readMetaAndCreate("gregtech:vanilla_replacements",
+            Pack pack = Pack.readMetaAndCreate("gt6ce:vanilla_replacements",
                     Component.literal("GregTech original vanilla replacements"), true,
                     VanillaCraftingRecipePack::new, PackType.SERVER_DATA, Pack.Position.TOP,
                     PackSource.BUILT_IN);
@@ -76,7 +76,7 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
             for(var entry:row.keys().entrySet()) if(row.pattern()==null||row.pattern().indexOf(entry.getKey())>=0)
                 keys.put(entry.getKey().toString(),ingredient(entry.getValue()));
             var json=new LinkedHashMap<String,Object>();
-            json.put("type",row.pattern()==null?"minecraft:crafting_shapeless":"gregtech:tool_shaped");
+            json.put("type",row.pattern()==null?"minecraft:crafting_shapeless":"gt6ce:tool_shaped");
             json.put("group","gt.vanilla");json.put("category","misc");
             if(row.pattern()==null) json.put("ingredients",new ArrayList<>(keys.values()));
             else {json.put("pattern",row.pattern().split("/",-1));json.put("key",keys);json.put("allow_mirror",true);}
@@ -101,8 +101,8 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
             return spec.equals("tag:minecraft:wooden_chests")?Map.of("item","minecraft:chest"):Map.of("tag",spec.substring(4));
         }
         if(spec.startsWith("item:")) return Map.of("item",spec.substring(5));
-        if(spec.equals("firestarter")) return List.of(Map.of("item","minecraft:flint_and_steel"),Map.of("item","gregtech:tool_flint_and_tinder"));
-        if(spec.startsWith("tool:")) return Map.of("item","gregtech:tool_"+com.gregtech.gregtech.api.tool.GTToolType.valueOf(spec.substring(5).toUpperCase(java.util.Locale.ROOT)).id());
+        if(spec.equals("firestarter")) return List.of(Map.of("item","minecraft:flint_and_steel"),Map.of("item","gt6ce:tool_flint_and_tinder"));
+        if(spec.startsWith("tool:")) return Map.of("item","gt6ce:tool_"+com.gregtech.gregtech.api.tool.GTToolType.valueOf(spec.substring(5).toUpperCase(java.util.Locale.ROOT)).id());
         String[] parts=spec.split(":",3);
         var stack=com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(parts[1]),
                 com.gregtech.gregtech.api.material.GTMaterialRegistry.get(parts[2]),1);
@@ -140,7 +140,7 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.SERVER_DATA ? Set.of("gregtech", "minecraft") : Set.of();
+        return type == PackType.SERVER_DATA ? Set.of("gt6ce", "minecraft") : Set.of();
     }
 
     @Override

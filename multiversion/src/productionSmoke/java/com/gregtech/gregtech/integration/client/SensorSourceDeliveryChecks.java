@@ -17,7 +17,7 @@ final class SensorSourceDeliveryChecks {
     static JsonObject verify() {
         int items = 0, rows = 0;
         for (var entry : SensorCatalog.ALL) {
-            var id = ResourceLocation.parse("gregtech:" + entry.id());
+            var id = ResourceLocation.parse("gt6ce:" + entry.id());
             require(BuiltInRegistries.ITEM.containsKey(id), "Source sensor item " + id);
             var stack = new ItemStack(BuiltInRegistries.ITEM.get(id));
             var block = ((BlockItem)stack.getItem()).getBlock();
@@ -41,13 +41,13 @@ final class SensorSourceDeliveryChecks {
             require(block.getExplosionResistance() == 3.0f && BlockHarvestPolicy.handHarvestable(block)
                     && BlockHarvestPolicy.source(block).orElseThrow().sourceId() == entry.originalId(), "Original native physical / source harvest metadata " + id);
             require(ItemMaterialRegistry.get(stack).orElseThrow().components().equals(MachineConstructionMaterials.block(entry.id()).orElseThrow().components()), "Actual known sensor materials " + id);
-            require(count(lines,"tooltip.gregtech.contained_materials") == 0
+            require(count(lines,"tooltip.gt6ce.contained_materials") == 0
 //? if >=1.21.1 {
-                    /*&& count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials") == 1, "Single advanced quantity section " + id);
+                    /*&& count(stack.getTooltipLines(Item.TooltipContext.EMPTY,null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials") == 1, "Single advanced quantity section " + id);
 *///?} else {
-                    && count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gregtech.contained_materials") == 1, "Single advanced quantity section " + id);
+                    && count(stack.getTooltipLines(null,TooltipFlag.ADVANCED),"tooltip.gt6ce.contained_materials") == 1, "Single advanced quantity section " + id);
 //?}
-            require(net.minecraft.client.resources.language.I18n.exists("block.gregtech." + entry.id()), "Loaded source name " + id);
+            require(net.minecraft.client.resources.language.I18n.exists("block.gt6ce." + entry.id()), "Loaded source name " + id);
             items++;
         }
         require(items == 21 && rows == 147, "All original sensors /seven rows each");

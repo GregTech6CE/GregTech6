@@ -13,16 +13,16 @@ def resources(root):
     # Colours are stack components/NBT on these blocks, not suffixed registry IDs.
     for stem in ("asphalt", "cfoam_fresh", "cfoam", "cfoam_slab", "concrete",
                  "concrete_reinforced", "glass_clear", "glass_glow", "glass_glow_slab", "glass_clear_slab"):
-        yield "decor_" + stem, {"type": "remi:group", "name": "block.gregtech." + stem,
-                "contents": ["item:gregtech:" + item for item in
+        yield "decor_" + stem, {"type": "remi:group", "name": "block.gt6ce." + stem,
+                "contents": ["item:gt6ce:" + item for item in
                              {"cfoam": ("cfoam", "cfoam_hardened", "cfoam_hardened_owned"),
                               "cfoam_fresh": ("cfoam_fresh", "cfoam_fresh_owned")}.get(stem, (stem,))],
                 "priority": 120}
-    for stem, name in (("extruder_shape", "item.gregtech.extruder_shape_bottle"),
-                       ("low_heat_extruder_shape", "item.gregtech.low_heat_extruder_shape_bottle"),
-                       ("loot_chest", "block.gregtech.loot_chest_dungeon")):
+    for stem, name in (("extruder_shape", "item.gt6ce.extruder_shape_bottle"),
+                       ("low_heat_extruder_shape", "item.gt6ce.low_heat_extruder_shape_bottle"),
+                       ("loot_chest", "block.gt6ce.loot_chest_dungeon")):
         yield "functional_" + stem, {"type": "remi:group", "name": name,
-                "regex": "^item:gregtech:" + stem + "_[a-z0-9_]+$", "priority": 120}
+                "regex": "^item:gt6ce:" + stem + "_[a-z0-9_]+$", "priority": 120}
     multi = (java / "registry/GTMultiItemsGen.java").read_text(encoding="utf-8")
     rows = re.findall(r'"([a-z0-9_]+)", "[^"]*", "(food|bottles)", "[^"]*"', multi)
     # MultiItemFood also registers non-food clay balls. Their explicit clay
@@ -33,18 +33,18 @@ def resources(root):
              and item not in {"blue_clay", "brown_clay", "red_clay", "white_clay", "yellow_clay"}]
     drinks = [item for item, category in rows if category == "bottles"]
     ice = [item for item, category in rows if category == "food" and item.endswith("ice_cream")]
-    for stem, label, members in (("foods", "itemGroup.gregtech.nature_foods", foods),
-                                 ("drinks", "itemGroup.gregtech.fluids", drinks),
-                                 ("ice_cream", "item.gregtech.ice_cream", ice)):
+    for stem, label, members in (("foods", "itemGroup.gt6ce.nature_foods", foods),
+                                 ("drinks", "itemGroup.gt6ce.fluids", drinks),
+                                 ("ice_cream", "item.gt6ce.ice_cream", ice)):
         assert len(members) > 1, stem
         yield "functional_" + stem, {"type": "remi:group", "name": label,
-                "contents": ["item:gregtech:" + i for i in sorted(set(members))], "priority": 120}
+                "contents": ["item:gt6ce:" + i for i in sorted(set(members))], "priority": 120}
     # Raw clay molds have unique IDs; the fired mold uses shape data on one ID.
-    yield "functional_clay_molds", {"type": "remi:group", "name": "item.gregtech.clay_mold",
-            "regex": "^item:gregtech:" + UNFIRED_CLAY + "$", "priority": 120}
+    yield "functional_clay_molds", {"type": "remi:group", "name": "item.gt6ce.clay_mold",
+            "regex": "^item:gt6ce:" + UNFIRED_CLAY + "$", "priority": 120}
     yield "glass_panes", {"type": "remi:group", "name": "block.minecraft.glass_pane",
             "regex": "^item:minecraft:(?:[a-z_]+_stained_)?glass_pane$", "priority": 120}
     yield "paper", {"type": "remi:group", "name": "item.minecraft.paper",
-            "contents": ["item:gregtech:plate_paper"], "priority": 120}
-    yield "real_fluids", {"type": "remi:group", "name": "itemGroup.gregtech.fluids",
-            "regex": "^fluid:gregtech:(?!fluid_item_)[a-z0-9_./-]+$", "priority": 120}
+            "contents": ["item:gt6ce:plate_paper"], "priority": 120}
+    yield "real_fluids", {"type": "remi:group", "name": "itemGroup.gt6ce.fluids",
+            "regex": "^fluid:gt6ce:(?!fluid_item_)[a-z0-9_./-]+$", "priority": 120}

@@ -61,7 +61,7 @@ public final class MagnetMachineBlock extends EnergyNodeBlock {
                 if (!level.isClientSide) {
                     boolean on = node.toggleMagnetEnabled();
                     player.displayClientMessage(Component.translatable(on
-                            ? "message.gregtech.magnet.enabled" : "message.gregtech.magnet.disabled"), true);
+                            ? "message.gt6ce.magnet.enabled" : "message.gt6ce.magnet.disabled"), true);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }

@@ -61,20 +61,20 @@ public final class NativeOriginWorld implements OriginWorld {
     private static ResourceLocation id(String value) { return new ResourceLocation(value); }
 //?}
     private BlockState state(StateKey key) {
-        String blockId = key.side >= 0 ? (key.id.equals("gregtech:glass_glow") ? "gregtech:glass_glow_slab" : "gregtech:cfoam_slab") : key.id;
+        String blockId = key.side >= 0 ? (key.id.equals("gt6ce:glass_glow") ? "gt6ce:glass_glow_slab" : "gt6ce:cfoam_slab") : key.id;
         if(blockId.equals("source:river")) {
-            var fluid=BuiltInRegistries.FLUID.get(id("gregtech:riverwater"));
+            var fluid=BuiltInRegistries.FLUID.get(id("gt6ce:riverwater"));
             if(fluid==net.minecraft.world.level.material.Fluids.EMPTY) throw new IllegalStateException("Missing original river water");
             return fluid.defaultFluidState().createLegacyBlock();
         }
-        if(blockId.equals("source:sands")) blockId="gregtech:"+com.gregtech.gregtech.block.BlackSandDefinitions.IDS.get(key.metadata%3);
-        if(blockId.equals("source:diggables")) blockId="gregtech:"+new String[]{"mud","clay_brown","turf","clay_red","clay_yellow","clay_blue","clay_white"}[key.metadata];
-        if(blockId.equals("source:glowtus")) blockId="gregtech:glowtus_"+DyeColor.byId(15-key.metadata).getName();
+        if(blockId.equals("source:sands")) blockId="gt6ce:"+com.gregtech.gregtech.block.BlackSandDefinitions.IDS.get(key.metadata%3);
+        if(blockId.equals("source:diggables")) blockId="gt6ce:"+new String[]{"mud","clay_brown","turf","clay_red","clay_yellow","clay_blue","clay_white"}[key.metadata];
+        if(blockId.equals("source:glowtus")) blockId="gt6ce:glowtus_"+DyeColor.byId(15-key.metadata).getName();
         if(blockId.equals("source:flower")) blockId="minecraft:"+new String[]{"poppy","blue_orchid","allium","azure_bluet","red_tulip","orange_tulip","white_tulip","pink_tulip","oxeye_daisy"}[key.metadata%9];
         if(blockId.equals("minecraft:short_grass") && !BuiltInRegistries.BLOCK.containsKey(id(blockId))) blockId="minecraft:grass";
         if(blockId.equals("minecraft:sand") && key.metadata==1) blockId="minecraft:red_sand";
         if(blockId.equals("minecraft:dirt") && key.metadata==2) blockId="minecraft:podzol";
-        if (blockId.startsWith("gregtech:stone_")) blockId += "_" + StoneVariant.byMeta(key.metadata).registrySuffix();
+        if (blockId.startsWith("gt6ce:stone_")) blockId += "_" + StoneVariant.byMeta(key.metadata).registrySuffix();
         if (blockId.equals("source:stained_terracotta")) blockId = "minecraft:" + DyeColor.byId(15-key.metadata).getName() + "_terracotta";
         if (blockId.equals("minecraft:sandstone")) blockId = switch(key.metadata) {
             case 1 -> "minecraft:chiseled_sandstone"; case 2 -> "minecraft:cut_sandstone"; default -> blockId;
@@ -208,7 +208,7 @@ public final class NativeOriginWorld implements OriginWorld {
         if(!canWrite(x,y,z)) return;
         if(level.getBlockEntity(new BlockPos(x,y,z)) instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host)
             host.attachCover(Direction.from3DDataValue(side),new net.minecraft.world.item.ItemStack(
-                    BuiltInRegistries.ITEM.get(id("gregtech:drain"))));
+                    BuiltInRegistries.ITEM.get(id("gt6ce:drain"))));
     }
 
 }

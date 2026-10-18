@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class PanelCoverTests {
     private static final BlockPos POS=new BlockPos(4,3,4);
     private static ItemStack stack(PanelCover panel){return new ItemStack(GTTechnological.get(panel.id));}
@@ -151,7 +151,7 @@ public final class PanelCoverTests {
         var m=machine(h);h.assertTrue(!m.attachCover(Direction.NORTH,stack(PanelCover.MANUAL))&&!m.attachCover(Direction.NORTH,stack(PanelCover.ENERGY)),"no fake modes or capacitor on processing machines");
         var menu=new net.minecraft.world.inventory.AbstractContainerMenu(null,0){public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player p,int s){return ItemStack.EMPTY;}public boolean stillValid(net.minecraft.world.entity.player.Player p){return true;}};
         for(var panel:PanelCover.values()){
-            var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","panel_covers/"+panel.id)).orElseThrow();
+            var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","panel_covers/"+panel.id)).orElseThrow();
             var grid=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++){
                 var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());if(ingredient.isEmpty())continue;

@@ -121,7 +121,7 @@ public class SafeBlock extends DirectionalBlock implements EntityBlock, SimpleWa
         if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         if (!level.isClientSide) {
             if (!safe.claimAndOpen(player)) {
-                player.displayClientMessage(Component.translatable("message.gregtech.safe.locked"), true);
+                player.displayClientMessage(Component.translatable("message.gt6ce.safe.locked"), true);
             } else {
                 player.openMenu(new SimpleMenuProvider(
                         (id, inv, p) -> safe.createMenu(id, inv),

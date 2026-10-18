@@ -101,7 +101,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
 
     /**
      * GT6's planter multi-tile {@code 32065} ({@code :146-149}, {@code :160-168}) as the port's own
-     * {@code gregtech:plant_pot}.
+     * {@code gt6ce:plant_pot}.
      *
      * <p>The registered {@code plant_pot} has GT6's top-face plant support; a plain vanilla flower pot
      * cannot support the plants written one block above it.</p>
@@ -112,7 +112,7 @@ public class GTDungeonChunkRoomFarmCrop extends GTDungeonChunkRoomEmpty {
 *///?} else {
         Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "plant_pot"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "plant_pot"));
         data.set(x, y, z, (block == null ? Blocks.FLOWER_POT : block).defaultBlockState());
     }
 

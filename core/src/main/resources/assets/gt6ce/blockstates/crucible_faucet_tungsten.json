@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_tungsten"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_tungsten"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_tungsten"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_tungsten"
+    }
+  }
+}

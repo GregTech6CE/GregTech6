@@ -1,0 +1,24 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_panel_cfoam",
+  "contents": [
+    "item:gt6ce:panel_cfoam",
+    "item:gt6ce:panel_cfoam_black",
+    "item:gt6ce:panel_cfoam_blue",
+    "item:gt6ce:panel_cfoam_brown",
+    "item:gt6ce:panel_cfoam_cyan",
+    "item:gt6ce:panel_cfoam_gray",
+    "item:gt6ce:panel_cfoam_green",
+    "item:gt6ce:panel_cfoam_light_blue",
+    "item:gt6ce:panel_cfoam_light_gray",
+    "item:gt6ce:panel_cfoam_lime",
+    "item:gt6ce:panel_cfoam_magenta",
+    "item:gt6ce:panel_cfoam_orange",
+    "item:gt6ce:panel_cfoam_pink",
+    "item:gt6ce:panel_cfoam_purple",
+    "item:gt6ce:panel_cfoam_red",
+    "item:gt6ce:panel_cfoam_white",
+    "item:gt6ce:panel_cfoam_yellow"
+  ],
+  "priority": 110
+}

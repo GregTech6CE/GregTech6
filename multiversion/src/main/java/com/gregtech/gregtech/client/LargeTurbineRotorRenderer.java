@@ -26,9 +26,9 @@ import org.joml.Matrix4f;
 /** GT6's extra 48-pixel rotor render pass spans the formed turbine's front 3x3 wall. */
 public final class LargeTurbineRotorRenderer<T extends BlockEntity> implements BlockEntityRenderer<T> {
     private static final ResourceLocation IDLE = ResourceLocation.fromNamespaceAndPath(
-            "gregtech", "textures/block/machines/multiblockmains/turbine.png");
+            "gt6ce", "textures/block/machines/multiblockmains/turbine.png");
     private static final ResourceLocation ACTIVE = ResourceLocation.fromNamespaceAndPath(
-            "gregtech", "textures/block/machines/multiblockmains/turbine_active.png");
+            "gt6ce", "textures/block/machines/multiblockmains/turbine_active.png");
     private static final float FRONT = -0.002f;
 
     public LargeTurbineRotorRenderer(BlockEntityRendererProvider.Context context) {}

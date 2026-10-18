@@ -160,9 +160,9 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
             default -> "grassblock_normal";
         };
 //? if >=1.21.1 {
-        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
-        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //?}
         return block == Blocks.AIR ? null : block;
     }
@@ -188,5 +188,5 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_fluid_springs.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_fluid_springs"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_fluid_springs"));
 }

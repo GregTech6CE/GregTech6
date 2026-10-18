@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MqM",
+    "MMM",
+    "MMM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:technology/any_rubber_foil"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gt6ce:insect_suit_chestplate"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

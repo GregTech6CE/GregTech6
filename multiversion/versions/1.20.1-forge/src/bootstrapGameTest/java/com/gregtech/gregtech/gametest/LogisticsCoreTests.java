@@ -130,7 +130,7 @@ public final class LogisticsCoreTests {
         restored.load(saved);
         helper.assertTrue(restored.storedEU() == 1536, "stored EU survives an NBT round trip");
         helper.assertTrue(helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
-                "gregtech", "machines/multiblock/logistics_core")).isPresent(),
+                "gt6ce", "machines/multiblock/logistics_core")).isPresent(),
                 "GT6 CCC/PMP/CCC Logistics Core recipe resolves in the generated pack");
         helper.succeed();
     }

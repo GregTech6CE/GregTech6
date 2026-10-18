@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PMP",
+    "PPP"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:co2_laser_hv"
+    },
+    "P": {
+      "tag": "forge:plates/electrum"
+    }
+  },
+  "result": {
+    "item": "gt6ce:flux_laser_hv"
+  }
+}

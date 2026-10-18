@@ -33,7 +33,7 @@ import java.util.List;
  * ({@code onToolClick} with {@code TOOL_crowbar}) and the vanilla loot roll
  * ({@code ST.generateOneVanillaLoot}) were missing.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class LootCrateTests {
     private static final int BASE_X = 38000;

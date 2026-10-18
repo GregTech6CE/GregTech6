@@ -1,0 +1,26 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "Sh",
+    "Pd"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:screws/aluminium"
+    },
+    "P": {
+      "tag": "forge:plates/aluminium"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:blank_cover"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

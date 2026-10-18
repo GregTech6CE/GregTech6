@@ -27,7 +27,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  *
  * <p>Before this batch both foam blocks were plain decorative blocks — nothing ever hardened.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CFoamTests {
     private static final int BASE_X = 42000;

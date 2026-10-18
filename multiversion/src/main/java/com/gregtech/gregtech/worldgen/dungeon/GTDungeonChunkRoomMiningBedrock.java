@@ -316,7 +316,7 @@ public class GTDungeonChunkRoomMiningBedrock extends GTDungeonChunkRoomEmpty {
 *///?} else {
         Block block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(
 //?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return block == null ? null : block.defaultBlockState();
     }
 }

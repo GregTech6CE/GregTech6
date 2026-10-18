@@ -42,8 +42,15 @@ public final class MaterialBehaviorContracts {
     // docs/integration/verification/ci-material-differential-20261006.json.
     // Ten nongenerating native pipe associations; complete isolated delta:
     // docs/integration/verification/transport-material-differential-20261006.json.
-    private static final String DEFINITIONS_SHA256 = "9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146";
-    private static final String POST_INIT_SHA256 = "149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe";
+    // 2026-10-18 namespace migration compared with HEAD 1e1069ab9: all 155935 rows
+    // per stage remain. Only 1160 translation keys, 53 own-mod IDs/prefixes and
+    // four external GT5U presence flags change; every physical/form field is retained.
+    // docs/integration/verification/gt6ce-material-differential-20261018.json.
+    // Exact identity normalization reproduces the prior definitions fingerprint
+    // 9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146
+    // and post-init fingerprint 149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe.
+    private static final String DEFINITIONS_SHA256 = "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb";
+    private static final String POST_INIT_SHA256 = "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80";
     private static int assertions;
     private MaterialBehaviorContracts() {}
 
@@ -53,7 +60,7 @@ public final class MaterialBehaviorContracts {
         expectThrows(IllegalStateException.class, () -> new ModData("unbound", "Unbound"),
                 "The platform must bind presence before creating metadata");
         check(ModData.MODS.isEmpty(), "Failed unbound construction must not publish metadata");
-        ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gregtech"));
+        ModData.bindPresence(id -> id.equals("minecraft") || id.equals("gt6ce"));
         GTMaterialRegistry.setLogSink((warning, message) -> {});
         check(GTMaterialRegistry.registrationPhase() == GTMaterialRegistry.RegistrationPhase.DEFINITIONS,
                 "Initial registration phase must remain DEFINITIONS");
@@ -164,7 +171,7 @@ public final class MaterialBehaviorContracts {
         check(com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry("bush_plant_gt_berry_copper").equals(com.gregtech.gregtech.content.creative.SourceCreativeCatalog.entry("bush")), "material bush variants retain the original bush creative category and order");
         check(variants.size()==1034, "all existing plantGtBerry definitions acquire a bush identity");
         check(variants.stream().map(v->v.blockPath()).distinct().count()==variants.size(), "material bushes have no duplicate identities");
-        var copper=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.colours("gregtech:plant_gt_berry_copper",GTMaterialRegistry.get("Copper").getColor());
+        var copper=com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.colours("gt6ce:plant_gt_berry_copper",GTMaterialRegistry.get("Copper").getColor());
         check(copper.bush()==0x009000 && copper.bloom()==0xff9090 && copper.immature()==0x80ff80 && copper.berry()==0xff825a,
                 "original MultiTileEntityBush material branch, including MT Copper solid RGB");
         check(com.gregtech.gregtech.content.plant.BerryBushCatalog.inventoryColour(copper)==0xff825a,"source material inventory shows solid RGB");
@@ -207,7 +214,7 @@ public final class MaterialBehaviorContracts {
                         && !ModReferences.MC.owns((String) null), "String ownership must retain loaded namespace behavior");
         expectThrows(IllegalStateException.class, () -> ModData.bindPresence(id -> true),
                 "Late presence rebinding must fail instead of corrupting already-declared metadata");
-        check(Materials.Copper.getTranslationKey().equals("material.gregtech.copper")
+        check(Materials.Copper.getTranslationKey().equals("material.gt6ce.copper")
                         && Materials.Copper.getDisplayNameFallback().equals("Copper"), "Display data must remain available to platform Component adapters");
     }
 

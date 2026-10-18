@@ -1,0 +1,20 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_axle_4",
+  "contents": [
+    "item:gt6ce:axle_adamantium_4",
+    "item:gt6ce:axle_arsenic_bronze_4",
+    "item:gt6ce:axle_arsenic_copper_4",
+    "item:gt6ce:axle_brass_4",
+    "item:gt6ce:axle_bronze_4",
+    "item:gt6ce:axle_iridium_4",
+    "item:gt6ce:axle_iritanium_4",
+    "item:gt6ce:axle_steel_4",
+    "item:gt6ce:axle_titanium_4",
+    "item:gt6ce:axle_trinaquadalloy_4",
+    "item:gt6ce:axle_trinitanium_4",
+    "item:gt6ce:axle_tungstensteel_4",
+    "item:gt6ce:axle_wood_4"
+  ],
+  "priority": 110
+}

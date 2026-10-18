@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:ammunition/sticks_wood"
+    },
+    {
+      "tag": "gt6ce:food/croppotato"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:potato_on_a_stick",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

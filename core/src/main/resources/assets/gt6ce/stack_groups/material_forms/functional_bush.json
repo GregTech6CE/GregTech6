@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bush",
+  "contents": [
+    "item:gt6ce:bush",
+    "item:gt6ce:bush_black_currants",
+    "item:gt6ce:bush_blackberry",
+    "item:gt6ce:bush_blueberry",
+    "item:gt6ce:bush_candleberry",
+    "item:gt6ce:bush_cotton",
+    "item:gt6ce:bush_cranberry",
+    "item:gt6ce:bush_raspberry",
+    "item:gt6ce:bush_red_currants",
+    "item:gt6ce:bush_white_currants"
+  ],
+  "priority": 110
+}

@@ -70,7 +70,7 @@ import net.minecraftforge.items.IItemHandler;
  * {@link CoverUtilityBehaviors#tickPressureValve} directly with the tank of a machine that really
  * has the cover attached.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CoverBehaviorTests {
 
@@ -205,7 +205,7 @@ public final class CoverBehaviorTests {
                 "the machine face accepts the crafting table cover");
         String behaviour = CoverItems.behavior(machine.getCover(Direction.UP));
         helper.assertTrue(CoverUtilityBehaviors.CRAFTING_TABLE.equals(behaviour),
-                "gregtech:crafting_table_cover is the crafting behaviour, got " + behaviour);
+                "gt6ce:crafting_table_cover is the crafting behaviour, got " + behaviour);
 
         // CoverCrafting:47 - the container only exists for a server player; CoverCrafting:54 returns
         // T either way, which is what makes the click "consumed" without a GUI.
@@ -279,7 +279,7 @@ public final class CoverBehaviorTests {
         helper.assertTrue(CoverUtilityBehaviors.FILTER_ITEM.equals(CoverItems.behavior(machine.getCover(Direction.NORTH)))
                         && CoverUtilityBehaviors.FILTER_FLUID.equals(
                                 CoverItems.behavior(machine.getCover(Direction.SOUTH))),
-                "gregtech:item_filter and gregtech:fluid_filter name their own behaviours, got "
+                "gt6ce:item_filter and gt6ce:fluid_filter name their own behaviours, got "
                         + CoverItems.behavior(machine.getCover(Direction.NORTH)) + " / "
                         + CoverItems.behavior(machine.getCover(Direction.SOUTH)));
 
@@ -387,7 +387,7 @@ public final class CoverBehaviorTests {
                 "the machine face accepts the item retriever cover");
         String behaviour = CoverItems.behavior(machine.getCover(Direction.EAST));
         helper.assertTrue(CoverUtilityBehaviors.RETRIEVER_ITEM.equals(behaviour),
-                "gregtech:item_retriever_cover is the retriever behaviour, got " + behaviour);
+                "gt6ce:item_retriever_cover is the retriever behaviour, got " + behaviour);
         helper.assertTrue(CoverUtilityBehaviors.setItemFilter(machine.getCover(Direction.EAST),
                         new ItemStack(Items.APPLE)),
                 "the retriever takes its filter from a right-click (CoverRetrieverItem:126-133)");
@@ -477,7 +477,7 @@ public final class CoverBehaviorTests {
         var machine = machine(level, pos);
         var air = com.gregtech.gregtech.registry.GTFluids.still("Air_Nether");
         helper.assertTrue(air != null && air.isPresent(),
-                "gregtech:netherair is registered, got " + air);
+                "gt6ce:netherair is registered, got " + air);
         var fluid = air.get();
         helper.assertTrue(com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid),
                 "the valve only vents gases (CoverPressureValve:57), got " + fluid);
@@ -726,7 +726,7 @@ public final class CoverBehaviorTests {
                 "the machine face accepts the blank cover");
         helper.assertTrue(CoverUtilityBehaviors.BLANK_COVER.equals(
                         CoverItems.behavior(machine.getCover(Direction.NORTH))),
-                "gregtech:blank_cover names its own behaviour, got "
+                "gt6ce:blank_cover names its own behaviour, got "
                         + CoverItems.behavior(machine.getCover(Direction.NORTH)));
         helper.assertTrue(CoverUtilityBehaviors.cycleDesign(machine.getCover(Direction.NORTH), 6) == 1,
                 "a chisel click advances the blank cover's design (CoverTextureMulti:64), got "
@@ -742,7 +742,7 @@ public final class CoverBehaviorTests {
                 "the machine face accepts the warning cover");
         helper.assertTrue(CoverUtilityBehaviors.WARNING_COVER.equals(
                         CoverItems.behavior(machine.getCover(Direction.SOUTH))),
-                "gregtech:warning_cover names its own behaviour, got "
+                "gt6ce:warning_cover names its own behaviour, got "
                         + CoverItems.behavior(machine.getCover(Direction.SOUTH)));
         helper.succeed();
     }
@@ -771,10 +771,10 @@ public final class CoverBehaviorTests {
         String valveId = CoverUtilityBehaviors.PRESSURE_VALVE;
         String asphaltId = CoverUtilityBehaviors.ASPHALT_PANEL;
         helper.assertTrue(valveId.equals(CoverItems.behavior(cover(valveId))),
-                "gregtech:" + valveId + " dispatches to its own behaviour, got "
+                "gt6ce:" + valveId + " dispatches to its own behaviour, got "
                         + CoverItems.behavior(cover(valveId)));
         helper.assertTrue(asphaltId.equals(CoverItems.behavior(asphaltPanel())),
-                "gregtech:" + asphaltId + " dispatches to its own behaviour, got "
+                "gt6ce:" + asphaltId + " dispatches to its own behaviour, got "
                         + CoverItems.behavior(asphaltPanel()));
         // Both are real items with the display names of the GT6 registrations above.
         helper.assertTrue(!cover(valveId).isEmpty() && !asphaltPanel().isEmpty(),

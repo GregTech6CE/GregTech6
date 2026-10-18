@@ -19,7 +19,7 @@ public final class PipeIgnition {
 
     /** Integration hook for externally owned blocks such as protected pollution/magic nodes. */
     public static final TagKey<Block> PROTECTED = TagKey.create(Registries.BLOCK,
-            ResourceLocation.fromNamespaceAndPath("gregtech", "pipe_fire_protected"));
+            ResourceLocation.fromNamespaceAndPath("gt6ce", "pipe_fire_protected"));
 
     public static void igniteNeighbors(Level level, BlockPos source) {
         for (Direction direction : Direction.values()) {
@@ -37,7 +37,7 @@ public final class PipeIgnition {
                 if (block.getFlammability(state, level, target, face) > 0) { flammable = true; break; }
             }
             // Original GT block families implement IItemGT. The port registers these under gregtech.
-            boolean gtBlock = BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gregtech");
+            boolean gtBlock = BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals("gt6ce");
             if (FluidPipeSafety.canIgnite(false, true, gtBlock, flammable)) {
                 level.setBlock(target, Blocks.FIRE.defaultBlockState(), 3);
             }

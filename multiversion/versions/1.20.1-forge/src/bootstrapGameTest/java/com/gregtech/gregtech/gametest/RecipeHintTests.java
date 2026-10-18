@@ -23,7 +23,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
  * key {@code gt.recipe.other}, alias {@code Other}) but no hint rows; this batch ports five of them
  * through the spec based row table of {@link GTMainRecipes}, including the ingredient labels.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class RecipeHintTests {
 

@@ -1355,7 +1355,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gregtech." + (spec != null ? spec.id() : "basic_machine"));
+        return Component.translatable("block.gt6ce." + (spec != null ? spec.id() : "basic_machine"));
     }
 
     @Nullable

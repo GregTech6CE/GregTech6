@@ -9,7 +9,7 @@ public final class FluidTexturePolicy {
         LIQUID("fluid/molten"), GAS("fluid/gas"), MOLTEN("metallic/molten"), PLASMA("plasma/gas");
         private final String texture;
         Kind(String texture) { this.texture = texture; }
-        public ResourceLocation standard() { return ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/" + texture); }
+        public ResourceLocation standard() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/" + texture); }
     }
     private FluidTexturePolicy() {}
     public static Kind kind(com.gregtech.gregtech.data.RegisteredFluids.FluidEntry entry) {

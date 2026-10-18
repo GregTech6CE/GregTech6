@@ -1,0 +1,22 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "WWW",
+    "WxW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "item": "gt6ce:wire_fine_copper"
+    },
+    "x": {
+      "item": "gt6ce:tool_wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:circuit_wiring_copper",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

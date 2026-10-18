@@ -34,7 +34,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
                     : LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(side));
             var vc = buffers.getBuffer(RenderType.cutout());
             double out = 0;
-            var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech", "block/machines/covers/logistics/base"));
+            var base = ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machines/covers/logistics/base"));
             CoverSurfaceRenderer.attachment(be,side,pose,vc,base,light,-1);
             CoverSurfaceRenderer.draw(pose,vc,side,base,light,0);
             if (type.role() == LogisticsCoverType.Role.DISPLAY) {
@@ -65,7 +65,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
     private static void drawSurface(PoseStack pose, com.mojang.blaze3d.vertex.VertexConsumer vc,
                                     Direction side, String texture, double distance, int light) {
         drawSurface(pose, vc, side,
-                ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gregtech", texture)),
+                ArmRenderHelper.getSprite(ResourceLocation.fromNamespaceAndPath("gt6ce", texture)),
                 distance, light);
     }
 

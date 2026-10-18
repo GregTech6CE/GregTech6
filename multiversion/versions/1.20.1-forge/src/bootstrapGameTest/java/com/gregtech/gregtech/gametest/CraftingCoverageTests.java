@@ -29,7 +29,7 @@ import java.util.TreeSet;
  * entry here is a real gap rather than a design choice — except for the deliberate exclusions listed
  * in {@link #NO_RECIPE_BY_DESIGN}.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CraftingCoverageTests {
 
@@ -146,7 +146,7 @@ public final class CraftingCoverageTests {
             helper.assertTrue(entry.getValue() > 0, entry.getKey() + " family is registered");
         }
         helper.assertTrue(!net.minecraftforge.registries.ForgeRegistries.ITEMS
-                .getValue(ResourceLocation.fromNamespaceAndPath("gregtech", "extruder_shape_plate")).equals(
+                .getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", "extruder_shape_plate")).equals(
                         net.minecraft.world.item.Items.AIR), "a known tech item resolves by id");
         helper.succeed();
     }

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:clay",
+    "gt6ce:clay_brown",
+    "gt6ce:clay_red",
+    "gt6ce:clay_yellow",
+    "gt6ce:clay_blue",
+    "gt6ce:clay_white"
+  ]
+}

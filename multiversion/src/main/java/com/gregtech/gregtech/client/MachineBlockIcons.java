@@ -15,7 +15,7 @@ public final class MachineBlockIcons {
     public static ResourceLocation burningBoxVariant(Direction facing, boolean active, boolean brick) {
         String shell = brick ? "brick" : "solid";
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "block/machine/burning_box_" + shell + "/"
+        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "block/machine/burning_box_" + shell + "/"
 *///?} else {
         return GregTech.id("block/machine/burning_box_" + shell + "/"
 //?}

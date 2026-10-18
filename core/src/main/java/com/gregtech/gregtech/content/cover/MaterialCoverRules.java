@@ -10,7 +10,7 @@ public final class MaterialCoverRules {
         if(!"plate".equals(prefix))return List.of();
         for(var stone:com.gregtech.gregtech.block.stone.StoneType.values())if(stone.material().getName().equals(material))
             return java.util.Arrays.stream(com.gregtech.gregtech.block.stone.StoneVariant.values())
-                    .map(variant->"gregtech:block/stones/"+stone.textureFolder()+"/"+variant.textureName()).toList();
+                    .map(variant->"gt6ce:block/stones/"+stone.textureFolder()+"/"+variant.textureName()).toList();
         return switch(material){
             case "Stone" -> List.of("minecraft:block/stone","minecraft:block/cobblestone","minecraft:block/mossy_cobblestone",
                     "minecraft:block/stone_bricks","minecraft:block/mossy_stone_bricks","minecraft:block/cracked_stone_bricks",

@@ -90,12 +90,12 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
     @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (!accessor.getServerData().contains("gt_structure")) return;
         var data = accessor.getServerData().getCompound("gt_structure");
-        tooltip.add(Component.translatable("jade.gregtech.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
+        tooltip.add(Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
                 .withStyle(data.getBoolean("formed") ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
-        if (data.contains("progress")) tooltip.add(Component.translatable("jade.gregtech.multiblock.progress", data.getInt("progress")));
+        if (data.contains("progress")) tooltip.add(Component.translatable("jade.gt6ce.multiblock.progress", data.getInt("progress")));
         if(data.contains("fusionCharge")) {
-            tooltip.add(Component.translatable("gregtech.fusion.startup",data.getLong("fusionCharge")));
-            tooltip.add(Component.translatable("gregtech.fusion.output",data.getLong("fusionOutput")));
+            tooltip.add(Component.translatable("gt6ce.fusion.startup",data.getLong("fusionCharge")));
+            tooltip.add(Component.translatable("gt6ce.fusion.output",data.getLong("fusionOutput")));
         }
         if(data.contains("axialState")) {
             tooltip.add(Component.translatable("gt.axial.state."+data.getString("axialState")));
@@ -103,7 +103,7 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         }
         for (var value : data.getList("energy", 10)) {
             var row = (CompoundTag) value;
-            tooltip.add(Component.translatable("jade.gregtech.multiblock.energy", row.getLong("stored"), row.getLong("capacity"), row.getString("unit")));
+            tooltip.add(Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"), row.getString("unit")));
         }
         for (var value : data.getList("fluids", 10)) {
             var row = (CompoundTag) value;
@@ -112,10 +112,10 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
 *///?} else {
             var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
-            tooltip.add(Component.translatable("jade.gregtech.multiblock.fluid", fluid.getDisplayName(), fluid.getAmount(), row.getInt("capacity")));
+            tooltip.add(Component.translatable("jade.gt6ce.multiblock.fluid", fluid.getDisplayName(), fluid.getAmount(), row.getInt("capacity")));
         }
-        tooltip.add(Component.translatable("jade.gregtech.multiblock.jei"));
+        tooltip.add(Component.translatable("jade.gt6ce.multiblock.jei"));
     }
 
-    @Override public ResourceLocation getUid() { return ResourceLocation.fromNamespaceAndPath("gregtech", "multiblock"); }
+    @Override public ResourceLocation getUid() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock"); }
 }

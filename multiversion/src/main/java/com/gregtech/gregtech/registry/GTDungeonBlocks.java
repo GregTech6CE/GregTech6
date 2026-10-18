@@ -89,13 +89,13 @@ public final class GTDungeonBlocks {
         FlowerPotBlock empty = (FlowerPotBlock) Blocks.FLOWER_POT;
         for (String id : POTTED_FLOWERS.keySet()) {
 //? if >=1.21.1 {
-            /*Block flower = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+            /*Block flower = BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
             Block flower = ForgeRegistries.BLOCKS.getValue(GregTech.id(id));
 //?}
             if (flower == null) throw new IllegalStateException("Missing GT6 indicator flower " + id);
 //? if >=1.21.1 {
-            /*empty.addPlant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id), POTTED_FLOWERS.get(id));
+            /*empty.addPlant(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id), POTTED_FLOWERS.get(id));
 *///?} else {
             empty.addPlant(GregTech.id(id), POTTED_FLOWERS.get(id));
 //?}
@@ -140,7 +140,7 @@ public final class GTDungeonBlocks {
 //?}
                     () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT,
 //? if >=1.21.1 {
-                            /*() -> BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id)),
+                            /*() -> BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id)),
                             BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_POPPY)));
 *///?} else {
                             () -> ForgeRegistries.BLOCKS.getValue(GregTech.id(id)),

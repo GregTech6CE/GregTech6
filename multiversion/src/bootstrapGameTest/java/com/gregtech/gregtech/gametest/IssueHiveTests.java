@@ -27,7 +27,7 @@ public final class IssueHiveTests {
         var pos = h.absolutePos(new BlockPos(2, 2, 2));
         var items = new java.util.HashSet<net.minecraft.world.item.Item>();
         for (var color : DyeColor.values()) {
-            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_hive_" + color.getName()));
+            var block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "bumble_hive_" + color.getName()));
             h.assertTrue(block instanceof FixedBumbleHiveBlock hive && hive.color() == color, "fixed registered color " + color);
             h.assertTrue(block.defaultBlockState().getProperties().isEmpty(), "no color or other variant property");
             var stack = new ItemStack(block);
@@ -47,7 +47,7 @@ public final class IssueHiveTests {
     @GameTest(template="test_empty", timeoutTicks=40)
     public static void legacyColorMigrationPreservesAllInventorySlots(GameTestHelper h) {
         var pos = h.absolutePos(new BlockPos(2, 2, 2));
-        var legacy = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", "bumble_hive"));
+        var legacy = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce", "bumble_hive"));
         for (var color : DyeColor.values()) {
             h.getLevel().setBlockAndUpdate(pos, legacy.defaultBlockState().setValue(BumbleHiveBlock.COLOR, color));
             var hive = (BumbleHiveBlockEntity)h.getLevel().getBlockEntity(pos);

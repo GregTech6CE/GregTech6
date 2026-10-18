@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_burnmixer",
+  "contents": [
+    "item:gt6ce:burnmixer_bronze",
+    "item:gt6ce:burnmixer_steel",
+    "item:gt6ce:burnmixer_titanium",
+    "item:gt6ce:burnmixer_tungsten_steel"
+  ],
+  "priority": 110
+}

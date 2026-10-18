@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "fh",
+    "oP"
+  ],
+  "key": {
+    "f": {
+      "item": "gt6ce:tool_file"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "o": {
+      "item": "gt6ce:tool_small_bending_cylinder"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_tinalloy"
+    }
+  },
+  "result": {
+    "item": "gt6ce:empty_food_can",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_comment": "MultiItemRandomTools.java:239, GregTech-6 Team / LGPL-3.0-or-later"
+}

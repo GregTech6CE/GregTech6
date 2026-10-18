@@ -40,7 +40,7 @@ public final class MaterialIcons {
 
     public static ResourceLocation texture(MaterialTextureSet set, MaterialPrefix prefix, boolean overlay) {
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech", MaterialIconDefinitions.texturePath(set, prefix, overlay));
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.texturePath(set, prefix, overlay));
 *///?} else {
         return GregTech.id(MaterialIconDefinitions.texturePath(set, prefix, overlay));
 //?}
@@ -56,7 +56,7 @@ public final class MaterialIcons {
      */
     public static ResourceLocation sharedModelLocation(MaterialTextureSet set, MaterialPrefix prefix) {
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech", MaterialIconDefinitions.modelPath(set, prefix));
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce", MaterialIconDefinitions.modelPath(set, prefix));
 *///?} else {
         return GregTech.id(MaterialIconDefinitions.modelPath(set, prefix));
 //?}

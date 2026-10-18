@@ -72,7 +72,7 @@ final class LootBrowserSmoke {
             .filter(r->r.group().rows().stream().anyMatch(v->v.output().getItem().toString().endsWith("cow_hoof"))).findFirst().orElseThrow();
         else if(page==2) recipe=recipes.stream().filter(LootEmiRecipe.class::isInstance).map(LootEmiRecipe.class::cast)
             .filter(r->r.getCategory().getId().getPath().equals("loot_tables")).max(java.util.Comparator.comparingInt(r->r.getOutputs().size())).orElseThrow();
-        else recipe = recipes.stream().filter(r -> r.getCategory().getId().getNamespace().equals("gregtech")
+        else recipe = recipes.stream().filter(r -> r.getCategory().getId().getNamespace().equals("gt6ce")
                 && r.getCategory().getId().getPath().equals(page == 3 ? "multiblock_assembly" : page == 4 ? "ore_veins" : "stone_layers_info"))
                 .findFirst().orElseThrow();
         dev.emi.emi.api.EmiApi.displayRecipe(recipe);

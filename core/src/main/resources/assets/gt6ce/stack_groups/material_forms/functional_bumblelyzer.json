@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bumblelyzer",
+  "contents": [
+    "item:gt6ce:bumblelyzer_aluminium",
+    "item:gt6ce:bumblelyzer_chromium",
+    "item:gt6ce:bumblelyzer_galvanized_steel",
+    "item:gt6ce:bumblelyzer_stainless_steel",
+    "item:gt6ce:bumblelyzer_titanium"
+  ],
+  "priority": 110
+}

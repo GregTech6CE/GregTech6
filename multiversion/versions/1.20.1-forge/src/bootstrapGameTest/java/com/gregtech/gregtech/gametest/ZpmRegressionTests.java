@@ -9,7 +9,7 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class ZpmRegressionTests {
     @GameTest(template="test_blueprint_empty")
@@ -48,7 +48,7 @@ public final class ZpmRegressionTests {
     @GameTest(template="test_empty")
     public static void zpmManufacturingRecipesLoad(GameTestHelper h){
         for(String name:java.util.List.of("basic","advanced")){
-            var recipe=h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","zpm/"+name));
+            var recipe=h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","zpm/"+name));
             h.assertTrue(recipe.isPresent(),"ZPM "+name+" crafting is registered");
             h.assertTrue(!recipe.orElseThrow().getResultItem(h.getLevel().registryAccess()).isEmpty(),"ZPM recipe resolves its result");
         }

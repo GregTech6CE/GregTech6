@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:leather",
+    {
+      "id": "#forge:leather",
+      "required": false
+    },
+    {
+      "id": "#c:leather",
+      "required": false
+    }
+  ]
+}

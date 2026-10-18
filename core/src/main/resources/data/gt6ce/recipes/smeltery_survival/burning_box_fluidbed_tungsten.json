@@ -1,0 +1,33 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PCP",
+    "UwU",
+    "BXB"
+  ],
+  "key": {
+    "U": {
+      "tag": "gt6ce:plate_curved/tungsten"
+    },
+    "X": {
+      "tag": "gt6ce:rotor/tungsten"
+    },
+    "P": {
+      "tag": "forge:plates/tungsten"
+    },
+    "C": {
+      "tag": "gt6ce:plate_double/copper"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:burning_box_fluidbed_tungsten"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

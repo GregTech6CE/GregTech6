@@ -24,7 +24,7 @@ import java.util.List;
  * next, and anything that still does not fit stays pending instead of being lost.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MachineOutputTests {
 

@@ -19,7 +19,7 @@ import java.util.Locale;
 public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
 
-    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gregtech", "engine");
+    static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath("gt6ce", "engine");
     private static final String NBT_TYPE      = "gt_eng_type";
     private static final String NBT_NAME      = "gt_eng_name";
     private static final String NBT_IN_RATE   = "gt_eng_in_rate";
@@ -106,16 +106,16 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
         long capacity = data.getLong(NBT_CAPACITY);
         int eff = data.getInt(NBT_EFF);
 
-        tooltip.add(Component.translatable("jade.gregtech.engine.title", name));
-        tooltip.add(Component.translatable("jade.gregtech.engine.in", format(inRate), inUnit));
+        tooltip.add(Component.translatable("jade.gt6ce.engine.title", name));
+        tooltip.add(Component.translatable("jade.gt6ce.engine.in", format(inRate), inUnit));
 
         int pct = capacity > 0 ? (int) Math.min(100, stored * 100 / capacity) : 0;
         boolean inputBuffer = "electric".equals(type) || "flux".equals(type);
-        tooltip.add(Component.translatable(inputBuffer ? "jade.gregtech.engine.out_input_buffer" : "jade.gregtech.engine.out",
+        tooltip.add(Component.translatable(inputBuffer ? "jade.gt6ce.engine.out_input_buffer" : "jade.gt6ce.engine.out",
                 format(outRate), format(stored), format(capacity), pct, inUnit));
 
         if (eff > 0) {
-            tooltip.add(Component.translatable("jade.gregtech.engine.eff", formatEfficiency(eff)));
+            tooltip.add(Component.translatable("jade.gt6ce.engine.eff", formatEfficiency(eff)));
         }
 
         if ("steam".equals(type)) {
@@ -123,25 +123,25 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
             long steamCap = data.getLong(NBT_STEAM_CAP);
             if (steamCap > 0) {
                 int steamPct = (int) Math.min(100, steamAmt * 100 / steamCap);
-                tooltip.add(Component.translatable("jade.gregtech.engine.steam",
+                tooltip.add(Component.translatable("jade.gt6ce.engine.steam",
                         format(steamAmt), format(steamCap), steamPct));
             }
             long waterAmt = data.getLong(NBT_WATER_AMT);
             long waterCap = data.getLong(NBT_WATER_CAP);
             if (waterCap > 0) {
                 int waterPct = (int) Math.min(100, waterAmt * 100 / waterCap);
-                tooltip.add(Component.translatable("jade.gregtech.engine.water",
+                tooltip.add(Component.translatable("jade.gt6ce.engine.water",
                         format(waterAmt), format(waterCap), waterPct));
             }
 
             if (data.getBoolean(NBT_SHUTDOWN)) {
-                tooltip.add(Component.translatable("jade.gregtech.engine.status.shutdown"));
+                tooltip.add(Component.translatable("jade.gt6ce.engine.status.shutdown"));
             } else if (!data.getBoolean(NBT_ENABLED)) {
-                tooltip.add(Component.translatable("jade.gregtech.engine.status.off"));
+                tooltip.add(Component.translatable("jade.gt6ce.engine.status.off"));
             } else if (pct < 20) {
-                tooltip.add(Component.translatable("jade.gregtech.engine.status.preheating", pct));
+                tooltip.add(Component.translatable("jade.gt6ce.engine.status.preheating", pct));
             } else {
-                tooltip.add(Component.translatable("jade.gregtech.engine.status.running", pct));
+                tooltip.add(Component.translatable("jade.gt6ce.engine.status.running", pct));
             }
         }
     }

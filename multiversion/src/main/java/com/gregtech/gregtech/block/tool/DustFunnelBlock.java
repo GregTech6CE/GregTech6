@@ -80,7 +80,7 @@ public class DustFunnelBlock extends Block implements EntityBlock {
                 int taken = funnel.insert(held);
                 if (taken > 0 && !player.getAbilities().instabuild) held.shrink(taken);
                 else if (taken == 0) player.displayClientMessage(
-                        Component.translatable("message.gregtech.dust_funnel.only_dusts"), true);
+                        Component.translatable("message.gt6ce.dust_funnel.only_dusts"), true);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);

@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_polarizer",
+  "contents": [
+    "item:gt6ce:polarizer_aluminium",
+    "item:gt6ce:polarizer_chromium",
+    "item:gt6ce:polarizer_galvanized_steel",
+    "item:gt6ce:polarizer_stainless_steel",
+    "item:gt6ce:polarizer_titanium"
+  ],
+  "priority": 110
+}

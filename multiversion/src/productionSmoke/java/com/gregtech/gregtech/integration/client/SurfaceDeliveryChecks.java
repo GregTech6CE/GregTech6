@@ -32,7 +32,7 @@ final class SurfaceDeliveryChecks {
    var block=GTBushes.byBerry(variant.berryItemId());var stack=new ItemStack(block);
    require(block!=null&&BuiltInRegistries.BLOCK.getKey(block).getPath().equals(variant.blockPath()),"material bush block identity");
    require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==0x009000&&(minecraft.getItemColors().getColor(stack,1)&0xffffff)==variant.colour(),"material bush inventory RGB");
-   String name=stack.getHoverName().getString();require(!name.contains("block.gregtech.")&&!name.contains("item.gregtech.")&&name.equals(block.getName().getString()),"material bush localized world/item name");
+   String name=stack.getHoverName().getString();require(!name.contains("block.gt6ce.")&&!name.contains("item.gt6ce.")&&name.equals(block.getName().getString()),"material bush localized world/item name");
    checkMesh(minecraft,stack,null);materialBushes++;
   }
   require(materialBushes==1034,"complete material berry bush registry");
@@ -60,13 +60,13 @@ final class SurfaceDeliveryChecks {
   graphics.fill(4,4,416,103,0xff14141c);graphics.drawString(minecraft.font,"Delivered bushes + springs (16 registered variants)",8,8,0xffffff,false);
   for(int i=0;i<stacks.size();i++) {
    var stack=stacks.get(i);String id=BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-   require(!stack.getHoverName().getString().startsWith("block.gregtech."),"untranslated name "+id);
+   require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"untranslated name "+id);
    int x=8+i%9*45,y=24+i/9*36;graphics.fill(x,y,x+43,y+33,0xff30303d);graphics.renderItem(stack,x+12,y+2);graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(stack.getHoverName().getString(),40),x+1,y+21,0xffffff,false);identities.add(id);
   }
   var machineIds=new JsonArray();
   String[] machineNames={"lightning_galvanized_steel","lightning_aluminium","lightning_stainless_steel","lightning_chromium","lightning_titanium","melter_stainless_steel"};
   for(int i=0;i<machineNames.length;i++) {
-   var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",machineNames[i])));checkMesh(minecraft,stack,null);
+   var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",machineNames[i])));checkMesh(minecraft,stack,null);
    var block=(com.gregtech.gregtech.block.machine.BasicMachineBlock)((BlockItem)stack.getItem()).getBlock();require((minecraft.getItemColors().getColor(stack,0)&0xffffff)==(block.basicSpec().material().getColor()&0xffffff),"machine inventory tint");
    int x=8+i*65,y=110;graphics.fill(x,y,x+62,y+33,0xff30303d);graphics.renderItem(stack,x+22,y+2);graphics.drawString(minecraft.font,minecraft.font.plainSubstrByWidth(stack.getHoverName().getString(),60),x+1,y+21,0xffffff,false);machineIds.add(machineNames[i]);
   }

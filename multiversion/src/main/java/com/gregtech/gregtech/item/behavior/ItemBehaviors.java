@@ -69,7 +69,7 @@ import java.util.Optional;
  * <h2>Registered behaviour ids</h2>
  *
  * <p>{@link #PORTED} lists what this batch covers. The ids are the port's own item registry paths
- * ({@code gregtech:duct_tape} and friends, all present in {@code GTMultiItemsGen.ENTRIES} or
+ * ({@code gt6ce:duct_tape} and friends, all present in {@code GTMultiItemsGen.ENTRIES} or
  * {@code GTTechnological}); the class column names the GT6 behaviour each one ports. An item that is
  * not in the table has no behaviour yet.</p>
  */
@@ -198,7 +198,7 @@ public final class ItemBehaviors {
 //?}
     }
 
-    /** Registry lookup by full id, e.g. {@code stack("gregtech:duct_tape")}; empty when unknown. */
+    /** Registry lookup by full id, e.g. {@code stack("gt6ce:duct_tape")}; empty when unknown. */
     public static ItemStack stack(String id) {
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(id));

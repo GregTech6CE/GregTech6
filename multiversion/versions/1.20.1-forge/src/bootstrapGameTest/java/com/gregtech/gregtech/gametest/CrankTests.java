@@ -51,7 +51,7 @@ import java.util.UUID;
  *   <li>GT6 shows no chat message for any of this, so neither does the port.</li>
  * </ul>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class CrankTests {
 
@@ -221,13 +221,13 @@ public final class CrankTests {
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void crankTranslationKeysStayComplete(GameTestHelper helper) throws Exception {
         for (String language : new String[]{"en_us", "zh_cn"}) {
-            JsonObject lang = resourceJson("assets/gregtech/lang/" + language + ".json");
-            for (String key : new String[]{"block.gregtech.crank", "gt.tooltip.crank.1", "gt.tooltip.crank.2"}) {
+            JsonObject lang = resourceJson("assets/gt6ce/lang/" + language + ".json");
+            for (String key : new String[]{"block.gt6ce.crank", "gt.tooltip.crank.1", "gt.tooltip.crank.2"}) {
                 helper.assertTrue(lang.has(key), language + " has no key " + key);
             }
-            helper.assertTrue(!lang.has("message.gregtech.crank.no_target"),
+            helper.assertTrue(!lang.has("message.gt6ce.crank.no_target"),
                     language + " still carries the removed 'mount it on a machine' message");
-            helper.assertTrue(!lang.has("message.gregtech.crank.full"),
+            helper.assertTrue(!lang.has("message.gt6ce.crank.full"),
                     language + " still carries the removed 'machine is full' message");
         }
         helper.succeed();

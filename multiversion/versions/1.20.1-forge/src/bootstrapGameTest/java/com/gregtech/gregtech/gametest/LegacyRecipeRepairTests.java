@@ -29,7 +29,7 @@ public final class LegacyRecipeRepairTests {
     @GameTest(template = "test_empty")
     public static void multiblockTableTargetsOnlyRegisteredBlocks(GameTestHelper h) {
         for (var entry : MultiblockCraftingRecipes.ENTRIES) {
-            var id = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
+            var id = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.blockId());
             h.assertTrue(ForgeRegistries.BLOCKS.containsKey(id)
                     && ForgeRegistries.BLOCKS.getValue(id) != Blocks.AIR,
                     "multiblock recipe target is registered: " + id);

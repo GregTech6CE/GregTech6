@@ -20,7 +20,7 @@ public final class PanelCoverInteraction {
         if(PanelCover.of(held)!=null){
             if(!level.isClientSide){
                 if(host.attachCover(side,held)){if(!player.getAbilities().instabuild)held.shrink(1);}
-                else player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gregtech.panel.unsupported"),true);
+                else player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.gt6ce.panel.unsupported"),true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -43,9 +43,9 @@ public final class PanelCoverInteraction {
 //?}
             if(!level.isClientSide){
                 var stack=host.getCover(side);
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.inverted(stack)?"message.gregtech.cover.inverted":"message.gregtech.cover.normal"),false);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.inverted(stack)?"message.gt6ce.cover.inverted":"message.gt6ce.cover.normal"),false);
                 if(MachineCoverSpec.of(stack)!=null&&MachineCoverSpec.of(stack).detector()||PanelCover.of(stack)!=null&&PanelCover.of(stack).strongConfig())
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.strong(stack)?"message.gregtech.cover.strong":"message.gregtech.cover.weak"),false);
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.strong(stack)?"message.gt6ce.cover.strong":"message.gt6ce.cover.weak"),false);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -63,13 +63,13 @@ public final class PanelCoverInteraction {
                 GTToolHelper.damageForUse(held,1,player);
 //?}
                 var stack=host.getCover(side);var panel=PanelCover.of(stack);
-                String message=chisel?"message.gregtech.panel.style":cutter?(MachineCoverSpec.strong(stack)?"message.gregtech.cover.strong":"message.gregtech.cover.weak"):
+                String message=chisel?"message.gt6ce.panel.style":cutter?(MachineCoverSpec.strong(stack)?"message.gt6ce.cover.strong":"message.gt6ce.cover.weak"):
 //? if >=1.21.1 {
-                    /*panel==PanelCover.BUTTONS?(CoverStackData.readOrEmpty(stack).getBoolean(PanelCoverRuntime.RESET)?"message.gregtech.panel.reset":"message.gregtech.panel.latch"):
+                    /*panel==PanelCover.BUTTONS?(CoverStackData.readOrEmpty(stack).getBoolean(PanelCoverRuntime.RESET)?"message.gt6ce.panel.reset":"message.gt6ce.panel.latch"):
 *///?} else {
-                    panel==PanelCover.BUTTONS?(stack.getOrCreateTag().getBoolean(PanelCoverRuntime.RESET)?"message.gregtech.panel.reset":"message.gregtech.panel.latch"):
+                    panel==PanelCover.BUTTONS?(stack.getOrCreateTag().getBoolean(PanelCoverRuntime.RESET)?"message.gt6ce.panel.reset":"message.gt6ce.panel.latch"):
 //?}
-                    MachineCoverSpec.inverted(stack)?"message.gregtech.cover.inverted":"message.gregtech.cover.normal";
+                    MachineCoverSpec.inverted(stack)?"message.gt6ce.cover.inverted":"message.gt6ce.cover.normal";
                 player.displayClientMessage(net.minecraft.network.chat.Component.translatable(message,PanelCoverRuntime.style(stack)+1),true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

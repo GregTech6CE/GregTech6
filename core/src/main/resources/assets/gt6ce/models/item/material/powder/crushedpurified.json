@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:item/material_icons/powder/crushedpurified",
+    "layer1": "gt6ce:item/material_icons/powder/crushedpurified_overlay"
+  }
+}

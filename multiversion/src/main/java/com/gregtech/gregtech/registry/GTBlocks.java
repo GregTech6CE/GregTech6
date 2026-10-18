@@ -34,8 +34,8 @@ import java.util.Map;
 
 public final class GTBlocks {
 //? if >=1.21.1 {
-    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gregtech");
-    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(Registries.ITEM, "gregtech");
+    /*public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, "gt6ce");
+    public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(Registries.ITEM, "gt6ce");
 *///?} else {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, GregTech.NAMESPACE);
     public static final DeferredRegister<Item> BLOCK_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);

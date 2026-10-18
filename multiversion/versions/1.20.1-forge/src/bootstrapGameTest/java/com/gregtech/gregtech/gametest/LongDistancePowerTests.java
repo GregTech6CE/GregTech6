@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class LongDistancePowerTests {
     private static final BlockPos SOURCE=new BlockPos(2,2,2), RECEIVER=new BlockPos(5,2,2);
@@ -39,7 +39,7 @@ public final class LongDistancePowerTests {
         var grades=new LongDistanceTransformerBlock[]{GTMiscBlocks.LONG_DIST_TRANSFORMER_ULV.get(),GTMiscBlocks.LONG_DIST_TRANSFORMER_LV.get(),GTMiscBlocks.LONG_DIST_TRANSFORMER_MV.get(),GTMiscBlocks.LONG_DIST_TRANSFORMER_ZPM.get(),GTMiscBlocks.LONG_DIST_TRANSFORMER_UV.get()};
         var names=new String[]{"ev","iv","luv","zpm","uv"};
         for(int i=0;i<grades.length;i++){
-            var wire=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","long_dist_wire_"+names[i]));
+            var wire=net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","long_dist_wire_"+names[i]));
             var source=setup(h,grades[i],grades[i],wire);var sink=sink(h);long voltage=2048L<<(i*2);
             h.assertTrue(source.voltage()==voltage,"original endpoint tier");
             h.assertTrue(source.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,voltage,2,false)==2&&sink.calls==0,"simulation does not transfer");

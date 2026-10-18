@@ -1,0 +1,19 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_crystal_ores",
+  "contents": [
+    "item:gt6ce:crystal_ore_arsenopyrite",
+    "item:gt6ce:crystal_ore_chalcopyrite",
+    "item:gt6ce:crystal_ore_cinnabar",
+    "item:gt6ce:crystal_ore_cobaltite",
+    "item:gt6ce:crystal_ore_galena",
+    "item:gt6ce:crystal_ore_kesterite",
+    "item:gt6ce:crystal_ore_molybdenite",
+    "item:gt6ce:crystal_ore_pyrite",
+    "item:gt6ce:crystal_ore_sphalerite",
+    "item:gt6ce:crystal_ore_stannite",
+    "item:gt6ce:crystal_ore_stibnite",
+    "item:gt6ce:crystal_ore_tetrahedrite"
+  ],
+  "priority": 110
+}

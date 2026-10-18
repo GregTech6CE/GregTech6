@@ -1,0 +1,28 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_drum",
+  "contents": [
+    "item:gt6ce:drum_adamantium",
+    "item:gt6ce:drum_awakened_draconium",
+    "item:gt6ce:drum_bronze",
+    "item:gt6ce:drum_desh",
+    "item:gt6ce:drum_draconium",
+    "item:gt6ce:drum_efrine",
+    "item:gt6ce:drum_gaia_spirit",
+    "item:gt6ce:drum_infinity",
+    "item:gt6ce:drum_invar",
+    "item:gt6ce:drum_manasteel",
+    "item:gt6ce:drum_netherite",
+    "item:gt6ce:drum_stainless_steel",
+    "item:gt6ce:drum_steel",
+    "item:gt6ce:drum_syrmorite",
+    "item:gt6ce:drum_tantalum_hafnium_carbide",
+    "item:gt6ce:drum_thaumium",
+    "item:gt6ce:drum_titanium",
+    "item:gt6ce:drum_tungsten",
+    "item:gt6ce:drum_tungsten_alloy",
+    "item:gt6ce:drum_tungsten_steel",
+    "item:gt6ce:drum_void_metal"
+  ],
+  "priority": 110
+}

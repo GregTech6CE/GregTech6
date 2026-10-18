@@ -68,12 +68,12 @@ public enum ElectricToolAssembly {
                 com.gregtech.gregtech.data.GregTechTags.Energy.EU);
         var result=item().assembled(material,capacity);
 //? if >=1.21.1 {
-        /*var key=ResourceLocation.fromNamespaceAndPath("gregtech","electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);
-        return new com.gregtech.gregtech.recipe.PoweredToolAssemblyRecipe(new ShapedRecipe("gregtech.electric_tools",
+        /*var key=ResourceLocation.fromNamespaceAndPath("gt6ce","electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);
+        return new com.gregtech.gregtech.recipe.PoweredToolAssemblyRecipe(new ShapedRecipe("gt6ce.electric_tools",
                 CraftingBookCategory.EQUIPMENT,new ShapedRecipePattern(3,3,ingredients,Optional.empty()),result),this,material,battery);
 *///?} else {
         var key=GregTech.id("electric_tools/"+id+"/"+material.getName().toLowerCase(Locale.ROOT)+suffix);
-        return new ToolShapedRecipe(new ShapedRecipe(key,"gregtech.electric_tools",
+        return new ToolShapedRecipe(new ShapedRecipe(key,"gt6ce.electric_tools",
                 CraftingBookCategory.EQUIPMENT,3,3,ingredients,result),false);
 //?}
     }

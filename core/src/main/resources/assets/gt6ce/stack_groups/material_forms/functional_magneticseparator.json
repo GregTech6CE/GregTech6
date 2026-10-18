@@ -1,0 +1,12 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_magneticseparator",
+  "contents": [
+    "item:gt6ce:magneticseparator_aluminium",
+    "item:gt6ce:magneticseparator_chromium",
+    "item:gt6ce:magneticseparator_galvanized_steel",
+    "item:gt6ce:magneticseparator_stainless_steel",
+    "item:gt6ce:magneticseparator_titanium"
+  ],
+  "priority": 110
+}

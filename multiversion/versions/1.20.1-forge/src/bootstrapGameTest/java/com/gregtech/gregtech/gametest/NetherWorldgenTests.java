@@ -34,7 +34,7 @@ import java.util.List;
  * resolves to a real {@code ore_*} / {@code ore_small_*} block in the port, so nothing in those
  * tables is silently skipped at runtime.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class NetherWorldgenTests {
     private static final int BASE_X = 52000;
@@ -85,8 +85,8 @@ public final class NetherWorldgenTests {
         ServerLevel level = helper.getLevel();
         WorldGenLevel gen = (WorldGenLevel) level;
         Block crystal = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "crystal_ore_cinnabar"));
-        helper.assertTrue(crystal != null && crystal != Blocks.AIR, "gregtech:crystal_ore_cinnabar exists");
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "crystal_ore_cinnabar"));
+        helper.assertTrue(crystal != null && crystal != Blocks.AIR, "gt6ce:crystal_ore_cinnabar exists");
         BlockState crystalState = crystal.defaultBlockState();
 
         // A prepared cave: stone floor at the lava sea, air, then a netherrack ceiling 20 blocks up.
@@ -149,7 +149,7 @@ public final class NetherWorldgenTests {
         ServerLevel level = helper.getLevel();
         WorldGenLevel gen = (WorldGenLevel) level;
         Block crystal = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "crystal_ore_pyrite"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "crystal_ore_pyrite"));
         BlockState crystalState = crystal.defaultBlockState();
         int x = BASE_X + 20, z = BASE_Z;
         int ceilingY = GTNetherDepositFeature.NETHER_WATER_LEVEL + 20;

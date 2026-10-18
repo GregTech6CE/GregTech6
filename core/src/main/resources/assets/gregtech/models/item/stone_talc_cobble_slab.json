@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gregtech:block/stones/gt.stone.talc/cobble",
-    "top": "gregtech:block/stones/gt.stone.talc/cobble",
-    "side": "gregtech:block/stones/gt.stone.talc/cobble"
-  }
-}

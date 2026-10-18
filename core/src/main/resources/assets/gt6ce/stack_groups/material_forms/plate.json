@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "itemGroup.gt6ce.plate",
+  "contents": [
+    "#gt6ce:plate"
+  ],
+  "exclusions": [
+    "#minecraft:planks",
+    "#gt6ce:wooden_planks",
+    "item:gt6ce:planks_treated",
+    "item:minecraft:glass_pane",
+    "item:minecraft:paper",
+    "item:gt6ce:plate_paper"
+  ],
+  "priority": 100
+}

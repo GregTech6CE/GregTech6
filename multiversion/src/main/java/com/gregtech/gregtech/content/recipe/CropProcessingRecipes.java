@@ -23,10 +23,10 @@ public final class CropProcessingRecipes {
     private void crop(String inputId,String fluidName,int amount,long chance,String residueId) {
 //? if >=1.21.1 {
         /*var input=BuiltInRegistries.ITEM.get(ResourceLocation.parse(inputId));
-        var residue=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",residueId));
+        var residue=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
 *///?} else {
         var input=ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(inputId));
-        var residue=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",residueId));
+        var residue=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",residueId));
 //?}
         var fluid=GTFluids.still(fluidName);
 //? if >=1.21.1 {

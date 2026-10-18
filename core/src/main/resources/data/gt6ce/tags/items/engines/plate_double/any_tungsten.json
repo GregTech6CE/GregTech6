@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:plate_double/tungsten",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate_double/tungsten_sintered",
+      "required": false
+    }
+  ]
+}

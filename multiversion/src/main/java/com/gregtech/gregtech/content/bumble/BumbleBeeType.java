@@ -155,7 +155,7 @@ public enum BumbleBeeType {
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(
 //?}
-                ResourceLocation.fromNamespaceAndPath("gregtech", itemId(species, type)));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", itemId(species, type)));
         return item == null || item == net.minecraft.world.item.Items.AIR ? null : item;
     }
 

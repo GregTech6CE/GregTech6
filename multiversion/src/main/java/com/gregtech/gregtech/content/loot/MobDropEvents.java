@@ -214,7 +214,7 @@ public final class MobDropEvents {
         if (tag(stack, "c:foods/meat_substitute") || tag(stack, "forge:meat_substitutes")) return false;
         if (meatFamily(stack) != MobDropRules.Meat.NONE) return true;
         if (stack.is(Items.CHICKEN) || stack.is(Items.COOKED_CHICKEN) || stack.is(Items.MUTTON) || stack.is(Items.COOKED_MUTTON) || stack.is(Items.RABBIT) || stack.is(Items.COOKED_RABBIT)) return true;
-        if (!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gregtech"))
+        if (!BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("gt6ce"))
             return tag(stack, "c:foods/raw_meat") || tag(stack, "c:foods/cooked_meat") || tag(stack, "forge:raw_meats") || tag(stack, "forge:cooked_meats");
         return Set.of("dogmeat", "grilled_dogmeat", "raw_ham", "cooked_ham", "raw_ham_slice", "cooked_ham_slice",
                 "raw_bacon", "grilled_bacon", "raw_ribs", "grilled_ribs", "raw_rib_eye_steak", "grilled_rib_eye_steak", "mutton", "grilled_mutton",

@@ -126,13 +126,13 @@ public final class BedrockFlowerRepairTests {
                 "B7 juicer yields two cactus dyes and 75 mB cactus juice");
 
         var manager = h.getLevel().getRecipeManager();
-        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech",
+        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",
                         "bedrock_flowers/flower_sagebrush/hand")).isPresent(),
                 "B0 shapeless one-stick recipe is available");
-        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech",
+        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",
                         "bedrock_flowers/flower_sagebrush/saw")).isPresent(),
                 "B0 two-stick saw recipe is available");
-        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gregtech",
+        h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",
                         "bedrock_flowers/tungstus_smelting")).isPresent(),
                 "B7 vanilla smelting into cactus dye is available");
         h.succeed();
@@ -145,6 +145,6 @@ public final class BedrockFlowerRepairTests {
     }
 
     private static Block block(String path) {
-        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", path));
+        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", path));
     }
 }

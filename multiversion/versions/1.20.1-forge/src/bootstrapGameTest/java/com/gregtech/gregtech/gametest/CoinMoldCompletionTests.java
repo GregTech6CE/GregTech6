@@ -51,7 +51,7 @@ public final class CoinMoldCompletionTests {
         h.assertTrue(mold.strike(),"plate minted");mirror.load(mold.getUpdateTag());
         h.assertTrue(mirror.displayedMaterial()==Materials.Copper,"coin retains displayed material");
         mold.takeContents();mirror.load(mold.getUpdateTag());h.assertTrue(mirror.displayedMaterial()==null,"retrieval clears client insert");
-        try(var stream=CoinMoldCompletionTests.class.getClassLoader().getResourceAsStream("assets/gregtech/models/block/tool/coin_mold.json")) {
+        try(var stream=CoinMoldCompletionTests.class.getClassLoader().getResourceAsStream("assets/gt6ce/models/block/tool/coin_mold.json")) {
             var model=com.google.gson.JsonParser.parseReader(new java.io.InputStreamReader(stream,java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject();
             for(String layer:new String[]{"colored","overlay"}) {
                 var parts=model.getAsJsonObject("children").getAsJsonObject(layer).getAsJsonArray("elements");

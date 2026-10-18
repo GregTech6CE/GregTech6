@@ -170,5 +170,5 @@ public class GTRocksFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature (data file {@code worldgen/configured_feature/gt_rocks.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_rocks"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_rocks"));
 }

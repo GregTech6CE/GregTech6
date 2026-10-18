@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:plate_curved/copper",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:plate_curved/annealed_copper",
+      "required": false
+    }
+  ]
+}

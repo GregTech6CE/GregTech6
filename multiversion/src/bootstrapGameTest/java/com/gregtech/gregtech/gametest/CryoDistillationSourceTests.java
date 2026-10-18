@@ -36,13 +36,13 @@ import java.util.*;
 public final class CryoDistillationSourceTests {
     private static BlockPos origin(GameTestHelper h) {return h.absolutePos(new BlockPos(2,0,2)).atY(260);}
     private static CryoDistillationControllerBlockEntity controller(GameTestHelper h,BlockPos pos) {
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:cryo_distillation_main"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:cryo_distillation_main"));
         h.assertTrue(block instanceof CryoDistillationControllerBlock,"registered cold controller");
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         return (CryoDistillationControllerBlockEntity)h.getLevel().getBlockEntity(pos);
     }
     private static TankBlockEntity drum(GameTestHelper h,BlockPos pos) {
-        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:drum_stainless_steel"));
+        var block=BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:drum_stainless_steel"));
         h.getLevel().setBlockAndUpdate(pos,block.defaultBlockState());
         return (TankBlockEntity)h.getLevel().getBlockEntity(pos);
     }

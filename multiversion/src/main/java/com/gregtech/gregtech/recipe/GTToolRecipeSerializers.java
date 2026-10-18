@@ -22,7 +22,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  *
  * <p>The rows themselves are built from {@link GTToolRecipes} at server start
  * ({@code Loader_ToolCraftingRecipes}); the JSON form exists for completeness and for pack authors who
- * want to re-add a single row ({@code {"type":"gregtech:tool_crafting","tool":"wrench","pattern":0}}).</p>
+ * want to re-add a single row ({@code {"type":"gt6ce:tool_crafting","tool":"wrench","pattern":0}}).</p>
  */
 //? if >=1.21.1 {
 /*import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -35,10 +35,10 @@ public final class GTToolRecipeSerializers {
 //? if >=1.21.1 {
  /*private GTToolRecipeSerializers(){}
  private static final Codec<GTToolType> TYPE=Codec.STRING.xmap(GTToolType::byId,GTToolType::id);
- private static final ResourceLocation CODEC_ID=ResourceLocation.fromNamespaceAndPath("gregtech","tools/codec");
- public static final ResourceLocation ASSEMBLY_ID=ResourceLocation.fromNamespaceAndPath("gregtech","tool_assembly");
- public static final ResourceLocation CRAFTING_ID=ResourceLocation.fromNamespaceAndPath("gregtech","tool_crafting");
- public static final ResourceLocation HEAD_ID=ResourceLocation.fromNamespaceAndPath("gregtech","tool_head");
+ private static final ResourceLocation CODEC_ID=ResourceLocation.fromNamespaceAndPath("gt6ce","tools/codec");
+ public static final ResourceLocation ASSEMBLY_ID=ResourceLocation.fromNamespaceAndPath("gt6ce","tool_assembly");
+ public static final ResourceLocation CRAFTING_ID=ResourceLocation.fromNamespaceAndPath("gt6ce","tool_crafting");
+ public static final ResourceLocation HEAD_ID=ResourceLocation.fromNamespaceAndPath("gt6ce","tool_head");
  public static final RecipeSerializer<GTToolAssemblyRecipe> ASSEMBLY=serializer(TYPE.fieldOf("tool").xmap(type->new GTToolAssemblyRecipe(CODEC_ID,type),GTToolAssemblyRecipe::toolType));
  private static final MapCodec<GTToolPatternRecipe> CRAFTING_CODEC=RecordCodecBuilder.mapCodec(instance->instance.group(
   TYPE.fieldOf("tool").forGetter(GTToolPatternRecipe::toolType),Codec.INT.optionalFieldOf("pattern",0).forGetter(GTToolPatternRecipe::patternIndex)
@@ -64,9 +64,9 @@ public final class GTToolRecipeSerializers {
 
     /** {@code gregtech:tool_assembly} — the id the port's data pack used before §29. */
     public static final ResourceLocation ASSEMBLY_ID = GregTech.id("tool_assembly");
-    /** {@code gregtech:tool_crafting} */
+    /** {@code gt6ce:tool_crafting} */
     public static final ResourceLocation CRAFTING_ID = GregTech.id("tool_crafting");
-    /** {@code gregtech:tool_head} */
+    /** {@code gt6ce:tool_head} */
     public static final ResourceLocation HEAD_ID = GregTech.id("tool_head");
 
     private static int intOrDefault(JsonObject json, String key) {

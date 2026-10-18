@@ -37,7 +37,7 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
             if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) {
                 var material = item.getMaterial();
                 String icon = shape == 6 ? "blockgem" : shape == 7 ? "blockraw" : "blocksolid";
-                var texture = ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/" + MaterialIcons.resolveTextureSet(material).folder() + "/" + icon);
+                var texture = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/" + MaterialIcons.resolveTextureSet(material).folder() + "/" + icon);
                 int rgb = material.getColor();
                 AnvilCuboidRenderer.draw(pose.last(), buffers.getBuffer(RenderType.entityCutoutNoCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),
                         bounds, CrucibleRenderSprites.resolve(texture), rgb, light);
@@ -62,7 +62,7 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
 
     private static void drawHammerPart(PoseStack pose,MultiBufferSource buffers,int light,
                                        net.minecraft.world.phys.AABB bounds,com.gregtech.gregtech.api.material.GTMaterial material) {
-        var texture=ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/"
+        var texture=ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/"
                 +MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
         int rgb=material.getColor();
         AnvilCuboidRenderer.draw(pose.last(),buffers.getBuffer(RenderType.entityCutoutNoCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),

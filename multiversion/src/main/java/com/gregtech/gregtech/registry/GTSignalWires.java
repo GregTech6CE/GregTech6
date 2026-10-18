@@ -20,9 +20,9 @@ import java.util.*;
 public final class GTSignalWires {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block,SignalWireBlock>> ALL = new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gregtech");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gregtech");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
+    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
+    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity>> SIGNAL_WIRE=ENTITIES.register("signal_wire",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity::new,all().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
     private static final List<RegistryObject<SignalWireBlock>> ALL = new ArrayList<>();

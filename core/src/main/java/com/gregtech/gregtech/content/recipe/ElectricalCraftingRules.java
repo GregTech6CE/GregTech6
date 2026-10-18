@@ -6,7 +6,7 @@ public final class ElectricalCraftingRules {
 
     public static String circuitTag(int tier) {
         if (tier < 0 || tier > 9) throw new IllegalArgumentException("Unknown GT6 circuit tier: " + tier);
-        return "gregtech:circuits_tier_" + tier + "_plus";
+        return "gt6ce:circuits_tier_" + tier + "_plus";
     }
 
     public static String wireMaterial(int tier) {

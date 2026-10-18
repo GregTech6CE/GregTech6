@@ -48,11 +48,11 @@ public final class GearboxBakedModel implements IDynamicBakedModel {
 //?}
     private static final ResourceLocation[] TEXTURES = {
 //? if >=1.21.1 {
-            /*ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/gearbox"),
-            ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/gearbox_axle"),
-            ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/gear"),
-            ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/gear_clockwise"),
-            ResourceLocation.fromNamespaceAndPath("gregtech","block/iconsets/gear_counterclockwise")
+            /*ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gearbox"),
+            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gearbox_axle"),
+            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear"),
+            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_clockwise"),
+            ResourceLocation.fromNamespaceAndPath("gt6ce","block/iconsets/gear_counterclockwise")
 *///?} else {
             GregTech.id("block/iconsets/gearbox"),
             GregTech.id("block/iconsets/gearbox_axle"),

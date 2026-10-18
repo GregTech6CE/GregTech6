@@ -29,7 +29,7 @@ public final class ClientModelContracts {
         var models = new HashMap<ResourceLocation, BakedModel>();
         var missing = model(ItemTransforms.NO_TRANSFORMS);
         models.put(BakedModelLookup.MISSING_MODEL, missing);
-        var location = new ResourceLocation("gregtech", "test/model");
+        var location = new ResourceLocation("gt6ce", "test/model");
         models.put(new ModelResourceLocation(location, ""), missing);
         var actual = model(transforms());
         models.put(location, actual);
@@ -86,10 +86,10 @@ public final class ClientModelContracts {
     }
 
     private static void fluidFallbackContracts() {
-        var preferred = ResourceLocation.fromNamespaceAndPath("gregtech", "block/fluids/test_liquid");
-        var fluid = ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/fluid/molten");
-        var gas = ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/fluid/gas");
-        var molten = ResourceLocation.fromNamespaceAndPath("gregtech", "block/material_icons/metallic/molten");
+        var preferred = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/fluids/test_liquid");
+        var fluid = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/fluid/molten");
+        var gas = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/fluid/gas");
+        var molten = ResourceLocation.fromNamespaceAndPath("gt6ce", "block/material_icons/metallic/molten");
         var available = new java.util.HashSet<>(java.util.Set.of(fluid, gas, molten));
         var plasma = com.gregtech.gregtech.api.fluid.FluidTexturePolicy.Kind.PLASMA.standard();
         available.add(plasma);

@@ -39,7 +39,7 @@ import java.util.List;
  *       which used to accumulate one {@link ItemStack} per mirrored row of every world load.</li>
  * </ul>
  */
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class MemoryGrowthTests {
 
     private static ElectricWireBlock wire() {

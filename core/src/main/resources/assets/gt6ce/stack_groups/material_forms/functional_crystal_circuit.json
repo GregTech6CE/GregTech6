@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_crystal_circuit",
+  "contents": [
+    "item:gt6ce:crystal_circuit_diamond",
+    "item:gt6ce:crystal_circuit_emerald",
+    "item:gt6ce:crystal_circuit_ruby",
+    "item:gt6ce:crystal_circuit_sapphire"
+  ],
+  "priority": 110
+}

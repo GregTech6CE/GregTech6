@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:battery_lead_acid_lv",
+    "gt6ce:battery_alkaline_lv",
+    "gt6ce:battery_nickel_cadmium_lv",
+    "gt6ce:battery_lithium_cobalt_lv",
+    "gt6ce:battery_lithium_manganese_lv",
+    "gt6ce:battery_lithium_cobalt_lv"
+  ]
+}

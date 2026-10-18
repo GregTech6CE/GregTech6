@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @PrefixGameTestTemplate(false)
 public final class BatteryBoxEnergyTests {
     private static ItemStack battery(String name,long charge) {
-        var item=(ChemicalBatteryItem)ForgeRegistries.ITEMS.getValue(new ResourceLocation("gregtech","battery_"+name));
+        var item=(ChemicalBatteryItem)ForgeRegistries.ITEMS.getValue(new ResourceLocation("gt6ce","battery_"+name));
         var stack=new ItemStack(item);item.setCharge(stack,charge);return stack;
     }
     private static long charge(ItemStack stack){return ((ChemicalBatteryItem)stack.getItem()).stored(stack);}
@@ -53,7 +53,7 @@ public final class BatteryBoxEnergyTests {
     @GameTest(template="test_empty")
     public static void inputBudgetDirectionsVoltageAndTheoryAreDistinct(GameTestHelper h) {
         var be=place(h,new BlockPos(1,2,1),"battery_box_lv");var state=be.batteryEnergy();
-        var raw=ForgeRegistries.ITEMS.getValue(new ResourceLocation("gregtech","lead_acid_cell_filled"));
+        var raw=ForgeRegistries.ITEMS.getValue(new ResourceLocation("gt6ce","lead_acid_cell_filled"));
         h.assertTrue(!be.installBattery(new ItemStack(raw)),"filled cells are not rechargeable battery items");
         var full=battery("lead_acid_lv",64000);be.installBattery(full);state.tick(2,null,null);
         h.assertTrue(be.doEnergyInjection(GregTechTags.Energy.EU,Direction.EAST,32,1,true)==0,"front cannot receive");

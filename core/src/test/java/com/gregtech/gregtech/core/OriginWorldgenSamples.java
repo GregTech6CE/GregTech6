@@ -54,10 +54,10 @@ final class OriginWorldgenSamples {
         SourceNexus layout=new SourceNexus(66,true);
         equal(false,layout.generate(nexus,new OriginWorld.Chunk(nexus,16,-48),0,0,new Random(0)),"Nexus only at original anchor");
         equal(true,layout.generate(nexus,new OriginWorld.Chunk(nexus,16,-48),16,-48,new Random(0)),"source Nexus generated");
-        nexus.block(20,-63,-44,"gregtech:concrete",8,-1);
+        nexus.block(20,-63,-44,"gt6ce:concrete",8,-1);
         nexus.block(20,66,-44,"minecraft:obsidian",0,-1);
-        nexus.block(20,79,-44,"gregtech:cfoam",8,-1);
-        nexus.block(16,75,-47,"gregtech:glass_clear",12,-1);
+        nexus.block(20,79,-44,"gt6ce:cfoam",8,-1);
+        nexus.block(16,75,-47,"gt6ce:glass_clear",12,-1);
         nexus.block(17,67,-46,"minecraft:end_portal_frame",3,-1);
         nexus.block(19,67,-45,"minecraft:air",0,-1);
         nexus.block(28,67,-46,"minecraft:water",0,-1);
@@ -73,25 +73,25 @@ final class OriginWorldgenSamples {
             SampleWorld plaza=new SampleWorld(x,z,false,false);
             plaza.probe(x,-63,z);
             equal(true,streets.generate(plaza,-16,-16,-1,-1,Set.of("plains")),"plaza chunk "+x+","+z);
-            plaza.block(x,-63,z,"gregtech:concrete",8,-1);
+            plaza.block(x,-63,z,"gt6ce:concrete",8,-1);
             equal(-63,plaza.lowestWrite,"plaza preserves bottom bedrock");
         }
         SampleWorld edge=new SampleWorld(-32,0,false,false);
         edge.probe(-31,66,0);
         streets.generate(edge,-16,-16,-1,-1,Set.of("plains"));
-        edge.block(-31,66,0,"gregtech:asphalt",15,-1);
+        edge.block(-31,66,0,"gt6ce:asphalt",15,-1);
 
         for (int mode=0;mode<3;mode++) {
             SampleWorld road=new SampleWorld(0,512,mode==2,mode==1);
             road.probe(3,66,520);road.probe(1,67,520);road.probe(2,67,520);
             road.probe(5,65,518);road.probe(5,73,518);
             equal(true,streets.generate(road,0,512,15,527,Set.of(mode==1?"ocean":"plains")),"road mode "+mode);
-            road.block(3,66,520,"gregtech:asphalt",8,-1);
-            road.block(1,67,520,"gregtech:cfoam",7,4);
-            road.block(2,67,520,"gregtech:railroad",0,-1);
+            road.block(3,66,520,"gt6ce:asphalt",8,-1);
+            road.block(1,67,520,"gt6ce:cfoam",7,4);
+            road.block(2,67,520,"gt6ce:railroad",0,-1);
             // A source bridge footing overlaps this square with light gray at k+3.
-            road.block(5,65,518,mode==0?"minecraft:gravel":"gregtech:concrete",mode==0?1:mode==1?7:8,-1);
-            if (mode==2) road.block(5,73,518,"gregtech:concrete",15,-1);
+            road.block(5,65,518,mode==0?"minecraft:gravel":"gt6ce:concrete",mode==0?1:mode==1?7:8,-1);
+            if (mode==2) road.block(5,73,518,"gt6ce:concrete",15,-1);
             equal("Z: 0",road.signs.get(new Pos(11,69,519)).get(2),"sign before 512 boundary");
             equal("Z: 1",road.signs.get(new Pos(11,69,520)).get(2),"sign after 512 boundary");
         }

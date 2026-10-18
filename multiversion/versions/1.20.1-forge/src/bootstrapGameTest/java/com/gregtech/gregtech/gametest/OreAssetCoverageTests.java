@@ -38,7 +38,7 @@ import java.util.List;
  * shows up here as a missing asset rather than as a client log line.  It touches no world and needs no
  * test structure.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class OreAssetCoverageTests {
 
@@ -107,9 +107,9 @@ public final class OreAssetCoverageTests {
             // The asset path is the registry path: BlockMaterialPrefix#getBlockId is
             // `<prefix registry name>_<material name, lowercased>`.
             String path = id.getPath();
-            String blockstatePath = "assets/gregtech/blockstates/" + path + ".json";
-            String modelPath = "assets/gregtech/models/block/ores/" + path + ".json";
-            String itemPath = "assets/gregtech/models/item/" + path + ".json";
+            String blockstatePath = "assets/gt6ce/blockstates/" + path + ".json";
+            String modelPath = "assets/gt6ce/models/block/ores/" + path + ".json";
+            String itemPath = "assets/gt6ce/models/item/" + path + ".json";
             if (!resourceExists(blockstatePath)) {
                 problems.add(path + ": missing " + blockstatePath);
                 continue;

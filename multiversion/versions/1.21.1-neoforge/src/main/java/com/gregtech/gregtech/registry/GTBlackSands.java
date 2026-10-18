@@ -2,7 +2,7 @@ package com.gregtech.gregtech.registry;
 import com.gregtech.gregtech.block.*;import net.minecraft.world.level.block.SoundType;import net.minecraft.world.level.block.state.BlockBehaviour;
 public final class GTBlackSands {private GTBlackSands(){}public static void registerCompositions(){
       for(String id:BlackSandDefinitions.IDS){
-       var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+       var block=net.minecraft.core.registries.BuiltInRegistries.BLOCK.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
        if(block instanceof BlackSandBlock sand)com.gregtech.gregtech.api.material.ItemMaterialRegistry.register(sand.asItem(),null,sand.material(),com.gregtech.gregtech.api.material.GTValues.U*9);
       }
      }

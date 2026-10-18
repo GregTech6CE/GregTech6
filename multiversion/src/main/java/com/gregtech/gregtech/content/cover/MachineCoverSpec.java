@@ -33,7 +33,7 @@ public enum MachineCoverSpec {
 *///?} else {
         if(stack.isEmpty())return null;var key=ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        if(key==null||!key.getNamespace().equals("gregtech"))return null;
+        if(key==null||!key.getNamespace().equals("gt6ce"))return null;
         for(var spec:values())if(spec.id.equals(key.getPath()))return spec;return null;
     }
 //? if >=1.21.1 {

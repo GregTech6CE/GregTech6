@@ -385,9 +385,9 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     /** A comb stack by item id, or an empty stack when the id is unknown. */
     public static ItemStack comb(String id, int count) {
 //? if >=1.21.1 {
-        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        /*Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 *///?} else {
-        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //?}
         if (item == null || item == net.minecraft.world.item.Items.AIR || count <= 0) return ItemStack.EMPTY;
         return new ItemStack(item, Math.min(64, count));
@@ -408,7 +408,7 @@ public class GTBumbleHivesFeature extends Feature<NoneFeatureConfiguration> {
     /** Registry key of the configured feature ({@code worldgen/configured_feature/gt_bumble_hives.json}). */
     public static final ResourceKey<net.minecraft.world.level.levelgen.feature.ConfiguredFeature<?, ?>> CONFIGURED =
             ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "gt_bumble_hives"));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "gt_bumble_hives"));
 //? if >=1.21.1 {
     /*private static boolean isRock(BlockState state){return state.is(BlockTags.BASE_STONE_OVERWORLD)||state.is(BlockTags.STONE_BRICKS)||state.is(Blocks.OBSIDIAN)||state.is(Blocks.DEEPSLATE);}
 *///?} else {

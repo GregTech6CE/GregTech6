@@ -34,7 +34,7 @@ public class HopperScreen extends AbstractContainerScreen<HopperContainerMenu> {
     private static ResourceLocation guiTexture(int slotCount) {
         String name = TEXTURE_SIZES.contains(slotCount) ? String.valueOf(slotCount) : "0";
 //? if >=1.21.1 {
-        /*return ResourceLocation.fromNamespaceAndPath("gregtech","textures/gui/chests/" + name + ".png");
+        /*return ResourceLocation.fromNamespaceAndPath("gt6ce","textures/gui/chests/" + name + ".png");
 *///?} else {
         return GregTech.id("textures/gui/chests/" + name + ".png");
 //?}

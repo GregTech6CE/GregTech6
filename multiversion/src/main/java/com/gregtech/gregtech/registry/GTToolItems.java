@@ -30,7 +30,7 @@ import java.util.Map;
 //?}
 public final class GTToolItems {
 //? if >=1.21.1 {
- /*public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gregtech");
+ /*public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gt6ce");
  public static final DeferredItem<SmelteryToolItem> CHISEL=ITEMS.register("tool_chisel",()->new SmelteryToolItem(SmelteryToolItem.Kind.CHISEL));
  public static final DeferredItem<SmelteryToolItem> PINCERS=ITEMS.register("tool_pincers",()->new SmelteryToolItem(SmelteryToolItem.Kind.PINCERS));
  private static final EnumMap<GTToolType,DeferredItem<? extends GTToolItem>> BY_TYPE=new EnumMap<>(GTToolType.class);

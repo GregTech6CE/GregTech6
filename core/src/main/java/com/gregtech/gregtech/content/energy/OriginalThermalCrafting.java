@@ -12,7 +12,7 @@ import java.util.*;
 public final class OriginalThermalCrafting {
     private OriginalThermalCrafting() {}
     private static Input form(String prefix, GTMaterial material) { return new Input("form", prefix, material); }
-    private static Input item(String id) { return new Input("item", "gregtech:" + id, null); }
+    private static Input item(String id) { return new Input("item", "gt6ce:" + id, null); }
     public static List<Row> rows() {
         var result = new ArrayList<Row>();
         String[] plate = {"plate", "plateDouble", "plateTriple", "plateQuadruple", "plateQuintuple"};
@@ -41,7 +41,7 @@ public final class OriginalThermalCrafting {
                         'T', form("screw", variant.material()), 'C', new Input("wire", Integer.toString(1 << tier), resistor[tier]),
                         'd', item("tool_screwdriver"));
             }
-            result.add(new Row("thermal/" + variant.id(), pattern, key, "gregtech:" + variant.id(), 1, false, true));
+            result.add(new Row("thermal/" + variant.id(), pattern, key, "gt6ce:" + variant.id(), 1, false, true));
         }
         return List.copyOf(result);
     }

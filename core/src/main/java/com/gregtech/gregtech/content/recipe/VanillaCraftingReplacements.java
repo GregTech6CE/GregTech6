@@ -20,8 +20,8 @@ public final class VanillaCraftingReplacements {
         var rows=new ArrayList<Row>();
         // Loader_Recipes_Vanilla:469,478 removes the vanilla arrow shortcut and uses four shafts.
         rows.add(new Row("minecraft:arrow","minecraft:arrow",4,null,keys("F=item:minecraft:flint",
-                "A=item:gregtech:arrow_gt_wood_empty","B=item:gregtech:arrow_gt_wood_empty",
-                "C=item:gregtech:arrow_gt_wood_empty","D=item:gregtech:arrow_gt_wood_empty")));
+                "A=item:gt6ce:arrow_gt_wood_empty","B=item:gt6ce:arrow_gt_wood_empty",
+                "C=item:gt6ce:arrow_gt_wood_empty","D=item:gt6ce:arrow_gt_wood_empty")));
         shaped(rows,"furnace",1,"XXX/XFX/XXX","X=tag:minecraft:stone_crafting_materials","F=firestarter");
         shaped(rows,"paper",1,"XXX","X=item:minecraft:sugar_cane");
         rows.add(new Row("minecraft:book","minecraft:book",1,null,keys("L=item:minecraft:leather","A=item:minecraft:paper","B=item:minecraft:paper","C=item:minecraft:paper")));
@@ -42,14 +42,14 @@ public final class VanillaCraftingReplacements {
         shaped(rows,"stone_pressure_plate",1,"SS","S=item:minecraft:stone");
         shaped(rows,"shears",1,"hP/Pf","P=material:plate:Iron","h=tool:hard_hammer","f=tool:file");
         shaped(rows,"bone_meal",1,"h/X","h=tool:hard_hammer","X=item:minecraft:bone");
-        rows.add(new Row("gregtech:vanilla/bone_white_dust","material:dust:White",1,null,keys("X=item:minecraft:bone")));
+        rows.add(new Row("gt6ce:vanilla/bone_white_dust","material:dust:White",1,null,keys("X=item:minecraft:bone")));
         shaped(rows,"quartz_stairs",1,"  X/ XX/XXX","X=item:minecraft:quartz");
         shaped(rows,"quartz_slab",1,"XX","X=item:minecraft:quartz");
         for(String prefix:List.of("stick","stickLong")) {
             var ingredients=new LinkedHashMap<Character,String>();
             ingredients.put('I',"material:"+prefix+":Iron");
             for(int i=0;i<(prefix.equals("stick")?4:8);i++) ingredients.put((char)('a'+i),"item:minecraft:redstone");
-            rows.add(new Row("gregtech:vanilla/magnetic_"+prefix.toLowerCase(Locale.ROOT),"material:"+prefix+":IronMagnetic",1,null,ingredients));
+            rows.add(new Row("gt6ce:vanilla/magnetic_"+prefix.toLowerCase(Locale.ROOT),"material:"+prefix+":IronMagnetic",1,null,ingredients));
         }
         for(String material:new String[]{"Iron","Gold"}) {
             String name=material.equals("Iron")?"iron":"golden";
@@ -67,11 +67,11 @@ public final class VanillaCraftingReplacements {
         for(String wood:new String[]{"oak","spruce","birch","jungle","acacia","dark_oak","mangrove","cherry","crimson","warped"}) {
             String tag="tag:minecraft:"+wood+"_"+(wood.equals("crimson")||wood.equals("warped")?"stems":"logs");
             rows.add(new Row("minecraft:"+wood+"_planks","minecraft:"+wood+"_planks",2,null,keys("L="+tag)));
-            rows.add(new Row("gregtech:vanilla/"+wood+"_planks_saw","minecraft:"+wood+"_planks",4,"s/L",keys("s=tool:saw","L="+tag)));
+            rows.add(new Row("gt6ce:vanilla/"+wood+"_planks_saw","minecraft:"+wood+"_planks",4,"s/L",keys("s=tool:saw","L="+tag)));
             shaped(rows,wood+"_pressure_plate",1,"PP","P=item:minecraft:"+wood+"_planks");
         }
         shaped(rows,"stick",2,"P/P","P=tag:minecraft:planks");
-        rows.add(new Row("gregtech:vanilla/stick_saw","minecraft:stick",2,"s/P",keys("s=tool:saw","P=tag:minecraft:planks")));
+        rows.add(new Row("gt6ce:vanilla/stick_saw","minecraft:stick",2,"s/P",keys("s=tool:saw","P=tag:minecraft:planks")));
         shaped(rows,"bowl",1,"k/X","k=tool:knife","X=tag:minecraft:planks");
         return List.copyOf(rows);
     }

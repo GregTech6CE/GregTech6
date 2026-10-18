@@ -68,7 +68,7 @@ final class RemiGroupingSmoke {
             for(var item:net.minecraft.core.registries.BuiltInRegistries.ITEM) {
                 var id=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item);
                 boolean transformer=id.getPath().startsWith("rotation_transformer_");
-                if(!id.getNamespace().equals("gregtech")||!transformer&&(!id.getPath().startsWith("gearbox_")||id.getPath().equals("gearbox_axle")))continue;
+                if(!id.getNamespace().equals("gt6ce")||!transformer&&(!id.getPath().startsWith("gearbox_")||id.getPath().equals("gearbox_axle")))continue;
                 var stack=new net.minecraft.world.item.ItemStack(item);
                 var model=mc.getItemRenderer().getModel(stack,mc.level,mc.player,0);
                 int faces=0;
@@ -76,8 +76,8 @@ final class RemiGroupingSmoke {
                     var quads=model.getQuads(null,face,net.minecraft.util.RandomSource.create(0));
                     for(var quad:quads) {
                         String texture=quad.getSprite().contents().name().toString();
-                        require(transformer?texture.startsWith("gregtech:block/machines/transformers/transformer_rotation/")
-                                :texture.equals("gregtech:block/iconsets/gearbox"),"wrong gearbox item texture: "+id);
+                        require(transformer?texture.startsWith("gt6ce:block/machines/transformers/transformer_rotation/")
+                                :texture.equals("gt6ce:block/iconsets/gearbox"),"wrong gearbox item texture: "+id);
                         if(!transformer)require(quad.isTinted(),"uncolored gearbox item: "+id);
                     }
                     faces+=quads.size();
@@ -100,7 +100,7 @@ final class RemiGroupingSmoke {
             receipt.addProperty("distinctFluidSpringNames", springNames.size());
             int retiredChecked=0;
             for(String retired:java.util.List.of("diggable_clay","diggable_peat","key_copper","large_boiler_main","large_crucible_main","tank_3x3","tank_5x5","bumble_hive","long_dist_pipe","long_dist_wire","fuel_rod_naquadah","battery_lv")){
-                var key=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",retired);
+                var key=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",retired);
                 require(!net.minecraft.core.registries.BuiltInRegistries.ITEM.keySet().contains(key),"retired item registered "+retired);
                 require(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key)==net.minecraft.world.item.Items.AIR,"retired item alias still resolves "+retired);
                 retiredChecked++;
@@ -209,9 +209,9 @@ final class RemiGroupingSmoke {
         JsonObject counts = new JsonObject();
         for (EmiStack stack : displayed) {
             String id = groupId(stack);
-            if (!id.isEmpty() && !id.startsWith("gregtech:"))
-                for (var member : members(stack)) require(!member.getId().getNamespace().equals("gregtech"), "GT member in foreign folder " + id + " / " + member.getId());
-            if (!id.startsWith("gregtech:material_forms/")) continue;
+            if (!id.isEmpty() && !id.startsWith("gt6ce:"))
+                for (var member : members(stack)) require(!member.getId().getNamespace().equals("gt6ce"), "GT member in foreign folder " + id + " / " + member.getId());
+            if (!id.startsWith("gt6ce:material_forms/")) continue;
             String form = id.substring(id.indexOf('/') + 1);
             require(found.add(form), "duplicate group " + id);
             List<EmiStack> members = members(stack);
@@ -224,10 +224,10 @@ final class RemiGroupingSmoke {
                 if (form.equals("functional_shredder")) require(!item.endsWith(":shredder_blades"), "shredder blades grouped with machines");
                 if (form.equals("plate")) require(!item.equals("minecraft:glass_pane") && !item.equals("minecraft:paper"),
                         "vanilla pane/paper still classified as plate");
-                if (form.equals("real_fluids")) require(member.getItemStack().isEmpty() && item.startsWith("gregtech:"),
+                if (form.equals("real_fluids")) require(member.getItemStack().isEmpty() && item.startsWith("gt6ce:"),
                         "item or foreign fluid mixed into real fluids " + item);
                 if (form.startsWith("wire_") || form.startsWith("cable_") || form.startsWith("pipe_") || form.startsWith("item_pipe_"))
-                    require(item.startsWith("gregtech:" + form + "_"), "mixed transport specification " + id + " / " + item);
+                    require(item.startsWith("gt6ce:" + form + "_"), "mixed transport specification " + id + " / " + item);
             }
             if (form.equals("functional_electric_motor")) {
                 var order = members.stream().map(m -> m.getId().getPath()).toList();

@@ -150,7 +150,7 @@ public final class GTOreBlockResolver {
     @Nullable
     private static Block lookup(String path) {
 //? if >=1.21.1 {
-        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gregtech", path);
+        /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
         return BuiltInRegistries.BLOCK.containsKey(id) ? BuiltInRegistries.BLOCK.get(id) : null;
 *///?} else {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(GregTech.NAMESPACE, path);

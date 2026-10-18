@@ -28,7 +28,7 @@ public enum PanelCover {
 *///?} else {
         var key=ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        if(key!=null&&key.getNamespace().equals("gregtech"))for(var cover:values())if(cover.id.equals(key.getPath()))return cover;
+        if(key!=null&&key.getNamespace().equals("gt6ce"))for(var cover:values())if(cover.id.equals(key.getPath()))return cover;
         return null;
     }
 }

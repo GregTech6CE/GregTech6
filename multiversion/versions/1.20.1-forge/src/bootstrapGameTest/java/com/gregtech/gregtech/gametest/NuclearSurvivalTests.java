@@ -9,7 +9,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.gametest.GameTestHolder;
 
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @net.minecraftforge.gametest.PrefixGameTestTemplate(false)
 public final class NuclearSurvivalTests {
     @GameTest(template="test_empty") public static void placedRodsKeepFuelAndBreedingState(GameTestHelper h) {
@@ -61,23 +61,23 @@ public final class NuclearSurvivalTests {
         h.assertTrue(ReactorRadiation.protectedByArmor(player)&&!ReactorRadiation.apply(player,100,100),"full tagged suit prevents exposure");
         player.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD,ItemStack.EMPTY);
         h.assertTrue(ReactorRadiation.apply(player,1,100)&&PlayerRadiation.dose(player)==100,"missing one piece removes protection");
-        var medicine=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","radaway"));
+        var medicine=net.minecraftforge.registries.ForgeRegistries.ITEMS.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","radaway"));
         var stack=new ItemStack(medicine,2);player.getAbilities().instabuild=false;
         h.assertTrue(medicine.getFoodProperties().canAlwaysEat()&&medicine.getFoodProperties().getNutrition()==0,"medicine can be taken at full hunger without adding food");
         stack=medicine.finishUsingItem(stack,h.getLevel(),player);
         h.assertTrue(PlayerRadiation.dose(player)==50&&stack.getCount()==1,"one pill removes exactly 50 dose and is consumed");
         medicine.finishUsingItem(stack,h.getLevel(),player);h.assertTrue(PlayerRadiation.dose(player)==0,"second pill completes treatment");
         for(var entry:GTRadiationProtection.SUIT.values()){
-            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","nuclear/"+entry.getId().getPath());
+            var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","nuclear/"+entry.getId().getPath());
             h.assertTrue(h.getLevel().getRecipeManager().byKey(id).isPresent(),"suit crafting route loaded: "+id);
         }
         h.succeed();
     }
     @GameTest(template="test_empty") public static void radiationMedicineManufacturingAndGeiger(GameTestHelper h){
         var items=net.minecraftforge.registries.ForgeRegistries.ITEMS;
-        var pill=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","empty_wax_pill"));
-        var medicine=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","radaway"));
-        var counter=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","geiger_counter"));
+        var pill=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","empty_wax_pill"));
+        var medicine=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","radaway"));
+        var counter=items.getValue(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","geiger_counter"));
         var routes=com.gregtech.gregtech.data.MachineRecipeMaps.Extruder.mRecipeList.stream()
                 .filter(r->java.util.Arrays.stream(r.mOutputs).anyMatch(s->s.is(pill))).toList();
         h.assertTrue(routes.size()==18,"three food-grade waxes, three dust sizes, two bottle molds");

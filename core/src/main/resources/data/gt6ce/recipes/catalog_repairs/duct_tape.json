@@ -1,0 +1,19 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PPP",
+    " G "
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:technology/any_plastic_foil"
+    },
+    "G": {
+      "tag": "forge:glue"
+    }
+  },
+  "result": {
+    "item": "gt6ce:duct_tape",
+    "count": 1
+  }
+}

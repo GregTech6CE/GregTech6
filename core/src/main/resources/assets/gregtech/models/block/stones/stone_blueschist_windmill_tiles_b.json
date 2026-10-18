@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "gregtech:block/stones/gt.stone.blueschist/windmill_tiles_b"
-  }
-}

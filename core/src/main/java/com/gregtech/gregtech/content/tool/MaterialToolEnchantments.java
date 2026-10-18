@@ -45,8 +45,8 @@ public final class MaterialToolEnchantments {
     }
     public static String id(String name) {
         return switch (name) {
-            case "disjunction", "butchery", "sharpness_multi", "smite_multi" -> "gregtech:"+name;
-            case "haste", "gt_haste" -> "gregtech:gt_haste";
+            case "disjunction", "butchery", "sharpness_multi", "smite_multi" -> "gt6ce:"+name;
+            case "haste", "gt_haste" -> "gt6ce:gt_haste";
             default -> name.contains(":") ? name : "minecraft:"+name;
         };
     }

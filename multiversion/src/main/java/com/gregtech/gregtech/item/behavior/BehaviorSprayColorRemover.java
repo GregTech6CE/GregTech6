@@ -53,8 +53,8 @@ import javax.annotation.Nullable;
  *       counterpart: the GT6 blocks that implemented them are the machine faces GT's own colour
  *       sprays painted.</li>
  *   <li>The GT grass branch ({@code :104}, {@code BlocksGT.Grass}). The port's coloured grasses are
- *       separate blocks ({@code gregtech:grass}, {@code gregtech:grass_<variant>},
- *       {@code gregtech:grassblock_<colour>} — {@code GTIconSetBlocks:118-124}) rather than one
+ *       separate blocks ({@code gt6ce:grass}, {@code gt6ce:grass_<variant>},
+ *       {@code gt6ce:grassblock_<colour>} — {@code GTIconSetBlocks:118-124}) rather than one
  *       block with six metadata values, and which of them is "the spray-painted one" is not
  *       decidable from the port's tables, so no mapping is invented here.</li>
  *   <li>The painting spray itself, {@code Behavior_Spray_Color} ({@code :45-183}), is not portable
@@ -91,9 +91,9 @@ public final class BehaviorSprayColorRemover {
 
     /** The port's can triple: the full id is registered first, the {@code _2} one is the used can. */
     public static Consumable paintRemovalSpray() {
-        return new Consumable(ItemBehaviors.stack("gregtech:empty_spray_can"),
-                ItemBehaviors.stack("gregtech:paint_removal_spray_2"),
-                ItemBehaviors.stack("gregtech:paint_removal_spray"),
+        return new Consumable(ItemBehaviors.stack("gt6ce:empty_spray_can"),
+                ItemBehaviors.stack("gt6ce:paint_removal_spray_2"),
+                ItemBehaviors.stack("gt6ce:paint_removal_spray"),
                 USES * USES_MULTIPLIER);
     }
 

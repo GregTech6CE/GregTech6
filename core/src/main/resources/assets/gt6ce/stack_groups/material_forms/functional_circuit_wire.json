@@ -1,0 +1,13 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_circuit_wire",
+  "contents": [
+    "item:gt6ce:circuit_wire_enderium",
+    "item:gt6ce:circuit_wire_gold",
+    "item:gt6ce:circuit_wire_magic",
+    "item:gt6ce:circuit_wire_platinum",
+    "item:gt6ce:circuit_wire_signalum",
+    "item:gt6ce:circuit_wiring_copper"
+  ],
+  "priority": 110
+}

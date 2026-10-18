@@ -221,7 +221,7 @@ public final class MassStorageMaterialForms {
 
     private static long taggedUnits(Form stored, ItemStack candidate) {
         // Forge's form-specific tags admit another mod's equivalent item. Broad
-        // gregtech:material/<name> and forge:storage_blocks tags are ambiguous.
+        // gt6ce:material/<name> and forge:storage_blocks tags are ambiguous.
         String material = MaterialEquivalence.materialName(stored.material);
         return switch (stored.family) {
             case DUST -> tagged(candidate, "dusts", material) ? GTValues.U

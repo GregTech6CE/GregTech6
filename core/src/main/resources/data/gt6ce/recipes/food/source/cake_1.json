@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "C",
+    "Z"
+  ],
+  "key": {
+    "Z": {
+      "item": "gt6ce:cake_bottom"
+    },
+    "C": {
+      "tag": "gt6ce:food/foodheavycream"
+    }
+  },
+  "result": {
+    "item": "minecraft:cake",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

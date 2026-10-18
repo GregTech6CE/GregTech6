@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=east,lit=false":  { "model": "gt6ce:block/machine/burning_box_solid/east_off" },
+    "facing=east,lit=true":   { "model": "gt6ce:block/machine/burning_box_solid/east_on" },
+    "facing=north,lit=false": { "model": "gt6ce:block/machine/burning_box_solid/north_off" },
+    "facing=north,lit=true":  { "model": "gt6ce:block/machine/burning_box_solid/north_on" },
+    "facing=south,lit=false": { "model": "gt6ce:block/machine/burning_box_solid/south_off" },
+    "facing=south,lit=true":  { "model": "gt6ce:block/machine/burning_box_solid/south_on" },
+    "facing=west,lit=false":  { "model": "gt6ce:block/machine/burning_box_solid/west_off" },
+    "facing=west,lit=true":   { "model": "gt6ce:block/machine/burning_box_solid/west_on" }
+  }
+}

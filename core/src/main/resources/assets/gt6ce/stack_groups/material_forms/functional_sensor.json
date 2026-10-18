@@ -1,0 +1,28 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_sensor",
+  "contents": [
+    "item:gt6ce:sensor_bucketometer",
+    "item:gt6ce:sensor_chronometer",
+    "item:gt6ce:sensor_electrometer",
+    "item:gt6ce:sensor_fluidometer",
+    "item:gt6ce:sensor_geiger",
+    "item:gt6ce:sensor_gibblometer",
+    "item:gt6ce:sensor_itemometer",
+    "item:gt6ce:sensor_kilobucketometer",
+    "item:gt6ce:sensor_kilogibblometer",
+    "item:gt6ce:sensor_laserometer",
+    "item:gt6ce:sensor_luminometer",
+    "item:gt6ce:sensor_playercounter",
+    "item:gt6ce:sensor_progressmeter",
+    "item:gt6ce:sensor_stackometer",
+    "item:gt6ce:sensor_tachometer",
+    "item:gt6ce:sensor_thermometer",
+    "item:gt6ce:sensor_tpsmeter",
+    "item:gt6ce:sensor_weightometer_light",
+    "item:gt6ce:sensor_weightometer_medium",
+    "item:gt6ce:sensor_weightometer_super_heavy",
+    "item:gt6ce:sensor_weightometric"
+  ],
+  "priority": 110
+}

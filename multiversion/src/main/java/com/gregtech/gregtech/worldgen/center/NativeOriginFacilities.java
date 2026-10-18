@@ -29,7 +29,7 @@ public final class NativeOriginFacilities {
     public static void place(NativeOriginWorld world, WorldGenLevel level, int x,int y,int z,int legacy,String data) {
         if(!world.canWrite(x,y,z)) return;
 
-        var key=ResourceLocation.fromNamespaceAndPath("gregtech",block(legacy));
+        var key=ResourceLocation.fromNamespaceAndPath("gt6ce",block(legacy));
         if(!BuiltInRegistries.BLOCK.containsKey(key)) throw new IllegalStateException("Missing origin facility "+key);
         var state=BuiltInRegistries.BLOCK.get(key).defaultBlockState();
         var side=java.util.regex.Pattern.compile("NBT_FACING, SIDE_([XYZ])_(NEG|POS)").matcher(data);

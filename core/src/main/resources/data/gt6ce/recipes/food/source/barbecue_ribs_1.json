@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "tag": "gt6ce:food/foodribcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbarbecuesauce"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:barbecue_ribs",
+    "count": 1
+  },
+  "gregtech_autocraftable": false
+}

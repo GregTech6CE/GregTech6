@@ -22,7 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * whose bounds come from GT6's own {@code tD1}/{@code tD2} arrays, and the random-walk sprinkle up
  * to the water level.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BedrockVeinTests {
     private static final int BASE_X = 58000;
@@ -141,6 +141,6 @@ public final class BedrockVeinTests {
 
     private static boolean isOre(BlockState state) {
         ResourceLocation id = ForgeRegistries.BLOCKS.getKey(state.getBlock());
-        return id != null && id.getNamespace().equals("gregtech") && id.getPath().startsWith("ore");
+        return id != null && id.getNamespace().equals("gt6ce") && id.getPath().startsWith("ore");
     }
 }

@@ -34,5 +34,5 @@ public record RegisteredBlock<T extends Block>(ResourceLocation getId, Supplier<
         var key = id(path);
         return new RegisteredBlock<>(key, () -> (T) BuiltInRegistries.BLOCK.get(key));
     }
-    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gregtech", path); }
+    private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
 }

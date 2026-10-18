@@ -25,7 +25,7 @@ public final class GTGrassRepairTests {
     public static void colouredGrassDropsDirtAndSupportsPlants(GameTestHelper h) {
         for (String colour : new String[]{"medium", "light", "dark", "normal", "yellow", "brown"}) {
             Block block = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", "grassblock_" + colour));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", "grassblock_" + colour));
             h.assertTrue(block instanceof GTGrassBlock, colour + " is a GT6 grass block");
             var state = block.defaultBlockState();
             var drops = block.getDrops(state, new LootParams.Builder(h.getLevel()));
@@ -34,16 +34,16 @@ public final class GTGrassRepairTests {
             h.assertTrue(state.is(BlockTags.MINEABLE_WITH_SHOVEL), colour + " grass uses a shovel");
             h.assertTrue(!state.isRandomlyTicking(), colour + " grass does not spread");
             var recipes = h.getLevel().getRecipeManager();
-            h.assertTrue(recipes.byKey(ResourceLocation.fromNamespaceAndPath("gregtech",
+            h.assertTrue(recipes.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",
                             "grass/grassblock_" + colour + "_from_dye")).isPresent()
-                            && recipes.byKey(ResourceLocation.fromNamespaceAndPath("gregtech",
+                            && recipes.byKey(ResourceLocation.fromNamespaceAndPath("gt6ce",
                                     "grass/grassblock_" + colour + "_to_vanilla")).isPresent(),
                     colour + " grass has the original dye and reverse crafting routes");
         }
 
         BlockPos soil = h.absolutePos(new BlockPos(2, 1, 2));
         var state = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "grassblock_yellow"))
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "grassblock_yellow"))
                 .defaultBlockState();
         h.getLevel().setBlockAndUpdate(soil, state);
         GTGrassBlock grass = (GTGrassBlock) state.getBlock();

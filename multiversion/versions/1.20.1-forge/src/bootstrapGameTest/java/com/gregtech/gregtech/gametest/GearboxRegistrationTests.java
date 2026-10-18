@@ -59,8 +59,8 @@ public final class GearboxRegistrationTests {
     public static void everyOriginalGearboxHasResolvedSurvivalRecipe(GameTestHelper helper) {
         var manager = helper.getLevel().getRecipeManager();
         long generated = Loader_HandToolCraftingRecipes.registeredIds().stream()
-                .filter(id -> id.startsWith("gregtech:hand/gearbox/")
-                        || id.startsWith("gregtech:hand/rotation_transformer/"))
+                .filter(id -> id.startsWith("gt6ce:hand/gearbox/")
+                        || id.startsWith("gt6ce:hand/rotation_transformer/"))
                 .count();
         helper.assertTrue(generated == 26, "all 26 original gearbox patterns are generated");
         for (var entry : GTGearboxes.allGearboxes())

@@ -14,22 +14,22 @@ public final class RecipeDisplayCaptions {
         var stats = RecipePowerStats.of(recipe, map.mPower);
         var visibility=com.gregtech.gregtech.api.recipe.RecipeCaptionVisibility.of(recipe.mEUt,map.mCombinePower,map.mShowVoltageAmperage);
         if (recipe.mEUt != 0) {
-            caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.gain" : "gregtech.jei.costs", stats.costs().toString(), ENERGY_UNIT), 86);
+            caption(graphics, Component.translatable(stats.generating() ? "gt6ce.jei.gain" : "gt6ce.jei.costs", stats.costs().toString(), ENERGY_UNIT), 86);
             if (visibility.usage())
-                caption(graphics, Component.translatable(stats.generating() ? "gregtech.jei.output" : "gregtech.jei.usage", stats.usage().toString(), ENERGY_UNIT), 98);
-            if (visibility.tier()) caption(graphics, Component.translatable("gregtech.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
-            if(visibility.power() && map!=com.gregtech.gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gregtech.jei.power", stats.power()), 122);
+                caption(graphics, Component.translatable(stats.generating() ? "gt6ce.jei.output" : "gt6ce.jei.usage", stats.usage().toString(), ENERGY_UNIT), 98);
+            if (visibility.tier()) caption(graphics, Component.translatable("gt6ce.jei.tier", stats.tier().toString(), ENERGY_UNIT), 110);
+            if(visibility.power() && map!=com.gregtech.gregtech.data.MachineRecipeMaps.Fusion) caption(graphics, Component.translatable("gt6ce.jei.power", stats.power()), 122);
         } else if(visibility.tier()) {
-            caption(graphics, Component.translatable("gregtech.jei.tier_unspecified"), 110);
+            caption(graphics, Component.translatable("gt6ce.jei.tier_unspecified"), 110);
         }
         // Instant maps (the crucibles) convert on contact, so a duration line would be a lie.
         if (!map.mInstantRecipes)
-            caption(graphics, Component.translatable("gregtech.jei.time_" + stats.timeUnit(), stats.time()), 134);
+            caption(graphics, Component.translatable("gt6ce.jei.time_" + stats.timeUnit(), stats.time()), 134);
         if(map==com.gregtech.gregtech.data.MachineRecipeMaps.Fusion)
-            caption(graphics,Component.translatable("gregtech.fusion.startup",recipe.mSpecialValue),122);
+            caption(graphics,Component.translatable("gt6ce.fusion.startup",recipe.mSpecialValue),122);
         else if(map.hasSpecialValueLabel() && recipe.mSpecialValue!=0)
             // GT6 NEI special value, e.g. the crucible's "Temperature: 1811 K".
-            caption(graphics,Component.translatable("gregtech.jei.special_value",
+            caption(graphics,Component.translatable("gt6ce.jei.special_value",
                     recipe.mSpecialValue*map.mSpecialValueMultiplier,map.mSpecialValuePost.trim()),122);
     }
     private static void caption(GuiGraphics graphics,Component text,int y) {

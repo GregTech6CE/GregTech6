@@ -49,7 +49,7 @@ public final class SandwichBlockEntity extends BlockEntity {
 
     private static ItemStack gt(String id) {
 //? if >=1.21.1 {
-        /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",id));
+        /*Item item = net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",id));
 *///?} else {
         Item item = ForgeRegistries.ITEMS.getValue(GregTech.id(id));
 //?}
@@ -135,7 +135,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         ItemStack remainder = stack.getCraftingRemainingItem();
         if (!remainder.isEmpty() && (remainder.is(Items.GLASS_BOTTLE)
 //? if >=1.21.1 {
-                /*|| net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remainder.getItem()).equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","bottle_empty"))))
+                /*|| net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(remainder.getItem()).equals(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","bottle_empty"))))
 *///?} else {
                 || ForgeRegistries.ITEMS.getKey(remainder.getItem()).equals(GregTech.id("bottle_empty"))))
 //?}
@@ -253,7 +253,7 @@ public final class SandwichBlockEntity extends BlockEntity {
         CompoundTag tag = new CompoundTag();
 //? if >=1.21.1 {
         /*writeFields(tag, level==null ? net.minecraft.core.RegistryAccess.fromRegistryOfRegistries(net.minecraft.core.registries.BuiltInRegistries.REGISTRY) : level.registryAccess(), true);
-        tag.putString("id", "gregtech:sandwich_block");
+        tag.putString("id", "gt6ce:sandwich_block");
         result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(tag));
 *///?} else {
         writeFields(tag, true);

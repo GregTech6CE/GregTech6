@@ -23,7 +23,7 @@ public final class MachineModelSmoke {
         var renderShapes = new TreeMap<String,Integer>();
         for (var block : BuiltInRegistries.BLOCK) {
             var id = BuiltInRegistries.BLOCK.getKey(block);
-            if (!id.getNamespace().equals("gregtech")) continue;
+            if (!id.getNamespace().equals("gt6ce")) continue;
             var state = block.defaultBlockState();
             var model = minecraft.getBlockRenderer().getBlockModel(state);
             if (model == missing) { errors.add("model " + id); continue; }

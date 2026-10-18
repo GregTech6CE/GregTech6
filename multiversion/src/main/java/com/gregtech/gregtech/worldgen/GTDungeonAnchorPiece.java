@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  * <p>GT6's dungeon {@code WorldgenDungeonGT} was registered with the 1.7.10 world generator, which had no
  * concept of a structure; the port generates it as a {@link GTDungeonFeature feature}, one cell per chunk
  * (see {@code GTDungeonLayout} for that split). The structure that only exists so vanilla's {@code /locate
- * structure gregtech:gt_dungeon} can answer must therefore build nothing - if it wrote a single block, the
+ * structure gt6ce:gt_dungeon} can answer must therefore build nothing - if it wrote a single block, the
  * dungeon would be generated twice.</p>
  *
  * <p>Why a piece at all, instead of an empty generation point: vanilla decides whether a structure exists
@@ -50,7 +50,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  * <p>GT6's dungeon {@code WorldgenDungeonGT} was registered with the 1.7.10 world generator, which had no
  * concept of a structure; the port generates it as a {@link GTDungeonFeature feature}, one cell per chunk
  * (see {@code GTDungeonLayout} for that split). The structure that only exists so vanilla's {@code /locate
- * structure gregtech:gt_dungeon} can answer must therefore build nothing - if it wrote a single block, the
+ * structure gt6ce:gt_dungeon} can answer must therefore build nothing - if it wrote a single block, the
  * dungeon would be generated twice.</p>
  *
  * <p>Why a piece at all, instead of an empty generation point: vanilla decides whether a structure exists

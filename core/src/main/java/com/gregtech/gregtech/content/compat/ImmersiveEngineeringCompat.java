@@ -21,8 +21,8 @@ public final class ImmersiveEngineeringCompat {
                 List.of(item("immersiveengineering:wooden_barrel", 1)),
                 List.of(item("minecraft:oak_planks", 6), form("dustSmall", "Wood", 2)),
                 null, 0, 16, 96, false, 100, false, SOURCE + ":48"));
-        machines.add(generify("generify/gt_to_ie", "gregtech:planks_treated", "immersiveengineering:treated_wood_horizontal", SOURCE + ":50"));
-        machines.add(generify("generify/ie_to_gt", "immersiveengineering:treated_wood_horizontal", "gregtech:planks_treated", SOURCE + ":52"));
+        machines.add(generify("generify/gt_to_ie", "gt6ce:planks_treated", "immersiveengineering:treated_wood_horizontal", SOURCE + ":50"));
+        machines.add(generify("generify/ie_to_gt", "immersiveengineering:treated_wood_horizontal", "gt6ce:planks_treated", SOURCE + ":52"));
         machines.add(new CompatSpecs.MachineRow("compress/coke", "Compressor", CompatSpecs.Op.ONE,
                 List.of(form("plateGem", "CoalCoke", 8)),
                 List.of(item("immersiveengineering:coke", 1)),
@@ -39,12 +39,12 @@ public final class ImmersiveEngineeringCompat {
         baths(machines);
         var crafting = List.of(
                 new CompatSpecs.CraftingRow("compat/immersiveengineering/packaged_to_gt",
-                        item("gregtech:planks_treated", 1),
+                        item("gt6ce:planks_treated", 1),
                         List.of(item("immersiveengineering:treated_wood_packaged", 1)),
                         SOURCE + ":53"),
                 new CompatSpecs.CraftingRow("compat/immersiveengineering/gt_to_horizontal",
                         item("immersiveengineering:treated_wood_horizontal", 1),
-                        List.of(item("gregtech:planks_treated", 1)),
+                        List.of(item("gt6ce:planks_treated", 1)),
                         SOURCE + ":54"));
         var removals = new ArrayList<CompatSpecs.Removal>();
         for (String metal : HAMMERED_PLATES) {
@@ -57,7 +57,7 @@ public final class ImmersiveEngineeringCompat {
                         SOURCE + ":55 fireproof treated planks are not registered",
                         SOURCE + ":58 external IC2 compressor bridge is not restored",
                         SOURCE + ":61 external pulverizer bridge is not restored",
-                        "RecipeMapBath.java:70-74 plank oil baths already output gregtech:planks_treated",
+                        "RecipeMapBath.java:70-74 plank oil baths already output gt6ce:planks_treated",
                         "Loader_Recipes_Woods.java:157-172 Railcraft tie and creosote-wood outputs stay deferred"));
     }
 

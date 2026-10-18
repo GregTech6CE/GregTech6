@@ -355,14 +355,14 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         }
 //? if >=1.21.1 {
         /*var registry=net.minecraft.core.registries.BuiltInRegistries.FLUID;
-        var id=ResourceLocation.fromNamespaceAndPath("gregtech","ic2distilledwater");
+        var id=ResourceLocation.fromNamespaceAndPath("gt6ce","ic2distilledwater");
         if(registry.containsKey(id)){cachedDistilledWaterFluid=registry.get(id);return;}
         for(var entry:registry.entrySet())if(entry.getKey().location().getPath().equalsIgnoreCase("ic2distilledwater")){
             cachedDistilledWaterFluid=entry.getValue();return;
 *///?} else {
         // Path 2: direct Forge registry lookup by known registry name
         cachedDistilledWaterFluid = ForgeRegistries.FLUIDS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", "ic2distilledwater"));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", "ic2distilledwater"));
         if (cachedDistilledWaterFluid != null) return;
         // Path 3: case-insensitive scan of Forge fluid registry
         for (var entry : ForgeRegistries.FLUIDS.getEntries()) {

@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:clay_comb",
+    "gt6ce:sticky_comb",
+    "gt6ce:royal_comb",
+    "gt6ce:soul_comb",
+    "gt6ce:amnesic_comb",
+    "gt6ce:military_comb",
+    "gt6ce:pyro_comb",
+    "gt6ce:cryo_comb",
+    "gt6ce:aero_comb",
+    "gt6ce:tera_comb"
+  ]
+}

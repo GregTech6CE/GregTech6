@@ -41,7 +41,7 @@ import java.util.TreeMap;
  * Boxinator/Unboxinator and {@code :552-625} for the crafting grid).
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MaterialFormConversionTests {
 
@@ -221,9 +221,9 @@ public final class MaterialFormConversionTests {
         List<String> ids = Loader_FormConversionCraftingRecipes.registeredIds();
         helper.assertTrue(ids.size() > 1000,
                 "GT6's crafting-grid form conversions were materialised per material: " + ids.size());
-        helper.assertTrue(ids.contains("gregtech:form_conversion/ingot_to_blockingot/copper_9"),
+        helper.assertTrue(ids.contains("gt6ce:form_conversion/ingot_to_blockingot/copper_9"),
                 "9 copper ingots -> block of copper ingots is a crafting recipe");
-        helper.assertTrue(ids.contains("gregtech:form_conversion/dustsmall_to_dust/copper_4"),
+        helper.assertTrue(ids.contains("gt6ce:form_conversion/dustsmall_to_dust/copper_4"),
                 "4 copper small piles -> one copper dust is a crafting recipe");
 
         GTMaterial copper = GTMaterialRegistry.get("Copper");

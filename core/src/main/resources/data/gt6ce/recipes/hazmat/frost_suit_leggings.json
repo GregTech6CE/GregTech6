@@ -1,0 +1,24 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "MMM",
+    "MqM",
+    "MlM"
+  ],
+  "key": {
+    "M": {
+      "tag": "gt6ce:plate/asbestos"
+    },
+    "l": {
+      "tag": "forge:tools/file"
+    },
+    "q": {
+      "tag": "forge:tools/scissors"
+    }
+  },
+  "result": {
+    "item": "gt6ce:frost_suit_leggings"
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

@@ -38,14 +38,14 @@ public final class WireTooltips {
         // Insulated / damage warning
         if (spec.insulated()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".wire.insulated")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.insulated")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.insulated")
 //?}
                     .withStyle(ChatFormatting.GREEN));
         } else if (spec.contactDamage()) {
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".wire.damage_warning")
+            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.damage_warning")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.damage_warning")
 //?}
@@ -54,7 +54,7 @@ public final class WireTooltips {
 
         // Use hint
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gregtech" + ".wire.use_cutter")
+        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".wire.use_cutter")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".wire.use_cutter")
 //?}

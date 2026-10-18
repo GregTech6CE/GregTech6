@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "gt6ce:block/stones/gt.stone.komatiite/smooth",
+    "top": "gt6ce:block/stones/gt.stone.komatiite/smooth",
+    "side": "gt6ce:block/stones/gt.stone.komatiite/smooth"
+  }
+}

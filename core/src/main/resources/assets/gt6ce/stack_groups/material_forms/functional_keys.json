@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_keys",
+  "contents": [
+    "item:gt6ce:brass_key",
+    "item:gt6ce:bronze_key",
+    "item:gt6ce:copper_key",
+    "item:gt6ce:gold_key",
+    "item:gt6ce:iron_key",
+    "item:gt6ce:lead_key",
+    "item:gt6ce:plastic_key",
+    "item:gt6ce:platinum_key",
+    "item:gt6ce:silver_key",
+    "item:gt6ce:tin_key"
+  ],
+  "priority": 110
+}

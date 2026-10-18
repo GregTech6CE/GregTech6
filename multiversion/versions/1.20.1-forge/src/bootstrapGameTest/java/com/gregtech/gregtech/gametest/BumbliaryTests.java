@@ -66,7 +66,7 @@ import java.util.List;
  * versus creative uses {@code FakePlayerFactory.getMinecraft} with {@code setGameMode} instead - and
  * asserts the mode it just set before it reads a slot rule.</p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbliaryTests {
 
@@ -103,7 +103,7 @@ public final class BumbliaryTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void ordinaryBumbliaryHasOriginalSurvivalRecipe(GameTestHelper helper) {
-        var recipe = helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gregtech", "tool_blocks/bumbliary")).orElseThrow();
+        var recipe = helper.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("gt6ce", "tool_blocks/bumbliary")).orElseThrow();
         helper.assertTrue(recipe instanceof com.gregtech.gregtech.recipe.ToolShapedRecipe, "bumbliary uses tool-aware crafting");
         var ingredients = recipe.getIngredients();
         helper.assertTrue(ingredients.size() == 9, "original 3x3 grid");
@@ -277,7 +277,7 @@ public final class BumbliaryTests {
     public static void bumbliaryIsRegistered(GameTestHelper helper) {
         List<String> problems = new ArrayList<>();
         for (String id : new String[]{"bumbliary", "advanced_bumbliary"}) {
-            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
             if (block == null || block.asItem() == Items.AIR) {
                 problems.add("the block " + id + " has no item");
                 continue;
@@ -286,8 +286,8 @@ public final class BumbliaryTests {
                 problems.add("the bumbliary block entity type must cover " + id);
             }
             for (String language : new String[]{"en_us", "zh_cn"}) {
-                if (!lang(language).contains("\"block.gregtech." + id + "\"")) {
-                    problems.add(language + " has no name for block.gregtech." + id);
+                if (!lang(language).contains("\"block.gt6ce." + id + "\"")) {
+                    problems.add(language + " has no name for block.gt6ce." + id);
                 }
             }
         }
@@ -300,18 +300,18 @@ public final class BumbliaryTests {
         // GT6's GUI sheets, lower case like every port texture.
         for (String texture : new String[]{"bumbliary.png", "bumbliary_advanced.png"}) {
             if (BumbliaryTests.class.getClassLoader()
-                    .getResource("assets/gregtech/textures/gui/machines/" + texture) == null) {
+                    .getResource("assets/gt6ce/textures/gui/machines/" + texture) == null) {
                 problems.add("missing GUI texture " + texture);
             }
         }
         // Both blocks need their assets: blockstate, block model, item model and GT6's six faces.
         for (String asset : new String[]{
-                "assets/gregtech/blockstates/bumbliary.json",
-                "assets/gregtech/blockstates/advanced_bumbliary.json",
-                "assets/gregtech/models/block/tool/bumbliary.json",
-                "assets/gregtech/models/block/tool/advanced_bumbliary.json",
-                "assets/gregtech/models/item/bumbliary.json",
-                "assets/gregtech/models/item/advanced_bumbliary.json"}) {
+                "assets/gt6ce/blockstates/bumbliary.json",
+                "assets/gt6ce/blockstates/advanced_bumbliary.json",
+                "assets/gt6ce/models/block/tool/bumbliary.json",
+                "assets/gt6ce/models/block/tool/advanced_bumbliary.json",
+                "assets/gt6ce/models/item/bumbliary.json",
+                "assets/gt6ce/models/item/advanced_bumbliary.json"}) {
             if (BumbliaryTests.class.getClassLoader().getResource(asset) == null) {
                 problems.add("missing " + asset);
             }
@@ -319,7 +319,7 @@ public final class BumbliaryTests {
         for (String machine : new String[]{"bumbliary", "bumbliary_adv"}) {
             for (String face : new String[]{"colored/bottom", "colored/top", "colored/sides",
                     "overlay/bottom", "overlay/top", "overlay/sides"}) {
-                String texture = "assets/gregtech/textures/block/machines/tools/" + machine + "/" + face + ".png";
+                String texture = "assets/gt6ce/textures/block/machines/tools/" + machine + "/" + face + ".png";
                 if (BumbliaryTests.class.getClassLoader().getResource(texture) == null) {
                     problems.add("missing " + texture);
                 }
@@ -353,7 +353,7 @@ public final class BumbliaryTests {
 
     private static String lang(String language) {
         try (java.io.InputStream stream = BumbliaryTests.class.getClassLoader()
-                .getResourceAsStream("assets/gregtech/lang/" + language + ".json")) {
+                .getResourceAsStream("assets/gt6ce/lang/" + language + ".json")) {
             if (stream == null) return "";
             return new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
         } catch (java.io.IOException exception) {

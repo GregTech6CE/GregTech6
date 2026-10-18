@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BTB",
+    "TPT",
+    "BTB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:tool_head_sword/gold"
+    },
+    "T": {
+      "tag": "gt6ce:screw/gold"
+    },
+    "P": {
+      "tag": "gt6ce:plate/gold"
+    }
+  },
+  "result": {
+    "item": "gt6ce:spike_fancy",
+    "count": 1,
+    "nbt": {
+      "BlockStateTag": {
+        "mode": "wall",
+        "secondary": "false"
+      }
+    }
+  }
+}

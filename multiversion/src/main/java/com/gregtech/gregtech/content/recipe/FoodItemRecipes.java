@@ -184,8 +184,8 @@ public final class FoodItemRecipes {
 
     /** {@code input, second ingredient id, output id, output count, GT6 source}. */
     private static final String[][] MIXER_ITEMS = {
-            {"chocolate_dough", "gregtech:gem_chipped_sugar", "cookie_shaped_dough", "4", "Loader_Recipes_Food.java:140"},
-            {"abyssal_dough", "gregtech:dust_chocolate", "cookie_shaped_abyssal_dough", "4", "Loader_Recipes_Food.java:142"},
+            {"chocolate_dough", "gt6ce:gem_chipped_sugar", "cookie_shaped_dough", "4", "Loader_Recipes_Food.java:140"},
+            {"abyssal_dough", "gt6ce:dust_chocolate", "cookie_shaped_abyssal_dough", "4", "Loader_Recipes_Food.java:142"},
     };
 
     /** {@code input, fluid field, mB, output id, GT6 source}; {@code U} is not a mB volume, see below. */
@@ -345,12 +345,12 @@ public final class FoodItemRecipes {
 
     private static void packaging() {
         // MultiItemFood.java:360,370,377 — the packaged food is boxed, the packaging comes back off.
-        box("fries", "gregtech:plate_double_paper", "fries_2", "MultiItemFood.java:360");
-        box("potato_chips", "gregtech:foil_aluminium", "bag_of_potato_chips", "MultiItemFood.java:370");
-        box("chili_chips", "gregtech:foil_aluminium", "bag_of_chili_chips", "MultiItemFood.java:377");
-        unbox("fries_2", "fries", "gregtech:scrap_gt_paper", 16, "MultiItemFood.java:361");
-        unbox("bag_of_potato_chips", "potato_chips", "gregtech:scrap_gt_aluminium", 2, "MultiItemFood.java:371");
-        unbox("bag_of_chili_chips", "chili_chips", "gregtech:scrap_gt_aluminium", 2, "MultiItemFood.java:378");
+        box("fries", "gt6ce:plate_double_paper", "fries_2", "MultiItemFood.java:360");
+        box("potato_chips", "gt6ce:foil_aluminium", "bag_of_potato_chips", "MultiItemFood.java:370");
+        box("chili_chips", "gt6ce:foil_aluminium", "bag_of_chili_chips", "MultiItemFood.java:377");
+        unbox("fries_2", "fries", "gt6ce:scrap_gt_paper", 16, "MultiItemFood.java:361");
+        unbox("bag_of_potato_chips", "potato_chips", "gt6ce:scrap_gt_aluminium", 2, "MultiItemFood.java:371");
+        unbox("bag_of_chili_chips", "chili_chips", "gt6ce:scrap_gt_aluminium", 2, "MultiItemFood.java:378");
         // MultiItemFood.java:917-919 — the three pills are boxed from a dust and the empty pill.
         pill("Iodine", "radaway", "MultiItemFood.java:917");
         pill("Mint", "peppermint", "MultiItemFood.java:918");
@@ -420,7 +420,7 @@ public final class FoodItemRecipes {
 *///?} else {
         if (item == null) {
 //?}
-            SKIPPED.add("gregtech:" + id + ": the port registers no such GT6 food item");
+            SKIPPED.add("gt6ce:" + id + ": the port registers no such GT6 food item");
             return ItemStack.EMPTY;
         }
         return new ItemStack(item, count);

@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
  * {@code GTDungeonLayout.ANCHOR_OFFSET}, i.e. {@code WorldgenDungeonGT:151-152}).
  *
  * <h2>Why a subclass of {@code RandomSpreadStructurePlacement}</h2>
- * <p>{@code /locate structure gregtech:gt_dungeon} reaches
+ * <p>{@code /locate structure gt6ce:gt_dungeon} reaches
  * {@code ServerLevel.findNearestMapStructure} ({@code ServerLevel:1121-1134}) and then
  * {@code ChunkGenerator.findNearestMapStructure} ({@code ChunkGenerator:120-186}), which dispatches on the
  * placement's runtime type: {@code ConcentricRingsStructurePlacement} first ({@code :142}) and
@@ -101,7 +101,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
 //?}
             placement -> placement.spacing() == SPACING && placement.separation() == SEPARATION
                     ? DataResult.success(placement)
-                    : DataResult.error(() -> "gregtech:gt_dungeon_lattice is GT6's fixed lattice: spacing must be "
+                    : DataResult.error(() -> "gt6ce:gt_dungeon_lattice is GT6's fixed lattice: spacing must be "
 //? if >=1.21.1 {
                             /*+ SPACING + " and separation " + SEPARATION));
 *///?} else {
@@ -132,7 +132,7 @@ public final class GTDungeonPlacement extends RandomSpreadStructurePlacement {
                 GTDungeonLayout.anchorOfRegion(GTDungeonLayout.regionOf(chunkZ)));
     }
 
-    /** The registered type, {@code gregtech:gt_dungeon_lattice} (see {@link GTStructures}). */
+    /** The registered type, {@code gt6ce:gt_dungeon_lattice} (see {@link GTStructures}). */
     @Override
     public StructurePlacementType<?> type() {
         return GTStructures.DUNGEON_LATTICE.get();

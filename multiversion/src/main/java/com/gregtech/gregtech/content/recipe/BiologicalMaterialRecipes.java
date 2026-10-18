@@ -30,14 +30,14 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
                 null, fluids(fluid("Slime_Green", 250)));
     }
     private void resin() {
-        add("resin/squeeze", MachineRecipeMaps.Squeezer, 64, 16, items(item("gregtech:rubber_resin", 1)), null, null, fluids(fluid("Latex", 144)));
-        add("resin/juice", MachineRecipeMaps.Juicer, 64, 16, items(item("gregtech:rubber_resin", 1)), null, null, fluids(fluid("Latex", 72)));
-        add("resin/separate", MachineRecipeMaps.Centrifuge, 64, 16, items(item("gregtech:rubber_resin", 1)), null, null,
+        add("resin/squeeze", MachineRecipeMaps.Squeezer, 64, 16, items(item("gt6ce:rubber_resin", 1)), null, null, fluids(fluid("Latex", 144)));
+        add("resin/juice", MachineRecipeMaps.Juicer, 64, 16, items(item("gt6ce:rubber_resin", 1)), null, null, fluids(fluid("Latex", 72)));
+        add("resin/separate", MachineRecipeMaps.Centrifuge, 64, 16, items(item("gt6ce:rubber_resin", 1)), null, null,
                 fluids(fluid("Latex", 144), fluid("Glue", 250)));
         for (String water : new String[]{"Water", "MnWtr", "DistW", "SpDew"})
-            add("resin/glue/" + water, MachineRecipeMaps.Mixer, 16, 16, items(item("gregtech:rubber_resin", 1)), null,
+            add("resin/glue/" + water, MachineRecipeMaps.Mixer, 16, 16, items(item("gt6ce:rubber_resin", 1)), null,
                     fluids(fluid(water, 250)), fluids(fluid("Glue", 250)));
-        add("resin/piston", MachineRecipeMaps.Laminator, 16, 16, items(item("gregtech:rubber_resin", 1), new ItemStack(Items.PISTON)),
+        add("resin/piston", MachineRecipeMaps.Laminator, 16, 16, items(item("gt6ce:rubber_resin", 1), new ItemStack(Items.PISTON)),
                 items(new ItemStack(Items.STICKY_PISTON)), null, null);
     }
 }

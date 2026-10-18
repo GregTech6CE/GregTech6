@@ -64,5 +64,5 @@ public final class ColoredBookRules {
         if(name.equals("Manual_Reactors"))return 32005;
         return pages>50?32001:32000;
     }
-    public static boolean isBook(String id){return id.startsWith("gregtech:")&&byPath(id.substring(9))!=null;}
+    public static boolean isBook(String id){return id.startsWith("gt6ce:")&&byPath(id.substring("gt6ce:".length()))!=null;}
 }

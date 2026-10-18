@@ -1,0 +1,11 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_generator_cores",
+  "contents": [
+    "item:gt6ce:adamantium_dynamo_main_housing",
+    "item:gt6ce:stainless_steel_dynamo_main_housing",
+    "item:gt6ce:titanium_dynamo_main_housing",
+    "item:gt6ce:tungstensteel_dynamo_main_housing"
+  ],
+  "priority": 110
+}

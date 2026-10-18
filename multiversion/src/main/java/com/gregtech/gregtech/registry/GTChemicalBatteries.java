@@ -18,9 +18,9 @@ import java.util.*;
 public final class GTChemicalBatteries {
 //? if >=1.21.1 {
     /*private static final List<DeferredHolder<Block,ChemicalBatteryBlock>> ALL=new ArrayList<>();
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gregtech");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gregtech");
-    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gregtech");
+    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(Registries.BLOCK,"gt6ce");
+    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(Registries.ITEM,"gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> ENTITIES=DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,"gt6ce");
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity>> CHEMICAL_BATTERY=ENTITIES.register("chemical_battery",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.energy.ChemicalBatteryBlockEntity::new,allRegistered().stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
 *///?} else {
     private static final List<RegistryObject<ChemicalBatteryBlock>> ALL=new ArrayList<>();
@@ -36,7 +36,7 @@ public final class GTChemicalBatteries {
 //?}
     public static ChemicalBatteryItem item(ChemicalBatterySpec.Chemistry chemistry,int tier){
 //? if >=1.21.1 {
-        /*var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",new ChemicalBatterySpec(chemistry,tier).id());
+        /*var id=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",new ChemicalBatterySpec(chemistry,tier).id());
 *///?} else {
         var id=com.gregtech.gregtech.GregTech.id(new ChemicalBatterySpec(chemistry,tier).id());
 //?}

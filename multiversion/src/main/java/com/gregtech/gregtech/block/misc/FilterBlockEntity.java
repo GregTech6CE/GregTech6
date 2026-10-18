@@ -81,7 +81,7 @@ public class FilterBlockEntity extends CapabilityRelayBlockEntity implements Men
         }
         return com.gregtech.gregtech.content.logistics.FilterPolicy.allows(blacklist,found);
     }
-    @Override public Component getDisplayName() { return Component.translatable(prefixMode()?"gregtech.filter.prefix_title":"gregtech.filter.title"); }
+    @Override public Component getDisplayName() { return Component.translatable(prefixMode()?"gt6ce.filter.prefix_title":"gt6ce.filter.title"); }
     @Override public AbstractContainerMenu createMenu(int id,Inventory inventory,Player player) { return new com.gregtech.gregtech.client.gui.FilterMenu(id,inventory,this); }
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {

@@ -12,7 +12,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.*;
 
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class ControlCoverTests {
     private static final BlockPos POS=new BlockPos(4,3,4);
     private static BasicMachineBlockEntity machine(GameTestHelper h){
@@ -91,7 +91,7 @@ public final class ControlCoverTests {
             public boolean stillValid(net.minecraft.world.entity.player.Player player){return true;}
         };
         for(var spec:MachineCoverSpec.values()){
-            var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","control_covers/"+spec.id)).orElseThrow();
+            var recipe=(com.gregtech.gregtech.recipe.ToolShapedRecipe)h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","control_covers/"+spec.id)).orElseThrow();
             var grid=new net.minecraft.world.inventory.TransientCraftingContainer(menu,3,3);
             for(int y=0;y<recipe.getHeight();y++)for(int x=0;x<recipe.getWidth();x++){
                 var ingredient=recipe.getIngredients().get(x+y*recipe.getWidth());if(ingredient.isEmpty())continue;

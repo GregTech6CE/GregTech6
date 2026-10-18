@@ -49,8 +49,8 @@ final class LargeRecipeControllerContracts {
         require(OriginalLargeRecipeMachineData.sources("largecrusher").equals(List.of(new OriginalLargeRecipeMachineData.Source(-3,1,2,OriginalLargeRecipeMachineData.Face.RIGHT),new OriginalLargeRecipeMachineData.Source(3,1,2,OriginalLargeRecipeMachineData.Face.LEFT))),"crusher source lateral pair");
         require(OriginalLargeRecipeMachineData.sources("largesluice").equals(List.of(new OriginalLargeRecipeMachineData.Source(-2,1,5,OriginalLargeRecipeMachineData.Face.RIGHT),new OriginalLargeRecipeMachineData.Source(2,1,5,OriginalLargeRecipeMachineData.Face.LEFT))),"sluice far-side pair");
         for(var name:List.of("largecoagulator","largeautoclave","largebath","largefermenter","largeoven"))require(OriginalLargeRecipeMachineData.sources(name).isEmpty(),"source no fabricated six-neighbor requests "+name);
-        require(MultiblockCraftingRecipes.find("largeautoclave_stainless_steel").keys().get('M').equals("item:gregtech:tank_wall_dense"),"source17112 uses dense18022 wall");
-        require(MultiblockCraftingRecipes.find("largebath_stainless_steel").keys().get('A').equals("item:gregtech:compact_robot_arm_mv"),"source17104 fixedIL.ROBOT_ARMS[2] component");
+        require(MultiblockCraftingRecipes.find("largeautoclave_stainless_steel").keys().get('M').equals("item:gt6ce:tank_wall_dense"),"source17112 uses dense18022 wall");
+        require(MultiblockCraftingRecipes.find("largebath_stainless_steel").keys().get('A').equals("item:gt6ce:compact_robot_arm_mv"),"source17104 fixedIL.ROBOT_ARMS[2] component");
         return count;
     }
     private static void require(boolean ok,String message) {count++;if(!ok)throw new AssertionError(message);}

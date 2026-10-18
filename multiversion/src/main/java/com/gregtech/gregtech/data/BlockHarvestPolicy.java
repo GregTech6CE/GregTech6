@@ -16,7 +16,7 @@ public final class BlockHarvestPolicy {
  public enum Tool { PICKAXE, AXE, SHOVEL, SWORD, WRENCH, CROWBAR, CUTTER, SHEARS, HAND }
  public static java.util.Optional<SourceBlockProperties.Params> source(Block block) {
   var id=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
-  if(!id.getNamespace().equals("gregtech"))return java.util.Optional.empty();
+  if(!id.getNamespace().equals("gt6ce"))return java.util.Optional.empty();
   var original=SourceBlockProperties.block(id.getPath());
   if(original.isEmpty() && block instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine)
    original=SourceBlockProperties.basic(machine.basicSpec().machineName(),machine.basicSpec().tier());

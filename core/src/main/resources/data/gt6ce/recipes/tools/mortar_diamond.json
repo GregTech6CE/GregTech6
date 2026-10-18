@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P",
+    "B"
+  ],
+  "key": {
+    "P": {
+      "tag": "forge:gems/diamond"
+    },
+    "B": {
+      "item": "gt6ce:mixing_bowl"
+    }
+  },
+  "result": {
+    "item": "gt6ce:mortar_diamond"
+  }
+}

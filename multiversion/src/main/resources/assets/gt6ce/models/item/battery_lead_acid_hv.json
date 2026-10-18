@@ -1,0 +1,47 @@
+{
+  "parent": "gt6ce:block/chemical_battery/standard_512_0",
+  "overrides": [
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.14285714285714285
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_1"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.2857142857142857
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_2"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.42857142857142855
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_3"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.5714285714285714
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_4"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.7142857142857143
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_5"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 0.8571428571428571
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_6"
+    },
+    {
+      "predicate": {
+        "gt6ce:battery_charge": 1.0
+      },
+      "model": "gt6ce:block/chemical_battery/standard_512_7"
+    }
+  ]
+}

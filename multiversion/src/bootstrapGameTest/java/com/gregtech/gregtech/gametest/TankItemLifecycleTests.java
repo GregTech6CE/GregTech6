@@ -62,7 +62,7 @@ public final class TankItemLifecycleTests {
     }
 
     static ItemStack item(String path) {
-        return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:" + path)));
+        return new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:" + path)));
     }
 //? if >=1.21.1 {
     /*static CompoundTag worldData(GameTestHelper h, TankBlockEntity tank) { return tank.saveWithId(h.getLevel().registryAccess()); }

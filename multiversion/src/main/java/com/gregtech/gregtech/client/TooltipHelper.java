@@ -19,7 +19,7 @@ public final class TooltipHelper {
     private TooltipHelper() {}
 
 //? if >=1.21.1 {
-    /*private static final String MOD = "gregtech";
+    /*private static final String MOD = "gt6ce";
 *///?} else {
     private static final String MOD = GregTech.NAMESPACE;
 //?}

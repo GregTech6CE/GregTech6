@@ -35,7 +35,7 @@ public final class BedrockFlowerProcessingRecipes extends OriginalRecipeBatch {
 
     private void registerFlower(BedrockFlowers.Flower flower) {
         String id = flower.id();
-        ItemStack input = item("gregtech:" + id, 1);
+        ItemStack input = item("gt6ce:" + id, 1);
 
         String grind = flower.family() == 'A' && flower.meta() < 2 ? "Wheat"
                 : flower.family() == 'B' && flower.meta() < 2 ? "Acacia"

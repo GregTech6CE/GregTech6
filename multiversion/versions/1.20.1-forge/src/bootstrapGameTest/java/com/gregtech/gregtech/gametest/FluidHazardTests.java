@@ -46,7 +46,7 @@ import net.minecraftforge.registries.RegistryObject;
  * acid is the <em>material's</em> {@code TD.Properties.ACID} ({@code FL.java:1118},
  * {@code TD.java:386}). The tests below pin both halves, including one fluid that is both at once.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class FluidHazardTests {
     private static final int BASE_X = 23000;
@@ -96,7 +96,7 @@ public final class FluidHazardTests {
 
     /** A tank block by its registry id, for the drums that have no static field. */
     private static Block tank(String id) {
-        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
     }
 
     private static TankBlockEntity placeTank(GameTestHelper helper, Block id, BlockPos pos) {
@@ -439,9 +439,9 @@ public final class FluidHazardTests {
     private static BlockPos placeNaturalGas(GameTestHelper helper) {
         BlockPos pos = at(0, 12, 0);
         Block block = ForgeRegistries.BLOCKS.getValue(
-                ResourceLocation.fromNamespaceAndPath("gregtech", BreathingGasEvents.NATURAL_GAS));
+                ResourceLocation.fromNamespaceAndPath("gt6ce", BreathingGasEvents.NATURAL_GAS));
         helper.assertTrue(block instanceof LiquidBlock,
-                "gregtech:" + BreathingGasEvents.NATURAL_GAS + " is a world fluid block, got " + block);
+                "gt6ce:" + BreathingGasEvents.NATURAL_GAS + " is a world fluid block, got " + block);
         helper.getLevel().setBlock(pos.below(), Blocks.STONE.defaultBlockState(), 2);
         helper.getLevel().setBlock(pos, block.defaultBlockState(), 2);
         helper.assertTrue(helper.getLevel().getFluidState(pos).getType() == still(helper, "Gas_Natural"),

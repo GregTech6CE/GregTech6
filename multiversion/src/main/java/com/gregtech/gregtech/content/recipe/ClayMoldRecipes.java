@@ -15,20 +15,20 @@ public final class ClayMoldRecipes {
     private ClayMoldRecipes() {}
     public static ItemStack input(ClayMoldCatalog.Raw raw) {
 //? if >=1.21.1 {
-        /*var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",raw.id()));
+        /*var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",raw.id()));
         if (item==Items.AIR) throw new IllegalStateException("Missing raw clay mold "+raw.id());
 *///?} else {
-        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech",raw.id()));
+        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce",raw.id()));
         if (item==null || item==Items.AIR) throw new IllegalStateException("Missing raw clay mold "+raw.id());
 //?}
         return new ItemStack(item);
     }
     public static ItemStack output(ClayMoldCatalog.Raw raw) {
 //? if >=1.21.1 {
-        /*var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","mold_ceramic"));
+        /*var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","mold_ceramic"));
         if (item==Items.AIR) throw new IllegalStateException("Missing ceramic mold");
 *///?} else {
-        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","mold_ceramic"));
+        var item=ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","mold_ceramic"));
         if (item==null || item==Items.AIR) throw new IllegalStateException("Missing ceramic mold");
 //?}
         return com.gregtech.gregtech.block.machine.MoldItemData.withShape(new ItemStack(item),raw.shape());

@@ -166,7 +166,7 @@ public class UsbSwitchBlockEntity extends BlockEntity
 
     @Override public Component getDisplayName() {
         return Component.translatable(kind == UsbSwitchBlock.Kind.USB
-                ? "block.gregtech.usb_switch" : "block.gregtech.hdd_switch");
+                ? "block.gt6ce.usb_switch" : "block.gt6ce.hdd_switch");
     }
     @Override @Nullable public AbstractContainerMenu createMenu(int id, Inventory playerInventory, Player player) {
         return new DataSwitchMenu(id, playerInventory, this);

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "gregtech:block/stones/gt.stone.komatiite/bricks",
-    "top": "gregtech:block/stones/gt.stone.komatiite/bricks",
-    "side": "gregtech:block/stones/gt.stone.komatiite/bricks"
-  }
-}

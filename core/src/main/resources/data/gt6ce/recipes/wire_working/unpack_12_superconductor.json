@@ -1,0 +1,16 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:wire_12_superconductor"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:wire_01_superconductor",
+    "count": 12
+  },
+  "gregtech_autocraftable": false,
+  "_autocrafting_source": "GT6 Loader_Recipes_Handlers:625 (disabled)",
+  "gregtech_form_variants": 5,
+  "gregtech_form_offset": 0
+}

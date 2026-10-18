@@ -1,0 +1,37 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "TXO",
+    "dPw",
+    "OMT"
+  ],
+  "key": {
+    "T": {
+      "tag": "forge:screws/chromium"
+    },
+    "X": {
+      "item": "gt6ce:rotor_chromium"
+    },
+    "O": {
+      "tag": "forge:rings/rubber"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    },
+    "P": {
+      "item": "gt6ce:plate_curved_chromium"
+    },
+    "M": {
+      "item": "gt6ce:compact_electric_motor_ev"
+    }
+  },
+  "result": {
+    "item": "gt6ce:compact_electric_pump_ev",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BBB",
+    "BBB",
+    "BFB"
+  ],
+  "key": {
+    "B": {
+      "tag": "gt6ce:ingot/brick"
+    },
+    "F": {
+      "item": "minecraft:flint_and_steel"
+    }
+  },
+  "result": {
+    "item": "gt6ce:burning_box_solid_brick"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

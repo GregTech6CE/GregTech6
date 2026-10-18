@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/rail_curved",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "rail": "gt6ce:block/iconsets/rail_turned_titanium"
+  }
+}

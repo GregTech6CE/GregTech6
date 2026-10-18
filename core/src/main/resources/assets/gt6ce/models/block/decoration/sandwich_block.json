@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "gt6ce:block/sandwiches/toast_top"
+  }
+}

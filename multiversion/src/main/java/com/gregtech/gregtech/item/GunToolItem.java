@@ -139,7 +139,7 @@ public final class GunToolItem extends GTToolItem {
  }
  private boolean hit(ItemStack gun,ItemStack ammo,Player shooter,Entity target,long power,Vec3 direction,int fire){
   var level=shooter.level();if(target.isInvulnerable()||target instanceof Player p&&(p.getAbilities().invulnerable||!shooter.canHarmPlayer(p)))return false;
-  if(target instanceof EnderMan enderman&&!enderman.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS)&&enchantment(ammo,"gregtech:disjunction",level)<=0){ // Native projectile immunity also performs its teleport.
+  if(target instanceof EnderMan enderman&&!enderman.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS)&&enchantment(ammo,"gt6ce:disjunction",level)<=0){ // Native projectile immunity also performs its teleport.
    return target.hurt(level.damageSources().thrown(new net.minecraft.world.entity.projectile.Snowball(level,shooter),shooter),0);
   }
   if(!(target instanceof LivingEntity||target instanceof net.minecraft.world.entity.boss.EnderDragonPart||target instanceof net.minecraft.world.entity.boss.enderdragon.EndCrystal))return false;
@@ -151,14 +151,14 @@ public final class GunToolItem extends GTToolItem {
 *///?} else {
   if(looting>0&&level instanceof ServerLevel server&&!(target instanceof Player)){var fake=net.minecraftforge.common.util.FakePlayerFactory.get(server,new com.mojang.authlib.GameProfile(new java.util.UUID(0,0),shooter.getGameProfile().getName()));fake.setItemInHand(InteractionHand.MAIN_HAND,ammo);fake.moveTo(shooter.getX(),shooter.getY(),shooter.getZ());attacker=fake;}
 //?}
-  var key=ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath("gregtech",power>25000?"bullet_piercing":"bullet"));
+  var key=ResourceKey.create(Registries.DAMAGE_TYPE,ResourceLocation.fromNamespaceAndPath("gt6ce",power>25000?"bullet_piercing":"bullet"));
   var source=new net.minecraft.world.damagesource.DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key),shooter,attacker);
 //? if >=1.21.1 {
   /*if(fire>0)target.igniteForSeconds(4*fire);
   float magic=net.minecraft.world.item.enchantment.EnchantmentHelper.modifyDamage((ServerLevel)level,ammo,target,source,0);
 *///?} else {
   if(fire>0)target.setSecondsOnFire(4*fire);
-  float magic=target instanceof LivingEntity living?net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageBonus(ammo,living.getMobType()):enchantment(ammo,"gregtech:disjunction",level);
+  float magic=target instanceof LivingEntity living?net.minecraft.world.item.enchantment.EnchantmentHelper.getDamageBonus(ammo,living.getMobType()):enchantment(ammo,"gt6ce:disjunction",level);
 //?}
   damage+=magic*(target instanceof Player?.5F:definition().magic());
   boolean struck=target.hurt(source,damage);
@@ -170,12 +170,12 @@ public final class GunToolItem extends GTToolItem {
 *///?} else {
  @Override public void appendHoverText(ItemStack stack,Level context,List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);
 //?}
-  tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.gun.reload"));
-  tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.gun.caliber",net.minecraft.network.chat.Component.translatable("item.gregtech."+definition().ammunition().getRegistryName()),definition().magazine()));
+  tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.reload"));
+  tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.caliber",net.minecraft.network.chat.Component.translatable("item.gt6ce."+definition().ammunition().getRegistryName()),definition().magazine()));
 //? if >=1.21.1 {
-  /*var ammo=ammunition(stack,context.level());tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
+  /*var ammo=ammunition(stack,context.level());tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
 *///?} else {
-  var ammo=ammunition(stack,context);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gregtech.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
+  var ammo=ammunition(stack,context);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.gun.ammo",ammo.getCount(),definition().magazine()));if(!ammo.isEmpty())tooltip.add(ammo.getHoverName());
 //?}
  }
 }

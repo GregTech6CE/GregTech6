@@ -66,7 +66,7 @@ import java.util.TreeSet;
  * {@code max(1, min(cap, (T - 300) / 50))} for heat, {@code 5} for a reactor core and {@code 3.0} per
  * carried hot ingot.
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class HazardDamageTests {
     private static final int BASE_X = 66000;
@@ -124,7 +124,7 @@ public final class HazardDamageTests {
             helper.assertTrue(holder.isPresent(), "damage type " + key.location() + " is registered");
             holder.ifPresent(h -> {
                 ids.add(key.location());
-                helper.assertTrue(("gregtech." + key.location().getPath()).equals(h.value().msgId()),
+                helper.assertTrue(("gt6ce." + key.location().getPath()).equals(h.value().msgId()),
                         key.location() + " uses the gregtech-namespaced death message id, got " + h.value().msgId());
                 helper.assertTrue(h.value().scaling() == net.minecraft.world.damagesource.DamageScaling.NEVER,
                         key.location() + " scales never (GT6 deals fixed damage)");
@@ -165,10 +165,10 @@ public final class HazardDamageTests {
     public static void deathMessagesExistInBothLanguages(GameTestHelper helper) {
         for (String lang : List.of("en_us", "zh_cn")) {
             JsonObject table = readLang(lang);
-            helper.assertTrue(table != null, "assets/gregtech/lang/" + lang + ".json is readable");
+            helper.assertTrue(table != null, "assets/gt6ce/lang/" + lang + ".json is readable");
             if (table == null) return;
             for (ResourceKey<DamageType> key : GTDamageTypes.ALL) {
-                String messageKey = "death.attack.gregtech." + key.location().getPath();
+                String messageKey = "death.attack.gt6ce." + key.location().getPath();
                 helper.assertTrue(table.has(messageKey), lang + " has " + messageKey);
                 if (table.has(messageKey)) {
                     String text = table.get(messageKey).getAsString();
@@ -180,9 +180,9 @@ public final class HazardDamageTests {
         // The message texts are GT6's own, e.g. DamageSourceSpike's "was impaled by a Spike!".
         JsonObject english = readLang("en_us");
         if (english != null) {
-            helper.assertTrue(english.get("death.attack.gregtech.spike").getAsString().contains("Spike"),
-                    "spike keeps GT6's wording: " + english.get("death.attack.gregtech.spike").getAsString());
-            helper.assertTrue(english.get("death.attack.gregtech.chemical").getAsString()
+            helper.assertTrue(english.get("death.attack.gt6ce.spike").getAsString().contains("Spike"),
+                    "spike keeps GT6's wording: " + english.get("death.attack.gt6ce.spike").getAsString());
+            helper.assertTrue(english.get("death.attack.gt6ce.chemical").getAsString()
                             .contains("chemical accident"),
                     "chemical keeps GT6's wording");
         }
@@ -190,7 +190,7 @@ public final class HazardDamageTests {
     }
 
     private static JsonObject readLang(String lang) {
-        try (var stream = HazardDamageTests.class.getResourceAsStream("/assets/gregtech/lang/" + lang + ".json")) {
+        try (var stream = HazardDamageTests.class.getResourceAsStream("/assets/gt6ce/lang/" + lang + ".json")) {
             if (stream == null) return null;
             return JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8)).getAsJsonObject();
         } catch (Exception e) {
@@ -367,7 +367,7 @@ public final class HazardDamageTests {
         // Loader_Tools: all six native suits, with universal pieces in every hazard set.
         var radiation = net.minecraftforge.registries.ForgeRegistries.ITEMS.tags().getTag(GTHazmat.RADIATION);
         helper.assertTrue(radiation.size() == 8,
-                "gregtech:radiation_protection holds the lead and universal suit pieces, got " + radiation.size());
+                "gt6ce:radiation_protection holds the lead and universal suit pieces, got " + radiation.size());
         for (TagKey<Item> protection : List.of(GTHazmat.CHEM, GTHazmat.HEAT, GTHazmat.FROST, GTHazmat.ELECTRIC,
                 GTHazmat.BIO, GTHazmat.INSECT, GTHazmat.GAS)) {
             helper.assertTrue(net.minecraftforge.registries.ForgeRegistries.ITEMS.tags().getTag(protection).size() == (protection.equals(GTHazmat.ELECTRIC) ? 4 : 8),

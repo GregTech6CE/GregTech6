@@ -26,9 +26,9 @@ public final class CapsuleCellRecipes {
                 if(input.isEmpty())continue;
                 boolean tiny=prefix==MaterialPrefix.nugget||prefix==MaterialPrefix.dustTiny;
 //? if >=1.21.1 {
-                /*var output=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())),tiny?1:9);
+                /*var output=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())),tiny?1:9);
 *///?} else {
-                var output=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())),tiny?1:9);
+                var output=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())),tiny?1:9);
 //?}
                 for(String mold:new String[]{"extruder_shape_capsulecellcontainer","low_heat_extruder_shape_capsulecellcontainer"}) {
                     if(!simple&&mold.startsWith("low_heat_"))continue;
@@ -57,9 +57,9 @@ public final class CapsuleCellRecipes {
             var output=GTItems.getStack(MaterialPrefix.dustTiny,spec.material(),1);
             if(output.isEmpty())throw new IllegalStateException("Missing capsule recycling dust: "+spec.id());
 //? if >=1.21.1 {
-            /*var input=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())));
+            /*var input=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
 *///?} else {
-            var input=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech","fluid_"+spec.id())));
+            var input=new ItemStack(ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce","fluid_"+spec.id())));
 //?}
             boolean brittle=spec.id().startsWith("cell_wax")||spec.id().equals("cell_plastic");
             long work=(brittle?2L:256L)*Math.max(1,spec.material().getToolQuality()+1);

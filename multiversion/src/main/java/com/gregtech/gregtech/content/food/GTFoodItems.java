@@ -120,7 +120,7 @@ public final class GTFoodItems {
 *///?} else {
         ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
 //?}
-        return key == null || !"gregtech".equals(key.getNamespace()) ? null : entryFor(key.getPath());
+        return key == null || !"gt6ce".equals(key.getNamespace()) ? null : entryFor(key.getPath());
     }
 
     /** How many of GT6's food items the port registers (all 266 of {@code MultiItemFood}). */
@@ -152,10 +152,10 @@ public final class GTFoodItems {
     /** The same lookup without recording a miss, for callers that keep their own skip list. */
     public static Item itemOrNull(String id) {
 //? if >=1.21.1 {
-        /*if(id==null)return null; Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gregtech",id));return item==net.minecraft.world.item.Items.AIR?null:item;
+        /*if(id==null)return null; Item item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id));return item==net.minecraft.world.item.Items.AIR?null:item;
 *///?} else {
         return id == null ? null
-                : ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                : ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
 //?}
     }
 

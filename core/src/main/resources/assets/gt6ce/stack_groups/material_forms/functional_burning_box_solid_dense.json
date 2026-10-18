@@ -1,0 +1,21 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_burning_box_solid_dense",
+  "contents": [
+    "item:gt6ce:burning_box_solid_dense_arsenic_bronze",
+    "item:gt6ce:burning_box_solid_dense_arsenic_copper",
+    "item:gt6ce:burning_box_solid_dense_bismuth",
+    "item:gt6ce:burning_box_solid_dense_bronze",
+    "item:gt6ce:burning_box_solid_dense_chromium",
+    "item:gt6ce:burning_box_solid_dense_invar",
+    "item:gt6ce:burning_box_solid_dense_lead",
+    "item:gt6ce:burning_box_solid_dense_netherite",
+    "item:gt6ce:burning_box_solid_dense_steel",
+    "item:gt6ce:burning_box_solid_dense_ta4hfc5",
+    "item:gt6ce:burning_box_solid_dense_titanium",
+    "item:gt6ce:burning_box_solid_dense_tungsten",
+    "item:gt6ce:burning_box_solid_dense_tungsten_steel",
+    "item:gt6ce:burning_box_solid_dense_ultimet"
+  ],
+  "priority": 110
+}

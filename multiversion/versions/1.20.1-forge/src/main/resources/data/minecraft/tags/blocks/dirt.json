@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "gregtech:plant_pot",
-    "gregtech:mud",
-    "gregtech:turf"
+    "gt6ce:plant_pot",
+    "gt6ce:mud",
+    "gt6ce:turf"
   ]
 }

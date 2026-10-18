@@ -1,0 +1,34 @@
+{
+  "type": "gt6ce:tool_shapeless",
+  "ingredients": [
+    {
+      "item": "gt6ce:sliced_baguette"
+    },
+    {
+      "item": "gt6ce:sliced_baguette"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    },
+    {
+      "tag": "gt6ce:food/foodbaconcooked"
+    }
+  ],
+  "result": {
+    "item": "gt6ce:large_bacon_sandwich",
+    "count": 1
+  },
+  "gregtech_autocraftable": true
+}

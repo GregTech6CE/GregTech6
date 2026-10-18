@@ -19,14 +19,14 @@ public final class CoinMoldRenderer implements BlockEntityRenderer<CoinMoldBlock
         var material=mold.displayedMaterial();
         if(material==null||!material.isValid())return;
 //? if >=1.21.1 {
-        /*var texture=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech","block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
+        /*var texture=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
 *///?} else {
         var texture=GregTech.id("block/material_icons/"+MaterialIcons.resolveTextureSet(material).folder()+"/blocksolid");
 //?}
         var out=buffers.getBuffer(RenderType.entityCutoutNoCull(TextureAtlas.LOCATION_BLOCKS));
         AnvilCuboidRenderer.draw(pose.last(),out,CoinMoldGeometry.CONTENT,CrucibleRenderSprites.resolve(texture),material.getColor(),light);
 //? if >=1.21.1 {
-        /*var detail=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",texture.getPath()+"_overlay");
+        /*var detail=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",texture.getPath()+"_overlay");
 *///?} else {
         var detail=GregTech.id(texture.getPath()+"_overlay");
 //?}

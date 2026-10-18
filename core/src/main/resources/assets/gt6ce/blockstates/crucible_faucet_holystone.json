@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gt6ce:block/blocks/crucible_faucet_holystone"
+    },
+    "facing=south": {
+      "model": "gt6ce:block/blocks/crucible_faucet_holystone"
+    },
+    "facing=east": {
+      "model": "gt6ce:block/blocks/crucible_faucet_holystone"
+    },
+    "facing=west": {
+      "model": "gt6ce:block/blocks/crucible_faucet_holystone"
+    }
+  }
+}

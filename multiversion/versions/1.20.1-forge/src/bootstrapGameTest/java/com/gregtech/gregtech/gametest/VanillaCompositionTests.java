@@ -5,7 +5,7 @@ import net.minecraft.world.item.*;
 import net.minecraftforge.gametest.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
-@GameTestHolder("gregtech") @PrefixGameTestTemplate(false)
+@GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
 public final class VanillaCompositionTests {
     @GameTest(template="test_empty") public static void allVanillaItemsHaveExplicitMaterialClassification(GameTestHelper h) {
         var missing = new ArrayList<String>();

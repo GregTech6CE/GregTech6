@@ -1,0 +1,29 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "PhP",
+    "SIS",
+    "PwP"
+  ],
+  "key": {
+    "P": {
+      "tag": "gt6ce:plate_double/arsenic_bronze"
+    },
+    "S": {
+      "tag": "gt6ce:stick/arsenic_bronze"
+    },
+    "I": {
+      "tag": "gt6ce:spring_small/arsenic_bronze"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:engine_steam_arsenic_bronze"
+  },
+  "allow_mirror": false
+}

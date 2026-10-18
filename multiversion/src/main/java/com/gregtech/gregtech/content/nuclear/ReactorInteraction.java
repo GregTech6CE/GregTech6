@@ -27,8 +27,8 @@ public final class ReactorInteraction {
             }
         }
 
-        player.displayClientMessage(Component.translatable("message.gregtech.reactor.detail",core.rodCount(),core.rods.length,core.neutronTotal(),core.lastHeat,
-                Component.translatable(core.stopped?"message.gregtech.reactor.stopped":"message.gregtech.reactor.running"),core.overflowCount()),true);
+        player.displayClientMessage(Component.translatable("message.gt6ce.reactor.detail",core.rodCount(),core.rods.length,core.neutronTotal(),core.lastHeat,
+                Component.translatable(core.stopped?"message.gt6ce.reactor.stopped":"message.gt6ce.reactor.running"),core.overflowCount()),true);
         return InteractionResult.SUCCESS;
     }
     public static int topSlot(ReactorCoreBlockEntity core,BlockHitResult hit){

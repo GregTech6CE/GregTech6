@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_magic_research_paper",
+  "contents": [
+    "item:gt6ce:magic_research_paper_introduction",
+    "item:gt6ce:magic_research_paper_page_1_8",
+    "item:gt6ce:magic_research_paper_page_2_8",
+    "item:gt6ce:magic_research_paper_page_3_8",
+    "item:gt6ce:magic_research_paper_page_4_8",
+    "item:gt6ce:magic_research_paper_page_5_8",
+    "item:gt6ce:magic_research_paper_page_6_8",
+    "item:gt6ce:magic_research_paper_page_7_8",
+    "item:gt6ce:magic_research_paper_page_8_8"
+  ],
+  "priority": 110
+}

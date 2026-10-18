@@ -34,7 +34,7 @@ public final class MagnetConverterSourceTests {
         int x = 3;
         for (String id : List.of("electromagnet_lv", "flux_magnet_lv")) {
             var pos = new BlockPos(x,4,4);
-            var block = (MagnetMachineBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:" + id));
+            var block = (MagnetMachineBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:" + id));
             h.setBlock(pos, block.defaultBlockState().setValue(EnergyNodeBlock.FACING, Direction.UP));
             var tile = (EnergyNodeBlockEntity) h.getBlockEntity(pos);
             h.setBlock(pos.above(),polarizer.defaultBlockState()); h.setBlock(pos.below(),polarizer.defaultBlockState());

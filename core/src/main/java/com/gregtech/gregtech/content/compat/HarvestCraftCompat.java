@@ -36,7 +36,7 @@ public final class HarvestCraftCompat {
                 item(MOD + ":chocolatedonutitem", 1), "GenMolten_Chocolate", 36, 0, 16, SOURCE + ":279"));
         for (String water : WATERS) {
             machines.add(fluid("mix/dough/" + water.toLowerCase(), "Mixer", item(MOD + ":flouritem", 1),
-                    item("gregtech:dough", 1), water, 1000, 16, 16, SOURCE + ":128-129"));
+                    item("gt6ce:dough", 1), water, 1000, 16, 16, SOURCE + ":128-129"));
         }
         return new CompatSpecs.Module(MOD, true, true, "Compat_Recipes_HarvestCraft",
                 List.copyOf(machines), List.of(), List.of(), List.of(

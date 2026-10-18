@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * GT6 {@code Behavior_Remote} ({@code Behavior_Remote.java:43-146}) — the Remote Activator
- * ({@code MultiItemRandomTools:515}; the port registers it as {@code gregtech:remote_activator} in
+ * ({@code MultiItemRandomTools:515}; the port registers it as {@code gt6ce:remote_activator} in
  * {@code GTMultiItemsGen.ENTRIES:124}). Its tooltip is the whole feature in one line: "Activates up to
  * 64 Blocks within a Range of 128m" ({@code :138}).
  *
@@ -81,7 +81,7 @@ import java.util.List;
 
 /**
  * GT6 {@code Behavior_Remote} ({@code Behavior_Remote.java:43-146}) — the Remote Activator
- * ({@code MultiItemRandomTools:515}; the port registers it as {@code gregtech:remote_activator} in
+ * ({@code MultiItemRandomTools:515}; the port registers it as {@code gt6ce:remote_activator} in
  * {@code GTMultiItemsGen.ENTRIES:124}). Its tooltip is the whole feature in one line: "Activates up to
  * 64 Blocks within a Range of 128m" ({@code :138}).
  *

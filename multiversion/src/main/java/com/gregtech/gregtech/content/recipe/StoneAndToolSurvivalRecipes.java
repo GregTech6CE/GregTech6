@@ -140,7 +140,7 @@ public final class StoneAndToolSurvivalRecipes {
 *///?} else {
         var item = ForgeRegistries.ITEMS.getValue(
 //?}
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", id));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", id));
         return item == null || item == Items.AIR ? ItemStack.EMPTY : new ItemStack(item);
     }
 }

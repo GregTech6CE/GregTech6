@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 //?}
 public final class RotaryConverterSourceTests {
     private static EnergyNodeBlockEntity place(GameTestHelper h, BlockPos pos, String id) {
-        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:" + id));
+        var block = (EnergyNodeBlock) BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gt6ce:" + id));
         h.setBlock(pos, block.defaultBlockState().setValue(EnergyNodeBlock.FACING, Direction.EAST));
         return (EnergyNodeBlockEntity) h.getBlockEntity(pos);
     }
@@ -31,7 +31,7 @@ public final class RotaryConverterSourceTests {
         var motor = place(h, new BlockPos(2,3,2), "electric_motor_lv");
         var dynamo = place(h, new BlockPos(3,3,2), "electric_dynamo_lv");
         var sink = place(h, new BlockPos(4,3,2), "battery_box_lv");
-        var battery = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:battery_lead_acid_lv")));
+        var battery = new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:battery_lead_acid_lv")));
         h.assertTrue(sink.installBattery(battery), "real complete rechargeable battery installs");
         sink.batteryEnergy().tick(2, null, null);
         h.assertTrue(motor.doEnergyInjection(GregTechTags.Energy.EU, Direction.WEST, 64, 1, true) == 1, "source motor max EU packet accepted");

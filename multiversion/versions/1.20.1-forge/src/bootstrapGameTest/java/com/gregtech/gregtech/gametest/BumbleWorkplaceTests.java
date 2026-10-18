@@ -22,7 +22,7 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /** GT6 {@code MultiItemBumbles.bumbleCanProduce} gates both kinds of bumbliary. */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class BumbleWorkplaceTests {
     private static final BlockPos RANGE_SITE = new BlockPos(64000, 240, 64000);
@@ -31,7 +31,7 @@ public final class BumbleWorkplaceTests {
     private BumbleWorkplaceTests() {}
 
     private static Block gtBlock(String id) {
-        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gregtech", id));
+        return ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
     }
 
     private static CompoundTag allWeatherGenes() {

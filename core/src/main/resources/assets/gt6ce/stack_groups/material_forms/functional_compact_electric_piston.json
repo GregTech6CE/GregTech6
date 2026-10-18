@@ -1,0 +1,18 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_compact_electric_piston",
+  "contents": [
+    "item:gt6ce:compact_electric_piston_ev",
+    "item:gt6ce:compact_electric_piston_hv",
+    "item:gt6ce:compact_electric_piston_iv",
+    "item:gt6ce:compact_electric_piston_luv",
+    "item:gt6ce:compact_electric_piston_lv",
+    "item:gt6ce:compact_electric_piston_mv",
+    "item:gt6ce:compact_electric_piston_puv1",
+    "item:gt6ce:compact_electric_piston_ulv",
+    "item:gt6ce:compact_electric_piston_uv",
+    "item:gt6ce:compact_electric_piston_xv",
+    "item:gt6ce:compact_electric_piston_zpm"
+  ],
+  "priority": 110
+}

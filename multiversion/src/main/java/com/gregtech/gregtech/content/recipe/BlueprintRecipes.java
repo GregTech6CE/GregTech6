@@ -44,7 +44,7 @@ public final class BlueprintRecipes {
     }
     private static boolean is(ItemStack stack, String path) {
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        return id.getNamespace().equals("gregtech") && id.getPath().equals(path);
+        return id.getNamespace().equals("gt6ce") && id.getPath().equals(path);
     }
     public static Recipe scan(Level level, BlockEntity machine, ItemStack special,
             List<ItemStack> items, List<FluidStack> fluids) {
@@ -91,9 +91,9 @@ public final class BlueprintRecipes {
         FluidStack dye = GTFluids.stack(blank ? "Dye_Chemical_White" : "Dye_Chemical_Blue", blank ? 16 : 144);
         if (dye == null || dye.isEmpty()) return null;
 //? if >=1.21.1 {
-        /*ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech", "blueprint")));
+        /*ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", "blueprint")));
 *///?} else {
-        ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(new net.minecraft.resources.ResourceLocation("gregtech", "blueprint")));
+        ItemStack output = new ItemStack(BuiltInRegistries.ITEM.get(new net.minecraft.resources.ResourceLocation("gt6ce", "blueprint")));
 //?}
         CraftingBlueprintData.writeItem(level, output, pattern);
         ItemStack crafted = preview(level, pattern);

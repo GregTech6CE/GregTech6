@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#gt6ce:spring/steel",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:spring/knightmetal",
+      "required": false
+    },
+    {
+      "id": "#gt6ce:spring/meteoric_steel",
+      "required": false
+    }
+  ]
+}

@@ -1,17 +1,17 @@
 {
   "replace": false,
   "values": [
-    "gregtech:log_blue_mahoe",
-    "gregtech:log_bluespruce",
-    "gregtech:log_cinnamon",
-    "gregtech:log_coconut",
-    "gregtech:log_ebony",
-    "gregtech:log_hazel",
-    "gregtech:log_maple",
-    "gregtech:log_pine",
-    "gregtech:log_rainbowood",
-    "gregtech:log_rubber",
-    "gregtech:log_white_mahoe",
-    "gregtech:log_willow"
+    "gt6ce:log_blue_mahoe",
+    "gt6ce:log_bluespruce",
+    "gt6ce:log_cinnamon",
+    "gt6ce:log_coconut",
+    "gt6ce:log_ebony",
+    "gt6ce:log_hazel",
+    "gt6ce:log_maple",
+    "gt6ce:log_pine",
+    "gt6ce:log_rainbowood",
+    "gt6ce:log_rubber",
+    "gt6ce:log_white_mahoe",
+    "gt6ce:log_willow"
   ]
 }

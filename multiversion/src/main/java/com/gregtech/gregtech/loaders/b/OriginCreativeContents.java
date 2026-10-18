@@ -85,7 +85,7 @@ public final class OriginCreativeContents {
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
         for(var item:BuiltInRegistries.ITEM) {
-            if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gregtech")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
 //? if >=1.21.1 {

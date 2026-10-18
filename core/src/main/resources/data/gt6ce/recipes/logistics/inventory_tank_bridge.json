@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "hY ",
+    "XMX",
+    " Yw"
+  ],
+  "key": {
+    "M": {
+      "item": "gt6ce:casing_machine_double_steel"
+    },
+    "X": {
+      "item": "gt6ce:pipe_medium_steel"
+    },
+    "Y": {
+      "item": "gt6ce:item_pipe_medium_electrum"
+    },
+    "h": {
+      "item": "gt6ce:tool_hammer"
+    },
+    "w": {
+      "item": "gt6ce:tool_wrench"
+    }
+  },
+  "result": {
+    "item": "gt6ce:inventory_tank_bridge"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

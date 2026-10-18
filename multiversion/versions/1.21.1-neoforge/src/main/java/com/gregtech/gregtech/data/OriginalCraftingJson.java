@@ -48,7 +48,7 @@ public final class OriginalCraftingJson {
                                  boolean autocraftable, boolean sourcePermission,
                                  com.gregtech.gregtech.content.recipe.FormConversionSelector selector,
                                  String input, String material) {
-        var json = recipe(sourcePermission ? "gregtech:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
+        var json = recipe(sourcePermission ? "gt6ce:tool_shapeless" : "minecraft:crafting_shapeless", group, category, output); var values = new JsonArray();
         if (sourcePermission) json.addProperty("gregtech_autocraftable", autocraftable);
         if (!input.isEmpty()) {
             json.addProperty("gregtech_form_input", input);
@@ -64,7 +64,7 @@ public final class OriginalCraftingJson {
     public static void shaped(Map<ResourceLocation, byte[]> data, ResourceLocation id, String group,
                               CraftingBookCategory category, ItemStack output, String[] pattern,
                               Map<Character, Ingredient> ingredients, boolean mirror) {
-        var json = recipe("gregtech:tool_shaped", group, category, output); var rows = new JsonArray();
+        var json = recipe("gt6ce:tool_shaped", group, category, output); var rows = new JsonArray();
         var keys = new JsonObject(); var used = new LinkedHashSet<Character>();
         for (String row : pattern) { rows.add(row); for (char c : row.toCharArray()) if (c != ' ') used.add(c); }
         for (char c : used) keys.add(String.valueOf(c), Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, ingredients.get(c)).getOrThrow());

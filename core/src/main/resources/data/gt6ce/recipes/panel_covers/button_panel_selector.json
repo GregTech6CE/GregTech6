@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "BXB",
+    "BQB",
+    "BCB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "X": {
+      "item": "gt6ce:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gt6ce:button_panel_selector"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}

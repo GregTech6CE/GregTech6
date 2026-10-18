@@ -31,7 +31,7 @@ import java.util.TreeSet;
  * crafting recipe anywhere, so none of them could be obtained in survival.
  * </p>
  */
-@GameTestHolder("gregtech")
+@GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)
 public final class MultiblockCraftingTests {
 
@@ -58,7 +58,7 @@ public final class MultiblockCraftingTests {
         TreeSet<String> problems = new TreeSet<>();
         int checked = 0;
         for (MultiblockCraftingRecipes.Entry entry : MultiblockCraftingRecipes.ENTRIES) {
-            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gregtech", entry.blockId());
+            ResourceLocation blockId = ResourceLocation.fromNamespaceAndPath("gt6ce", entry.blockId());
             Block block = ForgeRegistries.BLOCKS.getValue(blockId);
             if (block == null || block == net.minecraft.world.level.block.Blocks.AIR) {
                 problems.add("table references a block that does not exist: " + entry.blockId());
@@ -121,7 +121,7 @@ public final class MultiblockCraftingTests {
                 "large_stainless_steel_crucible", "stainless_steel_dynamo_main_housing", "magnalium_gas_turbine_main_housing",
                 "magnalium_steam_turbine_main_housing")) {
             Block block = ForgeRegistries.BLOCKS.getValue(
-                    ResourceLocation.fromNamespaceAndPath("gregtech", controller));
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", controller));
             helper.assertTrue(block != null, "controller block exists: " + controller);
             helper.assertTrue(MultiblockCraftingRecipes.find(controller) != null,
                     "controller has an original GT6 crafting recipe: " + controller);

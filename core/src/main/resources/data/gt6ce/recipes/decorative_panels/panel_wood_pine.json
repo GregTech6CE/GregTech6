@@ -1,0 +1,27 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": true,
+  "pattern": [
+    "TsT",
+    "TPT",
+    "TdT"
+  ],
+  "key": {
+    "T": {
+      "tag": "gt6ce:screws/any_iron_or_steel"
+    },
+    "P": {
+      "item": "gt6ce:planks_pine"
+    },
+    "s": {
+      "item": "gt6ce:tool_saw"
+    },
+    "d": {
+      "item": "gt6ce:tool_screwdriver"
+    }
+  },
+  "result": {
+    "item": "gt6ce:panel_wood_pine",
+    "count": 6
+  }
+}

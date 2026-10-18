@@ -1,0 +1,17 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "allow_mirror": false,
+  "pattern": ["wrd", "FGT", "SLC"],
+  "key": {
+    "w": {"item": "gt6ce:tool_wrench"},
+    "r": {"item": "gt6ce:tool_soft_hammer"},
+    "d": {"item": "gt6ce:tool_screwdriver"},
+    "F": {"item": "gt6ce:foil_gold"},
+    "G": {"item": "gt6ce:gear_gt_small_gold"},
+    "T": {"item": "gt6ce:screw_gold"},
+    "S": {"item": "gt6ce:spring_gold"},
+    "L": {"item": "gt6ce:crate"},
+    "C": {"item": "gt6ce:item_casing_gold"}
+  },
+  "result": {"item": "gt6ce:loot_crate"}
+}

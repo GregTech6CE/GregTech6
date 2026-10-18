@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "gt6ce:block/iconsets/gearbox",
+    "down": "gt6ce:block/iconsets/gearbox",
+    "up": "gt6ce:block/iconsets/gearbox",
+    "north": "gt6ce:block/iconsets/gearbox",
+    "south": "gt6ce:block/iconsets/gearbox",
+    "west": "gt6ce:block/iconsets/gearbox",
+    "east": "gt6ce:block/iconsets/gearbox"
+  }
+}

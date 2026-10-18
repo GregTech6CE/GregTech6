@@ -1,10 +1,14 @@
 """Generate blockstate and model JSONs for GT6 basic machines."""
 import json, os
+from pathlib import Path
 
-ROOT = r"F:\Dev\GregTech\GregTech6\src\main\resources\assets\gregtech"
+REPOSITORY = Path(__file__).resolve().parents[1]
+# Machine block models/states are shared Stonecutter inputs; inventory models
+# here use Forge's active-model parent and belong to the Forge resource overlay.
+ROOT = REPOSITORY / "multiversion/src/main/resources/assets/gt6ce"
 MODELS_DIR = os.path.join(ROOT, "models", "block", "machine", "basic")
 BLOCKSTATES_DIR = os.path.join(ROOT, "blockstates")
-TEXTURE_BASE = "gregtech:block/machines/basicmachines"
+TEXTURE_BASE = "gt6ce:block/machines/basicmachines"
 
 # Standard block-item transforms from vanilla minecraft:block/block
 DISPLAY = {
@@ -190,7 +194,7 @@ def model_json(machine_name, overlay="overlay"):
 
 
 def main():
-    ITEMS_DIR = os.path.join(ROOT, "models", "item")
+    ITEMS_DIR = REPOSITORY / "multiversion/versions/1.20.1-forge/src/main/resources/assets/gt6ce/models/item"
     os.makedirs(MODELS_DIR, exist_ok=True)
     os.makedirs(BLOCKSTATES_DIR, exist_ok=True)
     os.makedirs(ITEMS_DIR, exist_ok=True)
@@ -222,7 +226,7 @@ def main():
 
             # Blockstate — facing+lit variants with y rotation, static overlay for placed block
             blockstate_path = os.path.join(BLOCKSTATES_DIR, f"{variant_id}.json")
-            model_ref = f"gregtech:block/machine/basic/{name}"
+            model_ref = f"gt6ce:block/machine/basic/{name}"
             blockstate = {
                 "variants": {
                     "facing=north,lit=false": {"model": model_ref},
@@ -242,7 +246,7 @@ def main():
             # Item model — uses the active model (animated overlay for inventory/hand)
             item_path = os.path.join(ITEMS_DIR, f"{variant_id}.json")
             item_model = {
-                "parent": f"gregtech:block/machine/basic/{name}_active"
+                "parent": f"gt6ce:block/machine/basic/{name}_active"
             }
             with open(item_path, "w") as f:
                 json.dump(item_model, f, indent=2)

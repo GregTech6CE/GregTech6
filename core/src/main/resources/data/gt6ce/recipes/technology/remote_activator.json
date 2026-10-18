@@ -1,0 +1,37 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "_comment": "GT6 MultiItemRandomTools:522",
+  "allow_mirror": false,
+  "pattern": [
+    "TPE",
+    "BCd",
+    "xPT"
+  ],
+  "key": {
+    "P": {
+      "item": "gt6ce:plate_chromium"
+    },
+    "T": {
+      "item": "gt6ce:screw_chromium"
+    },
+    "C": {
+      "tag": "gt6ce:circuits_tier_4_plus"
+    },
+    "E": {
+      "item": "gt6ce:compact_signal_emitter_ev"
+    },
+    "B": {
+      "tag": "minecraft:buttons"
+    },
+    "d": {
+      "tag": "forge:tools/screwdriver"
+    },
+    "x": {
+      "tag": "forge:tools/wire_cutter"
+    }
+  },
+  "result": {
+    "item": "gt6ce:remote_activator",
+    "count": 1
+  }
+}

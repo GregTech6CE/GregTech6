@@ -32,7 +32,7 @@ public final class CrucibleHazardSourceTests {
         var cow=new Cow(EntityType.COW,h.getLevel());cow.setNoAi(true);cow.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).setBaseValue(20);cow.setHealth(20);
         cow.setPos(pos.getX()+x,pos.getY()+1,pos.getZ()+0.5);h.getLevel().addFreshEntity(cow);return cow;
     }
-    private static Block block(String path) {return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech",path));}
+    private static Block block(String path) {return BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce",path));}
 //? if >=1.21.1 {
     /*private static void temperature(GameTestHelper h,com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity entity,long t) {
         var tag=entity.saveWithoutMetadata(h.getLevel().registryAccess());

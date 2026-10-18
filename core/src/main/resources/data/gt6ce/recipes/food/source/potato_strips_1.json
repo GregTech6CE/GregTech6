@@ -1,0 +1,21 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    "k",
+    "X"
+  ],
+  "key": {
+    "X": {
+      "tag": "gt6ce:food/croppotato"
+    },
+    "k": {
+      "tag": "forge:tools/knife"
+    }
+  },
+  "result": {
+    "item": "gt6ce:potato_strips",
+    "count": 1
+  },
+  "allow_mirror": false,
+  "gregtech_autocraftable": false
+}

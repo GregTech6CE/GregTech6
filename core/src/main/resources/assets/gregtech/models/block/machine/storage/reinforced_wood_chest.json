@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/block",
-  "textures": {
-    "particle": "gregtech:block/machines/woodchest/overlay"
-  }
-}

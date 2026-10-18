@@ -1,0 +1,30 @@
+{
+  "type": "gt6ce:tool_shaped",
+  "pattern": [
+    " C ",
+    "WQX",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:comparator"
+    },
+    "C": {
+      "item": "gt6ce:circuit_basic"
+    },
+    "Q": {
+      "item": "gt6ce:blank_cover"
+    },
+    "W": {
+      "item": "gt6ce:cable_01_copper"
+    },
+    "X": {
+      "item": "gt6ce:integrated_circuit_0"
+    }
+  },
+  "result": {
+    "item": "gt6ce:redstone_selector"
+  },
+  "allow_mirror": false,
+  "_mirror_flags": "gt6-census"
+}
