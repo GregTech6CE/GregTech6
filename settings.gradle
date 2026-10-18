@@ -17,7 +17,7 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
 }
 
-rootProject.name = 'gregtech6'
+rootProject.name = 'gt6ce'
 include 'core'
 
 // All native Java source sets are managed by Stonecutter version nodes.

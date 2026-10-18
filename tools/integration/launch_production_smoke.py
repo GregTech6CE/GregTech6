@@ -124,7 +124,7 @@ def launch(args):
     natives.mkdir()
     mod_records = []
     for source in [args.jar, args.probe, *sorted((installed / 'mods').glob('*.jar'))]:
-        if source.parent.resolve() == (installed / 'mods').resolve() and source.name.startswith('gregtech'):
+        if source.parent.resolve() == (installed / 'mods').resolve() and source.name.startswith(('gregtech', 'gt6ce')):
             continue
         with zipfile.ZipFile(source) as archive:
             bad = archive.testzip()

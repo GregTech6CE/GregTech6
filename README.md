@@ -21,7 +21,7 @@ GregTech 6 centers on technology, resource processing, and industrial progressio
 
 Both platforms live in this repository and share the `core` module. Each produces a separate mod JAR with the shared core included. Install the artifact matching your Minecraft version and loader; no separate core JAR is required.
 
-The mod name is **GregTech 6 Community Edition** and its loader ID is **`gregtech6`**. Existing content and resource identifiers retain the `gregtech:` namespace.
+The mod name is **GregTech 6 Community Edition** and its loader ID is **`gt6ce`**. Existing content and resource identifiers retain the `gregtech:` namespace.
 
 ## Project Status
 

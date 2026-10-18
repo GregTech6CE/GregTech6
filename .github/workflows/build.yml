@@ -107,13 +107,13 @@ jobs:
           verified = json.loads(report.read_text(encoding='utf-8'))
           destination = pathlib.Path('work/ci-artifacts')
           destination.mkdir(parents=True, exist_ok=True)
-          target = destination / f"gregtech6-{os.environ['MC_VERSION']}-{os.environ['LOADER']}.jar"
+          target = destination / f"gt6ce-{os.environ['MC_VERSION']}-{os.environ['LOADER']}.jar"
           shutil.copyfile(source, target)
           digest = hashlib.sha256(target.read_bytes()).hexdigest()
           if digest != verified[os.environ['LOADER']]['sha256']:
               raise SystemExit('Platform jar changed after packaging verification')
           target.with_suffix('.jar.sha256').write_text(f'{digest}  {target.name}\n', encoding='utf-8')
-          sdks = list(pathlib.Path('core/build/libs').glob('gregtech6-addon-api-*.jar'))
+          sdks = list(pathlib.Path('core/build/libs').glob('gt6ce-addon-api-*.jar'))
           if len(sdks) != 1:
               raise SystemExit(f'Expected one addon SDK, found {sdks}')
           sdk = sdks[0]
@@ -132,7 +132,7 @@ jobs:
         # Owner adopted LGPL-3.0-or-later; these are test artifacts, not automatic releases.
         uses: actions/upload-artifact@v4
         with:
-          name: gregtech6-${{ matrix.minecraft }}-${{ matrix.loader }}
+          name: gt6ce-${{ matrix.minecraft }}-${{ matrix.loader }}
           path: work/ci-artifacts/
           if-no-files-found: error
       - name: Preserve failure diagnostics

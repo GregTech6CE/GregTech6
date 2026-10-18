@@ -16,9 +16,9 @@ import net.minecraftforge.fml.common.Mod;
 //?}
 
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = "gregtech", value = Dist.CLIENT)
+/*@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid = "gregtech", value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class FluidDisplayTooltips {
     private FluidDisplayTooltips() {}

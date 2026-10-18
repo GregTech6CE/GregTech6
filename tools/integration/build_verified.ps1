@@ -12,6 +12,15 @@ Push-Location -LiteralPath $repoPath
 try {
     $logDirectory = Join-Path $repoPath 'build/preflight'
     New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
+    $modProperties = @{}
+    foreach ($line in Get-Content -LiteralPath 'gradle.properties' -Encoding utf8) {
+        if ($line -match '^\s*(mod_id|mod_version)\s*=\s*(.+?)\s*$') { $modProperties[$matches[1]] = $matches[2] }
+    }
+    if (-not $modProperties.mod_id -or -not $modProperties.mod_version) { throw 'Missing artifact identity in gradle.properties.' }
+    $jarNames = @{
+        forge = "$($modProperties.mod_id)-1.20.1-forge-$($modProperties.mod_version).jar"
+        neoforge = "$($modProperties.mod_id)-neoforge-1.21.1-$($modProperties.mod_version).jar"
+    }
     $gradleArguments = @('--offline')
     $localInit = Join-Path $repoPath 'work/emi-local.init.gradle'
     if (Test-Path -LiteralPath $localInit) { $gradleArguments += @('-I', $localInit) }
@@ -79,7 +88,7 @@ try {
         Write-Host "Both client preflights passed. Building dual artifacts. Log: $buildLog"
         & $Gradle @gradleArguments ':assembleBothPlatforms' *> $buildLog
         if ($LASTEXITCODE -ne 0) { throw "Dual assemble failed; see $buildLog" }
-        & python 'tools/integration/verify_artifacts.py' --forge 'multiversion/versions/1.20.1-forge/build/libs/gregtech6-1.20.1-forge-0.0.0.jar' --neoforge 'multiversion/versions/1.21.1-neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar' --output (Join-Path $logDirectory 'artifacts.json')
+        & python 'tools/integration/verify_artifacts.py' --forge "multiversion/versions/1.20.1-forge/build/libs/$($jarNames.forge)" --neoforge "multiversion/versions/1.21.1-neoforge/build/libs/$($jarNames.neoforge)" --output (Join-Path $logDirectory 'artifacts.json')
         if ($LASTEXITCODE -ne 0) { throw 'Artifact verification failed.' }
         if (Test-Path -LiteralPath $ProductionEnvironment) {
             $production = Get-Content -LiteralPath $ProductionEnvironment -Raw -Encoding utf8 | ConvertFrom-Json
@@ -87,7 +96,7 @@ try {
             if ($LASTEXITCODE -ne 0) { throw 'Production startup probes did not build.' }
             foreach ($platform in @('forge', 'neoforge')) {
                 $platformBuild = if ($platform -eq 'forge') { 'multiversion/versions/1.20.1-forge/build' } else { 'multiversion/versions/1.21.1-neoforge/build' }
-                $jarName = if ($platform -eq 'forge') { 'gregtech6-1.20.1-forge-0.0.0.jar' } else { 'gregtech6-neoforge-1.21.1-0.0.0.jar' }
+                $jarName = $jarNames[$platform]
                 & python 'tools/integration/launch_production_smoke.py' --platform $platform --minecraft-root $production.minecraft_root --version $production.versions.$platform --java $production.java --jar "$platformBuild/libs/$jarName" --probe "$platformBuild/production-probe/gregtech-delivery-probe-0.0.0.jar" --output (Join-Path $logDirectory ($platform + '-production.json'))
                 if ($LASTEXITCODE -ne 0) { throw "$platform distribution client did not reach the title screen." }
             }

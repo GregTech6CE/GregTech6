@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-18 / GT6CE 模组身份
+
+双版正式包与 SDK 构建通过（最终 5m46s）。成品声明 `modId=gt6ce`、`displayName=GregTech 6 Community Edition`，依赖表属于 `dependencies.gt6ce`；两版入口各 1、事件订阅 68／123 全部核对为新 ID，包括修正后的流体提示回调。`gt6ce:shared_inventory` 几何加载器、818 个共享类、当前原生字节码、ZIP 完整性和 SDK 通过。未启动游戏、未跑全套测试或验证旧存档。见[范围与证据](verification/gt6ce-identity-20261018.md)。
+
 ## 2026-10-18 / 正式身份与业务去重
 
 本批双版主源码与自检源集编译、核心合同和当前 Stonecutter 源码／双语／资源检查的证据单列于[去重记录](verification/business-dedup-20261018.md)。删除旧 ID 兼容是用户明确要求，不能再沿用下方历史别名测试作为当前验收。未重新构建交付包、启动游戏或验证旧存档。

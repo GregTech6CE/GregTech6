@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "scope": "packaging and current bytecode only; no game execution",
+  "build_log": "work/gt6ce-branding-20261018/build-final.log",
+  "shared_classes": 818,
+  "platforms": {
+    "forge": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.20.1-forge\\build\\libs\\gt6ce-1.20.1-forge-0.0.0.jar",
+      "sha256": "2d8780fb4dd04cc89a2021f84e94b49ab2b1e1e6d43337e7b7ed6cb4974b0b25",
+      "bytes": 40615359,
+      "zip_entries": 83727,
+      "metadata_path": "META-INF/mods.toml",
+      "metadata": {
+        "mod_id": "gt6ce",
+        "mod_version": "0.0.0",
+        "minecraft": "1.20.1",
+        "loader": "forge",
+        "loader_version_range": "[47,)",
+        "dependency_ranges": {
+          "minecraft": "[1.20.1]",
+          "forge": "[47,)"
+        },
+        "license": "LGPL-3.0-or-later"
+      },
+      "zip_crc_checked": true,
+      "mixin_verification": {
+        "refmap": "gregtech.refmap.json",
+        "mapped_classes": 24,
+        "sha256": "c727fdaefba2b8aaa8dde727051378aaa5033e84858a5d46fd3cbde43d09254c",
+        "unmapped_forge_api_mixins": [
+          "ComponentCoverCapabilitiesMixin",
+          "ReliableEmiGearboxIconMixin",
+          "ReliableEmiNamespaceMixin",
+          "WaterContainerMixin"
+        ]
+      },
+      "current_platform_classes_checked": 1514,
+      "current_platform_classes_sha256": "37b72042616eb5075f699303cd50805439d17f09d7d673f79200a10eba670916",
+      "display_name": "GregTech 6 Community Edition",
+      "entrypoint_annotation": [
+        "com/gregtech/gregtech/GregTech.class"
+      ],
+      "event_subscriber_annotations_checked": 68,
+      "fluid_display_tooltips_annotation": "gt6ce",
+      "geometry_loader": "gt6ce:shared_inventory"
+    },
+    "neoforge": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\libs\\gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "sha256": "a802c0cee7f9a17c4df1ea21e354de34eb8aa6d1df5cc5f991e5bae0696fae25",
+      "bytes": 40458590,
+      "zip_entries": 83006,
+      "metadata_path": "META-INF/neoforge.mods.toml",
+      "metadata": {
+        "mod_id": "gt6ce",
+        "mod_version": "0.0.0",
+        "minecraft": "1.21.1",
+        "loader": "neoforge",
+        "loader_version_range": "[1,)",
+        "dependency_ranges": {
+          "minecraft": "[1.21.1]",
+          "neoforge": "[21.1.243,)"
+        },
+        "license": "LGPL-3.0-or-later"
+      },
+      "zip_crc_checked": true,
+      "mixin_verification": null,
+      "current_platform_classes_checked": 1612,
+      "current_platform_classes_sha256": "fa49bed3cdbd61a6dbca187992d10de8f157639ae958d527d29401285b79e0bc",
+      "display_name": "GregTech 6 Community Edition",
+      "entrypoint_annotation": [
+        "com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.class"
+      ],
+      "event_subscriber_annotations_checked": 123,
+      "fluid_display_tooltips_annotation": "gt6ce",
+      "geometry_loader": "gt6ce:shared_inventory"
+    }
+  },
+  "invalid_mod_annotations": [],
+  "sdk": {
+    "path": "C:\\Dev\\GregTech6\\core\\build\\libs\\gt6ce-addon-api-0.0.0.jar",
+    "bytes": 1920579,
+    "sha256": "20cd1c21f4380df3c5280dc9f8685087721239d6bf27c544e9ebbb0e45dd47fb",
+    "current_core_classes_checked": 818
+  },
+  "date": "2026-10-18",
+  "branch": "experiment/stonecutter",
+  "base_commit": "4befed5deaa1969bf3662a32ca23123feee20a47",
+  "loader_id": "gt6ce",
+  "display_name": "GregTech 6 Community Edition",
+  "registry_resource_namespace": "gregtech",
+  "build": "assembleBothPlatforms + :core:addonApiJar; BUILD SUCCESSFUL in 5m46s",
+  "initial_inspection_finding": "FluidDisplayTooltips had a literal gregtech subscriber ID in both platform branches; changed to GregTechIdentity.MOD_ID and rebuilt both jars.",
+  "game_started": false,
+  "full_test_suite_run": false,
+  "source_properties_and_java_identity_agree": true,
+  "evidence_sha256": {
+    "build-final.log": "5d47be78df1b57ea5faa1516013759942625867d9df644154871968249397ad3",
+    "artifact-inspection-readonly-final.json": "b2447305482fd444054d823698483eed4d18123cca214db01412aea8947a298a",
+    "inspect_current_artifacts.py": "cb24dc0b31723702f08fa9e0ff8e080d04e691cac48fe81b0fce7c649e916aa6"
+  }
+}
