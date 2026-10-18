@@ -1,5 +1,19 @@
 # 实现选择记录
 
+## 2026-10-18 / 附属材料按名字标识
+
+附属用 `MaterialDeclaration.builder(String)` 声明材料，不再提交数字 id。`builder(int, String)` 从 0.5 起忽略数字并记警告，0.7 移除。`ADDON_ID_MIN` / `ADDON_ID_MAX` 同样弃用。`API_VERSION` 是 5，`mod_version` 是 `0.5.0`。
+
+同名按原文合并。比较 `MaterialDefinition` 里除 id 以外的全部字段：显示名、颜色、贴图、熔点、沸点、密度、化学式、属性、原子数、透明度。`forms()` 取并集。字段不一致就启动失败，写出双方附属和字段名。只差大小写也失败，因为物品 id 会转小写。和内置材料同名，或只差大小写，同样失败。翻译键仍是 `material.gregtech.<小写名>`，不另加规则。
+
+内置材料保持原 id。附属材料在内置目录之后按名字排序，从 10000 起分配，注册表按需增长，不再有 10000 的数组上限。这个数字只在内存里用。`GregTechMaterials.find(int)` 解析的是这次启动的 id。
+
+周期表元素和原版物质不再比较 id。内置目录 link 之后、附属 link 之前，按原来的 `id < 8000` 且为元素、以及 `7900..7912`，给材料打上标记。提示读标记。附属材料不会被打上这些标记，所以运行时 id 落进旧区间也不会改变提示。材料词典的属性页不列出这两个标记。
+
+坩埚 `gt.materials` 写成 `{name, amount}`。`gt.display.material` 写成名字，没有显示材料时写空字符串。`gt.replicator.data` 键名不变，值改成字符串。读取时字符串按名字找；旧的数字按内置 id 找；找不到就跳过。写出只写新格式。
+
+规模没有预设接受线。实测数字记在 `VERIFICATION.md`。超出可接受范围时另开卡，不在这次里改物品生成。
+
 ## 2026-10-18 / 计划卡不再验收成品 jar 启动
 
 本机没有已安装的 Forge / NeoForge 加载器目录，`launch_production_smoke.py` 跑不了。计划卡的验收清单不再写「成品 jar 启动」。成品仍然用 `verify_artifacts.py` 核对 jar 内容。启动证据用开发环境的客户端和专服。

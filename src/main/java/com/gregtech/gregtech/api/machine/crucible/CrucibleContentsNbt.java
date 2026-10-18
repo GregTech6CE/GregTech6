@@ -20,8 +20,7 @@ public final class CrucibleContentsNbt {
                 continue;
             }
             CompoundTag entry = new CompoundTag();
-            entry.putInt("id", stack.material.getId());
-            entry.putLong("amount", stack.amount);
+            com.gregtech.gregtech.api.material.StoredMaterial.writeStack(entry, stack.material, stack.amount);
             list.add(entry);
         }
         tag.put(key, list);
@@ -35,7 +34,7 @@ public final class CrucibleContentsNbt {
         ListTag list = tag.getList(key, Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entry = list.getCompound(i);
-            GTMaterial material = GTMaterialRegistry.get(entry.getInt("id"));
+            GTMaterial material = com.gregtech.gregtech.api.material.StoredMaterial.readStackMaterial(entry);
             long amount = entry.getLong("amount");
             if (material.isValid() && amount > 0) {
                 stacks.add(new CrucibleMaterialStack(material, amount));

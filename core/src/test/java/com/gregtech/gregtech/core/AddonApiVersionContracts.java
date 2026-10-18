@@ -33,15 +33,15 @@ public final class AddonApiVersionContracts {
     private AddonApiVersionContracts() {}
 
     public static void main(String[] args) throws IOException {
-        if (args.length != 4) throw new IllegalArgumentException(
-                "expected gradle.properties, core java root, English API doc, Chinese API doc");
+        if (args.length < 4) throw new IllegalArgumentException(
+                "expected gradle.properties, source roots, English API doc, Chinese API doc");
         selfCheck();
         var properties = Path.of(args[0]);
-        var sources = Path.of(args[1]);
-        var english = Path.of(args[2]);
-        var chinese = Path.of(args[3]);
+        var english = Path.of(args[args.length - 2]);
+        var chinese = Path.of(args[args.length - 1]);
         int minor = requireApiMinor(Files.readString(properties), GregTechAddons.API_VERSION);
-        var entries = scanTree(sources);
+        var entries = new ArrayList<Entry>();
+        for (int i = 1; i < args.length - 2; i++) entries.addAll(scanTree(Path.of(args[i])));
         var en = parseTable(english.toString(), Files.readString(english), EN_HEADING, EN_HEADER);
         var zh = parseTable(chinese.toString(), Files.readString(chinese), ZH_HEADING, ZH_HEADER);
         audit(minor, entries, en, zh);

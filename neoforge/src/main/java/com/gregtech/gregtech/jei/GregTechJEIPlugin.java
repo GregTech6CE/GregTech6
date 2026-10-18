@@ -82,6 +82,9 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        long started = System.nanoTime();
+        int shown = 0;
+        try {
         // Reads the live RecipeMap lists, including a datapack overlay applied earlier in this reload.
         // EMI has its own native pages. Its JEI bridge must not import a second copy.
         if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
@@ -105,6 +108,16 @@ public final class GregTechJEIPlugin implements IModPlugin {
             }
             if (!recipes.isEmpty()) {
                 registration.addRecipes(entry.getValue().getRecipeType(),recipes);
+                shown += recipes.size();
+            }
+        }
+        } finally {
+            if (Integer.getInteger("gregtech.materialScale", 0) > 0) {
+                Runtime runtime = Runtime.getRuntime();
+                com.mojang.logging.LogUtils.getLogger().info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
+                        shown, (System.nanoTime() - started) / 1_000_000L,
+                        net.minecraft.core.registries.BuiltInRegistries.ITEM.size(),
+                        (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);
             }
         }
     }

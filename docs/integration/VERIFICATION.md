@@ -1,5 +1,27 @@
 # 验证账本
 
+## 2026-10-18 / 附属材料按名字标识
+
+`mod_version` 是 `0.5.0`，`GregTechAddons.API_VERSION` 是 5。Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。ForgeGradle 证书检查仍加 `-Dnet.minecraftforge.gradle.check.certs=false`，这不是项目配置。
+
+`:core:check` 通过，1 分 51 秒。`sourcePolicyCheck` 是 2384 个 Java 源文件。`addon API version contracts passed: 84 assertions, 7 scheduled removals`。材料契约每个场景单独一个 JVM：`service` 23、`name` 1、`id` 4、`addons` 3、`range` 2、`form` 1、`invalid` 1、`late` 4、`mismatch` 1、`casefold` 1、`corecase` 1、`order` 2、`named` 5。`service` 打印 `ammonium nitrate items=6 iron automatic items=96`。`materialBehaviorContracts` 仍是 1160 种材料、1105 个正数 id。
+
+`:core:addonMaterialScale` 不在 `check` 里。1000 种 `dust()` 加 1000 种金属，core 里数定义列表，不启动游戏：粉物品 6000，金属物品 41000，内置物品 56085。材料初始化 147 毫秒，列出物品定义 263 毫秒，一次 `System.gc()` 后已用堆约 6 MB。这不是客户端堆，也没有 JEI 或 EMI。每种金属是 41 个物品，不是先前估计的约 100 个。
+
+`:compileJava`、`:compileBootstrapGameTestJava`、`:compileAddonSample`、`:neoforge:compileJava`、`:neoforge:compileBootstrapGameTestJava`、`:neoforge:compileAddonSample` 一次通过，5 分 37 秒。样例编译只对着 SDK。
+
+`gregtech_card15` 的 `namesRoundTripAndOldIdsStillRead` 用铜核对三种存档字段。新格式写名字，旧的坩埚 int、USB short、显示 int 仍读回这次启动的内置 id。Forge 12:47:03、NeoForge 12:48:17 都打印 `All 1 required tests passed`。整次 `:runGameTestServer :neoforge:runGameTestServer` 是 26 分 47 秒。第一次 Forge 专服因为 `gregtech_card15` 没有 `test_empty` 结构而崩溃；结构补进该命名空间后，同一次命令两边都通过。目录是 `build/card15-gametest` 和 `neoforge/build/card15-gametest`。
+
+带 `-PaddonSample=true` 的同命名空间再跑一次，Forge 13:23:24、NeoForge 13:24:25 都是 `All 4 required tests passed`。`meltAddonIngotAndPourIt` 把样例金属 `SampleAlloy` 的锭丢进碳坩埚，加热到熔点以上，倒进碳模具的锭腔，冷却后掉出一块 `ingot`。坩埚存档条目是 `{name:SampleAlloy}`，没有 `id`。同一测试把旧的铜 `{id:int, amount}` 交给坩埚方块实体，再存成名字。`scanAddonMaterialAndReplicateNamedIron` 扫描硝酸铵粉，输出 USB 的 `gt.replicator.data` 是字符串 `AmmoniumNitrate`；复制配方返回 null，因为 `dust()` 和 `metal()` 不设置 UUM，公开 API 也不能给附属材料加 UUM。同一测试把名字格式的铁 USB 放进 T1 复制机，产出铁锭，USB 仍指着铁。`builtinTooltipFlagsMatchTheOldRanges` 对每种材料比对旧规则：附属材料两个旗标都没有；其余材料的周期表旗标等于「元素、id 在 1 到 7999、不是反物质」，原版物质旗标等于 id 在 7900 到 7912。
+
+重启用新目录 `build/card15-restart` 和 `neoforge/build/card15-restart`，标记文件是 `addon-sample-persistence.txt`。准备进程放入一单位 `SampleAlloy` 和一个装着 `AmmoniumNitrate` 名字的 USB 后退出，两边打印 `CARD15_RESTART_PREPARED`。Forge 第一次因为没有 `eula=true` 停在协议页，补上以后 13:31:24 准备完成。NeoForge 准备是 13:28:02。新的进程不重新放置方块，Forge 13:33:32、NeoForge 13:34:50 打印 `CARD15_RESTART_VERIFIED`。
+
+旧档是卡 11 世界的副本，原目录没有打开。Forge 副本 `build/card15-oldsave-forge`，复制机 (48, -58, 3)，硬盘开关在 z 少 1。NeoForge 副本 `neoforge/build/card15-oldsave-neo`，复制机 (-9806961, -58, -11702620)，开关同样在 z 少 1。Forge 13:37:11、NeoForge 13:38:40 都打印 `OLD_SAVE_USB item gregtech:usb3_hdd type 2 material Iron` 和 `OLD_SAVE_VERIFIED`。type 2 是 NBT short。仓库里没有本卡之前写下的坩埚内容，旧数字坩埚列表只在上面的 GameTest 里用真实方块实体读过。
+
+开发客户端 `-PclientSmoke=true`，超时 300 秒。带样例：Forge `CLIENT_SMOKE_SUCCESS` 68450 毫秒，`GT addon API 5 ready: [addon_sample]`；NeoForge 61507 毫秒，同一行。不带样例：Forge 89272 毫秒、NeoForge 62512 毫秒，ready 都是 `[]`。专服带样例并 `-PaddonSampleHalt=true`：Forge `Done (22.315s)` 后 `dust_ammoniumnitrate=true`，NeoForge `Done (6.637s)` 后同样的粉尘行，两边 ready 都含 `addon_sample`。不带样例的专服不会自己停：Forge `Done (24.502s)`、NeoForge `Done (8.125s)`，ready 是 `[]`，看到 Done 后结束进程。
+
+`-PmaterialScale=2000` 让样例再声明 1000 种粉和 1000 种金属，系统属性是 `gregtech.materialScale`。Forge 开发客户端带 JEI、不带 EMI，`-PclientSmokeTimeout=300`。300014 毫秒时仍是 `ForgeLoadingOverlay`，`renderedFrames` 为 0，`CLIENT_SMOKE_FAILED` 的原因是标题画面截图超时。`GT addon API 5 ready: [addon_sample]` 出现在超时前一秒。机器配方还在注册，粉碎回收已经到 72142 行。`JEI_SCALE` 没有打印。EMI 没有另开，因为同一段配方注册还没走完，EMI 的 `register` 也还没被调用。这超出本卡能接受的启动时间。后续是卡 19，本卡不改物品或配方生成。core 的 147 毫秒和 6 MB 仍然只是定义列表，不是这次客户端。
+
 ## 2026-10-18 / 附属 API 源码集与分加载器 SDK
 
 `mod_version` 是 `0.4.0`，`GregTechAddons.API_VERSION` 是 4。本机 Gradle 走用户目录里的代理，ForgeGradle 的证书检查对这个代理失败，所以下面的 Gradle 命令都加了 `-Dnet.minecraftforge.gradle.check.certs=false`。这不是项目配置。启动器是已安装的 Gradle 8.8，JDK 17，`JAVA21_HOME` 指向 JDK 21。

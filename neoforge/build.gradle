@@ -179,6 +179,7 @@ neoForge {
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.INFO
+            if (rootProject.findProperty('materialScale')) jvmArgument "-Dgregtech.materialScale=${rootProject.findProperty('materialScale')}"
         }
     }
 

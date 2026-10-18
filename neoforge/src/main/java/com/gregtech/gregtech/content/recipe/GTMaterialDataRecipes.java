@@ -53,7 +53,7 @@ public final class GTMaterialDataRecipes {
 
     /** GT6 {@code CS.NBT_USB_DATA}. */
     public static final String NBT_USB_DATA = com.gregtech.gregtech.content.data.UsbDataRules.DATA;
-    /** GT6 {@code CS.NBT_REPLICATOR_DATA} — a short holding the material id. */
+    /** GT6 {@code CS.NBT_REPLICATOR_DATA}. New saves store the material name; old saves stored a short id. */
     public static final String NBT_REPLICATOR_DATA = com.gregtech.gregtech.content.data.UsbDataRules.MATERIAL;
     /** GT6 {@code CS.NBT_USB_TIER}. */
     public static final String NBT_USB_TIER = com.gregtech.gregtech.content.data.UsbDataRules.TIER;
@@ -171,7 +171,7 @@ public final class GTMaterialDataRecipes {
         ItemStack out = usb.copyWithCount(1);
         CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tagOrEmpty(out);
         CompoundTag data = new CompoundTag();
-        data.putShort(NBT_REPLICATOR_DATA, (short) material.getId());
+        com.gregtech.gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
         tag.put(NBT_USB_DATA, data);
         tag.putByte(NBT_USB_TIER, (byte) USB_TIER);
         com.gregtech.gregtech.content.data.UsbDataMedia.store(out,tag);
@@ -289,7 +289,7 @@ public final class GTMaterialDataRecipes {
                 continue;
             }
             CompoundTag data = new CompoundTag();
-            data.putShort(NBT_REPLICATOR_DATA, (short) material.getId());
+            com.gregtech.gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
             driveTag.put(slotDataKey(slot), data);
             driveTag.putByte(slotTierKey(slot), (byte) DRIVE_FILE_TIER);
             tag.put(NBT_USB_DRIVE, driveTag);
@@ -315,7 +315,7 @@ public final class GTMaterialDataRecipes {
     @Nullable
     private static GTMaterial materialOf(CompoundTag data) {
         if (data == null || !data.contains(NBT_REPLICATOR_DATA)) return null;
-        GTMaterial material = GTMaterialRegistry.get(data.getShort(NBT_REPLICATOR_DATA));
+        GTMaterial material = com.gregtech.gregtech.api.material.StoredMaterial.read(data, NBT_REPLICATOR_DATA);
         return material.isValid() ? material : null;
     }
 
@@ -323,7 +323,7 @@ public final class GTMaterialDataRecipes {
 
     /**
      * GT6 {@code RecipeMapScannerMolecular:46-67}: a material form plus a USB 3 stick is replaced by
-     * that stick carrying the material's id.
+     * that stick carrying the material's name.
      */
     @Nullable
     public static Recipe scanner(List<ItemStack> items, List<FluidStack> fluids) {

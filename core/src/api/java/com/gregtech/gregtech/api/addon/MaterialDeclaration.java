@@ -16,10 +16,11 @@ public record MaterialDeclaration(
         String formula,
         boolean dust,
         boolean gas,
-        boolean liquid
+        boolean liquid,
+        boolean metal
 ) {
     public MaterialDeclaration {
-        if (id <= 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
+        if (id < 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 0..9999: " + id);
         Objects.requireNonNull(name, "Material name");
         if (!name.matches("[A-Za-z][A-Za-z0-9_]*"))
             throw new IllegalArgumentException("Use a stable, readable material name: " + name);
@@ -31,7 +32,18 @@ public record MaterialDeclaration(
         formula = formula == null ? "" : formula;
     }
 
-    public static Builder builder(int id, String name) { return new Builder(id, name); }
+    /** Declares a material by name. GregTech assigns the numeric id at startup. */
+    public static Builder builder(String name) { return new Builder(0, name); }
+
+    /**
+     * @deprecated Use {@link #builder(String)}. The numeric id is ignored. Removal is 0.7.
+     */
+    @Deprecated(since = "0.5", forRemoval = true)
+    @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.MaterialDeclaration#builder", removeAt = "0.7")
+    public static Builder builder(int id, String name) {
+        if (id <= 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 1..9999: " + id);
+        return new Builder(id, name);
+    }
 
     public static final class Builder {
         private final int id;
@@ -45,6 +57,7 @@ public record MaterialDeclaration(
         private boolean dust;
         private boolean gas;
         private boolean liquid;
+        private boolean metal;
 
         private Builder(int id, String name) {
             this.id = id;
@@ -62,12 +75,18 @@ public record MaterialDeclaration(
         /** Dust, the small and tiny dusts, and the unit flag. This is what generates dust items. */
         public Builder dust() { dust = true; return this; }
 
+        /**
+         * Ingots, plates, rods, gears and the other generated metal forms, plus dusts.
+         * This is the metal half of a scale check; it does not add a new prefix.
+         */
+        public Builder metal() { metal = true; return this; }
+
         public Builder gas() { gas = true; return this; }
         public Builder liquid() { liquid = true; return this; }
 
         public MaterialDeclaration build() {
             return new MaterialDeclaration(id, name, displayName, color, meltingPoint, boilingPoint, density,
-                    formula, dust, gas, liquid);
+                    formula, dust, gas, liquid, metal);
         }
     }
 }
