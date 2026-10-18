@@ -1,5 +1,15 @@
 # 实现选择记录
 
+## 2026-10-17 / 附属 API 用 0.x 版本，加载器拦版本
+
+`mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 等于 MINOR，现在是 3，所以版本是 `0.3.0`。只改实现时升 PATCH。文档列出的入口有增删改时升 MINOR，并同时改 `API_VERSION`。1.0 之前不承诺兼容。不兼容的改动要么先走弃用，要么在同一版写进 `ADDON_API` 的变更表。
+
+附属在 `mods.toml` / `neoforge.mods.toml` 里对 `gregtech6` 写 `versionRange="[0.3,)"`。版本不够由加载器在加载类之前拒绝。GT 不做运行时协商。`context.apiVersion()` 只给可选功能分支用。
+
+弃用在入口上同时标 `@Deprecated(since = "0.N", forRemoval = true)` 和 `@AddonApiRemoval(id = "...", removeAt = "0.M")`。Javadoc 的 `@deprecated` 写出替代和 `0.M`。`M` 至少是 `N + 2`：`0.N` 弃用的入口在 `0.(N+1)` 仍在，最早 `0.(N+2)` 删除。两份 `ADDON_API` 的弃用表必须和源码一致。`:core:addonApiVersionContracts` 在计划移除的 MINOR 小于等于当前 MINOR 时失败。到期后要么删掉入口，要么把 `removeAt` 改晚并在文档里写原因。没有 `forRemoval = true` 的旧 `@Deprecated` 不进入这张表。
+
+版本一致性不把 `mod_version` 写进资源。core 契约的 classpath 不含主资源，core 的 `processResources` 也不展开 `${mod_version}`。契约直接读 `gradle.properties`。
+
 ## 2026-10-16 / 附属配方机器由 GT 注册到附属命名空间
 
 附属通过 `GregTechMachineContributor` 交配方表、机器参数和结构格子。GT 在材料初始化之后、方块注册之前收集一次，再在自己的模组总线上为每个附属命名空间建 `DeferredRegister`。方块和物品 id 是 `附属:路径`，方块实体是 `附属:be_路径`。内置 id 不变。Forge 的 API 允许这样注册，并可能打出跨命名空间警告；NeoForge 的 `DeferredRegister.create` 接受另一个命名空间。这一步按加载器 API 决定，没有启动游戏。

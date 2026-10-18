@@ -54,7 +54,7 @@ Forge 1.20.1：
 .\gradlew.bat --console=plain :distributionJar
 ```
 
-当前输出：`build/libs/gregtech6-1.20.1-forge-0.0.0.jar`。
+当前输出：`build/libs/gregtech6-1.20.1-forge-0.3.0.jar`。
 
 NeoForge 1.21.1：
 
@@ -62,7 +62,7 @@ NeoForge 1.21.1：
 .\gradlew.bat --console=plain :neoforge:jar
 ```
 
-当前输出：`neoforge/build/libs/gregtech6-neoforge-1.21.1-0.0.0.jar`。
+当前输出：`neoforge/build/libs/gregtech6-neoforge-1.21.1-0.3.0.jar`。
 
 一次生成两个版本：
 

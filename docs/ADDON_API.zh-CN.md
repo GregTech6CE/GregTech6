@@ -2,7 +2,28 @@
 
 [English](ADDON_API.md) | [中文](ADDON_API.zh-CN.md)
 
-API版本 **3** 在 Forge 1.20.1 与 NeoForge 1.21.1 保留版本 2 的入口，并加上配方机器。`GregTechAddon` 和 `GregTechMaterialContributor` 没有删除方法，`onRecipesReady` 不变。用 `context.apiVersion() >= 2` 判断，不要要求等于 2。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT完成材料/物品关联和内置机器配方后，在common setup调用一次 `onRecipesReady`。按Addon模组ID排序调用；重复ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为FAILED。
+API 版本 **3** 就是模组版本 **0.3.0**，平台是 Forge 1.20.1 与 NeoForge 1.21.1。它保留版本 2 的入口，并加上配方机器。`GregTechAddon` 和 `GregTechMaterialContributor` 没有删除方法，`onRecipesReady` 不变。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT 完成材料/物品关联和内置机器配方后，在 common setup 调用一次 `onRecipesReady`。按 Addon 模组 ID 排序调用；重复 ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为 FAILED。
+
+## 版本
+
+依赖模组 id `gregtech6`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.3,)"`。GregTech 太旧时，加载器在附属的类加载之前拒绝。`context.apiVersion()` 返回 MINOR，只用于可选分支，例如 `context.apiVersion() >= 2`。它不能代替 `versionRange`，也不要要求等于某一个版本。
+
+`gradle.properties` 的 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 就是这个 MINOR。PATCH 不改这份 API。1.0 之前，MINOR 升级可以破坏附属调用。破坏一个已经写明的入口，要么等下面的移除表到期，要么在同一版的变更表里写明。
+
+要淘汰的入口同时标 `@Deprecated(since = "0.N", forRemoval = true)` 和 `@AddonApiRemoval(id = "<二进制名>", removeAt = "0.M")`，上面放同一段 Javadoc。`id` 是包名加类型，方法或字段再加 `#成员`。`@deprecated` 用 `{@link}` 或 `{@code}` 写出替代，并写上 `0.M`。`M` 至少是 `N + 2`：在 `0.N` 弃用的入口，`0.(N+1)` 仍然保留。`M` 小于等于当前 MINOR 时构建失败。到期后删掉入口，或把 `removeAt` 改晚并在本文写原因。没有 `forRemoval = true` 的 `@Deprecated` 不在这张表上。
+
+## 变更
+
+| MINOR | 变更 |
+| --- | --- |
+| 3 | 配方机器和大型配方机器。模组版本从 0.3.0 起。版本 2 的注册、材料和 `onRecipesReady` 保留。 |
+| 2 | 排队材料和追加形态。 |
+| 1 | 附属注册和 `onRecipesReady`。 |
+
+## 弃用与移除
+
+| 入口 | 弃用版本 | 替代 | 计划移除 |
+| --- | --- | --- | --- |
 
 新材料和追加形态走单独的 `ServiceLoader` 入口，见下文。不要在模组构造方法里提交材料：Forge 1.20.1 上附属构造和 GT 构造会重叠。
 
@@ -12,6 +33,7 @@ GregTechAddons.register(new GregTechAddon() {
     public void onRecipesReady(Context context) {
         // context.platform(): forge / neoforge
         // context.minecraftVersion(): 1.20.1 / 1.21.1
+        // context.apiVersion(): 3，只用于可选功能分支
         // 此时查询原有GT材料，往MachineRecipeMaps加入Addon配方。
     }
 });
@@ -147,10 +169,10 @@ GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures
 
 版本 3 不提供附属外壳、自定义方块实体子类、自定义结构检查、大烤炉线圈二选一、面向相邻方块的输入输出、燃料产能模板、新前缀、新流体、KubeJS 插件、材料 id 分配，也不迁移 gt6-crops 这类旧附属。KubeJS 仍用 `gregtech:machine` 给已经存在的配方表加行，包括这个入口创建的表。内置机器继续走 `OriginalLargeRecipeMachineData` 的名字分支。附属大型机器走默认端口。
 
-运行 `gradlew.bat :core:addonApiJar` 得到 `core/build/libs/gregtech6-addon-api-0.0.0.jar`。将其作为 `compileOnly files(...)` 开发依赖，**不要再次打包或shade这些类**；运行时由已安装的GT提供。SDK只包含共享领域和接口、许可声明，不含Minecraft素材。使用平台配方/物品栈/能源适配时还须对应版本的GT开发源码/开发依赖；生产重映射JAR不是通用开发依赖。目前没有发布Maven坐标。
+运行 `gradlew.bat :core:addonApiJar` 得到 `core/build/libs/gregtech6-addon-api-0.3.0.jar`。将其作为 `compileOnly files(...)` 开发依赖，**不要再次打包或shade这些类**；运行时由已安装的GT提供。SDK只包含共享领域和接口、许可声明，不含Minecraft素材。使用平台配方/物品栈/能源适配时还须对应版本的GT开发源码/开发依赖；生产重映射JAR不是通用开发依赖。目前没有发布Maven坐标。
 
-Addon须声明必需依赖模组 **`gregtech6`**；GT内容和保存命名空间仍为 **`gregtech`**。分别构建Forge和NeoForge版本，SDK不会让Forge二进制自动跨加载器运行。
+Addon 须声明必需依赖模组 **`gregtech6`**，并写 `versionRange="[0.3,)"`；GT 内容和保存命名空间仍为 **`gregtech`**。分别构建 Forge 和 NeoForge 版本，SDK 不会让 Forge 二进制自动跨加载器运行。
 
-当前支持注册和配方就绪生命周期、4291–7899 号段的排队材料和已有前缀的追加形态（生成 `gregtech:` 物品）、已有材料查询、现有机器配方、吃 `GregTechTags.Energy` 的配方机器和用现有 GT 外壳的大型配方机器（由 GT 注册到附属命名空间）、能源合同、`gregtech:machine` 与 `gregtech:machine_removal` 两种数据包配方，以及 `GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver` 和空的 `gregtech:signal_wire_receivers` 方块标签。`onRecipesReady` 仍不是数据包重载事件。API 版本 3 不承诺新前缀、流体、附属外壳、自定义机器方块实体、燃料产能模板、不经入口就用数据包新建配方表、修改动态配方、材料表的数据包重载、旧存档迁移、跨加载器物品栈或完整旧 GregAPI 替代。0.0.0 阶段仅文档列出的入口作为兼容面，内部实现可能调整。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+当前支持注册和配方就绪生命周期、4291–7899 号段的排队材料和已有前缀的追加形态（生成 `gregtech:` 物品）、已有材料查询、现有机器配方、吃 `GregTechTags.Energy` 的配方机器和用现有 GT 外壳的大型配方机器（由 GT 注册到附属命名空间）、能源合同、`gregtech:machine` 与 `gregtech:machine_removal` 两种数据包配方，以及 `GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver` 和空的 `gregtech:signal_wire_receivers` 方块标签。`onRecipesReady` 仍不是数据包重载事件。API 版本 3 不承诺新前缀、流体、附属外壳、自定义机器方块实体、燃料产能模板、不经入口就用数据包新建配方表、修改动态配方、材料表的数据包重载、旧存档迁移、跨加载器物品栈或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面，内部实现可能调整。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。
