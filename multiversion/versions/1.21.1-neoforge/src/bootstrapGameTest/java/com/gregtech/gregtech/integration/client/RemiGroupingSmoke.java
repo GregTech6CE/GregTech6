@@ -39,6 +39,10 @@ final class RemiGroupingSmoke {
             "functional_auto_igniter", "functional_auto_hammer", "functional_charging_crafting_table",
             "functional_co2_laser", "functional_laser_absorber", "functional_clay_molds", "functional_canvas",
             "functional_single_use", "functional_drinks", "functional_foods", "functional_ice_cream",
+            "functional_bumble_combs", "functional_chemical_bottles", "functional_food_condiments",
+            "functional_food_fruits", "functional_food_vegetables", "functional_food_meat", "functional_food_eggs_dairy",
+            "functional_food_dough", "functional_food_bakery", "functional_food_sandwiches", "functional_food_pizzas",
+            "functional_food_potatoes", "functional_animal_parts", "functional_plant_materials", "functional_medicines",
             "functional_book", "functional_large_book", "glass_panes", "real_fluids",
             "functional_burning_box_liquid", "functional_burning_box_liquid_dense", "functional_long_dist_wire",
             "functional_long_dist_transformer", "functional_electromagnet", "functional_energy_storage", "functional_transformer",
@@ -235,7 +239,10 @@ final class RemiGroupingSmoke {
                 receipt.addProperty("motorVoltageOrder", String.join(",", order));
             }
             require(!form.equals("other_gt"), "obsolete catchall folder");
-            if (form.equals("functional_bumble_hive")) require(members.stream().anyMatch(m -> m.getId().getPath().equals("clay_comb")), "clay hive missing");
+            if (form.equals("functional_bumble_combs")) require(members.size() == 20
+                    && members.stream().anyMatch(m -> m.getId().getPath().equals("clay_comb")), "bee comb variants missing");
+            if (form.equals("functional_drinks")) require(members.stream().noneMatch(m -> Set.of(
+                    "mercury_bottle", "ink_bottle", "lubricant_bottle", "glue_bottle").contains(m.getId().getPath())), "industrial bottle incorrectly grouped as a drink");
             if (form.equals("functional_electrolyzer")) require(members.stream().anyMatch(m -> m.getId().getPath().contains("galvanized_steel")), "LV electrolyzer missing");
             if (form.equals("functional_locker")) require(members.size()==60,"locker group incomplete");
             counts.addProperty(form, members.size());

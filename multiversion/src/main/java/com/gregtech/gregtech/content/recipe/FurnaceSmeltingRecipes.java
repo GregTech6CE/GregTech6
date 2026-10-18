@@ -87,7 +87,9 @@ public final class FurnaceSmeltingRecipes {
     private static final java.util.Map<Item, CookingData> COOKING = new java.util.IdentityHashMap<>();
     public static java.util.Optional<CookingData> cooking(Item item) {
         var own = COOKING.get(item);
-        return own == null ? ExternalOreProcessing.cooking(item) : java.util.Optional.of(own);
+        if (own != null) return java.util.Optional.of(own);
+        var single = SingleItemSourceRecipes.cooking(item);
+        return single.isPresent() ? single : ExternalOreProcessing.cooking(item);
     }
 
     private static boolean registered;

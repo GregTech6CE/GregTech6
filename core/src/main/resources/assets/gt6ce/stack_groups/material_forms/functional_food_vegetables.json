@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_vegetables",
+  "contents": [
+    "item:gt6ce:chili_pepper",
+    "item:gt6ce:cucumber",
+    "item:gt6ce:cucumber_slice",
+    "item:gt6ce:maxim_tomato",
+    "item:gt6ce:onion",
+    "item:gt6ce:onion_slice",
+    "item:gt6ce:pickle",
+    "item:gt6ce:pickle_slice",
+    "item:gt6ce:tomato",
+    "item:gt6ce:tomato_slice"
+  ],
+  "priority": 120
+}

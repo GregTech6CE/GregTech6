@@ -3,7 +3,6 @@ package com.gregtech.gregtech.client;
 import com.gregtech.gregtech.block.tool.MaterialAnvilBlock;
 import com.gregtech.gregtech.blockentity.tool.MaterialAnvilBlockEntity;
 import com.gregtech.gregtech.content.tool.AnvilWorkpieceGeometry;
-import com.gregtech.gregtech.item.MaterialItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -14,8 +13,10 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.RenderShape;
 
-/** GT6's two material-shaped workpieces; foreign items use their own item model. */
+/** GT6's two material-shaped workpieces; foreign blocks keep their actual block model. */
 public final class MaterialAnvilRenderer implements BlockEntityRenderer<MaterialAnvilBlockEntity> {
     public MaterialAnvilRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(MaterialAnvilBlockEntity anvil, float partialTick, PoseStack pose,
@@ -32,7 +33,8 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
         for (int slot = 0; slot < 2; slot++) {
             var stack = anvil.workpiece(slot);
             if (stack.isEmpty()) continue;
-            int shape = stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item ? AnvilWorkpieceGeometry.shape(item.getPrefix().getName()) : 0;
+            int shape = stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item
+                    ? AnvilWorkpieceGeometry.shape(item.getPrefix().getName()) : stack.getItem() instanceof BlockItem ? 7 : 0;
             var bounds = AnvilWorkpieceGeometry.bounds(shape, slot, facing);
             if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem item) {
                 var material = item.getMaterial();
@@ -47,6 +49,17 @@ public final class MaterialAnvilRenderer implements BlockEntityRenderer<Material
                     AnvilCuboidRenderer.draw(pose.last(), buffers.getBuffer(RenderType.entityCutoutNoCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)),
                             bounds, CrucibleRenderSprites.resolve(detail), 0xFFFFFF, light);
                 }
+            } else if (stack.getItem() instanceof BlockItem blockItem
+                    && blockItem.getBlock().defaultBlockState().getRenderShape() == RenderShape.MODEL) {
+                // A FIXED item transform may flatten, shrink or hide an ore item.
+                // Render its block model inside the original ore-workpiece bounds,
+                // including vanilla and other mods' ore models and render layers.
+                pose.pushPose();
+                pose.translate(bounds.minX, bounds.minY, bounds.minZ);
+                pose.scale((float) bounds.getXsize(), (float) bounds.getYsize(), (float) bounds.getZsize());
+                Minecraft.getInstance().getBlockRenderer().renderSingleBlock(blockItem.getBlock().defaultBlockState(),
+                        pose, buffers, light, OverlayTexture.NO_OVERLAY);
+                pose.popPose();
             } else {
                 pose.pushPose();
                 var renderer = Minecraft.getInstance().getItemRenderer();

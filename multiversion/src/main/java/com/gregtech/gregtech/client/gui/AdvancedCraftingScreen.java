@@ -31,13 +31,21 @@ public final class AdvancedCraftingScreen extends AbstractContainerScreen<Advanc
         }
     }
 //? if >=1.21.1 {
-    /*@Override public void render(GuiGraphics graphics,int x,int y,float tick){super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);
+    /*@Override public void render(GuiGraphics graphics,int x,int y,float tick){super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);}
 *///?} else {
-    @Override public void render(GuiGraphics graphics,int x,int y,float tick){renderBackground(graphics);super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);
+    @Override public void render(GuiGraphics graphics,int x,int y,float tick){renderBackground(graphics);super.render(graphics,x,y,tick);renderTooltip(graphics,x,y);}
 //?}
-        if(hoveredSlot!=null){int slot=hoveredSlot.index;
+    @Override protected void renderTooltip(GuiGraphics graphics,int x,int y){
+        if(menu.getCarried().isEmpty()&&hoveredSlot!=null){int slot=hoveredSlot.index;
             String key=slot==0?"gt.tooltip.advanced_crafting.blueprint":slot==AdvancedCraftingMenu.FLUSH?"gt.tooltip.advanced_crafting.flush":slot==AdvancedCraftingMenu.STORE?"gt.tooltip.advanced_crafting.store":slot==AdvancedCraftingMenu.RESULT?"gt.tooltip.advanced_crafting.craft":null;
-            if(key!=null)graphics.renderTooltip(font,Component.translatable(key),x,y);
+            if(key!=null){
+                var stack=hoveredSlot.getItem();
+                var lines=new java.util.ArrayList<Component>();
+                if(!stack.isEmpty()){lines.addAll(getTooltipFromContainerItem(stack));lines.add(Component.empty());}
+                lines.add(Component.translatable(key));
+                graphics.renderTooltip(font,lines,stack.getTooltipImage(),x,y);return;
+            }
         }
+        super.renderTooltip(graphics,x,y);
     }
 }

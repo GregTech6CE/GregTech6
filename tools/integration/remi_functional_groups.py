@@ -21,7 +21,7 @@ burning_box_fluidbed burning_box_fluidbed_dense
 electric_motor electric_dynamo electric_generator electric_heater electric_cooler
 electric_magnet flux_motor flux_dynamo flux_heater flux_cooler flux_magnet
 electric_laser flux_laser steam_turbine gas_turbine
-magnet magnet_electromagnetic battery_box solar_panel
+battery_box solar_panel
 drum wood_barrel fluid_cell fluid_capsule fluid_measure
 tap fluid_funnel cap_nozzle nozzle anvil bush bumble_hive
 track track_booster track_detector
@@ -62,7 +62,6 @@ def catalog(root):
                 continue
             groups[stem].append(item)
             break
-    groups["bumble_hive"].append("clay_comb")
     # Use the actual native ore definitions, not display-name or broad ore substring guesses.
     ores = (java / "block/SpecialOreDefinitions.java").read_text(encoding="utf-8")
     groups["special_ores"] = ["block_" + icon for icon in re.findall(r'new VanillaSpec\("([^"]+)"', ores)]

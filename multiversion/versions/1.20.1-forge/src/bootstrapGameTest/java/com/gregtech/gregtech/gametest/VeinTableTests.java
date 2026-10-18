@@ -18,10 +18,9 @@ import java.util.List;
  * §51: GT6's large ore veins ({@code WorldgenOresLarge}, {@code Loader_Worldgen:885-924}) against
  * the port's tables — order, parameters, and whether every named material can actually be placed.
  *
- * <p>The five veins added in §51 ({@code lignite}, {@code coal}, {@code bauxite},
- * {@code iodinesalt}, {@code rocksalt}) had been skipped early on with the note "those resources
- * generate as whole-block seam layers instead" — but GT6 has both: the same resources also appear as
- * whole-block seams in its stone layers, which the port keeps in {@link GTStoneLayersGen}.
+ * <p>The old tables remain source evidence, but GT6WorldGenerator:125 disables the entire
+ * Overworld large-vein list when stone layers are enabled. These catalog checks do not imply
+ * that the legacy entries generate alongside {@link GTStoneLayersGen}.
  */
 @GameTestHolder("gt6ce")
 @PrefixGameTestTemplate(false)

@@ -77,12 +77,19 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(mezz.jei.api.registration.IRecipeCatalystRegistration registration) {
+        for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
+            if(table instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock)
+                registration.addRecipeCatalyst(new ItemStack(table),mezz.jei.api.constants.RecipeTypes.CRAFTING);
         for (var info : MultiblockInfoCategory.recipes())
             registration.addRecipeCatalyst(info.controller(), MultiblockInfoCategory.TYPE);
         machines.forEach((map, stacks) -> {
             if (!categories.containsKey(map)) return;
             for (var stack : stacks) registration.addRecipeCatalyst(stack, RecipeMapCategory.recipeType(map));
         });
+    }
+
+    @Override public void registerRecipeTransferHandlers(mezz.jei.api.registration.IRecipeTransferRegistration registration){
+        registration.addRecipeTransferHandler(new AdvancedCraftingTransferInfo());
     }
 
     @Override public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {

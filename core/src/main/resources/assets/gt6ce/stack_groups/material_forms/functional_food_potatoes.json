@@ -1,0 +1,17 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_potatoes",
+  "contents": [
+    "item:gt6ce:bag_of_chili_chips",
+    "item:gt6ce:bag_of_potato_chips",
+    "item:gt6ce:chili_chips",
+    "item:gt6ce:fries",
+    "item:gt6ce:fries_2",
+    "item:gt6ce:potato_chips",
+    "item:gt6ce:potato_chips_raw",
+    "item:gt6ce:potato_on_a_stick",
+    "item:gt6ce:potato_strips",
+    "item:gt6ce:roasted_potato_on_a_stick"
+  ],
+  "priority": 120
+}

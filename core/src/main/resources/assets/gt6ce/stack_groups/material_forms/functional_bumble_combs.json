@@ -1,0 +1,27 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_bumble_combs",
+  "contents": [
+    "item:gt6ce:aero_comb",
+    "item:gt6ce:amnesic_comb",
+    "item:gt6ce:clay_comb",
+    "item:gt6ce:cryo_comb",
+    "item:gt6ce:end_comb",
+    "item:gt6ce:frozen_comb",
+    "item:gt6ce:honey_comb",
+    "item:gt6ce:jungle_comb",
+    "item:gt6ce:magic_comb",
+    "item:gt6ce:military_comb",
+    "item:gt6ce:nether_comb",
+    "item:gt6ce:pyro_comb",
+    "item:gt6ce:rock_comb",
+    "item:gt6ce:royal_comb",
+    "item:gt6ce:sandy_comb",
+    "item:gt6ce:shroomy_comb",
+    "item:gt6ce:soul_comb",
+    "item:gt6ce:sticky_comb",
+    "item:gt6ce:tera_comb",
+    "item:gt6ce:water_comb"
+  ],
+  "priority": 120
+}

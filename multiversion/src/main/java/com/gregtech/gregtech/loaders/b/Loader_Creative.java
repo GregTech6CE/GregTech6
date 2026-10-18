@@ -297,10 +297,6 @@ public class Loader_Creative implements IGTLoader {
             for (var entry : com.gregtech.gregtech.registry.GTFuelRods.ALL) {
                 if (entry.isPresent() && entry.get().definition()!=null) event.accept(new ItemStack(entry.get(), 1));
             }
-            // Magnets (N4)
-            for (var entry : com.gregtech.gregtech.registry.GTMagnets.all()) {
-                if (entry.isPresent()) event.accept(new ItemStack(entry.get(), 1));
-            }
         }
         if (GTCreativeTabs.MULTIBLOCKS_TAB != null
                 && event.getTabKey().equals(GTCreativeTabs.MULTIBLOCKS_TAB.getKey())) {

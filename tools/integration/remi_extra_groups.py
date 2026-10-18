@@ -3,9 +3,7 @@
 No recipe tags or registrations are changed. Typed fluid matching deliberately
 excludes item stacks with identical registry paths and other mods' fluids.
 """
-import re
-
-UNFIRED_CLAY = r"clay_(?:(?:[a-z0-9_]+_)?mold|tap|funnel|jug|measuring_pot|juicer|bowl|basin|crossing|crucible|faucet)"
+from remi_food_groups import UNFIRED_CLAY, resources as food_resources
 
 
 def resources(root):
@@ -23,22 +21,7 @@ def resources(root):
                        ("loot_chest", "block.gt6ce.loot_chest_dungeon")):
         yield "functional_" + stem, {"type": "remi:group", "name": name,
                 "regex": "^item:gt6ce:" + stem + "_[a-z0-9_]+$", "priority": 120}
-    multi = (java / "registry/GTMultiItemsGen.java").read_text(encoding="utf-8")
-    rows = re.findall(r'"([a-z0-9_]+)", "[^"]*", "(food|bottles)", "[^"]*"', multi)
-    # MultiItemFood also registers non-food clay balls. Their explicit clay
-    # family must not be swallowed by this higher-priority broad food group.
-    foods = [item for item, category in rows if category == "food"
-             and item != "clay_comb" and not item.endswith("ice_cream")
-             and not re.fullmatch(UNFIRED_CLAY, item)
-             and item not in {"blue_clay", "brown_clay", "red_clay", "white_clay", "yellow_clay"}]
-    drinks = [item for item, category in rows if category == "bottles"]
-    ice = [item for item, category in rows if category == "food" and item.endswith("ice_cream")]
-    for stem, label, members in (("foods", "itemGroup.gt6ce.nature_foods", foods),
-                                 ("drinks", "itemGroup.gt6ce.fluids", drinks),
-                                 ("ice_cream", "item.gt6ce.ice_cream", ice)):
-        assert len(members) > 1, stem
-        yield "functional_" + stem, {"type": "remi:group", "name": label,
-                "contents": ["item:gt6ce:" + i for i in sorted(set(members))], "priority": 120}
+    yield from food_resources(java)
     # Raw clay molds have unique IDs; the fired mold uses shape data on one ID.
     yield "functional_clay_molds", {"type": "remi:group", "name": "item.gt6ce.clay_mold",
             "regex": "^item:gt6ce:" + UNFIRED_CLAY + "$", "priority": 120}

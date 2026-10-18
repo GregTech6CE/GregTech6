@@ -1,0 +1,30 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_condiments",
+  "contents": [
+    "item:gt6ce:barbecue_sauce",
+    "item:gt6ce:chili_sauce",
+    "item:gt6ce:chocolate_cream",
+    "item:gt6ce:coconut_cream",
+    "item:gt6ce:diablo_sauce",
+    "item:gt6ce:diabolo_sauce",
+    "item:gt6ce:dressing",
+    "item:gt6ce:fish_oil",
+    "item:gt6ce:heavy_cream",
+    "item:gt6ce:hemp_oil",
+    "item:gt6ce:honey",
+    "item:gt6ce:honeydew",
+    "item:gt6ce:hot_sauce",
+    "item:gt6ce:lin_oil",
+    "item:gt6ce:mayo",
+    "item:gt6ce:nut_oil",
+    "item:gt6ce:nutella",
+    "item:gt6ce:olive_oil",
+    "item:gt6ce:royal_jelly",
+    "item:gt6ce:seed_oil",
+    "item:gt6ce:sunflower_oil",
+    "item:gt6ce:there_is_no_cow_sauce",
+    "item:gt6ce:whale_oil"
+  ],
+  "priority": 120
+}

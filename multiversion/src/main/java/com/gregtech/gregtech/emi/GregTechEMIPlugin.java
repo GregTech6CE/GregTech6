@@ -24,6 +24,10 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
+        registry.addRecipeHandler(com.gregtech.gregtech.registry.GTMenuTypes.ADVANCED_CRAFTING.get(),new AdvancedCraftingEmiHandler());
+        for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
+            if(table instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock)
+                registry.addWorkstation(dev.emi.emi.api.recipe.VanillaEmiRecipeCategories.CRAFTING,EmiStack.of(new ItemStack(table)));
         EmiCatalogRepair.apply();
         for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
             registry.setDefaultComparison(item,dev.emi.emi.api.stack.Comparison.compareData(

@@ -73,7 +73,8 @@ import javax.annotation.Nullable;
  * applied to this loop (see that class for why: 1.20.1's build limits are not 0..255, the upper limit is
  * exclusive, and {@code Level.setBlock} would load an unloaded chunk). The count is again the number of
  * positions that held a block and were replaced with air — the GT blocks this tool keeps are not
- * counted, and a position that was already air is not counted either.</p>
+ * counted, and a position that was already air is not counted either. Clicking uses the current
+ * dimension build range, including negative Y and the expanded top, except its very bottom layer.</p>
  *
  * <h2>Tooltips</h2>
  *
@@ -157,7 +158,8 @@ public final class BehaviorWorldgenDebugger {
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
                                 ItemStack stack, float hitX, float hitY, float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);                            // :44
-        eraseExceptOres(level, pos.getX() >> 4, pos.getZ() >> 4, MIN_Y, MAX_Y);           // :45-53
+        eraseExceptOres(level, pos.getX() >> 4, pos.getZ() >> 4,
+                level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
         return Outcome.acted(stack);                                                      // :54
     }
 }

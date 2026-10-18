@@ -31,12 +31,10 @@ public final class GTOreVeins {
      * All GT6 large veins flagged {@code ORE_OVERWORLD}, in original order (Loader_Worldgen
      * lines 885-915), which is exactly GT6's registration order.
      *
-     * <p>§51 added the five veins the port used to skip — {@code lignite}, {@code coal},
-     * {@code bauxite}, {@code iodinesalt} and {@code rocksalt}. They were dropped early on with the
-     * note "those resources generate as whole-block seam layers instead", but GT6 has <b>both</b>:
-     * the same resources also appear as whole-block seams in its stone layers ({@code WorldgenStone}
-     * / {@code BlockRockOres}, which the port keeps in {@link GTStoneLayersGen}), so skipping the
-     * veins lost the vein half of GT6's generation.
+     * <p>This is the preserved legacy table, not the default generation list. GT6WorldGenerator:125
+     * passes no ORE_OVERWORLD list when GENERATE_STONE is enabled (also :138-139 for Overworld-like
+     * dimensions). The stone-layer system and this legacy large-vein system are alternatives.
+     * Use {@link #activeOverworldVeins()} for generation and recipe-browser information.
      */
     public static final List<OreVein> OVERWORLD_VEINS = List.of(
         //          name             minY maxY weight den size  top                          bottom                       between                      spread
@@ -75,6 +73,11 @@ public final class GTOreVeins {
 
     /** Sum of all overworld vein weights (GT6 picks {@code random.nextInt(totalWeight)} per grid cell). */
     public static final int TOTAL_VEIN_WEIGHT = OVERWORLD_VEINS.stream().mapToInt(OreVein::weight).sum();
+
+    /** GT6 uses stone strata instead of all old Overworld large veins by default. */
+    public static List<OreVein> activeOverworldVeins() {
+        return GTWorldgenDefaults.STONE_LAYERS ? List.of() : OVERWORLD_VEINS;
+    }
 
     /**
      * All GT6 small ores flagged {@code GEN_OVERWORLD} (Loader_Worldgen lines 800-847).

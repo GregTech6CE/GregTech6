@@ -154,9 +154,6 @@ public final class GregTechClient {
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem shapedItem
                     && shapedItem.getBlock() instanceof com.gregtech.gregtech.block.tool.ShapedToolBlock shaped) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? shaped.tintRgb() : 0xFFFFFF, shapedItem);
-            } else if (entry.get() instanceof net.minecraft.world.item.BlockItem magnetItem
-                    && magnetItem.getBlock() instanceof com.gregtech.gregtech.block.energy.MagnetBlock magnet) {
-                event.register((stack, tintIndex) -> tintIndex == 0 ? magnet.tintRgb() : 0xFFFFFF, magnetItem);
             } else if (entry.get() instanceof MaterialBlockItem blockItem && blockItem.material() != null) {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? blockItem.getTintColor() : 0xFFFFFF, blockItem);
             } else if (entry.get() instanceof net.minecraft.world.item.BlockItem panelItem
@@ -340,8 +337,6 @@ public final class GregTechClient {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? attachment.tintRgb() : 0xFFFFFF, block);
             } else if (block instanceof com.gregtech.gregtech.block.tool.ShapedToolBlock shaped) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? shaped.tintRgb() : 0xFFFFFF, block);
-            } else if (block instanceof com.gregtech.gregtech.block.energy.MagnetBlock magnet) {
-                event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? magnet.tintRgb() : 0xFFFFFF, block);
             } else if (block instanceof MaterialBlockLike materialBlock) {
                 int color = materialBlock.material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? color : 0xFFFFFF, block);

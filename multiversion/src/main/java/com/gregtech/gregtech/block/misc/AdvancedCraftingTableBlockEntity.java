@@ -40,6 +40,9 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     private long revision;
     private long cachedRevision=-1;
     private RecipeManager cachedManager;
+    private long cachedRecipeGeneration=-1;
+    private net.minecraft.resources.ResourceLocation lastRecipeId;
+    private Object cachedRecipeIdentity;
     private Plan cachedPlan;
     private ItemStack cachedPreview=ItemStack.EMPTY;
     private final ItemStackHandler inventory=new ItemStackHandler(SIZE) {
@@ -149,15 +152,19 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
     private Plan plan() {
         if(level==null||level.isClientSide)return null;
         RecipeManager manager=level.getRecipeManager();
-        if(cachedRevision==revision&&cachedManager==manager)return cachedPlan;
-        cachedRevision=revision;cachedManager=manager;cachedPlan=null;cachedPreview=ItemStack.EMPTY;
+        long generation=com.gregtech.gregtech.recipe.AdvancedCraftingRecipeReload.generation();
+        Object identity=lastRecipeId==null?null:manager.byKey(lastRecipeId).orElse(null);
+        if(cachedRevision==revision&&cachedManager==manager&&cachedRecipeGeneration==generation&&cachedRecipeIdentity==identity)return cachedPlan;
+        cachedRevision=revision;cachedManager=manager;cachedRecipeGeneration=generation;cachedRecipeIdentity=identity;cachedPlan=null;cachedPreview=ItemStack.EMPTY;
         ItemStack[] pattern=pattern(),after=new ItemStack[SIZE],used=new ItemStack[9];int[] sources=new int[9];Arrays.fill(sources,-1);
 //? if >=1.21.1 {
-        /*CraftingContainer template=grid(pattern);var displayed=manager.getRecipeFor(RecipeType.CRAFTING,template.asCraftInput(),level).orElse(null);
-        if(displayed==null)return null;cachedPreview=displayed.value().assemble(template.asCraftInput(),level.registryAccess()).copy();
+        /*CraftingContainer template=grid(pattern);var displayed=manager.getRecipeFor(RecipeType.CRAFTING,template.asCraftInput(),level,lastRecipeId).orElse(null);
+        if(displayed==null)return null;lastRecipeId=displayed.id();cachedRecipeIdentity=displayed;
+        cachedPreview=displayed.value().assemble(template.asCraftInput(),level.registryAccess()).copy();
 *///?} else {
-        CraftingContainer template=grid(pattern);var displayed=manager.getRecipeFor(RecipeType.CRAFTING,template,level).orElse(null);
-        if(displayed==null)return null;cachedPreview=displayed.assemble(template,level.registryAccess()).copy();
+        CraftingContainer template=grid(pattern);var displayed=manager.getRecipeFor(RecipeType.CRAFTING,template,level,lastRecipeId).map(com.mojang.datafixers.util.Pair::getSecond).orElse(null);
+        if(displayed==null)return null;lastRecipeId=displayed.getId();cachedRecipeIdentity=displayed;
+        cachedPreview=displayed.assemble(template,level.registryAccess()).copy();
 //?}
         for(int i=0;i<SIZE;i++)after[i]=inventory.getStackInSlot(i).copy();
         for(int i=0;i<9;i++) {
@@ -166,14 +173,22 @@ public class AdvancedCraftingTableBlockEntity extends BlockEntity implements Blo
             sources[i]=slot;used[i]=after[slot].copyWithCount(1);after[slot].shrink(1);
         }
 //? if >=1.21.1 {
-        /*CraftingContainer grid=grid(used);var recipe=manager.getRecipeFor(RecipeType.CRAFTING,grid.asCraftInput(),level).orElse(null);
+        /*CraftingContainer grid=grid(used);var positioned=grid.asPositionedCraftInput();var input=positioned.input();
+        var recipe=displayed.value().matches(input,level)?displayed
+                :manager.getRecipeFor(RecipeType.CRAFTING,input,level,lastRecipeId).orElse(null);
 *///?} else {
-        CraftingContainer grid=grid(used);var recipe=manager.getRecipeFor(RecipeType.CRAFTING,grid,level).orElse(null);
+        CraftingContainer grid=grid(used);var recipe=displayed.matches(grid,level)?displayed
+                :manager.getRecipeFor(RecipeType.CRAFTING,grid,level,lastRecipeId).map(com.mojang.datafixers.util.Pair::getSecond).orElse(null);
 //?}
         if(recipe==null)return null;
 //? if >=1.21.1 {
-        /*ItemStack result=recipe.value().assemble(grid.asCraftInput(),level.registryAccess());if(result.isEmpty())return null;
-        var remains=recipe.value().getRemainingItems(grid.asCraftInput());
+        /*ItemStack result=recipe.value().assemble(input,level.registryAccess());if(result.isEmpty())return null;
+        // NeoForge recipes return one remainder per cropped input cell, not per table cell.
+        // Vanilla ResultSlot uses the same positioned offset when returning buckets/tools.
+        var croppedRemains=recipe.value().getRemainingItems(input);
+        var remains=NonNullList.withSize(9,ItemStack.EMPTY);
+        for(int y=0;y<input.height();y++)for(int x=0;x<input.width();x++)
+            remains.set(x+positioned.left()+(y+positioned.top())*3,croppedRemains.get(x+y*input.width()));
 *///?} else {
         ItemStack result=recipe.assemble(grid,level.registryAccess());if(result.isEmpty())return null;
         var remains=recipe.getRemainingItems(grid);
