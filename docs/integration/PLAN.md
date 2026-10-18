@@ -1,5 +1,7 @@
 # GregTech 6 整合计划与验收合同
 
+当前追加范围（2026-10-19）：用户认可 Stonecutter，明确要求先将 GitHub 原 `main` 改名 `old`，再将 `experiment/stonecutter` 改名 `main`，并直接交付双版本模组包，不运行额外检验。两次分支重命名及默认分支设置已完成；本地同名分支同步，后续开发主线为 `main`。本轮只执行 Forge `distributionJar` 与 NeoForge `jar`，不安排 check／verify／GameTest／客户端／验包。此前分支试验和“不自动合并 main”的阶段限制由本次明确授权取代。
+
 当前追加范围（2026-10-18）：按用户要求，将 lombinaxmasson 已合入 main 的最终附属 API 栈（PR #45，`c899462a6`，含 #29–#44 的功能）接入 `experiment/stonecutter`，并提供逐 PR 内容说明。保留完整 `gt6ce:` 身份、既有重复注册清理和 Stonecutter 架构；上游共用目录搬迁由现有结构取代。仅做双版编译、SDK／API 和新增功能定向验证；不扩大为完整生存、旧存档兼容或全部测试。见[来源、PR 清单与验证边界](verification/main-addon-stack-20261018.md)。
 
 当前追加范围（2026-10-18，用户明确要求完整改名）：本模组全部注册／资源身份由 `gregtech:` 迁为 `gt6ce:`，加载器与蓝色模组归属名称统一为 `GregTech 6 Community Edition`。双版源码、模型／纹理／配方／标签、语言键、查看器分组、生成器与自检同步迁移；不保留旧注册别名。此要求取代下方仅改加载器、保留旧命名空间的阶段方案。沿用已授权的分支上传和双版测试包交付范围。

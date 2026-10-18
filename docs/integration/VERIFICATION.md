@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / main 更名和免额外检验构建
+
+GitHub 按原 main→old、Stonecutter→main 的顺序返回成功，默认分支为新 main。原主线 `c899462a6` 保留于 old，Stonecutter 源码 `f835a068c` 成为 main。本轮仅记录直接正式包构建结果，按用户明确要求不运行额外检查、测试、客户端、专用服务器探针、GameTest 或验包。此前验证证据保持历史范围，不代表本次成品安装实测。 双版直接构建 12m 57s 成功，正式包已复制到 `build/deliveries/20261019-main/`，仅记录构建退出结果及文件信息；见[回执](verification/main-promotion-build-20261019.json)。
+
 ## 2026-10-18 / 上游 PR #29–#45 附属 API 栈
 
 双版主代码、独立 API、bootstrapGameTest、productionSmoke 和仅 SDK 的附属样例编译通过；API 版本合约 84 项、7 项移除期限检查通过。core SDK 49 个公共 class，两版 SDK 各另含 19 个原生公共 class；三个 SDK 的当前字节码、API 闭合、ZIP CRC 与许可证验包通过。41 个隔离纯 Java 核心合约进程全通过，内置材料物性摘要与 56,085 个物品 ID 保持。

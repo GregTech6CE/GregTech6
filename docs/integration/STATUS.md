@@ -1,5 +1,11 @@
 # 整合状态
 
+## 2026-10-19 / Stonecutter 正式成为 main
+
+按用户指定顺序完成 GitHub 原 `main` → `old`，再 `experiment/stonecutter` → `main`，默认分支设为新 `main`。`old` 完整保留原主线 `c899462a616100a1007f9dec56372ea6489c9f0a`；新主线源码为 `f835a068c52cbfb80adbe4f76ec0fc1b1dea9e57`，本地跟踪同步。原本本地 main 的提交已包含于 Stonecutter 历史，不丢弃历史。README、构建和迁移说明同步当前分支安排，下方实验分支描述为历史记录。
+
+双版正式包直接构建成功（12m 57s），交付目录 `build/deliveries/20261019-main/`，见[直接构建回执](verification/main-promotion-build-20261019.json)。本轮按用户要求不运行额外检验、测试、游戏或验包；结果只代表直接打包，不扩展为玩法或成品安装结论。
+
 ## 2026-10-18 / main 附属 API 最终栈接入 Stonecutter
 
 已将 lombinaxmasson 合入 main 的 PR #45（`c899462a6`，含 #29–#44）适配到 `experiment/stonecutter`。新增数据包机器配方覆盖、附属材料与命名保存、单方块／多方块配方机器、行为机器、流体燃料发电机及独立 SDK；保留本分支 `gt6ce:`、完整显示名、重复身份清理和共享工厂。上游目录搬迁由现有 Stonecutter 结构取代，版本为 **0.7.0 / API 7**。补修 Furnace 覆盖与普通炉镜像顺序、泛型 API 闭合和样例 JDK 选择。

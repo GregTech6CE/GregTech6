@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-19 / 主线分支更名与直接构建
+
+按用户明确顺序，使用 GitHub 分支重命名保留原 `main` 为 `old`（`c899462a6`），然后将 `experiment/stonecutter` 更名为 `main`（`f835a068c`），最后设置默认分支为新 `main`。保留实际提交历史，不以强推覆盖原主线。既有实验分支、不自动合并 main 的安排已由本次用户授权取代；上游后续开发以新 main 为准。
+
+用户明确要求“不用检验”，本批仅调用 Forge `distributionJar`（包含 reobfJar 及 core/API）和 NeoForge `jar`，不调用聚合 build／check／verify、SDK 检查或任何游戏探针。文档更新提交使用 `[skip ci]`，不为本次直接构建额外触发远端检验；不改变仓库正常 CI 配置。
+
 ## 2026-10-18 / main 附属 API 栈适配现有 Stonecutter
 
 采用 main `c899462a616100a1007f9dec56372ea6489c9f0a`（PR #45）的最终功能树；材料 ID／动态配方、信号、数据包机器配方、附属材料与机器、行为机器及流体燃料发电机均接入。上游先前的 `platform-shared` 目录、复合构建和可行性统计不重新引入，也不覆盖本分支完整迁移记录。公共 API 独立为 core/api 和 Stonecutter native/api，内部业务仍保持一份共享实现。模组版本与 API 对齐为 **0.7.0 / 7**，样例在 `examples/addon-sample/`，正式包及 SDK 不包含样例模组。

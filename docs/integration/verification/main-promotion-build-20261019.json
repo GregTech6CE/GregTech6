@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "repository": "https://github.com/SaltNya/GregTech6",
+  "actions_in_order": [
+    {
+      "from": "main",
+      "to": "old",
+      "returned_name": "old",
+      "sha": "c899462a616100a1007f9dec56372ea6489c9f0a"
+    },
+    {
+      "from": "experiment/stonecutter",
+      "to": "main",
+      "returned_name": "main",
+      "sha": "f835a068c52cbfb80adbe4f76ec0fc1b1dea9e57"
+    }
+  ],
+  "remote_state_after_renames": {
+    "repository": "SaltNya/GregTech6",
+    "default_branch": "main",
+    "branches": {
+      "main": "f835a068c52cbfb80adbe4f76ec0fc1b1dea9e57",
+      "old": "c899462a616100a1007f9dec56372ea6489c9f0a"
+    }
+  },
+  "source_revision": "f835a068c52cbfb80adbe4f76ec0fc1b1dea9e57",
+  "mod_version": "0.7.0",
+  "build": {
+    "tasks": [
+      ":multiversion:1.20.1-forge:distributionJar",
+      ":multiversion:1.21.1-neoforge:jar"
+    ],
+    "exit_code": 0,
+    "elapsed": "12m 57s",
+    "log": "work/promote-main-20261019/build-direct.log"
+  },
+  "files": [
+    {
+      "loader": "forge",
+      "source": "multiversion/versions/1.20.1-forge/build/libs/gt6ce-1.20.1-forge-0.7.0.jar",
+      "path": "build/deliveries/20261019-main/gt6ce-1.20.1-forge-0.7.0.jar",
+      "bytes": 40270685
+    },
+    {
+      "loader": "neoforge",
+      "source": "multiversion/versions/1.21.1-neoforge/build/libs/gt6ce-neoforge-1.21.1-0.7.0.jar",
+      "path": "build/deliveries/20261019-main/gt6ce-neoforge-1.21.1-0.7.0.jar",
+      "bytes": 40120054
+    }
+  ],
+  "additional_checks_run": false,
+  "game_started": false,
+  "tests_run": false,
+  "artifact_contents_verified": false,
+  "scope": "Direct build and file copy only, as explicitly requested by the user; no new gameplay/install/old-save validation claim."
+}

@@ -1,8 +1,8 @@
 # 双版本构建与 Git 上传说明
 
-更新：2026-10-18。当前为整合开发版，目标为 Minecraft 1.20.1 Forge 和 Minecraft 1.21.1 NeoForge。源码对齐、编译、游戏启动、完整玩法及存档兼容是分别记录的状态，详见 `docs/integration/STATUS.md` 和 `VERIFICATION.md`。
+更新：2026-10-19。当前为整合开发版，目标为 Minecraft 1.20.1 Forge 和 Minecraft 1.21.1 NeoForge。源码对齐、编译、游戏启动、完整玩法及存档兼容是分别记录的状态，详见 `docs/integration/STATUS.md` 和 `VERIFICATION.md`。
 
-当前实验分支使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，详见[迁移与生成器说明](../integration/STONECUTTER_MIGRATION.md)。
+当前主线 **`main`** 使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，原主线保留为 **`old`**。详见[迁移与生成器说明](../integration/STONECUTTER_MIGRATION.md)。
 
 ## 项目结构：一个仓库，两个平台产物
 

@@ -1,7 +1,7 @@
 # Stonecutter 完整迁移
 
-用户要求完整迁移，不以 EMI 试点作为验收终点；当前分支已改名 `experiment/stonecutter`。
-Stonecutter 是构建和源码管理工具；Git 托管仍为现有 GitHub 仓库。本分支不自动推送或合并 main。
+用户要求完整迁移，不以 EMI 试点作为验收终点；完整 Stonecutter 实现现为主线 `main`，原主线改名 `old` 保留。
+Stonecutter 是构建和源码管理工具；Git 托管仍为现有 GitHub 仓库，默认分支为 `main`。
 
 当前两版产品名称为 **GregTech 6 Community Edition**，加载 ID 和物品／方块／流体／配方／资源命名空间统一为 **`gt6ce`**。共同及版本专有资源均使用 `assets/gt6ce`、`data/gt6ce`；生成器、自检和验包同步采用这些路径。原版来源语言键、文本、Java 包和许可记录保留。原 `gregtech:` 身份不保留兼容映射，旧存档及相关脚本需要另行迁移。
 

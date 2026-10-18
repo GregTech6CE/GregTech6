@@ -4,7 +4,7 @@
 
 一个面向现代 Minecraft 的 GregTech 6 社区整合项目，通过共享核心和各自的 Forge、NeoForge 平台实现持续移植与开发。
 
-当前实验分支使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，详见[迁移与生成器说明](docs/integration/STONECUTTER_MIGRATION.md)。
+当前主线 **`main`** 使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，原主线保留为 **`old`**。详见[迁移与生成器说明](docs/integration/STONECUTTER_MIGRATION.md)。
 
 ## 项目介绍
 

@@ -4,7 +4,7 @@
 
 A community integration project bringing GregTech 6 to modern Minecraft, with a shared core and dedicated Forge and NeoForge implementations.
 
-The experimental branch now manages all native source sets and resources with **Stonecutter 0.7.11**. See the [migration and generator guide](docs/integration/STONECUTTER_MIGRATION.md).
+The **`main`** branch manages all native source sets and resources with **Stonecutter 0.7.11**. The former main branch is preserved as **`old`**. See the [migration and generator guide](docs/integration/STONECUTTER_MIGRATION.md).
 
 ## About
 
