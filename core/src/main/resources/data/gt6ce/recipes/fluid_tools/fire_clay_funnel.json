@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "gt6ce:clay_funnel"
   },
-  "result": "gt6ce:fluid_funnel",
+  "result": "gt6ce:fluid_funnel_ceramic",
   "experience": 0,
   "cookingtime": 200
 }

@@ -264,7 +264,15 @@ public final class ManualToolRecipeCatalog {
         SHAPED.put(ToolDefinition.ROLLING_PIN, List.of(
                 pattern(new String[]{"  S", " I ", "S f"},
                         forms('I', MaterialPrefix.ingot, 'S', MaterialPrefix.stick),
-                        tools('f', ToolDefinition.FILE), true, false)));
+                        tools('f', ToolDefinition.FILE), true, false),
+                // Loader_Recipes_Woods:237-238: one species plank, two arbitrary wood
+                // sticks (their materials need not agree), and a file or a knife.
+                pattern(new String[]{"  S", " P ", "S f"},
+                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
+                        tools('f', ToolDefinition.FILE), true, false),
+                pattern(new String[]{"  S", " P ", "S k"},
+                        forms('P', MaterialPrefix.plate, 'S', MaterialPrefix.stick),
+                        tools('k', ToolDefinition.KNIFE), true, false)));
         // Loader_Tools:225-243 — "T "/" F": a striking material above a piece of flint. The T key
         // accepts the material's gem, rock or nugget form; GTFlintAndTinderRecipe lists them.
         SHAPED.put(ToolDefinition.FLINT_AND_TINDER, List.of(

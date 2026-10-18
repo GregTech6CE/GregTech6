@@ -10,8 +10,15 @@ public final class MaterialPresentation {
         return Component.translatableWithFallback(material.getTranslationKey(), material.getDisplayNameFallback());
     }
 
-    /** Whole original translations win; source rules only supply the missing-name fallback. */
+    /** Original names, with the requested plain-stone Chinese display before the source fallback. */
     public static Component formName(String prefix, GTMaterial material, Component legacyFallback) {
+        // The patch calls every rock "bearing", including ordinary STONE materials.
+        // Follow GT6 LanguageHandler's STONE branch for the requested Chinese display:
+        // retain the exact material translation and derive its rock suffix from the patch.
+        if (net.minecraft.locale.Language.getInstance().getOrDefault("language.code").startsWith("zh_")
+                && "rockGt".equals(prefix) && material.resolve().has(MaterialProperty.STONE)
+                && "%s Rock".equals(OriginalMaterialNameRules.name(prefix, material, ignored -> "%s", false)))
+            return Component.translatable("item.gt6ce.rock_gt_stone", name(material));
         String key = com.gregtech.gregtech.api.prefix.PrefixRegistry.sourceTranslationKey(prefix, material.getName());
         if (net.minecraft.locale.Language.getInstance().has(key)) return Component.translatable(key);
         // Preserve translated prefix/material fallbacks where the original whole-name key is absent.

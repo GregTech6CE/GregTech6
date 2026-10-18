@@ -28,6 +28,17 @@ import net.minecraftforge.fml.common.Mod;
 public final class GTToolClient {
     private GTToolClient() {}
 
+//? if >=1.21.1 {
+    /*@SubscribeEvent
+    public static void setup(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        com.gregtech.gregtech.api.tool.GTToolEnchantments.setClientLookup(() -> {
+            var client = net.minecraft.client.Minecraft.getInstance();
+            var connection = client.getConnection();
+            return connection == null ? null : connection.registryAccess();
+        });
+    }
+*///?}
+
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         event.register((stack, tintIndex) -> {

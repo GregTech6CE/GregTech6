@@ -10,6 +10,8 @@
 
 中文文件由以下三项按顺序生成：英语回退、原文件所有 `S:` 项、明确的别名。逐字保留译文、空格、颜色、格式符和空值，不替换术语，不猜测新材料/档位的中文名。
 
+2026-10-19 用户要求普通石质岩石显示“黑色花岗岩岩石”，区分矿物岩石的“含…岩石”。`item.gt6ce.rock_gt_stone` 是对应 GT6 `LanguageHandler` 的 STONE 分支的显示模板：材料名仍取原文，后缀从原文 `oredict.rockGtGraniteBlack` 中材料名之后的部分提取，不改写任何原始全名键；矿物岩石继续使用原全名。该模板单独计入派生项，不计作英文回退。
+
 ```text
 python -X utf8 tools/localization.py
 python -X utf8 tools/localization.py --patch C:/Dev/GregTech_zh_cn.lang

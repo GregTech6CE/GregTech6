@@ -39,5 +39,8 @@ public final class GTToolRecipes {
     public static Map<GTToolType,List<Pattern>> allHeads(){return adapt(ManualToolRecipeCatalog.allHeads());}
     private static Map<GTToolType,List<Pattern>> adapt(Map<com.gregtech.gregtech.api.tool.ToolDefinition,List<ManualToolRecipeCatalog.Pattern>> source){Map<GTToolType,List<Pattern>> out=new LinkedHashMap<>();source.forEach((key,value)->out.put(GTToolType.valueOf(key.name()),value.stream().map(GTToolRecipes::adapt).toList()));return Map.copyOf(out);}
     public static boolean isHeadAssembly(GTToolType type){return ManualToolRecipeCatalog.isHeadAssembly(type.definition());}
+    public static boolean isWoodenRollingPin(GTToolType type,Pattern pattern){
+        return type==GTToolType.ROLLING_PIN&&pattern.forms().get('P')==MaterialPrefix.plate;
+    }
     @Nullable public static Item vanilla(char letter){return item(ManualToolRecipeCatalog.vanilla(letter));}
 }

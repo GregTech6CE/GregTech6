@@ -28,7 +28,7 @@ public final class GTToolCraftingRecipe extends GTToolPatternRecipe {
 
     @Override
     protected ItemStack assembleFrom(Match match) {
-        return GTToolItem.create(type, match.material(),type==GTToolType.POCKET_MULTITOOL?com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Blue"):match.handle());
+        return GTToolItem.create(type, match.material(),GTToolRecipes.isWoodenRollingPin(type,pattern)?com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"):type==GTToolType.POCKET_MULTITOOL?com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Blue"):match.handle());
     }
 
     @Override

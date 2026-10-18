@@ -12,6 +12,9 @@ import java.util.*;
 public final class OriginCreativeContents {
     private OriginCreativeContents() {}
     private static Map<String,List<ItemStack>> pages;
+//? if >=1.21.1 {
+    /*private static Object pagesEnchantmentRegistry;
+*///?}
     public static String family(Item item) {
         String id=BuiltInRegistries.ITEM.getKey(item).getPath();
         if(item instanceof RadiationSuitItem)return "equipment";
@@ -82,7 +85,13 @@ public final class OriginCreativeContents {
         return "technology";
     }
     public static synchronized Map<String,List<ItemStack>> pages() {
+//? if >=1.21.1 {
+        /*var lookup = com.gregtech.gregtech.api.tool.GTToolEnchantments.currentLookup();
+        var enchantmentRegistry = lookup == null ? null : lookup.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
+        if (pages != null && pagesEnchantmentRegistry == enchantmentRegistry) return pages;
+*///?} else {
         if(pages!=null)return pages;
+//?}
         var result=new LinkedHashMap<String,List<ItemStack>>();
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
@@ -137,7 +146,11 @@ public final class OriginCreativeContents {
             } else if(BuiltInRegistries.ITEM.getKey(item).getPath().equals("zpm_module"))page.add(com.gregtech.gregtech.content.energy.ZpmEnergy.charged());
             else page.add(new ItemStack(item));
         }
-        result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);return pages;
+        result.replaceAll((family,stacks)->List.copyOf(stacks));pages=Collections.unmodifiableMap(result);
+//? if >=1.21.1 {
+        /*pagesEnchantmentRegistry = enchantmentRegistry;
+*///?}
+        return pages;
     }
     public static Collection<ItemStack> contents(String family){return pages().getOrDefault(family,List.of());}
     public static ItemStack icon(String family){var stacks=contents(family);return stacks.isEmpty()?new ItemStack(Items.IRON_BLOCK):stacks.iterator().next().copy();}

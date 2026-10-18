@@ -26,15 +26,47 @@ public final class GTToolEnchantments {
     private GTToolEnchantments() {}
     private static final String APPLIED = "gt.material_enchantments.v1";
 //? if >=1.21.1 {
-    /*public static void applyCurrent(ItemStack stack) {
-        var lookup = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.currentLookup();
+    /*private static volatile java.util.function.Supplier<HolderLookup.Provider> clientLookup = () -> null;
+
+    public static void setClientLookup(java.util.function.Supplier<HolderLookup.Provider> lookup) {
+        clientLookup = java.util.Objects.requireNonNull(lookup);
+    }
+
+    /^* Integrated-server holders cannot be encoded against the client connection's registry. ^/
+    public static HolderLookup.Provider currentLookup() {
+        if (net.neoforged.fml.util.thread.EffectiveSide.get().isClient()) return clientLookup.get();
+        var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+        return server == null ? null : server.registryAccess();
+    }
+
+    public static void applyCurrent(ItemStack stack) {
+        var lookup = currentLookup();
         if (lookup != null) apply(stack, lookup);
     }
     public static void apply(ItemStack stack, HolderLookup.Provider lookup) {
+        if (stack.isEmpty()) return;
         var data = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        if (stack.isEmpty() || !data.contains(GTToolHelper.ROOT) || data.getBoolean(APPLIED)) return;
+        if (!data.contains(GTToolHelper.ROOT)) return;
         var registry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
-        var enchantments = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
+        var existing = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+        var enchantments = new ItemEnchantments.Mutable(existing);
+        boolean rebound = false;
+        // Copies may outlive a world or cross from the integrated server's catalogue to its client.
+        // Resolve by key without reapplying the material bonus or losing player levels/tooltip flags.
+        for (var entry : existing.entrySet()) {
+            var previous = entry.getKey();
+            var key = previous.unwrapKey();
+            if (key.isEmpty()) continue;
+            var current = registry.getOrThrow(key.get());
+            if (current == previous) continue;
+            enchantments.removeIf(holder -> holder == previous);
+            enchantments.upgrade(current, entry.getIntValue());
+            rebound = true;
+        }
+        if (data.getBoolean(APPLIED)) {
+            if (rebound) stack.set(DataComponents.ENCHANTMENTS, enchantments.toImmutable());
+            return;
+        }
 *///?} else {
     public static void apply(ItemStack stack) {
         if (stack.isEmpty() || !stack.hasTag() || !stack.getTag().contains(GTToolHelper.ROOT)

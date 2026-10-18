@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-19",
+  "branch": "main",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "sources": {
+    "root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+    "authors": "Gregorius Techneticies and GT6 contributors",
+    "license": "LGPL-3.0-or-later; existing notices retained",
+    "rules_adapted": [
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Vanilla.java",
+        "lines": "55-57",
+        "purpose": "furnace craftingFirestarter centre",
+        "sha256": "00cf8865a0bef43be72c2f63cc8e7d290da967318536a266c441eae4bda037d5"
+      },
+      {
+        "path": "gregapi/load/LoaderItemData.java",
+        "lines": "517-518",
+        "purpose": "fire charge and flint and steel firestarters",
+        "sha256": "0dc916611c9a743f477e473b75b3fa3462a47d22dd75ef086c33ea18aaa9f968"
+      },
+      {
+        "path": "gregtech/items/MultiItemRandomTools.java",
+        "lines": "111-132;343;356-398",
+        "purpose": "raw clay shapes, reclaim quantities and firestarters",
+        "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+      },
+      {
+        "path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+        "lines": "305;430;477;2108;2115;2177;2184",
+        "purpose": "ceramic utility firing",
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+      },
+      {
+        "path": "gregapi/data/RM.java",
+        "lines": "796-821",
+        "purpose": "smelting and blast firing, no smoker",
+        "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      {
+        "path": "gregapi/data/MT.java",
+        "lines": "299-313;2706;2887;3882",
+        "purpose": "implicit wood mortar property, tool enchantments, compressed wood target",
+        "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+      },
+      {
+        "path": "gregapi/load/LoaderWoodDictionary.java",
+        "lines": "51-56;69-98;156-171",
+        "purpose": "wood species and natural-wood exceptions",
+        "sha256": "55a53e74c6fcddc4894a2e61acb8ea914496a53cc4f9f64e7f78d78eebd8d0e3"
+      },
+      {
+        "path": "gregapi/wooddict/WoodEntry.java",
+        "lines": "175-176",
+        "purpose": "log material composition",
+        "sha256": "6df074efc1f573dec82553f18ff3c711952d03d419cc6dc0b915c90df44b1872"
+      },
+      {
+        "path": "gregapi/wooddict/BeamEntry.java",
+        "lines": "81-82",
+        "purpose": "beam material composition",
+        "sha256": "3f2eeae8da394ded25421eb05002329d55e85cc7c53e7420bdfd83f528e923e8"
+      },
+      {
+        "path": "gregapi/wooddict/PlankEntry.java",
+        "lines": "125-146",
+        "purpose": "plank, stair and slab material amounts",
+        "sha256": "3bd5fbe235cafacd39717d62eeb8fc1604d6984f4a153e71c17a923531983d23"
+      },
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Woods.java",
+        "lines": "168-170;191-193;212;237-241;278-296",
+        "purpose": "species pulp, wooden rolling pins, sawing and lathe outputs",
+        "sha256": "c91d081abaad62fdda8774873473516d269c7b6da9e8c0cb0fdb1270bd51aa68"
+      },
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Handlers.java",
+        "lines": "108-112",
+        "purpose": "mortar wood sticks and plates",
+        "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+      },
+      {
+        "path": "gregapi/lang/LanguageHandler.java",
+        "lines": "569",
+        "purpose": "plain STONE rock naming",
+        "sha256": "fed8d4bd2e3cb5f70f180d42876792843fa4dba7b8aab6be7581f3ae4130249b"
+      },
+      {
+        "path": "gregtech/loaders/a/Loader_Tools.java",
+        "lines": "143;278-284",
+        "purpose": "material firestarter and six stone tools",
+        "sha256": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e"
+      },
+      {
+        "path": "gregapi/item/multiitem/MultiItemTool.java",
+        "lines": "607-626",
+        "purpose": "material tool enchantments",
+        "sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac"
+      }
+    ],
+    "chinese_patch": {
+      "path": "C:/Dev/GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "original_whole_name_entries_modified": 0
+    }
+  },
+  "reported_crash": {
+    "attachment_sha256": "32bdbd2b1b9304459b875ec4cc6fb2b1f42679c41e6661bd0f2fb102c29b2d79",
+    "minecraft": "1.21.1",
+    "loader": "NeoForge 21.1.252",
+    "packet": "serverbound/minecraft:set_creative_mode_slot",
+    "enchantment": "minecraft:sharpness",
+    "cause": "Integrated-server enchantment holder used against client connection registry"
+  },
+  "recipe_changes": {
+    "furnace_firestarter_tag_members": 14,
+    "wooden_rolling_pin_patterns_added": 2,
+    "ceramic_json_added": {
+      "smelting": 5,
+      "blasting": 5,
+      "unfired_clay_reclaim": 5,
+      "reversed_crossing": 1
+    },
+    "gt_furnace_firing_rows_added": 5,
+    "existing_ceramic_firing_outputs_corrected": 2,
+    "original_stone_tool_patterns": "Already present; actual recipe-manager verification, no new stone recipes"
+  },
+  "validation": {
+    "initial_attempt": {
+      "dual_compile": "passed",
+      "required_tests_run": 5,
+      "passed": 3,
+      "failed": 2,
+      "failures": [
+        "Native vanilla wood species overwritten by generic composition loader",
+        "Rolling pin inherited the overwritten Wood material"
+      ],
+      "enchantment_tests": "Not selected: NeoForge filters by template namespace; probe fixture corrected",
+      "log": "work/early-survival-20261019/first-attempt.log",
+      "log_sha256": "81cf92649c31d101ce57219c51d2917fd1acd3dfc675c1d16d80ca3c2732870c"
+    },
+    "dual_main_compile": "passed",
+    "dual_bootstrap_probe_compile": "passed",
+    "game": "NeoForge 21.1.243 development server / JDK 21.0.7",
+    "world_generation_followup": {
+      "files": [
+        "worldgen/dungeon/GTDungeonChunkRoomWorkshop.java",
+        "worldgen/center/NativeOriginFacilities.java"
+      ],
+      "change": "Explicit world enchantment registry at tool storage boundary",
+      "dual_compile": "passed",
+      "log": "work\\early-survival-20261019\\final-compile.log",
+      "log_sha256": "4283338d07c80f8875ad3d19238dea798a2c9fdb8d2e7150dd7f9c20a80a389e",
+      "gameplay": "not run; applied after the seven selected GameTests"
+    },
+    "required_tests_passed": 7,
+    "required_tests_failed": 0,
+    "selected_namespaces": [
+      "gt6ce_early_survival",
+      "gt6ce_tool_enchantments"
+    ],
+    "cases": [
+      "furnaceAcceptsOriginalFirestartersAndMaterialTool",
+      "sourceClayFormsFireIntoVisibleCeramicPartsAndReclaimBeforeFiring",
+      "woodPulpKeepsSpeciesAndOriginalAmounts",
+      "woodenRollingPinsUsePlanksAndMixedWoodSticks",
+      "plainStoneRocksMakeTheirOwnTools",
+      "materialToolPacketsUseCurrentRegistry",
+      "appliedToolsRebindWithoutLosingPlayerEnchantments"
+    ],
+    "log": "work\\early-survival-20261019\\compile-targeted-game.log",
+    "log_sha256": "74f97dec2afef957053583172bb92762a237653f6f1efed51b41cd9db1d87170",
+    "result_lines": [
+      "[01:38:07] [Server thread/INFO] [minecraft/GameTestServer]: 7 tests are now running at position -12278400, -59, 7260690!",
+      "[01:38:08] [Server thread/INFO] [minecraft/GameTestServer]: All 7 required tests passed :)",
+      "BUILD SUCCESSFUL in 5m 25s"
+    ],
+    "language_source_projection": {
+      "changes": {
+        "changed": 0,
+        "missing": 1,
+        "unexpected": 0
+      },
+      "chinese_keys": 141740,
+      "derived_emi_headings": 316,
+      "derived_stone_rock_templates": 1,
+      "english": {
+        "exact_original_declarations": 12883,
+        "formatted_keys": 397,
+        "intentional_empty_tooltips": 679,
+        "keys": 15913,
+        "original_english_without_chinese_source": 477
+      },
+      "english_fallback_count": 3086,
+      "native_aliases": 12704,
+      "source_keys": 125676,
+      "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "mode": "write",
+      "changes_describe": "Pre-write delta: one new derived template added; no existing values changed"
+    },
+    "not_run": [
+      "full test suites",
+      "Forge game",
+      "manual client creative selection and viewer visuals",
+      "complete survival chain",
+      "saved-world restart",
+      "production JAR build/install",
+      "GitHub Actions"
+    ]
+  }
+}

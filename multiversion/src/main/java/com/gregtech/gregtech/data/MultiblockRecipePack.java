@@ -150,8 +150,60 @@ public final class MultiblockRecipePack extends AbstractPackResources {
             EMITTED.add(row.id());
         }
 
+        addClayUtilityRecipes(generated);
         resources = Collections.unmodifiableMap(generated);
         return resources;
+    }
+
+    /** Original raw utilities return their clay before firing; only firing produces ceramic parts. */
+    private static void addClayUtilityRecipes(Map<ResourceLocation,byte[]> generated) {
+        for(var row:com.gregtech.gregtech.content.recipe.ClayUtilityCatalog.ROWS) {
+            for(String type:List.of("smelting","blasting")) {
+                var firing=new HashMap<String,Object>();
+                firing.put("type","minecraft:"+type);
+                firing.put("ingredient",Map.of("item","gt6ce:"+row.raw()));
+//? if >=1.21.1 {
+                /*firing.put("result",Map.of("id","gt6ce:"+row.fired()));
+*///?} else {
+                firing.put("result","gt6ce:"+row.fired());
+//?}
+                firing.put("experience",0);
+                firing.put("cookingtime",type.equals("smelting")?200:100);
+                clayRecipe(generated,type+"_"+row.raw(),firing);
+            }
+            var reclaim=new HashMap<String,Object>();
+            reclaim.put("type","minecraft:crafting_shapeless");
+            reclaim.put("ingredients",List.of(Map.of("item","gt6ce:"+row.raw())));
+//? if >=1.21.1 {
+            /*reclaim.put("result",Map.of("id","minecraft:clay_ball","count",row.clayBalls()));
+*///?} else {
+            reclaim.put("result",Map.of("item","minecraft:clay_ball","count",row.clayBalls()));
+//?}
+            clayRecipe(generated,"reclaim_"+row.raw(),reclaim);
+        }
+        // MultiItemRandomTools:130 also permits the vertically reversed crossing layout.
+        var crossing=new HashMap<String,Object>();
+        crossing.put("type","gt6ce:tool_shaped");
+        crossing.put("pattern",List.of(" C ","CCC","kCR"));
+        crossing.put("key",Map.of("C",Map.of("tag","gt6ce:clay_balls"),
+                "k",Map.of("item","gt6ce:tool_knife"),"R",Map.of("item","gt6ce:tool_rolling_pin")));
+        crossing.put("allow_mirror",false);
+//? if >=1.21.1 {
+        /*crossing.put("result",Map.of("id","gt6ce:clay_crossing"));
+*///?} else {
+        crossing.put("result",Map.of("item","gt6ce:clay_crossing"));
+//?}
+        clayRecipe(generated,"form_clay_crossing_flipped",crossing);
+    }
+
+    private static void clayRecipe(Map<ResourceLocation,byte[]> generated,String name,Map<String,Object> recipe) {
+//? if >=1.21.1 {
+        /*String folder="recipe/";
+*///?} else {
+        String folder="recipes/";
+//?}
+        generated.put(ResourceLocation.fromNamespaceAndPath("gt6ce",folder+"ceramic_utilities/"+name+".json"),
+                GSON.toJson(recipe).getBytes(StandardCharsets.UTF_8));
     }
 
     private static GTMaterial materialOf(Block block) {

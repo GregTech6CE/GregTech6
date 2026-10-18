@@ -141,6 +141,27 @@ def load_source(repo=ROOT, external=None):
     return source, meta
 
 
+def stone_rock_heading(english, source):
+    """Use the patch's rock suffix for GT6's STONE naming branch, as requested.
+
+    Keep every original whole-name entry unchanged: ore-bearing rocks still use
+    those entries, while plain stone rocks have their own material-name template.
+    """
+    key = 'item.gt6ce.rock_gt_stone'
+    if key not in english:
+        return {}
+    if english[key] != '%s Rock':
+        raise ValueError('Stone rock template differs from the GT6 STONE naming rule')
+    material = source['gt.material.GraniteBlack']
+    original = source['oredict.rockGtGraniteBlack']
+    if original.count(material) != 1:
+        raise ValueError('Original stone rock name must contain its material exactly once')
+    suffix = original.partition(material)[2]
+    if not suffix or '%' in suffix:
+        raise ValueError('Original stone rock suffix is missing or formatted')
+    return {key: '%s' + suffix}
+
+
 def expected_chinese(english, source, aliases, *, repo=ROOT):
     for label, mapping in [('English', english), ('source', source), ('aliases', aliases)]:
         if not isinstance(mapping, dict) or any(not isinstance(k, str) or not isinstance(v, str)
@@ -157,6 +178,7 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
         if native in source and native != original:
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
+    result.update(stone_rock_heading(english, source))
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
         result.update(headings(repo, result))
@@ -196,9 +218,11 @@ def synchronize(repo=ROOT, *, write=False, external=None):
             raise ValueError('Chinese differs from exact source/aliases/English fallback: ' +
                              json.dumps({k: {'count': len(v), 'examples': v[:8]} for k, v in delta.items()}))
         target.write_text(json_text(expected), encoding='utf-8', newline='\n')
-    fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys())
+    rock_heading = stone_rock_heading(english, source)
+    fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys() - rock_heading.keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
+            'derived_stone_rock_templates': len(rock_heading),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

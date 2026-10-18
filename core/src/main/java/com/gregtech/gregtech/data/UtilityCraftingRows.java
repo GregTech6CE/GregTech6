@@ -12,11 +12,8 @@ public final class UtilityCraftingRows {
     private static List<OriginalSurvivalRecipes.Row> rows() {
         var rows = new ArrayList<OriginalSurvivalRecipes.Row>();
         // MultiItemRandomTools:126-132; tools retain their original durability use.
-        for (String[] raw : new String[][] {
-                {"clay_basin", "CkC|CRC| C "}, {"clay_faucet", "C C|kCR"},
-                {"clay_crossing", "kCR|CCC| C "}, {"clay_juicer", "kCR|CCC"},
-                {"clay_bowl", "k R|C C|CCC"}})
-            rows.add(new OriginalSurvivalRecipes.Row(raw[0],1,GTMaterialRegistry.get("Clay"),raw[1],
+        for (var raw : com.gregtech.gregtech.content.recipe.ClayUtilityCatalog.ROWS)
+            rows.add(new OriginalSurvivalRecipes.Row(raw.raw(),1,GTMaterialRegistry.get("Clay"),raw.pattern(),
                     Map.of('C',"tag:gt6ce:clay_balls",'k',"item:gt6ce:tool_knife",'R',"item:gt6ce:tool_rolling_pin")));
         // MultiItemRandomTools:240,388,534,536-537.
         rows.add(new OriginalSurvivalRecipes.Row("empty_spray_can",1,GTMaterialRegistry.get("Tin"),"Rf|Cs",
