@@ -577,7 +577,7 @@ public final class CompoundMaterials {
     public static final GTMaterial Trinitanium = alloy(8790, "Trinitanium", 0xEBAFFF).setTextureSet(MaterialTextureSet.METALLIC).setStats(2410, 4202, 2.22583F).setTooltipChemical("Ke₂Ti").setToolStats(3, 16F, 5120, 4);
     public static final GTMaterial TitaniumIridium = alloy(8793, "Titanium Iridium", 0xDCDCFF).setTextureSet(MaterialTextureSet.METALLIC).setLocalName("Iritanium").setStats(2330, 4130, 13.55F).setTooltipChemical("IrTi").setToolStats(3, 8F, 7680, 4);
     public static final GTMaterial TitaniumAluminide = alloy(8794, "Titanium Aluminide", 0xC8C8FF).setTextureSet(MaterialTextureSet.METALLIC).setStats(1235, 3022, 3.2506F).setTooltipChemical("Ti₃Al₇").setToolStats(3, 12F, 3840, 3);
-    public static final GTMaterial GraniteRed = elec(8507, "GraniteRed", 0xA03C46, MaterialTextureSet.SHINY).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 3);
-    public static final GTMaterial GraniteBlack = elec(8508, "GraniteBlack", 0x141414, MaterialTextureSet.SHINY).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 3);
-    public static final GTMaterial Granite = elec(8518, "Granite", 0xA07882, MaterialTextureSet.SHINY).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 1);
+    public static final GTMaterial GraniteRed = elec(8507, "GraniteRed", 0xA03C46, MaterialTextureSet.STONE).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 3);
+    public static final GTMaterial GraniteBlack = elec(8508, "GraniteBlack", 0x141414, MaterialTextureSet.STONE).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 3);
+    public static final GTMaterial Granite = elec(8518, "Granite", 0xA07882, MaterialTextureSet.STONE).setStats(1500, 3000, 0.843673F).setTooltipChemical("BiotitePotassiumFeldsparFlint").setToolStats(1, 3F, 64, 1);
 }
