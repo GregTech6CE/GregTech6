@@ -140519,6 +140519,7 @@
   "tooltip.gregtech.material_form": "Material form: %s",
   "tooltip.gregtech.material_from_gt": "Material from GregTech",
   "tooltip.gregtech.material_from_addon": "Added by the %s addon",
+  "tooltip.gregtech.material_from_addons": "Added by the %s addons",
   "tooltip.gregtech.material_from_mod": "Material from %s",
   "tooltip.gregtech.material_from_periodic_table": "Material from the Periodic Table of Elements",
   "tooltip.gregtech.material_tag": "Compatible tag: #%s",

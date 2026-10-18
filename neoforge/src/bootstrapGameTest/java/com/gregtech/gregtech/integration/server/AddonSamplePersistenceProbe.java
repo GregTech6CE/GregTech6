@@ -63,6 +63,17 @@ public final class AddonSamplePersistenceProbe {
             }
             return;
         }
+        if (phase.equals("card15-prepare") || phase.equals("card15-verify")) {
+            server = event.getServer();
+            ServerLevel level = server.overworld();
+            level.getChunk(PRESS);
+            level.getChunk(PRESS.offset(2, 0, 0));
+            if (phase.equals("card15-prepare")) prepareCard15(level);
+            else verifyCard15(level);
+            LOGGER.info(phase.equals("card15-prepare") ? "CARD15_RESTART_PREPARED" : "CARD15_RESTART_VERIFIED");
+            server.halt(false);
+            return;
+        }
         if (!phase.equals("prepare") && !phase.equals("verify")) return;
         server = event.getServer();
         ServerLevel level = server.overworld();
@@ -139,6 +150,85 @@ public final class AddonSamplePersistenceProbe {
                 || !cableId.equals("gregtech:usb3_cable") || cable.getCount() != 1 || dir != 2
                 || !ingotId.equals("gregtech:ingot_iron") || ingot.getCount() != 1)
             throw new IllegalStateException("Old replicator state changed");
+        inspectOldUsb(level, pos.offset(0, 0, -1));
+    }
+
+    /** The card 11 HDD switch sits one block south of the replicator and still stores iron as a short. */
+    private static void inspectOldUsb(ServerLevel level, BlockPos pos) {
+        level.getChunk(pos);
+        var be = level.getBlockEntity(pos);
+        if (!(be instanceof com.gregtech.gregtech.blockentity.inventory.UsbSwitchBlockEntity usb))
+            throw new IllegalStateException("Old HDD switch missing at " + pos + ": " + be);
+        ItemStack drive = usb.items().getStackInSlot(0);
+        String driveId = String.valueOf(BuiltInRegistries.ITEM.getKey(drive.getItem()));
+        var tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(drive);
+        var files = tag == null ? new net.minecraft.nbt.CompoundTag()
+                : tag.getCompound(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.NBT_USB_DRIVE);
+        var file = files.getCompound(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.slotDataKey(9));
+        var raw = file.get(com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
+        var material = com.gregtech.gregtech.api.material.StoredMaterial.read(file,
+                com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
+        LOGGER.info("OLD_SAVE_USB item {} type {} material {}", driveId, raw == null ? "missing" : raw.getId(),
+                material == null ? "missing" : material.getName());
+        if (!driveId.equals("gregtech:usb3_hdd") || raw == null || raw.getId() != net.minecraft.nbt.Tag.TAG_SHORT
+                || material == null || !"Iron".equals(material.getName()))
+            throw new IllegalStateException("Old USB short did not read as iron");
+    }
+
+    private static void prepareCard15(ServerLevel level) {
+        if (!level.getBlockState(PRESS).isAir())
+            throw new IllegalStateException("Card 15 prepare found a block at " + PRESS);
+        var alloy = com.gregtech.gregtech.api.material.GTMaterialRegistry.get("SampleAlloy");
+        if (!alloy.isValid()) throw new IllegalStateException("SampleAlloy is not registered");
+        level.setBlockAndUpdate(PRESS, BuiltInRegistries.BLOCK.get(ResourceLocation.parse("gregtech:smelting_crucible_carbon")).defaultBlockState());
+        var crucible = (com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity) level.getBlockEntity(PRESS);
+        if (crucible == null || !crucible.addMaterialStacks(java.util.List.of(
+                com.gregtech.gregtech.api.machine.crucible.CrucibleMaterialStack.of(alloy,
+                        com.gregtech.gregtech.api.material.GTValues.U)), 293))
+            throw new IllegalStateException("Crucible refused SampleAlloy");
+        var saved = crucible.saveWithoutMetadata(level.registryAccess());
+        var entry = saved.getList("gt.materials", net.minecraft.nbt.Tag.TAG_COMPOUND).getCompound(0);
+        if (!entry.contains("name", net.minecraft.nbt.Tag.TAG_STRING) || entry.contains("id")
+                || !"SampleAlloy".equals(entry.getString("name")))
+            throw new IllegalStateException("Crucible save is not a name: " + entry);
+        var chestPos = PRESS.offset(2, 0, 0);
+        level.setBlockAndUpdate(chestPos, net.minecraft.world.level.block.Blocks.CHEST.defaultBlockState());
+        var chest = (net.minecraft.world.level.block.entity.ChestBlockEntity) level.getBlockEntity(chestPos);
+        var nitrate = com.gregtech.gregtech.api.material.GTMaterialRegistry.get("AmmoniumNitrate");
+        var usb = com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.withMaterialData(
+                new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gregtech:usb3_stick"))), nitrate);
+        chest.setItem(0, usb);
+        var stick = com.gregtech.gregtech.content.data.UsbDataMedia.tag(usb);
+        var data = stick == null ? new net.minecraft.nbt.CompoundTag() : stick.getCompound("gt.usb.data");
+        var raw = data.get("gt.replicator.data");
+        if (raw == null || raw.getId() != net.minecraft.nbt.Tag.TAG_STRING || !"AmmoniumNitrate".equals(data.getString("gt.replicator.data")))
+            throw new IllegalStateException("USB save is not a name: " + data);
+        LOGGER.info("CARD15_RESTART_STATE alloy {} usb {}", entry.getString("name"), data.getString("gt.replicator.data"));
+    }
+
+    private static void verifyCard15(ServerLevel level) {
+        var crucible = level.getBlockEntity(PRESS);
+        if (!(crucible instanceof com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity smelter))
+            throw new IllegalStateException("Saved crucible did not load: " + crucible);
+        var content = smelter.getContentView();
+        if (content.size() != 1 || !"SampleAlloy".equals(content.get(0).material.getName())
+                || content.get(0).amount != com.gregtech.gregtech.api.material.GTValues.U)
+            throw new IllegalStateException("Saved crucible lost SampleAlloy: " + content);
+        var rewritten = smelter.saveWithoutMetadata(level.registryAccess())
+                .getList("gt.materials", net.minecraft.nbt.Tag.TAG_COMPOUND).getCompound(0);
+        if (!"SampleAlloy".equals(rewritten.getString("name")) || rewritten.contains("id"))
+            throw new IllegalStateException("Restart rewrote the crucible as " + rewritten);
+        var chest = level.getBlockEntity(PRESS.offset(2, 0, 0));
+        if (!(chest instanceof net.minecraft.world.level.block.entity.ChestBlockEntity stored))
+            throw new IllegalStateException("Saved chest did not load: " + chest);
+        var usb = stored.getItem(0);
+        var stick = com.gregtech.gregtech.content.data.UsbDataMedia.tag(usb);
+        var data = stick == null ? null : stick.getCompound("gt.usb.data");
+        var raw = data == null ? null : data.get("gt.replicator.data");
+        var material = com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.scannedMaterial(usb);
+        if (raw == null || raw.getId() != net.minecraft.nbt.Tag.TAG_STRING || material == null
+                || !"AmmoniumNitrate".equals(material.getName()))
+            throw new IllegalStateException("Saved USB lost the addon name: " + data);
     }
 
     private static void prepare(ServerLevel level) {

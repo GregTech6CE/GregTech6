@@ -65,5 +65,12 @@ public final class GregTechEMIPlugin implements EmiPlugin {
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] EMI registered {} machine recipes in {} categories in {} ms (overlay {})",
                 rows, categories, (System.nanoTime() - started) / 1_000_000, overlayGeneration);
+        if (Integer.getInteger("gregtech.materialScale", 0) > 0) {
+            Runtime runtime = Runtime.getRuntime();
+            com.mojang.logging.LogUtils.getLogger().info("EMI_SCALE recipes {} ms {} items {} heapMb {}",
+                    rows, (System.nanoTime() - started) / 1_000_000L,
+                    net.minecraft.core.registries.BuiltInRegistries.ITEM.size(),
+                    (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);
+        }
     }
 }
