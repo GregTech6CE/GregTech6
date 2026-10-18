@@ -3,11 +3,13 @@ package com.gregtech.gregtech.api.recipe;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
+
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -20,7 +22,8 @@ import java.util.*;
  * {@code findRecipe()} to build a row from the <em>contents</em> of the inputs (the scanner, the
  * printer and the replicator read the NBT of a USB stick) are ported through
  * {@link #dynamicRecipes(DynamicRecipes)}: the port keeps the table-driven lookup and asks the
- * provider only when no static row matches.</p>
+ * providers only when no static row matches. The built-in provider stays first. Each
+ * {@link #addDynamicRecipes(DynamicRecipes)} call appends another provider behind it.</p>
  */
 public class RecipeMap {
 
@@ -38,6 +41,8 @@ public class RecipeMap {
 
     @javax.annotation.Nullable
     private DynamicRecipes mDynamicRecipes;
+    private static final DynamicRecipes[] NO_ADDON_DYNAMIC_RECIPES = new DynamicRecipes[0];
+    private DynamicRecipes[] mAddonDynamicRecipes = NO_ADDON_DYNAMIC_RECIPES;
 
     /** Original findRecipe overrides that also need the machine world and special slot. */
     @FunctionalInterface
@@ -51,16 +56,32 @@ public class RecipeMap {
 
 
     /**
-     * Installs GT6's per-map {@code findRecipe()} override. One provider per map (GT6 has one
-     * subclass per map); calling it again replaces the previous provider.
+     * Installs the built-in {@code findRecipe()} override at the front of this map.
+     * Calling it again replaces that front provider and leaves providers added by
+     * {@link #addDynamicRecipes(DynamicRecipes)} where they are.
      */
     public RecipeMap dynamicRecipes(DynamicRecipes provider) {
         mDynamicRecipes = provider;
         return this;
     }
 
+    /**
+     * Appends a provider behind the built-in one. A null answer means this provider does not
+     * handle the input; the next provider is asked. The first non-null answer is the dynamic
+     * row, and later providers are not asked.
+     */
+    public RecipeMap addDynamicRecipes(DynamicRecipes provider) {
+        if (provider == null) throw new IllegalArgumentException("dynamic recipe provider");
+        var next = Arrays.copyOf(mAddonDynamicRecipes, mAddonDynamicRecipes.length + 1);
+        next[mAddonDynamicRecipes.length] = provider;
+        mAddonDynamicRecipes = next;
+        return this;
+    }
+
     /** Whether this map computes rows from input NBT (reported by the start-up log line). */
-    public boolean hasDynamicRecipes() { return mDynamicRecipes != null || mContextRecipes != null; }
+    public boolean hasDynamicRecipes() {
+        return mDynamicRecipes != null || mAddonDynamicRecipes.length != 0 || mContextRecipes != null;
+    }
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static final Map<String, RecipeMap> RECIPE_MAPS = new LinkedHashMap<>();
@@ -402,11 +423,13 @@ public class RecipeMap {
                 if (in.isEmpty()) continue;
                 for (int j = 0; j < tOutputs.length; j++) {
                     ItemStack out = tOutputs[j];
+
 //? if >=1.21.1 {
-                    /*if (!out.isEmpty() && ItemStack.isSameItemSameComponents(in, out)) {
+/*                    if (!out.isEmpty() && ItemStack.isSameItemSameComponents(in, out)) {
 *///?} else {
                     if (!out.isEmpty() && ItemStack.isSameItemSameTags(in, out)) {
 //?}
+
                         if (in.getCount() >= out.getCount()) {
                             in.shrink(out.getCount());
                             tOutputs[j] = ItemStack.EMPTY;
@@ -536,11 +559,13 @@ public class RecipeMap {
             if (empty(in)) continue;
             int needed = in.getCount();
             for (ItemStack s : items) {
+
 //? if >=1.21.1 {
-                /*if (!empty(s) && ItemStack.isSameItemSameComponents(in, s)) {
+/*                if (!empty(s) && ItemStack.isSameItemSameComponents(in, s)) {
 *///?} else {
                 if (!empty(s) && ItemStack.isSameItemSameTags(in, s)) {
 //?}
+
                     int take = Math.min(needed, s.getCount());
                     s.shrink(take); needed -= take;
                     if (needed == 0) break;
@@ -554,11 +579,13 @@ public class RecipeMap {
             if (in == null || in.isEmpty()) continue;
             int needed = in.getAmount();
             for (FluidStack f : fluids) {
+
 //? if >=1.21.1 {
-                /*if (!f.isEmpty() && FluidStack.isSameFluidSameComponents(f,in)) {
+/*                if (!f.isEmpty() && FluidStack.isSameFluidSameComponents(f,in)) {
 *///?} else {
                 if (!f.isEmpty() && f.isFluidEqual(in)) {
 //?}
+
                     int take = Math.min(needed, f.getAmount());
                     f.shrink(take); needed -= take;
                     if (needed == 0) break;
@@ -594,6 +621,68 @@ public class RecipeMap {
             if (f != null) mMaxFluidOutputSize = Math.max(mMaxFluidOutputSize, f.getAmount());
         }
         return aRecipe;
+    }
+
+    private List<Recipe> mBaseline;
+
+    public boolean hasBaseline() { return mBaseline != null; }
+    public int baselineSize() { return mBaseline == null ? 0 : mBaseline.size(); }
+
+    /** The first capture is kept. Rows in {@code exclude} are rebuilt from tags after every restore. */
+    public synchronized void captureBaseline(Set<Recipe> exclude) {
+        if (mBaseline != null) return;
+        var rows = new ArrayList<Recipe>(mRecipeList.size());
+        for (var recipe : mRecipeList) if (exclude == null || !exclude.contains(recipe)) rows.add(recipe);
+        mBaseline = List.copyOf(rows);
+    }
+
+    /** Drops rows outside the baseline and puts missing baseline rows back. Returns how many rows moved. */
+    public synchronized int restoreBaseline() {
+        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
+        var keep = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        keep.addAll(mBaseline);
+        var drop = new ArrayList<Recipe>();
+        for (var recipe : mRecipeList) if (!keep.contains(recipe)) drop.add(recipe);
+        for (var recipe : drop) unlink(recipe);
+        var present = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        present.addAll(mRecipeList);
+        int restored = 0;
+        for (var recipe : mBaseline) if (present.add(recipe)) {
+            add(recipe);
+            restored++;
+        }
+        return drop.size() + restored;
+    }
+
+    /** Clears the indexes and inserts the baseline again, for timing a full rebuild. */
+    public synchronized int reindexBaseline() {
+        if (mBaseline == null) throw new IllegalStateException("Recipe baseline was not captured for " + mNameInternal);
+        mRecipeList.clear();
+        mRecipeItemMap.clear();
+        mRecipeFluidMap.clear();
+        for (var recipe : mBaseline) add(recipe);
+        return mBaseline.size();
+    }
+
+    /** Removes one stored row and its input indexes. */
+    public synchronized boolean unlink(Recipe recipe) {
+        if (recipe == null || !mRecipeList.remove(recipe)) return false;
+        for (ItemStack in : recipe.mInputs) {
+            if (empty(in)) continue;
+            var pool = mRecipeItemMap.get(in.getItem());
+            if (pool == null) continue;
+            pool.remove(recipe);
+            if (pool.isEmpty()) mRecipeItemMap.remove(in.getItem());
+        }
+        for (FluidStack fluid : recipe.mFluidInputs) {
+            if (fluid == null || fluid.isEmpty()) continue;
+            String key = fluidKey(fluid);
+            var pool = mRecipeFluidMap.get(key);
+            if (pool == null) continue;
+            pool.remove(recipe);
+            if (pool.isEmpty()) mRecipeFluidMap.remove(key);
+        }
+        return true;
     }
 
     /** Removes all recipes that use the given item as one of their inputs. */
@@ -634,8 +723,8 @@ public class RecipeMap {
         }
         // GT6's subclass overrides run only when the table had no answer, exactly like GT6's
         // `if (rRecipe != null) return rRecipe;` guards at the top of those findRecipe() bodies.
-        if (mDynamicRecipes != null) {
-            Recipe dynamic = mDynamicRecipes.find(inputItems, inputFluids);
+        if (mDynamicRecipes != null || mAddonDynamicRecipes.length != 0) {
+            Recipe dynamic = firstDynamicRecipe(inputItems, inputFluids);
             if (dynamic != null && dynamic.mEnabled && !dynamic.mFakeRecipe) {
                 if (needsOutputs && dynamic.mNeedsEmptyOutput
                         && !allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount)) return null;
@@ -648,6 +737,19 @@ public class RecipeMap {
                     && (!needsOutputs || !dynamic.mNeedsEmptyOutput
                             || allOutputSlotsEmpty(items, inputSlotCount, outputSlotCount))
                     && RecipeInputs.consume(dynamic, inputItems, inputFluids, 1) != null) return dynamic;
+        }
+        return null;
+    }
+
+    @javax.annotation.Nullable
+    private Recipe firstDynamicRecipe(List<ItemStack> inputItems, List<FluidStack> inputFluids) {
+        if (mDynamicRecipes != null) {
+            Recipe recipe = mDynamicRecipes.find(inputItems, inputFluids);
+            if (recipe != null) return recipe;
+        }
+        for (int i = 0; i < mAddonDynamicRecipes.length; i++) {
+            Recipe recipe = mAddonDynamicRecipes[i].find(inputItems, inputFluids);
+            if (recipe != null) return recipe;
         }
         return null;
     }
@@ -685,10 +787,12 @@ public class RecipeMap {
         if (fluid == null || fluid.isEmpty()) return false;
         var recipes = mRecipeFluidMap.get(fluidKey(fluid));
         return recipes != null && recipes.stream().anyMatch(r -> r.mEnabled && !r.mFakeRecipe
+
 //? if >=1.21.1 {
-                /*&& Arrays.stream(r.mFluidInputs).anyMatch(f -> f != null && FluidStack.isSameFluidSameComponents(f,fluid)));
+/*                && Arrays.stream(r.mFluidInputs).anyMatch(f -> f != null && FluidStack.isSameFluidSameComponents(f,fluid)));
 *///?} else {
                 && Arrays.stream(r.mFluidInputs).anyMatch(f -> f != null && f.isFluidEqual(fluid)));
 //?}
+
     }
 }

@@ -6,6 +6,16 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
+sourceSets {
+    api {
+        java.srcDir 'src/api/java'
+    }
+}
+
+dependencies {
+    implementation sourceSets.api.output
+}
+
 // Use the same checked resource synchronization as both loader projects. Later local
 // builds only copy changed shared assets instead of replacing the entire catalog.
 apply from: rootProject.file('gradle/incremental-resources.gradle')
@@ -29,27 +39,48 @@ tasks.withType(JavaCompile).configureEach {
 // Pure Java contracts do not consume the shared Minecraft asset catalog.
 // Keep tens of thousands of static resources off their compiler/runtime classpaths.
 sourceSets.test {
-    compileClasspath = sourceSets.main.output.classesDirs + configurations.testCompileClasspath
-    runtimeClasspath = output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
+    compileClasspath = sourceSets.api.output + sourceSets.main.output.classesDirs + configurations.testCompileClasspath
+    runtimeClasspath = sourceSets.api.output + output + sourceSets.main.output.classesDirs + configurations.testRuntimeClasspath
 }
 
 tasks.named('jar', Jar).configure {
     // Shared textures/models now exceed the ZIP 16-bit entry count.
     zip64 = true
+    from sourceSets.api.output
     preserveFileTimestamps = false
     reproducibleFileOrder = true
 }
 
-// Compile-only shared addon API/domain dependency. Runtime classes are supplied by the mod JAR.
+// The pure Java SDK remains available separately from each loader's native SDK.
+// Neither SDK includes implementation output or the shared asset catalog.
 tasks.register('addonApiJar', Jar) {
-    dependsOn tasks.named('compileJava')
+    dependsOn tasks.named('compileApiJava')
     archiveBaseName = "${rootProject.property('mod_id')}-addon-api"
     archiveVersion = rootProject.version.toString()
-    from sourceSets.main.output.classesDirs
+    from sourceSets.api.output.classesDirs
     from('src/main/resources/META-INF/gregtech6') { into 'META-INF/gregtech6' }
+    duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
 }
+
+def addonApiClosureCheck = tasks.register('addonApiClosureCheck', Exec) {
+    description = 'Fails when a core API class references anything outside the API and the JDK.'
+    group = 'verification'
+    dependsOn tasks.named('compileApiJava')
+    workingDir rootProject.projectDir
+    def python = rootProject.findProperty('pythonExecutable') ?: 'python'
+    def classes = layout.buildDirectory.dir('classes/java/api')
+    commandLine python, '-X', 'utf8', 'tools/integration/check_addon_api_closure.py',
+            '--check', classes.get().asFile.absolutePath,
+            '--allow', classes.get().asFile.absolutePath,
+            '--kind', 'core'
+    inputs.files(sourceSets.api.allJava).withPropertyName('coreAddonApiSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.dir(classes).withPropertyName('coreAddonApiClasses')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+}
+tasks.named('check').configure { dependsOn addonApiClosureCheck }
 
 // These deterministic contracts consume only compiled core/test classes and test
 // resources. JavaExec tracks its classpath, arguments and toolchain as inputs.
@@ -78,3 +109,100 @@ tasks.register('addonApiJar', Jar) {
     }
     tasks.named('check').configure { dependsOn contract }
 }
+
+['kind', 'duplicate', 'part', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds'].each { scenario ->
+    def contract = tasks.register("addonMachineContracts_${scenario}", JavaExec) {
+        description = "Runs addon machine scenario ${scenario} in its own JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.AddonMachineContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/addonMachineContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("addonMachineContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
+
+['service', 'name', 'id', 'addons', 'range', 'form', 'invalid', 'late', 'mismatch', 'casefold', 'corecase', 'order', 'named'].each { scenario ->
+    def contract = tasks.register("addonMaterialContracts_${scenario}", JavaExec) {
+        description = "Runs addon material scenario ${scenario} in its own JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.AddonMaterialContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/addonMaterialContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("addonMaterialContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
+
+tasks.register('addonMaterialScale', JavaExec) {
+    description = 'Times startup and item-definition size for 1000 dust and 1000 metal addon materials.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.AddonMaterialContracts'
+    args 'scale'
+    jvmArgs '-Xmx2g'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+}
+
+def machineRecipeOverlayContracts = tasks.register('machineRecipeOverlayContracts', JavaExec) {
+    description = 'Runs machine recipe datapack document and match contracts without Minecraft.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.MachineRecipeOverlayContracts'
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/machineRecipeOverlayContracts.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("MachineRecipeOverlayContracts: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn machineRecipeOverlayContracts }
+
+def addonApiVersionContracts = tasks.register('addonApiVersionContracts', JavaExec) {
+    description = 'Checks mod_version minor against API_VERSION and that forRemoval entries are not due.'
+    group = 'verification'
+    dependsOn tasks.named('testClasses')
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'com.gregtech.gregtech.core.AddonApiVersionContracts'
+    workingDir = rootProject.projectDir
+    args 'gradle.properties', 'core/src/main/java', 'core/src/api/java', 'docs/ADDON_API.md', 'docs/ADDON_API.zh-CN.md'
+    inputs.file(rootProject.file('gradle.properties')).withPropertyName('modVersionProperties')
+    inputs.dir(rootProject.file('core/src/main/java'))
+            .withPropertyName('addonApiSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.dir(rootProject.file('core/src/api/java'))
+            .withPropertyName('addonApiSurface')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.files(rootProject.file('docs/ADDON_API.md'), rootProject.file('docs/ADDON_API.zh-CN.md'))
+            .withPropertyName('addonApiDocs')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+    def marker = layout.buildDirectory.file('reports/contracts/addonApiVersionContracts.passed')
+    outputs.file(marker)
+    doFirst { marker.get().asFile.delete() }
+    doLast {
+        marker.get().asFile.parentFile.mkdirs()
+        marker.get().asFile.setText("AddonApiVersionContracts: passed\n", 'UTF-8')
+    }
+}
+tasks.named('check').configure { dependsOn addonApiVersionContracts }

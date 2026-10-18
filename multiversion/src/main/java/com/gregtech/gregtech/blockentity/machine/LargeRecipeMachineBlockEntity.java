@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -17,6 +18,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
+
 import java.util.*;
 
 /** Shared execution and atomic part ownership for original large recipe-machine layouts. */
@@ -58,11 +60,13 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),false);
         var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
         if(!level.hasChunkAt(targetPos))return;
+
 //? if >=1.21.1 {
-        /*var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,face);
+/*        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,face);
 *///?} else {
         var target=level.getBlockEntity(targetPos)==null?null:level.getBlockEntity(targetPos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,face).resolve().orElse(null);
 //?}
+
         if(target==null)return;
         for(var tank:getTanksOutput()) {
             var offer=tank.getFluid();if(offer.isEmpty())continue;
@@ -82,11 +86,13 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),true);
         var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
         if(!level.hasChunkAt(targetPos))return;
+
 //? if >=1.21.1 {
-        /*var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,targetPos,face);
+/*        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,targetPos,face);
 *///?} else {
         var target=level.getBlockEntity(targetPos)==null?null:level.getBlockEntity(targetPos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER,face).resolve().orElse(null);
 //?}
+
         if(target==null)return;
         for(int slot=inputSlots();slot<inventory().getSlots();slot++) {
             var offer=inventory().getStackInSlot(slot);if(offer.isEmpty())continue;
@@ -94,21 +100,23 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if(result.accepted()>0)inventory().extractItem(slot,result.accepted(),false);
         }
     }
+
 //? if >=1.21.1 {
-    /*@Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    @Override public void loadAdditional(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
 *///?} else {
     @Override public void load(net.minecraft.nbt.CompoundTag tag) {
         super.load(tag);
 //?}
+
         if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
     @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
     @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }
     @Override protected boolean cheapOverclocking() { return !usesTimeEnergy(); }
-    @Override protected boolean requiresConstantEnergy() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.constantEnergy(usesTimeEnergy(),spec().machineName()); }
-    @Override protected int efficiency() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.efficiency(spec().machineName()); }
+    @Override protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && spec().constantEnergy(); }
+    @Override protected int efficiency() { return spec().processingEfficiency(); }
     @Override protected boolean parallelScalesDuration() { return !usesTimeEnergy(); }
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
@@ -129,7 +137,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if(!level.hasChunkAt(pos)) {bindings.clear(this::release);return false;}
             if(cell.role()==MultiblockLayout.Role.AIR) {if(level.isEmptyBlock(pos))continue;bindings.clear(this::release);return false;}
             var expected=cell.block();
-            if(cell.part()==18042) {
+            if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
                 if(ovenCoil==null) {
                     ovenCoil=level.getBlockState(pos).getBlock();
                     if(ovenCoil!=expected&&ovenCoil!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043)) {bindings.clear(this::release);return false;}

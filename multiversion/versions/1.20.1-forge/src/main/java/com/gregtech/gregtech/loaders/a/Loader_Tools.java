@@ -52,6 +52,9 @@ public record Loader_Tools(IEventBus bus) implements IGTLoader {
         com.gregtech.gregtech.recipe.FiniteBottleFillingRecipe.registerIngredient();
         GTToolItems.ITEMS.register(bus);
         RECIPE_SERIALIZERS.register("book_binding",()->com.gregtech.gregtech.recipe.BookBindingRecipe.SERIALIZER);
+        RECIPE_SERIALIZERS.register("machine", () -> com.gregtech.gregtech.recipe.MachineDatapackRecipe.ADDITION);
+        RECIPE_SERIALIZERS.register("machine_removal", () -> com.gregtech.gregtech.recipe.MachineDatapackRecipe.REMOVAL);
+        com.gregtech.gregtech.recipe.MachineDatapackRecipe.TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
     }
 

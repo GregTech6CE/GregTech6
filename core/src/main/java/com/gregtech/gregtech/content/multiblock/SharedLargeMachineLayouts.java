@@ -2,9 +2,22 @@ package com.gregtech.gregtech.content.multiblock;
 import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.*;
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
 public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}public record Cell(int right,int up,int back,int part,Role role){}
-    private static final Map<String,List<Cell>> DEFINITIONS=create();
+    private static final Map<String,List<Cell>> DEFINITIONS=new LinkedHashMap<>(create());
+    private static boolean frozen;
     public static List<Cell> cells(String machine) { return DEFINITIONS.get(machine); }
-    public static Set<String> machines() { return DEFINITIONS.keySet(); }
+    public static Set<String> machines() { return Collections.unmodifiableSet(DEFINITIONS.keySet()); }
+    /** Open only while addon layouts are collected. Built-in names stay reserved. */
+    public static void add(String machine, List<Cell> cells) {
+        if (frozen) throw new IllegalStateException("Large machine layouts are frozen");
+        if (machine == null || !machine.matches("[a-z0-9_]+"))
+            throw new IllegalArgumentException("Invalid large machine layout: " + machine);
+        if (cells == null || cells.isEmpty())
+            throw new IllegalArgumentException("Large machine layout '" + machine + "' is empty");
+        if (DEFINITIONS.containsKey(machine))
+            throw new IllegalStateException("Duplicate large machine layout: " + machine);
+        DEFINITIONS.put(machine, List.copyOf(cells));
+    }
+    public static void freeze() { frozen = true; }
     private static Map<String,List<Cell>> create() {
         var definitions=new LinkedHashMap<String,List<Cell>>();
         definitions.put("largemixer",List.of(
@@ -553,6 +566,6 @@ public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(
                 new Cell(0,2,6,18106,Role.ITEM_FLUID_INPUT),
                 new Cell(1,2,6,18106,Role.ITEM_FLUID_INPUT)));
         definitions.put("largemassfab",SharedMatterFabricatorStructure.CELLS);
-        return Collections.unmodifiableMap(definitions);
+        return definitions;
     }
 }

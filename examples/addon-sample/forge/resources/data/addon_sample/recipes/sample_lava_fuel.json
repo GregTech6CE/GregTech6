@@ -1,0 +1,8 @@
+{
+  "type": "gt6ce:machine",
+  "map": "addon_sample.fuel.gas",
+  "fluid_inputs": [{ "fluid": "minecraft:lava", "amount": 100 }],
+  "fluid_outputs": [{ "fluid": "minecraft:water", "amount": 10 }],
+  "eu_per_tick": 16,
+  "duration": 20
+}

@@ -1,0 +1,110 @@
+// Public source sets compile independently of the mod implementation. This file
+// adapts the v7 SDK to the existing Stonecutter nodes, not a second platform tree.
+def loader = project.name.endsWith('neoforge') ? 'neoforge' : 'forge'
+def minecraftVersion = loader == 'forge' ? '1.20.1' : '1.21.1'
+def coreApi = project(':core').sourceSets.api.output
+
+// Only external compile dependencies are visible to the native API. The core
+// project dependency's implementation classes must never leak into this source set.
+def externalCompile = configurations.compileClasspath.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def core = project(':core').projectDir.absolutePath.replace('\\', '/')
+    !path.startsWith(core + '/')
+}
+sourceSets.api.compileClasspath += coreApi + externalCompile
+
+def apiOutputs = files(sourceSets.api.output, coreApi)
+sourceSets.main.compileClasspath += apiOutputs
+sourceSets.main.runtimeClasspath += apiOutputs
+['bootstrapGameTest', 'productionSmoke', 'test'].each { name ->
+    sourceSets.named(name) {
+        compileClasspath += apiOutputs
+        runtimeClasspath += apiOutputs
+    }
+}
+
+def addonSdkJar = tasks.register('addonSdkJar', Jar) {
+    description = "Compile-only ${loader} addon SDK: public core and native API, Mojang names."
+    group = 'build'
+    dependsOn tasks.named('compileApiJava'), project(':core').tasks.named('compileApiJava')
+    archiveBaseName = "${rootProject.property('mod_id')}-addon-sdk-${minecraftVersion}-${loader}"
+    archiveVersion = project.version.toString()
+    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
+    from project(':core').sourceSets.api.output.classesDirs
+    from sourceSets.api.output.classesDirs
+    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+// File collections retain the task dependency of the SDK provider. Filtering
+// the external configuration also rules out any local implementation directory.
+def sampleClasspath = files(addonSdkJar.flatMap { it.archiveFile }) + externalCompile.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def build = layout.buildDirectory.get().asFile.absolutePath.replace('\\', '/')
+    // ModDev's Minecraft/loader artifacts are generated under its own build tree.
+    !path.startsWith(build + '/') || path.startsWith(build + '/moddev/')
+}
+def sampleRoot = rootProject.file("examples/addon-sample/${loader}")
+// Custom JavaCompile tasks do not inherit the Java plugin's source-set compiler
+// convention. Select the target JDK explicitly rather than the Gradle launcher.
+def sampleJavaVersion = loader == 'forge' ? 17 : 21
+def sampleJavaCompiler = javaToolchains.compilerFor {
+    languageVersion = JavaLanguageVersion.of(sampleJavaVersion)
+}
+def compileAddonSample = tasks.register('compileAddonSample', JavaCompile) {
+    description = "Compile the ${loader} consumer using only the SDK, Minecraft and loader dependencies."
+    group = 'verification'
+    dependsOn addonSdkJar
+    source = fileTree(new File(sampleRoot, 'java')) { include '**/*.java' }
+    classpath = sampleClasspath
+    destinationDirectory = layout.buildDirectory.dir('classes/addon-sample')
+    javaCompiler = sampleJavaCompiler
+    options.encoding = 'UTF-8'
+    options.release = sampleJavaVersion
+}
+
+if (rootProject.findProperty('addonSample') == 'true') {
+    sourceSets.create('addonSample') {
+        java.setSrcDirs([new File(sampleRoot, 'java')])
+        resources.setSrcDirs([new File(sampleRoot, 'resources')])
+        compileClasspath = sampleClasspath
+        runtimeClasspath = sourceSets.main.runtimeClasspath + output
+    }
+    tasks.named('compileAddonSampleJava', JavaCompile).configure {
+        javaCompiler = sampleJavaCompiler
+        options.encoding = 'UTF-8'
+        options.release = sampleJavaVersion
+    }
+    if (loader == 'forge') {
+        minecraft.runs.configureEach {
+            mods { addon_sample { source sourceSets.addonSample } }
+        }
+    } else {
+        neoForge.mods { addon_sample { sourceSet sourceSets.addonSample } }
+    }
+}
+
+def addonApiClosureCheck = tasks.register('addonApiClosureCheck', Exec) {
+    description = "Reject internal implementation references in the ${loader} public API and SDK-only sample."
+    group = 'verification'
+    dependsOn tasks.named('compileApiJava'), compileAddonSample
+    workingDir rootProject.projectDir
+    def platformApi = layout.buildDirectory.dir('classes/java/api')
+    def core = project(':core').layout.buildDirectory.dir('classes/java/api')
+    def sample = layout.buildDirectory.dir('classes/addon-sample')
+    def sdk = addonSdkJar.flatMap { it.archiveFile }
+    commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
+            'tools/integration/check_addon_api_closure.py', '--check', platformApi.get().asFile.absolutePath,
+            '--allow', platformApi.get().asFile.absolutePath, '--allow', core.get().asFile.absolutePath,
+            '--kind', loader, '--sample', sample.get().asFile.absolutePath, '--sdk', sdk.get().asFile.absolutePath
+    inputs.files(sourceSets.api.allJava, project(':core').sourceSets.api.allJava,
+            fileTree(new File(sampleRoot, 'java'))).withPropertyName('addonApiAndSampleSources')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+    inputs.files(sourceSets.api.output.classesDirs, coreApi.classesDirs, sample, sdk)
+            .withPropertyName('addonApiAndSampleClasses')
+            .withPathSensitivity(org.gradle.api.tasks.PathSensitivity.RELATIVE)
+}
+tasks.named('check').configure { dependsOn addonApiClosureCheck }
+tasks.named('assemble').configure { dependsOn addonSdkJar }

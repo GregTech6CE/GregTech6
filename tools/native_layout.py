@@ -12,7 +12,7 @@ import os
 import sys
 
 NODES = {'forge': '1.20.1-forge', 'neoforge': '1.21.1-neoforge'}
-SETS = ('main', 'test', 'bootstrapGameTest', 'productionSmoke', 'generated')
+SETS = ('api', 'main', 'test', 'bootstrapGameTest', 'productionSmoke', 'generated')
 _prepared = set()
 _TOKEN = re.compile(r'//[^\r\n]*|/\*[\s\S]*?\*/|"""(?:\\[\s\S]|(?!""")[^\\])*"""'
                     r'|"(?:\\[\s\S]|[^"\\])*"|\'(?:\\[\s\S]|[^\'\\])*\'')

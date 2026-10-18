@@ -39,11 +39,13 @@ public final class BehaviorDataStorage {
      */
     public static void tooltip(ItemStack stack, List<Component> lines) {
         if (stack == null || stack.isEmpty()) return;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
+/*        CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
 *///?} else {
         CompoundTag tag = stack.getTag();
 //?}
+
         if (tag == null) return;                              // GT6: `if (aStack.hasTagCompound())`
         CompoundTag data = GTMaterialDataRecipes.usbData(stack);
         if (data != null) dataTooltip(data, lines, true);     // :41 — the verbose form
@@ -63,8 +65,8 @@ public final class BehaviorDataStorage {
         com.gregtech.gregtech.content.cover.CanvasData.tooltip(data,lines);
         if(com.gregtech.gregtech.content.data.VisualDocumentData.tooltip(data,lines,allDetails))return;
         if (data == null || !data.contains(GTMaterialDataRecipes.NBT_REPLICATOR_DATA)) return;
-        GTMaterial material = com.gregtech.gregtech.api.material.GTMaterialRegistry
-                .get(data.getShort(GTMaterialDataRecipes.NBT_REPLICATOR_DATA));
+        GTMaterial material = com.gregtech.gregtech.api.material.StoredMaterial
+                .read(data, GTMaterialDataRecipes.NBT_REPLICATOR_DATA);
         if (!material.isValid()) return;
         String name = material.getLocalName();
         if (!material.has(com.gregtech.gregtech.api.material.MaterialProperty.UUM)) {

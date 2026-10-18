@@ -21,11 +21,13 @@ public final class OriginCreativeContents {
         if(item instanceof ElectricToolItem) return "tools";
         if(item instanceof com.gregtech.gregtech.item.PanelItemView) return "panels";
         if(item instanceof ChemicalBatteryItem) return "batteries";
+
 //? if >=1.21.1 {
-        /*if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem) return "fluids";
+/*        if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem) return "fluids";
 *///?} else {
         if(item instanceof com.gregtech.gregtech.item.FluidItem) return "fluids";
 //?}
+
         if(item instanceof BlockItem b) {
             var block=b.getBlock(); String type=block.getClass().getSimpleName();
             if(type.equals("GTStoneBlock")||type.equals("GTStoneSlabBlock")) return "stones";
@@ -59,7 +61,7 @@ public final class OriginCreativeContents {
             if(id.startsWith("pipe_")||id.startsWith("fluid_pipe_"))return "pipes";
             if(id.startsWith("item_pipe"))return "item_pipes";
             if(id.startsWith("hopper_")||id.startsWith("queue_hopper_"))return "hoppers";
-            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock"))return "basic_machines";
+            if(id.startsWith("basic_machine")||type.equals("BasicMachineBlock")||type.equals("BehaviorMachineBlock")||type.equals("FuelGeneratorBlock"))return "basic_machines";
             if(id.startsWith("usb_")||id.startsWith("hdd_"))return "computing";
         }
         var source=SourceCreativeCatalog.entry(id);
@@ -85,14 +87,25 @@ public final class OriginCreativeContents {
         for(String family:CreativeTabCatalog.FAMILIES)result.put(family,new ArrayList<>());
         var items=new ArrayList<Item>();
         for(var item:BuiltInRegistries.ITEM) {
+//? if >=1.21.1 {
+/*            var itemId = BuiltInRegistries.ITEM.getKey(item);
+            boolean addonMachine = item instanceof BlockItem blockItem
+                    && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
+                    && !"gt6ce".equals(machine.basicSpec().namespace());
+            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine)
+                    || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
+*///?} else {
             if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+//?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
+
 //? if >=1.21.1 {
-            /*if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;
+/*            if(item instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem fluid && fluid.fluidEntry().isHidden())continue;
 *///?} else {
             if(item instanceof com.gregtech.gregtech.item.FluidItem fluid && fluid.fluidEntry().isHidden())continue;
 //?}
+
             if (item instanceof CannedFoodItem can && can.spec().hidden()) continue;
             if (item instanceof ColoredBookItem book && book.variant().hidden()) continue;
             items.add(item);

@@ -51,6 +51,7 @@ public final class Loader_OvenRecipes {
 
     /** Undo only this loader's previous mirror, preserving independently registered machine recipes. */
     public static void clearMirrors() {
+        com.gregtech.gregtech.recipe.MachineRecipeOverlay.restoreFurnaceBeforeMirror();
         var map=MachineRecipeMaps.Furnace;
         map.mRecipeList.removeAll(MIRRORED);
         map.mRecipeItemMap.values().forEach(rows->rows.removeAll(MIRRORED));
@@ -143,6 +144,7 @@ public final class Loader_OvenRecipes {
 //?}
                 + " (NEVER_FURNACE materials yield scrap instead); {} GT furnace rows added to the"
                 + " vanilla furnace.", mirrored, unsmelted, fuelled);
+        com.gregtech.gregtech.recipe.MachineRecipeOverlay.reapplyFurnace(manager);
     }
 
     /**

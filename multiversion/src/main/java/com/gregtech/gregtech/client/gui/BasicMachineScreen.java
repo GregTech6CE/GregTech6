@@ -1,9 +1,11 @@
 package com.gregtech.gregtech.client.gui;
 
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.gregtech.gregtech.GregTech;
 //?}
+
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.registry.GTFluidType;
 import com.gregtech.gregtech.registry.GTFluids;
@@ -20,6 +22,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.level.material.Fluid;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -27,6 +30,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 //?}
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +48,18 @@ public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineCont
     }
 
     private static ResourceLocation resolveTexture(BasicMachineContainerMenu menu) {
-        return com.gregtech.gregtech.api.recipe.MachineGuiLayout.texture(
-                com.gregtech.gregtech.data.MachineRecipeMaps.byMachineName(menu.machineName()));
+        return com.gregtech.gregtech.api.recipe.MachineGuiLayout.texture(menu.recipeMap());
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
         renderBackground(graphics);
 //?}
+
         super.render(graphics, mouseX, mouseY, partialTick);
         renderFluidSlots(graphics);
         renderFluidTooltip(graphics, mouseX, mouseY);

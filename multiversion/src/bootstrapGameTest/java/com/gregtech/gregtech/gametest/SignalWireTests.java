@@ -13,9 +13,19 @@ import net.minecraft.gametest.framework.*;
 import net.minecraft.world.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.*;
+//? if >=1.21.1 {
+/*import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
+*///?} else {
 import net.minecraftforge.gametest.*;
+//?}
 
+//? if >=1.21.1 {
+/*/^* NeoForge counterpart of the Forge signal-wire behavior tests. ^/
+@GameTestHolder("gregtech_signal_wire") @PrefixGameTestTemplate(false)
+*///?} else {
 @GameTestHolder("gt6ce") @PrefixGameTestTemplate(false)
+//?}
 public final class SignalWireTests {
     private static SignalWireBlock block(String material,boolean insulated){
         return GTSignalWires.all().stream().map(r->r.get()).filter(b->b.material().getName().equalsIgnoreCase(material)&&b.insulated()==insulated).findFirst().orElseThrow();
@@ -27,7 +37,11 @@ public final class SignalWireTests {
         return (SignalWireBlockEntity)h.getLevel().getBlockEntity(pos);
     }
     private static void solve(SignalWireBlockEntity wire){wire.setMode(wire.mode());wire.tickNetwork();}
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void signalSourceDirectionsComparatorAndLight(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void signalSourceDirectionsComparatorAndLight(GameTestHelper h){
+//?}
         var pos=h.absolutePos(new BlockPos(4,4,4));
         h.getLevel().setBlockAndUpdate(pos.west(),Blocks.REDSTONE_BLOCK.defaultBlockState());
         h.getLevel().setBlockAndUpdate(pos.north(),Blocks.STONE.defaultBlockState());
@@ -41,7 +55,11 @@ public final class SignalWireTests {
         h.assertTrue(wire.signal()==0&&h.getLevel().getBlockState(pos).getValue(SignalWireBlock.POWER)==0,"Source removal clears state and lamp");
         h.succeed();
     }
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void originalFractionalRangeAndMixedCable(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void originalFractionalRangeAndMixedCable(GameTestHelper h){
+//?}
         var origin=h.absolutePos(new BlockPos(2,2,2));
         // Isolate long runs above the shared test fixtures, without force-loading any chunk.
         var base=new BlockPos(origin.getX(),h.getLevel().getMaxBuildHeight()-40,origin.getZ());
@@ -64,7 +82,11 @@ public final class SignalWireTests {
         } finally {for(var pos:placed)h.getLevel().setBlockAndUpdate(pos,Blocks.AIR.defaultBlockState());}
         h.succeed();
     }
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void loopUnlatchesAndCutSeparatesNetwork(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void loopUnlatchesAndCutSeparatesNetwork(GameTestHelper h){
+//?}
         var pos=h.absolutePos(new BlockPos(4,4,4));var type=block("RedAlloy",false);
         var a=place(h,pos,type);var b=place(h,pos.east(),type);
         var c=place(h,pos.east().south(),type);var d=place(h,pos.south(),type);
@@ -75,34 +97,68 @@ public final class SignalWireTests {
         solve(b);h.assertTrue(b.signal()==0&&c.signal()==0&&d.signal()==0,"Both ends must agree to connect");
         h.succeed();
     }
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void modesPersistAndControlCannotMutateRemovedWire(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void modesPersistAndControlCannotMutateRemovedWire(GameTestHelper h){
+//?}
         var pos=h.absolutePos(new BlockPos(4,4,4));var wire=place(h,pos,block("Lumium",true));
         var control=MachineControl.find(wire,Direction.UP);control.setMode(99);wire.tickNetwork();
         h.assertTrue(control.mode()==15&&control.progress()>14000&&control.progressMax()==16000,"Relay exposes original mode and progress scale");
         h.assertTrue(wire.getBlockState().getLightEmission(h.getLevel(),pos)==0,"Insulated Lumium is not a world lamp");
+//? if >=1.21.1 {
+/*        var saved=wire.saveWithoutMetadata(h.getLevel().registryAccess());
+        var copy=new SignalWireBlockEntity(pos,wire.getBlockState());
+        copy.loadWithComponents(saved,h.getLevel().registryAccess());
+*///?} else {
         var copy=new SignalWireBlockEntity(pos,wire.getBlockState());copy.load(wire.saveWithoutMetadata());
+//?}
         h.assertTrue(copy.mode()==15&&copy.signal()==0,"Persist source mode, recompute transient network power");
         wire.setRemoved();control.setMode(2);h.assertTrue(!control.available()&&wire.mode()==15,"Cached control cannot edit removed wire");
         h.succeed();
     }
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void reloadedLampClearsStaleBlockState(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void reloadedLampClearsStaleBlockState(GameTestHelper h){
+//?}
         var pos=h.absolutePos(new BlockPos(4,4,4));var wire=place(h,pos,block("Lumium",false));
         h.getLevel().setBlockAndUpdate(pos,wire.getBlockState().setValue(SignalWireBlock.POWER,15));
+//? if >=1.21.1 {
+/*        wire.loadWithComponents(new net.minecraft.nbt.CompoundTag(),h.getLevel().registryAccess());solve(wire);
+*///?} else {
         wire.load(new net.minecraft.nbt.CompoundTag());solve(wire);
+//?}
         h.assertTrue(wire.signal()==0&&wire.getBlockState().getValue(SignalWireBlock.POWER)==0,"Unpowered reloaded lamp clears persisted light");
         h.succeed();
     }
+//? if >=1.21.1 {
+/*    @GameTest(template="test_empty") public static void allSixCutterFacesAndRecipeRoutes(GameTestHelper h){
+*///?} else {
     @GameTest(template="test_blueprint_empty") public static void allSixCutterFacesAndRecipeRoutes(GameTestHelper h){
+//?}
         var pos=h.absolutePos(new BlockPos(4,4,4));var wire=place(h,pos,block("RedAlloy",false));
+//? if >=1.21.1 {
+/*        var player=h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+*///?} else {
         var player=h.makeMockPlayer();
+//?}
         var tool=GTToolItem.create(com.gregtech.gregtech.api.tool.GTToolType.WIRE_CUTTER,Materials.Steel,com.gregtech.gregtech.api.material.GTMaterialRegistry.get("Wood"));
         player.setItemInHand(InteractionHand.MAIN_HAND,tool);
         for(var side:Direction.values()){
             var other=place(h,pos.relative(side),block("Signalum",true));
             var hit=new BlockHitResult(Vec3.atCenterOf(pos).add(Vec3.atLowerCornerOf(side.getNormal()).scale(.5)),side,pos,false);
+//? if >=1.21.1 {
+/*            wire.getBlockState().useItemOn(player.getItemInHand(InteractionHand.MAIN_HAND),h.getLevel(),player,InteractionHand.MAIN_HAND,hit);
+*///?} else {
             wire.getBlockState().use(h.getLevel(),player,InteractionHand.MAIN_HAND,hit);
+//?}
             h.assertTrue(!wire.connected(side)&&!other.connected(side.getOpposite()),"Cutter disconnects both ports: "+side);
+//? if >=1.21.1 {
+/*            wire.getBlockState().useItemOn(player.getItemInHand(InteractionHand.MAIN_HAND),h.getLevel(),player,InteractionHand.MAIN_HAND,hit);
+*///?} else {
             wire.getBlockState().use(h.getLevel(),player,InteractionHand.MAIN_HAND,hit);
+//?}
             h.assertTrue(wire.connected(side)&&other.connected(side.getOpposite()),"Cutter reconnects both ports: "+side);
         }
         for(var entry:GTSignalWires.all()){

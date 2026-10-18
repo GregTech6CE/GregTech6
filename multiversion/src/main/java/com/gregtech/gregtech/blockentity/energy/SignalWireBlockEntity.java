@@ -1,13 +1,21 @@
 package com.gregtech.gregtech.blockentity.energy;
 
 import com.gregtech.gregtech.api.machine.MachineControl;
+import com.gregtech.gregtech.api.signal.GtSignalCarrier;
+import com.gregtech.gregtech.api.signal.GtSignalReceiver;
+import com.gregtech.gregtech.api.signal.GtSignalSource;
 import com.gregtech.gregtech.block.energy.*;
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.registry.GTSignalWires;
 *///?} else {
 import com.gregtech.gregtech.registry.GTBlockEntities;
 //?}
+
 import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.piston.PistonBaseBlock;
@@ -18,36 +26,44 @@ import java.util.*;
 /** GT6 fractional redstone attenuation. Rebuild from sources so disconnected loops cannot latch.
  * Loaded components are solved once per server tick; no static world/network cache or chunk loading.
  */
-public final class SignalWireBlockEntity extends BlockEntity implements MachineControl.Provider {
-    public static final long UNIT=Integer.MAX_VALUE;
+public final class SignalWireBlockEntity extends BlockEntity implements MachineControl.Provider, GtSignalCarrier {
+    public static final long UNIT=GtSignalCarrier.UNIT;
+    /** Addon blocks that accept signal power and are not sources. Vanilla receivers stay on the instanceof list. */
+    public static final TagKey<Block> RECEIVERS=TagKey.create(Registries.BLOCK,ResourceLocation.fromNamespaceAndPath("gt6ce","signal_wire_receivers"));
     private static final ThreadLocal<Boolean> SAMPLING=ThreadLocal.withInitial(()->false);
     private long signal, solvedTick=Long.MIN_VALUE;
     private int mode;
     private Direction received;
+
 //? if >=1.21.1 {
-    /*public SignalWireBlockEntity(BlockPos pos,BlockState state){super(GTSignalWires.SIGNAL_WIRE.get(),pos,state);}
+/*    public SignalWireBlockEntity(BlockPos pos,BlockState state){super(GTSignalWires.SIGNAL_WIRE.get(),pos,state);}
 *///?} else {
     public SignalWireBlockEntity(BlockPos pos,BlockState state){super(GTBlockEntities.SIGNAL_WIRE.get(),pos,state);}
 //?}
+
     @Override public void onLoad(){
         super.onLoad();
         if(level!=null&&level.isClientSide){requestModelDataUpdate();com.gregtech.gregtech.api.machine.PipeModelData.refreshCrossChunkNeighbors(level,worldPosition);}
     }
+
 //? if >=1.21.1 {
-    /*@Override public net.neoforged.neoforge.client.model.data.ModelData getModelData(){
+/*    @Override public net.neoforged.neoforge.client.model.data.ModelData getModelData(){
 *///?} else {
     @Override public net.minecraftforge.client.model.data.ModelData getModelData(){
 //?}
+
         float[] halves=new float[6];java.util.Arrays.fill(halves,-1);
         if(level!=null)for(var side:Direction.values()){
             var pos=worldPosition.relative(side);
             if(level.hasChunkAt(pos)&&level.getBlockState(pos).getBlock() instanceof SignalWireBlock wire)halves[side.ordinal()]=wire.halfThickness();
         }
+
 //? if >=1.21.1 {
-        /*return net.neoforged.neoforge.client.model.data.ModelData.builder().with(com.gregtech.gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES,halves).build();
+/*        return net.neoforged.neoforge.client.model.data.ModelData.builder().with(com.gregtech.gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES,halves).build();
 *///?} else {
         return net.minecraftforge.client.model.data.ModelData.builder().with(com.gregtech.gregtech.api.machine.PipeModelData.NEIGHBOR_HALVES,halves).build();
 //?}
+
     }
     public int mode(){return mode;}
     public void setMode(int value){
@@ -103,7 +119,15 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
                             || state.getBlock() instanceof TntBlock || state.getBlock() instanceof NoteBlock
                             || state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock
                             || state.getBlock() instanceof PoweredRailBlock || state.getBlock() instanceof RedstoneLampBlock)continue;
-                    long candidate=level.getSignal(pos,side)*UNIT-wire.loss();
+                    if(state.is(RECEIVERS))continue;
+                    long emitted;
+                    if(state.hasBlockEntity()){
+                        var entity=level.getBlockEntity(pos);
+                        if(entity instanceof GtSignalReceiver)continue;
+                        if(entity instanceof GtSignalSource source)emitted=GtSignalCarrier.clamp(source.gtSignal(side.ordinal()));
+                        else emitted=level.getSignal(pos,side)*UNIT;
+                    }else emitted=level.getSignal(pos,side)*UNIT;
+                    long candidate=emitted-wire.loss();
                     if(candidate>value){value=candidate;inputs.put(wire,side);}
                 }
                 values.put(wire,value);if(value>0)waves.add(new Wave(wire,value));
@@ -138,13 +162,15 @@ public final class SignalWireBlockEntity extends BlockEntity implements MachineC
             level.updateNeighbourForOutputSignal(wire.worldPosition,state.getBlock());
         }
     }
+
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,HolderLookup.Provider registries){super.saveAdditional(tag,registries);tag.putInt("mode",mode);}
+/*    @Override protected void saveAdditional(CompoundTag tag,HolderLookup.Provider registries){super.saveAdditional(tag,registries);tag.putInt("mode",mode);}
     @Override public void loadAdditional(CompoundTag tag,HolderLookup.Provider registries){super.loadAdditional(tag,registries);mode=Math.max(0,Math.min(15,tag.getInt("mode")));signal=0;received=null;solvedTick=Long.MIN_VALUE;}
 *///?} else {
     @Override protected void saveAdditional(CompoundTag tag){super.saveAdditional(tag);tag.putInt("mode",mode);}
     @Override public void load(CompoundTag tag){super.load(tag);mode=Math.max(0,Math.min(15,tag.getInt("mode")));signal=0;received=null;solvedTick=Long.MIN_VALUE;}
 //?}
+
     @Override public MachineControl machineControl(Direction side){return new MachineControl(){
         public boolean available(){return !isRemoved();}
         public boolean supportsSwitch(){return false;}

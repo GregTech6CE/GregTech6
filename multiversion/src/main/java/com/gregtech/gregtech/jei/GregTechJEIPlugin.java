@@ -1,10 +1,12 @@
 package com.gregtech.gregtech.jei;
 
 
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.gregtech.gregtech.GregTech;
 //?}
+
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import mezz.jei.api.IModPlugin;
@@ -33,16 +35,23 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     /** Categories created in {@link #registerCategories}, reused in {@link #registerRecipes}. */
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
+    private static int overlayGeneration;
+
+    /** The client overlay calls this before JEI re-registers, so the next pass reads the live maps. */
+    public static void overlayChanged() { overlayGeneration++; }
+    public static int overlayGeneration() { return overlayGeneration; }
 
     private Map<RecipeMap,List<ItemStack>> machines = Map.of();
 
     @Override
     public ResourceLocation getPluginUid() {
+
 //? if >=1.21.1 {
-        /*return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","jei_plugin");
+/*        return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","jei_plugin");
 *///?} else {
         return GregTech.id("jei_plugin");
 //?}
+
     }
 
     @Override
@@ -79,49 +88,63 @@ public final class GregTechJEIPlugin implements IModPlugin {
     @Override public void registerItemSubtypes(mezz.jei.api.registration.ISubtypeRegistration registration) {
         for(var item:com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.sticks())
             registration.registerSubtypeInterpreter(item,(stack,context)->com.gregtech.gregtech.api.recipe.UsbRecipeDisplayBinding.subtype(stack));
+
 //? if >=1.21.1 {
-        /*for(var entry:com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.ITEMS.getEntries()) if(entry.isBound())
+/*        for(var entry:com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.ITEMS.getEntries()) if(entry.isBound())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> com.gregtech.gregtech.api.fluid.FluidDisplayBinding.subtype(net.minecraft.client.Minecraft.getInstance().level.registryAccess(),stack));
 *///?} else {
         for(var entry:com.gregtech.gregtech.registry.GTFluidItems.ITEMS.getEntries()) if(entry.isPresent())
             registration.registerSubtypeInterpreter(entry.get(),(stack,context) -> com.gregtech.gregtech.api.fluid.FluidDisplayBinding.subtype(stack));
 //?}
+
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        long started = System.nanoTime();
+        int shown = 0;
+        try {
+        // Reads the live RecipeMap lists, including a datapack overlay applied earlier in this reload.
         // EMI has its own native pages. Its JEI bridge must not import a second copy.
+
 //? if >=1.21.1 {
-        /*if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
+/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
 *///?} else {
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
 //?}
+
             registration.addRecipes(LootInfoCategories.LOOT, com.gregtech.gregtech.content.loot.LootViewerData.lootGroups());
             registration.addRecipes(LootInfoCategories.MOBS, com.gregtech.gregtech.content.loot.LootViewerData.mobGroups());
         }
+
 //? if >=1.21.1 {
-        /*if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
+/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi")) {
 *///?} else {
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi")) {
 //?}
+
         registration.addRecipes(MultiblockInfoCategory.TYPE,MultiblockInfoCategory.recipes());
         registration.addRecipes(WorldgenInfoCategories.VEIN_TYPE, WorldgenInfoCategories.buildVeins());
         registration.addRecipes(WorldgenInfoCategories.SMALL_ORE_TYPE, WorldgenInfoCategories.buildSmallOres());
         registration.addRecipes(WorldgenInfoCategories.LAYER_TYPE, WorldgenInfoCategories.buildLayers());
         registration.addRecipes(WorldgenInfoCategories.BEDROCK_TYPE, WorldgenInfoCategories.buildBedrockOres());
         }
+
 //? if >=1.21.1 {
-        /*if (!net.neoforged.fml.ModList.get().isLoaded("emi"))
+/*        if (!net.neoforged.fml.ModList.get().isLoaded("emi"))
 *///?} else {
         if (!net.minecraftforge.fml.ModList.get().isLoaded("emi"))
 //?}
+
             registration.addRecipes(ToolAssemblyCategory.TYPE, com.gregtech.gregtech.recipe.ToolAssemblyCatalog.build());
         // EMI registers these same rows natively; keep JEI's bridge from duplicating them.
+
 //? if >=1.21.1 {
-        /*if (net.neoforged.fml.ModList.get().isLoaded("emi")) return;
+/*        if (net.neoforged.fml.ModList.get().isLoaded("emi")) return;
 *///?} else {
         if (net.minecraftforge.fml.ModList.get().isLoaded("emi")) return;
 //?}
+
         for (Map.Entry<RecipeMap, RecipeMapCategory> entry : categories.entrySet()) {
             List<Recipe> recipes = new ArrayList<>();
             for (Recipe recipe : entry.getKey().mRecipeList) {
@@ -129,6 +152,20 @@ public final class GregTechJEIPlugin implements IModPlugin {
             }
             if (!recipes.isEmpty()) {
                 registration.addRecipes(entry.getValue().getRecipeType(),recipes);
+                shown += recipes.size();
+            }
+        }
+        } finally {
+            if (Integer.getInteger("gregtech.materialScale", 0) > 0) {
+                Runtime runtime = Runtime.getRuntime();
+//? if >=1.21.1 {
+/*                com.mojang.logging.LogUtils.getLogger().info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
+*///?} else {
+                GregTech.LOGGER.info("JEI_SCALE recipes {} ms {} items {} heapMb {}",
+//?}
+                        shown, (System.nanoTime() - started) / 1_000_000L,
+                        net.minecraft.core.registries.BuiltInRegistries.ITEM.size(),
+                        (runtime.totalMemory() - runtime.freeMemory()) / 1_048_576L);
             }
         }
     }

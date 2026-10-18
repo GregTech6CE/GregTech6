@@ -225,6 +225,13 @@ public final class BasicMachineCatalog {
         };
     }
 
+    /** Every built-in machine type name, including controllers that are not registered as basic machines. */
+    public static Set<String> machineTypeNames() {
+        var names = new LinkedHashSet<String>();
+        for (MachineDef def : MACHINE_DEFS) names.add(def.name());
+        return Set.copyOf(names);
+    }
+
     /** Build a complete, validated batch before registering any blocks. */
     public static List<BasicMachineParameters> specifications() {
         List<BasicMachineParameters> result = new ArrayList<>();

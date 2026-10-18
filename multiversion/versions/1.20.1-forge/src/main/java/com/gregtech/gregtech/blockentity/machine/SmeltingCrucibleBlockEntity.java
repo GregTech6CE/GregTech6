@@ -756,7 +756,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         cooldown = tag.contains(NBT_COOLDOWN) ? tag.getInt(NBT_COOLDOWN) : 100;
         meltDownWarning = tag.getBoolean(NBT_MELTDOWN);
         displayedHeight = tag.getByte(NBT_DISPLAY_HEIGHT);
-        displayedMaterialId = tag.contains(NBT_DISPLAY_MATERIAL) ? tag.getInt(NBT_DISPLAY_MATERIAL) : -1;
+        displayedMaterialId = com.gregtech.gregtech.api.material.StoredMaterial.readId(tag, NBT_DISPLAY_MATERIAL);
         displayedMolten = tag.getBoolean(NBT_DISPLAY_MOLTEN);
         content.clear();
         content.addAll(CrucibleContentsNbt.loadList(NBT_MATERIALS, tag));
@@ -776,7 +776,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         tag.putInt(NBT_COOLDOWN, cooldown);
         tag.putBoolean(NBT_MELTDOWN, meltDownWarning);
         tag.putByte(NBT_DISPLAY_HEIGHT, displayedHeight);
-        tag.putInt(NBT_DISPLAY_MATERIAL, displayedMaterialId);
+        com.gregtech.gregtech.api.material.StoredMaterial.writeDisplay(tag, NBT_DISPLAY_MATERIAL, displayedMaterialId);
         tag.putBoolean(NBT_DISPLAY_MOLTEN, displayedMolten);
         CrucibleContentsNbt.saveList(NBT_MATERIALS, tag, content);
         tag.put("gt.cache", cache.serializeNBT());
@@ -787,7 +787,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
         CompoundTag tag = super.getUpdateTag();
         tag.putLong(NBT_TEMPERATURE, temperature);
         tag.putByte(NBT_DISPLAY_HEIGHT, displayedHeight);
-        tag.putInt(NBT_DISPLAY_MATERIAL, displayedMaterialId);
+        com.gregtech.gregtech.api.material.StoredMaterial.writeDisplay(tag, NBT_DISPLAY_MATERIAL, displayedMaterialId);
         tag.putBoolean(NBT_DISPLAY_MOLTEN, displayedMolten);
         tag.putBoolean(NBT_MELTDOWN, meltDownWarning);
         CrucibleContentsNbt.saveList(NBT_MATERIALS, tag, content);
@@ -817,7 +817,7 @@ public class SmeltingCrucibleBlockEntity extends GTEnergyBlockEntity implements 
             displayedHeight = tag.getByte(NBT_DISPLAY_HEIGHT);
         }
         if (tag.contains(NBT_DISPLAY_MATERIAL)) {
-            displayedMaterialId = tag.getInt(NBT_DISPLAY_MATERIAL);
+            displayedMaterialId = com.gregtech.gregtech.api.material.StoredMaterial.readId(tag, NBT_DISPLAY_MATERIAL);
         }
         if (tag.contains(NBT_DISPLAY_MOLTEN)) {
             displayedMolten = tag.getBoolean(NBT_DISPLAY_MOLTEN);

@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["III", "I I", "III"],
+  "key": { "I": { "item": "minecraft:iron_block" } },
+  "result": { "item": "addon_sample:sample_press", "count": 1 }
+}

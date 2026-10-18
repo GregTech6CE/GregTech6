@@ -1,5 +1,5 @@
 // Single source tree; native loader differences live in the platform Gradle adapters.
-sourceSets { bootstrapGameTest; productionSmoke }
+sourceSets { api; bootstrapGameTest; productionSmoke }
 
 stonecutter.filters.include('**/*.json', '**/*.mcmeta')
 // Restrict loader rewriting to entire JSON documents. Java text blocks also
@@ -18,8 +18,10 @@ stonecutter.replacements.regex(project.name.endsWith('neoforge')) { replacement 
 apply from: rootProject.file(project.name.endsWith('neoforge')
         ? 'gradle/platform-neoforge.gradle' : 'gradle/platform-forge.gradle')
 apply from: rootProject.file('gradle/native-smoke-runs.gradle')
+apply from: rootProject.file('gradle/addon-sdk.gradle')
 
-sourceSets.configureEach { sources ->
+// The external sample is a consumer fixture, not part of the mod's source tree.
+sourceSets.matching { it.name != 'addonSample' }.configureEach { sources ->
     def suffix = sources.name == 'main' ? '' : sources.name.capitalize()
     def generate = tasks.named('stonecutterGenerate' + suffix)
     // SourceDirectorySet.setSrcDirs flattens an Iterable<File>, losing builtBy.

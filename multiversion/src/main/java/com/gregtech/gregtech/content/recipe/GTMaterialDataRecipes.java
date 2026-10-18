@@ -14,11 +14,13 @@ import com.gregtech.gregtech.registry.GTItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
+
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public final class GTMaterialDataRecipes {
 
     /** GT6 {@code CS.NBT_USB_DATA}. */
     public static final String NBT_USB_DATA = com.gregtech.gregtech.content.data.UsbDataRules.DATA;
-    /** GT6 {@code CS.NBT_REPLICATOR_DATA} — a short holding the material id. */
+    /** GT6 {@code CS.NBT_REPLICATOR_DATA}. New saves store the material name; old saves stored a short id. */
     public static final String NBT_REPLICATOR_DATA = com.gregtech.gregtech.content.data.UsbDataRules.MATERIAL;
     /** GT6 {@code CS.NBT_USB_TIER}. */
     public static final String NBT_USB_TIER = com.gregtech.gregtech.content.data.UsbDataRules.TIER;
@@ -146,11 +148,13 @@ public final class GTMaterialDataRecipes {
     @Nullable
     public static CompoundTag usbData(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return null;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
+/*        CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
 *///?} else {
         CompoundTag tag = stack.getTag();
 //?}
+
         if (tag == null || !tag.contains(NBT_USB_DATA)) return null;
         CompoundTag data = tag.getCompound(NBT_USB_DATA);
         return data.isEmpty() ? null : data;
@@ -177,19 +181,23 @@ public final class GTMaterialDataRecipes {
     /** A copy of the stick carrying GT6's material data, written the way the scanner writes it. */
     public static ItemStack withMaterialData(ItemStack usb, GTMaterial material) {
         ItemStack out = usb.copyWithCount(1);
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tagOrEmpty(out);
+/*        CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tagOrEmpty(out);
 *///?} else {
         CompoundTag tag = out.getOrCreateTag();
 //?}
+
         CompoundTag data = new CompoundTag();
-        data.putShort(NBT_REPLICATOR_DATA, (short) material.getId());
+        com.gregtech.gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
         tag.put(NBT_USB_DATA, data);
         tag.putByte(NBT_USB_TIER, (byte) USB_TIER);
+
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.content.data.UsbDataMedia.store(out,tag);
+/*        com.gregtech.gregtech.content.data.UsbDataMedia.store(out,tag);
 *///?} else {
 //?}
+
         return out;
     }
 
@@ -230,11 +238,13 @@ public final class GTMaterialDataRecipes {
      */
     public static int driveTier(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return 0;
+
 //? if >=1.21.1 {
-        /*var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+/*        var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
 *///?} else {
         var id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
+
         if (id == null) return 0;
         var matcher = DRIVE_ID.matcher(id.getPath());
         return matcher.matches() ? Integer.parseInt(matcher.group(1)) : 0;
@@ -247,11 +257,13 @@ public final class GTMaterialDataRecipes {
     @Nullable
     public static CompoundTag driveSlot(ItemStack stack, int slot) {
         if (slot < 0 || slot >= DRIVE_SLOTS) return null;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = stack == null ? null : com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
+/*        CompoundTag tag = stack == null ? null : com.gregtech.gregtech.content.data.UsbDataMedia.tag(stack);
 *///?} else {
         CompoundTag tag = stack == null ? null : stack.getTag();
 //?}
+
         if (tag == null || !tag.contains(NBT_USB_DRIVE)) return null;
         CompoundTag drive = tag.getCompound(NBT_USB_DRIVE);
         if (!drive.contains(slotDataKey(slot))) return null;
@@ -273,11 +285,13 @@ public final class GTMaterialDataRecipes {
         if (tier <= 0) return null;
         CompoundTag data = driveSlot(drive, slot);
         if (data == null) return null;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(drive);
+/*        CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tag(drive);
 *///?} else {
         CompoundTag tag = drive.getTag();
 //?}
+
         int fileTier = tag != null && tag.getCompound(NBT_USB_DRIVE).contains(slotTierKey(slot))
                 ? tag.getCompound(NBT_USB_DRIVE).getByte(slotTierKey(slot)) : 0;
         if (fileTier > tier) return null;                          // GT6 :61
@@ -309,25 +323,29 @@ public final class GTMaterialDataRecipes {
      */
     public static int writeMaterialData(ItemStack drive, GTMaterial material) {
         if (!isDrive(drive) || material == null || !material.isValid()) return -1;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tagOrEmpty(drive);
+/*        CompoundTag tag = com.gregtech.gregtech.content.data.UsbDataMedia.tagOrEmpty(drive);
 *///?} else {
         CompoundTag tag = drive.getOrCreateTag();
 //?}
+
         CompoundTag driveTag = tag.getCompound(NBT_USB_DRIVE);
         for (int slot = 0; slot < DRIVE_SLOTS; slot++) {
             if (driveTag.contains(slotDataKey(slot)) && !driveTag.getCompound(slotDataKey(slot)).isEmpty()) {
                 continue;
             }
             CompoundTag data = new CompoundTag();
-            data.putShort(NBT_REPLICATOR_DATA, (short) material.getId());
+            com.gregtech.gregtech.api.material.StoredMaterial.writeName(data, NBT_REPLICATOR_DATA, material);
             driveTag.put(slotDataKey(slot), data);
             driveTag.putByte(slotTierKey(slot), (byte) DRIVE_FILE_TIER);
             tag.put(NBT_USB_DRIVE, driveTag);
+
 //? if >=1.21.1 {
-            /*com.gregtech.gregtech.content.data.UsbDataMedia.store(drive,tag);
+/*            com.gregtech.gregtech.content.data.UsbDataMedia.store(drive,tag);
 *///?} else {
 //?}
+
             return slot;
         }
         return -1;
@@ -349,7 +367,7 @@ public final class GTMaterialDataRecipes {
     @Nullable
     private static GTMaterial materialOf(CompoundTag data) {
         if (data == null || !data.contains(NBT_REPLICATOR_DATA)) return null;
-        GTMaterial material = GTMaterialRegistry.get(data.getShort(NBT_REPLICATOR_DATA));
+        GTMaterial material = com.gregtech.gregtech.api.material.StoredMaterial.read(data, NBT_REPLICATOR_DATA);
         return material.isValid() ? material : null;
     }
 
@@ -357,7 +375,7 @@ public final class GTMaterialDataRecipes {
 
     /**
      * GT6 {@code RecipeMapScannerMolecular:46-67}: a material form plus a USB 3 stick is replaced by
-     * that stick carrying the material's id.
+     * that stick carrying the material's name.
      */
     @Nullable
     public static Recipe scanner(List<ItemStack> items, List<FluidStack> fluids) {
