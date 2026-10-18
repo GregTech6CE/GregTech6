@@ -43,7 +43,7 @@ tasks.named('jar', Jar).configure {
 // Compile-only shared addon API/domain dependency. Runtime classes are supplied by the mod JAR.
 tasks.register('addonApiJar', Jar) {
     dependsOn tasks.named('compileJava')
-    archiveBaseName = 'gregtech6-addon-api'
+    archiveBaseName = "${rootProject.property('mod_id')}-addon-api"
     archiveVersion = rootProject.version.toString()
     from sourceSets.main.output.classesDirs
     from('src/main/resources/META-INF/gregtech6') { into 'META-INF/gregtech6' }

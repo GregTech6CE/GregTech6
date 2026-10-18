@@ -6,7 +6,7 @@ modId="gregtech_delivery_probe"
 version="1.0"
 displayName="GT delivery check (test only)"
 [[dependencies.gregtech_delivery_probe]]
-modId="gregtech6"
+modId="gt6ce"
 type="required"
 versionRange="[0,)"
 ordering="AFTER"

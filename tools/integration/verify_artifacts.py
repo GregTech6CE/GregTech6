@@ -63,13 +63,13 @@ def read_properties(path):
         if line and not line.startswith(('#', '!')) and '=' in line:
             key, value = line.split('=', 1)
             properties[key.strip()] = value.strip()
-    required = ('mod_id', 'mod_version', 'mod_license', 'minecraft_version',
+    required = ('mod_id', 'mod_name', 'mod_version', 'mod_license', 'minecraft_version',
                 'minecraft_version_range', 'forge_version_range', 'loader_version_range')
     missing = [key for key in required if not properties.get(key)]
     if missing:
         raise ValueError(f'{path}: missing metadata properties: {missing}')
-    if properties['mod_id'] != 'gregtech6':
-        raise ValueError('The loader mod ID must be gregtech6')
+    if properties['mod_id'] != 'gt6ce':
+        raise ValueError('The loader mod ID must be gt6ce')
     if properties['minecraft_version'] != PLATFORMS['forge']['minecraft']:
         raise ValueError('The Forge target must remain Minecraft 1.20.1')
     if properties['minecraft_version_range'] != '[1.20.1]':
