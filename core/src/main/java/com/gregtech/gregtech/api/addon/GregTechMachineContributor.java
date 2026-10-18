@@ -4,12 +4,12 @@ import com.gregtech.gregtech.api.recipe.RecipeMapSpec;
 
 import java.util.List;
 
+/** SPDX-License-Identifier: LGPL-3.0-or-later */
 /**
- * Machine entry discovered with {@link java.util.ServiceLoader}.
- * List this class in {@code META-INF/services/com.gregtech.gregtech.api.addon.GregTechMachineContributor}.
- * GregTech loads it after materials are initialized and before machine blocks are registered.
- * Return pure data. Do not register blocks, and do not touch {@code Materials} from the constructor.
+ * @deprecated Use {@link AddonMachineContributor}. Removal is 0.6.
  */
+@Deprecated(since = "0.4", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.GregTechMachineContributor", removeAt = "0.6")
 public interface GregTechMachineContributor {
     /** The addon's own loader mod id, not {@code gregtech} or {@code gregtech6}. */
     String addonId();

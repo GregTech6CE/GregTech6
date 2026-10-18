@@ -29,10 +29,14 @@ jobs:
             loader: forge
             task: ':build'
             libs: build/libs
+            sdk: build/addon-sdk
+            sdk_glob: 'gregtech6-addon-sdk-1.20.1-forge-*.jar'
           - minecraft: '1.21.1'
             loader: neoforge
             task: ':neoforge:build'
             libs: neoforge/build/libs
+            sdk: neoforge/build/addon-sdk
+            sdk_glob: 'gregtech6-addon-sdk-1.21.1-neoforge-*.jar'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -64,12 +68,14 @@ jobs:
             -Dorg.gradle.java.home="$JAVA17_HOME" \
             -Dorg.gradle.java.installations.fromEnv=JAVA17_HOME,JAVA21_HOME \
             -Dorg.gradle.java.installations.auto-download=false \
-            :core:check :core:addonApiJar "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
+            :core:check "$PLATFORM_TASK" 2>&1 | tee work/ci-build.log
       - name: Verify current platform packaging and preserve its checksum
         env:
           LIBS_DIR: ${{ matrix.libs }}
           MC_VERSION: ${{ matrix.minecraft }}
           LOADER: ${{ matrix.loader }}
+          SDK_DIR: ${{ matrix.sdk }}
+          SDK_GLOB: ${{ matrix.sdk_glob }}
         run: |
           python3 - <<'PY'
           import hashlib
@@ -99,12 +105,13 @@ jobs:
           if digest != verified[os.environ['LOADER']]['sha256']:
               raise SystemExit('Platform jar changed after packaging verification')
           target.with_suffix('.jar.sha256').write_text(f'{digest}  {target.name}\n', encoding='utf-8')
-          sdks = list(pathlib.Path('core/build/libs').glob('gregtech6-addon-api-*.jar'))
+          sdks = list(pathlib.Path(os.environ['SDK_DIR']).glob(os.environ['SDK_GLOB']))
           if len(sdks) != 1:
               raise SystemExit(f'Expected one addon SDK, found {sdks}')
           sdk = sdks[0]
           subprocess.run([sys.executable, 'tools/integration/verify_addon_api.py',
-                          '--jar', str(sdk), '--output', str(report.with_name('addon-api.json'))], check=True)
+                          '--jar', str(sdk), '--loader', os.environ['LOADER'],
+                          '--output', str(report.with_name('addon-api.json'))], check=True)
           shutil.copyfile(sdk, destination / sdk.name)
           (destination / 'build-commit.txt').write_text(os.environ['GITHUB_SHA'] + '\n', encoding='utf-8')
           PY
@@ -182,5 +189,7 @@ jobs:
               raise SystemExit('Platform identity/version differs')
           if forge['compiled_core_class_sha256'] != neo['compiled_core_class_sha256']:
               raise SystemExit('Platform shared-core bytecode differs')
+          if forge['forge']['core_api_class_sha256'] != neo['neoforge']['core_api_class_sha256']:
+              raise SystemExit('Platform core addon API bytecode differs')
           print(f"Both platforms contain the same {forge['shared_classes']} current core classes; packaging only.")
           PY

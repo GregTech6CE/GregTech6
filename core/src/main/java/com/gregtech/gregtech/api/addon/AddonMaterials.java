@@ -59,6 +59,32 @@ public final class AddonMaterials {
                         + contributor.getClass().getName(), failure);
             }
         }
+        for (AddonMaterialContributor contributor : ServiceLoader.load(AddonMaterialContributor.class, loader)) {
+            try {
+                submit(contributor.addonId(), definitions(contributor.materials()), contributor.forms(), contributor::link);
+            } catch (RuntimeException | Error failure) {
+                throw new IllegalStateException("Addon material contributor failed: "
+                        + contributor.getClass().getName(), failure);
+            }
+        }
+    }
+
+    private static List<MaterialDefinition> definitions(List<MaterialDeclaration> declarations) {
+        var definitions = new ArrayList<MaterialDefinition>();
+        for (MaterialDeclaration declaration : declarations) {
+            var builder = MaterialDefinition.builder(declaration.id(), declaration.name())
+                    .displayName(declaration.displayName())
+                    .color(declaration.color())
+                    .chemicalFormula(declaration.formula())
+                    .meltingPointKelvin(declaration.meltingPoint())
+                    .boilingPointKelvin(declaration.boilingPoint())
+                    .density(declaration.density());
+            if (declaration.dust()) builder.dust();
+            if (declaration.gas()) builder.gas();
+            if (declaration.liquid()) builder.liquid();
+            definitions.add(builder.build());
+        }
+        return List.copyOf(definitions);
     }
 
     /**

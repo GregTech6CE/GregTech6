@@ -26,6 +26,9 @@ public class GregTech {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public GregTech(FMLJavaModLoadingContext context) {
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        com.gregtech.gregtech.internal.addon.AddonPlatformServices.bind();
+        com.gregtech.gregtech.internal.addon.AddonLoaderServices.bind();
         com.gregtech.gregtech.api.mod.ModData.bindPresence(id -> net.minecraftforge.fml.ModList.get().isLoaded(
                 NAMESPACE.equals(id) ? MODID : id));
         GTMaterialRegistry.setLogSink((warning, message) -> {

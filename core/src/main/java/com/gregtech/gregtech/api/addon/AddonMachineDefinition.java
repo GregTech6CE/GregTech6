@@ -6,10 +6,12 @@ import com.gregtech.gregtech.api.machine.MachineControllerKind;
 import java.util.List;
 import java.util.Objects;
 
+/** SPDX-License-Identifier: LGPL-3.0-or-later */
 /**
- * One addon recipe machine. {@code constantEnergy} is the non-timed rule: the machine draws a
- * constant amount whenever it is not a TU machine. {@code efficiency} is parts per 10000.
+ * @deprecated Use {@link MachineDeclaration}. Removal is 0.6.
  */
+@Deprecated(since = "0.4", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineDefinition", removeAt = "0.6")
 public record AddonMachineDefinition(
         BasicMachineParameters parameters,
         String recipeMapName,
