@@ -369,7 +369,7 @@ public final class MachineRecipeIngredients {
         ResourceLocation key = ResourceLocation.tryParse(id.trim());
         if (key == null) return null;
         if (key.getNamespace().equals("gregtech")) key = ResourceLocation.fromNamespaceAndPath("gregtech",
-                com.gregtech.gregtech.registry.LegacyContentAliases.canonical(key.getPath()));
+                key.getPath());
 //? if >=1.21.1 {
         /*Item item = BuiltInRegistries.ITEM.get(key);
 *///?} else {

@@ -98,10 +98,14 @@ final class RemiGroupingSmoke {
                 require(springNames.add(name) && name.contains(" ("), "ambiguous spring name " + name);
             }
             receipt.addProperty("distinctFluidSpringNames", springNames.size());
-            for (var raw : index) require(raw.getItemStack().isEmpty()
-                    || !com.gregtech.gregtech.registry.LegacyContentBinding.legacy(raw.getItemStack().getItem()),
-                    "legacy duplicate remains in EMI index: " + raw.getId());
-            receipt.addProperty("legacyAliasesHidden", com.gregtech.gregtech.registry.LegacyContentAliases.ALIASES.size());
+            int retiredChecked=0;
+            for(String retired:java.util.List.of("diggable_clay","diggable_peat","key_copper","large_boiler_main","large_crucible_main","tank_3x3","tank_5x5","bumble_hive","long_dist_pipe","long_dist_wire","fuel_rod_naquadah","battery_lv")){
+                var key=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",retired);
+                require(!net.minecraft.core.registries.BuiltInRegistries.ITEM.keySet().contains(key),"retired item registered "+retired);
+                require(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(key)==net.minecraft.world.item.Items.AIR,"retired item alias still resolves "+retired);
+                retiredChecked++;
+            }
+            receipt.addProperty("retiredRegistryIdsRejected",retiredChecked);
             int fluidQueries = 0;
             for (var raw : index) if (raw.getId().getPath().equals("fluid_item_water") || raw.getId().getPath().equals("fluid_item_carbondioxide")) {
                 require(raw.getKey() instanceof net.minecraft.world.level.material.Fluid, "fluid item has item lookup key");

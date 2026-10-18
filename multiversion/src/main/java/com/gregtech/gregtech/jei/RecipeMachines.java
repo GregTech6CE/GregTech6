@@ -69,7 +69,7 @@ public final class RecipeMachines {
             add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Gas,
                     new ItemStack(com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(originalId)));
 //? if >=1.21.1 {
-        /*add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Hot,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.LARGE_HEAT_EXCHANGER_MAIN.get()));
+        /*add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Hot,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));
         add(result,MachineRecipeMaps.Fusion,new ItemStack(RecipeMachines.machine("fusion_reactor_main")));
 *///?} else {
         add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Hot,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));

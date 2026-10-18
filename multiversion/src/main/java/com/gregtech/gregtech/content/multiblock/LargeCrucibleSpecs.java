@@ -20,7 +20,7 @@ public final class LargeCrucibleSpecs {
         }
 
         public Block wall() {
-            return wallId < 0 ? GTMultiblocks.LARGE_CRUCIBLE_WALL.get() : LargeMachineParts.block(wallId);
+            return wallId < 0 ? GTMultiblocks.FIRE_BRICKS.get() : LargeMachineParts.block(wallId);
         }
     }
 

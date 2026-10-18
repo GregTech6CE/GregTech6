@@ -285,19 +285,18 @@ public final class WorldCreationSmoke {
         return (boolean)manager.getMethod("isLoaded").invoke(null)
                 && Class.forName("dev.emi.emi.registry.EmiRecipes").getField("activeWorker").get(null)==null;
     }
-    /** Checks actual loader aliases and stack decoding; it never reads a user save. */
+    /** Checks canonical chemical batteries and their current stack codec. */
     private static void checkBatteries(net.minecraft.server.MinecraftServer server,JsonObject receipt) {
         var registry=net.minecraft.core.registries.BuiltInRegistries.ITEM;
         int decoded=0,assemblies=0;
-        for(var alias:com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES) {
-            var oldId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.oldId());
-            var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",alias.target().id());
-            var item=registry.get(oldId);
+        for(var spec:com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all()) {
+            var targetId=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gregtech",spec.id());
+            var item=registry.get(targetId);
             if(!(item instanceof com.gregtech.gregtech.item.ChemicalBatteryItem battery)
-                    ||!registry.getKey(item).equals(targetId)||registry.keySet().contains(oldId))
-                throw new IllegalStateException("Placeholder is still registered or alias missing: "+oldId);
-            if(battery.spec().capacity()<alias.oldCapacity())throw new IllegalStateException("Migration truncates legal old charge: "+oldId);
-            for(long charge:new long[]{0,alias.oldCapacity()}) {
+                    ||!registry.getKey(item).equals(targetId))
+                throw new IllegalStateException("Missing canonical chemical battery: "+targetId);
+            if(battery.spec().capacity()<spec.capacity())throw new IllegalStateException("Incorrect canonical chemical battery capacity: "+targetId);
+            for(long charge:new long[]{0,spec.capacity()}) {
                 var stack=new ItemStack(item,1);
                 battery.setCharge(stack,charge);
 //? if >=1.21.1 {
@@ -309,11 +308,9 @@ public final class WorldCreationSmoke {
                 stack.getOrCreateTag().putString("migration_probe","keep me");
                 var encoded=stack.save(new net.minecraft.nbt.CompoundTag());
 //?}
-                encoded.putString("id",oldId.toString());
+                encoded.putString("id",targetId.toString());
 //? if >=1.21.1 {
-                /*// Older port items did not write the new chemical max-stack component.
-                encoded.getCompound("components").remove("minecraft:max_stack_size");
-                var restored=ItemStack.parseOptional(server.registryAccess(),encoded);
+                /*var restored=ItemStack.parseOptional(server.registryAccess(),encoded);
 *///?} else {
                 var restored=ItemStack.of(encoded);
 //?}
@@ -325,13 +322,13 @@ public final class WorldCreationSmoke {
                         ||!restored.getTag().getString("migration_probe").equals("keep me")
 //?}
                         ||restored.getMaxStackSize()!=(charge>0?1:16))
-                    throw new IllegalStateException("Old battery lost identity/charge/data/stack rules: "+oldId);
+                    throw new IllegalStateException("Old battery lost identity/charge/data/stack rules: "+targetId);
 //? if >=1.21.1 {
                 /*if(!((net.minecraft.nbt.CompoundTag)restored.saveOptional(server.registryAccess())).getString("id").equals(targetId.toString()))
 *///?} else {
                 if(!restored.save(new net.minecraft.nbt.CompoundTag()).getString("id").equals(targetId.toString()))
 //?}
-                    throw new IllegalStateException("Migrated battery did not save its canonical ID: "+oldId);
+                    throw new IllegalStateException("Migrated battery did not save its canonical ID: "+targetId);
                 decoded++;
             }
         }
@@ -359,7 +356,7 @@ public final class WorldCreationSmoke {
                 assemblies++;
             }
         }
-        receipt.addProperty("legacyBatteryAliasesChecked",com.gregtech.gregtech.content.energy.BatteryItemMigration.ALIASES.size());
+        receipt.addProperty("canonicalChemicalBatteriesChecked",com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all().size());
         receipt.addProperty("chemicalBatteryStackRoundTrips",decoded);
         receipt.addProperty("sourceChemicalBatteriesChecked",com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all().size());
         receipt.addProperty("sourcePoweredAssemblyRowsChecked",assemblies);

@@ -2,10 +2,6 @@
   "type": "remi:group",
   "name": "emi.group.gregtech.functional_repeaters",
   "contents": [
-    "item:gregtech:extender_advanced",
-    "item:gregtech:extender_basic",
-    "item:gregtech:extender_elite",
-    "item:gregtech:extender_wireless",
     "item:gregtech:inventory_extender",
     "item:gregtech:inventory_tank_extender",
     "item:gregtech:tank_extender",

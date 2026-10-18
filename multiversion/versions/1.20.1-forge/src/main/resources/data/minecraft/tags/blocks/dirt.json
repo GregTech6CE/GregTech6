@@ -3,7 +3,6 @@
   "values": [
     "gregtech:plant_pot",
     "gregtech:mud",
-    "gregtech:turf",
-    "gregtech:diggable_peat"
+    "gregtech:turf"
   ]
 }

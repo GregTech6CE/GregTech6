@@ -118,21 +118,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
         }
     }
 
-    /** Convert a pre-standardization battery tile after an old world loads its retained block ID. */
     @Override public void onLoad(){
         super.onLoad();
         if (isSolar() && level != null && !level.isClientSide && !isRemoved() && facing() == Direction.UP)
             level.setBlock(worldPosition, getBlockState().setValue(DirectionalBlock.FACING, Direction.DOWN), net.minecraft.world.level.block.Block.UPDATE_ALL);
-        if(level!=null&&!level.isClientSide&&!isRemoved()&&getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.ChemicalBatteryBlock){
-            var replacement=new ChemicalBatteryBlockEntity(worldPosition,getBlockState());
-            var tag=new CompoundTag();tag.putLong(com.gregtech.gregtech.item.ChemicalBatteryItem.CHARGE,buffer);
-//? if >=1.21.1 {
-            /*replacement.loadAdditional(tag,level.registryAccess());level.setBlockEntity(replacement);replacement.setChanged();
-*///?} else {
-            replacement.load(tag);level.setBlockEntity(replacement);replacement.setChanged();
-//?}
-            level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
-        }
     }
 
     public void setSpec(EnergyNodeSpec spec) {

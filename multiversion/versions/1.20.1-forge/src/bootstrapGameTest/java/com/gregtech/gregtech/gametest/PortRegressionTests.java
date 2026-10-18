@@ -77,7 +77,7 @@ public final class PortRegressionTests {
     @GameTest(template="test_blueprint_empty")
     public static void multiblockInspectionHasServerStatus(GameTestHelper helper) {
         var pos = new net.minecraft.core.BlockPos(2,2,2);
-        helper.setBlock(pos, GTMultiblocks.LARGE_GAS_TURBINE_MAIN.get());
+        helper.setBlock(pos, GTMultiblocks.findPart(17231).get());
         var entity = helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         var data = com.gregtech.gregtech.integration.jade.MultiblockJadeProvider.inspect(entity);
         helper.assertTrue(data.contains("formed") && !data.getBoolean("formed"), "unbuilt controller is explicitly incomplete");

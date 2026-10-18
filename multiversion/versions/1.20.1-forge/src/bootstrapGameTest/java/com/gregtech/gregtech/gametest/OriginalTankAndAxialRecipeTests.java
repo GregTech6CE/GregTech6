@@ -88,18 +88,18 @@ public final class OriginalTankAndAxialRecipeTests {
     @GameTest(template = "test_empty")
     public static void oldAxialControllersCannotBypass172xxManufacturing(GameTestHelper h) {
         Map<String, Integer> originals = Map.ofEntries(
-                Map.entry("large_turbine_main", 17211),
-                Map.entry("large_steam_turbine_trinitanium", 17212),
-                Map.entry("large_steam_turbine_graphene", 17213),
-                Map.entry("large_steam_turbine_vibramantium", 17214),
-                Map.entry("large_dynamo_main", 17221),
-                Map.entry("large_dynamo_titanium", 17222),
-                Map.entry("large_dynamo_tungstensteel", 17223),
-                Map.entry("large_dynamo_adamantium", 17224),
-                Map.entry("large_gas_turbine_main", 17231),
-                Map.entry("large_gas_turbine_trinitanium", 17232),
-                Map.entry("large_gas_turbine_graphene", 17233),
-                Map.entry("large_gas_turbine_vibramantium", 17234));
+                Map.entry("magnalium_steam_turbine_main_housing", 17211),
+                Map.entry("trinitanium_steam_turbine_main_housing", 17212),
+                Map.entry("graphene_steam_turbine_main_housing", 17213),
+                Map.entry("vibramantium_steam_turbine_main_housing", 17214),
+                Map.entry("stainless_steel_dynamo_main_housing", 17221),
+                Map.entry("titanium_dynamo_main_housing", 17222),
+                Map.entry("tungstensteel_dynamo_main_housing", 17223),
+                Map.entry("adamantium_dynamo_main_housing", 17224),
+                Map.entry("magnalium_gas_turbine_main_housing", 17231),
+                Map.entry("trinitanium_gas_turbine_main_housing", 17232),
+                Map.entry("graphene_gas_turbine_main_housing", 17233),
+                Map.entry("vibramantium_gas_turbine_main_housing", 17234));
         for (var conversion : originals.entrySet()) {
             Item legacy = ForgeRegistries.ITEMS.getValue(ResourceLocation.fromNamespaceAndPath(
                     "gregtech", conversion.getKey()));
@@ -125,10 +125,10 @@ public final class OriginalTankAndAxialRecipeTests {
             Item gas = LargeMachineParts.block(gasId).asItem();
             Item steam = LargeMachineParts.block(17211 + i).asItem();
             String axialId = switch (i) {
-                case 0 -> "large_gas_turbine_main";
-                case 1 -> "large_gas_turbine_trinitanium";
-                case 2 -> "large_gas_turbine_graphene";
-                default -> "large_gas_turbine_vibramantium";
+                case 0 -> "magnalium_gas_turbine_main_housing";
+                case 1 -> "trinitanium_gas_turbine_main_housing";
+                case 2 -> "graphene_gas_turbine_main_housing";
+                default -> "vibramantium_gas_turbine_main_housing";
             };
             ShapedRecipe originalRecipe = recipe(h, "axial/" + axialId);
             h.assertTrue(originalRecipe.getResultItem(h.getLevel().registryAccess()).is(gas)

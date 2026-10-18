@@ -21,7 +21,7 @@ public final class NeoPoweredToolCheckpoint {
   var parts=new java.util.ArrayList<ItemStack>();for(var ingredient:recipe.getIngredients()){require(ingredient.getItems().length>0,"resolved assembly ingredient");parts.add(ingredient.getItems()[0].copy());}
   var input=CraftingInput.of(3,3,parts);require(recipe.matches(input,level),"original powered wrench shape");
   var stack=recipe.assemble(input,level.registryAccess());require(stack.getItem()==GTElectricItems.ELECTRIC_WRENCH.get()&&GTToolHelper.getHead(stack)==Materials.Bronze,"actual powered wrench output");
-  var tool=(ElectricToolItem)stack.getItem();var eu=GregTechTags.Energy.EU;long capacity=((com.gregtech.gregtech.api.energy.item.IItemEnergy)GTElectricItems.BATTERY_LV.get()).getEnergyCapacity(new ItemStack(GTElectricItems.BATTERY_LV.get()),eu);
+  var tool=(ElectricToolItem)stack.getItem();var eu=GregTechTags.Energy.EU;long capacity=((com.gregtech.gregtech.api.energy.item.IItemEnergy)com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)).getEnergyCapacity(new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)),eu);
   require(tool.getEnergyCapacity(stack,eu)==capacity&&tool.getEnergyStored(stack,eu)==0&&!stack.isDamageableItem(),"inherited battery capacity, uncharged, material wear separate");
   require(tool.doEnergyInjection(eu,stack,32,4,level,BlockPos.ZERO,false)==4&&tool.getEnergyStored(stack,eu)==0,"charge simulation leaves components unchanged");
   require(tool.doEnergyInjection(eu,stack,32,4,level,BlockPos.ZERO,true)==4&&tool.getEnergyStored(stack,eu)==128,"actual packet charge");

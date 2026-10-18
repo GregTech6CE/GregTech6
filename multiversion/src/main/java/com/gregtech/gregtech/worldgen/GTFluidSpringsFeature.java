@@ -41,7 +41,7 @@ import java.util.List;
  * bedrock column with a 1/16 chance. Finally it plants up to six patches of indicator grass on the
  * surface so a player can prospect for the field.
  *
- * <p>The port keeps the whole algorithm; the port's diggable "grass" blocks stand in for GT6's grass
+ * <p>The port keeps the whole algorithm; the dedicated grass-soil blocks stand in for GT6's grass
  * variants (yellow for gas and lava, brown for oil, plain green for geothermal water — GT6's
  * {@code mIndicatorType} 1/2/3).
  */
@@ -151,13 +151,13 @@ public class GTFluidSpringsFeature extends Feature<NoneFeatureConfiguration> {
      * GT6's {@code mIndicatorType}: 1 and 2 use yellow and brown grass, 3 the plain green one
      * ({@code mIndicatorType == 3 ? 0 : 3 + mIndicatorType} are GT6's grass metas 4/5/0). The port's
      * icon set carries those textures as {@code grassblock_yellow}, {@code grassblock_brown} and
-     * {@code grass}.
+     * {@code grassblock_normal}.
      */
     public static Block indicatorBlock(int indicatorType) {
         String id = switch (indicatorType) {
             case 1 -> "grassblock_yellow";
             case 2 -> "grassblock_brown";
-            default -> "grass";
+            default -> "grassblock_normal";
         };
 //? if >=1.21.1 {
         /*Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gregtech", id));

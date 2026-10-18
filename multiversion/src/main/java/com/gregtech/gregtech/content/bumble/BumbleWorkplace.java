@@ -160,7 +160,7 @@ public final class BumbleWorkplace {
                 && !plant.iconName().equals("flower_hexalily");
     }
 //? if >=1.21.1 {
-    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals("gregtech")&&java.util.Set.of("diggable_clay","clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
+    /*private static boolean isDiggableClay(Block block){var id=BuiltInRegistries.BLOCK.getKey(block);return id.getNamespace().equals("gregtech")&&java.util.Set.of("clay_brown","clay_red","clay_blue","clay_yellow","clay_white").contains(id.getPath());}
 *///?} else {
 //?}
 }

@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class DiggableBlockTests {
     private static final String[] IDS = {
             "mud", "clay_brown", "turf", "clay_red", "clay_yellow", "clay_blue", "clay_white",
-            "diggable_clay", "diggable_peat"
+            "clay_brown", "turf"
     };
     private static final String[] DROP_IDS = {
             "mud_2", "brown_clay", "ingot_peat", "red_clay", "yellow_clay", "blue_clay", "white_clay",

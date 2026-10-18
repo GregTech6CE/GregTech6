@@ -1835,26 +1835,6 @@
       "source_key": "gt.multitileentity.10087",
       "value": "Battery Box (ZPM)"
     },
-    "block.gregtech.battery_eu_128": {
-      "source_key": "gt.multitileentity.14032",
-      "value": "Lithium-Cobalt Battery (MV)"
-    },
-    "block.gregtech.battery_eu_2048": {
-      "source_key": "gt.multitileentity.14034",
-      "value": "Lithium-Cobalt Battery (EV)"
-    },
-    "block.gregtech.battery_eu_32": {
-      "source_key": "gt.multitileentity.14031",
-      "value": "Lithium-Cobalt Battery (LV)"
-    },
-    "block.gregtech.battery_eu_512": {
-      "source_key": "gt.multitileentity.14033",
-      "value": "Lithium-Cobalt Battery (HV)"
-    },
-    "block.gregtech.battery_eu_8": {
-      "source_key": "gt.multitileentity.14030",
-      "value": "Lithium-Cobalt Battery (ULV)"
-    },
     "block.gregtech.battery_lead_acid_ev": {
       "source_key": "gt.multitileentity.14004",
       "value": "Lead-Acid Battery (EV)"
@@ -2023,14 +2003,6 @@
       "source_key": "gt.block.beam.2.3",
       "value": "Wood Beam"
     },
-    "block.gregtech.bedrock_drill_main": {
-      "source_key": "gt.multitileentity.17999",
-      "value": "Bedrock Mining Drill Controller"
-    },
-    "block.gregtech.bedrock_drill_wall": {
-      "source_key": "gt.multitileentity.18103",
-      "value": "Bedrock Mining Drill Head"
-    },
     "block.gregtech.bedrock_mining_drill_controller": {
       "source_key": "gt.multitileentity.17999",
       "value": "Bedrock Mining Drill Controller"
@@ -2180,10 +2152,6 @@
       "source_formula": "material_default_name",
       "source_key": "@material-form.default.blockSolid",
       "value": "Block of solid %s"
-    },
-    "block.gregtech.boiler_wall": {
-      "source_key": "gt.multitileentity.18002",
-      "value": "Stainless Steel Wall"
     },
     "block.gregtech.bookshelf": {
       "source_key": "gt.multitileentity.7000",
@@ -2872,10 +2840,6 @@
     "block.gregtech.bronze_wall": {
       "source_key": "gt.multitileentity.18010",
       "value": "Bronze Wall"
-    },
-    "block.gregtech.bumble_hive": {
-      "source_key": "gt.multitileentity.32755",
-      "value": "Bumble Hive"
     },
     "block.gregtech.bumble_hive_black": {
       "source_key": "gt.multitileentity.32755",
@@ -4877,10 +4841,6 @@
       "source_key": "gt.multitileentity.17000",
       "value": "Coke Oven"
     },
-    "block.gregtech.coke_oven_wall": {
-      "source_key": "gt.multitileentity.18000",
-      "value": "Fire Bricks"
-    },
     "block.gregtech.compressor_bronze": {
       "source_key": "gt.multitileentity.20101",
       "value": "Compressor (Bronze)"
@@ -5461,10 +5421,6 @@
       "source_key": "gt.multitileentity.17111",
       "value": "Cryo Distillation Tower"
     },
-    "block.gregtech.cryo_distillation_wall": {
-      "source_key": "gt.multitileentity.18102",
-      "value": "Distillation Tower Part"
-    },
     "block.gregtech.cryomixer_aluminium": {
       "source_key": "gt.multitileentity.20572",
       "value": "Cryo Mixer (T2)"
@@ -5608,14 +5564,6 @@
     "block.gregtech.dense_tungstensteel_wall": {
       "source_key": "gt.multitileentity.18023",
       "value": "Dense Tungstensteel Wall"
-    },
-    "block.gregtech.diggable_clay": {
-      "source_key": "gt.block.diggable.1",
-      "value": "Brown Clay"
-    },
-    "block.gregtech.diggable_peat": {
-      "source_key": "gt.block.diggable.2",
-      "value": "Turf"
     },
     "block.gregtech.distillation_tower_main": {
       "source_key": "gt.multitileentity.17101",
@@ -6465,22 +6413,6 @@
       "source_key": "gt.multitileentity.1308",
       "value": "Steam Engine (Tungstensteel)"
     },
-    "block.gregtech.extender_advanced": {
-      "source_key": "gt.multitileentity.30002",
-      "value": "Inventory and Tank Extender"
-    },
-    "block.gregtech.extender_basic": {
-      "source_key": "gt.multitileentity.30002",
-      "value": "Inventory and Tank Extender"
-    },
-    "block.gregtech.extender_elite": {
-      "source_key": "gt.multitileentity.30002",
-      "value": "Inventory and Tank Extender"
-    },
-    "block.gregtech.extender_wireless": {
-      "source_key": "gt.multitileentity.30002",
-      "value": "Inventory and Tank Extender"
-    },
     "block.gregtech.extruder_invar": {
       "source_key": "gt.multitileentity.20202",
       "value": "Extruder (Invar)"
@@ -6997,10 +6929,6 @@
       "source_key": "gt.multitileentity.17198",
       "value": "Fusion Reactor"
     },
-    "block.gregtech.fusion_reactor_wall": {
-      "source_key": "gt.multitileentity.18045",
-      "value": "Large Iridium Coil"
-    },
     "block.gregtech.fusion_ventilation_unit": {
       "source_key": "gt.multitileentity.18299",
       "value": "Ventilation Unit"
@@ -7341,10 +7269,6 @@
       "source_key": "gt.multitileentity.17213",
       "value": "Graphene Steam Turbine Main Housing"
     },
-    "block.gregtech.grass": {
-      "source_key": "gt.multiitem.food.12000",
-      "value": "Grass"
-    },
     "block.gregtech.grassblock_brown": {
       "source_key": "gt.block.grass.5",
       "value": "Grass"
@@ -7384,10 +7308,6 @@
     "block.gregtech.heat_exchanger_main": {
       "source_key": "gt.multitileentity.17197",
       "value": "Large Heat Exchanger"
-    },
-    "block.gregtech.heat_exchanger_wall": {
-      "source_key": "gt.multitileentity.18101",
-      "value": "Heat Transmitter"
     },
     "block.gregtech.heat_transmitter": {
       "source_key": "gt.multitileentity.18101",
@@ -8469,10 +8389,6 @@
       "source_key": "gt.multitileentity.18040",
       "value": "Large Copper Coil"
     },
-    "block.gregtech.large_crucible_wall": {
-      "source_key": "gt.multitileentity.18000",
-      "value": "Fire Bricks"
-    },
     "block.gregtech.large_dense_adamantium_tank_main_valve": {
       "source_key": "gt.multitileentity.17065",
       "value": "Large Dense Adamantium Tank Main Valve"
@@ -8496,46 +8412,6 @@
     "block.gregtech.large_dense_tungstensteel_tank_main_valve": {
       "source_key": "gt.multitileentity.17063",
       "value": "Large Dense Tungstensteel Tank Main Valve"
-    },
-    "block.gregtech.large_dynamo_adamantium": {
-      "source_key": "gt.multitileentity.17224",
-      "value": "Adamantium Dynamo Main Housing"
-    },
-    "block.gregtech.large_dynamo_main": {
-      "source_key": "gt.multitileentity.17221",
-      "value": "Stainless Steel Dynamo Main Housing"
-    },
-    "block.gregtech.large_dynamo_titanium": {
-      "source_key": "gt.multitileentity.17222",
-      "value": "Titanium Dynamo Main Housing"
-    },
-    "block.gregtech.large_dynamo_tungstensteel": {
-      "source_key": "gt.multitileentity.17223",
-      "value": "Tungstensteel Dynamo Main Housing"
-    },
-    "block.gregtech.large_dynamo_wall": {
-      "source_key": "gt.multitileentity.18040",
-      "value": "Large Copper Coil"
-    },
-    "block.gregtech.large_gas_turbine_graphene": {
-      "source_key": "gt.multitileentity.17233",
-      "value": "Graphene Gas Turbine Main Housing"
-    },
-    "block.gregtech.large_gas_turbine_main": {
-      "source_key": "gt.multitileentity.17231",
-      "value": "Magnalium Gas Turbine Main Housing"
-    },
-    "block.gregtech.large_gas_turbine_trinitanium": {
-      "source_key": "gt.multitileentity.17232",
-      "value": "Trinitanium Gas Turbine Main Housing"
-    },
-    "block.gregtech.large_gas_turbine_vibramantium": {
-      "source_key": "gt.multitileentity.17234",
-      "value": "Vibramantium Gas Turbine Main Housing"
-    },
-    "block.gregtech.large_gas_turbine_wall": {
-      "source_key": "gt.multitileentity.18022",
-      "value": "Dense Stainless Steel Wall"
     },
     "block.gregtech.large_invar_crucible": {
       "source_key": "gt.multitileentity.17307",
@@ -8569,18 +8445,6 @@
       "source_key": "gt.multitileentity.17042",
       "value": "Large Stainless Steel Tank Main Valve"
     },
-    "block.gregtech.large_steam_turbine_graphene": {
-      "source_key": "gt.multitileentity.17213",
-      "value": "Graphene Steam Turbine Main Housing"
-    },
-    "block.gregtech.large_steam_turbine_trinitanium": {
-      "source_key": "gt.multitileentity.17212",
-      "value": "Trinitanium Steam Turbine Main Housing"
-    },
-    "block.gregtech.large_steam_turbine_vibramantium": {
-      "source_key": "gt.multitileentity.17214",
-      "value": "Vibramantium Steam Turbine Main Housing"
-    },
     "block.gregtech.large_steel_crucible": {
       "source_key": "gt.multitileentity.17309",
       "value": "Large Steel Crucible"
@@ -8612,10 +8476,6 @@
     "block.gregtech.large_tungstensteel_tank_main_valve": {
       "source_key": "gt.multitileentity.17043",
       "value": "Large Tungstensteel Tank Main Valve"
-    },
-    "block.gregtech.large_turbine_main": {
-      "source_key": "gt.multitileentity.17211",
-      "value": "Magnalium Steam Turbine Main Housing"
     },
     "block.gregtech.largeautoclave_stainless_steel": {
       "source_key": "gt.multitileentity.17112",
@@ -8888,18 +8748,6 @@
     "block.gregtech.lightning_rod_electric_output": {
       "source_key": "gt.multitileentity.17998",
       "value": "Lightning Rod Electric Output"
-    },
-    "block.gregtech.lightning_rod_main": {
-      "source_key": "gt.multitileentity.17998",
-      "value": "Lightning Rod Electric Output"
-    },
-    "block.gregtech.lightning_rod_pillar": {
-      "source_key": "gt.multitileentity.18104",
-      "value": "Lightning Rod"
-    },
-    "block.gregtech.lightning_rod_wall": {
-      "source_key": "gt.multitileentity.18004",
-      "value": "Tungsten Wall"
     },
     "block.gregtech.lightning_stainless_steel": {
       "source_key": "gt.multitileentity.20503",
@@ -9276,10 +9124,6 @@
     "block.gregtech.long_dist_transformer_zpm": {
       "source_key": "gt.multitileentity.10067",
       "value": "Long Distance Transformer Endpoint (ZPM)"
-    },
-    "block.gregtech.long_dist_wire": {
-      "source_key": "gt.block.longdistwire.01.0",
-      "value": "Long Distance Electric Wire (EV)"
     },
     "block.gregtech.long_dist_wire_aluminium": {
       "source_key": "gt.block.longdistwire.01.9",
@@ -16042,10 +15886,6 @@
       "source_key": "gt.multitileentity.18003",
       "value": "Tungstensteel Wall"
     },
-    "block.gregtech.turbine_wall": {
-      "source_key": "gt.multitileentity.18022",
-      "value": "Dense Stainless Steel Wall"
-    },
     "block.gregtech.turf": {
       "source_key": "gt.block.diggable.2",
       "value": "Turf"
@@ -18119,10 +17959,6 @@
       "value": "ZPM Decharger (Electric)"
     },
     "block.gregtech.zpm_discharger_basic": {
-      "source_key": "gt.multitileentity.11170",
-      "value": "ZPM Decharger (Quantum)"
-    },
-    "block.gregtech.zpm_discharger_elite": {
       "source_key": "gt.multitileentity.11170",
       "value": "ZPM Decharger (Quantum)"
     },
@@ -36174,86 +36010,6 @@
     },
     "item.gregtech.jungle_comb.tooltip": {
       "source_key": "gt.multiitem.food.30006.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_brass": {
-      "source_key": "gt.multiitem.randomtools.30005",
-      "value": "Brass Key"
-    },
-    "item.gregtech.key_brass.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30005.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_bronze": {
-      "source_key": "gt.multiitem.randomtools.30004",
-      "value": "Bronze Key"
-    },
-    "item.gregtech.key_bronze.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30004.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_copper": {
-      "source_key": "gt.multiitem.randomtools.30002",
-      "value": "Copper Key"
-    },
-    "item.gregtech.key_copper.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30002.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_gold": {
-      "source_key": "gt.multiitem.randomtools.30001",
-      "value": "Gold Key"
-    },
-    "item.gregtech.key_gold.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30001.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_iron": {
-      "source_key": "gt.multiitem.randomtools.30000",
-      "value": "Iron Key"
-    },
-    "item.gregtech.key_iron.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30000.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_lead": {
-      "source_key": "gt.multiitem.randomtools.30008",
-      "value": "Lead Key"
-    },
-    "item.gregtech.key_lead.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30008.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_plastic": {
-      "source_key": "gt.multiitem.randomtools.30009",
-      "value": "Plastic Key"
-    },
-    "item.gregtech.key_plastic.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30009.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_platinum": {
-      "source_key": "gt.multiitem.randomtools.30007",
-      "value": "Platinum Key"
-    },
-    "item.gregtech.key_platinum.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30007.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_silver": {
-      "source_key": "gt.multiitem.randomtools.30006",
-      "value": "Silver Key"
-    },
-    "item.gregtech.key_silver.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30006.tooltip",
-      "value": ""
-    },
-    "item.gregtech.key_tin": {
-      "source_key": "gt.multiitem.randomtools.30003",
-      "value": "Tin Key"
-    },
-    "item.gregtech.key_tin.tooltip": {
-      "source_key": "gt.multiitem.randomtools.30003.tooltip",
       "value": ""
     },
     "item.gregtech.kiwi_ice_cream": {

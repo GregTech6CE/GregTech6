@@ -76,11 +76,7 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
     }
 
     /** GT6's default properties: pumpkin hardness, 300 flammability, solid on every side. */
-//? if >=1.21.1 {
-    /*public static Properties defaultProperties() {
-*///?} else {
-    public static Properties properties() {
-//?}
+    public static Properties defaultProperties() {
         return Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0F, 1.0F)
                 .sound(SoundType.WOOD).ignitedByLava();
     }

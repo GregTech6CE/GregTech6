@@ -18,9 +18,9 @@ public final class AxialBatteryRecipeTests {
 
     @GameTest(template = "test_empty")
     public static void allAxialRecipesAcceptEveryChemistryAtOnlyTheOriginalTier(GameTestHelper helper) {
-        String[] recipes = {"large_dynamo_main", "large_dynamo_titanium", "large_dynamo_tungstensteel",
-                "large_dynamo_adamantium", "large_gas_turbine_main", "large_gas_turbine_trinitanium",
-                "large_gas_turbine_graphene", "large_gas_turbine_vibramantium"};
+        String[] recipes = {"stainless_steel_dynamo_main_housing", "titanium_dynamo_main_housing", "tungstensteel_dynamo_main_housing",
+                "adamantium_dynamo_main_housing", "magnalium_gas_turbine_main_housing", "trinitanium_gas_turbine_main_housing",
+                "graphene_gas_turbine_main_housing", "vibramantium_gas_turbine_main_housing"};
         String[] tiers = {"ulv", "lv", "mv", "hv", "ev"};
         String[] chemistries = {"lead_acid", "alkaline", "nickel_cadmium", "lithium_cobalt", "lithium_manganese"};
         for (int index = 0; index < recipes.length; index++) {

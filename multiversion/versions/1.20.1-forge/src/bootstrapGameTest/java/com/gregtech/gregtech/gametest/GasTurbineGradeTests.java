@@ -55,7 +55,7 @@ public final class GasTurbineGradeTests {
             h.setBlock(pos.relative(front.getClockWise()),Blocks.AIR);h.assertTrue(!machine.isStructureOk(),"broken structure invalidates immediately");
             h.setBlock(pos.relative(front.getClockWise()),grade.wall());h.assertTrue(machine.isStructureOk(),"repair rebinds structure");
             if(grade.wallId()!=18022) {
-                h.setBlock(pos.relative(front.getClockWise()),GTMultiblocks.LARGE_GAS_TURBINE_WALL.get());h.assertTrue(!machine.isStructureOk(),"lower-grade casing is rejected");
+                h.setBlock(pos.relative(front.getClockWise()),GTMultiblocks.TANK_WALL_DENSE.get());h.assertTrue(!machine.isStructureOk(),"lower-grade casing is rejected");
             }
         }
         h.succeed();

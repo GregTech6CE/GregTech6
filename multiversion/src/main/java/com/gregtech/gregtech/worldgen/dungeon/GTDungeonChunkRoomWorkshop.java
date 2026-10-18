@@ -378,7 +378,7 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
     /** GT6's mass storage ({@code 6011}, :116, :117) as the port's own container block. */
     private static BlockState storage(Direction facing) {
 //? if >=1.21.1 {
-        /*return DungeonBindings.block("mass_storage").defaultBlockState()
+        /*return DungeonBindings.block("mass_storage_stainless_steel").defaultBlockState()
 *///?} else {
         return GTStorage.MASS_STORAGE.get().defaultBlockState()
 //?}

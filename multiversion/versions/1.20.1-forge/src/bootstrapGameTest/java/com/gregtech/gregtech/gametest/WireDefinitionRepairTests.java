@@ -45,7 +45,7 @@ public final class WireDefinitionRepairTests {
             String name=i==0?"graphene":"superconductor";var b=wire(name,1,false);var pos=new BlockPos(1,1,1+i*2);
             h.setBlock(pos,b.defaultBlockState().setValue(ElectricWireBlock.WEST,true).setValue(ElectricWireBlock.EAST,true));
             h.setBlock(pos.east(),GTMiscBlocks.CHARGING_CRAFTING_TABLE.get());
-            var table=(ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));table.items().setStackInSlot(16,new ItemStack(GTElectricItems.BATTERY_LV.get()));
+            var table=(ChargingCraftingTableBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos.east()));table.items().setStackInSlot(16,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,1)));
             var be=(ElectricWireBlockEntity)h.getLevel().getBlockEntity(h.absolutePos(pos));
             h.assertTrue(be.doEnergyInjection(GregTechTags.Energy.EU,Direction.WEST,32,1,true)==1,"real current through "+name);be.serverTick();
             h.assertTrue(be.lastWattage()==32-b.spec().lossPerBlock(),"nonzero carried power");

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-/** Source defaults and preserved aliases for specialized utility controllers. */
+/** Source defaults for specialized utility controllers. */
 public final class OriginalUtilityControllerData {
     private OriginalUtilityControllerData() {}
     public static final int HEAT_SOURCE_ID=17197, LIGHTNING_SOURCE_ID=17998;
@@ -21,7 +21,4 @@ public final class OriginalUtilityControllerData {
     private static List<String> keys(String name,int count) {
         return IntStream.rangeClosed(1,count).mapToObj(i->"gt.tooltip.multiblock."+name+"."+i).toList();
     }
-    private static final Map<String,String> ALIASES=Map.of("lightning_rod_main",LIGHTNING_PATH,
-            "bedrock_drill_main","bedrock_mining_drill_controller");
-    public static Map<String,String> aliases() { return ALIASES; }
 }

@@ -295,7 +295,8 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1603, "689 fixed source identities plus120 hoppers/780 storage/12 generator aliases/2 utility aliases");
+        check(properties.size() == 1589, "689 fixed source identities plus120 hoppers/780 storage; canonical identities only");
+        check(properties.get("fire_bricks").sourceId() == 18000, "Original fire bricks harvest metadata uses the canonical identity");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
         check(wood.sourceId() == 24809 && wood.tool().equals("axe") && wood.handHarvestable(), "Wood gearbox original aWooden exemption");
@@ -336,8 +337,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 780 && harvest.size() == 780, "Thirteen original storage families including lockers across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1561,
-                "647 fixed plus120 hoppers plus780 storage plus12 source generator aliases plus2 utility aliases");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1547,
+                "647 fixed plus120 hoppers plus780 storage; canonical identities only");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();

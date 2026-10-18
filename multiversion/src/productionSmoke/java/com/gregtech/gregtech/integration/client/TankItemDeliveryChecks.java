@@ -109,7 +109,7 @@ final class TankItemDeliveryChecks {
         int blocks = 0, machines = 0;
         var checked = new java.util.HashSet<net.minecraft.resources.ResourceLocation>();
         for (var entry : com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().entrySet()) {
-            var canonical = com.gregtech.gregtech.registry.LegacyContentAliases.canonical(entry.getKey());
+            var canonical = entry.getKey();
             var id = net.minecraft.resources.ResourceLocation.parse("gregtech:" + canonical);
             if (!checked.add(id)) continue;
             require(BuiltInRegistries.ITEM.containsKey(id), "installed source material item exists " + id);

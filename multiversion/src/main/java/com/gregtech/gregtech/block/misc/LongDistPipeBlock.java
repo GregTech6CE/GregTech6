@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.Block;
 
 /** Native block boundary for flattened GT6 long-distance wire/pipe metadata. */
 public class LongDistPipeBlock extends Block {
-    public enum Kind { LEGACY_PIPE, ITEM_PIPE, FLUID_PIPE, WIRE }
+    public enum Kind { ITEM_PIPE, FLUID_PIPE, WIRE }
     private final Kind kind;
     private final long maximumVoltage;
     private final long maximumTemperature;
@@ -36,29 +36,14 @@ public class LongDistPipeBlock extends Block {
         maximumTemperature = spec.maximumTemperature();
         networkIdentity = spec.networkIdentity();
     }
-    public LongDistPipeBlock(boolean wire, Properties properties) {
-        this(LongDistanceCatalog.get(wire ? "long_dist_wire" : "long_dist_pipe"), properties);
-    }
-    public LongDistPipeBlock(boolean wire, long voltage, Properties properties) {
-        super(properties); kind = wire ? Kind.WIRE : Kind.LEGACY_PIPE;
-        maximumVoltage = voltage; maximumTemperature = Long.MAX_VALUE; networkIdentity = kind+":"+voltage;
-    }
-    public LongDistPipeBlock(Kind kind, Properties properties) {
-        this(LongDistanceCatalog.get(switch(kind) {
-            case ITEM_PIPE -> "long_dist_pipe_item";
-            case FLUID_PIPE -> "long_dist_pipe_fluid";
-            case WIRE -> "long_dist_wire";
-            case LEGACY_PIPE -> "long_dist_pipe";
-        }), properties);
-    }
     public boolean isWire() { return kind == Kind.WIRE; }
     public long maximumVoltage() { return maximumVoltage; }
     public long maximumTemperature() { return maximumTemperature; }
     public String networkIdentity() { return networkIdentity; }
     public boolean sameLine(LongDistPipeBlock other) { return networkIdentity.equals(other.networkIdentity); }
-    /** The old shared block remains a separate unrestricted compatibility network. */
+    /** Only the appropriate original item/fluid line can connect to an endpoint. */
     public boolean acceptsPipeline(boolean fluid) {
-        return kind == Kind.LEGACY_PIPE || kind == (fluid ? Kind.FLUID_PIPE : Kind.ITEM_PIPE);
+        return kind == (fluid ? Kind.FLUID_PIPE : Kind.ITEM_PIPE);
     }
     @Override public int getFlammability(net.minecraft.world.level.block.state.BlockState state,
             net.minecraft.world.level.BlockGetter level, net.minecraft.core.BlockPos pos, net.minecraft.core.Direction side) {

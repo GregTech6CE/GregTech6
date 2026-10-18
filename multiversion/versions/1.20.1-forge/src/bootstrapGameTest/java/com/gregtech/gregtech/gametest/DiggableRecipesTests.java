@@ -185,9 +185,9 @@ public final class DiggableRecipesTests {
         var peat = ItemMaterialRegistry.get(stack("turf", 1)).orElseThrow();
         h.assertTrue(peat.material() == Materials.Peat && peat.amount() == GTValues.U * 4,
                 "turf contains four units of peat");
-        h.assertTrue(ItemMaterialRegistry.get(stack("diggable_clay", 1)).orElseThrow().amount()
+        h.assertTrue(ItemMaterialRegistry.get(stack("clay_brown", 1)).orElseThrow().amount()
                         == GTValues.U * 4
-                        && ItemMaterialRegistry.get(stack("diggable_peat", 1)).orElseThrow().amount()
+                        && ItemMaterialRegistry.get(stack("turf", 1)).orElseThrow().amount()
                         == GTValues.U * 4, "saved-world alias blocks retain their compositions");
         h.assertTrue(stack("mud", 1).is(ItemTags.create(GregTech.id("oredict/block_mud")))
                         && stack("mud_2", 1).is(ItemTags.create(GregTech.id("oredict/item_mud"))),

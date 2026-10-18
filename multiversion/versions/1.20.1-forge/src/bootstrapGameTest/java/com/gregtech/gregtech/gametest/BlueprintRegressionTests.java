@@ -142,12 +142,12 @@ public final class BlueprintRegressionTests {
     public static void lightningRodStructureAndEnergy(GameTestHelper helper) {
         var pos=new BlockPos(2,110-helper.absolutePos(BlockPos.ZERO).getY(),2);var absolute=helper.absolutePos(pos);
         helper.setBlock(pos,Blocks.AIR);
-        helper.setBlock(pos,GTMultiblocks.LIGHTNING_ROD_MAIN.get());
+        helper.setBlock(pos,GTMultiblocks.findPart(17998).get());
         for(int y=0;y<5;y++) for(int x=-1;x<=1;x++) for(int z=-1;z<=1;z++) {
             if(x==0&&y==0&&z==0) continue;
-            helper.setBlock(pos.offset(x,y,z),y%2==0?GTMultiblocks.LIGHTNING_ROD_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
+            helper.setBlock(pos.offset(x,y,z),y%2==0?GTMultiblocks.TUNGSTEN_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
         }
-        helper.setBlock(pos.above(5),GTMultiblocks.LIGHTNING_ROD_PILLAR.get());
+        helper.setBlock(pos.above(5),GTMultiblocks.LIGHTNING_ROD.get());
         // captureStrike() needs the tip to see the sky (LightningRodControllerBlockEntity:36). The test
         // structure's own volume is air, but the world ABOVE that volume is real terrain, and in a fresh
         // world this spot can sit under a mountain top (jagged peaks reach past y=190) - which blocked
@@ -195,10 +195,10 @@ public final class BlueprintRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void bedrockDrillConsumesLubricantAndConservesOutput(GameTestHelper helper) {
-        var pos=new BlockPos(3,6,3);helper.setBlock(pos,GTMultiblocks.BEDROCK_DRILL_MAIN.get());
+        var pos=new BlockPos(3,6,3);helper.setBlock(pos,GTMultiblocks.findPart(17999).get());
         for(int x=-1;x<=1;x++)for(int z=-1;z<=1;z++)for(int y=-5;y<=0;y++) {
             if(x==0&&y==0&&z==0)continue;
-            helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:y==-4?GTMultiblocks.BEDROCK_DRILL_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
+            helper.setBlock(pos.offset(x,y,z),y==-5?Blocks.BEDROCK:y==-4?GTMultiblocks.DENSE_TITANIUM_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
         }
         var machine=(com.gregtech.gregtech.blockentity.machine.BedrockDrillControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(machine.isStructureOk(),"drill heads and four dense titanium layers form above bedrock");
@@ -301,8 +301,8 @@ public final class BlueprintRegressionTests {
 
     @GameTest(template="test_blueprint_empty")
     public static void gasTurbineConsumesFuelAndEmitsAtRear(GameTestHelper helper){
-        var pos=new BlockPos(3,3,1);helper.setBlock(pos,GTMultiblocks.LARGE_GAS_TURBINE_MAIN.get());
-        for(int b=0;b<4;b++)for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(b!=0||y!=0||x!=0)helper.setBlock(pos.offset(x,y,b),GTMultiblocks.LARGE_GAS_TURBINE_WALL.get());
+        var pos=new BlockPos(3,3,1);helper.setBlock(pos,GTMultiblocks.findPart(17231).get());
+        for(int b=0;b<4;b++)for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++)if(b!=0||y!=0||x!=0)helper.setBlock(pos.offset(x,y,b),GTMultiblocks.TANK_WALL_DENSE.get());
         var machine=(com.gregtech.gregtech.blockentity.machine.LargeGasTurbineControllerBlockEntity)helper.getLevel().getBlockEntity(helper.absolutePos(pos));
         helper.assertTrue(machine.isStructureOk(),"35 solid walls form the original turbine volume");
         helper.setBlock(pos.east(),GTMultiblocks.TANK_WALL_DENSE.get());

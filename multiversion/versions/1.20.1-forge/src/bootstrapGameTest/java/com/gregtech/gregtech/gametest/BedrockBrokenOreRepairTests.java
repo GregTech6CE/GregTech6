@@ -88,7 +88,7 @@ public final class BedrockBrokenOreRepairTests {
     @GameTest(template = "coin_pile_space")
     public static void bedrockDrillSelectsAPlaceableBrokenOre(GameTestHelper helper) throws Exception {
         BlockPos pos = helper.absolutePos(new BlockPos(1, 1, 1));
-        helper.getLevel().setBlock(pos, GTMultiblocks.BEDROCK_DRILL_MAIN.get().defaultBlockState(), 3);
+        helper.getLevel().setBlock(pos, GTMultiblocks.findPart(17999).get().defaultBlockState(), 3);
         var drill = (BedrockDrillControllerBlockEntity) helper.getLevel().getBlockEntity(pos);
         helper.assertTrue(drill != null, "bedrock drill controller creates its block entity");
 

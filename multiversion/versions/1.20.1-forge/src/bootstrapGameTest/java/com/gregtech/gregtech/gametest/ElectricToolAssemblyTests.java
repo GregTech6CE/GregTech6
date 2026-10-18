@@ -44,7 +44,7 @@ public final class ElectricToolAssemblyTests {
                 grid.setItem(3,GTItems.getStack(MaterialPrefix.screw,Materials.Titanium));
                 h.assertTrue(!recipe.matches(grid,h.getLevel()),"cannot mix rod/head material with a different screw");
             } else {
-                grid.setItem(spec==ElectricToolAssembly.SCREWDRIVER?6:7,new ItemStack(GTElectricItems.BATTERY_MV.get()));
+                grid.setItem(spec==ElectricToolAssembly.SCREWDRIVER?6:7,new ItemStack(com.gregtech.gregtech.registry.GTChemicalBatteries.item(com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.NICKEL_CADMIUM,2)));
                 h.assertTrue(!recipe.matches(grid,h.getLevel()),"MV battery is not an LV battery");
             }
             grid=grid(recipe);
