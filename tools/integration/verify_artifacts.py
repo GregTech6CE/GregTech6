@@ -80,12 +80,18 @@ def read_properties(path):
     return properties
 
 
-def compiled_core_hashes(core_output):
-    classes = sorted(core_output.rglob('*.class'))
-    if not classes:
-        raise ValueError('No compiled shared-core classes; build :core:classes first')
-    return {path.relative_to(core_output).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
-            for path in classes}
+def compiled_core_hashes(core_output, *additional_outputs):
+    result = {}
+    for output in (core_output, *additional_outputs):
+        classes = sorted(output.rglob('*.class'))
+        if not classes:
+            raise ValueError('No compiled classes in ' + str(output) + '; build the corresponding classes task first')
+        for path in classes:
+            name = path.relative_to(output).as_posix()
+            if name in result:
+                raise ValueError('API and implementation class names overlap: ' + name)
+            result[name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return result
 
 
 def current_platform_hashes(repo, platform, artifact, required_core):
@@ -98,10 +104,9 @@ def current_platform_hashes(repo, platform, artifact, required_core):
             return {name: hashlib.sha256(archive.read(name)).hexdigest()
                     for name in archive.namelist()
                     if name.endswith('.class') and name not in required_core}
-    output = platform_build(repo, platform) / 'classes/java/main'
-    result = {path.relative_to(output).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
-              for path in output.rglob('*.class')
-              if path.relative_to(output).as_posix() not in required_core}
+    output = platform_build(repo, platform) / 'classes/java'
+    result = compiled_core_hashes(output / 'main', output / 'api')
+    result = {name: digest for name, digest in result.items() if name not in required_core}
     if not result:
         raise ValueError('No current NeoForge platform compilation output')
     return result
@@ -346,7 +351,7 @@ def main():
     try:
         language = synchronize(repo)
         properties = read_properties(repo / 'gradle.properties')
-        core = compiled_core_hashes(repo / 'core/build/classes/java/main')
+        core = compiled_core_hashes(repo / 'core/build/classes/java/main', repo / 'core/build/classes/java/api')
         forbidden_tests = test_only_entries(repo)
         artifacts = {platform: inspect(path, platform, core, properties, forbidden_tests)
                      for platform, path in targets.items()}

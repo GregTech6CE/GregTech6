@@ -17,6 +17,26 @@ public class FuelRecipeMaps {
     protected FuelRecipeMaps() {}
 
     private static final String GUI = "gt6ce:textures/gui/machines/";
+    private static final java.util.Set<String> FUEL_NAMES = new java.util.LinkedHashSet<>();
+
+    /** True for a built-in fuel map and for a fuel map an addon declared. */
+    public static boolean isFuelMap(String name) {
+        return name != null && FUEL_NAMES.contains(name);
+    }
+
+    /** Records a map that stores produced energy as a negative {@code mEUt}. */
+    public static void registerFuelMap(RecipeMap map) {
+        if (map != null && map.mNameInternal != null) FUEL_NAMES.add(map.mNameInternal);
+    }
+
+    /**
+     * Datapack rows write a positive {@code eu_per_tick}. On a fuel map that number is the energy
+     * produced per tick, stored negative so {@code FluidFuelBatch} can burn the row.
+     */
+    public static long storedEu(RecipeMap map, long euPerTick) {
+        if (map != null && isFuelMap(map.mNameInternal) && euPerTick > 0) return -euPerTick;
+        return euPerTick;
+    }
 
     public static final RecipeMap
             FluidBed = fromDefinition(FuelRecipeMapDefinitions.FluidBed),
@@ -39,7 +59,9 @@ public class FuelRecipeMaps {
                 spec.mNeedsOutputs,spec.mCombinePower,spec.mUseBucketSizeIn,spec.mUseBucketSizeOut);
         map.viewer(spec.mViewerAllowed,spec.mShowVoltageAmperage);
         map.specialValueLabel(spec.mSpecialValuePre,spec.mSpecialValueMultiplier,spec.mSpecialValuePost);
-        if(spec.mInstantRecipes)map.instantRecipes();return map;
+        if(spec.mInstantRecipes)map.instantRecipes();
+        registerFuelMap(map);
+        return map;
     }
 
     // ── Legacy stub API (kept for the transpiled data references) ──────────

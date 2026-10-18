@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -45,6 +46,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 //?}
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,21 +66,25 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private BasicMachineSpec spec;
     private RecipeMap recipeMap;
     private MachineItemHandler itemHandler;
+
 //? if >=1.21.1 {
-    /*private final net.neoforged.neoforge.items.ItemStackHandler autocraftingProgram = new net.neoforged.neoforge.items.ItemStackHandler(1) {
+/*    private final net.neoforged.neoforge.items.ItemStackHandler autocraftingProgram = new net.neoforged.neoforge.items.ItemStackHandler(1) {
 *///?} else {
     private final net.minecraftforge.items.ItemStackHandler autocraftingProgram = new net.minecraftforge.items.ItemStackHandler(1) {
 //?}
+
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             return com.gregtech.gregtech.content.recipe.AutocraftingRecipes.isProgram(stack);
         }
         @Override protected void onContentsChanged(int slot) { setChanged(); mInventoryChanged = true; }
     };
+
 //? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
+/*    public net.neoforged.neoforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
 *///?} else {
     public net.minecraftforge.items.IItemHandler autocraftingProgram() { return autocraftingProgram; }
 //?}
+
 
     private FluidTankGT[] tanksInput;
     private FluidTankGT[] tanksOutput;
@@ -147,8 +153,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public com.gregtech.gregtech.api.machine.MachineControl machineControl(Direction side){return control;}
     private boolean mInventoryChanged = true; // inventory changed, re-check recipe
     private Recipe mCurrentRecipe;  // the recipe currently being processed
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 
     // Internal caps (null side / GUI)
     private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> itemHandler);
@@ -160,6 +167,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @SuppressWarnings("unchecked")
     private final LazyOptional<IFluidHandler>[] fluidCapsBySide = new LazyOptional[6];
 //?}
+
 
     public BasicMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -320,11 +328,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             Direction absDir = relativeToAbsolute(dir);
             BlockPos adj = pos.relative(absDir);
             BlockEntity be = level.getBlockEntity(adj);
+
 //? if >=1.21.1 {
-            /*if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
+/*            if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) continue;
 *///?} else {
             if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
 //?}
+
             if (!(be instanceof IEnergyBlock source)) continue;
             if (!source.isEnergyEmittingTo(energyTag(), absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(energyTag(), absDir.getOpposite(), size);
@@ -397,8 +407,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return panels.removed(side,cover);
     }
 
+
 //? if >=1.21.1 {
-    /*private void invalidateSideCaps() { invalidateCapabilities(); }
+/*    private void invalidateSideCaps() { invalidateCapabilities(); }
 *///?} else {
     private void invalidateSideCaps() {
         for (int i = 0; i < 6; i++) {
@@ -407,6 +418,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
     }
 //?}
+
 
     private boolean coverIs(Direction side, String id) {
         return id.equals(com.gregtech.gregtech.content.cover.CoverItems.behavior(covers[side.ordinal()]));
@@ -563,11 +575,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(cover==null||(cutter?!cover.detector():!cover.invertible()))return false;
         if(level!=null&&level.isClientSide)return true;
         String key=cutter?"gt.cover.strong":"gt.cover.inverted";
+
 //? if >=1.21.1 {
-        /*var tag=com.gregtech.gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));com.gregtech.gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
+/*        var tag=com.gregtech.gregtech.content.cover.CoverStackData.readOrEmpty(stack);tag.putBoolean(key,!tag.getBoolean(key));com.gregtech.gregtech.content.cover.CoverStackData.write(stack,tag);setChanged();
 *///?} else {
         var tag=stack.getOrCreateTag();tag.putBoolean(key,!tag.getBoolean(key));setChanged();
 //?}
+
         if(level!=null)level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3);
         updateCoverSignals();return true;
     }
@@ -586,11 +600,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             ItemStack cover = covers[side.ordinal()];
             int tag = com.gregtech.gregtech.content.cover.CoverItems.selectorTag(cover);
             if (tag >= 0) return tag;
+
 //? if >=1.21.1 {
-            /*CompoundTag nbt = com.gregtech.gregtech.content.cover.CoverStackData.read(cover);
+/*            CompoundTag nbt = com.gregtech.gregtech.content.cover.CoverStackData.read(cover);
 *///?} else {
             CompoundTag nbt = cover.getTag();
 //?}
+
             if (nbt != null && nbt.contains("gt.circuit")) return nbt.getInt("gt.circuit");
             return -1; // selector present but not configured
         }
@@ -676,8 +692,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** GT6's printer and replicator accept a USB cable in place of a retained stick. */
     @Nullable
     private Recipe findRecipeWithUsbPort() {
+
 //? if >=1.21.1 {
-        /*if(recipeMap==null||itemHandler==null)return null;
+/*        if(recipeMap==null||itemHandler==null)return null;
         var items=itemHandler.stacks();var fluids=tanksToList(tanksInput);
         Recipe direct=recipeMap.findRecipe(items,fluids,recipeMap.mNeedsOutputs,recipeMap.mInputItemsCount,recipeMap.mOutputItemsCount, level, this, autocraftingProgram.getStackInSlot(0));
         return direct!=null?direct:com.gregtech.gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,recipeInputItems(),recipeInputFluids());
@@ -703,6 +720,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
         return null;
 //?}
+
     }
 
     /** GT6 {@code NBT_PARALLEL} batch limits for the large machines. */
@@ -777,11 +795,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                 for (int i = firstOutput; i < slots.length && remaining > 0; i++) {
                     var slot = slots[i];
                     boolean empty = slot == null || slot.isEmpty();
+
 //? if >=1.21.1 {
-                    /*if (empty ? pass == 0 : !net.minecraft.world.item.ItemStack.isSameItemSameComponents(slot, output)) continue;
+/*                    if (empty ? pass == 0 : !net.minecraft.world.item.ItemStack.isSameItemSameComponents(slot, output)) continue;
 *///?} else {
                     if (empty ? pass == 0 : !net.minecraft.world.item.ItemStack.isSameItemSameTags(slot, output)) continue;
 //?}
+
                     int capacity = Math.min(64, output.getMaxStackSize());
                     int space = capacity - (empty ? 0 : slot.getCount());
                     int take = (int) Math.min(Math.max(0, space), remaining);
@@ -884,17 +904,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
         BlockEntity be = level.getBlockEntity(adj);
+
 //? if >=1.21.1 {
-        /*if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
 *///?} else {
         if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
 //?}
+
         if (be == null) return;
+
 //? if >=1.21.1 {
-        /*IItemHandler source = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
+/*        IItemHandler source = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
 *///?} else {
         IItemHandler source = be.getCapability(ForgeCapabilities.ITEM_HANDLER, absolute.getOpposite()).resolve().orElse(null);
 //?}
+
         if (source == null) return;
         int inputCount = itemHandler.inputCount();
         if (inputCount <= 0) return;
@@ -922,13 +946,15 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
         BlockEntity be = level.getBlockEntity(adj);
+
 //? if >=1.21.1 {
-        /*if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
         IItemHandler target = be != null ? level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, be.getBlockPos(), absolute.getOpposite()) : null;
 *///?} else {
         if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
         IItemHandler target = be != null ? be.getCapability(ForgeCapabilities.ITEM_HANDLER, absolute.getOpposite()).resolve().orElse(null) : null;
 //?}
+
 
         int firstOutputSlot = itemHandler.inputCount();
         int totalSlots = itemHandler.getSlots();
@@ -959,17 +985,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if(isFaceShuttered(absolute))return;
         BlockPos adj = pos.relative(absolute);
         BlockEntity be = level.getBlockEntity(adj);
+
 //? if >=1.21.1 {
-        /*if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return;
 *///?} else {
         if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return;
 //?}
+
         if (be == null) return;
+
 //? if >=1.21.1 {
-        /*IFluidHandler source = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
+/*        IFluidHandler source = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
 *///?} else {
         IFluidHandler source = be.getCapability(ForgeCapabilities.FLUID_HANDLER, absolute.getOpposite()).resolve().orElse(null);
 //?}
+
         if (source == null) return;
         FluidStack drained = source.drain(1000, IFluidHandler.FluidAction.SIMULATE);
         if (drained.isEmpty()) return;
@@ -1007,17 +1037,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected IFluidHandler automaticFluidOutputTarget(Level level,BlockPos pos,Direction absolute) {
         BlockPos adj = pos.relative(absolute);
         BlockEntity be = level.getBlockEntity(adj);
+
 //? if >=1.21.1 {
-        /*if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
 *///?} else {
         if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return null;
 //?}
+
         if (be == null) return null;
+
 //? if >=1.21.1 {
-        /*IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
+/*        IFluidHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, be.getBlockPos(), absolute.getOpposite());
 *///?} else {
         IFluidHandler target = be.getCapability(ForgeCapabilities.FLUID_HANDLER, absolute.getOpposite()).resolve().orElse(null);
 //?}
+
         return target;
     }
 
@@ -1276,8 +1310,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Capabilities with side filtering ─────────────────────────────────
 
+
 //? if >=1.21.1 {
-    /*public IItemHandler itemCapability(@Nullable Direction side) {
+/*    public IItemHandler itemCapability(@Nullable Direction side) {
         if(itemHandler==null)return null;
         if(side==null)return itemHandler;
         int rel=relativeDir(side);
@@ -1315,9 +1350,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
         return super.getCapability(cap, side);
 //?}
+
     }
+
 //? if >=1.21.1 {
-    /*public IFluidHandler fluidCapability(@Nullable Direction side) {
+/*    public IFluidHandler fluidCapability(@Nullable Direction side) {
         if(tanksInput==null)return null;
         if(side==null)return this;
         int rel=relativeDir(side);
@@ -1349,13 +1386,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (fluidCapsBySide[i] != null) fluidCapsBySide[i].invalidate();
         }
 //?}
+
     }
 
     // ── MenuProvider ──────────────────────────────────────────────────────
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.gt6ce." + (spec != null ? spec.id() : "basic_machine"));
+        return Component.translatable("block." + (spec != null ? spec.namespace() : "gt6ce") + "." + (spec != null ? spec.id() : "basic_machine"));
     }
 
     @Nullable
@@ -1367,91 +1405,113 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     // ── NBT ──────────────────────────────────────────────────────────────
 
     @Override
+
 //? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.saveAdditional(tag,lookup);
 *///?} else {
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
+
         if(sourceRequiresIgnition())tag.putByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT,(byte)sourceIgnitionTicks);
         tag.putBoolean("gt.control_stopped",controlStopped);
         tag.putLong("gt.cover_ticks",coverTicks);
         if (itemHandler != null)
+
 //? if >=1.21.1 {
-            /*tag.put(NBT_INVENTORY, itemHandler.serializeNBT(lookup));
+/*            tag.put(NBT_INVENTORY, itemHandler.serializeNBT(lookup));
 *///?} else {
             tag.put(NBT_INVENTORY, itemHandler.serializeNBT());
 //?}
+
         if (recipeMap == MachineRecipeMaps.Autocrafter || !autocraftingProgram.getStackInSlot(0).isEmpty())
+
 //? if >=1.21.1 {
-            /*tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT(lookup));
+/*            tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT(lookup));
 *///?} else {
             tag.put("gt.autocrafting.program", autocraftingProgram.serializeNBT());
 //?}
+
         tag.putLong(NBT_ENERGY, mEnergy);
         tag.putLong(NBT_PROGRESS, mProgress);
         tag.putLong(NBT_MAX_PROGRESS, mMaxProgress);
         tag.putInt("gt.parallel", mParallelCount);
         tag.putLong("gt.min_energy",mMinEnergy);
+
 //? if >=1.21.1 {
-        /*if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save(lookup));
+/*        if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save(lookup));
 *///?} else {
         if(pendingOutputs!=null) tag.put("gt.pending_outputs",pendingOutputs.save());
 //?}
+
         if (tanksInput != null) {
             for (int i = 0; i < tanksInput.length; i++) {
                 CompoundTag t = new CompoundTag();
+
 //? if >=1.21.1 {
-                /*tanksInput[i].writeToNBT(t,lookup);
+/*                tanksInput[i].writeToNBT(t,lookup);
 *///?} else {
                 tanksInput[i].writeToNBT(t);
 //?}
+
                 tag.put(NBT_TANKS_IN + i, t);
             }
         }
         if (tanksOutput != null) {
             for (int i = 0; i < tanksOutput.length; i++) {
                 CompoundTag t = new CompoundTag();
+
 //? if >=1.21.1 {
-                /*tanksOutput[i].writeToNBT(t,lookup);
+/*                tanksOutput[i].writeToNBT(t,lookup);
 *///?} else {
                 tanksOutput[i].writeToNBT(t);
 //?}
+
                 tag.put(NBT_TANKS_OUT + i, t);
             }
         }
+
 //? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
+/*        saveCovers(tag,lookup);
 *///?} else {
         saveCovers(tag);
 //?}
+
     }
 
+
 //? if >=1.21.1 {
-    /*private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    private void saveCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
     private void saveCovers(CompoundTag tag) {
 //?}
+
         for (int i = 0; i < 6; i++) {
             if (!covers[i].isEmpty()) {
+
 //? if >=1.21.1 {
-                /*tag.put("gt_cover_" + i, covers[i].save(lookup));
+/*                tag.put("gt_cover_" + i, covers[i].save(lookup));
 *///?} else {
                 tag.put("gt_cover_" + i, covers[i].save(new CompoundTag()));
 //?}
+
             }
         }
     }
 
+
 //? if >=1.21.1 {
-    /*private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    private void loadCovers(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
     private void loadCovers(CompoundTag tag) {
 //?}
+
         panels.loaded();
         for (int i = 0; i < 6; i++) {
             covers[i] = tag.contains("gt_cover_" + i)
+
+// Version-specific branch.
 //? if >=1.21.1 {
 /*// Version-specific branch.
                     ? ItemStack.parseOptional(lookup,tag.getCompound("gt_cover_" + i)) : ItemStack.EMPTY;
@@ -1459,34 +1519,41 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 // Version-specific branch.
                     ? ItemStack.of(tag.getCompound("gt_cover_" + i)) : ItemStack.EMPTY;
 //?}
+
         }
     }
 
     // ── Client sync (covers only — everything else travels via menus) ───────
 
     @Override
+
 //? if >=1.21.1 {
-    /*public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+/*    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
     public CompoundTag getUpdateTag() {
 //?}
+
         CompoundTag tag = new CompoundTag();
+
 //? if >=1.21.1 {
-        /*saveCovers(tag,lookup);
+/*        saveCovers(tag,lookup);
 *///?} else {
         saveCovers(tag);
 //?}
+
         return tag;
     }
 
     @Override
+
 //? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         loadCovers(tag,lookup);
 *///?} else {
     public void handleUpdateTag(CompoundTag tag) {
         loadCovers(tag);
 //?}
+
     }
 
     @Override
@@ -1496,31 +1563,37 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     @Override
     public void onDataPacket(net.minecraft.network.Connection net,
+
 //? if >=1.21.1 {
-                             /*net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
+/*                             net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
         if (pkt.getTag() != null) loadCovers(pkt.getTag(),lookup);
 *///?} else {
                              net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket pkt) {
         if (pkt.getTag() != null) loadCovers(pkt.getTag());
 //?}
+
     }
 
     @Override
+
 //? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+/*    public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
         super.loadAdditional(tag,lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
+
         if (tag.contains("gt.autocrafting.program", 10)) {
             CompoundTag savedProgram = tag.getCompound("gt.autocrafting.program").copy();
             savedProgram.putInt("Size", 1);
+
 //? if >=1.21.1 {
-            /*autocraftingProgram.deserializeNBT(lookup, savedProgram);
+/*            autocraftingProgram.deserializeNBT(lookup, savedProgram);
 *///?} else {
             autocraftingProgram.deserializeNBT(savedProgram);
 //?}
+
         }
         sourceIgnitionTicks=Math.max(0,tag.getByte(com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_NBT));
         controlStopped=tag.getBoolean("gt.control_stopped");
@@ -1531,44 +1604,54 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (tag.contains(NBT_MAX_PROGRESS)) mMaxProgress = tag.getLong(NBT_MAX_PROGRESS);
         if (tag.contains("gt.parallel")) mParallelCount = Math.max(1, tag.getInt("gt.parallel"));
         mMinEnergy=tag.getLong("gt.min_energy");
+
 //? if >=1.21.1 {
-        /*pendingOutputs=tag.contains("gt.pending_outputs")?com.gregtech.gregtech.api.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs"),lookup):null;
+/*        pendingOutputs=tag.contains("gt.pending_outputs")?com.gregtech.gregtech.api.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs"),lookup):null;
 *///?} else {
         pendingOutputs=tag.contains("gt.pending_outputs")?com.gregtech.gregtech.api.recipe.MachineWorkOutputs.load(tag.getCompound("gt.pending_outputs")):null;
 //?}
+
         if(mMaxProgress>0 && pendingOutputs==null) { mProgress=0; mMaxProgress=0; } // Old saves never recorded their consumed job; do not invent outputs.
         if (itemHandler == null) {
             // Called before setSpec — defer
         } else if (tag.contains(NBT_INVENTORY)) {
+
 //? if >=1.21.1 {
-            /*itemHandler.deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
+/*            itemHandler.deserializeNBT(lookup,tag.getCompound(NBT_INVENTORY));
 *///?} else {
             itemHandler.deserializeNBT(tag.getCompound(NBT_INVENTORY));
 //?}
+
         }
         if (tanksInput != null) {
             for (int i = 0; i < tanksInput.length; i++)
                 if (tag.contains(NBT_TANKS_IN + i))
+
 //? if >=1.21.1 {
-                    /*tanksInput[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i),lookup);
+/*                    tanksInput[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i),lookup);
 *///?} else {
                     tanksInput[i].readFromNBT(tag.getCompound(NBT_TANKS_IN + i));
 //?}
+
         }
         if (tanksOutput != null) {
             for (int i = 0; i < tanksOutput.length; i++)
                 if (tag.contains(NBT_TANKS_OUT + i))
+
 //? if >=1.21.1 {
-                    /*tanksOutput[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i),lookup);
+/*                    tanksOutput[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i),lookup);
 *///?} else {
                     tanksOutput[i].readFromNBT(tag.getCompound(NBT_TANKS_OUT + i));
 //?}
+
         }
+
 //? if >=1.21.1 {
-        /*loadCovers(tag,lookup);
+/*        loadCovers(tag,lookup);
 *///?} else {
         loadCovers(tag);
 //?}
+
     }
 
     // ── Sided wrappers ────────────────────────────────────────────────────
@@ -1687,11 +1770,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             // Merge with existing stacks first
             for (int i = outIdx; i < getSlots(); i++) {
                 ItemStack existing = getStackInSlot(i);
+
 //? if >=1.21.1 {
-                /*if (ItemStack.isSameItemSameComponents(existing, stack)) {
+/*                if (ItemStack.isSameItemSameComponents(existing, stack)) {
 *///?} else {
                 if (ItemStack.isSameItemSameTags(existing, stack)) {
 //?}
+
                     int space = Math.min(getSlotLimit(i), existing.getMaxStackSize()) - existing.getCount();
                     if (space > 0) {
                         int toAdd = Math.min(space, stack.getCount());
@@ -1784,11 +1869,13 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     if (itemHandler == null) continue;
                     boolean acted = com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.tickRetriever(
                             level, pos, side, itemHandler,
+
 //? if >=1.21.1 {
-                            /*com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
+/*                            com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack, level.registryAccess()),
 *///?} else {
                             com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(stack),
 //?}
+
                             com.gregtech.gregtech.content.cover.MachineCoverSpec.inverted(stack),
                             coverTicks, coverPending[index] || resumed);
                     if (acted) coverPending[index] = false;
@@ -1820,21 +1907,25 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      */
     public boolean coverFilterPermits(Direction side, ItemStack candidate) {
         return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilterPermits(
+
 //? if >=1.21.1 {
-                /*covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
+/*                covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
 *///?} else {
                 covers[side.ordinal()], panels.stopped(), candidate);
 //?}
+
     }
 
     /** GT6 {@code CoverFilterFluid:117-129} asked about a live face. See {@link #coverFilterPermits}. */
     public boolean coverFluidFilterPermits(Direction side, FluidStack candidate) {
         return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.fluidFilterPermits(
+
 //? if >=1.21.1 {
-                /*covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
+/*                covers[side.ordinal()], panels.stopped(), candidate, level.registryAccess());
 *///?} else {
                 covers[side.ordinal()], panels.stopped(), candidate);
 //?}
+
     }
 
     /**
@@ -1851,20 +1942,24 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** The item filter stored on a face's cover, empty when there is none or it is not a filter. */
     public ItemStack coverItemFilter(Direction side) {
+
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side), level.registryAccess());
+/*        return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side), level.registryAccess());
 *///?} else {
         return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.itemFilter(getCover(side));
 //?}
+
     }
 
     /** The fluid filter stored on a face's cover, empty when there is none or it is not a filter. */
     public FluidStack coverFluidFilter(Direction side) {
+
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side), level.registryAccess());
+/*        return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side), level.registryAccess());
 *///?} else {
         return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.fluidFilter(getCover(side));
 //?}
+
     }
 
     /**
@@ -1886,25 +1981,31 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         ItemStack stack = covers[side.ordinal()];
         if (com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.FILTER_ITEM.equals(id)
                 || com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.RETRIEVER_ITEM.equals(id)) {
+
 //? if >=1.21.1 {
-            /*return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
+/*            return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held, level.registryAccess());
 *///?} else {
             return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setItemFilter(stack, held);
 //?}
+
         }
         if (com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.FILTER_FLUID.equals(id)) {
+
 //? if >=1.21.1 {
-            /*var container = held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
+/*            var container = held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
 *///?} else {
             var container = held.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve().orElse(null);
 //?}
+
             if (container == null) return false;
             FluidStack fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+
 //? if >=1.21.1 {
-            /*return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
+/*            return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid, level.registryAccess());
 *///?} else {
             return com.gregtech.gregtech.content.cover.CoverUtilityBehaviors.setFluidFilter(stack, fluid);
 //?}
+
         }
         return false;
     }

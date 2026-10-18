@@ -1,0 +1,986 @@
+{
+  "scope": "Read-only adoption completeness audit of final upstream tree and current authored Stonecutter source; no Gradle or source edits.",
+  "source_commit": "c899462a6",
+  "adopted_functional_commits": [
+    {
+      "commit": "7330804c6",
+      "feature": "core material item IDs before addon materials",
+      "status": "adopted",
+      "implementation": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "3451e5996",
+      "feature": "append dynamic recipe providers",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "be9e96976",
+      "feature": "fractional signal addon interfaces and ports",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "473caa8c7",
+      "feature": "avoid automatic signal connections to solid conductors",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "00a789bba",
+      "feature": "addon materials before directory freeze",
+      "status": "adopted",
+      "implementation": "core/src/main/java/com/gregtech/gregtech/api/addon/AddonMaterials.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "f88510cd7",
+      "feature": "machine recipe datapack add/remove/reload/sync",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "0d2669e00",
+      "feature": "wet foam block entity remapping",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "5787ef45b",
+      "feature": "addon recipe machines and multiblocks",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "00e0fa0f9",
+      "feature": "addon API version/removal gate",
+      "status": "adopted",
+      "implementation": "core/src/api/java/com/gregtech/gregtech/api/addon/AddonApiRemoval.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "9f58dfd50",
+      "feature": "separate per-loader addon SDK",
+      "status": "adopted",
+      "implementation": "gradle/addon-sdk.gradle",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "9526519a7",
+      "feature": "addon material identity by name",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/api/material/StoredMaterial.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "9cf119706",
+      "feature": "declaration-driven behavior machine shell",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    },
+    {
+      "commit": "61d04158f",
+      "feature": "addon fluid fuel generators",
+      "status": "adopted",
+      "implementation": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java",
+      "verification": "Static dependency/lifecycle coverage only; compilation, SDK and targeted GameTests are running under root."
+    }
+  ],
+  "new_production_class_coverage": [
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/api/material/StoredMaterial.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/material/StoredMaterial.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/client/MachineRecipeClient.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineRecipeClient.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/mixin/CustomPayloadLimitMixin.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/CustomPayloadLimitMixin.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/mixin/LoginQueryPayloadMixin.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/LoginQueryPayloadMixin.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/mixin/PacketFrameDecoderMixin.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameDecoderMixin.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/mixin/PacketFrameEncoderMixin.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameEncoderMixin.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/platform/Mc.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/platform/Mc.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/registry/AddonMachineRegistration.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/AddonMachineRegistration.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/registry/BehaviorMachineRegistration.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/BehaviorMachineRegistration.java"
+    },
+    {
+      "platform": "forge",
+      "logical": "main/java/com/gregtech/gregtech/registry/FuelGeneratorRegistration.java",
+      "present": true,
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/FuelGeneratorRegistration.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java",
+      "present": true,
+      "file": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/api/material/StoredMaterial.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/material/StoredMaterial.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/client/MachineRecipeClient.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineRecipeClient.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/platform/Mc.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/platform/Mc.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/platform/neoforge/machine/BehaviorMachineRegistration.java",
+      "present": true,
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BehaviorMachineRegistration.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/platform/neoforge/machine/FuelGeneratorRegistration.java",
+      "present": true,
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/FuelGeneratorRegistration.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java"
+    },
+    {
+      "platform": "neoforge",
+      "logical": "main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+      "present": true,
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java"
+    }
+  ],
+  "bootstrap_resources": [
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_receiver.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_receiver.json"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_source.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_source.json"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_tagged.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_tagged.json"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech/tags/block/signal_wire_receivers.json",
+      "status": "superseded",
+      "reason": "Deleted in final upstream; test binds receiver tag reflectively."
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_card11_sample/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_card11_sample/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_card15/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_card15/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_card16_behavior/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_card16_behavior/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_dynamic_recipes/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_dynamic_recipes/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_machine_overlay/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_machine_overlay/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "neoforge/src/bootstrapGameTest/resources/data/gregtech_signal_wire/structure/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.21.1-neoforge/src/bootstrapGameTest/resources/data/gregtech_signal_wire/structure/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_receiver.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_receiver.json"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_source.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_source.json"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/assets/gregtech/blockstates/signal_probe_tagged.json",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/assets/gt6ce/blockstates/signal_probe_tagged.json"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech/tags/blocks/signal_wire_receivers.json",
+      "status": "superseded",
+      "reason": "Deleted in final upstream; test binds receiver tag reflectively."
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_card11_sample/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_card11_sample/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_card15/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_card15/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_card16_behavior/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_card16_behavior/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structures/test_blueprint_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structures/test_blueprint_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_card17_fuel/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_dynamic_recipes/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_dynamic_recipes/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_machine_overlay/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_machine_overlay/structures/test_empty.nbt"
+    },
+    {
+      "upstream": "src/bootstrapGameTest/resources/data/gregtech_signal_wire/structures/test_empty.nbt",
+      "status": "covered",
+      "file": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/resources/data/gregtech_signal_wire/structures/test_empty.nbt"
+    }
+  ],
+  "lifecycle_and_registration_checks": [
+    {
+      "name": "forge service binding",
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "passed": true,
+      "tokens": [
+        "AddonCoreServices.bind()",
+        "AddonPlatformServices.bind()",
+        "AddonLoaderServices.bind()"
+      ]
+    },
+    {
+      "name": "neoforge service binding",
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "passed": true,
+      "tokens": [
+        "AddonCoreServices.bind()",
+        "AddonPlatformServices.bind()",
+        "AddonLoaderServices.bind()"
+      ]
+    },
+    {
+      "name": "addon machine collection",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineDefinitions.java",
+      "passed": true,
+      "tokens": [
+        "AddonMachineRuntime.install()",
+        "AddonMachineRuntime.specs()"
+      ]
+    },
+    {
+      "name": "forge addon register dispatch",
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTBasicMachines.java",
+      "passed": true,
+      "tokens": [
+        "AddonMachineRegistration.register(spec, bus)",
+        "BehaviorMachineRegistration.register(bus)",
+        "FuelGeneratorRegistration.register(bus)"
+      ]
+    },
+    {
+      "name": "neo addon register dispatch",
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "passed": true,
+      "tokens": [
+        "spec.namespace()",
+        "BehaviorMachineRegistration.register(bus)",
+        "FuelGeneratorRegistration.register(bus)",
+        "BEHAVIOR_MENU"
+      ]
+    },
+    {
+      "name": "shared behavior menu",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "passed": true,
+      "tokens": [
+        "BEHAVIOR_MACHINE",
+        "behavior_machine",
+        "BEHAVIOR_MENU"
+      ]
+    },
+    {
+      "name": "forge behavior screen",
+      "file": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "passed": true,
+      "tokens": [
+        "GTMenuTypes.BEHAVIOR_MACHINE.get()",
+        "BehaviorMachineScreen::new"
+      ]
+    },
+    {
+      "name": "neo behavior screen",
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+      "passed": true,
+      "tokens": [
+        "BasicMachineRegistries.BEHAVIOR_MENU.get()",
+        "BehaviorMachineScreen::new"
+      ]
+    },
+    {
+      "name": "fuel map registration",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+      "passed": true,
+      "tokens": [
+        "AddonMachines.fuelMaps()",
+        "FuelRecipeMaps.registerFuelMap"
+      ]
+    },
+    {
+      "name": "datapack produced fuel energy sign",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+      "passed": true,
+      "tokens": [
+        "FuelRecipeMaps.storedEu(map, spec.euPerTick())"
+      ]
+    },
+    {
+      "name": "server overlay lifecycle",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+      "passed": true,
+      "tokens": [
+        "@SubscribeEvent",
+        "EventPriority.HIGHEST",
+        "MachineRecipeOverlay.apply"
+      ]
+    },
+    {
+      "name": "client overlay refresh lifecycle",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineRecipeClient.java",
+      "passed": true,
+      "tokens": [
+        "CLIENT_PACKET_RECEIVED",
+        "overlayChanged",
+        "RecipesUpdatedEvent"
+      ]
+    },
+    {
+      "name": "addon energy receiver bridging",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "passed": true,
+      "tokens": [
+        "EnergyBlockViews.view(receiver)"
+      ]
+    },
+    {
+      "name": "wet foam uses corrected subclass",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "passed": true,
+      "tokens": [
+        "new com.gregtech.gregtech.block.misc.FreshCFoamBlock("
+      ]
+    },
+    {
+      "name": "wet foam owns remapped methods",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+      "passed": true,
+      "tokens": [
+        "implements EntityBlock",
+        "public BlockEntity newBlockEntity",
+        "BlockEntityTicker<T> getTicker"
+      ]
+    },
+    {
+      "name": "fractional signal production boundary",
+      "file": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "passed": true,
+      "tokens": [
+        "implements MachineControl.Provider, GtSignalCarrier",
+        "GtSignalReceiver",
+        "GtSignalSource"
+      ]
+    },
+    {
+      "name": "empty signal-tag test replacement",
+      "file": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SignalWireAddonTests.java",
+      "passed": true,
+      "tokens": [
+        "includeInReceiverTag",
+        "bindTags"
+      ]
+    }
+  ],
+  "production_signal_tags": {
+    "forge": {
+      "file": "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/tags/blocks/signal_wire_receivers.json",
+      "present_and_empty": true
+    },
+    "neoforge": {
+      "file": "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/tags/block/signal_wire_receivers.json",
+      "present_and_empty": true
+    }
+  },
+  "forge_packet_mixin_registration": {
+    "PacketFrameEncoderMixin": true,
+    "PacketFrameDecoderMixin": true,
+    "LoginQueryPayloadMixin": true,
+    "CustomPayloadLimitMixin": true
+  },
+  "new_language_keys": {
+    "en_us": {
+      "gui.gt6ce.behavior.energy": "%s / %s %s",
+      "gui.gt6ce.behavior.progress": "Progress: %s%%",
+      "gui.gt6ce.behavior.tank": "%s / %s mB",
+      "gui.gt6ce.behavior.on": "On",
+      "gui.gt6ce.behavior.off": "Off",
+      "tooltip.gt6ce.material_from_addon": "Added by the %s addon",
+      "tooltip.gt6ce.material_from_addons": "Added by the %s addons"
+    },
+    "zh_cn": {
+      "gui.gt6ce.behavior.energy": "%s / %s %s",
+      "gui.gt6ce.behavior.progress": "Progress: %s%%",
+      "gui.gt6ce.behavior.tank": "%s / %s mB",
+      "gui.gt6ce.behavior.on": "On",
+      "gui.gt6ce.behavior.off": "Off",
+      "tooltip.gt6ce.material_from_addon": "Added by the %s addon",
+      "tooltip.gt6ce.material_from_addons": "Added by the %s addons"
+    }
+  },
+  "sample_asset_and_service_checks": [
+    {
+      "platform": "forge",
+      "machine": "sample_press",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "forge",
+      "machine": "large_sample_press",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "forge",
+      "machine": "irrigator",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "forge",
+      "machine": "sample_engine",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "forge",
+      "machine": "sample_turbine",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "forge",
+      "service": "com.gregtech.gregtech.api.addon.AddonMaterialContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMaterials",
+      "implementation_present": true
+    },
+    {
+      "platform": "forge",
+      "service": "com.gregtech.gregtech.api.addon.AddonMachineContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMachines",
+      "implementation_present": true
+    },
+    {
+      "platform": "forge",
+      "service": "com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMachines",
+      "implementation_present": true
+    },
+    {
+      "platform": "neoforge",
+      "machine": "sample_press",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "neoforge",
+      "machine": "large_sample_press",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "neoforge",
+      "machine": "irrigator",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "neoforge",
+      "machine": "sample_engine",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "neoforge",
+      "machine": "sample_turbine",
+      "expected_assets": 5,
+      "missing": []
+    },
+    {
+      "platform": "neoforge",
+      "service": "com.gregtech.gregtech.api.addon.AddonMaterialContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMaterials",
+      "implementation_present": true
+    },
+    {
+      "platform": "neoforge",
+      "service": "com.gregtech.gregtech.api.addon.AddonMachineContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMachines",
+      "implementation_present": true
+    },
+    {
+      "platform": "neoforge",
+      "service": "com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor",
+      "provider": "com.gregtech.addonsample.AddonSampleMachines",
+      "implementation_present": true
+    }
+  ],
+  "superseded": [
+    {
+      "feature": "Mc/platform-shared source/resource consolidation",
+      "reason": "Existing whole-tree Stonecutter shared source and resources already provide the required management; helpers adopted without restoring parallel roots."
+    },
+    {
+      "feature": "Old bootstrap signal tag datapack",
+      "reason": "Deleted by final upstream, replaced with reflective test-only holder tag binding; production receiver tags remain empty."
+    },
+    {
+      "feature": "PR40 coverage statistics and feasibility report",
+      "reason": "Historical trial output is not the current Stonecutter implementation state."
+    },
+    {
+      "feature": "8c1908 stone recipe resource-case lookup",
+      "reason": "Current StoneAndToolSurvivalRecipes already performs direct ResourceLocation lookup preserving case; no regression introduced."
+    }
+  ],
+  "pending_verification": [
+    "Root-owned in-progress dual-platform compilation/SDK/API closure/source check and targeted NeoForge GameTests.",
+    "Full survival playthrough, real player GUI/model visual review, dedicated client sync, Forge runtime and old world compatibility are not established by this static audit."
+  ],
+  "findings": [],
+  "status": "passed_static"
+}

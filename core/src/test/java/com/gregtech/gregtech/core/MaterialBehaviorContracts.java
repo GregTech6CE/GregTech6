@@ -10,6 +10,8 @@ import com.gregtech.gregtech.data.GregTechConstants;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.ModReferences;
 import com.gregtech.gregtech.data.generated.GT6Materials;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 
 /** Full imported domain bootstrap and original numeric fixtures, with no game dependencies. */
@@ -50,6 +52,8 @@ public final class MaterialBehaviorContracts {
     // 9c743d9d39c4e41d11279f99d32b173208b40456ee4884a00a12853dd4468146
     // and post-init fingerprint 149d06616708c6871e2b0622fad173acb56f801406875b03a277eb611a0f1efe.
     private static final String DEFINITIONS_SHA256 = "8016d898e2e402fc1dd292c1441292b22db8407422c0b834a5c31f23c90a5bbb";
+    /** MaterialItemDefinitions.all() before addon materials existed, 56085 rows, zero suffixes. */
+    private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
     private static final String POST_INIT_SHA256 = "93676e07d4028454fa173cf568d695c1df9d961390ad6eaeea10ba63f021da80";
     private static int assertions;
     private MaterialBehaviorContracts() {}
@@ -138,6 +142,7 @@ public final class MaterialBehaviorContracts {
         check(com.gregtech.gregtech.content.tool.OriginalToolMaterials.inFamily(GTMaterialRegistry.get("WoodTainted"), "WoodMagical"), "ANY.WoodMagical includes MT.WOODS.Tainted under its registered name");
         validateCopperTinBronze();
         validateAmountsAndReactions();
+        validateMaterialItemIds();
         System.out.println("Material behavior contracts passed: " + assertions
                 + " assertions; 1160 materials, 1105 positive IDs, 1523 name entries, " + PrefixRegistry.all().size() + " prefixes, "
                 + CrucibleReactions.allRecipes().size() + " reactions");
@@ -261,6 +266,46 @@ public final class MaterialBehaviorContracts {
                 "Three admitted raw copper and one tin charge form exactly four U bronze");
         check(GregTechConstants.C == 273 && GregTechConstants.DEF_ENV_TEMP == 293 && GregTechConstants.L == 144,
                 "Integer Kelvin offset and external litre boundary must stay distinct from U");
+    }
+
+    private static void validateMaterialItemIds() throws Exception {
+        check(ITEM_ID_SHA256.equals(itemIdFingerprint(true)), "built-in material item ids match the golden sample taken before the two-pass change");
+        int free = freeMaterialId(1);
+        var added = GTMaterialRegistry.createMaterial(free, "Aaaaddon", "Aaaaddon", 0xFFFFFF).put(MaterialProperty.DUST);
+        check(!GTMaterialRegistry.isCoreMaterial(added), "a material registered after init is not part of the core directory");
+        check(GTMaterialRegistry.isCoreMaterial(Materials.Iron), "Iron remains a core material");
+        boolean generated = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (definition.material() != added) continue;
+            check(!definition.hasIdSuffix(), "a non-colliding addon material keeps its base item id: " + definition.itemId());
+            generated = true;
+        }
+        check(generated, "the addon dust material generates at least one item");
+        check(ITEM_ID_SHA256.equals(itemIdFingerprint(true)), "adding an addon material does not change any core item id");
+        GTMaterialRegistry.createMaterial(freeMaterialId(free + 1), "iron", "iron", 0xFFFFFF).put(MaterialProperty.DUST);
+        expectThrows(IllegalStateException.class, MaterialItemDefinitions::all,
+                "an addon material whose lowercased name takes a core item id is rejected instead of renaming the core item");
+    }
+
+    private static int freeMaterialId(int start) {
+        for (int id = start; id < GTMaterialRegistry.MAX_MATERIALS; id++) {
+            if (!GTMaterialRegistry.get(id).isValid()) return id;
+        }
+        throw new AssertionError("no free material id");
+    }
+
+    private static String itemIdFingerprint(boolean coreOnly) throws Exception {
+        var digest = MessageDigest.getInstance("SHA-256");
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (coreOnly && !GTMaterialRegistry.isCoreMaterial(definition.material())) continue;
+            String line = definition.itemId() + "\t" + definition.baseItemId() + "\t"
+                    + definition.prefix().getName() + "\t" + definition.material().getName() + "\t"
+                    + definition.material().getId() + "\n";
+            digest.update(line.getBytes(StandardCharsets.UTF_8));
+        }
+        var text = new StringBuilder();
+        for (byte value : digest.digest()) text.append(String.format("%02x", value));
+        return text.toString();
     }
 
     private static void validateAmountsAndReactions() {

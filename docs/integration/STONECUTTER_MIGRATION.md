@@ -19,7 +19,8 @@ Stonecutter 是构建和源码管理工具；Git 托管仍为现有 GitHub 仓�
 
 ## 目录
 
-- `core/`：共享领域逻辑、API、通用资源，不引入 Minecraft 或加载器类型。
+- `core/src/api/`：独立编译的公开纯 Java API；`core/src/main/` 保存共享领域实现与通用资源，不引入 Minecraft 或加载器类型。
+- `multiversion/src/api/` 及版本节点的 `src/api/`：Stonecutter 管理的公开原生 API，编译时仅能看到公开核心 API、Minecraft 与加载器；SDK 不包含 `main` 实现。
 - `multiversion/src/<sourceSet>/`：共同的原生源码与资源，Forge 为 VCS 活动版本。
 - `multiversion/versions/<version>/src/<sourceSet>/`：按版本保留的实现、资源覆盖和元数据，包含平台入口及尚未进一步合并的不同实现。
 - `multiversion/versions/<version>/build/generated/stonecutter/`：Stonecutter 生成输出，不直接编辑。
@@ -53,6 +54,7 @@ JSON 对比忽略格式，其他资源逐字节对比；Java 对比代码和字�
 ./gradlew :multiversion:1.20.1-forge:runClient
 ./gradlew :multiversion:1.21.1-neoforge:runClient
 ./gradlew prepareNativeTools verifyStonecutterSources
+./gradlew :multiversion:1.20.1-forge:addonSdkJar :multiversion:1.21.1-neoforge:addonSdkJar
 ```
 
 产物在 `multiversion/versions/<version>/build/libs/`；Forge 仍先重混淆原生类，再嵌入未改写的 core。
@@ -62,6 +64,8 @@ JSON 对比忽略格式，其他资源逐字节对比；Java 对比代码和字�
 编辑跨版本类时修改 `multiversion/src`，使用 Stonecutter 条件；平台专有类修改版本节点的 `src`。
 不要手改 `build/generated`。两个平台采用相同资源时保留共同文件；内容确有差异时才使用版本资源覆盖。
 新增或修改 loader API 代码后运行对应节点编译，不要将 Minecraft 类型引入 core。
+
+API 版本 7／模组版本 0.7.0 的 `api` 源集与其它原生源集一样由 `stonecutterGenerateApi` 展开并进入工具视图；当前清单检查包含 API，冻结迁移签名继续保持原样。每个节点的 `addonApiClosureCheck` 编译 durable 示例并检查 API 闭包，示例只依赖 SDK 和外部 Minecraft／加载器类。`examples/addon-sample` 是独立使用方，不是模组实现或第二套原生业务源码。
 
 Stonecutter 活动版本可在 IDE 中切换，也可使用原生任务：
 

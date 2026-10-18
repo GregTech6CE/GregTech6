@@ -29,10 +29,14 @@ jobs:
             loader: forge
             task: ':multiversion:1.20.1-forge:build'
             libs: multiversion/versions/1.20.1-forge/build/libs
+            sdk: multiversion/versions/1.20.1-forge/build/addon-sdk
+            sdk_glob: 'gt6ce-addon-sdk-1.20.1-forge-*.jar'
           - minecraft: '1.21.1'
             loader: neoforge
             task: ':multiversion:1.21.1-neoforge:build'
             libs: multiversion/versions/1.21.1-neoforge/build/libs
+            sdk: multiversion/versions/1.21.1-neoforge/build/addon-sdk
+            sdk_glob: 'gt6ce-addon-sdk-1.21.1-neoforge-*.jar'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -84,6 +88,8 @@ jobs:
           LIBS_DIR: ${{ matrix.libs }}
           MC_VERSION: ${{ matrix.minecraft }}
           LOADER: ${{ matrix.loader }}
+          SDK_DIR: ${{ matrix.sdk }}
+          SDK_GLOB: ${{ matrix.sdk_glob }}
         run: |
           python3 - <<'PY'
           import hashlib
@@ -120,6 +126,14 @@ jobs:
           subprocess.run([sys.executable, 'tools/integration/verify_addon_api.py',
                           '--jar', str(sdk), '--output', str(report.with_name('addon-api.json'))], check=True)
           shutil.copyfile(sdk, destination / sdk.name)
+          native_sdks = list(pathlib.Path(os.environ['SDK_DIR']).glob(os.environ['SDK_GLOB']))
+          if len(native_sdks) != 1:
+              raise SystemExit(f'Expected one isolated loader SDK, found {native_sdks}')
+          native_sdk = native_sdks[0]
+          subprocess.run([sys.executable, 'tools/integration/verify_addon_api.py',
+                          '--jar', str(native_sdk), '--loader', os.environ['LOADER'],
+                          '--output', str(report.with_name('addon-sdk-' + os.environ['LOADER'] + '.json'))], check=True)
+          shutil.copyfile(native_sdk, destination / native_sdk.name)
           (destination / 'build-commit.txt').write_text(os.environ['GITHUB_SHA'] + '\n', encoding='utf-8')
           PY
       - name: Upload packaging evidence without mod binaries

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.material;
 
+import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.data.ImportedMaterialData;
 
@@ -20,29 +21,62 @@ public final class GTMaterialRegistry {
     private static java.util.function.BiConsumer<Boolean, String> logSink = (warning, message) ->
             System.getLogger("gt6ce.materials").log(
                     warning ? System.Logger.Level.WARNING : System.Logger.Level.INFO, message);
+    /**
+     * Exclusive ceiling of built-in numeric ids. The registry itself is not capped:
+     * addon ids start at {@link #ADDON_ID_START} and grow with the materials that are loaded.
+     */
     public static final int MAX_MATERIALS = 10000;
+    /** First id assigned to addon materials. Every built-in id is below this. */
+    public static final int ADDON_ID_START = MAX_MATERIALS;
 
     private static final Map<String, GTMaterial> BY_NAME = new HashMap<>();
-    private static final GTMaterial[] BY_ID = new GTMaterial[MAX_MATERIALS];
+    private static final Map<Integer, GTMaterial> BY_ID = new HashMap<>();
+    private static final Set<GTMaterial> PERIODIC_TABLE = new HashSet<>();
+    private static final Set<GTMaterial> VANILLA_MATTER = new HashSet<>();
+    private static int nextAddonId = ADDON_ID_START;
     private static final Set<GTMaterial> ALL_MATERIALS = new HashSet<>();
 
     private static boolean initialized = false;
+    /** True only while built-in declare() and the queued addon install are registering definitions. */
+    private static boolean definitionsOpen = false;
+    /**
+     * Built-in materials present when {@link #init()} finished linking.
+     * Link-time groups stay in this set. Queued addon materials, including ones created by an addon link callback, do not.
+     */
+    private static Set<GTMaterial> coreMaterials = Set.of();
     public enum RegistrationPhase { DEFINITIONS, LINKS, READY, FAILED }
     private static RegistrationPhase phase = RegistrationPhase.DEFINITIONS;
 
     public static RegistrationPhase registrationPhase() { return phase; }
+
+    /**
+     * Whether this material belongs to the built-in directory.
+     * The snapshot is taken after linking, so link-time groups stay core.
+     * Queued addon materials are excluded from that snapshot.
+     */
+    public static boolean isCoreMaterial(GTMaterial material) {
+        return material != null && coreMaterials.contains(material.resolve());
+    }
 
     /** Binds loader logging without making the material model depend on a game logging API. */
     public static void setLogSink(java.util.function.BiConsumer<Boolean, String> sink) {
         logSink = java.util.Objects.requireNonNull(sink, "sink");
     }
 
+    public static void warn(String message) { logSink.accept(true, message); }
+
+    /** Next addon id. Built-in registration does not consume this sequence. */
+    public static int allocateAddonId() {
+        if (nextAddonId <= 0) throw new IllegalStateException("No material ids left");
+        return nextAddonId++;
+    }
+
     /** Strict entry point for new definitions; historical GT6 ID reuse stays confined to createMaterial. */
     public static GTMaterial registerDefinition(MaterialDefinition definition) {
-        if (phase != RegistrationPhase.DEFINITIONS)
+        if (!definitionsOpen || phase != RegistrationPhase.DEFINITIONS)
             throw new IllegalStateException("Material definitions are closed (" + phase + "): " + definition.name());
         String key = GTMaterial.sanitize(definition.name());
-        if (BY_NAME.containsKey(key) || BY_ID[definition.id()] != null)
+        if (BY_NAME.containsKey(key) || BY_ID.containsKey(definition.id()))
             throw new IllegalArgumentException("Material name or ID already registered: " + definition.name() + " / " + definition.id());
         return createMaterial(definition.id(), definition.name(), definition.displayName(), definition.color())
                 .put(definition.properties().toArray(MaterialProperty[]::new))
@@ -58,10 +92,6 @@ public final class GTMaterialRegistry {
         String sanitized = GTMaterial.sanitize(name);
         if (sanitized.isEmpty()) {
             throw new IllegalArgumentException("Material name cannot be empty after sanitization: " + name);
-        }
-
-        if (id >= MAX_MATERIALS) {
-            throw new IllegalArgumentException("Material ID out of range: " + id);
         }
 
         GTMaterial existing = BY_NAME.get(sanitized);
@@ -85,11 +115,64 @@ public final class GTMaterialRegistry {
     private static void register(GTMaterial material) {
         BY_NAME.put(material.getName(), material);
         ALL_MATERIALS.add(material);
-        if (material.getId() > 0 && material.getId() < MAX_MATERIALS) {
-            if (BY_ID[material.getId()] != null) {
-                throw new IllegalStateException("Material ID " + material.getId() + " already used by " + BY_ID[material.getId()].getName() + "; cannot register " + material.getName());
+        if (material.getId() > 0) {
+            GTMaterial previous = BY_ID.putIfAbsent(material.getId(), material);
+            if (previous != null) {
+                throw new IllegalStateException("Material ID " + material.getId() + " already used by " + previous.getName() + "; cannot register " + material.getName());
             }
-            BY_ID[material.getId()] = material;
+        }
+    }
+
+    /**
+     * Registers one addon material at an id from {@link #allocateAddonId()}.
+     * {@code definition.id()} is not used.
+     */
+    public static GTMaterial installAddonMaterial(MaterialDefinition definition, int id) {
+        if (!definitionsOpen || phase != RegistrationPhase.DEFINITIONS)
+            throw new IllegalStateException("Material definitions are closed (" + phase + "): " + definition.name());
+        if (id < ADDON_ID_START)
+            throw new IllegalArgumentException("Addon material id " + id + " is below " + ADDON_ID_START);
+        return createMaterial(id, definition.name(), definition.displayName(), definition.color())
+                .put(definition.properties().toArray(MaterialProperty[]::new))
+                .setTextureSet(definition.texture())
+                .setAtomicProperties(definition.atomicProperties()).setAlpha(definition.alpha())
+                .setStats(definition.meltingPointKelvin(), definition.boilingPointKelvin(), definition.density())
+                .setTooltipChemical(definition.chemicalFormula());
+    }
+
+    /** Registry key equal to {@code name} ignoring case, including aliases. Null when nothing matches. */
+    public static String registeredNameIgnoringCase(String name) {
+        String lower = GTMaterial.sanitize(name).toLowerCase(java.util.Locale.ROOT);
+        for (String key : BY_NAME.keySet()) {
+            if (key.toLowerCase(java.util.Locale.ROOT).equals(lower)) return key;
+        }
+        return null;
+    }
+
+    /**
+     * Built-in periodic-table element, stamped from the old {@code id < 8000} rule.
+     * Addon materials are not stamped, so a runtime id cannot make one look like an element.
+     */
+    public static boolean isPeriodicTableElement(GTMaterial material) {
+        return material != null && PERIODIC_TABLE.contains(material.resolve());
+    }
+
+    /** Built-in vanilla-matter material, stamped from the old {@code 7900..7912} rule. */
+    public static boolean isVanillaMatter(GTMaterial material) {
+        return material != null && VANILLA_MATTER.contains(material.resolve());
+    }
+
+    private static void stampBuiltinIdentity() {
+        for (GTMaterial material : ALL_MATERIALS) {
+            GTMaterial canonical = material.resolve();
+            if (AddonMaterials.owns(canonical)) continue;
+            if (canonical.has(MaterialProperty.ELEMENT) && canonical.getId() > 0 && canonical.getId() < 8000
+                    && !canonical.has(MaterialProperty.ANTIMATTER)) {
+                PERIODIC_TABLE.add(canonical);
+            }
+            if (canonical.getId() >= 7900 && canonical.getId() <= 7912) {
+                VANILLA_MATTER.add(canonical);
+            }
         }
     }
 
@@ -134,8 +217,8 @@ public final class GTMaterialRegistry {
     }
 
     public static GTMaterial get(int id) {
-        if (id <= 0 || id >= MAX_MATERIALS) return MaterialSentinels.Invalid;
-        GTMaterial material = BY_ID[id];
+        if (id <= 0) return MaterialSentinels.Invalid;
+        GTMaterial material = BY_ID.get(id);
         return material == null ? MaterialSentinels.Invalid : material.resolve();
     }
 
@@ -154,17 +237,36 @@ public final class GTMaterialRegistry {
         return Collections.unmodifiableList(sortedMaterialsCache);
     }
 
-    public static void init() {
+    public static synchronized void init() {
         if (phase == RegistrationPhase.FAILED)
             throw new IllegalStateException("Material initialization previously failed");
         if (initialized) return;
         initialized = true;
         try {
-            com.gregtech.gregtech.content.material.MaterialDefinitions.declare();
+            AddonMaterials.collectContributors();
+            AddonMaterials.closeQueue();
+            definitionsOpen = true;
+            try {
+                com.gregtech.gregtech.content.material.MaterialDefinitions.declare();
+                AddonMaterials.installDefinitions();
+            } finally {
+                definitionsOpen = false;
+            }
             phase = RegistrationPhase.LINKS;
             com.gregtech.gregtech.content.material.MaterialDefinitions.link();
+            stampBuiltinIdentity();
+            AddonMaterials.linkAddons();
+            var resolved = new HashSet<GTMaterial>();
+            for (GTMaterial material : ALL_MATERIALS) {
+                GTMaterial canonical = material.resolve();
+                if (AddonMaterials.owns(canonical)) continue;
+                resolved.add(canonical);
+            }
+            coreMaterials = Set.copyOf(resolved);
+            AddonMaterials.publishForms();
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
+            definitionsOpen = false;
             phase = RegistrationPhase.FAILED;
             throw failure;
         }

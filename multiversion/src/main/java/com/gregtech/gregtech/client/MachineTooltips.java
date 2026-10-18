@@ -1,21 +1,25 @@
 package com.gregtech.gregtech.client;
 
+
 //? if >=1.21.1 {
+/*
 
 
-
-/*import com.gregtech.gregtech.api.machine.MachineSpec;
+import com.gregtech.gregtech.api.machine.MachineSpec;
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
 *///?} else {
 import com.gregtech.gregtech.GregTech;
 //?}
+
 import com.gregtech.gregtech.api.energy.FaceConfig;
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
 import com.gregtech.gregtech.api.machine.MachineSpec;
 import com.gregtech.gregtech.api.material.GTMaterial;
 //?}
+
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import net.minecraft.ChatFormatting;
@@ -34,7 +38,8 @@ public final class MachineTooltips {
         if(com.gregtech.gregtech.content.multiblock.OriginalAdvancedControllerData.handles(spec.machineName())) {
             AdvancedControllerTooltips.append(spec,tooltip);return;
         }
-        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())) {
+        if(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec.machineName())
+                || spec.controllerKind()==com.gregtech.gregtech.api.machine.MachineControllerKind.LARGE_RECIPE) {
             if(!CommonBlockTooltips.containsKey(tooltip,"gt.lang.recipes")) LargeRecipeMachineTooltips.append(spec,tooltip);
             return;
         }
@@ -49,7 +54,7 @@ public final class MachineTooltips {
         FaceConfig fc = spec.faceConfig();
 
         // Recipes
-        var recipeMap = MachineRecipeMaps.byMachineName(spec.machineName());
+        var recipeMap = spec.recipeMap();
         Component recipeName = recipeMap != null
                 ? Component.translatableWithFallback(recipeMap.mNameInternal, recipeMap.mNameLocal)
                 : Component.literal(spec.machineName());
@@ -122,11 +127,13 @@ public final class MachineTooltips {
 
         // Energy IN: None
         tooltip.add(Component.translatable("gt.lang.energy.input").append(": ")
+
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.none")
+/*                .append(Component.translatable("tooltip." + "gt6ce" + ".machine.none")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.none")
 //?}
+
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.RED));
 
@@ -153,11 +160,13 @@ public final class MachineTooltips {
 
     public static void appendFurnaceFuelRecipes(List<Component> tooltip) {
         tooltip.add(Component.translatable("gt.lang.recipes").append(": ")
+
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gt6ce" + ".machine.recipes.furnace_fuels")
+/*                .append(Component.translatable("tooltip." + "gt6ce" + ".machine.recipes.furnace_fuels")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.recipes.furnace_fuels")
 //?}
+
                         .withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
     }
@@ -181,74 +190,90 @@ public final class MachineTooltips {
     // ── Burning box specific lines ──────────────────────────────────────
 
     public static void appendRequiresAirFront(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.air_front")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.air_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.air_front")
 //?}
+
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendRequiresAshesFront(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ashes_front")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ashes_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ashes_front")
 //?}
+
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendRequiresIgnitionFront(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ignite_front")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.requirement.ignite_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.requirement.ignite_front")
 //?}
+
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendNoGuiClickFront(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.nogui.click_front")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.nogui.click_front")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.nogui.click_front")
 //?}
+
                 .withStyle(ChatFormatting.GOLD));
     }
 
     public static void appendHazardFire(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.fire", 4)
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.fire", 4)
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.fire", 4)
 //?}
+
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     public static void appendHazardContactTop(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.contact_top")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.hazard.contact_top")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.hazard.contact_top")
 //?}
+
                 .withStyle(ChatFormatting.DARK_RED));
     }
 
     public static void appendShovelEmpty(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.shovel_empty")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.shovel_empty")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.shovel_empty")
 //?}
+
                 .withStyle(ChatFormatting.GRAY));
     }
 
     public static void appendWrenchFacing(List<Component> tooltip) {
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.wrench_facing")
+/*        tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".machine.tool.wrench_facing")
 *///?} else {
         tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".machine.tool.wrench_facing")
 //?}
+
                 .withStyle(ChatFormatting.GRAY));
     }
 

@@ -1,16 +1,19 @@
 package com.gregtech.gregtech.item;
 import com.gregtech.gregtech.api.material.MaterialPresentation;
 
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.gregtech.gregtech.GregTech;
 //?}
+
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.client.GTToolTooltips;
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.platform.neoforge.smeltery.SmeltingCrucibleEntity;
 *///?} else {
@@ -18,6 +21,7 @@ import com.gregtech.gregtech.block.machine.HopperBlock;
 import com.gregtech.gregtech.block.machine.QueueHopperBlock;
 import com.gregtech.gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
+
 import com.gregtech.gregtech.registry.GTToolItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -40,18 +44,22 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import java.util.UUID;
 //?}
 
+
 /** One registered item per {@link GTToolType} (GT6 {@code gt.metatool.01} split by tool kind). */
 public class GTToolItem extends Item {
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
     private static final UUID ATTACK_DAMAGE_MODIFIER = UUID.fromString("CB3F55D3-645C-4FBC-A695-84CC934974");
     private static final UUID ATTACK_SPEED_MODIFIER = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
 //?}
+
 
     private final GTToolType toolType;
 
@@ -107,11 +115,13 @@ public class GTToolItem extends Item {
             return InteractionResult.PASS;
         }
         BlockPos pos = context.getClickedPos();
+
 //? if >=1.21.1 {
-        /*if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleEntity crucible)) {
+/*        if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleEntity crucible)) {
 *///?} else {
         if (!(context.getLevel().getBlockEntity(pos) instanceof SmeltingCrucibleBlockEntity crucible)) {
 //?}
+
             return InteractionResult.PASS;
         }
         if (context.getLevel().isClientSide()) {
@@ -137,20 +147,25 @@ public class GTToolItem extends Item {
         }
         BlockState state = context.getLevel().getBlockState(context.getClickedPos());
 //? if >=1.21.1 {
-        /*if (state.getBlock() instanceof com.gregtech.gregtech.api.tool.ScrewdriverUseTarget) {
+/*
+        if (state.getBlock() instanceof com.gregtech.gregtech.api.tool.ScrewdriverUseTarget) {
+
 *///?} else {
-        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock) {
+        if (state.getBlock() instanceof HopperBlock || state.getBlock() instanceof QueueHopperBlock
+                || state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock) {
 //?}
             Player player = context.getPlayer();
             InteractionHand hand = context.getHand();
             BlockHitResult hit = new BlockHitResult(
                     context.getClickLocation(), context.getClickedFace(),
                     context.getClickedPos(), context.isInside());
+
 //? if >=1.21.1 {
-            /*return ((com.gregtech.gregtech.api.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);
+/*            return ((com.gregtech.gregtech.api.tool.ScrewdriverUseTarget)state.getBlock()).useScrewdriver(state,context.getLevel(),context.getClickedPos(),player,hand,hit);
 *///?} else {
             return state.use(context.getLevel(), player, hand, hit);
 //?}
+
         }
         return InteractionResult.PASS;
     }
@@ -171,20 +186,24 @@ public class GTToolItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity, int slot, boolean selected) {
+
 //? if >=1.21.1 {
-        /*if (!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
+/*        if (!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
 *///?} else {
         if (!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack);
 //?}
+
         super.inventoryTick(stack, level, entity, slot, selected);
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
     }
 
     @Override
     public boolean canBeDepleted() {
         return true;
 //?}
+
     }
 
     @Override
@@ -239,8 +258,9 @@ public class GTToolItem extends Item {
         return true;
     }
 
+
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){
+/*    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){
         if(!GTToolHelper.isUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;
         return net.minecraft.world.item.component.ItemAttributeModifiers.builder()
           .add(Attributes.ATTACK_DAMAGE,new AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","tool_attack_damage"),GTToolHelper.getCombatDamage(stack),AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND)
@@ -260,15 +280,18 @@ public class GTToolItem extends Item {
                 ATTACK_SPEED_MODIFIER, "GT tool modifier", speedModifier, AttributeModifier.Operation.ADDITION));
         return builder.build();
 //?}
+
     }
 
     @Override
     public String getDescriptionId() {
+
 //? if >=1.21.1 {
-        /*return "item." + "gt6ce" + ".tool." + toolType.id();
+/*        return "item." + "gt6ce" + ".tool." + toolType.id();
 *///?} else {
         return "item." + GregTech.NAMESPACE + ".tool." + toolType.id();
 //?}
+
     }
 
     @Override
@@ -277,20 +300,24 @@ public class GTToolItem extends Item {
             return super.getName(stack);
         }
         GTMaterial head = GTToolHelper.getHead(stack);
+
 //? if >=1.21.1 {
-        /*return Component.translatable("item." + "gt6ce" + ".tool." + toolType.id() + ".named",
+/*        return Component.translatable("item." + "gt6ce" + ".tool." + toolType.id() + ".named",
 *///?} else {
         return Component.translatable("item." + GregTech.NAMESPACE + ".tool." + toolType.id() + ".named",
 //?}
+
                 MaterialPresentation.name(head), Component.translatable(toolType.translationKey()));
     }
 
     @Override
+
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+/*    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 //?}
+
         if (GTToolHelper.isTool(stack)) {
             GTToolTooltips.append(stack, tooltip, flag);
         }

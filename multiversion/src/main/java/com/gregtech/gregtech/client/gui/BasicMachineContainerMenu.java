@@ -3,17 +3,21 @@ package com.gregtech.gregtech.client.gui;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.gregtech.gregtech.network.GTPackets;
 //?}
+
 import com.gregtech.gregtech.network.PacketSyncFluids;
 import com.gregtech.gregtech.registry.GTMenuTypes;
+
 //? if >=1.21.1 {
 /*import net.minecraft.network.RegistryFriendlyByteBuf;
 *///?} else {
 import net.minecraft.network.FriendlyByteBuf;
 //?}
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +26,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -31,6 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.network.PacketDistributor;
 //?}
+
 
 /** Container for basic machine GUI — creates slot layout from RecipeMap counts. */
 public class BasicMachineContainerMenu extends AbstractContainerMenu {
@@ -70,16 +76,18 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     }
 
     /** Client-side constructor used by Forge MenuType factory. */
+
 //? if >=1.21.1 {
-    /*public BasicMachineContainerMenu(int containerId, Inventory playerInv, RegistryFriendlyByteBuf buf) {
+/*    public BasicMachineContainerMenu(int containerId, Inventory playerInv, RegistryFriendlyByteBuf buf) {
 *///?} else {
     public BasicMachineContainerMenu(int containerId, Inventory playerInv, FriendlyByteBuf buf) {
 //?}
+
         super(GTMenuTypes.BASIC_MACHINE.get(), containerId);
         this.blockEntity = null;
         this.viewer = playerInv.player;
         this.machineName = buf != null ? buf.readUtf() : "default";
-        this.recipeMap = MachineRecipeMaps.byMachineName(machineName);
+        this.recipeMap = com.gregtech.gregtech.api.addon.RegisteredMachineIndex.recipeMap(machineName);
         this.progressData = new SimpleContainerData(1);
         addDataSlots(progressData);
         int totalMachineSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount
@@ -95,24 +103,30 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
     }
 
     /** Read fluid tank data from a buffer and apply to SlotFluid instances. */
+
 //? if >=1.21.1 {
-    /*public void readFluidSync(RegistryFriendlyByteBuf buf) {
+/*    public void readFluidSync(RegistryFriendlyByteBuf buf) {
 *///?} else {
     public void readFluidSync(FriendlyByteBuf buf) {
 //?}
+
         int total = recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
         if (total == 0) return;
+
 //? if >=1.21.1 {
-        /*net.neoforged.neoforge.fluids.FluidStack[] fluids = new net.neoforged.neoforge.fluids.FluidStack[total];
+/*        net.neoforged.neoforge.fluids.FluidStack[] fluids = new net.neoforged.neoforge.fluids.FluidStack[total];
 *///?} else {
         net.minecraftforge.fluids.FluidStack[] fluids = new net.minecraftforge.fluids.FluidStack[total];
 //?}
+
         for (int i = 0; i < total; i++) {
+
 //? if >=1.21.1 {
-            /*fluids[i] = net.neoforged.neoforge.fluids.FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+/*            fluids[i] = net.neoforged.neoforge.fluids.FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
 *///?} else {
             fluids[i] = buf.readFluidStack();
 //?}
+
         }
         for (Slot slot : slots) {
             if (slot instanceof SlotFluid sf) {
@@ -126,11 +140,13 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
     // ── Slot grid ─────────────────────────────────────────────────────────
 
+
 //? if >=1.21.1 {
-    /*private void addMachineSlots(net.neoforged.neoforge.items.IItemHandler inv) {
+/*    private void addMachineSlots(net.neoforged.neoforge.items.IItemHandler inv) {
 *///?} else {
     private void addMachineSlots(net.minecraftforge.items.IItemHandler inv) {
 //?}
+
         int inputCount  = recipeMap.mInputItemsCount;
         int outputCount = recipeMap.mOutputItemsCount;
         int totalFluids = recipeMap.mInputFluidCount + recipeMap.mOutputFluidCount;
@@ -139,11 +155,13 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         addGrid(inv,inputCount,outputCount,false,recipeMap.mOutputFluidCount);
     }
 
+
 //? if >=1.21.1 {
-    /*private void addGrid(net.neoforged.neoforge.items.IItemHandler inv,int start,int count,boolean input,int fluids) {
+/*    private void addGrid(net.neoforged.neoforge.items.IItemHandler inv,int start,int count,boolean input,int fluids) {
 *///?} else {
     private void addGrid(net.minecraftforge.items.IItemHandler inv,int start,int count,boolean input,int fluids) {
 //?}
+
         for(int i=0;i<count;i++) {
             var point=com.gregtech.gregtech.api.recipe.MachineGuiLayout.item(input,i,count,fluids);
             addSlot(input?new SlotInput(inv,start+i,point.x(),point.y()):new SlotOutput(inv,start+i,point.x(),point.y()));
@@ -166,11 +184,13 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         }
     }
 
+
 //? if >=1.21.1 {
-    /*private void addProgramSlot(net.neoforged.neoforge.items.IItemHandler handler) {
+/*    private void addProgramSlot(net.neoforged.neoforge.items.IItemHandler handler) {
 *///?} else {
     private void addProgramSlot(net.minecraftforge.items.IItemHandler handler) {
 //?}
+
         programSlot = slots.size();
         addSlot(new SlotItemHandler(handler, 0,
                 com.gregtech.gregtech.content.recipe.AutocraftingRules.SLOT_X,
@@ -218,11 +238,13 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         for (Slot slot : slots) {
             if (!(slot instanceof SlotFluid sf)) continue;
             var current = getTankFluid(sf);
+
 //? if >=1.21.1 {
-            /*if (current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
+/*            if (current.getAmount()!=sf.fluid().getAmount() || !net.neoforged.neoforge.fluids.FluidStack.isSameFluidSameComponents(current,sf.fluid())) {
 *///?} else {
             if (!current.isFluidStackIdentical(sf.fluid())) {
 //?}
+
                 sf.setFluid(current);
                 sendFluidUpdate(new PacketSyncFluids(containerId, slot.index, current));
             }
@@ -231,26 +253,32 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
 
     protected void sendFluidUpdate(PacketSyncFluids packet) {
         if (viewer instanceof ServerPlayer player)
+
 //? if >=1.21.1 {
-            /*PacketDistributor.sendToPlayer(player,packet);
+/*            PacketDistributor.sendToPlayer(player,packet);
 *///?} else {
             GTPackets.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), packet);
 //?}
+
     }
 
+
 //? if >=1.21.1 {
-    /*private net.neoforged.neoforge.fluids.FluidStack getTankFluid(SlotFluid sf) {
+/*    private net.neoforged.neoforge.fluids.FluidStack getTankFluid(SlotFluid sf) {
         if (blockEntity == null) return net.neoforged.neoforge.fluids.FluidStack.EMPTY;
 *///?} else {
     private net.minecraftforge.fluids.FluidStack getTankFluid(SlotFluid sf) {
         if (blockEntity == null) return net.minecraftforge.fluids.FluidStack.EMPTY;
 //?}
+
         int tank = sf.isInput() ? sf.tankIndex() : blockEntity.getTanks() - recipeMap.mOutputFluidCount + sf.tankIndex();
+
 //? if >=1.21.1 {
-        /*if (tank < 0 || tank >= blockEntity.getTanks()) return net.neoforged.neoforge.fluids.FluidStack.EMPTY;
+/*        if (tank < 0 || tank >= blockEntity.getTanks()) return net.neoforged.neoforge.fluids.FluidStack.EMPTY;
 *///?} else {
         if (tank < 0 || tank >= blockEntity.getTanks()) return net.minecraftforge.fluids.FluidStack.EMPTY;
 //?}
+
         return blockEntity.getFluidInTank(tank);
     }
 

@@ -20,6 +20,12 @@ def main():
     parser.add_argument('--baseline', action='store_true', help='Also prove zero gameplay/resource changes during migration')
     args = parser.parse_args()
     manifest = json.loads((ROOT / 'multiversion/migration-manifest.json').read_text())
+    # The frozen migration preceded the isolated public API source set. Current
+    # inventories must include it without rewriting the historical manifest.
+    source_sets = manifest['source_sets'] if args.baseline else ['api', *manifest['source_sets']]
+    resource_sets = manifest.get('resource_source_sets', [])
+    if not args.baseline:
+        resource_sets = ['api', *resource_sets]
     updates_file = ROOT / 'multiversion/migration-test-updates.json'
     updates = json.loads(updates_file.read_text())['updates'] if updates_file.exists() else []
     approved = {(r['source_set'], r['path']): r for r in updates}
@@ -30,7 +36,7 @@ def main():
     for platform, node in manifest['nodes'].items():
         summary[platform] = {}
         native = ROOT / ('src' if platform == 'forge' else 'neoforge/src')
-        for source_set in manifest['source_sets']:
+        for source_set in source_sets:
             expected = {r['path']: r for r in manifest['java']
                         if r['source_set'] == source_set and platform in r['native_signature']}
             generated = ROOT / f'multiversion/versions/{node}/build/generated/stonecutter/{source_set}/java'
@@ -64,7 +70,7 @@ def main():
     for platform, node in manifest['nodes'].items():
         resource_summary[platform] = {}
         native = ROOT / ('src' if platform == 'forge' else 'neoforge/src')
-        for source_set in manifest.get('resource_source_sets', []):
+        for source_set in resource_sets:
             expected = {r['path']: r for r in manifest['resources']
                         if r['source_set'] == source_set and platform in r['native_signature']}
             if not args.baseline:

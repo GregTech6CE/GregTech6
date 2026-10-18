@@ -17,6 +17,13 @@ import java.util.*;
 public final class ExternalOreProcessing {
     private ExternalOreProcessing() {}
     private static final Map<RecipeMap, Set<Recipe>> OWNED = new IdentityHashMap<>();
+
+    /** Rows this adapter currently owns. The datapack overlay excludes them from its baseline. */
+    public static synchronized Set<Recipe> owned() {
+        var all = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        for (var rows : OWNED.values()) all.addAll(rows);
+        return all;
+    }
     /** Distinct from ore-prefix compositions so callers can tell tag-derived ingots, dusts and rods apart. */
     public static final String TAGGED_COMPOSITION_SOURCE = "GT6 common form tags";
     private static volatile Map<Item, ItemComposition> compositions = Map.of();

@@ -121,7 +121,7 @@ GregTech6/
 
 ## Addon 开发
 
-两版提供共享 `GregTechAddon` / `GregTechAddons` 配方生命周期、材料领域与能源合同。用 `:core:addonApiJar` 构建仅供编译的 SDK，Addon 不应再次打包这些类。见 [Addon 接口说明](docs/ADDON_API.zh-CN.md)及[电压等级说明](docs/VOLTAGE_TIERS.md)。API版本1目前支持配方就绪回调，新材料自动注册生命周期尚待完善。
+API 版本 **7** 对应模组版本 **0.7.0**，公开材料、配方、配方机器、行为机器和流体燃料发电机入口。用 `:multiversion:1.20.1-forge:addonSdkJar` 或 `:multiversion:1.21.1-neoforge:addonSdkJar` 构建对应加载器的只供编译 SDK；`:core:addonApiJar` 单独保留纯 Java API。SDK 不包含内部实现类，Addon 不应再次打包这些类。见 [Addon 接口说明](docs/ADDON_API.zh-CN.md)、[仅依赖 SDK 的示例](examples/addon-sample/README.md)及[电压等级说明](docs/VOLTAGE_TIERS.md)。
 
 ## 许可证
 

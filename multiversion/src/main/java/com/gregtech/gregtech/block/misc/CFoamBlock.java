@@ -1,18 +1,17 @@
 package com.gregtech.gregtech.block.misc;
 
-import com.gregtech.gregtech.blockentity.CFoamBlockEntity;
 import com.gregtech.gregtech.registry.GTBlockEntities;
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.registry.GTConstructionBlocks;
 *///?} else {
 import com.gregtech.gregtech.registry.GTDecorBlocks;
 //?}
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -49,17 +48,6 @@ public class CFoamBlock extends ColoredConstructionBlock {
         entity.causeFallDamage(fallDistance, 0.5f, level.damageSources().fall());
     }
 
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return fresh ? new CFoamBlockEntity(pos, state) : null;
-    }
-
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (!fresh || level.isClientSide) return null;
-        return (l, p, s, be) -> {
-            if (be instanceof CFoamBlockEntity foam) foam.tick();
-        };
-    }
-
     /** GT6's {@code removeFoam}: wet foam is scraped away, only the hardened block drops itself. */
     @Override
     public List<net.minecraft.world.item.ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
@@ -69,11 +57,13 @@ public class CFoamBlock extends ColoredConstructionBlock {
 
     /** The hardened block this foam turns into (GT6's {@code BlocksGT.CFoam}). */
     public static Block hardened() {
+
 //? if >=1.21.1 {
-        /*return GTConstructionBlocks.CFOAM.get();
+/*        return GTConstructionBlocks.CFOAM.get();
 *///?} else {
         return GTDecorBlocks.CFOAM.get();
 //?}
+
     }
 
     /** True when this block is the wet variant the port tracks with its block entity. */

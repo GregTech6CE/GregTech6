@@ -91,7 +91,9 @@ minecraft {
             mods {
                 "${mod_id}" {
                     source sourceSets.main
+                    source sourceSets.api
                     source project(':core').sourceSets.main
+                    source project(':core').sourceSets.api
                     source sourceSets.bootstrapGameTest
                 }
             }
@@ -202,7 +204,7 @@ repositories {
 dependencies {
     if (project.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Optional local development path, matching NeoForge; production builds keep the core archive.
-        implementation files(project(':core').sourceSets.main.output)
+        implementation files(project(':core').sourceSets.main.output, project(':core').sourceSets.api.output)
     } else {
         implementation project(':core')
     }
@@ -296,6 +298,7 @@ reobf { productionSmokeJar {} }
 // The probe is a separate jar, so those parents must be provided as rename libraries.
 tasks.named('reobfProductionSmokeJar').configure {
     libraries.from(sourceSets.main.output.classesDirs)
+    libraries.from(sourceSets.api.output.classesDirs)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -326,6 +329,7 @@ tasks.named('processResources', ProcessResources).configure {
 tasks.named('jar', Jar).configure {
     // ForgeGradle rewrites every class in this jar, including pure Java constant pools.
     // Keep core out of that pass and add its untouched output in distributionJar below.
+    from sourceSets.api.output
     destinationDirectory = layout.buildDirectory.dir('forge-intermediates')
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
@@ -361,6 +365,7 @@ def distributionJar = tasks.register('distributionJar', Jar) {
         exclude 'META-INF/MANIFEST.MF'
     }
     from(project(':core').sourceSets.main.output)
+    from(project(':core').sourceSets.api.output)
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true

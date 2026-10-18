@@ -65,5 +65,19 @@ class NativeLayoutTests(unittest.TestCase):
         foreign = self.repo / 'reference/src/main/java'
         self.assertEqual(native_path(foreign), foreign)
 
+    def test_isolated_api_source_set_is_projected_and_reconciled(self):
+        self.seed()
+        for platform, node in NODES.items():
+            api = self.repo / f'multiversion/versions/{node}/build/generated/stonecutter/api/java/PublicApi.java'
+            api.parent.mkdir(parents=True, exist_ok=True)
+            api.write_text('public interface PublicApi { int version(); }\n')
+        view = prepare(self.repo)
+        self.assertEqual(native_path(self.repo/'src/api/java'), view/'forge/src/api/java')
+        for platform in NODES:
+            (view/f'{platform}/src/api/java/PublicApi.java').write_text(
+                'public interface PublicApi { int version(); String name(); }\n')
+        self.assertEqual(reconcile(self.repo), (2, 1))
+        self.assertIn('String name()', (self.repo/'multiversion/src/api/java/PublicApi.java').read_text())
+
 
 if __name__ == '__main__': unittest.main()

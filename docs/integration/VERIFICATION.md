@@ -1,5 +1,13 @@
 # 验证账本
 
+## 2026-10-18 / 上游 PR #29–#45 附属 API 栈
+
+双版主代码、独立 API、bootstrapGameTest、productionSmoke 和仅 SDK 的附属样例编译通过；API 版本合约 84 项、7 项移除期限检查通过。core SDK 49 个公共 class，两版 SDK 各另含 19 个原生公共 class；三个 SDK 的当前字节码、API 闭合、ZIP CRC 与许可证验包通过。41 个隔离纯 Java 核心合约进程全通过，内置材料物性摘要与 56,085 个物品 ID 保持。
+
+完整 Stonecutter 源集／工具投影、2758 Java 源码边界与严格双语通过；既有中英文值未改，新补 7 键。最终合并验证 3m32s，其中一次 NeoForge 21.1.243 开发服务端运行 7 个选定命名空间 **32 个必需 GameTest 全通过**，测试本身 5.891s；覆盖新增机器、命名材料、燃料、小数信号、动态配方和 Furnace 覆盖修复。最后 93 文件空白清理与已编译投影的代码／字面量签名保持；差异格式检查通过。
+
+Forge 游戏运行、客户端 JEI/EMI 实时刷新与视觉、完整数据包重载性能测试、真实世界重启／旧存档、生存全链、正式模组 JAR 构建及安装均未验证；GitHub Actions 未作为本地结论。见[逐 PR 范围](verification/main-addon-stack-20261018.md)、[验证回执](verification/main-addon-stack-validation-20261018.json)、[来源及文件摘要](verification/main-addon-stack-provenance-20261018.json)。
+
 ## 2026-10-18 / GT6CE 内容、资源和 EMI 归属名称
 
 源码／资源迁移检查、两版主代码与探针编译、四组核心合约、54 项工具定向测试通过；严格双语保留原始来源文本，451 份 REMI 分组资源与生成器一致。材料摘要先因身份字段变化失败，经未修改的 HEAD 观察器隔离对比后确认仅翻译键、归属与身份存在性字段改变，再更新期望并通过；见[材料差分回执](verification/gt6ce-material-differential-20261018.json)。

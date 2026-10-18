@@ -13,7 +13,7 @@ tasks.register('verifyStonecutterSources', Exec) {
     group = 'verification'
     description = 'Check the complete current native inventory and tooling projections.'
     for (def version : ['1.20.1-forge', '1.21.1-neoforge'])
-        for (def suffix : ['', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
+        for (def suffix : ['', 'Api', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
             dependsOn ":multiversion:${version}:stonecutterGenerate${suffix}"
     workingDir rootProject.projectDir
     commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
@@ -38,14 +38,15 @@ tasks.register('verifyStonecutterMigration', Exec) {
 tasks.register('prepareNativeTools', Exec) {
     group = 'build setup'
     for (def node : ['1.20.1-forge', '1.21.1-neoforge'])
-        for (def suffix : ['', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
+        for (def suffix : ['', 'Api', 'Test', 'BootstrapGameTest', 'ProductionSmoke'])
             dependsOn ":multiversion:${node}:stonecutterGenerate${suffix}"
     workingDir rootProject.projectDir
     commandLine providers.gradleProperty('pythonExecutable').getOrElse('python'), '-X', 'utf8',
             'tools/native_tool.py', '--prepare'
 }
 // Backward-compatible root CLI entries delegate to the Forge node.
-['compileJava', 'processResources', 'distributionJar', 'productionSmokeJar', 'runClient', 'runServer',
+['compileJava', 'processResources', 'distributionJar', 'productionSmokeJar', 'addonSdkJar',
+ 'compileAddonSample', 'addonApiClosureCheck', 'runClient', 'runServer',
  'runGameTestServer', 'runData', 'genIntellijRuns'].each { entry ->
     tasks.register(entry) { dependsOn ":multiversion:1.20.1-forge:${entry}" }
 }

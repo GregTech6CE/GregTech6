@@ -32,14 +32,17 @@ public final class PocketToolItem extends GTToolItem {
   var player=context.getPlayer();var level=context.getLevel();
   if(player!=null&&player.isShiftKeyDown()&&GTToolHelper.isUsable(stack)&&player.mayBuild()){
    var pos=context.getClickedPos();var key=net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock());
+   if(activeType()==GTToolType.SCREWDRIVER&&level.getBlockState(pos).getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock)return InteractionResult.PASS;
    if(!level.mayInteract(player,pos)||level.getBlockEntity(pos)!=null&&!key.getNamespace().equals("gt6ce"))return InteractionResult.PASS;
    if(!level.isClientSide){
     int index=java.util.Arrays.asList(MODES).indexOf(toolType());var next=new ItemStack(GTToolItems.get(MODES[(index+1)%MODES.length]));
+
 //? if >=1.21.1 {
-    /*next.applyComponents(stack.getComponents());com.gregtech.gregtech.platform.neoforge.StackCustomData.update(next,t->t.remove("gt.material_enchantments.v1"));GTToolEnchantments.apply(next,level.registryAccess());next.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,((GTToolItem)next.getItem()).getDefaultAttributeModifiers(next).withTooltip(false));
+/*    next.applyComponents(stack.getComponents());com.gregtech.gregtech.platform.neoforge.StackCustomData.update(next,t->t.remove("gt.material_enchantments.v1"));GTToolEnchantments.apply(next,level.registryAccess());next.set(net.minecraft.core.component.DataComponents.ATTRIBUTE_MODIFIERS,((GTToolItem)next.getItem()).getDefaultAttributeModifiers(next).withTooltip(false));
 *///?} else {
     next.setTag(stack.getTag().copy());next.removeTagKey("gt.material_enchantments.v1");GTToolEnchantments.apply(next);
 //?}
+
     player.setItemInHand(context.getHand(),next);player.getInventory().setChanged();
    }
    return InteractionResult.sidedSuccess(level.isClientSide);
@@ -48,9 +51,9 @@ public final class PocketToolItem extends GTToolItem {
  }
  @Override public InteractionResult useOn(UseOnContext context){if(activeType()==GTToolType.SAW)return com.gregtech.gregtech.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context);if(activeType()==GTToolType.SCREWDRIVER){var state=context.getLevel().getBlockState(context.getClickedPos());
 //? if >=1.21.1 {
-    /*if(state.getBlock() instanceof com.gregtech.gregtech.block.machine.HopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.useWithoutItem(context.getLevel(),context.getPlayer(),hit);}}
+/*    if(state.getBlock() instanceof com.gregtech.gregtech.api.tool.ScrewdriverUseTarget target){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return target.useScrewdriver(state,context.getLevel(),context.getClickedPos(),context.getPlayer(),context.getHand(),hit);}}
 *///?} else {
-    if(state.getBlock() instanceof com.gregtech.gregtech.block.machine.HopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.machine.QueueHopperBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
+    if(state.getBlock() instanceof com.gregtech.gregtech.block.machine.HopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.machine.QueueHopperBlock||state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock){var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());return state.use(context.getLevel(),context.getPlayer(),context.getHand(),hit);}}
 //?}
    return super.useOn(context);}
  @Override public net.minecraft.world.InteractionResult interactLivingEntity(ItemStack stack,net.minecraft.world.entity.player.Player player,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.InteractionHand hand){
@@ -73,9 +76,11 @@ public final class PocketToolItem extends GTToolItem {
   default -> false;};}
  @Override public float getDestroySpeed(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return GTToolHelper.isUsable(stack)&&specialHarvest(state)?Math.max(Float.MIN_NORMAL,GTToolHelper.getHead(stack).getToolSpeed()*toolType().speedMultiplier()*(activeType()==GTToolType.FILE?3:1)):super.getDestroySpeed(stack,state);}
  @Override public boolean isCorrectToolForDrops(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return GTToolHelper.isUsable(stack)&&specialHarvest(state)||super.isCorrectToolForDrops(stack,state);}
+
 //? if >=1.21.1 {
- /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
+/* @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
 *///?} else {
  @Override public void appendHoverText(ItemStack stack,net.minecraft.world.level.Level context,java.util.List<net.minecraft.network.chat.Component> tooltip,TooltipFlag flag){super.appendHoverText(stack,context,tooltip,flag);tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.pocket.switch"));}
 //?}
+
 }

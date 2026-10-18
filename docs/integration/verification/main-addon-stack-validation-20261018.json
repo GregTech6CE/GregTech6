@@ -1,0 +1,1070 @@
+{
+  "schema_version": 1,
+  "scope": "PR29–45 functional adoption onto experiment/stonecutter, gt6ce namespace preserved",
+  "upstream_commit": "c899462a616100a1007f9dec56372ea6489c9f0a",
+  "base_head": "a36f35f251fc0f36c13d4e2953082d4c619ea008",
+  "mod_version": "0.7.0",
+  "api_version": 7,
+  "dual_main_and_probe_compile": "passed",
+  "build_log": {
+    "path": "work/main-pr-sync-20261018/verify-native-runtime3.log",
+    "sha256": "0bb098db751cb16984c1f1c0318561cc3b3714e49ca21b094cea67dceb2684ed",
+    "exit_code": 0,
+    "elapsed": "3m32s",
+    "tail": [
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: [+                               ]",
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++        ]",
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++++++++++++++++++++++++++]",
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: ========= 32 GAME TESTS COMPLETE IN 5.891 s ======================",
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: All 32 required tests passed :)",
+      "[23:19:08] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================",
+      "[23:19:08] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server",
+      "[23:19:08] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players",
+      "[23:19:08] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds",
+      "[23:19:09] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved",
+      "[23:19:10] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved",
+      "[23:19:10] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down",
+      "",
+      "Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.",
+      "",
+      "You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.",
+      "",
+      "For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.",
+      "",
+      "BUILD SUCCESSFUL in 3m 32s",
+      "56 actionable tasks: 22 executed, 34 up-to-date"
+    ]
+  },
+  "jdk_toolchains": {
+    "forge": 17,
+    "neoforge": 21,
+    "core": 17
+  },
+  "core_contracts": {
+    "java": "C:/Program Files/Java/jdk-17/bin/java.exe",
+    "source_sets": {
+      "api": 25,
+      "main": 484,
+      "test": 27
+    },
+    "cases": [
+      {
+        "case": "ThermalBehaviorContracts",
+        "exit_code": 0,
+        "elapsed_seconds": 0.09,
+        "output": "Thermal behavior contracts passed: 53 assertions in 7 thermal and 2 mixing groups; immutable integer Kelvin\r\n",
+        "error": ""
+      },
+      {
+        "case": "CoreBehaviorContracts",
+        "exit_code": 0,
+        "elapsed_seconds": 0.44,
+        "output": "Original fluid display checks passed: 29\r\nCore behavior contracts passed: 2809 assertions in 33 groups (Java 17; no game dependencies)\r\n",
+        "error": ""
+      },
+      {
+        "case": "MachineRecipeOverlayContracts",
+        "exit_code": 0,
+        "elapsed_seconds": 0.12,
+        "output": "machine recipe overlay passed 47\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_kind",
+        "exit_code": 0,
+        "elapsed_seconds": 0.09,
+        "output": "kind passed 17\r\n",
+        "error": ""
+      },
+      {
+        "case": "MachineSpecBehaviorContracts",
+        "exit_code": 0,
+        "elapsed_seconds": 0.78,
+        "output": "Machine spec behavior contracts passed: 8274 assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_duplicate",
+        "exit_code": 0,
+        "elapsed_seconds": 0.22,
+        "output": "duplicate passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_part",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "part passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_map",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "map passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_controller",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "controller passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "MaterialBehaviorContracts",
+        "exit_code": 0,
+        "elapsed_seconds": 1.28,
+        "output": "Source wood fixtures passed: 110 MT.woodnormal rows; 1212 assertions\r\nMaterial behavior contracts passed: 7959 assertions; 1160 materials, 1105 positive IDs, 1523 name entries, 132 prefixes, 137 reactions\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_overlap",
+        "exit_code": 0,
+        "elapsed_seconds": 0.08,
+        "output": "overlap passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_energy",
+        "exit_code": 0,
+        "elapsed_seconds": 0.31,
+        "output": "energy passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_bounds",
+        "exit_code": 0,
+        "elapsed_seconds": 0.09,
+        "output": "bounds passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_service",
+        "exit_code": 0,
+        "elapsed_seconds": 0.23,
+        "output": "service passed 6\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_benergy",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "benergy passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_factory",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "factory passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_share",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "share passed 8\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_bconflict",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "bconflict passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_bslots",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "bslots passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_blayout",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "blayout passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelok",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "fuelok passed 6\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelmap",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "fuelmap passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelenergy",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "fuelenergy passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelstruct",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "fuelstruct passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelname",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "fuelname passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelbounds",
+        "exit_code": 0,
+        "elapsed_seconds": 0.08,
+        "output": "fuelbounds passed 7\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMachineContracts_fuelmachine",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "fuelmachine passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_name",
+        "exit_code": 0,
+        "elapsed_seconds": 0.12,
+        "output": "name passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_id",
+        "exit_code": 0,
+        "elapsed_seconds": 0.16,
+        "output": "id passed 4\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_addons",
+        "exit_code": 0,
+        "elapsed_seconds": 0.2,
+        "output": "addons passed 3\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_range",
+        "exit_code": 0,
+        "elapsed_seconds": 0.19,
+        "output": "range passed 2\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_service",
+        "exit_code": 0,
+        "elapsed_seconds": 0.42,
+        "output": "ammonium nitrate items=6 iron automatic items=96\r\nservice passed 23\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_form",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "form passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_invalid",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "invalid passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_mismatch",
+        "exit_code": 0,
+        "elapsed_seconds": 0.14,
+        "output": "mismatch passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_casefold",
+        "exit_code": 0,
+        "elapsed_seconds": 0.17,
+        "output": "casefold passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_late",
+        "exit_code": 0,
+        "elapsed_seconds": 0.34,
+        "output": "late passed 4\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_corecase",
+        "exit_code": 0,
+        "elapsed_seconds": 0.16,
+        "output": "corecase passed 1\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_order",
+        "exit_code": 0,
+        "elapsed_seconds": 0.16,
+        "output": "order passed 2\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_named",
+        "exit_code": 0,
+        "elapsed_seconds": 0.25,
+        "output": "named passed 5\r\n",
+        "error": ""
+      },
+      {
+        "case": "AddonMaterialContracts_scale",
+        "exit_code": 0,
+        "elapsed_seconds": 0.5,
+        "output": "scale dustMaterials=1000 metalMaterials=1000 dustItems=6000 metalItems=41000 coreItems=56085 initMs=129 itemListMs=200 heapMb=6\r\nscale passed 0\r\n",
+        "error": ""
+      }
+    ],
+    "passed": 41,
+    "failed": 0
+  },
+  "api_version_contract": {
+    "assertions": 84,
+    "scheduled_removals": 7,
+    "status": "passed",
+    "first_log": "work/main-pr-sync-20261018/compile-sdk.log"
+  },
+  "sdk_packaging": [
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\build\\libs\\gt6ce-addon-api-0.7.0.jar",
+      "loader": "core",
+      "bytes": 74797,
+      "sha256": "7a8306878825ad181a5d20808f857b8282ace32e487ce0136323db2b14bbf533",
+      "core_api_classes": 49,
+      "platform_api_classes": 0,
+      "shared_classes": 49,
+      "api_closure_checked": true,
+      "zip_crc_checked": true,
+      "compile_only": true,
+      "external_addon_runtime_verified": false
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.20.1-forge\\build\\addon-sdk\\gt6ce-addon-sdk-1.20.1-forge-0.7.0.jar",
+      "loader": "forge",
+      "bytes": 90060,
+      "sha256": "0db1de0f3282a7ab8f06a7906c570b05a64a08dcc7dc1d8a67057e5b92a5ef51",
+      "core_api_classes": 49,
+      "platform_api_classes": 19,
+      "shared_classes": 49,
+      "api_closure_checked": true,
+      "zip_crc_checked": true,
+      "compile_only": true,
+      "external_addon_runtime_verified": false
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\addon-sdk\\gt6ce-addon-sdk-1.21.1-neoforge-0.7.0.jar",
+      "loader": "neoforge",
+      "bytes": 90141,
+      "sha256": "d8992588a19dd285115965f78a4ddd89e781497b84178621bf76f450a81a24fb",
+      "core_api_classes": 49,
+      "platform_api_classes": 19,
+      "shared_classes": 49,
+      "api_closure_checked": true,
+      "zip_crc_checked": true,
+      "compile_only": true,
+      "external_addon_runtime_verified": false
+    }
+  ],
+  "native_source_inventory": {
+    "status": "passed",
+    "baseline_commit": null,
+    "mode": "current-inventory",
+    "tooling_java_checked": 2735,
+    "approved_test_output_updates": 0,
+    "source_sets": {
+      "forge": {
+        "api": 13,
+        "bootstrapGameTest": 334,
+        "main": 1082,
+        "productionSmoke": 19,
+        "test": 10
+      },
+      "neoforge": {
+        "api": 13,
+        "bootstrapGameTest": 104,
+        "main": 1141,
+        "productionSmoke": 19,
+        "test": 0
+      }
+    },
+    "resources": {
+      "forge": {
+        "api": 0,
+        "bootstrapGameTest": 64,
+        "generated": 0,
+        "main": 7479,
+        "productionSmoke": 0,
+        "test": 0
+      },
+      "neoforge": {
+        "api": 0,
+        "bootstrapGameTest": 52,
+        "generated": 0,
+        "main": 6651,
+        "productionSmoke": 0,
+        "test": 0
+      }
+    },
+    "failures": []
+  },
+  "source_policy": {
+    "status": "passed",
+    "java_sources": 2758,
+    "dynamic_calls_requiring_catalog_or_runtime_checks": 470,
+    "literal_language_calls": 860,
+    "scope": "Code boundaries, exact-source Chinese, pinned English declarations, encoding/format parity and literal call-site keys/arity; dynamic registry names require the separate installed-client probe. Not gameplay acceptance.",
+    "seconds": 11.841
+  },
+  "language": {
+    "changes": {
+      "changed": 0,
+      "missing": 0,
+      "unexpected": 0
+    },
+    "chinese_keys": 141739,
+    "derived_emi_headings": 316,
+    "english": {
+      "exact_original_declarations": 12883,
+      "formatted_keys": 396,
+      "intentional_empty_tooltips": 679,
+      "keys": 15912,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3086,
+    "native_aliases": 12704,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "game_test": {
+    "loader": "neoforge",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.243",
+    "environment": "development dedicated GameTest server, optional addon_sample enabled",
+    "passed": 32,
+    "failed": 0,
+    "test_elapsed_seconds": 5.891,
+    "selected_tests": [
+      {
+        "namespace": "gregtech_card11_sample",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AddonSampleMachineTests.java",
+        "methods": [
+          "builtInIdsStayInGregtechAndViewersSeeTheSample",
+          "samplePressConsumesEuAndEmitsNugget",
+          "largeSamplePressFormsAndMovesItemsThroughPorts",
+          "builtInSaveKeepsItemsEnergyAndRecordedWork"
+        ]
+      },
+      {
+        "namespace": "gt6ce_addon_stack",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\AddonStackIntegrationTests.java",
+        "methods": [
+          "furnaceOverlayKeepsDeletesAndCustomRows"
+        ]
+      },
+      {
+        "namespace": "gregtech_card16_behavior",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\BehaviorMachineTests.java",
+        "methods": [
+          "irrigatorRegistersOutsideTheRecipeCatalog",
+          "irrigatorWatersFarmlandAndObeysTheToggle",
+          "pipesFollowSlotRoles",
+          "restartKeepsInventoryFluidEnergyToggleAndState"
+        ]
+      },
+      {
+        "namespace": "gregtech_dynamic_recipes",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\DynamicRecipeProviderTests.java",
+        "methods": [
+          "laterProviderRunsOnlyWhenTheEarlierOneReturnsNull",
+          "anEarlierResultSkipsLaterProviders",
+          "aStaticRowIsFoundBeforeAnyProvider"
+        ]
+      },
+      {
+        "namespace": "gregtech_card17_fuel",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\FuelGeneratorTests.java",
+        "methods": [
+          "sampleFuelRegistersAndJoinsTheViewers",
+          "engineBurnsAFullChargeAndFeedsTheFront",
+          "turbineWaitsForStructureAndFeedsFourBehind",
+          "restartKeepsFuelBufferAndStructure"
+        ]
+      },
+      {
+        "namespace": "gregtech_card15",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\MaterialIdentitySaveTests.java",
+        "methods": [
+          "namesRoundTripAndOldIdsStillRead",
+          "meltAddonIngotAndPourIt",
+          "scanAddonMaterialAndReplicateNamedIron",
+          "builtinTooltipFlagsMatchTheOldRanges"
+        ]
+      },
+      {
+        "namespace": "gregtech_signal_wire",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SignalWireAddonTests.java",
+        "methods": [
+          "vanillaRedstoneBlockStillFeedsTheWire",
+          "vanillaStoneConductsStrongPower",
+          "fractionalSourceEntersAndPropagates",
+          "outOfRangeSourceIsClamped",
+          "receiverBlockEntityIsNotASource",
+          "taggedBlockIsNotASource"
+        ]
+      },
+      {
+        "namespace": "gregtech_signal_wire",
+        "source": "multiversion\\versions\\1.21.1-neoforge\\build\\generated\\stonecutter\\bootstrapGameTest\\java\\com\\gregtech\\gregtech\\gametest\\SignalWireTests.java",
+        "methods": [
+          "signalSourceDirectionsComparatorAndLight",
+          "originalFractionalRangeAndMixedCable",
+          "loopUnlatchesAndCutSeparatesNetwork",
+          "modesPersistAndControlCannotMutateRemovedWire",
+          "reloadedLampClearsStaleBlockState",
+          "allSixCutterFacesAndRecipeRoutes"
+        ]
+      }
+    ],
+    "world": "multiversion/versions/1.21.1-neoforge/build/addon-stack-gametest-20261018/world",
+    "full_suite": false
+  },
+  "post_validation_whitespace_parity": {
+    "checked": 93,
+    "failures": [],
+    "files": [
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonEnergy.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonFluids.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonItems.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonLoader.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonPlatform.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonRecipes.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTool.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/AddonTools.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorMachineContributor.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/BehaviorState.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/EnergyBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehavior.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/api/java/com/gregtech/gregtech/api/addon/platform/MachineBehaviorContext.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AddonSampleMachineTests.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AddonSampleMachineTests.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorMachineTests.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/BehaviorMachineTests.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FuelGeneratorTests.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FuelGeneratorTests.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/addon/AddonMachineRuntime.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/addon/BehaviorMachineHosts.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/addon/RegisteredMachineIndex.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/BasicMachineSpec.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/machine/BasicMachineSpec.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/material/StoredMaterial.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/material/StoredMaterial.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/MachineGuiLayout.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/recipe/MachineGuiLayout.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/block/machine/BehaviorMachineBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/block/machine/FuelGeneratorBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/CFoamBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/block/misc/CFoamBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/BehaviorMachineBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelGeneratorBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/FuelTurbineBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/LargeRecipeMachineTooltips.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/LargeRecipeMachineTooltips.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/MachineBlockClientModels.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineRecipeClient.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/MachineRecipeClient.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/MachineTooltips.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineContainerMenu.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineContainerMenu.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineScreen.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineScreen.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineMenu.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/gui/BehaviorMachineScreen.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/compat/CompatRecipes.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/compat/CompatRecipes.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineDefinitions.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineDefinitions.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineLayouts.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineLayouts.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ExternalOreProcessing.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/content/recipe/ExternalOreProcessing.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/emi/GregTechEMIPlugin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/emi/GregTechEMIPlugin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/internal/addon/AddonEnergyAdapter.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/internal/addon/AddonLoaderServices.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/internal/addon/AddonPlatformServices.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/item/ElectricToolItem.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/item/ElectricToolItem.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorDataStorage.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorDataStorage.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/GregTechJEIPlugin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/jei/GregTechJEIPlugin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/RecipeMachines.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/jei/RecipeMachines.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/loaders/b/OriginCreativeContents.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/loaders/b/OriginCreativeContents.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/platform/Mc.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/platform/Mc.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/recipe/MachineDatapackRecipe.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTAxles.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/GTAxles.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWires.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/GTWires.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleContentsNbt.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleContentsNbt.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Materials.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Materials.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MultiTileEntities.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MultiTileEntities.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/CustomPayloadLimitMixin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/mixin/CustomPayloadLimitMixin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/LoginQueryPayloadMixin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/mixin/LoginQueryPayloadMixin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameDecoderMixin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameDecoderMixin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameEncoderMixin.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameEncoderMixin.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/AddonMachineRegistration.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/AddonMachineRegistration.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/BehaviorMachineRegistration.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/BehaviorMachineRegistration.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/FuelGeneratorRegistration.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/FuelGeneratorRegistration.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTBasicMachines.java",
+        "prior_compiled_projection": "build/native-tools/forge/src/main/java/com/gregtech/gregtech/registry/GTBasicMachines.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/EngineMaterialTooltips.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/client/EngineMaterialTooltips.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BehaviorMachineRegistration.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BehaviorMachineRegistration.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/FuelGeneratorRegistration.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/FuelGeneratorRegistration.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmeltingCrucibleEntity.java",
+        "code_and_literals_unchanged": true
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/recipe/NeoRecipeSerializers.java",
+        "prior_compiled_projection": "build/native-tools/neoforge/src/main/java/com/gregtech/gregtech/recipe/NeoRecipeSerializers.java",
+        "code_and_literals_unchanged": true
+      }
+    ]
+  },
+  "not_verified": [
+    "Forge game execution",
+    "client JEI/EMI live reload and visual rendering",
+    "full datapack overlay benchmark/reload GameTest",
+    "full survival progression",
+    "actual saved-world restart/old-world migration",
+    "production mod jar build or installed-client execution",
+    "GitHub Actions result after push"
+  ],
+  "post_validation_sample_json_cleanup": {
+    "file_count": 26,
+    "only_final_blank_lines_removed": true,
+    "parsed_json_unchanged": true,
+    "paths": [
+      "examples/addon-sample/forge/resources/assets/addon_sample/blockstates/large_sample_press.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/blockstates/sample_press.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/item/large_sample_press.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/item/sample_press.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/irrigator.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/irrigator_active.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/irrigator_running.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress_active.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress_running.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/samplepress.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/samplepress_active.json",
+      "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/samplepress_running.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/blockstates/large_sample_press.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/blockstates/sample_press.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/item/large_sample_press.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/item/sample_press.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/irrigator.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/irrigator_active.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/irrigator_running.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress_active.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/largesamplepress_running.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/samplepress.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/samplepress_active.json",
+      "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/samplepress_running.json"
+    ]
+  }
+}

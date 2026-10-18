@@ -97,7 +97,7 @@ try {
             foreach ($platform in @('forge', 'neoforge')) {
                 $platformBuild = if ($platform -eq 'forge') { 'multiversion/versions/1.20.1-forge/build' } else { 'multiversion/versions/1.21.1-neoforge/build' }
                 $jarName = $jarNames[$platform]
-                & python 'tools/integration/launch_production_smoke.py' --platform $platform --minecraft-root $production.minecraft_root --version $production.versions.$platform --java $production.java --jar "$platformBuild/libs/$jarName" --probe "$platformBuild/production-probe/gregtech-delivery-probe-0.0.0.jar" --output (Join-Path $logDirectory ($platform + '-production.json'))
+                & python 'tools/integration/launch_production_smoke.py' --platform $platform --minecraft-root $production.minecraft_root --version $production.versions.$platform --java $production.java --jar "$platformBuild/libs/$jarName" --probe "$platformBuild/production-probe/gregtech-delivery-probe-$($modProperties.mod_version).jar" --output (Join-Path $logDirectory ($platform + '-production.json'))
                 if ($LASTEXITCODE -ne 0) { throw "$platform distribution client did not reach the title screen." }
             }
         }

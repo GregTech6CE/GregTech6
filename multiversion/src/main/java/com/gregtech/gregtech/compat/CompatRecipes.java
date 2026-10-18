@@ -9,16 +9,19 @@ import com.gregtech.gregtech.content.recipe.DyeProcessingRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.registry.GTItems;
 import com.mojang.logging.LogUtils;
+
 //? if >=1.21.1 {
 /*import net.minecraft.core.registries.BuiltInRegistries;
 *///?} else {
 //?}
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
 //? if >=1.21.1 {
 /*import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 //?}
+
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -48,6 +52,13 @@ public final class CompatRecipes {
     private CompatRecipes() {}
 
     public static synchronized int added() { return added; }
+
+    /** Rows this pass currently owns. The datapack overlay excludes them from its baseline. */
+    public static synchronized Set<Recipe> owned() {
+        var all = Collections.newSetFromMap(new IdentityHashMap<Recipe, Boolean>());
+        for (var rows : OWNED.values()) all.addAll(rows);
+        return all;
+    }
     public static synchronized int errors() { return errors; }
     public static synchronized List<String> problems() { return List.copyOf(PROBLEMS); }
 
@@ -185,8 +196,9 @@ public final class CompatRecipes {
     }
 
     private static List<ItemStack> resolve(CompatSpecs.Stack stack, String source) {
+
 //? if >=1.21.1 {
-        /*return switch (stack) {
+/*        return switch (stack) {
             case CompatSpecs.Stack.Item item -> {
                 var value = BuiltInRegistries.ITEM.get(ResourceLocation.parse(item.id()));
                 if (value == null || value == Items.AIR) {
@@ -201,9 +213,11 @@ public final class CompatRecipes {
                 problem(source, "missing item " + item.id());
                 return List.of();
 //?}
+
             }
+
 //? if >=1.21.1 {
-            /*case CompatSpecs.Stack.Tag tag -> tagItems(tag.neoTag(), tag.count(), source);
+/*            case CompatSpecs.Stack.Tag tag -> tagItems(tag.neoTag(), tag.count(), source);
             case CompatSpecs.Stack.Form form -> {
                 var prefix = PrefixRegistry.byName(form.prefix());
                 var material = GTMaterialRegistry.get(form.material());
@@ -228,9 +242,11 @@ public final class CompatRecipes {
                 problem(source, "missing form " + form.prefix() + "/" + form.material());
                 return List.of();
 //?}
+
             }
+
 //? if >=1.21.1 {
-        /*};
+/*        };
 *///?} else {
             var resolved = GTItems.getStack(prefix, material, form.count());
             if (resolved.isEmpty()) {
@@ -241,27 +257,32 @@ public final class CompatRecipes {
         }
         throw new IllegalStateException(stack.getClass().getName());
 //?}
+
     }
 
     private static List<ItemStack> tagItems(String tag, int count, String source) {
         var id = ResourceLocation.tryParse(tag);
+
 //? if >=1.21.1 {
-        /*if (id == null) {
+/*        if (id == null) {
 *///?} else {
         var manager = ForgeRegistries.ITEMS.tags();
         if (id == null || manager == null) {
 //?}
+
             problem(source, "tag " + tag + " is not bound");
             return List.of();
         }
         var items = new ArrayList<ItemStack>();
         var seen = Collections.newSetFromMap(new IdentityHashMap<Item, Boolean>());
+
 //? if >=1.21.1 {
-        /*BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, id)).forEach(holder -> {
+/*        BuiltInRegistries.ITEM.getTagOrEmpty(TagKey.create(Registries.ITEM, id)).forEach(holder -> {
             var item = holder.value();
 *///?} else {
         manager.getTag(TagKey.create(Registries.ITEM, id)).forEach(item -> {
 //?}
+
             if (item != Items.AIR && seen.add(item)) items.add(new ItemStack(item, count));
         });
         if (items.isEmpty()) problem(source, "empty tag " + tag);

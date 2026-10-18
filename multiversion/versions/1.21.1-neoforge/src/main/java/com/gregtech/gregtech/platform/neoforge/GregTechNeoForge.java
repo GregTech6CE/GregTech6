@@ -28,6 +28,9 @@ public final class GregTechNeoForge {
     private static final com.gregtech.gregtech.api.mod.SetupOnce SHARED_SETUP = new com.gregtech.gregtech.api.mod.SetupOnce();
 
     public GregTechNeoForge(IEventBus modEventBus, net.neoforged.fml.ModContainer modContainer) {
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        com.gregtech.gregtech.internal.addon.AddonPlatformServices.bind();
+        com.gregtech.gregtech.internal.addon.AddonLoaderServices.bind();
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON,com.gregtech.gregtech.GregTechConfig.SPEC);
         // No material/metadata holder may initialize before this platform binding.
         ModData.bindPresence(id -> ModList.get().isLoaded(NAMESPACE.equals(id) ? MOD_ID : id));
@@ -39,6 +42,7 @@ public final class GregTechNeoForge {
         PrefixRegistry.ensurePrefixesLoaded();
         ModReferences.UNKNOWN.getClass();
         MaterialGroups.Glowstone.getClass();
+        com.gregtech.gregtech.api.addon.AddonMaterials.collectContributors();
         GTMaterialRegistry.init();
         MaterialRoleFlags.apply();
         com.gregtech.gregtech.platform.neoforge.fluid.FluidRegistries.register(modEventBus);

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.block.energy;
 
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.api.tool.GTToolHelper;
 import com.gregtech.gregtech.api.tool.ToolInteractions;
@@ -7,18 +8,23 @@ import com.gregtech.gregtech.api.tool.ToolInteractionSpec;
 import com.gregtech.gregtech.api.tool.ToolInteractionTarget;
 *///?} else {
 //?}
+
 import com.gregtech.gregtech.api.material.GTMaterial;
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.platform.neoforge.NeoToolBindings;
 *///?} else {
 import com.gregtech.gregtech.api.tool.*;
 //?}
+
 import com.gregtech.gregtech.blockentity.energy.SignalWireBlockEntity;
+
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.registry.GTSignalWires;
 *///?} else {
 import com.gregtech.gregtech.registry.GTBlockEntities;
 //?}
+
 import net.minecraft.core.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
@@ -34,18 +40,24 @@ import net.minecraft.world.phys.shapes.*;
 import java.util.List;
 
 /** Six independent ports; the common cutter spec also drives the client face overlay. */
+//? if >=1.21.1 {
+/*public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget, com.gregtech.gregtech.api.tool.ScrewdriverUseTarget {
+*///?} else {
 public final class SignalWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
+//?}
     public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 15);
     private final GTMaterial material;
     private final int range;
     private final boolean insulated;
 //? if >=1.21.1 {
-    /*@Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool){
+/*
+    @Override public ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool){
         return GTToolHelper.isWireCutter(tool)?ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.REDSTONE):null;
     }
-
 *///?} else {
 //?}
+
+
     public SignalWireBlock(GTMaterial material, int range, boolean insulated, boolean luminous, Properties properties) {
         super(properties.lightLevel(state -> luminous ? state.getValue(POWER) : 0));
         this.material=material; this.range=range; this.insulated=insulated;
@@ -63,14 +75,17 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){builder.add(ElectricWireBlock.CONNECTIONS).add(POWER);}
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return new SignalWireBlockEntity(pos,state);}
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level,BlockState state,BlockEntityType<T> type){
+
 //? if >=1.21.1 {
-        /*return !level.isClientSide && type==GTSignalWires.SIGNAL_WIRE.get() ? (l,p,s,be)->((SignalWireBlockEntity)be).tickNetwork():null;
+/*        return !level.isClientSide && type==GTSignalWires.SIGNAL_WIRE.get() ? (l,p,s,be)->((SignalWireBlockEntity)be).tickNetwork():null;
 *///?} else {
         return !level.isClientSide && type==GTBlockEntities.SIGNAL_WIRE.get() ? (l,p,s,be)->((SignalWireBlockEntity)be).tickNetwork():null;
 //?}
+
     }
+
 //? if >=1.21.1 {
-    /*private InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
+/*    private InteractionResult interact(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
         if(com.gregtech.gregtech.platform.neoforge.energy.WireToolInteractions.use(state,level,pos,player,hand,hit))return InteractionResult.sidedSuccess(level.isClientSide);
         if(NeoToolBindings.isScrewdriver(player.getItemInHand(hand))){
 *///?} else {
@@ -81,23 +96,29 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         if(ToolInteractions.use(state,level,pos,player,hand,hit))return InteractionResult.sidedSuccess(level.isClientSide);
         if(GTToolHelper.isScrewdriver(player.getItemInHand(hand))){
 //?}
+
             if(!level.isClientSide && player.mayBuild() && level.mayInteract(player,pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity wire){
                 wire.setMode((wire.mode()+(player.isShiftKeyDown()?15:1))&15);
                 player.displayClientMessage(Component.translatable("message.gt6ce.signal_wire.mode",wire.mode()),true);
+
 //? if >=1.21.1 {
-                /*NeoToolBindings.damageForUse(player.getItemInHand(hand),1,player);
+/*                NeoToolBindings.damageForUse(player.getItemInHand(hand),1,player);
 *///?} else {
                 GTToolHelper.damageForUse(player.getItemInHand(hand),1,player);
 //?}
+
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
+
 //? if >=1.21.1 {
-    /*@Override protected ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?ItemInteractionResult.sidedSuccess(level.isClientSide):ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
+/*    @Override public InteractionResult useScrewdriver(BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit);}
+    @Override protected ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return interact(state,level,pos,player,hand,hit).consumesAction()?ItemInteractionResult.sidedSuccess(level.isClientSide):ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;}
 *///?} else {
 //?}
+
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
         if(level.isClientSide||old.is(this))return;
@@ -110,7 +131,8 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
             if(other.getBlock() instanceof SignalWireBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 level.setBlockAndUpdate(neighbor,other.setValue(ElectricWireBlock.propFor(side.getOpposite()),true));
-            } else if(!other.isAir() && (other.isSignalSource() || other.isRedstoneConductor(level,neighbor))) {
+            } else if(other.isSignalSource()) {
+                // Conductors such as stone still carry strong power, but only a wire cutter opens that port.
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
             }
         }
@@ -133,23 +155,34 @@ public final class SignalWireBlock extends Block implements EntityBlock, ToolInt
         if(!state.is(next.getBlock()))level.updateNeighborsAt(pos,this);
     }
     @Override public List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return List.of(new ItemStack(this));}
+
 //? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> text,TooltipFlag flag){
+/*    @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> text,TooltipFlag flag){
 *///?} else {
     @Override public void appendHoverText(ItemStack stack,BlockGetter level,List<Component> text,TooltipFlag flag){
 //?}
+
         text.add(Component.translatable("tooltip.gt6ce.signal_wire.range",range));
         text.add(Component.translatable("tooltip.gt6ce.signal_wire.controls"));
     }
     @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){
+
 //? if >=1.21.1 {
-        /*if(context instanceof EntityCollisionContext e && e.getEntity() instanceof Player p && NeoToolBindings.isWireCutter(p.getMainHandItem()))return Shapes.block();
+/*        if(context instanceof EntityCollisionContext e && e.getEntity() instanceof Player p && NeoToolBindings.isWireCutter(p.getMainHandItem()))return Shapes.block();
 *///?} else {
         if(context instanceof EntityCollisionContext e && e.getEntity() instanceof Player p && GTToolHelper.isWireCutter(p.getMainHandItem()))return Shapes.block();
 //?}
-        int a=8-halfThickness(),b=8+halfThickness();
+        int mask=0;
+        for(var side:Direction.values())if(state.getValue(ElectricWireBlock.propFor(side)))mask|=1<<side.ordinal();
+        var shape=shapes[mask];
+        if(shape==null)shapes[mask]=shape=connectionShape(halfThickness(),mask);
+        return shape;
+    }
+    private final VoxelShape[] shapes=new VoxelShape[64];
+    private static VoxelShape connectionShape(int half,int mask){
+        int a=8-half,b=8+half;
         var shape=Block.box(a,a,a,b,b,b);
-        for(var side:Direction.values())if(state.getValue(ElectricWireBlock.propFor(side)))shape=Shapes.or(shape,
+        for(var side:Direction.values())if((mask&1<<side.ordinal())!=0)shape=Shapes.or(shape,
                 Block.box(side==Direction.WEST?0:a,side==Direction.DOWN?0:a,side==Direction.NORTH?0:a,
                         side==Direction.EAST?16:b,side==Direction.UP?16:b,side==Direction.SOUTH?16:b));
         return shape;

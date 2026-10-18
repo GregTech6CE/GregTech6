@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.material.*;
 import com.gregtech.gregtech.api.machine.BasicMachineSpec;
 import com.gregtech.gregtech.api.energy.EnergyNodeSpec;
 import com.gregtech.gregtech.api.fluid.FluidDefinition;
+import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.machine.BasicMachineDefinitions;
 import com.gregtech.gregtech.content.energy.EnergyNodeDefinitions;
@@ -14,6 +15,7 @@ import java.util.*;
 @SuppressWarnings("deprecation")
 public final class RegistrationContracts {
     public static void main(String[] args) throws Exception {
+        ModData.bindPresence(name -> java.util.Set.of("minecraft", "forge", "gt6ce").contains(name));
         if (args.length == 1 && args[0].equals("material-memory")) {
             System.gc();
             Thread.sleep(150);
@@ -49,10 +51,9 @@ public final class RegistrationContracts {
         var definition = builder.build();
         builder.gas();
         if (definition.properties().contains(MaterialProperty.GAS)) throw new AssertionError("Mutable definition snapshot");
-        definition.register();
-        rejects(IllegalArgumentException.class, definition::register);
-        rejects(IllegalArgumentException.class, () -> MaterialDefinition.builder(9999, "AnotherName").build().register());
-        rejects(IllegalArgumentException.class, () -> MaterialDefinition.builder(9998, "RegistrationTestMaterial").build().register());
+        // Definitions register only inside init(): built-in declare() and the addon queue.
+        // A direct register() here is the closed-window failure, not a successful insertion.
+        rejects(IllegalStateException.class, definition::register);
         rejects(IllegalArgumentException.class, () -> MaterialDefinition.builder(0, "BadId").build());
         GTMaterialRegistry.init();
         if (GTMaterialRegistry.registrationPhase() != GTMaterialRegistry.RegistrationPhase.READY)

@@ -12,11 +12,13 @@ import net.minecraft.world.level.Level;
 import com.gregtech.gregtech.content.tool.ElectricToolWear;
 
 /** GT6 electric tool base — stores EU and consumes power on use. */
+
 //? if >=1.21.1 {
 /*public class ElectricToolItem extends TieredItem implements IItemEnergy, com.gregtech.gregtech.api.tool.PoweredToolItem {
 *///?} else {
 public class ElectricToolItem extends TieredItem implements IItemEnergy {
 //?}
+
     private final long capacity;
     private final int tier;
     private final long energyPerUse;
@@ -30,11 +32,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         this.energyPerUse = energyPerUse;
     }
 
+
 //? if >=1.21.1 {
-    /*public boolean canHarvest(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return isCorrectToolForDrops(stack,state);}
+/*    public boolean canHarvest(ItemStack stack,net.minecraft.world.level.block.state.BlockState state){return isCorrectToolForDrops(stack,state);}
     public float harvestSpeed(ItemStack stack){return Math.max(Float.MIN_NORMAL,2*headMaterial(stack).getToolSpeed());}
 *///?} else {
 //?}
+
     public com.gregtech.gregtech.content.tool.ElectricToolCatalog.Definition definition(){return com.gregtech.gregtech.content.tool.ElectricToolCatalog.of(toolName,tier);}
     public String toolName() { return toolName; }
     public int energyTier() { return tier; }
@@ -80,11 +84,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     }
 
     public boolean monkeyWrenchMode(ItemStack stack) {
+
 //? if >=1.21.1 {
-        /*return toolName.equals("Wrench") && com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getBoolean("gt.monkey_wrench");
+/*        return toolName.equals("Wrench") && com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getBoolean("gt.monkey_wrench");
 *///?} else {
         return toolName.equals("Wrench") && stack.hasTag() && stack.getTag().getBoolean("gt.monkey_wrench");
 //?}
+
     }
 
     /** GT6 switch behavior follows the tool click and ignores foreign block entities. */
@@ -102,36 +108,60 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
             return usable ? com.gregtech.gregtech.item.behavior.BehaviorPlaceWoodworkingSupplies.use(context)
                     : net.minecraft.world.InteractionResult.PASS;
         }
+        if (toolName.equals("Screwdriver") && player != null && player.isShiftKeyDown() && stack.getCount() == 1) {
+            var level = context.getLevel();
+            var pos = context.getClickedPos();
+            var state = level.getBlockState(pos);
+//? if >=1.21.1 {
+/*            if (state.getBlock() instanceof com.gregtech.gregtech.api.tool.ScrewdriverUseTarget target) {
+*///?} else {
+            if (state.getBlock() instanceof com.gregtech.gregtech.block.energy.SignalWireBlock) {
+//?}
+                var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
+                        context.getClickedFace(), pos, context.isInside());
+//? if >=1.21.1 {
+/*                return target.useScrewdriver(state, level, pos, player, context.getHand(), hit);
+*///?} else {
+                return state.use(level, player, context.getHand(), hit);
+//?}
+            }
+        }
         if (!toolName.equals("Wrench") || player == null || !player.isShiftKeyDown() || stack.getCount() != 1)
             return net.minecraft.world.InteractionResult.PASS;
         var level = context.getLevel();
         var pos = context.getClickedPos();
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.FAIL;
         var state = level.getBlockState(pos);
+
 //? if >=1.21.1 {
-        /*var key = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock());
+/*        var key = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(state.getBlock());
 *///?} else {
         var key = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(state.getBlock());
 //?}
+
         boolean ownBlock = key != null && key.getNamespace().equals("gt6ce");
         // Sneaking skips Block.use. Give the machine's existing tool handling first chance.
         if (ownBlock) {
             var hit = new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),
                     context.getClickedFace(), pos, context.isInside());
+
 //? if >=1.21.1 {
-            /*var itemResult=state.useItemOn(stack,level,player,context.getHand(),hit);
+/*            var itemResult=state.useItemOn(stack,level,player,context.getHand(),hit);
             var result=itemResult==net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION?state.useWithoutItem(level,player,hit):itemResult.result();
 *///?} else {
             var result = state.use(level, player, context.getHand(), hit);
 //?}
+
             if (result != net.minecraft.world.InteractionResult.PASS) return result;
         } else if (level.getBlockEntity(pos) != null) return net.minecraft.world.InteractionResult.PASS;
         if (!level.isClientSide) {
+
 //? if >=1.21.1 {
-            /*boolean mode=!monkeyWrenchMode(stack);com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putBoolean("gt.monkey_wrench",mode));
+/*            boolean mode=!monkeyWrenchMode(stack);com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putBoolean("gt.monkey_wrench",mode));
 *///?} else {
             stack.getOrCreateTag().putBoolean("gt.monkey_wrench", !monkeyWrenchMode(stack));
 //?}
+
             player.getInventory().setChanged();
             player.displayClientMessage(net.minecraft.network.chat.Component.translatable(monkeyWrenchMode(stack)
                     ? "item.gt6ce.tool.monkey_wrench" : "item.gt6ce.tool.wrench"), true);
@@ -139,11 +169,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
 
+
 //? if >=1.21.1 {
-    /*public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, net.minecraft.world.entity.player.Player player) {
+/*    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, net.minecraft.world.entity.player.Player player) {
 *///?} else {
     @Override public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, net.minecraft.world.entity.player.Player player) {
 //?}
+
         return toolName.equals("Chainsaw")
                 && com.gregtech.gregtech.content.tool.ElectricChainsawHarvest.convertDrops(this,stack,pos,player)
                 || com.gregtech.gregtech.content.tool.ElectricUtilityHarvest.trim(this,stack,pos,player);
@@ -166,11 +198,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         if (amount <= 0 || !isPoweredUsable(stack)
                 || user instanceof net.minecraft.world.entity.player.Player player && player.getAbilities().instabuild) return;
         long stored = getEnergyStored(stack, GregTechTags.Energy.EU);
+
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-Math.min(stored,amount)));
+/*        com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-Math.min(stored,amount)));
 *///?} else {
         stack.getOrCreateTag().putLong("gt.charge", stored - Math.min(stored, amount));
 //?}
+
         applyWear(stack, amount, user);
         if (user instanceof net.minecraft.world.entity.player.Player player) player.getInventory().setChanged();
     }
@@ -198,11 +232,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     @Override public void inventoryTick(ItemStack stack, Level level, net.minecraft.world.entity.Entity entity,
                                          int slot, boolean selected) {
         super.inventoryTick(stack, level, entity, slot, selected);
+
 //? if >=1.21.1 {
-        /*if(!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack,level.registryAccess());
+/*        if(!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack,level.registryAccess());
 *///?} else {
         if(!level.isClientSide) com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack);
 //?}
+
         if (!level.isClientSide && entity instanceof net.minecraft.world.entity.LivingEntity user) finishBrokenTool(stack, user);
     }
 
@@ -210,8 +246,9 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     public ItemStack assembled(com.gregtech.gregtech.api.material.GTMaterial material, long batteryCapacity) {
         if (!com.gregtech.gregtech.content.tool.ElectricToolAssembly.validMaterial(material) || batteryCapacity<=0)
             throw new IllegalArgumentException("Invalid electric tool material/capacity");
+
 //? if >=1.21.1 {
-        /*var result=new ItemStack(this);
+/*        var result=new ItemStack(this);
         com.gregtech.gregtech.platform.neoforge.StackCustomData.update(result,tag->{var stats=new CompoundTag();stats.putString("head",material.getName());stats.putString("handle",definition().handleMaterial());tag.put("GT.ToolStats",stats);tag.putLong("gt.capacity",batteryCapacity);});
         result.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);result.remove(net.minecraft.core.component.DataComponents.DAMAGE);
 *///?} else {
@@ -219,6 +256,7 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
                 com.gregtech.gregtech.api.material.GTMaterialRegistry.get(definition().handleMaterial()));
         result.getOrCreateTag().putLong("gt.capacity",batteryCapacity);
 //?}
+
         return result;
     }
 
@@ -237,11 +275,13 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     }
 
     @Override public net.minecraft.network.chat.Component getName(ItemStack stack) {
+
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).contains("GT.ToolStats")
+/*        return com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).contains("GT.ToolStats")
 *///?} else {
         return stack.hasTag() && stack.getTag().contains("GT.ToolStats")
 //?}
+
                 ? net.minecraft.network.chat.Component.translatable("item.gt6ce.electric_tool.named",
                     MaterialPresentation.name(headMaterial(stack)),super.getName(stack)) : super.getName(stack);
     }
@@ -259,17 +299,21 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
                 : net.minecraft.world.InteractionResult.PASS;
     }
 
+
 //? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+/*    @Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
 *///?} else {
     @Override public void appendHoverText(ItemStack stack, @javax.annotation.Nullable Level level,
 //?}
+
             java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+
 //? if >=1.21.1 {
-        /*super.appendHoverText(stack, context, tooltip, flag);
+/*        super.appendHoverText(stack, context, tooltip, flag);
 *///?} else {
         super.appendHoverText(stack, level, tooltip, flag);
 //?}
+
         tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.energy",
                 getEnergyStored(stack,GregTechTags.Energy.EU),getEnergyCapacity(stack,GregTechTags.Energy.EU)));
         tooltip.add(net.minecraft.network.chat.Component.translatable("tooltip.gt6ce.electric_tool.tier",definition().tierName().toUpperCase(java.util.Locale.ROOT),definition().voltage()));
@@ -293,22 +337,26 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         if (user instanceof net.minecraft.world.entity.player.Player player && player.getAbilities().instabuild) return true;
         long stored = getEnergyStored(stack, GregTechTags.Energy.EU);
         if (!hasEnergyForUse(stack)) return false;
+
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-energyPerUse));
+/*        com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",stored-energyPerUse));
 *///?} else {
         CompoundTag tag = stack.getOrCreateTag();
         tag.putLong("gt.charge", stored - energyPerUse);
 //?}
+
         applyWear(stack, energyPerUse, user);
         return true;
     }
 
     @Override public boolean hurtEnemy(ItemStack stack,net.minecraft.world.entity.LivingEntity target,net.minecraft.world.entity.LivingEntity attacker){if(isPoweredUsable(stack))consumeInteractionEnergy(stack,definition().attackCost(),attacker);return true;}
+
 //? if >=1.21.1 {
-    /*@Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if(!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
+/*    @Override public net.minecraft.world.item.component.ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack){if(!isPoweredUsable(stack))return net.minecraft.world.item.component.ItemAttributeModifiers.EMPTY;return net.minecraft.world.item.component.ItemAttributeModifiers.builder().add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce","powered_tool_damage"),definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE),net.minecraft.world.entity.EquipmentSlotGroup.MAINHAND).build();}
 *///?} else {
     @Override public com.google.common.collect.Multimap<net.minecraft.world.entity.ai.attributes.Attribute,net.minecraft.world.entity.ai.attributes.AttributeModifier> getAttributeModifiers(net.minecraft.world.entity.EquipmentSlot slot,ItemStack stack){if(slot!=net.minecraft.world.entity.EquipmentSlot.MAINHAND||!isPoweredUsable(stack))return com.google.common.collect.ImmutableMultimap.of();return com.google.common.collect.ImmutableMultimap.of(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,new net.minecraft.world.entity.ai.attributes.AttributeModifier(java.util.UUID.fromString("CB3F55D3-645C-4FBC-A695-84CC934974"),"GT powered tool damage",definition().damage()+headMaterial(stack).getToolQuality(),net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));}
 //?}
+
 
     // ── IItemEnergy ──────────────────────────────────────────────────────────
 
@@ -318,22 +366,26 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
     @Override
     public long getEnergyCapacity(ItemStack stack, GregTechTags.Tag energyType) {
         if(energyType!=GregTechTags.Energy.EU) return 0;
+
 //? if >=1.21.1 {
-        /*long configured=com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getLong("gt.capacity");
+/*        long configured=com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack).getLong("gt.capacity");
 *///?} else {
         long configured=stack.hasTag()?stack.getTag().getLong("gt.capacity"):0;
 //?}
+
         return configured>0?configured:capacity;
     }
 
     @Override
     public long getEnergyStored(ItemStack stack, GregTechTags.Tag energyType) {
         if (energyType != GregTechTags.Energy.EU) return 0;
+
 //? if >=1.21.1 {
-        /*CompoundTag tag = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack);
+/*        CompoundTag tag = com.gregtech.gregtech.platform.neoforge.StackCustomData.read(stack);
 *///?} else {
         CompoundTag tag = stack.getTag();
 //?}
+
         return tag != null ? Math.max(0,Math.min(tag.getLong("gt.charge"),getEnergyCapacity(stack,energyType))) : 0;
     }
 
@@ -353,12 +405,14 @@ public class ElectricToolItem extends TieredItem implements IItemEnergy {
         if (space <= 0) return 0;
         long accepted = Math.min(Math.min(64, amount), Math.max(1, space / size));
         if (doInject && accepted > 0) {
+
 //? if >=1.21.1 {
-            /*long charge=stored+Math.min(space,accepted*size);com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",charge));
+/*            long charge=stored+Math.min(space,accepted*size);com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack,tag->tag.putLong("gt.charge",charge));
 *///?} else {
             CompoundTag tag = stack.getOrCreateTag();
             tag.putLong("gt.charge", stored + Math.min(space, accepted * size));
 //?}
+
         }
         return accepted;
     }

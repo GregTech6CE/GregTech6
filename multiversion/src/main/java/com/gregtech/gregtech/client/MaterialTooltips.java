@@ -2,11 +2,14 @@ package com.gregtech.gregtech.client;
 import com.gregtech.gregtech.api.material.MaterialPresentation;
 
 
+
 //? if >=1.21.1 {
-//?} else {
+/**///?} else {
 import com.gregtech.gregtech.GregTech;
 //?}
+
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.ItemMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialChemistry;
@@ -82,22 +85,26 @@ public final class MaterialTooltips {
         if (prefix != null) {
             List<Integer> shapeless = ShapelessRecipeTooltipIndex.inputAmounts(prefix, mat);
             if (!shapeless.isEmpty()) {
+
 //? if >=1.21.1 {
-                /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".shapeless_recipes")
+/*                tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".shapeless_recipes")
 *///?} else {
                 tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".shapeless_recipes")
 //?}
+
                         .append(Component.literal(shapeless.toString()).withStyle(ChatFormatting.WHITE))
                         .withStyle(ChatFormatting.AQUA));
             }
         }
 
         if (flag.isAdvanced()) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
 //?}
+
                     .withStyle(ChatFormatting.DARK_AQUA));
             for (MaterialChemistry.WeightedMaterial weighted : materials) {
                 if (weighted.material().isValid()) {
@@ -105,11 +112,13 @@ public final class MaterialTooltips {
                 }
             }
         } else {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
 //?}
+
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
@@ -132,54 +141,76 @@ public final class MaterialTooltips {
     public static void appendSourceModTooltip(List<Component> tooltip, GTMaterial mat) {
         ModData source = mat.getSourceMod();
         if (source == null || source == ModReferences.UNKNOWN) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
 //?}
+
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.MC) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".vanilla_material")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".vanilla_material")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".vanilla_material")
 //?}
+
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if ((source == ModReferences.GT || source == ModReferences.GAPI) && isPeriodicTableElement(mat)) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_periodic_table")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_periodic_table")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_periodic_table")
 //?}
+
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
         if (source == ModReferences.GT || source == ModReferences.GAPI) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_gt")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_gt")
 //?}
+
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
+        var owners = com.gregtech.gregtech.api.addon.AddonMaterials.owners(mat);
+        if (owners.size() > 1) {
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".material_from_mod", source.name)
+/*            tooltip.add(Component.translatable("tooltip.gt6ce.material_from_addons", String.join(", ", owners))
+                    .withStyle(ChatFormatting.BLUE));
 *///?} else {
-        tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_mod", source.name)
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_addons",
+                    String.join(", ", owners)).withStyle(ChatFormatting.BLUE));
 //?}
+            return;
+        }
+        String sourceKey = com.gregtech.gregtech.api.material.GTMaterialRegistry.isCoreMaterial(mat)
+//? if >=1.21.1 {
+/*// Version-specific branch.
+                ? "tooltip." + "gt6ce" + ".material_from_mod"
+                : "tooltip." + "gt6ce" + ".material_from_addon";
+*///?} else {
+// Version-specific branch.
+                ? "tooltip." + GregTech.NAMESPACE + ".material_from_mod"
+                : "tooltip." + GregTech.NAMESPACE + ".material_from_addon";
+//?}
+        tooltip.add(Component.translatable(sourceKey, source.name)
                 .withStyle(ChatFormatting.BLUE));
     }
 
     private static boolean isPeriodicTableElement(GTMaterial mat) {
-        return mat.has(MaterialProperty.ELEMENT)
-                && mat.getId() > 0
-                && mat.getId() < 8000
-                && !mat.has(MaterialProperty.ANTIMATTER);
+        return GTMaterialRegistry.isPeriodicTableElement(mat);
     }
 
     public static void appendForeign(ItemStack stack, com.gregtech.gregtech.api.material.ItemComposition data,
@@ -207,11 +238,13 @@ public final class MaterialTooltips {
         if (!data.recoverable()) tooltip.add(Component.translatable("tooltip.gt6ce.composition_descriptive").withStyle(ChatFormatting.GRAY));
 
         if (flag.isAdvanced()) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".contained_materials")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".contained_materials")
 //?}
+
                     .withStyle(ChatFormatting.DARK_AQUA));
             for (var component : data.components()) for (MaterialChemistry.WeightedMaterial weighted : MaterialChemistry.materialWeights(component.material(), component.amount())) {
                 if (weighted.material().isValid()) {
@@ -219,19 +252,23 @@ public final class MaterialTooltips {
                 }
             }
         } else {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".f3h_hint")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".f3h_hint")
 //?}
+
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
 
+
 //? if >=1.21.1 {
-        /*tooltip.add(Component.translatable(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
+/*        tooltip.add(Component.translatable(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 *///?} else {
         tooltip.add(Component.translatable(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals("minecraft") ? "tooltip.gt6ce.vanilla_material" : "tooltip.gt6ce.foreign_material")
 //?}
+
                 .withStyle(ChatFormatting.BLUE));
     }
 
@@ -239,7 +276,7 @@ public final class MaterialTooltips {
         if (!mat.isValid()) {
             return Component.empty();
         }
-        if (mat.getId() >= 7900 && mat.getId() <= 7912) return Component.literal(displayUnits(amount) + " ")
+        if (GTMaterialRegistry.isVanillaMatter(mat)) return Component.literal(displayUnits(amount) + " ")
                 .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gt6ce.composition_category"));
         double weightKg = weightKg(mat, amount);
         long frac = ((long) (weightKg * 1000)) % 1000;
@@ -315,11 +352,13 @@ public final class MaterialTooltips {
         }
         long heat = burnValue * GregTechConstants.EU_PER_FURNACE_TICK;
         tooltip.add(Component.empty()
+
 //? if >=1.21.1 {
-                /*.append(Component.translatable("tooltip." + "gt6ce" + ".fuel_value.label")
+/*                .append(Component.translatable("tooltip." + "gt6ce" + ".fuel_value.label")
 *///?} else {
                 .append(Component.translatable("tooltip." + GregTech.NAMESPACE + ".fuel_value.label")
 //?}
+
                         .withStyle(ChatFormatting.RED))
                 .append(Component.literal(Long.toString(burnValue)).withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(" (" + heat + " ").withStyle(ChatFormatting.WHITE))
@@ -329,11 +368,13 @@ public final class MaterialTooltips {
 
     public static void appendFlammableTooltip(GTMaterial material, List<Component> tooltip) {
         if (material.resolve().has(MaterialProperty.FLAMMABLE)) {
+
 //? if >=1.21.1 {
-            /*tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".flammable")
+/*            tooltip.add(Component.translatable("tooltip." + "gt6ce" + ".flammable")
 *///?} else {
             tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".flammable")
 //?}
+
                     .withStyle(ChatFormatting.RED));
         }
     }
