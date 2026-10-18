@@ -33,6 +33,8 @@ public final class RecipeMachines {
         for (var entry:com.gregtech.gregtech.platform.neoforge.smeltery.SmelteryRegistries.crucibles()) if(entry.isBound())
             add(result,MachineRecipeMaps.CrucibleAlloying,new ItemStack(entry.get()));
         add(result,MachineRecipeMaps.ImplosionCompressor,new ItemStack(RecipeMachines.machine("implosion_compressor_main")));
+        for (var entry : com.gregtech.gregtech.platform.neoforge.machine.FuelGeneratorRegistration.all())
+            add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
         for(var entry:com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.blocks())
             add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
         for (int originalId = 17231; originalId <= 17234; originalId++)

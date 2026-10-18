@@ -33,6 +33,21 @@ public static List<Info> recipes() {
             var stacks=parts.entrySet().stream().map(e->new ItemStack(e.getKey(),e.getValue())).toList();
             result.add(new Info(new ItemStack(block),stacks.get(0),stacks.size()>1?stacks.get(1):ItemStack.EMPTY,Map.copyOf(diagram),false));
         }
+        for (var entry : com.gregtech.gregtech.registry.FuelGeneratorRegistration.all()) {
+            if (!entry.isPresent() || entry.get().declaration().kind() != com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind.MULTI) continue;
+            var layout = com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(entry.get().declaration().machineType());
+            if (layout == null) continue;
+            var diagram = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+            diagram.put(BlockPos.ZERO, MultiblockLayout.Role.FLUID_INPUT);
+            var parts = new LinkedHashMap<net.minecraft.world.level.block.Block, Integer>();
+            for (var cell : layout) {
+                diagram.put(cell.at(BlockPos.ZERO, Direction.NORTH), cell.role());
+                if (cell.role() != MultiblockLayout.Role.AIR) parts.merge(cell.block(), 1, Integer::sum);
+            }
+            var stacks = parts.entrySet().stream().map(e -> new ItemStack(e.getKey(), e.getValue())).toList();
+            result.add(new Info(new ItemStack(entry.get()), stacks.isEmpty() ? ItemStack.EMPTY : stacks.get(0),
+                    stacks.size() > 1 ? stacks.get(1) : ItemStack.EMPTY, Map.copyOf(diagram), false));
+        }
         var gas=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         gas.put(BlockPos.ZERO,MultiblockLayout.Role.FLUID_INPUT);
         for(var cell:com.gregtech.gregtech.content.multiblock.TurbineStructure.LAYOUT.cells())gas.put(cell.at(BlockPos.ZERO,Direction.NORTH),cell.role());
@@ -107,6 +122,10 @@ public static ItemStack expectedPart(Info info,BlockPos pos) {
         if(info.controller().is(GTMultiblocks.HEAT_EXCHANGER_MAIN.get().asItem()))return new ItemStack(pos.getY()==0||pos.getX()==0&&pos.getZ()==0?com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18024):GTMultiblocks.HEAT_TRANSMITTER.get());
         if(info.controller().is(GTMultiblocks.BEDROCK_DRILL_MAIN.get().asItem()))return new ItemStack(pos.getY()==-5?net.minecraft.world.level.block.Blocks.BEDROCK:pos.getY()==-4?GTMultiblocks.BEDROCK_DRILL_WALL.get():com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18026));
         if(info.controller().is(GTMultiblocks.LIGHTNING_ROD_MAIN.get().asItem()))return new ItemStack(pos.getY()==5?GTMultiblocks.LIGHTNING_ROD_PILLAR.get():pos.getY()%2==0?GTMultiblocks.LIGHTNING_ROD_WALL.get():GTMultiblocks.LARGE_NIOBIUM_TITANIUM_COIL.get());
+        if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof com.gregtech.gregtech.block.machine.FuelGeneratorBlock generator) {
+            var cells=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(generator.declaration().machineType());
+            if(cells!=null)for(var cell:cells)if(cell.at(BlockPos.ZERO,Direction.NORTH).equals(pos))return new ItemStack(cell.block());
+        }
         if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine) {
             var cells=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(machine.basicSpec().machineName());
             if(cells!=null)for(var cell:cells)if(cell.at(BlockPos.ZERO,Direction.NORTH).equals(pos))return new ItemStack(cell.block());
