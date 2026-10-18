@@ -14,6 +14,9 @@ groups = collections.OrderedDict()
 names = {}
 patterns = []
 def normal(s): return re.sub('[^a-z0-9]', '', s.lower())
+def whole_words(words, before, after):
+    return ((not before or any(''.join(words[:end]) == before for end in range(1,len(words)+1)))
+            and (not after or any(''.join(words[start:]) == after for start in range(len(words)))))
 for order, (expr, group, legacy, tab, cls) in enumerate(rows):
     family = re.sub('[^a-z0-9]+', '_', group.lower()).strip('_')
     family = {'axles_and_gearboxes':'axles', 'misc_tool_blocks':'tool_blocks',
@@ -34,13 +37,22 @@ bound = {}
 for key, text in lang.items():
     if not key.startswith(('block.gt6ce.','item.gt6ce.')) or not isinstance(text,str): continue
     item = key.split('.',2)[2]
+    # Keep word boundaries: the original "Mold (material)" template must not
+    # classify "Moldy Grass Bale" as a mold just because punctuation is removed.
+    source_words = re.findall(r'[a-z0-9]+', text.lower())
     text = normal(text)
     match = names.get(text)
     if match is None:
         for before,after,family,order in patterns:
-            if (before or after) and text.startswith(before) and text.endswith(after) and len(text)>len(before)+len(after):
+            if ((before or after) and text.startswith(before) and text.endswith(after)
+                    and len(text)>len(before)+len(after) and whole_words(source_words,before,after)):
                 match = (family,order); break
     if match: bound[item] = match
+
+# Grass/crop bales are original BlockBale* content, not MultiTileEntity molds.
+for key in lang:
+    if re.fullmatch(r'block\.gt6ce\.bale_[a-z_]+', key):
+        bound[key.split('.',2)[2]] = ('nature_foods', 12000)
 
 # Original independent MultiItem pages, retaining their registration order.
 gen = (ROOT/'core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java').read_text(encoding='utf-8')

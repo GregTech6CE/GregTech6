@@ -8,7 +8,8 @@
     "colored": {
       "textures": {
         "front": "gt6ce:block/machines/tools/crank/colored/front",
-        "axle": "gt6ce:block/iconsets/axle"
+        "side": "gt6ce:block/iconsets/axle",
+        "back": "gt6ce:block/iconsets/axle"
       },
       "elements": [
         {
@@ -24,11 +25,11 @@
           ],
           "faces": {
             "down": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "up": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "north": {
@@ -36,15 +37,15 @@
               "tintindex": 0
             },
             "south": {
-              "texture": "#axle",
+              "texture": "#back",
               "tintindex": 0
             },
             "west": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "east": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             }
           }
@@ -62,11 +63,11 @@
           ],
           "faces": {
             "down": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "up": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "north": {
@@ -74,15 +75,15 @@
               "tintindex": 0
             },
             "south": {
-              "texture": "#axle",
+              "texture": "#back",
               "tintindex": 0
             },
             "west": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             },
             "east": {
-              "texture": "#axle",
+              "texture": "#side",
               "tintindex": 0
             }
           }

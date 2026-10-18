@@ -79,7 +79,6 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTEngines.registerAll();
         com.gregtech.gregtech.registry.GTBoilers.registerAll();
         com.gregtech.gregtech.registry.GTPumps.registerAll();
-        com.gregtech.gregtech.registry.GTMagnets.registerAll();
         com.gregtech.gregtech.registry.GTLogisticsTank.initialize();
         com.gregtech.gregtech.registry.GTSandwich.initialize();
         com.gregtech.gregtech.registry.GTRemainingDecor.initialize();

@@ -82,9 +82,8 @@ import java.util.List;
  *       the only hint left is the tooltip.</li>
  *   <li><b>Sound.</b> GT6 plays {@code SFX.MC_MINECART} on the click and again at random while active
  *       ({@code :98}, {@code :108}); the port keeps its wooden crank knock.</li>
- *   <li><b>No spin model.</b> GT6 swaps in a {@code frontspin} texture and syncs {@code mActive} to the
- *       clients ({@code :94}, {@code :126}); the port's crank has a single static model, so
- *       {@code active = true} only carries the redstone state.</li>
+ *   <li><b>Animation.</b> The active block state uses GT6's {@code frontspin} and clockwise /
+ *       counterclockwise axle sprites ({@code :125-129}).</li>
  * </ul>
  */
 public class CrankBlock extends DirectionalBlock {
@@ -184,7 +183,22 @@ public class CrankBlock extends DirectionalBlock {
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (state.getValue(ACTIVE)) {
             level.setBlock(pos, state.setValue(ACTIVE, false), Block.UPDATE_ALL);
+            updateMountNeighbors(state, level, pos);
         }
+    }
+
+    /** Like a vanilla lever, notify both the attachment and the block conducting its strong signal. */
+    private void updateMountNeighbors(BlockState state, Level level, BlockPos pos) {
+        level.updateNeighborsAt(pos, this);
+        level.updateNeighborsAt(pos.relative(state.getValue(FACING).getOpposite()), this);
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock()) && state.getValue(ACTIVE) && !level.isClientSide) {
+            updateMountNeighbors(state, level, pos);
+        }
+        super.onRemove(state, level, pos, next, moving);
     }
 //? if >=1.21.1 {
     /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
@@ -223,7 +237,7 @@ public class CrankBlock extends DirectionalBlock {
             if (!state.getValue(ACTIVE)) {
                 level.setBlock(pos, state.setValue(ACTIVE, true), Block.UPDATE_ALL);
             }
-            level.updateNeighborsAt(pos, this);
+            updateMountNeighbors(state, level, pos);
             level.scheduleTick(pos, this, ACTIVE_TICKS);
             level.playSound(null, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS, 1.0F, 0.7F);
         }

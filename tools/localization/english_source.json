@@ -29593,12 +29593,12 @@
       "value": "Full Roll"
     },
     "item.gt6ce.braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2": {
-      "source_key": "gt.multiitem.randomtools.12008",
+      "source_key": "gt.multiitem.randomtools.12009",
       "value": "BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84"
     },
     "item.gt6ce.braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2.tooltip": {
-      "source_key": "gt.multiitem.randomtools.12008.tooltip",
-      "value": "Full Roll"
+      "source_key": "gt.multiitem.randomtools.12009.tooltip",
+      "value": "Used Roll"
     },
     "item.gt6ce.brass_compound": {
       "source_key": "gt.multiitem.randomtools.1",
@@ -33779,12 +33779,12 @@
       "value": "Full Roll"
     },
     "item.gt6ce.duct_tape_2": {
-      "source_key": "gt.multiitem.randomtools.12002",
+      "source_key": "gt.multiitem.randomtools.12003",
       "value": "Duct Tape"
     },
     "item.gt6ce.duct_tape_2.tooltip": {
-      "source_key": "gt.multiitem.randomtools.12002.tooltip",
-      "value": "Full Roll"
+      "source_key": "gt.multiitem.randomtools.12003.tooltip",
+      "value": "Used Roll"
     },
     "item.gt6ce.dumblebee_dead": {
       "source_key": "gt.multiitem.bumblebee.234",
@@ -42241,12 +42241,12 @@
       "value": "Full Roll"
     },
     "item.gt6ce.tape_2": {
-      "source_key": "gt.multiitem.randomtools.12000",
+      "source_key": "gt.multiitem.randomtools.12001",
       "value": "Tape"
     },
     "item.gt6ce.tape_2.tooltip": {
-      "source_key": "gt.multiitem.randomtools.12000.tooltip",
-      "value": "Full Roll"
+      "source_key": "gt.multiitem.randomtools.12001.tooltip",
+      "value": "Used Roll"
     },
     "item.gt6ce.tar_bottle": {
       "source_key": "gt.multiitem.bottles.32762",

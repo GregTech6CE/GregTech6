@@ -1,0 +1,239 @@
+{
+  "date": "2026-10-19",
+  "branch": "main",
+  "base_commit": "d79e4d9cd",
+  "mod": "gt6ce",
+  "version": "0.0.0",
+  "api": 0,
+  "dual_main_and_bootstrap_compile": "passed",
+  "native_runtime": {
+    "loader": "NeoForge 21.1.243",
+    "minecraft": "1.21.1",
+    "java": 21,
+    "required_tests": 6,
+    "passed": 6,
+    "test_milliseconds": 775.6,
+    "namespaces": [
+      "gt6ce_feedback_workbench",
+      "gt6ce_survival_feedback",
+      "gt6ce_feedback_manual"
+    ],
+    "log": "work\\feedback-20261019\\compile-game-4.log",
+    "log_sha256": "c3ad856247e8069b7406e93cc762b18ac14e8a3026ebc1a93947fade38f9fd16",
+    "tests": [
+      "realTransferSlotsAndRepeatedCraftsAvoidRecipeScans",
+      "stoneLayerModeDisablesOnlyLegacyOverworldVeins",
+      "originalFuelsAndAllFiveCompoundsReachNativeFurnace",
+      "animalRemainsMeatAndSixteenPaintCansHaveExecutableSourceRoutes",
+      "crankPowersThroughItsMountAndNotifiesWhenStopped",
+      "debugToolClicksUseModernDimensionHeights"
+    ]
+  },
+  "iteration_evidence": [
+    {
+      "log": "work/feedback-20261019/compile-game.log",
+      "result": "both main versions compiled; Forge probe package access error; probe moved to registry package without changing production visibility"
+    },
+    {
+      "log": "work/feedback-20261019/compile-game-2.log",
+      "result": "Neo probe used old helper name; switched to makeMockPlayer(SURVIVAL)"
+    },
+    {
+      "log": "work/feedback-20261019/compile-game-3.log",
+      "result": "6 ran, 4 passed; found production cropped remainder indexing error; crank stage extended to include scheduled-tick positions"
+    },
+    {
+      "log": "work/feedback-20261019/compile-game-4.log",
+      "result": "final both platform compiles and 6 required native tests passed"
+    }
+  ],
+  "crank_assets": {
+    "passed": true,
+    "models_match_generator": [
+      "models/block/machine/tool/crank.json",
+      "models/block/machine/tool/crank_active.json",
+      "blockstates/crank.json"
+    ],
+    "variants": 12,
+    "animated_textures_have_mcmeta": true,
+    "layer_tint_and_texture_references_valid": true,
+    "client_visual_runtime": false
+  },
+  "single_item_audit": {
+    "path": "single-item-runtime-audit-20261019.json",
+    "sha256": "f8976eb3f0eafcadcc0fe8d0d5f560ac2ccee4f95b3e4d443e1e468a1ceb6317",
+    "items": 1278,
+    "category_counts": {
+      "randomtools": 145,
+      "bottles": 170,
+      "food": 266,
+      "cans": 57,
+      "bumblebee": 640
+    },
+    "new_source_recipe_rows": 612,
+    "source_smelting_rows": 27,
+    "no_static_machine_rows_or_explicit_fuel": 828,
+    "no_static_rows_by_category": {
+      "randomtools": 58,
+      "bottles": 7,
+      "food": 74,
+      "cans": 49,
+      "bumblebee": 640
+    },
+    "scope_limit": [
+      "crafting-grid recipes",
+      "loot and harvest acquisition",
+      "dynamic recipes",
+      "right-click and equipment uses",
+      "complete survival playthrough"
+    ],
+    "interpretation": "Empty static rows do not imply missing recipes or uses; bees, right-click tools, containers, loot and crafting are separate mechanisms."
+  },
+  "localization": {
+    "chinese_keys": 141745,
+    "derived_emi_headings": 331,
+    "english": {
+      "exact_original_declarations": 12883,
+      "formatted_keys": 397,
+      "intentional_empty_tooltips": 679,
+      "keys": 15918,
+      "original_english_without_chinese_source": 477
+    },
+    "english_fallback_count": 3076,
+    "native_aliases": 12704,
+    "source_keys": 125676,
+    "source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+  },
+  "tape_identity_corrections": {
+    "corrections": {
+      "item.gt6ce.braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2": {
+        "after": "gt.multiitem.randomtools.12009",
+        "before": "gt.multiitem.randomtools.12008",
+        "english_after": "BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84",
+        "english_before": "BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84",
+        "source_line": 574
+      },
+      "item.gt6ce.braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2.tooltip": {
+        "after": "gt.multiitem.randomtools.12009.tooltip",
+        "before": "gt.multiitem.randomtools.12008.tooltip",
+        "english_after": "Used Roll",
+        "english_before": "Full Roll",
+        "source_line": 574
+      },
+      "item.gt6ce.duct_tape_2": {
+        "after": "gt.multiitem.randomtools.12003",
+        "before": "gt.multiitem.randomtools.12002",
+        "english_after": "Duct Tape",
+        "english_before": "Duct Tape",
+        "source_line": 565
+      },
+      "item.gt6ce.duct_tape_2.tooltip": {
+        "after": "gt.multiitem.randomtools.12003.tooltip",
+        "before": "gt.multiitem.randomtools.12002.tooltip",
+        "english_after": "Used Roll",
+        "english_before": "Full Roll",
+        "source_line": 565
+      },
+      "item.gt6ce.tape_2": {
+        "after": "gt.multiitem.randomtools.12001",
+        "before": "gt.multiitem.randomtools.12000",
+        "english_after": "Tape",
+        "english_before": "Tape",
+        "source_line": 556
+      },
+      "item.gt6ce.tape_2.tooltip": {
+        "after": "gt.multiitem.randomtools.12001.tooltip",
+        "before": "gt.multiitem.randomtools.12000.tooltip",
+        "english_after": "Used Roll",
+        "english_before": "Full Roll",
+        "source_line": 556
+      }
+    },
+    "english_preflight": {
+      "exact_original_declarations": 12883,
+      "formatted_keys": 397,
+      "intentional_empty_tooltips": 679,
+      "keys": 15918,
+      "original_english_without_chinese_source": 477
+    },
+    "full_import_guard": "Full identity importer refused to lose existing hazmat declarations; guard retained and unrelated bindings preserved",
+    "original_chinese_source_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+    "scope": "Only six source-proved used-tape name/description bindings; retain unrelated accepted declarations",
+    "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+    "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+    "unchanged_existing_english_declarations": 12877
+  },
+  "subreports": [
+    "survival-feedback-recipes-20261019.json",
+    "catalog-feedback-20261019.json"
+  ],
+  "provenance": {
+    "authors": "Gregorius Techneticies / GregTech-6 Team",
+    "license": "Existing LGPL-3.0-or-later notices retained; original source files read-only",
+    "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+    "files": [
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityCrank.java",
+        "lines": "115-144",
+        "sha256": "03d4c7a3be5709c5ae49726db44dabf715f8e2fa1f144ad025a6b1553b8a679a"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMixingBowl.java",
+        "lines": "158-185,370-408",
+        "sha256": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMixingBowlTable.java",
+        "lines": "40-50",
+        "sha256": "f8ec5640c025e9df10db5b4726528dadc8ebd43edb5f42bf64bdb8f0bcbc5d93"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "lines": "1001-1009",
+        "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371"
+      },
+      {
+        "path": "gregtech/items/behaviors/Behavior_Chunk_Remover.java",
+        "lines": "39-45",
+        "sha256": "0fed52565f0f7479255f24a435e7b056695590fef6f3ea33575e8e56d1630f30"
+      },
+      {
+        "path": "gregtech/items/behaviors/Behavior_Worldgen_Debugger.java",
+        "lines": "43-55",
+        "sha256": "d42480d08dd2c2ea17429d87bbfe22f15f1256ff5257f25982b1bf38fd5290f7"
+      },
+      {
+        "path": "gregapi/tileentity/tools/MultiTileEntityAdvancedCraftingTable.java",
+        "lines": "148-156,209-267,502-508,684-731",
+        "sha256": "730747ed9b5c401c6128ec09a481c9b0bcbc68c186c46f231afb07b4bf8231d0"
+      },
+      {
+        "path": "gregapi/worldgen/GT6WorldGenerator.java",
+        "lines": "125,138-139",
+        "sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b"
+      },
+      {
+        "path": "gregapi/data/CS.java",
+        "lines": "866",
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      }
+    ]
+  },
+  "not_verified": [
+    "game client visual inspection",
+    "live JEI/EMI transfer clicks",
+    "Forge game runtime",
+    "complete survival playthrough",
+    "saved-world restart and removed-ID migration",
+    "new production JAR installation"
+  ],
+  "not_performed": [
+    "full test suite",
+    "production JAR packaging",
+    "git push"
+  ],
+  "known_limitations": [
+    "Original glowing-material powder fullbright has no corresponding shared material flag; unchanged.",
+    "Full identity importer preserves its existing hazmat-declaration guard; only six proven used-tape bindings were repaired without dropping accepted declarations."
+  ]
+}

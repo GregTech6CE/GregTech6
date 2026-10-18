@@ -1,0 +1,15 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_chemical_bottles",
+  "contents": [
+    "item:gt6ce:bottle_oblood",
+    "item:gt6ce:bottle_of_poison",
+    "item:gt6ce:bottled_indigo_dye",
+    "item:gt6ce:glue_bottle",
+    "item:gt6ce:ink_bottle",
+    "item:gt6ce:lubricant_bottle",
+    "item:gt6ce:mercury_bottle",
+    "item:gt6ce:tar_bottle"
+  ],
+  "priority": 120
+}

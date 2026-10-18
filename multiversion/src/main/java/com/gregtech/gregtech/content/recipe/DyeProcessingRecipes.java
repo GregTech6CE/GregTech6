@@ -43,6 +43,10 @@ public final class DyeProcessingRecipes {
             for(String kind:new String[]{"Water","Flower"})for(String oil:new String[]{"Oil_Sunflower","Oil_Olive","Oil_Nut","Oil_Seed","Oil_Lin","Oil_Hemp"})
                 mixer(16,null,new FluidStack[]{fluid("Dye_"+kind+"_"+color,216),fluid(oil,20)},fluid("Dye_Chemical_"+color,288));
             mixer(16,null,new FluidStack[]{fluid("Dye_Chemical_"+color,16),fluid("CFoam",100)},fluid("CFoam_Dyed_"+color,100));
+            // MultiItemRandomTools:246: 16 dye units (16 * 144 mB), 256 ticks at 16 EU/t.
+            add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},
+                    new ItemStack[]{item("gt6ce:spray_paint_"+vanilla,1)},null,null,
+                    new FluidStack[]{fluid("Dye_Chemical_"+color,2304)},null,256,16,0));
             var dyeColor = net.minecraft.world.item.DyeColor.byName(vanilla, net.minecraft.world.item.DyeColor.WHITE);
             var wet = colored("cfoam_fresh", dyeColor, 1);
             add(MachineRecipeMaps.Injector,new Recipe(null,new ItemStack[]{wet},null,null,

@@ -51,8 +51,8 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         } else if (dim == net.minecraft.world.level.Level.NETHER) {
             return false;
         } else {
-            veins = GTOreVeins.OVERWORLD_VEINS;
-            totalWeight = GTOreVeins.TOTAL_VEIN_WEIGHT;
+            veins = GTOreVeins.activeOverworldVeins();
+            totalWeight = veins.stream().mapToInt(OreVein::weight).sum();
         }
         if (veins.isEmpty() || totalWeight <= 0) return false;
 

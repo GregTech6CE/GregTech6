@@ -37,7 +37,8 @@ import javax.annotation.Nullable;
  * <h2>The port's y range</h2>
  *
  * <p>{@link #MIN_Y}/{@link #MAX_Y} are the original's literals ({@code tY = 1; tY < 250}) and
- * {@link #useOn} uses exactly those; {@link #erase} is the same sweep with the range as a parameter,
+ * {@link #useOn} instead uses the current dimension's build range, preserving its very bottom layer
+ * as GT6 does; {@link #erase} takes a range,
  * because that is the seam the tests drive. It clamps the requested range to the level's own build
  * limits — 1.20.1 worlds do not all span 0..255 (the overworld is -64..319, a modded dimension may be
  * smaller) — and {@code Level.getMaxBuildHeight()} is <em>exclusive</em> in 1.20.1
@@ -142,7 +143,8 @@ public final class BehaviorChunkEraser {
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
                                 ItemStack stack, float hitX, float hitY, float hitZ) {
         if (level.isClientSide) return Outcome.refused(stack);               // :40
-        erase(level, pos.getX() >> 4, pos.getZ() >> 4, MIN_Y, MAX_Y);        // :41-43
+        erase(level, pos.getX() >> 4, pos.getZ() >> 4,
+                level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - 1);
         return Outcome.acted(stack);                                         // :44
     }
 }

@@ -31,7 +31,6 @@ public record Loader_MultiTileEntities(IEventBus bus) implements IGTLoader {
         GTStorage.registerAll();
         GTLootChests.registerAll();
         GTSensors.registerAll();
-        GTMagnets.registerAll();
         GTToolBlocks.registerAll();
         GTMiscBlocks.registerAll();
         GTWoods.registerAll();

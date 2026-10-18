@@ -28,6 +28,8 @@ public final class FurnaceFuelValue {
         if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) {
             return 0;
         }
+        var explicit = originalBurnTime(stack);
+        if (explicit != null) return explicit;
         if (stack.is(ItemTags.PLANKS)) {
             return 3L * GregTechConstants.TICKS_PER_SMELT / 2;
         }
@@ -55,6 +57,19 @@ public final class FurnaceFuelValue {
 
     public static long getHeatUnits(ItemStack stack) {
         return getBurnValue(stack) * GregTechConstants.EU_PER_FURNACE_TICK;
+    }
+
+    /** Original explicit item values; never calls the loader hook, avoiding fuel-event recursion. */
+    public static Integer originalBurnTime(ItemStack stack) {
+        if (stack.isEmpty() || ItemMaterialRegistry.hasStoredContents(stack)) return null;
+        var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Integer time = com.gregtech.gregtech.content.recipe.OriginalSingleItemCatalog.burnTime(id.getNamespace(), id.getPath());
+        if (time != null) return time;
+        var data = ItemMaterialRegistry.get(stack).orElse(null);
+        // MT.java:1243 declares 100 ticks per U of bark; dry bark is its half-U item.
+        if (data != null && data.components().size() == 1 && data.material().resolve().getName().equals("Bark"))
+            return (int) Math.min(32000L, 100L * data.amount() / GTValues.U);
+        return null;
     }
 
     public static long getBurnValue(GTMaterial material, @Nullable MaterialPrefix prefix, long amount) {

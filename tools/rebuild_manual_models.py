@@ -65,16 +65,8 @@ def main():
     ])
     # The port's FACING points outward; original mFacing points into the attached block.
     # Thus the north-facing model lies against the south block boundary.
-    model('crank', 'crank', [box([2,2,13], [14,14,15], 'front'), box([5,5,15], [11,11,16], 'front')])
-    crank_path = ROOT / 'models/block/machine/tool/crank.json'
-    crank = json.loads(crank_path.read_text(encoding='utf-8'))
-    crank['children']['colored']['textures']['axle'] = 'gt6ce:block/iconsets/axle'
-    for part in crank['children']['colored']['elements']:
-        for side, face in part['faces'].items():
-            if side != 'north': face['texture'] = '#axle'
-    for part in crank['children']['overlay']['elements']:
-        part['faces'] = {'north': part['faces']['north']}
-    crank_path.write_text(json.dumps(crank, indent=2)+'\n', encoding='utf-8')
+    from integration.manual_crank_models import write_crank
+    write_crank(ROOT)
     variants = {}
     for facing, rotation in [('north',0),('east',90),('south',180),('west',270)]:
         for stone in (False, True):

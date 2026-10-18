@@ -77,8 +77,14 @@ public final class SmeltingCrucibleRenderer implements BlockEntityRenderer<Smelt
     /** Single opaque top surface — GT6 pass 5 only draws {@code SIDES_TOP}. */
     static void drawTop(PoseStack poseStack, MultiBufferSource bufferSource, ResourceLocation texture, int tint,
                                 float y, float x0, float z0, float x1, float z1, int packedLight) {
+        drawTop(poseStack, bufferSource, texture, tint, y, x0, z0, x1, z1, packedLight, RenderType.solid());
+    }
+
+    /** A separate cutout pass retains the transparent pixels in GT6 material detail layers. */
+    static void drawTop(PoseStack poseStack, MultiBufferSource bufferSource, ResourceLocation texture, int tint,
+                        float y, float x0, float z0, float x1, float z1, int packedLight, RenderType renderType) {
         TextureAtlasSprite sprite = CrucibleRenderSprites.resolve(texture);
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.solid());
+        VertexConsumer consumer = bufferSource.getBuffer(renderType);
         Matrix4f matrix = poseStack.last().pose();
         float r = ((tint >> 16) & 0xFF) / 255.0F;
         float g = ((tint >> 8) & 0xFF) / 255.0F;

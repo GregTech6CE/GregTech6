@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_food_pizzas",
+  "contents": [
+    "item:gt6ce:flat_dough_with_ketchup",
+    "item:gt6ce:mince_meat_pizza",
+    "item:gt6ce:pizza_hawaii",
+    "item:gt6ce:pizza_margherita",
+    "item:gt6ce:raw_mince_meat_pizza",
+    "item:gt6ce:raw_pizza_hawaii",
+    "item:gt6ce:raw_pizza_margherita",
+    "item:gt6ce:raw_veggie_pizza",
+    "item:gt6ce:veggie_pizza"
+  ],
+  "priority": 120
+}

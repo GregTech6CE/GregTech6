@@ -142,6 +142,11 @@ def numbered_item_identities(original):
             if key in ('IL_ITEM_PREFIXES','IL_SHAPE_PREFIXES','SHAPE_WORDS'): tables[key]=ast.literal_eval(node.value)
     def item_id(field):
         if any(field.startswith(prefix) for prefix in tables['IL_ITEM_PREFIXES']): return None
+        # Same display name, different original registration: the port's _2
+        # items are the used rolls, never aliases of the sealed full rolls.
+        used_tape={'Tape_Used':'tape_2', 'Duct_Tape_Used':'duct_tape_2',
+                   'Brain_Tape_Used':'braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2'}
+        if field in used_tape:return used_tape[field]
         # These adopted technological IDs reorder the original IL field, not its display text.
         usb=re.fullmatch(r'USB_(Stick|Cable|HDD)_([1-4])',field)
         if usb:return 'usb'+usb[2]+'_'+usb[1].lower()
@@ -868,7 +873,7 @@ def main():
     # A name already bound by numeric identity also owns that ID's description.
     for key in english:
         if key.endswith('.tooltip') and key[:-8] in aliases:
-            original = aliases[key[:-8]] + '.tooltip'
+            original = item_candidates.get(key[:-8], aliases[key[:-8]]) + '.tooltip'
             if original in source: candidates[key].add(original)
     added,conflicts,missing,ambiguous,resolved_collisions={},{},{},{},{}
     runtime_fluid_fallbacks={}
@@ -909,6 +914,10 @@ def main():
                 ident=next(iter(material_proofs[key]))[0]
                 conflicts[key]={'before':aliases[key],'after':original,'source_material_id':ident,
                                 'reason':'Actual shared material ID matches original MT declaration; old field alias is not the material internal name'}
+            elif key in {'item.gt6ce.tape_2', 'item.gt6ce.duct_tape_2',
+                         'item.gt6ce.braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2'} and item_candidates.get(key)==original:
+                conflicts[key]={'before':aliases[key],'after':original,
+                                'reason':'Original IL used-roll field proves the distinct positive item ID; equal display names do not identify the full roll'}
             elif key=='block.gt6ce.mortar_block':
                 conflicts[key]={'before':aliases[key],'after':original,'reason':'Original ceramic mortar:32735; sapphire tool variant:32075'}
             elif key=='block.gt6ce.wood_barrel' and original=='gt.multitileentity.32733':

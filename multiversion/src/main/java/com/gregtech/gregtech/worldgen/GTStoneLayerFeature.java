@@ -72,6 +72,7 @@ public class GTStoneLayerFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        if (!GTWorldgenDefaults.STONE_LAYERS) return false;
         WorldGenLevel level = context.level();
         RandomSource random = context.random();
         BlockPos origin = context.origin();

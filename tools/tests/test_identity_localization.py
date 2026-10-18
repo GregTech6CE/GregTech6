@@ -21,6 +21,20 @@ from source_recipe_language import recipe_map_names
 
 
 class IdentityLanguageTests(unittest.TestCase):
+    def test_used_tape_uses_its_original_number_instead_of_the_equal_full_roll_name(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
+            root=Path(folder);java=native_path(root/'src/main/java/gregtech/items');java.mkdir(parents=True)
+            (java/'MultiItemRandomTools.java').write_text('''
+IL.Tape.set(addItem(12000, "Tape", "Full Roll"));
+IL.Tape_Used.set(addItem(12001, "Tape", "Used Roll"));
+IL.Duct_Tape.set(addItem(12002, "Duct Tape", "Full Roll"));
+IL.Duct_Tape_Used.set(addItem(12003, "Duct Tape", "Used Roll"));
+IL.Brain_Tape_Used.set(addItem(12009, "BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84", "Used Roll"));
+''',encoding='utf-8')
+            result,_=numbered_item_identities(root)
+            for native,ident in [('tape_2',12001),('duct_tape_2',12003),('braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2',12009)]:
+                self.assertEqual(result['item.gt6ce.'+native], 'gt.multiitem.randomtools.'+str(ident))
+
     def test_recipe_names_follow_inheritance_and_reject_changed_forwarding(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[2]/'work') as folder:
             root=Path(folder);java=native_path(root/'src/main/java/gregapi')

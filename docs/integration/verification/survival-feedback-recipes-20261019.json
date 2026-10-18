@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-19",
+  "scope": "source-based independent multi-item recipe/fuel repair and runtime batch inventory",
+  "validation": {
+    "compile": "pending root unified run",
+    "gametest": "pending root unified run",
+    "game_test_namespace": "gt6ce_survival_feedback",
+    "game_test_methods": 2,
+    "runtime_batch_report": "build/survival-feedback-single-item-audit.json relative to GameTest working directory"
+  },
+  "registered_non_material_table_count": 1278,
+  "registered_categories": {
+    "bottles": 170,
+    "bumblebee": 640,
+    "cans": 57,
+    "food": 266,
+    "randomtools": 145
+  },
+  "fixes": [
+    {
+      "family": "alloy compounds",
+      "identities": 5,
+      "behavior": "1/9 U compound -> one alloy nugget in vanilla/GT furnace; explicit material payload and matching crucible viewer row"
+    },
+    {
+      "family": "fuels",
+      "explicit_identity_count": 27,
+      "behavior": "GT6 grass, crop, resin, remains, apple cores, dry bark and bale values; native Forge/NeoForge fuel hook plus GT solid burning box; Bark forms preserve 100 ticks/U"
+    },
+    {
+      "family": "animal parts",
+      "identities": 15,
+      "behavior": "furnace/smoker -> sticky goo; mortar and shredder -> one bone meal; original family Generifier conversion"
+    },
+    {
+      "family": "plant remains",
+      "identities": 8,
+      "behavior": "RM.biomass(8) with original per-fluid yields and duration; Generifier -> plant remains"
+    },
+    {
+      "family": "meat",
+      "behavior": "2U scrap meat grinding/rotting; explicit raw/cooked meat-bar payload, compression/grinding/rotting; seven raw meat material-form cooking rows"
+    },
+    {
+      "family": "chum",
+      "new_rows": 4,
+      "behavior": "six source ingredients + Purple_Drink and fish/whale oil -> 8 chum + 1000 mB Sludge"
+    },
+    {
+      "family": "spray paint",
+      "new_rows": 16,
+      "behavior": "empty spray can + 2304 mB matching chemical dye, 256 ticks, 16 EU/t"
+    }
+  ],
+  "remaining_limits": [
+    "Batch machine-map audit is not equivalent to every independent identity having a crafting recipe: loot/harvest acquisition, material aliases, interactions and dynamic recipes are separate.",
+    "IC2/HBM plantball compression and external AE/TE/IC2 grinding integrations are not invented when those mod items/APIs are absent.",
+    "GT6 potion.idunsapplejuice, potion.goldenapplejuice and goldencarrotjuice biomass variants have no ported fluid and remain outside this source-owned-fluid batch.",
+    "Coke oven runtime already binds MachineRecipeMaps.CokeOven; viewer catalyst registration delegated to advanced workbench integration domain.",
+    "No client visual test, finished-jar installation, full survival loop or saved-world restart in this agent."
+  ],
+  "provenance": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "adopted_lines": "63-73, 241-247",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemFood.java",
+      "sha256": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598",
+      "adopted_lines": "53-60, 104-119, 206-218, 438-459, 581, 594, 927-928",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Food.java",
+      "sha256": "dc9162de4c889164383b30d4a665fabba052ad67dd7840a0241bf740665e6b82",
+      "adopted_lines": "54-58, 97-103, 242-250, 325-365, 392-398",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Crops.java",
+      "sha256": "82500dd7440d00c8fbc22330fd7d1e2abc3a058827c13277dd0cf540299fabd1",
+      "adopted_lines": "142-152",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy.java",
+      "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "adopted_lines": "1584-1606",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "adopted_lines": "682-702, 954-965",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "adopted_lines": "1243",
+      "author": "Gregorius Techneticies / GregTech-6 Team",
+      "license": "LGPL-3.0-or-later; source copyright headers retained as implementation attribution"
+    }
+  ]
+}

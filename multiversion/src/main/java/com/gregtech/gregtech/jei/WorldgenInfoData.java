@@ -60,9 +60,11 @@ public class WorldgenInfoData {
 
     public static List<VeinInfo> buildVeins() {
         List<VeinInfo> out = new ArrayList<>();
-        for (GTOreVeins.OreVein v : GTOreVeins.OVERWORLD_VEINS) {
+        var overworld=GTOreVeins.activeOverworldVeins();
+        int overworldWeight=overworld.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
+        for (GTOreVeins.OreVein v : overworld) {
             out.add(new VeinInfo(v.name(), "minecraft:overworld", v.minY(), v.maxY(), v.weight(),
-                    GTOreVeins.TOTAL_VEIN_WEIGHT, v.top(), v.bottom(), v.between(), v.spread(), true));
+                    overworldWeight, v.top(), v.bottom(), v.between(), v.spread(), true));
         }
         for (GTOreVeins.OreVein v : GTOreVeins.END_VEINS) {
             out.add(new VeinInfo(v.name(), "minecraft:the_end", v.minY(), v.maxY(), v.weight(),

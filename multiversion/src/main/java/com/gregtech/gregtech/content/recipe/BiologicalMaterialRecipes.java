@@ -11,6 +11,7 @@ public final class BiologicalMaterialRecipes extends OriginalRecipeBatch {
         if (!INSTANCE.entries().isEmpty()) throw new IllegalStateException("Biomaterials registered twice");
         INSTANCE.slime();
         INSTANCE.resin();
+        SingleItemSourceRecipes.register();
         return INSTANCE.entries().size();
     }
     private void slime() {

@@ -8,7 +8,6 @@ import com.gregtech.gregtech.blockentity.energy.EnergyNodeBlockEntity;
 import com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity;
 import com.gregtech.gregtech.content.energy.MagnetMachineDefinitions;
 import com.gregtech.gregtech.data.GregTechTags;
-import com.gregtech.gregtech.registry.GTMagnets;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
@@ -45,13 +44,17 @@ public final class MagnetMachineRepairTests {
     }
 
     @GameTest(template = "test_empty")
-    public static void originalTenRatingsAndDistinctDecorations(GameTestHelper h) {
+    public static void originalTenRatingsWithoutTestDecorations(GameTestHelper h) {
         long[] electric = {32, 128, 512, 2048, 8192};
         long[] flux = {128, 512, 2048, 8192, 32768};
         long[] magnetic = {16, 64, 256, 1024, 4096};
         String[] tiers = {"lv", "mv", "hv", "ev", "iv"};
-        h.assertTrue(MagnetMachineDefinitions.specifications().size() == 10
-                && GTMagnets.all().size() == 10, "ten powered magnets and ten passive material magnets coexist");
+        h.assertTrue(MagnetMachineDefinitions.specifications().size() == 10, "ten original powered magnets remain");
+        for (String old : new String[]{"iron", "steel", "neodymium", "cobalt", "alnico", "ferrite",
+                "electromagnetic_steel", "electromagnetic_aluminium", "electromagnetic_galvanized", "tungsten_steel"}) {
+            h.assertTrue(!ForgeRegistries.BLOCKS.containsKey(GregTech.id("magnet_" + old))
+                    && !ForgeRegistries.ITEMS.containsKey(GregTech.id("magnet_" + old)), "test decoration removed: " + old);
+        }
         for (int i = 0; i < tiers.length; i++) {
             EnergyNodeSpec eu = block("electromagnet_" + tiers[i]).spec();
             EnergyNodeSpec rf = block("flux_magnet_" + tiers[i]).spec();

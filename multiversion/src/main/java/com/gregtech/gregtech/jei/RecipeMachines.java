@@ -149,6 +149,7 @@ public final class RecipeMachines {
 
 
 
+        add(result,MachineRecipeMaps.CokeOven,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.COKE_OVEN_MAIN.get()));
         add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Hot,new ItemStack(com.gregtech.gregtech.registry.GTMultiblocks.HEAT_EXCHANGER_MAIN.get()));
 
 //? if >=1.21.1 {

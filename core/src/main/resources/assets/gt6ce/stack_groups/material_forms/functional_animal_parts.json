@@ -1,0 +1,22 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.functional_animal_parts",
+  "contents": [
+    "item:gt6ce:antler",
+    "item:gt6ce:boar_tusk",
+    "item:gt6ce:cow_hoof",
+    "item:gt6ce:cow_horn",
+    "item:gt6ce:deer_antler",
+    "item:gt6ce:deer_hoof",
+    "item:gt6ce:donkey_hoof",
+    "item:gt6ce:elephant_tusk",
+    "item:gt6ce:hoglin_tusk",
+    "item:gt6ce:hoof",
+    "item:gt6ce:horn",
+    "item:gt6ce:horse_hoof",
+    "item:gt6ce:mule_hoof",
+    "item:gt6ce:sheep_horn",
+    "item:gt6ce:tusk"
+  ],
+  "priority": 120
+}
