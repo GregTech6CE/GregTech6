@@ -88,8 +88,8 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
     @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }
     @Override protected boolean cheapOverclocking() { return !usesTimeEnergy(); }
-    @Override protected boolean requiresConstantEnergy() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.constantEnergy(usesTimeEnergy(),spec().machineName()); }
-    @Override protected int efficiency() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.efficiency(spec().machineName()); }
+    @Override protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && spec().constantEnergy(); }
+    @Override protected int efficiency() { return spec().processingEfficiency(); }
     @Override protected boolean parallelScalesDuration() { return !usesTimeEnergy(); }
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
@@ -110,7 +110,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             if(!level.hasChunkAt(pos)) {bindings.clear(this::release);return false;}
             if(cell.role()==MultiblockLayout.Role.AIR) {if(level.isEmptyBlock(pos))continue;bindings.clear(this::release);return false;}
             var expected=cell.block();
-            if(cell.part()==18042) {
+            if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
                 if(ovenCoil==null) {
                     ovenCoil=level.getBlockState(pos).getBlock();
                     if(ovenCoil!=expected&&ovenCoil!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043)) {bindings.clear(this::release);return false;}

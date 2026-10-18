@@ -136,6 +136,12 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
             return;
         }
+        var owners = com.gregtech.gregtech.api.addon.AddonMaterials.owners(mat);
+        if (owners.size() > 1) {
+            tooltip.add(Component.translatable("tooltip." + GregTech.NAMESPACE + ".material_from_addons",
+                    String.join(", ", owners)).withStyle(ChatFormatting.BLUE));
+            return;
+        }
         String sourceKey = com.gregtech.gregtech.api.material.GTMaterialRegistry.isCoreMaterial(mat)
                 ? "tooltip." + GregTech.NAMESPACE + ".material_from_mod"
                 : "tooltip." + GregTech.NAMESPACE + ".material_from_addon";
@@ -144,10 +150,7 @@ public final class MaterialTooltips {
     }
 
     private static boolean isPeriodicTableElement(GTMaterial mat) {
-        return mat.has(MaterialProperty.ELEMENT)
-                && mat.getId() > 0
-                && mat.getId() < 8000
-                && !mat.has(MaterialProperty.ANTIMATTER);
+        return GTMaterialRegistry.isPeriodicTableElement(mat);
     }
 
     public static void appendForeign(ItemStack stack, com.gregtech.gregtech.api.material.ItemComposition data,
@@ -195,7 +198,7 @@ public final class MaterialTooltips {
         if (!mat.isValid()) {
             return Component.empty();
         }
-        if (mat.getId() >= 7900 && mat.getId() <= 7912) return Component.literal(displayUnits(amount) + " ")
+        if (GTMaterialRegistry.isVanillaMatter(mat)) return Component.literal(displayUnits(amount) + " ")
                 .append(MaterialPresentation.name(mat)).append(Component.translatable("tooltip.gregtech.composition_category"));
         double weightKg = weightKg(mat, amount);
         long frac = ((long) (weightKg * 1000)) % 1000;

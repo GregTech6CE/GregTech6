@@ -15,6 +15,13 @@ java {
 }
 
 sourceSets {
+    api {
+        java {
+            srcDir 'src/api/java'
+            srcDir '../platform-shared/src/api/java'
+        }
+        compileClasspath += project(':core').sourceSets.api.output
+    }
     bootstrapGameTest {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
@@ -27,8 +34,6 @@ sourceSets {
         addonSample {
             java { srcDir '../work/addon-sample/neoforge/java' }
             resources { srcDir '../work/addon-sample/neoforge/resources' }
-            compileClasspath += sourceSets.main.compileClasspath + project(':core').sourceSets.main.output
-            runtimeClasspath += sourceSets.main.runtimeClasspath + project(':core').sourceSets.main.output
         }
     }
 }
@@ -79,7 +84,7 @@ dependencies {
     if (rootProject.findProperty('directCoreClasspath')?.toString() == 'true') {
         // Local development can use the same compiled core output directly.
         // This avoids rebuilding its large resource archive before an ordinary run.
-        implementation files(project(':core').sourceSets.main.output)
+        implementation files(project(':core').sourceSets.main.output, project(':core').sourceSets.api.output)
     } else {
         implementation project(':core')
     }
@@ -161,6 +166,7 @@ neoForge {
                 gameDirectory = project.file(rootProject.property('serverDirectory'))
             }
             jvmArgument '-Xmx2g'
+            if (rootProject.findProperty('addonSampleHalt') == 'true') jvmArgument '-DaddonSampleHalt=true'
             programArgument '--nogui'
         }
         gameTestServer {
@@ -173,13 +179,16 @@ neoForge {
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.INFO
+            if (rootProject.findProperty('materialScale')) jvmArgument "-Dgregtech.materialScale=${rootProject.findProperty('materialScale')}"
         }
     }
 
     mods {
         "${rootProject.property('mod_id')}" {
             sourceSet sourceSets.main
+            sourceSet sourceSets.api
             sourceSet project(':core').sourceSets.main
+            sourceSet project(':core').sourceSets.api
             sourceSet sourceSets.bootstrapGameTest
         }
         if (rootProject.findProperty('addonSample') == 'true') {
@@ -218,6 +227,8 @@ tasks.named('jar', Jar).configure {
     zip64 = true
     // The same Java 17 output used by Forge is embedded exactly once.
     from project(':core').sourceSets.main.output
+    from project(':core').sourceSets.api.output
+    from sourceSets.api.output
     duplicatesStrategy = DuplicatesStrategy.FAIL
     preserveFileTimestamps = false
     reproducibleFileOrder = true
@@ -237,3 +248,77 @@ tasks.register("productionSmokeJar", Jar) {
 }
 
 apply from: rootProject.file('gradle/platform-shared.gradle')
+
+def addonExternalCompile = configurations.compileClasspath.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def core = project(':core').projectDir.absolutePath.replace('\\', '/')
+    !path.startsWith(core + '/')
+}
+sourceSets.api.compileClasspath += addonExternalCompile
+// Project dependencies expose core's main classes, not classes that only the core jar copies in.
+def addonApiOutputs = files(sourceSets.api.output, project(':core').sourceSets.api.output)
+sourceSets.main.compileClasspath += addonApiOutputs
+sourceSets.main.runtimeClasspath += addonApiOutputs
+['bootstrapGameTest', 'productionSmoke', 'test'].each { name ->
+    sourceSets.named(name) {
+        compileClasspath += addonApiOutputs
+        runtimeClasspath += addonApiOutputs
+    }
+}
+
+def addonSdkJar = tasks.register('addonSdkJar', Jar) {
+    description = 'Compile-only NeoForge addon SDK: core API plus this loader API, Mojang names.'
+    group = 'build'
+    dependsOn tasks.named('compileApiJava'), project(':core').tasks.named('compileApiJava')
+    archiveBaseName = 'gregtech6-addon-sdk-1.21.1-neoforge'
+    archiveVersion = project.version.toString()
+    destinationDirectory = layout.buildDirectory.dir('addon-sdk')
+    from project(':core').sourceSets.api.output
+    from sourceSets.api.output
+    from(project(':core').file('src/main/resources/META-INF/gregtech6')) { into 'META-INF/gregtech6' }
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+def addonSampleClasspath = files(addonSdkJar.flatMap { it.archiveFile }) + configurations.compileClasspath.filter { file ->
+    def path = file.absolutePath.replace('\\', '/')
+    def core = project(':core').projectDir.absolutePath.replace('\\', '/')
+    def build = layout.buildDirectory.get().asFile.absolutePath.replace('\\', '/')
+    // Compiled GregTech classes stay out. NeoForge keeps its loader artifacts under build/moddev.
+    def loaderArtifact = path.startsWith(build + '/moddev/') || path.startsWith(build + '/addon-sdk/')
+    !path.startsWith(core + '/') && (!path.startsWith(build + '/') || loaderArtifact)
+}
+def compileAddonSample = tasks.register('compileAddonSample', JavaCompile) {
+    description = 'Compiles the NeoForge sample addon against the SDK jar and the loader, without GregTech internals.'
+    group = 'verification'
+    dependsOn addonSdkJar
+    source = fileTree(rootProject.file('work/addon-sample/neoforge/java'))
+    classpath = addonSampleClasspath
+    destinationDirectory = layout.buildDirectory.dir('classes/addon-sample')
+    options.encoding = 'UTF-8'
+    options.release = 21
+    javaCompiler.set(javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(21)
+    })
+}
+if (rootProject.findProperty('addonSample') == 'true') {
+    sourceSets.addonSample.compileClasspath = addonSampleClasspath
+    sourceSets.addonSample.runtimeClasspath = sourceSets.main.runtimeClasspath + sourceSets.addonSample.output
+}
+
+def addonApiClosureCheck = tasks.register('addonApiClosureCheck', Exec) {
+    description = 'Fails when the NeoForge API or the sample addon references a GregTech internal class.'
+    group = 'verification'
+    dependsOn tasks.named('compileApiJava'), compileAddonSample
+    workingDir rootProject.projectDir
+    def python = rootProject.findProperty('pythonExecutable') ?: 'python'
+    def platformApi = layout.buildDirectory.dir('classes/java/api').get().asFile.absolutePath
+    def coreApi = project(':core').layout.buildDirectory.dir('classes/java/api').get().asFile.absolutePath
+    def sample = layout.buildDirectory.dir('classes/addon-sample').get().asFile.absolutePath
+    def sdk = addonSdkJar.flatMap { it.archiveFile }.get().asFile.absolutePath
+    commandLine python, '-X', 'utf8', 'tools/integration/check_addon_api_closure.py',
+            '--check', platformApi, '--allow', platformApi, '--allow', coreApi,
+            '--kind', 'neoforge', '--sample', sample, '--sdk', sdk
+}
+tasks.named('check').configure { dependsOn addonApiClosureCheck }

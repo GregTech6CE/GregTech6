@@ -47,7 +47,8 @@ public final class EnergyTransfer {
 
     public static long insertEnergyInto(GregTechTags.Tag energyType, @Nullable Direction sideInto, long size, long amount,
                                         @Nullable Object emitter, BlockEntity receiver) {
-        if (receiver instanceof IEnergyBlock energyBlock) {
+        IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
+        if (energyBlock != null) {
             return energyBlock.doEnergyInjection(energyType, sideInto, size, amount, true);
         }
         return EnergyCompat.insertEnergyInto(energyType, sideInto, size, amount, emitter, receiver);
@@ -55,7 +56,8 @@ public final class EnergyTransfer {
 
     public static long extractEnergyFrom(GregTechTags.Tag energyType, @Nullable Direction sideOutOf, long size, long amount,
                                          BlockEntity receiver) {
-        if (receiver instanceof IEnergyBlock energyBlock) {
+        IEnergyBlock energyBlock = EnergyBlockViews.view(receiver);
+        if (energyBlock != null) {
             return energyBlock.doEnergyExtraction(energyType, sideOutOf, size, amount, true);
         }
         return EnergyCompat.extractEnergyFrom(energyType, sideOutOf, size, amount, receiver);

@@ -144,7 +144,7 @@ public final class EnergyNet {
                 BlockPos nb = wp.relative(dir);
                 if (wirePositions.contains(nb)) continue;
                 BlockEntity be = level.getBlockEntity(nb);
-                if (be instanceof IEnergyBlock) {
+                if (EnergyBlockViews.view(be) != null) {
                     receivers.add(nb.immutable());
                 }
             }

@@ -435,7 +435,7 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
         ListTag list = tag.getList("gt.materials", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag entry = list.getCompound(i);
-            var material = GTMaterialRegistry.get(entry.getInt("id"));
+            var material = com.gregtech.gregtech.api.material.StoredMaterial.readStackMaterial(entry);
             long amount = entry.getLong("amount");
             if (material.isValid() && amount > 0) content.add(CrucibleMaterialStack.of(material, amount));
         }
@@ -452,8 +452,7 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
         ListTag list = new ListTag();
         for (var stack : content) {
             CompoundTag entry = new CompoundTag();
-            entry.putInt("id", stack.material.getId());
-            entry.putLong("amount", stack.amount);
+            com.gregtech.gregtech.api.material.StoredMaterial.writeStack(entry, stack.material, stack.amount);
             list.add(entry);
         }
         tag.put("gt.materials", list);

@@ -136,12 +136,16 @@ public final class GTToolHelper {
 
     /** GT6 machine tool-click durability cost ({@code onToolClick2} return value). */
     public static void damageForUse(ItemStack stack, int amount, @Nullable LivingEntity user) {
+        damageForUse(stack, amount, user, EquipmentSlot.MAINHAND);
+    }
+
+    public static void damageForUse(ItemStack stack, int amount, @Nullable LivingEntity user, EquipmentSlot slot) {
         if (stack.getItem() instanceof com.gregtech.gregtech.item.ElectricToolItem electric) {
             electric.consumeInteractionEnergy(stack, Math.max(0L, amount) * 100L, user);
         } else if (stack.getItem() instanceof GTToolItem) {
-            hurt(stack, amount, user);
+            hurt(stack, amount, user, slot);
         } else if (user != null && !isCreative(user) && stack.isDamageableItem()) {
-            stack.hurtAndBreak(amount, user, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+            stack.hurtAndBreak(amount, user, entity -> entity.broadcastBreakEvent(slot));
         }
     }
 

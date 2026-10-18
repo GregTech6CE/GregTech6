@@ -60,7 +60,7 @@ public class BasicMachineContainerMenu extends AbstractContainerMenu {
         this.blockEntity = null;
         this.viewer = playerInv.player;
         this.machineName = buf != null ? buf.readUtf() : "default";
-        this.recipeMap = MachineRecipeMaps.byMachineName(machineName);
+        this.recipeMap = com.gregtech.gregtech.api.addon.RegisteredMachineIndex.recipeMap(machineName);
         this.progressData = new SimpleContainerData(1);
         addDataSlots(progressData);
         int totalMachineSlots = recipeMap.mInputItemsCount + recipeMap.mOutputItemsCount

@@ -20,7 +20,7 @@ public record Loader_MultiTileEntities(IEventBus bus) implements IGTLoader {
 
     private void registerMachines() {
         GTMachines.bootstrap();
-        GTBasicMachines.registerAll();
+        GTBasicMachines.registerAll(bus);
         GTEngines.registerAll();
         GTEnergyNodes.registerAll();
         GTBoilers.registerAll();

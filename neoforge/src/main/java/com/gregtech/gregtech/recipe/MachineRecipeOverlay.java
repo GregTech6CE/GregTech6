@@ -180,7 +180,7 @@ public final class MachineRecipeOverlay {
         var copiedFluidOutputs = new FluidStack[fluidOutputs.length];
         for (int i = 0; i < fluidOutputs.length; i++) copiedFluidOutputs[i] = fluidOutputs[i].copy();
         var recipe = new Recipe(items, copiedOutputs, null, chances, copiedFluidInputs, copiedFluidOutputs,
-                spec.duration(), spec.euPerTick(), spec.special());
+                spec.duration(), com.gregtech.gregtech.data.FuelRecipeMaps.storedEu(map, spec.euPerTick()), spec.special());
         if (map.addRecipe(recipe, true, false, false, false) == null) tally.rejected++;
         else tally.added++;
     }
