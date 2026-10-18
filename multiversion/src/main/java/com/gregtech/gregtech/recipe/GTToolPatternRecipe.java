@@ -173,6 +173,9 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     /** Whether the resolved material may be used for this row; GT6 gates this per registration. */
     protected boolean acceptsMaterial(GTMaterial material) {
         if (material == null || !material.isValid()) return false;
+        if (GTToolRecipes.isWoodenRollingPin(type,pattern))
+            return material.has(com.gregtech.gregtech.api.material.MaterialProperty.WOOD)
+                    && !material.has(com.gregtech.gregtech.api.material.MaterialProperty.ANTIMATTER);
         var gate = pattern.gate();
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
         // GT6's ANY.Stone (Loader_Tools:272) is the set of materials carrying the STONE property.
@@ -275,6 +278,8 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     }
 
     private static boolean fits(GTToolType type, GTToolRecipes.Pattern pattern, GTMaterial material) {
+        if (GTToolRecipes.isWoodenRollingPin(type,pattern)
+                && !material.has(com.gregtech.gregtech.api.material.MaterialProperty.WOOD)) return false;
         var gate = pattern.gate();
         if (gate.toolMaterial() != null) return true;
         if (gate.onlyMaterial() != null && !gate.onlyMaterial().equals(material.getName())) return false;
@@ -342,6 +347,16 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     }
 
     public static Ingredient specialIngredient(GTToolType type, GTToolRecipes.Pattern pattern, char letter) {
+        if (GTToolRecipes.isWoodenRollingPin(type,pattern)&&letter=='S') {
+            var sticks=new java.util.ArrayList<ItemStack>();
+            sticks.add(new ItemStack(net.minecraft.world.item.Items.STICK));
+            for(var material:GTMaterialRegistry.allMaterials()) {
+                if(!material.has(com.gregtech.gregtech.api.material.MaterialProperty.WOOD))continue;
+                var stack=GTItems.getStack(MaterialPrefix.stick,material,1);
+                if(!stack.isEmpty())sticks.add(stack);
+            }
+            return Ingredient.of(sticks.stream());
+        }
         String fixed = ManualToolRecipeCatalog.specialItem(type.definition(), letter);
         if (fixed != null) {
 //? if >=1.21.1 {
@@ -367,7 +382,7 @@ public abstract class GTToolPatternRecipe extends ToolShapedRecipe {
     private static ItemStack displayResult(GTToolType type, GTToolRecipes.Pattern pattern, boolean head) {
         GTMaterial material = displayMaterial(type, pattern);
         return head ? GTItems.getStack(GTToolRecipes.headPrefix(type), material, 1)
-                : GTToolItem.create(type, material, type==GTToolType.POCKET_MULTITOOL?GTMaterialRegistry.get("Blue"):type == GTToolType.FLINT_AND_TINDER
+                : GTToolItem.create(type, material, GTToolRecipes.isWoodenRollingPin(type,pattern)?GTMaterialRegistry.get("Wood"):type==GTToolType.POCKET_MULTITOOL?GTMaterialRegistry.get("Blue"):type == GTToolType.FLINT_AND_TINDER
                         ? com.gregtech.gregtech.content.material.Materials.Flint : handleMaterial(material, pattern));
     }
 }

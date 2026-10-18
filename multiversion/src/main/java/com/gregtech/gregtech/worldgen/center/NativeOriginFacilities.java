@@ -56,8 +56,13 @@ public final class NativeOriginFacilities {
         var entity=level.getBlockEntity(pos);
         if(entity instanceof ZpmModuleBlockEntity zpm) zpm.initializeDungeonEnergy(data.contains("NBT_ACTIVE_ENERGY, T"));
         if(entity instanceof DrawerQuadBlockEntity drawer && data.contains("NBT_INV_LIST")) {
-            for(int slot=0;slot<Math.min(drawer.items().getSlots(),OriginTestInventory.ROWS.size());slot++)
-                drawer.items().setStackInSlot(slot,NativeOriginItems.stack(OriginTestInventory.ROWS.get(slot)));
+            for(int slot=0;slot<Math.min(drawer.items().getSlots(),OriginTestInventory.ROWS.size());slot++) {
+                var stack = NativeOriginItems.stack(OriginTestInventory.ROWS.get(slot));
+//? if >=1.21.1 {
+                /*com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());
+*///?}
+                drawer.items().setStackInSlot(slot,stack);
+            }
         }
         if(entity instanceof com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity station && legacy==32703)
             station.setDungeonGrindstoneUses(4);

@@ -197,8 +197,12 @@ public class GTDungeonChunkRoomWorkshop extends GTDungeonChunkRoomEmpty {
         if (data.set(11, 1, 4, anvil(data.next(4)))
                 && data.level.getBlockEntity(new BlockPos(data.x + 11, data.y + 1, data.z + 4))
                 instanceof MaterialAnvilBlockEntity materialAnvil) {
-            materialAnvil.setDungeonHammer(GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),
-                    GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce));
+            var hammer = GTToolHelper.write(GTToolItems.empty(GTToolType.HARD_HAMMER),
+                    GT6Materials.Compounds.VanadiumSteel, GT6Materials.Woods.Spruce);
+//? if >=1.21.1 {
+            /*com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(hammer, data.level.registryAccess());
+*///?}
+            materialAnvil.setDungeonHammer(hammer);
         }
         ingotsOrPlates(data, 11, 1, 5);
 

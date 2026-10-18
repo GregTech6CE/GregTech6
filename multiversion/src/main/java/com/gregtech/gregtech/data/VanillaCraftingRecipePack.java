@@ -101,7 +101,8 @@ public final class VanillaCraftingRecipePack extends AbstractPackResources {
             return spec.equals("tag:minecraft:wooden_chests")?Map.of("item","minecraft:chest"):Map.of("tag",spec.substring(4));
         }
         if(spec.startsWith("item:")) return Map.of("item",spec.substring(5));
-        if(spec.equals("firestarter")) return List.of(Map.of("item","minecraft:flint_and_steel"),Map.of("item","gt6ce:tool_flint_and_tinder"));
+        // GT6 uses OD.craftingFirestarter, including the two early wooden fire starters.
+        if(spec.equals("firestarter")) return Map.of("tag","gt6ce:crafting_firestarters");
         if(spec.startsWith("tool:")) return Map.of("item","gt6ce:tool_"+com.gregtech.gregtech.api.tool.GTToolType.valueOf(spec.substring(5).toUpperCase(java.util.Locale.ROOT)).id());
         String[] parts=spec.split(":",3);
         var stack=com.gregtech.gregtech.registry.GTItems.getStack(com.gregtech.gregtech.api.prefix.PrefixRegistry.byName(parts[1]),

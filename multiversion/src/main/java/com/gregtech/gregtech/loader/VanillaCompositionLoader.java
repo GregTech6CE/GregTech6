@@ -42,5 +42,8 @@ public final class VanillaCompositionLoader {
             }
             if (!errors.isEmpty()) throw new IllegalStateException("Unresolved vanilla materials: " + errors);
         } catch (IOException e) { throw new UncheckedIOException(e); }
+        // The old generic table describes all planks as Wood. Original WoodDictionary
+        // replaces those fallbacks with the species before panel and recipe generation.
+        com.gregtech.gregtech.content.recipe.VanillaWoodProcessingRecipes.registerMaterials();
     }
 }

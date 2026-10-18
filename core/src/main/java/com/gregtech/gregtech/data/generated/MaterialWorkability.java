@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.data.generated;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.MaterialProperty;
 
 import java.util.Set;
 
@@ -92,7 +93,9 @@ public final class MaterialWorkability {
 
     /** GT6 {@code TD.Processing.MORTAR}: the material can be ground by a mortar. */
     public static boolean isMortarGrindable(GTMaterial material) {
-        return material != null && MORTAR.contains(normalize(material.getName()));
+        // MT.wood/woodnormal grant MORTAR in their factory, outside declaration flags.
+        return material != null && (material.has(MaterialProperty.WOOD)
+                || MORTAR.contains(normalize(material.getName())));
     }
 
     /** GT6 {@code TD.Properties.BRITTLE}. */

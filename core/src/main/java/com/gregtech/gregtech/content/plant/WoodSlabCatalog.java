@@ -10,6 +10,11 @@ public final class WoodSlabCatalog {
             case "bluespruce" -> "BlueSpruce";
             case "cinnamon" -> "Cinnamonwood";
             case "coconut" -> "Coconutwood";
+            case "jungle" -> "Junglewood";
+            case "dark_oak" -> "DarkOak";
+            case "cherry" -> "Cherrywood";
+            case "crimson" -> "Crimsonwood";
+            case "warped" -> "Warpedwood";
             case "compressed" -> "WoodCompressed";
             case "dry" -> "WoodDead";
             case "mossy" -> "WoodMossy";
