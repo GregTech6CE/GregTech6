@@ -121,34 +121,65 @@ public final class PanelCoverRuntime {
                 net.minecraft.sounds.SoundSource.BLOCKS,1F,1F);
         }
     }
-    public void beforeTick(){
-        if(!server())return;boolean wasStopped=stopped;refreshStopped();if(wasStopped!=stopped)for(var face:Direction.values())if(PanelCover.of(host.getCover(face))==PanelCover.SHUTTER)CoverConnections.update(host,face,!shuttered(face));boolean changed=false;
-        for(var side:Direction.values()){
-            var stack=host.getCover(side);var c=control(side);if(c==null)continue;
-            if(CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack))&&c.supportsMode()&&!stopped)c.setMode(CoverItems.selectorTag(stack));
-            var spec=MachineCoverSpec.of(stack);
-            if(spec!=null&&!spec.detector()&&!(host instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity))
-                c.setEnabled(spec.allows(new MachineCoverSpec.State(host.coverPossible(side),c.running(),c.active(),false),incoming(side),MachineCoverSpec.inverted(stack),host.coverOwner().getLevel().getGameTime()));
+    /**
+     * Applies the port's pre-work controls and selector state. Button reset currently
+     * runs here; the original button panel resets in its post-work cover callback.
+     * The one-shot restore flag is also consumed here, even when stopped skips selectors.
+     */
+    public void beforeTick() {
+        if (!server()) return;
+        boolean wasStopped = stopped;
+        refreshStopped();
+        if (wasStopped != stopped)
+            for (var face : Direction.values())
+                if (PanelCover.of(host.getCover(face)) == PanelCover.SHUTTER)
+                    CoverConnections.update(host, face, !shuttered(face));
+        boolean changed = false;
+        for (var side : Direction.values()) {
+            var stack = host.getCover(side);
+            var c = control(side);
+            if (c == null) continue;
+            // Original fixed selector tags set their mode even while covers are stopped.
+            if (CoverItems.TAG_SELECTOR.equals(CoverItems.behavior(stack)) && c.supportsMode() && !stopped)
+                c.setMode(CoverItems.selectorTag(stack));
+            var spec = MachineCoverSpec.of(stack);
+            if (spec != null && !spec.detector()
+                    && !(host instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity))
+                c.setEnabled(spec.allows(new MachineCoverSpec.State(host.coverPossible(side), c.running(), c.active(), false),
+                        incoming(side), MachineCoverSpec.inverted(stack), host.coverOwner().getLevel().getGameTime()));
         }
-        for(var side:Direction.values()){
-            var stack=host.getCover(side);var panel=PanelCover.of(stack);if(panel==null||!panel.selector())continue;
-            var c=control(side);if(c==null||!c.supportsMode()||stopped)continue;
-            if(panel==PanelCover.REDSTONE)c.setMode(incoming(side));
-            else if(restore)c.setMode(value(stack)&15);
+        for (var side : Direction.values()) {
+            var stack = host.getCover(side);
+            var panel = PanelCover.of(stack);
+            if (panel == null || !panel.selector()) continue;
+            var c = control(side);
+            if (c == null || !c.supportsMode() || stopped) continue;
+            if (panel == PanelCover.REDSTONE) c.setMode(incoming(side));
+            else if (restore) c.setMode(value(stack) & 15);
 //? if >=1.21.1 {
-            /*if(panel==PanelCover.BUTTONS&&CoverStackData.has(stack)){
-                int ticks=CoverStackData.read(stack).getInt(COUNTDOWN);
-                if(ticks>1){CoverStackData.putInt(stack,COUNTDOWN,--ticks);host.coverOwner().setChanged();if(ticks==1)c.setMode(0);}
+            /*if (panel == PanelCover.BUTTONS && CoverStackData.has(stack)) {
+                int ticks = CoverStackData.read(stack).getInt(COUNTDOWN);
+                if (ticks > 1) {
+                    CoverStackData.putInt(stack, COUNTDOWN, --ticks);
+                    host.coverOwner().setChanged();
+                    if (ticks == 1) c.setMode(0);
+                }
 *///?} else {
-            if(panel==PanelCover.BUTTONS&&stack.hasTag()){
-                int ticks=stack.getTag().getInt(COUNTDOWN);
-                if(ticks>1){stack.getTag().putInt(COUNTDOWN,--ticks);host.coverOwner().setChanged();if(ticks==1)c.setMode(0);}
+            if (panel == PanelCover.BUTTONS && stack.hasTag()) {
+                int ticks = stack.getTag().getInt(COUNTDOWN);
+                if (ticks > 1) {
+                    stack.getTag().putInt(COUNTDOWN, --ticks);
+                    host.coverOwner().setChanged();
+                    if (ticks == 1) c.setMode(0);
+                }
 //?}
             }
-            changed|=setValue(stack,c.mode()&15);
+            changed |= setValue(stack, c.mode() & 15);
         }
-        restore=false;if(changed)changed();
+        restore = false;
+        if (changed) changed();
     }
+
     public void afterTick(){
         if(!server())return;
         long now=host.coverOwner().getLevel().getGameTime();
