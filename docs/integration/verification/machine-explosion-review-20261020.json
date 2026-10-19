@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-20",
+  "base_commit": "46189a10c",
+  "scope": "machine explosion and energy-failure entry points only; broad source audit remains paused",
+  "original_authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master",
+  "original_sources": [
+    {
+      "path": "gregapi/GT_API.java",
+      "sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce"
+    },
+    {
+      "path": "gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+    },
+    {
+      "path": "gregapi/random/ExplosionGT.java",
+      "sha256": "e6c1ace9164893e31e4440b4144e5c83d4ac75a01a3032bf8a90ecb51b0b6f0f"
+    },
+    {
+      "path": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    },
+    {
+      "path": "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+    },
+    {
+      "path": "gregtech/tileentity/energy/transformers/MultiTileEntityLongDistanceTransformer.java",
+      "sha256": "68bff798f2d06d109cd5f5902671fea99617319555ed874d2971f49a14f8d6e2"
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityBedrockDrill.java",
+      "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08"
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3"
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6"
+    },
+    {
+      "path": "gregtech/tileentity/energy/converters/MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3"
+    },
+    {
+      "path": "gregtech/tileentity/energy/converters/MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    },
+    {
+      "path": "gregtech/tileentity/autotools/MultiTileEntityAutoToolHammer.java",
+      "sha256": "f47df299bf216988e91ccb84220c607e033a17f0b5140459c55e5b7873b38871"
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+      "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+      "sha256": "2b04eaab46ae4e48dbd4a7500ed1b5fac533933649cc8a0dbf4baab1b99fa96c"
+    },
+    {
+      "path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+      "sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779"
+    },
+    {
+      "path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+      "sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182"
+    },
+    {
+      "path": "gregapi/tileentity/connectors/MultiTileEntityAxle.java",
+      "sha256": "033cbb9dc03d4d2471cdcb544ac9c566337acf393f79c8e4cfc97eb3dac790f7"
+    },
+    {
+      "path": "gregapi/tileentity/connectors/MultiTileEntityWireElectric.java",
+      "sha256": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724"
+    },
+    {
+      "path": "gregapi/tileentity/connectors/MultiTileEntityPipeFluid.java",
+      "sha256": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110"
+    },
+    {
+      "path": "gregapi/tileentity/tank/TileEntityBase08Barrel.java",
+      "sha256": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45"
+    },
+    {
+      "path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    }
+  ],
+  "fixed": [
+    "distant transformer sender/receiver unconditionally removed despite default-off overload config",
+    "large boiler stale pressure and incomplete-shell early-return hazard ordering",
+    "large boiler cached formed state lost while shell chunks are unavailable",
+    "direct-explosion controllers not removed before blast; obsolete callbacks could repeat it",
+    "bedrock drill soft buffer guard/batch overshoot and persisted energy state"
+  ],
+  "preserved": [
+    "deliberate drill >4096 RU and logistics >1024 EU strength-six explosions",
+    "automatic hammer direct positive-KU oversize exception",
+    "boiler true overheat/full-steam/damaged-pressure-shell and unsafe removal/descaling",
+    "crucible explosive-material phases",
+    "source reactor terrain explosions remain disabled"
+  ],
+  "first_run": {
+    "log": "work/machine-explosion-review-20261020-run.log",
+    "result": "4 passed, turbine assertion failed because fixture assumed initial entity yaw was zero",
+    "repair": "test compares five-/ten-degree deltas from actual initial body/head rotation"
+  },
+  "final_run": {
+    "log": "work/machine-explosion-review-20261020-final.log",
+    "required_tests": 6,
+    "result": "passed",
+    "gradle_result": "BUILD SUCCESSFUL in 2m 26s"
+  },
+  "tasks": [
+    "compileBothPlatforms",
+    ":multiversion:1.21.1-neoforge:runGameTestServer"
+  ],
+  "wiki_validation": [
+    "48 SU/t ->16 RU/t after original startup",
+    "one distilled water /200 consumed steam",
+    "upward living-entity rotation 5 degrees /tick, 10 at above-nominal output"
+  ],
+  "native_test_scope": "actual machine factories, fluid/energy capabilities, source pressure boundaries, actual remote unloaded chunk boundary; blast starts cancelled after counting",
+  "not_run": [
+    "full tests",
+    "actual destructive blast propagation",
+    "user save or test line",
+    "full survival production chain",
+    "client visuals",
+    "independent saved-world process restart"
+  ]
+}

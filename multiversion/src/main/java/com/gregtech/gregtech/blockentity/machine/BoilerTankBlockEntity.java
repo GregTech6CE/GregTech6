@@ -89,15 +89,13 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
     transient float smoothBarometerFrame;
 
     public int barometerValue() {
-        long cap = steamTank.getCapacity();
-        if (cap <= 0) return 0;
-        return (int) Math.min(31, steamTank.getAmount() * 31 / cap);
+        return com.gregtech.gregtech.content.energy.BoilerHazards.pressure(steamTank.getAmount(), steamTank.capacity());
     }
 
     /** Exponential-moving-average smoothed frame for the barometer needle.
      *  Call every render frame; returns a damped 0–31 value. */
     public int smoothBarometerFrame(float speed) {
-        float target = Math.min(31f, (float) steamTank.getAmount() * 31f / Math.max(1, steamTank.getCapacity()));
+        float target = barometerValue();
         smoothBarometerFrame += (target - smoothBarometerFrame) * speed;
         return Math.round(Math.min(31, smoothBarometerFrame));
     }
@@ -105,7 +103,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
     // ── Tick ─────────────────────────────────────────────────────────────────
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, BoilerTankBlockEntity be) {
-        if (be.spec == null || level.isClientSide) return;
+        if (be.spec == null || level.isClientSide || be.isRemoved() || level.getBlockEntity(pos) != be) return;
         be.boil();
         be.coolDown();
         be.pushSteamUp();
@@ -191,7 +189,7 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
         return com.gregtech.gregtech.content.energy.BoilerHazards.explosionPower(steamTank.getAmount());
     }
     public void explode() {
-        if (level == null || level.isClientSide) return;
+        if (level == null || level.isClientSide || isRemoved() || level.getBlockEntity(worldPosition) != this) return;
         float power = explosionPower();
         level.removeBlock(worldPosition, false);
         level.explode(null, worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,

@@ -92,6 +92,9 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
     @Override public boolean isStructureOk() {
         if(level==null||isRemoved())return false;
         if(level.isClientSide)return structureOkay;
+        // GT6 checkStructure2 retains its saved result until every shell chunk is available.
+        // Missing chunks must neither invalidate a sound boiler nor interrupt its loaded outlets.
+        if(!shellLoaded())return structureOkay;
         var centre=bodyCentre();
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
         boolean complete=true;
@@ -167,23 +170,20 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
                                   OriginalLargeBoilerControllerBlockEntity boiler) {
-        if (level.isClientSide) return;
+        if (level.isClientSide || boiler.isRemoved() || level.getBlockEntity(pos) != boiler) return;
         boolean formed = boiler.isStructureOk();
-        if (formed) boiler.boil();
+        boiler.boil();
         // GT6 cools its heat and steam buffers even after a wall is removed.
         boiler.coolDown();
-        if (!formed) {
-            // GT6 bursts when a pressurised shell is damaged; an unloaded chunk is not damage.
-            if (boiler.barometer > 4 && boiler.shellLoaded()) boiler.explode();
-            return;
-        }
-        boiler.pushSteam();
-        int pressure = (int) Math.min(31, boiler.steam.getAmount() * 31 / boiler.variant.steamCapacity());
+        if (formed) boiler.pushSteam();
+        // The source samples after boiling, cooling and output, even with an incomplete shell.
+        int pressure = com.gregtech.gregtech.content.energy.BoilerHazards.pressure(boiler.steam.getAmount(), boiler.variant.steamCapacity());
         if (pressure != boiler.barometer) {
             boiler.barometer = pressure;
             boiler.syncToClient();
         }
-        if (boiler.heat > boiler.variant.heatCapacity()
+        if ((!formed && boiler.shellLoaded() && pressure > 4)
+                || boiler.heat > boiler.variant.heatCapacity()
                 || boiler.steam.getAmount() >= boiler.variant.steamCapacity()) boiler.explode();
     }
 
@@ -530,6 +530,6 @@ public final class OriginalLargeBoilerControllerBlockEntity extends GTEnergyBloc
 //?}
         water.setCapacity(WATER_CAPACITY);
         steam.setCapacity(variant.steamCapacity());
-        barometer = (int) Math.min(31, steam.getAmount() * 31 / variant.steamCapacity());
+        barometer = com.gregtech.gregtech.content.energy.BoilerHazards.pressure(steam.getAmount(), variant.steamCapacity());
     }
 }
