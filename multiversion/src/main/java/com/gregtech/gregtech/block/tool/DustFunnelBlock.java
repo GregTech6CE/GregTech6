@@ -73,10 +73,15 @@ public class DustFunnelBlock extends Block implements EntityBlock {
         if (!(level.getBlockEntity(pos) instanceof DustFunnelBlockEntity funnel)) return InteractionResult.PASS;
         ItemStack held = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            if (player.isShiftKeyDown() && held.isEmpty()) {
+            if (com.gregtech.gregtech.api.tool.GTToolHelper.isMonkeyWrench(held)) {
+                funnel.cycleMode(player.isShiftKeyDown());
+                player.displayClientMessage(funnel.modeIcon().getHoverName(), true);
+                com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
+            } else if (player.isShiftKeyDown() && held.isEmpty()
+                    || com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.PINCERS)) {
                 ItemStack out = funnel.retrieve();
                 if (!out.isEmpty() && !player.addItem(out)) player.drop(out, false);
-            } else if (!held.isEmpty()) {
+            } else if (!held.isEmpty() && hit.getDirection() == net.minecraft.core.Direction.UP) {
                 int taken = funnel.insert(held);
                 if (taken > 0 && !player.getAbilities().instabuild) held.shrink(taken);
                 else if (taken == 0) player.displayClientMessage(
@@ -106,6 +111,9 @@ public class DustFunnelBlock extends Block implements EntityBlock {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
         tooltip.add(Component.translatable("gt.tooltip.dust_funnel.1").withStyle(net.minecraft.ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("gt.tooltip.dust_funnel.2").withStyle(net.minecraft.ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.nogui.rightclick.interact").append(" (")
+                .append(Component.translatable("gt.lang.face.top")).append(")").withStyle(net.minecraft.ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.pincers.to.take").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("gt.lang.use.monkey.wrench.to.toggle.outputs").withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }
 }

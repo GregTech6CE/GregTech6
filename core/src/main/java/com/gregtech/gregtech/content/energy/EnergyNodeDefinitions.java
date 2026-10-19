@@ -65,24 +65,7 @@ public final class EnergyNodeDefinitions {
                     .capacity(s.hi() * 2).name("Transformer (" + s.name().replace('_', '-').toUpperCase() + ")").build());
         }
 
-        // Flux motors/dynamos: Forge Energy bridge (GT6 4 RF = 1 EU, 2 EU = 1 RU).
-        // GT6 builds these from MT.DATA.Flux_T[1..5] = {Pb, Invar, Electrum, ...}.
-        result.add(EnergyNodeSpec.builder("flux_motor_lv", Materials.Lead)
-                    .kind(Kind.CONVERTER).texture("motors/rotation_flux")
-                    .input(GregTechTags.Energy.RF, 128).output(GregTechTags.Energy.RU, 16)
-                    .capacity(128 * 2).name("Flux Motor (LV)").build());
-        result.add(EnergyNodeSpec.builder("flux_motor_mv", Materials.Invar)
-                    .kind(Kind.CONVERTER).texture("motors/rotation_flux")
-                    .input(GregTechTags.Energy.RF, 512).output(GregTechTags.Energy.RU, 64)
-                    .capacity(512 * 2).name("Flux Motor (MV)").build());
-        result.add(EnergyNodeSpec.builder("flux_dynamo_lv", Materials.Lead)
-                    .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
-                    .input(GregTechTags.Energy.RU, 32).output(GregTechTags.Energy.RF, 88)
-                    .capacity(32 * 2).name("Flux Dynamo (LV)").build());
-        result.add(EnergyNodeSpec.builder("flux_dynamo_mv", Materials.Invar)
-                    .kind(Kind.CONVERTER).texture("dynamos/flux_rotation")
-                    .input(GregTechTags.Energy.RU, 128).output(GregTechTags.Energy.RF, 352)
-                    .capacity(128 * 2).name("Flux Dynamo (MV)").build());
+        result.addAll(FluxRotaryCatalog.specifications());
 
         result.addAll(OriginalSteamTurbines.specifications());
 

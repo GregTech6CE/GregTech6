@@ -15,6 +15,7 @@ import java.util.List;
 public final class PanelBlockItem extends BlockItem implements PanelItemView {
     public PanelBlockItem(PanelBlock block, Properties properties) { super(block, properties.stacksTo(16)); }
     @Override public com.gregtech.gregtech.content.transport.PanelCatalog.Spec panelSpec(){return ((PanelBlock)getBlock()).spec();}
+    @Override public Component getName(ItemStack stack) { return panelSpec().color().isEmpty() ? super.getName(stack) : coloredPanelName(); }
     @Override public InteractionResult useOn(UseOnContext context) {
         var player=context.getPlayer();var level=context.getLevel();var pos=context.getClickedPos();
         if(player==null||!player.mayBuild()||!level.mayInteract(player,pos))return InteractionResult.FAIL;

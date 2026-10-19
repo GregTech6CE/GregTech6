@@ -86,6 +86,10 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             var display=FluidDisplayBinding.display(fluid);
 //?}
             var fluidSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_fluid_"+i);
+            if (input) {
+                var containers = com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(fluid);
+                if (!containers.isEmpty()) builder.addInvisibleIngredients(role).addItemStacks(containers);
+            }
             if(!display.isEmpty()) fluidSlot.addItemStack(display).addTooltipCallback((view,tooltip)->
                     tooltip.add(Component.translatable("gt6ce.fluid.amount",fluid.getAmount())));
 //? if >=1.21.1 {

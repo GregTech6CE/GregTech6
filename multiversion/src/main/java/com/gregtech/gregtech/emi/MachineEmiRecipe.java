@@ -39,7 +39,12 @@ public final class MachineEmiRecipe implements EmiRecipe {
             }
             (recipe.isCatalystInput(i) ? catalysts : inputs).add(ingredient);
         }
-        for (var fluid : recipe.mFluidInputs) if (fluid != null && !fluid.isEmpty()) inputs.add(fluid(fluid));
+        for (var fluid : recipe.mFluidInputs) if (fluid != null && !fluid.isEmpty()) {
+            var choices = new ArrayList<EmiStack>();
+            choices.add(fluid(fluid));
+            for (var container : com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.containers(fluid)) choices.add(EmiStack.of(container));
+            inputs.add(EmiIngredient.of(choices));
+        }
         for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
         for (int i = 0; i < recipe.mOutputs.length; i++) {
             var stack = recipe.mOutputs[i];

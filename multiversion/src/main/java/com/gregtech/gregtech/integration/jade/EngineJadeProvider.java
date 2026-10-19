@@ -44,7 +44,8 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
 
         tag.putString(NBT_TYPE, type.name().toLowerCase(Locale.ROOT));
         tag.putString(NBT_NAME, ms.id());
-        tag.putLong(NBT_STORED, be.getEnergyStored(GregTechTags.Energy.KU, null));
+        tag.putLong(NBT_STORED, be.getEnergyStored(type == com.gregtech.gregtech.api.machine.EngineType.DIESEL
+                ? GregTechTags.Energy.RU : GregTechTags.Energy.KU, null));
         tag.putLong(NBT_OUT_RATE, ms.outputRate());
         tag.putInt(NBT_EFF, ms.efficiency());
 
@@ -64,7 +65,7 @@ public enum EngineJadeProvider implements IBlockComponentProvider, IServerDataPr
             case STEAM -> {
                 tag.putLong(NBT_IN_RATE, 200);
                 tag.putString(NBT_IN_UNIT, "Steam");
-                tag.putLong(NBT_CAPACITY, ms.outputRate() * 1000);
+                tag.putLong(NBT_CAPACITY, be instanceof KineticSteamEngineBlockEntity se ? se.energyCapacity() : ms.outputRate() * 2000);
                 tag.putBoolean(NBT_ENABLED, be instanceof KineticSteamEngineBlockEntity se && se.isEnabled());
                 tag.putBoolean(NBT_SHUTDOWN, be instanceof KineticSteamEngineBlockEntity se && se.isShutdown());
                 if (be instanceof KineticSteamEngineBlockEntity se) {

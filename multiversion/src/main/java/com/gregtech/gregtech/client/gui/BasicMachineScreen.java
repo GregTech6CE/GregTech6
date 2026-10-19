@@ -37,8 +37,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineContainerMenu> {
+public class BasicMachineScreen extends AbstractContainerScreen<BasicMachineContainerMenu> implements FluidRecipeScreen {
     private final ResourceLocation texture;
+
+    @Override public FluidStack fluidAt(int mouseX, int mouseY) {
+        for (Slot slot : menu.slots) if (slot instanceof SlotFluid fluid
+                && mouseX >= leftPos + slot.x && mouseX < leftPos + slot.x + 16
+                && mouseY >= topPos + slot.y && mouseY < topPos + slot.y + 16) return fluid.fluid().copy();
+        return FluidStack.EMPTY;
+    }
 
     public BasicMachineScreen(BasicMachineContainerMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);

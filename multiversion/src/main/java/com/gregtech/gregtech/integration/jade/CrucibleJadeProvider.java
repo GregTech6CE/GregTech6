@@ -59,7 +59,16 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
 //?}
         tag.putLong(NBT_TEMPERATURE, crucible.getTemperature());
         tag.putLong(NBT_BUFFER, crucible.getEnergyBuffer());
-        tag.putString(NBT_CONTENT, crucible.formatContentSummary());
+        var contents = new net.minecraft.nbt.ListTag();
+        for (var stack : crucible.getContentView()) {
+            if (stack.amount <= 0 || !stack.material.isValid()) continue;
+            var row = new CompoundTag();
+            row.putString("material", stack.material.getName());
+            row.putLong("amount", stack.amount);
+            row.putBoolean("molten", crucible.getTemperature() >= stack.material.getMeltingPoint());
+            contents.add(row);
+        }
+        tag.put(NBT_CONTENT, contents);
         tag.putInt(NBT_FILL, crucible.getDisplayFillPercent());
         tag.putBoolean(NBT_MOLTEN, crucible.isDisplayedMolten());
         tag.putBoolean(NBT_WARNING, crucible.isMeltDownWarning());
@@ -92,16 +101,17 @@ public enum CrucibleJadeProvider implements IBlockComponentProvider, IServerData
         if (data.contains(NBT_FILL)) {
             tooltip.add(Component.translatable("jade.gt6ce.crucible.fill", data.getInt(NBT_FILL)));
         }
-        if (data.contains(NBT_DISPLAY_MAT)) {
-            String stateKey = data.getBoolean(NBT_MOLTEN) ? "molten" : "solid";
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.display", data.getString(NBT_DISPLAY_MAT),
-                    Component.translatable("jade.gt6ce.crucible.state." + stateKey)));
-        }
         if (data.getBoolean(NBT_WARNING)) {
             tooltip.add(Component.translatable("jade.gt6ce.crucible.warning"));
         }
-        if (data.contains(NBT_CONTENT)) {
-            tooltip.add(Component.translatable("jade.gt6ce.crucible.content", data.getString(NBT_CONTENT)));
+        for (var entry : data.getList(NBT_CONTENT, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            var row = (CompoundTag) entry;
+            var material = com.gregtech.gregtech.api.material.GTMaterialRegistry.get(row.getString("material"));
+            var line = Component.literal(com.gregtech.gregtech.client.MaterialTooltips.displayUnits(row.getLong("amount")) + " ")
+                    .append(com.gregtech.gregtech.api.material.MaterialPresentation.name(material))
+                    .append(" (").append(Component.translatable("jade.gt6ce.crucible.state."
+                            + (row.getBoolean("molten") ? "molten" : "solid"))).append(")");
+            tooltip.add(Component.translatable("jade.gt6ce.crucible.content", line));
         }
         if (data.contains(NBT_CACHE, CompoundTag.TAG_COMPOUND)) {
 //? if >=1.21.1 {

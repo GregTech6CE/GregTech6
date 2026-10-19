@@ -88,4 +88,6 @@ public final class MoldItemBakedModel extends BakedModelWrapper<BakedModel> {
         return withGrid(super.getQuads(state,side,random,data,layer),side);
     }
     @Override public ItemOverrides getOverrides(){return overrides;}
+    /** The native item renderer otherwise unwraps the hull's passes and loses this cavity grid. */
+    @Override public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous) { return List.of(this); }
 }

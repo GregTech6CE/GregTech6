@@ -2640,6 +2640,14 @@ ITEMS.put("steam_turbine_trinitanium",new Entry("turbines",393));
 ITEMS.put("steam_turbine_graphene",new Entry("turbines",394));
 }
 public static Entry entry(String id) {
+    for (int i = 0; i < com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.size(); i++) {
+        var tier = com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.get(i);
+        if (id.equals("flux_motor_" + tier.tier())) return new Entry("motors", 11021 + i);
+        if (id.equals("flux_dynamo_" + tier.tier())) return new Entry("dynamos", 11111 + i);
+    }
+
+    for (var spec : com.gregtech.gregtech.content.energy.HeatExchangerCatalog.ALL)
+        if (spec.id().equals(id)) return new Entry("heat_exchangers", spec.sourceId());
     if (id.startsWith("wooden_bucket_")) {
         for (var band : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.BANDS)
             for (var content : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.CONTENTS)

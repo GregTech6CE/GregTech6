@@ -20,6 +20,7 @@ public final class CoverDrops {
         if(ComponentCoverFallback.ownClass(owner)&&owner instanceof PanelCoverHost host&&tag.contains("gt.cover.stopped"))host.panels().restoreStopped(tag.getBoolean("gt.cover.stopped"));
     }
     private static CompoundTag coverData(BlockEntity owner,ServerLevel level){
+        if (owner instanceof PanelCoverHost host && !host.hasAttachedCovers()) return new CompoundTag();
 //? if >=1.21.1 {
         /*var saved=owner.saveWithoutMetadata(level.registryAccess());var result=new CompoundTag();
 *///?} else {
@@ -42,12 +43,26 @@ public final class CoverDrops {
     }
     public static List<ItemStack> capture(BlockState state,ServerLevel level,BlockEntity owner,List<ItemStack> drops){
         if(owner==null||!ComponentCoverFallback.ownClass(owner))return drops;
+        boolean machine = owner instanceof com.gregtech.gregtech.blockentity.machine.HopperBlockEntity
+                || owner instanceof com.gregtech.gregtech.blockentity.tool.ProcessingToolBlockEntity
+                || owner instanceof com.gregtech.gregtech.blockentity.GTEnergyBlockEntity
+                    && !(owner instanceof com.gregtech.gregtech.blockentity.machine.TankBlockEntity)
+                    && !(owner instanceof com.gregtech.gregtech.blockentity.machine.LogisticsTankBlockEntity)
+                    && !(owner instanceof com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity);
+        if (machine) for (var stack : drops) if (stack.is(state.getBlock().asItem())) {
+//? if >=1.21.1 {
+            /*stack.remove(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+*///?} else {
+            stack.removeTagKey("BlockEntityTag");
+//?}
+        }
         var coverData=HARVEST.get(owner);
         if(coverData==null)coverData=coverData(owner,level);
         if(coverData.isEmpty())return drops;
         for(var stack:drops)if(!stack.isEmpty()&&stack.is(state.getBlock().asItem())){
 //? if >=1.21.1 {
             /*var data=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);var blockTag=data==null?new CompoundTag():data.copyTag();
+            blockTag.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType()).toString());
             blockTag.merge(coverData);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(blockTag));
 *///?} else {
             var existing=stack.getTagElement("BlockEntityTag");var blockTag=existing==null?new CompoundTag():existing.copy();

@@ -144,6 +144,10 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     public EnergyNodeSpec spec() { return spec; }
+    public long turbineSteamAmount() { return steamTank == null ? 0 : steamTank.getAmount(); }
+    public long turbineSteamCapacity() { return steamTank == null ? 0 : steamTank.capacity(); }
+    public boolean converterStopped() { return converterStopped; }
+    public boolean converterEmitted() { return rotaryConverter != null && rotaryConverter.emitted(); }
     public long stored() { return isSolar() ? solarEnergy.energy() : isBatteryBox() ? batteryEnergy.buffer() : buffer; }
     public com.gregtech.gregtech.content.energy.BatteryBoxEnergy batteryEnergy() { return batteryEnergy; }
 

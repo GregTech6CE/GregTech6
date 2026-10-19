@@ -34,6 +34,8 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         if (steam != null) {
             tag.putLong(STEAM_AMT, steam.getAmount());
             tag.putLong(STEAM_CAP, steam.getCapacity());
+            tag.putLong("gt_steam_offer", com.gregtech.gregtech.content.energy.BoilerSteamOutput.offered(
+                    steam.getAmount(), steam.capacity(), spec.steamOutput()));
         }
         if (water != null) {
             tag.putLong(WATER_AMT, water.getAmount());
@@ -58,6 +60,7 @@ public enum BoilerJadeProvider implements IBlockComponentProvider, IServerDataPr
         int steamPct = steamCap > 0 ? (int) (steamAmt * 100 / steamCap) : 0;
         tooltip.add(Component.translatable("jade.gt6ce.boiler.steam",
                 steamAmt, steamCap, steamPct));
+        tooltip.add(Component.translatable("gt.lang.energy.output").append(": " + data.getLong("gt_steam_offer") + " L/t"));
 
         long waterAmt = data.getLong(WATER_AMT);
         long waterCap = data.getLong(WATER_CAP);

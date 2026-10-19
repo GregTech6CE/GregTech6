@@ -11,6 +11,21 @@ public final class UtilityCraftingRows {
     public static final List<OriginalSurvivalRecipes.Row> ROWS = rows();
     private static List<OriginalSurvivalRecipes.Row> rows() {
         var rows = new ArrayList<OriginalSurvivalRecipes.Row>();
+        // The three upper RF grades were omitted by the first energy-node import.
+        for (var tier : com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.subList(2, 5)) {
+            rows.add(new OriginalSurvivalRecipes.Row("flux_motor_" + tier.tier(), 1, tier.material(), "GMG", Map.of(
+                    'M', "item:gt6ce:electric_motor_" + tier.tier(), 'G', "mat:gearGt")));
+            rows.add(new OriginalSurvivalRecipes.Row("flux_dynamo_" + tier.tier(), 1, tier.material(), "SMS|SGS", Map.of(
+                    'M', "item:gt6ce:electric_dynamo_" + tier.tier(), 'G', "mat:gearGt", 'S', "mat:stickLong")));
+        }
+        for (var spec : com.gregtech.gregtech.content.energy.HeatExchangerCatalog.ALL)
+            rows.add(new OriginalSurvivalRecipes.Row(spec.id(), 1, spec.material(), "PCP|OwO|PMP", Map.of(
+                    'P', spec.dense() ? "mat:plateQuadruple@Lead" : "mat:plate@Lead",
+                    'C', spec.material() == ImportedMaterialData.Invar ? "tag:gt6ce:technology/any_copper_" + (spec.dense() ? "dense_plate" : "double_plate")
+                            : "mat:" + (spec.dense() ? "plateDense" : "plateDouble") + "@AnnealedCopper",
+                    'O', "pipe:any_" + (spec.dense() ? "large" : "small") + "@Copper",
+                    'M', "block:" + (spec.dense() ? "casingMachineQuadruple" : "casingMachine"),
+                    'w', "item:gt6ce:tool_wrench")));
         // MultiItemRandomTools:126-132; tools retain their original durability use.
         for (var raw : com.gregtech.gregtech.content.recipe.ClayUtilityCatalog.ROWS)
             rows.add(new OriginalSurvivalRecipes.Row(raw.raw(),1,GTMaterialRegistry.get("Clay"),raw.pattern(),

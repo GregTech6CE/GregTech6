@@ -21,11 +21,13 @@ public final class MaterialFuelRules {
     }
 
     public static long getBurnValue(GTMaterial material, MaterialPrefix prefix, long amount) {
+        if (prefix == MaterialPrefix.unit) return 0; // Viewer material placeholders are not physical fuel.
         GTMaterial mat = material.resolve();
         if (!mat.isValid()) {
             return 0;
         }
         long burnTime = mat.getFurnaceBurnTime();
+        if (mat.getName().equals("Bark")) burnTime = Math.max(100, burnTime);
         if (burnTime <= 0 && prefix == null) {
             return 0;
         }
@@ -54,10 +56,27 @@ public final class MaterialFuelRules {
         if (prefix == MaterialPrefix.stickLong) {
             return Math.max(GregTechConstants.TICKS_PER_SMELT, burnTime);
         }
-        if (prefix == MaterialPrefix.plate) {
-            return Math.max((GregTechConstants.TICKS_PER_SMELT * 27L) / 2, burnTime);
-        }
         return burnTime;
+    }
+
+    /** Original GT_API_Proxy: blockRaw is 10U fuel; wood bundle minima apply to blocks, not plates. */
+    public static long blockBurnValue(GTMaterial material, com.gregtech.gregtech.api.prefix.BlockMaterialPrefix prefix) {
+        if (prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.ore
+                || prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.oreSmall) return 0;
+        long time = 0;
+        for (var part : com.gregtech.gregtech.block.BlockMaterialWeights.contained(material, prefix))
+            time += scaleUnits(part.material().getFurnaceBurnTime(), GTValues.U, part.amount());
+        if (prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.blockRaw)
+            time = material.resolve().getFurnaceBurnTime() * 10;
+        if (isWoodFamily(material)) {
+            if (prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.blockPlate)
+                time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 27L / 2);
+            if (prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.crateGtPlate)
+                time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 51L / 2);
+            if (prefix == com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.crateGt64Plate)
+                time = Math.max(time, GregTechConstants.TICKS_PER_SMELT * 195L / 2);
+        }
+        return clampFuelValue(time);
     }
 
     private static boolean isWoodFamily(GTMaterial material) {
