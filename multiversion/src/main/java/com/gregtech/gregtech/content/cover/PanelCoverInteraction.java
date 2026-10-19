@@ -14,7 +14,10 @@ import net.minecraft.world.phys.BlockHitResult;
 public final class PanelCoverInteraction {
     private PanelCoverInteraction(){}
     public static InteractionResult use(PanelCoverHost host,Player player,InteractionHand hand,BlockHitResult hit,boolean manageAllCovers){
-        var owner=host.coverOwner();var level=owner.getLevel();var held=player.getItemInHand(hand);var side=hit.getDirection();
+        var owner = host.coverOwner();
+        var level = owner.getLevel();
+        var held = player.getItemInHand(hand);
+        var side = hit.getDirection();
         if(level==null)return InteractionResult.PASS;
         if(!player.mayBuild()||!level.mayInteract(player,owner.getBlockPos()))return InteractionResult.FAIL;
         if(PanelCover.of(held)!=null){
@@ -35,17 +38,25 @@ public final class PanelCoverInteraction {
         }
         // Source controller forwards edge tool actions to the selected neighboring cover.
 //? if >=1.21.1 {
-        /*if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER&&FluidPipeToolInteractions.isInteractionTool(held))side=FluidPipeToolInteractions.selectedFace(hit);
-        if(com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMagnifyingGlass(held)&&!host.getCover(side).isEmpty()){
+        /*if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
+                && FluidPipeToolInteractions.isInteractionTool(held)) side = FluidPipeToolInteractions.selectedFace(hit);
+        if (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isMagnifyingGlass(held)
+                && !host.getCover(side).isEmpty()) {
 *///?} else {
-        if(PanelCover.of(host.getCover(side))==PanelCover.CONTROLLER&&GTToolHelper.isInteractionTool(held))side=ToolInteractions.selectedFace(hit);
-        if(GTToolHelper.isMagnifyingGlass(held)&&!host.getCover(side).isEmpty()){
+        if (PanelCover.of(host.getCover(side)) == PanelCover.CONTROLLER
+                && GTToolHelper.isInteractionTool(held)) side = ToolInteractions.selectedFace(hit);
+        if (GTToolHelper.isMagnifyingGlass(held) && !host.getCover(side).isEmpty()) {
 //?}
-            if(!level.isClientSide){
-                var stack=host.getCover(side);
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.inverted(stack)?"message.gt6ce.cover.inverted":"message.gt6ce.cover.normal"),false);
-                if(MachineCoverSpec.of(stack)!=null&&MachineCoverSpec.of(stack).detector()||PanelCover.of(stack)!=null&&PanelCover.of(stack).strongConfig())
-                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable(MachineCoverSpec.strong(stack)?"message.gt6ce.cover.strong":"message.gt6ce.cover.weak"),false);
+            // Generic mode/strength output currently replaces cover-specific diagnostics.
+            // This consumed path has no tool-click damage charge.
+            if (!level.isClientSide) {
+                var stack = host.getCover(side);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                        MachineCoverSpec.inverted(stack) ? "message.gt6ce.cover.inverted" : "message.gt6ce.cover.normal"), false);
+                if (MachineCoverSpec.of(stack) != null && MachineCoverSpec.of(stack).detector()
+                        || PanelCover.of(stack) != null && PanelCover.of(stack).strongConfig())
+                    player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                            MachineCoverSpec.strong(stack) ? "message.gt6ce.cover.strong" : "message.gt6ce.cover.weak"), false);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -56,6 +67,7 @@ public final class PanelCoverInteraction {
 //?}
         if((cutter||screw||chisel)&&(host.panels().configure(side,cutter,chisel)
                 ||!chisel&&host instanceof com.gregtech.gregtech.blockentity.machine.BasicMachineBlockEntity machine&&machine.configureControlCover(side,cutter))){
+            // Fixed one-point charge; original cover tool-return costs differ by action.
             if(!level.isClientSide){
 //? if >=1.21.1 {
                 /*NeoToolBindings.damageForUse(held,1,player);
