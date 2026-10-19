@@ -21,40 +21,76 @@ public enum MachineCoverSpec {
     RUNNING("activity_detector_running","detectorrunningpassively",-1),
     PROCESSING("activity_detector_processing","detectorrunningactively",-1),
     SUCCESS("activity_detector_success","detectorrunningsuccessfully",-1);
-    public final String id,texture;
+    public final String id, texture;
     public final int interval;
-    MachineCoverSpec(String id,String texture,int interval){this.id=id;this.texture=texture;this.interval=interval;}
-    public record State(boolean possible,boolean running,boolean processing,boolean success){}
-    public boolean detector(){return interval<0;}
-    public boolean invertible(){return detector()||this==REDSTONE||this==AUTO_REDSTONE;}
-    public static MachineCoverSpec of(ItemStack stack){
+
+    MachineCoverSpec(String id, String texture, int interval) {
+        this.id = id;
+        this.texture = texture;
+        this.interval = interval;
+    }
+
+    public record State(boolean possible, boolean running, boolean processing, boolean success) {}
+
+    public boolean detector() {
+        return interval < 0;
+    }
+
+    public boolean invertible() {
+        return detector() || this == REDSTONE || this == AUTO_REDSTONE;
+    }
+
+    public static MachineCoverSpec of(ItemStack stack) {
 //? if >=1.21.1 {
-        /*if(stack.isEmpty())return null;var key=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        /*if (stack.isEmpty()) return null;
+        var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
 *///?} else {
-        if(stack.isEmpty())return null;var key=ForgeRegistries.ITEMS.getKey(stack.getItem());
+        if (stack.isEmpty()) return null;
+        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        if(key==null||!key.getNamespace().equals("gt6ce"))return null;
-        for(var spec:values())if(spec.id.equals(key.getPath()))return spec;return null;
+        if (key == null || !key.getNamespace().equals("gt6ce")) return null;
+        for (var spec : values())
+            if (spec.id.equals(key.getPath())) return spec;
+        return null;
     }
 //? if >=1.21.1 {
-    /*public static boolean inverted(ItemStack stack){return CoverStackData.has(stack)&&CoverStackData.read(stack).getBoolean("gt.cover.inverted");}
-    public static boolean strong(ItemStack stack){return CoverStackData.has(stack)&&CoverStackData.read(stack).getBoolean("gt.cover.strong");}
+    /*public static boolean inverted(ItemStack stack) {
+        return CoverStackData.has(stack) && CoverStackData.read(stack).getBoolean("gt.cover.inverted");
+    }
+
+    public static boolean strong(ItemStack stack) {
+        return CoverStackData.has(stack) && CoverStackData.read(stack).getBoolean("gt.cover.strong");
+    }
 *///?} else {
-    public static boolean inverted(ItemStack stack){return stack.hasTag()&&stack.getTag().getBoolean("gt.cover.inverted");}
-    public static boolean strong(ItemStack stack){return stack.hasTag()&&stack.getTag().getBoolean("gt.cover.strong");}
+    public static boolean inverted(ItemStack stack) {
+        return stack.hasTag() && stack.getTag().getBoolean("gt.cover.inverted");
+    }
+
+    public static boolean strong(ItemStack stack) {
+        return stack.hasTag() && stack.getTag().getBoolean("gt.cover.strong");
+    }
 //?}
-    public boolean allows(State state,int signal,boolean inverted,long timer){
-        if(interval>0)return state.processing()||Math.floorMod(timer,interval)>=interval-10;
-        boolean powered=(signal>0)!=inverted;
-        return switch(this){
-            case REDSTONE->powered;
-            case AUTO_REDSTONE->state.processing()&&!state.success()||powered;
-            case AUTOMATIC->state.possible()||state.processing();
-            default->true;
+
+    /** The caller supplies state and clock; this predicate cannot validate their source. */
+    public boolean allows(State state, int signal, boolean inverted, long timer) {
+        if (interval > 0) return state.processing() || Math.floorMod(timer, interval) >= interval - 10;
+        boolean powered = (signal > 0) != inverted;
+        return switch (this) {
+            case REDSTONE -> powered;
+            case AUTO_REDSTONE -> state.processing() && !state.success() || powered;
+            case AUTOMATIC -> state.possible() || state.processing();
+            default -> true;
         };
     }
-    public int signal(State state,boolean inverted){
-        boolean value=switch(this){case POSSIBLE->state.possible();case RUNNING->state.running();case PROCESSING->state.processing();case SUCCESS->state.success();default->false;};
-        return detector()&&(value!=inverted)?15:0;
+
+    public int signal(State state, boolean inverted) {
+        boolean value = switch (this) {
+            case POSSIBLE -> state.possible();
+            case RUNNING -> state.running();
+            case PROCESSING -> state.processing();
+            case SUCCESS -> state.success();
+            default -> false;
+        };
+        return detector() && (value != inverted) ? 15 : 0;
     }
 }

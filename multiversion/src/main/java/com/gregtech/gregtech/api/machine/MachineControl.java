@@ -3,14 +3,36 @@ package com.gregtech.gregtech.api.machine;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-/** Optional machine controls. Relays resolve the target on every operation, never cache a machine. */
+/**
+ * Optional machine controls. Relays resolve the target on every operation, never cache a machine.
+ * This boundary currently exposes running/active state but has no explicit work-possible
+ * or just-completed state; callers must not infer full original detector support from it.
+ */
 public interface MachineControl {
-    default boolean available(){return true;}
-    default boolean supportsSwitch(){return true;}
-    default boolean supportsProgress(){return true;}
-    default boolean supportsMode(){return false;}
-    default int mode(){return 0;}
-    default int setMode(int mode){return 0;}
+    default boolean available() {
+        return true;
+    }
+
+    default boolean supportsSwitch() {
+        return true;
+    }
+
+    default boolean supportsProgress() {
+        return true;
+    }
+
+    default boolean supportsMode() {
+        return false;
+    }
+
+    default int mode() {
+        return 0;
+    }
+
+    default int setMode(int mode) {
+        return 0;
+    }
+
     boolean enabled();
     boolean setEnabled(boolean enabled);
     boolean running();

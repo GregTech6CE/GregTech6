@@ -208,6 +208,7 @@ public final class PanelCoverRuntime {
                 power=panel.strongConfig()&&MachineCoverSpec.strong(stack);
             }
             var spec=MachineCoverSpec.of(stack);
+            // Generic MachineControl has no completion flag; this path currently supplies false.
             if(spec!=null&&spec.detector()){
                 var c=control(side);
                 signal=c==null?0:spec.signal(new MachineCoverSpec.State(host.coverPossible(side),c.running(),c.active(),false),MachineCoverSpec.inverted(stack));
