@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_water",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_water",
+    "item:gt6ce:wooden_bucket_tin_water",
+    "item:gt6ce:wooden_bucket_zinc_water",
+    "item:gt6ce:wooden_bucket_lead_water",
+    "item:gt6ce:wooden_bucket_bismuth_water",
+    "item:gt6ce:wooden_bucket_brass_water",
+    "item:gt6ce:wooden_bucket_bronze_water",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_water",
+    "item:gt6ce:wooden_bucket_gold_water"
+  ],
+  "priority": 125
+}

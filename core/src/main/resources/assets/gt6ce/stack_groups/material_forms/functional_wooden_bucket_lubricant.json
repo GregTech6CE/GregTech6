@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_lubricant",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_lubricant",
+    "item:gt6ce:wooden_bucket_tin_lubricant",
+    "item:gt6ce:wooden_bucket_zinc_lubricant",
+    "item:gt6ce:wooden_bucket_lead_lubricant",
+    "item:gt6ce:wooden_bucket_bismuth_lubricant",
+    "item:gt6ce:wooden_bucket_brass_lubricant",
+    "item:gt6ce:wooden_bucket_bronze_lubricant",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_lubricant",
+    "item:gt6ce:wooden_bucket_gold_lubricant"
+  ],
+  "priority": 125
+}

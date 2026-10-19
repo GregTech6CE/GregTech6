@@ -57,8 +57,17 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /** KU generator engine block. 6-directional facing (DirectionalBlock), no GUI. */
-public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
+public class EngineBlock extends DirectionalBlock implements EntityBlock, GTMachineBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
+        com.gregtech.gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
+
+    @Override
+    public double fluidConnectorHalf(BlockState state, Direction face) {
+        if (engineType() != EngineType.STEAM) return com.gregtech.gregtech.api.machine.PipeGeometry.NONE;
+        Direction front = state.getValue(FACING);
+        if (face == front) return com.gregtech.gregtech.api.machine.PipeGeometry.NONE;
+        return com.gregtech.gregtech.api.machine.PipeGeometry.virtual(face == front.getOpposite() ? 4 : 2);
+    }
 
     private static final Map<Direction, VoxelShape> SHAPES = new EnumMap<>(Direction.class);
     static {

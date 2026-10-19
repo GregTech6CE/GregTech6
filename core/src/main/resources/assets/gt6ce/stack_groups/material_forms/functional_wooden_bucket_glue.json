@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_glue",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_glue",
+    "item:gt6ce:wooden_bucket_tin_glue",
+    "item:gt6ce:wooden_bucket_zinc_glue",
+    "item:gt6ce:wooden_bucket_lead_glue",
+    "item:gt6ce:wooden_bucket_bismuth_glue",
+    "item:gt6ce:wooden_bucket_brass_glue",
+    "item:gt6ce:wooden_bucket_bronze_glue",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_glue",
+    "item:gt6ce:wooden_bucket_gold_glue"
+  ],
+  "priority": 125
+}

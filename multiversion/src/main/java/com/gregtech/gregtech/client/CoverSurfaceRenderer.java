@@ -37,7 +37,8 @@ final class CoverSurfaceRenderer {
         drawAt(pose, vertices, side.getOpposite(), sprite, light,
                 com.gregtech.gregtech.content.cover.CoverPlateGeometry.THICKNESS - 1 + distance(layer), color);
     }
-    static double distance(int layer) { return .0005 + Math.max(0, layer) * .0001; }
+    // Stay outside the host's layered texture planes while keeping the cover flush to the face.
+    static double distance(int layer) { return .002 + Math.max(0, layer) * .0005; }
     static void draw(PoseStack pose, VertexConsumer vertices, Direction side,
                      TextureAtlasSprite sprite, int light, int layer) {draw(pose,vertices,side,sprite,light,layer,-1);}
     static void draw(PoseStack pose, VertexConsumer vertices, Direction side,TextureAtlasSprite sprite,int light,int layer,int color) {

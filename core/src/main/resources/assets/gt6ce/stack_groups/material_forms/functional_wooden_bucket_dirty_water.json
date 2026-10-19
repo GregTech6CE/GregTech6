@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_dirty_water",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_dirty_water",
+    "item:gt6ce:wooden_bucket_tin_dirty_water",
+    "item:gt6ce:wooden_bucket_zinc_dirty_water",
+    "item:gt6ce:wooden_bucket_lead_dirty_water",
+    "item:gt6ce:wooden_bucket_bismuth_dirty_water",
+    "item:gt6ce:wooden_bucket_brass_dirty_water",
+    "item:gt6ce:wooden_bucket_bronze_dirty_water",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_dirty_water",
+    "item:gt6ce:wooden_bucket_gold_dirty_water"
+  ],
+  "priority": 125
+}

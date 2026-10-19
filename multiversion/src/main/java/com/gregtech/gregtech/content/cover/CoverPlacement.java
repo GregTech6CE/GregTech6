@@ -14,9 +14,13 @@ public final class CoverPlacement {
         return player.getMainHandItem().isEmpty() ? player.getOffhandItem() : player.getMainHandItem();
     }
     public static boolean coverGrid(BlockGetter level, BlockPos pos, Player player) {
-        if (!CoverItems.isCover(held(player))) return false;
+        ItemStack stack = held(player);
+        boolean placing = CoverItems.isCover(stack);
+        boolean removing = GTToolHelper.matchesTool(stack, GTToolType.CROWBAR);
+        if (!placing && !removing) return false;
         return level.getBlockEntity(pos) instanceof PanelCoverHost host
-                && (ComponentCoverFallback.ownClass(host.coverOwner()) || ComponentCoverFallback.eligible(host.coverOwner()));
+                && (ComponentCoverFallback.ownClass(host.coverOwner()) || ComponentCoverFallback.eligible(host.coverOwner()))
+                && (placing || host.hasAttachedCovers());
     }
     public static boolean fullSelection(BlockGetter level, BlockPos pos, BlockState state, Player player) {
         return coverGrid(level, pos, player) || ToolInteractions.describe(state, held(player)) != null;

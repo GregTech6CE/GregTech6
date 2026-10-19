@@ -373,6 +373,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
                 spawnOutputItem(output);
             }
             syncToClient();
+            playPickupSound();
             return true;
         }
 
@@ -417,8 +418,13 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
 
         if (pickedUp) {
             syncToClient();
+            playPickupSound();
         }
         return pickedUp;
+    }
+
+    private void playPickupSound() {
+        level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.3F, 1.0F);
     }
 
     private boolean tryPickupFromBasin(Player player, MoldBasinBlockEntity basin, boolean usingPincers) {
@@ -453,6 +459,7 @@ public class MoldBlockEntity extends BlockEntity implements ITileEntityMold {
         if (!player.getInventory().add(output)) {
             spawnOutputItem(output);
         }
+        playPickupSound();
         return true;
     }
 

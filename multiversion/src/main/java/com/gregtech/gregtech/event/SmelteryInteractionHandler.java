@@ -150,7 +150,6 @@ public final class SmelteryInteractionHandler {
             boolean usingPincers = GTToolHelper.matchesTool(held, GTToolType.PINCERS);
             boolean pickedUp = mold.tryPickupWithPincers(player, usingPincers);
             if (pickedUp) {
-                level.playSound(null, mold.getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.3F, 1.0F);
                 if (usingPincers) {
                     GTToolHelper.damageForUse(held, 1, player);
                 }
@@ -279,7 +278,6 @@ public final class SmelteryInteractionHandler {
         } else if (GTToolHelper.matchesTool(held, GTToolType.PINCERS)) {
             boolean pickedUp = mold.tryPickupWithPincers(player, true);
             if (pickedUp) {
-                level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.3F, 1.0F);
                 GTToolHelper.damageForUse(held, 1, player);
             }
             return;

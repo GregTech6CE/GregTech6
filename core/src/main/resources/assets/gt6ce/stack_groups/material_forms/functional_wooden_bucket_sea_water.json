@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_sea_water",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_sea_water",
+    "item:gt6ce:wooden_bucket_tin_sea_water",
+    "item:gt6ce:wooden_bucket_zinc_sea_water",
+    "item:gt6ce:wooden_bucket_lead_sea_water",
+    "item:gt6ce:wooden_bucket_bismuth_sea_water",
+    "item:gt6ce:wooden_bucket_brass_sea_water",
+    "item:gt6ce:wooden_bucket_bronze_sea_water",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_sea_water",
+    "item:gt6ce:wooden_bucket_gold_sea_water"
+  ],
+  "priority": 125
+}

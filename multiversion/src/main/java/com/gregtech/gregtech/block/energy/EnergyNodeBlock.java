@@ -36,9 +36,18 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /** GT6 energy-net node block (motor/dynamo/transformer/turbine/solar/storage). */
-public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget {
+public class EnergyNodeBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock, ToolInteractionTarget,
+        com.gregtech.gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
 
     private final EnergyNodeSpec spec;
+
+    @Override
+    public double fluidConnectorHalf(BlockState state, Direction face) {
+        if (spec.kind() != EnergyNodeSpec.Kind.TURBINE) return com.gregtech.gregtech.api.machine.PipeGeometry.NONE;
+        Direction front = state.getValue(FACING);
+        if (face == front) return com.gregtech.gregtech.api.machine.PipeGeometry.NONE;
+        return com.gregtech.gregtech.api.machine.PipeGeometry.virtual(face.getAxis() == front.getAxis() ? 4 : 2);
+    }
 
 //? if >=1.21.1 {
 //?} else {

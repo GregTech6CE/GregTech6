@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_rubber_sap",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_rubber_sap",
+    "item:gt6ce:wooden_bucket_tin_rubber_sap",
+    "item:gt6ce:wooden_bucket_zinc_rubber_sap",
+    "item:gt6ce:wooden_bucket_lead_rubber_sap",
+    "item:gt6ce:wooden_bucket_bismuth_rubber_sap",
+    "item:gt6ce:wooden_bucket_brass_rubber_sap",
+    "item:gt6ce:wooden_bucket_bronze_rubber_sap",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_rubber_sap",
+    "item:gt6ce:wooden_bucket_gold_rubber_sap"
+  ],
+  "priority": 125
+}

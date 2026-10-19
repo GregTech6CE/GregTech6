@@ -49,6 +49,10 @@ public class GTJadePlugin implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
+        registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
+                com.gregtech.gregtech.block.misc.ColoredConstructionBlock.class);
+        registration.registerBlockComponent(ConstructionNameJadeProvider.INSTANCE,
+                com.gregtech.gregtech.block.misc.ConcreteBlock.class);
         registration.registerBlockComponent(EnergyBufferJadeProvider.INSTANCE,com.gregtech.gregtech.block.energy.ChemicalBatteryBlock.class);
         registration.registerBlockComponent(ExtenderJadeProvider.INSTANCE,com.gregtech.gregtech.block.misc.SourceExtenderBlock.class);
         registration.registerBlockComponent(ReactorJadeProvider.INSTANCE,com.gregtech.gregtech.block.energy.ReactorCoreBlock.class);
