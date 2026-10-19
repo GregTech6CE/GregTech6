@@ -162,24 +162,16 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * One retriever operation: GT6 {@code CoverRetrieverItem:60-79} — pull filtered items out of the
-     * pipe network into the inventory the cover faces.
+     * Current adjacent-inventory pull into the supplied host handler. GT6 instead searched
+     * the pipe network and delivered to the inventory facing the cover. The direction,
+     * empty-filter semantics, repeated-stack selection and pipe accounting still differ.
      *
-     * <p>The original walks the pipe graph from its own tile ({@code :69}) and, for every inventory
-     * hanging off it that is not itself a pipe ({@code :72}), moves up to 64 matching items into
-     * {@code tTarget}, the inventory adjacent to the cover ({@code :67}). The port has no pipe-graph
-     * walker available to a cover, so the inventory directly in front of the face plays the part of
-     * the network's nearest inventory and {@code target} is the machine — everything the filter, the
-     * 64-item ceiling and the {@code % 20 == 15} cadence do is unchanged.</p>
-     *
-     * @param target      what GT6's {@code tTarget} is: the destination, i.e. the host's own slots
-     * @param filter      the stack stored under {@link #FILTER_ITEM_KEY}, or empty for "no filter"
-     *                    ({@code CoverRetrieverItem:65-66}, where an invalid stack becomes a
-     *                    {@code null} filter rather than an empty one)
-     * @param blacklist   GT6's {@code aData.mVisuals[aSide] != 0}, the inverted-filter flag
-     * @param tickCounter the owner's cover tick counter
-     * @param pending     the cover's pending flag; see {@link #retrieverDue}
-     * @return whether any item moved
+     * @param target the port's receiving handler (the host's own slots)
+     * @param filter the stored item template; current matching uses logistics FilterRules
+     * @param blacklist inverted-filter mode
+     * @param tickCounter host-local cover clock
+     * @param pending requests an attempt outside the periodic phase; callers clear it on success
+     * @return whether any item moved, not whether an attempt was made
      */
     public static boolean tickRetriever(Level level, BlockPos machinePos, Direction side,
                                         IItemHandler target, ItemStack filter, boolean blacklist,
@@ -299,10 +291,9 @@ public final class CoverUtilityBehaviors {
     }
 
     /**
-     * GT6 {@code CoverFilterFluid:117-129}. The original's match is {@code FL.equal(a, b, T)}, which
-     * is {@code UT.Code.equal} — the same fluid and NBT ignored ({@code UT.java:113}) — so the
-     * port's {@link FluidStack#isFluidEqual(FluidStack)} is the exact counterpart: it compares the
-     * fluid and, in 1.20.1, deliberately not the tag.
+     * GT6 {@code CoverFilterFluid:117-129} uses {@code FL.equal(a, b, T)}: the same
+     * fluid with NBT ignored. Compare fluid identities here; stack-level equality
+     * may also compare tags or components and impose a stricter condition.
      */
 //? if >=1.21.1 {
     /*public static boolean fluidFilterPermits(ItemStack cover, boolean stopped, FluidStack candidate,net.minecraft.core.HolderLookup.Provider lookup) {
@@ -365,8 +356,9 @@ public final class CoverUtilityBehaviors {
 
     /**
      * GT6 {@code CoverFilterItem:92-97} / {@code CoverFilterFluid:96-109}: right-clicking the cover
-     * with a stack stores that stack as the filter, one item deep — the original never consumes the
-     * held stack, and neither does this.
+     * with a stack stores a template; item filters also toggle wildcard on repeated matches.
+     * This shared setter is currently reused by retrievers, which had a one-shot original setter.
+     * The original never consumes the held stack, and neither does this.
      *
      * @return whether a filter was stored
      */
@@ -378,15 +370,17 @@ public final class CoverUtilityBehaviors {
         if (cover == null || cover.isEmpty() || held == null || held.isEmpty()) return false;
 //? if >=1.21.1 {
         /*CompoundTag tag = CoverStackData.readOrEmpty(cover);
-        var previous=itemFilter(cover,lookup);
+        var previous = itemFilter(cover, lookup);
 *///?} else {
         CompoundTag tag = cover.getOrCreateTag();
-        var previous=itemFilter(cover);
+        var previous = itemFilter(cover);
 //?}
-        if(!previous.isEmpty()&&(previous.getItem()!=held.getItem()||!tag.getBoolean("gt.filter.wildcard")&&previous.getDamageValue()!=held.getDamageValue()))return false;
-        if(!previous.isEmpty())tag.putBoolean("gt.filter.wildcard",!tag.getBoolean("gt.filter.wildcard"));
-        else tag.putBoolean("gt.filter.wildcard",false);
-        var specimen=new ItemStack(held.getItem());specimen.setDamageValue(held.getDamageValue());
+        if (!previous.isEmpty() && (previous.getItem() != held.getItem()
+                || !tag.getBoolean("gt.filter.wildcard") && previous.getDamageValue() != held.getDamageValue())) return false;
+        if (!previous.isEmpty()) tag.putBoolean("gt.filter.wildcard", !tag.getBoolean("gt.filter.wildcard"));
+        else tag.putBoolean("gt.filter.wildcard", false);
+        var specimen = new ItemStack(held.getItem());
+        specimen.setDamageValue(held.getDamageValue());
 //? if >=1.21.1 {
         /*tag.put(FILTER_ITEM_KEY, specimen.save(lookup));
         CoverStackData.write(cover,tag);
