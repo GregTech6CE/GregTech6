@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 物质流体目录和特殊配方抽取
+
+Java 17 独立编译 MatterConversionCatalog／FluidDefinitions／MatterFluidAudit，通过 core 观察取得八项遗漏旁表关联、普通汞 1000 mB 与熔融汞 144 mB、汞 80／120 核子及 26214400 工作量。目录 28 行与原版／基线逐项同序；还原抽取循环后两版投影代码和字面量相同，FluidDefinitions 仅改注释。初版探针空 materialKey 的 Set.contains 判空错误已修正，最终执行通过。未运行原生配方管理器、Gradle、全套测试或游戏，详见 [回执](verification/matter-fluid-audit-20261019.json)。
+
 ## 2026-10-19 / 物质制造结构与聚变源检查
 
 SharedMatterFabricatorStructure 与 `f3b298f30` 代码／字面量等价，Java 17 独立编译和目录观察通过。149 个 core 位置与原版显式调用／中心空气匹配，顶部八格允许两种处理器；28 条特殊转换数值声明匹配。聚变四项定向源检查通过，模块不再导入 native_layout；仅验证源引用、tint 字段、两版主控状态组合和 18 条聚变数值。ALIGN-056 为源码顺序推导，无 Minecraft 重启、完整配方解析、全套测试或构建。见 [回执](verification/matter-controller-audit-20261019.json)。

@@ -37,6 +37,8 @@
 
 ## 初始化和配方从哪里看
 
+物质制造的 28 条特殊转换纯数据现在位于 core `content/recipe/MatterConversionCatalog.java`；共享原生 `MatterRecipeLoader` 遍历它并解析物品／流体，另展开元素分离。流体身份定义是 core `data/FluidCatalog.java`，须同时区分条目 materialKey 与 boundMaterial 旁表；原生边界 `RegisteredFluids` 继承同一目录。相关消费和数量缺口见 [物质流体核查](MATTER_FLUID_AUDIT.md)。
+
 - Forge 入口：版本目录的 `com/gregtech/gregtech/GregTech.java`。按 `content`、`machine registration`、`material linking` 职责调用初始化步骤。
 - NeoForge 入口：版本目录的 `platform/neoforge/GregTechNeoForge.java`。保留原生注册事件及材料／发酵准备顺序。
 - 共用机器配方入口：共享目录的 `content/recipe/MachineRecipeBootstrap.java`。两平台共用注册清单；显式配方在前，通用形态处理随后，导入的大表最后补充。

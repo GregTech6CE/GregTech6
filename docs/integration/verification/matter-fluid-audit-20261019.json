@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-19",
+  "baseline": "cca4bd48b",
+  "new_findings": [
+    "ALIGN-057",
+    "ALIGN-058"
+  ],
+  "evidence_scope": "Actual core catalog observation plus original/current registration call chains; no native recipe manager run",
+  "catalog_extraction": {
+    "rows": 28,
+    "same_order_and_values_as_baseline_and_original": true,
+    "native_rest_unchanged_in_both_projections": true,
+    "comment_only_file": "core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java"
+  },
+  "compilation": "Java 17: MatterConversionCatalog, FluidDefinitions and MatterFluidAudit; passed",
+  "core_observations": [
+    "FLUID|GenLiquid_Mercury|mercury|Mercury|null|hidden=false|loaderAmount=1000",
+    "FLUID|GenMolten_Iron|molten.iron|Iron|null|hidden=false|loaderAmount=144",
+    "FLUID|GenMolten_Mercury|molten.mercury|Mercury|null|hidden=false|loaderAmount=144",
+    "FLUID|HeliumPlasma|heliumplasma|null|null|hidden=true|loaderAmount=1000",
+    "FLUID|Hydrogen|hydrogen|null|Hydrogen|hidden=false|loaderAmount=1000",
+    "FLUID|NitrogenPlasma|nitrogenplasma|null|null|hidden=true|loaderAmount=1000",
+    "MERCURY_OUTPUT|80|120|26214400",
+    "MISSED_BOUND_COUNT|8",
+    "MISSED_BOUND|Argon|argon|Argon",
+    "MISSED_BOUND|Deuterium|deuterium|Deuterium",
+    "MISSED_BOUND|Helium|helium|Helium",
+    "MISSED_BOUND|Hydrogen|hydrogen|Hydrogen",
+    "MISSED_BOUND|Neon|neon|Neon",
+    "MISSED_BOUND|Nitrogen|nitrogen|Nitrogen",
+    "MISSED_BOUND|Oxygen|oxygen|Oxygen",
+    "MISSED_BOUND|Tritium|tritium|Tritium"
+  ],
+  "original_sha256": {
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/data/TD.java": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+    "gregapi/oredict/OreDictMaterial.java": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+    "gregtech/loaders/a/Loader_Fluids.java": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb",
+    "gregtech/loaders/c/Loader_Recipes_Other.java": "60d8832d969461869f1b224a9cc28578515fcd60c591cd0992f4e26b8951a1a3"
+  },
+  "current_sha256": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MatterRecipeLoader.java": "2811b781f0eb7a0daf2cbc9322fea9e70db8b739cc2f48f2aa4ba922550c0608",
+    "core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java": "4586190b0b7a8e03e683efb4797349f112b2d8f47b6c5374b86a5f96537b019a",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/MatterConversionCatalog.java": "9dcb5f7eb266b3d9ae7f25d543e47ca7ac54b9c1e0bfc2d7e451463586bcf051",
+    "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java": "6b7a3219ebeadd593754cfdc351ab796ebc8565f2780c1704a02791ac0f9bd9e",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOtherGen.java": "e710352c4de8cf333394f811b011f1147fd37ceec92a6b898e87cdb2a9bc956a",
+    "tools/integration/audit-probes/MatterFluidAudit.java": "c17129796b187cc3e03740aae28e0da7c4be9d488f6390affc0a468b6ea629aa",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java": "891e5f6d9b731857076e3bc12de8904d37d864b377931c33fe7263df8b5c4224",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": "919a82a89f9631e6c65e0d891af79e608bd0670746b22bca4dfaaa88909c5907",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java": "c3d8f2e23bca0849c649a3d7893a46fcfc876ab9a7c3f0b0a4ed596adc601688",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java": "2d8fef3cdab512b92899617bcdeebe67d47c4ad07cba7a5b2f45fcae5b06f855",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/SelectorTagItem.java": "cbd55d1d5e1851c4349678a06d1520c78800496ef471c389c94d30f7fa1b0c9c",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59"
+  },
+  "not_run": [
+    "Gradle",
+    "native compilation",
+    "full tests",
+    "GameTest",
+    "Minecraft",
+    "final native recipe enumeration",
+    "packaging"
+  ],
+  "remaining": [
+    "other fluid phase unit mappings",
+    "external mod fluid overrides",
+    "native collision/skip counts",
+    "transformers and storage energy networks"
+  ]
+}
