@@ -40,3 +40,5 @@
 本轮 30 个类名的完整映射、两版 54 步初始化序列和验证范围见 [标准化回执](verification/loader-standardization-20261019.json)。
 
 材料生成表需要区分“表已存在”与“属性已正确继承／被玩法消费”。目前的工作属性表和处理目标表仍有确认缺口，见 [材料处理审计](MATERIAL_PROCESSING_AUDIT.md)。`tools/integration/inventory_processing_target_consumers.py` 是只读导航工具，输出引用位置，不会替代语义核查或写回原版源码。
+
+纯 core 生成器不需要经由原生投影视图：`tools/extract_gt6_workability.py` 和 `tools/extract_gt6_processing_targets.py` 使用 `--source <MT.java>`，默认输出维护中的 core 文件；先用 `--check` 比较。临时生成可用 `--output` 指向 `work/`，工作属性报告仅在显式传 `--report` 时生成。`tools/generator_output.py` 共用输出／检查逻辑。它们的算法局限仍在审计表中，不应把可重复生成当作内容已经对齐。

@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-19",
+  "baseline": "758769b41",
+  "scope": "Direct original handler call-site inventory plus reviewed PartRecipeLoader parameter/condition/output branches. No final Minecraft recipe enumeration.",
+  "call_sites": 478,
+  "map_count": 28,
+  "source_sha256": {
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/data/OP.java": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+    "gregapi/recipes/handlers/RecipeMapHandlerPrefix.java": "de005fa316ae3d9ebddf69456c47a4e1e0ec38b9983d9fa9d1809e2bd9e58156",
+    "gregtech/loaders/c/Loader_Recipes_Handlers.java": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+  },
+  "port_sha256": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/PartRecipeLoader.java": "ac07e9ae8709bbe8111d859b45a898cf0b77fcd6601bee29de623b9c3e5a938e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/WireProcessingRecipes.java": "c3cf59c12785a327d82e64d27ba08e0a5b41f1d1bd65c7d4667d6009db2a7d37",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/WelderFamilyRecipes.java": "b1acbcfcc1ff882d157f0c74ac6b9138cfa9b8ce04c8fbcc7d7d880c5e734895",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/SharpeningRecipes.java": "763a6d05a092935c8172d096df05a515a7749a87260da7e368545e9fa81cdc8b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MortarGrindingRecipes.java": "6a351be593fdcef84e5e6b2d6c6de8167535023ee4dadfe258691a5149498562",
+    "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java": "6daca755d56a666151b4f3397e588819f7fc5fb118a59d2153da82f3362ce2f9"
+  },
+  "issues": [
+    "ALIGN-014",
+    "ALIGN-015",
+    "ALIGN-016"
+  ],
+  "examples": [
+    {
+      "route": "hard-workable quality 3 ingot -> plate in RollingMill",
+      "source_ticks": 1024,
+      "port_literal_ticks": 16
+    },
+    {
+      "route": "quality 3 stickLong -> two sticks with water in Cutter",
+      "source_ticks": 64,
+      "source_millibuckets": 256,
+      "port_literal_ticks": 16,
+      "port_millibuckets": 16
+    },
+    {
+      "route": "Lathe plateGem -> lens",
+      "source_pulverized_remainder_units": "1/4 U",
+      "port_roll_byproduct": "none"
+    }
+  ],
+  "examples_evidence": "Source parameter and formula comparison, not runtime recipe observations.",
+  "generator_checks": [
+    {
+      "script": "extract_gt6_workability.py",
+      "default_output": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java",
+      "maintained_sha256": "e460efaed48f54ebe0f7f1ef3d249e31d7d3011ada59b10bf51916f15e0751ba",
+      "check_exit": 0,
+      "write_to_scratch_exit": 0,
+      "mismatch_exit": 1,
+      "check_preserved_content_and_mtime": true,
+      "stdout": [
+        "Unchanged: C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\generated\\MaterialWorkability.java",
+        "SOFT: 37  FURNACE: 56  easy workable union: 76",
+        "MORTAR: 195  BRITTLE: 78  FOOD: 26  CRYSTALLISABLE: 43",
+        "multi-declaration statements seen: 0"
+      ]
+    },
+    {
+      "script": "extract_gt6_processing_targets.py",
+      "default_output": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java",
+      "maintained_sha256": "e800fb05585bcc78fc150c4cf7504252f51a2e783b2b5674339608ee2f4c9934",
+      "check_exit": 0,
+      "write_to_scratch_exit": 0,
+      "mismatch_exit": 1,
+      "check_preserved_content_and_mtime": true,
+      "stdout": [
+        "GT6 processing target calls: 38 (38 rows after override, 17 owners, kinds: Bending, Compressing, Cutting, Forging, Smashing, Solidifying, Working)",
+        "owners: Ceramic, EndSandBlack, EndSandWhite, FishRaw, FrozenIron, GildedIron, H2O, IronMagnetic, Lava, MeatRaw, NeodymiumMagnetic, Porcelain, RedSand, Sand, SteelGalvanized, SteelMagnetic, TungstenSintered",
+        "Unchanged: C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\generated\\MaterialProcessingTargets.java"
+      ]
+    }
+  ],
+  "original_MT_unchanged": true,
+  "production_Java_and_resources_unchanged": true,
+  "not_run": [
+    "Minecraft startup",
+    "final recipe expansion",
+    "full tests",
+    "Gradle build",
+    "packages"
+  ],
+  "status": "Documented branch differences confirmed; all-material and complete recipe audit unfinished."
+}

@@ -4,35 +4,32 @@ GT6 uses these flags for a lot of machine handler decisions:
 
   * ``SOFT`` / ``FURNACE`` — ``tEasyWorkable`` (Loader_Recipes_Handlers:58): easy materials get fixed
     compression durations (16 / 144 ticks), hard ones pay 256*(1+toolQuality) per material unit.
-  * ``MORTAR`` — "can be ground in a mortar" (TD.java:515); the whole Mortar handler block
-    (Loader_Recipes_Handlers:79-112) is gated on it.
+  * ``MORTAR`` — "can be ground in a mortar" (TD.java:515); most Mortar handler rows
+    (Loader_Recipes_Handlers:80-112) require it; the rockGt row at :79 does not.
   * ``BRITTLE`` / ``FOOD`` — the extra Mortar conditions for gems, sticks, ingots and plates
     (``Or(BRITTLE, FOOD, <finer form>.NOT)`` / ``Or(BRITTLE, FOOD, WOOD)``).
 
 The port has no FURNACE/SOFT/MORTAR/BRITTLE/FOOD material property, so the flags are imported as
 generated name tables instead of inventing a new material property.
 
-Usage: python tools/extract_gt6_workability.py
+Usage: python tools/extract_gt6_workability.py --source <MT.java> --check
+
+The legacy algorithm does not propagate factory flags and uses field-name keys
+(ALIGN-010). Check mode proves the existing table can be reproduced, not that its
+material membership is complete. This source generator writes directly to core.
 """
 
 from __future__ import annotations
 
-# Native paths are generated views; generators must use tools/native_tool.py.
-import sys as _native_sys
-from pathlib import Path as _NativePath
-_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
-from native_layout import native_path
-
-
+import argparse
 import json
-import os
+from pathlib import Path
 import re
 
-GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java"
-ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-MT_JAVA = os.path.join(GT6, "gregapi", "data", "MT.java")
-OUT_JAVA = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data", "generated", "MaterialWorkability.java")
-OUT_JSON = os.path.join(ROOT, "docs", "material-workability.json")
+from generator_output import write_or_check
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT_JAVA = ROOT / "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java"
 
 DECL_ENUM = re.compile(r"^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=")
 DECL_STATIC = re.compile(r"OreDictMaterial\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(")
@@ -65,8 +62,17 @@ def statements(text: str) -> list[str]:
 
 
 def main() -> None:
-    with open(MT_JAVA, "r", encoding="utf-8", errors="replace") as handle:
-        text = handle.read()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, required=True, help="Preserved original gregapi/data/MT.java")
+    parser.add_argument("--output", type=Path, default=OUT_JAVA)
+    parser.add_argument("--report", type=Path, help="Optional extraction report; historical reports are not overwritten by default")
+    parser.add_argument("--check", action="store_true", help="Compare requested outputs without writing")
+    args = parser.parse_args()
+    if any(path is not None and path.resolve() == args.source.resolve() for path in (args.output, args.report)):
+        parser.error("Outputs must not overwrite the original source")
+    if args.report is not None and args.report.resolve() == args.output.resolve():
+        parser.error("Java output and extraction report must use different files")
+    text = args.source.read_text(encoding="utf-8")
 
     soft: dict[str, str] = {}
     furnace: dict[str, str] = {}
@@ -178,12 +184,10 @@ def main() -> None:
         "    }",
         "}",
     ]
-    os.makedirs(os.path.dirname(OUT_JAVA), exist_ok=True)
-    with open(OUT_JAVA, "w", encoding="utf-8", newline="\n") as handle:
-        handle.write("\n".join(lines) + "\n")
+    write_or_check(args.output, "\n".join(lines) + "\n", check=args.check)
 
     report = {
-        "source": MT_JAVA,
+        "source": str(args.source.resolve()),
         "soft": sorted(soft.values()),
         "furnace": sorted(furnace.values()),
         "easyWorkable": [soft.get(k) or furnace[k] for k in easy],
@@ -193,16 +197,13 @@ def main() -> None:
         "food": sorted(flags["FOOD"].values()),
         "statementsWithMultipleDeclarations": multi,
     }
-    os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
-    with open(OUT_JSON, "w", encoding="utf-8", newline="\n") as handle:
-        json.dump(report, handle, indent=2, ensure_ascii=False)
+    if args.report is not None:
+        write_or_check(args.report, json.dumps(report, indent=2, ensure_ascii=False) + "\n", check=args.check)
 
     print(f"SOFT: {len(soft)}  FURNACE: {len(furnace)}  easy workable union: {len(easy)}")
     print(f"MORTAR: {len(flags['MORTAR'])}  BRITTLE: {len(flags['BRITTLE'])}  FOOD: {len(flags['FOOD'])}"
           f"  CRYSTALLISABLE: {len(flags['CRYSTALLISABLE'])}")
     print("multi-declaration statements seen: " + str(multi))
-    print("wrote " + OUT_JAVA)
-    print("wrote " + OUT_JSON)
 
 
 def _literals(names: list[str]) -> str:

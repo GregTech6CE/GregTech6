@@ -1,0 +1,2120 @@
+{
+  "scope": "Index explicit RM map handler registrations for the original-source audit.\n\nCounts describe constructor call sites, not material-expanded recipe counts.\nLoop bounds, outer conditions and indirect registrations still need review.",
+  "source": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Handlers.java",
+  "source_sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b",
+  "call_sites": 478,
+  "map_count": 28,
+  "maps": {
+    "Anvil": {
+      "calls": [
+        {
+          "line": 157,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 158,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 159,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 160,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 161,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 162,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 163,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 164,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 165,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 166,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 167,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 168,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 169,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 170,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 171,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 172,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 175,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 176,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 177,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 178,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 179,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 180,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 181,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 182,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 183,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 184,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 185,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 186,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 187,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 188,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 191,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 192,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 193,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 194,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 195,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 196,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 197,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 198,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 199,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 200,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 201,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 202,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 203,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 204,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 205,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefixShredding": 16,
+        "RecipeMapHandlerPrefix": 29
+      }
+    },
+    "AnvilBendBig": {
+      "calls": [
+        {
+          "line": 208,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 209,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 210,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 3
+      }
+    },
+    "AnvilBendSmall": {
+      "calls": [
+        {
+          "line": 213,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 214,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 2
+      }
+    },
+    "Autoclave": {
+      "calls": [
+        {
+          "line": 436,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 437,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 438,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 439,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 440,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 441,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 443,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 444,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 445,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 446,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 447,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 448,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 12
+      }
+    },
+    "Bath": {
+      "calls": [
+        {
+          "line": 661,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 662,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 663,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 664,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 665,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 666,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 667,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 668,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 669,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 680,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 682,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 683,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 684,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 685,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 686,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 687,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 688,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 689,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 690,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 692,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 694,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 695,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 696,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 698,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 699,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 700,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 701,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 702,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 703,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 704,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 705,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 706,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 707,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 708,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 709,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 715,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 717,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 718,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 722,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 724,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 725,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 728,
+          "handler": "RecipeMapHandlerMaterial"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerMaterial": 42
+      }
+    },
+    "Boxinator": {
+      "calls": [
+        {
+          "line": 492,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 493,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 495,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 496,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 497,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 498,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 499,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 500,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 501,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 502,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 503,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 504,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 505,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 506,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 507,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 508,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 509,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 511,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 512,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 513,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 514,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 515,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 516,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 517,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 518,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 519,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 520,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 521,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 522,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 523,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 524,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 525,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 527,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 528,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 529,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 530,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 531,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 532,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 533,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 534,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 535,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 536,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 537,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 538,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 540,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 541,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 542,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 543,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 544,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 545,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 546,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 547,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 548,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 549,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 550,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 55
+      }
+    },
+    "ClusterMill": {
+      "calls": [
+        {
+          "line": 309,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 311,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 2
+      }
+    },
+    "Compressor": {
+      "calls": [
+        {
+          "line": 217,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 218,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 219,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 220,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 221,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 222,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 223,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 224,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 226,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 227,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 228,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 229,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 230,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 231,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 232,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 233,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 236,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 237,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 238,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 239,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 241,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 242,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 243,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 244,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 24
+      }
+    },
+    "Crusher": {
+      "calls": [
+        {
+          "line": 64,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 65,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 66,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 67,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 69,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 70,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 71,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 72,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 73,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 74,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 75,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 77,
+          "handler": "RecipeMapHandlerCrushing"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 11,
+        "RecipeMapHandlerCrushing": 1
+      }
+    },
+    "Cutter": {
+      "calls": [
+        {
+          "line": 633,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 634,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 635,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 636,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 637,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 638,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 639,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 640,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 641,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 642,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 643,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 644,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 645,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 646,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 647,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 648,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 649,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 650,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 651,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 652,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 20
+      }
+    },
+    "Extruder": {
+      "calls": [
+        {
+          "line": 816,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 817,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 820,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 821,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 833,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 834,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 837,
+          "handler": "RecipeMapHandlerPrefixForging"
+        },
+        {
+          "line": 838,
+          "handler": "RecipeMapHandlerPrefixForging"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefixForging": 8
+      }
+    },
+    "Freezer": {
+      "calls": [
+        {
+          "line": 713,
+          "handler": "RecipeMapHandlerMaterial"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerMaterial": 1
+      }
+    },
+    "Generifier": {
+      "calls": [
+        {
+          "line": 735,
+          "handler": "RecipeMapHandlerMaterial"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerMaterial": 1
+      }
+    },
+    "Lathe": {
+      "calls": [
+        {
+          "line": 371,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 372,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 373,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 374,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 375,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 376,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 377,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 378,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 379,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 380,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 381,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 383,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 384,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 385,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 386,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 387,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 388,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 389,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 390,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 391,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 392,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 393,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 22
+      }
+    },
+    "Loom": {
+      "calls": [
+        {
+          "line": 621,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 1
+      }
+    },
+    "Mortar": {
+      "calls": [
+        {
+          "line": 79,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 80,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 81,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 82,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 83,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 84,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 85,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 86,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 87,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 88,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 89,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 90,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 91,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 92,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 93,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 94,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 95,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 96,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 97,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 98,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 99,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 100,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 101,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 102,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 103,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 104,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 105,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 106,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 107,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 108,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 109,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 110,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 111,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 112,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 34
+      }
+    },
+    "Polarizer": {
+      "calls": [
+        {
+          "line": 658,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 714,
+          "handler": "RecipeMapHandlerMaterial"
+        },
+        {
+          "line": 721,
+          "handler": "RecipeMapHandlerMaterial"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerMaterial": 3
+      }
+    },
+    "Press": {
+      "calls": [
+        {
+          "line": 248,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 250,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 251,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 252,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 253,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 254,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 255,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 256,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 257,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 258,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 259,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 11
+      }
+    },
+    "RollBender": {
+      "calls": [
+        {
+          "line": 298,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 299,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 300,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 301,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 303,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 304,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 305,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 306,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 8
+      }
+    },
+    "RollFormer": {
+      "calls": [
+        {
+          "line": 314,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 316,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 2
+      }
+    },
+    "RollingMill": {
+      "calls": [
+        {
+          "line": 262,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 263,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 264,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 265,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 266,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 267,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 268,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 269,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 270,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 271,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 272,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 274,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 275,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 276,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 277,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 278,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 279,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 280,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 281,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 282,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 283,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 284,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 22
+      }
+    },
+    "Sharpening": {
+      "calls": [
+        {
+          "line": 396,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 397,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 398,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 399,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 400,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 401,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 402,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 403,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 404,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 405,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 406,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 407,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 408,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 409,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 410,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 411,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 412,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 413,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 414,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 415,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 20
+      }
+    },
+    "Shredder": {
+      "calls": [
+        {
+          "line": 114,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 115,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 116,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 117,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 118,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 119,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 120,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 121,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 122,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 123,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 124,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 126,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 127,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 128,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 129,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 130,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 131,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 132,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 133,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 134,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 135,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 136,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 138,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 139,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 140,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 141,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 142,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 143,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 145,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 146,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 147,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 148,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 149,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 150,
+          "handler": "RecipeMapHandlerPrefixShredding"
+        },
+        {
+          "line": 153,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 154,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefixShredding": 34,
+        "RecipeMapHandlerPrefix": 2
+      }
+    },
+    "Sifting": {
+      "calls": [
+        {
+          "line": 62,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 1
+      }
+    },
+    "Sluice": {
+      "calls": [
+        {
+          "line": 672,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 673,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 2
+      }
+    },
+    "Unboxinator": {
+      "calls": [
+        {
+          "line": 451,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 452,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 453,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 454,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 455,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 456,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 458,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 459,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 461,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 462,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 463,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 464,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 465,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 466,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 468,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 469,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 470,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 471,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 472,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 473,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 475,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 476,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 477,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 478,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 479,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 480,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 481,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 482,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 483,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 485,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 486,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 487,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 488,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 489,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 622,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 35
+      }
+    },
+    "Welder": {
+      "calls": [
+        {
+          "line": 319,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 320,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 321,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 322,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 323,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 324,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 325,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 326,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 327,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 328,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 329,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 330,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 331,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 332,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 334,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 335,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 336,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 337,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 338,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 339,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 340,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 341,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 342,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 343,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 344,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 345,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 346,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 347,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 350,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 351,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 352,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 353,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 354,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 355,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 356,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 357,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 358,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 360,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 361,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 362,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 363,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 364,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 365,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 366,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 367,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 368,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 46
+      }
+    },
+    "Wiremill": {
+      "calls": [
+        {
+          "line": 287,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 288,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 289,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 290,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 292,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 293,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 294,
+          "handler": "RecipeMapHandlerPrefix"
+        },
+        {
+          "line": 295,
+          "handler": "RecipeMapHandlerPrefix"
+        }
+      ],
+      "handler_classes": {
+        "RecipeMapHandlerPrefix": 8
+      }
+    }
+  }
+}

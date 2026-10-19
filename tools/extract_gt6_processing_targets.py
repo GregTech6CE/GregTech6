@@ -13,30 +13,24 @@ unit for all seven; `null` as the target means "itself" as well (`setBending` et
 and an amount of 0 disables the process ("nothing" on the page).
 
 Inputs : gregtech6-master .../gregapi/data/MT.java
-Output : src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java
+Output : core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java
+
+Usage: python tools/extract_gt6_processing_targets.py --source <MT.java> --check
+This legacy extraction only records explicit setters. Copied/factory-inherited
+targets remain incomplete (ALIGN-012); --check proves reproducibility, not parity.
 """
 
 from __future__ import annotations
 
-# Native paths are generated views; generators must use tools/native_tool.py.
-import sys as _native_sys
-from pathlib import Path as _NativePath
-_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
-from native_layout import native_path, require_managed_writer
-if __name__ == "__main__": require_managed_writer()
-
-
-import io
-import os
+import argparse
+from pathlib import Path
 import re
 import sys
 
-GT6 = os.path.normpath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "..", "..",
-    "gregtech6-master", "gregtech6-master", str(native_path("src")), "main", "java", "gregapi", "data", "MT.java"))
-ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-TARGET = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "data", "generated",
-                      "MaterialProcessingTargets.java")
+from generator_output import write_or_check
+
+ROOT = Path(__file__).resolve().parents[1]
+TARGET = ROOT / "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java"
 
 KINDS = ["Solidifying", "Bending", "Compressing", "Cutting", "Forging", "Smashing", "Working"]
 
@@ -68,10 +62,10 @@ def eval_amount(expression: str) -> int:
                  % expression)
 
 
-def parse():
+def parse(source: Path):
     """GT6's seven targets: (owner field, kind, target field or '', amount) in source order."""
     rows = []
-    for number, line in enumerate(io.open(GT6, encoding="utf-8", errors="replace").read().splitlines(), 1):
+    for number, line in enumerate(source.read_text(encoding="utf-8").splitlines(), 1):
         calls = list(SETTER.finditer(line))
         if not calls:
             continue
@@ -99,17 +93,21 @@ def parse():
 
 
 def main() -> int:
-    rows = parse()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, required=True, help="Preserved original gregapi/data/MT.java")
+    parser.add_argument("--output", type=Path, default=TARGET)
+    parser.add_argument("--check", action="store_true", help="Compare output without writing")
+    args = parser.parse_args()
+    if args.output.resolve() == args.source.resolve():
+        parser.error("Output must not overwrite the original source")
+    rows = parse(args.source)
     # GT6's fluent chains override earlier calls, so the last row of an (owner, kind) pair wins.
     latest = {}
     for owner, kind, target, amount in rows:
         latest[(owner, kind)] = (target, amount)
-    ordered = [(owner, kind, latest[(owner, kind)][0], latest[(owner, kind)][1])
-               for owner, kind, _target, _amount in rows
-               if latest[(owner, kind)] == (latest[(owner, kind)][0], latest[(owner, kind)][1])]
-    # de-duplicate while keeping source order
-    seen = set()
-    ordered = [row for row in ordered if not (row[:2] in seen or seen.add(row[:2]))]
+    # Dictionary updates retain the first occurrence's position and the last value.
+    ordered = [(owner, kind, target, amount)
+               for (owner, kind), (target, amount) in latest.items()]
 
     owners = sorted({row[0] for row in ordered})
     kinds_used = sorted({row[1] for row in ordered})
@@ -185,8 +183,7 @@ def main() -> int:
         "}",
         "",
     ]
-    io.open(TARGET, "w", encoding="utf-8", newline="\n").write("\n".join(lines))
-    print("wrote %s (%d rows)" % (os.path.relpath(TARGET, ROOT).replace("\\", "/"), len(ordered)))
+    write_or_check(args.output, "\n".join(lines), check=args.check)
     return 0
 
 
