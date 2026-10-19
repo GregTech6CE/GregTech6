@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_seed_oil",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_seed_oil",
+    "item:gt6ce:wooden_bucket_tin_seed_oil",
+    "item:gt6ce:wooden_bucket_zinc_seed_oil",
+    "item:gt6ce:wooden_bucket_lead_seed_oil",
+    "item:gt6ce:wooden_bucket_bismuth_seed_oil",
+    "item:gt6ce:wooden_bucket_brass_seed_oil",
+    "item:gt6ce:wooden_bucket_bronze_seed_oil",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_seed_oil",
+    "item:gt6ce:wooden_bucket_gold_seed_oil"
+  ],
+  "priority": 125
+}

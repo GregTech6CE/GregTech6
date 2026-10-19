@@ -1,0 +1,76 @@
+{
+  "scope": "New gameplay feedback only; comprehensive original audit remains paused.",
+  "source_author": "Gregorius Techneticies / GregTech-6 Team",
+  "source_code_license": "LGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\MultiItemTool.java",
+      "sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\item\\multiitem\\behaviors\\Behavior_Bucket_Simple.java",
+      "sha256": "ee8d4395793f7d192c2b257af293fb019f01319e29baf73aecb0437ee200178f"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Handlers.java",
+      "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
+      "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMold.java",
+      "sha256": "60a916a836f1bcb00ed6ed846e05c203d1bb8bae9a83478eb39afabea67884fd"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityBasin.java",
+      "sha256": "799fe911ecc92a27a36bea7ad50aea101d047f50dfdac213dd7b340b0129edac"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityEngineSteam.java",
+      "sha256": "e0cffb1ae738531ad1a28fc458dc7dfd24717a63b27c3a64ad003eb6289cc4e5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\reactors\\MultiTileEntityReactorCore.java",
+      "sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\multiblocks\\MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\COPYING.assets",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    }
+  ],
+  "verification": {
+    "dual_native_compile": {
+      "result": "passed",
+      "duration_seconds": 79,
+      "log": "work/gameplay-feedback-20261019/compile-3.log",
+      "log_sha256": "f0035709b5d69d0eeff95cc52614300ff8fdbb6c49803b44e5d7d80799f97023"
+    },
+    "air_reaction_venting_cases": 13,
+    "bucket_assets_models_language_identities": 171,
+    "client_runtime": "not run",
+    "distribution_build": "not run",
+    "full_audit": "paused"
+  }
+}

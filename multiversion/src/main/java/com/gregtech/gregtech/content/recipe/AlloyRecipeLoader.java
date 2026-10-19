@@ -207,7 +207,7 @@ public class AlloyRecipeLoader implements InitializationStep {
 
      * Informational recipes for the Combination Smelting (crucible alloying) JEI tab:
 
-     * one fake recipe per ALLOY material with composition data, shown with unit items.
+     * one fake recipe per ALLOY material with composition data, shown with physical ingots or dust where available.
 
      * The actual conversion happens inside {@code SmeltingCrucibleBlockEntity}.
 
@@ -227,9 +227,7 @@ public class AlloyRecipeLoader implements InitializationStep {
 
                 if (part.ratio() > 64) { complete = false; break; }
 
-                var stack = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-
-                        com.gregtech.gregtech.data.MaterialPrefix.unit, part.material(), (int)part.ratio());
+                var stack = CrucibleDisplayItems.units(part.material(), (int)part.ratio());
 
                 if (stack.isEmpty()) { complete = false; break; }
 
@@ -239,9 +237,7 @@ public class AlloyRecipeLoader implements InitializationStep {
 
             if (!complete || inputs.isEmpty()) continue;
 
-            var output = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-
-                    com.gregtech.gregtech.data.MaterialPrefix.unit, reaction.output(), (int)reaction.yield());
+            var output = CrucibleDisplayItems.units(reaction.output(), (int)reaction.yield());
 
             if (output.isEmpty()) continue;
 
@@ -255,11 +251,7 @@ public class AlloyRecipeLoader implements InitializationStep {
 
         for (var item : new net.minecraft.world.item.Item[]{net.minecraft.world.item.Items.COAL, net.minecraft.world.item.Items.CHARCOAL}) {
 
-            var carbon = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-
-                    com.gregtech.gregtech.data.MaterialPrefix.unit,
-
-                    com.gregtech.gregtech.content.material.Materials.Carbon, 1);
+            var carbon = CrucibleDisplayItems.units(com.gregtech.gregtech.content.material.Materials.Carbon, 1);
 
             MachineRecipeMaps.CrucibleAlloying.addFakeRecipe(false,
 
@@ -472,7 +464,7 @@ public class AlloyRecipeLoader implements InitializationStep {
 
     /**
      * Informational recipes for the Combination Smelting (crucible alloying) JEI tab:
-     * one fake recipe per ALLOY material with composition data, shown with unit items.
+     * one fake recipe per ALLOY material with composition data, shown with physical ingots or dust where available.
      * The actual conversion happens inside {@code SmeltingCrucibleBlockEntity}.
      */
     private void crucibleAlloyingDisplay() {
@@ -482,23 +474,19 @@ public class AlloyRecipeLoader implements InitializationStep {
             boolean complete = reaction.yield() > 0 && reaction.yield() <= 64;
             for (var part : reaction.parts()) {
                 if (part.ratio() > 64) { complete = false; break; }
-                var stack = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-                        com.gregtech.gregtech.data.MaterialPrefix.unit, part.material(), (int)part.ratio());
+                var stack = CrucibleDisplayItems.units(part.material(), (int)part.ratio());
                 if (stack.isEmpty()) { complete = false; break; }
                 inputs.add(stack);
             }
             if (!complete || inputs.isEmpty()) continue;
-            var output = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-                    com.gregtech.gregtech.data.MaterialPrefix.unit, reaction.output(), (int)reaction.yield());
+            var output = CrucibleDisplayItems.units(reaction.output(), (int)reaction.yield());
             if (output.isEmpty()) continue;
             MachineRecipeMaps.CrucibleAlloying.addFakeRecipe(false, inputs.toArray(RecipeMap.ZL_IS),
                     new net.minecraft.world.item.ItemStack[]{output}, null, null, null, null, 0, 0, reaction.output().getMeltingPoint());
             shown++;
         }
         for (var item : new net.minecraft.world.item.Item[]{net.minecraft.world.item.Items.COAL, net.minecraft.world.item.Items.CHARCOAL}) {
-            var carbon = com.gregtech.gregtech.api.material.MaterialStackItemHelper.mat(
-                    com.gregtech.gregtech.data.MaterialPrefix.unit,
-                    com.gregtech.gregtech.content.material.Materials.Carbon, 1);
+            var carbon = CrucibleDisplayItems.units(com.gregtech.gregtech.content.material.Materials.Carbon, 1);
             MachineRecipeMaps.CrucibleAlloying.addFakeRecipe(false,
                     new net.minecraft.world.item.ItemStack[]{new net.minecraft.world.item.ItemStack(item, 2)},
                     new net.minecraft.world.item.ItemStack[]{carbon}, null, null, null, null, 0, 0, 1700);

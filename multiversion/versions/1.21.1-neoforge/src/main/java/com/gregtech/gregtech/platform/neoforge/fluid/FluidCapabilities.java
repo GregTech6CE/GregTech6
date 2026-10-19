@@ -15,6 +15,11 @@ public final class FluidCapabilities {
 
     @SubscribeEvent
     public static void register(RegisterCapabilitiesEvent event) {
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+                (stack, context) -> ((com.gregtech.gregtech.item.WoodenBucketItem) stack.getItem()).handler(stack),
+                com.gregtech.gregtech.registry.GTMultiItems.all().stream().map(holder -> holder.get())
+                        .filter(item -> item instanceof com.gregtech.gregtech.item.WoodenBucketItem)
+                        .toArray(net.minecraft.world.item.Item[]::new));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
                 com.gregtech.gregtech.registry.GTBlockEntities.PORTABLE_CONTAINER.get(),
                 (vessel, side) -> vessel.fluidHandler());

@@ -34,7 +34,14 @@ import java.util.List;
  * material-tinted textures); HU in from any face, steam out the top.
  * The front face shows a pressure gauge; rotate with a wrench.
  */
-public class BoilerTankBlock extends Block implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget {
+public class BoilerTankBlock extends Block implements EntityBlock, com.gregtech.gregtech.api.tool.ToolInteractionTarget,
+        com.gregtech.gregtech.api.machine.PipeGeometry.FluidConnectorGeometry {
+
+    /** Original boilers retain a full-width attachment surface; they do not use the engine's tiny outlets. */
+    @Override
+    public double fluidConnectorHalf(BlockState state, Direction face) {
+        return com.gregtech.gregtech.api.machine.PipeGeometry.virtual(8);
+    }
 
     @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state,ItemStack tool) {
         return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)

@@ -28,6 +28,8 @@ import java.util.*;
 public final class OriginalHandCraftingRows {
     private OriginalHandCraftingRows() {}
     public static void add(Map<ResourceLocation, byte[]> data) {
+        rods(data);
+        woodenBuckets(data);
         addAxles(data);
         int gearboxes = customGearboxes(data), transformers = transformerGearboxes(data);
         int engines = rotationEngines(data), pumps = rotationalPumps(data);
@@ -35,6 +37,40 @@ public final class OriginalHandCraftingRows {
         int circuit = circuits(data), cell = cells(data), store = storage(data);
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original native hand crafting: gearboxes={} transformers={} rotation-engines={} pumps={} wire={} pipes={} anvils={} bars={} circuits={} cells={} storage={}",
                 gearboxes, transformers, engines, pumps, wire, pipe, anvil, bar, circuit, cell, store);
+    }
+
+    /** GT6 Loader_Recipes_Handlers:418-419: an ingot or billet and a file produce one rod. */
+    private static void rods(Map<ResourceLocation, byte[]> recipes) {
+        var coated = Set.of("WoodTreated", "WoodPolished", "GildedIron", "SteelGalvanized", "NetherizedDiamond");
+        for (GTMaterial material : com.gregtech.gregtech.api.material.GTMaterialRegistry.allMaterials()) {
+            if (!material.isValid() || material.resolve() != material
+                    || material.has(com.gregtech.gregtech.api.material.MaterialProperty.ANTIMATTER)
+                    || coated.contains(material.getName().replace(" ", ""))) continue;
+            ItemStack output = GTItems.getStack(MaterialPrefix.stick, material, 1);
+            if (output.isEmpty()) continue;
+            for (MaterialPrefix inputForm : List.of(MaterialPrefix.ingot, MaterialPrefix.billet)) {
+                ItemStack input = GTItems.getStack(inputForm, material, 1);
+                if (input.isEmpty()) continue;
+                register(recipes, "rod/" + inputForm.getName() + "/" + MaterialEquivalence.materialName(material),
+                        new String[]{"X ", " f"},
+                        Map.of('X', com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(input),
+                                'f', requiredTool(GTToolType.FILE)), output);
+            }
+        }
+    }
+
+    private static void woodenBuckets(Map<ResourceLocation, byte[]> recipes) {
+        for (var band : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.BANDS) {
+            Item item = BuiltInRegistries.ITEM.get(id(com.gregtech.gregtech.content.tool.WoodenBucketCatalog.itemId(
+                    band, com.gregtech.gregtech.content.tool.WoodenBucketCatalog.empty())));
+            ItemStack plate = GTItems.getStack(MaterialPrefix.plate,
+                    com.gregtech.gregtech.api.material.GTMaterialRegistry.get(band.material()), 1);
+            if (item == Items.AIR || plate.isEmpty()) continue;
+            register(recipes, "wooden_bucket/" + band.id(), new String[]{"WPW", " Wh"},
+                    Map.of('W', Ingredient.of(ItemTags.PLANKS),
+                            'P', com.gregtech.gregtech.recipe.CraftingMaterialForms.ingredient(plate),
+                            'h', requiredTool(GTToolType.HARD_HAMMER)), new ItemStack(item));
+        }
     }
     private static <T extends Block> List<RegisteredBlock<T>> blocks(Class<T> type) {
         var result=new ArrayList<RegisteredBlock<T>>();

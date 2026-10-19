@@ -1,0 +1,1227 @@
+{
+  "author": "Gregorius Techneticies / GregTech-6 Team",
+  "asset_license": "CC0-1.0",
+  "preserved_catalog": "wolfram0108/gregtech6_w",
+  "chinese_source": "C:\\Dev\\GregTech_zh_cn.lang",
+  "chinese_sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+  "items": [
+    {
+      "item": "wooden_bucket_copper",
+      "original_meta": 2000,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2000.png",
+      "sha256": "e79819f951fed6c69f8827e902c5114000584c6beb690c0b2364a9520b0f5197",
+      "chinese_key": "gt.multiitem.randomtools.2000"
+    },
+    {
+      "item": "wooden_bucket_copper_water",
+      "original_meta": 2001,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2001.png",
+      "sha256": "da59712735cd20215a97c13232f7f4ee9ef2960abaf1da563c8ff3ed92721b77",
+      "chinese_key": "gt.multiitem.randomtools.2001"
+    },
+    {
+      "item": "wooden_bucket_copper_milk",
+      "original_meta": 2002,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2002.png",
+      "sha256": "9ea59b4aafd3eece3bcfd5d6df42f25b1d43c7278fcf8a093ff20cf753cb91ca",
+      "chinese_key": "gt.multiitem.randomtools.2002"
+    },
+    {
+      "item": "wooden_bucket_copper_latex",
+      "original_meta": 2003,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2003.png",
+      "sha256": "71fc6af95bdecc6eb59c87f51db95bcf0be78b5b3d9210fab2b107685c333d1d",
+      "chinese_key": "gt.multiitem.randomtools.2003"
+    },
+    {
+      "item": "wooden_bucket_copper_creosote",
+      "original_meta": 2004,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2004.png",
+      "sha256": "5f3f1eb3ce98004c1a383f563ddb6a7cb3580881c0e0922431e59175c44b9f17",
+      "chinese_key": "gt.multiitem.randomtools.2004"
+    },
+    {
+      "item": "wooden_bucket_copper_sea_water",
+      "original_meta": 2005,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2005.png",
+      "sha256": "6368fd5bd8cf66525aef33ec0a68769287ccd081611ac2656ca59810068edec3",
+      "chinese_key": "gt.multiitem.randomtools.2005"
+    },
+    {
+      "item": "wooden_bucket_copper_rubber_sap",
+      "original_meta": 2006,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2006.png",
+      "sha256": "71fc6af95bdecc6eb59c87f51db95bcf0be78b5b3d9210fab2b107685c333d1d",
+      "chinese_key": "gt.multiitem.randomtools.2006"
+    },
+    {
+      "item": "wooden_bucket_copper_spruce_resin",
+      "original_meta": 2007,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2007.png",
+      "sha256": "3c8445e32ff611654dfc2bd4a3b79480e466cc39c97b2e7e3ea4875434819973",
+      "chinese_key": "gt.multiitem.randomtools.2007"
+    },
+    {
+      "item": "wooden_bucket_copper_honey",
+      "original_meta": 2008,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2008.png",
+      "sha256": "8148384b203958d6ccb34e6f40e2aa84793c348b503dd9d94f4eef124092a308",
+      "chinese_key": "gt.multiitem.randomtools.2008"
+    },
+    {
+      "item": "wooden_bucket_copper_dirty_water",
+      "original_meta": 2009,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2009.png",
+      "sha256": "ce866bf51d9c33c5f0b9f2225f8acf398deebad2c170857ed1b9b4f5870b4a46",
+      "chinese_key": "gt.multiitem.randomtools.2009"
+    },
+    {
+      "item": "wooden_bucket_copper_lubricant",
+      "original_meta": 2010,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2010.png",
+      "sha256": "b2eb211bddd1d4c44918425599eb3418563ddb77ecacb3bb9f78c79ca8ee3cdc",
+      "chinese_key": "gt.multiitem.randomtools.2010"
+    },
+    {
+      "item": "wooden_bucket_copper_spoiled_milk",
+      "original_meta": 2011,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2011.png",
+      "sha256": "9ea59b4aafd3eece3bcfd5d6df42f25b1d43c7278fcf8a093ff20cf753cb91ca",
+      "chinese_key": "gt.multiitem.randomtools.2011"
+    },
+    {
+      "item": "wooden_bucket_copper_maple_sap",
+      "original_meta": 2012,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2012.png",
+      "sha256": "ccfbf04a1e954c8f9d3e490feeed38c770abe29a3d64749f29e4f963bc426007",
+      "chinese_key": "gt.multiitem.randomtools.2012"
+    },
+    {
+      "item": "wooden_bucket_copper_rainbow_sap",
+      "original_meta": 2013,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2013.png",
+      "sha256": "2e3fdfeac4cd59ba58e6cb8d054d356360494abf4d4290dcc45e5f66b6af94db",
+      "chinese_key": "gt.multiitem.randomtools.2013"
+    },
+    {
+      "item": "wooden_bucket_copper_soy_milk",
+      "original_meta": 2014,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2014.png",
+      "sha256": "89128f01877c87ae66557ffa44b952f95c6a8af4a3ec46b980ee210dc6aff2f0",
+      "chinese_key": "gt.multiitem.randomtools.2014"
+    },
+    {
+      "item": "wooden_bucket_copper_glue",
+      "original_meta": 2015,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2015.png",
+      "sha256": "f6577ed81d975eb24cf2b645bffcbc9a9320627528d6d6b1ebcc607d54b9b948",
+      "chinese_key": "gt.multiitem.randomtools.2015"
+    },
+    {
+      "item": "wooden_bucket_copper_spectral_dew",
+      "original_meta": 2016,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2016.png",
+      "sha256": "df0f8b0810ef20261f10be713a97439887dd2fba5749f3178d71359722fddfc2",
+      "chinese_key": "gt.multiitem.randomtools.2016"
+    },
+    {
+      "item": "wooden_bucket_copper_seed_oil",
+      "original_meta": 2017,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2017.png",
+      "sha256": "e41802bdba9252a3578551bdfd7fab4e4403a0c8ab1a49e994871e48b62adfe2",
+      "chinese_key": "gt.multiitem.randomtools.2017"
+    },
+    {
+      "item": "wooden_bucket_copper_poison",
+      "original_meta": 2018,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2018.png",
+      "sha256": "910693181d5feb6d3595bfe699fcf3907ac9822557bcd9e5a00ce941dcefbb76",
+      "chinese_key": "gt.multiitem.randomtools.2018"
+    },
+    {
+      "item": "wooden_bucket_tin",
+      "original_meta": 2100,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2100.png",
+      "sha256": "813f19c0f0481c2096d3d357a2723b369ca923bbeebf155b78cb24d0875eabfc",
+      "chinese_key": "gt.multiitem.randomtools.2100"
+    },
+    {
+      "item": "wooden_bucket_tin_water",
+      "original_meta": 2101,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2101.png",
+      "sha256": "5c1fc78c1213992bb702833a28df2c9807b6257353ce548ecf0a1f2f111dbed1",
+      "chinese_key": "gt.multiitem.randomtools.2101"
+    },
+    {
+      "item": "wooden_bucket_tin_milk",
+      "original_meta": 2102,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2102.png",
+      "sha256": "0e486b056b5e38e4a6defe384a05691e9cb031f87974acb36e9eca492846fee0",
+      "chinese_key": "gt.multiitem.randomtools.2102"
+    },
+    {
+      "item": "wooden_bucket_tin_latex",
+      "original_meta": 2103,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2103.png",
+      "sha256": "8f5ea277ef551142f3e59888ef02b62b398f874401bd29f44ee113c466d30c64",
+      "chinese_key": "gt.multiitem.randomtools.2103"
+    },
+    {
+      "item": "wooden_bucket_tin_creosote",
+      "original_meta": 2104,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2104.png",
+      "sha256": "c2cff4ad07bc5ba1ff275a77ded88ad9ede86c6eff63042c935f297b1128872f",
+      "chinese_key": "gt.multiitem.randomtools.2104"
+    },
+    {
+      "item": "wooden_bucket_tin_sea_water",
+      "original_meta": 2105,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2105.png",
+      "sha256": "11a697c039e4c779b748fca3f75a27b22971fa03333d1d3812e629ff56fc2111",
+      "chinese_key": "gt.multiitem.randomtools.2105"
+    },
+    {
+      "item": "wooden_bucket_tin_rubber_sap",
+      "original_meta": 2106,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2106.png",
+      "sha256": "8f5ea277ef551142f3e59888ef02b62b398f874401bd29f44ee113c466d30c64",
+      "chinese_key": "gt.multiitem.randomtools.2106"
+    },
+    {
+      "item": "wooden_bucket_tin_spruce_resin",
+      "original_meta": 2107,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2107.png",
+      "sha256": "3f6b4929ea7e74947884a27a3dcfe01e6d24e01cb0083c784851954067fb602b",
+      "chinese_key": "gt.multiitem.randomtools.2107"
+    },
+    {
+      "item": "wooden_bucket_tin_honey",
+      "original_meta": 2108,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2108.png",
+      "sha256": "8c85f32df2f4d212b81e3062386badb3fd5b92f98628f6e8e2279cc93b7e6f39",
+      "chinese_key": "gt.multiitem.randomtools.2108"
+    },
+    {
+      "item": "wooden_bucket_tin_dirty_water",
+      "original_meta": 2109,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2109.png",
+      "sha256": "243ab85723887712dd291c7631069e1ba84360eb2074bffca1c07aa745ec61dd",
+      "chinese_key": "gt.multiitem.randomtools.2109"
+    },
+    {
+      "item": "wooden_bucket_tin_lubricant",
+      "original_meta": 2110,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2110.png",
+      "sha256": "f396683e63fb51651a20f94bb97d339010e67f221c32d2fd6b91be70f990990e",
+      "chinese_key": "gt.multiitem.randomtools.2110"
+    },
+    {
+      "item": "wooden_bucket_tin_spoiled_milk",
+      "original_meta": 2111,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2111.png",
+      "sha256": "0e486b056b5e38e4a6defe384a05691e9cb031f87974acb36e9eca492846fee0",
+      "chinese_key": "gt.multiitem.randomtools.2111"
+    },
+    {
+      "item": "wooden_bucket_tin_maple_sap",
+      "original_meta": 2112,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2112.png",
+      "sha256": "116a9168966e488657a729f21fb9a8587a51da7ef5738c26ea427273368d1471",
+      "chinese_key": "gt.multiitem.randomtools.2112"
+    },
+    {
+      "item": "wooden_bucket_tin_rainbow_sap",
+      "original_meta": 2113,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2113.png",
+      "sha256": "7db3d4dd0a2c481b1abfc694101e1f708d4696e3f12177ac86c05671d46163ed",
+      "chinese_key": "gt.multiitem.randomtools.2113"
+    },
+    {
+      "item": "wooden_bucket_tin_soy_milk",
+      "original_meta": 2114,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2114.png",
+      "sha256": "f91dae3ce849aca966556e20c741a7c92cb0c14be49919bab7916d0add84fb12",
+      "chinese_key": "gt.multiitem.randomtools.2114"
+    },
+    {
+      "item": "wooden_bucket_tin_glue",
+      "original_meta": 2115,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2115.png",
+      "sha256": "d0369d0651c50b8b8ea80e42ceda7a3e0a24f924fc90a278e180200fcca8c551",
+      "chinese_key": "gt.multiitem.randomtools.2115"
+    },
+    {
+      "item": "wooden_bucket_tin_spectral_dew",
+      "original_meta": 2116,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2116.png",
+      "sha256": "2e3ded46927ecdf454a0a83f77028c52128a98c5820ad29c1336002c9782b746",
+      "chinese_key": "gt.multiitem.randomtools.2116"
+    },
+    {
+      "item": "wooden_bucket_tin_seed_oil",
+      "original_meta": 2117,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2117.png",
+      "sha256": "4c810c6b2888059563b504b000fcef337e7dd16beed6be27ae195523288c07b3",
+      "chinese_key": "gt.multiitem.randomtools.2117"
+    },
+    {
+      "item": "wooden_bucket_tin_poison",
+      "original_meta": 2118,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2118.png",
+      "sha256": "e2988b36f60729d73022554b3ba94e7433dfa034fb7bf8a5c4b402f9c84c41d4",
+      "chinese_key": "gt.multiitem.randomtools.2118"
+    },
+    {
+      "item": "wooden_bucket_zinc",
+      "original_meta": 2200,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2200.png",
+      "sha256": "c45a5bc9e56e6ee8b346ca9df6307dd1c6ed45deedb01589ae1ed18c3b749dbc",
+      "chinese_key": "gt.multiitem.randomtools.2200"
+    },
+    {
+      "item": "wooden_bucket_zinc_water",
+      "original_meta": 2201,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2201.png",
+      "sha256": "08b11537811728591337e63378a24d98a41477e1f68ddca7de6d53ab3b24cce9",
+      "chinese_key": "gt.multiitem.randomtools.2201"
+    },
+    {
+      "item": "wooden_bucket_zinc_milk",
+      "original_meta": 2202,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2202.png",
+      "sha256": "367238688cd321128a50dd5ff93c368d211946b31aac464b0a9d60556c6c58af",
+      "chinese_key": "gt.multiitem.randomtools.2202"
+    },
+    {
+      "item": "wooden_bucket_zinc_latex",
+      "original_meta": 2203,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2203.png",
+      "sha256": "ec42376c5e1d0dce2de36565502375e953c818bec5ad7b901d2dfd60fcb9ca6a",
+      "chinese_key": "gt.multiitem.randomtools.2203"
+    },
+    {
+      "item": "wooden_bucket_zinc_creosote",
+      "original_meta": 2204,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2204.png",
+      "sha256": "e37d06bb69864c76a5f4c2fd6b98bd1fc23c19e9e6fc5f1818efa5ba53fa7ea3",
+      "chinese_key": "gt.multiitem.randomtools.2204"
+    },
+    {
+      "item": "wooden_bucket_zinc_sea_water",
+      "original_meta": 2205,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2205.png",
+      "sha256": "a5888676481bb7a12da8d16dbaf78a79a448bc2cbbaf99cb46cc217e93ac8fda",
+      "chinese_key": "gt.multiitem.randomtools.2205"
+    },
+    {
+      "item": "wooden_bucket_zinc_rubber_sap",
+      "original_meta": 2206,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2206.png",
+      "sha256": "ec42376c5e1d0dce2de36565502375e953c818bec5ad7b901d2dfd60fcb9ca6a",
+      "chinese_key": "gt.multiitem.randomtools.2206"
+    },
+    {
+      "item": "wooden_bucket_zinc_spruce_resin",
+      "original_meta": 2207,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2207.png",
+      "sha256": "d9bfc6db8d83441064571c61163132e58c51708f20088e791c9f5dc9eefbc943",
+      "chinese_key": "gt.multiitem.randomtools.2207"
+    },
+    {
+      "item": "wooden_bucket_zinc_honey",
+      "original_meta": 2208,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2208.png",
+      "sha256": "2dc920e2abb93b2e8e7bd14035781a4c16d3938c8ec9d6cb14148a6efcbfecd2",
+      "chinese_key": "gt.multiitem.randomtools.2208"
+    },
+    {
+      "item": "wooden_bucket_zinc_dirty_water",
+      "original_meta": 2209,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2209.png",
+      "sha256": "3e08847ba7ed8a70721f11884e6148133188cac9fbda43cc4ffacf6a84091251",
+      "chinese_key": "gt.multiitem.randomtools.2209"
+    },
+    {
+      "item": "wooden_bucket_zinc_lubricant",
+      "original_meta": 2210,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2210.png",
+      "sha256": "92b023d427d10a57b0733a3c0d01365ed77c462669492da74cc5961231e6073c",
+      "chinese_key": "gt.multiitem.randomtools.2210"
+    },
+    {
+      "item": "wooden_bucket_zinc_spoiled_milk",
+      "original_meta": 2211,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2211.png",
+      "sha256": "367238688cd321128a50dd5ff93c368d211946b31aac464b0a9d60556c6c58af",
+      "chinese_key": "gt.multiitem.randomtools.2211"
+    },
+    {
+      "item": "wooden_bucket_zinc_maple_sap",
+      "original_meta": 2212,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2212.png",
+      "sha256": "4fbdba02760dc5c3f5926f4bbb9bae5f620c7620e4c98d639f7a7643300bfb72",
+      "chinese_key": "gt.multiitem.randomtools.2212"
+    },
+    {
+      "item": "wooden_bucket_zinc_rainbow_sap",
+      "original_meta": 2213,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2213.png",
+      "sha256": "db388e6c42e02667dbe9a745479534b2643279f53ff65e4008b4a00988426c63",
+      "chinese_key": "gt.multiitem.randomtools.2213"
+    },
+    {
+      "item": "wooden_bucket_zinc_soy_milk",
+      "original_meta": 2214,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2214.png",
+      "sha256": "23959ec6d50b08be0ae316f3d851b04dae5e7cd5fe158aedeb7eeac8acd5f2c5",
+      "chinese_key": "gt.multiitem.randomtools.2214"
+    },
+    {
+      "item": "wooden_bucket_zinc_glue",
+      "original_meta": 2215,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2215.png",
+      "sha256": "609bde6b9d8d2223de8e18b9752fbac0c235b2a27d61ca08a7a4ec4f32f40ac9",
+      "chinese_key": "gt.multiitem.randomtools.2215"
+    },
+    {
+      "item": "wooden_bucket_zinc_spectral_dew",
+      "original_meta": 2216,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2216.png",
+      "sha256": "9f286a31bd1e17a73a35809a212b74d22a55491d4f9e0f306230f7c0baa91ba1",
+      "chinese_key": "gt.multiitem.randomtools.2216"
+    },
+    {
+      "item": "wooden_bucket_zinc_seed_oil",
+      "original_meta": 2217,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2217.png",
+      "sha256": "57a7b947ade6a632f10cd89c6414fb3f2badab864f1367f38849cdd09c484528",
+      "chinese_key": "gt.multiitem.randomtools.2217"
+    },
+    {
+      "item": "wooden_bucket_zinc_poison",
+      "original_meta": 2218,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2218.png",
+      "sha256": "ad3c66de7c3565161054208ff811d2a31d13aef793f6e101c1a2f779add8b1ee",
+      "chinese_key": "gt.multiitem.randomtools.2218"
+    },
+    {
+      "item": "wooden_bucket_lead",
+      "original_meta": 2300,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2300.png",
+      "sha256": "fca42e325d115a1fdfb96685cbd4a3c3c76f69f8369ca53bf444e04d5a4365e2",
+      "chinese_key": "gt.multiitem.randomtools.2300"
+    },
+    {
+      "item": "wooden_bucket_lead_water",
+      "original_meta": 2301,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2301.png",
+      "sha256": "36f82b83416bcbe892659cd8f0ee2663ad46a6dd2e2dde2716f1392d71f9db01",
+      "chinese_key": "gt.multiitem.randomtools.2301"
+    },
+    {
+      "item": "wooden_bucket_lead_milk",
+      "original_meta": 2302,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2302.png",
+      "sha256": "95a181e62c4adc775a79de413669edb67cbf35db07748e3909b83a922077bc97",
+      "chinese_key": "gt.multiitem.randomtools.2302"
+    },
+    {
+      "item": "wooden_bucket_lead_latex",
+      "original_meta": 2303,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2303.png",
+      "sha256": "33221f04eed3da9a2c261b5f0ea1aa84de7f207fbeab70b80d8045d55e7c2571",
+      "chinese_key": "gt.multiitem.randomtools.2303"
+    },
+    {
+      "item": "wooden_bucket_lead_creosote",
+      "original_meta": 2304,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2304.png",
+      "sha256": "4137b98b467162b0c51bad5e5d7289058240ed28419ed81fc6e36f93a8d76b5e",
+      "chinese_key": "gt.multiitem.randomtools.2304"
+    },
+    {
+      "item": "wooden_bucket_lead_sea_water",
+      "original_meta": 2305,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2305.png",
+      "sha256": "fa71392f2ae4f41cf18512edfe9f7d9ca94b0b85dcfac08ab7dc9e48fe8eab15",
+      "chinese_key": "gt.multiitem.randomtools.2305"
+    },
+    {
+      "item": "wooden_bucket_lead_rubber_sap",
+      "original_meta": 2306,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2306.png",
+      "sha256": "33221f04eed3da9a2c261b5f0ea1aa84de7f207fbeab70b80d8045d55e7c2571",
+      "chinese_key": "gt.multiitem.randomtools.2306"
+    },
+    {
+      "item": "wooden_bucket_lead_spruce_resin",
+      "original_meta": 2307,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2307.png",
+      "sha256": "0eb8894223eb0a86d9ed84eec25c1ffb13a69515c19c38c3faacff40ca207576",
+      "chinese_key": "gt.multiitem.randomtools.2307"
+    },
+    {
+      "item": "wooden_bucket_lead_honey",
+      "original_meta": 2308,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2308.png",
+      "sha256": "3b566d76fc4f2cac8b907adc60e11bf31ce394c920d4562d1d2aada6730ddbd4",
+      "chinese_key": "gt.multiitem.randomtools.2308"
+    },
+    {
+      "item": "wooden_bucket_lead_dirty_water",
+      "original_meta": 2309,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2309.png",
+      "sha256": "43be86cc81bb8ad73e359630855be910d425ecbcdb03b1e4d7ac75e65fb8c576",
+      "chinese_key": "gt.multiitem.randomtools.2309"
+    },
+    {
+      "item": "wooden_bucket_lead_lubricant",
+      "original_meta": 2310,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2310.png",
+      "sha256": "2aa4780dcce4ed905d2500472b296e33f20de107c726ae2a710deabb9dc9c7fb",
+      "chinese_key": "gt.multiitem.randomtools.2310"
+    },
+    {
+      "item": "wooden_bucket_lead_spoiled_milk",
+      "original_meta": 2311,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2311.png",
+      "sha256": "95a181e62c4adc775a79de413669edb67cbf35db07748e3909b83a922077bc97",
+      "chinese_key": "gt.multiitem.randomtools.2311"
+    },
+    {
+      "item": "wooden_bucket_lead_maple_sap",
+      "original_meta": 2312,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2312.png",
+      "sha256": "aa4ca7f017106f5c05f3c920cc36f920503a4b45a5d0499376bfde035b9a5d76",
+      "chinese_key": "gt.multiitem.randomtools.2312"
+    },
+    {
+      "item": "wooden_bucket_lead_rainbow_sap",
+      "original_meta": 2313,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2313.png",
+      "sha256": "d053d8001cce9c806d4aecce056efde0e11ea36ffc3af1bf9c1f3b645b4311e2",
+      "chinese_key": "gt.multiitem.randomtools.2313"
+    },
+    {
+      "item": "wooden_bucket_lead_soy_milk",
+      "original_meta": 2314,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2314.png",
+      "sha256": "37ea4589d792202c59606072c088902e6dd8b758fdd124dadf19602d9f06709b",
+      "chinese_key": "gt.multiitem.randomtools.2314"
+    },
+    {
+      "item": "wooden_bucket_lead_glue",
+      "original_meta": 2315,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2315.png",
+      "sha256": "3892f87cc4e37c481e98954aa1de5915d2e0f0b750cd9f554ff69fe10fff2c42",
+      "chinese_key": "gt.multiitem.randomtools.2315"
+    },
+    {
+      "item": "wooden_bucket_lead_spectral_dew",
+      "original_meta": 2316,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2316.png",
+      "sha256": "a2121e8af6c7f437e84309ee49ae13f828859551429b6b9d325bdb499bc9c2e2",
+      "chinese_key": "gt.multiitem.randomtools.2316"
+    },
+    {
+      "item": "wooden_bucket_lead_seed_oil",
+      "original_meta": 2317,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2317.png",
+      "sha256": "87fda7554d00fc5f60e0be10d066cec15459bff6788dff35e5cca03849d0af14",
+      "chinese_key": "gt.multiitem.randomtools.2317"
+    },
+    {
+      "item": "wooden_bucket_lead_poison",
+      "original_meta": 2318,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2318.png",
+      "sha256": "cd294d20b5e82765a69645be8aadd2f0322d02c37d02d8676ff7b3c6aade986e",
+      "chinese_key": "gt.multiitem.randomtools.2318"
+    },
+    {
+      "item": "wooden_bucket_bismuth",
+      "original_meta": 2400,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2400.png",
+      "sha256": "a2820a7b59e1ac7256b3aa5749c55380d77c4d6c8df5cd87f955e580884dff23",
+      "chinese_key": "gt.multiitem.randomtools.2400"
+    },
+    {
+      "item": "wooden_bucket_bismuth_water",
+      "original_meta": 2401,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2401.png",
+      "sha256": "76d7a79e9eecd0df3d3da93eee3813ae8f99fb36fad0700271d9bff7d2748724",
+      "chinese_key": "gt.multiitem.randomtools.2401"
+    },
+    {
+      "item": "wooden_bucket_bismuth_milk",
+      "original_meta": 2402,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2402.png",
+      "sha256": "da1dfad62354864d0c16e3b868c818468fad977353c293c4fe1f4d7ee65e6772",
+      "chinese_key": "gt.multiitem.randomtools.2402"
+    },
+    {
+      "item": "wooden_bucket_bismuth_latex",
+      "original_meta": 2403,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2403.png",
+      "sha256": "4091a7f451e905cd65fa56a335317be92ff4bdf7a2406d7805249e9f4c56cebc",
+      "chinese_key": "gt.multiitem.randomtools.2403"
+    },
+    {
+      "item": "wooden_bucket_bismuth_creosote",
+      "original_meta": 2404,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2404.png",
+      "sha256": "5d4c5c28a481113b7d534f04d4d1c63d4374d54c7865910e29d27be5a3231f6c",
+      "chinese_key": "gt.multiitem.randomtools.2404"
+    },
+    {
+      "item": "wooden_bucket_bismuth_sea_water",
+      "original_meta": 2405,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2405.png",
+      "sha256": "d997be57420e209cadb4edabeddca4fa54ff11b611f522644183f99cbfddcf80",
+      "chinese_key": "gt.multiitem.randomtools.2405"
+    },
+    {
+      "item": "wooden_bucket_bismuth_rubber_sap",
+      "original_meta": 2406,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2406.png",
+      "sha256": "4091a7f451e905cd65fa56a335317be92ff4bdf7a2406d7805249e9f4c56cebc",
+      "chinese_key": "gt.multiitem.randomtools.2406"
+    },
+    {
+      "item": "wooden_bucket_bismuth_spruce_resin",
+      "original_meta": 2407,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2407.png",
+      "sha256": "110c5279e29e57b9cb182de0ec5c90468dac5d27891ca3cb3deb4f8d57cf9aca",
+      "chinese_key": "gt.multiitem.randomtools.2407"
+    },
+    {
+      "item": "wooden_bucket_bismuth_honey",
+      "original_meta": 2408,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2408.png",
+      "sha256": "14baeeccae41e511ba3e1971082e4d37506aa6b70e648fa986122f9e426f44f2",
+      "chinese_key": "gt.multiitem.randomtools.2408"
+    },
+    {
+      "item": "wooden_bucket_bismuth_dirty_water",
+      "original_meta": 2409,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2409.png",
+      "sha256": "dc047f23d7ad3876c73b2ff6207247dba6a2df98eae3b2464da47dff5ac568fb",
+      "chinese_key": "gt.multiitem.randomtools.2409"
+    },
+    {
+      "item": "wooden_bucket_bismuth_lubricant",
+      "original_meta": 2410,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2410.png",
+      "sha256": "d1bb604ae86a1a1e380cd61777450f0a1c46de42b9147c8773535d6bfeeaa6c1",
+      "chinese_key": "gt.multiitem.randomtools.2410"
+    },
+    {
+      "item": "wooden_bucket_bismuth_spoiled_milk",
+      "original_meta": 2411,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2411.png",
+      "sha256": "da1dfad62354864d0c16e3b868c818468fad977353c293c4fe1f4d7ee65e6772",
+      "chinese_key": "gt.multiitem.randomtools.2411"
+    },
+    {
+      "item": "wooden_bucket_bismuth_maple_sap",
+      "original_meta": 2412,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2412.png",
+      "sha256": "3b0438e2e54df5709fe294b9b1f2866abd8b74cca82b86a840c5f7b8b6a96513",
+      "chinese_key": "gt.multiitem.randomtools.2412"
+    },
+    {
+      "item": "wooden_bucket_bismuth_rainbow_sap",
+      "original_meta": 2413,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2413.png",
+      "sha256": "69723cc99fc7d8cc33ad1cd4f0aabe47ee25e3596ec2689154ec2bf15fbd2ba1",
+      "chinese_key": "gt.multiitem.randomtools.2413"
+    },
+    {
+      "item": "wooden_bucket_bismuth_soy_milk",
+      "original_meta": 2414,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2414.png",
+      "sha256": "0a7835d040419cf788ab1a2b0a9c301b3470b9e97ce22b0a5d08806e920b9dd2",
+      "chinese_key": "gt.multiitem.randomtools.2414"
+    },
+    {
+      "item": "wooden_bucket_bismuth_glue",
+      "original_meta": 2415,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2415.png",
+      "sha256": "3dfc13e6af61a41540e61f389912a1bcd38ae27b31dd647c32c91ba6e9569965",
+      "chinese_key": "gt.multiitem.randomtools.2415"
+    },
+    {
+      "item": "wooden_bucket_bismuth_spectral_dew",
+      "original_meta": 2416,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2416.png",
+      "sha256": "4c3a9027227ea6ca82a903538a72e8c00371cc51031b44bf812b1dde749c8ef7",
+      "chinese_key": "gt.multiitem.randomtools.2416"
+    },
+    {
+      "item": "wooden_bucket_bismuth_seed_oil",
+      "original_meta": 2417,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2417.png",
+      "sha256": "5306665f230459005433c52670879d01f0f88d2c8a8899e36eb9dd187b8a1c6a",
+      "chinese_key": "gt.multiitem.randomtools.2417"
+    },
+    {
+      "item": "wooden_bucket_bismuth_poison",
+      "original_meta": 2418,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2418.png",
+      "sha256": "87f22cc7651642500aa6b640f120a751a9a160e38f2bbebbc2c3ab11a8e61890",
+      "chinese_key": "gt.multiitem.randomtools.2418"
+    },
+    {
+      "item": "wooden_bucket_brass",
+      "original_meta": 2500,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2500.png",
+      "sha256": "9cf9db17f9d31590f6843e8086891450a10e50144981472949d9c258a9c308f6",
+      "chinese_key": "gt.multiitem.randomtools.2500"
+    },
+    {
+      "item": "wooden_bucket_brass_water",
+      "original_meta": 2501,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2501.png",
+      "sha256": "a6e344b4238c8a3fa77ffaf53ef4356f8e32ef1e7297efd8dedc26d4e0560c71",
+      "chinese_key": "gt.multiitem.randomtools.2501"
+    },
+    {
+      "item": "wooden_bucket_brass_milk",
+      "original_meta": 2502,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2502.png",
+      "sha256": "a338cac8ace4ab5372799e6d9507e9e528ba0ee8a79814f5194da10fc0dfff9c",
+      "chinese_key": "gt.multiitem.randomtools.2502"
+    },
+    {
+      "item": "wooden_bucket_brass_latex",
+      "original_meta": 2503,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2503.png",
+      "sha256": "a8cd88b05a4fc03c7e38b7859117340301f2baa7baba2d0258c0d0f2adbd5186",
+      "chinese_key": "gt.multiitem.randomtools.2503"
+    },
+    {
+      "item": "wooden_bucket_brass_creosote",
+      "original_meta": 2504,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2504.png",
+      "sha256": "ef7d92467164725a2dfe886d743c33cf7f566563247c5e427b8d5a0e132ed0ae",
+      "chinese_key": "gt.multiitem.randomtools.2504"
+    },
+    {
+      "item": "wooden_bucket_brass_sea_water",
+      "original_meta": 2505,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2505.png",
+      "sha256": "ea4000a1b64cee52a6a7c78af7b40e05111c7179877729cf4600248c4b92a463",
+      "chinese_key": "gt.multiitem.randomtools.2505"
+    },
+    {
+      "item": "wooden_bucket_brass_rubber_sap",
+      "original_meta": 2506,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2506.png",
+      "sha256": "a8cd88b05a4fc03c7e38b7859117340301f2baa7baba2d0258c0d0f2adbd5186",
+      "chinese_key": "gt.multiitem.randomtools.2506"
+    },
+    {
+      "item": "wooden_bucket_brass_spruce_resin",
+      "original_meta": 2507,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2507.png",
+      "sha256": "1a84032c1883e70498d60efa8701a25d6d5aa4cf2995e3849976efc5f3d7e8f1",
+      "chinese_key": "gt.multiitem.randomtools.2507"
+    },
+    {
+      "item": "wooden_bucket_brass_honey",
+      "original_meta": 2508,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2508.png",
+      "sha256": "4b6e63e15021ebb63013d271e2728510efc20e44cf5810dcd8ef00f651c5984c",
+      "chinese_key": "gt.multiitem.randomtools.2508"
+    },
+    {
+      "item": "wooden_bucket_brass_dirty_water",
+      "original_meta": 2509,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2509.png",
+      "sha256": "af79ade9b2d6fc72715559cd5198dee55d0e7820fd4fc4237f62aaa220d002da",
+      "chinese_key": "gt.multiitem.randomtools.2509"
+    },
+    {
+      "item": "wooden_bucket_brass_lubricant",
+      "original_meta": 2510,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2510.png",
+      "sha256": "9206480a00fd85d9554dcafb33baf0e77bbc1be0b98d9bdf9db84094f55ed85d",
+      "chinese_key": "gt.multiitem.randomtools.2510"
+    },
+    {
+      "item": "wooden_bucket_brass_spoiled_milk",
+      "original_meta": 2511,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2511.png",
+      "sha256": "a338cac8ace4ab5372799e6d9507e9e528ba0ee8a79814f5194da10fc0dfff9c",
+      "chinese_key": "gt.multiitem.randomtools.2511"
+    },
+    {
+      "item": "wooden_bucket_brass_maple_sap",
+      "original_meta": 2512,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2512.png",
+      "sha256": "4e94bd7e71103e333a4eb437640eb3cc36c34645195eaba80466f80d7f7c26b2",
+      "chinese_key": "gt.multiitem.randomtools.2512"
+    },
+    {
+      "item": "wooden_bucket_brass_rainbow_sap",
+      "original_meta": 2513,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2513.png",
+      "sha256": "2e570dcd8b7f80da36be59978d5bd0846a098ae846f65e4cd71b4d06d7df657a",
+      "chinese_key": "gt.multiitem.randomtools.2513"
+    },
+    {
+      "item": "wooden_bucket_brass_soy_milk",
+      "original_meta": 2514,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2514.png",
+      "sha256": "7b7d58de6c7539d48bbc83e5fd64b402ccba6b82f79e56639941c6ce87bc1955",
+      "chinese_key": "gt.multiitem.randomtools.2514"
+    },
+    {
+      "item": "wooden_bucket_brass_glue",
+      "original_meta": 2515,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2515.png",
+      "sha256": "f5a4a257ca50d1edda647d9b68afdd04742778e57406742f30e454765cca40e8",
+      "chinese_key": "gt.multiitem.randomtools.2515"
+    },
+    {
+      "item": "wooden_bucket_brass_spectral_dew",
+      "original_meta": 2516,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2516.png",
+      "sha256": "8b737e7d6048a2b9bbd800e58ed7927d60666cd9c6cc654353d0111436632b40",
+      "chinese_key": "gt.multiitem.randomtools.2516"
+    },
+    {
+      "item": "wooden_bucket_brass_seed_oil",
+      "original_meta": 2517,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2517.png",
+      "sha256": "366d752f124f373927525e324e5c8e987db7ad6d0ec2393f7653427450ba40f9",
+      "chinese_key": "gt.multiitem.randomtools.2517"
+    },
+    {
+      "item": "wooden_bucket_brass_poison",
+      "original_meta": 2518,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2518.png",
+      "sha256": "ee28fa7b9c9d97543f760172c577528425ea0d0e19341a71b27d8d39b4254098",
+      "chinese_key": "gt.multiitem.randomtools.2518"
+    },
+    {
+      "item": "wooden_bucket_bronze",
+      "original_meta": 2600,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2600.png",
+      "sha256": "875a4fbf23e23ca00ede461f8c47fcbb64decbca4d2c88fce616dd78be34e728",
+      "chinese_key": "gt.multiitem.randomtools.2600"
+    },
+    {
+      "item": "wooden_bucket_bronze_water",
+      "original_meta": 2601,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2601.png",
+      "sha256": "4a67c3d332e662483fde4e4a648452884e642fabed1de7893a64b2c1449537e5",
+      "chinese_key": "gt.multiitem.randomtools.2601"
+    },
+    {
+      "item": "wooden_bucket_bronze_milk",
+      "original_meta": 2602,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2602.png",
+      "sha256": "4a847f41ebd987a7470b6363df358dc8b3a9be2e039cb999fb1d42dc8d993428",
+      "chinese_key": "gt.multiitem.randomtools.2602"
+    },
+    {
+      "item": "wooden_bucket_bronze_latex",
+      "original_meta": 2603,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2603.png",
+      "sha256": "0403db5d0713e35f26d53293500efa9f2c839b498599e34ffd2d590eda0958ca",
+      "chinese_key": "gt.multiitem.randomtools.2603"
+    },
+    {
+      "item": "wooden_bucket_bronze_creosote",
+      "original_meta": 2604,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2604.png",
+      "sha256": "f06964d309997aa603a88faad16fb0fd778d8645518fc2e488bb6a345889edee",
+      "chinese_key": "gt.multiitem.randomtools.2604"
+    },
+    {
+      "item": "wooden_bucket_bronze_sea_water",
+      "original_meta": 2605,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2605.png",
+      "sha256": "6f968f2f90cbfc23bb7454db2354dbab64a672fd9ec6a195895471cdea55545b",
+      "chinese_key": "gt.multiitem.randomtools.2605"
+    },
+    {
+      "item": "wooden_bucket_bronze_rubber_sap",
+      "original_meta": 2606,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2606.png",
+      "sha256": "0403db5d0713e35f26d53293500efa9f2c839b498599e34ffd2d590eda0958ca",
+      "chinese_key": "gt.multiitem.randomtools.2606"
+    },
+    {
+      "item": "wooden_bucket_bronze_spruce_resin",
+      "original_meta": 2607,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2607.png",
+      "sha256": "d21a0a9f49a72000235425408e54f7c0f08563f5adc5b14f7bd246a9024d5397",
+      "chinese_key": "gt.multiitem.randomtools.2607"
+    },
+    {
+      "item": "wooden_bucket_bronze_honey",
+      "original_meta": 2608,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2608.png",
+      "sha256": "71a10aaaefbf875ad6411a5f9ee937c0b58c5f71542a12b9ac1d128d64bccf39",
+      "chinese_key": "gt.multiitem.randomtools.2608"
+    },
+    {
+      "item": "wooden_bucket_bronze_dirty_water",
+      "original_meta": 2609,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2609.png",
+      "sha256": "7a6b695b6c8fb5e607eaf209e667ecc2e3da0a62f1b3ad024934e91d66ff6eba",
+      "chinese_key": "gt.multiitem.randomtools.2609"
+    },
+    {
+      "item": "wooden_bucket_bronze_lubricant",
+      "original_meta": 2610,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2610.png",
+      "sha256": "596a08a53590c28884609a1075b4396668143385847dd50099aa585d9c905c56",
+      "chinese_key": "gt.multiitem.randomtools.2610"
+    },
+    {
+      "item": "wooden_bucket_bronze_spoiled_milk",
+      "original_meta": 2611,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2611.png",
+      "sha256": "4a847f41ebd987a7470b6363df358dc8b3a9be2e039cb999fb1d42dc8d993428",
+      "chinese_key": "gt.multiitem.randomtools.2611"
+    },
+    {
+      "item": "wooden_bucket_bronze_maple_sap",
+      "original_meta": 2612,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2612.png",
+      "sha256": "750c084bd3c2ba8811a9fcfa77c57863d821e3f7d83f77a8dcf4aff37f768b1f",
+      "chinese_key": "gt.multiitem.randomtools.2612"
+    },
+    {
+      "item": "wooden_bucket_bronze_rainbow_sap",
+      "original_meta": 2613,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2613.png",
+      "sha256": "afadbb32cfef6d0945456fa7e59c72c8924dbf1ba9a651a7fb116fcdcff070c6",
+      "chinese_key": "gt.multiitem.randomtools.2613"
+    },
+    {
+      "item": "wooden_bucket_bronze_soy_milk",
+      "original_meta": 2614,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2614.png",
+      "sha256": "41ae58d30aad344114e923c0bff9aa34a7a1e25b2f394b1fca069104bc1cbbb6",
+      "chinese_key": "gt.multiitem.randomtools.2614"
+    },
+    {
+      "item": "wooden_bucket_bronze_glue",
+      "original_meta": 2615,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2615.png",
+      "sha256": "dd49f181c793b78d76c6165819d7deca7106304acd9c0ffd7ce0287dcaa25b1c",
+      "chinese_key": "gt.multiitem.randomtools.2615"
+    },
+    {
+      "item": "wooden_bucket_bronze_spectral_dew",
+      "original_meta": 2616,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2616.png",
+      "sha256": "aef6bec2757c750c701ec9e22af158dc51f905aa9498badaaacd2a6bbd2f0c26",
+      "chinese_key": "gt.multiitem.randomtools.2616"
+    },
+    {
+      "item": "wooden_bucket_bronze_seed_oil",
+      "original_meta": 2617,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2617.png",
+      "sha256": "00b5431bd218c156638210858e0124f57e0aff7febfc67055df1d07d2ed16af3",
+      "chinese_key": "gt.multiitem.randomtools.2617"
+    },
+    {
+      "item": "wooden_bucket_bronze_poison",
+      "original_meta": 2618,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2618.png",
+      "sha256": "ac8c489a06e83d7cdcc037e0170442bf9fd6a53cf53f052686b989c2a7a0ed78",
+      "chinese_key": "gt.multiitem.randomtools.2618"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze",
+      "original_meta": 2700,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2700.png",
+      "sha256": "7be87806eba348271f9f097be5f07f439295b59aeca16b7941eb1354d6fb51fb",
+      "chinese_key": "gt.multiitem.randomtools.2700"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_water",
+      "original_meta": 2701,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2701.png",
+      "sha256": "115c1ed87fae56d3f617fa629a0f4df1e94b28fcf357acef26b23c52f4dda101",
+      "chinese_key": "gt.multiitem.randomtools.2701"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_milk",
+      "original_meta": 2702,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2702.png",
+      "sha256": "e41aec363087091690a23a67535677cafc604e3e1c9dfb7b96fa2e4ead12efd2",
+      "chinese_key": "gt.multiitem.randomtools.2702"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_latex",
+      "original_meta": 2703,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2703.png",
+      "sha256": "4f5913c636c2949d766fedb23f30b259c0228275fed77848142636889a1c0a3e",
+      "chinese_key": "gt.multiitem.randomtools.2703"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_creosote",
+      "original_meta": 2704,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2704.png",
+      "sha256": "01763b79bc9c527e625e8ce361851fb765201fb662eca940e62b3f966a405dcb",
+      "chinese_key": "gt.multiitem.randomtools.2704"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_sea_water",
+      "original_meta": 2705,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2705.png",
+      "sha256": "56febd3dd7da777d9dc3be6a12ace0e9b40fce5ad32de2c135fac57e085f22f1",
+      "chinese_key": "gt.multiitem.randomtools.2705"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_rubber_sap",
+      "original_meta": 2706,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2706.png",
+      "sha256": "4f5913c636c2949d766fedb23f30b259c0228275fed77848142636889a1c0a3e",
+      "chinese_key": "gt.multiitem.randomtools.2706"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_spruce_resin",
+      "original_meta": 2707,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2707.png",
+      "sha256": "81b6cd2872769119fd089354b17ee509407628b4c6972089564b51e0a0c39de3",
+      "chinese_key": "gt.multiitem.randomtools.2707"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_honey",
+      "original_meta": 2708,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2708.png",
+      "sha256": "a5a645c9b37edd777fb96d5c35a37e6ba2062b1f483a0022a13519626e9b26a8",
+      "chinese_key": "gt.multiitem.randomtools.2708"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_dirty_water",
+      "original_meta": 2709,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2709.png",
+      "sha256": "3b56ef35dc7671caae163aecec5aab8612f9e66d1f82c24ea671fc3dda40ed65",
+      "chinese_key": "gt.multiitem.randomtools.2709"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_lubricant",
+      "original_meta": 2710,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2710.png",
+      "sha256": "ae50985e5984337e1718509e03403c4f6e5eab2a1492cabf222c8455ef25a57f",
+      "chinese_key": "gt.multiitem.randomtools.2710"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_spoiled_milk",
+      "original_meta": 2711,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2711.png",
+      "sha256": "e41aec363087091690a23a67535677cafc604e3e1c9dfb7b96fa2e4ead12efd2",
+      "chinese_key": "gt.multiitem.randomtools.2711"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_maple_sap",
+      "original_meta": 2712,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2712.png",
+      "sha256": "c703ada2d4c33258dc7f8f46ebd909e69fc15333d9b98af94783322b4142ac4c",
+      "chinese_key": "gt.multiitem.randomtools.2712"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_rainbow_sap",
+      "original_meta": 2713,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2713.png",
+      "sha256": "92e15ae0f00ae2d3492f8ca3da0222d98fa7cabf90350a439a9cd45d335b9ef7",
+      "chinese_key": "gt.multiitem.randomtools.2713"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_soy_milk",
+      "original_meta": 2714,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2714.png",
+      "sha256": "2c1f43b8ba2da7f0eb67432573c250c1d5057e20b0798732270e079580b3d254",
+      "chinese_key": "gt.multiitem.randomtools.2714"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_glue",
+      "original_meta": 2715,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2715.png",
+      "sha256": "131fa5eb524046fc3f522372403a43c9385602d31d8601bdc7e5b62dc870a1c2",
+      "chinese_key": "gt.multiitem.randomtools.2715"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_spectral_dew",
+      "original_meta": 2716,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2716.png",
+      "sha256": "b08d2f76cd7faeb7464ee9fecaccf11879fc82680842a5621c45fa12ae2b3297",
+      "chinese_key": "gt.multiitem.randomtools.2716"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_seed_oil",
+      "original_meta": 2717,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2717.png",
+      "sha256": "d0df4e88acaffccf5d8ee34672aa2692cc15f41534358ddfbbdffe90e4cdbbf6",
+      "chinese_key": "gt.multiitem.randomtools.2717"
+    },
+    {
+      "item": "wooden_bucket_bismuth_bronze_poison",
+      "original_meta": 2718,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2718.png",
+      "sha256": "df88b60703654903fd67a97874f0b96dbe800b7f45fb0660b35af3623e023e49",
+      "chinese_key": "gt.multiitem.randomtools.2718"
+    },
+    {
+      "item": "wooden_bucket_gold",
+      "original_meta": 2800,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2800.png",
+      "sha256": "35513e30dd8086d4b49352a618d83ca69a01b8950a2ea773ae8b7d0f0345cbaa",
+      "chinese_key": "gt.multiitem.randomtools.2800"
+    },
+    {
+      "item": "wooden_bucket_gold_water",
+      "original_meta": 2801,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2801.png",
+      "sha256": "a59f5e5b42fae0b827cd91637ff98ef910128a1bcf75474ed0bb8585a40daf2c",
+      "chinese_key": "gt.multiitem.randomtools.2801"
+    },
+    {
+      "item": "wooden_bucket_gold_milk",
+      "original_meta": 2802,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2802.png",
+      "sha256": "2e7795574b5d845d45d9dbf7ecd3dbf227e0152db4962c9c88e95e2f8c82b2ad",
+      "chinese_key": "gt.multiitem.randomtools.2802"
+    },
+    {
+      "item": "wooden_bucket_gold_latex",
+      "original_meta": 2803,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2803.png",
+      "sha256": "a2052c3b1969e64db113412a84d9c9c9f3fee52816b4c767b7688284bc2ced71",
+      "chinese_key": "gt.multiitem.randomtools.2803"
+    },
+    {
+      "item": "wooden_bucket_gold_creosote",
+      "original_meta": 2804,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2804.png",
+      "sha256": "44ba250fe46ab9649acbcafe65f68215dff9f6ca4785a7eee38f3f6d00cddcb7",
+      "chinese_key": "gt.multiitem.randomtools.2804"
+    },
+    {
+      "item": "wooden_bucket_gold_sea_water",
+      "original_meta": 2805,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2805.png",
+      "sha256": "d08e3c48f59c78241a81111ac9b1e48c2bc50b2119ace793d275f201292c12cb",
+      "chinese_key": "gt.multiitem.randomtools.2805"
+    },
+    {
+      "item": "wooden_bucket_gold_rubber_sap",
+      "original_meta": 2806,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2806.png",
+      "sha256": "9d82cbfed9a03ab94a182bac574217cf4ad77fc22e22187f0d6f1d10b0eacd69",
+      "chinese_key": "gt.multiitem.randomtools.2806"
+    },
+    {
+      "item": "wooden_bucket_gold_spruce_resin",
+      "original_meta": 2807,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2807.png",
+      "sha256": "a27cb9035c442867148f33674da881f19971d6430b3d2eb5d335f96c6b0ab6e5",
+      "chinese_key": "gt.multiitem.randomtools.2807"
+    },
+    {
+      "item": "wooden_bucket_gold_honey",
+      "original_meta": 2808,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2808.png",
+      "sha256": "cb5294b7cfcd93ec06613de5055e1b117df32f9b72edac0006e2a4c33b3287e1",
+      "chinese_key": "gt.multiitem.randomtools.2808"
+    },
+    {
+      "item": "wooden_bucket_gold_dirty_water",
+      "original_meta": 2809,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2809.png",
+      "sha256": "2a5e49d8a0358a62873347ea16390604cd71eab3859ae85f0a9bb464bba815ae",
+      "chinese_key": "gt.multiitem.randomtools.2809"
+    },
+    {
+      "item": "wooden_bucket_gold_lubricant",
+      "original_meta": 2810,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2810.png",
+      "sha256": "230bec71eb4eef9e029ad25929c60bd71b8dae03e53a52a56b7244466e15a155",
+      "chinese_key": "gt.multiitem.randomtools.2810"
+    },
+    {
+      "item": "wooden_bucket_gold_spoiled_milk",
+      "original_meta": 2811,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2811.png",
+      "sha256": "0f5b5a8dec36e814d0db9e3964cd67fa79c32f2db29fc6e8c775e21b57f2084b",
+      "chinese_key": "gt.multiitem.randomtools.2811"
+    },
+    {
+      "item": "wooden_bucket_gold_maple_sap",
+      "original_meta": 2812,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2812.png",
+      "sha256": "053906cbab85f4ac3338835beb63cef5b299887864c65222e3c7f97ac10dbe84",
+      "chinese_key": "gt.multiitem.randomtools.2812"
+    },
+    {
+      "item": "wooden_bucket_gold_rainbow_sap",
+      "original_meta": 2813,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2813.png",
+      "sha256": "fa647f9e94c1fcf6c97aabd373e5d3e9cdc6f3df36dc395ffd1776c82b208336",
+      "chinese_key": "gt.multiitem.randomtools.2813"
+    },
+    {
+      "item": "wooden_bucket_gold_soy_milk",
+      "original_meta": 2814,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2814.png",
+      "sha256": "493b3064d2735999e50a7a889026e5d9f479ea68edf408a4f4c1208749b0bc8b",
+      "chinese_key": "gt.multiitem.randomtools.2814"
+    },
+    {
+      "item": "wooden_bucket_gold_glue",
+      "original_meta": 2815,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2815.png",
+      "sha256": "247d42f1f06494733f23aebedbbe505c924c99f30fbcba15fb569aca46061039",
+      "chinese_key": "gt.multiitem.randomtools.2815"
+    },
+    {
+      "item": "wooden_bucket_gold_spectral_dew",
+      "original_meta": 2816,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2816.png",
+      "sha256": "0c6935365411e374bb9362a6dc4b8ad1b989f50ec907b1c87b53f4f41a971a59",
+      "chinese_key": "gt.multiitem.randomtools.2816"
+    },
+    {
+      "item": "wooden_bucket_gold_seed_oil",
+      "original_meta": 2817,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2817.png",
+      "sha256": "784fb6cfe48d836f111e99bd8a06a19ff3eddb25093e061c9cdcee5757e724d0",
+      "chinese_key": "gt.multiitem.randomtools.2817"
+    },
+    {
+      "item": "wooden_bucket_gold_poison",
+      "original_meta": 2818,
+      "source": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\items\\gt.multiitem.randomtools\\2818.png",
+      "sha256": "95708f26764642de9ffdb09dca1bce68ab7eccd5f752a9b3ab7794b49c2e5554",
+      "chinese_key": "gt.multiitem.randomtools.2818"
+    }
+  ],
+  "groups": [
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_empty.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_water.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_milk.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_latex.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_creosote.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_sea_water.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_rubber_sap.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_spruce_resin.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_honey.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_dirty_water.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_lubricant.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_spoiled_milk.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_maple_sap.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_rainbow_sap.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_soy_milk.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_glue.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_spectral_dew.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_seed_oil.json",
+    "core\\src\\main\\resources\\assets\\gt6ce\\stack_groups\\material_forms\\functional_wooden_bucket_poison.json"
+  ]
+}

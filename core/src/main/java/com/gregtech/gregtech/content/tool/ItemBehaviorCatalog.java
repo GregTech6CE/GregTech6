@@ -14,6 +14,7 @@ public final class ItemBehaviorCatalog {
             new Entry("braintech_aerospace_advanced_reinforced_duct_tape_fal_84",   "BehaviorDuctTape"),
             new Entry("braintech_aerospace_advanced_reinforced_duct_tape_fal_84_2", "BehaviorDuctTape"),
             new Entry("portable_scanner",                                           "BehaviorScanner"),
+            new Entry("quicksilver_thermometer",                                     "BehaviorThermometer"),
             new Entry("portable_cropnalyzer",                                       "BehaviorCropnalyzer"),
             new Entry("debug_scanner",                                              "BehaviorScanner"),
             new Entry("tool_plunger",                                               "BehaviorPlungerFluid"),

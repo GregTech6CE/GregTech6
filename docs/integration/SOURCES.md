@@ -117,3 +117,8 @@
 - saltnya 的原Git仓仍未提供，只有 `import/saltnya-snapshot` 的本地原字节文件快照和hash清单。不能伪造其原作者提交。
 
 匹配证据在 `provenance/brokestar-history-snapshot-match.json`、`masson-history-match.json`；当前brokestar HEAD的差异报告单独保留以避免误认。上述原历史尚未合入整合主分支，不意味着采用了整套代码，也不是新项目origin。备份本地仓库时保留 `.git` 或用 `git bundle create work/history-backup.bundle --all` 保存所有原refs；日后发布新远程时先约定如何迁移这些历史refs。
+
+
+## 2026-10-19 / 新报告的工具、木桶与坩埚交互修复
+
+本轮工具／木桶／坩埚／测温／引擎接口依据原版GT6 Java；171木桶原图来自_w保留的GT6资产目录，CC0-1.0，已保留资产授权文本及NOTICE。木桶中文逐字使用用户指定补丁。 [详细范围、来源和验证边界](verification/gameplay-feedback-20261019.md)。仅本地，无推送或发布。

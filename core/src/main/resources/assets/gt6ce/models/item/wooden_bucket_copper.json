@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gt6ce:item/wooden_buckets/wooden_bucket_copper"
+  }
+}

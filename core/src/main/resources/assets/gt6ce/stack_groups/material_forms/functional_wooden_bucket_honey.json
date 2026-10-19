@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_honey",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_honey",
+    "item:gt6ce:wooden_bucket_tin_honey",
+    "item:gt6ce:wooden_bucket_zinc_honey",
+    "item:gt6ce:wooden_bucket_lead_honey",
+    "item:gt6ce:wooden_bucket_bismuth_honey",
+    "item:gt6ce:wooden_bucket_brass_honey",
+    "item:gt6ce:wooden_bucket_bronze_honey",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_honey",
+    "item:gt6ce:wooden_bucket_gold_honey"
+  ],
+  "priority": 125
+}

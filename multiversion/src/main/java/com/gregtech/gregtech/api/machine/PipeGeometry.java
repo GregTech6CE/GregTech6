@@ -119,34 +119,19 @@ public final class PipeGeometry {
      * size; GT6 steam engines act as virtual pipes — tiny (2 px half) on the
      * four distilled-water sides, medium (4 px half) on the steam input face,
      * nothing on the kinetic output front.
-     * @param dirFromPipe direction from the pipe toward the neighbor
+     * @param direction direction from the pipe toward the neighbor
      */
-//? if >=1.21.1 {
-    /*public static double fluidNeighborHalf(BlockState state,Direction direction){
-        double half=pipeHalfOf(state);
-        if(half!=NONE)return half;
-        return state.getBlock() instanceof FluidConnectorGeometry connector?connector.fluidConnectorHalf(state,direction.getOpposite()):NONE;
-*///?} else {
-    public static double fluidNeighborHalf(BlockState state, Direction dirFromPipe) {
-        double pipe = pipeHalfOf(state);
-        if (pipe != NONE) return pipe;
-        if (state.getBlock() instanceof com.gregtech.gregtech.block.machine.EngineBlock engine
-                && engine.engineType() == com.gregtech.gregtech.api.machine.EngineType.STEAM
-                && state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING)) {
-            Direction facing = state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
-            Direction engineFace = dirFromPipe.getOpposite();
-            if (engineFace == facing) return NONE;                       // kinetic output
-            if (engineFace == facing.getOpposite()) return virtual(4.0); // steam input: medium
-            return virtual(2.0);                                         // water sides: tiny
-        }
-        return NONE;
-//?}
+    public static double fluidNeighborHalf(BlockState state, Direction direction) {
+        double half = pipeHalfOf(state);
+        if (half != NONE) return half;
+        return state.getBlock() instanceof FluidConnectorGeometry connector
+                ? connector.fluidConnectorHalf(state, direction.getOpposite()) : NONE;
     }
-//? if >=1.21.1 {
-    /*/^* Thin world boundary for future original steam-engine tiny/medium sockets. ^/
-    public interface FluidConnectorGeometry { double fluidConnectorHalf(BlockState state,Direction face); }
-*///?} else {
-//?}
+
+    /** A machine socket exposes its original attachment width to adjoining pipe geometry. */
+    public interface FluidConnectorGeometry {
+        double fluidConnectorHalf(BlockState state, Direction face);
+    }
 
     /** px box from {@link #armBox} → block-unit VoxelShape. */
     public static net.minecraft.world.phys.shapes.VoxelShape boxShape(double[] b) {

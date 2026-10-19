@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_empty",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper",
+    "item:gt6ce:wooden_bucket_tin",
+    "item:gt6ce:wooden_bucket_zinc",
+    "item:gt6ce:wooden_bucket_lead",
+    "item:gt6ce:wooden_bucket_bismuth",
+    "item:gt6ce:wooden_bucket_brass",
+    "item:gt6ce:wooden_bucket_bronze",
+    "item:gt6ce:wooden_bucket_bismuth_bronze",
+    "item:gt6ce:wooden_bucket_gold"
+  ],
+  "priority": 125
+}

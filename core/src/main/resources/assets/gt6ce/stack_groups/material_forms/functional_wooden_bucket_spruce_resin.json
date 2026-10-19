@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_spruce_resin",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_spruce_resin",
+    "item:gt6ce:wooden_bucket_tin_spruce_resin",
+    "item:gt6ce:wooden_bucket_zinc_spruce_resin",
+    "item:gt6ce:wooden_bucket_lead_spruce_resin",
+    "item:gt6ce:wooden_bucket_bismuth_spruce_resin",
+    "item:gt6ce:wooden_bucket_brass_spruce_resin",
+    "item:gt6ce:wooden_bucket_bronze_spruce_resin",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_spruce_resin",
+    "item:gt6ce:wooden_bucket_gold_spruce_resin"
+  ],
+  "priority": 125
+}

@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_maple_sap",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_maple_sap",
+    "item:gt6ce:wooden_bucket_tin_maple_sap",
+    "item:gt6ce:wooden_bucket_zinc_maple_sap",
+    "item:gt6ce:wooden_bucket_lead_maple_sap",
+    "item:gt6ce:wooden_bucket_bismuth_maple_sap",
+    "item:gt6ce:wooden_bucket_brass_maple_sap",
+    "item:gt6ce:wooden_bucket_bronze_maple_sap",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_maple_sap",
+    "item:gt6ce:wooden_bucket_gold_maple_sap"
+  ],
+  "priority": 125
+}

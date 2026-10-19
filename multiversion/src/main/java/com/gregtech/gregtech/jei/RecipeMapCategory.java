@@ -69,7 +69,9 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
             var itemSlot=builder.addSlot(role,point.x(),point.y()).setSlotName(role.name()+"_item_"+i);
             var choices=input?recipe.viewerInputAlternatives(i):java.util.List.<ItemStack>of();
             if(choices.isEmpty())itemSlot.addItemStack(items[i]);else itemSlot.addItemStacks(choices);
-            var materialAliases=com.gregtech.gregtech.api.material.MaterialDisplayBinding.alternatives(items[i]);
+            var materialAliases=com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)
+                    ? com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.aliases(items[i])
+                    : com.gregtech.gregtech.api.material.MaterialDisplayBinding.alternatives(items[i]);
             if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);
             if(!input&&chance<10000) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(

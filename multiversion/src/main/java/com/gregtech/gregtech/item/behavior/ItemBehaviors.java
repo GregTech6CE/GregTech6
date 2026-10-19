@@ -92,6 +92,7 @@ public final class ItemBehaviors {
                 case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;
                 case "BehaviorRemote" -> BehaviorRemote.class;
                 case "BehaviorScanner" -> BehaviorScanner.class;
+                case "BehaviorThermometer" -> BehaviorThermometer.class;
                 case "BehaviorCropnalyzer" -> BehaviorCropnalyzer.class;
                 case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;
                 case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;
@@ -257,6 +258,9 @@ public final class ItemBehaviors {
                                 ItemStack stack, float hitX, float hitY, float hitZ) {
         String id = itemId(stack);
         if (id == null) return Outcome.refused(stack);
+        if (id.equals("quicksilver_thermometer")) {
+            return BehaviorThermometer.useOn(level, pos, player, stack);
+        }
         // The id is tested before anything is allocated: every multi-item of the port reaches this
         // method, and only the thirty-odd ids below have a behaviour at all.
         if (id.startsWith("tape") || id.startsWith("duct_tape") || id.startsWith("braintech_aerospace")) {

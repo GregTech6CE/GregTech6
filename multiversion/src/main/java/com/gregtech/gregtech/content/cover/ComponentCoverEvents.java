@@ -45,7 +45,9 @@ public final class ComponentCoverEvents {
         if (ComponentCoverFallback.fallbackClass(host.coverOwner())
                 && !ComponentCoverFallback.eligible(host.coverOwner())) return;
         var hit = event.getHitVec();
-        if (CoverItems.isCover(event.getEntity().getItemInHand(event.getHand())))
+        if (CoverItems.isCover(event.getEntity().getItemInHand(event.getHand()))
+                || com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(event.getEntity().getItemInHand(event.getHand()),
+                        com.gregtech.gregtech.api.tool.GTToolType.CROWBAR))
             hit = hit.withDirection(com.gregtech.gregtech.api.tool.ToolInteractions.selectedFace(hit));
         var result = host instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics
                 ? com.gregtech.gregtech.content.logistics.LogisticsCoverInteraction.use(logistics,

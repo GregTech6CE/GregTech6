@@ -459,33 +459,38 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
         tag.put("gt.cache", cache.serializeNBT(lookup));
     }
     @Override
+    public boolean isEnergyAcceptingFrom(GregTechTags.Tag type, @Nullable Direction side, boolean theoretical) {
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(type);
+    }
+
+    @Override
     public boolean isEnergyType(GregTechTags.Tag energyType, @Nullable Direction side, boolean emitting) {
-        return !emitting && energyType == GregTechTags.Energy.HU;
+        return !emitting && com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType);
     }
 
     @Override
     public Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
-        return GregTechTags.Energy.HU.asList();
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.INPUTS;
     }
 
     @Override
     public boolean hasEnergySurface(@Nullable Direction side) {
-        return side == Direction.DOWN;
+        return true;
     }
 
     @Override
     public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return energyType == GregTechTags.Energy.HU ? CrucibleSpec.MIN_HU_PER_TICK : 0;
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType) ? CrucibleSpec.MIN_HU_PER_TICK : 0;
     }
 
     @Override
     public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return energyType == GregTechTags.Energy.HU ? 2048 : 0;
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType) ? 2048 : 0;
     }
 
     @Override
     public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
-        return energyType == GregTechTags.Energy.HU ? Long.MAX_VALUE : 0;
+        return com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType) ? Long.MAX_VALUE : 0;
     }
 
     @Override
@@ -500,22 +505,31 @@ public class SmeltingCrucibleEntity extends com.gregtech.gregtech.blockentity.GT
 
     @Override
     public long getEnergyDemanded(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
-        if (energyType != GregTechTags.Energy.HU || side != Direction.DOWN) {
+        if (!com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType)) {
             return 0;
         }
-        return Long.MAX_VALUE - getEnergyBuffer();
+        return Long.MAX_VALUE;
     }
 
     @Override
     public long doInject(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
-        if (energyType != GregTechTags.Energy.HU || side != Direction.DOWN || amount <= 0) {
+        if (!com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.accepts(energyType) || amount <= 0) {
             return 0;
+        }
+        if (energyType == GregTechTags.Energy.KU) {
+            if (doInject) {
+                long air = com.gregtech.gregtech.api.machine.crucible.CrucibleEnergyRules.airAmount(
+                        size, amount, Math.max(0, maxMaterialAmount() - getCrucibleContentAmount()));
+                if (air > 0) addMaterialStacks(List.of(CrucibleMaterialStack.of(Materials.Air, air)), getTemperature());
+            }
+            return amount;
         }
         ThermalState received;
         try {
             received = ThermalStep.receive(
                     thermal,
-                    ThermalStep.EnergyKind.HEAT, size, amount);
+                    energyType == GregTechTags.Energy.CU ? ThermalStep.EnergyKind.COOLING
+                            : ThermalStep.EnergyKind.HEAT, size, amount);
         } catch (IllegalArgumentException | ArithmeticException invalidPacket) {
             // Reject the entire packet count; simulated and actual acceptance must agree.
             return 0;

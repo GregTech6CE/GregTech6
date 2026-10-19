@@ -2639,5 +2639,13 @@ ITEMS.put("steam_turbine_void_metal",new Entry("turbines",392));
 ITEMS.put("steam_turbine_trinitanium",new Entry("turbines",393));
 ITEMS.put("steam_turbine_graphene",new Entry("turbines",394));
 }
-public static Entry entry(String id){return ITEMS.get(id.startsWith("bush_plant_gt_berry_")?"bush":id);}
+public static Entry entry(String id) {
+    if (id.startsWith("wooden_bucket_")) {
+        for (var band : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.BANDS)
+            for (var content : com.gregtech.gregtech.content.tool.WoodenBucketCatalog.CONTENTS)
+                if (id.equals(com.gregtech.gregtech.content.tool.WoodenBucketCatalog.itemId(band, content)))
+                    return new Entry("equipment", band.originalBase() + content.offset());
+    }
+    return ITEMS.get(id.startsWith("bush_plant_gt_berry_") ? "bush" : id);
+}
 }

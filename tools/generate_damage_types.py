@@ -52,10 +52,10 @@ RES = os.path.join(ROOT, str(native_path("src")), "main", "resources")
 TYPES = {
     # --- environmental / processing hazards -------------------------------------------------
     "heat": (
-        "DamageSourceHeat.java", [], "burning", 0.1, [],
+        "DamageSourceHeat.java", [], "burning", 0.1, ["no_impact"],
         "%1$s was boiled alive", "%1$s 被活活煮死了"),
     "frost": (
-        "DamageSourceFrost.java", [], "freezing", 0.1, ["is_freezing"],
+        "DamageSourceFrost.java", [], "freezing", 0.1, ["is_freezing", "no_impact"],
         "%1$s got frozen", "%1$s 被冻僵了"),
     "chemical": (
         "DamageSourceChem.java", [], "hurt", 0.1, [],

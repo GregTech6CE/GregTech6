@@ -1,0 +1,16 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.wooden_bucket_creosote",
+  "contents": [
+    "item:gt6ce:wooden_bucket_copper_creosote",
+    "item:gt6ce:wooden_bucket_tin_creosote",
+    "item:gt6ce:wooden_bucket_zinc_creosote",
+    "item:gt6ce:wooden_bucket_lead_creosote",
+    "item:gt6ce:wooden_bucket_bismuth_creosote",
+    "item:gt6ce:wooden_bucket_brass_creosote",
+    "item:gt6ce:wooden_bucket_bronze_creosote",
+    "item:gt6ce:wooden_bucket_bismuth_bronze_creosote",
+    "item:gt6ce:wooden_bucket_gold_creosote"
+  ],
+  "priority": 125
+}

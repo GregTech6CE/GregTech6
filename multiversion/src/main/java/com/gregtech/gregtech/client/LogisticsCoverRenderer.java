@@ -75,7 +75,7 @@ public final class LogisticsCoverRenderer<T extends BlockEntity & LogisticsCover
         for (int corner = 0; corner < 4; corner++) {
             double u = corner >= 2 ? 1 : 0;
             double v = corner == 1 || corner == 2 ? 1 : 0;
-            var pos = CoverFaceCoordinates.to(side, u, v, distance);
+            var pos = CoverFaceCoordinates.to(side, u, v, CoverSurfaceRenderer.distance(0) + distance);
 //? if >=1.21.1 {
             /*vc.addVertex(pose.last().pose(), (float) pos.x, (float) pos.y, (float) pos.z)
                     .setColor(1f, 1f, 1f, 1f).setUv(sprite.getU((float) u),

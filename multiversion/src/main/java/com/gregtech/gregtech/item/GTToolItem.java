@@ -72,6 +72,12 @@ public class GTToolItem extends Item {
         return toolType;
     }
 
+    /** GT6 MultiItemTool.hasEffect: material enchantments never add a glint to tools. */
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return false;
+    }
+
     /** GT6 crucible shovel scrape — runs on server via {@code onItemUseFirst} before {@code Block#use}. */
     @Override
     public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {

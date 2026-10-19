@@ -30,13 +30,24 @@ public final class MachineEmiRecipe implements EmiRecipe {
         for (int i = 0; i < recipe.mInputs.length; i++) {
             var stack = recipe.mInputs[i];
             if (stack == null || stack.isEmpty()) continue;
-            (recipe.isCatalystInput(i) ? catalysts : inputs).add(ingredients.ingredient(recipe,i));
+            var ingredient = ingredients.ingredient(recipe,i);
+            if (com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map)) {
+                var search = new ArrayList<EmiStack>();
+                search.add(EmiStack.of(stack.copyWithCount(1)));
+                for (var alias : com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.aliases(stack)) search.add(EmiStack.of(alias));
+                ingredient = new MachineEmiIngredient(search, stack.getCount());
+            }
+            (recipe.isCatalystInput(i) ? catalysts : inputs).add(ingredient);
         }
         for (var fluid : recipe.mFluidInputs) if (fluid != null && !fluid.isEmpty()) inputs.add(fluid(fluid));
         for (var special : RecipeSpecialItems.display(recipe.mSpecialItems)) catalysts.add(EmiStack.of(special));
         for (int i = 0; i < recipe.mOutputs.length; i++) {
             var stack = recipe.mOutputs[i];
-            if (stack != null && !stack.isEmpty()) outputs.add(EmiStack.of(stack).setChance(recipe.getOutputChance(i) / 10000f));
+            if (stack != null && !stack.isEmpty()) {
+                outputs.add(EmiStack.of(stack).setChance(recipe.getOutputChance(i) / 10000f));
+                if (com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.isCrucible(map))
+                    for (var alias : com.gregtech.gregtech.content.recipe.CrucibleDisplayItems.aliases(stack)) outputs.add(EmiStack.of(alias));
+            }
         }
         for (var fluid : recipe.mFluidOutputs) if (fluid != null && !fluid.isEmpty()) outputs.add(fluid(fluid));
         this.inputs = List.copyOf(inputs); this.catalysts = List.copyOf(catalysts); this.outputs = List.copyOf(outputs);
@@ -70,6 +81,7 @@ public final class MachineEmiRecipe implements EmiRecipe {
     @Override public List<EmiIngredient> getInputs() { return inputs; }
     @Override public List<EmiIngredient> getCatalysts() { return catalysts; }
     @Override public List<EmiStack> getOutputs() { return outputs; }
+    @Override public boolean supportsRecipeTree() { return !recipe.mFakeRecipe; }
     @Override public int getDisplayWidth() { return 176; }
     @Override public int getDisplayHeight() { return Math.max(64,Math.min(146,net.minecraft.client.Minecraft.getInstance().getWindow().getGuiScaledHeight()-140)); }
     @Override public void addWidgets(WidgetHolder widgets) {
