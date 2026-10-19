@@ -99,7 +99,7 @@
 | ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
-| ALIGN-077 | 确认导线、物品管道、流体管道及普通桶未接入原版进度计合同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 当前缺少 ProgressSensorSource／MachineControl.Provider；功率、液量和压力读取不能替代，见 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。 |
+| ALIGN-077 | 确认导线、管道及普通桶未接入原版进度指标；有些覆盖板可用但读数语义不同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 管道／桶无专用进度接口，但 CoverProgress 会回退到内容物占比；不能写成完全不可安装或无读数，见 [补查](DISPLAY_METER_AUDIT.md) 和 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。 |
 | ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
 | ALIGN-079 | 确认物品管道库存槽数被当作单槽容量。 | 原版 NBT_INV_SIZE 创建多槽库存，每槽正常上限 64。 | 当前固定一个槽、槽上限 spec.invSize，涉及缓存种类及存档结构，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-080 | 确认物品管道吞吐限流缺失且计数单位不同。 | 原版每次成功搬运计一堆，扫描／发送检查每秒容量。 | 当前按物品数累加，仅保存和显示，无容量准入，见 [报告](ITEM_PIPE_AUDIT.md)。 |
@@ -134,6 +134,7 @@
 | ALIGN-109 | 确认按钮复位比原版提前一个机器工作阶段。 | 原版 post-work tick 将倒计时 2 变 1 并清零模式。 | 当前 beforeTick 清零，电动机随后执行转换器；末轮机器采用模式不同，不是 10→1 数量规则错误，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-110 | 确认通用检测／自动红石控制丢失成功状态。 | 原版专用成功接口，控制扩展器转发目标状态。 | MachineControl 无该字段，通用 State 固定 false，安装仅看 supportsSwitch；基础机另有 successful 专用输出，不算全失效，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
 | ALIGN-111 | 确认控制扩展器未转发独立开工条件。 | 原版直接查询目标 getStateRunningPossible。 | 当前默认 active 或 progressMax>0 近似，可能漏掉有配方但尚未启动的目标；条件案例未游戏验证，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
+| ALIGN-112 | 确认显示面板缺少原版图层独立高亮。 | 能源显示及状态的部分指示图层 aGlow=true，构造器使用自带亮度 240。 | 当前仅字符串图层，全部传环境 light；源码确认，暗室实际观感未验，见 [报告](DISPLAY_METER_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

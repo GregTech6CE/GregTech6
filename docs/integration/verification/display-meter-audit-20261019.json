@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-19",
+  "baseline": "71900f689",
+  "provenance": "Original LGPL Gregorius Techneticies / GregTech-6 Team files read only",
+  "original_sources": {
+    "gregapi/cover/covers/CoverScaleProgress.java": "0da39674abb1e9571b53491d079c7f11cd59096932023610b9de0b7ab89824cb",
+    "gregapi/cover/covers/CoverScaleEnergy.java": "476a44b89bb05572fec251a9c2878712cf1279c1f3704f9d88185ba38309adb8",
+    "gregapi/cover/covers/CoverDisplayEnergy.java": "78ef4ab41fa83d9d9eec2f3049c77453f82b75ad1aced04634fc5d99e70076da",
+    "gregapi/cover/covers/CoverControllerDisplay.java": "3bf964aae67f2497641bb9d1a67b5849b73eaf6ca4190ce1ffec0cacba4fc180",
+    "gregapi/cover/covers/AbstractCoverAttachmentScale.java": "55975a2ce559ff0ab235971d7c79c22341c8dd99f0d51fa2aa3318ecc1f06040",
+    "gregapi/cover/covers/AbstractCoverAttachmentDisplay.java": "44a45eab46f2016387786fdbfd965e26bffaa1567a48a465138056203cfe5831",
+    "gregapi/render/BlockTextureDefault.java": "626f10a146021b90da190d9ac051771e8d07b9cd9c62d68955b2db5c31602c85",
+    "gregapi/tileentity/connectors/MultiTileEntityPipeItem.java": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b",
+    "gregapi/tileentity/connectors/MultiTileEntityPipeFluid.java": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110",
+    "gregapi/tileentity/tank/TileEntityBase08Barrel.java": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/client/PanelCoverRenderer.java": "8bbf04606dd6b500d48adfb40bd0a863768da80dc41736f74006cf02b71b2363",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java": "2649a65f8b02ed8c36432195fe70ddb8cdb9ff9ef8ff47640099632ef7daeb8d",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java": "5e246e3eff7043bbe6b1a1ccc0315d4ca1ff4abcede2ce2efdfd7c7a877ed431",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/TankBlockEntity.java": "3dadd179616c587c55b7138ca7072675875b14f6d2693199a53935e8b96f9c17",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": "f3657ce15e34af7267a165adf48781f7d88befaec5100889b3718f5e584ac591",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "7c4c4661787d53bad2e8ada5e6ec36636a6d5f6a24a1fed0efdde46475570284",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java": "1eb0b32785ddbaf477155c0e8f380f916c3ab815c0b27892a5a06d509df75ef6",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java": "b7a77c31e07b4de56819bfbbbc9f2608031793222d0fe435700d682bf43e3944"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/client/PanelCoverRenderer.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-112: original layer-specific glow/full-bright flags are not represented or applied by shared panel renderer",
+    "ALIGN-077 refined: item/fluid pipes and ordinary barrel may accept progress covers via capability-content fallback, but readings differ from original transfer/fermentation metrics; missing exact native progress contract remains"
+  ],
+  "positive_evidence": [
+    "15-step redstone and 10-step display formulas correspond for mathematical non-overflow domain",
+    "Current BigInteger branch intentionally avoids original long multiplication overflow",
+    "Energy meter and energy display query first exposed capacitor type with native stored/capacity values",
+    "Status layer low four state bits and corresponding availability bits mapped to original top/bottom sprites",
+    "Existing client snapshot and charge display GameTest source exists but was not run"
+  ],
+  "not_run": [
+    "new probes",
+    "native compilation",
+    "GameTests",
+    "full test suite",
+    "client rendering",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Glow conclusion is based on render inputs and original brightness flags, not a dark-room screenshot",
+    "Contents fallback differs from original progress and can expose int-limited native tank snapshots; not proven as an independent in-game overflow bug",
+    "Not full texture asset, packet ordering, all-host state capability or all-face geometry acceptance"
+  ]
+}

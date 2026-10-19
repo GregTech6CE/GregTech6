@@ -204,3 +204,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `block/misc/ExtenderBlockEntity.java`：模式、开关、运行／进度转发；通用面板经 PanelCoverRuntime 和 CoverSignalMixin 输出。
 
 真假状态缺口与时钟来源见 [控制器核查](CONTROLLER_DETECTOR_AUDIT.md)。
+
+## 显示图层和计量回退
+
+- `multiversion/src/main/java/.../content/cover/CoverProgress.java`：无原生 MachineControl 时按内容物／容量生成进度视图，不能替代吞吐或发酵接口。
+- 同目录 `PanelCoverRuntime.java` 的 scale／energy／afterTick：红石分档、能源类型、状态位和显示更新。
+- `client/PanelCoverRenderer.java` 的 layers：原版贴图选择，尚无图层高亮属性。
+- `client/CoverSurfaceRenderer.java`：实际写入顶点的光照与贴图坐标。
+
+新增亮度缺口与 ALIGN-077 范围修订见 [显示核查](DISPLAY_METER_AUDIT.md)。

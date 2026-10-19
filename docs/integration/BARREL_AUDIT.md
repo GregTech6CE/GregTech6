@@ -70,6 +70,8 @@ Java 17 观察到纯计算的两个边界：每 1000 输入产 1、桶里只有 
 
 原版进度接口返回 mSealedTime／mMaxSealedTime；当前实体既没有 ProgressSensorSource，也没有 MachineControl.Provider。SensorBlockEntity.PROGRESS 因而不能用普通桶已有的两个 getter 读取发酵进度，作为 ALIGN-077 的扩展记录。液量读取、放大镜提示和进度面板是不同入口，不能一起判缺。
 
+2026-10-19 第三十七批补充：CoverProgress 会为具备库存／流体能力的宿主提供覆盖板进度回退，读取当前内容物占比；因此本处缺少的是原版吞吐／发酵测量合同，不能扩大为没有任何进度覆盖板读数。见 [显示计量补查](DISPLAY_METER_AUDIT.md)。
+
 桶的物品能力、物流桶的 retained filter、装饰覆盖板许可、拆除恢复、所有发酵配方、标签匹配和世界更新时序仍待后续核查。dumpFluidsToAdjacent 方法存在，不等于方块拆除一定调用；当前 TankBlock 的 getDrops 已保存桶数据，本轮不把方法名当成实际掉落行为证据。
 
 ## 标准化及验证

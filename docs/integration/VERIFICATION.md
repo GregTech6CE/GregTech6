@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 显示图层与进度来源源码核对
+
+相对 71900f689，CoverProgress、PanelCoverRenderer、PanelCoverRuntime 分别投影两版，共六份代码／字面量一致。原版亮度构造器、管道吞吐和桶发酵进度、当前能力回退与顶点 light 参数留存哈希；未新增测试、编译、GameTest、客户端、重启、构建或推送，见 [回执](verification/display-meter-audit-20261019.json)。
+
 ## 2026-10-19 / 自动控制和检测器源链核对
 
 相对 755df5754，MachineCoverSpec、MachineControl、PanelCoverRuntime 的两版投影共六份代码／字面量一致。原版接口继承、扩展器转发、五档注册周期及当前双输出路径留存哈希。未新增模拟测试、编译、GameTest、游戏、重启、构建或推送；六面连线及 Mixin 实际生效待验，见 [回执](verification/controller-detector-audit-20261019.json)。

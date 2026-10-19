@@ -48,6 +48,8 @@ Forge 的 FluidPipeDefinitions → GTFluidPipes.register 和 Neo 的 FluidTransp
 
 当前 FLUID、BUCKETOMETER 等分支仍能通过 IFluidHandler 读量，不能说管道所有仪表都失效。但该接口返回 int，极大 long 容量的显示精度边界另需核查；压力接口自身保留 long。原版管道还有 progress=mTransferredAmount、max=mCapacity*tankCount；当前没有 ProgressSensorSource／MachineControl.Provider，作为 ALIGN-077 的流体管道扩展记录。
 
+2026-10-19 第三十七批补充：CoverProgress 会为具备库存／流体能力的宿主提供覆盖板进度回退，读取当前内容物占比；因此本处缺少的是原版吞吐／发酵测量合同，不能扩大为没有任何进度覆盖板读数。见 [显示计量补查](DISPLAY_METER_AUDIT.md)。
+
 ## 待继续追踪的时序与兼容边界
 
 - 原版按 WD.even 坐标奇偶将流体管道分进 SERVER_TICK_PRE／SERVER_TICK_PR2 两阶段，当前通过普通方块实体 ticker 执行。均衡算法对应不能证明同一 tick 的整网结果和顺序对应；尚未运行线形、环形和区块重载场景。

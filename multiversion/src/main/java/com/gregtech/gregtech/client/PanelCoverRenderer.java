@@ -13,32 +13,46 @@ import java.util.*;
 public final class PanelCoverRenderer {
     private static final String[] BUTTON_STYLES={"underlay","underlay_0_to_15","underlay_0_to_f","underlay_1_to_16","underlay_16_1_to_15","underlay_keypad_1_to_9","underlay_keypad_9_to_1","underlay_bits"};
     private PanelCoverRenderer(){}
-    public static List<String> layers(ItemStack stack){
-        var panel=PanelCover.of(stack);
-        var component=ComponentCoverRuntime.kind(stack);
-        if(component!=null)return List.of(ComponentCoverRules.texture(component,ComponentCoverRuntime.visual(stack)));
-        if(panel==null){
-            var id=CoverItems.behavior(stack);int count=CoverUtilityBehaviors.designCount(id);
-            if(count>0)return List.of((CoverUtilityBehaviors.BLANK_COVER.equals(id)?"blank/":"warning/")+Math.floorMod(CoverUtilityBehaviors.design(stack),count));
+    /** Layer identities only; original per-layer glow flags are not represented here. */
+    public static List<String> layers(ItemStack stack) {
+        var panel = PanelCover.of(stack);
+        var component = ComponentCoverRuntime.kind(stack);
+        if (component != null)
+            return List.of(ComponentCoverRules.texture(component, ComponentCoverRuntime.visual(stack)));
+        if (panel == null) {
+            var id = CoverItems.behavior(stack);
+            int count = CoverUtilityBehaviors.designCount(id);
+            if (count > 0)
+                return List.of((CoverUtilityBehaviors.BLANK_COVER.equals(id) ? "blank/" : "warning/")
+                        + Math.floorMod(CoverUtilityBehaviors.design(stack), count));
             return List.of();
         }
-        int value=PanelCoverRuntime.value(stack),style=PanelCoverRuntime.style(stack);
-        return switch(panel){
-            case MANUAL->List.of("manualselector/underlay","manualselector/"+(value&15));
-            case REDSTONE->List.of("redstoneselector/underlay","redstoneselector/"+(value&15));
-            case BUTTONS->List.of("buttonselector/"+BUTTON_STYLES[Math.floorMod(style,8)],"buttonselector/"+(value&15));
-            case EMITTER->List.of("redstoneemitter/underlay","redstoneemitter/"+(value&15));
-            case ENERGY_DISPLAY->List.of("energydisplay/underlay","energydisplay/"+Math.max(0,Math.min(10,value)));
-            case STATUS->{
-                String folder="statusdisplay/"+(Math.floorMod(style,2)==0?"bottom/":"top/");var layers=new ArrayList<String>();layers.add(folder+"base");
-                for(int i=0;i<4;i++)if((value&(32<<i))!=0)layers.add(folder+(i+1)+((value&(1<<i))!=0?"_on":"_off"));yield layers;
+        int value = PanelCoverRuntime.value(stack), style = PanelCoverRuntime.style(stack);
+        return switch (panel) {
+            case MANUAL -> List.of("manualselector/underlay", "manualselector/" + (value & 15));
+            case REDSTONE -> List.of("redstoneselector/underlay", "redstoneselector/" + (value & 15));
+            case BUTTONS -> List.of("buttonselector/" + BUTTON_STYLES[Math.floorMod(style, 8)],
+                    "buttonselector/" + (value & 15));
+            case EMITTER -> List.of("redstoneemitter/underlay", "redstoneemitter/" + (value & 15));
+            case ENERGY_DISPLAY -> List.of("energydisplay/underlay", "energydisplay/" + Math.max(0, Math.min(10, value)));
+            case STATUS -> {
+                String folder = "statusdisplay/" + (Math.floorMod(style, 2) == 0 ? "bottom/" : "top/");
+                var layers = new ArrayList<String>();
+                layers.add(folder + "base");
+                for (int i = 0; i < 4; i++)
+                    if ((value & (32 << i)) != 0)
+                        layers.add(folder + (i + 1) + ((value & (1 << i)) != 0 ? "_on" : "_off"));
+                yield layers;
             }
-            case PROGRESS->List.of("progressredstone/circuit");case ENERGY->List.of("energyredstone/circuit");
-            case CONDUCTOR_IN->List.of("redstoneconductor/in");case CONDUCTOR_OUT->List.of("redstoneconductor/out");
-            case CONTROLLER->List.of("coverswitch/base","coverswitch/circuit");
-            case SHUTTER->List.of("shutter/"+(MachineCoverSpec.inverted(stack)?"inverted":"normal"));
+            case PROGRESS -> List.of("progressredstone/circuit");
+            case ENERGY -> List.of("energyredstone/circuit");
+            case CONDUCTOR_IN -> List.of("redstoneconductor/in");
+            case CONDUCTOR_OUT -> List.of("redstoneconductor/out");
+            case CONTROLLER -> List.of("coverswitch/base", "coverswitch/circuit");
+            case SHUTTER -> List.of("shutter/" + (MachineCoverSpec.inverted(stack) ? "inverted" : "normal"));
         };
     }
+
     public static boolean renderFace(PanelCoverHost host,Direction side,PoseStack pose,MultiBufferSource buffers,int fallbackLight){
         var stack=host.getCover(side);if(!CoverItems.isCover(stack))return false;
         var behavior=CoverItems.behavior(stack);
