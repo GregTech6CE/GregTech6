@@ -4,20 +4,18 @@ Legacy field names remain in a generated compatibility facade only. Registry
 names, IDs, factory calls and their ordering are preserved.
 """
 
-# Native paths are generated views; generators must use tools/native_tool.py.
-import sys as _native_sys
-from pathlib import Path as _NativePath
-_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
-from native_layout import native_path
-
 from pathlib import Path
 import re
 from format_definition_tables import align_java_tables
 
 ROOT = Path(__file__).resolve().parents[1]
-JAVA = native_path(ROOT / 'src/main/java/com/gregtech/gregtech')
+JAVA = ROOT / 'core/src/main/java/com/gregtech/gregtech'
 GROUPS = {'Elements': 'ElementMaterials', 'Compounds': 'CompoundMaterials',
           'Ores': 'OreMaterials', 'Stones': 'StoneMaterials', 'Woods': 'WoodMaterials'}
+# These formerly shadowed MT fields were adopted after the original wood table.
+# Preserve the checked-in holder initialization order and public facade order.
+LATE_WOOD_FIELDS = ('Magic', 'Cinnamon', 'Lime', 'Ash')
+WOOD_FACADE_FIELDS = ('Cinnamon', 'Lime', 'Ash', 'Magic')
 TOKEN = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/|\b[A-Za-z_$][\w$]*\b')
 
 def replace_identifiers(text, names):
@@ -56,10 +54,21 @@ def write_catalog(source, java_root=JAVA, save_intermediate=True):
     facade = source[:source.index('    public static final class Elements {')]
     for group, rows in groups.items():
         cls = GROUPS[group]
-        lines = [f'package {package};\n', imports,
+        group_imports = imports
+        if any('new AtomicProperties(' in expression for _, _, expression in rows):
+            group_imports = group_imports.replace(
+                'import com.gregtech.gregtech.api.material.GTMaterial;\n',
+                'import com.gregtech.gregtech.api.material.GTMaterial;\n'
+                'import com.gregtech.gregtech.api.material.AtomicProperties;\n')
+        field_rows = rows
+        if group == 'Woods':
+            late = {row[0]: row for row in rows if row[0] in LATE_WOOD_FIELDS}
+            field_rows = [row for row in rows if row[0] not in late]
+            field_rows += [late[name] for name in LATE_WOOD_FIELDS if name in late]
+        lines = [f'package {package};\n', group_imports,
                  '/** Generated from GT6 material definitions. Regenerate with tools/transpile_gt6_materials.py. */',
                  f'public final class {cls} {{', f'    private {cls}() {{}}', '']
-        for old, readable, expression in rows:
+        for old, readable, expression in field_rows:
             expression = replace_identifiers(expression, {'CS': 'GregTechConstants'})
             # Same-group aliases are the only unqualified material references in field declarations.
             if expression in dict((r[0], r[1]) for r in rows):
@@ -69,13 +78,23 @@ def write_catalog(source, java_root=JAVA, save_intermediate=True):
         dest = java_root / f'content/material/generated/{cls}.java'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(align_java_tables('\n'.join(lines)), encoding='utf-8')
-        facade += f'    public static final class {group} {{\n        private {group}() {{}}\n'
+        facade += f'    public static final class {group} {{\n'
+        leading = {row[0]: row for row in rows if group == 'Woods' and row[0] in WOOD_FACADE_FIELDS}
+        for name in WOOD_FACADE_FIELDS:
+            if name in leading:
+                old, readable, _ = leading[name]
+                facade += f'        public static final GTMaterial {old} = {package}.{cls}.{readable};\n'
+        facade += f'        private {group}() {{}}\n'
         for old, readable, _ in rows:
+            if old in leading:
+                continue
             facade += f'        public static final GTMaterial {old} = {package}.{cls}.{readable};\n'
         facade += '    }\n\n'
     facade += '}\n'
     facade = replace_identifiers(facade, {'CS': 'GregTechConstants', 'MT': 'ImportedMaterialData'})
     facade = facade.replace('import static com.gregtech.gregtech.data.ImportedMaterialData.*;\n', '')
+    # The facade contains references only; atomic constructors live in the holder.
+    facade = facade.replace('import com.gregtech.gregtech.api.material.AtomicProperties;\n', '')
     facade = facade.replace('/** Auto-transpiled from GregTech 6 {@code gregapi.data.MT}. Do not edit by hand. */',
                             '/** Legacy GT6 symbol facade. New content uses content.material.generated catalogues. */')
     dest = java_root / 'data/generated/GT6Materials.java'

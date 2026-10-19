@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 原版输入至材料分表一致性
+
+原版 MT → 当前 transpiler → split_ore_processing → write_catalog，在 work/ 生成七份文件与基线 549bf3076 的生产 Java 逐字相同；只更新中间快照与工具。python -m unittest tools.tests.test_modular_materials 三项通过（4.428 秒）。修复了旧计数、已移除 worldgen_fields 入口、core 读取路径和 Windows 临时目录权限问题。未原生编译、构建、游戏或推送；14 项矿物处理跳过另记，见 [回执](verification/material-regeneration-audit-20261019.json)。
+
 ## 2026-10-19 / 定义表排版与读取器核对
 
 46 份 Java 相对 ebc081fe6 的代码、字符串、注释相同，格式重复执行无变动；190 个静态读取正则／文件组合条目数量保持。七份材料生成输出在临时目录与旧生成器加格式化逐字一致。原有两项材料单测一项通过、一项因旧断言 1056 与实际 1058 失败；另确认四文件既有数据漂移，未更改断言或生产材料数据。Python 语法已检查，无 Gradle、游戏、构建、推送。见 [回执](verification/definition-table-formatting-20261019.json)。

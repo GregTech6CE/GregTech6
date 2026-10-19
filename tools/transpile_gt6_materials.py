@@ -293,6 +293,7 @@ def parse_strings_and_numbers(args: list[str]) -> dict:
         "numbers": numbers,
         "texture": texture,
         "magical": "MAGICAL" in args,
+        "explicit_hazards": [flag for flag in ("EXPLOSIVE", "FLAMMABLE") if flag in args],
         "color": extract_color(args),
     }
 
@@ -728,6 +729,12 @@ def emit_material(
     else:
         body = f'dust({id_}, "{name}", {color})'
 
+    # Preserve the two explicit hazard flags already adopted in the port. Other
+    # factory-inherited properties still need their own source/consumer audit.
+    if field in {"Gunpowder", "Dynamite"}:
+        if parsed.get('explicit_hazards') != ['EXPLOSIVE', 'FLAMMABLE']:
+            raise ValueError(f'Original hazard flags changed for {field}')
+        body += '.put(MaterialProperty.EXPLOSIVE, MaterialProperty.FLAMMABLE)'
     line_body = body + f".setTextureSet(MaterialTextureSet.{tex})"
     if local != name:
         line_body += f'.setLocalName("{local}")'

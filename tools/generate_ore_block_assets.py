@@ -57,7 +57,8 @@ BLOCKSTATES = ASSETS / "blockstates"
 MODELS = ASSETS / "models/block/ores"
 ITEM_MODELS = ASSETS / "models/item"
 
-JAVA = native_path(ROOT / "src/main/java/com/gregtech/gregtech")
+# Material/worldgen input tables are shared core sources, not native views.
+JAVA = ROOT / "core/src/main/java/com/gregtech/gregtech"
 GEN_MATERIALS = ROOT / "tools/generated/materials-source.java.txt"
 MT_FILE = JAVA / "data/ImportedMaterialData.java"
 FORM_FILE = JAVA / "data/generated/MaterialForms.java"
