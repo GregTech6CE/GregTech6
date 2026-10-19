@@ -51,7 +51,7 @@ final class EmiCatalogRepair {
                     com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(spec.machineName()) != null);
         }
         return com.gregtech.gregtech.content.creative.EmiCatalogOrder.key(path, item.isEmpty() ? "fluids"
-                : com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(item.getItem()));
+                : com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.family(item.getItem()));
     }
 
 }

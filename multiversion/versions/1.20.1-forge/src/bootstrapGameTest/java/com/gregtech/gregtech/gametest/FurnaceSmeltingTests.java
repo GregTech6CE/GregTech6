@@ -112,7 +112,7 @@ public final class FurnaceSmeltingTests {
     /** GT6 writes these rows into the vanilla furnace list; the port has to mirror them there. */
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void rowsReachTheVanillaFurnace(GameTestHelper helper) {
-        var added = com.gregtech.gregtech.loaders.Loader_OvenRecipes.addedToVanillaFurnace();
+        var added = com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.addedToVanillaFurnace();
         helper.assertTrue(!added.isEmpty(), "GT furnace rows were mirrored into the vanilla furnace");
         ItemStack sample = added.get(0);
         int vanilla = 0;
@@ -132,7 +132,7 @@ public final class FurnaceSmeltingTests {
         var json = new TreeMap<String, Object>();
         json.put("rows", FurnaceSmeltingRecipes.entries().size());
         json.put("furnaceTable", MachineRecipeMaps.Furnace.mRecipeList.size());
-        json.put("vanillaRows", com.gregtech.gregtech.loaders.Loader_OvenRecipes.addedToVanillaFurnace().size());
+        json.put("vanillaRows", com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.addedToVanillaFurnace().size());
         json.put("skipped", FurnaceSmeltingRecipes.skipped());
         json.put("vanillaSmeltingRecipes",
                 helper.getLevel().getRecipeManager().getAllRecipesFor(RecipeType.SMELTING).size());

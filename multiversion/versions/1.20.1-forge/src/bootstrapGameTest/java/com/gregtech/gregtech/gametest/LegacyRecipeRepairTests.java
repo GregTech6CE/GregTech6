@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.data.MultiblockCraftingRecipes;
-import com.gregtech.gregtech.loaders.Loader_TrackRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_TrackRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;

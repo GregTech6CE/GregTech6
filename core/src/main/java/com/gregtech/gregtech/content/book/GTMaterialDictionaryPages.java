@@ -100,7 +100,7 @@ public final class GTMaterialDictionaryPages {private GTMaterialDictionaryPages(
         long amount = Long.parseLong(row[1]);
         GTMaterial target = material;
         if (!row[0].isEmpty()) {
-            String name = com.gregtech.gregtech.loaders.c.GTMaterialFields.materialOf(row[0]);
+            String name = com.gregtech.gregtech.content.recipe.generated.GTMaterialFields.materialOf(row[0]);
             target = name == null ? null : GTMaterialRegistry.get(name);
         }
         processingValue(out, target, amount, material);

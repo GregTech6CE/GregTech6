@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.recipe;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.loaders.c.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;

@@ -1,10 +1,10 @@
 package com.gregtech.gregtech;
 
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
-import com.gregtech.gregtech.loaders.IGTLoader;
-import com.gregtech.gregtech.loaders.a.*;
-import com.gregtech.gregtech.loaders.b.*;
-import com.gregtech.gregtech.loaders.c.Loader_Recipes_OreProcessing;
+import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.content.*;
+import com.gregtech.gregtech.bootstrap.registration.*;
+import com.gregtech.gregtech.content.recipe.Loader_Recipes_OreProcessing;
 import com.gregtech.gregtech.network.GTPackets;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -89,7 +89,7 @@ public class GregTech {
                     new Loader_MaterialPost(),
                     new Loader_MaterialRegistration(),
                     new Loader_Recipes_OreProcessing(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Parts(),
                     () -> LOGGER.info("Registered {} original vanilla processing recipes", com.gregtech.gregtech.content.recipe.VanillaProcessingRecipes.register()),
                     () -> LOGGER.info("Registered {} GT6 diggable processing rows", com.gregtech.gregtech.content.recipe.DiggableRecipes.register()),
                     () -> LOGGER.info("Registered {} vanilla block processing recipes", com.gregtech.gregtech.content.recipe.VanillaBlockProcessingRecipes.register()),
@@ -119,12 +119,12 @@ public class GregTech {
                     () -> LOGGER.info("Registered {} polymer forming recipes", com.gregtech.gregtech.content.recipe.PolymerFormingRecipes.register()),
                     () -> LOGGER.info("Registered {} graphene nanofabrication recipes", com.gregtech.gregtech.content.recipe.GrapheneNanofabricationRecipes.register()),
                     () -> LOGGER.info("Registered {} original reactor rod recipes", com.gregtech.gregtech.content.nuclear.ReactorRodRecipes.register()),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Alloys(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Decomp(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fuels(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Chem(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fusion(),
-                    new com.gregtech.gregtech.loaders.c.Loader_Recipes_Matter(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Alloys(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Decomp(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Fuels(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Chem(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Fusion(),
+                    new com.gregtech.gregtech.content.recipe.Loader_Recipes_Matter(),
                     () -> LOGGER.info("Registered {} vanilla material recovery recipes", com.gregtech.gregtech.content.recipe.VanillaRecoveryRecipes.register()),
                     () -> LOGGER.info("Registered {} vehicle packaging recipes", com.gregtech.gregtech.content.recipe.VehiclePackagingRecipes.register()),
                     // GT6 Loader_Recipes_Handlers:217-550 — generic per-material form conversions
@@ -200,7 +200,7 @@ public class GregTech {
                     // reviewed against the original by hand, and RecipeMap's collision check keeps the
                     // first recipe registered for a given input. Running the bulk-transpiled data last
                     // therefore means it can only *fill* maps, never displace a vetted recipe.
-                    () -> com.gregtech.gregtech.loaders.c.GTGeneratedChem.loadAll()
+                    () -> com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.loadAll()
             );
 
             for (IGTLoader loader : phaseC) {

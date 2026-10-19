@@ -159,7 +159,7 @@ public final class SurfaceFeedbackChecks {
 //?}
    require(fluidSprite,"spring inventory has wrong fluid sprite");require(!stack.getHoverName().getString().startsWith("block.gt6ce."),"untranslated spring variant");models++;
   }
-  var pages=com.gregtech.gregtech.loaders.b.OriginCreativeContents.pages();require(pages.values().stream().flatMap(Collection::stream).filter(s->s.is(GTFluidSprings.FLUID_SPRING.get().asItem())).count()==0,"empty legacy spring in creative page");
+  var pages=com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.pages();require(pages.values().stream().flatMap(Collection::stream).filter(s->s.is(GTFluidSprings.FLUID_SPRING.get().asItem())).count()==0,"empty legacy spring in creative page");
   require(pages.get("untyped").stream().filter(s->s.getItem() instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.FluidSpringBlock).count()==7,"typed creative spring count");
   receipt.addProperty("flatSurfaceInventoryModelsChecked",models);receipt.add("flatBushInventoryColors",colors);
  }

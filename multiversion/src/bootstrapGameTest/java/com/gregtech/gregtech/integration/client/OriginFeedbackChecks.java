@@ -105,7 +105,7 @@ public final class OriginFeedbackChecks {
         contents.add(com.gregtech.gregtech.api.machine.crucible.CrucibleMaterialStack.of(air,com.gregtech.gregtech.api.material.GTValues.U));
         require(com.gregtech.gregtech.api.machine.crucible.CrucibleReactions.react(contents,steel.getMeltingPoint())&&contents.size()==1&&contents.get(0).material==steel&&contents.get(0).amount==com.gregtech.gregtech.api.material.GTValues.U,"Air steel yield mismatch");
         receipt.addProperty("originalCrucibleReactionChecks",4);
-        var pages=com.gregtech.gregtech.loaders.b.OriginCreativeContents.pages();
+        var pages=com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.pages();
         require(pages.get("tool_blocks").stream().anyMatch(stack->stack.getItem()==crank.asItem()),"Crank missing from original tool-block page");
         require(pages.get("tools").stream().noneMatch(stack->stack.getItem()==crank.asItem()),"Crank remains in hand-tool page");
         require(pages.get("construction").stream().filter(stack->stack.getItem()==asphalt.asItem()).count()==16,"Asphalt creative colors missing");

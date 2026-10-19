@@ -6,7 +6,7 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.material.generated.WoodMaterials;
-import com.gregtech.gregtech.loaders.Loader_HandToolCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_HandToolCraftingRecipes;
 import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.registry.GTGearboxes;
 import net.minecraft.core.BlockPos;

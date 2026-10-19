@@ -30,7 +30,7 @@ final class CanvasDeliveryChecks {
             require(!stack.getHoverName().getString().contains("item.gt6ce."),"localized canvas name");
             int i=variant.originalId()-7030,x=8+(i%8)*50,y=24+(i/8)*28;graphics.renderItem(stack,x+16,y);graphics.drawString(client.font,client.font.plainSubstrByWidth(stack.getHoverName().getString(),48),x,y+17,0xffffff,false);
         }
-        var equipment=new java.util.ArrayList<>(com.gregtech.gregtech.loaders.b.OriginCreativeContents.contents("equipment"));
+        var equipment=new java.util.ArrayList<>(com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.contents("equipment"));
         int first=-1,magic=-1;
         for(int i=0;i<equipment.size();i++) { var id=BuiltInRegistries.ITEM.getKey(equipment.get(i).getItem()).getPath();if(id.equals("canvas_black"))first=i;if(id.equals("magic_research_paper_introduction"))magic=i; }
         require(first>=0&&magic>first+15,"equipment page places canvas before research papers");

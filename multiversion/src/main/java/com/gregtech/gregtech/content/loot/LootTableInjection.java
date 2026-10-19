@@ -41,7 +41,7 @@ import java.util.Map;
  * ({@code MultiTileEntityChest:262} → {@code ST.generateLoot} → {@code ChestGenHooks}). So the rows a
  * player finds in a dungeon, mineshaft, stronghold, pyramid or village chest are the ones GT6 added
  * to the vanilla tables — {@code addLoot(ChestGenHooks.<CONST>, …)} rows, 91 of them transpiled into
- * {@link com.gregtech.gregtech.loaders.c.GTLootGen} as {@code van.<CONST>} by
+ * {@link com.gregtech.gregtech.content.recipe.generated.GTLootGen} as {@code van.<CONST>} by
  * {@code tools/transpile_gt6_loot.py}.</p>
  *
  * <p>The port has no GT chest block, so vanilla chests stay vanilla and this loader adds one GT pool

@@ -5,8 +5,8 @@ public final class NeoMachineRecipeLoader {
  private NeoMachineRecipeLoader(){}
  public static void load(){SETUP.run(NeoMachineRecipeLoader::loadRecipes);}
  private static void loadRecipes(){
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_OreProcessing().run();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_OreProcessing().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Parts().run();
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaProcessingRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe DiggableRecipes: {}",com.gregtech.gregtech.content.recipe.DiggableRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaBlockProcessingRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaBlockProcessingRecipes.register());
@@ -33,13 +33,13 @@ public final class NeoMachineRecipeLoader {
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe PolymerFormingRecipes: {}",com.gregtech.gregtech.content.recipe.PolymerFormingRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GrapheneNanofabricationRecipes: {}",com.gregtech.gregtech.content.recipe.GrapheneNanofabricationRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe ReactorRodRecipes: {}",com.gregtech.gregtech.content.nuclear.ReactorRodRecipes.register());
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Alloys().run();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Decomp().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Alloys().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Decomp().run();
   com.gregtech.gregtech.data.FuelRecipeMaps.bootstrap();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fuels().run();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Chem().run();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Fusion().run();
-  new com.gregtech.gregtech.loaders.c.Loader_Recipes_Matter().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Fuels().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Chem().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Fusion().run();
+  new com.gregtech.gregtech.content.recipe.Loader_Recipes_Matter().run();
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VanillaRecoveryRecipes: {}",com.gregtech.gregtech.content.recipe.VanillaRecoveryRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe VehiclePackagingRecipes: {}",com.gregtech.gregtech.content.recipe.VehiclePackagingRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe MaterialFormConversionRecipes: {}",com.gregtech.gregtech.content.recipe.MaterialFormConversionRecipes.register());
@@ -58,6 +58,6 @@ public final class NeoMachineRecipeLoader {
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GTMainRecipes: {}",com.gregtech.gregtech.content.recipe.GTMainRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe GTMaterialDataRecipes: {}",com.gregtech.gregtech.content.recipe.GTMaterialDataRecipes.register());
   com.mojang.logging.LogUtils.getLogger().info("[gregtech] Native source recipe FoodItemRecipes: {}",com.gregtech.gregtech.content.recipe.FoodItemRecipes.register());
-  com.gregtech.gregtech.loaders.c.GTGeneratedChem.loadAll();
+  com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.loadAll();
  }
 }

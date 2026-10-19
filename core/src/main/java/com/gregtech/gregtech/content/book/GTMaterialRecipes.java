@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.content.book;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
-import com.gregtech.gregtech.loaders.c.GTAlloyTable;
+import com.gregtech.gregtech.content.recipe.generated.GTAlloyTable;
 
 import java.util.ArrayList;
 import java.util.List;

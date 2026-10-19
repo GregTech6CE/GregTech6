@@ -51,7 +51,7 @@ final class LongDistanceRuntimeSmoke {
             var line=(LongDistPipeBlock)b;
             require(line.maximumTemperature()==spec.maximumTemperature()&&line.maximumVoltage()==spec.voltage(),"wrong native limits "+spec.id());
             if(spec.kind().equals("FLUID_PIPE"))require(com.gregtech.gregtech.api.material.GTMaterialRegistry.get(spec.material()).getMeltingPoint()==spec.maximumTemperature(),"source material melting value differs "+spec.id());
-            require(com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(b.asItem()).equals("long_distance_transport"),"wrong creative family "+spec.id());
+            require(com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.family(b.asItem()).equals("long_distance_transport"),"wrong creative family "+spec.id());
             require(com.gregtech.gregtech.data.BlockHarvestPolicy.level(b)==3&&com.gregtech.gregtech.data.BlockHarvestPolicy.tool(b)==(line.isWire()?com.gregtech.gregtech.data.BlockHarvestPolicy.Tool.CUTTER:com.gregtech.gregtech.data.BlockHarvestPolicy.Tool.WRENCH),"wrong source harvest "+spec.id());
             level.setBlock(start,b.defaultBlockState(),3);
             var loot=Block.getDrops(b.defaultBlockState(),level,start,null);

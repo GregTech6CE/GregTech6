@@ -5,7 +5,7 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.content.book.GTMaterialDictionary;
 import com.gregtech.gregtech.content.book.GTMaterialRecipes;
 import com.gregtech.gregtech.content.material.Materials;
-import com.gregtech.gregtech.loaders.c.GTAlloyTable;
+import com.gregtech.gregtech.content.recipe.generated.GTAlloyTable;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTestHolder;

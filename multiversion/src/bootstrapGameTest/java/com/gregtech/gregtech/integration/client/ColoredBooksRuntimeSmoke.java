@@ -163,7 +163,7 @@ final class ColoredBooksRuntimeSmoke {
                 }
             require(quads>0&&!stack.getHoverName().getString().startsWith("item.gregtech"),"Transparent/untranslated book "+variant.path());models++;
         }
-        var visible=com.gregtech.gregtech.loaders.b.OriginCreativeContents.pages().get("books");
+        var visible=com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.pages().get("books");
 //? if >=1.21.1 {
 //?} else {
         for(var variant:ColoredBookRules.VARIANTS)require(!GTColoredBooks.stack(variant.originalId()).hasFoil(),"Vanilla book glint alters source cover "+variant.path());

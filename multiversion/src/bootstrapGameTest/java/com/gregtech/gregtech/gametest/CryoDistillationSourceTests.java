@@ -103,7 +103,7 @@ public final class CryoDistillationSourceTests {
         var input=new FluidTankGT(64000);input.setFluid(new FluidStack(Fluids.WATER,75));
         old.put("gt.input",savedTank(h,input));
         var names=List.of("He","Ne","Ar");long[] amounts={13,29,31};
-        for(int i=0;i<3;i++){var tank=new FluidTankGT(32000);tank.setFluid(com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid(names.get(i),(int)amounts[i]));old.put("gt.output"+i,savedTank(h,tank));}
+        for(int i=0;i<3;i++){var tank=new FluidTankGT(32000);tank.setFluid(com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid(names.get(i),(int)amounts[i]));old.put("gt.output"+i,savedTank(h,tank));}
 //? if >=1.21.1 {
         /*entity.loadAdditional(old,h.getLevel().registryAccess());
 *///?} else {

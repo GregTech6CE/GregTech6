@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.recipe;
 
 import com.gregtech.gregtech.GregTech;
-import com.gregtech.gregtech.loaders.*;
+import com.gregtech.gregtech.content.recipe.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;

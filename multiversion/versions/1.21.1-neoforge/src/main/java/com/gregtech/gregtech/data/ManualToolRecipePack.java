@@ -76,9 +76,9 @@ public final class ManualToolRecipePack extends AbstractPackResources {
         }
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Original powered tool datapack: {} concrete material/battery assemblies",powered);
         OriginalHandCraftingRows.add(generated);
-        com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.add(generated);
-        com.gregtech.gregtech.loaders.Loader_StoneCraftingRecipes.add(generated);
-        com.gregtech.gregtech.loaders.Loader_BedrockFlowerCraftingRecipes.add(generated);
+        com.gregtech.gregtech.content.recipe.Loader_FormConversionCraftingRecipes.add(generated);
+        com.gregtech.gregtech.content.recipe.Loader_StoneCraftingRecipes.add(generated);
+        com.gregtech.gregtech.content.recipe.Loader_BedrockFlowerCraftingRecipes.add(generated);
         resources=Map.copyOf(generated);return resources;
     }
     private static void add(Map<ResourceLocation,byte[]> data,String id,String serializer,String tool,int pattern){

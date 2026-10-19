@@ -114,7 +114,7 @@ public final class GTCreativeTabs {
         if(SOURCE_PAGES.isEmpty())for(String id:com.gregtech.gregtech.content.creative.CreativeTabCatalog.FAMILIES)
             SOURCE_PAGES.put(id,TABS.register(id,()->CreativeModeTab.builder()
                 .title(Component.translatable(com.gregtech.gregtech.content.creative.CreativeTabCatalog.title(id)))
-                .withSearchBar().icon(()->com.gregtech.gregtech.loaders.b.OriginCreativeContents.icon(id))
+                .withSearchBar().icon(()->com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.icon(id))
                 .displayItems((params,output)->{}).build()));
         return SOURCE_PAGES.get(family);
     }
@@ -212,7 +212,7 @@ private GTCreativeTabs() {}
 }
 
 //? if >=1.21.1 {
-    /*private static ItemStack storageStack(){return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("storage");}
+    /*private static ItemStack storageStack(){return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("storage");}
 *///?} else {
     private static net.minecraft.world.item.ItemStack storageStack() {
         var ms = GTStorage.MASS_STORAGE;
@@ -222,7 +222,7 @@ private GTCreativeTabs() {}
 //?}
 
 //? if >=1.21.1 {
-    /*private static ItemStack energyNodeStack(){return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("energy_nodes");}
+    /*private static ItemStack energyNodeStack(){return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("energy_nodes");}
 *///?} else {
     private static net.minecraft.world.item.ItemStack energyNodeStack() {
         for (var entry : GTEnergyNodes.all()) {
@@ -233,7 +233,7 @@ private GTCreativeTabs() {}
 //?}
 
 //? if >=1.21.1 {
-    /*private static ItemStack multiblockStack(){return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("multiblocks");}
+    /*private static ItemStack multiblockStack(){return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("multiblocks");}
 *///?} else {
     private static net.minecraft.world.item.ItemStack multiblockStack() {
         var main = GTMultiblocks.DISTILLATION_TOWER_MAIN;
@@ -243,7 +243,7 @@ private GTCreativeTabs() {}
 //?}
 
 //? if >=1.21.1 {
-    /*private static ItemStack multiItemsStack(){return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("multi_items");}
+    /*private static ItemStack multiItemsStack(){return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("multi_items");}
 *///?} else {
     private static net.minecraft.world.item.ItemStack multiItemsStack() {
         for (var entry : GTMultiItems.all()) {
@@ -341,7 +341,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack wiresStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("wires");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("wires");
 *///?} else {
         // Icon: rubber-coated copper cable (1x)
         for (var entry : GTWires.allCables()) {
@@ -362,7 +362,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack cruciblesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("smelting_crucibles");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("smelting_crucibles");
 *///?} else {
         if (GTMachines.SMELTING_CRUCIBLE_STEEL != null && GTMachines.SMELTING_CRUCIBLE_STEEL.isPresent()) {
             return new ItemStack(GTMachines.SMELTING_CRUCIBLE_STEEL.get());
@@ -373,7 +373,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack burningBoxesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("burning_boxes");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("burning_boxes");
 *///?} else {
         if (GTMachines.BURNING_BOX_SOLID_STEEL != null && GTMachines.BURNING_BOX_SOLID_STEEL.isPresent()) {
             return new ItemStack(GTMachines.BURNING_BOX_SOLID_STEEL.get());
@@ -384,7 +384,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack basicMachinesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("basic_machines");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("basic_machines");
 *///?} else {
         List<RegistryObject<BasicMachineBlock>> machines = MachineRegistry.basicMachines();
         if (!machines.isEmpty()) {
@@ -397,7 +397,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack fluidsStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("fluids");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("fluids");
 *///?} else {
         FluidItem first = GTFluidItems.getFirst();
         if (first != null) {
@@ -409,7 +409,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack pipesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("pipes");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("pipes");
 *///?} else {
         if (GTFluidPipes.PIPE_MEDIUM_STEEL != null && GTFluidPipes.PIPE_MEDIUM_STEEL.isPresent()) {
             return new ItemStack(GTFluidPipes.PIPE_MEDIUM_STEEL.get());
@@ -420,7 +420,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack itemPipesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("item_pipes");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("item_pipes");
 *///?} else {
         if (GTItemPipes.PIPE_MEDIUM_BRASS != null && GTItemPipes.PIPE_MEDIUM_BRASS.isPresent()) {
             return new ItemStack(GTItemPipes.PIPE_MEDIUM_BRASS.get());
@@ -431,7 +431,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack fluidContainersStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("fluid_containers");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("fluid_containers");
 *///?} else {
         if (GTTanks.DRUM_STEEL != null && GTTanks.DRUM_STEEL.isPresent()) {
             return new ItemStack(GTTanks.DRUM_STEEL.get());
@@ -442,7 +442,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack technologyStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("technology");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("technology");
 *///?} else {
         for (RegistryObject<Item> entry : GTTechnological.all()) {
             if (entry.isPresent()) return new ItemStack(entry.get());
@@ -453,7 +453,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack iconSetsStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("iconsets");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("iconsets");
 *///?} else {
         for (RegistryObject<Block> entry : GTIconSetBlocks.all()) {
             if (entry.isPresent()) return new ItemStack(entry.get());
@@ -464,7 +464,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack hoppersStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("hoppers");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("hoppers");
 *///?} else {
         if (GTMachines.HOPPER_STEEL != null && GTMachines.HOPPER_STEEL.isPresent()) {
             return new ItemStack(GTMachines.HOPPER_STEEL.get());
@@ -475,7 +475,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack enginesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("engines");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("engines");
 *///?} else {
         List<RegistryObject<EngineBlock>> engines = MachineRegistry.allEngines();
         if (!engines.isEmpty()) {
@@ -488,7 +488,7 @@ private GTCreativeTabs() {}
 
     private static ItemStack axlesStack() {
 //? if >=1.21.1 {
-        /*return com.gregtech.gregtech.loaders.b.NeoCreativeContents.icon("axles");
+        /*return com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents.icon("axles");
 *///?} else {
         for (var entry : GTAxles.all()) {
             if (entry.isPresent()) return new ItemStack(entry.get());

@@ -11,7 +11,7 @@ import com.gregtech.gregtech.content.recipe.MaterialFormConversionRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.generated.MaterialWorkability;
-import com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_FormConversionCraftingRecipes;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTTechnological;

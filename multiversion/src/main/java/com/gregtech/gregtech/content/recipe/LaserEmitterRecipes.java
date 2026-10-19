@@ -90,7 +90,7 @@ public final class LaserEmitterRecipes {
         // GTGeneratedChem resolves a material's gas exactly like the transpiled GT6 rows do
         var material = com.gregtech.gregtech.api.material.GTMaterialRegistry.get(materialName);
         if (material != null && material.isValid()) {
-            FluidStack stack = com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid(material.getName(), mb);
+            FluidStack stack = com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid(material.getName(), mb);
             if (stack != null) return stack;
         }
         var still = com.gregtech.gregtech.registry.GTFluids.still(materialName);

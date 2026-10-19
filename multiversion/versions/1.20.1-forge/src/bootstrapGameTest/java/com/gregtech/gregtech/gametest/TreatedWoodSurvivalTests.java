@@ -8,7 +8,7 @@ import com.gregtech.gregtech.content.recipe.TreatedWoodRecipes;
 import com.gregtech.gregtech.content.recipe.VanillaWoodProcessingRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.loaders.Loader_WoodCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_WoodCraftingRecipes;
 import com.gregtech.gregtech.recipe.ToolShapedRecipe;
 import com.gregtech.gregtech.registry.GTItems;
 import net.minecraft.core.BlockPos;

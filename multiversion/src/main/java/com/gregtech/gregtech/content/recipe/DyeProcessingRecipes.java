@@ -54,7 +54,7 @@ public final class DyeProcessingRecipes {
             add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{wet},new ItemStack[]{colored("cfoam",dyeColor,1)},null,null,null,null,16,16,0));
             for(String sulfate:new String[]{"SodiumSulfate","PotassiumSulfate"}) for(int count:new int[]{1,4}) {
                 var powder=GTItems.getStack(count==1?MaterialPrefix.dustSmall:MaterialPrefix.dust,GTMaterialRegistry.get(sulfate),1);
-                var molten=com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid("Glass",1296*count);
+                var molten=com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid("Glass",1296*count);
                 if(molten==null||molten.isEmpty())throw new IllegalStateException("Missing molten glass");
                 add(MachineRecipeMaps.Mixer,new Recipe(new ItemStack[]{powder},new ItemStack[]{colored("glass_clear",dyeColor,count)},null,null,
                         new FluidStack[]{molten,fluid("Dye_Chemical_"+color,36*count)},null,16*count,16,0));
@@ -90,7 +90,7 @@ public final class DyeProcessingRecipes {
                 if(!feed.isEmpty())add(MachineRecipeMaps.Extruder,new Recipe(new ItemStack[]{feed,item("gt6ce:"+mold,1)},
                         new ItemStack[]{item("gt6ce:plastic_canister",1)},null,null,null,null,192,16,0).withCatalystInputs(1));
             }
-        var co2=com.gregtech.gregtech.loaders.c.GTGeneratedChem.materialFluid("CarbonDioxide",16000);
+        var co2=com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid("CarbonDioxide",16000);
         if(co2==null||co2.isEmpty())throw new IllegalStateException("Missing CO2");
         add(MachineRecipeMaps.Canner,new Recipe(new ItemStack[]{item("gt6ce:empty_spray_can",1)},new ItemStack[]{item("gt6ce:fire_extinguisher_co2",1)},null,null,
                 new FluidStack[]{co2},null,256,16,0));

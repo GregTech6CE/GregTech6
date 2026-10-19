@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.tool;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.tool.ToolDefinition;
 import com.gregtech.gregtech.content.book.GTMaterialEnchants;
-import com.gregtech.gregtech.loaders.c.GTEnchantmentTable;
+import com.gregtech.gregtech.content.recipe.generated.GTEnchantmentTable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

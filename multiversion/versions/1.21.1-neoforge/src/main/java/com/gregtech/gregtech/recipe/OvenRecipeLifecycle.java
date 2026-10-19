@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.recipe;
 
-import com.gregtech.gregtech.loaders.Loader_OvenRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_OvenRecipes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -36,7 +36,7 @@ public final class OvenRecipeLifecycle {
         var manager = server.getRecipeManager(); var current = manager.getRecipes(); var applied = APPLIED.get(manager);
         // The same RecipeManager may be reused on reload. Compare actual holder identities, not manager identity.
         if (applied != null && applied.size() == current.size() && applied.containsAll(current)) return;
-        com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes.replacePlain(manager, server.registryAccess());
+        com.gregtech.gregtech.content.recipe.Loader_FormConversionCraftingRecipes.replacePlain(manager, server.registryAccess());
         Loader_OvenRecipes.apply(manager, server.registryAccess());
         Set<RecipeHolder<?>> snapshot = Collections.newSetFromMap(new IdentityHashMap<>());
         snapshot.addAll(manager.getRecipes()); APPLIED.put(manager, snapshot);
