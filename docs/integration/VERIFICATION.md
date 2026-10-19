@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 基础机器执行和工作量
+
+MachineWorkCost 相对 `f13ef66cd` 代码／字面量一致，Java 17 独立编译通过。实际 core 观察 90/100 加 32 被截为 100、精确到达与 long 上界、普通／TU 并行和溢出拒绝。原版余量 22、固定输出位置、四模式及单空罐误准入来自源码推导，未作为 Minecraft 实测。无 Gradle、全套测试、原生库存模拟、游戏、重启或打包，见 [回执](verification/basic-machine-execution-audit-20261019.json)。
+
 ## 2026-10-19 / 焦炉参数及调用链
 
 OriginalCokeOvenRules、OriginalMultiblockMachineParameters、LargeMachineProcessingRules 与 `90196e6de` 代码／字面量一致，Java 17 独立编译通过。core 观察焦炉参数、面掩码、25 砖／一空气、四向排液目标集合与首位置、TU 单份／16 并行和 tickIgnition(1)。原生排液、绑定、积压和点火顺序为源调用链核查，没有运行 Minecraft 或声称模拟完成。未运行 Gradle、全套测试、世界重启或打包；见 [回执](verification/coke-oven-audit-20261019.json)。

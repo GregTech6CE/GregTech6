@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "f13ef66cd37d053fc71389564ea0029e978352ee",
+  "scope": "Shared BasicMachine execution audit and MachineWorkCost readability; no gameplay changes",
+  "findings": [
+    "ALIGN-040",
+    "ALIGN-041",
+    "ALIGN-042",
+    "ALIGN-043"
+  ],
+  "code_and_literals_unchanged": [
+    "core/src/api/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java"
+  ],
+  "compilation": "javac 17: MachineWorkCost.java and BasicMachineExecutionAudit.java, passed",
+  "core_observations": [
+    "ADVANCE|overshoot|90|100|32|100",
+    "ADVANCE|exact|68|100|32|100",
+    "ADVANCE|long-boundary|9223372036854775805|9223372036854775807|32|9223372036854775807",
+    "COST|ordinary|128|2560",
+    "COST|TU|1|20",
+    "COST|overflow-rejected|true"
+  ],
+  "evidence_boundary": "Only core arithmetic executed. Slot, mode and fluid outcomes are source control-flow deductions, not native simulations.",
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregapi/recipes/Recipe.java": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+    "gregapi/recipes/maps/RecipeMapBath.java": "69a915045f1ee5f524394ee87d33da3441e85d562cb7deb9f4e97387497f9f6c",
+    "gregapi/recipes/maps/RecipeMapUnboxinator.java": "34d81f6198e7311dc42aee2aaa5cb67ddc53fee9e9dd90ce98f8c93d6116096f",
+    "gregtech/loaders/c/Loader_Recipes_Chem.java": "92b3aff4549ad511b1e6fe5a24219f230ac581569d8666adc80266d2e4fdcf5c",
+    "gregtech/loaders/c/Loader_Recipes_Temporary.java": "2d29f917e9a5b18d8286c968b88c238e8813070e0cea116b4b21bdafe01a4f40"
+  },
+  "current_sha256": {
+    "core/src/api/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java": "85af75925df6db599a0979ab613b4309aed0f4f1a866eed64c642c2345a7a1a9",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java": "08398b0617b30013a8c37d30dec80f812bfa103c10dd23461eff5d1df23adbb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/GTFacingMachineBlock.java": "d07a16e1e99d6fc66d4dafcc24a960becf09bd853693db490d37c7e559547b48",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/MachineWorkOutputs.java": "234c0f4fb2f13c5479df8d3ceada31de71787c7b87b6b98a5256fcda3ee453d2",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": "919a82a89f9631e6c65e0d891af79e608bd0670746b22bca4dfaaa88909c5907",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java": "c3d8f2e23bca0849c649a3d7893a46fcfc876ab9a7c3f0b0a4ed596adc601688",
+    "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java": "764bc7016ab081c3d18d2cb8507f0918322063ff373401d3b14513f82f0e409b",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTChemGen.java": "f9e541855f9773c596fcd7c1150f733379b64a0492c605a5308b82b231ce7c25",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTTemporaryGen.java": "19ee76a7601fc08da82992ca7d8a863f857e25c94200941748b365b3c3b1d796"
+  },
+  "not_run": [
+    "Gradle",
+    "full test suite",
+    "native inventory/fluid simulation",
+    "Minecraft",
+    "GameTest",
+    "saved-world restart",
+    "build",
+    "push"
+  ]
+}
