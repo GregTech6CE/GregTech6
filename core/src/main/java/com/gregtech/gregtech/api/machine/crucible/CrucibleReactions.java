@@ -62,10 +62,63 @@ public final class CrucibleReactions {
         RECIPES.add(new Reaction(out.resolve(), yield, List.of(parts)));
     }
     public static List<Reaction> recipes() { return Collections.unmodifiableList(RECIPES); }
+
+    /** One addon row. Built-in rows are not tagged. */
+    public record AddonRow(String addonId, Reaction reaction) {
+        public AddonRow {
+            Objects.requireNonNull(addonId, "addonId");
+            Objects.requireNonNull(reaction, "reaction");
+        }
+    }
+
+    /** A removal. An empty input set drops every row of {@code output}. */
+    public record AddonRemoval(String addonId, GTMaterial output, Set<GTMaterial> inputs) {
+        public AddonRemoval {
+            Objects.requireNonNull(addonId, "addonId");
+            Objects.requireNonNull(output, "output");
+            Objects.requireNonNull(inputs, "inputs");
+            output = output.resolve();
+            var resolved = new HashSet<GTMaterial>();
+            for (GTMaterial input : inputs) resolved.add(input.resolve());
+            inputs = Set.copyOf(resolved);
+        }
+    }
+
     private static List<Reaction> all;
+    private static boolean sealed;
+
+    /**
+     * Freezes the table: built-in explicit rows, built-in composition rows, addon explicit rows,
+     * addon composition rows, then removals. Call this once, after materials have linked and before
+     * {@link #allRecipes()}.
+     */
+    public static synchronized void seal(List<AddonRow> explicit, List<AddonRow> derived, List<AddonRemoval> removals) {
+        if (sealed || all != null) throw new IllegalStateException(all != null
+                ? "Crucible reactions were read before addon linking finished"
+                : "Crucible reactions are already sealed");
+        Objects.requireNonNull(explicit, "explicit");
+        Objects.requireNonNull(derived, "derived");
+        Objects.requireNonNull(removals, "removals");
+        List<Reaction> result = new ArrayList<>(RECIPES);
+        appendBuiltinCompositions(result);
+        var addonIds = new IdentityHashMap<Reaction, String>();
+        for (AddonRow row : explicit) addonIds.put(row.reaction(), row.addonId());
+        for (AddonRow row : derived) addonIds.put(row.reaction(), row.addonId());
+        for (AddonRow row : explicit) result.add(row.reaction());
+        for (AddonRow row : derived) result.add(row.reaction());
+        applyRemovals(result, removals);
+        rejectDuplicates(result, addonIds);
+        warnOverlappingInputs(result, addonIds);
+        all = List.copyOf(result);
+        sealed = true;
+    }
+
     public static synchronized List<Reaction> allRecipes() {
         if (all != null) return all;
-        List<Reaction> result = new ArrayList<>(RECIPES);
+        throw new IllegalStateException("Crucible reactions were read before addon linking finished");
+    }
+
+    private static void appendBuiltinCompositions(List<Reaction> result) {
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
             if (material.resolve() != material || !OriginalCrucibleCompositions.hasRecipe(material.getId()) || !material.hasComposition()) continue;
             List<Part> parts = material.getCompositionComponents().stream()
@@ -73,7 +126,88 @@ public final class CrucibleReactions {
             if (parts.stream().anyMatch(p -> p.material() == material)) continue;
             result.add(new Reaction(material, material.getCompositionDivider(), parts));
         }
-        return all = List.copyOf(result);
+    }
+
+    private static void applyRemovals(List<Reaction> result, List<AddonRemoval> removals) {
+        for (AddonRemoval removal : removals) {
+            int matched = 0;
+            for (int i = result.size() - 1; i >= 0; i--) {
+                if (!matches(result.get(i), removal)) continue;
+                Reaction row = result.remove(i);
+                matched++;
+                GTMaterialRegistry.warn("Addon '" + removal.addonId() + "' removed crucible reaction " + describe(row));
+            }
+            if (matched == 0) GTMaterialRegistry.warn("Addon '" + removal.addonId()
+                    + "' crucible removal " + removalLabel(removal) + " matched nothing");
+        }
+    }
+
+    private static boolean matches(Reaction row, AddonRemoval removal) {
+        if (row.output().resolve() != removal.output()) return false;
+        if (removal.inputs().isEmpty()) return true;
+        var parts = new HashSet<GTMaterial>();
+        for (Part part : row.parts()) parts.add(part.material().resolve());
+        return parts.equals(removal.inputs());
+    }
+
+    private static void rejectDuplicates(List<Reaction> result, IdentityHashMap<Reaction, String> addonIds) {
+        for (int i = 0; i < result.size(); i++) {
+            Reaction row = result.get(i);
+            String addonId = addonIds.get(row);
+            if (addonId == null) continue;
+            for (int j = 0; j < result.size(); j++) {
+                if (i == j || !sameRecipe(row, result.get(j))) continue;
+                String otherId = addonIds.get(result.get(j));
+                String where = otherId == null ? "a built-in row" : "addon '" + otherId + "'";
+                throw new IllegalStateException("Addon '" + addonId + "' crucible reaction duplicates "
+                        + where + ": " + describe(row));
+            }
+        }
+    }
+
+    private static void warnOverlappingInputs(List<Reaction> result, IdentityHashMap<Reaction, String> addonIds) {
+        for (int i = 0; i < result.size(); i++) {
+            Reaction row = result.get(i);
+            String addonId = addonIds.get(row);
+            if (addonId == null) continue;
+            Map<GTMaterial, Long> ratios = ratioMap(row);
+            for (int j = 0; j < result.size(); j++) {
+                if (i == j || sameRecipe(row, result.get(j)) || !ratios.equals(ratioMap(result.get(j)))) continue;
+                if (addonIds.get(result.get(j)) != null && j < i) continue;
+                GTMaterialRegistry.warn("Addon '" + addonId + "' crucible reaction " + describe(row)
+                        + " uses the same inputs as " + describe(result.get(j)) + " and can take that reaction over");
+            }
+        }
+    }
+
+    private static boolean sameRecipe(Reaction left, Reaction right) {
+        return left.output().resolve() == right.output().resolve() && left.yield() == right.yield()
+                && ratioMap(left).equals(ratioMap(right));
+    }
+
+    private static Map<GTMaterial, Long> ratioMap(Reaction reaction) {
+        var ratios = new HashMap<GTMaterial, Long>();
+        for (Part part : reaction.parts()) ratios.merge(part.material().resolve(), part.ratio(), Math::addExact);
+        return ratios;
+    }
+
+    private static String describe(Reaction reaction) {
+        var text = new StringBuilder(reaction.output().resolve().getName())
+                .append(" yield ").append(reaction.yield()).append(" from ");
+        for (int i = 0; i < reaction.parts().size(); i++) {
+            if (i > 0) text.append(", ");
+            Part part = reaction.parts().get(i);
+            text.append(part.material().resolve().getName()).append('*').append(part.ratio());
+        }
+        return text.toString();
+    }
+
+    private static String removalLabel(AddonRemoval removal) {
+        if (removal.inputs().isEmpty()) return removal.output().getName() + " (any inputs)";
+        var names = new ArrayList<String>();
+        for (GTMaterial input : removal.inputs()) names.add(input.getName());
+        names.sort(String::compareTo);
+        return removal.output().getName() + " from " + String.join(", ", names);
     }
     /** One winning reaction per tick, with at most one solid ingredient, as in GT6. */
     public static boolean react(List<CrucibleMaterialStack> content, long temperature) {
