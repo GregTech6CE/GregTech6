@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.recipe.generated;
 import java.util.List;
 
 /**
- * The port's alloying table (transcribed from {@link Loader_Recipes_Alloys}) in reverse-queryable
+ * The port's alloying table (transcribed from {@link AlloyRecipeLoader}) in reverse-queryable
  * form: every entry is one {@code mix(out(...), ...)} call, i.e. what a molten alloy is made of.
  *
  * <p>Used by the material dictionary to print which alloys a material takes part in. Amounts are

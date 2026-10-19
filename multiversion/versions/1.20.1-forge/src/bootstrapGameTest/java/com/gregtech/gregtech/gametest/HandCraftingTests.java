@@ -238,11 +238,11 @@ public final class HandCraftingTests {
             // Rows injected at runtime (hand recipes, the GT6 masonry patterns) state their own flag in
             // code and are audited by their own tests; this rule is about the data-pack rows the
             // mirror-flag tool writes.
-            if (com.gregtech.gregtech.content.recipe.Loader_StoneCraftingRecipes.registeredIds()
+            if (com.gregtech.gregtech.content.recipe.StoneCraftingRecipeInjector.registeredIds()
                     .contains(tool.getId().toString())) continue;
-            if (com.gregtech.gregtech.content.recipe.Loader_HandToolCraftingRecipes.registeredIds()
+            if (com.gregtech.gregtech.content.recipe.HandToolCraftingRecipeInjector.registeredIds()
                     .contains(tool.getId().toString())) continue;
-            if (com.gregtech.gregtech.content.recipe.Loader_ToolCraftingRecipes.registeredIds()
+            if (com.gregtech.gregtech.content.recipe.ToolCraftingRecipeInjector.registeredIds()
                     .contains(tool.getId().toString())) continue;
             checked++;
             if (tool.allowMirror()) mirroring.add(tool.getId().toString());

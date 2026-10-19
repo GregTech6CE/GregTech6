@@ -37,7 +37,7 @@ import java.util.Locale;
  * output by leading empty grid cells, in source prefix registration order; missing material outputs
  * still reserve their source offset. XToY requires exactly the same material in every occupied cell.
  */
-public final class Loader_FormConversionCraftingRecipes {
+public final class FormConversionCraftingRecipeInjector {
     private static final List<Conversion> ONE_TO_MANY = OriginalFormConversions.FIXED.stream().filter(Conversion::single).toList();
     private static final List<Conversion> MANY_TO_MANY = OriginalFormConversions.FIXED.stream().filter(c -> !c.single()).toList();
 
@@ -48,7 +48,7 @@ public final class Loader_FormConversionCraftingRecipes {
         return CraftingMaterialForms.replaces(recipe, access);
     }
 
-    private Loader_FormConversionCraftingRecipes() {}
+    private FormConversionCraftingRecipeInjector() {}
 
     /** Recipe ids registered by the last server start, for diagnostics and tests. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }

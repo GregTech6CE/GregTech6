@@ -8,7 +8,7 @@ import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTTechnological;
 import com.gregtech.gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +48,7 @@ import java.util.List;
  * Extruder recipes omit the shape molds until those items are ported.</p>
 
  */
-public class Loader_Recipes_Parts implements IGTLoader {
+public class PartRecipeLoader implements InitializationStep {
 
     private static final long EU = 16;
 

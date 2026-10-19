@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.bootstrap.registration;
 
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTMenuTypes;
@@ -9,7 +9,7 @@ import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /** Final Phase B step — submits all shared DeferredRegisters after every bootstrapper has queued. */
-public record Loader_Submit(IEventBus bus) implements IGTLoader {
+public record DeferredRegistrySubmission(IEventBus bus) implements InitializationStep {
     @Override
     public void run() {
         GTItems.ITEMS.register(bus);

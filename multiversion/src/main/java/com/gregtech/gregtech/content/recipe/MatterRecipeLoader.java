@@ -5,7 +5,7 @@ import com.gregtech.gregtech.api.prefix.BlockMaterialPrefix;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.data.*;
 import com.gregtech.gregtech.registry.*;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.*;
 
 /** GT6 Loader_Recipes_Other: special Ender conversions and elemental separation (131072 QU per nucleon). */
-public final class Loader_Recipes_Matter implements IGTLoader {
+public final class MatterRecipeLoader implements InitializationStep {
     private int added;
     public void run() {
         special("Dilithium","dustDiv72",1,144L,"Ender_TE",250);

@@ -2,10 +2,7 @@ package com.gregtech.gregtech.content.recipe;
 
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.FuelRecipeMaps;
-//? if >=1.21.1 {
-//?} else {
-import com.gregtech.gregtech.bootstrap.IGTLoader;
-//?}
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.mojang.logging.LogUtils;
 //? if >=1.21.1 {
@@ -24,11 +21,7 @@ import org.slf4j.Logger;
  * amount, so total energy = {@code |EUt| * duration} per charge. Exhaust fluids
  * (CO2 / water / pahoehoe lava) are recipe outputs. Missing fluids skip silently.</p>
  */
-//? if >=1.21.1 {
-/*public class Loader_Recipes_Fuels implements Runnable {
-*///?} else {
-public class Loader_Recipes_Fuels implements IGTLoader {
-//?}
+public class FuelRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private int added, skipped, rejected;

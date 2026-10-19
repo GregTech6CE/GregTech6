@@ -36,7 +36,7 @@ import java.util.List;
  * of the very same shape would collide with the 1-bottle row above. The honey/honeydew/royal-jelly rows
  * from GT drops ({@code :169-174}) need GT6's bee-drop items and are left to the bee batch.
  */
-public final class Loader_BottleFillingRecipes {
+public final class BottleFillingRecipeInjector {
 
     private static final List<String> REGISTERED = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();
@@ -47,7 +47,7 @@ public final class Loader_BottleFillingRecipes {
      */
     private static final List<com.gregtech.gregtech.content.food.BottleFillingRows.Family> FAMILIES=com.gregtech.gregtech.content.food.BottleFillingRows.FAMILIES;
 
-    private Loader_BottleFillingRecipes() {}
+    private BottleFillingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }

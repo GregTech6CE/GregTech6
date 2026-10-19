@@ -40,7 +40,7 @@ import java.util.Locale;
  *       removed; shapeless crafting and machine recipes remain available.</li>
  * </ul>
  */
-public final class Loader_TrackRecipes {
+public final class TrackRecipeInjector {
 
     /** The vanilla rails GT6 replaces ({@code Blocks.rail/golden_rail/detector_rail/activator_rail}). */
     private static final List<Item> REPLACED = List.of(Items.RAIL, Items.POWERED_RAIL,
@@ -50,7 +50,7 @@ public final class Loader_TrackRecipes {
     private static final List<String> REGISTERED = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();
 
-    private Loader_TrackRecipes() {}
+    private TrackRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }

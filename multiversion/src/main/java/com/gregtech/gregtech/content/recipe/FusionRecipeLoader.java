@@ -1,12 +1,12 @@
 package com.gregtech.gregtech.content.recipe;
 
-import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
 
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.material.MaterialStackItemHelper;
 import com.gregtech.gregtech.data.*;
 import com.gregtech.gregtech.registry.GTTechnological;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -17,7 +17,7 @@ import java.util.*;
 
 /** GT6 Loader_Recipes_Other lines 949-966: all 18 fusion reactions, including their LU startup cost.
  * Gas units are 1000 mB/U; molten metal units are 144 mB/U. Missing phases never substitute another phase. */
-public final class Loader_Recipes_Fusion implements IGTLoader {
+public final class FusionRecipeLoader implements InitializationStep {
     private int added;
     private final Set<String> missing=new TreeSet<>();
     public void run() {
@@ -42,15 +42,15 @@ public final class Loader_Recipes_Fusion implements IGTLoader {
         com.mojang.logging.LogUtils.getLogger().info("[gregtech] Fusion recipes: {} / 18; unresolved: {}",added,missing);
     }
     private FluidStack fluid(String token) {
-        var fields=token.split(":");var material=GTGeneratedChem.material(fields[0]);
+        var fields=token.split(":");var material=GeneratedRecipeResolver.material(fields[0]);
         if(material==null){missing.add(token);return FluidStack.EMPTY;}
         var name=material.getName().toLowerCase(Locale.ROOT);
         // GT6 fuels the ring with the material's own gas/liquid phase (MT.D.gas(...)), not with a
         // name-prefixed fluid: the generated gas name is the material name (FL.java:1080) and the
         // molten phase keeps its "molten." prefix (FL.java:1077).
         var stack="gas".equals(fields[1])
-                ? GTGeneratedChem.materialFluid(material.getName(),Integer.parseInt(fields[2]))
-                : GTGeneratedChem.byRegistryName("molten."+name,Integer.parseInt(fields[2]));
+                ? GeneratedRecipeResolver.materialFluid(material.getName(),Integer.parseInt(fields[2]))
+                : GeneratedRecipeResolver.byRegistryName("molten."+name,Integer.parseInt(fields[2]));
         if(stack==null){missing.add(token);return FluidStack.EMPTY;}
         return stack;
     }
@@ -60,7 +60,7 @@ public final class Loader_Recipes_Fusion implements IGTLoader {
         if(Arrays.stream(in).anyMatch(FluidStack::isEmpty)||Arrays.stream(out).anyMatch(FluidStack::isEmpty))return;
         ItemStack[] items=new ItemStack[0];
         if(dust!=null) {
-            var material=GTGeneratedChem.material(dust);
+            var material=GeneratedRecipeResolver.material(dust);
             var stack=material==null?ItemStack.EMPTY:MaterialStackItemHelper.mat(MaterialPrefix.dust,material,1);
             if(stack.isEmpty()){missing.add(dust);return;}items=new ItemStack[]{stack};
         }

@@ -66,12 +66,12 @@ import java.util.Map;
  * <p>GT6's {@code CR.shaped(BRICK ×4, "XX"/"XX", plain stone)} is not repeated here: the data pack
  * already ships it as {@code stone_<rock>_bricks.json}.</p>
  */
-public final class Loader_StoneCraftingRecipes {
+public final class StoneCraftingRecipeInjector {
 
     private static final List<String> REGISTERED = new ArrayList<>();
     private static final List<String> SKIPPED = new ArrayList<>();
 
-    private Loader_StoneCraftingRecipes() {}
+    private StoneCraftingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }

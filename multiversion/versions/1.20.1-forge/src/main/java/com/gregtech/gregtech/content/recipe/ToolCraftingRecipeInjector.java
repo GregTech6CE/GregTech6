@@ -24,11 +24,11 @@ import java.util.List;
  * (GT6 {@code AdvancedCraftingTool extends ShapelessOreRecipe}). All of them are registered here so
  * the shape lives in one place, {@link GTToolRecipes}.</p>
  */
-public final class Loader_ToolCraftingRecipes {
+public final class ToolCraftingRecipeInjector {
 
     private static final List<String> REGISTERED = new ArrayList<>();
 
-    private Loader_ToolCraftingRecipes() {}
+    private ToolCraftingRecipeInjector() {}
 
     /** Recipe ids the last server start added, for tests and reports. */
     public static List<String> registeredIds() { return List.copyOf(REGISTERED); }

@@ -40,7 +40,7 @@ public final class ExternalOreProcessing {
     /** Remove only this adapter's exact rows; other mods' processing rows remain registered. */
     public static synchronized void clear() {
         // Restore displaced source rows before removing them; otherwise an old mirror can resurrect this reload's predecessors.
-        com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.clearMirrors();
+        com.gregtech.gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
         OWNED.forEach((map, rows) -> {
             map.mRecipeList.removeAll(rows);
             map.mRecipeItemMap.values().forEach(values -> values.removeAll(rows));

@@ -1,12 +1,12 @@
 package com.gregtech.gregtech.bootstrap.registration;
 
 import com.gregtech.gregtech.api.machine.MachineRegistry;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /** Registers all GT6 machine blocks, wires, pipes, and tanks — following the original GT6 {@code Loader_MultiTileEntities} pattern. */
-public record Loader_MultiTileEntities(IEventBus bus) implements IGTLoader {
+public record MachineBlockBootstrap(IEventBus bus) implements InitializationStep {
 
     @Override
     public void run() {

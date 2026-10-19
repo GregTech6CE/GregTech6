@@ -14,7 +14,7 @@ import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.block.stone.StoneVariant;
 //? if >=1.21.1 {
 //?} else {
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 //?}
 import com.gregtech.gregtech.registry.GTBlocks;
 //? if >=1.21.1 {
@@ -37,9 +37,9 @@ import java.util.Set;
 
 /** Registers GT6 material blocks, stone blocks, and stone slabs — logic inlined from three separate loader classes. */
 //? if >=1.21.1 {
-/*public record Loader_Blocks() implements Runnable {
+/*public record BlockBootstrap() implements Runnable {
 *///?} else {
-public record Loader_Blocks() implements IGTLoader {
+public record BlockBootstrap() implements InitializationStep {
 //?}
     private static final Logger LOGGER = LogUtils.getLogger();
 

@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.loot;
 import com.gregtech.gregtech.content.book.GTBooks;
 import com.gregtech.gregtech.content.book.GTMaterialDictionary;
 import com.gregtech.gregtech.api.material.GTMaterial;
-import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import com.gregtech.gregtech.content.recipe.generated.GTLootGen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -125,7 +125,7 @@ public final class GTLootTables {
         if (spec.startsWith(GTMaterialDictionary.MAPPING_PREFIX)) {
             return GTMaterialDictionary.bookStack(spec);
         }
-        ItemStack stack = GTGeneratedChem.resolveSpec(spec);
+        ItemStack stack = GeneratedRecipeResolver.resolveSpec(spec);
         return stack == null ? ItemStack.EMPTY : stack;
     }
 

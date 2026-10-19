@@ -7,7 +7,7 @@ import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.block.stone.StoneVariant;
 import com.gregtech.gregtech.content.recipe.StoneAndToolSurvivalRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;
@@ -99,7 +99,7 @@ public final class StoneExtrusionTests {
             expectedRegistered += 8;
             String material = type.material().getName();
             for (String[] shape : StoneAndToolSurvivalRecipes.stoneExtrusionShapes()) {
-                ItemStack expected = GTGeneratedChem.resolveSpec(String.format(shape[1], material));
+                ItemStack expected = GeneratedRecipeResolver.resolveSpec(String.format(shape[1], material));
                 if (expected == null || expected.isEmpty()) {
                     missingForms++;
                     continue;

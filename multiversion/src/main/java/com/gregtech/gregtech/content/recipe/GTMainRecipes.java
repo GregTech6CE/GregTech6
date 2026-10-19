@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.recipe;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -224,7 +224,7 @@ public final class GTMainRecipes {
         if (specs == null || specs.isEmpty()) return new ItemStack[0];
         List<ItemStack> out = new ArrayList<>();
         for (String spec : specs.split(";")) {
-            ItemStack stack = GTGeneratedChem.resolveSpec(stripLabel(spec));
+            ItemStack stack = GeneratedRecipeResolver.resolveSpec(stripLabel(spec));
             if (stack == null || stack.isEmpty()) return null;
             String label = labelOf(spec);
             if (label != null) {
@@ -254,16 +254,16 @@ public final class GTMainRecipes {
     /** The first spec of a row that does not resolve — the reason a row is skipped. */
     private static String firstMissing(Row row) {
         for (String spec : row.inputs().split(";")) {
-            if (!spec.isEmpty() && GTGeneratedChem.resolveSpec(stripLabel(spec)) == null) return "input " + spec;
+            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveSpec(stripLabel(spec)) == null) return "input " + spec;
         }
         for (String spec : row.outputs().split(";")) {
-            if (!spec.isEmpty() && GTGeneratedChem.resolveSpec(stripLabel(spec)) == null) return "output " + spec;
+            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveSpec(stripLabel(spec)) == null) return "output " + spec;
         }
         for (String spec : row.fluidIn().split(";")) {
-            if (!spec.isEmpty() && GTGeneratedChem.resolveFluidSpec(stripLabel(spec)) == null) return "fluid " + spec;
+            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null) return "fluid " + spec;
         }
         for (String spec : row.fluidOut().split(";")) {
-            if (!spec.isEmpty() && GTGeneratedChem.resolveFluidSpec(stripLabel(spec)) == null) {
+            if (!spec.isEmpty() && GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null) {
                 return "fluid out " + spec;
             }
         }
@@ -274,7 +274,7 @@ public final class GTMainRecipes {
         if (specs == null || specs.isEmpty()) return new FluidStack[0];
         List<FluidStack> out = new ArrayList<>();
         for (String spec : specs.split(";")) {
-            FluidStack stack = GTGeneratedChem.resolveFluidSpec(spec);
+            FluidStack stack = GeneratedRecipeResolver.resolveFluidSpec(spec);
             if (stack == null || stack.isEmpty()) return null;
             out.add(stack);
         }

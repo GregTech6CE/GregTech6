@@ -3,7 +3,7 @@ package com.gregtech.gregtech.content.recipe;
 import com.gregtech.gregtech.api.material.*;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.*;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.gregtech.gregtech.util.OM;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +31,7 @@ import static com.gregtech.gregtech.api.material.GTValues.*;
  * <p>Registered standard ores use GT6 crushing targets and separate hammer/crusher yields.
  * Small ore mining is handled by SmallOreDrops, not a standard-ore recipe.</p>
  */
-public class Loader_Recipes_OreProcessing implements IGTLoader {
+public class OreProcessingRecipeLoader implements InitializationStep {
 
     /** Chances are 1/100th of a percent: 10_000 = 100 %. */
     private static final long CHANCE_100 = 10_000L;

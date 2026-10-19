@@ -7,8 +7,8 @@ import net.minecraft.world.item.crafting.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 /** Forge reload adapter for the shared original hand-crafting rows. */
-public final class Loader_HandToolCraftingRecipes {
-    private Loader_HandToolCraftingRecipes(){}
+public final class HandToolCraftingRecipeInjector {
+    private HandToolCraftingRecipeInjector(){}
     private static final List<String> REGISTERED=new ArrayList<>();
     public static List<String> registeredIds(){return List.copyOf(REGISTERED);}
     public static void apply(RecipeManager manager,net.minecraft.core.RegistryAccess access){

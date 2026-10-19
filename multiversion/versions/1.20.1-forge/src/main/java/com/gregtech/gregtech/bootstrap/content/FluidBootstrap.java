@@ -5,7 +5,7 @@ import com.gregtech.gregtech.api.fluid.FluidRenderLayers;
 import com.gregtech.gregtech.block.GTWorldFluidBlock;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.item.FluidItem;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.gregtech.gregtech.registry.GTWorldWaterFluid;
 import com.gregtech.gregtech.registry.GTBlocks;
@@ -29,7 +29,7 @@ import net.minecraftforge.registries.RegistryObject;
  * Registers GT6 fluids and fluid container items.
  * Forge registration adapter; definitions are prepared by content.fluid.FluidDefinitions.
  */
-public record Loader_Fluids(IEventBus bus) implements IGTLoader {
+public record FluidBootstrap(IEventBus bus) implements InitializationStep {
     /**
      * Fluids that also exist as world blocks. GT6's fluid springs ({@code WorldgenFluidSpring},
      * Loader_Worldgen:782-797) place oil, natural gas and geothermal water into the world, and

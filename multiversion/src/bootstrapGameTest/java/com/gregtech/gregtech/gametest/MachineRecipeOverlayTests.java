@@ -65,7 +65,7 @@ public final class MachineRecipeOverlayTests {
                 int applications = MachineRecipeOverlay.applications();
                 int otherRows = MachineRecipeMaps.Crusher.mRecipeList.size();
                 for (int round = 0; round < 2; round++) {
-                    com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.apply(manager, server.registryAccess());
+                    com.gregtech.gregtech.content.recipe.OvenRecipeBridge.apply(manager, server.registryAccess());
                     requireFurnace(recipesWith(furnace, Items.JIGSAW) == 0,
                             "the oven mirror reintroduced the removed Jigsaw input");
                     requireFurnace(recipesWith(furnace, Items.STRUCTURE_VOID) == 1,
@@ -87,7 +87,7 @@ public final class MachineRecipeOverlayTests {
             }
             var withoutMarkers = furnaceProbeManager(server, 0);
             MachineRecipeOverlay.apply(withoutMarkers);
-            com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.apply(withoutMarkers, server.registryAccess());
+            com.gregtech.gregtech.content.recipe.OvenRecipeBridge.apply(withoutMarkers, server.registryAccess());
             var restored = furnace.findRecipe(List.of(new ItemStack(Items.STRUCTURE_VOID)), List.of(), false, 1, 12);
             requireFurnace(restored != null && restored.mOutputs[0].is(Items.EMERALD),
                     "dropping the markers left a stale custom Furnace row in displaced mirrors");
@@ -96,7 +96,7 @@ public final class MachineRecipeOverlayTests {
             checks++;
         } finally {
             MachineRecipeOverlay.apply(server.getRecipeManager());
-            com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.apply(server.getRecipeManager(), server.registryAccess());
+            com.gregtech.gregtech.content.recipe.OvenRecipeBridge.apply(server.getRecipeManager(), server.registryAccess());
         }
         return checks;
     }

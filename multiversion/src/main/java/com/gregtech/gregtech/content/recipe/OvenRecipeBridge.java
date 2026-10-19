@@ -44,8 +44,8 @@ import java.util.List;
  * {@code FurnaceRecipes.func_151394_a}.
  * </p>
  */
-public final class Loader_OvenRecipes {
-    private Loader_OvenRecipes() {}
+public final class OvenRecipeBridge {
+    private OvenRecipeBridge() {}
     private static final java.util.Set<com.gregtech.gregtech.api.recipe.Recipe> MIRRORED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
     private static final java.util.Set<com.gregtech.gregtech.api.recipe.Recipe> DISPLACED = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
 

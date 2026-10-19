@@ -17,7 +17,7 @@ import com.gregtech.gregtech.data.MaterialPrefix;
 
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 
 import com.gregtech.gregtech.registry.GTFluids;
 
@@ -53,7 +53,7 @@ import org.slf4j.Logger;
 
  ^/
 
-public class Loader_Recipes_Chem implements IGTLoader {
+public class ChemicalRecipeLoader implements InitializationStep {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -169,7 +169,7 @@ import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.item.ItemStack;
@@ -187,7 +187,7 @@ import org.slf4j.Logger;
  * hydrochloric + sulfuric acid chains, ammonia. The remaining ~350 chem recipes
  * (organics, dyes, polymers) are tracked as follow-up work.</p>
  */
-public class Loader_Recipes_Chem implements IGTLoader {
+public class ChemicalRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private int added, skipped;

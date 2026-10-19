@@ -5,7 +5,7 @@ import com.gregtech.gregtech.api.material.MaterialItemDefinitions;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.CoinItem;
 import com.gregtech.gregtech.item.MaterialItem;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTTechnological;
 import com.mojang.logging.LogUtils;
@@ -18,7 +18,7 @@ import org.slf4j.Logger;
  * Registers one GT6 material item per valid (prefix, material) pair.
  * The shared definition stream retains the original explicit prefix order and material filtering.
  */
-public record Loader_Items() implements IGTLoader {
+public record ItemBootstrap() implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     @Override

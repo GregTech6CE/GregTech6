@@ -99,7 +99,7 @@ public final class BatteryCellRecipes {
     private static FluidStack electrolyte(String materialName, int mb) {
         var material = com.gregtech.gregtech.api.material.GTMaterialRegistry.get(materialName);
         if (material != null && material.isValid()) {
-            FluidStack stack = com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem
+            FluidStack stack = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
                     .materialFluid(material.getName(), mb);
             if (stack != null) return stack;
         }

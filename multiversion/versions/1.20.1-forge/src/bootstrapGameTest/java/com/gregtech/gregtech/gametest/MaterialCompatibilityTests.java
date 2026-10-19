@@ -138,7 +138,7 @@ public final class MaterialCompatibilityTests {
                 "Direct tool keeps its input material stats");
         grid.setItem(7,GTItems.getStack(MaterialPrefix.plate,GTMaterialRegistry.get("Bronze")));
         h.assertTrue(!recipe.matches(grid,h.getLevel()),"Direct tool components cannot mix materials");
-        for(String id:com.gregtech.gregtech.content.recipe.Loader_ToolCraftingRecipes.registeredIds()) {
+        for(String id:com.gregtech.gregtech.content.recipe.ToolCraftingRecipeInjector.registeredIds()) {
             h.assertTrue(h.getLevel().getRecipeManager().byKey(ResourceLocation.parse(id)).isPresent(),
                     "Tool recipe loaded: "+id);
         }

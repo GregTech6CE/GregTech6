@@ -104,7 +104,7 @@ public final class StoneAndToolSurvivalRecipes {
             var plain = blockItem(stone.stoneType().registryId() + "_" + StoneVariant.STONE.registrySuffix());
             for (String family : STONE_EXTRUDER_MOLDS) {
                 for (String[] shape : STONE_EXTRUDER_SHAPES) {
-                    var out = com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem
+                    var out = com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver
                             .resolveSpec(String.format(shape[1], material.getName()));
                     extrude(input, mold(family + shape[0]), out);
                 }

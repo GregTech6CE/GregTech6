@@ -3,9 +3,9 @@ package com.gregtech.gregtech.bootstrap.content;
 import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialRoleFlags;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 
-public record Loader_Materials() implements IGTLoader {
+public record MaterialBootstrap() implements InitializationStep {
     @Override
     public void run() {
         AddonMaterials.collectContributors();

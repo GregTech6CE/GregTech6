@@ -13,7 +13,7 @@ import com.gregtech.gregtech.data.RegisteredFluids;
 
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 
 import com.gregtech.gregtech.registry.GTFluids;
 
@@ -51,7 +51,7 @@ import java.util.List;
 
  ^/
 
-public class Loader_Recipes_Alloys implements IGTLoader {
+public class AlloyRecipeLoader implements InitializationStep {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -375,7 +375,7 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.material.Fluid;
@@ -394,7 +394,7 @@ import java.util.List;
  * material units (1 unit = 144 mB). Recipes whose materials/fluids are not registered
  * are skipped silently — GT6 had the same behavior for absent cross-mod metals.</p>
  */
-public class Loader_Recipes_Alloys implements IGTLoader {
+public class AlloyRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final int UNIT_MB = 144;
 

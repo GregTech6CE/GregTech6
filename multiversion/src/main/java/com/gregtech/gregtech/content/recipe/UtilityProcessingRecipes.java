@@ -19,7 +19,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
             var block=((BlockItem)item("gt6ce:asphalt",1).getItem()).getBlock();
             var asphalt=ConcreteBlock.coloredItem(block,DyeColor.byName(name,DyeColor.GRAY));
             add("asphalt/"+rock,MachineRecipeMaps.Mixer,16,16,items(powder),items(asphalt),
-                    fluids(com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid("Asphalt",144)),null);
+                    fluids(com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid("Asphalt",144)),null);
         }
         add("road_stripe",MachineRecipeMaps.Mixer,64,16,items(mat(MaterialPrefix.dust,"Glass",1),mat(MaterialPrefix.dust,"Asphalt",1)),
                 items(item("gt6ce:railroad",4)),fluids(fluid("Latex",144),fluid("Dye_Chemical_White",144)),null);
@@ -33,7 +33,7 @@ public final class UtilityProcessingRecipes extends OriginalRecipeBatch {
         add("pellet_coke",MachineRecipeMaps.CokeOven,900,0,items(item("gt6ce:wood_pellet",1)),items(mat(MaterialPrefix.chunkGt,"Charcoal",1)),null,fluids(fluid("Oil_Creosote",25)));
         for(String acid:new String[]{"SulfuricAcid","NitricAcid"})
             add("foam_remover/"+acid,MachineRecipeMaps.Canner,256,16,items(item("gt6ce:empty_spray_can",1)),items(item("gt6ce:c_foam_removal_spray",1)),
-                fluids(com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid(acid,16000)),null);
+                fluids(com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid(acid,16000)),null);
         add("foam_hardener",MachineRecipeMaps.Canner,256,16,items(item("minecraft:sand",7),item("gt6ce:empty_spray_can",1)),items(item("gt6ce:hardening_spray",1)),null,null);
         // Full material crates pack 64 pieces; partial crates are normally loot and unpack 16.
         for(var block:BuiltInRegistries.BLOCK) if(block instanceof com.gregtech.gregtech.block.MaterialBlockLike materialBlock && materialBlock.prefix().isCrate()) {

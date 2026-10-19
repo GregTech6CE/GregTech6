@@ -72,7 +72,7 @@ public final class MolecularDataPortTests {
         for(int id:new int[]{10,800,9800}) {
             var recipe=lookup(h,MachineRecipeMaps.Replicator,List.of(usb(id)),matter(id));
             h.assertTrue(recipe!=null&&recipe.mOutputs.length==0&&recipe.mFluidOutputs.length==1&&recipe.mFluidOutputs[0].getAmount()==1000,"ambient phase yields one fluid unit for "+material(id).getName());
-            var expected=com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.materialFluid(material(id).getName(),1000);
+            var expected=com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver.materialFluid(material(id).getName(),1000);
             h.assertTrue(recipe.mFluidOutputs[0].isFluidEqual(expected),"fluid preserves registered material identity");
         }
         h.assertTrue(MaterialDataFacts.scannable(MaterialPrefix.toolHeadSword),"source tool-head prefix stays scannable");h.succeed();

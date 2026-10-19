@@ -78,7 +78,7 @@ import java.util.Map;
 
  ^/
 
-public final class GTGeneratedChem {
+public final class GeneratedRecipeResolver {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -96,7 +96,7 @@ public final class GTGeneratedChem {
 
 
 
-    private GTGeneratedChem() {}
+    private GeneratedRecipeResolver() {}
 
 
 
@@ -183,7 +183,7 @@ import java.util.Map;
  * rather than back-filled (B8). {@link #loadAll()} logs the exact unresolved
  * tokens each run so the set stays auditable instead of being a silent number.</p>
  */
-public final class GTGeneratedChem {
+public final class GeneratedRecipeResolver {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final Map<String, RecipeMap> MAPS = new HashMap<>();
@@ -192,7 +192,7 @@ public final class GTGeneratedChem {
     private static final java.util.Set<String> MISSING = new java.util.TreeSet<>();
     private static int added, skipped;
 
-    private GTGeneratedChem() {}
+    private GeneratedRecipeResolver() {}
 
     /**
      * Entry point — called from Loader_Recipes_Chem after the core chains.
@@ -261,7 +261,7 @@ public final class GTGeneratedChem {
 
         int beforeSkipped = skipped;
 
-        GeneratedRecipeSink.emit(GTGeneratedChem::register,loader);
+        GeneratedRecipeSink.emit(GeneratedRecipeResolver::register,loader);
 
         SET_STATS.add(new SetStats(set, added - beforeAdded, skipped - beforeSkipped));
 
@@ -486,7 +486,7 @@ public final class GTGeneratedChem {
     private static void load(String set, Runnable loader) {
         int beforeAdded = added;
         int beforeSkipped = skipped;
-        GeneratedRecipeSink.emit(GTGeneratedChem::register,loader);
+        GeneratedRecipeSink.emit(GeneratedRecipeResolver::register,loader);
         SET_STATS.add(new SetStats(set, added - beforeAdded, skipped - beforeSkipped));
     }
 
@@ -783,7 +783,7 @@ public final class GTGeneratedChem {
 
         if (index == null) {
 
-            synchronized (GTGeneratedChem.class) {
+            synchronized (GeneratedRecipeResolver.class) {
 
                 if (BY_REGISTRY_NAME == null) {
 
@@ -935,7 +935,7 @@ public final class GTGeneratedChem {
     public static FluidStack byRegistryName(String registryName, int mb) {
         Map<String, String> index = BY_REGISTRY_NAME;
         if (index == null) {
-            synchronized (GTGeneratedChem.class) {
+            synchronized (GeneratedRecipeResolver.class) {
                 if (BY_REGISTRY_NAME == null) {
                     Map<String, String> map = new HashMap<>();
                     for (Map.Entry<String, RegisteredFluids.FluidEntry> entry : RegisteredFluids.all().entrySet()) {

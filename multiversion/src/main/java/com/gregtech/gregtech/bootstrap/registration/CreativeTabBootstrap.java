@@ -2,7 +2,7 @@ package com.gregtech.gregtech.bootstrap.registration;
 //? if >=1.21.1 {
 /*import com.gregtech.gregtech.api.material.*;import com.gregtech.gregtech.api.prefix.*;import com.gregtech.gregtech.data.MaterialPrefix;import com.gregtech.gregtech.registry.*;import net.minecraft.world.item.*;import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;
 @EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
-public final class Loader_Creative {private Loader_Creative(){}
+public final class CreativeTabBootstrap {private CreativeTabBootstrap(){}
 public static void register(net.neoforged.bus.api.IEventBus bus){GTCreativeTabIcons.register();GTCreativeTabIcons.ICONS.register(bus);GTCreativeTabs.registerTabs();GTCreativeTabs.TABS.register(bus);}
 @SubscribeEvent public static void populateTabs(BuildCreativeModeTabContentsEvent event){if(!event.getTabKey().location().getNamespace().equals("gt6ce"))return;
  for(var prefix:PrefixRegistry.all()){var key=GTCreativeTabs.keyFor(prefix);if(key!=null&&key.equals(event.getTabKey())){populatePrefix(event,prefix);return;}}
@@ -32,7 +32,7 @@ import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.generated.GT6Materials;
 import com.gregtech.gregtech.item.FluidItem;
 import com.gregtech.gregtech.item.GTToolItem;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -48,10 +48,10 @@ import java.util.List;
 
 /** Registers creative tabs and populates them — combined from Loader_Creative and CreativeTabHandler. */
 @Mod.EventBusSubscriber(modid = GregTech.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Loader_Creative implements IGTLoader {
+public class CreativeTabBootstrap implements InitializationStep {
     private final IEventBus bus;
 
-    public Loader_Creative(IEventBus bus) {
+    public CreativeTabBootstrap(IEventBus bus) {
         this.bus = bus;
     }
 

@@ -21,7 +21,7 @@ import com.gregtech.gregtech.data.MaterialPrefix;
 
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 
 import com.gregtech.gregtech.registry.GTFluids;
 
@@ -75,7 +75,7 @@ import static com.gregtech.gregtech.api.material.GTValues.U;
 
  ^/
 
-public class Loader_Recipes_Decomp implements IGTLoader {
+public class DecompositionRecipeLoader implements InitializationStep {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -233,7 +233,7 @@ import com.gregtech.gregtech.api.recipe.RecipeMap;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTFluids;
 import com.gregtech.gregtech.util.OM;
 import com.mojang.logging.LogUtils;
@@ -260,7 +260,7 @@ import static com.gregtech.gregtech.api.material.GTValues.U;
  * everything else comes out as dust. Components with neither form abort the recipe
  * so no material is silently destroyed.</p>
  */
-public class Loader_Recipes_Decomp implements IGTLoader {
+public class DecompositionRecipeLoader implements InitializationStep {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private int added, skipped;

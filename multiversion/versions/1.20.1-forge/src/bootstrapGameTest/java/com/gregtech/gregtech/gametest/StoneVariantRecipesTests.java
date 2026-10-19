@@ -12,7 +12,7 @@ import com.gregtech.gregtech.content.recipe.StoneVariantRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.GTToolItem;
-import com.gregtech.gregtech.content.recipe.Loader_StoneCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.StoneCraftingRecipeInjector;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTToolItems;
@@ -311,16 +311,16 @@ public final class StoneVariantRecipesTests {
         // (the 27 data-pack plain-stone → bricks rows cover GT6's remaining row).
         int types = StoneType.values().length;
         int expectedRows = 28 * types;
-        int registered = Loader_StoneCraftingRecipes.registeredIds().size();
-        int skipped = Loader_StoneCraftingRecipes.skipped().size();
+        int registered = StoneCraftingRecipeInjector.registeredIds().size();
+        int skipped = StoneCraftingRecipeInjector.skipped().size();
         helper.assertTrue(registered + skipped + types == expectedRows,
                 "masonry crafting rows " + registered + " + " + skipped + " skipped + " + types
                         + " data-pack != GT6's " + expectedRows);
         helper.assertTrue(registered >= 20 * types, "masonry crafting rows registered: " + registered);
-        helper.assertTrue(Loader_StoneCraftingRecipes.skipped().stream()
+        helper.assertTrue(StoneCraftingRecipeInjector.skipped().stream()
                         .allMatch(reason -> reason.contains("the rock has no form")
                                 || reason.contains("drill") || reason.contains("moss item")),
-                "unexpected skip reasons: " + Loader_StoneCraftingRecipes.skipped());
+                "unexpected skip reasons: " + StoneCraftingRecipeInjector.skipped());
         // GT6's CR.DEF rows must not mirror, the CR.DEF_MIR ones must (CR.java:161-163).
         assertMirror(helper, "stone_granite_black/bricks_cracked_by_hammer", false);
         assertMirror(helper, "stone_granite_black/cobble_to_wall", true);
@@ -344,9 +344,9 @@ public final class StoneVariantRecipesTests {
         json.put("masonryRows", StoneVariantRecipes.entries().size());
         json.put("rowsByFamily", new java.util.TreeMap<>(StoneVariantRecipes.counts()));
         json.put("machineRowsChecked", checked);
-        json.put("craftingRows", Loader_StoneCraftingRecipes.registeredIds().size());
-        json.put("craftingRowsSkipped", Loader_StoneCraftingRecipes.skipped());
-        json.put("craftingRowIds", Loader_StoneCraftingRecipes.registeredIds());
+        json.put("craftingRows", StoneCraftingRecipeInjector.registeredIds().size());
+        json.put("craftingRowsSkipped", StoneCraftingRecipeInjector.skipped());
+        json.put("craftingRowIds", StoneCraftingRecipeInjector.registeredIds());
         json.put("skipped", StoneVariantRecipes.skipped());
         try {
             java.nio.file.Files.writeString(java.nio.file.Path.of("../../docs/stone-variant-coverage.json"),

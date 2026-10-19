@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeResolver;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -61,13 +61,13 @@ public final class GeneratedChemistryTests {
      */
     @GameTest(template = "test_empty")
     public static void transpiledCoverageDoesNotRegress(GameTestHelper helper) {
-        int added = GTGeneratedChem.addedRecipes();
+        int added = GeneratedRecipeResolver.addedRecipes();
         // Floor set from the state after the parser fixes (1062 added across the five sets).
         helper.assertTrue(added >= 1000, "transpiled recipes registered: " + added);
 
-        var stats = GTGeneratedChem.setStats();
+        var stats = GeneratedRecipeResolver.setStats();
         helper.assertTrue(stats.size() == 9, "transpiled sets: " + stats);
-        TreeMap<String, GTGeneratedChem.SetStats> bySet = new TreeMap<>();
+        TreeMap<String, GeneratedRecipeResolver.SetStats> bySet = new TreeMap<>();
         for (var stat : stats) bySet.put(stat.set(), stat);
         for (String set : new String[]{"chem", "other", "potions", "food", "temporary", "ores"}) {
             var stat = bySet.get(set);
@@ -85,9 +85,9 @@ public final class GeneratedChemistryTests {
         var extruder = bySet.get("extruder");
         helper.assertTrue(extruder != null && extruder.added() > 0,
                 "the extruder set registers once the generator modules resolve: " + extruder);
-        helper.assertTrue(GTGeneratedChem.missingContent().stream()
+        helper.assertTrue(GeneratedRecipeResolver.missingContent().stream()
                         .noneMatch(t -> t.startsWith("tech:module_")),
-                "no generator module token stays unresolved: " + GTGeneratedChem.missingContent().stream()
+                "no generator module token stays unresolved: " + GeneratedRecipeResolver.missingContent().stream()
                         .filter(t -> t.startsWith("tech:module_")).toList());
         // Loader_Recipes_Vanilla's machine recipes need the 1.7.10 -> 1.20.1 vanilla name mapping;
         // if that mapping regresses the whole set collapses to zero (the rest of the file's 235
@@ -139,11 +139,11 @@ public final class GeneratedChemistryTests {
     @GameTest(template = "test_empty")
     public static void perLoaderCoverageIsReported(GameTestHelper helper) {
         var report = new TreeMap<String, Object>();
-        for (var stat : GTGeneratedChem.setStats()) {
+        for (var stat : GeneratedRecipeResolver.setStats()) {
             report.put("set." + stat.set(), "added " + stat.added() + ", skipped " + stat.skipped());
         }
-        report.put("totalAdded", GTGeneratedChem.addedRecipes());
-        report.put("totalSkipped", GTGeneratedChem.skippedRecipes());
+        report.put("totalAdded", GeneratedRecipeResolver.addedRecipes());
+        report.put("totalSkipped", GeneratedRecipeResolver.skippedRecipes());
         // Recipe maps the transpiled sets feed (GT6 Loader_Recipes_Other/_Potions/_Food/_Extruder).
         var maps = new TreeMap<String, Object>();
         for (var entry : java.util.Map.ofEntries(
@@ -186,9 +186,9 @@ public final class GeneratedChemistryTests {
     @GameTest(template = "test_empty")
     public static void missingContentIsReported(GameTestHelper helper) {
         var report = new TreeMap<String, Object>();
-        report.put("added", GTGeneratedChem.addedRecipes());
-        report.put("skipped", GTGeneratedChem.skippedRecipes());
-        report.put("missingContent", new TreeSet<>(GTGeneratedChem.missingContent()));
+        report.put("added", GeneratedRecipeResolver.addedRecipes());
+        report.put("skipped", GeneratedRecipeResolver.skippedRecipes());
+        report.put("missingContent", new TreeSet<>(GeneratedRecipeResolver.missingContent()));
         java.nio.file.Path out = java.nio.file.Path.of("../../docs/chem-missing-content.json");
         try {
             java.nio.file.Files.writeString(out, new com.google.gson.GsonBuilder().setPrettyPrinting()
@@ -196,7 +196,7 @@ public final class GeneratedChemistryTests {
         } catch (Exception e) {
             helper.assertTrue(false, "cannot write chemistry coverage report: " + e);
         }
-        helper.assertTrue(true, "missing content tokens: " + GTGeneratedChem.missingContent().size());
+        helper.assertTrue(true, "missing content tokens: " + GeneratedRecipeResolver.missingContent().size());
         helper.succeed();
     }
 }

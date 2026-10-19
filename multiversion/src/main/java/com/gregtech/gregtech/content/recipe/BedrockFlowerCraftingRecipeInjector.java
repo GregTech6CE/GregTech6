@@ -39,13 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** GT6 BlockFlowersA/B shapeless dyes and B-family hand-cut wooden sticks. */
-public final class Loader_BedrockFlowerCraftingRecipes {
+public final class BedrockFlowerCraftingRecipeInjector {
     private static final String[] A_DUST = {
             "Yellow", "Yellow", "Magenta", "Yellow", "Pink", "White", "LightBlue", "Brown"
     };
     private static final String[] B_DUST = {"Yellow", "Pink", "Yellow", "Purple"};
 
-    private Loader_BedrockFlowerCraftingRecipes() {}
+    private BedrockFlowerCraftingRecipeInjector() {}
 
 //? if >=1.21.1 {
     /*public static void add(Map<ResourceLocation, byte[]> recipes) {

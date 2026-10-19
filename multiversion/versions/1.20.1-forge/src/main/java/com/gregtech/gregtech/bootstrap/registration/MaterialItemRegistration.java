@@ -1,9 +1,9 @@
 package com.gregtech.gregtech.bootstrap.registration;
 
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.registry.GTMaterialRegistration;
 
-public record Loader_MaterialRegistration() implements IGTLoader {
+public record MaterialItemRegistration() implements InitializationStep {
     @Override
     public void run() {
         GTMaterialRegistration.registerAll();

@@ -2,7 +2,7 @@ package com.gregtech.gregtech.bootstrap.content;
 
 import com.gregtech.gregtech.GregTech;
 import com.gregtech.gregtech.api.tool.GTToolType;
-import com.gregtech.gregtech.bootstrap.IGTLoader;
+import com.gregtech.gregtech.bootstrap.InitializationStep;
 import com.gregtech.gregtech.recipe.GTToolAssemblyRecipe;
 import com.gregtech.gregtech.recipe.GTToolPatternRecipe;
 import com.gregtech.gregtech.recipe.GTToolHeadRecipe;
@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /** Registers GT6 tools and the tool crafting recipe serializers. */
-public record Loader_Tools(IEventBus bus) implements IGTLoader {
+public record ToolBootstrap(IEventBus bus) implements InitializationStep {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, GregTech.NAMESPACE);
