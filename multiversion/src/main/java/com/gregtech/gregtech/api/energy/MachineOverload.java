@@ -45,7 +45,8 @@ public final class MachineOverload {
     /** Direct source explode(), also used by the automatic hammer's deliberate overload exception. */
     public static void explode(BlockEntity machine, float power) {
         var level = machine.getLevel();
-        if (level == null || level.isClientSide || power <= 0) return;
+        if (level == null || level.isClientSide || power <= 0 || machine.isRemoved()
+                || level.getBlockEntity(machine.getBlockPos()) != machine) return;
         var pos = machine.getBlockPos();
         level.removeBlock(pos, false);
         if (power >= 1) {

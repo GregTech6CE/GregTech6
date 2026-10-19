@@ -161,22 +161,24 @@ public class BedrockDrillControllerBlockEntity extends GTEnergyBlockEntity imple
     @Override public long getEnergyDemanded(GregTechTags.Tag type,Direction side,long size){
         if(type!=GregTechTags.Energy.RU||size==Long.MIN_VALUE)return 0;
         long magnitude=Math.abs(size);
-        return magnitude>=1024&&magnitude<=4096?(ENERGY_CAPACITY-energy)/magnitude:0;
+        return magnitude>=1024&&magnitude<=4096?4096:0;
     }
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute){
         if(type!=GregTechTags.Energy.RU||size==Long.MIN_VALUE||amount<=0||!isStructureOk())return 0;
         size=Math.abs(size);if(size<1024)return 0;
-        if(size>4096){if(execute)level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,6,Level.ExplosionInteraction.BLOCK);return amount;}
-        long accepted=Math.min(amount,(ENERGY_CAPACITY-energy)/size);if(execute&&accepted>0){energy+=size*accepted;setChanged();}return accepted;
+        var plan=com.gregtech.gregtech.content.energy.DirectMachinePowerRules.inject(energy,ENERGY_CAPACITY,4096,size,amount,execute);
+        if(plan.explode())com.gregtech.gregtech.api.energy.MachineOverload.explode(this,6);
+        else if(execute&&plan.accepted()>0){energy=plan.energy();setChanged();}
+        return plan.accepted();
     }
     @Override public long getEnergyStored(GregTechTags.Tag type,Direction side){return type==GregTechTags.Energy.RU?energy:0;}
     @Override public long getEnergyCapacity(GregTechTags.Tag type,Direction side){return type==GregTechTags.Energy.RU?ENERGY_CAPACITY:0;}
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(tag,lookup);tag.putLong("gt.drill_energy",energy);tag.putInt("gt.stone_type",stoneType);tag.put("gt.output",output.serializeNBT(lookup));tag.put("gt.lubricant",lubricant.writeToNBT(lookup,new CompoundTag()));}
-    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(tag,lookup);energy=Math.max(0,Math.min(ENERGY_CAPACITY,tag.getLong("gt.drill_energy")));stoneType=Math.floorMod(tag.getInt("gt.stone_type"),StoneType.values().length+2);output.deserializeNBT(lookup,tag.getCompound("gt.output"));com.gregtech.gregtech.api.fluid.NativeMachineTankData.restore(lubricant,tag.getCompound("gt.lubricant"),lookup);}
+    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(tag,lookup);energy=Math.max(0,tag.getLong("gt.drill_energy"));stoneType=Math.floorMod(tag.getInt("gt.stone_type"),StoneType.values().length+2);output.deserializeNBT(lookup,tag.getCompound("gt.output"));com.gregtech.gregtech.api.fluid.NativeMachineTankData.restore(lubricant,tag.getCompound("gt.lubricant"),lookup);}
     public void restorePersistentState(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup){loadAdditional(tag,lookup);}
 *///?} else {
     @Override protected void saveAdditional(CompoundTag tag){super.saveAdditional(tag);tag.putLong("gt.drill_energy",energy);tag.putInt("gt.stone_type",stoneType);tag.put("gt.output",output.serializeNBT());tag.put("gt.lubricant",lubricant.writeToNBT(new CompoundTag()));}
-    @Override public void load(CompoundTag tag){super.load(tag);energy=Math.max(0,Math.min(ENERGY_CAPACITY,tag.getLong("gt.drill_energy")));stoneType=Math.floorMod(tag.getInt("gt.stone_type"),StoneType.values().length+2);output.deserializeNBT(tag.getCompound("gt.output"));lubricant.readFromNBT(tag.getCompound("gt.lubricant"));}
+    @Override public void load(CompoundTag tag){super.load(tag);energy=Math.max(0,tag.getLong("gt.drill_energy"));stoneType=Math.floorMod(tag.getInt("gt.stone_type"),StoneType.values().length+2);output.deserializeNBT(tag.getCompound("gt.output"));lubricant.readFromNBT(tag.getCompound("gt.lubricant"));}
 //?}
 }

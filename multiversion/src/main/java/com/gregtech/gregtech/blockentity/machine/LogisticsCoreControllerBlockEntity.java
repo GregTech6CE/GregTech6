@@ -266,7 +266,7 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
 
     private long injectEU(long size, long amount, boolean execute) {
         var plan=com.gregtech.gregtech.content.logistics.LogisticsCorePowerRules.inject(energy,energyCapacity(),size,amount,execute);
-        if(plan.explode()){if(level!=null&&!level.isClientSide)level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,6,Level.ExplosionInteraction.BLOCK);}
+        if(plan.explode())com.gregtech.gregtech.api.energy.MachineOverload.explode(this,6);
         else if(execute&&plan.accepted()>0){energy=plan.energy();setChanged();}
         return plan.accepted();
     }

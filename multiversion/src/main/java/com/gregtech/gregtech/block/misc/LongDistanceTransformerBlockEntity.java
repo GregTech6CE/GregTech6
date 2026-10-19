@@ -112,7 +112,7 @@ public class LongDistanceTransformerBlockEntity extends com.gregtech.gregtech.bl
         try {
             // TileEntityBase01Root checks accepting/target before calling the original doInject.
             var receiver=receiver(); if(receiver==null) return 0;
-            if(magnitude>voltage()*2) { if(execute) level.destroyBlock(worldPosition,false); return amount; }
+            if(magnitude>voltage()*2) { if(execute) com.gregtech.gregtech.api.energy.MachineOverload.apply(this,magnitude,type); return amount; }
             if(magnitude<voltage()/2) return amount; // Original root consumes undersized packets without transmitting.
             if(magnitude>maximumVoltage) {
                 if(execute) {rescan();for(var pos:wires) level.setBlockAndUpdate(pos,Blocks.FIRE.defaultBlockState());}
@@ -120,7 +120,7 @@ public class LongDistanceTransformerBlockEntity extends com.gregtech.gregtech.bl
             }
             long output=magnitude-loss(distance);
             if(output<=0 || output<receiver.voltage()/2) return 0;
-            if(output>receiver.voltage()*2) { if(execute) level.destroyBlock(receiver.worldPosition,false); return amount; }
+            if(output>receiver.voltage()*2) { if(execute) com.gregtech.gregtech.api.energy.MachineOverload.apply(receiver,output,type); return amount; }
             if(!execute) return amount; // Original simulation validates the route, not downstream demand.
             var out=receiver.front().getOpposite(); var pos=receiver.worldPosition.relative(out);
             if(!level.hasChunkAt(pos)) return 0;

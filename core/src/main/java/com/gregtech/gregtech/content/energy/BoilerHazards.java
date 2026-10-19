@@ -4,6 +4,14 @@ package com.gregtech.gregtech.content.energy;
 public final class BoilerHazards {
     private BoilerHazards() {}
 
+    /** Original UT.Code.scale(amount, capacity, 31, false), including its positive first step. */
+    public static int pressure(long steam, long capacity) {
+        if (steam <= 0 || capacity <= 0) return 0;
+        if (steam >= capacity) return 31;
+        return 1 + java.math.BigInteger.valueOf(steam).multiply(java.math.BigInteger.valueOf(30))
+                .divide(java.math.BigInteger.valueOf(capacity)).intValue();
+    }
+
     /** Stored HU plus steam's heat equivalent; preserve the source's integer division of steam. */
     public static double hotEnergy(long heat, long steam) {
         return (double) heat + steam / 2;
