@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 特殊储能目录、源码消费和边界
+
+ZpmWorkRules／原生调用归一化 recharge→refillAmount 后代码与字面量相同，两版投影相同；Neo 注册类只改格式／说明。Java 17 编译 core 规则和观察入口通过，20 行观察覆盖目录、分类、旧图标排除、光照、补缓存、余包和钳制。原版 20 项充能器循环、4 项便携电源及其 Canner 行已核；名称检索仅辅助实际注册消费链，未冒充运行时全注册表。无原生编译、Gradle、游戏、重启、打包或推送，见 [回执](verification/special-storage-audit-20261019.json)。
+
 ## 2026-10-19 / 储能目录与八档充放电
 
 BatteryBoxState／ItemBatteryRules／BatteryBoxEnergy 相对 `611a75c65` 代码／字面量一致，原生适配两版投影一致。Java 17 core 编译与探针通过；原版 20 项盒和 25 项化学电池额定数据匹配，观察 12 个水晶宝石定义及 17 行状态／边界结果。电池槽为显式假适配器，原版负缓存为源码推导，LU 缺口为两版构造链核查。无原生编译、Gradle、游戏、重启、打包或推送，见 [回执](verification/battery-storage-audit-20261019.json)。

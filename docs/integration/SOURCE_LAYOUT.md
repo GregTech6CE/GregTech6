@@ -70,6 +70,10 @@
 
 core `content/energy/BatteryBoxDefinitions.java` 定义二十种盒，`BatteryBoxState.java` 处理工作缓存、充放电分档与输出模式。共享原生 `content/energy/BatteryBoxEnergy.java` 按固定槽位适配物品能源接口及世界回调，并读写 NBT；原生库存和 tick 仍在 EnergyNodeBlockEntity。化学电池目录是 core `ChemicalBatterySpec`，单次包数规则是 `ItemBatteryRules`，原生物品是 `item/ChemicalBatteryItem.java`。Energium 材料宝石尚未拥有同样的储能能力，详见 [储能核查](BATTERY_STORAGE_AUDIT.md)。
 
+## ZPM 与尚缺的特殊储能
+
+core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`refillAmount` 表示从神器提取到放能器，不是给神器充电。共享原生 `ZpmEnergy` 处理两版物品数据；`ZpmModuleBlockEntity` 与 `ZpmDischargerBlockEntity` 分别负责摆放的神器和放能器。Forge 注册在 GTLasers，Neo 在版本目录的 GTZpmArtifacts；ELITE 是 BASIC 引用别名。crystal_chargers／portable_power_cells 目前仅有分类，不能当作控制器入口，详见 [特殊储能核查](SPECIAL_STORAGE_AUDIT.md)。
+
 ## 命名与修改约定
 
 物质制造机结构维护在 core `content/multiblock/SharedMatterFabricatorStructure.java`，主控 `MatterFabricatorBlockEntity` 只补充 QU 参数和处理器互换验证，实际加工／保存沿大型配方机父类。共用 `content/recipe/MatterRecipeLoader.java` 生成特殊转换与元素分离行，不能只搜索同名动态 RecipeMap。`tools/tests/test_fusion_resources.py` 已直接读取维护源码和三层资源位置，不再借助 native 工具视图；它是源引用检查，不能替代游戏渲染验证。

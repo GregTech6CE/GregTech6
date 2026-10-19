@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "ad913c4ff",
+  "status": "scoped_checks_passed",
+  "new_findings": [
+    "ALIGN-063",
+    "ALIGN-064",
+    "ALIGN-065",
+    "ALIGN-066"
+  ],
+  "format_and_rename_parity": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/ZpmWorkRules.java": {
+      "code_and_literals_unchanged_after_refill_method_rename": true,
+      "renamed_occurrences": 1
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmDischargerBlockEntity.java": {
+      "code_and_literals_unchanged_after_refill_method_rename": true,
+      "renamed_occurrences": 1,
+      "both_native_projections_unchanged_after_rename": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTZpmArtifacts.java": {
+      "code_and_literals_unchanged_after_refill_method_rename": true,
+      "renamed_occurrences": 0
+    }
+  },
+  "original_charger_count": 20,
+  "original_charger_loop_rows": [
+    "aRegistry.add(\"Crystal Charger (T\"      +i+\")\", \"Crystal Chargers\", 10130+i, 10131, MultiTileEntityCrystalCharger     .class, MT.DATA.Electric_T[i].mToolQuality, 16, aMachine, UT.NBT.make(NBT_MATERIAL, MT.DATA.Electric_T[i], NBT_HARDNESS, 4.0F, NBT_RESISTANCE, 4.0F, NBT_INPUT, V[i], NBT_OUTPUT, V[i], NBT_ENERGY_EMITTED, TD.Energy.LU, NBT_INV_SIZE,  4), \"FCF\", \"FCF\", \"PMP\", 'C', OD_CIRCUITS[i], 'P', IL.Processor_Crystal_Emerald, 'F', IL.FIELD_GENERATORS[i], 'M', OP.casingMachine.dat(MT.DATA.Electric_T[i]));",
+    "aRegistry.add(\"Large Crystal Charger (T\"+i+\")\", \"Crystal Chargers\", 10140+i, 10131, MultiTileEntityCrystalChargerLarge.class, MT.DATA.Electric_T[i].mToolQuality, 16, aMachine, UT.NBT.make(NBT_MATERIAL, MT.DATA.Electric_T[i], NBT_HARDNESS, 4.0F, NBT_RESISTANCE, 4.0F, NBT_INPUT, V[i], NBT_OUTPUT, V[i], NBT_ENERGY_EMITTED, TD.Energy.LU, NBT_INV_SIZE, 16), \"FCF\", \"FCF\", \"PMP\", 'C', OD_CIRCUITS[i], 'P', IL.Processor_Crystal_Emerald, 'F', IL.FIELD_GENERATORS[i], 'M', aRegistry.getItem(10130+i));"
+  ],
+  "original_portable_cell_count": 4,
+  "original_portable_cell_rows": [
+    "IL.Power_Cell_Empty             .set(aRegistry.add(\"Power Cell (Empty)\"                             , \"Portable Power Cells\"                , 14700, 14700, MultiTileEntityPowerCell       .class, 0, 16, aUtilMetal, UT.NBT.make(NBT_HARDNESS, 0.5F, NBT_RESISTANCE, 1.0F, NBT_ENERGY_ACCEPTED, TD.Energy.EU                                                                                                                                            ), \"ACA\", \"FPF\", \"ACA\", 'C', OD_CIRCUITS[4], 'P', OP.foil.dat(MT.Pt), 'F', OP.foil.dat(ANY.Plastic), 'A', OP.casingSmall.dat(MT.Al)));",
+    "IL.Power_Cell_H                 .set(aRegistry.add(\"Power Cell (Hydrogen)\"                          , \"Portable Power Cells\"                , 14701, 14700, MultiTileEntityPowerCell       .class, 0, 16, aUtilMetal, UT.NBT.make(NBT_HARDNESS, 0.5F, NBT_RESISTANCE, 1.0F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_COLOR, UT.Code.getRGBInt(MT.H  .fRGBaGas), NBT_INPUT_MIN, 1, NBT_INPUT, V[3], NBT_INPUT_MAX, V   [3], NBT_CAPACITY,         3_200_000L))); RM.Canner.addRecipe1(F, 16, 256, IL.Power_Cell_Empty       .get(1), MT.H   .gas(U*200, T), NF, aRegistry.getItem(UT.NBT.make(NBT_ACTIVE_ENERGY, T))); RM.Canner.addRecipe1(F, 16, 256, aRegistry.getItem(), NF, NF, IL.Power_Cell_Empty.get(1));",
+    "IL.Aneutronic_Fusion_Empty      .set(aRegistry.add(\"Aneutronic Fusion Power Cell (Empty)\"           , \"Portable Power Cells\"                , 14600, 14700, MultiTileEntityAneutronicFusion.class, 0, 16, aUtilMetal, UT.NBT.make(NBT_HARDNESS, 0.5F, NBT_RESISTANCE, 1.0F, NBT_ENERGY_ACCEPTED, TD.Energy.EU                                                                                                                                            ), \"VPV\", \"GFG\", \"VGV\", 'P', IL.Processor_Crystal_Ruby, 'V', OP.plateGemTiny.dat(MT.Vb), 'F', IL.FIELD_GENERATORS[5], 'G', OP.foil.dat(MT.Graphene)));",
+    "IL.Aneutronic_Fusion_He3        .set(aRegistry.add(\"Aneutronic Fusion Power Cell (Helium-3)\"        , \"Portable Power Cells\"                , 14601, 14700, MultiTileEntityAneutronicFusion.class, 0, 16, aUtilMetal, UT.NBT.make(NBT_HARDNESS, 0.5F, NBT_RESISTANCE, 1.0F, NBT_ENERGY_ACCEPTED, TD.Energy.EU                                               , NBT_INPUT_MIN, 1, NBT_INPUT, V[5], NBT_INPUT_MAX, V   [5], NBT_CAPACITY,     1_024_000_000L))); RM.Canner.addRecipe1(F, 16, 256, IL.Aneutronic_Fusion_Empty.get(1), MT.He_3.gas(U*200, T), NF, aRegistry.getItem(UT.NBT.make(NBT_ACTIVE_ENERGY, T))); RM.Canner.addRecipe1(F, 16, 256, aRegistry.getItem(), NF, NF, IL.Aneutronic_Fusion_Empty.get(1));"
+  ],
+  "production_java_inventory": {
+    "files_scanned": 1703,
+    "name_matches": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/creative/CreativeTabCatalog.java",
+        "lines": [
+          6
+        ]
+      },
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/creative/EmiCatalogOrder.java",
+        "lines": [
+          40
+        ]
+      }
+    ],
+    "limitation": "Names alone are not proof; report also traces native registry consumers and runtime core catalogs."
+  },
+  "core_observations": [
+    "LU_STORAGE_IN_ENERGY_CATALOG|0",
+    "CREATIVE_FAMILY|crystal_chargers|true",
+    "CREATIVE_FAMILY|portable_power_cells|true",
+    "ICON_BLOCK|powercell|false",
+    "ICON_BLOCK|aneutronic_fusion|false",
+    "ZPM|capacity=2000000000000|packet=131072",
+    "LIGHT|0|0",
+    "LIGHT|1|0",
+    "LIGHT|1000000000000|7",
+    "LIGHT|1999999999999|14",
+    "LIGHT|2000000000000|15",
+    "REFILL|bufferPackets=0|amount=5242880",
+    "REFILL|bufferPackets=39|amount=5242880",
+    "REFILL|bufferPackets=40|amount=2621440",
+    "REFILL|bufferPackets=79|amount=2621440",
+    "REFILL|bufferPackets=80|amount=0",
+    "REFILL_REMAINDER|0",
+    "CHARGE_CLAMP|0|2000000000000",
+    "BUFFER_CLAMP|0|41943040",
+    "DUNGEON|0|2000000000000"
+  ],
+  "source_inferences_not_gameplay": {
+    "original_light_for_energy_1": 1,
+    "original_light_at_half_capacity": 8,
+    "capacitor_example": {
+      "item_charge": 1000,
+      "buffer": 131072,
+      "original_stored": 1000,
+      "current_stored": 132072,
+      "current_progress_supported": false
+    },
+    "empty_slot_capacity": {
+      "original": 0,
+      "current": 2000041943040
+    }
+  },
+  "validation": {
+    "java17_core_compile_and_probe": true,
+    "cached_core_dependencies": true,
+    "native_compile": false,
+    "gradle": false,
+    "minecraft": false,
+    "restart": false,
+    "build": false,
+    "push": false
+  },
+  "original_source_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7",
+    "gregapi/tileentity/energy/TileEntityBase08Battery.java": "4db1df818cd2ef2dbf0ae167af3ed15f9993741380ea67ebc4db9bdc1d170d33",
+    "gregapi/tileentity/energy/TileEntityBase09PowerCell.java": "0169ca1f7874ece9c8789d8ada84e4e41cf8ab4fda26959dac8a63dfec96873c",
+    "gregtech/tileentity/energy/storage/MultiTileEntityCrystalCharger.java": "88f50c6adf2145c3ded0863b17f7a2911447868d39de86750ac9b84d47eecf2d",
+    "gregtech/tileentity/energy/storage/MultiTileEntityCrystalChargerLarge.java": "6e04d9df9e9bfef1a5c02245965587a7215a769bfbde6867e573fdb6381a19d0",
+    "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerQU.java": "656a06dbe11d8b84af15aeaff12ebbf6e3feb08655c412b7be05afa86217a171",
+    "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerEU.java": "a37613afe836530f7f91e9fc89fc4010a26a39bcb56615ec9bdd2c18da5dd194",
+    "gregtech/tileentity/batteries/eu/MultiTileEntityPowerCell.java": "9d208e185b75eec273ba8ddd0e79ed196b018bd2d69a8a2f00d4a8556c156b24",
+    "gregtech/tileentity/batteries/eu/MultiTileEntityAneutronicFusion.java": "a46f9a1100231bd0eeb98aba55cfeeee7ebe2a8afed10d0ea8786c0ba1d2cf6a",
+    "gregtech/tileentity/batteries/qu/MultiTileEntityZPM.java": "a7403d35111a4b97e74971542c0aef04045180ce95be60c38cab93d656af7a09"
+  },
+  "current_source_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/ZpmWorkRules.java": "9e0eb80b8b0d3b395c0a0f1c03385198c4f8ea24d8dbe5183e84d654763b4853",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmDischargerBlockEntity.java": "2ec6a0759a0b72c7b6e9c4034539010eb2595f3e6278f3df37629c5d202b9822",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTZpmArtifacts.java": "0b8feb31b93b855bbfb2d19cd5b89042b6b9a97b6fda56f64bbaf21cb823b984",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/energy/ZpmEnergy.java": "a178a56b9eeb4c6b8a2c2b23cb89f1a0a2f3d1f808d4c807a0076551ce4932c1",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ZpmDischargerBlock.java": "fbf7f68858500a1580ad82c53596630afbba732430f5054cf3a3830d60755055",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ZpmModuleBlock.java": "7be2f09dc9879cd1922857a8aed017fd822bb39c78daaf2b2ff88b60f8ea0e00",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java": "7cece89f08f3cd60bf861896a93b2e99b3f3c920bbeebcb89a51752509096b94",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLasers.java": "6a42b626ce0df7d752ad33a32d8d256341f6e9afe3cb427aa41f19d9e115e7fa",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98",
+    "core/src/main/java/com/gregtech/gregtech/content/plant/IconPlantCatalog.java": "28105fad501d5d5a0dc608c8a4dee6b48db651ec600feb87880300db0960b792",
+    "tools/integration/audit-probes/SpecialStorageAudit.java": "3788f71ac59b58ac2532a0ba0d82b34ee5cecea14514950aeae157a85d6f17e9"
+  }
+}
