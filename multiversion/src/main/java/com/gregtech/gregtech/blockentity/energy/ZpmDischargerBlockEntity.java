@@ -49,7 +49,7 @@ public final class ZpmDischargerBlockEntity extends GTEnergyBlockEntity implemen
         var module=inventory.getStackInSlot(0);
         boolean loaded=ZpmEnergy.isModule(module)&&module.getCount()==1;
         if(tick++%20==0&&loaded&&buffer<ZpmEnergy.PACKET*80){
-            long taken=com.gregtech.gregtech.content.energy.ZpmWorkRules.recharge(buffer,ZpmEnergy.stored(module));
+            long taken=com.gregtech.gregtech.content.energy.ZpmWorkRules.refillAmount(buffer,ZpmEnergy.stored(module));
             if(taken>0){ZpmEnergy.set(module,ZpmEnergy.stored(module)-taken);buffer+=taken;setChanged();}
         }
         if(!stopped&&loaded&&buffer>=ZpmEnergy.PACKET){
