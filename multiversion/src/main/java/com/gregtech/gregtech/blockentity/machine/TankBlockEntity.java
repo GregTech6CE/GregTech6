@@ -184,7 +184,7 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
             // GT6 TileEntityBase08Barrel#onTick2:188-207 — a sealed barrel ferments its content.
             if (softHammerState) tickFermentation(fluid);
         } else if (softHammerState && sealedTime > 0) {
-            // GT6 clears the seal when the barrel runs dry.
+            // Discard cached fermentation work when the contents run dry.
             resetSeal();
         }
 
@@ -196,12 +196,13 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
     /**
      * GT6 {@code TileEntityBase08Barrel:170-186}: a barrel holding a fluid its proof flags do not
      * cover loses the whole content at once (not the pipe's few units a tick) and fizzes, and acid
-     * also dissolves the barrel itself with {@code setToAir()} - the one case where the vessel is
-     * destroyed outright and with no chance roll, unlike the pipe's {@code rng(100) == 0}.
+     * also dissolves the barrel itself with {@code setToAir()}, without the pipe's chance roll.
+     * This method only covers the current gas/acid/plasma path; it does not implement the
+     * original barrel's magic, simple-fluid and power-conducting checks.
      *
-     * <p>The temperature meltdown stays above this and keeps its own
-     * {@link SmelteryBlockEntityHelper#meltdown} (GT6 {@code :162}), which fills the block with lava;
-     * acid instead leaves air, which is what {@code removeBlock} does here.
+     * <p>The port's temperature meltdown above uses a separate lava/heat helper.
+     * Original barrel meltdown chooses lava or fire from its contents; that distinction
+     * is not implemented by the helper. Acid instead leaves air here.
      */
     private void corrode(FluidStack fluid) {
         tank.setEmpty();
@@ -420,9 +421,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
                 // In GT6 this checks fluid sets. For now allow basic vanilla fluids.
             }
         }
-        // GT6 TileEntityBase08Barrel:251-254 and TileEntityBase08FluidContainer:420 — the same three
-        // questions as the corrosion tick, asked at the fill gate so an unproofed hazard never gets
-        // in at all. This is the "reject" half of accept/reject/destroy.
+        // Current block-capability gate. GT6's portable-item fill checked protection here,
+        // whereas its placed barrel accepted into the tank and handled hazards on tick.
         if (FluidHazards.proofRejects(stack.getFluid(), spec.gasProof(), spec.acidProof(), spec.plasmaProof())) {
             return false;
         }
@@ -437,8 +437,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
 
     @Override
     public int fill(FluidStack resource, FluidAction action) {
-        // The gate has to be here as well as in isFluidValid: Forge treats isFluidValid as a query
-        // only, while GT6 rejects inside fill (TileEntityBase08Barrel:248-255).
+        // Enforce the current validation policy here as well: callers need not consult
+        // isFluidValid before invoking fill. Original block/item policies differ (see above).
         if (resource.isEmpty() || !isFluidValid(0, resource)) return 0;
         return tank.fill(resource, action);
     }
@@ -644,8 +644,8 @@ public class TankBlockEntity extends BlockEntity implements IFluidHandler, com.g
     }
 
     /**
-     * GT6 {@code TileEntityBase08Barrel#onToolClick2} (soft hammer): an empty barrel is unsealed,
-     * otherwise the seal is toggled. Either way the fermentation progress is discarded.
+     * Current soft-hammer action: unseal an empty barrel or toggle a filled one,
+     * and discard fermentation work. GT6's empty-barrel mode-bit update differs.
      */
     public void toggleSoftHammerState() {
         if (tank.isEmpty()) {
