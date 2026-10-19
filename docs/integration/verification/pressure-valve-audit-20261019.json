@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-19",
+  "baseline": "e25e2fb04",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL sources read only; existing headers retained",
+  "original_sources": {
+    "gregapi/cover/covers/CoverPressureValve.java": "b686320794365c0c6f49cdd486b73ad331706aa3158f25df711f80678a9bf025",
+    "gregapi/cover/covers/CoverFilterFluid.java": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java": "67cee667a065adc067945627106ae8b144375587c301afdee73bebd66677438c",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java": "91324b807b0c1ccfa432c642fc4a99f8832e1037b03fa8bbdc364aa58fec3b0e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java": "66fb8cd5c0c2509644e2087d9d41bddcaadfa6d7894eab9315ed25185de7a5ee",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeCoverTests.java": "6656013a6417e5c977b274eac037e2fe0fcab135c3415ad14f5f789f2eaf6262",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": "3feec0f63c86d3387c60b08ee0a2b17fe743035baaa9a6566d1c6f4528e8eb62",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "c7a6e0db9db4bb282eff27fb549cb521c0f6a2e80f3314ce747cabca4e6ee84f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java": "891dd9218fbf094225a658ce635670e06fecf838a06a712702fd64308cadca2d",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "d687f2e32cbefca3c8c25f0299bd6ce7e6489f92a810e9eeb87435b46d931137",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java": "c7f23282aa60f43e330c2a9d415ad1519d670c5149b4658ddb8531fba7442366",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java": "4e83b2a7db99ee07b75606e688b0aab0bd236a522bbcc28c31428c81983183fd",
+    "multiversion/src/main/java/com/gregtech/gregtech/util/GTEntityHelper.java": "870b63171f28b14b3073c61520cfef2d1d703a281ed4ed04133b1a3586f195ab",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/transport/FluidPipeToolInteractions.java": "5fa7a4294669941d5e6c15a0fca2dd74f0b5b58fe92ab239f5cbfec067c41103",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java": "8c87415f062ea24248e08b9c9218dbdfca02eda8a573f283dd0d2d3c05537929"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverBehaviorTests.java": {
+      "forge-test-source": true
+    },
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PipeCoverTests.java": {
+      "forge-test-source": true
+    }
+  },
+  "normalizations": [
+    "Rename valveConnectsThrough to valveBlocksPipeConnection at declaration, test call and documentation references",
+    "Change one legacy assertion message from connects exactly when a pipe faces it to blocks connection when another pipe faces it"
+  ],
+  "findings": [
+    "ALIGN-106: valve-side disconnect and connection interception not wired to pipe or connector gates",
+    "ALIGN-100 extended: valve warmup uses covered tick count rather than entity age"
+  ],
+  "positive_evidence": [
+    "Single-tank and no-adjacent-pipe placement restriction enforced by native pipe host",
+    "Stopped gate exists in tickCovers caller",
+    "Full-tank/neighbor-tank/gas/open-space release decision present",
+    "Vent uses matching 5x5x5 bounds, temperature multiplier 2 and cap 10; full damage immunity not audited",
+    "Global right-click event invokes common fluid sample before block-specific handler; capability-only native helper is not sufficient evidence of player-visible sampling omission"
+  ],
+  "not_run": [
+    "native compilation",
+    "legacy GameTests",
+    "new simulation tests",
+    "full test suite",
+    "client/server launch",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "No placed-world valve connection or vent test",
+    "Current generic material-container fallback uses ID prefixes rather than original material association; affected registered examples not yet established",
+    "Mixin/events runtime ordering and third-party capability behavior not tested"
+  ]
+}

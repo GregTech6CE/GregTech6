@@ -177,3 +177,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `blockentity/energy/EnergyNodeBlockEntity.java`：电池盒原生库存与蒸汽口，两者接入方式不同。
 
 原版父类入口和当前接入矩阵见 [能力核查](COVER_CAPABILITY_AUDIT.md)。
+
+## 压力阀连接与容器模板采样
+
+- `multiversion/src/main/java/.../content/cover/CoverUtilityBehaviors.java`：压力阀释放判断、执行、温度伤害；valveBlocksPipeConnection 是未接入的拦截谓词。
+- 同目录 `CoverConnections.java`：连接状态和扳手共用门控。
+- 同目录 `UtilityCoverInteraction.java` 的 sample：能力／瓶子／桶／物品 ID 回退；ComponentCoverEvents 先于方块交互调用。
+- `blockentity/machine/FluidPipeBlockEntity.java`：阀门最终安装限制与覆盖板计数调度。
+
+当前缺口与已有路径见 [压力阀核查](PRESSURE_VALVE_AUDIT.md)。

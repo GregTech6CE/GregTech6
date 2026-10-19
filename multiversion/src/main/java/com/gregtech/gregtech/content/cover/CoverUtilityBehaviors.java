@@ -492,16 +492,17 @@ public final class CoverUtilityBehaviors {
      * GT6 {@code CoverPressureValve:44}: the valve only goes on a fluid pipe with exactly one tank,
      * and only when the block it faces is <em>not</em> another fluid pipe.
      *
-     * <p>{@code interceptCoverPlacement} returns {@code !(... || ... || ...)}: the first two
-     * terms reject the host, the third rejects the placement. Flipped into a positive predicate the
-     * rule is "host is a single-tank fluid pipe and the neighbour is not a fluid pipe".</p>
+     * <p>The original rejects a non-pipe host, a tank count other than one, or
+     * another fluid pipe in front. The caller checks the host class; this predicate
+     * checks the remaining two conditions.</p>
      */
     public static boolean valveCanAttachTo(int hostTankCount, boolean neighbourIsFluidPipe) {
         return hostTankCount == 1 && !neighbourIsFluidPipe;
     }
 
-    /** GT6 {@code CoverPressureValve:45}: {@code interceptConnect} exactly when a pipe faces it. */
-    public static boolean valveConnectsThrough(boolean neighbourIsFluidPipe) {
+    /** GT6 interceptConnect: true means block a connection to the adjacent pipe.
+     * Currently a standalone predicate; the live connector gate does not call it. */
+    public static boolean valveBlocksPipeConnection(boolean neighbourIsFluidPipe) {
         return neighbourIsFluidPipe;
     }
 
@@ -521,15 +522,13 @@ public final class CoverUtilityBehaviors {
     /**
      * One pressure valve operation: GT6 {@code CoverPressureValve:49-64}.
      *
-     * <p>The order of the original is kept: the clock gate first ({@code :50}), then the full-tank
-     * test ({@code :53}), then the decision ({@code :54-61}). {@code tank} is the single tank the
-     * original dereferences as {@code mTanks[0]} ({@code :51}); see the class javadoc for why a
-     * machine supplies it where GT6 had a fluid pipe.</p>
+     * <p>The fluid pipe host supplies its first tank after checking the global cover
+     * stop flag. Normal placement permits only single-tank pipes. The clock here is
+     * the host's cover counter, not its full entity lifetime.</p>
      *
-     * <p>Not ported: the {@code disconnect(aSide, T)} call on {@code :52}, which releases the pipe's
-     * connection for the duration of the operation. The port's covers do not own pipe connections —
-     * {@code BasicMachineBlockEntity} has no connection state to release — so there is nothing to
-     * call; a pipe-hosted valve would have to bring that call with it.</p>
+     * <p>GT6 disconnects the covered side on each eligible tick, even before testing
+     * fullness. Neither this helper nor its current caller performs that disconnect.
+     * Keep this connection-state difference separate from the release decision.</p>
      *
      * @param tank        the tank that is released when full
      * @param tickCounter the owner's cover tick counter, standing in for GT6's {@code aTimer}

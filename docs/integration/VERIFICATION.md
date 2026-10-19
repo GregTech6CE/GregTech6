@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 压力阀命名与连接源码
+
+相对 e25e2fb04，三份生产文件展开两版、两份旧 Forge GameTest 源码共八份比较通过；仅归一 valveConnectsThrough → valveBlocksPipeConnection 和一条反向断言说明。确认旧名称在维护 Java 源码中无剩余。未新增模拟测试、编译、GameTest 执行、游戏、重启、构建或推送，见 [回执](verification/pressure-valve-audit-20261019.json)。
+
 ## 2026-10-19 / 覆盖板能力包装源码核对
 
 相对 1a6d5c3b1，ComponentCoverAccess、ComponentCoverFallback、EnergyNodeBlockEntity 三份生产文件分别展开两版，六份代码／字面量比较通过；原版继承链、当前 provider／Mixin 门控及配置来源哈希留档。未新增模拟测试、原生编译、游戏、存档重启、构建或推送；Mixin 生效与全宿主行为仍待实测，见 [回执](verification/cover-capability-audit-20261019.json)。

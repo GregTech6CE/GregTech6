@@ -14,30 +14,40 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 /** Native cover clicks shared by GT machine, container, pipe and fallback hosts. */
 public final class UtilityCoverInteraction {
     private UtilityCoverInteraction(){}
-    public static FluidStack sample(ItemStack held){
+    /** Samples without draining the held item; material-container fallback is currently ID-based. */
+    public static FluidStack sample(ItemStack held) {
 //? if >=1.21.1 {
-        /*var container=held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
+        /*var container = held.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
 *///?} else {
-        var container=net.minecraftforge.fluids.FluidUtil.getFluidHandler(held).orElse(null);
+        var container = net.minecraftforge.fluids.FluidUtil.getFluidHandler(held).orElse(null);
 //?}
-        if(container!=null){var fluid=container.drain(Integer.MAX_VALUE,IFluidHandler.FluidAction.SIMULATE);if(!fluid.isEmpty())return fluid;}
-        if(held.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle&&bottle.fluid()!=null)return new FluidStack(bottle.fluid(),250);
+        if (container != null) {
+            var fluid = container.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            if (!fluid.isEmpty()) return fluid;
+        }
+        if (held.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle && bottle.fluid() != null)
+            return new FluidStack(bottle.fluid(), 250);
 //? if >=1.21.1 {
-        /*if(held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)return new FluidStack(((com.gregtech.gregtech.mixin.BucketContentAccessor)bucket).gregtech$bucketContent(),1000);
+        /*if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
+            return new FluidStack(((com.gregtech.gregtech.mixin.BucketContentAccessor) bucket).gregtech$bucketContent(), 1000);
 *///?} else {
-        if(held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)return new FluidStack(bucket.getFluid(),1000);
+        if (held.getItem() instanceof net.minecraft.world.item.BucketItem bucket)
+            return new FluidStack(bucket.getFluid(), 1000);
 //?}
         // These registered GT containers encode their fluid identity in the item catalog, not NBT.
-        var key=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(held.getItem());
-        if(key.getNamespace().equals("gt6ce")){
-            for(String prefix:new String[]{"bottle_","capsule_","cell_","bucket_"})if(key.getPath().startsWith(prefix)){
-                var name=key.getPath().substring(prefix.length());
-                var fluid=net.minecraft.core.registries.BuiltInRegistries.FLUID.get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce",name));
-                if(fluid!=net.minecraft.world.level.material.Fluids.EMPTY)return new FluidStack(fluid,1000);
-            }
+        var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(held.getItem());
+        if (key.getNamespace().equals("gt6ce")) {
+            for (String prefix : new String[]{"bottle_", "capsule_", "cell_", "bucket_"})
+                if (key.getPath().startsWith(prefix)) {
+                    var name = key.getPath().substring(prefix.length());
+                    var fluid = net.minecraft.core.registries.BuiltInRegistries.FLUID.get(
+                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", name));
+                    if (fluid != net.minecraft.world.level.material.Fluids.EMPTY) return new FluidStack(fluid, 1000);
+                }
         }
         return FluidStack.EMPTY;
     }
+
     public static InteractionResult use(PanelCoverHost host,Player player,InteractionHand hand,BlockHitResult hit){
         var owner=host.coverOwner();var level=owner.getLevel();if(level==null)return InteractionResult.PASS;
         var held=player.getItemInHand(hand);var side=hit.getDirection();var installed=host.getCover(side);var id=CoverItems.behavior(installed);
