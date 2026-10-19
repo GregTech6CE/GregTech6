@@ -22,9 +22,9 @@ import net.minecraftforge.items.IItemHandler;
 //?}
 
 /**
- * GT6-style sensor panel: measures the block behind it (opposite the display
- * face) every half second, shows the value on the front and emits an analog
- * redstone signal selected by the original eight modes and threshold buttons.
+ * Current sensor panel: measures the selected input every ten game ticks and
+ * emits the selected mode's redstone result. Original non-TPS sensors sampled
+ * every server post tick; measurement coverage and scaling still differ.
  */
 public class SensorBlockEntity extends BlockEntity {
 
@@ -152,9 +152,9 @@ public class SensorBlockEntity extends BlockEntity {
     }
 
     /**
-     * The measurement itself, without the ten-tick throttle. GT6's sensors only measure on their own
-     * timer, but a GameTest runs inside a single game tick, so the throttle is split out here and the
-     * test drives {@code measure} directly (the same split {@code CoverAttachmentBehaviors} uses).
+     * The measurement itself, without the port's ten-tick throttle. Direct calls
+     * from GameTests exercise measurement but do not validate the scheduled sampling
+     * rate, post-tick ordering or capture of short-lived values.
      */
     public static void measure(Level level, BlockPos pos, BlockState state, SensorBlockEntity be) {
         Direction facing = be.inputSide().getOpposite();
@@ -314,6 +314,7 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case STACKOMETER -> {
+                    // Current count / 64 differs from GT6's occupied-slot count.
 //? if >=1.21.1 {
                     /*IItemHandler items = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,target.getBlockPos(),facing);
 *///?} else {
@@ -361,6 +362,8 @@ public class SensorBlockEntity extends BlockEntity {
             case CHRONOMETER -> { newValue = com.gregtech.gregtech.api.sensor.SensorMeasurements.timeOfDayMinutes(level.getDayTime()); maximum = 1440; }
             default -> {}
         }
+        // sample clamps values to int; most maximum values remain long here, unlike
+        // the original base sensor which binds both operands before evaluating modes.
         newValue = be.average.sample(newValue);
         be.setChanged();
         var reading = com.gregtech.gregtech.api.sensor.SensorControl.evaluate(be.mode, newValue, maximum, be.threshold);

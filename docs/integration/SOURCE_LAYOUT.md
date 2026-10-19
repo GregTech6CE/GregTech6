@@ -213,3 +213,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `client/CoverSurfaceRenderer.java`：实际写入顶点的光照与贴图坐标。
 
 新增亮度缺口与 ALIGN-077 范围修订见 [显示核查](DISPLAY_METER_AUDIT.md)。
+
+## 独立传感器执行链
+
+- `core/.../api/sensor/SensorControl.java`：八种模式与阈值／红石计算。
+- 同目录 `SensorAverage.java`：采样窗口、int 样本、long 累计和保存索引。
+- 同目录 `SensorPanelRules.java`：输入面、布局、单位／颜色、TPS 和传输上限算术。
+- `multiversion/src/main/java/.../blockentity/sensor/SensorBlockEntity.java`：采样调度、原生目标读取、最大值及同步保存。
+- `tools/integration/audit-probes/SensorModeAudit.java`：五项纯规则原版差异观察，不依赖 Minecraft。
+
+实际缺口、已有入口和验证范围见 [独立传感器核查](SENSOR_EXECUTION_AUDIT.md)。

@@ -107,7 +107,7 @@
 | ALIGN-082 | 确认物品管道侧面能力未检查连接及既有入口锁定。 | 原版 connected、固定接收面、空槽准入；外部抽取也要求连接。 | 当前侧面包装只查禁入／禁出，插入成功覆盖入口；内部路由检查不能代替，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-083 | 确认流体管道遗漏材料接触伤害开关。 | 原版 16 组材料／112 规格免接触温度伤害。 | 当前规格无 contactDamage，碰撞对所有管道调用温度伤害，见 [报告](FLUID_PIPE_AUDIT.md)。 |
 | ALIGN-084 | 确认流体管道方块硬度／橡胶抗爆参数不对应。 | 原版 blocking 真为 2／6，橡胶假为 1／2。 | 当前 blocking 未传递，两版固定硬度 1.5／抗爆 6；快速阻挡语义需续核，见 [报告](FLUID_PIPE_AUDIT.md)。 |
-| ALIGN-085 | 确认流体管道温度计接口缺失。 | 原版温度计读取管道 Temperature 合同。 | 当前温度计只认坩埚；管道已实现 CompressionSensorSource，压力计和普通液量读取仍有，见 [报告](FLUID_PIPE_AUDIT.md)。 |
+| ALIGN-085 | 确认流体管道温度计接口缺失。 | 原版温度计读取管道 Temperature 合同。 | 当前温度计只认坩埚；管道已实现 CompressionSensorSource，压力计和普通液量读取仍有，见 [报告](FLUID_PIPE_AUDIT.md)。 环境温度回退同样缺失，见 [传感器补查](SENSOR_EXECUTION_AUDIT.md)。 |
 | ALIGN-086 | 确认普通桶封口未隔离流体。 | 原版封口禁普通进出液，发酵与自动排液互斥。 | 当前 fill/drain 无封口检查，tick 可先排液再发酵；空桶软锤位操作也不同，见 [报告](BARREL_AUDIT.md)。 |
 | ALIGN-087 | 确认桶自动排液方向／限量与能力不同。 | 原版按气体／浮力分垂直、上、下，无额外 1000 限量。 | 当前轻流体向六面、每面最多 1000，并隐藏选定输出面整个 capability，见 [报告](BARREL_AUDIT.md)。 |
 | ALIGN-088 | 确认桶发酵加载后进度清零。 | 原版重查有效配方保留已保存进度，查配方 tick 不递增。 | 当前查配方清零两种时间且同 tick 推进；正常新发酵也提前一 tick，见 [报告](BARREL_AUDIT.md)。 |
@@ -135,6 +135,11 @@
 | ALIGN-110 | 确认通用检测／自动红石控制丢失成功状态。 | 原版专用成功接口，控制扩展器转发目标状态。 | MachineControl 无该字段，通用 State 固定 false，安装仅看 supportsSwitch；基础机另有 successful 专用输出，不算全失效，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
 | ALIGN-111 | 确认控制扩展器未转发独立开工条件。 | 原版直接查询目标 getStateRunningPossible。 | 当前默认 active 或 progressMax>0 近似，可能漏掉有配方但尚未启动的目标；条件案例未游戏验证，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
 | ALIGN-112 | 确认显示面板缺少原版图层独立高亮。 | 能源显示及状态的部分指示图层 aGlow=true，构造器使用自带亮度 240。 | 当前仅字符串图层，全部传环境 light；源码确认，暗室实际观感未验，见 [报告](DISPLAY_METER_AUDIT.md)。 |
+| ALIGN-113 | 确认独立传感器比例／百分比红石分档不同。 | 原版中间正值使用 1+value×14/max。 | 当前 floor(value×15/max)，50% 为 7 而非 8，零阈值也不同；不可改错覆盖板自己的量化，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
+| ALIGN-114 | 确认堆叠计错误按物品数除以 64。 | 原版数可访问的非空堆，最大为槽位数。 | 当前 count/64、slotLimit 总和/64；单个物品显示 0，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
+| ALIGN-115 | 确认独立流体／桶量计遗漏世界流体。 | 原版水／岩浆源及 IFluidBlock 模拟读取有回退。 | 当前仅在目标实体存在时读能力，无实体源方块保持零；世界测试未做，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
+| ALIGN-116 | 确认仪表样本和上限钳制不一致。 | 原版两者 bindInt 后比较／求百分比。 | 当前样本 int、大部分 maximum long；额定超导满量的合成输入 FULL 为 0 而非 15，纯规则已观察，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
+| ALIGN-117 | 确认普通传感器采样从每后 tick 改为每十 tick。 | 原版默认 getTickRate=1，仅 TPS 覆写 20。 | 当前统一节流 10，影响平均窗口时长和短脉冲；TPS 样本重复加入边界也需核，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

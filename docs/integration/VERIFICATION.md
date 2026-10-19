@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 传感器源码与五项原版数值观察
+
+相对 b9b11884d，四份生产文件（原生实体两版投影）共五份代码／字面量一致。Java 17 仅编译 SensorControl、SensorAverage、SensorPanelRules 和审计入口，观察 1%／50%、零阈值和超导额定上限的原版差异，约 1.5 秒。未原生编译、完整测试、GameTest、游戏、重启、构建或推送，见 [回执](verification/sensor-execution-audit-20261019.json)。
+
 ## 2026-10-19 / 显示图层与进度来源源码核对
 
 相对 71900f689，CoverProgress、PanelCoverRenderer、PanelCoverRuntime 分别投影两版，共六份代码／字面量一致。原版亮度构造器、管道吞吐和桶发酵进度、当前能力回退与顶点 light 参数留存哈希；未新增测试、编译、GameTest、客户端、重启、构建或推送，见 [回执](verification/display-meter-audit-20261019.json)。

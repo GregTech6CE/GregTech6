@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-19",
+  "baseline": "b9b11884d",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL sources read only; existing notices retained",
+  "original_sources": {
+    "gregapi/tileentity/machines/MultiTileEntitySensorTE.java": "494f1305c7e2a0a20fb60d20dd1f5cbcfb8c96024cb344ac6fe48826c7aa5a94",
+    "gregapi/tileentity/machines/MultiTileEntitySensor.java": "2bf9bc42503a926e97c0ea45109a7cc936e5493cc49a41313b7d526fea485477",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregtech/tileentity/sensors/MultiTileEntityStackometer.java": "93d9e29ee45126f5510ed710a027f6f82fc60adf8ab501e8517649f670036899",
+    "gregtech/tileentity/sensors/MultiTileEntityFluidometer.java": "c0f490c610e74bc834eb2bda40fa3c8fa64a39d5e37fa7cf52fac873c16af235",
+    "gregtech/tileentity/sensors/MultiTileEntityBucketometer.java": "64de1df253b4faf7db718c9dd59e0aed23ed9ebe5e78916a6726dcf38d3a2a19",
+    "gregtech/tileentity/sensors/MultiTileEntityKiloBucketometer.java": "14893480722ddb8b9de23c9e1cde30e6a71a8d55e72b4ad31e2a783676eec745",
+    "gregtech/tileentity/sensors/MultiTileEntityThermometer.java": "4fd1c78b969ce28a0c745d58b1303affc56ce980f563f16a3cf5130f37154e26",
+    "gregtech/tileentity/sensors/MultiTileEntityElectrometer.java": "26056b15ed5f03a9a881eda905d4cce8688ab866a1d4fd2806b701eade62692d",
+    "gregtech/tileentity/sensors/MultiTileEntityWeightometerHeavy.java": "e251c54a9b2304ab5d720b4c2eb5b27680ea425f41b2dce4ecff77324f61113c",
+    "gregtech/tileentity/sensors/MultiTileEntityTPSmeter.java": "fdb1b1e94aff56cf9a0f2b149d14d789831b80fc04e548f730d7a1e561814bfb"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorAverage.java": "b441e3ffe5c56e81998f2009dfb5cb2fbe32bc936f5ba76fd822c95936db7a85",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorControl.java": "4a0caa87735ef774a71b59f1255df31311df966b6e536b297f091546c77e3fc8",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelRules.java": "ce5f79308858b8746764ece62f5c5bbd70135621b73af0dc93a93bfa3b5c303c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": "5b322c37b90c3e9e128e61250eb51508c094d28e9e7399eedfcbd38f1321ae30",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorCatalog.java": "a4f43242d699a34ce417e8eb98e9f5e6d54a39f62f2f8ca89dd5ac63bc665afc",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorMeasurements.java": "84a6ffeda1d3f2e8181933a10feafceedbe214353086c3219f9af6f6ad846ed7",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SixCellDisplay.java": "2249b6924dcf19076859123f1335631ae2173a2347914f843564d5b099e25629",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WireCatalog.java": "4ed83e575672b1748a5e6b828cb501a51c973b12801528191cf14039700c3eaf",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/sensor/SensorBlock.java": "cd92511e6c0bdf80fdeae5243f7ee78f009c4d3aee596515b41b12e630bdaf52",
+    "core/src/test/java/com/gregtech/gregtech/core/SensorSourceContracts.java": "e35ec182112bd649ec8188f69b77a360a4cf22bf2df122b5db8b4df8a616374d",
+    "core/src/test/java/com/gregtech/gregtech/core/UtilityControllerContracts.java": "836ff7c1f7872935e3b2926345eb690e0787a020a4ac8a0731bffce8e60e4343",
+    "tools/integration/audit-probes/SensorModeAudit.java": "b357ba935901216079bcfc7105a9644e05a8c09e74c7b864af1a0365a7fcbefd"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorAverage.java": {
+      "plain": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorControl.java": {
+      "plain": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorPanelRules.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "java": "Java 17; compiled only SensorControl, SensorAverage, SensorPanelRules and SensorModeAudit; no Minecraft dependencies",
+  "observations": [
+    "PERCENT_1|raw=1|sample=1|maximum=100|current_signal=0|original_signal=1",
+    "PERCENT_50|raw=50|sample=50|maximum=100|current_signal=7|original_signal=8",
+    "SCALE_50|raw=50|sample=50|maximum=100|current_signal=7|original_signal=8",
+    "SCALE_ZERO_THRESHOLD|raw=1|sample=1|maximum=100|current_signal=0|original_signal=15",
+    "SUPERCONDUCTOR_FULL|raw=34359738368|sample=2147483647|maximum=34359738368|current_signal=0|original_signal=15"
+  ],
+  "findings": [
+    "ALIGN-113: sensor proportional redstone uses floor ratio instead of original nonzero interior scale",
+    "ALIGN-114: stackometer divides item count by 64 instead of counting occupied slots",
+    "ALIGN-115: fluid/bucket meters omit world-fluid fallback when no target block entity exists",
+    "ALIGN-116: native sensor clamps sampled value but most maxima remain long instead of original int clamp",
+    "ALIGN-117: ordinary sensors sample every 10 world ticks instead of every server post tick"
+  ],
+  "existing_findings_extended": [
+    "ALIGN-085: thermometer lacks environmental temperature fallback as well as generic temperature target support"
+  ],
+  "not_run": [
+    "native compilation",
+    "full test suite",
+    "GameTests",
+    "world source-fluid measurement",
+    "short pulse sampling in game",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Pure mode observations cannot establish native sensor measurements, render output or runtime ordering",
+    "Maximum example uses declared 1x superconductor rating and a synthetic full-flow input; no actual energy network run",
+    "Sensor kit tool behavior, all sensor subclasses, weights, compatibility and complete UI not yet accepted"
+  ]
+}
