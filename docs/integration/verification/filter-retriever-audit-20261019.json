@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-19",
+  "baseline": "a190181c9",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL sources read only and existing headers retained",
+  "original_sources": {
+    "gregapi/cover/covers/CoverFilterItem.java": "aef369a78515dcee7f1acc869597f503cb89429d9bbce373d9e537cac66086ae",
+    "gregapi/cover/covers/CoverFilterFluid.java": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+    "gregapi/cover/covers/CoverRetrieverItem.java": "ae7fdb0f52ae54e03edfc76ddc4ddca9b6ebb6ba54fe4b0bcc82d7019d696047",
+    "gregapi/util/ST.java": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+    "gregapi/code/ItemStackSet.java": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b",
+    "gregapi/code/ItemStackMap.java": "837535ebdbe64212236cd29119858627f12c4f1ac27cc9af41630bb876d56d42",
+    "gregapi/code/ItemStackContainer.java": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1",
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java": "000ac0a3252d71f22ae943466e48f26fc43888e32303ebeccdcbc6557500a8bf",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "d687f2e32cbefca3c8c25f0299bd6ce7e6489f92a810e9eeb87435b46d931137",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": "f3657ce15e34af7267a165adf48781f7d88befaec5100889b3718f5e584ac591",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java": "c43c0512acb8cbfbf8a235661ffa4be687ee7c6eaf5a00a0089c8a52bd79f344",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java": "5a110a43cd87ebabb067a40942d9be6e02a86064b7a2a337cca0a14b2c0c3cdc",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "c7a6e0db9db4bb282eff27fb549cb521c0f6a2e80f3314ce747cabca4e6ee84f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverConnections.java": "8ff4714f9ff59c1d5778d4bb9368549eb0dbbd26f2c3289cb064861bc8286f3d",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java": "22db4ee99107ef5618c358c41d879bdd68b44b76bcf4330c308f5d45c93e8db7",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverIssueTests.java": "eb1b44b9d8c5cb2882a81fa36ed2fbe1dc859082bc87e5532730a9ba44073731"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-102: retriever placement, network search and transfer direction differ",
+    "ALIGN-103: resume pending cleared on success instead of before eligible attempt",
+    "ALIGN-104: absent template and tagged template matching differ; retriever does not consume wildcard setting"
+  ],
+  "validation": "Only maintained-source comparison; comments/whitespace excluded, code and literals compared; shared native source projected separately for Forge and NeoForge",
+  "not_run": [
+    "native compilation",
+    "new Java probes",
+    "GameTests",
+    "full test suite",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Source equivalence does not prove native runtime or full original parity",
+    "Ordinary filter paths are present; null candidates, fluid container fallback, host side interception and transaction rollback remain to audit"
+  ]
+}

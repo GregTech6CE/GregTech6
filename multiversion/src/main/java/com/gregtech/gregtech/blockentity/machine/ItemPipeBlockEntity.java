@@ -124,12 +124,11 @@ public class ItemPipeBlockEntity extends BlockEntity
     /**
      * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem:56,62}): a
      * per-face "run on the next tick even though the 20-tick clock has not come round" flag, set on
-     * resume and cleared once the cover has actually moved something.
+     * resume and currently cleared only after moving items. GT6 cleared it before the
+     * eligible attempt, even when the search found nothing.
      *
-     * <p>The machine keeps this as a {@code boolean[6]} ({@code BasicMachineBlockEntity:1523}); it is
-     * six bits of one byte here because the flag really is one bit per face and a pipe has no reason
-     * to allocate an array for it. Not persisted, for the machine's reason: the flag is worth at most
-     * one tick and a reload re-arms it on the first tick after the cover stops being suspended.</p>
+     * <p>The machine uses a boolean array; this pipe uses six bits. Neither pending
+     * representation is persisted, and success-based retry can last beyond one tick.</p>
      */
     private byte retrieverPending;
 

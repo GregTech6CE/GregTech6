@@ -158,3 +158,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `BasicMachineBlockEntity`、`FluidPipeBlockEntity` 和 `PanelCoverRuntime`：分别提供本地或世界时钟，不能只读规则类判断实际调度。
 
 已有实现、未对齐边界和验证限制见 [覆盖板核查](COMPONENT_DRAIN_COVER_AUDIT.md)。
+
+## 物品／流体过滤与检索器
+
+- `core/.../content/logistics/FilterPolicy.java`：54 个物流模板槽和黑白名单／标签策略，不代表所有覆盖板的统一匹配合同。
+- `multiversion/src/main/java/.../content/logistics/FilterRules.java`：两版原生物品数据比较与前缀识别。
+- 同一共享源码根下 `content/cover/CoverUtilityBehaviors.java`：普通过滤器设置／匹配，以及当前检索器搬运。
+- `blockentity/machine/BasicMachineBlockEntity.java` 与 `ItemPipeBlockEntity.java`：提供目标库存、本地时钟与 pending 生命周期。
+- `content/cover/PanelCoverRuntime.java`、`CoverConnections.java`：覆盖板安装和管道连接限制。
+
+三套筛选合同、当前流向和待核边界见 [过滤器与检索器核查](FILTER_RETRIEVER_COVER_AUDIT.md)。

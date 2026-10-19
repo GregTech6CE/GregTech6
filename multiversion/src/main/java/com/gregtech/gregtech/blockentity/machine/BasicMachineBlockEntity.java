@@ -1820,11 +1820,11 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /**
      * GT6's {@code aData.mValues[aSide]} for the retriever ({@code CoverRetrieverItem:56,62}): a
      * per-face "run on the next tick even though the 20-tick clock has not come round" flag, set on
-     * resume and cleared once the cover has actually moved something.
+     * resume and currently cleared only after moving items. GT6 cleared it before the
+     * eligible attempt, even when the search found nothing.
      *
-     * <p>Not persisted. GT6 saves {@code mValues} only for covers that ask for it
-     * ({@code needsVisualsSaved}), and the flag is worth at most one tick: a reload re-arms it on
-     * the first tick after the cover stops being suspended anyway.</p>
+     * <p>This pending array is not persisted. Its lifetime is currently success-based,
+     * so it may remain set for multiple ticks; reload behavior needs separate validation.</p>
      */
     private final boolean[] coverPending = new boolean[6];
 
