@@ -16288,10 +16288,6 @@
   "block.gt6ce.heat_exchanger_dense_tungsten": "Dense Heat Exchanger (Tungsten)",
   "block.gt6ce.heat_exchanger_dense_tungsten_steel": "Dense Heat Exchanger (Tungstensteel)",
   "block.gt6ce.heat_exchanger_dense_ta4hfc5": "Dense Heat Exchanger (Tantalum Hafnium Carbide)",
-  "gt6ce.tooltip.heat_exchanger.fluids": "No GUI. Use Tiny Funnels and Taps to interact!",
-  "gt6ce.tooltip.heat_exchanger.fire": "Can put Blocks around it on Fire! (3m)",
-  "gt6ce.tooltip.heat_exchanger.contact": "Causes Damage when touched while active! (Top)",
-  "gt6ce.tooltip.heat_exchanger.tools": "Use Magnifying Glass to see Details",
   "emi.group.gt6ce.heat_exchanger": "Heat Exchangers",
   "emi.group.gt6ce.heat_exchanger_dense": "Dense Heat Exchangers",
   "block.gt6ce.flux_motor_hv": "Flux Motor (Electrum)",
@@ -16300,5 +16296,7 @@
   "block.gt6ce.flux_dynamo_ev": "Flux Dynamo (Enderium Base)",
   "block.gt6ce.flux_motor_iv": "Flux Motor (Enderium)",
   "block.gt6ce.flux_dynamo_iv": "Flux Dynamo (Enderium)",
-  "gt.lang.use.monkey.wrench.to.toggle.outputs": "Use Monkey Wrench to toggle Outputs"
+  "gt.lang.use.monkey.wrench.to.toggle.outputs": "Use Monkey Wrench to toggle Outputs",
+  "config.jade.plugin_gt6ce.construction_name": "GT Construction Names",
+  "config.jade.plugin_gt6ce.steam_turbine": "GT Steam Turbine"
 }

@@ -295,7 +295,27 @@ public final class MachineSpecBehaviorContracts {
 
     private static void originalHarvestProperties() {
         var properties = com.gregtech.gregtech.data.SourceBlockProperties.blocks();
-        check(properties.size() == 1589, "689 fixed source identities plus120 hoppers/780 storage; canonical identities only");
+        check(properties.size() == 1603, "689 fixed identities, 120 hoppers, 780 storage, 8 heat exchangers and 6 upper flux devices");
+        var restoredDevices = java.util.Map.ofEntries(
+                java.util.Map.entry("heat_exchanger_invar", 9103),
+                java.util.Map.entry("heat_exchanger_tungsten", 9107),
+                java.util.Map.entry("heat_exchanger_tungsten_steel", 9108),
+                java.util.Map.entry("heat_exchanger_ta4hfc5", 9109),
+                java.util.Map.entry("heat_exchanger_dense_invar", 9153),
+                java.util.Map.entry("heat_exchanger_dense_tungsten", 9157),
+                java.util.Map.entry("heat_exchanger_dense_tungsten_steel", 9158),
+                java.util.Map.entry("heat_exchanger_dense_ta4hfc5", 9159),
+                java.util.Map.entry("flux_motor_hv", 11023), java.util.Map.entry("flux_motor_ev", 11024),
+                java.util.Map.entry("flux_motor_iv", 11025), java.util.Map.entry("flux_dynamo_hv", 11113),
+                java.util.Map.entry("flux_dynamo_ev", 11114), java.util.Map.entry("flux_dynamo_iv", 11115));
+        for (var entry : restoredDevices.entrySet()) {
+            var data = properties.get(entry.getKey());
+            check(data != null && data.sourceId() == entry.getValue() && data.tool().equals("wrench")
+                    && !data.handHarvestable(), "Restored original device harvest identity: " + entry.getKey());
+            check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.block(entry.getKey())
+                    .filter(composition -> !composition.components().isEmpty()).isPresent(),
+                    "Restored original device has construction materials: " + entry.getKey());
+        }
         check(properties.get("fire_bricks").sourceId() == 18000, "Original fire bricks harvest metadata uses the canonical identity");
         check(com.gregtech.gregtech.data.SourceBlockProperties.basics().size() == 265, "All265 adopted original machine metadata keys");
         var wood = properties.get("gearbox_wood");
@@ -337,8 +357,8 @@ public final class MachineSpecBehaviorContracts {
         var storage = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.blocks();
         var harvest = com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest();
         check(storage.size() == 780 && harvest.size() == 780, "Thirteen original storage families including lockers across60 metalsets");
-        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1547,
-                "647 fixed plus120 hoppers plus780 storage; canonical identities only");
+        check(com.gregtech.gregtech.content.machine.MachineConstructionMaterials.blocks().size() == 1561,
+                "647 fixed, 120 hoppers, 780 storage, 8 heat exchangers and 6 upper flux devices");
         long u = GTValues.U;
         for (var spec : com.gregtech.gregtech.registry.GTStorageMetals.ALL) {
             var metal = spec.material().resolve();
@@ -604,7 +624,7 @@ public final class MachineSpecBehaviorContracts {
                     "Original final packet overshoots room " + spec.id());
             seen++;
         }
-        check(seen == 14, "Source registered motor/dynamo family coverage");
+        check(seen == 20, "Five original tiers for each of the EU/RF motor/dynamo families");
         var lv = nodes.stream().filter(s -> s.id().equals("electric_motor_lv")).findFirst().orElseThrow();
         var motor = new com.gregtech.gregtech.content.energy.OriginalRotaryConverter.State(lv);
         var calls = new long[2];

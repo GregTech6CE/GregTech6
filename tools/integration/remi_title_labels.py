@@ -87,6 +87,9 @@ LABELS["other_gt"] = ("Other GregTech Items", "其他格雷科技物品")
 
 LABELS.update({
     "special_ores": ("Special Ores", "特殊矿石"),
+    "heat_exchanger": ("Heat Exchangers", "热交换器"),
+    "heat_exchanger_dense": ("Dense Heat Exchangers", "致密热交换器"),
+    "boiler_main_barometer": ("Boiler Main Barometers", "锅炉气压计"),
     "crystal_ores": ("Crystal Ores", "晶体矿物"),
     "rock_ores": ("Rock Ores", "岩层矿物"),
     "bumble_combs": ("Bee Combs", "蜂巢"),
