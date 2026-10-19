@@ -126,7 +126,22 @@ def definition_paths():
     paths = set((JAVA / 'content/material/generated').glob('*.java'))
     paths.update(JAVA / path for path in (
         'content/material/Materials.java', 'data/generated/GT6Materials.java',
-        'data/BasicMachineOriginalParams.java', 'data/FluidCatalog.java'))
+        'content/material/ParticleMaterials.java', 'data/ImportedMaterialData.java',
+        'data/BasicMachineOriginalParams.java', 'data/FluidCatalog.java',
+        'content/multiblock/OriginalGeneratorParameters.java',
+        'content/multiblock/OriginalLargeBoilerParameters.java',
+        'content/multiblock/OriginalLargeCrucibleParameters.java',
+        'content/multiblock/SharedLargeMachineParts.java',
+        'content/multiblock/TankValveParameters.java',
+        'registry/GTStorageMetals.java',
+        'worldgen/GTBedrockOres.java', 'worldgen/GTOreVeins.java',
+        'content/bumble/GTBumbleSpecies.java',
+        'content/bumble/BumbliarySlotLayouts.java',
+        'content/food/BottleFillingRows.java',
+        'content/food/FoodStatisticRows.java',
+        'content/food/SandwichBottleFoods.java',
+        'content/food/SandwichIngredientEffects.java',
+        'content/food/SandwichSourceIngredients.java'))
     for pattern in ('*Catalog.java', '*Definitions.java', 'Original*Data.java'):
         paths.update(JAVA.rglob(pattern))
     return sorted(paths)

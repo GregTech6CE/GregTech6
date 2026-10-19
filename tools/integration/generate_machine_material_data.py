@@ -367,7 +367,7 @@ def main():
                      18041: 'large_niobium_titanium_coil', 18100: 'centrifuge_part',
                      18101: 'heat_transmitter', 18102: 'distillation_tower_part', 18105: 'electrolyzer_part'})
     part_map = REPO / 'core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java'
-    for source_id, path in re.findall(r'new Part\((\d+),"([^"]+)"', masked(part_map.read_text(encoding='utf-8'))):
+    for source_id, path in re.findall(r'new Part\(\s*(\d+)\s*,\s*"([^"]+)"', masked(part_map.read_text(encoding='utf-8'))):
         bindings[int(source_id)] = path
     burning_families = {'Burning Box (Solid,': 'solid', 'Dense Burning Box (Solid,': 'solid_dense',
                        'Burning Box (Liquid,': 'liquid', 'Dense Burning Box (Liquid,': 'liquid_dense',

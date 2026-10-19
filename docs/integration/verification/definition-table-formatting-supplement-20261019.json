@@ -1,0 +1,113 @@
+{
+  "baseline": "329485ce89ca2c2c31c78a6a0bf0939a7f22f8e5",
+  "scope": "Supplementary shared definition tables: whitespace only",
+  "files": {
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbliarySlotLayouts.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "ccbc606761d92e0eb37129af1426171eb525b075d21cd38abdfbdeec5e3cadc3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleSpecies.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "094699260e2fadfcfac81c83e0b26f241f86731c428e9f11b473899249c7df4c"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/BottleFillingRows.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "638032b474cf503097bf3bd54196a9fa6152f328405200f1561abcb858fc53c8"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/FoodStatisticRows.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "72e3cd0611c71a8d06a853b34ac1dd222187ebced803891eb131b33624bd0b38"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/SandwichBottleFoods.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "4f8dee226e68bc9853ce205ac70687376b960fd2e4df85a3601a9ee35f7e8403"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/SandwichIngredientEffects.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "b31372a8630f594f1b6f50ab8dca7af56c6547e43e5a56c1d252b36f664bee4b"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/SandwichSourceIngredients.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "48284bba1ece57de73e85a876c0b5aff6f7588014aab47b1a0d8a216f3d605e1"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/ParticleMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "9a1ca50ba411b617d65b8a1ff4cc96a423b1bce3a2f2ab476876afdf509f867f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalGeneratorParameters.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "0f3a053c74fd65b47475420752179a6e5d2b7d83f96d71f8d381b7f731fa0df4"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerParameters.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "45e9412988c75dfae49b6a7322b9aea32ee602406b7d05c7f51d6980f9bfc828"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeCrucibleParameters.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "e6fe506c09f23b8477f3ba8acc88b22175110efab6c33312c0d0534673367a3c"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "aab51ea700cb8fdbe89720b80c5c326c07c6c57b9679153cbf9aefdc5a07e9c6"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "32bd2ca495a1baea144f28e5f8b2246a6c6a923ea3526650ba2e708e61779fb8"
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "e319f98ceaf4d213630c824d8e19ec4c962cb0b044e1c6be1c3043d36c232ab1"
+    },
+    "core/src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "5bbc6eba4d0f0448b3816aa48eca79ac56a64dfa027430b24da9f8049bdb5470"
+    },
+    "core/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOres.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "2cff5b44a3b3816f5ebddac811502e61b5ed35730016f55788832958e834651c"
+    },
+    "core/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "4df6a0848dd20675d47f5d77ab90e97c3a8c7bbf43895f658421605575b863d4"
+    }
+  },
+  "formatted_file_count": 17,
+  "line_endings_normalized_for_git_comparison": true,
+  "reader_literal_regex_nonzero_pairs": 175,
+  "reader_regex_scope": "Static literal regex patterns in Python tools mentioning affected Java filenames; default flags; match counts only",
+  "whitespace_tolerant_reader_changes": {
+    "tools/generate_reinforced_chest_assets.py": {
+      "rows_in_order_unchanged": 60
+    },
+    "tools/integration/generate_machine_material_data.py": {
+      "rows_in_order_unchanged": 89
+    },
+    "tools/integration/remi_catalog_groups.py": {
+      "rows_in_order_unchanged": 89
+    }
+  },
+  "formatter_default_paths_checked": 109,
+  "formatter_default_paths_clean": true,
+  "not_run": [
+    "Gradle build",
+    "game launch",
+    "full test suite"
+  ]
+}

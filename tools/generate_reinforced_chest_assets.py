@@ -22,7 +22,7 @@ ORIGINAL = ROOT.parent / 'gregtech6-master/gregtech6-master'
 
 def specs():
     text = (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java')).read_text(encoding='utf-8')
-    port = re.findall(r'new Spec\("([^"]+)", [^,]+, ([\d.]+)F, ([\d.]+)F\)', text)
+    port = re.findall(r'new Spec\(\s*"([^"]+)"\s*,\s*[^,]+,\s*([\d.]+)F\s*,\s*([\d.]+)F\s*\)', text)
     original = (native_path(ORIGINAL / 'src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java')).read_text(encoding='utf-8')
     source = re.findall(r'metalset\(aRegistry, aMetal, aUtilMetal, aMachine, aWooden, (?:MT|ANY)\.(\w+)\s*,\s*(\d+),\s*([\d.]+)F,\s*([\d.]+)F,', original)
     assert len(port) == len(source) == 60

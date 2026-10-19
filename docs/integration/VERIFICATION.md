@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 补充定义表空白等价
+
+相对 329485ce8，17 份生产 Java 在归一 Git 换行后代码、字面量和注释保持一致，格式化幂等；109 份默认表格检查无待调整文件。175 组静态正则／源码非空匹配数量保持，三处放宽空白的读取规则前后分别提取同序的 60／89／89 条记录。未运行 Gradle、游戏或完整测试，见 [回执](verification/definition-table-formatting-supplement-20261019.json)。
+
 ## 2026-10-19 / 作物反射改名与覆盖板交互核对
 
 相对 ce8839255，OriginalCropScan 私有 a／c 两变量归一，ComponentCoverEvents／PanelCoverInteraction 双版展开，共五份代码／字面量比较通过。Java 17 仅编译附属作物接口、扫描能源规则与作物适配，无测试执行；未原生编译、外部提供者、GameTest、游戏损耗、重启、构建或推送，见 [回执](verification/crop-magnifier-audit-20261019.json)。

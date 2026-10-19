@@ -59,7 +59,7 @@ def extend(root, groups, ids):
         if family and path in ids:
             groups[family].append(path)
     controllers = (java / "content/multiblock/SharedLargeMachineParts.java").read_text(encoding="utf-8")
-    for number, path in re.findall(r'new Part\((\d+),"([^"]+)"', controllers):
+    for number, path in re.findall(r'new Part\(\s*(\d+)\s*,\s*"([^"]+)"', controllers):
         n = int(number)
         family = ("multiblock_tanks" if 17001 <= n <= 17007 or 17042 <= n <= 17047
                   else "multiblock_dense_tanks" if 17022 <= n <= 17027 or 17062 <= n <= 17067
