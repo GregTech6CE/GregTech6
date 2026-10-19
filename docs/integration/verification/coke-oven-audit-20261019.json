@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "90196e6de35b63f7bae86a40b8edf4c7bbce5d80",
+  "findings": [
+    "ALIGN-036",
+    "ALIGN-037",
+    "ALIGN-038",
+    "ALIGN-039"
+  ],
+  "scope": "Coke oven source call chain plus actual core observations; no native game execution",
+  "standardization": {
+    "code_and_literals_unchanged": [
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalCokeOvenRules.java",
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockMachineParameters.java",
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineProcessingRules.java"
+    ],
+    "java17_independent_compile": true
+  },
+  "core_observations": [
+    "SPEC|coke_oven_main|TU|1|1|16|16|5.0|5.0",
+    "FACES|2|1|0|61|63|-1|-1|-1|0",
+    "CELLS|25|1",
+    "TARGETS|0|-1|9|-1|0|-1|0",
+    "TARGETS|1|0|9|0|-1|-2|-1",
+    "TARGETS|0|1|9|1|0|-1|-2",
+    "TARGETS|-1|0|9|0|1|0|-1",
+    "TU_COST|1|1|3600",
+    "TU_COST|16|1|3600",
+    "IGNITION|40|0"
+  ],
+  "original_registration": {
+    "path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+    "line": 1193,
+    "compared": "TU nominal 1, bounds 1..16, parallel 16, hardness/resistance 5 and side masks, ignition requirement"
+  },
+  "source_arithmetic": {
+    "coal_fluid_output_litres": 500,
+    "parallel": 16,
+    "original_backlog_stop": 16000,
+    "qualification": "Recipe declaration and controller formula, not a running inventory observation"
+  },
+  "source_hashes": {
+    "gregtech/tileentity/multiblocks/MultiTileEntityCokeOven.java": "26ba343b5b4d6a2b7e2c7dd2c6dfbc1b48b5b03345adcb3420e798f091d16066",
+    "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockMachine.java": "daaacb82489056ddf8be9c3e594541fe0ec44ef2902be190556cdea361a05e06",
+    "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/c/Loader_Recipes_Other.java": "60d8832d969461869f1b224a9cc28578515fcd60c591cd0992f4e26b8951a1a3",
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+  },
+  "port_hashes": {
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalCokeOvenRules.java": "3ab1fdb94d770e5d6e9fefca8e05bf19583b405e9071ac7a41f6fb5dc2c7b6ca",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockMachineParameters.java": "13a36ab813301f1fab084d5fe11b4aa9bec639fa3ef705c6a900550a0bb3cea8",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineProcessingRules.java": "281197041e1ffb05d3eb4ef4b2283f0a4500ce0f1932ad73737a70604867864b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/CokeOvenControllerBlockEntity.java": "5b046902880a1f77d3f8bca9eff34c2a3f732a9b931c0380b54cb0341b2d05d3",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java": "cbcf20ea5720f14743165dc896dc0ad72b9a0268ef75b5e5cba9bac61bffdc79",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/CokeOvenControllerBlock.java": "602cc0a705aaaaf8f6ebacdb46a1d41ce1e992099f2e12b22afee5b9e990e52c",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/MachineWorkOutputs.java": "234c0f4fb2f13c5479df8d3ceada31de71787c7b87b6b98a5256fcda3ee453d2",
+    "core/src/api/java/com/gregtech/gregtech/api/recipe/MachineWorkCost.java": "cb4a06de0537713bf1d01be56ae8f74cfb2ee510a7f720890f30f308e90f37ed",
+    "core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java": "e11743331fef31f59fc0b5063280d4cd45fc288b2c1f0153a3c4580ee935110e",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeRecipeMachineData.java": "d022dc37ff9f295f884c47053e03470888d685120744db03cbdd07148149b012",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOtherGen.java": "e710352c4de8cf333394f811b011f1147fd37ceec92a6b898e87cdb2a9bc956a"
+  },
+  "not_run": [
+    "Gradle",
+    "Minecraft",
+    "GameTest",
+    "native blocked-output simulation",
+    "saved-world restart",
+    "new mod build"
+  ]
+}

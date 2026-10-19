@@ -1,9 +1,47 @@
 package com.gregtech.gregtech.content.multiblock;
-import com.gregtech.gregtech.api.machine.BasicMachineParameters;import com.gregtech.gregtech.api.energy.MachineFaceMasks;import com.gregtech.gregtech.content.material.Materials;import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;import static com.gregtech.gregtech.api.energy.MachineFaceMasks.*;import java.util.List;
+import com.gregtech.gregtech.api.machine.BasicMachineParameters;
+import com.gregtech.gregtech.api.energy.MachineFaceMasks;
+import com.gregtech.gregtech.content.material.Materials;
+import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
+import static com.gregtech.gregtech.api.energy.MachineFaceMasks.*;
+import java.util.List;
 /** Original dedicated-controller parameters omitted from the general basic-machine catalog. */
-public final class OriginalMultiblockMachineParameters {private OriginalMultiblockMachineParameters(){}public static BasicMachineParameters distillationTower(){return new BasicMachineParameters("distillation_tower_main",Materials.StainlessSteel,"distillationtower","HU",1,512,0,6,6,new MachineFaceMasks(63,63,63,63,63,0,-1,BACK,-1,BACK),com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("distillationtower",1),1,1,1024);}
- public static BasicMachineParameters cryoDistillationTower(){return new BasicMachineParameters("cryo_distillation_main",Materials.StainlessSteel,"cryodistillationtower","CU",1,512,0,6,6,new MachineFaceMasks(63,63,63,63,63,0,-1,BACK,-1,BACK),com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("cryodistillationtower",1),1,1,1024);}
- public static BasicMachineParameters cokeOven(){return BasicMachineParameters.builder("coke_oven_main",Materials.Ceramic).machineType("cokeoven").energy(com.gregtech.gregtech.data.GregTechTags.Energy.TU,1).energyRange(1,16).parallel(16).strength(5,5).faces(new MachineFaceMasks(2,1,0,61,63,0,-1,-1,-1,BOTTOM)).constructionMaterials(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("cokeoven",1)).build();}
- public static BasicMachineParameters fusionReactor(){return OriginalAdvancedControllerData.parameters("fusionreactor","fusion_reactor_main");}
- public static BasicMachineParameters implosionCompressor(){return OriginalAdvancedControllerData.parameters("implosioncompressor","implosion_compressor_main");}
+public final class OriginalMultiblockMachineParameters {
+    private OriginalMultiblockMachineParameters() {}
+
+    public static BasicMachineParameters distillationTower() {
+        return new BasicMachineParameters("distillation_tower_main", Materials.StainlessSteel,
+                "distillationtower", "HU", 1, 512, 0, 6, 6,
+                new MachineFaceMasks(63, 63, 63, 63, 63, 0, -1, BACK, -1, BACK),
+                com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("distillationtower", 1),
+                1, 1, 1024);
+    }
+
+    public static BasicMachineParameters cryoDistillationTower() {
+        return new BasicMachineParameters("cryo_distillation_main", Materials.StainlessSteel,
+                "cryodistillationtower", "CU", 1, 512, 0, 6, 6,
+                new MachineFaceMasks(63, 63, 63, 63, 63, 0, -1, BACK, -1, BACK),
+                com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("cryodistillationtower", 1),
+                1, 1, 1024);
+    }
+
+    public static BasicMachineParameters cokeOven() {
+        return BasicMachineParameters.builder("coke_oven_main", Materials.Ceramic)
+                .machineType("cokeoven")
+                .energy(com.gregtech.gregtech.data.GregTechTags.Energy.TU, 1)
+                .energyRange(1, 16)
+                .parallel(16)
+                .strength(5, 5)
+                .faces(new MachineFaceMasks(2, 1, 0, 61, 63, 0, -1, -1, -1, BOTTOM))
+                .constructionMaterials(com.gregtech.gregtech.content.machine.OriginalMachineMaterialData.weights("cokeoven", 1))
+                .build();
+    }
+
+    public static BasicMachineParameters fusionReactor() {
+        return OriginalAdvancedControllerData.parameters("fusionreactor", "fusion_reactor_main");
+    }
+
+    public static BasicMachineParameters implosionCompressor() {
+        return OriginalAdvancedControllerData.parameters("implosioncompressor", "implosion_compressor_main");
+    }
 }

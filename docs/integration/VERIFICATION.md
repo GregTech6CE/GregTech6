@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 焦炉参数及调用链
+
+OriginalCokeOvenRules、OriginalMultiblockMachineParameters、LargeMachineProcessingRules 与 `90196e6de` 代码／字面量一致，Java 17 独立编译通过。core 观察焦炉参数、面掩码、25 砖／一空气、四向排液目标集合与首位置、TU 单份／16 并行和 tickIgnition(1)。原生排液、绑定、积压和点火顺序为源调用链核查，没有运行 Minecraft 或声称模拟完成。未运行 Gradle、全套测试、世界重启或打包；见 [回执](verification/coke-oven-audit-20261019.json)。
+
 ## 2026-10-19 / 大型锅炉目录、坐标与接口
 
 OriginalLargeBoilerParameters／StructureGrid 相对 `70f7e06d7` 在归一化十个已声明的形参／局部变量改名后，代码与字面量一致。Java 17 独立编译通过；core 五项额定值匹配原版，四向 36 格预览／检查角色相同，实际长整数容量与 bindInt 观察确认传感器边界。蒸汽分配和失效结构例子为源码算术／控制流核对，未执行原生机器。无 Gradle、游戏、GameTest、世界重启或新构建。详见 [回执](verification/large-boiler-audit-20261019.json)。
