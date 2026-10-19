@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 扫描注册与四项执行合同核对
+
+相对 3e644ac22，ItemBehaviorCatalog、ScannerEnergyRules、ItemBehaviors、BehaviorScanner 共四份生产源码等价，原生双版展开，共六份比较；46 条 ID／行为记录顺序保持。原版注册、WD.scan、USB 可选能力、事件和诊断来源留存哈希。未新增测试、编译、GameTest、游戏、异常注入、重启、构建或推送，见 [回执](verification/scanner-behavior-audit-20261019.json)。
+
 ## 2026-10-19 / 特殊仪表与测重源链核对
 
 相对 202a57727，SensorMeasurements、CrucibleInputRules、SensorBlockEntity 共三份源码保持代码／字面量一致，原生实体两版展开，共四份比较通过。量程样例由原版 VMAX／注册和当前目录算术得到，无游戏结果；未新增 Java 观察、编译、测试、重启、构建或推送，见 [回执](verification/sensor-source-audit-20261019.json)。

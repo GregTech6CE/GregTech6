@@ -233,3 +233,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `content/nuclear/RodPhysics.java`／core `ReactorRodCatalog.java`：燃料棒最大中子值与冷却剂调整；仪表尚未读取该上限。
 
 量程、重量与库存视图的核对见 [特殊仪表报告](SENSOR_SOURCE_AUDIT.md)。
+
+## 手持扫描仪与行为归属
+
+- `core/.../content/tool/ItemBehaviorCatalog.java`：46 条物品 ID 与行为归属；每条独立一行。
+- `multiversion/src/main/java/.../item/behavior/ItemBehaviors.java`：行为类选择和作物／方块扫描分派。
+- `item/ScannerItem.java`：物品能源、交互、付费与聊天输出门控。
+- `item/behavior/BehaviorScanner.java`：实际诊断内容与按段计价，不是完整 WD.scan 等价实现。
+- `core/.../content/tool/ScannerEnergyRules.java`：扫描档位、容量、packet 与使用扣费纯规则。
+
+活动注册、休眠旧类和实际缺项见 [扫描仪核查](SCANNER_BEHAVIOR_AUDIT.md)。

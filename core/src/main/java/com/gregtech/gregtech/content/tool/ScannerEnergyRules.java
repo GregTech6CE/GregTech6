@@ -10,9 +10,17 @@ public final class ScannerEnergyRules {
     public static final long CROP_RESCAN_COST = 512;
 
     public record Spec(String id, long capacity, long voltage, int scanLevel, boolean debug) {
-        public long minimumPacket() { return debug ? 1 : voltage / 2; }
-        public long maximumPacket() { return debug ? Long.MAX_VALUE : voltage * 2; }
-        public boolean scansBlocks() { return scanLevel > 0; }
+        public long minimumPacket() {
+            return debug ? 1 : voltage / 2;
+        }
+
+        public long maximumPacket() {
+            return debug ? Long.MAX_VALUE : voltage * 2;
+        }
+
+        public boolean scansBlocks() {
+            return scanLevel > 0;
+        }
 
         public boolean acceptsPacket(int count, long size) {
             return debug || count == 1 && size >= minimumPacket() && size <= maximumPacket();

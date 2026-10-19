@@ -143,6 +143,10 @@
 | ALIGN-118 | 确认可调齿轮箱转速表量程公式不同。 | 原版 speed×16；轴另用 speed×power。 | 当前两者都用 speed×power，齿轮箱变为 speed²/4，青铜巧合相同而木／钢不同，见 [报告](SENSOR_SOURCE_AUDIT.md)。 |
 | ALIGN-119 | 确认中子计未接燃料棒／冷却剂上限。 | 原版逐槽调用棒的 neutron maximum，2×2 累加。 | 当前一律 Integer.MAX_VALUE；原始计数已有来源，快照时序另待核，见 [报告](SENSOR_SOURCE_AUDIT.md)。 |
 | ALIGN-120 | 确认测重使用加工载荷且大存储读数受单堆视图限制。 | 原版优先宿主重量，再按物品物理组成乘完整数量。 | 当前 CrucibleItemInput 包含回收资格／矿石产量，WEIGHT 没有 ITEM 已有的完整计数特判；单位换算本身对应，见 [报告](SENSOR_SOURCE_AUDIT.md)。 |
+| ALIGN-121 | 确认扫描仪未接物理／进度诊断来源。 | WD.scan 有重量、温度、压缩体积和进度段。 | 当前遗漏独立接口读取，连已有 CompressionSensorSource 也未用；不能称设备本身无压力，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
+| ALIGN-122 | 确认扫描仪按通用控制对象虚增状态段和费用。 | 原版各独立接口决定段资格，每段 512 EU。 | USB supportsSwitch=false 仍被显示为 ON 并有 Running 段；原版仅模式。完整总价另受其他段影响，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
+| ALIGN-123 | 确认扫描仪缺少逐段异常隔离。 | 原版各段独立捕获后继续诊断。 | 当前本地调用链没有恢复；异常可中断扫描，未故障注入或复现崩溃，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
+| ALIGN-124 | 确认扫描缺少方块调试与可修改事件合同。 | 原版自身多方块接口提供 debug，末尾事件可改文本／费用并取消结果。 | 当前直接返回固定诊断，没有提供者／事件调用；现代扩展桥接待设计，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

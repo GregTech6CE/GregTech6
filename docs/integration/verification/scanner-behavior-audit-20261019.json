@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-19",
+  "baseline": "3e644ac22",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL source tree read only",
+  "original_sources": {
+    "gregapi/util/WD.java": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+    "gregtech/items/behaviors/Behavior_Scanner.java": "e56f3c51a3ee4c3fd85d5a5dc4800cebb2bf800b01eab0513da1c338481830bc",
+    "gregtech/items/behaviors/Behavior_SensorKit.java": "f32aa3eb98c95ff9f86242d9f2b5e236a71061dfed0b7b82a92dcf68be6cc8a7",
+    "gregtech/items/MultiItemRandomTools.java": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+    "gregapi/item/multiitem/energy/EnergyStat.java": "d4253ac1d573a36836df5227a13538096ad0b7d8d43327d9678a3e434a3b1df6",
+    "gregapi/event/BlockScanningEvent.java": "6730f9259548048188c54815fc68915e3a1ffe2821828c760c10cb80b98325cb",
+    "gregapi/block/IBlockDebugable.java": "ec442623c963a1f44df355dcad447e46061edb8d9e306b14ba589d9e23b0c508",
+    "gregapi/block/multitileentity/MultiTileEntityBlock.java": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+    "gregapi/tileentity/computer/TileEntityBase08DataSwitch.java": "8d8023886b231059173a56c87e39936bd270260581336db7fa38f752b8298311",
+    "gregtech/tileentity/computer/MultiTileEntityUSBSwitch.java": "67b4976126119b054bef60ea80d9c06b83588b545058b2be18450624a9dad03a"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java": "eebba6fc2101187282119905d2e57242dda3d56926f224dc7dd814a719e465e5",
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ScannerEnergyRules.java": "c2e9069d3c91336dc18e39ca81a182ed25bde14c360d52541a9da2ba9581bd0e",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorScanner.java": "f75ddca5c2907b2a26a5bb0802e12333e636cc3aca01b1474d27de7eab3d83a5",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": "46a4a54fdb289ed44bea96caca1a281bb5f8578bddce8360cb24c845c3583b5d",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/ScannerItem.java": "19de069676aad4d332fe3dabcd609ca064288ed231c4943e50d7883de0eaed5c",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java": "81cf717d62b7facb9df8ea6a3750082dbd38b8a19ed8a6bb807b1226de481470",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/UsbSwitchBlockEntity.java": "21a362eb6a034d606ef7ed3c2faab624dc28e023e76bc657a96b998b81a7ea71",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/CompressionSensorSource.java": "535b7262de8142cb619ce87007d91300d854cae32f5a560906ce11d1f9daa1a5",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java": "fdf6613e71b5f66e90ed5aa020284ff404e8434f070a690dfba7426497f4f659",
+    "core/src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java": "c1f139d059358bf8420243e930500707ab1a1300a7957b6c4424e1a1ea4aeeca"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java": {
+      "plain": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ScannerEnergyRules.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorScanner.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "behavior_catalog_rows": 46,
+  "findings": [
+    "ALIGN-121: scanner omits native physical/progress diagnostics even when modern getters/source interfaces exist",
+    "ALIGN-122: scanner unconditionally reports/charges switch and running sections for any MachineControl; USB switch is a concrete unsupported-switch example",
+    "ALIGN-123: scanner no longer isolates native-section exceptions before gathering remaining diagnostics",
+    "ALIGN-124: scanner lacks original block debug-provider and mutable cancellable scan-result/cost hook"
+  ],
+  "not_missing": [
+    "Behavior_SensorKit has no active original Java reference outside its declaration and its Nuclear Control functionality is commented out",
+    "Portable/debug/crop scanner identities registered as ScannerItem with corresponding specs",
+    "Section fee, scan levels, capacity and payment-before-chat paths exist; state wording still lacks possible/success per prior findings"
+  ],
+  "conditional_compatibility": [
+    "Original EnergyStat rechargeFromPlayer depends on legacy EU-item compatibility; current scanner use has no equivalent, but modern provider support not defined, so not classified as unconditional missing armor charging",
+    "Legacy IC2/Galacticraft scanning branches require separate modern integration mapping"
+  ],
+  "not_run": [
+    "new probes",
+    "native compilation",
+    "full test suite",
+    "GameTests",
+    "world scanner test",
+    "fault-injection test",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Section-cost mismatch identified by eligibility, not total end-to-end scan-price measurements",
+    "Catalog and dispatch formatting preserves rows/order but does not verify every behavior implementation",
+    "Exception propagation inferred from local call chain; no crash reproduced",
+    "Block event replacement API requires implementation design, not a same-name legacy bus port"
+  ]
+}
