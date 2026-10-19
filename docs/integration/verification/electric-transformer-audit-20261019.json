@@ -1,0 +1,154 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "0848c890b",
+  "status": "scoped_checks_passed",
+  "new_findings": [
+    "ALIGN-059",
+    "ALIGN-060"
+  ],
+  "extended_finding": "ALIGN-017",
+  "format_parity": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/TransformerControlState.java": {
+      "code_and_literals_unchanged": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/energy/ElectricTransformerControl.java": {
+      "code_and_literals_unchanged": true,
+      "both_native_projections_unchanged": true
+    }
+  },
+  "catalog_matches": [
+    {
+      "id": "transformer_ulv_lv",
+      "material": "TinAlloy",
+      "input": 32,
+      "output": 8,
+      "capacity": 64,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_lv_mv",
+      "material": "SteelGalvanized",
+      "input": 128,
+      "output": 32,
+      "capacity": 256,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_mv_hv",
+      "material": "Aluminium",
+      "input": 512,
+      "output": 128,
+      "capacity": 1024,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_hv_ev",
+      "material": "StainlessSteel",
+      "input": 2048,
+      "output": 512,
+      "capacity": 4096,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_ev_iv",
+      "material": "Chromium",
+      "input": 8192,
+      "output": 2048,
+      "capacity": 16384,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_iv_luv",
+      "material": "Titanium",
+      "input": 32768,
+      "output": 8192,
+      "capacity": 65536,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_luv_zpm",
+      "material": "Iridium",
+      "input": 131072,
+      "output": 32768,
+      "capacity": 262144,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_zpm_uv",
+      "material": "OsmiumElemental",
+      "input": 524288,
+      "output": 131072,
+      "capacity": 1048576,
+      "source_multiplier": 4
+    },
+    {
+      "id": "transformer_uv_xv",
+      "material": "Trinitanium",
+      "input": 2097152,
+      "output": 524288,
+      "capacity": 4194304,
+      "source_multiplier": 4
+    }
+  ],
+  "core_observations": [
+    "DEVICE|transformer_ulv_lv|TinAlloy|32|8|64",
+    "DEVICE|transformer_lv_mv|SteelGalvanized|128|32|256",
+    "DEVICE|transformer_mv_hv|Aluminium|512|128|1024",
+    "DEVICE|transformer_hv_ev|StainlessSteel|2048|512|4096",
+    "DEVICE|transformer_ev_iv|Chromium|8192|2048|16384",
+    "DEVICE|transformer_iv_luv|Titanium|32768|8192|65536",
+    "DEVICE|transformer_luv_zpm|Iridium|131072|32768|262144",
+    "DEVICE|transformer_zpm_uv|OsmiumElemental|524288|131072|1048576",
+    "DEVICE|transformer_uv_xv|Trinitanium|2097152|524288|4194304",
+    "FITTING|space=4|packet=32|requested=1|accepted=0",
+    "FITTING|space=32|packet=32|requested=2|accepted=1",
+    "EU_MAGNITUDE|negative32=0",
+    "EU_GATE|negative32|min16|callbackMarker=99",
+    "STATE|initial|accepts=true|running=false|active=false|visual=0|mode=0",
+    "STATE|output_refused|accepts=false|running=true|active=false|visual=2|mode=0",
+    "STATE|reverse_has_independent_output_flags|accepts=true|running=false|active=false|visual=2|mode=0",
+    "STATE|64_possible_ticks|accepts=true|running=true|active=true|visual=1|mode=0",
+    "STATE|stopped|accepts=false|running=true|active=true|visual=0|mode=0",
+    "LIMIT|mode15|max64|4",
+    "STATE|restored_reverse|accepts=true|running=true|active=true|visual=0|mode=15",
+    "STATE|restored_forward|accepts=true|running=true|active=true|visual=0|mode=15"
+  ],
+  "original_results_are_source_inferences": {
+    "buffer60_capacity64_packet32": {
+      "accepted": 1,
+      "buffer_after": 92
+    },
+    "negative_eu_size": "absolute magnitude accepted, not negative EU output"
+  },
+  "validation": {
+    "java17_core_compile_and_probe": true,
+    "cached_core_dependencies": true,
+    "native_compile": false,
+    "gradle": false,
+    "minecraft": false,
+    "save_restart": false,
+    "new_build": false,
+    "push": false
+  },
+  "original_source_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+    "gregapi/tileentity/energy/TileEntityBase11Bidirectional.java": "e03bb5ec9205a3e9526782cf9fd145c2ee85d3a0e8632fad953674bd23202062",
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Converter.java": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4",
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Stats.java": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+    "gregapi/tileentity/behavior/TE_Behavior_Active_Trinary.java": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+  },
+  "current_source_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/TransformerControlState.java": "c688197b4dc3f2e5c471008ad57235204d4ba5f299780200bc9a0096ab2044ef",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/energy/ElectricTransformerControl.java": "f7b11b3df361cf4ad61665f7f007e199a45321e0b47078da036bd231c51f832c",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java": "61055f405067b1dab5c72403119a2385176aceeca918643db602d33d58b552b6",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyPackets.java": "8706971077df366192d41af1480edb9da6dc7d5dbe7f1ac97574e1715ca1a4d7",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java": "a8de64c9f415bba030b1c3b8fbaa05fc5c5aeb26a9d6dfa2f96240ce65e10e6b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "6f5e09d5828768ed9634d872a9a48a407c303be717464fd26a91ed9387f7663c",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+    "tools/integration/audit-probes/TransformerAudit.java": "18bb7564538acad564afb78fb923de8fe0f3d6bbd1218009fca43348b3cd252d"
+  }
+}

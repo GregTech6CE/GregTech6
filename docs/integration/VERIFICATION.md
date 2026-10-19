@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 电变压器目录与纯状态观察
+
+两份控制类相对 `0848c890b` 代码／字面量一致，原生适配两版投影一致。Java 17 编译控制状态、包帮助函数、门限、额定目录和探针通过；九项目录逐行匹配原版注册、V 与 Electric_T，观察缓存余量拒包、负号 EU 门限与归一化、双方向状态、64 tick 活动和模式限制。原版接收 1／缓存 92 为源码推导；无原生编译、Gradle、游戏、重启、打包或推送，见 [回执](verification/electric-transformer-audit-20261019.json)。
+
 ## 2026-10-19 / 物质流体目录和特殊配方抽取
 
 Java 17 独立编译 MatterConversionCatalog／FluidDefinitions／MatterFluidAudit，通过 core 观察取得八项遗漏旁表关联、普通汞 1000 mB 与熔融汞 144 mB、汞 80／120 核子及 26214400 工作量。目录 28 行与原版／基线逐项同序；还原抽取循环后两版投影代码和字面量相同，FluidDefinitions 仅改注释。初版探针空 materialKey 的 Set.contains 判空错误已修正，最终执行通过。未运行原生配方管理器、Gradle、全套测试或游戏，详见 [回执](verification/matter-fluid-audit-20261019.json)。

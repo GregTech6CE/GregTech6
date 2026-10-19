@@ -62,6 +62,10 @@
 
 “参数表中有标志”不代表运行代码已消费它。机器审计已经发现完成余量、固定输出位置、中断和 KU 完成条件等差异，具体见 [加工执行](BASIC_MACHINE_EXECUTION_AUDIT.md) 与 [中断／供能](BASIC_MACHINE_INTERRUPTION_AUDIT.md)。
 
+## 电变压器的参数与控制
+
+额定目录在 core `content/energy/EnergyNodeDefinitions.java`；开关、模式、双方向输出状态和 64 tick 显示状态在 `content/energy/TransformerControlState.java`。共享原生 `content/energy/ElectricTransformerControl.java` 仅适配 MachineControl 和 NBT；实际输入、输出和切换方向仍在 `blockentity/energy/EnergyNodeBlockEntity.java`。包数取整帮助函数是 core `api/energy/EnergyPackets.java`，公共最小包门限是 `EnergyGate.java`，两者不能混同。现存边界差异见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。
+
 ## 命名与修改约定
 
 物质制造机结构维护在 core `content/multiblock/SharedMatterFabricatorStructure.java`，主控 `MatterFabricatorBlockEntity` 只补充 QU 参数和处理器互换验证，实际加工／保存沿大型配方机父类。共用 `content/recipe/MatterRecipeLoader.java` 生成特殊转换与元素分离行，不能只搜索同名动态 RecipeMap。`tools/tests/test_fusion_resources.py` 已直接读取维护源码和三层资源位置，不再借助 native 工具视图；它是源引用检查，不能替代游戏渲染验证。

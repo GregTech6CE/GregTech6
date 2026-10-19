@@ -36,7 +36,7 @@
 | ALIGN-014 | 确认部分通用加工固定耗时替代了原版材料工作性分支，也遗漏部分过滤条件。 | `Loader_Recipes_Handlers:262–319,371–393`；`RecipeMapHandlerPrefix.getCosts`。 | `PartRecipeLoader` 的轧制、杆拉细丝、卷弯、箔／轨道与车床方法使用固定时长。困难材料品质 3、1U 锭→板，原版参数算得 1024 tick，当前传 16；具体范围不包含已有独立工作性计算的 Welder 和物理导线入口。 |
 | ALIGN-015 | 确认车床／切割的部分材料余料未返回。 | 原版车床／切割行启用 pulverized remains，`RecipeMapHandlerPrefix:213–218` 按差额和粉碎目标返回。 | `PartRecipeLoader.roll`、`cut` 只输出主产物，如板→透镜、透镜→环、小板切割。锭／宝石→杆有专用余料但未按粉碎目标转换；不能扩大成所有加工都无副产物。 |
 | ALIGN-016 | 确认通用材料切割的冷却液矩阵、时长和品质用量倍率不同。 | `Loader_Recipes_Handlers:628–652` 实际循环前四种冷却液；`RecipeMapHandlerPrefix:218` 按品质+1缩放。 | 当前 `cut` 只注册水、基础时长与 `max(16,duration)` 水量；品质 3 的长杆水路线，原版参数为 64 tick／256 mB，当前 16 tick／16 mB。其他显式切割配方未全部核查。 |
-| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
+| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。电变压器 emitElectricTransformer 同样缺少活动环境分支，见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
 | ALIGN-018 | 确认 Flux Motor／Dynamo 各缺少后三档，共六个设备。 | `Loader_MultiTileEntities:858–860,955–957` 注册 11023–11025、11113–11115，无外部模组条件。 | 两版本共用的 `EnergyNodeDefinitions` 各只有 LV／MV。五类原版目录 35 行与当前 core 29 项比对，现有项额定值匹配；缺项需连同模型／配方／材料与语言补齐。 |
 | ALIGN-019 | 确认小锅炉工具交互差异。 | 原版 BoilerTank 的排空器先水后蒸汽，温度计读取储存热量。 | 当前先蒸汽后水、固定排空消耗，并缺少锅炉温度计分支；Jade 不能代替物品交互。 |
 | ALIGN-020 | 确认小锅炉缺少外部爆炸触发的高压连锁处理。 | 原版 BoilerTank.onExploded 在表值 >4 时再次爆炸。 | 当前只有自身过热／满罐及玩家拆除分支；抑制高压掉落不是爆炸回调。 |
@@ -81,6 +81,8 @@
 | ALIGN-056 | 确认聚变已有任务恢复后，同配方下一批重复要求启动 LU。 | 原版恢复任务完成后 active 为 true；充能条件允许 currentRecipe 为 null，连续同配方不重充。 | 当前 load 或暂停 tick 清空 continuousRecipe，保留任务完成后立即 startRecipe，因标记为空重新收取全额；不是当前任务丢失，尚未游戏重启实测。 |
 | ALIGN-057 | 确认物质制造漏读已有流体材料旁表。 | 原版材料相态对象直接供元素分离遍历。 | 当前 Hydrogen／Deuterium／Tritium／Helium／Nitrogen／Oxygen／Neon／Argon 的旁表关联已存在，但加载器仅读 materialKey，八项被跳过；不是流体未注册。 |
 | ALIGN-058 | 确认普通汞液体物质分离的单位量偏大。 | 原版显式 mercury 绑定 L=144 mB/U，再用 liquid(U) 生成配方。 | 当前普通 mercury 按非 molten 名称取 1000 mB，同样输出 80 带电＋120 中性；独立 molten.mercury 的 144 不能替代普通汞。 |
+| ALIGN-059 | 确认电变压器最后整包接收采用向下取整。 | 原版 Energy_Stats 在缓存未满时向上取整整包，60/64 接收 32 后为 92。 | 当前 EnergyPackets.fitting 以剩余 4/32 得 0，拒收；不同于 ALIGN-047 接收后截断，见 [报告](ELECTRIC_TRANSFORMER_AUDIT.md)。 |
+| ALIGN-060 | 确认电变压器拒收幅值合法的负号 EU 包。 | 原版 Root 按绝对值过门限，Energy_Stats 按绝对值储存。 | 当前门限允许 -32，但随后非 RU 的 magnitude 得 0；限于接口边界，未声称普通供电必然触发。 |
 
 上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，能源目录和弱燃料参数也有 core 枚举，其余结论依赖具体调用链核查，没有启动游戏。锅炉及液体／气体燃烧室的完整来源、相同部分和边界见 [专题核查](BOILER_BURNING_BOX_AUDIT.md)。
 
@@ -157,3 +159,5 @@
 第十三批完成聚变／内爆的结构目录、额定参数和四项执行差异核查，详见 [专题报告](ADVANCED_CONTROLLER_AUDIT.md)。两份参数／布局代码展开且代码和字面量等价；聚变结构生成器统一到共享 core，886 格可全文复现。继续特殊主控的重载／停机连续性、物质制造机、储能／变压器和网络；旧聚变资源自检的过时路径也需修订。全面目标仍未完成。
 
 继续核查材料属性的成员与工厂继承、处理目标和前缀监听器，以及锅炉、其它能源转换／储能与网络系统。同步整理相关过大／压行实现。第五批已整理三份能源核心源码的格式与职责说明，并在 SOURCE_LAYOUT 中补充批量材料数据导航。每条结论附原版和当前调用链；完整审计仍未完成，不能以这一批编译通过结束目标。
+
+第十六批核对九档电变压器目录和主要方向／控制路径，新增输入边界 ALIGN-059–060，扩展环境检查 ALIGN-017；两份压行控制类展开。详见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。电池盒、旋转与长距离转换及网络仍待继续。
