@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-19",
+  "baseline": "202a57727",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL source tree read only; Geiger source also credits Erik3003",
+  "original_sources": {
+    "gregtech/tileentity/sensors/MultiTileEntityTachometer.java": "bc93e9a5516c1d8aa8803dc962527efc1771de5135f21a9c1f4b83963ac26d07",
+    "gregtech/tileentity/sensors/MultiTileEntityGeigerCounter.java": "12199d6ca0c11d872472bc462dc60d391d92c9a07884a2f9b075af0e2cd406cb",
+    "gregtech/tileentity/sensors/MultiTileEntityWeightometerLight.java": "2b4426415dd6ea23982b2c1fb0da6a3b0e9de489a2a72d29a0c52eb1ec44e648",
+    "gregtech/tileentity/sensors/MultiTileEntityWeightometerMedium.java": "9dee7bac16a3b1cea17ca365f9c0f57cbba8ac522e0fc5e835fb3c3b875144d8",
+    "gregtech/tileentity/sensors/MultiTileEntityWeightometerHeavy.java": "e251c54a9b2304ab5d720b4c2eb5b27680ea425f41b2dce4ecff77324f61113c",
+    "gregtech/tileentity/sensors/MultiTileEntityWeightometerSuperHeavy.java": "863c4f1e8338e8260fdea1355162816892c3290c7a1eeada2062869a17fe3ac2",
+    "gregtech/tileentity/sensors/MultiTileEntityItemometer.java": "74b527cf81330b9fd1e046ca816920247d1bcea30ef1dc1b8bdcea5c1c157347",
+    "gregtech/tileentity/sensors/MultiTileEntityPlayerCounter.java": "2732be6ca4d00d61fb091a1f0a39ce930879d8dd291f0831ffc1c50dfab1ab7f",
+    "gregtech/tileentity/sensors/MultiTileEntityLuminometer.java": "d7bb0a8aff94008a82c6d8170cde548fb2717eb013407bf9c8b4807cc8f77559",
+    "gregapi/util/OM.java": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+    "gregapi/oredict/OreDictItemData.java": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+    "gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6",
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleInputRules.java": "0223ef99957bb2ee84c15495be772a9393be0b6cafcb98bb790fa8dc52e51408",
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorMeasurements.java": "4f9a381790451ff44b2b86cae500387b49f71ed57868bc4b84bf958fb1afda62",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": "126d5b9d3026d627a1eb9a523818d1d8749a1e450bddd285a752866848e257ed",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleItemInput.java": "c431802126d4fc95c434d7933ceb1e6093390052654eed67e2490be418fc7521",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java": "b1df17a16b6bac123280a6fe18eb3c605ec6435110ba9a9168e7d61a4f70fb38",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java": "229d3578a2ad9483d72555f04daf2a1c02b710867e4c5cd922b575e7f65fcca1",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": "7e8963ad5bda51505373466307e8d293d0563a8351c25d7e62bb4d8be03949ce",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/GearboxBlockEntity.java": "f369a5e38fff95e3e8f7406dec4c24ee9cf87e2be0440647d4acb94db9a9b686",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleMaterialStack.java": "e4b5127735fe5eb482acabf957e71a3c3e01bc63f4d991754657c31b89ce5299",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java": "9c290c674d071bae778965dae13db3cc1cc70bde334ea38ea00a8238a3c7b354",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/GearboxSpec.java": "dfac20b712e132643d866ca08232eb4ac288b597b7dbe1ca6cfe01603f8038a5",
+    "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a",
+    "core/src/main/java/com/gregtech/gregtech/content/storage/OriginalStorageTooltipData.java": "95776c2e114beef85ab9eb7ca1f48bc6cec97e70cdc6aec3733219891d32bb15"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleInputRules.java": {
+      "plain": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorMeasurements.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-118: custom gearbox tachometer maximum uses speed*(speed/4) instead of original speed*16",
+    "ALIGN-119: Geiger maximum fixed to Integer.MAX_VALUE instead of installed rod/coolant-dependent maxima",
+    "ALIGN-120: weight meter uses recoverable crucible payload and capped capability stacks instead of direct weight/composition contracts"
+  ],
+  "source_examples": [
+    {
+      "gearbox": "wood",
+      "speed": 16,
+      "original_max": 256,
+      "current_max": 64
+    },
+    {
+      "gearbox": "bronze",
+      "speed": 64,
+      "original_max": 1024,
+      "current_max": 1024
+    },
+    {
+      "gearbox": "steel",
+      "speed": 256,
+      "original_max": 4096,
+      "current_max": 16384
+    },
+    {
+      "gearbox": "titanium",
+      "speed": 1024,
+      "original_max": 16384,
+      "current_max": 262144
+    }
+  ],
+  "positive_evidence": [
+    "ITEM mass-storage override reads full stored count, so its successful support must not be generalized to WEIGHT",
+    "Crucible payloads are per-item; multiplication by visible stack count is not itself a demonstrated double count",
+    "Four weight display units and maximum count conversions correspond to original scale definitions",
+    "Player counter measures global server player count, matching original scope",
+    "Axle tachometer uses speed*power as original; gearbox maximum is a distinct formula"
+  ],
+  "not_run": [
+    "new Java probes",
+    "native compilation",
+    "full test suite",
+    "GameTests",
+    "world sensor readings",
+    "reactor cycle trace",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Gearbox examples are source arithmetic, not measured percentages in game",
+    "Reactor old/current neutron snapshot semantics remain deferred",
+    "Concrete material/ore weight matrices and all stored-container behavior remain incomplete",
+    "Fluid display-item exclusions and special sided inventory fallback still need full compatibility validation"
+  ]
+}

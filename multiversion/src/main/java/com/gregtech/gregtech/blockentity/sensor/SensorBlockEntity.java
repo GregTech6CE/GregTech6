@@ -242,8 +242,17 @@ public class SensorBlockEntity extends BlockEntity {
                     }
                 }
                 case TACHOMETER -> {
-                    if(target instanceof com.gregtech.gregtech.blockentity.energy.AxleBlockEntity axle){newValue=axle.transferredLast();maximum=com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(axle.maxSpeed(),axle.maxPower());}
-                    else if(target instanceof com.gregtech.gregtech.blockentity.energy.GearboxBlockEntity gearbox&&target.getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.GearboxBlock block){newValue=gearbox.transferredLast();maximum=com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(block.spec().maxSpeed(),block.spec().maxPower());}
+                    if (target instanceof com.gregtech.gregtech.blockentity.energy.AxleBlockEntity axle) {
+                        newValue = axle.transferredLast();
+                        maximum = com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(axle.maxSpeed(), axle.maxPower());
+                    }
+                    else if (target instanceof com.gregtech.gregtech.blockentity.energy.GearboxBlockEntity gearbox
+                            && target.getBlockState().getBlock() instanceof com.gregtech.gregtech.block.energy.GearboxBlock block) {
+                        newValue = gearbox.transferredLast();
+                        // GT6's custom-gearbox meter used rated speed * 16 instead.
+                        maximum = com.gregtech.gregtech.api.sensor.SensorPanelRules.transferMaximum(
+                                block.spec().maxSpeed(), block.spec().maxPower());
+                    }
                 }
                 case WEIGHTOMETRIC, WEIGHTOMETRIC_LIGHT, WEIGHTOMETRIC_MEDIUM,
                      WEIGHTOMETRIC_SUPER_HEAVY -> {
@@ -254,6 +263,8 @@ public class SensorBlockEntity extends BlockEntity {
                             .resolve().orElse(null);
 //?}
                     if (items != null) {
+                        // This is currently a recoverable crucible payload, not OM.weight or
+                        // the original host-provided weight. Bulk handler views may be capped.
                         double kilograms = 0;
                         for (int i = 0; i < items.getSlots(); i++) {
                             var stack = items.getStackInSlot(i);
@@ -333,7 +344,11 @@ public class SensorBlockEntity extends BlockEntity {
                 }
                 case LUMINOMETER, PLAYERCOUNTER, CHRONOMETER -> { /* sampled without a block entity below */ }
                 case GEIGER -> {
-                    if(target instanceof com.gregtech.gregtech.blockentity.energy.ReactorCoreBlockEntity reactor){newValue=reactor.neutronTotal();maximum=Integer.MAX_VALUE;}
+                    if (target instanceof com.gregtech.gregtech.blockentity.energy.ReactorCoreBlockEntity reactor) {
+                        newValue = reactor.neutronTotal();
+                        // The original sums installed rods' neutron maxima, including coolant adjustments.
+                        maximum = Integer.MAX_VALUE;
+                    }
                 }
                 case LASEROMETER -> {
                     // GT6 MultiTileEntityLaserometer reads only an adjacent laser fiber's

@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 特殊仪表与测重源链核对
+
+相对 202a57727，SensorMeasurements、CrucibleInputRules、SensorBlockEntity 共三份源码保持代码／字面量一致，原生实体两版展开，共四份比较通过。量程样例由原版 VMAX／注册和当前目录算术得到，无游戏结果；未新增 Java 观察、编译、测试、重启、构建或推送，见 [回执](verification/sensor-source-audit-20261019.json)。
+
 ## 2026-10-19 / 传感器源码与五项原版数值观察
 
 相对 b9b11884d，四份生产文件（原生实体两版投影）共五份代码／字面量一致。Java 17 仅编译 SensorControl、SensorAverage、SensorPanelRules 和审计入口，观察 1%／50%、零阈值和超导额定上限的原版差异，约 1.5 秒。未原生编译、完整测试、GameTest、游戏、重启、构建或推送，见 [回执](verification/sensor-execution-audit-20261019.json)。

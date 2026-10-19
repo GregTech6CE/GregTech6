@@ -24,10 +24,12 @@ public final class CrucibleInputRules {
         return new SmeltingPreview(target.resolve(), amount.longValue(), source.getMeltingPoint());
     }
 
+    /** Per-item crucible payload; ore crushing targets are not physical item composition. */
     public static CrucibleMaterialStack materialItem(GTMaterial material, MaterialPrefix prefix) {
         return prefix == MaterialPrefix.oreRaw ? ore(material.resolve(), 1)
                 : CrucibleMaterialStack.of(material.resolve(), prefix == null ? GTValues.U : prefix.getMaterialWeight());
     }
+
     public static CrucibleMaterialStack ore(GTMaterial material, long count) {
         return CrucibleMaterialStack.of(material.getTargetCrushingMaterial(),
                 Math.multiplyExact(material.getTargetCrushingAmount(), Math.multiplyExact(count, (long) material.getOreMultiplier())));

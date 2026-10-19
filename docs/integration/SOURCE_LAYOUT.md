@@ -223,3 +223,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `tools/integration/audit-probes/SensorModeAudit.java`：五项纯规则原版差异观察，不依赖 Minecraft。
 
 实际缺口、已有入口和验证范围见 [独立传感器核查](SENSOR_EXECUTION_AUDIT.md)。
+
+## 特殊仪表与重量数据
+
+- `multiversion/src/main/java/.../blockentity/sensor/SensorBlockEntity.java` 的 TACHOMETER／GEIGER／WEIGHT 分支：实际源值与量程。
+- `core/.../api/sensor/SensorMeasurements.java`：重量和体积单位转换；不决定被测材料来源。
+- `multiversion/src/main/java/.../api/machine/crucible/CrucibleItemInput.java` 与 core 的 `CrucibleInputRules.java`：投料回收／矿石产量合同，当前测重复用了它。
+- `blockentity/inventory/MassStorageBlockEntity.java`：stored() 与自动化单堆视图的区别。
+- `content/nuclear/RodPhysics.java`／core `ReactorRodCatalog.java`：燃料棒最大中子值与冷却剂调整；仪表尚未读取该上限。
+
+量程、重量与库存视图的核对见 [特殊仪表报告](SENSOR_SOURCE_AUDIT.md)。
