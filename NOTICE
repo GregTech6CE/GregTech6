@@ -19,6 +19,9 @@ and assets were not imported for that fluid-pipe change. See docs/integration/SO
 The material arrow texture is now retained from its GregTech asset catalog
 (src/main/resources/assets/gregtech/textures/entity/arrow.png), under its upstream
 CC0-1.0 default asset license. See docs/integration/verification/ammunition-source-20261004.json.
+The 171 original wooden bucket sprites (randomtools 2000..2818) are also retained
+from that catalog under CC0-1.0, credited to Gregorius Techneticies / GregTech-6 Team.
+See docs/integration/verification/wooden-buckets-source-20261019.json for byte hashes.
 
 Assets and other third-party components retain their own licenses, not this blanket
 code declaration. Upstream GT6 default assets: CC0-1.0 unless otherwise stated.

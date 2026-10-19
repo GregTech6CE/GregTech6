@@ -24,3 +24,9 @@ GitHub [运行 39332310565](https://github.com/SaltNya/GregTech6/actions/runs/39
 首次后续核心检查在旧设备数量断言失败，之前通过的源码策略检查覆盖 2814 份 Java、125676 个原文键和 13061 个别名。第二次继续执行所有任务，材料、热学、覆盖层合同、Stonecutter 一致性与双版编译通过，另定位到电机／发电机的旧覆盖数。最终以 Java 17 启动 `:core:check :verifyStonecutterSources :compileBothPlatforms`，全部通过，35 秒；机器规格 8326 条、核心行为 2809 条、材料 7959 条断言通过。见[验证账本](../VERIFICATION.md)。
 
 临时日志保存在忽略目录：`work/ci-guards-20261020.log`、`work/ci-guards-fixed-20261020.log`、`work/ci-remi-20261020.log`、`work/ci-core-fixed-20261020.log`、`work/ci-core-final-20261020.log`、`work/ci-core-complete-20261020.log`。本轮不启动游戏或恢复已暂停的全面玩法核查。
+
+## 云端后续验包与署名同步
+
+提交 `f4b4a7873` 的[运行 39335154602](https://github.com/SaltNya/GregTech6/actions/runs/39335154602) 已通过两版前置检查、正式编译和核心检查，末端实际验包失败。发现根 `NOTICE` 比包内声明少了木桶贴图原作者与来源的三行；Forge SDK 的原脚本明确复现 `SDK license/notice differs: NOTICE`。将包内已保留的完整声明同步回根文件，增加署名，不删除或弱化原作者说明。
+
+双版本发行包及核心 SDK 构建通过（7m27s）。随后原 `verify_artifacts.py` 对两个实际发行包均通过，保留相同的 918 个当前核心类；`verify_addon_api.py` 对纯核心 SDK、Forge SDK、NeoForge SDK 均通过（55 个核心 API 类，双端各 19 个原生 API 类）。ZIP CRC、元数据、当前代码、语言和署名一致性以及测试内容隔离全部验证。报告位于 `work/ci-package-forge-20261020.json`、`work/ci-package-neoforge-20261020.json`、`work/ci-sdk-{core,forge,neoforge}-20261020.json`；构建日志为 `work/ci-packaging-20261020.log`。
