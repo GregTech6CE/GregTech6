@@ -1,11 +1,14 @@
 package com.gregtech.gregtech.content.energy;
+
 import com.gregtech.gregtech.api.energy.*;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.material.generated.WoodMaterials;
 import com.gregtech.gregtech.data.GregTechTags;
-/** Exact original custom gearboxes and rotational transformers, independent of platform registration. */
-public final class GearboxCatalog {private GearboxCatalog(){}
+/** Original custom gearbox and rotational transformer ratings; runtime behavior is audited separately. */
+public final class GearboxCatalog {
+    private GearboxCatalog() {}
+
     public record Tier(String suffix, GTMaterial material, int voltageTier, long maxSpeed) {}
     private static final Tier[] TIERS = {
             new Tier("wood", WoodMaterials.WoodTreated, 0, 16),
@@ -24,7 +27,21 @@ public final class GearboxCatalog {private GearboxCatalog(){}
     };
     private static final long[] V = {8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, 2097152};
 
- public static Tier[] tiers(){return TIERS.clone();}
- public static GearboxSpec gearbox(Tier tier){return new GearboxSpec("gearbox_"+tier.suffix(),tier.material(),tier.maxSpeed(),tier.maxSpeed()/4);}
- public static EnergyNodeSpec transformer(Tier tier){int t=tier.voltageTier();long input=V[t],output=t==0?2:V[t-1];return new EnergyNodeSpec("rotation_transformer_"+tier.suffix(),tier.material(),EnergyNodeSpec.Kind.CONVERTER,"transformers/rotation_transformer",GregTechTags.Energy.RU,GregTechTags.Energy.RU,input,output,input*2,tier.material().getLocalName()+" Transformer Gearbox",0);}
+    public static Tier[] tiers() {
+        return TIERS.clone();
+    }
+
+    public static GearboxSpec gearbox(Tier tier) {
+        return new GearboxSpec("gearbox_" + tier.suffix(), tier.material(),
+                tier.maxSpeed(), tier.maxSpeed() / 4);
+    }
+
+    public static EnergyNodeSpec transformer(Tier tier) {
+        int t = tier.voltageTier();
+        long input = V[t], output = t == 0 ? 2 : V[t - 1];
+        return new EnergyNodeSpec("rotation_transformer_" + tier.suffix(), tier.material(),
+                EnergyNodeSpec.Kind.CONVERTER, "transformers/rotation_transformer",
+                GregTechTags.Energy.RU, GregTechTags.Energy.RU,
+                input, output, input * 2, tier.material().getLocalName() + " Transformer Gearbox", 0);
+    }
 }
