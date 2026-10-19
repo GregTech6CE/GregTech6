@@ -49,9 +49,9 @@ import java.util.List;
  * are imported by {@code tools/extract_gt6_workability.py} into {@link MaterialWorkability}.
  * <p>
  * Pairs GT6 has but the port cannot express yet are recorded in {@link #skipped()} instead of being
- * guessed: the port has no {@code compressed}, {@code plateSteamcraft}, {@code casingSmall},
- * {@code plateTiny} or {@code rawOreChunk} prefix, which is what the remaining compressor/anvil
- * conversions of the same handler block refer to.
+ * guessed: the port has no {@code compressed}, {@code plateSteamcraft} or {@code casingSmall}
+ * prefix. The separately registered {@code plateTiny} and {@code rawOreChunk} prefixes do exist;
+ * their presence alone does not complete every original conversion involving them.
  */
 public final class MaterialFormConversionRecipes {
     /** One registered conversion: the GT6 handler family, its GT6 prefix pair, and the recipe. */

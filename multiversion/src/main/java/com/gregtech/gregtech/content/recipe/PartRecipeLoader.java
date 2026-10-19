@@ -23,30 +23,10 @@ import java.util.List;
  * {@code gregtech.loaders.c.Loader_Recipes_Handlers} (RollingMill / Wiremill /
  * RollBender / ClusterMill / RollFormer / Lathe / Cutter / Extruder tables) plus the
  * dust/crushed furnace smelting from {@code Loader_Recipes_Furnace}. The GT6
- * easy/hard-workable duration split is collapsed to the standard duration; the
- * Extruder recipes omit the shape molds until those items are ported.</p>
- */
-
-/**
-
- * Generic material part processing: plates, rods, bolts, screws, gears, rings,
-
- * springs, wires, foils, rails and gem plates for every registered material.
-
- *
-
- * <p>Port of the per-prefix machine handlers from GT6
-
- * {@code gregtech.loaders.c.Loader_Recipes_Handlers} (RollingMill / Wiremill /
-
- * RollBender / ClusterMill / RollFormer / Lathe / Cutter / Extruder tables) plus the
-
- * dust/crushed furnace smelting from {@code Loader_Recipes_Furnace}. The GT6
-
- * easy/hard-workable duration split is collapsed to the standard duration; the
-
- * Extruder recipes omit the shape molds until those items are ported.</p>
-
+ * easy/hard-workable duration split is collapsed to the standard duration.
+ * Extrusion uses registered shape molds, with a mold-free fallback if lookup fails.
+ * Material eligibility, forging targets and the input-prefix matrix still require
+ * alignment with the original; see ALIGN-011 in the integration audit.</p>
  */
 public class PartRecipeLoader implements InitializationStep {
 

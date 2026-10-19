@@ -34,7 +34,8 @@ import java.util.List;
  * Hand-grinding is GT6's early-game ore/dust path — before the first machine you break ore chunks,
  * nuggets and gems in a mortar — so without this table the port's mortar could only grind the handful
  * of hand-written vanilla entries. The flags come from {@code tools/extract_gt6_workability.py}
- * (195 materials are mortar grindable in the original).
+ * The generated flag table currently omits factory-inherited flags and has field/name mismatches;
+ * its size is not a count of all mortar-grindable materials in the original (ALIGN-010).
  */
 public final class MortarGrindingRecipes {
     /** One registered grinding route, for tests and reports. */
@@ -44,7 +45,7 @@ public final class MortarGrindingRecipes {
     private static final List<String> SKIPPED = List.of(
             "six external-form rows (:84-89) bind actual items through ExternalOreProcessing after tags");
 
-    /** Rows gated only on {@code MORTAR}. */
+    /** Currently gated on MORTAR; the original rockGt row is exempt (ALIGN-013). */
     private static final List<String> PLAIN_ROWS = List.of(
             "rockGt", "crushedPurified", "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny",
             "scrapGt", "billet", "chunkGt", "nugget", "plateTiny", "plateGemTiny", "round", "screw", "bolt",
