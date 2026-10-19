@@ -1,0 +1,259 @@
+{
+  "baseline": "c1e513f77",
+  "date": "2026-10-19",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_author": "GregTech-6 Team / Gregorius Techneticies; LGPL-3.0-or-later source headers retained",
+  "original_sources": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/tileentity/connectors/MultiTileEntityPipeItem.java": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b",
+    "gregapi/tileentity/connectors/ITileEntityItemPipe.java": "ec9f812e370e16e9bb08cf05f7d5fc2910d595cdf81bfa72e4a468ad1eac6667",
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/ItemPipeSpec.java": "0e9c94a305cd1ad1d2518b43b1d8436323d19f7aec730d23e6fc3f176c06efc5",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItemPipes.java": "1e22814f3af129d12e34795b2c26332275aecc5543e251798e0414ece4a80f81",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": "8850e61e34728043aa2f7142d0ee3e959dd864763d79cfbffee0d6cc538a270d",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeCatalog.java": "95ade2780d60d1a0713d2813fc4e318ad6976e8495e15078563ba406fe4c8747",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/WeightedItemPipeRoutes.java": "6bcea8ae6e7071f5c97a02bf7f9bbcdff9f8e6b9383775c7ad701093c9176326",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeTransfer.java": "a93c9ad572516b56aab428d4c4a00bdb6881fab760ee68b57b2951618ccb25be",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/ItemTransferAmounts.java": "968d4fb10864dd5af2b5cce4ea1efe93a90fbb545c955c24a4d8b36df6a781dc",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeDefinitions.java": "c86b7a849c9b2b6a15f0f4d4b707401bf27bbb75f5a5db5a5180326bb5de9f15",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeTransferAdapter.java": "f6384e9bda68b7fbdd8ff772f9dedc63f80dcfed78e249d64f0cde31ad335f64",
+    "core/src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java": "c1f139d059358bf8420243e930500707ab1a1300a7957b6c4424e1a1ea4aeeca",
+    "tools/integration/audit-probes/ItemPipeAudit.java": "9675b477ba1f9e17bcc9410823c25520572e965b72c44c8888c72634f4d6ef7d",
+    "tools/integration/check_relay_sharing.py": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+    "tools/integration/test_source_projection.py": "7e6ea45ded531a80dff20279cf63116c2c09c4d468ca1b8b61d8220df786e348"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/ItemPipeSpec.java": {
+      "platforms": [
+        "core"
+      ],
+      "code_and_literals_equal": true,
+      "parameter_renames": {}
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItemPipes.java": {
+      "platforms": [
+        "forge",
+        "neoforge"
+      ],
+      "code_and_literals_equal": true,
+      "parameter_renames": {
+        "routing": "blocking",
+        "step": "stepSize",
+        "inv": "inventorySize"
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": {
+      "platforms": [
+        "forge",
+        "neoforge"
+      ],
+      "code_and_literals_equal": true,
+      "parameter_renames": {}
+    }
+  },
+  "original_families": [
+    {
+      "line": 1823,
+      "symbol": "Brass",
+      "material": "Brass",
+      "step": 32768,
+      "slots": 1,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1824,
+      "symbol": "Constantan",
+      "material": "Constantan",
+      "step": 32768,
+      "slots": 1,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1825,
+      "symbol": "CobaltBrass",
+      "material": "CobaltBrass",
+      "step": 32768,
+      "slots": 1,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1826,
+      "symbol": "Ge",
+      "material": "Germanium",
+      "step": 32768,
+      "slots": 1,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1827,
+      "symbol": "ArsenicCopper",
+      "material": "ArsenicCopper",
+      "step": 16384,
+      "slots": 1,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1828,
+      "symbol": "ArsenicBronze",
+      "material": "ArsenicBronze",
+      "step": 32768,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1829,
+      "symbol": "Electrum",
+      "material": "Electrum",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1830,
+      "symbol": "SterlingSilver",
+      "material": "SterlingSilver",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1831,
+      "symbol": "RoseGold",
+      "material": "RoseGold",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1832,
+      "symbol": "Angmallen",
+      "material": "Angmallen",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1833,
+      "symbol": "BlackBronze",
+      "material": "BlackBronze",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1834,
+      "symbol": "AluminiumBrass",
+      "material": "AluminiumBrass",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1835,
+      "symbol": "Manyullyn",
+      "material": "Manyullyn",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1836,
+      "symbol": "Magnalium",
+      "material": "Magnalium",
+      "step": 16384,
+      "slots": 2,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1837,
+      "symbol": "Pt",
+      "material": "Platinum",
+      "step": 8192,
+      "slots": 4,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1838,
+      "symbol": "Os",
+      "material": "OsmiumElemental",
+      "step": 4096,
+      "slots": 8,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1839,
+      "symbol": "Enderium",
+      "material": "Enderium",
+      "step": 2048,
+      "slots": 16,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1840,
+      "symbol": "Ultimet",
+      "material": "Ultimet",
+      "step": 2048,
+      "slots": 16,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1841,
+      "symbol": "ElvenElementium",
+      "material": "ElvenElementium",
+      "step": 2048,
+      "slots": 16,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1842,
+      "symbol": "Osmiridium",
+      "material": "Osmiridium",
+      "step": 1024,
+      "slots": 32,
+      "recipe": true,
+      "blocking": true
+    },
+    {
+      "line": 1843,
+      "symbol": "VibraniumSilver",
+      "material": "VibraniumSilver",
+      "step": 64,
+      "slots": 512,
+      "recipe": true,
+      "blocking": true
+    }
+  ],
+  "core_variant_rows": 126,
+  "core_routing_delivery_assertions": 14,
+  "projection_regressions": 2,
+  "existing_relay_equivalence_baseline": "c07466737",
+  "validation": "Java 17 compiled five core production classes, current CoreBehaviorContracts, and probe; invoked only itemPipeRoutingAndDelivery.",
+  "limitations": [
+    "Other core/API/test dependencies use cached class output.",
+    "Material aliases use current legacy facade, not full original property reconstruction.",
+    "Native inventory, side permissions, timing and throughput findings are source-derived; no native compilation or world simulation.",
+    "No Gradle build, game, save restart, package or push."
+  ]
+}

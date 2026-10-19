@@ -36,57 +36,18 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 /**
- * GT6 item pipe block entity. Routes items through a pipe network with step-size based priority.
+ * Native item inventory, weighted routing adapter and lazily allocated cover host.
+ * Routing currently forwards through neighbour inventories every four world ticks;
+ * it is not GT6's direct source-to-exit transfer through the scanned network.
  *
- * <h2>Covers: an item pipe is a cover host, the way GT6's own pipe is</h2>
+ * <p>Face handlers apply insertion/extraction cover rules. An item filter cannot
+ * be attached facing another item pipe: attachCover disconnects that face and
+ * refuses placement. Covers are allocated on demand and tick before routing.
  *
- * <p>GT6 attaches covers to <em>tiles</em>, and both item-side utility covers are pipe covers: the
- * item filter, whose {@code interceptItemInsert}/{@code interceptItemExtract} are asked from the
- * host's own item handling ({@code CoverFilterItem:115-127}), and the item retriever, whose
- * {@code interceptCoverPlacement} refuses any host that is not a tickable item pipe
- * ({@code CoverRetrieverItem:50}). This class is therefore a {@link PanelCoverHost} exactly the way
- * {@link FluidPipeBlockEntity} became one in §111, and with the same three properties:</p>
- *
- * <ul>
- *   <li><b>No {@code MachineControl}.</b> {@code coverControl} is not overridden, so
- *       {@link PanelCoverHost#coverPossible} and {@link PanelCoverHost#coverSupportsPossible} keep
- *       their interface defaults ({@code false}; {@code PanelCoverHost:16-17}) and
- *       {@code MachineControl.find} answers {@code null} for a block entity that is not a
- *       {@code Provider} ({@code MachineControl:25-27}). A control panel is therefore refused at
- *       attach by {@code PanelCoverRuntime.canAttach:33-41} — no control means no selector
- *       ({@code :36}), no progress panel ({@code :37}), no status panel ({@code :38}) and, with no
- *       energy buffer either, no energy display ({@code :39}) — which is the same outcome a fluid
- *       pipe has and needs no special case here. What still works is what only <em>emits</em>: the
- *       redstone emitter, the conductor pair, the cover controller and the shutter, because
- *       {@code afterTick} reads the face's own redstone input and needs no control. Neither item-side
- *       cover consults one either: the filter reads its own stack ({@code CoverFilterItem:118-119})
- *       and the retriever reads the world ({@code CoverRetrieverItem:69-72}).</li>
- *   <li><b>The retriever's host test is satisfied by construction.</b>
- *       {@code CoverRetrieverItem:50} refuses a host that is not {@code canTick()} and an
- *       {@code ITileEntityItemPipe}; this <em>is</em> the item pipe and it ticks
- *       ({@link ItemPipeBlock#getTicker}), so there is no predicate to write — unlike the fluid
- *       pipe, where the pressure valve's one-tank rule had to be carried into {@code attachCover}.
- *       The same class's {@code pipeCapacityCheck()} gate ({@code :61}) is the receiver side of
- *       {@code ST.move} and stays where GT6 puts it: {@code CoverUtilityBehaviors.tickRetriever}
- *       simulates the insert into the target before extracting ({@code :301-303}).</li>
- *   <li><b>Lazily allocated cover state.</b> See the field comments below: a world holds thousands of
- *       item pipes and {@link #tickServer} runs for every one of them, so a coverless pipe pays one
- *       boolean read per tick and allocates nothing.</li>
- * </ul>
- *
- * <h2>Deliberate deviations from GT6's item-filter placement rule</h2>
- *
- * <p>{@code CoverFilterItem:135-137} refuses to place the item filter when the host is an item pipe
- * <em>and</em> the neighbour across the cover's face is another item pipe, and
- * {@code CoverFilterItem:129-133} additionally disconnects the two pipes ({@code interceptConnect}).
- * Neither is mirrored, for a reason that is the whole point of requirement §112.4: this port makes a
- * face filter gate the pipe-to-pipe traffic of the very face it sits on (GT6 asks
- * {@code interceptItemInsert} per face, so a filter facing a pipe would only ever be asked on a path
- * GT6 does not have — its pipes hand items to the neighbour's inventory, not to the neighbour's
- * filter). Refusing placement there would make the sender-side half of the rule unreachable and would
- * silently fail an attach on a pipe that is connected to another pipe. The retriever has no such rule
- * — it declares no {@code interceptConnect} and no {@code interceptCoverPlacement} beyond the host
- * test above — so its own face stays wholly its own.</p>
+ * <p>The host does not expose MachineControl or ProgressSensorSource. In particular,
+ * a transferred-item counter alone does not implement GT6's progress interface.
+ * Inventory capacity, throughput and side-permission differences are tracked in
+ * docs/integration/ITEM_PIPE_AUDIT.md; comments here describe the current code.
  */
 public class ItemPipeBlockEntity extends BlockEntity
         implements IItemHandler, ITileEntityAdjacentInventoryUpdatable, PanelCoverHost {

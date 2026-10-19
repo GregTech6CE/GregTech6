@@ -21,8 +21,15 @@ SOURCE = 'multiversion/src/main/java/com/gregtech/gregtech/blockentity/Capabilit
 def project(source, platform):
     # clean_java expects generated Java. Maintained Forge-active source still wraps
     # NeoForge branches in block comments, so expose those specific bodies first.
+    # Stonecutter escapes nested block comments as /^* ... ^/. Restore them within
+    # the exposed body before Java tokenization (an apostrophe in a masked comment
+    # would otherwise be mistaken for a character literal and hide directives).
+    def expose(match):
+        body = re.sub(r'/\^\*([\s\S]*?)\^/', r'/*\1*/', match[2])
+        return match[1] + body
+
     exposed = re.sub(r'(//\? if >=1\.21\.1 \{\s*)/\*([\s\S]*?)\*/(?=//\?})',
-                     r'\1\2', source)
+                     expose, source)
     return clean_java(exposed, platform)
 
 

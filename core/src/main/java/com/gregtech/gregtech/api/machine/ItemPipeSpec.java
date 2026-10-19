@@ -42,7 +42,7 @@ public record ItemPipeSpec(
             };
         }
 
-        /** Step size for this variant relative to base. Restrictive pipes are 25-100x slower. */
+        /** Routing cost, not travel time: restrictive variants multiply their same-size cost by 100. */
         public long stepSize(long baseStepSize) {
             return switch (this) {
                 case MEDIUM -> baseStepSize;

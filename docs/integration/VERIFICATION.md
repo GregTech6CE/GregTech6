@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 物品管道定向核查与条件源码解析
+
+Java 17 定向编译五个 core 生产类、当前 CoreBehaviorContracts 和观察入口，仅执行 itemPipeRoutingAndDelivery 的 14 条既有合同；126 目录规格对应原版 21 组注册参数。三份生产代码两版投影、参数改名归一后代码／字面量等价。投影工具发现并修复掩码嵌套注释中的撇号误解析，两条定向回归通过；原管道转发去重核查仍通过。未原生编译、游戏、重启、构建或推送，见 [回执](verification/item-pipe-audit-20261019.json)。
+
 ## 2026-10-19 / 导线与电缆目录及算术
 
 Java 17 定向编译三个 core 类和观察入口，检查 620 个变种与九条算术观察；30 组原版参数由 Loader_MultiTileEntities 和 CS.V 展开对应。五份 Java 相对 861f803d9 代码／字面量等价（EnergyNet 仅额外删未用私有 DUMMY_PROPS），共享两份代码分别展开 Forge／Neo 分支核对。直径／堆叠是独立抄录原版显式表进行比对，未编译原版。无原生编译、游戏、重启、构建或推送，见 [回执](verification/wire-audit-20261019.json)。

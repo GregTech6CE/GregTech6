@@ -99,8 +99,12 @@
 | ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
-| ALIGN-077 | 确认导线未接入进度计的电流读取合同。 | 原版 ITileEntityProgress 返回累计安培数及额定安培上限。 | 当前导线缺少 ProgressSensorSource／MachineControl.Provider；已有功率计读取不能替代，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
+| ALIGN-077 | 确认导线和物品管道未接入原版进度计合同。 | 原版导线返回累计安培／上限，物品管道返回成功传输次数／容量各乘 64。 | 当前两者缺少 ProgressSensorSource／MachineControl.Provider；已有功率计读取不能替代，见 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
+| ALIGN-079 | 确认物品管道库存槽数被当作单槽容量。 | 原版 NBT_INV_SIZE 创建多槽库存，每槽正常上限 64。 | 当前固定一个槽、槽上限 spec.invSize，涉及缓存种类及存档结构，见 [报告](ITEM_PIPE_AUDIT.md)。 |
+| ALIGN-080 | 确认物品管道吞吐限流缺失且计数单位不同。 | 原版每次成功搬运计一堆，扫描／发送检查每秒容量。 | 当前按物品数累加，仅保存和显示，无容量准入，见 [报告](ITEM_PIPE_AUDIT.md)。 |
+| ALIGN-081 | 确认物品管道改成逐段缓存转交。 | 原版每十 tick 扫描后从源库存直接交付出口。 | 当前每四 tick 向 firstHop 库存转交，堵塞／时序不同，见 [报告](ITEM_PIPE_AUDIT.md)。 |
+| ALIGN-082 | 确认物品管道侧面能力未检查连接及既有入口锁定。 | 原版 connected、固定接收面、空槽准入；外部抽取也要求连接。 | 当前侧面包装只查禁入／禁出，插入成功覆盖入口；内部路由检查不能代替，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 
 上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，能源目录和弱燃料参数也有 core 枚举，其余结论依赖具体调用链核查，没有启动游戏。锅炉及液体／气体燃烧室的完整来源、相同部分和边界见 [专题核查](BOILER_BURNING_BOX_AUDIT.md)。
 
@@ -169,6 +173,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第二十四批核查物品管道 21 组／126 规格目录与实际库存、路由、能力入口，新增 ALIGN-079–082；进度接口缺口扩展 ALIGN-077。纠正过时过滤器说明、展开 Neo 注册并修复源码投影对嵌套注释的处理。继续库存特例、交互、通知和其余系统，见 [报告](ITEM_PIPE_AUDIT.md)。
 
 第二十三批对照普通导线 30 组／620 个变种目录和正常输电源链，新增电流进度接口、泡沫包覆 ALIGN-077–078。整理压行代码并纠正辅助连接索引职责；复杂环路、首 tick、区块／兼容边界和物流仍待继续，见 [报告](ELECTRIC_WIRE_AUDIT.md)。
 
