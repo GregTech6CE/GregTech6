@@ -66,7 +66,7 @@ def refresh_manifest():
     texture_sets = {}
     for file in MATERIALS.glob("*.java"):
         for line in file.read_text(encoding="utf-8").splitlines():
-            match = re.search(r'public static final GTMaterial (\w+) = .*?\.setTextureSet\(MaterialTextureSet\.(\w+)\)', line)
+            match = re.search(r'public static final GTMaterial (\w+)\s*=\s*.*?\.setTextureSet\(MaterialTextureSet\.(\w+)\)', line)
             if match:
                 texture_sets[match[1]] = match[2].lower()
 

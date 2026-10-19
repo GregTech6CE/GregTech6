@@ -21,14 +21,15 @@ if __name__ == "__main__": require_managed_writer()
 import pathlib
 import re
 import sys
+from format_definition_tables import align_java_tables
 
 import transpile_gt6_materials as source
 
 HOLDER = native_path(pathlib.Path("src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java"))
-ROW = re.compile(r'^(    public static final GTMaterial \w+ = )(.*?);$', re.M)
+ROW = re.compile(r'^(    public static final GTMaterial \w+\s*=\s*)(.*?);$', re.M)
 CALL = re.compile(r'^(metal|element|dust|gas)\((\d+),')
-ATOMS = re.compile(r'^(?:metal|element)\(\d+, "[^"]+", "[^"]+", (\d+), (\d+), ')
-DUST = re.compile(r'^dust\((\d+), "([^"]+)", (0x[0-9A-Fa-f]+)\)')
+ATOMS = re.compile(r'^(?:metal|element)\(\d+,\s*"[^"]+",\s*"[^"]+",\s*(\d+),\s*(\d+),\s*')
+DUST = re.compile(r'^dust\((\d+),\s*"([^"]+)",\s*(0x[0-9A-Fa-f]+)\)')
 
 
 def main() -> int:
@@ -87,7 +88,7 @@ def main() -> int:
     for change in fixes:
         print("  " + change)
     if "--write" in sys.argv:
-        HOLDER.write_text(fixed, encoding="utf-8")
+        HOLDER.write_text(align_java_tables(fixed), encoding="utf-8")
     return 0 if "--write" in sys.argv or not fixes else 1
 
 

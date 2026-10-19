@@ -17,6 +17,7 @@ import argparse, hashlib, json, re, sys
 REPO=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(REPO/'tools/integration'))
 from generate_machine_material_data import masked, norm, calls, recipe, amount, java_material, U, split_top_level
+from format_definition_tables import align_java_tables
 
 FAMILIES={0:'chest_',500:'reinforced_wood_chest_',2000:'safe_',3000:'key_safe_',
           4000:'drawer_quad_',7300:'locker_',6000:'mass_storage_',8600:'bottle_crate_',
@@ -169,7 +170,7 @@ public final class OriginalStorageMaterialData {
              source_files=[dict(path=str(ns.source/p),sha256=hashlib.sha256((ns.source/p).read_bytes()).hexdigest()) for p in relatives],
              authors=['GregTech-6 Team','Gregorius Techneticies'],license='LGPL-3.0-or-later',
              boundaries='Thirteen native metalset families, including normal lockers; exact original known REV units, cables with insulation and recursive logistics cover/processor data. Unknown workbench/circuit/leather automatic data stays absent. Charging lockers and unrelated legacy IDs excluded; native paths/source IDs and materials verified by shared source contracts.')
- ns.out.parent.mkdir(parents=True,exist_ok=True);ns.out.write_text(''.join(java),encoding='utf-8')
+ ns.out.parent.mkdir(parents=True,exist_ok=True);ns.out.write_text(align_java_tables(''.join(java)),encoding='utf-8')
  ns.audit.parent.mkdir(parents=True,exist_ok=True);ns.audit.write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  print(json.dumps(dict(identities=identities,families=len(FAMILIES),metalsets=len(rows),units={k:v['material_units'] for k,v in family_rows.items()})))
 if __name__=='__main__':main()

@@ -12,6 +12,7 @@ from native_layout import native_path
 
 from pathlib import Path
 import re
+from format_definition_tables import align_java_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 JAVA = native_path(ROOT / 'src/main/java/com/gregtech/gregtech')
@@ -67,7 +68,7 @@ def write_catalog(source, java_root=JAVA, save_intermediate=True):
         lines.extend(['}', ''])
         dest = java_root / f'content/material/generated/{cls}.java'
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text('\n'.join(lines), encoding='utf-8')
+        dest.write_text(align_java_tables('\n'.join(lines)), encoding='utf-8')
         facade += f'    public static final class {group} {{\n        private {group}() {{}}\n'
         for old, readable, _ in rows:
             facade += f'        public static final GTMaterial {old} = {package}.{cls}.{readable};\n'
@@ -78,7 +79,7 @@ def write_catalog(source, java_root=JAVA, save_intermediate=True):
     facade = facade.replace('/** Auto-transpiled from GregTech 6 {@code gregapi.data.MT}. Do not edit by hand. */',
                             '/** Legacy GT6 symbol facade. New content uses content.material.generated catalogues. */')
     dest = java_root / 'data/generated/GT6Materials.java'
-    dest.write_text(facade, encoding='utf-8')
+    dest.write_text(align_java_tables(facade), encoding='utf-8')
     write_readable_references(groups, java_root)
     return groups
 
@@ -117,4 +118,4 @@ public final class Materials {
 '''
     source += ''.join(f'    public static final GTMaterial {field} = {target};\n' for field, target in sorted(names.items()))
     source += '}\n'
-    (java_root / 'content/material/Materials.java').write_text(source, encoding='utf-8')
+    (java_root / 'content/material/Materials.java').write_text(align_java_tables(source), encoding='utf-8')

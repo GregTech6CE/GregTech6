@@ -12,7 +12,7 @@ import java.util.Map;
 public final class SandwichLayerCatalog {
     public record Layer(int id,String texture,int footprint,int thickness,int tint){}
 
-    private static final Layer[] LAYERS = new Layer[256];
+    private static final Layer[] LAYERS             = new Layer[256];
     private static final Map<String, Integer> ITEMS = new HashMap<>();
 
     private SandwichLayerCatalog() {}
@@ -89,18 +89,18 @@ public final class SandwichLayerCatalog {
         ITEMS.put("minecraft:cooked_cod", 25);
         ITEMS.put("minecraft:salmon", 24);
         ITEMS.put("minecraft:cooked_salmon", 25);
-        register("gt6ce:mayo", 15);
-        register("gt6ce:dressing", 15);
+        register("gt6ce:mayo",           15);
+        register("gt6ce:dressing",       15);
         register("gt6ce:tomato_ketchup", 1);
-        register("gt6ce:butter", 11);
-        register("gt6ce:salted_butter", 11);
-        register("gt6ce:chili_sauce", 1);
-        register("gt6ce:hot_sauce", 1);
+        register("gt6ce:butter",         11);
+        register("gt6ce:salted_butter",  11);
+        register("gt6ce:chili_sauce",    1);
+        register("gt6ce:hot_sauce",      1);
         register("gt6ce:barbecue_sauce", 3);
-        register("gt6ce:olive_oil", 2);
-        register("gt6ce:egg_yolk", 211);
-        register("gt6ce:egg_white", 215);
-        register("gt6ce:scrambled_egg", 211);
+        register("gt6ce:olive_oil",      2);
+        register("gt6ce:egg_yolk",       211);
+        register("gt6ce:egg_white",      215);
+        register("gt6ce:scrambled_egg",  211);
         // Source rows override historical guessed aliases, including sauce and pill colors.
         for (var row : SandwichSourceIngredients.ROWS) register(row.item(), row.layer());
         for (var can : CannedFoodCatalog.ROWS) if (can.layer() > 0) register("gt6ce:" + can.id(), can.layer());

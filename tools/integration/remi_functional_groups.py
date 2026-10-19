@@ -88,7 +88,7 @@ def catalog(root):
         if can:
             groups[can[1] + "_food_can"].append(item)
     rods = (java / "content/nuclear/ReactorRodCatalog.java").read_text(encoding="utf-8")
-    for item, kind in re.findall(r'new Rod\(\d+,"([^"]+)","[^"]*","[^"]*",Kind\.(\w+)', rods):
+    for item, kind in re.findall(r'new Rod\(\d+,\s*"([^"]+)",\s*"[^"]*",\s*"[^"]*",\s*Kind\.(\w+)', rods):
         if item in ids:
             groups["reactor_rod_" + kind.lower()].append(item)
     tech = (java / "content/recipe/TechnologicalItemDefinitions.java").read_text(encoding="utf-8")

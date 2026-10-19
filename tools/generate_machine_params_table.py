@@ -21,6 +21,7 @@ import argparse
 from pathlib import Path
 
 import gt6_machine_map as mapping
+from format_definition_tables import align_java_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = mapping.JAVA / "data/BasicMachineOriginalParams.java"
@@ -119,7 +120,7 @@ public final class BasicMachineOriginalParams {
     private BasicMachineOriginalParams() {}
 }
 '''
-    args.out.write_text(header + ",\n".join(rows) + "\n" + footer, encoding="utf-8", newline="\n")
+    args.out.write_text(align_java_tables(header + ",\n".join(rows) + "\n" + footer), encoding="utf-8", newline="\n")
     print("wrote %s (%d entries)" % (args.out, len(rows)))
     if missing:
         print("WARNING no original registration for:")

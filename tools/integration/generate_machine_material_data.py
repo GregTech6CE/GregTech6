@@ -26,6 +26,7 @@ import sys
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / 'tools'))
 from extract_basic_machine_recipes import match_paren, split_top_level, machine_key
+from format_definition_tables import align_java_tables
 
 U = 648_648_000
 
@@ -302,7 +303,7 @@ def main():
         indexed.setdefault(row['machine'], {})[int(tier[1]) if tier else 1] = row
     params = (REPO / 'core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java').read_text(encoding='utf-8')
     output = []
-    for match in re.finditer(r'new Params\("([^"]+)", (\d+), "([^"]+)"', params):
+    for match in re.finditer(r'new Params\("([^"]+)",\s*(\d+),\s*"([^"]+)"', params):
         name, tier, original = match[1], int(match[2]), match[3]
         options = indexed.get(original, {})
         row = options.get(tier) or (next(iter(options.values())) if len(options) == 1 else None)
@@ -467,7 +468,7 @@ public final class OriginalMachineMaterialData {
         java.append('    }\n')
     java.append('}\n')
     ns.out.parent.mkdir(parents=True, exist_ok=True)
-    ns.out.write_text(''.join(java), encoding='utf-8')
+    ns.out.write_text(align_java_tables(''.join(java)), encoding='utf-8')
     if ns.smeltery_out:
         quality_aliases = {m[1]: norm(m[2]) for m in re.finditer(r'^\s*(\w+)\s*\.[^\n]*?\.steal\(([^)]*)\)', any_source, re.M)}
         def hull_material(value):
@@ -513,7 +514,7 @@ public final class OriginalSmelteryDefinitions {
 }
 ''')
         ns.smeltery_out.parent.mkdir(parents=True,exist_ok=True)
-        ns.smeltery_out.write_text(''.join(smeltery),encoding='utf-8')
+        ns.smeltery_out.write_text(align_java_tables(''.join(smeltery)),encoding='utf-8')
     audit = {'source_root': str(ns.source), 'license': 'LGPL-3.0-or-later', 'authors': ['GregTech-6 Team', 'Gregorius Techneticies'],
              'source_files': [{'path': str(root / name), 'sha256': hashlib.sha256((root / name).read_bytes()).hexdigest()} for name in relative],
              'rows': output, 'block_rows': block_rows, 'source_without_known_data': empty_rows,

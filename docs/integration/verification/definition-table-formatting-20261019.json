@@ -1,0 +1,250 @@
+{
+  "baseline": "ebc081fe6",
+  "scope": "Shared core definition table whitespace only",
+  "files": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/OriginalSmelteryDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "bc253618f79ab7f973e6508100cbb27a9a7db778becc89195f26740fb31f195c"
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/material/VanillaUnificationDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "ce8628e93540b74e1d6d1d713d124ad5f7c77a2b9ca033c903c89e873fa7aad9"
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/sensor/SensorCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "a4f43242d699a34ce417e8eb98e9f5e6d54a39f62f2f8ca89dd5ac63bc665afc"
+    },
+    "core/src/main/java/com/gregtech/gregtech/block/BlackSandDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "71311f5a9961efacf74051cb4b6049363f0b8c23b6007198e7a00fd3863167c3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/block/SpecialOreDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "7a4a680529f3e8fceecddca18eaea43024d1c15ee35de0f74ed42bb5323b95ad"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/AxleCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "3ce315c55dc958b78ed74bc38eacf37591ba4664bddcdd8defcd666924b7a1b1"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "f53b97291a0767b2a7dccfcde89f7c95708a42556c0eee1160569721d3bc20b8"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "e415af314e30d54a0a5fb55404f53cd4fcf6845c62520e5772881c4eda00ee2f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "9d4563bcbb5dd5ba0bc54881032724c28430f97d9b139138204c4765f5194638"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/EngineCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "38cd5126a7d6354ec518a9b84825e5015a83214a08fbc4840e7e44679d153f28"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "9c290c674d071bae778965dae13db3cc1cc70bde334ea38ea00a8238a3c7b354"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "94895981c92304174ee4fd4f9ffe07e3af8c38616fc4b327bc68476282b2edf4"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/PumpCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "416e98a9480c1ccd9b3cea1f7b4450f03248ab0f0aba131635c04d09e9a912ee"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WireCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "4ed83e575672b1748a5e6b828cb501a51c973b12801528191cf14039700c3eaf"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/CannedFoodCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "b16c2fbfa1f4698240bd3c896146653cbc332ad322db9af2d8f131d27c06c594"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/food/SandwichLayerCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "68d7d88ff38e6e6e2ec0c9d684d4c1850061c78a85fe3b8ba93355cec3297621"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalFunctionalTooltipData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "ac578cd94f7b32d88283b16ce76c112ff423359aaef6dc357d819eeb4eaa41f1"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalMachineMaterialData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "7f8c0635ba537a47e09f55f0a7a9d3375a177ac16b6f7d72e9e2637e542cc313"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalStorageMaterialData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "b3cfc5cb035f32ae563b21318e26aeb46566e679c6b2a683d68cfe2008027d07"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/Materials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "d73635bac396ecc1a4ba5ee2253de90b6733c048d02d0f0fc51fa9bf41afacdf"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "b4a9a493457e5f7f75a8d5f88699a96c1f3e8ca84d7ef2e70c15377b42ca208f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/OreMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "c779342be258f4523ca2320d83a62195d61e04c44153211de446a90c7fffbd89"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/StoneMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "cc86196560bc2366cb749b9a2e478bbd22b60848a5d345e3bb604b1c5d43d5c3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "8c20e80ff77eecbe54af3a3102bcf5973ea58d82177f77bd2cc3d39a027a4521"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "186f4b144bf5a0d2a9812e585524b55754a02a56216291176e43e09db0fbadf5"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalUtilityControllerData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "53537f0889df1954e1a7609eca7a65944742d1c7c815e8c2ede4b569259f8f6b"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/plant/BerryBushCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "41cb7f436e25968f18174210fc8583cbd0d588268e38218115f10aa5edde7ba4"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/ClayMoldCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "7ae7a89e781edc9e74d4b1ae1411667a0fe4e80f064e62ef0e3936e248c0dd12"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/ClayUtilityCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "8d910bc1a1c0c1468633c5aa948924710e2f636c95d8bd830b9a296b8de230ad"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/CropProcessingCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "a0d78ea7280e1c914a6de30cc3200356c2046708c75e2cc08eb29e998b3b0570"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/MatterConversionCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "5cb7209929ddebc5c1d7b48732805d901bd2561bbbb5f7323b840412670d8a3f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalSingleItemCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "2a24656a90b114965f5c8d23b13d8c267bf3695d943d35310e26931138d2e22b"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/TechnologicalItemDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "ed15884a595a7f809dacc7232ceba5732f4b26449e9d4bf3184a8e93c1938a0f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/storage/OriginalStorageTooltipData.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "95776c2e114beef85ab9eb7ca1f48bc6cec97e70cdc6aec3733219891d32bb15"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ElectricToolCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "7874e423f6c2d36816627c116c4ee1cda40328f703c2020e5676d697598dbf22"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ManualToolRecipeCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "dfb85e795b327178fc79cd08f7072eb4932e95a5e5dc1a31595308592131fb2f"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "f4d8bd3724cb316287746b93af70f212e500a8cef6725a53a8e62edf18eeb8a7"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/CheapWoodBarrelCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "dcf7cc73ef7f2c4ff286fa44b42fd38c372bd15c5506a2ab910603cfe7c9b7e3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "6539aec834e43df12f7905460f51282383dfcdc4ec69c34e26c579c166b7b0d3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "37584c85f2dcd9fe09d1ee697553a7aaf6f8376e1f3f590e11c08cca5361b8f0"
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb"
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "107ffcf13019a3cc7a1bc7ea40776b7d528446121787b3b7e465fb8f6fa369d6"
+    },
+    "core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "0ef835c2b7fa1b57f0b0f7a1c5090df0bacc843bb1ad92006b7ca63d726eb5a3"
+    },
+    "core/src/main/java/com/gregtech/gregtech/worldgen/NetherScatterCatalog.java": {
+      "code_literals_and_comments_unchanged": true,
+      "formatting_idempotent": true,
+      "sha256": "12f7b69e0f5e17e394b1726f344102fef1aa0dfd2e3972b2a8da54b7bff7b85b"
+    }
+  },
+  "reader_pattern_file_pairs": 190,
+  "verification": "Source content/literals/comments, idempotence and reader pattern counts; no game or build",
+  "material_generator": {
+    "outputs": 7,
+    "baseline_output_plus_format_equals_current": true,
+    "existing_test_failure": "expected 1056 material rows, intermediate contains 1058",
+    "existing_data_drift": [
+      "GT6Materials.java",
+      "ElementMaterials.java",
+      "CompoundMaterials.java",
+      "WoodMaterials.java"
+    ],
+    "production_data_regenerated": false
+  }
+}

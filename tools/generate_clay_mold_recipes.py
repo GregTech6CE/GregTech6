@@ -7,6 +7,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from format_definition_tables import align_java_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java'
@@ -22,6 +23,8 @@ ROWS = {}
 FORMS = {}
 
 def write(path, text):
+    if path.suffix == '.java':
+        text = align_java_tables(text)
     path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists() or path.read_text(encoding='utf-8') != text:
         path.write_text(text, encoding='utf-8')
@@ -119,7 +122,7 @@ owner = ''
 for line in (ROOT / 'core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java').read_text(encoding='utf-8').splitlines():
     m = re.search(r'public static final class (\w+)', line)
     if m: owner = m[1]
-    m = re.search(r'public static final GTMaterial (\w+) =', line)
+    m = re.search(r'public static final GTMaterial (\w+)\s*=', line)
     if m: refs[m[1]] = 'GT6Materials.' + owner + '.' + m[1]
 factory_members = {}
 for family, factories in [('STONE', ['stone', 'stonedcmp', 'stonecent', 'stoneelec']), ('WAX', ['wax'])]:

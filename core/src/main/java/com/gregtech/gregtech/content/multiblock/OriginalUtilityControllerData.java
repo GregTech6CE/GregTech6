@@ -9,10 +9,10 @@ import java.util.stream.IntStream;
 /** Source defaults for specialized utility controllers. */
 public final class OriginalUtilityControllerData {
     private OriginalUtilityControllerData() {}
-    public static final int HEAT_SOURCE_ID=17197, LIGHTNING_SOURCE_ID=17998;
-    public static final String HEAT_PATH="heat_exchanger_main", LIGHTNING_PATH="lightning_rod_electric_output";
-    public static final String HEAT_FUEL_KEY="gt.recipe.fuels.hot";
-    public static final int HEAT_RATE=OriginalGeneratorParameters.HEAT_EXCHANGER_RATE, HEAT_EFFICIENCY=10000;
+    public static final int HEAT_SOURCE_ID   = 17197, LIGHTNING_SOURCE_ID=17998;
+    public static final String HEAT_PATH     = "heat_exchanger_main", LIGHTNING_PATH="lightning_rod_electric_output";
+    public static final String HEAT_FUEL_KEY = "gt.recipe.fuels.hot";
+    public static final int HEAT_RATE        = OriginalGeneratorParameters.HEAT_EXCHANGER_RATE, HEAT_EFFICIENCY=10000;
     public static final long LIGHTNING_PACKET=AdvancedControllerRules.LIGHTNING_PACKET,
             LIGHTNING_CAPACITY=AdvancedControllerRules.LIGHTNING_CAPACITY;
     public static final int LIGHTNING_AMPS=16;

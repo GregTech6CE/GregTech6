@@ -18,7 +18,7 @@ class WireSpecs(unittest.TestCase):
   expected={mat:(8*4**int(tier)*int(mul or 1),int(amp),int(wire),int(cable),contact=='T',has=='T') for tier,mul,amp,wire,cable,contact,contact_cable,has,mat in rows}
   self.assertEqual(30,len(expected))
   port=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/energy/WireDefinitions.java')).read_text(encoding='utf-8')
-  found=re.findall(r'new WireDef\("([^"\n]+)", Materials\.(\w+), (\d+)L, (\d+), (\d+), (\d+), (true|false), (true|false)\), // MT\.(\w+)',port)
+  found=re.findall(r'new WireDef\("([^"\n]+)",\s*Materials\.(\w+),\s*(\d+)L,\s*(\d+),\s*(\d+),\s*(\d+),\s*(true|false),\s*(true|false)\),\s*// MT\.(\w+)',port)
   actual={mat:(int(v),int(a),int(w),int(c),d=='true',has=='true') for suffix,material,v,a,w,c,d,has,mat in found}
   self.assertEqual(expected,actual)
   self.assertEqual(30,len({row[0] for row in found}))

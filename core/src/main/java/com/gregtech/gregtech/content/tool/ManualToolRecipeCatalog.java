@@ -102,7 +102,7 @@ public final class ManualToolRecipeCatalog {
     }
 
     private static final Map<ToolDefinition, List<Pattern>> SHAPED = new LinkedHashMap<>();
-    private static final Map<ToolDefinition, List<Pattern>> HEADS = new LinkedHashMap<>();
+    private static final Map<ToolDefinition, List<Pattern>> HEADS  = new LinkedHashMap<>();
 
     private ManualToolRecipeCatalog() {}
 

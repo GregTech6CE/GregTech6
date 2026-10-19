@@ -39,6 +39,14 @@
 
 ## 初始化和配方从哪里看
 
+### 定义表的空格与列对齐
+
+材料字段名／等号、同类工厂调用的参数、连续构造器或注册表行使用空格对齐。逗号紧跟参数，补齐空格放在逗号后；不重排条目，不改数值、字面量或注释，不为对齐修改方法签名。两版共享的 core 表只维护一次。
+
+`python tools/format_definition_tables.py` 只列出需要调整的定义文件；加 `--write` 才写入，也可传入指定 Java 文件。工具跳过无法完整解析的多行表达式和泛型参数，保留原有换行格式，写入前核对非空白内容／字符串／注释，并检查重复执行不再改变结果。它不是通用 Java 格式化器。
+
+材料拆分、机器参数、机器含材、储存含材、黏土模具及共用导入输出已经接入相同对齐函数。旧生成器仍应遵循各自的来源／工具视图要求；格式化本身不能证明重新导入的数据正确。2026-10-19 发现旧材料中间快照与当前四份材料源码已有差异，未覆盖生产数据；详见 [本次核对](verification/definition-table-formatting-20261019.json)。
+
 物质制造的 28 条特殊转换纯数据现在位于 core `content/recipe/MatterConversionCatalog.java`；共享原生 `MatterRecipeLoader` 遍历它并解析物品／流体，另展开元素分离。流体身份定义是 core `data/FluidCatalog.java`，须同时区分条目 materialKey 与 boundMaterial 旁表；原生边界 `RegisteredFluids` 继承同一目录。相关消费和数量缺口见 [物质流体核查](MATTER_FLUID_AUDIT.md)。
 
 - Forge 入口：版本目录的 `com/gregtech/gregtech/GregTech.java`。按 `content`、`machine registration`、`material linking` 职责调用初始化步骤。

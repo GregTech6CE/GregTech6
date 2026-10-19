@@ -22,48 +22,48 @@ public class FluidCatalog {
     public static final class FluidFlags {
         private FluidFlags() {}
 
-        public static final long LIQUID            = 1L <<  0;
-        public static final long GAS_FLAG          = 1L <<  1;
-        public static final long PLASMA            = 1L <<  2;
-        public static final long SIMPLE            = 1L <<  3;
-        public static final long HIDDEN            = 1L <<  4;
-        public static final long ENCHANTED_EFFECT  = 1L <<  5;
-        public static final long MAGIC             = 1L <<  6;
-        public static final long VOID_OVERFLOW     = 1L <<  7;
-        public static final long AIR               = 1L <<  8;
-        public static final long OXYGEN            = 1L <<  9;
-        public static final long LIQUID_OXYGEN     = 1L << 10;
-        public static final long STEAM             = 1L << 11;
-        public static final long POWER_CONDUCTING  = 1L << 12;
-        public static final long LUBRICANT         = 1L << 13;
-        public static final long THERMOS           = 1L << 14;
-        public static final long POTION            = 1L << 15;
-        public static final long FOOD              = 1L << 16;
-        public static final long JUICE             = 1L << 17;
-        public static final long FRUIT_JUICE       = 1L << 18;
-        public static final long CITRUS_JUICE      = 1L << 19;
-        public static final long WATER             = 1L << 20;
-        public static final long BATH              = 1L << 21;
-        public static final long HONEY             = 1L << 22;
-        public static final long MILK              = 1L << 23;
-        public static final long TEA               = 1L << 24;
-        public static final long COOKING_OIL       = 1L << 25;
-        public static final long SLIME             = 1L << 26;
-        public static final long ALCOHOLIC         = 1L << 27;
-        public static final long VINEGAR           = 1L << 28;
-        public static final long RUM               = 1L << 29;
-        public static final long WINE              = 1L << 30;
-        public static final long BEER              = 1L << 31;
-        public static final long CIDER             = 1L << 32;
-        public static final long SPIRIT            = 1L << 33;
-        public static final long BRANDY            = 1L << 34;
-        public static final long LIQUOR            = 1L << 35;
-        public static final long LIQUEUR           = 1L << 36;
-        public static final long WHISKEY           = 1L << 37;
-        public static final long DYE               = 1L << 38;
-        public static final long BROKEN            = 1L << 39;
-        public static final long INFINITE          = 1L << 40;
-        public static final long NONSTANDARD       = 1L << 41;
+        public static final long LIQUID           = 1L <<  0;
+        public static final long GAS_FLAG         = 1L <<  1;
+        public static final long PLASMA           = 1L <<  2;
+        public static final long SIMPLE           = 1L <<  3;
+        public static final long HIDDEN           = 1L <<  4;
+        public static final long ENCHANTED_EFFECT = 1L <<  5;
+        public static final long MAGIC            = 1L <<  6;
+        public static final long VOID_OVERFLOW    = 1L <<  7;
+        public static final long AIR              = 1L <<  8;
+        public static final long OXYGEN           = 1L <<  9;
+        public static final long LIQUID_OXYGEN    = 1L << 10;
+        public static final long STEAM            = 1L << 11;
+        public static final long POWER_CONDUCTING = 1L << 12;
+        public static final long LUBRICANT        = 1L << 13;
+        public static final long THERMOS          = 1L << 14;
+        public static final long POTION           = 1L << 15;
+        public static final long FOOD             = 1L << 16;
+        public static final long JUICE            = 1L << 17;
+        public static final long FRUIT_JUICE      = 1L << 18;
+        public static final long CITRUS_JUICE     = 1L << 19;
+        public static final long WATER            = 1L << 20;
+        public static final long BATH             = 1L << 21;
+        public static final long HONEY            = 1L << 22;
+        public static final long MILK             = 1L << 23;
+        public static final long TEA              = 1L << 24;
+        public static final long COOKING_OIL      = 1L << 25;
+        public static final long SLIME            = 1L << 26;
+        public static final long ALCOHOLIC        = 1L << 27;
+        public static final long VINEGAR          = 1L << 28;
+        public static final long RUM              = 1L << 29;
+        public static final long WINE             = 1L << 30;
+        public static final long BEER             = 1L << 31;
+        public static final long CIDER            = 1L << 32;
+        public static final long SPIRIT           = 1L << 33;
+        public static final long BRANDY           = 1L << 34;
+        public static final long LIQUOR           = 1L << 35;
+        public static final long LIQUEUR          = 1L << 36;
+        public static final long WHISKEY          = 1L << 37;
+        public static final long DYE              = 1L << 38;
+        public static final long BROKEN           = 1L << 39;
+        public static final long INFINITE         = 1L << 40;
+        public static final long NONSTANDARD      = 1L << 41;
     }
 
     /** How a fluid is drawn in-world (crucibles, tanks, cells). */
@@ -867,11 +867,11 @@ public class FluidCatalog {
     // Dye fluids
     // =======================================================================
 
-    public static final FluidEntry[] DYE_FLUIDS_WATER = new FluidEntry[16];
-    public static final FluidEntry[] DYE_FLUIDS_FLOWER = new FluidEntry[16];
+    public static final FluidEntry[] DYE_FLUIDS_WATER    = new FluidEntry[16];
+    public static final FluidEntry[] DYE_FLUIDS_FLOWER   = new FluidEntry[16];
     public static final FluidEntry[] DYE_FLUIDS_CHEMICAL = new FluidEntry[16];
-    public static final FluidEntry[] DYED_C_FOAMS = new FluidEntry[16];
-    public static final FluidEntry[] DYED_C_FOAMS_OWNED = new FluidEntry[16];
+    public static final FluidEntry[] DYED_C_FOAMS        = new FluidEntry[16];
+    public static final FluidEntry[] DYED_C_FOAMS_OWNED  = new FluidEntry[16];
 
     static {
         for (byte i = 0; i < 16; i++) {

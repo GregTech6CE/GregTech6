@@ -9,20 +9,20 @@ import java.util.List;
 public final class OriginalStorageTooltipData {
     private OriginalStorageTooltipData() {}
     public static final long MASS_CAPACITY = 1_000_000;
-    public static final String SLOT_COUNT = "gt.multitileentity.hopper.tooltip.1";
-    public static final String STACK_SIZE = "gt.multitileentity.hopper.tooltip.2";
-    public static final String EXACT = "gt.multitileentity.hopper.tooltip.3";
-    public static final String MASS_SIZE = "gt.multitileentity.massstorage.tooltip.1";
-    public static final String MASS_TABLE = "gt.multitileentity.massstorage.tooltip.2";
+    public static final String SLOT_COUNT  = "gt.multitileentity.hopper.tooltip.1";
+    public static final String STACK_SIZE  = "gt.multitileentity.hopper.tooltip.2";
+    public static final String EXACT       = "gt.multitileentity.hopper.tooltip.3";
+    public static final String MASS_SIZE   = "gt.multitileentity.massstorage.tooltip.1";
+    public static final String MASS_TABLE  = "gt.multitileentity.massstorage.tooltip.2";
     public static final String SCREWDRIVER = "gt.lang.use.screwdriver.to.toggle";
-    public static final String MONKEY = "gt.lang.use.monkey.wrench.to.toggle";
-    public static final String INPUTS = "gt.lang.use.monkey.wrench.to.toggle.inputs";
-    public static final String OUTPUTS = "gt.lang.use.monkey.wrench.to.toggle.auto.outputs";
-    public static final String MAGNIFIER = "gt.lang.use.magnifyingglass.to.detail";
-    public static final String RESET = "gt.lang.use.soft.hammer.to.reset";
-    public static final String TAPE = "gt.lang.use.tape";
-    public static final String UNTAPE = "gt.lang.use.untape";
-    public static final String PINCERS = "gt.lang.use.pincers.to.take";
+    public static final String MONKEY      = "gt.lang.use.monkey.wrench.to.toggle";
+    public static final String INPUTS      = "gt.lang.use.monkey.wrench.to.toggle.inputs";
+    public static final String OUTPUTS     = "gt.lang.use.monkey.wrench.to.toggle.auto.outputs";
+    public static final String MAGNIFIER   = "gt.lang.use.magnifyingglass.to.detail";
+    public static final String RESET       = "gt.lang.use.soft.hammer.to.reset";
+    public static final String TAPE        = "gt.lang.use.tape";
+    public static final String UNTAPE      = "gt.lang.use.untape";
+    public static final String PINCERS     = "gt.lang.use.pincers.to.take";
 
     public record Hopper(int slots, int stackSize, boolean showStackSize, boolean exact, List<String> tools) {}
     public static Hopper hopper(int sourceSlots, boolean queue, Integer savedMode, boolean savedExact) {

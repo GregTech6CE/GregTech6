@@ -51,32 +51,32 @@ public final class EngineCatalog {
 
     /** Electric engine tiers (EU → KU): SteelGalvanized, Al, StainlessSteel, Cr, Ti */
     private static final GTMaterial[] ELECTRIC_TIERS = {Materials.SteelGalvanized, Materials.Aluminium, Materials.StainlessSteel, Materials.Chromium, Materials.Titanium};
-    private static final long[] ELECTRIC_INPUTS   = {32, 128, 512, 2048, 8192};
-    private static final long[] ELECTRIC_OUTPUTS  = {16, 64, 256, 1024, 4096};
-    private static final int[]  ELECTRIC_TIER_NUM = {1, 2, 3, 4, 5};
+    private static final long[] ELECTRIC_INPUTS      = {32, 128, 512, 2048, 8192};
+    private static final long[] ELECTRIC_OUTPUTS     = {16, 64, 256, 1024, 4096};
+    private static final int[]  ELECTRIC_TIER_NUM    = {1, 2, 3, 4, 5};
 
     /** Flux engine tiers (RF → KU): Pb, Invar, Electrum, EnderiumBase, Enderium */
     private static final GTMaterial[] FLUX_TIERS = {Materials.Lead, Materials.Invar, Materials.Electrum, Materials.EnderiumBase, Materials.Enderium};
-    private static final long[] FLUX_INPUTS   = {128, 512, 2048, 8192, 32768};
-    private static final long[] FLUX_OUTPUTS  = {16, 64, 256, 1024, 4096};
-    private static final int[]  FLUX_TIER_NUM = {1, 2, 3, 4, 5};
+    private static final long[] FLUX_INPUTS      = {128, 512, 2048, 8192, 32768};
+    private static final long[] FLUX_OUTPUTS     = {16, 64, 256, 1024, 4096};
+    private static final int[]  FLUX_TIER_NUM    = {1, 2, 3, 4, 5};
 
     /** GT6 kinetic() 24777–24897: one RU → KU engine for each original axle material. */
     private record RotationTier(String id, GTMaterial material, int voltageTier, long input) {}
     private static final RotationTier[] ROTATION_TIERS = {
-            new RotationTier("wood", WoodMaterials.WoodTreated, 0, 8),                   // 24807
-            new RotationTier("bronze", Materials.Bronze, 1, 32),                         // 24817
-            new RotationTier("brass", Materials.Brass, 1, 32),                           // 24777
-            new RotationTier("arsenic_copper", Materials.ArsenicCopper, 1, 32),          // 24787
-            new RotationTier("arsenic_bronze", Materials.ArsenicBronze, 1, 32),          // 24797
-            new RotationTier("steel", Materials.Steel, 2, 128),                         // 24827
-            new RotationTier("titanium", Materials.Titanium, 3, 512),                    // 24837
-            new RotationTier("tungsten_steel", Materials.Tungstensteel, 4, 2048),        // 24847 (existing ID)
-            new RotationTier("iridium", Materials.Iridium, 5, 8192),                    // 24857
-            new RotationTier("iritanium", Materials.TitaniumIridium, 6, 32768),         // 24867
-            new RotationTier("trinitanium", Materials.Trinitanium, 7, 131072),          // 24877
-            new RotationTier("trinaquadalloy", Materials.Trinaquadalloy, 8, 524288),    // 24887
-            new RotationTier("adamantium", Materials.Adamantium, 9, 2097152),           // 24897
+            new RotationTier("wood",           WoodMaterials.WoodTreated, 0, 8),                   // 24807
+            new RotationTier("bronze",         Materials.Bronze,          1, 32),                         // 24817
+            new RotationTier("brass",          Materials.Brass,           1, 32),                           // 24777
+            new RotationTier("arsenic_copper", Materials.ArsenicCopper,   1, 32),          // 24787
+            new RotationTier("arsenic_bronze", Materials.ArsenicBronze,   1, 32),          // 24797
+            new RotationTier("steel",          Materials.Steel,           2, 128),                         // 24827
+            new RotationTier("titanium",       Materials.Titanium,        3, 512),                    // 24837
+            new RotationTier("tungsten_steel", Materials.Tungstensteel,   4, 2048),        // 24847 (existing ID)
+            new RotationTier("iridium",        Materials.Iridium,         5, 8192),                    // 24857
+            new RotationTier("iritanium",      Materials.TitaniumIridium, 6, 32768),         // 24867
+            new RotationTier("trinitanium",    Materials.Trinitanium,     7, 131072),          // 24877
+            new RotationTier("trinaquadalloy", Materials.Trinaquadalloy,  8, 524288),    // 24887
+            new RotationTier("adamantium",     Materials.Adamantium,      9, 2097152),           // 24897
     };
 
     // ── Diesel engine data (from original GT6 Loader_MultiTileEntities) ──────
@@ -87,7 +87,7 @@ public final class EngineCatalog {
             Materials.Invar, Materials.Titanium, Materials.Tungstensteel, Materials.Iridium
     };
     private static final long[] DIESEL_OUTPUTS = {16, 16, 24, 32, 64, 128, 256, 512};
-    private static final int[]  DIESEL_TIERS = {0, 0, 0, 1, 1, 2, 3, 4};
+    private static final int[]  DIESEL_TIERS   = {0, 0, 0, 1, 1, 2, 3, 4};
 
     // ── Steam engine data (from original GT6 Loader_MultiTileEntities) ──────
 
@@ -137,7 +137,7 @@ public final class EngineCatalog {
 
     // ── Hardness / blast resistance per tier (lightweight engines) ─────────
 
-    private static final float[] HARDNESS = {4.0F, 4.5F, 5.0F, 6.0F, 7.0F};
+    private static final float[] HARDNESS         = {4.0F, 4.5F, 5.0F, 6.0F, 7.0F};
     private static final float[] BLAST_RESISTANCE = {4.0F, 4.5F, 5.0F, 6.0F, 7.0F};
 
     // ── Registration ───────────────────────────────────────────────────────
