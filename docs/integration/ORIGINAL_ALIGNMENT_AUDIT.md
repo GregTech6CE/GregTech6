@@ -122,7 +122,7 @@
 | ALIGN-097 | 确认普通桶与物流桶物品缺少容器能力。 | 原版 MultiTileEntityItemInternal 转发桶的物品 fill／drain 并更新 NBT。 | 当前只有存液掉落数据和提示／堆叠限制，没有本模组提供的物品流体 handler；量杯等不在此缺口内，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 | ALIGN-098 | 确认泵每源罐只尝试一次，不重复使用余下预算。 | 原版 CoverPump 在有进展且有预算时循环 FL.move。 | 当前 for 每个 tank 一次；单次调用限额的接收器可能低于额定吞吐，未原生复现，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
 | ALIGN-099 | 确认排水口世界取液范围收窄。 | 原版河湖／绿洲名单、量子份额及通用流体 drain 回调。 | 当前无限水只检查河流标签，普通路径限定 LiquidBlock 源；三种 GT 水独立批量路径已有，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
-| ALIGN-100 | 确认排水口缺少方块更新即时尝试，且宿主时钟不同。 | 原版 receivedBlockUpdate 或全局相位。 | 当前只周期调用，基础机／管道本地计数、其他宿主世界计时；周期相同不是相位相同，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)；压力阀 >2 使用覆盖板计数而非实体年龄，见 [补查](PRESSURE_VALVE_AUDIT.md)。 |
+| ALIGN-100 | 确认排水口缺少方块更新即时尝试，且宿主时钟不同。 | 原版 receivedBlockUpdate 或全局相位。 | 当前只周期调用，基础机／管道本地计数、其他宿主世界计时；周期相同不是相位相同，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)；压力阀 >2 使用覆盖板计数而非实体年龄，见 [补查](PRESSURE_VALVE_AUDIT.md)；重启定时器的持久化本地／世界时钟差异见 [控制核查](CONTROLLER_DETECTOR_AUDIT.md)。 |
 | ALIGN-101 | 确认雨水气候取样位置不同。 | 原版宿主群系决定温度门控和产量，前方决定接雨条件。 | 当前从 front 群系算产量；群系边界可能不同，纯雨量公式已对应，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
 | ALIGN-102 | 确认检索器安装范围、管网搜索和取货方向不同。 | 原版仅装在可 tick 的物品管道，从管网邻接来源向覆盖板面对库存搬运；首次成功返回并计数。 | 当前从前方抽入宿主，可装基础机器，没有对应扫描／管道吞吐准入；金属箱可装但没有检索 tick／普通进出拦截，见 [能力补查](COVER_CAPABILITY_AUDIT.md) 和 [检索器报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
 | ALIGN-103 | 确认检索器恢复后失败持续逐 tick 重试。 | 原版通过容量等门控后，在尝试前清除 pending。 | 当前两类宿主仅成功搬运后清除，恢复失败保留；停止门控仍在，重载未验，见 [报告](FILTER_RETRIEVER_COVER_AUDIT.md)。 |
@@ -132,6 +132,8 @@
 | ALIGN-107 | 确认固定编号选择标签错误受停止门控，安装也未立即设模式。 | 原版 placed／loaded／tickPre 强制指定模式，不检查 stopped。 | 当前 beforeTick 要求 !stopped，attached 不处理固定标签；不能据此删除其他选择器的正确暂停门控，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-108 | 确认手动／按钮选择器停止加载时丢失面板恢复机会。 | 原版 onCoverLoaded 无条件用保存值恢复模式。 | 当前 stopped 跳过循环但仍清 restore，恢复后读宿主模式覆盖面板；宿主独立保存可能掩盖，未实测重启，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-109 | 确认按钮复位比原版提前一个机器工作阶段。 | 原版 post-work tick 将倒计时 2 变 1 并清零模式。 | 当前 beforeTick 清零，电动机随后执行转换器；末轮机器采用模式不同，不是 10→1 数量规则错误，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
+| ALIGN-110 | 确认通用检测／自动红石控制丢失成功状态。 | 原版专用成功接口，控制扩展器转发目标状态。 | MachineControl 无该字段，通用 State 固定 false，安装仅看 supportsSwitch；基础机另有 successful 专用输出，不算全失效，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
+| ALIGN-111 | 确认控制扩展器未转发独立开工条件。 | 原版直接查询目标 getStateRunningPossible。 | 当前默认 active 或 progressMax>0 近似，可能漏掉有配方但尚未启动的目标；条件案例未游戏验证，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

@@ -195,3 +195,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `blockentity/energy/EnergyNodeBlockEntity.java` 的 tickOriginalConverter：面板与机器工作的先后顺序。
 
 停止合同、恢复和末轮复位差异见 [选择器核查](SELECTOR_PANEL_AUDIT.md)。
+
+## 自动控制、运行状态与检测输出
+
+- `multiversion/src/main/java/.../content/cover/MachineCoverSpec.java`：控制条件和检测输出谓词；参数的实际来源由调用者负责。
+- `api/machine/MachineControl.java`：控制边界，目前未提供独立 possible／success。
+- `blockentity/machine/BasicMachineBlockEntity.java`：coverState、switchesAllowRunning、updateCoverSignals 专用路径。
+- `block/misc/ExtenderBlockEntity.java`：模式、开关、运行／进度转发；通用面板经 PanelCoverRuntime 和 CoverSignalMixin 输出。
+
+真假状态缺口与时钟来源见 [控制器核查](CONTROLLER_DETECTOR_AUDIT.md)。

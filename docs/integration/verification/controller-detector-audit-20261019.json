@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-19",
+  "baseline": "755df5754",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL sources read only",
+  "original_sources": {
+    "gregapi/cover/covers/AbstractCoverAttachmentController.java": "affba26902422135a44436651cdec84fbfa47e79d4ee974413a22baaa5e5ee97",
+    "gregapi/cover/covers/AbstractCoverAttachmentDetector.java": "a958b416ecfa953d91d5da8cd8bf8c961c79ac11b3481020ae987a5b6fe94161",
+    "gregapi/cover/covers/CoverControllerAuto.java": "b36f224334d454c60ad59ab3edcbb183108d675497f6db3cddca5629f3daca59",
+    "gregapi/cover/covers/CoverControllerAutoRedstone.java": "3b8a984648877e68c0c0f1351f0c496c14ba22d60aa8d177c1dcc95e811f0920",
+    "gregapi/cover/covers/CoverControllerAutoTimer.java": "4f10c74f205753decc13d63e017b591e90fc1c6f1a0d5b13d7278e9afb199e15",
+    "gregapi/cover/covers/CoverControllerRedstone.java": "d35efe4efb06d3a6d91dc2c6126990b087f5d80339bd4d0dc9fbcdedeedf9a9e",
+    "gregapi/cover/covers/CoverDetectorRunningPossible.java": "2a6c8b7e501ed125a31e7046e66107769b72d4c377e2d8c0b013177e6d4c9409",
+    "gregapi/cover/covers/CoverDetectorRunningPassively.java": "c85626d8b4829d95ebe3cd6465d7e40ebd88fe25dcd03f35dbb9c5613cff4d7a",
+    "gregapi/cover/covers/CoverDetectorRunningActively.java": "d2a2ddf68773ab85ef8446254ff3e982ca890ad334ee2f70ff4260eb234b785f",
+    "gregapi/cover/covers/CoverDetectorRunningSuccessfully.java": "f98eaa76ae46e493792a214f418a711189f9ca71ee60d2845c08bec1743d97b2",
+    "gregtech/tileentity/extenders/MultiTileEntityExtender.java": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+    "gregtech/tileentity/extenders/MultiTileEntityExtenderController.java": "220238e5b50477ffbcb28bcc114dfc6e7a95570957525ef72fad307a17463688",
+    "gregapi/cover/CoverData.java": "e2069e2a2095a44e0ea1be7d38d9c4068cacb70f7850b2bc49a85e37d848da75",
+    "gregapi/tileentity/machines/ITileEntityRunningSuccessfully.java": "738735d7a3110619b84bab43de713faa5494c9d8347060155fc83ccea47194e7",
+    "gregapi/tileentity/machines/ITileEntityRunningActively.java": "24f563a24576dca97988319156e388d556956d54ec065d330ddcc58477a904dd",
+    "gregapi/tileentity/machines/ITileEntityRunningPassively.java": "5eb22739f6d54c8fe2ef6df071faaf1777f297caa1567d6ee3f33b16b71c9cec",
+    "gregtech/items/MultiItemTechnological.java": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "bd460a6f2f5c0c0e83ffc84e915639f7ff5ca4fb3fc92e5bff76b557c52cc387",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "462b96e55a7de118d9a8abffcf5841fffdbc546df4c13c58750ec2e6cbb36365",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "d687f2e32cbefca3c8c25f0299bd6ce7e6489f92a810e9eeb87435b46d931137",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "7c4c4661787d53bad2e8ada5e6ec36636a6d5f6a24a1fed0efdde46475570284",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java": "08398b0617b30013a8c37d30dec80f812bfa103c10dd23461eff5d1df23adbb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java": "3314eac50bb1f110b51db37f62ab237d495678c223a2b18ca61336d0a7ac6e26",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java": "f3cc8096bda6f64d84e3d445a49e61d7afba75cbc043fef2981e480668863da7",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java": "1dd5eb2d07ec7387eb0fc8daa5b22d33b541ba4c3ec17ed648f4a90ba7ee3538",
+    "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": "e93c85a5858a9c6f7da98ec0dc19f3802159ea3b3523c7be5f7e20e36f0ee7ba",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": "a13c19133920c00170a3cee482d124524d8eb64b83cc63ed76c981ba9a86db2f"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-110: generic controller/detector state fixes success=false; extender loses original completion forwarding and installation does not check specific state support",
+    "ALIGN-111: extender uses default active-or-progress readiness approximation instead of original target running-possible state",
+    "ALIGN-100 extended: reboot timers use host-local persisted cover ticks or world time rather than original entity timer"
+  ],
+  "positive_evidence": [
+    "Controller boolean formulas and five timer intervals match source predicates",
+    "BasicMachine has a separate successful signal path and must not be classified as missing all completion detection",
+    "Controller side-order traversal uses last matching controller; no blanket AND-combination claim",
+    "Detector inverted and strong/weak rules exist",
+    "Native output and generic BlockState mixin paths both exist; runtime directional validation remains pending"
+  ],
+  "not_run": [
+    "new probes",
+    "native compilation",
+    "GameTests",
+    "full test suite",
+    "game launch",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Source predicates do not establish all machine state lifecycles",
+    "Readiness example is a conditional source scenario, not an observed game trace",
+    "No all-face redstone or neighboring-component feedback test",
+    "Generic mixin registration is not proof of runtime injection for every provider"
+  ]
+}

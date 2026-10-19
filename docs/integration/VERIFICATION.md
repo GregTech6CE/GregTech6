@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 自动控制和检测器源链核对
+
+相对 755df5754，MachineCoverSpec、MachineControl、PanelCoverRuntime 的两版投影共六份代码／字面量一致。原版接口继承、扩展器转发、五档注册周期及当前双输出路径留存哈希。未新增模拟测试、编译、GameTest、游戏、重启、构建或推送；六面连线及 Mixin 实际生效待验，见 [回执](verification/controller-detector-audit-20261019.json)。
+
 ## 2026-10-19 / 选择器原版与平台源码核对
 
 相对 70d637645，PanelCover 和 PanelCoverRuntime 分别展开 Forge／Neo，四份代码／字面量比较通过，无行为改动。原版 CoverData 和选择器加载／tick 路径、当前电动机先面板后转换器的顺序留存来源哈希。未新增模拟测试、编译、GameTest、游戏、重启、构建或推送，见 [回执](verification/selector-panel-audit-20261019.json)。
