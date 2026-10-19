@@ -166,10 +166,8 @@ public class FluidPipeBlockEntity extends BlockEntity implements IFluidHandler, 
     private boolean hasCovers;
 
     /**
-     * The cover tick counter, standing in for GT6's {@code aTimer} exactly as
-     * {@code BasicMachineBlockEntity.coverTicks:76} does for the machine — the full argument is on
-     * {@link CoverAttachmentBehaviors}'s class javadoc: {@code level.getGameTime()} never advances
-     * inside a one-tick GameTest body, this counter advances once per covered server tick.
+     * Local counter advanced by the covered tick pass. It is not the original global
+     * SERVER_TIME used by CoverDrain and CoverVent and is not persisted by this pipe.
      */
     private long coverTicks;
 

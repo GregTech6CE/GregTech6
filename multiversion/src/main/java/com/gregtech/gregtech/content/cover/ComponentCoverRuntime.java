@@ -37,13 +37,24 @@ import net.minecraftforge.items.IItemHandler;
 public final class ComponentCoverRuntime {
     public static final String VISUAL = "gt.cover.visual", SLOT = "gt.cover.slot";
     private ComponentCoverRuntime() {}
-    public static ComponentCoverRules.Kind kind(ItemStack stack) { return ComponentCoverRules.kind(CoverItems.behavior(stack)); }
-    public static int visual(ItemStack stack) { return CoverStackData.readOrEmpty(stack).getInt(VISUAL); }
-    public static int slot(ItemStack stack) { return CoverStackData.readOrEmpty(stack).getInt(SLOT); }
+
+    public static ComponentCoverRules.Kind kind(ItemStack stack) {
+        return ComponentCoverRules.kind(CoverItems.behavior(stack));
+    }
+
+    public static int visual(ItemStack stack) {
+        return CoverStackData.readOrEmpty(stack).getInt(VISUAL);
+    }
+
+    public static int slot(ItemStack stack) {
+        return CoverStackData.readOrEmpty(stack).getInt(SLOT);
+    }
+
     public static boolean pipe(PanelCoverHost host) {
         return host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.FluidPipeBlockEntity
                 || host.coverOwner() instanceof com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity;
     }
+
     public static boolean canAttach(PanelCoverHost host, Direction side, ItemStack stack) {
         var kind = kind(stack);
         if (kind == null) return true;
@@ -52,6 +63,7 @@ public final class ComponentCoverRuntime {
         return ComponentCoverRules.canAttach(kind, host.componentTicks(),
                 fluid != null && fluid.getTanks() > 0, items != null && items.getSlots() > 0);
     }
+
     public static void attached(PanelCoverHost host, Direction side) {
         var stack = host.getCover(side);
         var kind = kind(stack);
@@ -61,20 +73,25 @@ public final class ComponentCoverRuntime {
                 CoverStackData.putInt(stack, SLOT, -1 - slot(stack));
         }
     }
+
     public static boolean allowsItem(ItemStack stack, boolean insert) {
         var kind = kind(stack);
         return kind != ComponentCoverRules.Kind.CONVEYOR && kind != ComponentCoverRules.Kind.ROBOT_ARM
                 || (insert ? ComponentCoverRules.allowsInsert(visual(stack)) : ComponentCoverRules.allowsExtract(visual(stack)));
     }
+
     public static boolean allowsFluid(ItemStack stack, boolean fill) {
         return kind(stack) != ComponentCoverRules.Kind.PUMP
                 || (fill ? ComponentCoverRules.allowsInsert(visual(stack)) : ComponentCoverRules.allowsExtract(visual(stack)));
     }
+
     public static void tick(PanelCoverHost host, Direction side, long serverTime) {
         var stack = host.getCover(side);
         var kind = kind(stack);
         if (kind == null || !ComponentCoverRules.due(kind, CoverItems.tierIndex(stack), serverTime, host.panels().stopped())) return;
-        var owner = host.coverOwner();var level = owner.getLevel();var next = owner.getBlockPos().relative(side);
+        var owner = host.coverOwner();
+        var level = owner.getLevel();
+        var next = owner.getBlockPos().relative(side);
         if (level == null || level.isClientSide || owner.isRemoved() || !level.hasChunkAt(next)) return;
         var neighbor = level.getBlockEntity(next);
         if (neighbor instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity part
@@ -95,6 +112,7 @@ public final class ComponentCoverRuntime {
             }
         }
     }
+
     private static IFluidHandler fluid(BlockEntity entity, Direction side) {
 //? if >=1.21.1 {
         /*return entity == null ? null : entity.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, entity.getBlockPos(), side);
@@ -102,6 +120,7 @@ public final class ComponentCoverRuntime {
         return entity == null ? null : entity.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, side).orElse(null);
 //?}
     }
+
     private static IItemHandler items(BlockEntity entity, Direction side) {
 //? if >=1.21.1 {
         /*return entity == null ? null : entity.getLevel().getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, entity.getBlockPos(), side);
@@ -109,12 +128,15 @@ public final class ComponentCoverRuntime {
         return entity == null ? null : entity.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, side).orElse(null);
 //?}
     }
+
     private static void moveFluid(IFluidHandler from, IFluidHandler to, int budget) {
-        // A cover operation may move different channels, sharing one throughput budget.
+        // Current pass visits each source tank once, sharing one throughput budget.
+        // GT6 repeated FL.move while progress remained, including within a single tank.
         for (int tank = 0; tank < from.getTanks() && budget > 0; tank++) {
             var stored = from.getFluidInTank(tank);
             if (stored.isEmpty()) continue;
-            var offer = stored.copy();offer.setAmount(Math.min(budget, stored.getAmount()));
+            var offer = stored.copy();
+            offer.setAmount(Math.min(budget, stored.getAmount()));
             var available = from.drain(offer, IFluidHandler.FluidAction.SIMULATE);
             int accepted = to.fill(available, IFluidHandler.FluidAction.SIMULATE);
             if (accepted <= 0) continue;
@@ -122,17 +144,20 @@ public final class ComponentCoverRuntime {
             var moved = from.drain(available, IFluidHandler.FluidAction.EXECUTE);
             int filled = to.fill(moved, IFluidHandler.FluidAction.EXECUTE);
             if (filled < moved.getAmount()) {
-                var rest = moved.copy();rest.setAmount(moved.getAmount() - filled);
+                var rest = moved.copy();
+                rest.setAmount(moved.getAmount() - filled);
                 from.fill(rest, IFluidHandler.FluidAction.EXECUTE);
             }
             budget -= filled;
         }
     }
+
     private static ItemStack insert(IItemHandler to, ItemStack stack, int slot, boolean simulate) {
         if (slot >= 0) return slot < to.getSlots() ? to.insertItem(slot, stack, simulate) : stack;
         for (int i = 0; i < to.getSlots() && !stack.isEmpty(); i++) stack = to.insertItem(i, stack, simulate);
         return stack;
     }
+
     private static void moveItem(BlockEntity owner, IItemHandler from, IItemHandler to, int source, int target) {
         if (source >= from.getSlots() || target >= to.getSlots()) return;
         int start = source < 0 ? 0 : source, end = source < 0 ? from.getSlots() : source + 1;

@@ -472,18 +472,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /**
      * Drain cover: pull the neighbouring fluid block and the rain into the input tanks.
      *
-     * <p>The behaviour is GT6's {@code CoverDrain.onTickPre} ({@code CoverDrain:68-159}); it lives in
-     * {@code CoverAttachmentBehaviors} like the other two. Only the fluid block half and the rain
-     * half of the original are ported — the XP, sewage and quantum branches are recorded as skipped
-     * in that class' javadoc.</p>
-     *
-     * <p>{@link #coverTicks} is passed instead of {@code level.getGameTime()}: it advances exactly
-     * once per server tick, so the original's {@code SERVER_TIME % 20 == 5} cadence is unchanged in a
-     * running game while staying observable under the manual {@code serverTick} loop a GameTest
-     * uses. The guards of the three covers that came before this one read
-     * {@code level.getGameTime()} ({@link #tickPumpCover} and both item covers), which is frozen for
-     * the whole duration of such a test body: those branches cannot be observed from a GameTest at
-     * all, so a cover written today must not copy that part of them.</p>
+     * <p>World fluids, rain, XP orbs and animal products are implemented by
+     * CoverAttachmentBehaviors; quantum fluid blocks and optional integrations remain incomplete.
+     * This host passes its persisted local cover counter. GT6 used SERVER_TIME and also reacted
+     * immediately to block updates, so matching periods alone does not preserve its schedule.</p>
      */
     private void tickDrainCover(Level level, BlockPos pos, Direction side) {
         com.gregtech.gregtech.content.cover.CoverAttachmentBehaviors
@@ -497,11 +489,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
      * behaviour, including the {@code WD.collectable_air} front-face gate and the partial-fill
      * semantics of {@code FL.fill_}, lives in {@code CoverAttachmentBehaviors.tickVent}.
      *
-     * <p>{@link #coverTicks} is passed instead of {@code level.getGameTime()} for the same reason as
-     * in {@link #tickDrainCover}, and here it matters more: the original fires on a single tick out
-     * of every 360, so with a frozen {@code getGameTime()} the branch would not just be hard to
-     * observe in a GameTest, it would be unreachable. {@code coverTicks} advances exactly once per
-     * server tick, so the cycle is the original's.</p>
+     * <p>This shares the machine's local cover clock with the drain. It keeps a 360-tick
+     * period but not GT6's global phase; manual test-loop convenience is not parity evidence.</p>
      */
     private void tickAirVentCover(Level level, BlockPos pos, Direction side) {
         com.gregtech.gregtech.content.cover.CoverAttachmentBehaviors
