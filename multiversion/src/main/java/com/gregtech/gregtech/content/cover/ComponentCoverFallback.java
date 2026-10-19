@@ -30,20 +30,33 @@ public final class ComponentCoverFallback {
     private ComponentCoverFallback() {}
     private static final Map<BlockEntity,Boolean> ACTIVE=Collections.synchronizedMap(new WeakHashMap<>());
     private static final Map<BlockEntity,CompoundTag> SENT=Collections.synchronizedMap(new WeakHashMap<>());
-    private static final ClassValue<Boolean> FALLBACK=new ClassValue<>() {
-        @Override protected Boolean computeValue(Class<?> type){
-            try{return type.getMethod("getCover",Direction.class).getDeclaringClass()==BlockEntity.class;}
-            catch(NoSuchMethodException failure){return false;}
+    // The BlockEntity mixin supplies the fallback getCover method. Native overrides
+    // opt out, so their capability providers must apply cover checks themselves.
+    private static final ClassValue<Boolean> FALLBACK = new ClassValue<>() {
+        @Override protected Boolean computeValue(Class<?> type) {
+            try {
+                return type.getMethod("getCover", Direction.class).getDeclaringClass() == BlockEntity.class;
+            }
+            catch (NoSuchMethodException failure) {
+                return false;
+            }
         }
     };
-    public static boolean ownClass(BlockEntity owner){
-        if(owner==null)return false;
-        for(Class<?> type=owner.getClass();type!=BlockEntity.class&&type!=null;type=type.getSuperclass())
-            if(type.getName().startsWith("com.gregtech.gregtech.blockentity."))return true;
+
+    public static boolean ownClass(BlockEntity owner) {
+        if (owner == null) return false;
+        for (Class<?> type = owner.getClass(); type != BlockEntity.class && type != null; type = type.getSuperclass())
+            if (type.getName().startsWith("com.gregtech.gregtech.blockentity.")) return true;
         return false;
     }
-    public static boolean fallbackClass(BlockEntity owner){return owner instanceof FallbackCoverHost&&FALLBACK.get(owner.getClass());}
-    public static boolean uses(BlockEntity owner){return ownClass(owner)&&owner instanceof FallbackCoverHost&&FALLBACK.get(owner.getClass());}
+
+    public static boolean fallbackClass(BlockEntity owner) {
+        return owner instanceof FallbackCoverHost && FALLBACK.get(owner.getClass());
+    }
+
+    public static boolean uses(BlockEntity owner) {
+        return ownClass(owner) && owner instanceof FallbackCoverHost && FALLBACK.get(owner.getClass());
+    }
     @SuppressWarnings({"unchecked","rawtypes"})
     public static boolean eligible(BlockEntity owner){
         if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;

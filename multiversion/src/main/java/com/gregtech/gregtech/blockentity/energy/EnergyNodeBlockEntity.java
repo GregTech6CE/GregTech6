@@ -341,17 +341,37 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     private net.minecraftforge.items.IItemHandler sidedBatteryInventory(Direction side) {
         return new net.minecraftforge.items.IItemHandler() {
 //?}
-            private boolean blocked(){return panels().shuttered(side);}
-            @Override public int getSlots(){return batterySlots.getSlots();}
-            @Override public net.minecraft.world.item.ItemStack getStackInSlot(int slot){return batterySlots.getStackInSlot(slot);}
-            @Override public net.minecraft.world.item.ItemStack insertItem(int slot,net.minecraft.world.item.ItemStack stack,boolean simulate){
-                return blocked()||!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),true)?stack:batterySlots.insertItem(slot,stack,simulate);
+            // This native wrapper currently checks shutters and component direction only.
+            // Item-filter matching is not supplied by the fallback capability mixin.
+            private boolean blocked() {
+                return panels().shuttered(side);
             }
-            @Override public net.minecraft.world.item.ItemStack extractItem(int slot,int amount,boolean simulate){
-                return blocked()||!com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side),false)?net.minecraft.world.item.ItemStack.EMPTY:batterySlots.extractItem(slot,amount,simulate);
+
+            @Override public int getSlots() {
+                return batterySlots.getSlots();
             }
-            @Override public int getSlotLimit(int slot){return batterySlots.getSlotLimit(slot);}
-            @Override public boolean isItemValid(int slot,net.minecraft.world.item.ItemStack stack){return !blocked()&&batterySlots.isItemValid(slot,stack);}
+
+            @Override public net.minecraft.world.item.ItemStack getStackInSlot(int slot) {
+                return batterySlots.getStackInSlot(slot);
+            }
+
+            @Override public net.minecraft.world.item.ItemStack insertItem(int slot, net.minecraft.world.item.ItemStack stack, boolean simulate) {
+                return blocked() || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), true)
+                        ? stack : batterySlots.insertItem(slot, stack, simulate);
+            }
+
+            @Override public net.minecraft.world.item.ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return blocked() || !com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(getCover(side), false)
+                        ? net.minecraft.world.item.ItemStack.EMPTY : batterySlots.extractItem(slot, amount, simulate);
+            }
+
+            @Override public int getSlotLimit(int slot) {
+                return batterySlots.getSlotLimit(slot);
+            }
+
+            @Override public boolean isItemValid(int slot, net.minecraft.world.item.ItemStack stack) {
+                return !blocked() && batterySlots.isItemValid(slot, stack);
+            }
         };
     }
 
