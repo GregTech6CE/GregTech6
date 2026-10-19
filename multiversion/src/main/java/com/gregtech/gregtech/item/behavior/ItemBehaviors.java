@@ -81,7 +81,25 @@ public final class ItemBehaviors {
     public record Entry(String itemId, Class<?> behaviour) {}
 
     /** Every GT6 {@code gregtech.items.behaviors} class this layer implements, with its port item. */
-    public static final List<Entry> PORTED = com.gregtech.gregtech.content.tool.ItemBehaviorCatalog.ALL.stream().map(v->new Entry(v.itemId(),switch(v.behavior()){case "BehaviorChunkEraser" -> BehaviorChunkEraser.class;case "BehaviorDataStorage" -> BehaviorDataStorage.class;case "BehaviorDataStorage16" -> BehaviorDataStorage16.class;case "BehaviorDuctTape" -> BehaviorDuctTape.class;case "BehaviorFlintAndTinder" -> BehaviorFlintAndTinder.class;case "BehaviorLighter" -> BehaviorLighter.class;case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;case "BehaviorRemote" -> BehaviorRemote.class;case "BehaviorScanner" -> BehaviorScanner.class;case "BehaviorCropnalyzer" -> BehaviorCropnalyzer.class;case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;case "BehaviorSprayFoamHardener" -> BehaviorSprayFoamHardener.class;case "BehaviorSprayFoamRemover" -> BehaviorSprayFoamRemover.class;case "BehaviorWorldgenDebugger" -> BehaviorWorldgenDebugger.class;default -> null;})).toList();
+    public static final List<Entry> PORTED = com.gregtech.gregtech.content.tool.ItemBehaviorCatalog.ALL.stream()
+            .map(v -> new Entry(v.itemId(), switch (v.behavior()) {
+                case "BehaviorChunkEraser" -> BehaviorChunkEraser.class;
+                case "BehaviorDataStorage" -> BehaviorDataStorage.class;
+                case "BehaviorDataStorage16" -> BehaviorDataStorage16.class;
+                case "BehaviorDuctTape" -> BehaviorDuctTape.class;
+                case "BehaviorFlintAndTinder" -> BehaviorFlintAndTinder.class;
+                case "BehaviorLighter" -> BehaviorLighter.class;
+                case "BehaviorPlungerFluid" -> BehaviorPlungerFluid.class;
+                case "BehaviorRemote" -> BehaviorRemote.class;
+                case "BehaviorScanner" -> BehaviorScanner.class;
+                case "BehaviorCropnalyzer" -> BehaviorCropnalyzer.class;
+                case "BehaviorSprayColorRemover" -> BehaviorSprayColorRemover.class;
+                case "BehaviorSprayExtinguisher" -> BehaviorSprayExtinguisher.class;
+                case "BehaviorSprayFoamHardener" -> BehaviorSprayFoamHardener.class;
+                case "BehaviorSprayFoamRemover" -> BehaviorSprayFoamRemover.class;
+                case "BehaviorWorldgenDebugger" -> BehaviorWorldgenDebugger.class;
+                default -> null;
+            })).toList();
 
     /** The behaviour class registered for a port item id, or empty when the item has none yet. */
     public static Optional<Class<?>> behaviourOf(String itemId) {

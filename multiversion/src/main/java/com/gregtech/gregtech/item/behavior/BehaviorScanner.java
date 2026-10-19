@@ -32,55 +32,24 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * GT6 {@code Behavior_Scanner} ({@code Behavior_Scanner.java:42-87}) — the Portable Scanner and the
- * Debug Scanner.
+ * Portable/debug block diagnostics adapted from GT6 Behavior_Scanner and WD.scan.
+ * GTMultiItems registers ScannerItem; ItemBehaviors gathers crop or block results,
+ * then ScannerItem pays the returned section cost before sending chat lines.
  *
- * <h2>Where the actual work is</h2>
+ * <p>Block properties replace old metadata. Class details start at scan level 10;
+ * entity class output requires a level above 100. The portable scanner uses level 2.
+ * Each reported native section currently costs 512 EU.</p>
  *
- * <p>The behaviour itself is three lines: it calls {@code WD.scan(...)} with its scan level and the
- * block's coordinates ({@code :53}), pays for it out of the item's energy buffer, and chats the lines
- * back. All the content is {@code WD.scan} ({@code WD.java:911-1055}), which is what this class
- * ports.</p>
+ * <p>Alignment remains incomplete. This scan omits physical weight, temperature,
+ * compressed-volume and native progress-source diagnostics, even where the port
+ * already has source interfaces/getters. Generic MachineControl also does not expose
+ * original independent possible/success states, and the scanner currently treats any
+ * control as an on/off and running-state source without checking optional support.</p>
  *
- * <h2>Scan levels</h2>
- *
- * <p>{@code MultiItemRandomTools:517} gives the Portable Scanner scan level {@code 2} and
- * {@code :516} gives the Debug Scanner {@code Integer.MAX_VALUE}; {@code WD.java:925} is the only
- * level test in the original — from {@code 10} on it also prints the block's and the block entity's
- * Java class. {@code Behavior_Scanner:62-76} additionally prints the class of an entity that is
- * clicked when the level is above {@code 100}. The port keeps all three thresholds:
- * {@link #CLASS_LEVEL}, {@link #ENTITY_LEVEL}.</p>
- *
- * <h2>Cost</h2>
- *
- * <p>{@code WD.scan} charges {@code CS.V[3] = 512} EU for every block-entity <em>section</em> it can
- * fill in ({@code WD.java:939,943,947,951,959,964,969,988,995,1003,1045} all do
- * {@code rEUAmount += V[3]}), and nothing for the block-level header. The portable scanner's own
- * energy stats are {@code V[3] * 8000} capacity at {@code V[3]} per operation
- * ({@code MultiItemRandomTools:517}), which is exactly one section per operation of a full buffer.
- * {@link #COST_PER_SECTION} keeps the number.</p>
- *
- * <h2>What the port cannot scan</h2>
- *
- * <p>Each of these is a GT6 interface the port has no counterpart for, so the section is dropped
- * rather than faked: {@code ITileEntityWeight} ({@code WD.java:938-941}),
- * {@code ITileEntityTemperature} ({@code :942-945}), {@code ITileEntityGibbl} ({@code :946-949}), the
- * IC2 reactor/chamber, wrenchable, energy sink/source/conductor and energy storage branches
- * ({@code :1010-1042}), {@code IBlockDebugable} ({@code :1044-1048}), the Galacticraft sealable check
- * ({@code :935}) and the {@code BlockScanningEvent} post ({@code :1050-1053}) — the port has no GT6
- * event bus, so the "cancel and rewrite the lines" hook is gone with it.</p>
- *
- * <p>Two 1.7.10 concepts are translated instead of dropped:</p>
- *
- * <ul>
- *   <li>{@code MetaData} ({@code WD.java:923}) does not exist in 1.20.1. The state's properties are
- *       printed in its place, sorted by name so the line is stable.</li>
- *   <li>{@code ITileEntityProgress}/{@code SwitchableOnOff}/{@code SwitchableMode}/
- *       {@code Running*} ({@code WD.java:950-983}) are one interface in the port:
- *       {@link MachineControl}. Its {@code active()} is GT6's "Actively", {@code running()} without
- *       {@code active()} is "Passively" and neither is "Not Possible"; GT6's extra
- *       "Successfully"/"Possible" wording needs state the port does not keep.</li>
- * </ul>
+ * <p>The original isolated failures per section, requested block debug information,
+ * and posted a mutable/cancellable BlockScanningEvent that could change the cost.
+ * Those contracts are not implemented here. Legacy IC2/Galacticraft integrations
+ * require a separate modern compatibility decision, not a same-name class port.</p>
  */
 public final class BehaviorScanner {
 
@@ -109,8 +78,7 @@ public final class BehaviorScanner {
      * @param side      the face that was clicked; every block-entity getter is asked about it
      * @param scanLevel GT6's scan level ({@link #PORTABLE_LEVEL} or {@link #DEBUG_LEVEL})
      * @param player    the scanning player, or {@code null} for GT6's auto-tool case
-     * @param out       the lines are appended here, in the original's order; nothing is added when
-     *                  the original would add nothing
+     * @param out the current diagnostic lines; supported sections and costs still differ from GT6
      * @return the EU the scan costs, i.e. {@code COST_PER_SECTION} per reported section
      */
     public static long scan(Level level, BlockPos pos, Direction side, int scanLevel, @Nullable Player player,
@@ -142,8 +110,8 @@ public final class BehaviorScanner {
         if (state.is(BlockTags.BEACON_BASE_BLOCKS)) lines.add("Is usable for Beacon Pyramids");
 
         if (be != null) {
-            // WD.java:950-983 — progress, on/off, mode and running, which the original prints as one
-            // "State: ON --- Mode: x --- Running: y" line but charges per part.
+            // WD.scan charges each supported state interface separately. This adapter
+            // currently treats every MachineControl as both on/off and running-capable.
             MachineControl control = MachineControl.find(be, side);
             if (control != null) {
                 if (control.supportsProgress() && control.progressMax() > 0) {
@@ -201,6 +169,7 @@ public final class BehaviorScanner {
             }
         }
 
+        // Original debug providers and the cancellable scan event run before this return.
         out.addAll(lines);
         return cost;
     }
