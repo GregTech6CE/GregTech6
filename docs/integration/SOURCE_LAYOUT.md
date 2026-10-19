@@ -129,3 +129,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 ## 轴的转速与功率目录
 
 `content/energy/AxleCatalog` 以 material／maxSpeed／powerLimits 保存十三材料四尺寸，family／sizeTier 是目录循环变量；`api/energy/AxleSpec` 是公开规格。`AxleConnectionRules` 只核直线连接。实际输送和过载在共享 `blockentity/energy/AxleBlockEntity`，可调箱缓存／输出调度在独立 GearboxBlockEntity，不能互相替代审计，见 [报告](AXLE_GEARBOX_AUDIT.md)。
+
+## 物流桶与共享储液实现
+
+- `core/.../content/transport/fluid/LogisticsTankSpec.java`：32072 物流桶容量、材料、防护和温限。
+- `multiversion/src/main/java/.../blockentity/machine/LogisticsTankBlockEntity.java`：直接物流存储接口、保留过滤及覆盖板保存；两版共用。
+- `multiversion/versions/1.21.1-neoforge/src/main/java/.../registry/GTLogisticsTank.java`：Neo 注册入口；Forge 对应 GTTanks.registerLogisticsTank。
+- `core/.../api/fluid/LongFluidStorage.java`：长整数容量、液量和策略；原生 `multiversion/src/main/java/.../api/fluid/FluidTankGT.java` 才持有流体身份及 NBT。
+
+原版同名标志并非均有同语义，具体边界见 [物流桶核查](LOGISTICS_TANK_AUDIT.md)。

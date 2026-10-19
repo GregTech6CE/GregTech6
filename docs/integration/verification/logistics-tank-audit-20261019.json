@@ -1,0 +1,73 @@
+{
+  "baseline": "6bf967c93",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL sources read only",
+  "original_sources": {
+    "gregapi/tileentity/tank/TileEntityBase08Barrel.java": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+    "gregapi/fluid/FluidTankGT.java": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+    "gregtech/tileentity/tanks/MultiTileEntityBarrelLogistics.java": "1247122cf9a7d7d000da70dde1641dc9cb67b624ba71c840b3e11f9f28e538dc",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/LogisticsTankSpec.java": "9c70e78e74399469f9e45375ac7bc2cc0440f81d5a09fcadc960cad7ae5e1fd2",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsTankBlockEntity.java": "c6aa7a3144ed0c5d53a4f5669be416216a9939c9c9f74d26588da5daf0de17d7",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTLogisticsTank.java": "d92b43ad3c38242d2081be95e7ada87b26d2e712a79fbe32dbb3f9038b7f9e75",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": "ee3eda16b46070490cec024ca29431484c498f20cbf65570049ff709c2d71919",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java": "0cd17fb5ff14eb4702b084983a32ab8d3f0cce45e12f873e818bad7fbbdc60fb",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/TankBlockEntity.java": "3dadd179616c587c55b7138ca7072675875b14f6d2693199a53935e8b96f9c17",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankBlock.java": "bbc594645c47a5517b9064a2eb33f9b754936675bf17c6599accb984dab6e716",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsTankBlock.java": "1fb05f7d61c91d71abd6aa71f87589c3ab8c47b93d12e0d9dea0a8b35ce7eb85",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java": "5a14d12cb99687b2d2dbffcef2988fbf027e698e79e9c8dfa08c5d9661534198",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java": "77b6ab76e8b102ce9056180026e3dcde2b10226aa23831a1fbdd4003decd13a6",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "6f5e09d5828768ed9634d872a9a48a407c303be717464fd26a91ed9387f7663c",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTTanks.java": "661c5f6c7b9ac0c2a3bc458e9eac211e71a40b0e0c4ec570b7fa9f9e7c93993e",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": "646c20ece3778713fedcd6fd2697633e36816994da1178c8a77f644b4616684c",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": "ef835bdb5bc52b00b04c1166bf47ff1e327ee2665f4b7f05c82835b6740b7ee8",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LogisticsTankTests.java": "cdd3808cc330c4d635dce1e9740192108f863b3127d65e3e81e6345560bf0874",
+    "core/src/main/resources/data/gt6ce/recipes/logistics/logistics_tank.json": "db8eb483c7717f642d03440d7e41bbeb7b749fcf3388b6826532812c7672af9d",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/TankSpec.java": "2d0cc7d3f822e408e6863a067a4c519ee73f434701bd5db170c6870d6251811d",
+    "tools/integration/audit-probes/LongFluidStorageAudit.java": "2d6d1cd18950ed4195d366a42986a21e7522e131fe87050766bfd8788bcfcb02"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java": {
+      "plain": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/LogisticsTankSpec.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsTankBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTLogisticsTank.java": {
+      "plain": true
+    }
+  },
+  "java": "Java 17; compiled only LongFluidStorage and LongFluidStorageAudit, no cached dependencies",
+  "observations": [
+    "RESIZE_AMOUNT|500",
+    "RESIZE_CAPACITY|500",
+    "RESTORED_AMOUNT|1200",
+    "RESTORED_CAPACITY|1200",
+    "PARTIAL_OVERFLOW_ACCEPTED|100",
+    "PARTIAL_OVERFLOW_STORED|1000",
+    "FULL_OVERFLOW_ACCEPTED|200",
+    "FULL_OVERFLOW_STORED|1000",
+    "RETAINED_FILTER_DRAIN|1000",
+    "RETAINED_FILTER_AMOUNT|0",
+    "RETAINED_FILTER_POLICY|true"
+  ],
+  "findings": [
+    "ALIGN-092",
+    "ALIGN-093",
+    "ALIGN-094"
+  ],
+  "limits": [
+    "Original results derived from source; native lifecycle and actual world saves not executed",
+    "Core retained-filter policy is not native identity or NBT verification",
+    "No production setVoidExcess caller found in maintained Java; recorded as API difference",
+    "Existing Forge LogisticsTankTests inspected, not run",
+    "No native compile, full tests, game, restart, build or push"
+  ]
+}
