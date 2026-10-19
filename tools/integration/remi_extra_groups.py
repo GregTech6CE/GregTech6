@@ -8,6 +8,11 @@ from remi_food_groups import UNFIRED_CLAY, resources as food_resources
 
 def resources(root):
     java = root / "core/src/main/java/com/gregtech/gregtech"
+    from remi_catalog_groups import wooden_bucket_variants
+    for content, members in wooden_bucket_variants(root).items():
+        yield "functional_wooden_bucket_" + content, {
+            "type": "remi:group", "name": "emi.group.gt6ce.wooden_bucket_" + content,
+            "contents": ["item:gt6ce:" + item for item in members], "priority": 125}
     # Colours are stack components/NBT on these blocks, not suffixed registry IDs.
     for stem in ("asphalt", "cfoam_fresh", "cfoam", "cfoam_slab", "concrete",
                  "concrete_reinforced", "glass_clear", "glass_glow", "glass_glow_slab", "glass_clear_slab"):

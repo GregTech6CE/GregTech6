@@ -6,6 +6,15 @@ their native identity. In particular machine parts are never basic machines.
 import re
 
 
+def wooden_bucket_variants(root):
+    source = (root / "core/src/main/java/com/gregtech/gregtech/content/tool/WoodenBucketCatalog.java").read_text(encoding="utf-8")
+    bands = re.findall(r'new Band\("([^"]+)",\s*"[^"]+",\s*\d+\)', source)
+    contents = re.findall(r'new Content\("([^"]+)",\s*"[^"]+",\s*(\d+),', source)
+    assert len(bands) == 9 and len(contents) == 19, "Review original wooden bucket variants"
+    return {content: ["wooden_bucket_" + band + ("_" + content if int(offset) else "")
+                      for band in bands] for content, offset in contents}
+
+
 def extend(root, groups, ids):
     java = root / "core/src/main/java/com/gregtech/gregtech"
     # A translated sprite name is not a registered gearbox. Match the same 13 tiers

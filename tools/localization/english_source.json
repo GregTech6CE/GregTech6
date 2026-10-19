@@ -50,10 +50,6 @@
       "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
     },
     {
-      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
-      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
-    },
-    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
       "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
     },
@@ -594,10 +590,6 @@
       "sha256": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598"
     },
     {
-      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
-      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
-    },
-    {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemTechnological.java",
       "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc"
     },
@@ -624,10 +616,6 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\a\\Loader_Woods.java",
       "sha256": "77ffe887982b4a013f4d798a90c056e10b7e5e7704213043278ddaf836b6f8b1"
-    },
-    {
-      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
-      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
     },
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\computer\\MultiTileEntityHDDSwitch.java",
@@ -968,6 +956,26 @@
     {
       "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntitySmeltery.java",
       "sha256": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\tool\\WoodenBucketCatalog.java",
+      "sha256": "5c06fe627f9a886e9d59022c0af0acd737f03e55354b8260415785ccdeae7996"
+    },
+    {
+      "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\energy\\HeatExchangerCatalog.java",
+      "sha256": "447b91863fad6a1de26fc9ba2c8181305aa37b9b08dcc10f128040182dc07042"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\items\\MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
     }
   ],
   "values": {
@@ -6805,6 +6813,18 @@
       "source_key": "gt.multitileentity.11162",
       "value": "Thermofluxic Cooler (Invar)"
     },
+    "block.gt6ce.flux_dynamo_ev": {
+      "source_key": "gt.multitileentity.11114",
+      "value": "Flux Dynamo (Enderium Base)"
+    },
+    "block.gt6ce.flux_dynamo_hv": {
+      "source_key": "gt.multitileentity.11113",
+      "value": "Flux Dynamo (Electrum)"
+    },
+    "block.gt6ce.flux_dynamo_iv": {
+      "source_key": "gt.multitileentity.11115",
+      "value": "Flux Dynamo (Enderium)"
+    },
     "block.gt6ce.flux_dynamo_lv": {
       "source_key": "gt.multitileentity.11111",
       "value": "Flux Dynamo (Lead)"
@@ -6872,6 +6892,18 @@
     "block.gt6ce.flux_magnet_mv": {
       "source_key": "gt.multitileentity.11032",
       "value": "Flux Magnet (Invar)"
+    },
+    "block.gt6ce.flux_motor_ev": {
+      "source_key": "gt.multitileentity.11024",
+      "value": "Flux Motor (Enderium Base)"
+    },
+    "block.gt6ce.flux_motor_hv": {
+      "source_key": "gt.multitileentity.11023",
+      "value": "Flux Motor (Electrum)"
+    },
+    "block.gt6ce.flux_motor_iv": {
+      "source_key": "gt.multitileentity.11025",
+      "value": "Flux Motor (Enderium)"
     },
     "block.gt6ce.flux_motor_lv": {
       "source_key": "gt.multitileentity.11021",
@@ -7305,9 +7337,41 @@
       "source_key": "gt.multitileentity.19001",
       "value": "HDD Switch"
     },
+    "block.gt6ce.heat_exchanger_dense_invar": {
+      "source_key": "gt.multitileentity.9153",
+      "value": "Dense Heat Exchanger (Invar)"
+    },
+    "block.gt6ce.heat_exchanger_dense_ta4hfc5": {
+      "source_key": "gt.multitileentity.9159",
+      "value": "Dense Heat Exchanger (Tantalum Hafnium Carbide)"
+    },
+    "block.gt6ce.heat_exchanger_dense_tungsten": {
+      "source_key": "gt.multitileentity.9157",
+      "value": "Dense Heat Exchanger (Tungsten)"
+    },
+    "block.gt6ce.heat_exchanger_dense_tungsten_steel": {
+      "source_key": "gt.multitileentity.9158",
+      "value": "Dense Heat Exchanger (Tungstensteel)"
+    },
+    "block.gt6ce.heat_exchanger_invar": {
+      "source_key": "gt.multitileentity.9103",
+      "value": "Heat Exchanger (Invar)"
+    },
     "block.gt6ce.heat_exchanger_main": {
       "source_key": "gt.multitileentity.17197",
       "value": "Large Heat Exchanger"
+    },
+    "block.gt6ce.heat_exchanger_ta4hfc5": {
+      "source_key": "gt.multitileentity.9109",
+      "value": "Heat Exchanger (Tantalum Hafnium Carbide)"
+    },
+    "block.gt6ce.heat_exchanger_tungsten": {
+      "source_key": "gt.multitileentity.9107",
+      "value": "Heat Exchanger (Tungsten)"
+    },
+    "block.gt6ce.heat_exchanger_tungsten_steel": {
+      "source_key": "gt.multitileentity.9108",
+      "value": "Heat Exchanger (Tungstensteel)"
     },
     "block.gt6ce.heat_transmitter": {
       "source_key": "gt.multitileentity.18101",
@@ -27449,6 +27513,10 @@
       "source_key": "gt.tooltip.crucible.1",
       "value": "KU Input will turn into Air for Steelmaking"
     },
+    "gt.tooltip.dust_funnel.1": {
+      "source_key": "gt.lang.recipes.dustfunnel",
+      "value": "Turns all differently sized Dusts into the specified Size"
+    },
     "gt.tooltip.ender_garbage.1": {
       "source_key": "gt.multitileentity.ender.garbage.bin.tooltip.1",
       "value": "Trash Bin deleting Items & Fluids, or moving them to the Servers Garbage Dump"
@@ -43409,6 +43477,1374 @@
     "item.gt6ce.wood_pellet.tooltip": {
       "source_key": "gt.multiitem.randomtools.5999.tooltip",
       "value": ""
+    },
+    "item.gt6ce.wooden_bucket_bismuth": {
+      "source_key": "gt.multiitem.randomtools.2400",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2400.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze": {
+      "source_key": "gt.multiitem.randomtools.2700",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2700.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_creosote": {
+      "source_key": "gt.multiitem.randomtools.2704",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2704.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2709",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2709.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_glue": {
+      "source_key": "gt.multiitem.randomtools.2715",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2715.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_honey": {
+      "source_key": "gt.multiitem.randomtools.2708",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2708.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_latex": {
+      "source_key": "gt.multiitem.randomtools.2703",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2703.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2710",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2710.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2712",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2712.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_milk": {
+      "source_key": "gt.multiitem.randomtools.2702",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2702.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_poison": {
+      "source_key": "gt.multiitem.randomtools.2718",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2718.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2713",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2713.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2706",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2706.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2705",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2705.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2717",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2717.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2714",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2714.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2716",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2716.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2711",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2711.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2707",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2707.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_water": {
+      "source_key": "gt.multiitem.randomtools.2701",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_bronze_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2701.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_creosote": {
+      "source_key": "gt.multiitem.randomtools.2404",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2404.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2409",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2409.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_glue": {
+      "source_key": "gt.multiitem.randomtools.2415",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2415.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_honey": {
+      "source_key": "gt.multiitem.randomtools.2408",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2408.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_latex": {
+      "source_key": "gt.multiitem.randomtools.2403",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2403.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2410",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2410.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2412",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2412.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_milk": {
+      "source_key": "gt.multiitem.randomtools.2402",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2402.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_poison": {
+      "source_key": "gt.multiitem.randomtools.2418",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2418.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2413",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2413.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2406",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2406.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2405",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2405.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2417",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2417.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2414",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2414.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2416",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2416.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2411",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2411.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2407",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2407.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_water": {
+      "source_key": "gt.multiitem.randomtools.2401",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bismuth_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2401.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_brass": {
+      "source_key": "gt.multiitem.randomtools.2500",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2500.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_brass_creosote": {
+      "source_key": "gt.multiitem.randomtools.2504",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2504.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_brass_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2509",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2509.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_brass_glue": {
+      "source_key": "gt.multiitem.randomtools.2515",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2515.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_brass_honey": {
+      "source_key": "gt.multiitem.randomtools.2508",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2508.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_brass_latex": {
+      "source_key": "gt.multiitem.randomtools.2503",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2503.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_brass_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2510",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2510.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_brass_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2512",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2512.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_brass_milk": {
+      "source_key": "gt.multiitem.randomtools.2502",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2502.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_brass_poison": {
+      "source_key": "gt.multiitem.randomtools.2518",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2518.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_brass_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2513",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2513.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_brass_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2506",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2506.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_brass_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2505",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2505.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_brass_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2517",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2517.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_brass_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2514",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2514.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_brass_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2516",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2516.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_brass_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2511",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2511.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_brass_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2507",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2507.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_brass_water": {
+      "source_key": "gt.multiitem.randomtools.2501",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_brass_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2501.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_bronze": {
+      "source_key": "gt.multiitem.randomtools.2600",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2600.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_bronze_creosote": {
+      "source_key": "gt.multiitem.randomtools.2604",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2604.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_bronze_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2609",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2609.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bronze_glue": {
+      "source_key": "gt.multiitem.randomtools.2615",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2615.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_bronze_honey": {
+      "source_key": "gt.multiitem.randomtools.2608",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2608.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_bronze_latex": {
+      "source_key": "gt.multiitem.randomtools.2603",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2603.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_bronze_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2610",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2610.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_bronze_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2612",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2612.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_bronze_milk": {
+      "source_key": "gt.multiitem.randomtools.2602",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2602.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bronze_poison": {
+      "source_key": "gt.multiitem.randomtools.2618",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2618.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_bronze_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2613",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2613.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_bronze_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2606",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2606.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_bronze_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2605",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2605.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_bronze_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2617",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2617.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_bronze_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2614",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2614.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2616",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2616.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2611",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2611.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2607",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2607.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_bronze_water": {
+      "source_key": "gt.multiitem.randomtools.2601",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_bronze_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2601.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_copper": {
+      "source_key": "gt.multiitem.randomtools.2000",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2000.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_copper_creosote": {
+      "source_key": "gt.multiitem.randomtools.2004",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2004.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_copper_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2009",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2009.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_copper_glue": {
+      "source_key": "gt.multiitem.randomtools.2015",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2015.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_copper_honey": {
+      "source_key": "gt.multiitem.randomtools.2008",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2008.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_copper_latex": {
+      "source_key": "gt.multiitem.randomtools.2003",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2003.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_copper_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2010",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2010.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_copper_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2012",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2012.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_copper_milk": {
+      "source_key": "gt.multiitem.randomtools.2002",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2002.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_copper_poison": {
+      "source_key": "gt.multiitem.randomtools.2018",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2018.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_copper_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2013",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2013.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_copper_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2006",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2006.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_copper_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2005",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2005.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_copper_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2017",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2017.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_copper_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2014",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2014.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_copper_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2016",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2016.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_copper_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2011",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2011.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_copper_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2007",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2007.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_copper_water": {
+      "source_key": "gt.multiitem.randomtools.2001",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_copper_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2001.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_gold": {
+      "source_key": "gt.multiitem.randomtools.2800",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2800.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_gold_creosote": {
+      "source_key": "gt.multiitem.randomtools.2804",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2804.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_gold_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2809",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2809.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_gold_glue": {
+      "source_key": "gt.multiitem.randomtools.2815",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2815.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_gold_honey": {
+      "source_key": "gt.multiitem.randomtools.2808",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2808.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_gold_latex": {
+      "source_key": "gt.multiitem.randomtools.2803",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2803.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_gold_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2810",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2810.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_gold_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2812",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2812.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_gold_milk": {
+      "source_key": "gt.multiitem.randomtools.2802",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2802.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_gold_poison": {
+      "source_key": "gt.multiitem.randomtools.2818",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2818.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_gold_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2813",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2813.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_gold_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2806",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2806.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_gold_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2805",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2805.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_gold_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2817",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2817.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_gold_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2814",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2814.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_gold_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2816",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2816.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_gold_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2811",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2811.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_gold_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2807",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2807.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_gold_water": {
+      "source_key": "gt.multiitem.randomtools.2801",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_gold_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2801.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_lead": {
+      "source_key": "gt.multiitem.randomtools.2300",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2300.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_lead_creosote": {
+      "source_key": "gt.multiitem.randomtools.2304",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2304.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_lead_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2309",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2309.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_lead_glue": {
+      "source_key": "gt.multiitem.randomtools.2315",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2315.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_lead_honey": {
+      "source_key": "gt.multiitem.randomtools.2308",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2308.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_lead_latex": {
+      "source_key": "gt.multiitem.randomtools.2303",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2303.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_lead_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2310",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2310.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_lead_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2312",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2312.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_lead_milk": {
+      "source_key": "gt.multiitem.randomtools.2302",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2302.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_lead_poison": {
+      "source_key": "gt.multiitem.randomtools.2318",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2318.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_lead_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2313",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2313.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_lead_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2306",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2306.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_lead_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2305",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2305.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_lead_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2317",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2317.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_lead_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2314",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2314.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_lead_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2316",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2316.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_lead_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2311",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2311.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_lead_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2307",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2307.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_lead_water": {
+      "source_key": "gt.multiitem.randomtools.2301",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_lead_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2301.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_tin": {
+      "source_key": "gt.multiitem.randomtools.2100",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2100.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_tin_creosote": {
+      "source_key": "gt.multiitem.randomtools.2104",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2104.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_tin_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2109",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2109.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_tin_glue": {
+      "source_key": "gt.multiitem.randomtools.2115",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2115.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_tin_honey": {
+      "source_key": "gt.multiitem.randomtools.2108",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2108.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_tin_latex": {
+      "source_key": "gt.multiitem.randomtools.2103",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2103.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_tin_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2110",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2110.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_tin_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2112",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2112.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_tin_milk": {
+      "source_key": "gt.multiitem.randomtools.2102",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2102.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_tin_poison": {
+      "source_key": "gt.multiitem.randomtools.2118",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2118.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_tin_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2113",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2113.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_tin_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2106",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2106.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_tin_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2105",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2105.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_tin_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2117",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2117.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_tin_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2114",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2114.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_tin_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2116",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2116.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_tin_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2111",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2111.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_tin_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2107",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2107.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_tin_water": {
+      "source_key": "gt.multiitem.randomtools.2101",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_tin_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2101.tooltip",
+      "value": "Water"
+    },
+    "item.gt6ce.wooden_bucket_zinc": {
+      "source_key": "gt.multiitem.randomtools.2200",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2200.tooltip",
+      "value": "Empty"
+    },
+    "item.gt6ce.wooden_bucket_zinc_creosote": {
+      "source_key": "gt.multiitem.randomtools.2204",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_creosote.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2204.tooltip",
+      "value": "Creosote Oil"
+    },
+    "item.gt6ce.wooden_bucket_zinc_dirty_water": {
+      "source_key": "gt.multiitem.randomtools.2209",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_dirty_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2209.tooltip",
+      "value": "Dirty Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_zinc_glue": {
+      "source_key": "gt.multiitem.randomtools.2215",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_glue.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2215.tooltip",
+      "value": "Glue"
+    },
+    "item.gt6ce.wooden_bucket_zinc_honey": {
+      "source_key": "gt.multiitem.randomtools.2208",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_honey.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2208.tooltip",
+      "value": "Honey"
+    },
+    "item.gt6ce.wooden_bucket_zinc_latex": {
+      "source_key": "gt.multiitem.randomtools.2203",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_latex.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2203.tooltip",
+      "value": "Latex"
+    },
+    "item.gt6ce.wooden_bucket_zinc_lubricant": {
+      "source_key": "gt.multiitem.randomtools.2210",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_lubricant.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2210.tooltip",
+      "value": "Lubricant"
+    },
+    "item.gt6ce.wooden_bucket_zinc_maple_sap": {
+      "source_key": "gt.multiitem.randomtools.2212",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_maple_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2212.tooltip",
+      "value": "Maple Sap"
+    },
+    "item.gt6ce.wooden_bucket_zinc_milk": {
+      "source_key": "gt.multiitem.randomtools.2202",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2202.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_zinc_poison": {
+      "source_key": "gt.multiitem.randomtools.2218",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_poison.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2218.tooltip",
+      "value": "Poison"
+    },
+    "item.gt6ce.wooden_bucket_zinc_rainbow_sap": {
+      "source_key": "gt.multiitem.randomtools.2213",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_rainbow_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2213.tooltip",
+      "value": "Rainbow Sap"
+    },
+    "item.gt6ce.wooden_bucket_zinc_rubber_sap": {
+      "source_key": "gt.multiitem.randomtools.2206",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_rubber_sap.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2206.tooltip",
+      "value": "Rubber Tree Sap"
+    },
+    "item.gt6ce.wooden_bucket_zinc_sea_water": {
+      "source_key": "gt.multiitem.randomtools.2205",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_sea_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2205.tooltip",
+      "value": "Sea Water (you cannot place this!)"
+    },
+    "item.gt6ce.wooden_bucket_zinc_seed_oil": {
+      "source_key": "gt.multiitem.randomtools.2217",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_seed_oil.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2217.tooltip",
+      "value": "Seed Oil"
+    },
+    "item.gt6ce.wooden_bucket_zinc_soy_milk": {
+      "source_key": "gt.multiitem.randomtools.2214",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_soy_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2214.tooltip",
+      "value": "Soy Milk"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spectral_dew": {
+      "source_key": "gt.multiitem.randomtools.2216",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spectral_dew.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2216.tooltip",
+      "value": "Spectral Dew"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spoiled_milk": {
+      "source_key": "gt.multiitem.randomtools.2211",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spoiled_milk.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2211.tooltip",
+      "value": "Milk (you cannot drink out of Buckets!)"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spruce_resin": {
+      "source_key": "gt.multiitem.randomtools.2207",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_spruce_resin.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2207.tooltip",
+      "value": "Spruce Tree Resin"
+    },
+    "item.gt6ce.wooden_bucket_zinc_water": {
+      "source_key": "gt.multiitem.randomtools.2201",
+      "value": "Wooden Bucket"
+    },
+    "item.gt6ce.wooden_bucket_zinc_water.tooltip": {
+      "source_key": "gt.multiitem.randomtools.2201.tooltip",
+      "value": "Water"
     },
     "item.gt6ce.worldgen_debug_wand": {
       "source_key": "gt.multiitem.randomtools.9999",

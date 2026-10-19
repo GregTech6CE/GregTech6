@@ -8,9 +8,11 @@ import re
 try:
     from .remi_functional_groups import catalog
     from .remi_title_labels import LABELS
+    from .remi_catalog_groups import wooden_bucket_variants
 except ImportError:
     from remi_functional_groups import catalog
     from remi_title_labels import LABELS
+    from remi_catalog_groups import wooden_bucket_variants
 
 VOLTAGE = r"(?:ULV|LV|MV|HV|EV|IV|LuV|ZPM|UV|PUV1|XV|T\d+)(?:[-–](?:ULV|LV|MV|HV|EV|IV|LuV|ZPM|UV|PUV1|XV))?"
 
@@ -55,7 +57,7 @@ def headings(root, language):
         result["emi.group.gt6ce.functional_" + group] = value
     # Explicit headings are UI vocabulary, not translations of representative items.
     for group, labels in LABELS.items():
-        path = group if group.startswith("decor_") or group in {"fluid_item", "real_fluids", "safe", "key_safe"} else "functional_" + group
+        path = group if group.startswith("decor_") or group in {"fluid_item", "real_fluids", "safe", "key_safe", "heat_exchanger", "heat_exchanger_dense", "boiler_main_barometer"} else "functional_" + group
         result["emi.group.gt6ce." + path] = labels[1 if chinese else 0]
     # Transport groups must show only size/type, never the chosen copper/brass.
     try:
@@ -67,4 +69,9 @@ def headings(root, language):
         for name in names:
             value = value.replace(name, "")
         result["emi.group.gt6ce." + path] = value.replace("  ", " ").strip()
+    # Preserve the original bucket name and content label, removing only UI hints.
+    for content, members in wooden_bucket_variants(root).items():
+        key = "item.gt6ce." + members[0]
+        label = re.sub(r"\s*\(.*\)$", "", language[key + ".tooltip"])
+        result["emi.group.gt6ce.wooden_bucket_" + content] = language[key] + " · " + label
     return result

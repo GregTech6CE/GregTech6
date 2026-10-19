@@ -19,7 +19,10 @@ public final class HeatExchangerItem extends BlockItem {
                 .append(Component.translatable("gt.lang.face.top")).append(")").withStyle(ChatFormatting.RED));
         lines.add(Component.translatable("gt.lang.efficiency").append(": " + spec.efficiency() / 100.0 + "%").withStyle(ChatFormatting.YELLOW));
         lines.add(Component.translatable("gt.lang.recipes").append(": ").append(Component.translatable("gt.recipe.fuels.hot")).withStyle(ChatFormatting.AQUA));
-        for (String key : List.of("fluids", "fire", "contact", "tools"))
-            lines.add(Component.translatable("gt6ce.tooltip.heat_exchanger." + key).withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("gt.lang.nogui.funnel.tap.tank").withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("gt.lang.hazard.fire").append(" (3m)").withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("gt.lang.hazard.contact").append(" (")
+                .append(Component.translatable("gt.lang.face.top")).append(")").withStyle(ChatFormatting.GRAY));
+        lines.add(Component.translatable("gt.lang.use.magnifyingglass.to.detail").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -142105,7 +142105,7 @@
   "emi.group.gt6ce.wooden_bucket_spectral_dew": "木桶 · 光谱露",
   "emi.group.gt6ce.wooden_bucket_seed_oil": "木桶 · 种子油",
   "emi.group.gt6ce.wooden_bucket_poison": "木桶 · 有毒",
-  "item.gt6ce.colored_panel": "%1$s%2$s",
+  "item.gt6ce.colored_panel": "%1$s %2$s",
   "emi.group.gt6ce.boiler_main_barometer": "锅炉气压计",
   "block.gt6ce.heat_exchanger_invar": "热交换器 (殷钢)",
   "block.gt6ce.heat_exchanger_tungsten": "热交换器 (钨)",
@@ -142115,10 +142115,6 @@
   "block.gt6ce.heat_exchanger_dense_tungsten": "致密热交换器 (钨)",
   "block.gt6ce.heat_exchanger_dense_tungsten_steel": "致密热交换器 (钨钢)",
   "block.gt6ce.heat_exchanger_dense_ta4hfc5": "致密热交换器 (碳化钽铪)",
-  "gt6ce.tooltip.heat_exchanger.fluids": "没有界面，手持小型漏斗或龙头右键进行交互!",
-  "gt6ce.tooltip.heat_exchanger.fire": "会使得周围的方块着火! (3m)",
-  "gt6ce.tooltip.heat_exchanger.contact": "当它在运作的时候接触会受伤! (顶面)",
-  "gt6ce.tooltip.heat_exchanger.tools": "使用放大镜观察细节",
   "emi.group.gt6ce.heat_exchanger": "热交换器",
   "emi.group.gt6ce.heat_exchanger_dense": "致密热交换器",
   "block.gt6ce.flux_motor_hv": "红石通量旋转动能引擎 (琥珀金)",
@@ -142126,5 +142122,7 @@
   "block.gt6ce.flux_motor_ev": "红石通量旋转动能引擎 (末影粗胚)",
   "block.gt6ce.flux_dynamo_ev": "红石通量发电机 (末影粗胚)",
   "block.gt6ce.flux_motor_iv": "红石通量旋转动能引擎 (末影)",
-  "block.gt6ce.flux_dynamo_iv": "红石通量发电机 (末影)"
+  "block.gt6ce.flux_dynamo_iv": "红石通量发电机 (末影)",
+  "config.jade.plugin_gt6ce.construction_name": "GT Construction Names",
+  "config.jade.plugin_gt6ce.steam_turbine": "GT Steam Turbine"
 }
