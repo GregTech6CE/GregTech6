@@ -18,34 +18,10 @@ import java.util.*;
 public final class MatterRecipeLoader implements InitializationStep {
     private int added;
     public void run() {
-        special("Dilithium","dustDiv72",1,144L,"Ender_TE",250);
-        special("Dilithium","dustTiny",1,1152L,"Ender_TE",20000);
-        special("Dilithium","dustSmall",1,2592L,"Ender_TE",45000);
-        special("Dilithium","dust",1,10368L,"Ender_TE",180000);
-        special("Dilithium","gem",1,20736L,"Ender_TE",360000);
-        special("Dilithium","blockDust",1,93312L,"Ender_TE",1620000);
-        special("Dilithium","blockGem",1,186624L,"Ender_TE",3240000);
-        special("AncientDebris","dustDiv72",1,144L,"Ender_TE",250);
-        special("AncientDebris","dustTiny",1,1152L,"Ender_TE",2000);
-        special("AncientDebris","dustSmall",1,2592L,"Ender_TE",4500);
-        special("AncientDebris","dust",1,10368L,"Ender_TE",18000);
-        special("AncientDebris","ingot",1,10368L,"Ender_TE",18000);
-        special("AncientDebris","blockDust",1,93312L,"Ender_TE",162000);
-        special("AncientDebris","blockIngot",1,93312L,"Ender_TE",162000);
-        special("Dilithium","dustDiv72",0,144L,"Ender",144);
-        special("Dilithium","dustTiny",0,1152L,"Ender",11520);
-        special("Dilithium","dustSmall",0,2592L,"Ender",25920);
-        special("Dilithium","dust",0,10368L,"Ender",103680);
-        special("Dilithium","gem",0,20736L,"Ender",207360);
-        special("Dilithium","blockDust",0,93312L,"Ender",933120);
-        special("Dilithium","blockGem",0,186624L,"Ender",1866240);
-        special("AncientDebris","dustDiv72",0,144L,"Ender",144);
-        special("AncientDebris","dustTiny",0,1152L,"Ender",1152);
-        special("AncientDebris","dustSmall",0,2592L,"Ender",2592);
-        special("AncientDebris","dust",0,10368L,"Ender",10368);
-        special("AncientDebris","ingot",0,10368L,"Ender",10368);
-        special("AncientDebris","blockDust",0,93312L,"Ender",93312);
-        special("AncientDebris","blockIngot",0,93312L,"Ender",93312);
+        for (var conversion : MatterConversionCatalog.SPECIAL_CONVERSIONS) {
+            special(conversion.material(), conversion.form(), conversion.circuit(), conversion.duration(),
+                    conversion.outputFluid(), conversion.outputAmount());
+        }
         var fluids=RegisteredFluids.all();
         var seen=Collections.newSetFromMap(new IdentityHashMap<GTMaterial,Boolean>());
         for(var raw:GTMaterialRegistry.allMaterials()) {

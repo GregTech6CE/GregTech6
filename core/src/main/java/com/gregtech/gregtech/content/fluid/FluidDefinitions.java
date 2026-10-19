@@ -11,8 +11,9 @@ public final class FluidDefinitions {
     private FluidDefinitions() {}
     public static void prepare() {
         FluidCatalog.bootstrap();
-        // Loader_Fluids:618 creates Hg's ordinary mercury liquid (1U=1000mB).
-        // Retain the existing molten registry ID for saves, but restore the native liquid too.
+        // Loader_Fluids:618 creates ordinary mercury with L=144 mB per U.
+        // This flag preserves the port's ordinary liquid entry alongside its molten ID;
+        // the generic 1000 mB quantity used by MatterRecipeLoader is still an audited mismatch.
         com.gregtech.gregtech.content.material.generated.ElementMaterials.Mercury
                 .put(com.gregtech.gregtech.api.material.MaterialProperty.LIQUID);
         // GT6 reactor coolant isotopologues have liquid phases; retain old gas IDs for saves.
