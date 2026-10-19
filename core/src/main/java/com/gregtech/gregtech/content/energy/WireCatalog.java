@@ -45,16 +45,32 @@ public final class WireCatalog {
             new WireDef("superconductor", Materials.Superconductor, 8589934592L, 4, 1, 1, false, false), // MT.Superconductor
     };
     public static List<WireSpec> specifications() {
-        List<WireSpec> specs=new ArrayList<>();
-        for(WireDef def:WIRE_DEFS){
-            for(int size=1;size<=16;size++)specs.add(new WireSpec(def.idSuffix(),def.material(),size,def.voltage(),def.amperage()*size,def.wireLoss(),false,def.contactDamage()));
-            if(def.hasCable())for(int size:CABLE_SIZES)specs.add(new WireSpec(def.idSuffix(),def.material(),size,def.voltage(),def.amperage()*size,def.cableLoss(),true,false));
+        List<WireSpec> specs = new ArrayList<>();
+        for (WireDef def : WIRE_DEFS) {
+            for (int size = 1; size <= 16; size++)
+                specs.add(new WireSpec(def.idSuffix(), def.material(), size, def.voltage(),
+                        def.amperage() * size, def.wireLoss(), false, def.contactDamage()));
+            if (def.hasCable())
+                for (int size : CABLE_SIZES)
+                    specs.add(new WireSpec(def.idSuffix(), def.material(), size, def.voltage(),
+                            def.amperage() * size, def.cableLoss(), true, false));
         }
         return List.copyOf(specs);
     }
-    public static String registryId(WireSpec spec){return String.format(java.util.Locale.ROOT,"%s_%02d_%s",spec.insulated()?"cable":"wire",spec.size(),spec.id());}
-    public static int stackSize(int size,boolean insulated){
-        if(!insulated)return Math.max(1,64/Math.max(1,size));
-        return switch(size){case 1->64;case 2->32;case 4->16;case 8->8;case 12->4;default->1;};
+    public static String registryId(WireSpec spec) {
+        return String.format(java.util.Locale.ROOT, "%s_%02d_%s",
+                spec.insulated() ? "cable" : "wire", spec.size(), spec.id());
+    }
+
+    public static int stackSize(int size, boolean insulated) {
+        if (!insulated) return Math.max(1, 64 / Math.max(1, size));
+        return switch (size) {
+            case 1 -> 64;
+            case 2 -> 32;
+            case 4 -> 16;
+            case 8 -> 8;
+            case 12 -> 4;
+            default -> 1;
+        };
     }
 }

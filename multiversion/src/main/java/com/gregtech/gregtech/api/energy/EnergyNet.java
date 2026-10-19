@@ -10,10 +10,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import java.util.*;
 
 /**
- * Per-dimension wire connectivity graph (GT6 {@code EnergyNet}).
- * <p>
- * Tracks which wire segments are connected so energy transfer can
- * traverse the full network efficiently.
+ * Auxiliary per-dimension conductor adjacency index. Actual EU transfer traverses
+ * neighbouring block entities in {@code ElectricWireBlockEntity.transferElectricity};
+ * it does not use this index. This class is not the legacy IC2 EnergyNet adapter.
  *
  * <p>The map is per dimension and outlives chunks, so it is the one structure here that has to be
  * released explicitly: wire block entities register from {@code onLoad} and release from
@@ -26,8 +25,6 @@ public final class EnergyNet {
 
     /** Adjacency per dimension: wire pos → set of connected wire positions. */
     private static final Map<Level, Map<BlockPos, Set<BlockPos>>> GRAPHS = new WeakHashMap<>();
-
-    private static final BooleanProperty[] DUMMY_PROPS = {};
 
     /* ---- registration ---- */
 
