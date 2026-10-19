@@ -1,16 +1,19 @@
 package com.gregtech.gregtech.content.energy;
+
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.material.generated.WoodMaterials;
 import com.gregtech.gregtech.api.energy.AxleSpec;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import java.util.List;
 import java.util.ArrayList;
-/** Exact original 13 material families / 52 axle specifications. */
-public final class AxleCatalog {private AxleCatalog(){}
-    private record Tier(String name, GTMaterial mat, long speed, long[] powers) {}
+/** Thirteen original material families, each with four axle sizes; runtime behavior is separate. */
+public final class AxleCatalog {
+    private AxleCatalog() {}
+
+    private record Tier(String name, GTMaterial material, long maxSpeed, long[] powerLimits) {}
 
     public static List<AxleSpec> specifications() {
-        List<AxleSpec> specs=new ArrayList<>();
+        List<AxleSpec> specs = new ArrayList<>();
         // GT6 Loader_MultiTileEntities: 52 axles, four diameters per material.
         // NBT_PIPESIZE is the maximum RU speed; NBT_PIPEBANDWIDTH is the maximum power.
         // Names are stable registry IDs; the source's legacy numeric IDs are noted below.
@@ -30,12 +33,12 @@ public final class AxleCatalog {private AxleCatalog(){}
                 new Tier("adamantium", Materials.Adamantium, 4194304, new long[]{512, 1024, 2048, 4096}),        // 24890-24893
         };
 
-        for (Tier t : tiers) {
-            for (int s = 1; s <= 4; s++) {
-                long power = t.powers()[s - 1];
+        for (Tier family : tiers) {
+            for (int sizeTier = 1; sizeTier <= 4; sizeTier++) {
+                long power = family.powerLimits()[sizeTier - 1];
                 long loss = 0; // GT6 axles do not lose speed per block
-                String id = String.format("axle_%s_%d", t.name(), s);
-                specs.add(new AxleSpec(id, t.mat(), s, t.speed(), power, loss));
+                String id = String.format("axle_%s_%d", family.name(), sizeTier);
+                specs.add(new AxleSpec(id, family.material(), sizeTier, family.maxSpeed(), power, loss));
             }
         }
         return List.copyOf(specs);
