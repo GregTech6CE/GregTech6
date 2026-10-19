@@ -448,9 +448,9 @@ public final class CoverBehaviorTests {
                 "a pipe with anything but one tank is not (CoverPressureValve:44)");
         helper.assertTrue(!CoverUtilityBehaviors.valveCanAttachTo(1, true),
                 "and neither is a pipe facing another pipe (CoverPressureValve:44)");
-        helper.assertTrue(CoverUtilityBehaviors.valveConnectsThrough(true)
-                        && !CoverUtilityBehaviors.valveConnectsThrough(false),
-                "CoverPressureValve:45 connects exactly when a pipe faces it");
+        helper.assertTrue(CoverUtilityBehaviors.valveBlocksPipeConnection(true)
+                        && !CoverUtilityBehaviors.valveBlocksPipeConnection(false),
+                "CoverPressureValve:45 blocks connection when another pipe faces it");
 
         helper.assertTrue(CoverUtilityBehaviors.valveAction(false, true, false, false) == ValveAction.IDLE,
                 "a tank that is not full is left alone (CoverPressureValve:53)");

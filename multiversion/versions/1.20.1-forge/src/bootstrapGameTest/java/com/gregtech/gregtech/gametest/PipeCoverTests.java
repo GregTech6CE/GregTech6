@@ -158,7 +158,7 @@ public final class PipeCoverTests {
     /**
      * GT6 {@code CoverPressureValve:44}: only a fluid pipe with <b>exactly one tank</b> may host the
      * valve, and not on a face that points at another pipe ({@code valveCanAttachTo}/{@code
-     * valveConnectsThrough}). Covers without that rule still attach to such a face.
+     * valveBlocksPipeConnection}). Covers without that rule still attach to such a face.
      */
     @GameTest(template = "test_empty", timeoutTicks = 100)
     public static void theValveKeepsGt6sSingleTankPlacementRule(GameTestHelper helper) {
@@ -181,7 +181,7 @@ public final class PipeCoverTests {
         FluidPipeBlockEntity source = setPipe(helper, first, PIPE);
         setPipe(helper, first.east(), PIPE);
         helper.assertFalse(source.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.PRESSURE_VALVE)),
-                "a face pointing at another pipe is refused (:44 valveConnectsThrough)");
+                "a face pointing at another pipe is refused (:44 valveBlocksPipeConnection)");
         helper.assertTrue(source.attachCover(Direction.EAST, cover(CoverUtilityBehaviors.FILTER_FLUID)),
                 "the fluid filter has no such rule and still attaches");
         helper.succeed();
