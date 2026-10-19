@@ -1,0 +1,470 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "611a75c65",
+  "status": "scoped_checks_passed",
+  "new_findings": [
+    "ALIGN-061",
+    "ALIGN-062"
+  ],
+  "extended_finding": "ALIGN-017",
+  "format_parity": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxState.java": {
+      "code_and_literals_unchanged": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/ItemBatteryRules.java": {
+      "code_and_literals_unchanged": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxEnergy.java": {
+      "code_and_literals_unchanged": true,
+      "both_native_projections_unchanged": true
+    }
+  },
+  "matched_box_count": 20,
+  "matched_eu_cell_rows": [
+    {
+      "source_id": 14000,
+      "class": "MultiTileEntityBatteryEU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 16000,
+      "energy_type": "EU",
+      "current_id": "battery_lead_acid_ulv"
+    },
+    {
+      "source_id": 14001,
+      "class": "MultiTileEntityBatteryEU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 64000,
+      "energy_type": "EU",
+      "current_id": "battery_lead_acid_lv"
+    },
+    {
+      "source_id": 14002,
+      "class": "MultiTileEntityBatteryEU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 256000,
+      "energy_type": "EU",
+      "current_id": "battery_lead_acid_mv"
+    },
+    {
+      "source_id": 14003,
+      "class": "MultiTileEntityBatteryEU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 1024000,
+      "energy_type": "EU",
+      "current_id": "battery_lead_acid_hv"
+    },
+    {
+      "source_id": 14004,
+      "class": "MultiTileEntityBatteryEU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 4096000,
+      "energy_type": "EU",
+      "current_id": "battery_lead_acid_ev"
+    },
+    {
+      "source_id": 14010,
+      "class": "MultiTileEntityBatteryEU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 32000,
+      "energy_type": "EU",
+      "current_id": "battery_alkaline_ulv"
+    },
+    {
+      "source_id": 14011,
+      "class": "MultiTileEntityBatteryEU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 128000,
+      "energy_type": "EU",
+      "current_id": "battery_alkaline_lv"
+    },
+    {
+      "source_id": 14012,
+      "class": "MultiTileEntityBatteryEU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 512000,
+      "energy_type": "EU",
+      "current_id": "battery_alkaline_mv"
+    },
+    {
+      "source_id": 14013,
+      "class": "MultiTileEntityBatteryEU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 2048000,
+      "energy_type": "EU",
+      "current_id": "battery_alkaline_hv"
+    },
+    {
+      "source_id": 14014,
+      "class": "MultiTileEntityBatteryEU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 8192000,
+      "energy_type": "EU",
+      "current_id": "battery_alkaline_ev"
+    },
+    {
+      "source_id": 14020,
+      "class": "MultiTileEntityBatteryEU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 32000,
+      "energy_type": "EU",
+      "current_id": "battery_nickel_cadmium_ulv"
+    },
+    {
+      "source_id": 14021,
+      "class": "MultiTileEntityBatteryEU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 128000,
+      "energy_type": "EU",
+      "current_id": "battery_nickel_cadmium_lv"
+    },
+    {
+      "source_id": 14022,
+      "class": "MultiTileEntityBatteryEU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 512000,
+      "energy_type": "EU",
+      "current_id": "battery_nickel_cadmium_mv"
+    },
+    {
+      "source_id": 14023,
+      "class": "MultiTileEntityBatteryEU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 2048000,
+      "energy_type": "EU",
+      "current_id": "battery_nickel_cadmium_hv"
+    },
+    {
+      "source_id": 14024,
+      "class": "MultiTileEntityBatteryEU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 8192000,
+      "energy_type": "EU",
+      "current_id": "battery_nickel_cadmium_ev"
+    },
+    {
+      "source_id": 14030,
+      "class": "MultiTileEntityBatteryAdvEU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 512000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_cobalt_ulv"
+    },
+    {
+      "source_id": 14031,
+      "class": "MultiTileEntityBatteryAdvEU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 2048000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_cobalt_lv"
+    },
+    {
+      "source_id": 14032,
+      "class": "MultiTileEntityBatteryAdvEU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 8192000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_cobalt_mv"
+    },
+    {
+      "source_id": 14033,
+      "class": "MultiTileEntityBatteryAdvEU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 32768000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_cobalt_hv"
+    },
+    {
+      "source_id": 14034,
+      "class": "MultiTileEntityBatteryAdvEU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 131072000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_cobalt_ev"
+    },
+    {
+      "source_id": 14040,
+      "class": "MultiTileEntityBatteryAdvEU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 1024000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_manganese_ulv"
+    },
+    {
+      "source_id": 14041,
+      "class": "MultiTileEntityBatteryAdvEU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 4096000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_manganese_lv"
+    },
+    {
+      "source_id": 14042,
+      "class": "MultiTileEntityBatteryAdvEU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 16384000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_manganese_mv"
+    },
+    {
+      "source_id": 14043,
+      "class": "MultiTileEntityBatteryAdvEU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 65536000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_manganese_hv"
+    },
+    {
+      "source_id": 14044,
+      "class": "MultiTileEntityBatteryAdvEU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 262144000,
+      "energy_type": "EU",
+      "current_id": "battery_lithium_manganese_ev"
+    }
+  ],
+  "original_lu_crystal_rows_without_current_energy_behavior": [
+    {
+      "source_id": 14500,
+      "class": "MultiTileEntityBatteryLU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 3200000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14501,
+      "class": "MultiTileEntityBatteryLU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 12800000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14502,
+      "class": "MultiTileEntityBatteryLU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 51200000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14503,
+      "class": "MultiTileEntityBatteryLU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 204800000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14504,
+      "class": "MultiTileEntityBatteryLU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 819200000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14505,
+      "class": "MultiTileEntityBatteryLU8192",
+      "tier": 5,
+      "input": 8192,
+      "capacity": 3276800000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14510,
+      "class": "MultiTileEntityBatteryLU8",
+      "tier": 0,
+      "input": 8,
+      "capacity": 6400000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14511,
+      "class": "MultiTileEntityBatteryLU32",
+      "tier": 1,
+      "input": 32,
+      "capacity": 25600000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14512,
+      "class": "MultiTileEntityBatteryLU128",
+      "tier": 2,
+      "input": 128,
+      "capacity": 102400000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14513,
+      "class": "MultiTileEntityBatteryLU512",
+      "tier": 3,
+      "input": 512,
+      "capacity": 409600000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14514,
+      "class": "MultiTileEntityBatteryLU2048",
+      "tier": 4,
+      "input": 2048,
+      "capacity": 1638400000,
+      "energy_type": "LU"
+    },
+    {
+      "source_id": 14515,
+      "class": "MultiTileEntityBatteryLU8192",
+      "tier": 5,
+      "input": 8192,
+      "capacity": 6553600000,
+      "energy_type": "LU"
+    }
+  ],
+  "core_observations": [
+    "BOX|battery_box_ulv|TinAlloy|8|8|4",
+    "BOX|energy_storage_ulv|TinAlloy|8|8|16",
+    "BOX|battery_box_lv|SteelGalvanized|32|32|4",
+    "BOX|energy_storage_lv|SteelGalvanized|32|32|16",
+    "BOX|battery_box_mv|Aluminium|128|128|4",
+    "BOX|energy_storage_mv|Aluminium|128|128|16",
+    "BOX|battery_box_hv|StainlessSteel|512|512|4",
+    "BOX|energy_storage_hv|StainlessSteel|512|512|16",
+    "BOX|battery_box_ev|Chromium|2048|2048|4",
+    "BOX|energy_storage_ev|Chromium|2048|2048|16",
+    "BOX|battery_box_iv|Titanium|8192|8192|4",
+    "BOX|energy_storage_iv|Titanium|8192|8192|16",
+    "BOX|battery_box_luv|Iridium|32768|32768|4",
+    "BOX|energy_storage_luv|Iridium|32768|32768|16",
+    "BOX|battery_box_zpm|OsmiumElemental|131072|131072|4",
+    "BOX|energy_storage_zpm|OsmiumElemental|131072|131072|16",
+    "BOX|battery_box_uv|Trinitanium|524288|524288|4",
+    "BOX|energy_storage_uv|Trinitanium|524288|524288|16",
+    "BOX|battery_box_xv|Trinaquadalloy|2097152|2097152|4",
+    "BOX|energy_storage_xv|Trinaquadalloy|2097152|2097152|16",
+    "CELL|battery_lead_acid_ulv|8|16000|1|16|false",
+    "CELL|battery_lead_acid_lv|32|64000|16|64|false",
+    "CELL|battery_lead_acid_mv|128|256000|64|256|false",
+    "CELL|battery_lead_acid_hv|512|1024000|256|1024|false",
+    "CELL|battery_lead_acid_ev|2048|4096000|1024|4096|false",
+    "CELL|battery_alkaline_ulv|8|32000|1|16|false",
+    "CELL|battery_alkaline_lv|32|128000|16|64|false",
+    "CELL|battery_alkaline_mv|128|512000|64|256|false",
+    "CELL|battery_alkaline_hv|512|2048000|256|1024|false",
+    "CELL|battery_alkaline_ev|2048|8192000|1024|4096|false",
+    "CELL|battery_nickel_cadmium_ulv|8|32000|1|16|false",
+    "CELL|battery_nickel_cadmium_lv|32|128000|16|64|false",
+    "CELL|battery_nickel_cadmium_mv|128|512000|64|256|false",
+    "CELL|battery_nickel_cadmium_hv|512|2048000|256|1024|false",
+    "CELL|battery_nickel_cadmium_ev|2048|8192000|1024|4096|false",
+    "CELL|battery_lithium_cobalt_ulv|8|512000|1|16|true",
+    "CELL|battery_lithium_cobalt_lv|32|2048000|16|64|true",
+    "CELL|battery_lithium_cobalt_mv|128|8192000|64|256|true",
+    "CELL|battery_lithium_cobalt_hv|512|32768000|256|1024|true",
+    "CELL|battery_lithium_cobalt_ev|2048|131072000|1024|4096|true",
+    "CELL|battery_lithium_manganese_ulv|8|1024000|1|16|true",
+    "CELL|battery_lithium_manganese_lv|32|4096000|16|64|true",
+    "CELL|battery_lithium_manganese_mv|128|16384000|64|256|true",
+    "CELL|battery_lithium_manganese_hv|512|65536000|256|1024|true",
+    "CELL|battery_lithium_manganese_ev|2048|262144000|1024|4096|true",
+    "CRYSTAL_FORM|EnergiumCyan|gemChipped|gem_chipped_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gemChipped|gem_chipped_energiumred",
+    "CRYSTAL_FORM|EnergiumCyan|gemFlawed|gem_flawed_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gemFlawed|gem_flawed_energiumred",
+    "CRYSTAL_FORM|EnergiumCyan|gem|gem_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gem|gem_energiumred",
+    "CRYSTAL_FORM|EnergiumCyan|gemFlawless|gem_flawless_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gemFlawless|gem_flawless_energiumred",
+    "CRYSTAL_FORM|EnergiumCyan|gemExquisite|gem_exquisite_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gemExquisite|gem_exquisite_energiumred",
+    "CRYSTAL_FORM|EnergiumCyan|gemLegendary|gem_legendary_energiumcyan",
+    "CRYSTAL_FORM|EnergiumRed|gemLegendary|gem_legendary_energiumred",
+    "BAND|0|bufferDelta=4096|itemEnergy=35904",
+    "BAND|1|bufferDelta=2560|itemEnergy=37440",
+    "BAND|2|bufferDelta=0|itemEnergy=40000",
+    "BAND|3|bufferDelta=0|itemEnergy=40000",
+    "BAND|4|bufferDelta=0|itemEnergy=40000",
+    "BAND|5|bufferDelta=0|itemEnergy=40000",
+    "BAND|6|bufferDelta=-2560|itemEnergy=42560",
+    "BAND|7|bufferDelta=-4096|itemEnergy=44096",
+    "LOW_BUFFER|providers=4|offered=1",
+    "LOW_BUFFER_AFTER|buffer=0|emitted=true",
+    "NEXT_TICK|emitted=false",
+    "STOPPED_SIMULATION|accepted=9|bufferUnchanged=true",
+    "STOPPED_INJECTION|accepted=9|buffer=288|offered=0",
+    "LAST_PACKET|accepted=1|excess=28",
+    "RESTORE|buffer=40988|mode=2|canReceive=false|emitted=false",
+    "ITEM_LAST_PACKET|1",
+    "ITEM_EMPTY_EXTRACTION|0"
+  ],
+  "original_low_buffer_example": {
+    "evidence": "source_control_flow_and_arithmetic_not_gameplay",
+    "buffer": 32,
+    "voltage": 32,
+    "providers": 4,
+    "mode": 0,
+    "offered": 4,
+    "buffer_if_all_accepted": -96
+  },
+  "validation": {
+    "java17_core_compile_and_probe": true,
+    "cached_core_dependencies": true,
+    "explicit_fake_item_slots": true,
+    "native_compile": false,
+    "gradle": false,
+    "minecraft": false,
+    "save_restart": false,
+    "build": false,
+    "push": false
+  },
+  "original_source_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7",
+    "gregapi/tileentity/energy/TileEntityBase08Battery.java": "4db1df818cd2ef2dbf0ae167af3ed15f9993741380ea67ebc4db9bdc1d170d33",
+    "gregapi/tileentity/energy/ITileEntityEnergy.java": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+    "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java": "950a267dbb2f35248a064e5797e3658e6396c4f5a2f06cefcec7cd2e04f4b5fe",
+    "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBoxLarge.java": "0df829051bc1a876cd3ef0410fc4c484d1f8851034aade2b55c88a4dfdc46834"
+  },
+  "current_source_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxState.java": "95e57072502f19fe6df500cb5f56fa121b156e5e16505d2871b9010f8a5315a7",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/ItemBatteryRules.java": "861cc8325d9cbe35616c42aa63e790f3e09d22fb8cb618d92eae89ce1690af57",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxEnergy.java": "f5599f66927860e9733ec557703b35647a95061583333af81e502f58f9a84296",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/BatteryBoxDefinitions.java": "690097332af4a5764dbb34b90046e02bdcbc4753e14cccbb093f6e96f6fea007",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/ChemicalBatterySpec.java": "3d7fcf7ccca6b950cdd9132796618b2f9ba654cf6c2d0a8aa6af1f022ab76bc5",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "6f5e09d5828768ed9634d872a9a48a407c303be717464fd26a91ed9387f7663c",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/ChemicalBatteryItem.java": "01f20b5b2f2aa18e00a3cb6dd3d6c53519147af8f2367ce5e6d99889fe8ea961",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ChemicalBatteryBlockEntity.java": "17b085c3ce00abbd96d7e72da2d2152cdee633a2d2194927b93c4733d503707e",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ChemicalBatteryBlock.java": "b09ca6042bcb4296d769e6fc3278de0336edb6168ff8f509d62c454e2ac8c96d",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTChemicalBatteries.java": "9f9f2a2ed03bafa7303651458b65157f0d4f1db413d69a3d5f9cf693a10bd4b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java": "22f5f0756e7c56b6e9b516e3ccd4c77dd47bc426e2014f35df0e70ae7a36b141",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java": "7db844433b1cf1b35ef56402ad8fe31a57601c32b29ea4252a23d737a51b3abb",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java": "e4544fc6fedd72f9dfd63e815729406830d303832f14990d1c4e0c165936dddc",
+    "tools/integration/audit-probes/BatteryStorageAudit.java": "2b1b207c778c1603962319b8ece564878b4e3fe17ca07b121389db7c005bca9f"
+  }
+}

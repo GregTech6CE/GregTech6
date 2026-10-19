@@ -66,6 +66,10 @@
 
 额定目录在 core `content/energy/EnergyNodeDefinitions.java`；开关、模式、双方向输出状态和 64 tick 显示状态在 `content/energy/TransformerControlState.java`。共享原生 `content/energy/ElectricTransformerControl.java` 仅适配 MachineControl 和 NBT；实际输入、输出和切换方向仍在 `blockentity/energy/EnergyNodeBlockEntity.java`。包数取整帮助函数是 core `api/energy/EnergyPackets.java`，公共最小包门限是 `EnergyGate.java`，两者不能混同。现存边界差异见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。
 
+## 电池盒与电池物品
+
+core `content/energy/BatteryBoxDefinitions.java` 定义二十种盒，`BatteryBoxState.java` 处理工作缓存、充放电分档与输出模式。共享原生 `content/energy/BatteryBoxEnergy.java` 按固定槽位适配物品能源接口及世界回调，并读写 NBT；原生库存和 tick 仍在 EnergyNodeBlockEntity。化学电池目录是 core `ChemicalBatterySpec`，单次包数规则是 `ItemBatteryRules`，原生物品是 `item/ChemicalBatteryItem.java`。Energium 材料宝石尚未拥有同样的储能能力，详见 [储能核查](BATTERY_STORAGE_AUDIT.md)。
+
 ## 命名与修改约定
 
 物质制造机结构维护在 core `content/multiblock/SharedMatterFabricatorStructure.java`，主控 `MatterFabricatorBlockEntity` 只补充 QU 参数和处理器互换验证，实际加工／保存沿大型配方机父类。共用 `content/recipe/MatterRecipeLoader.java` 生成特殊转换与元素分离行，不能只搜索同名动态 RecipeMap。`tools/tests/test_fusion_resources.py` 已直接读取维护源码和三层资源位置，不再借助 native 工具视图；它是源引用检查，不能替代游戏渲染验证。

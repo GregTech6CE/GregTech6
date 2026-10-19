@@ -36,7 +36,7 @@
 | ALIGN-014 | 确认部分通用加工固定耗时替代了原版材料工作性分支，也遗漏部分过滤条件。 | `Loader_Recipes_Handlers:262–319,371–393`；`RecipeMapHandlerPrefix.getCosts`。 | `PartRecipeLoader` 的轧制、杆拉细丝、卷弯、箔／轨道与车床方法使用固定时长。困难材料品质 3、1U 锭→板，原版参数算得 1024 tick，当前传 16；具体范围不包含已有独立工作性计算的 Welder 和物理导线入口。 |
 | ALIGN-015 | 确认车床／切割的部分材料余料未返回。 | 原版车床／切割行启用 pulverized remains，`RecipeMapHandlerPrefix:213–218` 按差额和粉碎目标返回。 | `PartRecipeLoader.roll`、`cut` 只输出主产物，如板→透镜、透镜→环、小板切割。锭／宝石→杆有专用余料但未按粉碎目标转换；不能扩大成所有加工都无副产物。 |
 | ALIGN-016 | 确认通用材料切割的冷却液矩阵、时长和品质用量倍率不同。 | `Loader_Recipes_Handlers:628–652` 实际循环前四种冷却液；`RecipeMapHandlerPrefix:218` 按品质+1缩放。 | 当前 `cut` 只注册水、基础时长与 `max(16,duration)` 水量；品质 3 的长杆水路线，原版参数为 64 tick／256 mB，当前 16 tick／16 mB。其他显式切割配方未全部核查。 |
-| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。电变压器 emitElectricTransformer 同样缺少活动环境分支，见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
+| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。电变压器 emitElectricTransformer 及电池盒 serverTick 同样缺少活动环境分支，见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
 | ALIGN-018 | 确认 Flux Motor／Dynamo 各缺少后三档，共六个设备。 | `Loader_MultiTileEntities:858–860,955–957` 注册 11023–11025、11113–11115，无外部模组条件。 | 两版本共用的 `EnergyNodeDefinitions` 各只有 LV／MV。五类原版目录 35 行与当前 core 29 项比对，现有项额定值匹配；缺项需连同模型／配方／材料与语言补齐。 |
 | ALIGN-019 | 确认小锅炉工具交互差异。 | 原版 BoilerTank 的排空器先水后蒸汽，温度计读取储存热量。 | 当前先蒸汽后水、固定排空消耗，并缺少锅炉温度计分支；Jade 不能代替物品交互。 |
 | ALIGN-020 | 确认小锅炉缺少外部爆炸触发的高压连锁处理。 | 原版 BoilerTank.onExploded 在表值 >4 时再次爆炸。 | 当前只有自身过热／满罐及玩家拆除分支；抑制高压掉落不是爆炸回调。 |
@@ -83,6 +83,8 @@
 | ALIGN-058 | 确认普通汞液体物质分离的单位量偏大。 | 原版显式 mercury 绑定 L=144 mB/U，再用 liquid(U) 生成配方。 | 当前普通 mercury 按非 molten 名称取 1000 mB，同样输出 80 带电＋120 中性；独立 molten.mercury 的 144 不能替代普通汞。 |
 | ALIGN-059 | 确认电变压器最后整包接收采用向下取整。 | 原版 Energy_Stats 在缓存未满时向上取整整包，60/64 接收 32 后为 92。 | 当前 EnergyPackets.fitting 以剩余 4/32 得 0，拒收；不同于 ALIGN-047 接收后截断，见 [报告](ELECTRIC_TRANSFORMER_AUDIT.md)。 |
 | ALIGN-060 | 确认电变压器拒收幅值合法的负号 EU 包。 | 原版 Root 按绝对值过门限，Energy_Stats 按绝对值储存。 | 当前门限允许 -32，但随后非 RU 的 magnitude 得 0；限于接口边界，未声称普通供电必然触发。 |
+| ALIGN-061 | 确认电池盒低缓存输出有额外的防透支限制。 | 原版有一包缓存就可按供能槽数量输出，四槽／32 缓存可在全接收后到 -96。 | 当前 offered 受 buffer/voltage 限制，最多一包且不变负；这是保护性差异，本轮不撤销，见 [储能核查](BATTERY_STORAGE_AUDIT.md)。 |
+| ALIGN-062 | 确认十二种 Energium 宝石缺少原版 LU 储能行为。 | 原版红／青各六档 LU 电池注册为对应宝石的统一目标，有电量和充放电。 | 当前十二个 gem 形态均走普通 MaterialItem，两版没有转到 IItemEnergy／可摆放电池；EU 化学电池不是替代。 |
 
 上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，能源目录和弱燃料参数也有 core 枚举，其余结论依赖具体调用链核查，没有启动游戏。锅炉及液体／气体燃烧室的完整来源、相同部分和边界见 [专题核查](BOILER_BURNING_BOX_AUDIT.md)。
 
@@ -110,7 +112,7 @@
 | 坩埚、相变、铸造 | 已确认 ALIGN-001，待核其余分支 | 致死回收、热采掘、冷却目标、过热与材料守恒 |
 | 单方块机器 | 共用加工执行／中断／供能已确认 ALIGN-040–047，逐控制器及其余分支继续 | 配方映射、输入输出、额定值、超载、工具交互与持久化 |
 | 多方块与部件 | 大型锅炉、焦炉、聚变／内爆的部分结构／执行链已核查；物质制造结构／参数／特殊配方声明已对照 | 结构位置、部件角色、断开行为、建造与诊断、部件共用身份；整体绑定差异见 ALIGN-036，聚变输出／控制、内爆音效及聚变连续恢复见 ALIGN-052–056；物质制造最终配方解析、其它主控及跨区块行为继续 |
-| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；新增 ALIGN-017–035 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、变压器、储能及保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
+| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪 LU 水晶注册消费 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器、便携电源及保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
 | 电线、流体／物品管道、长距离物流 | 待逐网络重核 | 优先级、路由、丢包、接收端卸载与跨区块边界 |
 | 储物、容器与传感器 | 待逐类型重核 | 容量、成组掉落、量子／中继桥、仪表与单位 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
@@ -161,3 +163,5 @@
 继续核查材料属性的成员与工厂继承、处理目标和前缀监听器，以及锅炉、其它能源转换／储能与网络系统。同步整理相关过大／压行实现。第五批已整理三份能源核心源码的格式与职责说明，并在 SOURCE_LAYOUT 中补充批量材料数据导航。每条结论附原版和当前调用链；完整审计仍未完成，不能以这一批编译通过结束目标。
 
 第十六批核对九档电变压器目录和主要方向／控制路径，新增输入边界 ALIGN-059–060，扩展环境检查 ALIGN-017；两份压行控制类展开。详见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。电池盒、旋转与长距离转换及网络仍待继续。
+
+第十七批核对电池盒与化学电池目录、充放电和 LU 水晶注册消费，新增保护性差异 ALIGN-061 与功能缺口 ALIGN-062，见 [储能核查](BATTERY_STORAGE_AUDIT.md)。继续水晶充能器、便携电源、旋转与长距离转换及网络。
