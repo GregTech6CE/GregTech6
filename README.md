@@ -123,7 +123,7 @@ Read the [collaboration guide](docs/integration/COLLABORATION.md), [integration 
 
 ## Addon development
 
-API version **0** corresponds to mod version **0.0.0**. API 0 is a development interface; the version reset retains the existing extension capabilities. Public APIs provide materials, recipes, recipe machines, behavior machines and fluid fuel generators. Build the compile-only SDK for your loader with `:multiversion:1.20.1-forge:addonSdkJar` or `:multiversion:1.21.1-neoforge:addonSdkJar`. The separate `:core:addonApiJar` contains only the pure Java API. SDKs exclude implementation classes; do not bundle them into an addon. See [the addon API guide](docs/ADDON_API.md), the [SDK-only sample](examples/addon-sample/README.md), and [voltage tiers](docs/VOLTAGE_TIERS.md).
+API version **0** corresponds to mod version **0.0.0**. API 0 is a development interface; the version reset retains the existing extension capabilities. Public APIs provide materials, crucible compositions and alloy rows, recipes, recipe machines, behavior machines and fluid fuel generators. Build the compile-only SDK for your loader with `:multiversion:1.20.1-forge:addonSdkJar` or `:multiversion:1.21.1-neoforge:addonSdkJar`. The separate `:core:addonApiJar` contains only the pure Java API. SDKs exclude implementation classes; do not bundle them into an addon. See [the addon API guide](docs/ADDON_API.md), the [SDK-only sample](examples/addon-sample/README.md), and [voltage tiers](docs/VOLTAGE_TIERS.md).
 
 ## License
 

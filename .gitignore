@@ -4,10 +4,13 @@ run-data/
 .gradle/
 *.iml
 .idea/
+.vscode/
 __pycache__/
 
 # Integration scratch, local runs and generated evidence. Summaries live in docs/integration.
 /work/
+# Local card plans; durable decisions and evidence still go to docs/integration.
+/docs/card-plans/
 **/build/
 **/.gradle/
 **/run/
