@@ -8,7 +8,7 @@ import com.gregtech.gregtech.content.recipe.TreatedWoodRecipes;
 import com.gregtech.gregtech.content.recipe.VanillaWoodProcessingRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.content.recipe.Loader_WoodCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.WoodCraftingRecipeInjector;
 import com.gregtech.gregtech.recipe.ToolShapedRecipe;
 import com.gregtech.gregtech.registry.GTItems;
 import net.minecraft.core.BlockPos;
@@ -94,7 +94,7 @@ public final class TreatedWoodSurvivalTests {
     @GameTest(template = "test_empty", timeoutTicks = 300)
     public static void originalWoodGearPatternsAreRegisteredWithTheirRealInputs(GameTestHelper h) {
         var manager = h.getLevel().getRecipeManager();
-        h.assertTrue(Loader_WoodCraftingRecipes.treatedRegisteredIds().size() == 3,
+        h.assertTrue(WoodCraftingRecipeInjector.treatedRegisteredIds().size() == 3,
                 "Wood bolts and both treated gears use the three original hand patterns");
         ToolShapedRecipe woodBolt = crafting(manager, "wood_bolt");
         ToolShapedRecipe smallGear = crafting(manager, "small_gear");

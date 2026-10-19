@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.block.misc.TrackBlock;
-import com.gregtech.gregtech.content.recipe.Loader_TrackRecipes;
+import com.gregtech.gregtech.content.recipe.TrackRecipeInjector;
 import com.gregtech.gregtech.registry.GTTrackBlocks;
 import com.gregtech.gregtech.registry.GTIconSetBlocks;
 import net.minecraft.core.BlockPos;
@@ -216,15 +216,15 @@ public final class TrackTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void recipesAndTheVanillaCartCeiling(GameTestHelper h) {
         // 30 track rows plus GT6's 15 replacements of the four vanilla rail recipes.
-        h.assertTrue(Loader_TrackRecipes.registeredIds().size() == 45,
+        h.assertTrue(TrackRecipeInjector.registeredIds().size() == 45,
                 "GT6 has one row per track plus the vanilla replacements: "
-                        + Loader_TrackRecipes.registeredIds().size()
-                        + " " + Loader_TrackRecipes.skipped());
-        h.assertTrue(Loader_TrackRecipes.skipped().isEmpty(),
-                "every GT6 rail row is registered: " + Loader_TrackRecipes.skipped());
+                        + TrackRecipeInjector.registeredIds().size()
+                        + " " + TrackRecipeInjector.skipped());
+        h.assertTrue(TrackRecipeInjector.skipped().isEmpty(),
+                "every GT6 rail row is registered: " + TrackRecipeInjector.skipped());
 
         var recipes = h.getLevel().getRecipeManager().getRecipes();
-        for (String id : Loader_TrackRecipes.registeredIds()) {
+        for (String id : TrackRecipeInjector.registeredIds()) {
             h.assertTrue(recipes.stream().anyMatch(r -> r.getId().toString().equals(id)),
                     "the crafting manager holds " + id);
         }

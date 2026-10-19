@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rank the transpiler's missing-content tokens by how many recipes each one blocks.
 
-The runtime records which content tokens failed to resolve (see GTGeneratedChem.missingContent),
+The runtime records which content tokens failed to resolve (see GeneratedRecipeResolver.missingContent),
 but not how often. Counting the specs inside the generated tables shows which missing material
 form, fluid or item is worth adding first.
 

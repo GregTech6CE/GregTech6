@@ -249,7 +249,7 @@ public final class GTFluids {
     /**
      * A registered GT6 fluid as a {@link FluidStack}, or {@code null} when it is not registered.
      * <p>
-     * GT6's {@code Water}/{@code Lava} entries reuse the vanilla fluids, so {@link Loader_Fluids}
+     * GT6's {@code Water}/{@code Lava} entries reuse the vanilla fluids, so {@link FluidBootstrap}
      * deliberately does not register a still/flowing pair for them (by registry identity, not texture mode); those two resolve to the vanilla fluids here.
      * </p>
      */

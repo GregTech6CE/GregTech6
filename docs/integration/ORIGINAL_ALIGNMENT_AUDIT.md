@@ -2,6 +2,8 @@
 
 当前审计开始于 2026-10-19，基线 `d4e5b7009`。这是进行中的全面核查，**尚未得出全部对齐的结论**。本页取代旧 `REMAINING_WORK.md` 的当前安排；旧交付与历史回执不作改写。
 
+第二批以 `65cd233e4` 为基线：完成 30 个活动类名标准化、共享机器配方初始化清单及起火器标签入口归一；新增材料属性／凝固目标的原版对照。当前代码入口见 [源码导航](SOURCE_LAYOUT.md)。
+
 ## 范围与判定方式
 
 原版来源为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，此次清点 1,229 个 Java 文件；当前 core 与 Stonecutter 的主源码／API 共 1,740 个 Java 文件。文件数量、同名类、注释提及原版或配方条数均不能证明行为等价。逐文件路径及摘要见 [源码范围清单](verification/alignment-source-inventory-20261019.json)，可用 `tools/integration/inventory_alignment_scope.py` 重建。
@@ -18,16 +20,20 @@
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。不能把语言文件格式自检通过当作这些提示已经汉化。 |
 | ALIGN-004 | 配置功能仍明显不完整；这也符合之前将 cfg 放到收尾的安排。 | 原版 `gregapi/config/Config`、世界生成调度与加载器具有多项配置读取。 | 共享 `GregTechConfig` 只定义日志与过压爆炸两项；`GTWorldgenDefaults.STONE_LAYERS` 为常量。需完整列出原配置的现代适用性；Nexus／roads 默认开启本身不是错误。 |
-| ALIGN-005 | 确认共享目录与独立资源重复维护导致自检不一致；不能判为游戏里缺起火器标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `core/.../tags/items/crafting_firestarters.json` 存在，但 `EquipmentCraftingCatalog.TAGS` 未列出它，源策略检查报 `missing=['gt6ce:crafting_firestarters']`。追踪 `PortableCraftingRecipePack.addOriginalToolTag` 后确认 NeoForge 另有 `tags/item/crafting_firestarters.json`，所以并非只能依赖目录转换。两份资源和目录都不是本批改动；后续应统一维护入口，保留自检约束。 |
+| ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
+| ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
+| ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
+| ALIGN-008 | 确认搅拌盆材料表面未按 GLOWING 自发光。 | `MultiTileEntityMixingBowl:407` 调用材料 `getTextureDust()`；`OreDictMaterial:1009` 将 GLOWING 传给纹理。 | `ProcessingToolRenderer` 材料面与覆盖面都使用环境 `light`，没有材料发光判断。流体亮度另有 `FluidCatalog`／`FluidVisualPolicy`，不能扩大为“所有发光流体缺失”。 |
+| ALIGN-009 | 确认凝固目标只供手册展示，尚未接入坩埚冷却。 | `MT:1880–1881`：H2O→Ice、Lava→Obsidian；`MultiTileEntitySmeltery:276,343` 按 `mTargetSolidifying` 转换材料和数量。 | `CrucibleProcess` 冷却分支将同材料重新加入。实际 core 两个 1U 样本降过熔点后分别仍为 Water、Lava；量仍为 648648000，见 [材料审计回执](verification/material-trait-review-20261019.json)。 |
 
-上述是代码确认的具体范围，不表示这些系统完全未移植；没有在本轮启动游戏复现。
+上述是具体范围，不表示这些系统完全未移植；ALIGN-009 另有独立 core 观察，其余新增项为调用链核查，没有启动游戏。
 
 ## 全面核查队列
 
 | 系统 | 本轮状态 | 完成盘点需要的证据 |
 | --- | --- | --- |
-| 材料、前缀、物质量、统一规则 | 待逐项重核 | 原版工厂隐式属性、材料处理目标、外部标签、物质量和转换条件 |
-| 固定／动态配方、监听器 | 待逐项重核 | 生成器跳过原因、运行时未解析行、回调触发顺序；外部依赖与内部遗漏分开 |
+| 材料、前缀、物质量、统一规则 | 已清点三组 TD 的 69 个直接属性声明，核查其中 15 项的具体表示／消费路径；其余继续 | 已确认 ALIGN-006–009。FOOD／BRITTLE／SOFT 等由 `MaterialWorkability` 表示，不能只看枚举判缺失；成员全集和工厂继承仍待重核。 |
+| 固定／动态配方、监听器 | 两版本 54 步初始化序列已比对并共享，语义和完整内容继续核查 | 生成器跳过原因、运行时未解析行、回调触发顺序；外部依赖与内部遗漏分开 |
 | 手工工具与早期生存 | 已有前轮局部修复，待扩大核查 | 工具专属行为、损耗、容器返还和自然可得原料 |
 | 单物品、食物、饮料、服装 | 已有 1,278 项运行清单，待核查行为出口 | 无静态机器配方不直接判缺失，另查右键、掉落、工作台、动态回调 |
 | 弹药与实体 | 已确认 ALIGN-002，未完成全类核查 | 箭／子弹命中、附魔、拾取、同步和外部武器入口 |
@@ -64,8 +70,10 @@
 
 最终双版主代码及探针编译通过（1m28s）；105 个 Java 文件两版归一化比较通过。额外源策略检查因 ALIGN-005 的既有标签目录遗漏失败，不能记为全套自检通过。本轮未运行游戏，也未生成新构建包。
 
-尚未完成的代码标准化：`Loader_...` 类名改成职责明确的常规 Java 类名、启动器重复配方清单提取、过大职责类拆分、紧密压行代码整理，以及生成器路径／来源参数的统一。不能把仅完成目录整理称为全部重构完成。保留原版来源注释、历史清单与第三方署名。
+第二批已经完成 `Loader_...`／`IGTLoader`／`GTGeneratedChem` 共 30 个活动类名整理及共用机器配方清单。原版来源注释和历史回执保留原名。78 个非启动入口 Java 文件在正确展开 Stonecutter 条件后，除声明的接口适配外代码／字面量等价；两平台各 54 步调用序列相同，日志和异常定位改用明确职责名称。NeoForge 旧独立配方加载类已删除。
+
+尚未完成的标准化：过大职责类拆分、紧密压行代码整理、其它重复注册适配、生成器路径／来源参数的统一，以及审计中发现的材料元数据消费边界。不能把改名和一份清单当作全部重构完成。
 
 ## 下一批工作
 
-先完成加载类命名和初始化清单的可读性整理，再按上表依赖顺序逐系统核查。每条结论必须附原版和当前调用链，记录已确认缺失、适配与待验证项。全量审计目标保持进行中，不因这一批编译通过而结束。
+继续核查材料属性的成员与工厂继承、处理目标和前缀监听器，再按上表推进其它系统。同步整理相关过大／压行实现。每条结论附原版和当前调用链；完整审计仍未完成，不能以这一批编译通过结束目标。

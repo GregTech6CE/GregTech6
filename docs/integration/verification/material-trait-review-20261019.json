@@ -1,0 +1,658 @@
+{
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "scope": "Partial behavioral review with a complete inventory of directly declared TagData in these three TD sections. Helper arrays, material membership, all consumers and other TD sections are not yet fully reviewed.",
+  "original_sources": {
+    "gregapi/data/TD.java": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/oredict/OreDictMaterial.java": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+    "gregapi/item/multiitem/MultiItemTool.java": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac",
+    "gregtech/items/behaviors/Behavior_FlintAndTinder.java": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+    "gregtech/tileentity/tools/MultiTileEntityMixingBowl.java": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c",
+    "gregtech/tileentity/tools/MultiTileEntitySmeltery.java": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+  },
+  "port_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/material/MaterialProperty.java": "d9fc7cb4cdaf7588597faab8efd2f7c7f721011cccc2d6b9d7f2ded831765783",
+    "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java": "736f3c9a09621dd7e21f2a2dc33d307a0fcc82cad7192ef3450ad55612a08963",
+    "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java": "e460efaed48f54ebe0f7f1ef3d249e31d7d3011ada59b10bf51916f15e0751ba",
+    "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java": "e800fb05585bcc78fc150c4cf7504252f51a2e783b2b5674339608ee2f4c9934",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/crucible/CrucibleProcess.java": "6e87a39733bb0f9990acba2a81203996b2bf8daac33cbaa176f38aa342392c8e",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java": "9aca88dc0f53c5346df5d8beb44a870eb45414f82e586baf0e0f913c41d387d6",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/ProcessingToolRenderer.java": "95a93903f84a4078eea52a3a61e26f7307e986fc4e0d74199d93148f60ed1c79"
+  },
+  "traits": [
+    {
+      "section": "Properties",
+      "symbol": "ACID",
+      "key": "PROPERTIES.ACID",
+      "original_line": 386,
+      "status": "consumer_present",
+      "issue": "",
+      "note": "CrucibleProcess checks acidProof before preserving contents; all other acid consumers remain to audit."
+    },
+    {
+      "section": "Properties",
+      "symbol": "WOOD",
+      "key": "PROPERTIES.WOOD",
+      "original_line": 388,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "FOOD",
+      "key": "PROPERTIES.FOOD",
+      "original_line": 390,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isFood supplies a generated set; full membership/factory propagation is not yet compared."
+    },
+    {
+      "section": "Properties",
+      "symbol": "MEAT",
+      "key": "PROPERTIES.MEAT",
+      "original_line": 392,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "ROTTEN",
+      "key": "PROPERTIES.ROTTEN",
+      "original_line": 394,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "COAL",
+      "key": "PROPERTIES.COAL",
+      "original_line": 396,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "STONE",
+      "key": "PROPERTIES.STONE",
+      "original_line": 398,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "PEARL",
+      "key": "PROPERTIES.PEARL",
+      "original_line": 400,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "QUARTZ",
+      "key": "PROPERTIES.QUARTZ",
+      "original_line": 402,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "CRYSTAL",
+      "key": "PROPERTIES.CRYSTAL",
+      "original_line": 404,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "VALUABLE",
+      "key": "PROPERTIES.VALUABLE",
+      "original_line": 406,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "MAGICAL",
+      "key": "PROPERTIES.MAGICAL",
+      "original_line": 408,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "WARPING",
+      "key": "PROPERTIES.WARPING",
+      "original_line": 410,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "BETWEENLANDS",
+      "key": "PROPERTIES.BETWEENLANDS",
+      "original_line": 412,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "MAZEBREAKER",
+      "key": "PROPERTIES.MAZEBREAKER",
+      "original_line": 414,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "BURNING",
+      "key": "PROPERTIES.BURNING",
+      "original_line": 416,
+      "status": "confirmed_gap",
+      "issue": "ALIGN-006",
+      "note": "Ignition tests only FLAMMABLE; original also accepts BURNING."
+    },
+    {
+      "section": "Properties",
+      "symbol": "FLAMMABLE",
+      "key": "PROPERTIES.FLAMMABLE",
+      "original_line": 418,
+      "status": "consumer_present",
+      "issue": "",
+      "note": "Ignition and crucible burnoff read the explicit property."
+    },
+    {
+      "section": "Properties",
+      "symbol": "UNBURNABLE",
+      "key": "PROPERTIES.UNBURNABLE",
+      "original_line": 420,
+      "status": "consumer_present",
+      "issue": "",
+      "note": "Crucible burnoff exemption reads the explicit property."
+    },
+    {
+      "section": "Properties",
+      "symbol": "EXPLOSIVE",
+      "key": "PROPERTIES.EXPLOSIVE",
+      "original_line": 422,
+      "status": "consumer_present",
+      "issue": "",
+      "note": "Crucible phase result propagates explosiveAmount; all block/tool consumers remain to audit."
+    },
+    {
+      "section": "Properties",
+      "symbol": "BOUNCY",
+      "key": "PROPERTIES.BOUNCY",
+      "original_line": 424,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "GLOWING",
+      "key": "PROPERTIES.GLOWING",
+      "original_line": 426,
+      "status": "confirmed_gap",
+      "issue": "ALIGN-008",
+      "note": "The mixing-bowl material surface lacks the original material-driven fullbright path. Fluid luminosity is separately implemented."
+    },
+    {
+      "section": "Properties",
+      "symbol": "LIGHTING",
+      "key": "PROPERTIES.LIGHTING",
+      "original_line": 428,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "SOFT",
+      "key": "PROPERTIES.SOFT",
+      "original_line": 430,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isSoft/isEasyWorkable."
+    },
+    {
+      "section": "Properties",
+      "symbol": "BRITTLE",
+      "key": "PROPERTIES.BRITTLE",
+      "original_line": 432,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isBrittle; do not infer absence from MaterialProperty alone."
+    },
+    {
+      "section": "Properties",
+      "symbol": "STRETCHY",
+      "key": "PROPERTIES.STRETCHY",
+      "original_line": 434,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "INVISIBLE",
+      "key": "PROPERTIES.INVISIBLE",
+      "original_line": 436,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "TRANSPARENT",
+      "key": "PROPERTIES.TRANSPARENT",
+      "original_line": 438,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "MAGNETIC_PASSIVE",
+      "key": "PROPERTIES.MAGNETIC_PASSIVE",
+      "original_line": 440,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "MAGNETIC_ACTIVE",
+      "key": "PROPERTIES.MAGNETIC_ACTIVE",
+      "original_line": 442,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "AUTO_COLLECTING",
+      "key": "PROPERTIES.AUTO_COLLECTING",
+      "original_line": 444,
+      "status": "confirmed_gap",
+      "issue": "ALIGN-007",
+      "note": "Machine drop collection tests the tool type, omitting original primary/secondary material traits."
+    },
+    {
+      "section": "Properties",
+      "symbol": "ENDER_DRAGON_PROOF",
+      "key": "PROPERTIES.ENDER_DRAGON_PROOF",
+      "original_line": 446,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "WITHER_PROOF",
+      "key": "PROPERTIES.WITHER_PROOF",
+      "original_line": 448,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "NO_ADVANCED_TOOLS",
+      "key": "PROPERTIES.NO_ADVANCED_TOOLS",
+      "original_line": 450,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "HAS_TOOL_STATS",
+      "key": "PROPERTIES.HAS_TOOL_STATS",
+      "original_line": 452,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "HAS_COLOR",
+      "key": "PROPERTIES.HAS_COLOR",
+      "original_line": 454,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "COMMON_ORE",
+      "key": "PROPERTIES.COMMON_ORE",
+      "original_line": 456,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "EXPLODES_IN_NONVANILLA_CRAFTING_GRID",
+      "key": "PROPERTIES.EXPLODES_IN_NONVANILLA_CRAFTING_GRID",
+      "original_line": 458,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "RANDOM_SMALL_GEM_ORE",
+      "key": "PROPERTIES.RANDOM_SMALL_GEM_ORE",
+      "original_line": 460,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "AUTO_BLACKLIST",
+      "key": "PROPERTIES.AUTO_BLACKLIST",
+      "original_line": 462,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "AUTO_MATERIAL",
+      "key": "PROPERTIES.AUTO_MATERIAL",
+      "original_line": 464,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "INVALID_MATERIAL",
+      "key": "PROPERTIES.INVALID_MATERIAL",
+      "original_line": 466,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "UNUSED_MATERIAL",
+      "key": "PROPERTIES.UNUSED_MATERIAL",
+      "original_line": 467,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "IGNORE_IN_COLOR_LOG",
+      "key": "PROPERTIES.IGNORE_IN_COLOR_LOG",
+      "original_line": 468,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Properties",
+      "symbol": "DONT_SHOW_THIS_COMPONENT",
+      "key": "PROPERTIES.DONT_SHOW_THIS_COMPONENT",
+      "original_line": 470,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "UNRECYCLABLE",
+      "key": "PROCESSING.UNRECYCLABLE",
+      "original_line": 499,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "CENTRIFUGE",
+      "key": "PROCESSING.CENTRIFUGABLE",
+      "original_line": 501,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "ELECTROLYSER",
+      "key": "PROCESSING.ELECTROLYSABLE",
+      "original_line": 503,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "CRUCIBLE_ALLOY",
+      "key": "PROCESSING.CRUCIBLE_ALLOY",
+      "original_line": 505,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "EXTRUDER",
+      "key": "PROCESSING.EXTRUDABLE",
+      "original_line": 507,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "EXTRUDER_SIMPLE",
+      "key": "PROCESSING.EXTRUDABLE_SIMPLE",
+      "original_line": 509,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "UUM",
+      "key": "PROCESSING.UUM_SYNTHESISABLE",
+      "original_line": 511,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "FUSION",
+      "key": "PROCESSING.FUSION_SYNTHESISABLE",
+      "original_line": 513,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "MORTAR",
+      "key": "PROCESSING.MORTAR_GRINDABLE",
+      "original_line": 515,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isMortarGrindable also handles the implicit WOOD factory trait."
+    },
+    {
+      "section": "Processing",
+      "symbol": "COOL2CRYSTAL",
+      "key": "PROCESSING.COOL2CRYSTAL",
+      "original_line": 517,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "SMITHABLE",
+      "key": "PROCESSING.SMITHABLE",
+      "original_line": 519,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "FURNACE",
+      "key": "PROCESSING.FURNACE",
+      "original_line": 521,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isFurnace; original complete membership remains to audit."
+    },
+    {
+      "section": "Processing",
+      "symbol": "NEVER_FURNACE",
+      "key": "PROCESSING.NEVER_FURNACE",
+      "original_line": 523,
+      "status": "source_set_matched",
+      "issue": "",
+      "note": "Five MT declarations match the five postInit material names; furnace handling exists in OvenRecipeBridge. Not a new runtime test."
+    },
+    {
+      "section": "Processing",
+      "symbol": "MELTING",
+      "key": "PROCESSING.MELTING",
+      "original_line": 525,
+      "status": "consumer_present",
+      "issue": "",
+      "note": "CrucibleProcess uses this burnoff exemption; not a full material membership claim."
+    },
+    {
+      "section": "Processing",
+      "symbol": "BLACKLISTED_SMELTER",
+      "key": "PROCESSING.BLACKLISTED_SMELTER",
+      "original_line": 527,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "CRYSTALLISABLE",
+      "key": "PROCESSING.CRYSTALLISABLE",
+      "original_line": 529,
+      "status": "alternate_representation",
+      "issue": "",
+      "note": "MaterialWorkability.isCrystallisable feeds AutoclaveRecipes."
+    },
+    {
+      "section": "Processing",
+      "symbol": "REACTS_WITH_GLASS",
+      "key": "PROCESSING.REACTS_WITH_GLASS",
+      "original_line": 531,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "SOLDERING_MATERIAL",
+      "key": "PROCESSING.SOLDERING_MATERIAL",
+      "original_line": 533,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "SOLDERING_MATERIAL_BAD",
+      "key": "PROCESSING.SOLDERING_MATERIAL_BAD",
+      "original_line": 534,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "SOLDERING_MATERIAL_GOOD",
+      "key": "PROCESSING.SOLDERING_MATERIAL_GOOD",
+      "original_line": 535,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "WASHING_FIRESTONE",
+      "key": "PROCESSING.WASHING_FIRESTONE",
+      "original_line": 537,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "WASHING_PERSULFATE",
+      "key": "PROCESSING.WASHING_PERSULFATE",
+      "original_line": 538,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "WASHING_MERCURY",
+      "key": "PROCESSING.WASHING_MERCURY",
+      "original_line": 539,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "Processing",
+      "symbol": "PULVERIZING_CINNABAR",
+      "key": "PROCESSING.PULVERIZING_CINNABAR",
+      "original_line": 541,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    },
+    {
+      "section": "ItemGenerator",
+      "symbol": "LIQUID",
+      "key": "ITEMGENERATOR.LIQUID",
+      "original_line": 550,
+      "status": "not_reviewed",
+      "issue": "",
+      "note": "No parity conclusion from the inventory."
+    }
+  ],
+  "solidification_observation": {
+    "issue": "ALIGN-009",
+    "original": "MT:1880-1881 and MultiTileEntitySmeltery:276,343 use mTargetSolidifying.",
+    "current": "CrucibleProcess cooling branch re-adds the same material; MaterialProcessingTargets is consumed only by the dictionary in production.",
+    "probe": "work/architecture-standardization-20261019/SolidificationAudit.java",
+    "probe_sha256": "22de1ee1b7b755ebacc16bd82efd59a7dbc7cc965a2f3c35669cd66b7bffd13f",
+    "result_lines": [
+      "SOLIDIFICATION|H2O|original=Ice|actual=Water|units=648648000|melting=273",
+      "SOLIDIFICATION|Lava|original=Obsidian|actual=Lava|units=648648000|melting=1300"
+    ],
+    "scope": "Standalone core, 1 U each, temperature crosses melting point downward, acid-proof hull. No game world was started."
+  }
+}

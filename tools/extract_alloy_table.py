@@ -1,4 +1,4 @@
-"""Generate the alloy reverse table from Loader_Recipes_Alloys.java.
+"""Generate the alloy reverse table from AlloyRecipeLoader.java.
 
 The port's alloy recipes are written as `mix(out("Bronze", 4), "Copper", 3, "Tin", 1)` calls; the
 material dictionary needs the reverse direction ("which alloys is Copper part of?"), so this tool
@@ -18,7 +18,7 @@ import os
 import re
 
 SOURCE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "content", "recipe",
-                      "Loader_Recipes_Alloys.java")
+                      "AlloyRecipeLoader.java")
 TARGET = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                       "GTAlloyTable.java")
 
@@ -65,7 +65,7 @@ lines = [
     "import java.util.List;",
     "",
     "/**",
-    " * The port's alloying table (transcribed from {@link Loader_Recipes_Alloys}) in reverse-queryable",
+    " * The port's alloying table (transcribed from {@link AlloyRecipeLoader}) in reverse-queryable",
     " * form: every entry is one {@code mix(out(...), ...)} call, i.e. what a molten alloy is made of.",
     " *",
     " * <p>Used by the material dictionary to print which alloys a material takes part in. Amounts are",

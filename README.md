@@ -6,6 +6,8 @@ A community integration project bringing GregTech 6 to modern Minecraft, with a 
 
 The **`main`** branch manages all native source sets and resources with **Stonecutter 0.7.11**. The former main branch is preserved as **`old`**. See the [migration and generator guide](docs/integration/STONECUTTER_MIGRATION.md).
 
+For code entry points and naming conventions, see the [source layout guide](docs/integration/SOURCE_LAYOUT.md). The ongoing [original GT6 alignment audit](docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md) distinguishes confirmed gaps from unverified behavior.
+
 ## About
 
 GregTech 6 Community Edition combines work from **saltnya's gregtech6reborn**, **brokestar233's gregtech6**, and **lombinaxmasson's cruciblecraft**. The project uses saltnya's implementation as its initial content baseline while comparing and integrating the strengths of all three ports.

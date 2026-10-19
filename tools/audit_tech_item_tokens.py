@@ -40,7 +40,7 @@ def port_ids() -> set[str]:
     ids = set(re.findall(r'"([a-z0-9_]+)"', block))
     # GT6's IL.* names are not all technological items: the generator modules and most of the food
     # items are multi-items (GTMultiItemsGen, transpiled from GT6's MultiItem* classes), and
-    # GTGeneratedChem's ``tech:`` spec resolves those through ForgeRegistries - registered anyway.
+    # GeneratedRecipeResolver's ``tech:`` spec resolves those through ForgeRegistries - registered anyway.
     if MULTI.exists():
         entries = MULTI.read_text(encoding="utf-8").split("static final String[] ENTRIES = {", 1)[1]
         entries = entries.split("};", 1)[0]
@@ -93,7 +93,7 @@ def main() -> None:
             ok.append(token)
         elif token in alias and (alias[token] in ids or ":" in alias[token]):
             # a namespaced target is a vanilla item (bone meal, hay block, poisonous potato);
-            # GTGeneratedChem resolves it through ForgeRegistries
+            # GeneratedRecipeResolver resolves it through ForgeRegistries
             aliasable.append((token, alias[token], count))
         else:
             missing.append((token, count))

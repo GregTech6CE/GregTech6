@@ -11,7 +11,7 @@ if __name__ == "__main__": require_managed_writer()
 import io
 import os
 
-PATH = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "Loader_Fluids.java")
+PATH = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "FluidBootstrap.java")
 text = io.open(PATH, encoding="utf-8").read()
 text = text.replace("import net.minecraftforge.fluids.FlowingFluid;\n", "")
 text = text.replace("import net.minecraft.world.level.block.LiquidBlock;",

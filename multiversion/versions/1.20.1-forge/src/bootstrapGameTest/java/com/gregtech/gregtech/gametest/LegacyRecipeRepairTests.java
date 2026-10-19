@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.data.MultiblockCraftingRecipes;
-import com.gregtech.gregtech.content.recipe.Loader_TrackRecipes;
+import com.gregtech.gregtech.content.recipe.TrackRecipeInjector;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -59,11 +59,11 @@ public final class LegacyRecipeRepairTests {
                 "", CookingBookCategory.MISC, Ingredient.of(Items.STICK),
                 new ItemStack(Items.POWERED_RAIL), 0, 200);
 
-        h.assertTrue(Loader_TrackRecipes.replacesVanillaRailRecipe(shaped, access),
+        h.assertTrue(TrackRecipeInjector.replacesVanillaRailRecipe(shaped, access),
                 "GT6 replaces a conflicting shaped recipe even from another mod");
-        h.assertTrue(!Loader_TrackRecipes.replacesVanillaRailRecipe(shapeless, access),
+        h.assertTrue(!TrackRecipeInjector.replacesVanillaRailRecipe(shapeless, access),
                 "GT6 keeps a shapeless data-pack replacement");
-        h.assertTrue(!Loader_TrackRecipes.replacesVanillaRailRecipe(smelting, access),
+        h.assertTrue(!TrackRecipeInjector.replacesVanillaRailRecipe(smelting, access),
                 "GT6 keeps a non-crafting rail recipe");
         h.assertTrue(h.getLevel().getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath(
                 "minecraft", "powered_rail")).isEmpty(),

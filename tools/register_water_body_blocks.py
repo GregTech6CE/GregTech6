@@ -20,7 +20,7 @@ import io
 import json
 import os
 
-LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "Loader_Fluids.java")
+LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "FluidBootstrap.java")
 ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 
@@ -65,14 +65,14 @@ def write_json(path, obj):
 
 text = io.open(LOADER, encoding="utf-8").read()
 if "WORLD_FLUID_PATHS" in text:
-    print("Loader_Fluids: already wired")
+    print("FluidBootstrap: already wired")
 else:
     assert text.count(OLD_SET) == 1, "fluid set anchor"
     text = text.replace(OLD_SET, NEW_SET)
     assert text.count("SPRING_FLUID_PATHS.contains(path)") == 1, "usage anchor"
     text = text.replace("SPRING_FLUID_PATHS.contains(path)", "WORLD_FLUID_PATHS.contains(path)")
     io.open(LOADER, "w", encoding="utf-8", newline="\n").write(text)
-    print("Loader_Fluids: water body fluids now get a LiquidBlock")
+    print("FluidBootstrap: water body fluids now get a LiquidBlock")
 
 # Blockstate + models: a LiquidBlock uses vanilla water's 16 level variants, and GT6 renders its
 # waterlike blocks with vanilla water's icon, so the models reference vanilla water textures.

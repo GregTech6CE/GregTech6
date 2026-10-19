@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-19 / 初始化类名、共享配方清单与材料对照
+
+30 类改名完成，双版各 54 步机器配方注册顺序保持并共用清单；NeoForge 旧独立入口删除，Forge 同样受 SetupOnce 保护。98 项标签目录包含起火器标签，NeoForge 重复资源删除。确认材料点火、自收集、自发光及凝固目标四处缺口；69 个属性声明中目前只核查 15 项的具体消费路径，未完成全部属性审计。双版编译和源策略通过，随后按用户要求生成当前工作树双版包。见 [标准化回执](verification/loader-standardization-20261019.json)、[材料审计](verification/material-trait-review-20261019.json) 与 [交付回执](verification/current-build-20261019.json)。
+
 ## 2026-10-19 / 原版全面审计与加载目录整理
 
 清点原版 1,229 个、当前生产／API 1,740 个 Java 文件并保存摘要。确认坩埚致死回收、材料箭命中、硬编码提示及配置范围的具体缺口，其他系统继续核查。50 类从 loader/loaders/a/b/c 迁至 bootstrap、content/material、content/recipe 和共享数据目录；生成器及检查工具同步。双版主代码／探针编译通过，105 文件两版方法体与字符串对比通过。类名与初始化清单重构未完成，未运行游戏或构建新 JAR，见 [审计主表](ORIGINAL_ALIGNMENT_AUDIT.md)。

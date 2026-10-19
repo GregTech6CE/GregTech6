@@ -3,7 +3,7 @@ package com.gregtech.gregtech.gametest;
 import com.gregtech.gregtech.api.energy.EnergyNet;
 import com.gregtech.gregtech.block.energy.ElectricWireBlock;
 import com.gregtech.gregtech.blockentity.energy.ElectricWireBlockEntity;
-import com.gregtech.gregtech.content.recipe.Loader_OvenRecipes;
+import com.gregtech.gregtech.content.recipe.OvenRecipeBridge;
 import com.gregtech.gregtech.registry.GTWires;
 import com.gregtech.gregtech.world.GarbageData;
 import net.minecraft.core.BlockPos;
@@ -178,14 +178,14 @@ public final class MemoryGrowthTests {
     public static void ovenMirrorReportIsPerPass(GameTestHelper h) {
         // An empty target list, so the pass mirrors every enabled GT furnace row again.
         List<Recipe<?>> first = new ArrayList<>();
-        int rows = Loader_OvenRecipes.mirrorIntoFurnaceForTests(first);
+        int rows = OvenRecipeBridge.mirrorIntoFurnaceForTests(first);
         h.assertTrue(rows > 0, "the GT furnace table has rows to mirror, mirrored " + rows);
-        int reported = Loader_OvenRecipes.addedToVanillaFurnace().size();
+        int reported = OvenRecipeBridge.addedToVanillaFurnace().size();
         h.assertTrue(reported == rows, "the report must describe this pass only: " + rows
                 + " rows mirrored but " + reported + " reported");
 
-        Loader_OvenRecipes.mirrorIntoFurnaceForTests(new ArrayList<>());
-        int after = Loader_OvenRecipes.addedToVanillaFurnace().size();
+        OvenRecipeBridge.mirrorIntoFurnaceForTests(new ArrayList<>());
+        int after = OvenRecipeBridge.addedToVanillaFurnace().size();
         h.assertTrue(after == reported, "a repeated pass must replace the report instead of appending to"
                 + " it (one pass = " + reported + ", after the second pass = " + after
                 + "); this is the accumulator that grew once per world load");

@@ -11,7 +11,7 @@ import com.gregtech.gregtech.content.recipe.MaterialFormConversionRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.generated.MaterialWorkability;
-import com.gregtech.gregtech.content.recipe.Loader_FormConversionCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.FormConversionCraftingRecipeInjector;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTTechnological;
@@ -99,8 +99,8 @@ public final class MaterialFormConversionTests {
         report.put("byKind", byKind);
         report.put("byMap", byMap);
         report.put("skipped", MaterialFormConversionRecipes.skipped());
-        report.put("craftingGridRecipes", Loader_FormConversionCraftingRecipes.registeredIds().size());
-        report.put("craftingGridSkipped", Loader_FormConversionCraftingRecipes.skipped());
+        report.put("craftingGridRecipes", FormConversionCraftingRecipeInjector.registeredIds().size());
+        report.put("craftingGridSkipped", FormConversionCraftingRecipeInjector.skipped());
         // Totals of every recipe map GT6 drives with the generic prefix handlers, so the next porting
         // round can see which handler family is still empty instead of guessing.
         var allMaps = new TreeMap<String, Integer>();
@@ -218,7 +218,7 @@ public final class MaterialFormConversionTests {
 
     @GameTest(template = "test_empty")
     public static void craftingGridConversions(GameTestHelper helper) {
-        List<String> ids = Loader_FormConversionCraftingRecipes.registeredIds();
+        List<String> ids = FormConversionCraftingRecipeInjector.registeredIds();
         helper.assertTrue(ids.size() > 1000,
                 "GT6's crafting-grid form conversions were materialised per material: " + ids.size());
         helper.assertTrue(ids.contains("gt6ce:form_conversion/ingot_to_blockingot/copper_9"),

@@ -18,7 +18,7 @@ import io
 import json
 import os
 
-LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "Loader_Fluids.java")
+LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "FluidBootstrap.java")
 ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 
@@ -59,8 +59,8 @@ if "SPRING_FLUID_PATHS" not in text:
         "import java.util.concurrent.atomic.AtomicReference;", 1)
 
     text = text.replace(
-        "public record Loader_Fluids(IEventBus bus) implements IGTLoader {",
-        '''public record Loader_Fluids(IEventBus bus) implements IGTLoader {
+        "public record FluidBootstrap(IEventBus bus) implements InitializationStep {",
+        '''public record FluidBootstrap(IEventBus bus) implements InitializationStep {
     /**
      * Fluids that also exist as world blocks — GT6's fluid springs ({@code WorldgenFluidSpring},
      * Loader_Worldgen:782-797) place oil, natural gas, geothermal water and lava into the world, so
@@ -121,9 +121,9 @@ if "SPRING_FLUID_PATHS" not in text:
                             "import com.gregtech.gregtech.registry.GTFluidItems;", 1)
 
     io.open(LOADER, "w", encoding="utf-8", newline="\n").write(text)
-    print("Loader_Fluids: spring fluids now get a LiquidBlock")
+    print("FluidBootstrap: spring fluids now get a LiquidBlock")
 else:
-    print("Loader_Fluids: already wired")
+    print("FluidBootstrap: already wired")
 
 # Blockstate + models: a LiquidBlock uses vanilla water's 16 level variants.
 for path, (texture, _, _) in FLUIDS.items():

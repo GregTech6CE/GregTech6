@@ -6,6 +6,8 @@
 
 当前主线 **`main`** 使用 **Stonecutter 0.7.11** 管理全部原生源集及资源，原主线保留为 **`old`**。详见[迁移与生成器说明](docs/integration/STONECUTTER_MIGRATION.md)。
 
+代码入口与命名约定见[源码导航](docs/integration/SOURCE_LAYOUT.md)；[原版对齐审计](docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md)持续记录已确认缺口和待验证范围。
+
 ## 项目介绍
 
 GregTech 6 Community Edition 整合了 **saltnya 的 gregtech6reborn**、**brokestar233 的 gregtech6** 和 **lombinaxmasson 的 cruciblecraft** 三个项目的工作。项目以 saltnya 的实现作为初始内容基准，逐项比较并吸收三个移植项目的完善部分。

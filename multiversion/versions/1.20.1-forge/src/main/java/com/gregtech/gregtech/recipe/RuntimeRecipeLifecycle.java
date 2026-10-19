@@ -30,7 +30,7 @@ public final class RuntimeRecipeLifecycle {
 
     @SubscribeEvent
     public static void stopped(ServerStoppedEvent event) {
-        Loader_OvenRecipes.clearMirrors();
+        OvenRecipeBridge.clearMirrors();
         APPLIED.clear();
     }
 
@@ -42,15 +42,15 @@ public final class RuntimeRecipeLifecycle {
         var working=new RecipeManager();
         working.replaceRecipes(manager.getRecipes());
         var access=server.registryAccess();
-        Loader_BottleFillingRecipes.apply(working,access);
-        Loader_FormConversionCraftingRecipes.apply(working,access);
-        Loader_HandToolCraftingRecipes.apply(working,access);
-        Loader_StoneCraftingRecipes.apply(working,access);
-        Loader_ToolCraftingRecipes.apply(working,access);
-        Loader_TrackRecipes.apply(working,access);
-        Loader_WoodCraftingRecipes.apply(working,access);
-        Loader_BedrockFlowerCraftingRecipes.apply(working,access);
-        Loader_OvenRecipes.apply(working,access);
+        BottleFillingRecipeInjector.apply(working,access);
+        FormConversionCraftingRecipeInjector.apply(working,access);
+        HandToolCraftingRecipeInjector.apply(working,access);
+        StoneCraftingRecipeInjector.apply(working,access);
+        ToolCraftingRecipeInjector.apply(working,access);
+        TrackRecipeInjector.apply(working,access);
+        WoodCraftingRecipeInjector.apply(working,access);
+        BedrockFlowerCraftingRecipeInjector.apply(working,access);
+        OvenRecipeBridge.apply(working,access);
         manager.replaceRecipes(working.getRecipes());
         ShapelessRecipeTooltipIndex.rebuild(manager);
         Set<Recipe<?>> snapshot=Collections.newSetFromMap(new IdentityHashMap<>());

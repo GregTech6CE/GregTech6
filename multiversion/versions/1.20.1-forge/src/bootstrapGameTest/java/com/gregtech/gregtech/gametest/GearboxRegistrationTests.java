@@ -6,7 +6,7 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.content.material.Materials;
 import com.gregtech.gregtech.content.material.generated.WoodMaterials;
-import com.gregtech.gregtech.content.recipe.Loader_HandToolCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.HandToolCraftingRecipeInjector;
 import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.registry.GTGearboxes;
 import net.minecraft.core.BlockPos;
@@ -58,7 +58,7 @@ public final class GearboxRegistrationTests {
     @GameTest(template = "test_empty")
     public static void everyOriginalGearboxHasResolvedSurvivalRecipe(GameTestHelper helper) {
         var manager = helper.getLevel().getRecipeManager();
-        long generated = Loader_HandToolCraftingRecipes.registeredIds().stream()
+        long generated = HandToolCraftingRecipeInjector.registeredIds().stream()
                 .filter(id -> id.startsWith("gt6ce:hand/gearbox/")
                         || id.startsWith("gt6ce:hand/rotation_transformer/"))
                 .count();

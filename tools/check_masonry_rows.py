@@ -5,7 +5,7 @@ per variant — ``BlockStones:255-487``.  This script parses the original and ch
 
 * the machine families (hammer, crusher, shredder, smelting, generify, cleanmoss, sawing) against the
   port's runtime report ``docs/stone-variant-coverage.json``;
-* the crafting patterns, mirror flags and tool keys against ``Loader_StoneCraftingRecipes``.
+* the crafting patterns, mirror flags and tool keys against ``StoneCraftingRecipeInjector``.
 
 Usage:  python tools/check_masonry_rows.py [--json docs/gt6-masonry-parity.json]
 """
@@ -30,7 +30,7 @@ GT6 = (native_path(ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src"
        / "gregapi" / "block" / "metatype" / "BlockStones.java")).resolve()
 PORT_REPORT = ROOT / "docs" / "stone-variant-coverage.json"
 PORT_LOADER = (native_path(ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "content" / "recipe"
-               / "Loader_StoneCraftingRecipes.java"))
+               / "StoneCraftingRecipeInjector.java"))
 ROCK_TYPES = 27
 
 GROUP = re.compile(r"for \(ItemStackContainer tStack : \(ItemStackSet<ItemStackContainer>\)mEqualBlocks\[(\w+)\]\)")

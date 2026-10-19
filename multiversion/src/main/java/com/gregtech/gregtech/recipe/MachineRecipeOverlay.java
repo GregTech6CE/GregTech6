@@ -81,7 +81,7 @@ public final class MachineRecipeOverlay {
     public static Result apply(RecipeManager manager) {
         // Undo the previous overlay before clearing mirrors: DISPLACED may otherwise
         // restore a previous world's datapack row after the baseline was restored.
-        com.gregtech.gregtech.content.recipe.Loader_OvenRecipes.clearMirrors();
+        com.gregtech.gregtech.content.recipe.OvenRecipeBridge.clearMirrors();
         ensureBaseline();
         long started = System.nanoTime();
         int moved = 0;

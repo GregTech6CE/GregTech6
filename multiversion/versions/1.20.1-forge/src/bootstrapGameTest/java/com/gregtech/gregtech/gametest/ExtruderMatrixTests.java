@@ -6,7 +6,7 @@ import com.gregtech.gregtech.api.material.MaterialEquivalence;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.content.recipe.Loader_Recipes_Parts;
+import com.gregtech.gregtech.content.recipe.PartRecipeLoader;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;
@@ -131,7 +131,7 @@ public final class ExtruderMatrixTests {
     @GameTest(template = "test_empty", timeoutTicks = 400)
     public static void matrixCoverageIsReported(GameTestHelper helper) {
         int recipes = MachineRecipeMaps.Extruder.mRecipeList.size();
-        List<String> skipped = Loader_Recipes_Parts.EXTRUDER_SKIPPED;
+        List<String> skipped = PartRecipeLoader.EXTRUDER_SKIPPED;
         helper.assertTrue(recipes > 3000, "extruder recipes after the matrix: " + recipes);
         helper.assertTrue(skipped.size() >= 4, "GT6 extruder outputs recorded as skipped: " + skipped);
         List<String> report = new ArrayList<>(skipped);

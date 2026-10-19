@@ -251,7 +251,7 @@ def main() -> None:
         " * {@code tools/transpile_gt6_loot.py}: {@code table|weight|min|max|spec}. The specs use the",
         " * same grammar as the chemistry loaders ({@code i:<prefix>:<material>:<count>},",
         " * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}), resolved at load time by",
-        " * {@code GTGeneratedChem.resolveSpec}.",
+        " * {@code GeneratedRecipeResolver.resolveSpec}.",
         " */",
         "final class GTLootGen {".replace("final class", "public final class"),
         "    private GTLootGen() {}",

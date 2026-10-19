@@ -57,7 +57,7 @@ MOULD_FAMILY = {
     "Shape_SimpleEx_": "low_heat_extruder_shape_",
 }
 
-# GT6 OP.<name> -> port item prefix used in GTGeneratedChem specs.
+# GT6 OP.<name> -> port item prefix used in GeneratedRecipeResolver specs.
 OP_PREFIX = {
     "plate": "plate",
     "plateCurved": "plateCurved",

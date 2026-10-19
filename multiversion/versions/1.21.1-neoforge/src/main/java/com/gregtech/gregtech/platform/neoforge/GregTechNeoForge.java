@@ -52,7 +52,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTColoredBooks.registerAll();
         int materialItems = GTItems.register(modEventBus);
         com.gregtech.gregtech.registry.GTProjectiles.register(modEventBus);
-        new com.gregtech.gregtech.bootstrap.content.Loader_Blocks().run();
+        new com.gregtech.gregtech.bootstrap.content.BlockBootstrap().run();
         com.gregtech.gregtech.registry.GTWoods.registerAll();
         com.gregtech.gregtech.registry.GTTreeHoles.registerAll();
         com.gregtech.gregtech.registry.GTBumbleBlocks.initialize();
@@ -111,7 +111,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.content.transport.HopperRegistries.register(modEventBus);
         SmelteryRegistries.register(modEventBus);
         com.gregtech.gregtech.registry.GTRemainingIconBlocks.initialize();
-        com.gregtech.gregtech.bootstrap.registration.Loader_Creative.register(modEventBus);
+        com.gregtech.gregtech.bootstrap.registration.CreativeTabBootstrap.register(modEventBus);
         LOGGER.info("Queued {} Neo material items from the shared original definitions", materialItems);
         modEventBus.addListener(this::commonSetup);
     }
@@ -150,7 +150,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.content.recipe.FermenterFoodRecipes.register();
         com.gregtech.gregtech.content.transport.fluid.FermentationAccess.bindOriginalRecipeMaps();
         GTMaterialRegistry.postInit();
-        com.gregtech.gregtech.content.recipe.NeoMachineRecipeLoader.load();
+        com.gregtech.gregtech.content.recipe.MachineRecipeBootstrap.load();
         com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                 new com.gregtech.gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1"));
         LOGGER.info("GT addon API {} ready: {}", com.gregtech.gregtech.api.addon.GregTechAddons.API_VERSION,

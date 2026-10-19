@@ -53,7 +53,7 @@ if "stripLabel" not in main:
         if (specs == null || specs.isEmpty()) return new ItemStack[0];
         List<ItemStack> out = new ArrayList<>();
         for (String spec : specs.split(";")) {
-            ItemStack stack = GTGeneratedChem.resolveSpec(spec);
+            ItemStack stack = GeneratedRecipeResolver.resolveSpec(spec);
             if (stack == null || stack.isEmpty()) return null;
             out.add(stack);
         }
@@ -63,7 +63,7 @@ if "stripLabel" not in main:
         if (specs == null || specs.isEmpty()) return new ItemStack[0];
         List<ItemStack> out = new ArrayList<>();
         for (String spec : specs.split(";")) {
-            ItemStack stack = GTGeneratedChem.resolveSpec(stripLabel(spec));
+            ItemStack stack = GeneratedRecipeResolver.resolveSpec(stripLabel(spec));
             if (stack == null || stack.isEmpty()) return null;
             String label = labelOf(spec);
             if (label != null) {
@@ -87,8 +87,8 @@ if "stripLabel" not in main:
     }"""
     assert main.count(old) == 1, "items() anchor"
     main = main.replace(old, new)
-    for old_call, new_call in (('GTGeneratedChem.resolveSpec(spec) == null', 'GTGeneratedChem.resolveSpec(stripLabel(spec)) == null'),
-                               ('GTGeneratedChem.resolveFluidSpec(spec) == null', 'GTGeneratedChem.resolveFluidSpec(stripLabel(spec)) == null')):
+    for old_call, new_call in (('GeneratedRecipeResolver.resolveSpec(spec) == null', 'GeneratedRecipeResolver.resolveSpec(stripLabel(spec)) == null'),
+                               ('GeneratedRecipeResolver.resolveFluidSpec(spec) == null', 'GeneratedRecipeResolver.resolveFluidSpec(stripLabel(spec)) == null')):
         main = main.replace(old_call, new_call)
     print("GTMainRecipes: ingredient labels supported")
 

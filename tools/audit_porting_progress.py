@@ -158,7 +158,7 @@ def missing_tokens(path: Path) -> dict:
 def refresh_missing_tokens(log: Path, path: Path) -> dict:
     """Snapshot the run's unresolved content from the log, then report on the fresh list.
 
-    The log line is the live truth ("accepted-missing content (N): a, b, c" from GTGeneratedChem);
+    The log line is the live truth ("accepted-missing content (N): a, b, c" from GeneratedRecipeResolver);
     the text file is only its checked-in copy, so it is rewritten here instead of read as-is.
     """
     tokens: list[str] = []
