@@ -1,0 +1,85 @@
+{
+  "baseline": "1f87ed351",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL sources read only",
+  "original_sources": {
+    "gregapi/recipes/Recipe.java": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+    "gregapi/fluid/FluidTankGT.java": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregapi/tileentity/tank/TileEntityBase08Barrel.java": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+    "gregapi/block/multitileentity/MultiTileEntityItemInternal.java": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportBlockItem.java": "a70530d5b92742fa9eee0420bb348ed8882989797cccf5d4e4beeded2f21b193",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java": "8c87415f062ea24248e08b9c9218dbdfca02eda8a573f283dd0d2d3c05537929",
+    "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": "919a82a89f9631e6c65e0d891af79e608bd0670746b22bca4dfaaa88909c5907",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java": "9365506a34416799515ae69ac370f7286f190fe4de233e12fbdd4e86e0dd43cf",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java": "3fd5a1cab48767441ac5cbff550d7cdb808e0ba2a8f2f40e8ee15f6c54de3db3",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/block/machine/GTMachineBlockItem.java": "086862bfab5076cdd13bbc2b15c3e878bf4d632e54761a7e606f1b7e737f206e",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTTanks.java": "661c5f6c7b9ac0c2a3bc458e9eac211e71a40b0e0c4ec570b7fa9f9e7c93993e",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportRegistries.java": "78322ce1af478c2b5ac79a208d343a420f0d1f6a242b24516a0072b7d84cc713",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankBlock.java": "bbc594645c47a5517b9064a2eb33f9b754936675bf17c6599accb984dab6e716",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/TankBlockEntity.java": "3dadd179616c587c55b7138ca7072675875b14f6d2693199a53935e8b96f9c17",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java": "c2899194998a462d5dbe2fb7998997a5c2392c58348a6cb0f2ea8483eb0cb2af",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java": "cbcf20ea5720f14743165dc896dc0ad72b9a0268ef75b5e5cba9bac61bffdc79",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/CokeOvenControllerBlockEntity.java": "5b046902880a1f77d3f8bca9eff34c2a3f732a9b931c0380b54cb0341b2d05d3",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/DistillationTowerControllerBlockEntity.java": "4620b27deb9ca3163f84837e274827d0d504232e318b9858790d0a1e058a262e",
+    "tools/integration/audit-probes/AdaptiveFluidCapacityAudit.java": "af9046a6aefbcd9cbb34dc81eed382e6284a8fe1bed3149a5be282233c975612"
+  },
+  "framework_source_evidence": [
+    {
+      "archive": "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\maven_downloader\\net\\minecraftforge\\forge\\1.20.1-47.4.20\\forge-1.20.1-47.4.20-sources.jar",
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": {
+        "net/minecraftforge/fluids/FluidType.java": "962eec431be56e08437331b40efd47625682d3e575a2faf9e3a1bb033fe16822",
+        "net/minecraftforge/common/ForgeMod.java": "ae15230a1cc86f618f69248bf98ece5569711985bd0ab002a4f74a06bc7f12d8"
+      },
+      "observed": "FluidType.toString returns registered type ID; vanilla water/lava types use minecraft namespace"
+    },
+    {
+      "archive": "C:\\Users\\90499\\.gradle\\caches\\modules-2\\files-2.1\\net.neoforged\\neoforge\\21.1.243\\7c3c8a58e626916d133b20bc249e1a7e5f1a306b\\neoforge-21.1.243-sources.jar",
+      "sha256": "c11c83b344cb92ce9e815db2ed4b53fd7770b97098d5ebd10edde28595c12af0",
+      "entries": {
+        "net/neoforged/neoforge/fluids/FluidType.java": "c0aa477a906fe2f3eccd43de3ae4d5922f483e6548c7d238d69cfadca0d89056",
+        "net/neoforged/neoforge/common/NeoForgeMod.java": "af472a08300e110db72e3937fcb713039f015d22c5f5841cc25822c2c410afc8"
+      },
+      "observed": "FluidType.toString returns registered type ID; vanilla water/lava types use minecraft namespace"
+    }
+  ],
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportBlockItem.java": {
+      "plain": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java": {
+      "plain": true
+    }
+  },
+  "java": "Java 17; compiled only current LongFluidStorage and AdaptiveFluidCapacityAudit, no cached dependencies",
+  "observations": [
+    "UNBOUND_CAPACITY|8000",
+    "FLUID_TYPE_WATER_KEY|8000",
+    "SEA_FLUID_KEY|32000",
+    "MISSING_KEY|8000",
+    "PARALLEL_ONE_TWO_BATCH_CAPACITY|64000",
+    "CURRENT_OUTPUT_BASE|8000",
+    "ORIGINAL_OUTPUT_DEFAULT_ARGUMENT|9223372036854775807"
+  ],
+  "findings": [
+    "ALIGN-095",
+    "ALIGN-096",
+    "ALIGN-097"
+  ],
+  "limits": [
+    "Seven core observations use synthetic keys/values, not actual native registry or built-in recipe execution",
+    "Original behavior and item capability gap derived from source, not original game run",
+    "FluidType implementation checked only in the named local cached framework sources",
+    "No native compile, broad tests, game, save restart, build or push"
+  ]
+}

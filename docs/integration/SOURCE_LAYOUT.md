@@ -138,3 +138,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `core/.../api/fluid/LongFluidStorage.java`：长整数容量、液量和策略；原生 `multiversion/src/main/java/.../api/fluid/FluidTankGT.java` 才持有流体身份及 NBT。
 
 原版同名标志并非均有同语义，具体边界见 [物流桶核查](LOGISTICS_TANK_AUDIT.md)。
+
+## 流体身份、可调容量和物品能力
+
+- `multiversion/src/main/java/.../api/recipe/RecipeMap.java`：按流体注册 ID 统计配方所需罐大小。
+- `multiversion/src/main/java/.../api/fluid/FluidTankGT.java`：原生流体身份、容量查询、填充／抽取及保存；纯数量计算在 LongFluidStorage。
+- `multiversion/src/main/java/.../registry/GTWorldWaterFluid.java`：GT 世界水的原版水类型兼容边界。
+- `multiversion/versions/1.21.1-neoforge/src/main/java/.../content/transport/fluid/FluidTransportBlockItem.java`：桶／管道物品提示和堆叠上限；并非物品流体 handler。
+- `multiversion/versions/1.21.1-neoforge/src/main/java/.../platform/neoforge/fluid/FluidCapabilities.java`：流体展示物品、便携小容器及坩埚的能力注册。
+
+注册表的类型 ID 与流体 ID、物品数据与容器能力之间的差异见 [专题报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。

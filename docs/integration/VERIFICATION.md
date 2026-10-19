@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 可调容量源码与纯查询观察
+
+相对 1f87ed351，三份生产 Java 的代码／字面量等价，共享 FluidTankGT 两版分别展开核对。Java 17 仅运行 LongFluidStorage 的七项合成参数观察；原版公式、原生注册 ID、桶物品能力由源码链确认。本机 Forge 47.4.20／Neo 21.1.243 源码哈希留档，不声称原生游戏已验。未完整构建、重启或推送，见 [回执](verification/adaptive-fluid-audit-20261019.json)。
+
 ## 2026-10-19 / 物流桶源码与共享储液观察
 
 相对 6bf967c93，四份生产 Java 的代码／字面量保持一致，共享实体分别展开 Forge、Neo 分支核对。Java 17 仅编译 LongFluidStorage 与观察入口，11 项结果包括缩容、超额恢复、部分／满罐溢出以及保留过滤策略。原生身份、软锤、NBT 和网络仅源码核查；未原生编译、游戏、重启、构建、推送，见 [回执](verification/logistics-tank-audit-20261019.json)。

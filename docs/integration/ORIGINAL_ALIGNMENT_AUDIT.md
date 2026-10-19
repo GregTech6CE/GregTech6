@@ -117,6 +117,9 @@
 | ALIGN-092 | 确认物流桶空桶软锤无法清除过滤。 | 原版父类先处理空桶清身份／自动输出，非空才检查 canBeSealed。 | 当前整个 toggleSoftHammerState 为空；保留过滤本身正常，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
 | ALIGN-093 | 确认共享储液容量查询／缩容改变原版合同。 | 原版缩容不改已有量，无可调表时报告名义容量。 | 当前缩容截量，查询额外以已有量作下限；部分多方块已有补偿，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
 | ALIGN-094 | 确认溢出销毁的接口分支不完整。 | 原版 add／fill 启用后报告消耗整个同种输入。 | 当前 add 仅满罐报告全部，原生 fill 未用标志；未发现启用业务调用，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
+| ALIGN-095 | 确认可调容量键混用，空罐首次填充未按输入流体查表。 | 原版配方／罐同用 Fluid 名称，空罐按输入查询。 | 当前罐用 type ID，三种世界水查成 minecraft:water；普通静态流体多为同 ID，不一概判失效，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
+| ALIGN-096 | 确认基础配方机默认罐容量和倍率不同。 | 原版输入默认 1000／可覆盖、配方容量乘 parallel×2，输出 Long.MAX_VALUE。 | 当前输入 8000／倍率 1，基础输出 8000；独立输出覆写另列，不等同原版积压限制，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
+| ALIGN-097 | 确认普通桶与物流桶物品缺少容器能力。 | 原版 MultiTileEntityItemInternal 转发桶的物品 fill／drain 并更新 NBT。 | 当前只有存液掉落数据和提示／堆叠限制，没有本模组提供的物品流体 handler；量杯等不在此缺口内，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
