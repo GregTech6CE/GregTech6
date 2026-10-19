@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "4dc1031dfd134bdc51c6780fe1872d357d5bece2",
+  "scope": "Dynamic Bath/Unboxinator, map flags and chain-processing cap; no gameplay changes",
+  "findings": [
+    "ALIGN-048",
+    "ALIGN-049",
+    "ALIGN-050",
+    "ALIGN-051"
+  ],
+  "code_and_literals_unchanged": [
+    "core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMapSpec.java"
+  ],
+  "compilation": "javac 17: RecipeMapSpec and DynamicRecipeAudit, passed",
+  "parser_checks": "Comments/string-only constructor text ignored; inline comment and comma whitespace accepted; expression flags reported unsupported",
+  "map_flag_inventory": {
+    "matched": 85,
+    "different_needs_outputs": 82,
+    "other_three_flag_differences": 0,
+    "unsupported": 0
+  },
+  "core_observations": [
+    "MAPS|85|needs_outputs|0",
+    "MAP|Bath|6|6|1|3|false",
+    "MAP|Unboxinator|1|12|0|0|false",
+    "BATCH|largecentrifuge|16|2457600|1179648|source-work-limit|2",
+    "COST|eight-input-example|512|18874368",
+    "ITEM_DEFINITION|crushedCentrifuged|Cobalt60|crushed_centrifuged_cobalt60",
+    "ITEM_DEFINITION|crushedCentrifuged|Cobalt|crushed_centrifuged_cobalt",
+    "ITEM_DEFINITION|dustTiny|Cobalt60|dust_tiny_cobalt60",
+    "ITEM_DEFINITION|dustTiny|Cobalt|dust_tiny_cobalt",
+    "ITEM_DEFINITION|dust|Cobalt60|dust_cobalt60",
+    "ITEM_DEFINITION|dust|Cobalt|dust_cobalt"
+  ],
+  "evidence_boundary": "Core catalogs, material definitions and costs executed; original cap computed from source formula. No native recipe resolution, inventory or RNG execution.",
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregapi/data/RM.java": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+    "gregapi/recipes/Recipe.java": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+    "gregapi/recipes/maps/RecipeMapUnboxinator.java": "34d81f6198e7311dc42aee2aaa5cb67ddc53fee9e9dd90ce98f8c93d6116096f",
+    "gregapi/recipes/maps/RecipeMapBath.java": "69a915045f1ee5f524394ee87d33da3441e85d562cb7deb9f4e97387497f9f6c",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregtech/tileentity/tools/MultiTileEntityBathingPot.java": "fef4fb033b46670651307a6127c220f04d2a7fcfb11058345b32a0f43c8d7eab",
+    "gregtech/loaders/c/Loader_Recipes_Ores.java": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMapSpec.java": "5bd85a3160f2a02a77ff663d37742d4f475195c4d4c11e197f25456ccf39ff15",
+    "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java": "764bc7016ab081c3d18d2cb8507f0918322063ff373401d3b14513f82f0e409b",
+    "core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java": "7432073717be1f3239fb9bd36e508950f4e594ebb0de953850bd449ad986fb47",
+    "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java": "cb44dd865ae0c043b5917f0cded4f0943647fc281eb1037ea0f471bb7efd942d",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOresGen.java": "8ab7afc28555b28fd7d2626311ab789ae3243a6e5357d140b8d4ad70a7d72f9b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMainRecipes.java": "22bc2ef2b04fa551d0a3a6e05c433fe0467b31ccd2f94f7a12ca2d15791ad7b9",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": "919a82a89f9631e6c65e0d891af79e608bd0670746b22bca4dfaaa88909c5907",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java": "88ea4001ad21f6c8892d346f20cfb8a0f86ad6844c9e72aecb33e8af46b12f7e",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ProcessingToolBlockEntity.java": "45157759a0ad70742bd6d8f28aebc2d9a7277a4bf5d9ad72f66ab14987672985",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/loot/LootBagItem.java": "340c1d923f6c87ef8f1afb2c216e58f4041388147496252b8f1887294aeea625",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineContextRecipes.java": "40fcad32efa394e90dc059710bf1e779f09dcfd7e79f35dd56b87a05cdfc0f0f"
+  },
+  "not_run": [
+    "Gradle",
+    "full test suite",
+    "Minecraft",
+    "GameTest",
+    "native recipe/RNG execution",
+    "saved-world restart",
+    "build",
+    "push"
+  ]
+}

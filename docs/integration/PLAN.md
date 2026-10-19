@@ -1,5 +1,7 @@
 # GregTech 6 整合计划与验收合同
 
+第十二批进展（2026-10-19）：动态拆包／Bath、表级输出要求和链式并行新增 ALIGN-048–051。85 张同名配方表中 82 张 needsOutputs 与原版不同，其余三个所核标志一致；未把静态染色／右键开袋算作动态机器处理。RecipeMapSpec 展开，新增显式来源的只读比对工具。继续特殊能量、其它动态表和全面队列，见 [动态配方核查](DYNAMIC_RECIPE_AUDIT.md)。
+
 第十一批进展（2026-10-19）：基础机器的软锤取消、恒定供能中断、KU 正转负完成条件和整包缓存截断确认 ALIGN-044–047。OriginalBasicMachineRules 展开，纠正 BasicMachineEnergy 的原版归因注释，保持执行代码。继续链式并行、特殊能量和动态配方，再扩大其他控制器与网络，见 [中断与供能核查](BASIC_MACHINE_INTERRUPTION_AUDIT.md)。
 
 第十批进展（2026-10-19）：共用基础机器确认剩余工作量截断、固定输出槽位、四种螺丝刀模式和空输出罐身份预留差异 ALIGN-040–043；已有空物品输出检查与待输出保留分支单独记录。MachineWorkCost 压行代码展开，保持行为。继续共用加工剩余分支、动态配方、其他控制器及能源／网络，见 [加工执行核查](BASIC_MACHINE_EXECUTION_AUDIT.md)。

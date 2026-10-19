@@ -1,0 +1,3520 @@
+{
+  "scope": "Compare explicit recipe-map constructor flags by internal name.\n\nThis is a source inventory, not a runtime recipe check. Only single-line constructor\nrows with literal trailing flags are supported; other constructor sites are reported.",
+  "original": {
+    "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\RM.java",
+    "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+    "rows": {
+      "gt.recipe.other": {
+        "line": 62,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.autocrafting": {
+        "line": 63,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.distillationtower": {
+        "line": 65,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.cryodistillationtower": {
+        "line": 66,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.steamcracking": {
+        "line": 67,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.catalyticcracking": {
+        "line": 68,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.fermenter": {
+        "line": 69,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.distillery": {
+        "line": 70,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.drying": {
+        "line": 71,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.coagulator": {
+        "line": 72,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.crystallisationcrucible": {
+        "line": 73,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.mixer": {
+        "line": 74,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.burnmixer": {
+        "line": 76,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cryomixer": {
+        "line": 77,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cokeoven": {
+        "line": 78,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.roaster": {
+        "line": 79,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bath": {
+        "line": 80,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.sluice": {
+        "line": 81,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.magneticseparator": {
+        "line": 82,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.sifter": {
+        "line": 83,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.calciner": {
+        "line": 85,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.implosioncompressor": {
+        "line": 86,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.compressor": {
+        "line": 87,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.injector": {
+        "line": 88,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.loom": {
+        "line": 89,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.laminator": {
+        "line": 90,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.autoclave": {
+        "line": 91,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.freezer": {
+        "line": 92,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.polarizer": {
+        "line": 93,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.lightning": {
+        "line": 94,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.slicer": {
+        "line": 96,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.lathe": {
+        "line": 97,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.pressurewasher": {
+        "line": 98,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.press": {
+        "line": 99,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.squeezer": {
+        "line": 101,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.juicer": {
+        "line": 102,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "mc.recipe.furnace": {
+        "line": 103,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.microwave": {
+        "line": 104,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.cooker": {
+        "line": 105,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bumblequeen": {
+        "line": 106,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bumblelyzer": {
+        "line": 107,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.trees": {
+        "line": 108,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.plantalyzer": {
+        "line": 109,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.wiremill": {
+        "line": 111,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.clustermill": {
+        "line": 112,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollingmill": {
+        "line": 113,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollbender": {
+        "line": 114,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollformer": {
+        "line": 115,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.laserengraver": {
+        "line": 116,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.welder": {
+        "line": 117,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil": {
+        "line": 118,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil.bend.small": {
+        "line": 119,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil.bend.big": {
+        "line": 120,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.centrifuge": {
+        "line": 122,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.electrolyzer": {
+        "line": 123,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.toolhead": {
+        "line": 125,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.sharpener": {
+        "line": 126,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cruciblealloying": {
+        "line": 128,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cruciblesmelting": {
+        "line": 129,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cutter": {
+        "line": 130,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.melter": {
+        "line": 131,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.smelter": {
+        "line": 132,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.mortar": {
+        "line": 133,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.shredder": {
+        "line": 134,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.crusher": {
+        "line": 135,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.extruder": {
+        "line": 136,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.hammer": {
+        "line": 137,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.chisel": {
+        "line": 138,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.nanofab": {
+        "line": 140,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.printer": {
+        "line": 141,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.scannervisuals": {
+        "line": 142,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.scannermolecular": {
+        "line": 143,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.massfab": {
+        "line": 144,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.replicator": {
+        "line": 145,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.fusionreactor": {
+        "line": 146,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.canner": {
+        "line": 148,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.boxinator": {
+        "line": 149,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.unboxinator": {
+        "line": 150,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.generifier": {
+        "line": 151,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.bedrockorelist": {
+        "line": 153,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.byproductlist": {
+        "line": 154,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.blastfurnace": {
+        "line": 157,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.vacuumfreezer": {
+        "line": 158,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.assembler": {
+        "line": 159,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cncmachine": {
+        "line": 160,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    "unsupported_sites": []
+  },
+  "current": {
+    "path": "C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\data\\MachineRecipeMapDefinitions.java",
+    "sha256": "764bc7016ab081c3d18d2cb8507f0918322063ff373401d3b14513f82f0e409b",
+    "rows": {
+      "mc.recipe.furnace": {
+        "line": 7,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.microwave": {
+        "line": 8,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.roaster": {
+        "line": 9,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.distillery": {
+        "line": 10,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.extruder": {
+        "line": 11,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.smelter": {
+        "line": 12,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.crystallisationcrucible": {
+        "line": 13,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.drying": {
+        "line": 14,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.laminator": {
+        "line": 15,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.catalyticcracking": {
+        "line": 16,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.steamcracking": {
+        "line": 17,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.distillationtower": {
+        "line": 18,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.cryodistillationtower": {
+        "line": 19,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.shredder": {
+        "line": 20,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.lathe": {
+        "line": 21,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cutter": {
+        "line": 22,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.centrifuge": {
+        "line": 23,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollingmill": {
+        "line": 24,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollbender": {
+        "line": 25,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.rollformer": {
+        "line": 26,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.clustermill": {
+        "line": 27,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.wiremill": {
+        "line": 28,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.mixer": {
+        "line": 29,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.loom": {
+        "line": 30,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.sluice": {
+        "line": 31,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.sharpener": {
+        "line": 32,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.burnmixer": {
+        "line": 33,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.pressurewasher": {
+        "line": 34,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.crusher": {
+        "line": 35,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.sifter": {
+        "line": 36,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.squeezer": {
+        "line": 37,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.compressor": {
+        "line": 38,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.press": {
+        "line": 39,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.electrolyzer": {
+        "line": 40,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.canner": {
+        "line": 41,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.injector": {
+        "line": 42,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.printer": {
+        "line": 43,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.scannervisuals": {
+        "line": 44,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.autocrafting": {
+        "line": 45,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.slicer": {
+        "line": 46,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.nanofab": {
+        "line": 47,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.plantalyzer": {
+        "line": 48,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bumblelyzer": {
+        "line": 49,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.boxinator": {
+        "line": 50,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.unboxinator": {
+        "line": 51,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.polarizer": {
+        "line": 52,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.magneticseparator": {
+        "line": 53,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.laserengraver": {
+        "line": 54,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.welder": {
+        "line": 55,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.freezer": {
+        "line": 56,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cryomixer": {
+        "line": 57,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.massfab": {
+        "line": 58,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.scannermolecular": {
+        "line": 59,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.replicator": {
+        "line": 60,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.autoclave": {
+        "line": 61,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bath": {
+        "line": 62,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.generifier": {
+        "line": 63,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.coagulator": {
+        "line": 64,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.fermenter": {
+        "line": 65,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.melter": {
+        "line": 66,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cokeoven": {
+        "line": 67,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.lightning": {
+        "line": 68,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.implosioncompressor": {
+        "line": 69,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.fusionreactor": {
+        "line": 70,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.mortar": {
+        "line": 71,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.other": {
+        "line": 72,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.toolhead": {
+        "line": 73,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.cooker": {
+        "line": 74,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.blastfurnace": {
+        "line": 75,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.vacuumfreezer": {
+        "line": 76,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.assembler": {
+        "line": 77,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cncmachine": {
+        "line": 78,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cruciblealloying": {
+        "line": 79,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.cruciblesmelting": {
+        "line": 80,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bedrockorelist": {
+        "line": 81,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "gt.recipe.byproductlist": {
+        "line": 82,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.hammer": {
+        "line": 83,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.chisel": {
+        "line": 84,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.calciner": {
+        "line": 85,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.juicer": {
+        "line": 86,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil": {
+        "line": 87,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil.bend.small": {
+        "line": 88,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.anvil.bend.big": {
+        "line": 89,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.bumblequeen": {
+        "line": 90,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "gt.recipe.trees": {
+        "line": 91,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    "unsupported_sites": []
+  },
+  "compared_maps": 85,
+  "differences": [
+    {
+      "map": "gt.recipe.anvil",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 118,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 87,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.anvil.bend.big",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 120,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 89,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.anvil.bend.small",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 119,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 88,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.assembler",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 159,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 77,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.autoclave",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 91,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 61,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.autocrafting",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 63,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 45,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.bath",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 80,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 62,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.bedrockorelist",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 153,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 81,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.blastfurnace",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 157,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 75,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.boxinator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 149,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 50,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.bumblelyzer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 107,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 49,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.bumblequeen",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 106,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 90,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.burnmixer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 76,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 33,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.byproductlist",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 154,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 82,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.calciner",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 85,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 85,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.canner",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 148,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 41,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.catalyticcracking",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 68,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 16,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.centrifuge",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 122,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 23,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.chisel",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 138,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 84,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.clustermill",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 112,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 27,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cncmachine",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 160,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 78,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.coagulator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 72,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 64,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cokeoven",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 78,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 67,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.compressor",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 87,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 38,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cooker",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 105,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 74,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cruciblealloying",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 128,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 79,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cruciblesmelting",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 129,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 80,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.crusher",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 135,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 35,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cryodistillationtower",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 66,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 19,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cryomixer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 77,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 57,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.crystallisationcrucible",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 73,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 13,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.cutter",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 130,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 22,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.distillationtower",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 65,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 18,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.distillery",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 70,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 10,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.drying",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 71,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 14,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.electrolyzer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 123,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 40,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.extruder",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 136,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 11,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.fermenter",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 69,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 65,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.freezer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 92,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 56,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.fusionreactor",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 146,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 70,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.generifier",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 151,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 63,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.hammer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 137,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 83,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.implosioncompressor",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 86,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 69,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.injector",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 88,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 42,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.juicer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 102,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 86,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.laminator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 90,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 15,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.laserengraver",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 116,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 54,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.lathe",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 97,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 21,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.lightning",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 94,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 68,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.loom",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 89,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 30,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.magneticseparator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 82,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 53,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.massfab",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 144,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 58,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.melter",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 131,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 66,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.microwave",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 104,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 8,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.mixer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 74,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 29,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.mortar",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 133,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 71,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.nanofab",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 140,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 47,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.plantalyzer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 109,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 48,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.polarizer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 93,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 52,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.press",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 99,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 39,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.pressurewasher",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 98,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 34,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.printer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 141,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 43,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.replicator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 145,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 60,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.roaster",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 79,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 9,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.rollbender",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 114,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 25,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.rollformer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 115,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 26,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.rollingmill",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 113,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 24,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.scannermolecular",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 143,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 59,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.scannervisuals",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 142,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 44,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.sharpener",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 126,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 32,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.shredder",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 134,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 20,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.sifter",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 83,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 36,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.slicer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 96,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 46,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.sluice",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 81,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 31,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.smelter",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 132,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 12,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.squeezer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 101,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 37,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.steamcracking",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 67,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 17,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.unboxinator",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 150,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 51,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.vacuumfreezer",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 158,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 76,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.welder",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 117,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 55,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "gt.recipe.wiremill",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 111,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      },
+      "current": {
+        "line": 28,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": true,
+          "bucket_size_out": true
+        }
+      }
+    },
+    {
+      "map": "mc.recipe.furnace",
+      "changed": [
+        "needs_outputs"
+      ],
+      "original": {
+        "line": 103,
+        "flags": {
+          "needs_outputs": true,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      },
+      "current": {
+        "line": 7,
+        "flags": {
+          "needs_outputs": false,
+          "combine_power": false,
+          "bucket_size_in": false,
+          "bucket_size_out": false
+        }
+      }
+    }
+  ],
+  "original_only": [],
+  "current_only": []
+}

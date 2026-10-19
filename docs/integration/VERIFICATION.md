@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 动态表、构造标志与长配方
+
+RecipeMapSpec 相对 `4dc1031df` 代码／字面量一致，Java 17 独立编译通过。构造标志索引最终匹配 85 对，82 项 needsOutputs 不同，其余三标志一致；零未解析／未配对。解析样本覆盖注释、空格、字符串假调用及不支持表达式。core 观察 85 表标志、Bath／Unboxinator 槽数、大型离心机及钴材料定义；原生执行与原版限批为源码推导，没有运行游戏、全套测试或构建，见 [回执](verification/dynamic-recipe-audit-20261019.json)。
+
 ## 2026-10-19 / 中断、KU 与接收缓存
 
 OriginalBasicMachineRules／BasicMachineEnergy 相对 `d011da00c` 代码和字面量一致，Java 17 独立编译通过。core 观察 247 处理项、20 KU 项、供能豁免样本、活塞 ±32 包、两种符号入缓存均加 32、缓存 60 接收一包 32 后截成 64。原版 92／扣额定后 28、软锤和中断时序为源码推导，未运行原生机器。无 Gradle、全套测试、游戏、重启、打包或推送，见 [回执](verification/basic-machine-interruption-audit-20261019.json)。
