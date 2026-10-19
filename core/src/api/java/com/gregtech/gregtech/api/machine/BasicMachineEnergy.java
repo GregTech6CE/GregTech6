@@ -4,7 +4,10 @@ package com.gregtech.gregtech.api.machine;
 public final class BasicMachineEnergy {
     private BasicMachineEnergy() {}
 
-    /** GT6 rounds demand up to whole packets; the inherited machine buffer clips excess units. */
+    /**
+     * Round demand up to whole packets. The current bounded buffer clips excess units;
+     * the original BasicMachine keeps the entire accepted packet (audit ALIGN-047).
+     */
     public static long demanded(long stored, long capacity, long size) {
         if (capacity <= 0 || size == 0 || size == Long.MIN_VALUE) return 0;
         long space = capacity - Math.min(capacity, Math.max(0, stored));

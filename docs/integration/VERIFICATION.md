@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 中断、KU 与接收缓存
+
+OriginalBasicMachineRules／BasicMachineEnergy 相对 `d011da00c` 代码和字面量一致，Java 17 独立编译通过。core 观察 247 处理项、20 KU 项、供能豁免样本、活塞 ±32 包、两种符号入缓存均加 32、缓存 60 接收一包 32 后截成 64。原版 92／扣额定后 28、软锤和中断时序为源码推导，未运行原生机器。无 Gradle、全套测试、游戏、重启、打包或推送，见 [回执](verification/basic-machine-interruption-audit-20261019.json)。
+
 ## 2026-10-19 / 基础机器执行和工作量
 
 MachineWorkCost 相对 `f13ef66cd` 代码／字面量一致，Java 17 独立编译通过。实际 core 观察 90/100 加 32 被截为 100、精确到达与 long 上界、普通／TU 并行和溢出拒绝。原版余量 22、固定输出位置、四模式及单空罐误准入来自源码推导，未作为 Minecraft 实测。无 Gradle、全套测试、原生库存模拟、游戏、重启或打包，见 [回执](verification/basic-machine-execution-audit-20261019.json)。

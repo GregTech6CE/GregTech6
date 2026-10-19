@@ -45,6 +45,19 @@
 - Forge 的工作台配方随 RecipeManager 重载注入，见 `recipe/RuntimeRecipeLifecycle.java`。`*RecipeInjector` 表示这些注入器，不与初始化机器配方混用。
 - 导入配方表位于 core 的 `content/recipe/generated`；原生 `GeneratedRecipeResolver` 负责物品／流体解析，`GeneratedRecipeSink` 负责向当前解析上下文输出纯数据。`GTTechnologyRecipes` 是手写的原版嵌入配方目录，不是机器控制器。
 
+## 机器参数与运行行为从哪里看
+
+| 要找的内容 | 入口（相对于对应 Java 根目录） |
+| --- | --- |
+| 原版各档机器的额定输入、并行数和硬度 | core 的 `data/BasicMachineOriginalParams.java`；这是参数表 |
+| 单方块机器的超频、效率、点火、恒定供能豁免 | core 的 `content/machine/OriginalBasicMachineRules.java` |
+| 工作成本与能量包的纯计算 | core API 的 `api/recipe/MachineWorkCost.java`、`api/machine/BasicMachineEnergy.java` |
+| 实际启动、推进、中断、输出和保存 | shared 的 `blockentity/machine/BasicMachineBlockEntity.java`；多方块子类还会覆写结构和供能规则 |
+| 待产物抽取、分堆、交付和保存 | shared 的 `api/recipe/MachineWorkOutputs.java` |
+| 玩家持工具操作机器 | shared 的 `block/machine/BasicMachineBlock.java`，覆盖板交互再转给相应处理类 |
+
+“参数表中有标志”不代表运行代码已消费它。机器审计已经发现完成余量、固定输出位置、中断和 KU 完成条件等差异，具体见 [加工执行](BASIC_MACHINE_EXECUTION_AUDIT.md) 与 [中断／供能](BASIC_MACHINE_INTERRUPTION_AUDIT.md)。
+
 ## 命名与修改约定
 
 - 包名表达职责，不再新增 `a/b/c` 阶段目录或并列的 `loader/loaders`。

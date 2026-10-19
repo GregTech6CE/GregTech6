@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "d011da00c28c4439c228c568c34e60d9cdb0b9e4",
+  "scope": "BasicMachine interruptions, KU completion and packet buffer audit; readability only",
+  "findings": [
+    "ALIGN-044",
+    "ALIGN-045",
+    "ALIGN-046",
+    "ALIGN-047"
+  ],
+  "code_and_literals_unchanged": [
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalBasicMachineRules.java",
+    "core/src/api/java/com/gregtech/gregtech/api/machine/BasicMachineEnergy.java"
+  ],
+  "compilation": "javac 17, OriginalBasicMachineRules, BasicMachineEnergy, PistonEngineState and BasicMachineInterruptAudit: passed",
+  "core_observations": [
+    "CATALOG|handled|247|KU|20|[compressor, crusher, press, sifter, squeezer]",
+    "NO_CONSTANT_POWER|centrifuge1|false|bath1|true",
+    "CONSTANT_POWER|largecentrifuge|true|largecrusher|false",
+    "ENGINE_PACKETS|32|-32",
+    "BUFFER_SIGNS|32|32",
+    "BUFFER_BOUNDARY|60|1|64|after-drain|0"
+  ],
+  "evidence_boundary": "Core flags and arithmetic executed; native tool, structure, shutdown and completion behavior inspected in source only.",
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/data/TD.java": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/machine/OriginalBasicMachineRules.java": "8c0f2719cde796995c010995c94ddfa095839754a2b77e1073cc0121b45cd111",
+    "core/src/api/java/com/gregtech/gregtech/api/machine/BasicMachineEnergy.java": "9282d959bd389b1a1c39f41fdb8f694feff6e86c4b94b039952615aad749dcc5",
+    "core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java": "7432073717be1f3239fb9bd36e508950f4e594ebb0de953850bd449ad986fb47",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineProcessingRules.java": "281197041e1ffb05d3eb4ef4b2283f0a4500ce0f1932ad73737a70604867864b",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/PistonEngineState.java": "bd15892eedc1013ed9035e24903f68d8c71a7f93082f7458f9297e78ca7e87ad",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java": "a8de64c9f415bba030b1c3b8fbaa05fc5c5aeb26a9d6dfa2f96240ce65e10e6b",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java": "cbcf20ea5720f14743165dc896dc0ad72b9a0268ef75b5e5cba9bac61bffdc79",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/PistonEngineBlockEntity.java": "93ccbf44b47066a0ecab2c18c5adc19d58e9753d31f9cb99244190525c4449fa",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java": "08398b0617b30013a8c37d30dec80f812bfa103c10dd23461eff5d1df23adbb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java": "891dd9218fbf094225a658ce635670e06fecf838a06a712702fd64308cadca2d"
+  },
+  "not_run": [
+    "Gradle",
+    "full test suite",
+    "native energy network",
+    "Minecraft",
+    "GameTest",
+    "saved-world restart",
+    "build",
+    "push"
+  ]
+}
