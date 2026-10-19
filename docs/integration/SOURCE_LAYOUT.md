@@ -38,3 +38,5 @@
 - 一般生产代码保持按方法／职责分行。剩余压行实现、过大职责类和原版属性映射仍在审计，不将本轮改名算作全部清理完成。
 
 本轮 30 个类名的完整映射、两版 54 步初始化序列和验证范围见 [标准化回执](verification/loader-standardization-20261019.json)。
+
+材料生成表需要区分“表已存在”与“属性已正确继承／被玩法消费”。目前的工作属性表和处理目标表仍有确认缺口，见 [材料处理审计](MATERIAL_PROCESSING_AUDIT.md)。`tools/integration/inventory_processing_target_consumers.py` 是只读导航工具，输出引用位置，不会替代语义核查或写回原版源码。

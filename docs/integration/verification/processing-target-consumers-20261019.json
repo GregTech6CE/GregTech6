@@ -1,0 +1,799 @@
+{
+  "scope": "Seven original processing-target fields, excluding comments and strings. References are not proof of runtime reachability or port parity.",
+  "source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "source_sha256": {
+    "gregapi/oredict/OreDictMaterial.java": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+    "gregapi/oredict/OreDictMaterialCondition.java": "de90358be7c2a29806d24645e8322bdda798605269bc229c8a426593c7175471",
+    "gregapi/recipes/handlers/RecipeMapHandlerPrefixForging.java": "d21e5e4027af1b83cedb8c0c6e1435f5c5ef7de9fab24850dd2e9936143b7501",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregtech/loaders/c/Loader_Recipes_Furnace.java": "69a45e400339a5bada9854d47402e23d73bf199f6cf8c658f9149f02696acf66",
+    "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java": "2b04eaab46ae4e48dbd4a7500ed1b5fac533933649cc8a0dbf4baab1b99fa96c",
+    "gregtech/tileentity/tools/MultiTileEntityAnvil.java": "b3e829336ae782314373e9df3092db897f7096596f8bb77abdc8eb248ed5c868",
+    "gregtech/tileentity/tools/MultiTileEntityMold.java": "60a916a836f1bcb00ed6ed846e05c203d1bb8bae9a83478eb39afabea67884fd",
+    "gregtech/tileentity/tools/MultiTileEntitySmeltery.java": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1"
+  },
+  "references": {
+    "Solidifying": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 287,
+        "code": "mTargetSolidifying  = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 753,
+        "code": "setSolidifying(aMaterial.mTargetSolidifying.mMaterial, aMaterial.mTargetSolidifying.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 753,
+        "code": "setSolidifying(aMaterial.mTargetSolidifying.mMaterial, aMaterial.mTargetSolidifying.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 768,
+        "code": "setSolidifying(aMaterial.mTargetSolidifying.mMaterial,(aMaterial.mTargetSolidifying.mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 768,
+        "code": "setSolidifying(aMaterial.mTargetSolidifying.mMaterial,(aMaterial.mTargetSolidifying.mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 811,
+        "code": "mTargetSolidifying.mMaterial.mTargetedSolidifying.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 812,
+        "code": "mTargetSolidifying = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 683,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedSolidifying) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSolidifying.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 902,
+        "code": "tPage +=                    +(aMat.mTargetSolidifying.mAmount / U) +     + ((int)(((double)(aMat.mTargetSolidifying.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSolidifying.mAmount <= 0 ?           : aMat.mTargetSolidifying.mMaterial == aMat ?          : aMat.mTargetSolidifying.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 902,
+        "code": "tPage +=                    +(aMat.mTargetSolidifying.mAmount / U) +     + ((int)(((double)(aMat.mTargetSolidifying.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSolidifying.mAmount <= 0 ?           : aMat.mTargetSolidifying.mMaterial == aMat ?          : aMat.mTargetSolidifying.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 902,
+        "code": "tPage +=                    +(aMat.mTargetSolidifying.mAmount / U) +     + ((int)(((double)(aMat.mTargetSolidifying.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSolidifying.mAmount <= 0 ?           : aMat.mTargetSolidifying.mMaterial == aMat ?          : aMat.mTargetSolidifying.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 902,
+        "code": "tPage +=                    +(aMat.mTargetSolidifying.mAmount / U) +     + ((int)(((double)(aMat.mTargetSolidifying.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSolidifying.mAmount <= 0 ?           : aMat.mTargetSolidifying.mMaterial == aMat ?          : aMat.mTargetSolidifying.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 902,
+        "code": "tPage +=                    +(aMat.mTargetSolidifying.mAmount / U) +     + ((int)(((double)(aMat.mTargetSolidifying.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSolidifying.mAmount <= 0 ?           : aMat.mTargetSolidifying.mMaterial == aMat ?          : aMat.mTargetSolidifying.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 962,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedSolidifying) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSolidifying.has(aMat)) tMap.put(tMat, tMat.mTargetSolidifying.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 962,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedSolidifying) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSolidifying.has(aMat)) tMap.put(tMat, tMat.mTargetSolidifying.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Furnace.java",
+        "line": 194,
+        "code": "long aTargetAmount = UT.Code.units(UT.Code.units(aEvent.mMaterial.mTargetSmelting.mAmount, U, aEvent.mMaterial.mTargetSmelting.mMaterial.mTargetSolidifying.mAmount, F), U, mTargetAmount<0?aEvent.mPrefix.mAmount:mTargetAmount, F);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Furnace.java",
+        "line": 196,
+        "code": "RM.add_smelting(aEvent.mStack, OM.ingot(aEvent.mMaterial.mTargetSmelting.mMaterial.mTargetSolidifying.mMaterial, aTargetAmount), mExp ? UT.Code.units(aTargetAmount, U, aEvent.mMaterial.mToolQuality+1, T) : 0, !RUNNING, T, F);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/loaders/c/Loader_Recipes_Furnace.java",
+        "line": 198,
+        "code": "RM.add_smelting(aEvent.mStack, OM.ingot(aEvent.mMaterial.mTargetSmelting.mMaterial.mTargetSolidifying.mMaterial, aTargetAmount), mExp ? UT.Code.units(aTargetAmount, U, aEvent.mMaterial.mToolQuality+1, T) : 0, !RUNNING, F, T);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+        "line": 326,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(tToBeAdded);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+        "line": 326,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(tToBeAdded);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+        "line": 399,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(mContent);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+        "line": 399,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(mContent);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 190,
+        "code": "mContent.mMaterial = mContent.mMaterial.mTargetSolidifying.mMaterial;",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 194,
+        "code": "if (mContent.mMaterial.mTargetSolidifying.mMaterial.contains(TD.Processing.COOL2CRYSTAL)) {",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 250,
+        "code": "if (aMaterial.mMaterial.mTargetSolidifying.mMaterial.contains(TD.Processing.COOL2CRYSTAL)) {",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 254,
+        "code": "if (tPrefix.mat(aMaterial.mMaterial.mTargetSolidifying.mMaterial, 1) != null) {",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 255,
+        "code": "long tRequiredAmount = getMoldRequiredMaterialUnits(), rAmount = UT.Code.units(tRequiredAmount, U, aMaterial.mMaterial.mTargetSolidifying.mAmount, T);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 604,
+        "code": "if (aMaterial.mMaterial.mTargetSolidifying.mMaterial.contains(TD.Processing.COOL2CRYSTAL)) {",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 608,
+        "code": "if (tPrefix == null || tPrefix.mat(aMaterial.mMaterial.mTargetSolidifying.mMaterial, 1) == null) return 0;",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityMold.java",
+        "line": 610,
+        "code": "long rAmount = UT.Code.units(tRequiredAmount, U, aMaterial.mMaterial.mTargetSolidifying.mAmount, T);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+        "line": 276,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(tToBeAdded);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+        "line": 276,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(tToBeAdded);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+        "line": 343,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(mContent);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntitySmeltery.java",
+        "line": 343,
+        "code": "OM.stack(tMaterial.mMaterial.mTargetSolidifying.mMaterial, UT.Code.units_(tMaterial.mAmount, U, tMaterial.mMaterial.mTargetSolidifying.mAmount, F)).addToList(mContent);",
+        "review_role": "behavior/condition candidate; inspect caller"
+      }
+    ],
+    "Bending": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 293,
+        "code": "mTargetBending      = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 759,
+        "code": "setBending    (aMaterial.mTargetBending    .mMaterial, aMaterial.mTargetBending    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 759,
+        "code": "setBending    (aMaterial.mTargetBending    .mMaterial, aMaterial.mTargetBending    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 774,
+        "code": "setBending    (aMaterial.mTargetBending    .mMaterial,(aMaterial.mTargetBending    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 774,
+        "code": "setBending    (aMaterial.mTargetBending    .mMaterial,(aMaterial.mTargetBending    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 865,
+        "code": "mTargetBending.mMaterial.mTargetedBending.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 866,
+        "code": "mTargetBending = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 704,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedBending) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetBending.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 912,
+        "code": "tPage +=                    +(aMat.mTargetBending    .mAmount / U) +     + ((int)(((double)(aMat.mTargetBending    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetBending    .mAmount <= 0 ?           : aMat.mTargetBending    .mMaterial == aMat ?          : aMat.mTargetBending    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 912,
+        "code": "tPage +=                    +(aMat.mTargetBending    .mAmount / U) +     + ((int)(((double)(aMat.mTargetBending    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetBending    .mAmount <= 0 ?           : aMat.mTargetBending    .mMaterial == aMat ?          : aMat.mTargetBending    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 912,
+        "code": "tPage +=                    +(aMat.mTargetBending    .mAmount / U) +     + ((int)(((double)(aMat.mTargetBending    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetBending    .mAmount <= 0 ?           : aMat.mTargetBending    .mMaterial == aMat ?          : aMat.mTargetBending    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 912,
+        "code": "tPage +=                    +(aMat.mTargetBending    .mAmount / U) +     + ((int)(((double)(aMat.mTargetBending    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetBending    .mAmount <= 0 ?           : aMat.mTargetBending    .mMaterial == aMat ?          : aMat.mTargetBending    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 912,
+        "code": "tPage +=                    +(aMat.mTargetBending    .mAmount / U) +     + ((int)(((double)(aMat.mTargetBending    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetBending    .mAmount <= 0 ?           : aMat.mTargetBending    .mMaterial == aMat ?          : aMat.mTargetBending    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1013,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedBending) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetBending.has(aMat)) tMap.put(tMat, tMat.mTargetBending.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1013,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedBending) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetBending.has(aMat)) tMap.put(tMat, tMat.mTargetBending.mAmount);",
+        "review_role": "definition/copy/display"
+      }
+    ],
+    "Compressing": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 294,
+        "code": "mTargetCompressing  = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 760,
+        "code": "setCompressing(aMaterial.mTargetCompressing.mMaterial, aMaterial.mTargetCompressing.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 760,
+        "code": "setCompressing(aMaterial.mTargetCompressing.mMaterial, aMaterial.mTargetCompressing.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 775,
+        "code": "setCompressing(aMaterial.mTargetCompressing.mMaterial,(aMaterial.mTargetCompressing.mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 775,
+        "code": "setCompressing(aMaterial.mTargetCompressing.mMaterial,(aMaterial.mTargetCompressing.mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 874,
+        "code": "mTargetCompressing.mMaterial.mTargetedCompressing.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 875,
+        "code": "mTargetCompressing = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 711,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedCompressing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCompressing.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 913,
+        "code": "tPage +=                    +(aMat.mTargetCompressing.mAmount / U) +     + ((int)(((double)(aMat.mTargetCompressing.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCompressing.mAmount <= 0 ?           : aMat.mTargetCompressing.mMaterial == aMat ?          : aMat.mTargetCompressing.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 913,
+        "code": "tPage +=                    +(aMat.mTargetCompressing.mAmount / U) +     + ((int)(((double)(aMat.mTargetCompressing.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCompressing.mAmount <= 0 ?           : aMat.mTargetCompressing.mMaterial == aMat ?          : aMat.mTargetCompressing.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 913,
+        "code": "tPage +=                    +(aMat.mTargetCompressing.mAmount / U) +     + ((int)(((double)(aMat.mTargetCompressing.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCompressing.mAmount <= 0 ?           : aMat.mTargetCompressing.mMaterial == aMat ?          : aMat.mTargetCompressing.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 913,
+        "code": "tPage +=                    +(aMat.mTargetCompressing.mAmount / U) +     + ((int)(((double)(aMat.mTargetCompressing.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCompressing.mAmount <= 0 ?           : aMat.mTargetCompressing.mMaterial == aMat ?          : aMat.mTargetCompressing.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 913,
+        "code": "tPage +=                    +(aMat.mTargetCompressing.mAmount / U) +     + ((int)(((double)(aMat.mTargetCompressing.mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCompressing.mAmount <= 0 ?           : aMat.mTargetCompressing.mMaterial == aMat ?          : aMat.mTargetCompressing.mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1030,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedCompressing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCompressing.has(aMat)) tMap.put(tMat, tMat.mTargetCompressing.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1030,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedCompressing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCompressing.has(aMat)) tMap.put(tMat, tMat.mTargetCompressing.mAmount);",
+        "review_role": "definition/copy/display"
+      }
+    ],
+    "Cutting": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 289,
+        "code": "mTargetCutting      = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 755,
+        "code": "setCutting    (aMaterial.mTargetCutting    .mMaterial, aMaterial.mTargetCutting    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 755,
+        "code": "setCutting    (aMaterial.mTargetCutting    .mMaterial, aMaterial.mTargetCutting    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 770,
+        "code": "setCutting    (aMaterial.mTargetCutting    .mMaterial,(aMaterial.mTargetCutting    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 770,
+        "code": "setCutting    (aMaterial.mTargetCutting    .mMaterial,(aMaterial.mTargetCutting    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 829,
+        "code": "mTargetCutting.mMaterial.mTargetedCutting.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 830,
+        "code": "mTargetCutting = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 725,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedCutting) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCutting.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 914,
+        "code": "tPage +=                    +(aMat.mTargetCutting    .mAmount / U) +     + ((int)(((double)(aMat.mTargetCutting    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCutting    .mAmount <= 0 ?           : aMat.mTargetCutting    .mMaterial == aMat ?          : aMat.mTargetCutting    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 914,
+        "code": "tPage +=                    +(aMat.mTargetCutting    .mAmount / U) +     + ((int)(((double)(aMat.mTargetCutting    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCutting    .mAmount <= 0 ?           : aMat.mTargetCutting    .mMaterial == aMat ?          : aMat.mTargetCutting    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 914,
+        "code": "tPage +=                    +(aMat.mTargetCutting    .mAmount / U) +     + ((int)(((double)(aMat.mTargetCutting    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCutting    .mAmount <= 0 ?           : aMat.mTargetCutting    .mMaterial == aMat ?          : aMat.mTargetCutting    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 914,
+        "code": "tPage +=                    +(aMat.mTargetCutting    .mAmount / U) +     + ((int)(((double)(aMat.mTargetCutting    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCutting    .mAmount <= 0 ?           : aMat.mTargetCutting    .mMaterial == aMat ?          : aMat.mTargetCutting    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 914,
+        "code": "tPage +=                    +(aMat.mTargetCutting    .mAmount / U) +     + ((int)(((double)(aMat.mTargetCutting    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetCutting    .mAmount <= 0 ?           : aMat.mTargetCutting    .mMaterial == aMat ?          : aMat.mTargetCutting    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1064,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedCutting) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCutting.has(aMat)) tMap.put(tMat, tMat.mTargetCutting.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1064,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedCutting) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetCutting.has(aMat)) tMap.put(tMat, tMat.mTargetCutting.mAmount);",
+        "review_role": "definition/copy/display"
+      }
+    ],
+    "Forging": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 291,
+        "code": "mTargetForging      = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 757,
+        "code": "setForging    (aMaterial.mTargetForging    .mMaterial, aMaterial.mTargetForging    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 757,
+        "code": "setForging    (aMaterial.mTargetForging    .mMaterial, aMaterial.mTargetForging    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 772,
+        "code": "setForging    (aMaterial.mTargetForging    .mMaterial,(aMaterial.mTargetForging    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 772,
+        "code": "setForging    (aMaterial.mTargetForging    .mMaterial,(aMaterial.mTargetForging    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 847,
+        "code": "mTargetForging.mMaterial.mTargetedForging.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 848,
+        "code": "mTargetForging = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterialCondition.java",
+        "line": 59,
+        "code": "@Override public boolean isTrue(OreDictMaterial aMaterial) {return aMaterial.mTargetForging.mMaterial == aMaterial;}",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterialCondition.java",
+        "line": 64,
+        "code": "@Override public boolean isTrue(OreDictMaterial aMaterial) {return aMaterial.mTargetForging.mAmount >= U;}",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregapi/recipes/handlers/RecipeMapHandlerPrefixForging.java",
+        "line": 48,
+        "code": "return aMaterial.mTargetForging.mMaterial;",
+        "review_role": "behavior/condition candidate; inspect caller"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 732,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedForging) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetForging.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 915,
+        "code": "tPage +=                    +(aMat.mTargetForging    .mAmount / U) +     + ((int)(((double)(aMat.mTargetForging    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetForging    .mAmount <= 0 ?           : aMat.mTargetForging    .mMaterial == aMat ?          : aMat.mTargetForging    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 915,
+        "code": "tPage +=                    +(aMat.mTargetForging    .mAmount / U) +     + ((int)(((double)(aMat.mTargetForging    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetForging    .mAmount <= 0 ?           : aMat.mTargetForging    .mMaterial == aMat ?          : aMat.mTargetForging    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 915,
+        "code": "tPage +=                    +(aMat.mTargetForging    .mAmount / U) +     + ((int)(((double)(aMat.mTargetForging    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetForging    .mAmount <= 0 ?           : aMat.mTargetForging    .mMaterial == aMat ?          : aMat.mTargetForging    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 915,
+        "code": "tPage +=                    +(aMat.mTargetForging    .mAmount / U) +     + ((int)(((double)(aMat.mTargetForging    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetForging    .mAmount <= 0 ?           : aMat.mTargetForging    .mMaterial == aMat ?          : aMat.mTargetForging    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 915,
+        "code": "tPage +=                    +(aMat.mTargetForging    .mAmount / U) +     + ((int)(((double)(aMat.mTargetForging    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetForging    .mAmount <= 0 ?           : aMat.mTargetForging    .mMaterial == aMat ?          : aMat.mTargetForging    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1081,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedForging) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetForging.has(aMat)) tMap.put(tMat, tMat.mTargetForging.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1081,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedForging) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetForging.has(aMat)) tMap.put(tMat, tMat.mTargetForging.mAmount);",
+        "review_role": "definition/copy/display"
+      }
+    ],
+    "Smashing": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 288,
+        "code": "mTargetSmashing     = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 754,
+        "code": "setSmashing   (aMaterial.mTargetSmashing   .mMaterial, aMaterial.mTargetSmashing   .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 754,
+        "code": "setSmashing   (aMaterial.mTargetSmashing   .mMaterial, aMaterial.mTargetSmashing   .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 769,
+        "code": "setSmashing   (aMaterial.mTargetSmashing   .mMaterial,(aMaterial.mTargetSmashing   .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 769,
+        "code": "setSmashing   (aMaterial.mTargetSmashing   .mMaterial,(aMaterial.mTargetSmashing   .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 820,
+        "code": "mTargetSmashing.mMaterial.mTargetedSmashing.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 821,
+        "code": "mTargetSmashing = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 739,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedSmashing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSmashing.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 916,
+        "code": "tPage +=                    +(aMat.mTargetSmashing   .mAmount / U) +     + ((int)(((double)(aMat.mTargetSmashing   .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSmashing   .mAmount <= 0 ?           : aMat.mTargetSmashing   .mMaterial == aMat ?          : aMat.mTargetSmashing   .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 916,
+        "code": "tPage +=                    +(aMat.mTargetSmashing   .mAmount / U) +     + ((int)(((double)(aMat.mTargetSmashing   .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSmashing   .mAmount <= 0 ?           : aMat.mTargetSmashing   .mMaterial == aMat ?          : aMat.mTargetSmashing   .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 916,
+        "code": "tPage +=                    +(aMat.mTargetSmashing   .mAmount / U) +     + ((int)(((double)(aMat.mTargetSmashing   .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSmashing   .mAmount <= 0 ?           : aMat.mTargetSmashing   .mMaterial == aMat ?          : aMat.mTargetSmashing   .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 916,
+        "code": "tPage +=                    +(aMat.mTargetSmashing   .mAmount / U) +     + ((int)(((double)(aMat.mTargetSmashing   .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSmashing   .mAmount <= 0 ?           : aMat.mTargetSmashing   .mMaterial == aMat ?          : aMat.mTargetSmashing   .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 916,
+        "code": "tPage +=                    +(aMat.mTargetSmashing   .mAmount / U) +     + ((int)(((double)(aMat.mTargetSmashing   .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetSmashing   .mAmount <= 0 ?           : aMat.mTargetSmashing   .mMaterial == aMat ?          : aMat.mTargetSmashing   .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1098,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedSmashing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSmashing.has(aMat)) tMap.put(tMat, tMat.mTargetSmashing.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1098,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedSmashing) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetSmashing.has(aMat)) tMap.put(tMat, tMat.mTargetSmashing.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregtech/tileentity/tools/MultiTileEntityAnvil.java",
+        "line": 128,
+        "code": "ST.drop(worldObj, getCoords(), OP.scrapGt.mat(mMaterial.mTargetSmashing.mMaterial, 48+rng(16)));",
+        "review_role": "behavior/condition candidate; inspect caller"
+      }
+    ],
+    "Working": [
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 290,
+        "code": "mTargetWorking      = OM.stack(this, U),",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 756,
+        "code": "setWorking    (aMaterial.mTargetWorking    .mMaterial, aMaterial.mTargetWorking    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 756,
+        "code": "setWorking    (aMaterial.mTargetWorking    .mMaterial, aMaterial.mTargetWorking    .mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 771,
+        "code": "setWorking    (aMaterial.mTargetWorking    .mMaterial,(aMaterial.mTargetWorking    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 771,
+        "code": "setWorking    (aMaterial.mTargetWorking    .mMaterial,(aMaterial.mTargetWorking    .mAmount * aMultiplier) / aDivider);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 838,
+        "code": "mTargetWorking.mMaterial.mTargetedWorking.remove(this);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/oredict/OreDictMaterial.java",
+        "line": 839,
+        "code": "mTargetWorking = OM.stack(aMaterial, aAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 746,
+        "code": "for (OreDictMaterial tMat : aMat.mTargetedWorking) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetWorking.has(aMat)) {",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 923,
+        "code": "tPage +=                    +(aMat.mTargetWorking    .mAmount / U) +     + ((int)(((double)(aMat.mTargetWorking    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetWorking    .mAmount <= 0 ?           : aMat.mTargetWorking    .mMaterial == aMat ?          : aMat.mTargetWorking    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 923,
+        "code": "tPage +=                    +(aMat.mTargetWorking    .mAmount / U) +     + ((int)(((double)(aMat.mTargetWorking    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetWorking    .mAmount <= 0 ?           : aMat.mTargetWorking    .mMaterial == aMat ?          : aMat.mTargetWorking    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 923,
+        "code": "tPage +=                    +(aMat.mTargetWorking    .mAmount / U) +     + ((int)(((double)(aMat.mTargetWorking    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetWorking    .mAmount <= 0 ?           : aMat.mTargetWorking    .mMaterial == aMat ?          : aMat.mTargetWorking    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 923,
+        "code": "tPage +=                    +(aMat.mTargetWorking    .mAmount / U) +     + ((int)(((double)(aMat.mTargetWorking    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetWorking    .mAmount <= 0 ?           : aMat.mTargetWorking    .mMaterial == aMat ?          : aMat.mTargetWorking    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 923,
+        "code": "tPage +=                    +(aMat.mTargetWorking    .mAmount / U) +     + ((int)(((double)(aMat.mTargetWorking    .mAmount % U) / (double)U) * 1000))+   +(aMat.mTargetWorking    .mAmount <= 0 ?           : aMat.mTargetWorking    .mMaterial == aMat ?          : aMat.mTargetWorking    .mMaterial.getLocal())+    ;",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1115,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedWorking) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetWorking.has(aMat)) tMap.put(tMat, tMat.mTargetWorking.mAmount);",
+        "review_role": "definition/copy/display"
+      },
+      {
+        "path": "gregapi/util/UT.java",
+        "line": 1115,
+        "code": "tMap = new HashMap<>(); for (OreDictMaterial tMat : aMat.mTargetedWorking) if (tMat.mTargetRegistration == tMat && tMat != aMat && tMat.mTargetWorking.has(aMat)) tMap.put(tMat, tMat.mTargetWorking.mAmount);",
+        "review_role": "definition/copy/display"
+      }
+    ]
+  }
+}

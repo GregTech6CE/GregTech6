@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-19",
+  "baseline": "618e31b8b",
+  "scope": "Twelve core material flag observations and eight target lookups; direct original field consumers plus reviewed recipe branches. Not a full material membership or final Minecraft recipe audit.",
+  "original_source_sha256": {
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/data/TD.java": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+    "gregapi/oredict/OreDictMaterial.java": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+    "gregapi/oredict/OreDictMaterialCondition.java": "de90358be7c2a29806d24645e8322bdda798605269bc229c8a426593c7175471",
+    "gregapi/recipes/handlers/RecipeMapHandlerPrefixForging.java": "d21e5e4027af1b83cedb8c0c6e1435f5c5ef7de9fab24850dd2e9936143b7501",
+    "gregtech/loaders/c/Loader_Recipes_Handlers.java": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b",
+    "gregtech/tileentity/tools/MultiTileEntityAnvil.java": "b3e829336ae782314373e9df3092db897f7096596f8bb77abdc8eb248ed5c868"
+  },
+  "port_source_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/ExtrusionWorkRules.java": "08c1b26a79fd42972168baf58dc51db7605c70de27b831e533539d23ed477003",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/MaterialRecoveryRules.java": "4f0bd8ef0b72fa077778b0b68a32ea3425b31a3ff5b0493331afd24656801bca",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/PipeWeldingRules.java": "a461cd27450baf0dba108d3cb29a8b950dd3e59464b3a73a559237bb13103549",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MaterialFormConversionRecipes.java": "b58037c7f3e91a3256ee66a5c83e434163824cf2e2e9f7ef01087853760e4da8",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MortarGrindingRecipes.java": "6a351be593fdcef84e5e6b2d6c6de8167535023ee4dadfe258691a5149498562",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/PartRecipeLoader.java": "ac07e9ae8709bbe8111d859b45a898cf0b77fcd6601bee29de623b9c3e5a938e",
+    "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java": "e460efaed48f54ebe0f7f1ef3d249e31d7d3011ada59b10bf51916f15e0751ba",
+    "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java": "e800fb05585bcc78fc150c4cf7504252f51a2e783b2b5674339608ee2f4c9934",
+    "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionaryPages.java": "f1096bfdeb6866bc5241850967d0fcf7a32189df9c916888ba67adb23893c740",
+    "core/src/main/java/com/gregtech/gregtech/content/tool/AnvilMaterialCatalog.java": "01774e16dc05ece15ae7fdd1b3b72da61eabd6a704ea9048211046f598da4b65",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/tool/AnvilForgingRecipes.java": "af26f55d1dcdee083155faab732cda90581ebbb0c597517483f49e358f2178b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/MaterialAnvilBlockEntity.java": "4087c4d8bb273f97fca875cba85a6ef60a9249d8da939167e2efb8cf3132e339",
+    "tools/extract_gt6_workability.py": "9df58276da4f1cc40db4454882259c6d1bf490cff34a34f77738ce91397cf23d",
+    "tools/extract_gt6_processing_targets.py": "b43e18beac5cd4056efda6bd56c89c22b43cfa79aa363d1a4a03cdf25256273f"
+  },
+  "issues": [
+    "ALIGN-010",
+    "ALIGN-011",
+    "ALIGN-012",
+    "ALIGN-013"
+  ],
+  "original_expectation_basis": "MATERIAL_PROCESSING_AUDIT.md lists reviewed declarations, factory inheritance and specific consumers; no inference from absent enum names alone.",
+  "observations": [
+    "FLAGS|MeatRaw|MeatRaw|FOOD=false|MORTAR=false|FURNACE=true|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|MeatCooked|MeatCooked|FOOD=false|MORTAR=false|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|FishRaw|FishRaw|FOOD=false|MORTAR=false|FURNACE=true|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Cheese|Cheese|FOOD=false|MORTAR=false|FURNACE=true|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Chocolate|Chocolate|FOOD=false|MORTAR=false|FURNACE=true|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|NaCl|Salt|FOOD=false|MORTAR=false|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Sn|Tin|FOOD=false|MORTAR=false|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Pb|Lead|FOOD=false|MORTAR=false|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Au|Gold|FOOD=false|MORTAR=true|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Paper|Paper|FOOD=false|MORTAR=true|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|Wood|Wood|FOOD=false|MORTAR=true|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "FLAGS|SiO2|SiliconDioxide|FOOD=false|MORTAR=false|FURNACE=false|BRITTLE=false|CRYSTALLISABLE=false",
+    "TARGET|WoodTreated|WoodTreated|Forging|DEFAULT_SELF_1U",
+    "TARGET|WoodTreated|WoodTreated|Compressing|DEFAULT_SELF_1U",
+    "TARGET|WoodPolished|WoodPolished|Forging|DEFAULT_SELF_1U",
+    "TARGET|WoodPolished|WoodPolished|Compressing|DEFAULT_SELF_1U",
+    "TARGET|Brick|Clay Brick|Forging|DEFAULT_SELF_1U",
+    "TARGET|Brick|Clay Brick|Compressing|DEFAULT_SELF_1U",
+    "TARGET|TungstenSintered|TungstenSintered|Forging|,648648000",
+    "TARGET|TungstenSintered|TungstenSintered|Compressing|DEFAULT_SELF_1U"
+  ],
+  "probe": "tools/integration/audit-probes/MaterialProcessingAudit.java",
+  "probe_sha256": "6edb62e89a5913179553c7db58b8a64f1edd1ce13972ebe48b2313bc6a2fb3b0",
+  "runtime_log_sha256": "7f4d6a0345c9bf8d6d77207f050fbf9e0d1bfba95f886f2d30e018b7883ecb88",
+  "invocation": "Java 17 source launcher; classpath core/build/classes/java/main;core/build/classes/java/api; presence bound to minecraft and gt6ce",
+  "formatting_checks": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/ExtrusionWorkRules.java",
+      "sha256_before": "d94d6bf4288dd9369189d0b39bd9102277ba6d89b27decdc2c4b9c0f1717c9b5",
+      "sha256_after": "08c1b26a79fd42972168baf58dc51db7605c70de27b831e533539d23ed477003",
+      "both_platform_code_and_literals": "unchanged"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/MaterialRecoveryRules.java",
+      "sha256_before": "4c70053d3168ccaf78b87192745ddd124caf34c95bd640a1fa21e794d894ef45",
+      "sha256_after": "4f0bd8ef0b72fa077778b0b68a32ea3425b31a3ff5b0493331afd24656801bca",
+      "both_platform_code_and_literals": "unchanged"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/PipeWeldingRules.java",
+      "sha256_before": "e754f3554c6ddc8703b751eaff63ed2848f0e7f6a7a9b9873b892aeb4260fde7",
+      "sha256_after": "a461cd27450baf0dba108d3cb29a8b950dd3e59464b3a73a559237bb13103549",
+      "both_platform_code_and_literals": "unchanged"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MaterialFormConversionRecipes.java",
+      "sha256_before": "14545ae5dc5bc1f74ac903b4e7cb406e72c1e5ad100c9d6b052e7b4f758a3004",
+      "sha256_after": "b58037c7f3e91a3256ee66a5c83e434163824cf2e2e9f7ef01087853760e4da8",
+      "both_platform_code_and_literals": "unchanged"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MortarGrindingRecipes.java",
+      "sha256_before": "35692c5c42fb38e274c4a9cf90fd6c746fb4f03c962f1c7ef438fcff7adb0c13",
+      "sha256_after": "6a351be593fdcef84e5e6b2d6c6de8167535023ee4dadfe258691a5149498562",
+      "both_platform_code_and_literals": "unchanged"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/PartRecipeLoader.java",
+      "sha256_before": "69938b8e30d9697e17113c780698853cded90905a022cabac4d5b2a0bc3ceb84",
+      "sha256_after": "ac07e9ae8709bbe8111d859b45a898cf0b77fcd6601bee29de623b9c3e5a938e",
+      "both_platform_code_and_literals": "unchanged"
+    }
+  ],
+  "not_run": [
+    "Minecraft startup",
+    "final recipe enumeration",
+    "gameplay acceptance",
+    "full tests",
+    "new packages"
+  ],
+  "status": "Differences confirmed in documented scope; comprehensive audit remains active.",
+  "formatted_core_javac": {
+    "java": 17,
+    "classes": 3,
+    "exit_code": 0,
+    "output": "work/architecture-standardization-20261019/formatted-classes"
+  }
+}

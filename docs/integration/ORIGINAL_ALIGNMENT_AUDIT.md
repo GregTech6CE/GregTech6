@@ -4,6 +4,8 @@
 
 第二批以 `65cd233e4` 为基线：完成 30 个活动类名标准化、共享机器配方初始化清单及起火器标签入口归一；新增材料属性／凝固目标的原版对照。当前代码入口见 [源码导航](SOURCE_LAYOUT.md)。
 
+第三批以 `618e31b8b` 为基线：复核工作属性的工厂继承与名称映射、七种处理目标的全部直接引用，以及挤压／研钵／压缩的具体过滤分支；新增 ALIGN-010–013。详见 [材料处理审计](MATERIAL_PROCESSING_AUDIT.md)。
+
 ## 范围与判定方式
 
 原版来源为 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，此次清点 1,229 个 Java 文件；当前 core 与 Stonecutter 的主源码／API 共 1,740 个 Java 文件。文件数量、同名类、注释提及原版或配方条数均不能证明行为等价。逐文件路径及摘要见 [源码范围清单](verification/alignment-source-inventory-20261019.json)，可用 `tools/integration/inventory_alignment_scope.py` 重建。
@@ -25,15 +27,19 @@
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
 | ALIGN-008 | 确认搅拌盆材料表面未按 GLOWING 自发光。 | `MultiTileEntityMixingBowl:407` 调用材料 `getTextureDust()`；`OreDictMaterial:1009` 将 GLOWING 传给纹理。 | `ProcessingToolRenderer` 材料面与覆盖面都使用环境 `light`，没有材料发光判断。流体亮度另有 `FluidCatalog`／`FluidVisualPolicy`，不能扩大为“所有发光流体缺失”。 |
 | ALIGN-009 | 确认凝固目标只供手册展示，尚未接入坩埚冷却。 | `MT:1880–1881`：H2O→Ice、Lava→Obsidian；`MultiTileEntitySmeltery:276,343` 按 `mTargetSolidifying` 转换材料和数量。 | `CrucibleProcess` 冷却分支将同材料重新加入。实际 core 两个 1U 样本降过熔点后分别仍为 Water、Lava；量仍为 648648000，见 [材料审计回执](verification/material-trait-review-20261019.json)。 |
+| ALIGN-010 | 确认工作属性表遗漏工厂继承，并混用字段名与材料名。影响部分材料的配方过滤和耗时。 | `MT:62,78,168–177,439,472,1056,1129`：食物工厂、低熔点金属工厂及显式属性。 | core 实际观察肉／奶酪／巧克力 FOOD、MORTAR 缺失，锡铅 FURNACE、MORTAR 缺失，盐／二氧化硅的显式属性未匹配。其他材料和最终配方全集未验证，见 [具体样本和调用路径](MATERIAL_PROCESSING_AUDIT.md)。 |
+| ALIGN-011 | 确认通用挤压注册未应用原版材料条件／锻造目标，输入前缀矩阵也较窄。 | `Loader_Recipes_Handlers:741–838` 的前缀矩阵、EXTRUDER／EXTRUDER_SIMPLE／fullforge；`RecipeMapHandlerPrefixForging` 的输出目标。 | `PartRecipeLoader` 只遍历四个输入前缀，对有效形态同时注册普通和低温路径，保留原材料输出。Rubber／Plastic 有专用路径，不包含在此判断中；未枚举最终 Minecraft 配方。 |
+| ALIGN-012 | 确认材料手册的处理目标遗漏复制继承。 | `OreDictMaterial.setAllToTheOutputOf:749–777`；`MT:1245–1246,1279–1280,1732`。 | 处理木／抛光木的目标、砖的禁用目标、烧结钨的压缩目标在侧表缺失。core 八次查询已记录；不能将展示错误直接推为所有对应机器错误。 |
+| ALIGN-013 | 确认通用配方部分条件不同。 | `Loader_Recipes_Handlers:79` 的 rockGt 研钵行不要求 MORTAR；`:217–233` 的压缩行排除 COATED，部分还排除 LAYERED。 | `MortarGrindingRecipes` 把 rockGt 也放进 MORTAR 过滤；`MaterialFormConversionRecipes` 缺少上述涂层／层状条件。材料实际形态和最终可见配方仍待枚举。 |
 
-上述是具体范围，不表示这些系统完全未移植；ALIGN-009 另有独立 core 观察，其余新增项为调用链核查，没有启动游戏。
+上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，其余为具体调用链核查，没有启动游戏。
 
 ## 全面核查队列
 
 | 系统 | 本轮状态 | 完成盘点需要的证据 |
 | --- | --- | --- |
-| 材料、前缀、物质量、统一规则 | 已清点三组 TD 的 69 个直接属性声明，核查其中 15 项的具体表示／消费路径；其余继续 | 已确认 ALIGN-006–009。FOOD／BRITTLE／SOFT 等由 `MaterialWorkability` 表示，不能只看枚举判缺失；成员全集和工厂继承仍待重核。 |
-| 固定／动态配方、监听器 | 两版本 54 步初始化序列已比对并共享，语义和完整内容继续核查 | 生成器跳过原因、运行时未解析行、回调触发顺序；外部依赖与内部遗漏分开 |
+| 材料、前缀、物质量、统一规则 | 已清点三组 TD 的 69 个直接属性声明，核查其中 15 项的具体表示／消费路径；工厂样本和七种目标直接引用已扩大核查 | 已确认 ALIGN-006–010、012。FOOD／BRITTLE／SOFT 等虽有 `MaterialWorkability` 表示，继承和名称映射仍有实际缺口；成员全集未完成。 |
+| 固定／动态配方、监听器 | 两版本 54 步初始化序列已比对并共享；新增挤压、研钵、压缩分支差异 ALIGN-011、013 | 继续核对完整前缀条件矩阵、生成器跳过原因、运行时未解析行、回调触发顺序；外部依赖与内部遗漏分开 |
 | 手工工具与早期生存 | 已有前轮局部修复，待扩大核查 | 工具专属行为、损耗、容器返还和自然可得原料 |
 | 单物品、食物、饮料、服装 | 已有 1,278 项运行清单，待核查行为出口 | 无静态机器配方不直接判缺失，另查右键、掉落、工作台、动态回调 |
 | 弹药与实体 | 已确认 ALIGN-002，未完成全类核查 | 箭／子弹命中、附魔、拾取、同步和外部武器入口 |
@@ -68,9 +74,11 @@
 
 目录迁移不更改注册 ID、资源、初始化顺序、配方数值或保存格式。方法体和字符串已按 Forge／NeoForge 两种条件展开，与基线归一化比较。聚变配方需要的两个解析方法由包内访问显式改为 public；它们仍不是对外 SDK API。完整映射见 [迁移记录](verification/loader-package-migration-20261019.json)。
 
-最终双版主代码及探针编译通过（1m28s）；105 个 Java 文件两版归一化比较通过。额外源策略检查因 ALIGN-005 的既有标签目录遗漏失败，不能记为全套自检通过。本轮未运行游戏，也未生成新构建包。
+首批双版主代码及探针编译通过（1m28s）；105 个 Java 文件两版归一化比较通过。当时额外源策略检查因 ALIGN-005 的标签目录遗漏失败；第二批已修复并通过。首批未运行游戏或打包，之后按用户要求交付的当前工作树包另见 [构建回执](verification/current-build-20261019.json)。
 
 第二批已经完成 `Loader_...`／`IGTLoader`／`GTGeneratedChem` 共 30 个活动类名整理及共用机器配方清单。原版来源注释和历史回执保留原名。78 个非启动入口 Java 文件在正确展开 Stonecutter 条件后，除声明的接口适配外代码／字面量等价；两平台各 54 步调用序列相同，日志和异常定位改用明确职责名称。NeoForge 旧独立配方加载类已删除。
+
+第三批展开三份加工计算类的压行实现，并修正三份配方类的重复／过时说明。六个 Java 文件双版展开后代码和字符串与基线一致，三个计算类独立编译通过；没有把格式整理夹带成配方行为调整。新增只读原版目标引用索引工具，旧生成器的硬编码来源路径仍待统一。
 
 尚未完成的标准化：过大职责类拆分、紧密压行代码整理、其它重复注册适配、生成器路径／来源参数的统一，以及审计中发现的材料元数据消费边界。不能把改名和一份清单当作全部重构完成。
 
