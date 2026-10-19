@@ -132,8 +132,8 @@ public final class SharedMaterialBootstrapGameTests {
 
     @GameTest(template = "test_empty", timeoutTicks = 20)
     public static void originalAlternateReactions(GameTestHelper helper) {
-        helper.assertTrue(CrucibleReactions.recipes().size() == 42 && CrucibleReactions.allRecipes().size() == 173,
-                "All 42 explicit and 173 total original reactions must remain");
+        helper.assertTrue(CrucibleReactions.recipes().size() == 46 && CrucibleReactions.allRecipes().size() == 137,
+                "All 46 explicit and 137 total original reactions must remain");
         var annealed = stacks(Materials.AnnealedCopper, 1_945_944_000L, Materials.Tin, 648_648_000L);
         helper.assertTrue(Materials.AnnealedCopper.getMeltingPoint() == 2800 && CrucibleReactions.react(annealed, 1357)
                         && annealed.size() == 1 && amountOf(annealed, Materials.Bronze) == 2_594_592_000L,

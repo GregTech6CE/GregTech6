@@ -150,6 +150,26 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
+['crucible', 'cruciblecore', 'crucibleunknown', 'crucibledup', 'cruciblesteal', 'crucibleearly', 'crucibleself', 'cruciblebad'].each { scenario ->
+    def contract = tasks.register("crucibleAddonContracts_${scenario}", JavaExec) {
+        description = "Runs crucible addon scenario ${scenario} in its own JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.CrucibleAddonContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/crucibleAddonContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("crucibleAddonContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
+
 tasks.register('addonMaterialScale', JavaExec) {
     description = 'Times startup and item-definition size for 1000 dust and 1000 metal addon materials.'
     group = 'verification'

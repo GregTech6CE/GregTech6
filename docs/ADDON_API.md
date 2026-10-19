@@ -20,6 +20,7 @@ API **0** is the GT6CE development baseline and includes all the capabilities be
 
 | Upstream minor | Imported change |
 | --- | --- |
+| 8 | Crucible compositions, smelting targets and alloy rows. An addon names materials: a composition can opt into one derived crucible row, a smelting target sets what the material melts into, and explicit rows or removals change the alloy table. The table freezes at the end of material linking. Imported from upstream 0.8.0 and included in CE API 0. Legacy contributor removal moves to 0.10. |
 | 7 | Fuel generators. An addon declares a fuel map and a fluid fuel machine: efficiency, one energy packet, tank capacity, and front, back, or 1 to 8 blocks behind. GregTech registers and runs the single block and the multiblock. Upstream mod version starts at 0.7.0. The numeric material entries stay until 0.9 so this release does not remove them in the same minor that adds the template. |
 | 6 | Behavior machines. An addon declares slots, tanks, toggles, energy and a GUI sheet, and supplies a `MachineBehavior`. GregTech owns the block, inventory, energy, menu and save. Upstream mod version starts at 0.6.0. The version 3 contributor types stay until 0.8 so this release does not remove them in the same minor that adds the shell. |
 | 4 | The addon API is its own source set and a per-loader compile-only SDK. Materials, prefixes, items, fluids, recipes, tools and energy use the facades below. Upstream mod version starts at 0.4.0. Version 3 registration and `onRecipesReady` stay. |
@@ -30,14 +31,14 @@ API **0** is the GT6CE development baseline and includes all the capabilities be
 
 ## Deprecation and removal
 
-Legacy entries are marked deprecated from the CE baseline `0.0`. Their existing earliest removal deadlines, `0.8` and `0.9`, remain unchanged; resetting the current version does not bring removal forward.
+Legacy entries are marked deprecated from the CE baseline `0.0`. Numeric material entries retain their `0.9` earliest removal deadline; the four legacy contributor/layout entries are deferred to `0.10` when importing crucible declarations. Resetting the current version does not bring removal forward.
 
 | Entry | Deprecated | Replacement | Remove at |
 | --- | --- | --- | --- |
-| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.0 | MachineDeclaration | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.0 | MachineLayout | 0.8 |
+| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.0 | AddonMachineContributor | 0.10 |
+| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.0 | AddonMaterialContributor | 0.10 |
+| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.0 | MachineDeclaration | 0.10 |
+| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.0 | MachineLayout | 0.10 |
 | com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.0 | MaterialDeclaration.builder(String) | 0.9 |
@@ -163,7 +164,7 @@ Static rows are still searched first. Dynamic providers run only when none of th
 
 ## Materials and forms
 
-List an `AddonMaterialContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor`. GregTech loads that file with its own class loader at the start of material initialization, before the built-in directory is declared. Return pure data. Do not touch GregTech material tables from the service constructor or from `materials()` / `forms()`. `link()` runs later, after the built-in directory has linked, and is the place for a composition that names another material.
+List an `AddonMaterialContributor` in `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor`. GregTech loads that file with its own class loader at the start of material initialization, before the built-in directory is declared. Return pure data. Do not touch GregTech material tables from the service constructor or from `materials()` / `forms()`. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` are read after the built-in directory has linked. `link()` runs at the same point for anything those lists do not cover.
 
 ```java
 public final class MyMaterials implements AddonMaterialContributor {
@@ -194,6 +195,42 @@ Generated forms are registered in the **`gt6ce`** namespace, through the same `M
 The translation key is `material.gt6ce.<lowercasename>`, from `GTMaterial.getTranslationKey()`. Put it in the addon’s own `assets/gt6ce/lang/en_us.json` and `zh_cn.json`. Minecraft merges those files with GregTech’s by key. A tooltip on an addon material uses `tooltip.gt6ce.material_from_addon` (“Added by the %s addon”), or `tooltip.gt6ce.material_from_addons` when several addons declared it. The shared Chinese file keeps the English fallback for both keys, because neither is an original GT6 translation.
 
 A `dust()` material such as ammonium nitrate generates **6** items. Iron’s automatic forms are **96**. `metal()` is the declaration that produces that larger set. Phase C recipe generators walk every material, so a new material receives the furnace, macerator and similar rows its properties already imply. Removing the addon leaves those `gt6ce:` items missing under the usual Minecraft rules. A crucible or USB entry whose name is no longer loaded is skipped, so unloading an addon does not crash the load. A world reload after uninstall has not been run.
+
+## Crucible
+
+Throwing a GregTech material form into a crucible already melts it. The amount is the form's material weight. Once the crucible is hot enough, the stack becomes that material's smelting target. With no declaration the target is the material itself, one unit out for one unit in, and the crucible smelting page does not list it. Molds still cast whatever material is molten into the mold's existing form, when that form exists.
+
+`compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` are pure data on `AddonMaterialContributor`. GregTech reads them after the built-in directory has linked and before recipes load. Names are material names. `Cr` and `Chromium` are the same material. Unknown names, a non-positive yield, ratio or divider, an empty input list on a new row, or an output that is also an input fail startup and name the addon.
+
+A composition may be set only on a material this addon declared. Part amounts are positive multiples of `GTValues.U`. The divider is stored, and the tooltip formula then comes from the composition. `crucible = true` also adds one alloy row: each ratio is `amount / U`, and the yield is the divider. `crucible = false` stores the composition and adds no row. Two owners of a merged material must declare the same composition, including that flag.
+
+A smelting target may also be set only on this addon's material. `amount` is the output for each `U` of input, so `U` means one to one. The declaration marks the material as melting, which is what puts it on the crucible smelting page. Omitting it leaves the default: melt into itself, with no melting flag.
+
+An explicit alloy row uses coefficients, not units. Three annealed copper and one tin producing four bronze is yield `4` and ratios `3` and `1`. The output may be an existing material. A removal names the output and the input materials. An empty input list removes every row of that output. Otherwise the input names must be the same set; order and ratios are ignored. Removals run after every addon has added its rows, so one addon can drop another addon's row. A removal that matches nothing is a warning, not a failed startup, and each removed row is logged with the addon id.
+
+Assembly order is: built-in explicit rows, built-in composition rows, addon explicit rows in addon-id order, addon composition rows, then removals. The reaction rule is unchanged: one winning row per tick, at most one solid input, no reaction below an output or input melting point, and the greatest output wins. An addon row whose inputs and ratios exactly match another remaining row, with the same output and yield, fails startup. The same inputs and ratios with a different yield or output are kept, and startup warns that the greater output can take the other row over. Remove the old row first when that is the goal.
+
+The table is frozen at the end of material linking. Reading it earlier fails startup. There is no datapack and no `/reload` for these rows. Mixer recipes that produce the same alloy are separate; remove those with `gt6ce:machine_removal`. This entry does not add crucible blocks, hulls, faucets, molds, or a way to say what an arbitrary non-GregTech item melts into. It does not write a crucible's temperature or contents.
+
+```java
+public List<MaterialComposition> compositions() {
+    return List.of(new MaterialComposition("SampleCrucibleAlloy", 4, List.of(
+            new MaterialComposition.Part("SampleAlloy", 3 * GTValues.U),
+            new MaterialComposition.Part("Copper", GTValues.U)), true));
+}
+public List<SmeltingTargetDeclaration> smeltingTargets() {
+    return List.of(new SmeltingTargetDeclaration("SampleAlloy", "SampleAlloy", GTValues.U));
+}
+public List<CrucibleReactionDeclaration> crucibleReactions() {
+    return List.of(new CrucibleReactionDeclaration("SampleCrucibleAlloy", 2, List.of(
+            new CrucibleReactionDeclaration.Part("SampleAlloy", 1),
+            new CrucibleReactionDeclaration.Part("Tin", 1))));
+}
+public List<CrucibleReactionRemoval> crucibleRemovals() {
+    return List.of(new CrucibleReactionRemoval("StainlessSteel",
+            List.of("WroughtIron", "Nichrome", "Chromium", "Manganese")));
+}
+```
 
 ## Recipe machines
 
@@ -297,7 +334,7 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 ## Supported scope
 
 - Shared addon registration, version/context and recipe-ready lifecycle.
-- `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data.
+- `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` name materials and are applied when materials link.
 - `AddonItems.stack(prefix, material, count)` and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate.
 - `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row.
 - `AddonMachineContributor` recipe machines and large recipe machines. Energy is a short name such as `EU`. A multiblock uses existing GregTech part names. GregTech registers the blocks in the addon's namespace. Layout roles are `StructureRole`.
@@ -311,6 +348,6 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 
 These stay closed. `BasicMachineBlock` and `BasicMachineBlockEntity` are GregTech's machine implementation; an addon machine is data, not a subclass. `Recipe.mRecipeList` is the internal row list; production code uses the `AddonRecipes.Line` returned by `add`. `GTMaterial`, `GTMaterialRegistry` and the material sentinels are replaced by `GregTechMaterials`. `GregTechTags` is replaced by energy short names. `MachineRecipeMaps` fields are replaced by `AddonRecipes.map(name)`. `MaterialPrefix` constants are replaced by prefix name strings. The full tool catalog stays inside GregTech.
 
-API version 0 includes fluid fuel generators and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, multiblock behavior machines, addon-drawn GUIs, new prefixes, addon casings, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
+API version 0 includes crucible compositions, smelting targets and alloy rows, and still reads an old numeric material id as a built-in material, writing the name the next time that block or item is saved. It does **not** promise solid fuel, energy conversion, moving the built-in engines onto this template, multiblock behavior machines, addon-drawn GUIs, new prefixes, addon casings or crucible blocks, writing a crucible's temperature or contents, melting an arbitrary non-GregTech item, datapack crucible rows, datapack-created recipe maps without a contributor, datapack reloads of the material table, one binary for both loaders, or a complete old GregAPI replacement. Only the documented entries are the compatibility surface. Use [the voltage guide](VOLTAGE_TIERS.md) rather than GT5/GTCE tier labels.
 
 The SDK/project code license is LGPL-3.0-or-later. Preserve applicable source/asset notices; consult `LICENSE`, `COPYING` and `NOTICE` for the actual declarations.
