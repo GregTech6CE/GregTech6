@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-19",
+  "baseline": "1a6d5c3b1",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL source trees read only; production copyright headers retained",
+  "original_sources": {
+    "gregapi/cover/covers/CoverFilterItem.java": "aef369a78515dcee7f1acc869597f503cb89429d9bbce373d9e537cac66086ae",
+    "gregapi/cover/covers/CoverFilterFluid.java": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+    "gregapi/cover/covers/CoverRetrieverItem.java": "ae7fdb0f52ae54e03edfc76ddc4ddca9b6ebb6ba54fe4b0bcc82d7019d696047",
+    "gregapi/cover/covers/CoverPump.java": "d7425ae66212cbf5ffb8ab2ffb51e3b257a0e491166d7a25533017db2d1a7bf6",
+    "gregapi/cover/covers/CoverConveyor.java": "8b182ba4124f66e48b31b4f9863c00bfe6cf57f51fa7a5ef4b62dbe3a12bb8c4",
+    "gregapi/cover/covers/CoverRobotArm.java": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregapi/tileentity/base/TileEntityBase07Paintable.java": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+    "gregapi/tileentity/base/TileEntityBase08Directional.java": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+    "gregapi/tileentity/base/TileEntityBase09FacingSingle.java": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyBatBox.java": "21ee1d11820ce91c0f693d4bf7684503ed29d8b8fa2cf7b434ebbd2143338fd7",
+    "gregtech/tileentity/energy/storage/MultiTileEntityBatteryBox.java": "950a267dbb2f35248a064e5797e3658e6396c4f5a2f06cefcec7cd2e04f4b5fe"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "7c4c4661787d53bad2e8ada5e6ec36636a6d5f6a24a1fed0efdde46475570284",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "462b96e55a7de118d9a8abffcf5841fffdbc546df4c13c58750ec2e6cbb36365",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "c7a6e0db9db4bb282eff27fb549cb521c0f6a2e80f3314ce747cabca4e6ee84f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": "2ff66903c17048e8e40b2016be2fa4a798db46d19add5964d889086a051ad330",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java": "c43c0512acb8cbfbf8a235661ffa4be687ee7c6eaf5a00a0089c8a52bd79f344",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "d687f2e32cbefca3c8c25f0299bd6ce7e6489f92a810e9eeb87435b46d931137",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": "f3657ce15e34af7267a165adf48781f7d88befaec5100889b3718f5e584ac591",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": "876160330766a311b71ca0bde1574f20115c4826f031cae118c90e2bce760364",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/UsbSwitchBlockEntity.java": "21a362eb6a034d606ef7ed3c2faab624dc28e023e76bc657a96b998b81a7ea71",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+    "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": "e93c85a5858a9c6f7da98ec0dc19f3802159ea3b3523c7be5f7e20e36f0ee7ba",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": "a13c19133920c00170a3cee482d124524d8eb64b83cc63ed76c981ba9a86db2f",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverIssueTests.java": "eb1b44b9d8c5cb2882a81fa36ed2fbe1dc859082bc87e5532730a9ba44073731"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-105: battery box native side handler omits item-filter matching; fallback mixin excludes native getCover overrides",
+    "ALIGN-102 extended: generic inventory hosts accept retriever without traffic blockade or retriever ticking"
+  ],
+  "positive_evidence": [
+    "BasicMachine and ItemPipe apply ordinary filter and retriever side checks",
+    "ComponentCoverAccess applies ordinary filters to insert/extract and fill/drain",
+    "Pump/conveyor/robot-arm directional rules match original intercept predicates",
+    "Original base cover drain also selects an unnamed candidate before filtering"
+  ],
+  "not_run": [
+    "native compilation",
+    "GameTests",
+    "new simulation tests",
+    "full test suite",
+    "client/server launch",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Mixin configuration and source call paths do not prove injection applied at runtime",
+    "Not an audit of every capability provider or mod compatibility path",
+    "Empty candidate return differences observed but no effective transfer bypass established",
+    "Fluid template material fallback, pressure valve and UI remain pending"
+  ]
+}

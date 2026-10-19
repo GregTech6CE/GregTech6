@@ -30,42 +30,142 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
-/** Cached native capability views always consult the current attached cover. */
+/**
+ * Live cover checks around a host capability: shutter, component direction and filters.
+ * Retriever traffic blocking is handled separately by the machine/pipe wrappers,
+ * not by this adapter. Native hosts must opt in; fallback hosts are wrapped by the mixin.
+ */
 public final class ComponentCoverAccess {
     private ComponentCoverAccess() {}
-    public static IItemHandler items(PanelCoverHost host,Direction side,IItemHandler inner) {
+
+    public static IItemHandler items(PanelCoverHost host, Direction side, IItemHandler inner) {
         return new IItemHandler() {
-            private boolean allowed(boolean insert){return !host.coverOwner().isRemoved()&&!host.panels().shuttered(side)&&ComponentCoverRuntime.allowsItem(host.getCover(side),insert);}
-            public int getSlots(){return inner.getSlots();}
-            public ItemStack getStackInSlot(int slot){return inner.getStackInSlot(slot);}
-            public int getSlotLimit(int slot){return inner.getSlotLimit(slot);}
+            private boolean allowed(boolean insert) {
+                return !host.coverOwner().isRemoved()
+                        && !host.panels().shuttered(side)
+                        && ComponentCoverRuntime.allowsItem(host.getCover(side), insert);
+            }
+
+            public int getSlots() {
+                return inner.getSlots();
+            }
+
+            public ItemStack getStackInSlot(int slot) {
+                return inner.getStackInSlot(slot);
+            }
+
+            public int getSlotLimit(int slot) {
+                return inner.getSlotLimit(slot);
+            }
 //? if >=1.21.1 {
-            /*public boolean isItemValid(int slot,ItemStack stack){return allowed(true)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),stack,host.coverOwner().getLevel().registryAccess())&&inner.isItemValid(slot,stack);}
-            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate){return allowed(true)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),stack,host.coverOwner().getLevel().registryAccess())?inner.insertItem(slot,stack,simulate):stack;}
-            public ItemStack extractItem(int slot,int amount,boolean simulate){return allowed(false)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),inner.getStackInSlot(slot),host.coverOwner().getLevel().registryAccess())?inner.extractItem(slot,amount,simulate):ItemStack.EMPTY;}
+            /*public boolean isItemValid(int slot, ItemStack stack) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
+                        && inner.isItemValid(slot, stack);
+            }
+
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
+                        ? inner.insertItem(slot, stack, simulate) : stack;
+            }
+
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return allowed(false)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), inner.getStackInSlot(slot), host.coverOwner().getLevel().registryAccess())
+                        ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            }
 *///?} else {
-            public boolean isItemValid(int slot,ItemStack stack){return allowed(true)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),stack)&&inner.isItemValid(slot,stack);}
-            public ItemStack insertItem(int slot,ItemStack stack,boolean simulate){return allowed(true)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),stack)?inner.insertItem(slot,stack,simulate):stack;}
-            public ItemStack extractItem(int slot,int amount,boolean simulate){return allowed(false)&&CoverUtilityBehaviors.itemFilterPermits(host.getCover(side),host.panels().stopped(),inner.getStackInSlot(slot))?inner.extractItem(slot,amount,simulate):ItemStack.EMPTY;}
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack)
+                        && inner.isItemValid(slot, stack);
+            }
+
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), stack)
+                        ? inner.insertItem(slot, stack, simulate) : stack;
+            }
+
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                return allowed(false)
+                        && CoverUtilityBehaviors.itemFilterPermits(host.getCover(side), host.panels().stopped(), inner.getStackInSlot(slot))
+                        ? inner.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            }
 //?}
         };
     }
-    public static IFluidHandler fluids(PanelCoverHost host,Direction side,IFluidHandler inner) {
+
+    public static IFluidHandler fluids(PanelCoverHost host, Direction side, IFluidHandler inner) {
         return new IFluidHandler() {
-            private boolean allowed(boolean fill){return !host.coverOwner().isRemoved()&&!host.panels().shuttered(side)&&ComponentCoverRuntime.allowsFluid(host.getCover(side),fill);}
-            public int getTanks(){return inner.getTanks();}
-            public FluidStack getFluidInTank(int tank){return inner.getFluidInTank(tank);}
-            public int getTankCapacity(int tank){return inner.getTankCapacity(tank);}
+            private boolean allowed(boolean fill) {
+                return !host.coverOwner().isRemoved()
+                        && !host.panels().shuttered(side)
+                        && ComponentCoverRuntime.allowsFluid(host.getCover(side), fill);
+            }
+
+            public int getTanks() {
+                return inner.getTanks();
+            }
+
+            public FluidStack getFluidInTank(int tank) {
+                return inner.getFluidInTank(tank);
+            }
+
+            public int getTankCapacity(int tank) {
+                return inner.getTankCapacity(tank);
+            }
 //? if >=1.21.1 {
-            /*public boolean isFluidValid(int tank,FluidStack stack){return allowed(true)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack,host.coverOwner().getLevel().registryAccess())&&inner.isFluidValid(tank,stack);}
-            public int fill(FluidStack stack,FluidAction action){return allowed(true)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack,host.coverOwner().getLevel().registryAccess())?inner.fill(stack,action):0;}
-            public FluidStack drain(FluidStack stack,FluidAction action){return allowed(false)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack,host.coverOwner().getLevel().registryAccess())?inner.drain(stack,action):FluidStack.EMPTY;}
-            public FluidStack drain(int amount,FluidAction action){if(!allowed(false))return FluidStack.EMPTY;var sample=inner.drain(amount,FluidAction.SIMULATE);return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),sample,host.coverOwner().getLevel().registryAccess())?inner.drain(amount,action):FluidStack.EMPTY;}
+            /*public boolean isFluidValid(int tank, FluidStack stack) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
+                        && inner.isFluidValid(tank, stack);
+            }
+
+            public int fill(FluidStack stack, FluidAction action) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
+                        ? inner.fill(stack, action) : 0;
+            }
+
+            public FluidStack drain(FluidStack stack, FluidAction action) {
+                return allowed(false)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack, host.coverOwner().getLevel().registryAccess())
+                        ? inner.drain(stack, action) : FluidStack.EMPTY;
+            }
+
+            public FluidStack drain(int amount, FluidAction action) {
+                if (!allowed(false)) return FluidStack.EMPTY;
+                var sample = inner.drain(amount, FluidAction.SIMULATE);
+                return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), sample, host.coverOwner().getLevel().registryAccess())
+                        ? inner.drain(amount, action) : FluidStack.EMPTY;
+            }
 *///?} else {
-            public boolean isFluidValid(int tank,FluidStack stack){return allowed(true)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack)&&inner.isFluidValid(tank,stack);}
-            public int fill(FluidStack stack,FluidAction action){return allowed(true)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack)?inner.fill(stack,action):0;}
-            public FluidStack drain(FluidStack stack,FluidAction action){return allowed(false)&&CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),stack)?inner.drain(stack,action):FluidStack.EMPTY;}
-            public FluidStack drain(int amount,FluidAction action){if(!allowed(false))return FluidStack.EMPTY;var sample=inner.drain(amount,FluidAction.SIMULATE);return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side),host.panels().stopped(),sample)?inner.drain(amount,action):FluidStack.EMPTY;}
+            public boolean isFluidValid(int tank, FluidStack stack) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
+                        && inner.isFluidValid(tank, stack);
+            }
+
+            public int fill(FluidStack stack, FluidAction action) {
+                return allowed(true)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
+                        ? inner.fill(stack, action) : 0;
+            }
+
+            public FluidStack drain(FluidStack stack, FluidAction action) {
+                return allowed(false)
+                        && CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), stack)
+                        ? inner.drain(stack, action) : FluidStack.EMPTY;
+            }
+
+            public FluidStack drain(int amount, FluidAction action) {
+                if (!allowed(false)) return FluidStack.EMPTY;
+                var sample = inner.drain(amount, FluidAction.SIMULATE);
+                return CoverUtilityBehaviors.fluidFilterPermits(host.getCover(side), host.panels().stopped(), sample)
+                        ? inner.drain(amount, action) : FluidStack.EMPTY;
+            }
 //?}
         };
     }

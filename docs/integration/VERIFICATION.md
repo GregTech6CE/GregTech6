@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 覆盖板能力包装源码核对
+
+相对 1a6d5c3b1，ComponentCoverAccess、ComponentCoverFallback、EnergyNodeBlockEntity 三份生产文件分别展开两版，六份代码／字面量比较通过；原版继承链、当前 provider／Mixin 门控及配置来源哈希留档。未新增模拟测试、原生编译、游戏、存档重启、构建或推送；Mixin 生效与全宿主行为仍待实测，见 [回执](verification/cover-capability-audit-20261019.json)。
+
 ## 2026-10-19 / 过滤器和检索器源码等价
 
 相对 a190181c9，五份生产文件的代码与字面量保持一致；四份共享原生文件分别展开 Forge／Neo 分支，共九份投影核对通过。原版集合匹配、检索流向、调度与当前调用链留存来源哈希。本批没有新增模拟测试，未原生编译、游戏、保存重启、构建或推送，见 [回执](verification/filter-retriever-audit-20261019.json)。

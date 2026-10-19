@@ -168,3 +168,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `content/cover/PanelCoverRuntime.java`、`CoverConnections.java`：覆盖板安装和管道连接限制。
 
 三套筛选合同、当前流向和待核边界见 [过滤器与检索器核查](FILTER_RETRIEVER_COVER_AUDIT.md)。
+
+## 覆盖板的原生与后备能力边界
+
+- `multiversion/src/main/java/.../content/cover/ComponentCoverAccess.java`：物品／流体能力包装，动态读取覆盖板，不含检索器专用封锁。
+- 同目录 `ComponentCoverFallback.java`：根据 getCover 声明类选择后备宿主；原生重写者自行接入。
+- `mixin/ComponentCoverCapabilitiesMixin.java`：Forge 指定实体返回值与 Neo BlockCapability 返回值包装，均受 uses 门控。
+- `blockentity/energy/EnergyNodeBlockEntity.java`：电池盒原生库存与蒸汽口，两者接入方式不同。
+
+原版父类入口和当前接入矩阵见 [能力核查](COVER_CAPABILITY_AUDIT.md)。
