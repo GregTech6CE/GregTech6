@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "3a70fc495e8f95dfaeaecbf9a12a9a2beb8c9ca5",
+  "mod_version": "0.0.0",
+  "api_version": 0,
+  "tasks": [
+    ":multiversion:1.20.1-forge:distributionJar",
+    ":multiversion:1.21.1-neoforge:jar"
+  ],
+  "result": "BUILD SUCCESSFUL in 4m 53s",
+  "log": "work\\feedback-build-20261019\\build.log",
+  "log_sha256": "675216a4825f4f4b6d7061a01ff2d8caf38d5fb98dd4a29fbe138fe770896437",
+  "package_checks": [
+    "ZIP CRC",
+    "mod identity/version",
+    "current fix classes and resources",
+    "removed test magnet class absent",
+    "used-tape tooltip",
+    "platform model loader"
+  ],
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "build\\deliveries\\20261019-feedback\\gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 40296956,
+      "sha256": "f796093e8228776d0ec3d48001c9ff4c81568e1ec8150594e037960be1d3d439"
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "build\\deliveries\\20261019-feedback\\gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40149368,
+      "sha256": "9ed789d46d1fb60b6b5d36741bc5b8415c91ea5783d5d027abedb0a2e1b0f25a"
+    }
+  ],
+  "not_repeated": [
+    "tests and GameTest",
+    "game client",
+    "saved-world restart"
+  ],
+  "prior_validation": "feedback-20261019.json; dual compilation and 6 NeoForge GameTests passed before this packaging request"
+}
