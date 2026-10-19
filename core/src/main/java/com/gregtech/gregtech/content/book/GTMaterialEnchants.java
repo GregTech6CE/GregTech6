@@ -2,8 +2,8 @@ package com.gregtech.gregtech.content.book;
 
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
-import com.gregtech.gregtech.loaders.c.GTEnchantmentTable;
-import com.gregtech.gregtech.loaders.c.GTMaterialFields;
+import com.gregtech.gregtech.content.recipe.generated.GTEnchantmentTable;
+import com.gregtech.gregtech.content.recipe.generated.GTMaterialFields;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

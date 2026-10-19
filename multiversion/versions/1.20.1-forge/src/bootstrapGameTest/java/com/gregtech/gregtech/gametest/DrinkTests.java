@@ -297,8 +297,8 @@ public final class DrinkTests {
      */
     @GameTest(template = "test_empty", timeoutTicks = 200)
     public static void bottleFillingRecipesAreRegistered(GameTestHelper helper) {
-        java.util.List<String> ids = com.gregtech.gregtech.loaders.Loader_BottleFillingRecipes.registeredIds();
-        java.util.List<String> skipped = com.gregtech.gregtech.loaders.Loader_BottleFillingRecipes.skipped();
+        java.util.List<String> ids = com.gregtech.gregtech.content.recipe.Loader_BottleFillingRecipes.registeredIds();
+        java.util.List<String> skipped = com.gregtech.gregtech.content.recipe.Loader_BottleFillingRecipes.skipped();
         com.gregtech.gregtech.GregTech.LOGGER.info(
                 "[bottles] filling rows registered: {} (skipped: {})", ids.size(), skipped);
         helper.assertTrue(ids.size() >= 40,

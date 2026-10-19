@@ -12,7 +12,7 @@ import com.gregtech.gregtech.content.recipe.StoneVariantRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.GTToolItem;
-import com.gregtech.gregtech.loaders.Loader_StoneCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_StoneCraftingRecipes;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTToolItems;

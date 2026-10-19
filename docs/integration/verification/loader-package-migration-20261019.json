@@ -1,0 +1,588 @@
+{
+  "baseline": "d4e5b70092cebad893a2a46afd4a3a70949a6d1f",
+  "moves": [
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/IGTLoader.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/bootstrap/IGTLoader.java",
+      "old_class": "com.gregtech.gregtech.loaders.IGTLoader",
+      "new_class": "com.gregtech.gregtech.bootstrap.IGTLoader",
+      "sha256_before": "31dd8670452d66063d727380f38174516453c1862ce141985541a1d71aa92d9a",
+      "sha256_after": "d88ebc411f3826a5ba9a1cae3ef3dd11c86354e1e9fb1cf3ee482c9c5a545b19"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTAlloyTable.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTAlloyTable.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTAlloyTable",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTAlloyTable",
+      "sha256_before": "24472f126ad34087fe004fd32cfbc7897a74be9bb3bd12d8893d5a86bd0c407b",
+      "sha256_after": "65b928e2e8a6c6a682d0e29960db3533aa048150f872266e6246257042d74879"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTChemGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTChemGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTChemGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTChemGen",
+      "sha256_before": "3daaffa45ac9d0e4fe98996c4b34bec5e49044072bbba20bee7dcf829cee0165",
+      "sha256_after": "213b4a4b525838e6f60507f7c5a60d58253f1fab185d75ccde1d4e055da54252"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTCombGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTCombGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTCombGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTCombGen",
+      "sha256_before": "72aef8c61ddb1947c8c7080d3e35f568f37719e9a546f897c1559615c471ced6",
+      "sha256_after": "1d9e2f692489457f9ead0a217bc79ed55c2fe9b5964cfe67091e2599fa306c88"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTEnchantmentTable.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTEnchantmentTable",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTEnchantmentTable",
+      "sha256_before": "c209779c1e8b408bda4e26d1efbfc798b0dad576eecb0ab4018dcc2eb7b2a4ae",
+      "sha256_after": "4c49a747f64e5fedaa0cd93c34030a44e580f13ee5cd2bb2d9ebae4a2eb1fa74"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTExtruderGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTExtruderGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTExtruderGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTExtruderGen",
+      "sha256_before": "82284f149739fe620f0d98a7b8f6ed222710c290b5ceb567407b8cada1c562e0",
+      "sha256_after": "d52d2b884755ea904f11076daf50bd02ff66861a5500c6a4ba6f3b4c136f1edf"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTFoodGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTFoodGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTFoodGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTFoodGen",
+      "sha256_before": "5838d06e1a0e064a25dfd7737123c0922493141e71fd7f826cc26c2a49c70619",
+      "sha256_after": "43c74c3390feb1be16ba0a97708f3981ade5875949a85cff53280cc27e369735"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTLootGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTLootGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTLootGen",
+      "sha256_before": "f556e3f08414f184c7ba4a39008a2f3e53cc0a1a721fc1b6e8c618e266b49c6e",
+      "sha256_after": "1e7b8829c428775abefce68f5a1c84c2b52b5aa04a7c2af187120c6e268683ff"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTMaterialFields.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTMaterialFields",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTMaterialFields",
+      "sha256_before": "ccac61fba449f0834b7849ec820051b5d57004321ff482f207ce7f31bd5d2fd1",
+      "sha256_after": "a1c18d4543e846d71a17686a1fc825cabf39f4fc9045a44ab3f9b804250e3715"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOresGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOresGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTOresGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTOresGen",
+      "sha256_before": "af3d4a61b3cee0041facd87eef6a185a00b3c728d18b3fda7c450c30b9a97aa3",
+      "sha256_after": "536760d7512d5b8d7110e88f2e9bba02a774b3cee8f9865811265047aa77aa60"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOtherGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOtherGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTOtherGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTOtherGen",
+      "sha256_before": "245ccd9d9ae28bc6ef60a96ee2d7ea31e8333dd1f598d673b163574d49aa25b5",
+      "sha256_after": "c2da95d0d2039b36048fd1a4db677f798fcba7bd90540e4a89565b6e4cc2d35e"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTPotionGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTPotionGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTPotionGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTPotionGen",
+      "sha256_before": "cc7a802efdf1dc69ec2eb1abc923d7d8e54f7c3bc3eeb242f8d3480a09ad336f",
+      "sha256_after": "0266900793c99eae3430aff43a7b98139535e0e3befb1b5dc4ffee1df62a3fcf"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTTechnologyRecipes.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTTechnologyRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTTechnologyRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTTechnologyRecipes",
+      "sha256_before": "10c231fdc79abb9eb0a28f1774b70f6272f112cde861681fcf1176d9b9d7c30b",
+      "sha256_after": "5d2d44d724ae032ac92497a1694a3bd7fcc08730ed4e661f93dd00a2c01a6cf4"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTTemporaryGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTTemporaryGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTTemporaryGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTTemporaryGen",
+      "sha256_before": "2f83159d1eaf0b5ac8e621ba01c37d06bfc87d875768002b316935eaa1f2fe57",
+      "sha256_after": "74dc216b9aad453cd195c0833ddcf0e53702a4009b38632df8fd1a68c7eedd14"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GTVanillaGen.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTVanillaGen.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTVanillaGen",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTVanillaGen",
+      "sha256_before": "5ef63866a22f63f811e560b5b29d74fd4d4ecab33d2c861ed85d04bda1287c4b",
+      "sha256_after": "3d7ed6aec15993e1ba6f95dc17fa1ca18b49be39dfc3c12567d8ee063a4c3d86"
+    },
+    {
+      "old": "core/src/main/java/com/gregtech/gregtech/loaders/c/GeneratedRecipeSink.java",
+      "new": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeSink.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GeneratedRecipeSink",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GeneratedRecipeSink",
+      "sha256_before": "3629a457f3bc9c0f196efa1178b40ea7363effe0e186bcc1698a47dd863be48a",
+      "sha256_after": "4a6dd3fca4601c6bd65d50f9420d6f9fc1e29988321855984bf4ca9d737cffb9"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loader/VanillaCompositionLoader.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaCompositionLoader.java",
+      "old_class": "com.gregtech.gregtech.loader.VanillaCompositionLoader",
+      "new_class": "com.gregtech.gregtech.content.material.VanillaCompositionLoader",
+      "sha256_before": "206326f630d01169d3ec9cc381a34060cbfd072e883a617484e9a64c9e71e1ee",
+      "sha256_after": "bc7e479d29cde9677e52c29b2669e037992c9eddbfd89fdbd48387a9f6da96b3"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loader/VanillaUnificationLoader.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaUnificationLoader.java",
+      "old_class": "com.gregtech.gregtech.loader.VanillaUnificationLoader",
+      "new_class": "com.gregtech.gregtech.content.material.VanillaUnificationLoader",
+      "sha256_before": "0f9a7f35e1cafe02b8594a39a319859796dd9f13c1d5ee22050aa5eee7b3e45f",
+      "sha256_after": "9814c567c983b73006e730be3a9fd520cfc14c25adc332fee34303fd826d7394"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_BedrockFlowerCraftingRecipes.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_BedrockFlowerCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_BedrockFlowerCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_BedrockFlowerCraftingRecipes",
+      "sha256_before": "b220ffd89257c3d273ab9cc3c6fca787c0e56f0c0b7ff07c75ded5ecca8b722d",
+      "sha256_after": "f427fc56ec652bf967ab543ab5e8df385797b5f54813fad5098e63659a4dc056"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_FormConversionCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_FormConversionCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_FormConversionCraftingRecipes",
+      "sha256_before": "f0883bc3e36e495f074f7b168d9bd282f305ed09238c8e82e8b275a0eeeb24eb",
+      "sha256_after": "87b596226bca626ebadd21b92dc31bb6544198d08253804e8c18ba7aca3fd488"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_OvenRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_OvenRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_OvenRecipes",
+      "sha256_before": "8864230396c1cd0d3a1bcfe3076b6829c917c09ccc39b43bf261c38c47445436",
+      "sha256_after": "cab78db24c4b17fa3b38984679244d6294e7655f345154d9cc7fc4556bca05bd"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_StoneCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_StoneCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_StoneCraftingRecipes",
+      "sha256_before": "4d64673a5ad2ad2b840db381b641d3b9234f28f8df08ccc6e433f11cf67a5ceb",
+      "sha256_after": "ba925486264cc3a32337abafcbed8bc9148a610ad4cdd4443eb1c29785b04f88"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_WoodCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_WoodCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_WoodCraftingRecipes",
+      "sha256_before": "c1565369a3e9576bece3f3f2c705b5a1c4f73c718c72ba10009fe31a2dc3d6ae",
+      "sha256_after": "c9fb2645249b77a8623d1e67ea1096a8de819d0a3f5b8c37e80dc259e32e4289"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Blocks.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Blocks",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Blocks",
+      "sha256_before": "6ed2b3fe8ab927d5e9b2e0bda18f0124b876619b3b2cd6fba7cd35dfdc30c0d4",
+      "sha256_after": "060ab702405cf97a39fd090229d6ba23a929012c88119801ea3a5fc38f3a4180"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/Loader_Creative.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.Loader_Creative",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.Loader_Creative",
+      "sha256_before": "8ecbedbe567922678a4d49d9940b4a91ef23979995f78d695e3fff4ee4d3c3d3",
+      "sha256_after": "c88726cf6e1d613348a28db63b3a29dc93ece0a940692296278725d46495cff4"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/b/OriginCreativeContents.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.OriginCreativeContents",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents",
+      "sha256_before": "1f29f32370c143c7e1bc33def265839a6976c204934d7757b249f7f7abeef3a4",
+      "sha256_after": "ecb0480a7b2c0a24eac21598af11c4a23ffff0ce483eefe7930b85ecfac92474"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/GTGeneratedChem.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTGeneratedChem.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.GTGeneratedChem",
+      "new_class": "com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem",
+      "sha256_before": "90a03a766cd3ce86ba4ac864b80b1ccdafdc9a77f43ef3c4b85797d8a0435fe2",
+      "sha256_after": "81d4b2f44713ce464ec094d5666b3759f9dd1c319116318504d52f7358dcb309"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Alloys.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Alloys.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Alloys",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Alloys",
+      "sha256_before": "be1eb6d3c763264205b154d2b01e1899cd156a877de63acf291181f3ac68fe5c",
+      "sha256_after": "d6203e7e66b00a39600f617cb6047e943604f0a1b0b767e11347413abbbfa7fc"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Chem.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Chem.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Chem",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Chem",
+      "sha256_before": "082d2e06246999bec50fe09c97c1d3fffbd88e7e4f5a0d373b4bd711bd30198d",
+      "sha256_after": "362001c4279a8f0d3a1a592c53ab4137146edfa735aa48e56bd00cb6833f7c30"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Decomp.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Decomp.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Decomp",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Decomp",
+      "sha256_before": "138879b35d047b2c2add40de1938412ad1bb317556f3f7ec7cbbcfacb7a9a016",
+      "sha256_after": "5db1bf97e1380d783dad8c2daaf3f370ed355d16a9da0d395c1a5e1734879dc3"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fuels.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Fuels.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Fuels",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Fuels",
+      "sha256_before": "765523b5c0d4e5674ec15a871cc2a37988cf83d432686eba3f4014ce119111b3",
+      "sha256_after": "8e6c79317ce865a1d267a2cc9b9225819fadfaf43e01842e1eb72e0e1fdbc592"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Fusion.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Fusion",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Fusion",
+      "sha256_before": "86d70017424ff33446c7d80afa52799934a15255c61623e64c21355718155039",
+      "sha256_after": "8157ab0db206d4a935915a6fa995be498dc256b42c2b42397dec45ff550f95bb"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Matter.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Matter.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Matter",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Matter",
+      "sha256_before": "af400055329f5ca0c8dde8b48a368da4fc87a96e0040b13f38931a80fe119d04",
+      "sha256_after": "f892ee9cb579eb1bbe5f1cf20e9027e853431cc789b934467397120e706ebef4"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_OreProcessing.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_OreProcessing.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_OreProcessing",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_OreProcessing",
+      "sha256_before": "42f0f4dc8bc0b155dff7b90c603a64baf4fca2053d7582e023e99214f2ef4905",
+      "sha256_after": "16674ca915d45ce733134c89f87aecb5668d96c224bdf94ab84e2a4876bece85"
+    },
+    {
+      "old": "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Parts.java",
+      "new": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Parts.java",
+      "old_class": "com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_Recipes_Parts",
+      "sha256_before": "b2c3355abc8a555b18c1c469f0440f0834f285e472b4116c857af48cea0170db",
+      "sha256_after": "36f8c2de817477ae8e202fee3467594c629c5e841e5321e552d1c92c613649a0"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_BottleFillingRecipes.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/recipe/Loader_BottleFillingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_BottleFillingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_BottleFillingRecipes",
+      "sha256_before": "f7ad3acf71967c32ce5866ac06f54b5afde0503aef99d4fa0ee2f54d69ff27be",
+      "sha256_after": "0f589a8970296f82c0ee27c4a5c3843fac9378843abcb360ffda2d8fa39d7794"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/recipe/Loader_HandToolCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_HandToolCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_HandToolCraftingRecipes",
+      "sha256_before": "1796ba0b5b76928c0df625ce9a5cf6b56f1f87e13d602e8d9ed2669c4e60609a",
+      "sha256_after": "5562d02057571a47dcda472b5c18611bf26c5b4943b6fda44e629383dc8073f9"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_ToolCraftingRecipes.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/recipe/Loader_ToolCraftingRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_ToolCraftingRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_ToolCraftingRecipes",
+      "sha256_before": "53f4eb9723bacbca89bdceea6f8c12d143f565196912a687df14a1d3bcc4a3a3",
+      "sha256_after": "fb34cb387531afafafb0fd98015e8eac72fae6b9ad470719277b03c3da173065"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_TrackRecipes.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/recipe/Loader_TrackRecipes.java",
+      "old_class": "com.gregtech.gregtech.loaders.Loader_TrackRecipes",
+      "new_class": "com.gregtech.gregtech.content.recipe.Loader_TrackRecipes",
+      "sha256_before": "7c6e653cb5f2e981a78183562aeb8e5101bde0ef20f506fb56ebc8f18c99c89b",
+      "sha256_after": "6504a41927cee277096129e7b5ec02be7ab0eaada8c52a414cdd0193ccd342de"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Data.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Data.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Data",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Data",
+      "sha256_before": "5221c1868d888aa6aed4c5f4357b152bf75a44e9577d5f3e8ba75f1c8ff4cca0",
+      "sha256_after": "6f8243a187e82e55b4eb3fabb4e105de78a1444064132ba68ee5ad2751168c34"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Fluids.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Fluids.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Fluids",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Fluids",
+      "sha256_before": "181bc7115a83459a0d3bb92bdda50f738605af23ba86965538de286e7eab102a",
+      "sha256_after": "c084da697a7b220035b1fe81e501efa529b48d1f1af2ebdfbeb22f93f1710d43"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Items.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Items.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Items",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Items",
+      "sha256_before": "6a566f958fa1387d5151a5dae66c8cf7ff1de5ee1784c38e7290155b7fa36c8c",
+      "sha256_after": "adde72b1ec7643cf7b02c2aa2875360739babaa631f2ff50532485f9799a3a2a"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Materials.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Materials.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Materials",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Materials",
+      "sha256_before": "f7980dbd308ca13a733389ed027de0a80e665c4beaa59338a3a687ecd5055809",
+      "sha256_after": "b0ef8ba92899f7bd2c6bf49ea530580071787777ad62978ece4da286edecc982"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Tools.java",
+      "old_class": "com.gregtech.gregtech.loaders.a.Loader_Tools",
+      "new_class": "com.gregtech.gregtech.bootstrap.content.Loader_Tools",
+      "sha256_before": "af7066f795f151173eb0f26eecdd1e481355c37dd599194d80baf9be9885225b",
+      "sha256_after": "897d88dff6425d4276dd54b7eb7704035b66760dd94225f975095f32cd54c224"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MaterialPost.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/Loader_MaterialPost.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.Loader_MaterialPost",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.Loader_MaterialPost",
+      "sha256_before": "2fcdee56bd7b98f93d9665fe43c9e08207706d10051bd70085a8d738846f73ea",
+      "sha256_after": "d5e56af1981ccc1d622ba2c947114c7b7bc5699bc669c05686693797f2dd6954"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MaterialRegistration.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/Loader_MaterialRegistration.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.Loader_MaterialRegistration",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.Loader_MaterialRegistration",
+      "sha256_before": "0d95ea4fa00782981f14e05b17191f44cffbb3cf579c8ca2388ad5205dc4431e",
+      "sha256_after": "9db23ddbf7de37841f8b559bebe01282136c2bd2c863ba55d05096ad107565cd"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/Loader_MultiTileEntities.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.Loader_MultiTileEntities",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.Loader_MultiTileEntities",
+      "sha256_before": "163b60da3902f3f6bf38b7b79ae6d78cccac3af112361fc8ffa29f5e35f1a09f",
+      "sha256_after": "f6c522c7141ef40d6a9a54525add3505f4309c0f1baa9b3ade883e82e337ec01"
+    },
+    {
+      "old": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Submit.java",
+      "new": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/Loader_Submit.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.Loader_Submit",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.Loader_Submit",
+      "sha256_before": "ae242445c48679cbe0ca437bf6eaddc9a03e8c0bb27c6f623a5c5ffb559ef16a",
+      "sha256_after": "73ace42a154aae0c12f96f94486c72c66cd6d0338f02289f80a41be526e04df6"
+    },
+    {
+      "old": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/loaders/TrackRecipeReplacement.java",
+      "new": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/TrackRecipeReplacement.java",
+      "old_class": "com.gregtech.gregtech.loaders.TrackRecipeReplacement",
+      "new_class": "com.gregtech.gregtech.content.recipe.TrackRecipeReplacement",
+      "sha256_before": "d87797b3ad79e7e46b70f6955a569e8e4d97ba844f0004b38a1fbcff4adc97c2",
+      "sha256_after": "9554cd3f382d3e07f3bb566d388e7694d83d56b22a67efb97be66dc28690dce4"
+    },
+    {
+      "old": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/loaders/b/NeoCreativeContents.java",
+      "new": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/bootstrap/registration/NeoCreativeContents.java",
+      "old_class": "com.gregtech.gregtech.loaders.b.NeoCreativeContents",
+      "new_class": "com.gregtech.gregtech.bootstrap.registration.NeoCreativeContents",
+      "sha256_before": "ca177f46a031ae439a19f60d87211a386b6b4bd7afb82bcaf7661bbf82b37b5d",
+      "sha256_after": "10ed0d76c466a80d2664fdb0f2c12fd2dadbc7f15b17877f7444d1d878ff896e"
+    }
+  ],
+  "reference_updates": [
+    "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionaryPages.java",
+    "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialEnchants.java",
+    "core/src/main/java/com/gregtech/gregtech/content/book/GTMaterialRecipes.java",
+    "core/src/main/java/com/gregtech/gregtech/content/tool/MaterialToolEnchantments.java",
+    "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialProcessingTargets.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/IGTLoader.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTAlloyTable.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTChemGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTCombGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTExtruderGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTFoodGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOresGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTOtherGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTPotionGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTTechnologyRecipes.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTTemporaryGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GTVanillaGen.java",
+    "core/src/main/java/com/gregtech/gregtech/loaders/c/GeneratedRecipeSink.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CryoDistillationSourceTests.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MachineRecipeOverlayTests.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MolecularDataPortTests.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/SensorSourceTests.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/CannedFoodFeedbackChecks.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/ColoredBooksRuntimeSmoke.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/LongDistanceRuntimeSmoke.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/MachineFeedbackChecks.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/OriginFeedbackChecks.java",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/SurfaceFeedbackChecks.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/loot/LootTableInjection.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/AutocraftingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/BatteryCellRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DyeProcessingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ExternalOreProcessing.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMainRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/LaserEmitterRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/StoneAndToolSurvivalRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/UtilityProcessingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/emi/EmiCatalogRepair.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loader/VanillaCompositionLoader.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loader/VanillaUnificationLoader.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_BedrockFlowerCraftingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_FormConversionCraftingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_OvenRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_StoneCraftingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/Loader_WoodCraftingRecipes.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Creative.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/b/OriginCreativeContents.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/GTGeneratedChem.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Alloys.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Chem.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Decomp.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fuels.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Matter.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_OreProcessing.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Parts.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeOverlay.java",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java",
+    "multiversion/src/productionSmoke/java/com/gregtech/gregtech/integration/client/CanvasDeliveryChecks.java",
+    "multiversion/src/productionSmoke/java/com/gregtech/gregtech/integration/client/DecorativePanelDeliveryChecks.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AlloyDictionaryTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/AxleRepairTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/DrinkTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/EnchantmentDictionaryTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/ExtruderMatrixTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FurnaceSmeltingTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxRegistrationTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GeneratedChemistryTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/HandCraftingTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/LegacyRecipeRepairTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialCompatibilityTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MaterialFormConversionTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/MemoryGrowthTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneExtrusionTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/StoneVariantRecipesTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TrackTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/TreatedWoodSurvivalTests.java",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/WoodRecipeTests.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_BottleFillingRecipes.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_HandToolCraftingRecipes.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_ToolCraftingRecipes.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/Loader_TrackRecipes.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Data.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Fluids.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Items.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Materials.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/a/Loader_Tools.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MaterialPost.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MaterialRegistration.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_MultiTileEntities.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/loaders/b/Loader_Submit.java",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/NeoMachineRecipeLoader.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/data/WoodCraftingRecipePack.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/loaders/TrackRecipeReplacement.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/loaders/b/NeoCreativeContents.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/recipe/OvenRecipeLifecycle.java",
+    "tools/check_enchant_table_coverage.py",
+    "tools/check_gearbox_visual_assets.py",
+    "tools/extract_alloy_table.py",
+    "tools/extract_enchantment_table.py",
+    "tools/extract_gt6_comb_recipes.py",
+    "tools/extract_gt6_material_fields.py",
+    "tools/extract_gt6_processing_targets.py",
+    "tools/find_alloy_recipes.py",
+    "tools/show_material_enchantments.py",
+    "tools/tests/test_fusion_resources.py",
+    "tools/transpile_gt6_chem.py",
+    "tools/transpile_gt6_loot.py"
+  ],
+  "scope": "Package relocation; initialization order, method bodies and literals preserved. Two resolver methods now explicitly public for cross-package fusion access. Class-name cleanup remains open.",
+  "verification": {
+    "body_and_literal_comparison": "passed",
+    "compared_java_files": 105,
+    "platform_projections": 2,
+    "failures": [],
+    "allowed_non_body_changes": [
+      "package and imports",
+      "public access on GTGeneratedChem.material and byRegistryName"
+    ],
+    "python_syntax_files": 19,
+    "compile": {
+      "status": "passed",
+      "log": "work/architecture-audit-20261019/compile-3.log",
+      "sha256": "bb491b88547637394f706ddae55352e1435f0c0329f7596b27bbfa2604f1e428",
+      "tasks": [
+        "compileBothPlatforms",
+        ":multiversion:1.20.1-forge:compileBootstrapGameTestJava",
+        ":multiversion:1.21.1-neoforge:compileBootstrapGameTestJava"
+      ],
+      "attempts": [
+        "compile.log: fusion resolver import absent",
+        "compile-2.log: two package-private resolver methods",
+        "compile-3.log: passed in 1m28s"
+      ],
+      "runtime_tests_run": false,
+      "packaging_run": false
+    },
+    "source_policy": {
+      "status": "failed_existing_catalog_drift",
+      "message": "Shared item-tag adapter drift: missing=['gt6ce:crafting_firestarters'] stale=[]",
+      "runtime_note": "The NeoForge singular tag exists independently and is byte-identical to core; this does not prove a missing gameplay tag.",
+      "both_tag_sha256": "c30d0c0f1bfa1f2cb9adcb4dfcce0c8ffc129fd2b70aa5ee8a70f2ca3416589f"
+    },
+    "source_sets": {
+      "status": "passed",
+      "source_sets": {
+        "forge": {
+          "api": 13,
+          "bootstrapGameTest": 336,
+          "main": 1085,
+          "productionSmoke": 19,
+          "test": 10
+        },
+        "neoforge": {
+          "api": 13,
+          "bootstrapGameTest": 111,
+          "main": 1144,
+          "productionSmoke": 19,
+          "test": 0
+        }
+      },
+      "approved_test_output_updates": 0,
+      "failure_count": 0,
+      "first_failures": []
+    },
+    "tooling_projection_note": "Initial simultaneous projection checks hit Unsafe view manifest path while removing stale paths; isolated rerun passed without weakening the guard. Future projection checks must be sequential."
+  },
+  "reviewed_original_sources": {
+    "gregtech/entities/projectiles/EntityArrow_Material.java": "9acb906960f26b26b1c6364ba2c27298808ddeafa027395311529a061f6c4834",
+    "gregtech/tileentity/tools/MultiTileEntitySmeltery.java": "eaf9b833c4c439a102bb346c6c4e032d88b6d97b823003232f45d185f23597f1",
+    "gregapi/config/Config.java": "2a042710713454d905ab456a0ef3879e81d32670d4bd230445ea0d152e708eb7",
+    "gregapi/worldgen/GT6WorldGenerator.java": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b"
+  }
+}

@@ -17,9 +17,9 @@ import io
 import os
 import re
 
-SOURCE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+SOURCE = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "content", "recipe",
                       "Loader_Recipes_Alloys.java")
-TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                       "GTAlloyTable.java")
 
 text = io.open(SOURCE, encoding="utf-8").read()
@@ -60,7 +60,7 @@ for output, units, inputs in alloys[:5]:
     print("   %s x%d <- %s" % (output, units, " + ".join("%s x%d" % i for i in inputs)))
 
 lines = [
-    "package com.gregtech.gregtech.loaders.c;",
+    "package com.gregtech.gregtech.content.recipe.generated;",
     "",
     "import java.util.List;",
     "",

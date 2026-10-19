@@ -6,7 +6,7 @@ the receiver of a call — the enchantment table does, `Ma.addEnchantmentForArmo
 carry field names, and the port has to resolve them back to materials.
 
 Inputs : gregtech6-master .../gregapi/data/MT.java
-Output : src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java
+Output : src/main/java/com/gregtech/gregtech/content/recipe/generated/GTMaterialFields.java
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ import os
 import re
 
 GT6 = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\MT.java"
-TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                       "GTMaterialFields.java")
 
 # `Field, Alias = Field = helper( 8637, "HSLA-Steel" , ...)` and
@@ -63,7 +63,7 @@ def main() -> int:
     for probe in ("Ma", "Fe", "Au", "Pt", "PO4", "HSLA", "Atl", "Ke", "Polycarbonate"):
         print("   %-16s %s" % (probe, fields.get(probe)))
     lines = [
-        "package com.gregtech.gregtech.loaders.c;",
+        "package com.gregtech.gregtech.content.recipe.generated;",
         "",
         "import java.util.LinkedHashMap;",
         "import java.util.Map;",

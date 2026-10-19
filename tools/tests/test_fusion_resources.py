@@ -47,6 +47,6 @@ class FusionResources(unittest.TestCase):
             value=1
             for number in re.search(r'setSpecialNumber\(([^)]+)',line).group(1).replace('L','').split('*'):value*=int(number)
             expected.append((int(circuit),int(ticks),int(eut),value))
-        port=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/loaders/c/Loader_Recipes_Fusion.java')).read_text(encoding='utf8')
+        port=(native_path(ROOT/'src/main/java/com/gregtech/gregtech/content/recipe/Loader_Recipes_Fusion.java')).read_text(encoding='utf8')
         actual=[tuple(map(int,match)) for match in re.findall(r'add\((\d+),(\d+),(-?\d+),(\d+)L,',port)]
         self.assertEqual(actual,expected)

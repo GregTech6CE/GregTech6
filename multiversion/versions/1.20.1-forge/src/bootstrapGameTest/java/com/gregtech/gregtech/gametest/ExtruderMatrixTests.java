@@ -6,7 +6,7 @@ import com.gregtech.gregtech.api.material.MaterialEquivalence;
 import com.gregtech.gregtech.api.recipe.Recipe;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.loaders.c.Loader_Recipes_Parts;
+import com.gregtech.gregtech.content.recipe.Loader_Recipes_Parts;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;

@@ -9,7 +9,7 @@ Every GT6 expression these rows use is mapped explicitly below; an expression th
 express is recorded as a comment instead of being guessed at.
 
 Inputs : gregtech6-master .../gregtech/items/MultiItemFood.java
-Output : src/main/java/com/gregtech/gregtech/loaders/c/GTCombGen.java
+Output : src/main/java/com/gregtech/gregtech/content/recipe/generated/GTCombGen.java
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ import re
 
 GT6 = (r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregtech\items"
        r"\MultiItemFood.java")
-TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                       "GTCombGen.java")
 
 # GT6 comb field -> port item id (the multi-item table's snake_case of the display name).
@@ -203,7 +203,7 @@ def main() -> int:
         print("   skip (%s): %s" % (why, line[:110].encode("ascii", "replace").decode()))
 
     lines = [
-        "package com.gregtech.gregtech.loaders.c;",
+        "package com.gregtech.gregtech.content.recipe.generated;",
         "",
         "/**",
         " * GT6's comb processing: the twenty {@code RM.Centrifuge.addRecipe1} rows of",
@@ -227,7 +227,7 @@ def main() -> int:
         "",
         "    private static void r(long eut, long dur, long[] chances, String[] itemIn,",
         "                          String[] fluidIn, String[] fluidOut, String[] itemOut) {",
-        '        GTGeneratedChem.register("Centrifuge", eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);',
+        '        GeneratedRecipeSink.register("Centrifuge", eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);',
         "    }",
         "",
         "    static void load() {",

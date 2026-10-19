@@ -329,7 +329,7 @@ public final class SensorSourceTests {
             var fluid=com.gregtech.gregtech.registry.GTFluids.stack(key,1).getFluid();
             h.assertTrue(fluid!=net.minecraft.world.level.material.Fluids.LAVA,
                     "Shared lava sprite must not alias registry identity "+key);
-            h.assertTrue(com.gregtech.gregtech.loaders.c.GTGeneratedChem.resolveFluidSpec("f:"+key+":1").getFluid()==fluid
+            h.assertTrue(com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem.resolveFluidSpec("f:"+key+":1").getFluid()==fluid
                     &&com.gregtech.gregtech.content.food.GTDrinks.fluidOf(com.gregtech.gregtech.data.RegisteredFluids.get(key))==fluid,
                     "Chemical and container lookup preserve distinct fluid "+key);
         }

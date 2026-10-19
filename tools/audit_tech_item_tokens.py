@@ -70,7 +70,8 @@ def aliases() -> dict[str, str]:
 
 def referenced() -> dict[str, int]:
     counts: dict[str, int] = {}
-    for path in sorted(GENERATED.glob("loaders/c/GT*Gen.java")):
+    catalog = ROOT / "core/src/main/java/com/gregtech/gregtech/content/recipe/generated"
+    for path in sorted(catalog.glob("GT*Gen.java")):
         for token in TOKEN.findall(path.read_text(encoding="utf-8")):
             counts[token] = counts.get(token, 0) + 1
     return counts

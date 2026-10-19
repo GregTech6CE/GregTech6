@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.loaders.c.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;

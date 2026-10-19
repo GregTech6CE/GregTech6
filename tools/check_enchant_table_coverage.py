@@ -21,8 +21,9 @@ import io
 import json
 import re
 
-TABLE = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTEnchantmentTable.java"))
-FIELDS = str(native_path("src/main/java/com/gregtech/gregtech/loaders/c/GTMaterialFields.java"))
+CATALOG = _NativePath(__file__).resolve().parents[1] / "core/src/main/java/com/gregtech/gregtech/content/recipe/generated"
+TABLE = str(CATALOG / "GTEnchantmentTable.java")
+FIELDS = str(CATALOG / "GTMaterialFields.java")
 LANG = str(native_path("src/main/resources/assets/gt6ce/lang/zh_cn.json"))
 
 

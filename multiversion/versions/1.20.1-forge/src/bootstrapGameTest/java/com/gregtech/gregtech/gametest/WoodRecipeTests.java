@@ -8,7 +8,7 @@ import com.gregtech.gregtech.block.wood.WoodSpecies;
 import com.gregtech.gregtech.content.recipe.GTWoodRecipes;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.item.GTToolItem;
-import com.gregtech.gregtech.loaders.Loader_WoodCraftingRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_WoodCraftingRecipes;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTWoods;
 import net.minecraft.gametest.framework.GameTest;

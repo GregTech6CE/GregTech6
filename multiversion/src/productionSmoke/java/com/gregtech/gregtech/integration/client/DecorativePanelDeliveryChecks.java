@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 final class DecorativePanelDeliveryChecks {
  private static void require(boolean b,String why){if(!b)throw new IllegalStateException("Decorative panel delivery: "+why);}
  static JsonObject capture(Minecraft client,GuiGraphics g){
-  int count=0,wood=0,colored=0;var page=com.gregtech.gregtech.loaders.b.OriginCreativeContents.contents("panels");
+  int count=0,wood=0,colored=0;var page=com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.contents("panels");
   var foam=com.gregtech.gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;
   require(com.gregtech.gregtech.content.recipe.MaterialRecoveryRules.shredderWork(foam)==2L*Math.max(1,foam.getToolQuality()+1),"source BRITTLE foam recovery work");
   for(var spec:PanelCatalog.ALL){var stack=new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.parse("gt6ce:"+spec.id())));

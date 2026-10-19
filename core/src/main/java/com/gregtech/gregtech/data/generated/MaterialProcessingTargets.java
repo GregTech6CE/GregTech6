@@ -75,7 +75,7 @@ public final class MaterialProcessingTargets {
     static {
         for (String row : ROWS) {
             String[] parts = row.split("\\|", -1);
-            String owner = com.gregtech.gregtech.loaders.c.GTMaterialFields.materialOf(parts[0]);
+            String owner = com.gregtech.gregtech.content.recipe.generated.GTMaterialFields.materialOf(parts[0]);
             if (owner == null) continue;   // a GT6 material the port does not register
             BY_MATERIAL.put(com.gregtech.gregtech.api.material.GTMaterial.sanitize(owner)
                     + "|" + parts[1], new String[]{parts[2], parts[3]});

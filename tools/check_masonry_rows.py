@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parent.parent
 GT6 = (native_path(ROOT / ".." / "gregtech6-master" / "gregtech6-master" / "src" / "main" / "java"
        / "gregapi" / "block" / "metatype" / "BlockStones.java")).resolve()
 PORT_REPORT = ROOT / "docs" / "stone-variant-coverage.json"
-PORT_LOADER = (native_path(ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "loaders"
+PORT_LOADER = (native_path(ROOT / "src" / "main" / "java" / "com" / "gregtech" / "gregtech" / "content" / "recipe"
                / "Loader_StoneCraftingRecipes.java"))
 ROCK_TYPES = 27
 

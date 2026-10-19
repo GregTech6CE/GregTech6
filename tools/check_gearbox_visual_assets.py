@@ -27,7 +27,7 @@ NAMES = (
 
 def check() -> None:
     registered = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java")).read_text(encoding="utf-8")
-    loader = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/loaders/a/Loader_Blocks.java")).read_text(encoding="utf-8")
+    loader = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/bootstrap/content/Loader_Blocks.java")).read_text(encoding="utf-8")
     model = (native_path(ROOT / "src/main/java/com/gregtech/gregtech/client/GearboxBakedModel.java")).read_text(encoding="utf-8")
     assert "GTIconSetBlocks.registerAll()" in loader, "icon set blocks are not registered"
     for name in NAMES:

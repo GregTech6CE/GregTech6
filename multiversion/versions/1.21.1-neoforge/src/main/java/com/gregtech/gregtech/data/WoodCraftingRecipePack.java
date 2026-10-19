@@ -64,7 +64,7 @@ public final class WoodCraftingRecipePack extends AbstractPackResources {
             String[] parts=spec.split(":",3);
             return com.gregtech.gregtech.registry.GTItems.getStack(prefix(parts[1]),com.gregtech.gregtech.api.material.GTMaterialRegistry.get(parts[2]),1);
         }
-        return com.gregtech.gregtech.loaders.Loader_WoodCraftingRecipes.resolve(spec);
+        return com.gregtech.gregtech.content.recipe.Loader_WoodCraftingRecipes.resolve(spec);
     }
     private static Map<String,Object> ingredient(String spec){
         var stack=resolve(spec);if(stack.isEmpty())throw new IllegalStateException("Unresolved original wood ingredient "+spec);

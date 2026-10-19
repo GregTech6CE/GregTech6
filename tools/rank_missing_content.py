@@ -21,7 +21,7 @@ import re
 import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-GEN_DIR = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c")
+GEN_DIR = os.path.join(ROOT, "core", "src", "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated")
 SPEC = re.compile(r'"([a-z]+:[^"]+)"')
 
 

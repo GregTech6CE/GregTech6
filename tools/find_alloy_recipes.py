@@ -13,7 +13,7 @@ import re
 
 PATTERNS = ["Bronze", "Brass", "Steel", "Invar", "Electrum", "Cupronickel", "Solder"]
 
-for path in sorted(glob.glob(str(native_path("src/main/java/com/gregtech/gregtech/loaders/**/*Gen.java")), recursive=True)):
+for path in sorted(glob.glob(str(_NativePath(__file__).resolve().parents[1] / "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/*Gen.java"))):
     text = io.open(path, encoding="utf-8", errors="replace").read()
     if 'CrucibleAlloying' not in text and 'Alloy' not in text:
         continue

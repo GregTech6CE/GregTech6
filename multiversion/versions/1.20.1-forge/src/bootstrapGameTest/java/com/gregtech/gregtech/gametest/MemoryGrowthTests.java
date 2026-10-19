@@ -3,7 +3,7 @@ package com.gregtech.gregtech.gametest;
 import com.gregtech.gregtech.api.energy.EnergyNet;
 import com.gregtech.gregtech.block.energy.ElectricWireBlock;
 import com.gregtech.gregtech.blockentity.energy.ElectricWireBlockEntity;
-import com.gregtech.gregtech.loaders.Loader_OvenRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_OvenRecipes;
 import com.gregtech.gregtech.registry.GTWires;
 import com.gregtech.gregtech.world.GarbageData;
 import net.minecraft.core.BlockPos;

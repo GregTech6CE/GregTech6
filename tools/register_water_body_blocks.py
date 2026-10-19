@@ -20,7 +20,7 @@ import io
 import json
 import os
 
-LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "a", "Loader_Fluids.java")
+LOADER = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "bootstrap", "content", "Loader_Fluids.java")
 ASSETS = os.path.join(str(native_path("src")), "main", "resources", "assets", "gt6ce")
 LANG = os.path.join(ASSETS, "lang")
 

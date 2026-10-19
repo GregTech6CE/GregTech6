@@ -3,7 +3,7 @@
 
 Usage: python tools/transpile_gt6_chem.py [set]
 
-Each set generates one class under loaders/c/: one r(...) call per translatable
+Each set generates one class under content/recipe/generated/: one r(...) call per translatable
 recipe with string ingredient specs resolved at runtime by GTGeneratedChem
 (missing materials or fluids skip the recipe defensively). Untranslatable
 recipes (cross-mod items, loop variables, ST.make blocks) are skipped and
@@ -66,7 +66,7 @@ if SET not in SOURCES:
     raise SystemExit("unknown set %r (choose from %s)" % (SET, ", ".join(SOURCES)))
 SOURCE_FILE, CLASS_NAME, DOC = SOURCES[SET]
 SRC = os.path.join(GT6, "gregtech", "loaders", "c", SOURCE_FILE)
-OUT = os.path.join(ROOT, str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+OUT = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                    CLASS_NAME + ".java")
 
 # RM map fields available in the port (others are skipped).
@@ -761,7 +761,7 @@ def main():
         lines.append(f'        r("{map_name}", {eut}, {dur}, {ch}, '
                      f'{arr(item_in)}, {arr(fluid_in)}, {arr(fluid_out)}, {arr(item_out)});')
 
-    content = f"""package com.gregtech.gregtech.loaders.c;
+    content = f"""package com.gregtech.gregtech.content.recipe.generated;
 
 /**
  * {DOC}
@@ -782,7 +782,7 @@ final class {CLASS_NAME} {{
 
     private static void r(String map, long eut, long dur, long[] chances,
                           String[] itemIn, String[] fluidIn, String[] fluidOut, String[] itemOut) {{
-        GTGeneratedChem.register(map, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
+        GeneratedRecipeSink.register(map, eut, dur, chances, itemIn, fluidIn, fluidOut, itemOut);
     }}
 
     static void load() {{

@@ -4,8 +4,8 @@ import com.gregtech.gregtech.api.recipe.MachineWorkCost;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialRoleFlags;
 import com.gregtech.gregtech.api.material.ItemMaterialRegistry;
-import com.gregtech.gregtech.loader.VanillaCompositionLoader;
-import com.gregtech.gregtech.loader.VanillaUnificationLoader;
+import com.gregtech.gregtech.content.material.VanillaCompositionLoader;
+import com.gregtech.gregtech.content.material.VanillaUnificationLoader;
 import com.gregtech.gregtech.platform.neoforge.smeltery.SmelteryRegistries;
 import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
@@ -52,7 +52,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTColoredBooks.registerAll();
         int materialItems = GTItems.register(modEventBus);
         com.gregtech.gregtech.registry.GTProjectiles.register(modEventBus);
-        new com.gregtech.gregtech.loaders.a.Loader_Blocks().run();
+        new com.gregtech.gregtech.bootstrap.content.Loader_Blocks().run();
         com.gregtech.gregtech.registry.GTWoods.registerAll();
         com.gregtech.gregtech.registry.GTTreeHoles.registerAll();
         com.gregtech.gregtech.registry.GTBumbleBlocks.initialize();
@@ -111,7 +111,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.content.transport.HopperRegistries.register(modEventBus);
         SmelteryRegistries.register(modEventBus);
         com.gregtech.gregtech.registry.GTRemainingIconBlocks.initialize();
-        com.gregtech.gregtech.loaders.b.Loader_Creative.register(modEventBus);
+        com.gregtech.gregtech.bootstrap.registration.Loader_Creative.register(modEventBus);
         LOGGER.info("Queued {} Neo material items from the shared original definitions", materialItems);
         modEventBus.addListener(this::commonSetup);
     }

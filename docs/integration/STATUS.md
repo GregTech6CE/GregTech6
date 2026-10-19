@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-19 / 原版全面审计与加载目录整理
+
+清点原版 1,229 个、当前生产／API 1,740 个 Java 文件并保存摘要。确认坩埚致死回收、材料箭命中、硬编码提示及配置范围的具体缺口，其他系统继续核查。50 类从 loader/loaders/a/b/c 迁至 bootstrap、content/material、content/recipe 和共享数据目录；生成器及检查工具同步。双版主代码／探针编译通过，105 文件两版方法体与字符串对比通过。类名与初始化清单重构未完成，未运行游戏或构建新 JAR，见 [审计主表](ORIGINAL_ALIGNMENT_AUDIT.md)。
+
 ## 2026-10-19 / 反馈修复双版成品交付
 
 `3a70fc495` 的 Forge `distributionJar` 与 NeoForge `jar` 已成功生成，耗时 4m53s，保留 0.0.0／API 0。正式包已复制到 `build/deliveries/20261019-feedback/`；ZIP、身份及当前修复类／资源检查通过，不重复运行测试或游戏。文件大小及 SHA-256 见[交付回执](verification/feedback-build-20261019.json)。

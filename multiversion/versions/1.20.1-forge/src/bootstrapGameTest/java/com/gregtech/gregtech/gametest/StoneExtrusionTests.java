@@ -7,7 +7,7 @@ import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.block.stone.StoneVariant;
 import com.gregtech.gregtech.content.recipe.StoneAndToolSurvivalRecipes;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
-import com.gregtech.gregtech.loaders.c.GTGeneratedChem;
+import com.gregtech.gregtech.content.recipe.generated.GTGeneratedChem;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraft.gametest.framework.GameTest;

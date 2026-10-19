@@ -76,7 +76,7 @@ final class MachineFeedbackChecks {
             var block=(BasicMachineBlock)BuiltInRegistries.BLOCK.get(id(name));var spec=block.basicSpec();
             require(spec.recipeMap()==com.gregtech.gregtech.data.MachineRecipeMaps.Lightning && !spec.recipeMap().mRecipeList.isEmpty(), "No actual Lightning recipe map "+name);
             require(spec.energyIn()==(32L<<(2*(spec.tier()-1))) && spec.hardness()==4f, "Wrong original Lightning grade "+name);
-            require(com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(block.asItem()).equals("basic_machines"), "Missing Lightning creative entry "+name);
+            require(com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.family(block.asItem()).equals("basic_machines"), "Missing Lightning creative entry "+name);
             machineRows.add(name);
         }
         craft(server,"machines/basic/melter_stainless_steel","melter_stainless_steel",rows);
@@ -97,10 +97,10 @@ final class MachineFeedbackChecks {
             String name=node.id(); String expected=name.startsWith("electric_dynamo_")||name.startsWith("flux_dynamo_")?"dynamos"
                 :name.startsWith("battery_box_")||name.startsWith("energy_storage_")?"battery_boxes"
                 :name.startsWith("transformer_")?"transformers":null;
-            if(expected!=null){require(com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(BuiltInRegistries.ITEM.get(id(name))).equals(expected),"Wrong actual source creative family "+name);groups++;}
+            if(expected!=null){require(com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.family(BuiltInRegistries.ITEM.get(id(name))).equals(expected),"Wrong actual source creative family "+name);groups++;}
         }
         for(var node:com.gregtech.gregtech.content.logistics.LongDistanceCatalog.ALL)
-            require(com.gregtech.gregtech.loaders.b.OriginCreativeContents.family(BuiltInRegistries.ITEM.get(id(node.id()))).equals("long_distance_transport"),"Long-distance block absent from original page "+node.id());
+            require(com.gregtech.gregtech.bootstrap.registration.OriginCreativeContents.family(BuiltInRegistries.ITEM.get(id(node.id()))).equals("long_distance_transport"),"Long-distance block absent from original page "+node.id());
         receipt.add("machineFeedbackCrafting",rows);receipt.add("lightningProcessorsChecked",machineRows);
         receipt.addProperty("sourceEnergyCreativeGroupsChecked",groups);
         receipt.addProperty("longDistanceCreativeGroupsChecked",com.gregtech.gregtech.content.logistics.LongDistanceCatalog.ALL.size());

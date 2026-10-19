@@ -19,7 +19,7 @@ import re
 from collections import Counter
 
 SOURCE = r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java\gregapi\data\MT.java"
-TARGET = os.path.join(str(native_path("src")), "main", "java", "com", "gregtech", "gregtech", "loaders", "c",
+TARGET = os.path.join(str(_NativePath(__file__).resolve().parents[1] / "core" / "src"), "main", "java", "com", "gregtech", "gregtech", "content", "recipe", "generated",
                       "GTEnchantmentTable.java")
 
 # GT6 (1.7.10) enchantment field -> 1.20.1 registry id. `field_151370_z` is the obfuscated
@@ -83,7 +83,7 @@ for material, kind, enchant, level in entries:
     grouped[material].setdefault(kind, []).append((enchant, level))
 
 lines = [
-    "package com.gregtech.gregtech.loaders.c;",
+    "package com.gregtech.gregtech.content.recipe.generated;",
     "",
     "import java.util.List;",
     "",

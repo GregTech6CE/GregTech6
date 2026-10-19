@@ -46,8 +46,8 @@ import re
 
 GT6 = pathlib.Path(r"F:\Dev\GregTech6\gregtech6-master\gregtech6-master\src\main\java")
 SOURCE = GT6 / "gregtech/loaders/c/Loader_Loot.java"
-OUT_JAVA = native_path(pathlib.Path(
-    "src/main/java/com/gregtech/gregtech/loaders/c/GTLootGen.java"))
+OUT_JAVA = pathlib.Path(__file__).resolve().parents[1] / (
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTLootGen.java")
 OUT_JSON = pathlib.Path("docs/gt6-loot-rows.json")
 
 ROW = re.compile(
@@ -244,7 +244,7 @@ def main() -> None:
         for name, values in bounds.items() if "Min" in values and "Max" in values}
 
     lines = [
-        "package com.gregtech.gregtech.loaders.c;",
+        "package com.gregtech.gregtech.content.recipe.generated;",
         "",
         "/**",
         " * GT6's loot rows, transpiled from {@code Loader_Loot} by",

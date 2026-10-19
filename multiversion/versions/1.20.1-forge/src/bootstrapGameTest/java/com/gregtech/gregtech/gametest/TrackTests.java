@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.block.misc.TrackBlock;
-import com.gregtech.gregtech.loaders.Loader_TrackRecipes;
+import com.gregtech.gregtech.content.recipe.Loader_TrackRecipes;
 import com.gregtech.gregtech.registry.GTTrackBlocks;
 import com.gregtech.gregtech.registry.GTIconSetBlocks;
 import net.minecraft.core.BlockPos;

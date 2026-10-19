@@ -64,7 +64,7 @@ SUBSYSTEMS: list[tuple[str, str, tuple[str, ...]]] = [
     ("工具方块 blocks/tool", "gregtech/blocks/tool", ("block/tool",)),
     ("石材 blocks/stone", "gregtech/blocks/stone", ("block/stone",)),
     ("流体方块 blocks/fluids", "gregtech/blocks/fluids", ("block/misc",)),
-    ("配方加载器 loaders", "gregtech/loaders/c", ("loaders/c",)),
+    ("配方注册 recipes", "gregtech/loaders/c", ("content/recipe",)),
     ("兼容模块 compat", "gregtech/compat", ("integration",)),
     ("世界生成 worldgen", "gregtech/worldgen", ("worldgen",)),
     ("GUI", "gregapi/gui", ("client/gui",)),
