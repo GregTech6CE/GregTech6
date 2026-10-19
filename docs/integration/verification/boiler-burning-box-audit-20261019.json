@@ -1,0 +1,462 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "05d713ec629ede2091b9e729c7e903752ab50a4b",
+  "scope": "Single-block boilers and liquid/gas burning boxes; excludes solid and fluidized-bed combustion semantics",
+  "original_sources": [
+    {
+      "path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "gregtech/loaders/b/Loader_Fuels.java",
+      "sha256": "df4517a5c621527c62adee8245601a420b53f7e4d5e871283ac16fbcd4e68edc"
+    },
+    {
+      "path": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "path": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "gregtech/tileentity/energy/converters/MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3"
+    },
+    {
+      "path": "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorLiquid.java",
+      "sha256": "7fc93631602ac5110de425b6e3ae2db4bf0aee7ff56487fac103d80a817f0a0e"
+    },
+    {
+      "path": "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorGas.java",
+      "sha256": "a3ce51395334630298a106239c420f187e7465a6c56e4ed707e72c1340ff9e34"
+    }
+  ],
+  "port_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BoilerTankBlockEntity.java",
+      "sha256": "fd49610755a96b586647374e2738c77088088fc671a434c36d15905d74899d74"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BoilerTankBlock.java",
+      "sha256": "f8e9cce8518bfcc1191ebdd1b1c44758356d27ea0743705a44a1eb27203e6940"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+      "sha256": "f71b61c70dbfd5aa009fad996d49159aa8c7942fbaa31628839772c1e82c63d7"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BurningBoxBlock.java",
+      "sha256": "712177a6a391503a2402a6c368b8999d28f7173bdb68b8fe977f212117b32d6c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/GTFacingMachineBlockEntity.java",
+      "sha256": "5a21e45558bbeb6cb9e8a4c42aa36d6a7e6a2ec577fe38f458d71be7adfc1a8a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "ee3eda16b46070490cec024ca29431484c498f20cbf65570049ff709c2d71919"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/AdjacentEnergyControl.java",
+      "sha256": "28449f7479ee106a58a3f7fa8b34ac25ff39ee3536602f668bc66ba7fddf7b68"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "sha256": "26ae9451d2de14088d4fbc405db59260f457192de8ca27cbc79e10578b2bd51d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java",
+      "sha256": "b3f1a8cb8e0f8eac95bdafcfa3c4f6f4c8000a2acc02316441d46b7b8468b518"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BoilerSpec.java",
+      "sha256": "4c92cd3597f060bfd690c46711f2950a8abddd05d80a2472564095c58fc8b58d"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxDefinitions.java",
+      "sha256": "e2dcc5a219e0bd3226d7e74e3f2781a098580dd157ab2d4a3bfaa756eed55fa5"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalFuelRecipeRows.java",
+      "sha256": "ebe786dcf7373811eb0cee01b355d671c15e1e1e5ebaa6951f3c2f15e04f6c30"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "6b7a3219ebeadd593754cfdc351ab796ebc8565f2780c1704a02791ac0f9bd9e"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "sha256": "719c6bca1b45dac4c31b153bc2b48d71a4a5c50aa7adaed35b9c5372fb2ad8b6"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerHazards.java",
+      "sha256": "d937f4c962f238e248fb741517faabfcd1d454af519835a3cad14563409db485"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxFuelRules.java",
+      "sha256": "d820251d8489be55bd85dd094d92019c5e76e26a8bd03362475f0bd74fc21d56"
+    }
+  ],
+  "private_identifier_renames": {
+    "Mat": "MaterialVariant",
+    "MATS": "VARIANTS",
+    "mat": "material",
+    "normal": "normalOutput",
+    "strong": "strongOutput",
+    "en": "displayName",
+    "out": "specifications",
+    "m": "variant"
+  },
+  "source_parity": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerCatalog.java",
+      "code_and_literals_unchanged_after_private_renames": true
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/BoilerHazards.java",
+      "code_and_literals_unchanged_after_private_renames": true
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxFuelRules.java",
+      "code_and_literals_unchanged_after_private_renames": true
+    }
+  ],
+  "boilers": [
+    {
+      "source_line": 553,
+      "id": "steam_boiler_lead",
+      "ratings": {
+        "strong": false,
+        "output": 32,
+        "hardness": 4.0,
+        "steam_capacity": 320000,
+        "heat_capacity": 320000,
+        "recommended_heat": 16
+      }
+    },
+    {
+      "source_line": 554,
+      "id": "steam_boiler_bismuth",
+      "ratings": {
+        "strong": false,
+        "output": 40,
+        "hardness": 4.0,
+        "steam_capacity": 400000,
+        "heat_capacity": 400000,
+        "recommended_heat": 20
+      }
+    },
+    {
+      "source_line": 555,
+      "id": "steam_boiler_bronze",
+      "ratings": {
+        "strong": false,
+        "output": 48,
+        "hardness": 7.0,
+        "steam_capacity": 480000,
+        "heat_capacity": 480000,
+        "recommended_heat": 24
+      }
+    },
+    {
+      "source_line": 556,
+      "id": "steam_boiler_arsenic_copper",
+      "ratings": {
+        "strong": false,
+        "output": 48,
+        "hardness": 7.0,
+        "steam_capacity": 480000,
+        "heat_capacity": 480000,
+        "recommended_heat": 24
+      }
+    },
+    {
+      "source_line": 557,
+      "id": "steam_boiler_arsenic_bronze",
+      "ratings": {
+        "strong": false,
+        "output": 56,
+        "hardness": 7.0,
+        "steam_capacity": 560000,
+        "heat_capacity": 560000,
+        "recommended_heat": 28
+      }
+    },
+    {
+      "source_line": 558,
+      "id": "steam_boiler_invar",
+      "ratings": {
+        "strong": false,
+        "output": 32,
+        "hardness": 4.0,
+        "steam_capacity": 320000,
+        "heat_capacity": 320000,
+        "recommended_heat": 16
+      }
+    },
+    {
+      "source_line": 559,
+      "id": "steam_boiler_steel",
+      "ratings": {
+        "strong": false,
+        "output": 64,
+        "hardness": 6.0,
+        "steam_capacity": 640000,
+        "heat_capacity": 640000,
+        "recommended_heat": 32
+      }
+    },
+    {
+      "source_line": 560,
+      "id": "steam_boiler_chromium",
+      "ratings": {
+        "strong": false,
+        "output": 192,
+        "hardness": 4.0,
+        "steam_capacity": 1920000,
+        "heat_capacity": 1920000,
+        "recommended_heat": 96
+      }
+    },
+    {
+      "source_line": 561,
+      "id": "steam_boiler_titanium",
+      "ratings": {
+        "strong": false,
+        "output": 224,
+        "hardness": 9.0,
+        "steam_capacity": 2240000,
+        "heat_capacity": 2240000,
+        "recommended_heat": 112
+      }
+    },
+    {
+      "source_line": 562,
+      "id": "steam_boiler_netherite",
+      "ratings": {
+        "strong": false,
+        "output": 224,
+        "hardness": 9.0,
+        "steam_capacity": 2240000,
+        "heat_capacity": 2240000,
+        "recommended_heat": 112
+      }
+    },
+    {
+      "source_line": 563,
+      "id": "steam_boiler_tungsten",
+      "ratings": {
+        "strong": false,
+        "output": 256,
+        "hardness": 10.0,
+        "steam_capacity": 2560000,
+        "heat_capacity": 2560000,
+        "recommended_heat": 128
+      }
+    },
+    {
+      "source_line": 564,
+      "id": "steam_boiler_tungsten_steel",
+      "ratings": {
+        "strong": false,
+        "output": 256,
+        "hardness": 12.5,
+        "steam_capacity": 2560000,
+        "heat_capacity": 2560000,
+        "recommended_heat": 128
+      }
+    },
+    {
+      "source_line": 565,
+      "id": "steam_boiler_ultimet",
+      "ratings": {
+        "strong": false,
+        "output": 512,
+        "hardness": 12.5,
+        "steam_capacity": 5120000,
+        "heat_capacity": 5120000,
+        "recommended_heat": 256
+      }
+    },
+    {
+      "source_line": 567,
+      "id": "strong_steam_boiler_lead",
+      "ratings": {
+        "strong": true,
+        "output": 128,
+        "hardness": 4.0,
+        "steam_capacity": 1280000,
+        "heat_capacity": 1280000,
+        "recommended_heat": 64
+      }
+    },
+    {
+      "source_line": 568,
+      "id": "strong_steam_boiler_bismuth",
+      "ratings": {
+        "strong": true,
+        "output": 160,
+        "hardness": 4.0,
+        "steam_capacity": 1600000,
+        "heat_capacity": 1600000,
+        "recommended_heat": 80
+      }
+    },
+    {
+      "source_line": 569,
+      "id": "strong_steam_boiler_bronze",
+      "ratings": {
+        "strong": true,
+        "output": 192,
+        "hardness": 7.0,
+        "steam_capacity": 1920000,
+        "heat_capacity": 1920000,
+        "recommended_heat": 96
+      }
+    },
+    {
+      "source_line": 570,
+      "id": "strong_steam_boiler_arsenic_copper",
+      "ratings": {
+        "strong": true,
+        "output": 192,
+        "hardness": 7.0,
+        "steam_capacity": 1920000,
+        "heat_capacity": 1920000,
+        "recommended_heat": 96
+      }
+    },
+    {
+      "source_line": 571,
+      "id": "strong_steam_boiler_arsenic_bronze",
+      "ratings": {
+        "strong": true,
+        "output": 224,
+        "hardness": 7.0,
+        "steam_capacity": 2240000,
+        "heat_capacity": 2240000,
+        "recommended_heat": 112
+      }
+    },
+    {
+      "source_line": 572,
+      "id": "strong_steam_boiler_invar",
+      "ratings": {
+        "strong": true,
+        "output": 128,
+        "hardness": 4.0,
+        "steam_capacity": 1280000,
+        "heat_capacity": 1280000,
+        "recommended_heat": 64
+      }
+    },
+    {
+      "source_line": 573,
+      "id": "strong_steam_boiler_steel",
+      "ratings": {
+        "strong": true,
+        "output": 256,
+        "hardness": 6.0,
+        "steam_capacity": 2560000,
+        "heat_capacity": 2560000,
+        "recommended_heat": 128
+      }
+    },
+    {
+      "source_line": 574,
+      "id": "strong_steam_boiler_chromium",
+      "ratings": {
+        "strong": true,
+        "output": 768,
+        "hardness": 4.0,
+        "steam_capacity": 7680000,
+        "heat_capacity": 7680000,
+        "recommended_heat": 384
+      }
+    },
+    {
+      "source_line": 575,
+      "id": "strong_steam_boiler_titanium",
+      "ratings": {
+        "strong": true,
+        "output": 896,
+        "hardness": 9.0,
+        "steam_capacity": 8960000,
+        "heat_capacity": 8960000,
+        "recommended_heat": 448
+      }
+    },
+    {
+      "source_line": 576,
+      "id": "strong_steam_boiler_netherite",
+      "ratings": {
+        "strong": true,
+        "output": 896,
+        "hardness": 9.0,
+        "steam_capacity": 8960000,
+        "heat_capacity": 8960000,
+        "recommended_heat": 448
+      }
+    },
+    {
+      "source_line": 577,
+      "id": "strong_steam_boiler_tungsten",
+      "ratings": {
+        "strong": true,
+        "output": 1024,
+        "hardness": 10.0,
+        "steam_capacity": 10240000,
+        "heat_capacity": 10240000,
+        "recommended_heat": 512
+      }
+    },
+    {
+      "source_line": 578,
+      "id": "strong_steam_boiler_tungsten_steel",
+      "ratings": {
+        "strong": true,
+        "output": 1024,
+        "hardness": 12.5,
+        "steam_capacity": 10240000,
+        "heat_capacity": 10240000,
+        "recommended_heat": 512
+      }
+    },
+    {
+      "source_line": 579,
+      "id": "strong_steam_boiler_ultimet",
+      "ratings": {
+        "strong": true,
+        "output": 2048,
+        "hardness": 12.5,
+        "steam_capacity": 20480000,
+        "heat_capacity": 20480000,
+        "recommended_heat": 1024
+      }
+    }
+  ],
+  "fuel_observation": "FUEL|burning_box_gas_dense_invar|rate=64|efficiency=10000|hydrogen_batch_litres=2|heat_per_batch=32",
+  "confirmed_differences": [
+    "ALIGN-019",
+    "ALIGN-020",
+    "ALIGN-021",
+    "ALIGN-022",
+    "ALIGN-023",
+    "ALIGN-024",
+    "ALIGN-025"
+  ],
+  "verification": "Java 17 independent compile of three edited core classes and inventory probe against unchanged core dependencies",
+  "limitations": [
+    "Core catalog observations are not native registry or gameplay tests.",
+    "Fuel stall is derived from inspected native tick code with actual core parameters, not a running-world observation.",
+    "Private renames and formatting preserve existing behavior; reported gameplay gaps are not fixed."
+  ],
+  "not_run": [
+    "Gradle",
+    "Minecraft",
+    "GameTest",
+    "world save/reload",
+    "new JAR build"
+  ]
+}
