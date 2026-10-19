@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 作物反射改名与覆盖板交互核对
+
+相对 ce8839255，OriginalCropScan 私有 a／c 两变量归一，ComponentCoverEvents／PanelCoverInteraction 双版展开，共五份代码／字面量比较通过。Java 17 仅编译附属作物接口、扫描能源规则与作物适配，无测试执行；未原生编译、外部提供者、GameTest、游戏损耗、重启、构建或推送，见 [回执](verification/crop-magnifier-audit-20261019.json)。
+
 ## 2026-10-19 / 扫描注册与四项执行合同核对
 
 相对 3e644ac22，ItemBehaviorCatalog、ScannerEnergyRules、ItemBehaviors、BehaviorScanner 共四份生产源码等价，原生双版展开，共六份比较；46 条 ID／行为记录顺序保持。原版注册、WD.scan、USB 可选能力、事件和诊断来源留存哈希。未新增测试、编译、GameTest、游戏、异常注入、重启、构建或推送，见 [回执](verification/scanner-behavior-audit-20261019.json)。

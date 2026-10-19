@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-19",
+  "baseline": "ce8839255",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL files read only; existing adaptation notices preserved",
+  "original_sources": {
+    "gregtech/items/behaviors/Behavior_Cropnalyzer.java": "850ae16295d6741da10d61b462d7b04bcb748db05d8693b1fb4a957886428884",
+    "gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java": "df3e7812331b86f9076dfe42afbc8135b73f6091fd53d47d25c3dd95ec89e00f",
+    "gregtech/items/tools/machine/GT_Tool_Screwdriver.java": "0cb7f909f6f9d4272ee6eb63ab9aafdc4b5889f093b2133f1531fbe703bcd56f",
+    "gregapi/item/multiitem/behaviors/Behavior_Tool.java": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+    "gregapi/cover/covers/CoverFilterItem.java": "aef369a78515dcee7f1acc869597f503cb89429d9bbce373d9e537cac66086ae",
+    "gregapi/cover/covers/CoverFilterFluid.java": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+    "gregapi/cover/covers/AbstractCoverAttachmentDetector.java": "a958b416ecfa953d91d5da8cd8bf8c961c79ac11b3481020ae987a5b6fe94161",
+    "gregapi/cover/covers/CoverSelectorButtonPanel.java": "b7f4202b201e79446726c81218c74c097107071b67daf66d6e867e69b7055157",
+    "gregapi/cover/covers/CoverRobotArm.java": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc",
+    "gregtech/items/tools/machine/GT_Tool_MonkeyWrench.java": "10e3a5f002704457d364c47a2905d39d2953d745f428870717129eeb24872702"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalCropScan.java": "90d21b1db071dc7e3cf7ca51855ca2e086585e2518d68cd8d0d23bd5b89ff121",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": "872a0b3cb1cad7c5db2fa79f72380090c397adeaded99864f34efa2545eba454",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java": "a414993a6212d73dd7672b283f6dcfac7458696e92b96d81a09984714b2525aa",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorCropnalyzer.java": "84ddbe25fe9815d26078f4d5715f3ef3590ed19b8c70bebc251ae4b7c2b79076",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": "46a4a54fdb289ed44bea96caca1a281bb5f8578bddce8360cb24c845c3583b5d",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/ScannerItem.java": "19de069676aad4d332fe3dabcd609ca064288ed231c4943e50d7883de0eaed5c",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+    "core/src/api/java/com/gregtech/gregtech/api/crop/CropScanSource.java": "74b8ae7309655d85481104f1e78a28d4b6d002bb308540af3f39b92a89b2d2fb",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+    "core/src/main/java/com/gregtech/gregtech/content/tool/ScannerEnergyRules.java": "c2e9069d3c91336dc18e39ca81a182ed25bde14c360d52541a9da2ba9581bd0e",
+    "core/src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java": "c1f139d059358bf8420243e930500707ab1a1300a7957b6c4424e1a1ea4aeeca"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalCropScan.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "normalizations": [
+    "OriginalCropScan private CropAccess local a -> cropAccess",
+    "OriginalCropScan private CardAccess local c -> cardAccess; only whole variable/field references normalized"
+  ],
+  "java": "Java 17 compiled only CropScanSource, ScannerEnergyRules, OriginalCropScan; no test execution or Minecraft dependencies",
+  "findings": [
+    "ALIGN-125: generic magnifier consumes filter-cover interaction without original target/metadata/wildcard/fluid diagnostics",
+    "ALIGN-126: generic panel magnifier path applies no wear and configuration uses fixed wear instead of original tool-return cost conversion"
+  ],
+  "positive_evidence": [
+    "Crop discovery promotion before energy payment matches original; it is not a new free-scan exploit finding",
+    "Original only supported optional IC2 crops; vanilla plants are not required targets by this contract",
+    "Current crop addon API and optional reflection fallback exist; first/rescan costs and output fields correspond by source",
+    "Robot-arm component magnifier has its own slot diagnostic and one-unit wear; generic-path finding must not be generalized to all covers"
+  ],
+  "not_run": [
+    "native compilation",
+    "optional IC2 provider launch",
+    "full test suite",
+    "GameTests",
+    "world tool wear test",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Crop fallback contracts inspected but external provider compatibility not runtime verified",
+    "Wear examples use source cost conversion; actual tool stack mutation and break effects not measured",
+    "Magnifier diagnostics on all hosts, sound, permission and other tool interactions remain incomplete"
+  ]
+}

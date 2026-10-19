@@ -67,20 +67,20 @@ public final class OriginalCropScan {
         var access = CROPS.get(tile.getClass());
         if (access.isEmpty()) return Result.NONE;
         try {
-            CropAccess a = access.get();
-            Object crop = a.crop.invoke(tile);
+            CropAccess cropAccess = access.get();
+            Object crop = cropAccess.crop.invoke(tile);
             if (crop == null) return Result.NONE;
             // Invoke the public API declaration, even if a mod's card subclass is non-public.
-            var card = CARDS.get(a.crop.getReturnType());
+            var card = CARDS.get(cropAccess.crop.getReturnType());
             if (card.isEmpty()) return Result.NONE;
-            CardAccess c = card.get();
-            boolean discovery = ((Number) a.scanLevel.invoke(tile)).intValue() < 4;
-            if (discovery) a.setScanLevel.invoke(tile, (byte) 4);
-            return format(new CropScanData((String) c.name.invoke(crop),
-                    List.of((String[]) c.attributes.invoke(crop)), (String) c.discoveredBy.invoke(crop),
-                    number(a.growth, tile), number(a.gain, tile), number(a.resistance, tile),
-                    number(a.fertilizer, tile), number(a.water, tile), number(a.weedEx, tile),
-                    number(a.nutrients, tile), number(a.humidity, tile), number(a.air, tile),
+            CardAccess cardAccess = card.get();
+            boolean discovery = ((Number) cropAccess.scanLevel.invoke(tile)).intValue() < 4;
+            if (discovery) cropAccess.setScanLevel.invoke(tile, (byte) 4);
+            return format(new CropScanData((String) cardAccess.name.invoke(crop),
+                    List.of((String[]) cardAccess.attributes.invoke(crop)), (String) cardAccess.discoveredBy.invoke(crop),
+                    number(cropAccess.growth, tile), number(cropAccess.gain, tile), number(cropAccess.resistance, tile),
+                    number(cropAccess.fertilizer, tile), number(cropAccess.water, tile), number(cropAccess.weedEx, tile),
+                    number(cropAccess.nutrients, tile), number(cropAccess.humidity, tile), number(cropAccess.air, tile),
                     discovery ? 0 : 4), x, y, z, translate);
         } catch (ReflectiveOperationException | LinkageError e) {
             return Result.NONE;

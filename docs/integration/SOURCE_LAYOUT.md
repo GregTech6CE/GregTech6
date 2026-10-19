@@ -243,3 +243,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `core/.../content/tool/ScannerEnergyRules.java`：扫描档位、容量、packet 与使用扣费纯规则。
 
 活动注册、休眠旧类和实际缺项见 [扫描仪核查](SCANNER_BEHAVIOR_AUDIT.md)。
+
+## 作物分析与通用工具事件
+
+- `core/src/api/java/.../api/crop/CropScanSource.java`：可选附属作物接口。
+- `core/.../content/tool/OriginalCropScan.java`：公开接口／旧可选反射、分析等级与输出；局部 cropAccess／cardAccess 说明所持对象。
+- `multiversion/src/main/java/.../content/cover/ComponentCoverEvents.java`：覆盖板最高优先级分派与事件取消。
+- 同目录 `PanelCoverInteraction.java`：通用放大镜／配置路径；ComponentCoverInteraction 则处理机械臂等组件。
+- `api/tool/GTToolHelper.java` 与 core `ManualToolRules.clickDamage`：直接损耗和原版返回成本的转换边界。
+
+已核作物条件和诊断／损耗缺口见 [本轮报告](CROP_MAGNIFIER_AUDIT.md)。
