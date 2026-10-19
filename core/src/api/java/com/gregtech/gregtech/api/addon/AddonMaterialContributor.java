@@ -17,6 +17,24 @@ public interface AddonMaterialContributor {
 
     List<MaterialFormRequest> forms();
 
-    /** Compositions and other cross-material links. New materials still belong in {@link #materials()}. */
+    /**
+     * Compositions of this addon's own materials. Resolved after the built-in directory has linked.
+     * A {@code crucible} composition also becomes one crucible reaction.
+     */
+    default List<MaterialComposition> compositions() { return List.of(); }
+
+    /** Smelting results for this addon's own materials. Omitted materials still melt into themselves. */
+    default List<SmeltingTargetDeclaration> smeltingTargets() { return List.of(); }
+
+    /** Explicit crucible alloy rows, in addition to composition-derived rows. */
+    default List<CrucibleReactionDeclaration> crucibleReactions() { return List.of(); }
+
+    /**
+     * Crucible rows to drop, applied after every addon's additions.
+     * An empty input list drops every row of that output. A miss warns and does not fail startup.
+     */
+    default List<CrucibleReactionRemoval> crucibleRemovals() { return List.of(); }
+
+    /** Other cross-material links. New materials still belong in {@link #materials()}. */
     default void link() {}
 }

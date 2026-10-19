@@ -25,6 +25,6 @@ side="BOTH"
 [[dependencies.addon_sample]]
 modId="gt6ce"
 type="required"
-versionRange="[0.7,)"
+versionRange="[0.8,)"
 ordering="NONE"
 side="BOTH"
