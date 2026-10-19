@@ -99,7 +99,7 @@
 | ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
-| ALIGN-077 | 确认导线、物品管道、流体管道未接入原版进度计合同。 | 原版分别返回安培、搬运次数乘 64、传输液量及对应上限。 | 当前缺少 ProgressSensorSource／MachineControl.Provider；功率、液量和压力读取不能替代，见 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)。 |
+| ALIGN-077 | 确认导线、物品管道、流体管道及普通桶未接入原版进度计合同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 当前缺少 ProgressSensorSource／MachineControl.Provider；功率、液量和压力读取不能替代，见 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。 |
 | ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
 | ALIGN-079 | 确认物品管道库存槽数被当作单槽容量。 | 原版 NBT_INV_SIZE 创建多槽库存，每槽正常上限 64。 | 当前固定一个槽、槽上限 spec.invSize，涉及缓存种类及存档结构，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-080 | 确认物品管道吞吐限流缺失且计数单位不同。 | 原版每次成功搬运计一堆，扫描／发送检查每秒容量。 | 当前按物品数累加，仅保存和显示，无容量准入，见 [报告](ITEM_PIPE_AUDIT.md)。 |
@@ -108,6 +108,12 @@
 | ALIGN-083 | 确认流体管道遗漏材料接触伤害开关。 | 原版 16 组材料／112 规格免接触温度伤害。 | 当前规格无 contactDamage，碰撞对所有管道调用温度伤害，见 [报告](FLUID_PIPE_AUDIT.md)。 |
 | ALIGN-084 | 确认流体管道方块硬度／橡胶抗爆参数不对应。 | 原版 blocking 真为 2／6，橡胶假为 1／2。 | 当前 blocking 未传递，两版固定硬度 1.5／抗爆 6；快速阻挡语义需续核，见 [报告](FLUID_PIPE_AUDIT.md)。 |
 | ALIGN-085 | 确认流体管道温度计接口缺失。 | 原版温度计读取管道 Temperature 合同。 | 当前温度计只认坩埚；管道已实现 CompressionSensorSource，压力计和普通液量读取仍有，见 [报告](FLUID_PIPE_AUDIT.md)。 |
+| ALIGN-086 | 确认普通桶封口未隔离流体。 | 原版封口禁普通进出液，发酵与自动排液互斥。 | 当前 fill/drain 无封口检查，tick 可先排液再发酵；空桶软锤位操作也不同，见 [报告](BARREL_AUDIT.md)。 |
+| ALIGN-087 | 确认桶自动排液方向／限量与能力不同。 | 原版按气体／浮力分垂直、上、下，无额外 1000 限量。 | 当前轻流体向六面、每面最多 1000，并隐藏选定输出面整个 capability，见 [报告](BARREL_AUDIT.md)。 |
+| ALIGN-088 | 确认桶发酵加载后进度清零。 | 原版重查有效配方保留已保存进度，查配方 tick 不递增。 | 当前查配方清零两种时间且同 tick 推进；正常新发酵也提前一 tick，见 [报告](BARREL_AUDIT.md)。 |
+| ALIGN-089 | 确认桶世界／物品准入混用并缺少部分限制。 | 原版放置桶接受后在 tick 处理危险，便携物品先拒绝。 | 当前世界桶预拒绝热／气／酸／等离子，遗漏魔法、导能及木桶 SIMPLE 消费，见 [报告](BARREL_AUDIT.md)。 |
+| ALIGN-090 | 确认桶过热后果丢失内容物分支。 | 原版至少 1000 mB 熔岩才放熔岩，否则放火并 burn。 | 两版 helper 总放 level 4 熔岩并造成 4 点 heat；正常 fill 已拦超温，触发条件另述，见 [报告](BARREL_AUDIT.md)。 |
+| ALIGN-091 | 确认发酵产物数量被额外钳制。 | 原版缩放后 setFluid 不按罐容量截断。 | 当前至少 1、至多容量；core 观察 0／32000 边界，实际配方可达性未全验，见 [报告](BARREL_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

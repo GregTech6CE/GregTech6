@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 普通桶源码链与纯比例观察
+
+相对 b232d8cbe，三份展开后的生产文件代码／字面量一致，共享 TankBlockEntity 两版投影亦一致（只改注释）。Java 17 无缓存依赖编译 BarrelFermentationRules 与观察入口，七项结果已记录。封口、重载、邻居流量及破坏行为为源码结论，未运行游戏或保存世界。无原生编译、全量测试、构建、推送，见 [回执](verification/barrel-audit-20261019.json)。
+
 ## 2026-10-19 / 原版输入至材料分表一致性
 
 原版 MT → 当前 transpiler → split_ore_processing → write_catalog，在 work/ 生成七份文件与基线 549bf3076 的生产 Java 逐字相同；只更新中间快照与工具。python -m unittest tools.tests.test_modular_materials 三项通过（4.428 秒）。修复了旧计数、已移除 worldgen_fields 入口、core 读取路径和 Windows 临时目录权限问题。未原生编译、构建、游戏或推送；14 项矿物处理跳过另记，见 [回执](verification/material-regeneration-audit-20261019.json)。

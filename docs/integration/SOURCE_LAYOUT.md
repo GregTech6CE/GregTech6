@@ -78,6 +78,10 @@
 
 “参数表中有标志”不代表运行代码已消费它。机器审计已经发现完成余量、固定输出位置、中断和 KU 完成条件等差异，具体见 [加工执行](BASIC_MACHINE_EXECUTION_AUDIT.md) 与 [中断／供能](BASIC_MACHINE_INTERRUPTION_AUDIT.md)。
 
+## 普通储液桶与发酵
+
+共享 `blockentity/machine/TankBlockEntity.java` 处理普通桶的保存、能力、自动排液和发酵；`BarrelFermentationRules` 只做比例算术。Neo 的 `FermentationAccess` 已在 bootstrap 绑定配方查询，`FluidTransportEnvironment` 是当前环境／熔岩伤害动作，不等同原版桶按内容物选择火焰或熔岩的逻辑。物品态与世界态填充接口必须分别沿继承链核查，详见 [普通桶核查](BARREL_AUDIT.md)。
+
 ## 电变压器的参数与控制
 
 额定目录在 core `content/energy/EnergyNodeDefinitions.java`；开关、模式、双方向输出状态和 64 tick 显示状态在 `content/energy/TransformerControlState.java`。共享原生 `content/energy/ElectricTransformerControl.java` 仅适配 MachineControl 和 NBT；实际输入、输出和切换方向仍在 `blockentity/energy/EnergyNodeBlockEntity.java`。包数取整帮助函数是 core `api/energy/EnergyPackets.java`，公共最小包门限是 `EnergyGate.java`，两者不能混同。现存边界差异见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。
