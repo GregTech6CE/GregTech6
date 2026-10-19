@@ -1,4 +1,4 @@
-"""Original14 motor/dynamo visual states; preserves each platform's existing layered model.
+"""Original20 motor/dynamo visual states; preserves each platform's existing layered model.
 
 GregTech-6 Team / Gregorius Techneticies, LGPL-3.0-or-later source selection:
 MultiTileEntityMotorElectric/Flux and MultiTileEntityDynamoElectric/Flux.getTexture2.
@@ -22,7 +22,7 @@ from pathlib import Path
 TIERS = ['lv', 'mv', 'hv', 'ev', 'iv']
 DEVICES = [(family + '_' + tier, 'motor' in family)
            for family in ['electric_motor', 'electric_dynamo', 'flux_motor', 'flux_dynamo']
-           for tier in (TIERS if family.startswith('electric') else TIERS[:2])]
+           for tier in TIERS]
 ROTATIONS = {'north': {}, 'east': {'y': 90}, 'south': {'y': 180}, 'west': {'y': 270},
              'up': {'x': 270}, 'down': {'x': 90}}
 

@@ -66,8 +66,8 @@ for line,txt in enumerate(source.splitlines(),1):
      stone=mat.rsplit('.',1)[-1];slugs={'Basalt':'basalt','GraniteBlack':'granite_black','GraniteRed':'granite_red','Umber':'umber','Livingrock':'livingrock','Holystone':'holystone','Betweenstone':'betweenstone','NetherBrick':'nether_brick'}
      spec='item:minecraft:nether_bricks' if stone=='NetherBrick' else 'item:gt6ce:stone_'+slugs.get(stone,stone.lower())+'_stone'
     if material=='ANY.Steel' and form=='bolt':spec='tag:gt6ce:technology/any_steel_bolt'
-    if material=='ANY.Iron' and form in {'gearGt','stick','stickLong'}:
-     spec='tag:gt6ce:technology/any_iron_'+{'gearGt':'gear','stick':'rod','stickLong':'long_rod'}[form]
+    if material=='ANY.Iron' and form in {'gearGt','stick','stickLong','plate','plateDouble','screw','wireFine'}:
+     spec='tag:gt6ce:technology/any_iron_'+{'gearGt':'gear','stick':'rod','stickLong':'long_rod','plate':'plate','plateDouble':'double_plate','screw':'screw','wireFine':'fine_wire'}[form]
     if material=='ANY.Si' and form=='plateGem':spec='tag:gt6ce:technology/any_silicon_gem_plate'
     keys[key]=spec
    elif exp in {'Blocks.stone','Blocks.brick_block'}:keys[key]='item:minecraft:'+{'Blocks.stone':'stone','Blocks.brick_block':'bricks'}[exp]
@@ -93,6 +93,9 @@ for line,txt in enumerate(source.splitlines(),1):
   keysrc=', '.join("'%s', \"%s\""%(k,v) for k,v in sorted(keys.items()))
   rows.append(f'        new Row("{path}", 1, {mat}, "'+ '|'.join(patterns)+f'", Map.of({keysrc}))')
   evidence.append({'id':path,'line':line,'source_id':int(a[2])})
+# Preserve the consolidated canonical fire-brick ID, absent from the old block-properties map.
+if not any('new Row("fire_bricks"' in row for row in rows):
+ rows.insert(next(i for i,row in enumerate(rows) if 'new Row("bedrock_mining_drill_head"' in row), '        new Row("fire_bricks", 1, ImportedMaterialData.Ceramic, "CBC|BWB|CBC", Map.of(\'B\', "mat:ingot@Brick", \'C\', "mat:dust@Clay", \'W\', "item:minecraft:water_bucket"))')
 # Key crafting is identical in all ten original MultiItemRandomTools registrations.
 for material in ['Iron','Gold','Copper','Tin','Bronze','Brass','Silver','Platinum','Lead','Plastic']:
  rows.append(f'        new Row("{material.lower()}_key", 3, com.gregtech.gregtech.api.material.GTMaterialRegistry.get("{material}"), "fPx", Map.of(\'f\', "item:gt6ce:tool_file", \'P\', "mat:plate", \'x\', "item:gt6ce:tool_wire_cutter"))')

@@ -285,7 +285,11 @@ public class KineticSteamEngineBlockEntity extends EngineBaseBlockEntity impleme
         }
         if(be.kuEnergy>=cap){
             be.kuEnergy=cap-1;
-            if(be.engineState>30){be.shutdown=true;be.enabled=false;be.steamTank.setEmpty();}
+            if(be.engineState>30){
+                be.shutdown=true;be.enabled=false;be.steamTank.setEmpty();
+                level.playSound(null, pos, net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                        net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
+            }
             else be.engineState=31;
         }
         if(!be.enabled||be.shutdown){

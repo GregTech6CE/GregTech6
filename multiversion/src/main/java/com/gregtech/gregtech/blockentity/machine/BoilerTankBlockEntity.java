@@ -171,9 +171,8 @@ public class BoilerTankBlockEntity extends GTEnergyBlockEntity implements com.gr
                 .resolve().orElse(null);
 //?}
         if (target == null) return;
-        long want = steamTank.getAmount() > steamTank.getCapacity() / 4 * 3
-                ? spec.steamOutput() * 2 : spec.steamOutput();
-        FluidStack offer = steamTank.drain((int) Math.min(Math.min(want,steamTank.getAmount()-steamTank.getCapacity()/2), Integer.MAX_VALUE), IFluidHandler.FluidAction.SIMULATE);
+        long want = com.gregtech.gregtech.content.energy.BoilerSteamOutput.offered(steamTank.getAmount(), steamTank.capacity(), spec.steamOutput());
+        FluidStack offer = steamTank.drain((int) Math.min(want, Integer.MAX_VALUE), IFluidHandler.FluidAction.SIMULATE);
         if (offer.isEmpty()) return;
         int filled = target.fill(offer, IFluidHandler.FluidAction.SIMULATE);
         if (filled <= 0) return;

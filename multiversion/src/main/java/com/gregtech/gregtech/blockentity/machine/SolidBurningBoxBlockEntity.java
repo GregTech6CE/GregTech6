@@ -48,6 +48,44 @@ public class SolidBurningBoxBlockEntity extends GTFacingMachineBlockEntity imple
     private static final int FUEL_SLOT = 0;
     private static final int ASH_SLOT = 1;
 
+//? if >=1.21.1 {
+    /*private final net.neoforged.neoforge.items.IItemHandler automation = new net.neoforged.neoforge.items.IItemHandler() {
+*///?} else {
+    private final net.minecraftforge.items.IItemHandler automation = new net.minecraftforge.items.IItemHandler() {
+//?}
+        @Override public int getSlots() { return 2; }
+        @Override public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
+        @Override public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }
+        @Override public boolean isItemValid(int slot, ItemStack stack) {
+            return slot == FUEL_SLOT && com.gregtech.gregtech.api.machine.FurnaceFuelValue.getBurnValue(stack) > 0;
+        }
+        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return isItemValid(slot, stack) ? inventory.insertItem(slot, stack, simulate) : stack;
+        }
+        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return slot == ASH_SLOT ? inventory.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+        }
+    };
+//? if >=1.21.1 {
+    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(@Nullable Direction side) {
+        return isRemoved() || side == getFrontFacing() ? null : automation;
+    }
+*///?} else {
+    private net.minecraftforge.common.util.LazyOptional<net.minecraftforge.items.IItemHandler> itemCapability =
+            net.minecraftforge.common.util.LazyOptional.of(() -> automation);
+    @Override public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+            net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction side) {
+        if (capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER && side != getFrontFacing())
+            return itemCapability.cast();
+        return super.getCapability(capability, side);
+    }
+    @Override public void invalidateCaps() { super.invalidateCaps(); itemCapability.invalidate(); }
+    @Override public void reviveCaps() {
+        super.reviveCaps();
+        itemCapability = net.minecraftforge.common.util.LazyOptional.of(() -> automation);
+    }
+//?}
+
     private long energy;
     private boolean burning;
     @Nullable

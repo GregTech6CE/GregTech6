@@ -251,6 +251,14 @@ public final class MachineRecipeIngredients {
     }
 
     private static Object pipeIngredient(String sizeName, GTMaterial target, GTMaterial machineMaterial) {
+        if (sizeName.startsWith("any_") && target.resolve() == com.gregtech.gregtech.content.material.Materials.Copper.resolve()) {
+            var choices = new java.util.ArrayList<Object>();
+            for (var material : com.gregtech.gregtech.data.MaterialGroups.Cu.getReRegistrations()) {
+                Item pipe = pipeItem(sizeName.substring(4), material);
+                if (pipe != null) choices.add(Map.of("item", net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(pipe).toString()));
+            }
+            return choices.isEmpty() ? null : choices;
+        }
         Item item = pipeItem(sizeName, target);
         if (item != null) {
 //? if >=1.21.1 {

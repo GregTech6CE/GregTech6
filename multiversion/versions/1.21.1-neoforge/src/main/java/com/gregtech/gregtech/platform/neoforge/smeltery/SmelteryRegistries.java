@@ -74,7 +74,9 @@ public final class SmelteryRegistries {
         ENTITIES.register(bus);
     }
     private static void capabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event){
+        event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,SOLID_BURNING_BOX.get(),(be,side)->be.itemCapability(side));
         event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.BURNING_BOX.get(),com.gregtech.gregtech.blockentity.machine.BurningBoxBlockEntity::itemCapability);
         event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.BURNING_BOX.get(),com.gregtech.gregtech.blockentity.machine.BurningBoxBlockEntity::fluidCapability);
+        event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.HEAT_EXCHANGER.get(),com.gregtech.gregtech.blockentity.machine.HeatExchangerBlockEntity::fluidCapability);
     }
 }

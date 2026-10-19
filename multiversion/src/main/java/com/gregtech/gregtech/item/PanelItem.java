@@ -16,6 +16,7 @@ public final class PanelItem extends Item implements PanelItemView {
     private final com.gregtech.gregtech.content.transport.PanelCatalog.Spec spec;
     public PanelItem(com.gregtech.gregtech.content.transport.PanelCatalog.Spec spec, Properties properties) { super(properties.stacksTo(16));this.spec=spec; }
     @Override public com.gregtech.gregtech.content.transport.PanelCatalog.Spec panelSpec(){return spec;}
+    @Override public Component getName(ItemStack stack) { return spec.color().isEmpty() ? super.getName(stack) : coloredPanelName(); }
     @Override public InteractionResult useOn(UseOnContext context) {
         var player=context.getPlayer();var level=context.getLevel();var pos=context.getClickedPos();
         if(player==null||!player.mayBuild()||!level.mayInteract(player,pos))return InteractionResult.FAIL;

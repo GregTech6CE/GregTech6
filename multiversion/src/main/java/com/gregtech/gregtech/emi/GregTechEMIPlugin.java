@@ -24,6 +24,9 @@ public final class GregTechEMIPlugin implements EmiPlugin {
 
     @Override
     public void register(EmiRegistry registry) {
+        com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.invalidate();
+        FluidScreenStackProvider.register(registry);
+        WoodenBucketLookupRecipe.register(registry);
         registry.addRecipeHandler(com.gregtech.gregtech.registry.GTMenuTypes.ADVANCED_CRAFTING.get(),new AdvancedCraftingEmiHandler());
         for(var table:net.minecraft.core.registries.BuiltInRegistries.BLOCK)
             if(table instanceof com.gregtech.gregtech.block.misc.AdvancedCraftingTableBlock)

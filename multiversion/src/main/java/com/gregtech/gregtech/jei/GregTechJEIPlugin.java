@@ -32,6 +32,9 @@ import java.util.Map;
  */
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
+    @Override public void registerVanillaCategoryExtensions(mezz.jei.api.registration.IVanillaCategoryExtensionRegistration registration) {
+        ToolCraftingDisplay.register(registration);
+    }
 
     /** Categories created in {@link #registerCategories}, reused in {@link #registerRecipes}. */
     private final Map<RecipeMap, RecipeMapCategory> categories = new LinkedHashMap<>();
@@ -108,6 +111,7 @@ public final class GregTechJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
+        com.gregtech.gregtech.api.fluid.FluidContainerDisplayBinding.invalidate();
         long started = System.nanoTime();
         int shown = 0;
         try {

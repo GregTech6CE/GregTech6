@@ -116,6 +116,13 @@ def catalog(root):
     return {g: sorted(set(items)) for g, items in sorted(groups.items()) if len(set(items)) > 1}, ids
 
 def resources(root):
+    for dense in (False, True):
+        suffix = "_dense" if dense else ""
+        yield ("heat_exchanger" + suffix, {
+            "type": "remi:group", "name": "emi.group.gt6ce.heat_exchanger" + suffix,
+            "regex": "^gt6ce:heat_exchanger" + suffix + "_(?:invar|tungsten|tungsten_steel|ta4hfc5)$", "priority": 110})
+    yield "boiler_main_barometer", {"type": "remi:group", "name": "emi.group.gt6ce.boiler_main_barometer",
+            "regex": "^gt6ce:[a-z_]+_boiler_main_barometer$", "priority": 110}
     groups, ids = catalog(root)
     from remi_group_titles import headings
     language = json.loads((root / "core/src/main/resources/assets/gt6ce/lang/en_us.json").read_text(encoding="utf-8"))

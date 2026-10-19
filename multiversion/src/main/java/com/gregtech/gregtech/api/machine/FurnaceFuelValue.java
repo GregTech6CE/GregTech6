@@ -65,6 +65,15 @@ public final class FurnaceFuelValue {
         var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
         Integer time = com.gregtech.gregtech.content.recipe.OriginalSingleItemCatalog.burnTime(id.getNamespace(), id.getPath());
         if (time != null) return time;
+        if (stack.getItem() instanceof com.gregtech.gregtech.api.material.MaterialFormItem form) {
+            long total = 0;
+            for (var part : com.gregtech.gregtech.api.material.MaterialChemistry.prefixMaterialWeights(form.getMaterial(), form.getPrefix()))
+                total += getBurnValue(part.material(), form.getPrefix(), part.amount());
+            return (int) clampFuelValue(total);
+        }
+        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof com.gregtech.gregtech.block.MaterialBlockLike block)
+            return (int) MaterialFuelRules.blockBurnValue(block.material(), block.prefix());
         var data = ItemMaterialRegistry.get(stack).orElse(null);
         // MT.java:1243 declares 100 ticks per U of bark; dry bark is its half-U item.
         if (data != null && data.components().size() == 1 && data.material().resolve().getName().equals("Bark"))

@@ -174,35 +174,10 @@ public class LargeHeatExchangerControllerBlockEntity extends GTEnergyBlockEntity
 //?}
         }
     }
-    private boolean matches(Recipe recipe){
-        return recipe!=null&&recipe.mEnabled&&!recipe.mFakeRecipe&&recipe.mInputs.length==0
-                &&recipe.mFluidInputs.length==1&&!recipe.mFluidInputs[0].isEmpty()
-//? if >=1.21.1 {
-                /*&&FluidStack.isSameFluidSameComponents(hot.getFluidLong(),recipe.mFluidInputs[0]);
-*///?} else {
-                &&hot.getFluidLong().isFluidEqual(recipe.mFluidInputs[0]);
-//?}
-    }
-    private void burnFuel(){
-        if(hot.isEmpty())return;
-        var map=recipes();
-        if(map==null)return; // Keep an unknown saved map identity; never silently burn another fuel type.
-        Recipe recipe=map.mRecipeList.contains(lastRecipe)&&matches(lastRecipe)?lastRecipe:null;
-        if(recipe==null)for(var candidate:map.mRecipeList)if(matches(candidate)){recipe=candidate;break;}
-        if(recipe==null){hot.setEmpty();return;}
-        var output=recipe.mFluidOutputs.length==0?FluidStack.EMPTY:recipe.mFluidOutputs[0];
-//? if >=1.21.1 {
-        /*if(!output.isEmpty()&&!cold.isEmpty()&&!FluidStack.isSameFluidSameComponents(cold.getFluidLong(),output))return;
-*///?} else {
-        if(!output.isEmpty()&&!cold.isEmpty()&&!cold.getFluidLong().isFluidEqual(output))return;
-//?}
-        if(!output.isEmpty()&&Long.MAX_VALUE-cold.getAmount()<output.getAmount())return;
-        var plan=HeatExchangerRules.charge(hot.getAmount(),recipe.mFluidInputs[0].getAmount(),cold.getAmount(),
-                output.getAmount(),heat,settings.bufferTarget(),recipe.mEUt,recipe.mDuration,settings.efficiency());
-        if(plan==null){if(hot.getAmount()<recipe.mFluidInputs[0].getAmount()&&activityHistory==0)hot.setEmpty();return;}
-        hot.remove(plan.inputUsed());
-        if(plan.outputMade()>0)cold.setFluid(output,cold.getAmount()+plan.outputMade());
-        heat+=plan.energyAdded();active=true;lastRecipe=recipe;setChanged();
+    private void burnFuel() {
+        var result = com.gregtech.gregtech.api.fluid.HotFluidFuelCycle.charge(settings, hot, cold, heat, activityHistory, lastRecipe);
+        heat = result.heat(); lastRecipe = result.recipe(); active = result.active();
+        if (active) setChanged();
     }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role){return role==MultiblockLayout.Role.FLUID_INPUT?input:null;}
     @Override public int getTanks(){return 2;}

@@ -20,6 +20,7 @@ public final class GTMultiblocks {
     public static RegisteredBlock<BasicMachineBlock> DISTILLATION_TOWER_MAIN;
     public static void registerAll() {
         if (!NAMED.isEmpty()) throw new IllegalStateException("Multiblocks registered twice");
+        GTHeatExchangers.registerAll();
         for (var part : SharedLargeMachineParts.DEFINITIONS)
             NAMED.put(part.originalId(), RegisteredBlock.register(part.name(), () -> MultiblockBlockFactory.create(part)));
         for (var part : OriginalMultiblockPartData.ALL)

@@ -1,0 +1,6 @@
+{
+  "type": "remi:group",
+  "name": "emi.group.gt6ce.heat_exchanger",
+  "regex": "^gt6ce:heat_exchanger_(?:invar|tungsten|tungsten_steel|ta4hfc5)$",
+  "priority": 110
+}

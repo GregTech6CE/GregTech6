@@ -1,0 +1,5087 @@
+{
+  "date": "2026-10-20",
+  "scope": "Targeted player feedback and missing single-block energy registrations; broad audit stays user-paused.",
+  "authors": [
+    "Gregorius Techneticies",
+    "GregTech-6 Team"
+  ],
+  "code_license": "LGPL-3.0-or-later",
+  "texture_license": "CC0-1.0 (preserved LICENSE.assets)",
+  "sources": [
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Handlers.java",
+      "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\c\\Loader_Recipes_Ores.java",
+      "sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\loaders\\b\\Loader_OreProcessing.java",
+      "sha256": "bade43317484adffdca7b6bbaf3dc910da424d8ad3bcbe89235979044546c2c3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\GT_API_Proxy.java",
+      "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityGeneratorHotFluid.java",
+      "sha256": "7d6c773afd8df1b012a8e36d55500fb12bc1fb65f60815fa02bdd2b8ca3598a4"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityGeneratorSolid.java",
+      "sha256": "2a91b961b7ff13ae8752376c1c77bc6c5501897e85686f217ed3915c5ecf3c1a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\generators\\MultiTileEntityGeneratorFluidBed.java",
+      "sha256": "20f7dc1235a4d2e4d2891f1b57a538ae6ed5f0332af4ca77b7e9461fa6d189fc"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityBoilerTank.java",
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityEngineSteam.java",
+      "sha256": "e0cffb1ae738531ad1a28fc458dc7dfd24717a63b27c3a64ad003eb6289cc4e5"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\energy\\converters\\MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityDustFunnel.java",
+      "sha256": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityJuicer.java",
+      "sha256": "2c98bf960cc89cd5c5477f66c71ab9ba013265a6d651bb76225e0c099bba572c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregtech\\tileentity\\tools\\MultiTileEntityMixingBowl.java",
+      "sha256": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\resources\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    },
+    {
+      "path": "C:\\Dev\\GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0"
+    }
+  ],
+  "texture_sources": [
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\LICENSE.assets",
+      "sha256": "e2aaec4ccc681649063335b6c4991fd52570d15f45bd0af97c1cee3cb0375299"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\colored\\left.png",
+      "sha256": "4f8004f09dc2ef5f20eca50efd1e691b2650b7b15e173fb95997619f79719332"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\colored\\top.png",
+      "sha256": "4f8004f09dc2ef5f20eca50efd1e691b2650b7b15e173fb95997619f79719332"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\colored\\front.png",
+      "sha256": "4f8004f09dc2ef5f20eca50efd1e691b2650b7b15e173fb95997619f79719332"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay\\left.png",
+      "sha256": "c71c3cb616a851ad68a3f0821c0853e4c6fff37ad8873d6161e60b1234ce04f6"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay\\top.png",
+      "sha256": "1d116dec67f49dc22a130120f186fbbf7e9f963f4212629ea46a963a6f2feacb"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay\\front.png",
+      "sha256": "4429701e5c9841c54aafd14ad87ee1879535a5ec5dbb39670caae42c611da546"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay_active\\left.png",
+      "sha256": "390ee18a9f13166c640b8a0f96a4b987490e5a502a6889336e5b7307b59ed275"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay_active\\top.png",
+      "sha256": "b7b0e3f66530c15165ba8d44c2b05ef14986624987636a5c2caea818c670183a"
+    },
+    {
+      "path": "C:\\Dev\\gregtech6_w-main\\gregtech6_w-main\\src\\main\\resources\\assets\\gregtech\\textures\\blocks\\machines\\generators\\hot_fluid\\overlay_active\\front.png",
+      "sha256": "4429701e5c9841c54aafd14ad87ee1879535a5ec5dbb39670caae42c611da546"
+    }
+  ],
+  "registration_coverage": {
+    "static_rows": 545,
+    "counts": {
+      "existing_harvest_mapping": 490,
+      "existing_separate_registration": 35,
+      "added": 14,
+      "unmatched": 6
+    },
+    "limits": "Declaration/harvest-map comparison only; loop-generated rows and full behavior parity are not counted.",
+    "rows": [
+      {
+        "source_id": 1199,
+        "source_line": 519,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorBrick",
+        "name_expression": "Brick Burning Box (Solid)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1100,
+        "source_line": 522,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1101,
+        "source_line": 523,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1102,
+        "source_line": 524,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1111,
+        "source_line": 525,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1112,
+        "source_line": 526,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1103,
+        "source_line": 527,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1104,
+        "source_line": 528,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1105,
+        "source_line": 529,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1106,
+        "source_line": 530,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1110,
+        "source_line": 531,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1107,
+        "source_line": 532,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1108,
+        "source_line": 533,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1109,
+        "source_line": 534,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1150,
+        "source_line": 536,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1151,
+        "source_line": 537,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1152,
+        "source_line": 538,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1161,
+        "source_line": 539,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1162,
+        "source_line": 540,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1153,
+        "source_line": 541,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1154,
+        "source_line": 542,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1155,
+        "source_line": 543,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1156,
+        "source_line": 544,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1160,
+        "source_line": 545,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1157,
+        "source_line": 546,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1158,
+        "source_line": 547,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1159,
+        "source_line": 548,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorMetal",
+        "name_expression": "Dense Burning Box (Solid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1200,
+        "source_line": 553,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1201,
+        "source_line": 554,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1202,
+        "source_line": 555,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1210,
+        "source_line": 556,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1211,
+        "source_line": 557,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1203,
+        "source_line": 558,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1204,
+        "source_line": 559,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1205,
+        "source_line": 560,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1206,
+        "source_line": 561,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1209,
+        "source_line": 562,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1207,
+        "source_line": 563,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1208,
+        "source_line": 564,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1212,
+        "source_line": 565,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1250,
+        "source_line": 567,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1251,
+        "source_line": 568,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1252,
+        "source_line": 569,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1260,
+        "source_line": 570,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1261,
+        "source_line": 571,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1253,
+        "source_line": 572,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1254,
+        "source_line": 573,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1255,
+        "source_line": 574,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1256,
+        "source_line": 575,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1259,
+        "source_line": 576,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1257,
+        "source_line": 577,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1258,
+        "source_line": 578,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1262,
+        "source_line": 579,
+        "group": "Steam Boilers",
+        "source_class": "MultiTileEntityBoilerTank",
+        "name_expression": "Strong Steam Boiler Tank (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1300,
+        "source_line": 584,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1301,
+        "source_line": 585,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1302,
+        "source_line": 586,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1312,
+        "source_line": 587,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1313,
+        "source_line": 588,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1309,
+        "source_line": 589,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1303,
+        "source_line": 590,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1310,
+        "source_line": 591,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1304,
+        "source_line": 592,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1311,
+        "source_line": 593,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1305,
+        "source_line": 594,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1306,
+        "source_line": 595,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1307,
+        "source_line": 596,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1308,
+        "source_line": 597,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1350,
+        "source_line": 599,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1351,
+        "source_line": 600,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1352,
+        "source_line": 601,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1362,
+        "source_line": 602,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1363,
+        "source_line": 603,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1359,
+        "source_line": 604,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1353,
+        "source_line": 605,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1360,
+        "source_line": 606,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1354,
+        "source_line": 607,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1361,
+        "source_line": 608,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1355,
+        "source_line": 609,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1356,
+        "source_line": 610,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1357,
+        "source_line": 611,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1358,
+        "source_line": 612,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineSteam",
+        "name_expression": "Strong Steam Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1402,
+        "source_line": 619,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1411,
+        "source_line": 620,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1412,
+        "source_line": 621,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1403,
+        "source_line": 622,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1404,
+        "source_line": 623,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1405,
+        "source_line": 624,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1406,
+        "source_line": 625,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1410,
+        "source_line": 626,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1407,
+        "source_line": 627,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1408,
+        "source_line": 628,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1409,
+        "source_line": 629,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1452,
+        "source_line": 633,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1461,
+        "source_line": 634,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1462,
+        "source_line": 635,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1453,
+        "source_line": 636,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1454,
+        "source_line": 637,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1455,
+        "source_line": 638,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1456,
+        "source_line": 639,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1460,
+        "source_line": 640,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1457,
+        "source_line": 641,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1458,
+        "source_line": 642,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1459,
+        "source_line": 643,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorLiquid",
+        "name_expression": "Dense Burning Box (Liquid, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1602,
+        "source_line": 649,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1611,
+        "source_line": 650,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1612,
+        "source_line": 651,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1603,
+        "source_line": 652,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1604,
+        "source_line": 653,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1605,
+        "source_line": 654,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1606,
+        "source_line": 655,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1610,
+        "source_line": 656,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1607,
+        "source_line": 657,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1608,
+        "source_line": 658,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1609,
+        "source_line": 659,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1652,
+        "source_line": 663,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1661,
+        "source_line": 664,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1662,
+        "source_line": 665,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1653,
+        "source_line": 666,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1654,
+        "source_line": 667,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1655,
+        "source_line": 668,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1656,
+        "source_line": 669,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1660,
+        "source_line": 670,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1657,
+        "source_line": 671,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1658,
+        "source_line": 672,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1659,
+        "source_line": 673,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorGas",
+        "name_expression": "Dense Burning Box (Gas, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9000,
+        "source_line": 678,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9001,
+        "source_line": 679,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9002,
+        "source_line": 680,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9011,
+        "source_line": 681,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9012,
+        "source_line": 682,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9003,
+        "source_line": 683,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9004,
+        "source_line": 684,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9005,
+        "source_line": 685,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9006,
+        "source_line": 686,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9010,
+        "source_line": 687,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9007,
+        "source_line": 688,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9008,
+        "source_line": 689,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9009,
+        "source_line": 690,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9050,
+        "source_line": 692,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9051,
+        "source_line": 693,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9052,
+        "source_line": 694,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9061,
+        "source_line": 695,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9062,
+        "source_line": 696,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9053,
+        "source_line": 697,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9054,
+        "source_line": 698,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9055,
+        "source_line": 699,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9056,
+        "source_line": 700,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9060,
+        "source_line": 701,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9057,
+        "source_line": 702,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9058,
+        "source_line": 703,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9059,
+        "source_line": 704,
+        "group": "Burning Boxes",
+        "source_class": "MultiTileEntityGeneratorFluidBed",
+        "name_expression": "Dense Fluidized Bed Burning Box (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9103,
+        "source_line": 709,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_invar"
+      },
+      {
+        "source_id": 9107,
+        "source_line": 710,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_tungsten"
+      },
+      {
+        "source_id": 9108,
+        "source_line": 711,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_tungsten_steel"
+      },
+      {
+        "source_id": 9109,
+        "source_line": 712,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_ta4hfc5"
+      },
+      {
+        "source_id": 9153,
+        "source_line": 714,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Dense Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_dense_invar"
+      },
+      {
+        "source_id": 9157,
+        "source_line": 715,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Dense Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_dense_tungsten"
+      },
+      {
+        "source_id": 9158,
+        "source_line": 716,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Dense Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_dense_tungsten_steel"
+      },
+      {
+        "source_id": 9159,
+        "source_line": 717,
+        "group": "Heat Exchangers",
+        "source_class": "MultiTileEntityGeneratorHotFluid",
+        "name_expression": "Dense Heat Exchanger (",
+        "binding": "added",
+        "path": "heat_exchanger_dense_ta4hfc5"
+      },
+      {
+        "source_id": 9147,
+        "source_line": 722,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9146,
+        "source_line": 723,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9145,
+        "source_line": 724,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9148,
+        "source_line": 725,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9149,
+        "source_line": 726,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9197,
+        "source_line": 727,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9198,
+        "source_line": 728,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 9199,
+        "source_line": 729,
+        "group": "Engines",
+        "source_class": "MultiTileEntityMotorLiquid",
+        "name_expression": "Diesel Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1512,
+        "source_line": 794,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1515,
+        "source_line": 795,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1518,
+        "source_line": 796,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1522,
+        "source_line": 798,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1525,
+        "source_line": 799,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1527,
+        "source_line": 800,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1528,
+        "source_line": 801,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1529,
+        "source_line": 802,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1530,
+        "source_line": 804,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1531,
+        "source_line": 805,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1535,
+        "source_line": 806,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1538,
+        "source_line": 807,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1540,
+        "source_line": 809,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1545,
+        "source_line": 810,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 1548,
+        "source_line": 811,
+        "group": "Turbines",
+        "source_class": "MultiTileEntityTurbineSteam",
+        "name_expression": "Steam Turbine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10001,
+        "source_line": 817,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterElectric",
+        "name_expression": "Electric Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10002,
+        "source_line": 818,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterElectric",
+        "name_expression": "Electric Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10003,
+        "source_line": 819,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterElectric",
+        "name_expression": "Electric Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10004,
+        "source_line": 820,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterElectric",
+        "name_expression": "Electric Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10005,
+        "source_line": 821,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterElectric",
+        "name_expression": "Electric Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11001,
+        "source_line": 824,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterFlux",
+        "name_expression": "Flux Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11002,
+        "source_line": 825,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterFlux",
+        "name_expression": "Flux Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11003,
+        "source_line": 826,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterFlux",
+        "name_expression": "Flux Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11004,
+        "source_line": 827,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterFlux",
+        "name_expression": "Flux Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11005,
+        "source_line": 828,
+        "group": "Heaters",
+        "source_class": "MultiTileEntityHeaterFlux",
+        "name_expression": "Flux Heater (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10011,
+        "source_line": 833,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineElectric",
+        "name_expression": "Electric Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10012,
+        "source_line": 834,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineElectric",
+        "name_expression": "Electric Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10013,
+        "source_line": 835,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineElectric",
+        "name_expression": "Electric Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10014,
+        "source_line": 836,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineElectric",
+        "name_expression": "Electric Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10015,
+        "source_line": 837,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineElectric",
+        "name_expression": "Electric Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11011,
+        "source_line": 840,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineFlux",
+        "name_expression": "Flux Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11012,
+        "source_line": 841,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineFlux",
+        "name_expression": "Flux Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11013,
+        "source_line": 842,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineFlux",
+        "name_expression": "Flux Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11014,
+        "source_line": 843,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineFlux",
+        "name_expression": "Flux Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11015,
+        "source_line": 844,
+        "group": "Engines",
+        "source_class": "MultiTileEntityEngineFlux",
+        "name_expression": "Flux Engine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10021,
+        "source_line": 849,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorElectric",
+        "name_expression": "Electric Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10022,
+        "source_line": 850,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorElectric",
+        "name_expression": "Electric Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10023,
+        "source_line": 851,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorElectric",
+        "name_expression": "Electric Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10024,
+        "source_line": 852,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorElectric",
+        "name_expression": "Electric Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10025,
+        "source_line": 853,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorElectric",
+        "name_expression": "Electric Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11021,
+        "source_line": 856,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorFlux",
+        "name_expression": "Flux Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11022,
+        "source_line": 857,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorFlux",
+        "name_expression": "Flux Motor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11023,
+        "source_line": 858,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorFlux",
+        "name_expression": "Flux Motor (",
+        "binding": "added",
+        "path": "flux_motor_hv"
+      },
+      {
+        "source_id": 11024,
+        "source_line": 859,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorFlux",
+        "name_expression": "Flux Motor (",
+        "binding": "added",
+        "path": "flux_motor_ev"
+      },
+      {
+        "source_id": 11025,
+        "source_line": 860,
+        "group": "Motors",
+        "source_class": "MultiTileEntityMotorFlux",
+        "name_expression": "Flux Motor (",
+        "binding": "added",
+        "path": "flux_motor_iv"
+      },
+      {
+        "source_id": 10031,
+        "source_line": 865,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetElectric",
+        "name_expression": "Electromagnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10032,
+        "source_line": 866,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetElectric",
+        "name_expression": "Electromagnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10033,
+        "source_line": 867,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetElectric",
+        "name_expression": "Electromagnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10034,
+        "source_line": 868,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetElectric",
+        "name_expression": "Electromagnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10035,
+        "source_line": 869,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetElectric",
+        "name_expression": "Electromagnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11031,
+        "source_line": 872,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetFlux",
+        "name_expression": "Flux Magnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11032,
+        "source_line": 873,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetFlux",
+        "name_expression": "Flux Magnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11033,
+        "source_line": 874,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetFlux",
+        "name_expression": "Flux Magnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11034,
+        "source_line": 875,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetFlux",
+        "name_expression": "Flux Magnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11035,
+        "source_line": 876,
+        "group": "Magnets",
+        "source_class": "MultiTileEntityMagnetFlux",
+        "name_expression": "Flux Magnet (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10040,
+        "source_line": 881,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10041,
+        "source_line": 882,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10042,
+        "source_line": 883,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10043,
+        "source_line": 884,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10044,
+        "source_line": 885,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10045,
+        "source_line": 886,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10046,
+        "source_line": 887,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10047,
+        "source_line": 888,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10048,
+        "source_line": 889,
+        "group": "Transformers",
+        "source_class": "MultiTileEntityTransformerElectric",
+        "name_expression": "Transformer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10050,
+        "source_line": 901,
+        "group": "Solar Panels",
+        "source_class": "MultiTileEntitySolarPanelElectric",
+        "name_expression": "Solar Panel (Silicon)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10051,
+        "source_line": 902,
+        "group": "Solar Panels",
+        "source_class": "MultiTileEntitySolarPanelElectric",
+        "name_expression": "Solar Panel (Germanium)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10071,
+        "source_line": 921,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserBuildcraft",
+        "name_expression": "Buildcraft Assembly Laser (",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 10072,
+        "source_line": 922,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserBuildcraft",
+        "name_expression": "Buildcraft Assembly Laser (",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 10073,
+        "source_line": 923,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserBuildcraft",
+        "name_expression": "Buildcraft Assembly Laser (",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 10074,
+        "source_line": 924,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserBuildcraft",
+        "name_expression": "Buildcraft Assembly Laser (",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 10075,
+        "source_line": 925,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserBuildcraft",
+        "name_expression": "Buildcraft Assembly Laser (",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 10101,
+        "source_line": 930,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserElectric",
+        "name_expression": "Electric CO2 Laser (",
+        "binding": "existing_separate_registration",
+        "path": "co2_laser_lv"
+      },
+      {
+        "source_id": 10102,
+        "source_line": 931,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserElectric",
+        "name_expression": "Electric CO2 Laser (",
+        "binding": "existing_separate_registration",
+        "path": "co2_laser_mv"
+      },
+      {
+        "source_id": 10103,
+        "source_line": 932,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserElectric",
+        "name_expression": "Electric CO2 Laser (",
+        "binding": "existing_separate_registration",
+        "path": "co2_laser_hv"
+      },
+      {
+        "source_id": 10104,
+        "source_line": 933,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserElectric",
+        "name_expression": "Electric CO2 Laser (",
+        "binding": "existing_separate_registration",
+        "path": "co2_laser_ev"
+      },
+      {
+        "source_id": 10105,
+        "source_line": 934,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserElectric",
+        "name_expression": "Electric CO2 Laser (",
+        "binding": "existing_separate_registration",
+        "path": "co2_laser_iv"
+      },
+      {
+        "source_id": 11101,
+        "source_line": 937,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserFlux",
+        "name_expression": "Flux Laser (",
+        "binding": "existing_separate_registration",
+        "path": "flux_laser_lv"
+      },
+      {
+        "source_id": 11102,
+        "source_line": 938,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserFlux",
+        "name_expression": "Flux Laser (",
+        "binding": "existing_separate_registration",
+        "path": "flux_laser_mv"
+      },
+      {
+        "source_id": 11103,
+        "source_line": 939,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserFlux",
+        "name_expression": "Flux Laser (",
+        "binding": "existing_separate_registration",
+        "path": "flux_laser_hv"
+      },
+      {
+        "source_id": 11104,
+        "source_line": 940,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserFlux",
+        "name_expression": "Flux Laser (",
+        "binding": "existing_separate_registration",
+        "path": "flux_laser_ev"
+      },
+      {
+        "source_id": 11105,
+        "source_line": 941,
+        "group": "Lasers",
+        "source_class": "MultiTileEntityLaserFlux",
+        "name_expression": "Flux Laser (",
+        "binding": "existing_separate_registration",
+        "path": "flux_laser_iv"
+      },
+      {
+        "source_id": 10111,
+        "source_line": 946,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoElectric",
+        "name_expression": "Electric Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10112,
+        "source_line": 947,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoElectric",
+        "name_expression": "Electric Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10113,
+        "source_line": 948,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoElectric",
+        "name_expression": "Electric Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10114,
+        "source_line": 949,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoElectric",
+        "name_expression": "Electric Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10115,
+        "source_line": 950,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoElectric",
+        "name_expression": "Electric Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11111,
+        "source_line": 953,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoFlux",
+        "name_expression": "Flux Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11112,
+        "source_line": 954,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoFlux",
+        "name_expression": "Flux Dynamo (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11113,
+        "source_line": 955,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoFlux",
+        "name_expression": "Flux Dynamo (",
+        "binding": "added",
+        "path": "flux_dynamo_hv"
+      },
+      {
+        "source_id": 11114,
+        "source_line": 956,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoFlux",
+        "name_expression": "Flux Dynamo (",
+        "binding": "added",
+        "path": "flux_dynamo_ev"
+      },
+      {
+        "source_id": 11115,
+        "source_line": 957,
+        "group": "Dynamos",
+        "source_class": "MultiTileEntityDynamoFlux",
+        "name_expression": "Flux Dynamo (",
+        "binding": "added",
+        "path": "flux_dynamo_iv"
+      },
+      {
+        "source_id": 10121,
+        "source_line": 962,
+        "group": "Quantum Energizers",
+        "source_class": "MultiTileEntityQuantumEnergizerLaser",
+        "name_expression": "Quantum Energizer (T1)",
+        "binding": "existing_separate_registration",
+        "path": "quantum_energizer_ev"
+      },
+      {
+        "source_id": 10122,
+        "source_line": 963,
+        "group": "Quantum Energizers",
+        "source_class": "MultiTileEntityQuantumEnergizerLaser",
+        "name_expression": "Quantum Energizer (T2)",
+        "binding": "existing_separate_registration",
+        "path": "quantum_energizer_iv"
+      },
+      {
+        "source_id": 10123,
+        "source_line": 964,
+        "group": "Quantum Energizers",
+        "source_class": "MultiTileEntityQuantumEnergizerLaser",
+        "name_expression": "Quantum Energizer (T3)",
+        "binding": "existing_separate_registration",
+        "path": "quantum_energizer_luv"
+      },
+      {
+        "source_id": 10124,
+        "source_line": 965,
+        "group": "Quantum Energizers",
+        "source_class": "MultiTileEntityQuantumEnergizerLaser",
+        "name_expression": "Quantum Energizer (T4)",
+        "binding": "existing_separate_registration",
+        "path": "quantum_energizer_zpm"
+      },
+      {
+        "source_id": 10125,
+        "source_line": 966,
+        "group": "Quantum Energizers",
+        "source_class": "MultiTileEntityQuantumEnergizerLaser",
+        "name_expression": "Quantum Energizer (T5)",
+        "binding": "existing_separate_registration",
+        "path": "quantum_energizer_uv"
+      },
+      {
+        "source_id": 10151,
+        "source_line": 976,
+        "group": "Laser Absorbers",
+        "source_class": "MultiTileEntityLaserAbsorberElectric",
+        "name_expression": "Laser Absorber (",
+        "binding": "existing_separate_registration",
+        "path": "laser_absorber_lv"
+      },
+      {
+        "source_id": 10152,
+        "source_line": 977,
+        "group": "Laser Absorbers",
+        "source_class": "MultiTileEntityLaserAbsorberElectric",
+        "name_expression": "Laser Absorber (",
+        "binding": "existing_separate_registration",
+        "path": "laser_absorber_mv"
+      },
+      {
+        "source_id": 10153,
+        "source_line": 978,
+        "group": "Laser Absorbers",
+        "source_class": "MultiTileEntityLaserAbsorberElectric",
+        "name_expression": "Laser Absorber (",
+        "binding": "existing_separate_registration",
+        "path": "laser_absorber_hv"
+      },
+      {
+        "source_id": 10154,
+        "source_line": 979,
+        "group": "Laser Absorbers",
+        "source_class": "MultiTileEntityLaserAbsorberElectric",
+        "name_expression": "Laser Absorber (",
+        "binding": "existing_separate_registration",
+        "path": "laser_absorber_ev"
+      },
+      {
+        "source_id": 10155,
+        "source_line": 980,
+        "group": "Laser Absorbers",
+        "source_class": "MultiTileEntityLaserAbsorberElectric",
+        "name_expression": "Laser Absorber (",
+        "binding": "existing_separate_registration",
+        "path": "laser_absorber_iv"
+      },
+      {
+        "source_id": 10161,
+        "source_line": 985,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerElectric",
+        "name_expression": "Thermoelectric Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10162,
+        "source_line": 986,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerElectric",
+        "name_expression": "Thermoelectric Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10163,
+        "source_line": 987,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerElectric",
+        "name_expression": "Thermoelectric Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10164,
+        "source_line": 988,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerElectric",
+        "name_expression": "Thermoelectric Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 10165,
+        "source_line": 989,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerElectric",
+        "name_expression": "Thermoelectric Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11161,
+        "source_line": 992,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerFlux",
+        "name_expression": "Thermofluxic Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11162,
+        "source_line": 993,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerFlux",
+        "name_expression": "Thermofluxic Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11163,
+        "source_line": 994,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerFlux",
+        "name_expression": "Thermofluxic Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11164,
+        "source_line": 995,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerFlux",
+        "name_expression": "Thermofluxic Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11165,
+        "source_line": 996,
+        "group": "Coolers",
+        "source_class": "MultiTileEntityCoolerFlux",
+        "name_expression": "Thermofluxic Cooler (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 11170,
+        "source_line": 1000,
+        "group": "ZPM",
+        "source_class": "MultiTileEntityZPMDechargerQU",
+        "name_expression": "ZPM Decharger (Quantum)",
+        "binding": "existing_separate_registration",
+        "path": "zpm_discharger_advanced"
+      },
+      {
+        "source_id": 11171,
+        "source_line": 1001,
+        "group": "ZPM",
+        "source_class": "MultiTileEntityZPMDechargerEU",
+        "name_expression": "ZPM Decharger (Electric)",
+        "binding": "existing_separate_registration",
+        "path": "zpm_discharger_basic"
+      },
+      {
+        "source_id": 10180,
+        "source_line": 1005,
+        "group": "Magical Energy Production",
+        "source_class": "MultiTileEntityMagicFieldAbsorber",
+        "name_expression": "Magic Field Absorber",
+        "binding": "unmatched",
+        "path": null
+      },
+      {
+        "source_id": 14999,
+        "source_line": 1103,
+        "group": "ZPM",
+        "source_class": "MultiTileEntityZPM",
+        "name_expression": "Zero-Point-Module (ZPM)",
+        "binding": "existing_separate_registration",
+        "path": "zpm"
+      },
+      {
+        "source_id": 15001,
+        "source_line": 1108,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolHammer",
+        "name_expression": "Automatic Hammer (",
+        "binding": "existing_separate_registration",
+        "path": "auto_hammer_steel"
+      },
+      {
+        "source_id": 15002,
+        "source_line": 1109,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolHammer",
+        "name_expression": "Automatic Hammer (",
+        "binding": "existing_separate_registration",
+        "path": "auto_hammer_aluminium"
+      },
+      {
+        "source_id": 15003,
+        "source_line": 1110,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolHammer",
+        "name_expression": "Automatic Hammer (",
+        "binding": "existing_separate_registration",
+        "path": "auto_hammer_titanium"
+      },
+      {
+        "source_id": 15004,
+        "source_line": 1111,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolHammer",
+        "name_expression": "Automatic Hammer (",
+        "binding": "existing_separate_registration",
+        "path": "auto_hammer_tungsten"
+      },
+      {
+        "source_id": 15010,
+        "source_line": 1114,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_steel"
+      },
+      {
+        "source_id": 15011,
+        "source_line": 1115,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_aluminium"
+      },
+      {
+        "source_id": 15012,
+        "source_line": 1116,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_stainless"
+      },
+      {
+        "source_id": 15013,
+        "source_line": 1117,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_titanium"
+      },
+      {
+        "source_id": 15014,
+        "source_line": 1118,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_tungsten"
+      },
+      {
+        "source_id": 15015,
+        "source_line": 1119,
+        "group": "Automatic Tools",
+        "source_class": "MultiTileEntityAutoToolIgniter",
+        "name_expression": "Automatic Igniter (",
+        "binding": "existing_separate_registration",
+        "path": "auto_igniter_ultimet"
+      },
+      {
+        "source_id": 16001,
+        "source_line": 1125,
+        "group": "Pumps",
+        "source_class": "MultiTileEntityPump",
+        "name_expression": "Rotational Pump (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 16002,
+        "source_line": 1126,
+        "group": "Pumps",
+        "source_class": "MultiTileEntityPump",
+        "name_expression": "Rotational Pump (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 16003,
+        "source_line": 1127,
+        "group": "Pumps",
+        "source_class": "MultiTileEntityPump",
+        "name_expression": "Rotational Pump (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 16004,
+        "source_line": 1128,
+        "group": "Pumps",
+        "source_class": "MultiTileEntityPump",
+        "name_expression": "Rotational Pump (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 19000,
+        "source_line": 1132,
+        "group": "Computing",
+        "source_class": "MultiTileEntityUSBSwitch",
+        "name_expression": "USB Switch",
+        "binding": "existing_separate_registration",
+        "path": "usb_switch"
+      },
+      {
+        "source_id": 19001,
+        "source_line": 1133,
+        "group": "Computing",
+        "source_class": "MultiTileEntityHDDSwitch",
+        "name_expression": "HDD Switch",
+        "binding": "existing_separate_registration",
+        "path": "hdd_switch"
+      },
+      {
+        "source_id": 20001,
+        "source_line": 1288,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20002,
+        "source_line": 1289,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20003,
+        "source_line": 1290,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20004,
+        "source_line": 1291,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20011,
+        "source_line": 1294,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Shredder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20012,
+        "source_line": 1295,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Shredder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20013,
+        "source_line": 1296,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Shredder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20014,
+        "source_line": 1297,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Shredder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20021,
+        "source_line": 1300,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crusher (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20022,
+        "source_line": 1301,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crusher (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20023,
+        "source_line": 1302,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crusher (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20024,
+        "source_line": 1303,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crusher (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20041,
+        "source_line": 1306,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Lathe (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20042,
+        "source_line": 1307,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Lathe (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20043,
+        "source_line": 1308,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Lathe (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20044,
+        "source_line": 1309,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Lathe (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20051,
+        "source_line": 1312,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20052,
+        "source_line": 1313,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20053,
+        "source_line": 1314,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20054,
+        "source_line": 1315,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20061,
+        "source_line": 1318,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Buzzsaw (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20062,
+        "source_line": 1319,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Buzzsaw (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20063,
+        "source_line": 1320,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Buzzsaw (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20064,
+        "source_line": 1321,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Buzzsaw (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20071,
+        "source_line": 1324,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Squeezer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20072,
+        "source_line": 1325,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Squeezer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20073,
+        "source_line": 1326,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Squeezer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20074,
+        "source_line": 1327,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Squeezer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20081,
+        "source_line": 1330,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Centrifuge (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20082,
+        "source_line": 1331,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Centrifuge (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20083,
+        "source_line": 1332,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Centrifuge (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20084,
+        "source_line": 1333,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Centrifuge (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20091,
+        "source_line": 1336,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electrolyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20092,
+        "source_line": 1337,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electrolyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20093,
+        "source_line": 1338,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electrolyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20094,
+        "source_line": 1339,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electrolyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20095,
+        "source_line": 1340,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electrolyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20101,
+        "source_line": 1343,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Compressor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20102,
+        "source_line": 1344,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Compressor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20103,
+        "source_line": 1345,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Compressor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20104,
+        "source_line": 1346,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Compressor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20111,
+        "source_line": 1349,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Rolling Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20112,
+        "source_line": 1350,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Rolling Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20113,
+        "source_line": 1351,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Rolling Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20114,
+        "source_line": 1352,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Rolling Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20121,
+        "source_line": 1355,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Bender (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20122,
+        "source_line": 1356,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Bender (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20123,
+        "source_line": 1357,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Bender (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20124,
+        "source_line": 1358,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Bender (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20131,
+        "source_line": 1361,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Former (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20132,
+        "source_line": 1362,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Former (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20133,
+        "source_line": 1363,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Former (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20134,
+        "source_line": 1364,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roll Former (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20141,
+        "source_line": 1367,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cluster Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20142,
+        "source_line": 1368,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cluster Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20143,
+        "source_line": 1369,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cluster Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20144,
+        "source_line": 1370,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cluster Mill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20151,
+        "source_line": 1373,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Wiremill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20152,
+        "source_line": 1374,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Wiremill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20153,
+        "source_line": 1375,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Wiremill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20154,
+        "source_line": 1376,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Wiremill (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20161,
+        "source_line": 1379,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Canning Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20162,
+        "source_line": 1380,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Canning Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20163,
+        "source_line": 1381,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Canning Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20164,
+        "source_line": 1382,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Canning Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20165,
+        "source_line": 1383,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Canning Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20171,
+        "source_line": 1386,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roasting Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20172,
+        "source_line": 1387,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roasting Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20173,
+        "source_line": 1388,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roasting Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20174,
+        "source_line": 1389,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Roasting Oven (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20181,
+        "source_line": 1392,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20182,
+        "source_line": 1393,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20183,
+        "source_line": 1394,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20184,
+        "source_line": 1395,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20191,
+        "source_line": 1398,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Distillery (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20192,
+        "source_line": 1399,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Distillery (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20193,
+        "source_line": 1400,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Distillery (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20194,
+        "source_line": 1401,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Distillery (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20201,
+        "source_line": 1406,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Low Heat Extruder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20202,
+        "source_line": 1407,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Extruder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20203,
+        "source_line": 1408,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Extruder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20204,
+        "source_line": 1409,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Extruder (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20211,
+        "source_line": 1412,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20212,
+        "source_line": 1413,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20213,
+        "source_line": 1414,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20214,
+        "source_line": 1415,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20221,
+        "source_line": 1418,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Polarizer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20222,
+        "source_line": 1419,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Polarizer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20223,
+        "source_line": 1420,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Polarizer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20224,
+        "source_line": 1421,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Polarizer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20225,
+        "source_line": 1422,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Polarizer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20231,
+        "source_line": 1425,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Press (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20232,
+        "source_line": 1426,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Press (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20233,
+        "source_line": 1427,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Press (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20234,
+        "source_line": 1428,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Press (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20241,
+        "source_line": 1431,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Smelter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20242,
+        "source_line": 1432,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Smelter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20243,
+        "source_line": 1433,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Smelter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20244,
+        "source_line": 1434,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Smelter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20251,
+        "source_line": 1437,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crystallisation Crucible (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20252,
+        "source_line": 1438,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crystallisation Crucible (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20253,
+        "source_line": 1439,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crystallisation Crucible (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20254,
+        "source_line": 1440,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Crystallisation Crucible (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20261,
+        "source_line": 1443,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Injector (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20262,
+        "source_line": 1444,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Injector (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20263,
+        "source_line": 1445,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Injector (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20264,
+        "source_line": 1446,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Injector (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20265,
+        "source_line": 1447,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Injector (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20271,
+        "source_line": 1450,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Printer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20272,
+        "source_line": 1451,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Printer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20273,
+        "source_line": 1452,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Printer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20274,
+        "source_line": 1453,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Printer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20275,
+        "source_line": 1454,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Printer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20281,
+        "source_line": 1457,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Scanner (Visuals, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20282,
+        "source_line": 1458,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Scanner (Visuals, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20283,
+        "source_line": 1459,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Scanner (Visuals, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20284,
+        "source_line": 1460,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Scanner (Visuals, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20285,
+        "source_line": 1461,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Scanner (Visuals, ",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20291,
+        "source_line": 1464,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sluice (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20292,
+        "source_line": 1465,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sluice (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20293,
+        "source_line": 1466,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sluice (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20294,
+        "source_line": 1467,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sluice (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20301,
+        "source_line": 1470,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Magnetic Separator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20302,
+        "source_line": 1471,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Magnetic Separator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20303,
+        "source_line": 1472,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Magnetic Separator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20304,
+        "source_line": 1473,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Magnetic Separator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20305,
+        "source_line": 1474,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Magnetic Separator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20311,
+        "source_line": 1477,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Dryer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20312,
+        "source_line": 1478,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Dryer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20313,
+        "source_line": 1479,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Dryer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20314,
+        "source_line": 1480,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Dryer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20321,
+        "source_line": 1483,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Engraver (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20322,
+        "source_line": 1484,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Engraver (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20323,
+        "source_line": 1485,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Engraver (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20324,
+        "source_line": 1486,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Engraver (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20325,
+        "source_line": 1487,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Engraver (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20331,
+        "source_line": 1490,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Welder (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20332,
+        "source_line": 1491,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Welder (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20333,
+        "source_line": 1492,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Welder (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20334,
+        "source_line": 1493,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Welder (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20335,
+        "source_line": 1494,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laser Welder (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20341,
+        "source_line": 1497,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Autocrafter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20342,
+        "source_line": 1498,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Autocrafter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20343,
+        "source_line": 1499,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Autocrafter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20344,
+        "source_line": 1500,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Autocrafter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20345,
+        "source_line": 1501,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Autocrafter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20351,
+        "source_line": 1504,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20352,
+        "source_line": 1505,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20353,
+        "source_line": 1506,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20354,
+        "source_line": 1507,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20355,
+        "source_line": 1508,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20361,
+        "source_line": 1511,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20362,
+        "source_line": 1512,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20363,
+        "source_line": 1513,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20364,
+        "source_line": 1514,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20365,
+        "source_line": 1515,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Loom (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20371,
+        "source_line": 1518,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20372,
+        "source_line": 1519,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20373,
+        "source_line": 1520,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20374,
+        "source_line": 1521,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20375,
+        "source_line": 1522,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Electric Sifter (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20381,
+        "source_line": 1525,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Slicer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20382,
+        "source_line": 1526,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Slicer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20383,
+        "source_line": 1527,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Slicer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20384,
+        "source_line": 1528,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Slicer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20385,
+        "source_line": 1529,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Slicer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20391,
+        "source_line": 1532,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laminator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20392,
+        "source_line": 1533,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laminator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20393,
+        "source_line": 1534,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laminator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20394,
+        "source_line": 1535,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Laminator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20411,
+        "source_line": 1542,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Fabricator (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20412,
+        "source_line": 1543,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Fabricator (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20413,
+        "source_line": 1544,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Fabricator (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20414,
+        "source_line": 1545,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Fabricator (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20415,
+        "source_line": 1546,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Fabricator (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20423,
+        "source_line": 1551,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Molecular Scanner (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20431,
+        "source_line": 1556,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Replicator (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20432,
+        "source_line": 1557,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Replicator (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20433,
+        "source_line": 1558,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Replicator (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20434,
+        "source_line": 1559,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Replicator (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20435,
+        "source_line": 1560,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Matter Replicator (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20441,
+        "source_line": 1563,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Nanoscale Fabricator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20442,
+        "source_line": 1564,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Nanoscale Fabricator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20443,
+        "source_line": 1565,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Nanoscale Fabricator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20444,
+        "source_line": 1566,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Nanoscale Fabricator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20445,
+        "source_line": 1567,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Nanoscale Fabricator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20481,
+        "source_line": 1570,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Catalytic Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20482,
+        "source_line": 1571,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Catalytic Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20483,
+        "source_line": 1572,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Catalytic Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20484,
+        "source_line": 1573,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Catalytic Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20491,
+        "source_line": 1576,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Steam Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20492,
+        "source_line": 1577,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Steam Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20493,
+        "source_line": 1578,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Steam Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20494,
+        "source_line": 1579,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Steam Cracker (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20501,
+        "source_line": 1582,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Lightning Processor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20502,
+        "source_line": 1583,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Lightning Processor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20503,
+        "source_line": 1584,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Lightning Processor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20504,
+        "source_line": 1585,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Lightning Processor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20505,
+        "source_line": 1586,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Lightning Processor (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20511,
+        "source_line": 1589,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sanding Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20512,
+        "source_line": 1590,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sanding Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20513,
+        "source_line": 1591,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sanding Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20514,
+        "source_line": 1592,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Sanding Machine (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20521,
+        "source_line": 1595,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Burner Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20522,
+        "source_line": 1596,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Burner Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20523,
+        "source_line": 1597,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Burner Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20524,
+        "source_line": 1598,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Burner Mixer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20531,
+        "source_line": 1601,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Plantalyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20532,
+        "source_line": 1602,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Plantalyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20533,
+        "source_line": 1603,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Plantalyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20534,
+        "source_line": 1604,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Plantalyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20535,
+        "source_line": 1605,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Plantalyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20541,
+        "source_line": 1608,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Bumblelyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20542,
+        "source_line": 1609,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Bumblelyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20543,
+        "source_line": 1610,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Bumblelyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20544,
+        "source_line": 1611,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Bumblelyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20545,
+        "source_line": 1612,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Bumblelyzer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20551,
+        "source_line": 1615,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Pressure Washer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20552,
+        "source_line": 1616,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Pressure Washer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20553,
+        "source_line": 1617,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Pressure Washer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20554,
+        "source_line": 1618,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Pressure Washer (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20561,
+        "source_line": 1621,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Freezer (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20562,
+        "source_line": 1622,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Freezer (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20563,
+        "source_line": 1623,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Freezer (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20564,
+        "source_line": 1624,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Freezer (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20565,
+        "source_line": 1625,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Freezer (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20571,
+        "source_line": 1628,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cryo Mixer (T1)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20572,
+        "source_line": 1629,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cryo Mixer (T2)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20573,
+        "source_line": 1630,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cryo Mixer (T3)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20574,
+        "source_line": 1631,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cryo Mixer (T4)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20575,
+        "source_line": 1632,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Cryo Mixer (T5)",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20581,
+        "source_line": 1635,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Boxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20582,
+        "source_line": 1636,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Boxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20583,
+        "source_line": 1637,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Boxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20584,
+        "source_line": 1638,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Boxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20585,
+        "source_line": 1639,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Boxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20591,
+        "source_line": 1642,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Unboxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20592,
+        "source_line": 1643,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Unboxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20593,
+        "source_line": 1644,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Unboxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20594,
+        "source_line": 1645,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Unboxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 20595,
+        "source_line": 1646,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachineElectric",
+        "name_expression": "Unboxinator (",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22000,
+        "source_line": 1651,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Coagulator",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22001,
+        "source_line": 1652,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Generifier",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22002,
+        "source_line": 1653,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Bath",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22003,
+        "source_line": 1654,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Fermenter",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22004,
+        "source_line": 1655,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Autoclave",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      },
+      {
+        "source_id": 22010,
+        "source_line": 1657,
+        "group": "Basic Machines",
+        "source_class": "MultiTileEntityBasicMachine",
+        "name_expression": "Melter",
+        "binding": "existing_harvest_mapping",
+        "path": null
+      }
+    ]
+  },
+  "verification": {
+    "final_build_success": true,
+    "passed_required_tests": [
+      "6"
+    ],
+    "final_log": {
+      "path": "C:\\Dev\\GregTech6\\work\\gameplay-feedback-20261020\\final-run.log",
+      "sha256": "17e1e6b270bb762aab44ed77c2bdcf449eefe6300e9b543cc7319d22c3e11e72"
+    },
+    "previous_four_scenes_passed": true,
+    "survival_generator_rows": 220,
+    "full_suite": false,
+    "client_visuals": false,
+    "normal_dedicated_server": false,
+    "old_world": false,
+    "saved_restart": false,
+    "distribution_delivery": false,
+    "pushed": false,
+    "paired_new_lang_keys": 23,
+    "source_bound_new_device_names": 14,
+    "valid_added_model_references": 380,
+    "valid_added_texture_references": 280,
+    "final_duration": "6m01s"
+  },
+  "steam_case": {
+    "user_report": "192 L/t steam boiler",
+    "original_boiler_high_pressure_threshold": ">75%",
+    "high_pressure_offer": 384,
+    "invar_turbine_maximum": 192,
+    "bronze_turbine_maximum": 96,
+    "limit": "Condition demonstrated, not an asserted reproduction of the exact user world."
+  }
+}

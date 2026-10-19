@@ -54,17 +54,7 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
         super.onRemove(state, level, pos, next, moving);
     }
     @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
-        var stack=new net.minecraft.world.item.ItemStack(this);
-        if(builder.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof ProcessingToolBlockEntity tool) {
-//? if >=1.21.1 {
-            /*var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tool,tool.saveWithId(builder.getLevel().registryAccess())); data.remove("gt.items");
-            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tool,tool.saveWithoutMetadata()); data.remove("gt.items");
-            stack.getOrCreateTag().put("BlockEntityTag",data);
-//?}
-        }
-        return java.util.List.of(stack);
+        return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
     }
 //? if >=1.21.1 {
     /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {

@@ -22,7 +22,7 @@ public enum ConstructionNameJadeProvider implements IBlockComponentProvider {
         var state = accessor.getBlockState();
         if (!state.hasProperty(ConcreteBlock.COLOR)) return;
         var name = Component.translatable(accessor.getBlock().getDescriptionId() + "."
-                + state.getValue(ConcreteBlock.COLOR).getName());
+                + state.getValue(ConcreteBlock.COLOR).getName()).withStyle(net.minecraft.ChatFormatting.WHITE);
         tooltip.remove(CORE_OBJECT_NAME);
         tooltip.add(0, name, CORE_OBJECT_NAME);
     }

@@ -28,7 +28,16 @@ import java.util.List;
 //?}
 
 /** Draws a behavior machine from its declaration and the addon's GUI sheet. */
-public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachineMenu> {
+public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachineMenu> implements FluidRecipeScreen {
+    @Override public FluidStack fluidAt(int mouseX, int mouseY) {
+        for (int i = 0; i < declaration.fluids().size(); i++) {
+            var tank = declaration.fluids().get(i);
+            if (mouseX >= leftPos + tank.x() && mouseX < leftPos + tank.x() + BehaviorMachineDeclaration.TANK_WIDTH
+                    && mouseY >= topPos + tank.y() && mouseY < topPos + tank.y() + BehaviorMachineDeclaration.TANK_HEIGHT)
+                return menu.tankFluid(i).copy();
+        }
+        return FluidStack.EMPTY;
+    }
     private final ResourceLocation texture;
     private final BehaviorMachineDeclaration declaration;
     private final List<Hover> hovers = new ArrayList<>();

@@ -13,6 +13,16 @@ public final class OriginalMachineMaterialData {
     private static final Map<String, ItemComposition> DATA       = new HashMap<>();
     private static final Map<String, ItemComposition> BLOCK_DATA = new HashMap<>();
     static { init0(); init1(); init2(); init3(); initLargeRecipe(); blocks0(); blocks1(); blocks2(); blocks3(); }
+    static { for (var spec : com.gregtech.gregtech.content.energy.HeatExchangerCatalog.ALL) BLOCK_DATA.put(spec.id(), spec.composition()); }
+    static {
+        for (var tier : com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.subList(2, 5))
+            for (String family : List.of("motor", "dynamo")) {
+                var original = BLOCK_DATA.get("electric_" + family + "_" + tier.tier());
+                var parts = new ArrayList<MaterialComponent>(original.components());
+                parts.add(MaterialComponent.of(tier.material(), 8 * GTValues.U));
+                BLOCK_DATA.put("flux_" + family + "_" + tier.tier(), new ItemComposition(null, parts, "GT6 original RF rotary conversion CR.REV", true));
+            }
+    }
     public static Optional<ItemComposition> find(String machine, int tier) {
         return Optional.ofNullable(DATA.get(machine + "/" + tier));
     }

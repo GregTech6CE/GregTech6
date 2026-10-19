@@ -73,6 +73,18 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     protected ItemStackHandler inventory;
     protected FluidTankGT fuelTank;
     @Nullable protected ItemStack pendingAsh;
+//? if >=1.21.1 {
+    /*private final net.neoforged.neoforge.items.IItemHandler automation = new net.neoforged.neoforge.items.IItemHandler() {
+*///?} else {
+    private final net.minecraftforge.items.IItemHandler automation = new net.minecraftforge.items.IItemHandler() {
+//?}
+        public int getSlots() { return inventory == null ? 0 : inventory.getSlots(); }
+        public ItemStack getStackInSlot(int slot) { return inventory.getStackInSlot(slot); }
+        public int getSlotLimit(int slot) { return inventory.getSlotLimit(slot); }
+        public boolean isItemValid(int slot, ItemStack stack) { return slot == 0 && recipeMap != null && recipeMap.containsInput(stack); }
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) { return isItemValid(slot, stack) ? inventory.insertItem(slot, stack, simulate) : stack; }
+        public ItemStack extractItem(int slot, int count, boolean simulate) { return slot == 1 ? inventory.extractItem(slot, count, simulate) : ItemStack.EMPTY; }
+    };
 
     public BurningBoxBlockEntity(BlockPos pos, BlockState state) {
         super(com.gregtech.gregtech.registry.GTBlockEntities.BURNING_BOX.get(), pos, state, specFrom(state));
@@ -182,7 +194,8 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     }
 
     private boolean tryConsumeFluidBedFuel() {
-        if (!canStoreAsh()) return false;
+        flushPendingAsh();
+        if (pendingAsh != null && !pendingAsh.isEmpty()) return false;
         ItemStack fuel = inventory.getStackInSlot(0);
         if (fuel.isEmpty() || fuelTank == null || fuelTank.isEmpty()) return false;
         FluidStack tankFluid = fuelTank.getFluid();
@@ -191,13 +204,14 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         List<FluidStack> fluids = List.of(tankFluid);
         Recipe recipe = recipeMap.findRecipe(items, fluids, false, 1, 1);
         if (recipe == null) return false;
+        if (recipe.mOutputs.length > 0 && !canStoreAsh(recipe.mOutputs[0])) return false;
         long eut = Math.abs(recipe.mEUt);
         if (eut == 0) return false;
         // Consume inputs
         for (FluidStack fluidIn : recipe.mFluidInputs) {
             fuelTank.remove(fluidIn.getAmount());
         }
-        inventory.extractItem(0, 1, false);
+        inventory.extractItem(0, recipe.mInputs[0].getCount(), false);
         energy += BurningBoxFuelRules.recipeHeat(eut, recipe.mDuration, spec.efficiency());
         // Queue ash from first output
         ItemStack[] outputs = recipe.mOutputs;
@@ -398,7 +412,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
     // ── Capabilities ─────────────────────────────────────────────────────────
 
 //? if >=1.21.1 {
-    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(@Nullable Direction side){return inventory != null && side != getFrontFacing() ? inventory : null;}
+    /*public net.neoforged.neoforge.items.IItemHandler itemCapability(@Nullable Direction side){return !isRemoved() && inventory != null && side != getFrontFacing() ? automation : null;}
     public net.neoforged.neoforge.fluids.capability.IFluidHandler fluidCapability(@Nullable Direction side){return fuelTank;}
 *///?} else {
     @Override
@@ -406,7 +420,7 @@ public class BurningBoxBlockEntity extends GTFacingMachineBlockEntity implements
         // Both sinks are side-independent, so one cached LazyOptional each (memory audit: this used to
         // allocate a new handle on every query, i.e. one object per neighbouring machine per tick).
         if (cap == ForgeCapabilities.ITEM_HANDLER && inventory != null && side != getFrontFacing()) {
-            if (itemCap == null) itemCap = LazyOptional.of(() -> inventory);
+            if (itemCap == null) itemCap = LazyOptional.of(() -> automation);
             return itemCap.cast();
         }
         if (cap == ForgeCapabilities.FLUID_HANDLER && fuelTank != null) {

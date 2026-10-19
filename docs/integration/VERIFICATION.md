@@ -1,5 +1,11 @@
 # 验证账本
 
+## 2026-10-20 / 单方块热交换器与定向玩法反馈
+
+Forge 1.20.1、NeoForge 1.21.1 最终编译通过；六个 NeoForge 隔离场景全部通过（6m01s）。覆盖八种热交换器的能力／真实配方与热流体产物、箱子连接筛粉漏斗、熔炉焦煤块热值、额定蒸汽供能、192 L/t 锅炉高压实际输出 384 L/t、蒸汽引擎空载消耗及满压力停机排汽。
+
+另核对 220 条生存配方生成、23 个新增双语键、14 个设备名称与原版汉化补丁逐字对应，以及新增资源的 380 个模型和 280 个贴图引用。没有完整测试集或发行包，没有客户端画面、旧存档／独立重启验收；全面核查保持暂停。见 [说明](verification/gameplay-and-single-machines-20261020.md) 和 [来源及结果](verification/gameplay-and-single-machines-20261020.json)。
+
 ## 2026-10-19 / 用户请求的双版成品
 
 源码 11f0f6b15，运行 Forge distributionJar 与 NeoForge jar，BUILD SUCCESSFUL in 6m37s。受限环境首试无法加载 Gradle 原生库，正常权限重试成功，首试日志保留。交付副本与输出 SHA-256 一致，完整 ZIP CRC 通过；未游戏、完整测试或继续功能检查，见 [回执](verification/audit-pause-build-20261019.json)。

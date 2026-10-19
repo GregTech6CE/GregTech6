@@ -83,9 +83,9 @@ public final class ComponentCoverFallback {
         if(!uses(owner))return;
         var storage=((FallbackCoverHost)owner).gregtechComponentStorage(false);
 //? if >=1.21.1 {
-        /*if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag,lookup);}
+        /*if(storage!=null && storage.hasCovers()){tag.putBoolean("gt.component_covers",true);storage.save(tag,lookup);}
 *///?} else {
-        if(storage!=null){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
+        if(storage!=null && storage.hasCovers()){tag.putBoolean("gt.component_covers",true);storage.save(tag);}
 //?}
     }
     /** Harvested GT block items retain the native attachment data. */

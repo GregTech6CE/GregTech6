@@ -74,7 +74,7 @@ public final class MaterialTooltips {
                     .withStyle(ChatFormatting.BLUE));
         }
 
-        appendFuelTooltip(mat, prefix, prefix != null ? prefix.getMaterialWeight() : GTValues.U, tooltip);
+        appendFuelValue(FurnaceFuelValue.getBurnValue(stack), tooltip);
         appendFlammableTooltip(mat, tooltip);
 
         String chemical = mat.getResolvedTooltipChemical();
@@ -346,7 +346,10 @@ public final class MaterialTooltips {
 
     public static void appendFuelTooltip(GTMaterial material, @Nullable MaterialPrefix prefix, long amount,
                                          List<Component> tooltip) {
-        long burnValue = FurnaceFuelValue.getBurnValue(material, prefix, amount);
+        appendFuelValue(FurnaceFuelValue.getBurnValue(material, prefix, amount), tooltip);
+    }
+
+    private static void appendFuelValue(long burnValue, List<Component> tooltip) {
         if (burnValue <= 0) {
             return;
         }

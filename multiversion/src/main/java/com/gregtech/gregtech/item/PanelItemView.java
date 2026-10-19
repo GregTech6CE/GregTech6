@@ -4,4 +4,10 @@ package com.gregtech.gregtech.item;
 /** Native item boundary to the shared original panel identity. */
 public interface PanelItemView {
     com.gregtech.gregtech.content.transport.PanelCatalog.Spec panelSpec();
+    default net.minecraft.network.chat.Component coloredPanelName() {
+        var spec = panelSpec();
+        var base = net.minecraft.network.chat.Component.translatable("block.gt6ce.panel_" + spec.kind());
+        return spec.color().isEmpty() ? base : net.minecraft.network.chat.Component.translatable(
+                "item.gt6ce.colored_panel", net.minecraft.network.chat.Component.translatable("color.minecraft." + spec.color()), base);
+    }
 }

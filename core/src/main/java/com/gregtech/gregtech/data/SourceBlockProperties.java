@@ -15,7 +15,14 @@ public final class SourceBlockProperties {
     }
     private static final Map<String, Params> BLOCKS = new LinkedHashMap<>(), BASICS = new LinkedHashMap<>();
     static { blocks0(); blocks1(); blocks2(); blocks3(); basics0(); basics1(); basics2(); basics3(); basicsLargeRecipe();
+        for (int i = 0; i < com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.size(); i++) {
+            var tier = com.gregtech.gregtech.content.energy.FluxRotaryCatalog.TIERS.get(i);
+            BLOCKS.put("flux_motor_" + tier.tier(), new Params(11021 + i, "wrench", tier.material(), -1, false));
+            BLOCKS.put("flux_dynamo_" + tier.tier(), new Params(11111 + i, "wrench", tier.material(), -1, false));
+        }
         BLOCKS.putAll(com.gregtech.gregtech.content.machine.OriginalStorageMaterialData.harvest());
+        for (var spec : com.gregtech.gregtech.content.energy.HeatExchangerCatalog.ALL)
+            BLOCKS.put(spec.id(), new Params(spec.sourceId(), "wrench", spec.material(), -1, false));
         // Original metalset lines145..146 pass explicit metadata0, even for high-tier metals.
         for (var entry : HopperCatalog.ALL) {
             String suffix = entry.spec().id().substring(entry.queue() ? "queue_hopper_".length() : "hopper_".length());

@@ -1,0 +1,97 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "gt6ce:block/machines/generators/hot_fluid/colored/left",
+    "0top": "gt6ce:block/machines/generators/hot_fluid/colored/top",
+    "0front": "gt6ce:block/machines/generators/hot_fluid/colored/front",
+    "0left": "gt6ce:block/machines/generators/hot_fluid/colored/left",
+    "1top": "gt6ce:block/machines/generators/hot_fluid/overlay/top",
+    "1front": "gt6ce:block/machines/generators/hot_fluid/overlay/front",
+    "1left": "gt6ce:block/machines/generators/hot_fluid/overlay/left"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#0top",
+          "cullface": "up",
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#0front",
+          "cullface": "down",
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#0left",
+          "cullface": "north",
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#0left",
+          "cullface": "south",
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#0left",
+          "cullface": "east",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#0left",
+          "cullface": "west",
+          "tintindex": 0
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#1top",
+          "cullface": "up"
+        },
+        "down": {
+          "texture": "#1front",
+          "cullface": "down"
+        },
+        "north": {
+          "texture": "#1left",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#1left",
+          "cullface": "south"
+        },
+        "east": {
+          "texture": "#1left",
+          "cullface": "east"
+        },
+        "west": {
+          "texture": "#1left",
+          "cullface": "west"
+        }
+      }
+    }
+  ]
+}

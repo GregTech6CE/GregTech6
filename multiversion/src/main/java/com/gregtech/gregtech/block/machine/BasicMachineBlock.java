@@ -677,39 +677,7 @@ public class BasicMachineBlock extends GTFacingMachineBlock implements EntityBlo
     }
 
     @Override protected ItemStack createMachineDrop(BlockState state, BlockEntity entity) {
-
-        var stack=createMachineDrop(state);
-
-        if(entity instanceof BasicMachineBlockEntity machine) {
-
-
-
-//? if >=1.21.1 {
-/*            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata(machine.getLevel().registryAccess()));
-
-            data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(machine.getType()).toString());
-*///?} else {
-            var data=com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(machine,machine.saveWithoutMetadata());
-//?}
-
-
-
-            data.remove("gt.inventory");
-
-
-
-//? if >=1.21.1 {
-/*            stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));
-*///?} else {
-            stack.getOrCreateTag().put("BlockEntityTag",data);
-//?}
-
-
-
-        }
-
-        return stack;
-
+        return createMachineDrop(state);
     }
 
     @Override public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
