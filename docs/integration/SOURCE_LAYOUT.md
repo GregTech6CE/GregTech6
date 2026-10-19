@@ -97,3 +97,7 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 ## 旋转变速器与可调齿轮箱入口
 
 `content/energy/GearboxCatalog` 保存十三种材料及两类设备的额定目录；`GearboxRotationRules` 是可调齿轮箱的齿轮啮合／方向纯函数。两者职责不同。共享 `registry/GTGearboxes` 消费目录，旋转变速器运行在 `blockentity/energy/EnergyNodeBlockEntity` 的专用分支，没有接入同目录的 OriginalRotaryConverter.State。控制差异见 [核查报告](ROTATION_TRANSFORMER_AUDIT.md)。
+
+## 长距离线路入口
+
+`content/logistics/LongDistanceCatalog` 是设备与线种目录；`LongDistanceNetwork` 负责纯扫描，`LongDistanceLink` 负责单接收端归属及目标坐标，`LongDistanceRules.loss` 负责每包损耗。实际重载／线路失效位于共享 `block/misc/LongDistanceTransformerBlockEntity`、`LongDistEndpointBlockEntity` 与 `LongDistanceTopology`，不能仅通过 core 测试断言其正确。旧 MAX_SCAN／unique／rescan helper 不是当前原生扫描／缓存策略，见 [核查](LONG_DISTANCE_ENERGY_AUDIT.md)。

@@ -21,27 +21,36 @@ package com.gregtech.gregtech.content.logistics;
 
 import java.util.*;
 
-/** Source breadth-first same-metadata scan, selecting the first correctly oriented receiver. */
+/** Breadth-first same-identity scan adapted from the original; ties follow the adapter's neighbor order. */
 public final class LongDistanceNetwork {
     private LongDistanceNetwork() {}
+
     public interface World<P, E> {
         String identity(P position);
         Iterable<P> neighbors(P position);
         E endpoint(P position);
         P front(E endpoint);
     }
+
+    /** Visited line blocks up to the selected receiver, not necessarily the complete branched network. */
     public record Connection<P, E>(E receiver, int distance, Set<P> lines) {}
+
     public static <P, E> Connection<P, E> scan(P origin, P start, String identity, World<P, E> world) {
         var queue = new ArrayDeque<P>();
         var distances = new HashMap<P, Integer>();
         var lines = new LinkedHashSet<P>();
         if (!identity.equals(world.identity(start))) return null;
-        queue.add(start); distances.put(start, 0);
+        queue.add(start);
+        distances.put(start, 0);
         while (!queue.isEmpty()) {
-            var current = queue.remove(); lines.add(current);
+            var current = queue.remove();
+            lines.add(current);
             for (var next : world.neighbors(current)) {
                 if (identity.equals(world.identity(next))) {
-                    if (!distances.containsKey(next)) { distances.put(next, distances.get(current) + 1); queue.add(next); }
+                    if (!distances.containsKey(next)) {
+                        distances.put(next, distances.get(current) + 1);
+                        queue.add(next);
+                    }
                 } else if (!origin.equals(next)) {
                     var endpoint = world.endpoint(next);
                     if (endpoint != null && lines.contains(world.front(endpoint)))
@@ -51,13 +60,16 @@ public final class LongDistanceNetwork {
         }
         return null;
     }
+
     /** UT.Code.getSideForPlayerPlacing uses 65 degrees, not vanilla nearest-axis placement. */
     public static int placement(float pitch, int horizontalOpposite) {
         return pitch >= 65 ? 1 : pitch <= -65 ? 0 : horizontalOpposite;
     }
+
     public static int activity(long history, boolean stopped, boolean unavailable) {
         return stopped ? 0 : unavailable ? 3 : history == -1L ? 1 : history == 0 ? 0 : 2;
     }
+
     /** The original retains its recent activity while stopped or waiting for a remembered target. */
     public static long nextHistory(long history, boolean active, boolean stopped, boolean unavailable) {
         return stopped || unavailable ? history : (history << 1) | (active ? 1L : 0L);

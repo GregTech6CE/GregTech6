@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-19",
+  "baseline": "10861dbbd",
+  "classification": "progress",
+  "findings": [
+    "ALIGN-070",
+    "ALIGN-071",
+    "ALIGN-072"
+  ],
+  "parity": {
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceLink.java": {
+      "code_and_literals_equal": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceNetwork.java": {
+      "code_and_literals_equal": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceRules.java": {
+      "code_and_literals_equal": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTopology.java": {
+      "code_and_literals_equal": true,
+      "both_native_projections_equal": true
+    }
+  },
+  "observations": [
+    "EXISTING_CORE_CONTRACTS|23",
+    "DEVICE|long_dist_transformer_ulv|TRANSFORMER|Chromium|-1|2048|16",
+    "DEVICE|long_dist_transformer_lv|TRANSFORMER|Titanium|-1|8192|16",
+    "DEVICE|long_dist_transformer_mv|TRANSFORMER|Iridium|-1|32768|16",
+    "DEVICE|long_dist_transformer_zpm|TRANSFORMER|Osmium|-1|131072|16",
+    "DEVICE|long_dist_transformer_uv|TRANSFORMER|Trinitanium|-1|524288|16",
+    "DEVICE|long_dist_wire_ev|WIRE|Tin|0|4096|64",
+    "DEVICE|long_dist_wire_lead|WIRE|Lead|1|4096|64",
+    "DEVICE|long_dist_wire_iv|WIRE|Copper|2|16384|64",
+    "DEVICE|long_dist_wire_luv|WIRE|Silver|3|65536|64",
+    "DEVICE|long_dist_wire_gold|WIRE|Gold|4|65536|64",
+    "DEVICE|long_dist_wire_electrum|WIRE|Electrum|5|65536|64",
+    "DEVICE|long_dist_wire_blue_alloy|WIRE|BlueAlloy|6|65536|64",
+    "DEVICE|long_dist_wire_electrotine_alloy|WIRE|ElectrotineAlloy|7|65536|64",
+    "DEVICE|long_dist_wire_zpm|WIRE|Steel|8|262144|64",
+    "DEVICE|long_dist_wire_aluminium|WIRE|Aluminium|9|262144|64",
+    "DEVICE|long_dist_wire_tungsten|WIRE|Tungsten|10|262144|64",
+    "DEVICE|long_dist_wire_tungsten_steel|WIRE|TungstenSteel|11|262144|64",
+    "DEVICE|long_dist_wire_uv|WIRE|Osmium|12|1048576|64",
+    "DEVICE|long_dist_wire_platinum|WIRE|Platinum|13|1048576|64",
+    "DEVICE|long_dist_wire_naquadah|WIRE|Naquadah|14|1048576|64",
+    "DEVICE|long_dist_wire_graphene|WIRE|Graphene|15|1048576|64",
+    "LOSS|1|64",
+    "LOSS|511|64",
+    "LOSS|512|64",
+    "LOSS|519|64",
+    "LOSS|520|65",
+    "LOSS|4096|512",
+    "LOSS|5000|625",
+    "RESTORE|known=true|target=null",
+    "REBIND|claim=true|target=receiver",
+    "RESET|known=false|receiverReceiving=false"
+  ],
+  "source_transformer_rows": [
+    "aMat = MT.DATA.Electric_T[4];   aRegistry.add(\"Long Distance Transformer Endpoint (\"      +VN[4]+\")\", \"Long Distance Transport\"             , 10064, 10060, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[4], NBT_OUTPUT, V[4], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WMW\", \"MxM\", \"WMW\", 'M', aRegistry.getItem(10044), 'W', OP.cableGt04.dat(MT.AnnealedCopper));",
+    "aMat = MT.DATA.Electric_T[5];   aRegistry.add(\"Long Distance Transformer Endpoint (\"      +VN[5]+\")\", \"Long Distance Transport\"             , 10065, 10060, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[5], NBT_OUTPUT, V[5], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WMW\", \"MxM\", \"WMW\", 'M', aRegistry.getItem(10045), 'W', OP.cableGt04.dat(MT.AnnealedCopper));",
+    "aMat = MT.DATA.Electric_T[6];   aRegistry.add(\"Long Distance Transformer Endpoint (\"+VN[6]+\")\"      , \"Long Distance Transport\"             , 10066, 10060, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[6], NBT_OUTPUT, V[6], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WMW\", \"MxM\", \"WMW\", 'M', aRegistry.getItem(10046), 'W', OP.cableGt04.dat(MT.AnnealedCopper));",
+    "aMat = MT.DATA.Electric_T[7];   aRegistry.add(\"Long Distance Transformer Endpoint (\"+VN[7]+\")\"      , \"Long Distance Transport\"             , 10067, 10060, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[7], NBT_OUTPUT, V[7], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WMW\", \"MxM\", \"WMW\", 'M', aRegistry.getItem(10047), 'W', OP.cableGt04.dat(MT.AnnealedCopper));",
+    "aMat = MT.DATA.Electric_T[8];   aRegistry.add(\"Long Distance Transformer Endpoint (\"+VN[8]+\")\"      , \"Long Distance Transport\"             , 10068, 10060, aClass, aMat.mToolQuality, 16, aMachine     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   4.0F, NBT_RESISTANCE,   4.0F, NBT_INPUT, V[8], NBT_OUTPUT, V[8], NBT_WASTE_ENERGY, F, NBT_ENERGY_ACCEPTED, TD.Energy.EU, NBT_ENERGY_EMITTED, TD.Energy.EU), \"WMW\", \"MxM\", \"WMW\", 'M', aRegistry.getItem(10048), 'W', OP.cableGt04.dat(MT.AnnealedCopper));"
+  ],
+  "source_wire_tiers_row": "VISUALLY_OPAQUE_BLOCKS.add(BlocksGT.LongDistWire01                      = new BlockLongDistWire         (\"gt.block.longdistwire.01\", Textures.BlockIcons.LONG_DIST_WIRES_01, new byte[] {4, 4, 5, 6, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8}));",
+  "validation": {
+    "java": "17",
+    "core_contracts": 23,
+    "transformer_rating_rows": 5,
+    "wire_meta_voltage_rows": 16,
+    "native_compilation": false,
+    "gradle": false,
+    "world_reload": false,
+    "external_mod_runtime": false,
+    "build": false
+  },
+  "limits": [
+    "Restore probe checks only core link ownership, not native route validity.",
+    "ALIGN-070 native restore/update failure is established by source flow, not a Minecraft reproduction.",
+    "Existing activity contracts do not prove exact original target-ownership visual semantics.",
+    "Wire material recipe/color mapping and complete pipeline behavior remain unaudited.",
+    "Overcharge consequences depend on original configuration; no unconditional explosion claim."
+  ],
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/a/Loader_Blocks.java": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregtech/tileentity/energy/transformers/MultiTileEntityLongDistanceTransformer.java": "68bff798f2d06d109cd5f5902671fea99617319555ed874d2971f49a14f8d6e2",
+    "gregtech/blocks/tool/BlockLongDistWire.java": "6582cf7e867482c9b162c16a1527b21f542b6ed1254168bc65e193e8d7e5b854",
+    "gregapi/block/misc/BlockBaseMachineUpdate.java": "e6b3c858bf1b52d6a33f42f60b23948b5554b4f869f183804451fa8a129dc54e",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/tileentity/energy/ITileEntityEnergy.java": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+    "gregtech/tileentity/tanks/MultiTileEntityLongDistancePipelineFluid.java": "e54bb7180e6bc534d0ddf0cb8b004b99e79580f76e25c0bffb8e74f2d63654d2",
+    "gregtech/tileentity/inventories/MultiTileEntityLongDistancePipelineItem.java": "befd9158a68c0a581e8e3e44f7f632b7287b349ce6f56ba580c2c0911b69a218"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceLink.java": "849cc7eedc12b00c49d992138d324c05df643c7c9925d09b4de10d7d97c583ac",
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceNetwork.java": "acc6984fff8258a5139264baf91033ef4bb8a28e3f059e6a6ddc5bd22271c2a9",
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceRules.java": "f48bf0e6747be8c6cc669982f7e5090a1184cfd39c6a3fdb18b9e2d03c26d30f",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTopology.java": "9657ee73bab8fe7725bff626158d2da20a469d695b656ff47e110c1abcceb52e",
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceCatalog.java": "41549d8d9acd833f63c3d2f5b2b455a04556fc1f6faa04fe1d90c809718ab3ba",
+    "core/src/test/java/com/gregtech/gregtech/core/LongDistanceSourceContracts.java": "355c8eaf30111b02835e4552cf355f0e8317b326fab3526539aa60b64ad15731",
+    "tools/integration/audit-probes/LongDistanceAudit.java": "d8597a8ae73efad4d43351a177d7b527bb0a611b834752600b0d5b55d7a4924a",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLongDistance.java": "76ffc5b441e69cabee291a0a297351ec3efb5c2d20e2ce6da2a7219033909db8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java": "ac5a00d798ad16442a09940c3ba30f546c5a3be39f7d916345d94b519c070e68",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlock.java": "834a6418b09f9c6a7548b20643ac34076c591c683a30a2f1644ac20306cb6c86",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java": "c48bb228e9df6937c5f0ffbf1a4285509fafbe751164d16f11e03d9b5e9a950e",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistPipeBlock.java": "7785ae13a611fe30167cde868aa350625fb558250f9e6510d77a5f2f21589260",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyCompat.java": "a8cdf995e95129e193624be094ba1226cc1aadce5ba9ca29384a865fcbb1d975"
+  }
+}

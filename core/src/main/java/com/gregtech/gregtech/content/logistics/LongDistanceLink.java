@@ -28,27 +28,64 @@ public final class LongDistanceLink<P, O> {
     private final BooleanSupplier live;
     private P targetPosition;
     private LongDistanceLink<P, O> target, sender;
+
     public LongDistanceLink(P position, O owner, BooleanSupplier live) {
-        this.position = position; this.owner = owner; this.live = live;
+        this.position = position;
+        this.owner = owner;
+        this.live = live;
     }
-    public P targetPosition() { return targetPosition; }
-    public O targetOwner() { return target != null && target != this && target.live.getAsBoolean() ? target.owner : null; }
-    public O senderOwner() { return receiving() ? sender.owner : null; }
-    public boolean receiving() { return sender != null && sender.live.getAsBoolean() && sender.target == this; }
-    public boolean known() { return targetPosition != null; }
-    public void reset() { targetPosition = null; target = null; sender = null; }
-    public void restore(P position) { reset(); targetPosition = position; }
+
+    public P targetPosition() {
+        return targetPosition;
+    }
+
+    public O targetOwner() {
+        return target != null && target != this && target.live.getAsBoolean() ? target.owner : null;
+    }
+
+    public O senderOwner() {
+        return receiving() ? sender.owner : null;
+    }
+
+    public boolean receiving() {
+        return sender != null && sender.live.getAsBoolean() && sender.target == this;
+    }
+
+    public boolean known() {
+        return targetPosition != null;
+    }
+
+    public void reset() {
+        targetPosition = null;
+        target = null;
+        sender = null;
+    }
+
+    /** Restores only the remembered endpoint; the world adapter is responsible for route validity. */
+    public void restore(P position) {
+        reset();
+        targetPosition = position;
+    }
+
     /** A receiving endpoint cannot be turned into another sender by a soft-hammer scan. */
     public boolean beginScan() {
         if (receiving()) return false;
-        targetPosition = position; target = this; sender = null;
+        targetPosition = position;
+        target = this;
+        sender = null;
         return true;
     }
-    public void bind(LongDistanceLink<P, O> peer) { target = peer; targetPosition = peer.position; }
+
+    public void bind(LongDistanceLink<P, O> peer) {
+        target = peer;
+        targetPosition = peer.position;
+    }
+
     public boolean claim() {
         if (target == null || target == this || !target.live.getAsBoolean()) return false;
         var previous = target.sender;
-        if (previous == null || !previous.live.getAsBoolean() || previous.target == null || !previous.target.live.getAsBoolean()) target.sender = this;
+        if (previous == null || !previous.live.getAsBoolean() || previous.target == null || !previous.target.live.getAsBoolean())
+            target.sender = this;
         return target.sender == this;
     }
 }

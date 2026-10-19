@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 长距离目录与连接规则
+
+LongDistanceLink／Network／Rules 和原生 Topology 相对 10861dbbd 代码与字面量相同，Topology 两版投影相同。Java 17 局部编译、23 项既有 core 合同和目录／损耗／恢复观察通过。五端点额定行与十六导线 meta 电压对应原版；恢复后原生 watched 缺口、适配入口和超压后果为源码链结论。没有原生编译、Gradle、游戏重启、外部模组测试、构建或推送，见 [回执](verification/long-distance-audit-20261019.json)。
+
 ## 2026-10-19 / 旋转变速器目录和包边界
 
 两份 core 源相对 7b5508a08 去注释／空白后代码和字面量一致；Java 17 局部编译通过。十三行目录逐项对照原版材料、V、倍率和浪费标志；五行观察覆盖负 RU、末包、超速门限／容量与齿轮布局计数。停止、原版过载及限速例子为源码推导；当前输出超限可达性未证实。没有原生编译、Gradle、游戏、重启、构建或推送。见 [回执](verification/rotation-transformer-audit-20261019.json)。
