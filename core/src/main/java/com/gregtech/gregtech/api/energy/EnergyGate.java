@@ -25,8 +25,8 @@ import com.gregtech.gregtech.data.GregTechTags;
 
 /**
  * The pure part of the upstream TileEntityBase01Root energy gate (TileEntityBase01Root.java:716-717),
- * extracted as static functions so the mdk Root default block (D3) can delegate to it and the
- * math stays offline-testable in the root module.
+ * shared by the native EnergyBlockDefaults adapter. The core calculation has no
+ * Minecraft or loader dependency.
  *
  * Semantics kept verbatim against upstream Root:716-717:
  * - aSize 0 or the wrong directionality (not accepting / not emitting) -> 0, nothing happens;
@@ -36,8 +36,8 @@ import com.gregtech.gregtech.data.GregTechTags;
  *   as USED but doInject is never called - the energy is swallowed, Root:717);
  * - extraction: a packet below getEnergySizeOutputMin returns 0 (refused, Root:716).
  *
- * Not synchronized on purpose: this is the pure math. The mdk default block keeps upstream's
- * "synchronized" on the doEnergyInjection/doEnergyExtraction entry points that call into these.
+ * Synchronization belongs to the caller: GTEnergyBlockEntity keeps upstream's
+ * synchronized doEnergyInjection/doEnergyExtraction entry points.
  */
 public final class EnergyGate {
 	private EnergyGate() {}
