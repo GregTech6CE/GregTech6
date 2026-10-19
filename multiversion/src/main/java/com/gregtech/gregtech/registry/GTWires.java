@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** GT6 electric wire blocks — storage holder populated by {@code Loader_MultiTileEntities}. */
+/** Native electric wire registrations populated from the shared WireCatalog on both platforms. */
 public final class GTWires {
 
 //? if >=1.21.1 {
@@ -91,7 +91,7 @@ public final class GTWires {
     }
 
     /**
-     * GT6's stack sizes: a wire carries one unit of material per size, so
+     * GT6's explicit stack limits (material content is separately size * U/2):
      * {@code MultiTileEntityWireElectric.addElectricWires} registers {@code 64/size}
      * (64, 32, 21, 16, 12, 10, 9, 8, 7, 6, 5, 4); its cables use 64/32/16/8/4 for sizes 1/2/4/8/12.
      */

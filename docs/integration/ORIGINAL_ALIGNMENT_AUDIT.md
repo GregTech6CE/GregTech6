@@ -99,6 +99,8 @@
 | ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
+| ALIGN-077 | 确认导线未接入进度计的电流读取合同。 | 原版 ITileEntityProgress 返回累计安培数及额定安培上限。 | 当前导线缺少 ProgressSensorSource／MachineControl.Provider；已有功率计读取不能替代，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
+| ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
 
 上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，能源目录和弱燃料参数也有 core 枚举，其余结论依赖具体调用链核查，没有启动游戏。锅炉及液体／气体燃烧室的完整来源、相同部分和边界见 [专题核查](BOILER_BURNING_BOX_AUDIT.md)。
 
@@ -167,6 +169,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第二十三批对照普通导线 30 组／620 个变种目录和正常输电源链，新增电流进度接口、泡沫包覆 ALIGN-077–078。整理压行代码并纠正辅助连接索引职责；复杂环路、首 tick、区块／兼容边界和物流仍待继续，见 [报告](ELECTRIC_WIRE_AUDIT.md)。
 
 第十五批沿物质制造流体关联与单位量新增 ALIGN-057–058，追踪了双重声明的碰撞拒绝及选择器保留路径，未冒称最终有效配方枚举。28 条数据移入 core 目录，说明及观察见 [物质流体核查](MATTER_FLUID_AUDIT.md)。其余相态、外部覆盖、储能／变压器与网络仍在队列。
 

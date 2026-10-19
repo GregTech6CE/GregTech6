@@ -29,6 +29,8 @@
 | 金属／粉末／宝石等材料工厂的默认属性 | `api/material/MaterialFactories.java` |
 | 材料组成、矿物处理关系 | `data/generated/MaterialCompositionData.java`、`MaterialOreProcessing.java` |
 | 定义与后续关联的执行顺序 | `content/material/MaterialDefinitions.java` 的 `declare()`、`link()` |
+| 单个材料保存的属性字段与访问方法 | `api/material/GTMaterial.java` |
+| 哪些材料生成锭、板、杆等形态 | `data/generated/MaterialForms.java`；批量物品定义在 `api/material/MaterialItemDefinitions.java` |
 | 按名字、数字 ID 保存材料的运行时注册表 | `api/material/GTMaterialRegistry.java` 的 `BY_NAME`、`BY_ID`、`ALL_MATERIALS`；初始化在 `init()` |
 
 `Materials.java` 是方便手写业务使用的全名字段入口；`data/generated/GT6Materials.java` 主要保留原版短名引用并触发五类材料初始化，`data/ImportedMaterialData.java` 保留原版符号和少量特殊定义。它们不是另一套独立材料实例全集。新增补充材料另见 `SupplementalMaterials.java`、`ParticleMaterials.java`、`VanillaMatterMaterials.java`。
@@ -50,6 +52,8 @@
 配方表本身的名称、物品槽／储罐数和构造标志在 core 的 `data/MachineRecipeMapDefinitions.java`，数据结构是 `api/recipe/RecipeMapSpec.java`；原生 `data/MachineRecipeMaps.java` 将它们转成 RecipeMap。`dynamicRecipes`／`contextualRecipes` 安装动态查询入口，fake 展示行不参与机器加工。当前表标志和动态入口仍有确认缺口，见 [动态配方核查](DYNAMIC_RECIPE_AUDIT.md)。只读工具 `tools/integration/inventory_recipe_map_flags.py` 使用 `--source <原版RM.java> --current <当前定义文件> --output <报告>` 比对四个尾部标志，报告未解析行；它不会替代配方执行验收。
 
 ## 机器参数与运行行为从哪里看
+
+普通导线／电缆的 30 组额定数据在 core `content/energy/WireCatalog.java`；有符号损耗和计数算术在 `WirePacketRules.java`，实际递归输电／过载 tick 在 shared `blockentity/energy/ElectricWireBlockEntity.java`。`api/energy/EnergyNet.java` 是辅助连接索引，当前输电并不通过它调度；不要把它和原版引入的 IC2 EnergyNet 混为一谈。核查范围和缺口见 [导线报告](ELECTRIC_WIRE_AUDIT.md)。
 
 | 要找的内容 | 入口（相对于对应 Java 根目录） |
 | --- | --- |

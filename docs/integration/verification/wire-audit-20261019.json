@@ -1,0 +1,395 @@
+{
+  "baseline": "861f803d9",
+  "date": "2026-10-19",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_author": "GregTech-6 Team / Gregorius Techneticies; source headers retained, LGPL-3.0-or-later",
+  "original_sources": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/data/OP.java": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+    "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+    "gregapi/tileentity/connectors/MultiTileEntityWireElectric.java": "60dd3bf9147a220ab327a1aed3f0081382678eb0d6190e865e84e1b7dae89724",
+    "gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+    "gregtech/tileentity/sensors/MultiTileEntityProgressmeter.java": "abacf7a552e8ed6987a62011408cef029363c9f955c51e7da0e643572966c234"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WireCatalog.java": "54a7c1b591a971728f8943ac775fc539aeb4c434b7f47fe4ca304c0a6dc4b6f7",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WirePacketRules.java": "f2c06933e519ae49e35e38fb8fe0bae73cc0d9063be5bf3006444782fc2d0e40",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/energy/WireDefinitions.java": "79cc0f335e84fa538d3b85bfe999a66335051934423dc67db4c90a7e03fa84f3",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java": "a723323751a62f46981cb134ff15f21cec73f29208ce8cdd678a440ba3dcab05",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWires.java": "fcd9821a5ca16da4f679e49c7e4733ea5fd8ad880f639d6e7a6fd457f57d547d",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ElectricWireBlockEntity.java": "5c54700139f9644ff18b2d2e53b15d29f926c6eb933042b4254e3bf73fa9e1c2",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ElectricWireBlock.java": "52dea0de5c0bf9487391acd3b8e91f07af5d4ee2160531c3969fc3577beebf88",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": "8da206a54a6652869df93588061238fcc99f4abe7dc98f93e61a07e17100a5b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": "26ae9451d2de14088d4fbc405db59260f457192de8ca27cbc79e10578b2bd51d",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamHardener.java": "a4dbbbb0c1e0afc0582ead7c97734aaa097811d779fbf9e2106ed92b3fae9419",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamRemover.java": "8a6d8d1a09651638b7d3d2d1183f8ecbe4434a8780b9ce6acd338a0d96bf5346",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/WireSpec.java": "b5317e0681065790dd3cb3706c8bc9dce572495b587a552e76b2a7245312966d",
+    "tools/integration/audit-probes/WireCatalogAudit.java": "f69f85b75c95dba43bb0d8352fa1d6ea5a6d42739d88d70e8025e048e04c53be"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WireCatalog.java": "Code and literals unchanged; unused private DUMMY_PROPS excluded for EnergyNet.",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/WirePacketRules.java": "Code and literals unchanged; unused private DUMMY_PROPS excluded for EnergyNet.",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/energy/WireDefinitions.java": "Code and literals unchanged; unused private DUMMY_PROPS excluded for EnergyNet.",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyNet.java": "Code and literals unchanged; unused private DUMMY_PROPS excluded for EnergyNet.",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWires.java": "Code and literals unchanged; unused private DUMMY_PROPS excluded for EnergyNet."
+  },
+  "both_platform_projections_checked": [
+    "EnergyNet",
+    "GTWires"
+  ],
+  "original_family_rows": [
+    {
+      "line": 1914,
+      "material": "Sn",
+      "voltage": 32,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1915,
+      "material": "Pb",
+      "voltage": 64,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1917,
+      "material": "Constantan",
+      "voltage": 128,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1918,
+      "material": "Cu",
+      "voltage": 256,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1919,
+      "material": "AnnealedCopper",
+      "voltage": 384,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1920,
+      "material": "Efrine",
+      "voltage": 256,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1922,
+      "material": "Kanthal",
+      "voltage": 512,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1923,
+      "material": "Ag",
+      "voltage": 1536,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1924,
+      "material": "Au",
+      "voltage": 512,
+      "amperage": 3,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1925,
+      "material": "Electrum",
+      "voltage": 1024,
+      "amperage": 2,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1926,
+      "material": "BlueAlloy",
+      "voltage": 1536,
+      "amperage": 2,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1927,
+      "material": "ElectrotineAlloy",
+      "voltage": 1024,
+      "amperage": 3,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1929,
+      "material": "Nichrome",
+      "voltage": 2048,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1930,
+      "material": "Steel",
+      "voltage": 2048,
+      "amperage": 2,
+      "wire_loss": 3,
+      "cable_loss": 2,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1931,
+      "material": "HSLA",
+      "voltage": 2048,
+      "amperage": 3,
+      "wire_loss": 3,
+      "cable_loss": 2,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1932,
+      "material": "Al",
+      "voltage": 2048,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1933,
+      "material": "TungstenSteel",
+      "voltage": 4096,
+      "amperage": 4,
+      "wire_loss": 3,
+      "cable_loss": 2,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1934,
+      "material": "W",
+      "voltage": 6144,
+      "amperage": 8,
+      "wire_loss": 3,
+      "cable_loss": 2,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1935,
+      "material": "Netherite",
+      "voltage": 2048,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1937,
+      "material": "Os",
+      "voltage": 16384,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1938,
+      "material": "Pt",
+      "voltage": 24576,
+      "amperage": 2,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1939,
+      "material": "Osmiridium",
+      "voltage": 24576,
+      "amperage": 4,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1940,
+      "material": "SiC",
+      "voltage": 8192,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1941,
+      "material": "Ir",
+      "voltage": 24576,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 2,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1943,
+      "material": "Nq",
+      "voltage": 98304,
+      "amperage": 4,
+      "wire_loss": 2,
+      "cable_loss": 1,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1944,
+      "material": "NiobiumTitanium",
+      "voltage": 32768,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1945,
+      "material": "VanadiumGallium",
+      "voltage": 65536,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1946,
+      "material": "YttriumBariumCuprate",
+      "voltage": 98304,
+      "amperage": 4,
+      "wire_loss": 4,
+      "cable_loss": 3,
+      "wire_damage": true,
+      "cable_damage": false,
+      "cable": true
+    },
+    {
+      "line": 1948,
+      "material": "Graphene",
+      "voltage": 65536,
+      "amperage": 1,
+      "wire_loss": 2,
+      "cable_loss": 2,
+      "wire_damage": false,
+      "cable_damage": false,
+      "cable": false
+    },
+    {
+      "line": 1950,
+      "material": "Superconductor",
+      "voltage": 8589934592,
+      "amperage": 4,
+      "wire_loss": 1,
+      "cable_loss": 1,
+      "wire_damage": false,
+      "cable_damage": false,
+      "cable": false
+    }
+  ],
+  "catalog_rows_checked": 620,
+  "native_variant_count": {
+    "wires": 480,
+    "cables": 140
+  },
+  "arithmetic_observations": [
+    "AT_LOSS|false",
+    "ABOVE_LOSS|true",
+    "ZERO_PACKETS|false",
+    "MIN_VOLTAGE|false",
+    "POSITIVE_LOSS|30",
+    "NEGATIVE_LOSS|-30",
+    "WATTAGE|120",
+    "WATTAGE_SATURATION|9223372036854775807",
+    "COUNTER_SATURATION|9223372036854775807"
+  ],
+  "validation": "Java 17 targeted compilation of WireCatalog, WirePacketRules, WireSpec and probe; cached core dependencies.",
+  "limitations": [
+    "Diameter and stack expansion independently transcribed from original addElectricWires and checked against all runtime core rows.",
+    "Material symbols resolved through current legacy facade; this is not a full original material-property audit.",
+    "Source-derived native findings; no native compile, GameTest, real world, save reload, build or push."
+  ]
+}
