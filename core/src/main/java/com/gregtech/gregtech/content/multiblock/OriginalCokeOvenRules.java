@@ -27,20 +27,29 @@ import java.util.List;
 public final class OriginalCokeOvenRules {
     private OriginalCokeOvenRules() {}
     public static final int IGNITION_TICKS = 40;
+
     public static List<SharedLargeMachineLayouts.Cell> cells() {
         var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
-        for (int x=-1;x<=1;x++) for (int y=-1;y<=1;y++) for (int z=0;z<=2;z++) {
-            if (x==0 && y==0 && z==0) continue;
-            boolean air=x==0 && y==0 && z==1;
-            cells.add(new SharedLargeMachineLayouts.Cell(x,y,z,air?0:18000,
-                    air?StructureGrid.Role.AIR:StructureGrid.Role.ITEM_FLUID_ENERGY));
-        }
+        for (int x = -1; x <= 1; x++)
+            for (int y = -1; y <= 1; y++)
+                for (int z = 0; z <= 2; z++) {
+                    if (x == 0 && y == 0 && z == 0) continue;
+                    boolean air = x == 0 && y == 0 && z == 1;
+                    cells.add(new SharedLargeMachineLayouts.Cell(x, y, z, air ? 0 : 18000,
+                            air ? StructureGrid.Role.AIR : StructureGrid.Role.ITEM_FLUID_ENERGY));
+                }
         return List.copyOf(cells);
     }
+
     public static List<StructureGrid.Position> fluidTargets() {
         var targets = new ArrayList<StructureGrid.Position>();
-        for (int x=-1;x<=1;x++) for (int z=0;z<=2;z++) targets.add(new StructureGrid.Position(x,-2,z));
+        for (int x = -1; x <= 1; x++)
+            for (int z = 0; z <= 2; z++)
+                targets.add(new StructureGrid.Position(x, -2, z));
         return List.copyOf(targets);
     }
-    public static int tickIgnition(int remaining) { return Math.max(0,Math.min(IGNITION_TICKS,remaining)-1); }
+
+    public static int tickIgnition(int remaining) {
+        return Math.max(0, Math.min(IGNITION_TICKS, remaining) - 1);
+    }
 }
