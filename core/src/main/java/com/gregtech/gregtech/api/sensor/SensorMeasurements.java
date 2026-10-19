@@ -2,6 +2,7 @@ package com.gregtech.gregtech.api.sensor;
 
 /**
  * Display units of the original sensors: the gauges that show a scaled value instead of a raw count.
+ * The native caller's physical-weight source is separate from this unit conversion.
  *
  * <p>The four weight-o-meters of GT6 differ <em>only</em> in this scale - the measurement code is the
  * same in all four classes, only the last line differs
@@ -24,23 +25,45 @@ public final class SensorMeasurements {
     /** GT6's {@code B[16]-1}: the largest value the six-cell display is built for. */
     public static final long MAX_COUNT = 65535;
 
-    public static long timeOfDayMinutes(long ticks) { return ((Math.floorMod(ticks,24000)+6000)%24000)*60/1000; }
-    public static long cubicMetres(long millibuckets) { return Math.max(0, millibuckets) / 1000; }
-    public static long cubicDecametres(long millibuckets) { return Math.max(0, millibuckets) / 1_000_000; }
-    public static long gibbl(long compressedVolume) { return Math.max(0, compressedVolume) / 1000; }
-    public static long kiloGibbl(long compressedVolume) { return Math.max(0, compressedVolume) / 1_000_000; }
+    public static long timeOfDayMinutes(long ticks) {
+        return ((Math.floorMod(ticks, 24000) + 6000) % 24000) * 60 / 1000;
+    }
+
+    public static long cubicMetres(long millibuckets) {
+        return Math.max(0, millibuckets) / 1000;
+    }
+
+    public static long cubicDecametres(long millibuckets) {
+        return Math.max(0, millibuckets) / 1_000_000;
+    }
+
+    public static long gibbl(long compressedVolume) {
+        return Math.max(0, compressedVolume) / 1000;
+    }
+
+    public static long kiloGibbl(long compressedVolume) {
+        return Math.max(0, compressedVolume) / 1_000_000;
+    }
 
     /** GT6 {@code WeightometerHeavy:62}: {@code (long)(rWeightKG/1000)}, "in Tons". */
-    public static long tonnes(double kilograms) { return clamp(kilograms / 1000); }
+    public static long tonnes(double kilograms) {
+        return clamp(kilograms / 1000);
+    }
 
     /** GT6 {@code WeightometerLight:62}: {@code (long)(rWeightKG*1000)}, "in Gramm". */
-    public static long grams(double kilograms) { return clamp(kilograms * 1000); }
+    public static long grams(double kilograms) {
+        return clamp(kilograms * 1000);
+    }
 
     /** GT6 {@code WeightometerMedium:62}: {@code (long)rWeightKG}, "in Kilogramme". */
-    public static long kilograms(double kilograms) { return clamp(kilograms); }
+    public static long kilograms(double kilograms) {
+        return clamp(kilograms);
+    }
 
     /** GT6 {@code WeightometerSuperHeavy:62}: {@code (long)(rWeightKG/1000000)}, "in Kilotons". */
-    public static long kilotonnes(double kilograms) { return clamp(kilograms / 1_000_000); }
+    public static long kilotonnes(double kilograms) {
+        return clamp(kilograms / 1_000_000);
+    }
 
     private static long clamp(double value) {
         return (long) Math.max(0, Math.min(MAX_COUNT, value));
