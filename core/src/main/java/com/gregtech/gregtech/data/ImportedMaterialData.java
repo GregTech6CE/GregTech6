@@ -59,7 +59,7 @@ public final class ImportedMaterialData extends com.gregtech.gregtech.api.materi
 
     // --- special / sentinel materials ---
 
-    public static final GTMaterial NULL = com.gregtech.gregtech.api.material.MaterialSentinels.Invalid;
+    public static final GTMaterial NULL  = com.gregtech.gregtech.api.material.MaterialSentinels.Invalid;
     public static final GTMaterial Empty = com.gregtech.gregtech.api.material.MaterialSentinels.Empty;
 
     /**
@@ -1059,9 +1059,9 @@ public final class ImportedMaterialData extends com.gregtech.gregtech.api.materi
     /** Wood variants (GT6 {@code MT.WOODS}). */
     public static final class WOODS {
         public static final GTMaterial Cinnamon = GT6Materials.Woods.Cinnamon;
-        public static final GTMaterial Lime = GT6Materials.Woods.Lime;
-        public static final GTMaterial Ash = GT6Materials.Woods.Ash;
-        public static final GTMaterial Magic = GT6Materials.Woods.Magic;
+        public static final GTMaterial Lime     = GT6Materials.Woods.Lime;
+        public static final GTMaterial Ash      = GT6Materials.Woods.Ash;
+        public static final GTMaterial Magic    = GT6Materials.Woods.Magic;
         private WOODS() {}
 
         public static final GTMaterial

@@ -56,11 +56,11 @@ public final class BumbliarySlotLayouts {
             SLOTS_COMBS, SLOTS_DRONE, SLOTS_DEAD, SLOTS_DEAD, 10000);
 
     /** GT6's {@code MultiTileEntityBumbliaryAdvanced} slot groups ({@code :333-337}). */
-    public static final int ADV_SLOT_ROYAL = 7, ADV_SLOT_DRONE = 12;
+    public static final int ADV_SLOT_ROYAL    = 7, ADV_SLOT_DRONE = 12;
     public static final int[] ADV_SLOTS_COMBS = {0, 4, 5, 9, 10, 11, 14};
     public static final int[] ADV_SLOTS_DRONE = {1, 2, 3, 6, 8, 11, 13};
-    public static final int[] ADV_SLOTS_DEAD = {15, 16, 17, 18, 19};
-    public static final int[] ADV_SLOTS_AUTO = {0, 4, 5, 9, 10, 11, 14, 15, 16, 17, 18, 19};
+    public static final int[] ADV_SLOTS_DEAD  = {15, 16, 17, 18, 19};
+    public static final int[] ADV_SLOTS_AUTO  = {0, 4, 5, 9, 10, 11, 14, 15, 16, 17, 18, 19};
 
     /**
      * GT6's advanced bumbliary ({@code MultiTileEntityBumbliaryAdvanced:333-344}). Note that GT6 lists
