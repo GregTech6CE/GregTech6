@@ -101,3 +101,7 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 ## 长距离线路入口
 
 `content/logistics/LongDistanceCatalog` 是设备与线种目录；`LongDistanceNetwork` 负责纯扫描，`LongDistanceLink` 负责单接收端归属及目标坐标，`LongDistanceRules.loss` 负责每包损耗。实际重载／线路失效位于共享 `block/misc/LongDistanceTransformerBlockEntity`、`LongDistEndpointBlockEntity` 与 `LongDistanceTopology`，不能仅通过 core 测试断言其正确。旧 MAX_SCAN／unique／rescan helper 不是当前原生扫描／缓存策略，见 [核查](LONG_DISTANCE_ENERGY_AUDIT.md)。
+
+## 能力转发器的共用业务
+
+共享 `blockentity/CapabilityRelayBlockEntity` 的 ItemRelay／FluidRelay 维护物品与流体操作；forwardItems／forwardFluids 只选择平台能力常量，不放业务规则。`LongDistEndpointBlockEntity` 选择路由、物品或流体类型和流体权限；`RelayVisitSet` 只保存线程访问集合，清理责任在调用者。源码去重核对入口为 `tools/integration/check_relay_sharing.py --baseline c07466737`，不依赖先生成完整原生视图。

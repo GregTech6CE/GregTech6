@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 共用物品与流体转发源码等价
+
+check_relay_sharing.py --baseline c07466737 分别展开两版并内联薄包装，六项物品／七项流体操作的代码与字面量相同；RelayVisitSet 与 Neo 注册格式等价，旧烟测仅改注释和一条归因消息。Java 17 局部编译并记录十行目录／访问集合观察。没有原生编译、Gradle、游戏、自检场景、重启、构建或推送，见 [回执](verification/pipeline-relay-audit-20261019.json)。
+
 ## 2026-10-19 / 长距离目录与连接规则
 
 LongDistanceLink／Network／Rules 和原生 Topology 相对 10861dbbd 代码与字面量相同，Topology 两版投影相同。Java 17 局部编译、23 项既有 core 合同和目录／损耗／恢复观察通过。五端点额定行与十六导线 meta 电压对应原版；恢复后原生 watched 缺口、适配入口和超压后果为源码链结论。没有原生编译、Gradle、游戏重启、外部模组测试、构建或推送，见 [回执](verification/long-distance-audit-20261019.json)。

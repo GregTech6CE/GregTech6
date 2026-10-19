@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-19",
+  "baseline": "c07466737",
+  "classification": "progress",
+  "new_findings": [
+    "ALIGN-073"
+  ],
+  "related_existing_findings": [
+    "ALIGN-070"
+  ],
+  "sharing": {
+    "forge": {
+      "code_and_literals_equal_after_inlining": true,
+      "shared_operations": {
+        "forwardItems": 6,
+        "forwardFluids": 7
+      }
+    },
+    "neoforge": {
+      "code_and_literals_equal_after_inlining": true,
+      "shared_operations": {
+        "forwardItems": 6,
+        "forwardFluids": 7
+      }
+    }
+  },
+  "format_only_code_and_literals_equal": [
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LongDistanceCapabilities.java"
+  ],
+  "smoke_change": {
+    "assertion_and_operations_unchanged": true,
+    "failure_message_and_comment_corrected": true,
+    "native_runtime_not_executed": true
+  },
+  "observations": [
+    "PIPE|long_dist_pipe_item|0|-1",
+    "PIPE|long_dist_pipe_fluid|1|1943",
+    "PIPE|long_dist_pipe_tungsten|2|3695",
+    "PIPE|long_dist_pipe_adamantium|3|5225",
+    "PIPE|long_dist_pipe_draconium|4|4500",
+    "VISIT|first=true|recursive=false",
+    "VISIT|nested=true",
+    "VISIT|outerStillPresent=true",
+    "THREAD_ISOLATED|true",
+    "CLEANUP|fresh=true|empty=true"
+  ],
+  "validation": {
+    "java": "17",
+    "compiled": [
+      "LongDistanceCatalog",
+      "RelayVisitSet",
+      "PipelineRelayAudit"
+    ],
+    "native_compilation": false,
+    "gradle": false,
+    "game": false,
+    "build": false
+  },
+  "limits": [
+    "Native item extraction difference follows sided permission and capability source chains.",
+    "Core visitation observations do not prove full Minecraft relay-cycle behavior.",
+    "Four current pipe temperatures observed; not an independent computation of original alloy melting points.",
+    "Source-equivalence check expands maintained NeoForge comment branches before projection.",
+    "No original NBT key mismatch was reproduced in the port; current route invalidation remains pending."
+  ],
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregtech/tileentity/inventories/MultiTileEntityLongDistancePipelineItem.java": "befd9158a68c0a581e8e3e44f7f632b7287b349ce6f56ba580c2c0911b69a218",
+    "gregtech/tileentity/tanks/MultiTileEntityLongDistancePipelineFluid.java": "e54bb7180e6bc534d0ddf0cb8b004b99e79580f76e25c0bffb8e74f2d63654d2",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregtech/blocks/tool/BlockLongDistPipe.java": "c2c20883e798025e670b75b1946190c9520f9de7eed9a47dc679f3a508952135",
+    "gregtech/loaders/a/Loader_Blocks.java": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java": "45befd9c8e4007673a93dcb70aec0c304a0857612b7c15b2d4661fb13e65ed83",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LongDistanceCapabilities.java": "1b83724ab7d25d9e92d84dbb09ff1be9b9c23127715c8980a9208cfae9c9937d",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/LongDistanceRuntimeSmoke.java": "0645061b070494077634f52c1b304331877099ca6281bf2e405397d9e45067b1",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java": "03bf62e4694673c88c3df2863f8cd4edda0918439cf8bcb9861b5584554e5a60",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java": "c48bb228e9df6937c5f0ffbf1a4285509fafbe751164d16f11e03d9b5e9a950e",
+    "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceCatalog.java": "41549d8d9acd833f63c3d2f5b2b455a04556fc1f6faa04fe1d90c809718ab3ba",
+    "tools/integration/check_relay_sharing.py": "f2ed64d6430958482029324405476ed326139c64f2370ea17fd4002efb9af1f0",
+    "tools/integration/audit-probes/PipelineRelayAudit.java": "d531f4ce9c7ec0732b885d36bcf53787ad74450d24fed1f499a7dbdc02337038"
+  }
+}
