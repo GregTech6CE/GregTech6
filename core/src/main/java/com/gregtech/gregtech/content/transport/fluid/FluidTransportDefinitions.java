@@ -1,11 +1,16 @@
 package com.gregtech.gregtech.content.transport.fluid;
+
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.machine.PipeSpec;
 import com.gregtech.gregtech.api.machine.TankSpec;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
-/** GT6 pipe parameters adapted to the existing registry IDs; saltnya tank catalog. Logistics tank is a separate host. */
+/**
+ * Shared fluid pipe ratings and ordinary tank definitions, preserving registration order.
+ * Pipe ratings originate in GT6; tanks retain the saltnya catalog. Native hosts own
+ * inventory, distribution and hazards. A matching rating does not imply matching behavior.
+ */
 public final class FluidTransportDefinitions {
     private FluidTransportDefinitions() {}
     private record FluidPipeMat(String idSuffix, GTMaterial material, long baseCapacity,
@@ -96,24 +101,32 @@ public final class FluidTransportDefinitions {
 
     public static List<PipeSpec> pipes() {
         var result = new ArrayList<PipeSpec>();
-        for (var mat : FLUID_PIPE_MATS) for (var size : PipeSpec.PipeSize.values())
-            result.add(PipeSpec.of("pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + mat.idSuffix,
-                    mat.material, size, mat.baseCapacity, mat.gasProof, mat.acidProof, mat.plasmaProof, mat.magicProof,
-                    mat.maxTemperature > 0 ? mat.maxTemperature : (long)(mat.material.getMeltingPoint() * 1.25D), mat.flammability));
+        for (var family : FLUID_PIPE_MATS)
+            for (var size : PipeSpec.PipeSize.values())
+                result.add(PipeSpec.of("pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + family.idSuffix,
+                        family.material, size, family.baseCapacity, family.gasProof, family.acidProof,
+                        family.plasmaProof, family.magicProof,
+                        family.maxTemperature > 0 ? family.maxTemperature
+                                : (long) (family.material.getMeltingPoint() * 1.25D),
+                        family.flammability));
         return List.copyOf(result);
     }
     public static List<TankSpec> tanks() {
         var result = new ArrayList<TankSpec>();
         for (var cheap : CheapWoodBarrelCatalog.ENTRIES) result.add(cheap.spec());
-        for (var w : WOODS) result.add(TankSpec.of(w.id,w.material,TankSpec.TankType.WOOD_BARREL,
-                w.capacity,false,false,false,false,true,2F,3F));
-        result.add(TankSpec.of("plastic_canister",com.gregtech.gregtech.content.material.generated.CompoundMaterials.Plastic,
-                TankSpec.TankType.PLASTIC_CANISTER,32000,true,false,false,false,false,3F,5F));
-        for (var d : DRUMS) {
-            float hardness=d.material.getToolDurability()>0?5F+d.material.getToolQuality()*1.5F:5F;
-            float resistance=d.material.getToolDurability()>0?7F+d.material.getToolQuality()*1.5F:6F;
-            result.add(TankSpec.of(d.id,d.material,TankSpec.TankType.METAL_DRUM,d.capacity,
-                    d.gasProof,d.acidProof,d.plasmaProof,false,false,hardness,resistance));
+        for (var wood : WOODS)
+            result.add(TankSpec.of(wood.id, wood.material, TankSpec.TankType.WOOD_BARREL,
+                    wood.capacity, false, false, false, false, true, 2F, 3F));
+        result.add(TankSpec.of("plastic_canister",
+                com.gregtech.gregtech.content.material.generated.CompoundMaterials.Plastic,
+                TankSpec.TankType.PLASTIC_CANISTER, 32000, true, false, false, false, false, 3F, 5F));
+        for (var drum : DRUMS) {
+            float hardness = drum.material.getToolDurability() > 0
+                    ? 5F + drum.material.getToolQuality() * 1.5F : 5F;
+            float resistance = drum.material.getToolDurability() > 0
+                    ? 7F + drum.material.getToolQuality() * 1.5F : 6F;
+            result.add(TankSpec.of(drum.id, drum.material, TankSpec.TankType.METAL_DRUM, drum.capacity,
+                    drum.gasProof, drum.acidProof, drum.plasmaProof, false, false, hardness, resistance));
         }
         return List.copyOf(result);
     }

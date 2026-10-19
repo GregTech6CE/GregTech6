@@ -53,6 +53,8 @@
 
 ## 机器参数与运行行为从哪里看
 
+流体管道和普通储罐目录在 core `content/transport/fluid/FluidTransportDefinitions.java`；管道规格 `PipeSpec`、通道均衡 `FluidPipeChannels`、危险数值 `FluidPipeSafety` 均属 core。Forge 由 `content/fluid/FluidPipeDefinitions` 消费，Neo 由 `content/transport/fluid/FluidTransportRegistries` 消费；共享 `FluidPipeBlockEntity` 负责通道状态、邻居交互和危险处理。数值表中的防护不等于接触伤害开关或仪表接口已接入，见 [流体管道核查](FLUID_PIPE_AUDIT.md)。
+
 物品管道目录为 core `content/transport/ItemPipeCatalog.java`，规格展开是 `api/machine/ItemPipeSpec.java`；shared `content/transport/ItemPipeDefinitions.java` 调用 `registry/GTItemPipes.java` 注册两版方块。core `WeightedItemPipeRoutes` 只选择出口的第一跳，`ItemPipeTransfer` 只处理目的库存的模拟／实际交付；原生库存、每 tick 转运和侧面能力仍在 `blockentity/machine/ItemPipeBlockEntity.java`。目录参数正确不代表这些消费路径正确，详见 [物品管道核查](ITEM_PIPE_AUDIT.md)。
 
 普通导线／电缆的 30 组额定数据在 core `content/energy/WireCatalog.java`；有符号损耗和计数算术在 `WirePacketRules.java`，实际递归输电／过载 tick 在 shared `blockentity/energy/ElectricWireBlockEntity.java`。`api/energy/EnergyNet.java` 是辅助连接索引，当前输电并不通过它调度；不要把它和原版引入的 IC2 EnergyNet 混为一谈。核查范围和缺口见 [导线报告](ELECTRIC_WIRE_AUDIT.md)。

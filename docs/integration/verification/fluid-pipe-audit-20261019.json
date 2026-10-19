@@ -1,0 +1,762 @@
+{
+  "baseline": "bc98c1477",
+  "date": "2026-10-19",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_author": "GregTech-6 Team / Gregorius Techneticies; LGPL source headers retained",
+  "original_sources": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/tileentity/connectors/MultiTileEntityPipeFluid.java": "3a6850055375e7975145b03abab44c5922746a6f4053dd8d3163de989f37b110",
+    "gregtech/tileentity/sensors/MultiTileEntityThermometer.java": "4fd1c78b969ce28a0c745d58b1303affc56ce980f563f16a3cf5130f37154e26",
+    "gregtech/tileentity/sensors/MultiTileEntityGibblometer.java": "f2cfe639b77b1bed7af763d2349b2f0d93342394ba88a92855dcfcd1c36a71ab"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportDefinitions.java": "ab27ef5956d0aec9ee2524dc08752969a9ffab6e54b8bd6b681a031b3baac67f",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/fluid/FluidPipeDefinitions.java": "45330185eac72341edcb4293942076cd3a26da36c11b53457e2c2b8f3000c980",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportRegistries.java": "78322ce1af478c2b5ac79a208d343a420f0d1f6a242b24516a0072b7d84cc713",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTFluidPipes.java": "fba62c35ed72903d668b8ad1312ca29656d0824487b2171862074c9ba597e776",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/PipeSpec.java": "08ec92bd55ea36d07c67c75b02812ff643446167a1e9b999c38576d49d8acfda",
+    "core/src/main/java/com/gregtech/gregtech/api/fluid/FluidPipeChannels.java": "97abc2c9e1f395ebe003f122f7a0ea9e9ea71f359f2ad7dc04cfc1c10c31bd87",
+    "core/src/main/java/com/gregtech/gregtech/api/fluid/FluidPipeSafety.java": "3f561468c10d8b56762b829f56e5c7496300b0657e43387e4bae8c89a72572ed",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "5eacb98e9e5641f707e5acadd09e91079457f44c2f7b403bd6ad899f304d2372",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java": "c7f23282aa60f43e330c2a9d415ad1519d670c5149b4658ddb8531fba7442366",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": "8da206a54a6652869df93588061238fcc99f4abe7dc98f93e61a07e17100a5b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": "ee3eda16b46070490cec024ca29431484c498f20cbf65570049ff709c2d71919",
+    "core/src/test/java/com/gregtech/gregtech/core/CoreBehaviorContracts.java": "c1f139d059358bf8420243e930500707ab1a1300a7957b6c4424e1a1ea4aeeca",
+    "tools/integration/audit-probes/FluidPipeAudit.java": "54ad807f33d6f982be4463b5534923fe69934cdc52a3c06d26c73250e436593c"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportDefinitions.java": {
+      "local_renames": {
+        "mat": "family",
+        "w": "wood",
+        "d": "drum"
+      },
+      "code_and_literals_equal": true
+    },
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/fluid/FluidPipeDefinitions.java": {
+      "local_renames": {
+        "s": "spec"
+      },
+      "code_and_literals_equal": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportRegistries.java": {
+      "local_renames": {},
+      "code_and_literals_equal": true
+    }
+  },
+  "original_families": [
+    {
+      "line": 1846,
+      "symbol": "Wood",
+      "material": "Wood",
+      "base": 50,
+      "proof_flags": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 150,
+      "recipe": false,
+      "blocking": true,
+      "explicit_temperature": 340
+    },
+    {
+      "line": 1847,
+      "symbol": "WoodTreated",
+      "material": "WoodTreated",
+      "base": 75,
+      "proof_flags": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 150,
+      "recipe": false,
+      "blocking": true,
+      "explicit_temperature": 340
+    },
+    {
+      "line": 1848,
+      "symbol": "IronWood",
+      "material": "Ironwood",
+      "base": 200,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1849,
+      "symbol": "Plastic",
+      "material": "Plastic",
+      "base": 100,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": false,
+      "blocking": true,
+      "explicit_temperature": 370
+    },
+    {
+      "line": 1850,
+      "symbol": "Rubber",
+      "material": "Rubber",
+      "base": 100,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": false,
+      "blocking": false,
+      "explicit_temperature": 350
+    },
+    {
+      "line": 1851,
+      "symbol": "Cu",
+      "material": "Copper",
+      "base": 100,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1852,
+      "symbol": "Au",
+      "material": "Gold",
+      "base": 100,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1853,
+      "symbol": "Al",
+      "material": "Aluminium",
+      "base": 100,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1854,
+      "symbol": "TinAlloy",
+      "material": "TinAlloy",
+      "base": 125,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1855,
+      "symbol": "Bronze",
+      "material": "Bronze",
+      "base": 150,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1856,
+      "symbol": "Invar",
+      "material": "Invar",
+      "base": 200,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1857,
+      "symbol": "Steel",
+      "material": "Steel",
+      "base": 200,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1858,
+      "symbol": "Desh",
+      "material": "Desh",
+      "base": 200,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1859,
+      "symbol": "Cr",
+      "material": "Chromium",
+      "base": 200,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1860,
+      "symbol": "HSLA",
+      "material": "HSLASteel",
+      "base": 250,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1861,
+      "symbol": "Efrine",
+      "material": "Efrine",
+      "base": 250,
+      "proof_flags": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1862,
+      "symbol": "SteelGalvanized",
+      "material": "SteelGalvanized",
+      "base": 250,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1863,
+      "symbol": "StainlessSteel",
+      "material": "StainlessSteel",
+      "base": 250,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1864,
+      "symbol": "TungstenAlloy",
+      "material": "HSLATungstenAlloy",
+      "base": 300,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1865,
+      "symbol": "Ti",
+      "material": "Titanium",
+      "base": 300,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1866,
+      "symbol": "Netherite",
+      "material": "Netherite",
+      "base": 300,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1867,
+      "symbol": "DeshAlloy",
+      "material": "WorkersAlloy",
+      "base": 350,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1868,
+      "symbol": "W",
+      "material": "Tungsten",
+      "base": 350,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1869,
+      "symbol": "Pd",
+      "material": "Palladium",
+      "base": 400,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1870,
+      "symbol": "VanadiumSteel",
+      "material": "VanadiumSteel",
+      "base": 400,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        false
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1871,
+      "symbol": "TungstenSteel",
+      "material": "Tungstensteel",
+      "base": 400,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1872,
+      "symbol": "TungstenCarbide",
+      "material": "TungstenCarbide",
+      "base": 450,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1873,
+      "symbol": "Ir",
+      "material": "Iridium",
+      "base": 500,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1874,
+      "symbol": "GaiaSpirit",
+      "material": "GaiaSpirit",
+      "base": 1000,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1875,
+      "symbol": "Draconium",
+      "material": "Draconium",
+      "base": 2500,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1876,
+      "symbol": "DraconiumAwakened",
+      "material": "DraconiumAwakened",
+      "base": 10000,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1877,
+      "symbol": "Infinity",
+      "material": "Infinity",
+      "base": 1000000000,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1878,
+      "symbol": "Ad",
+      "material": "Adamantium",
+      "base": 10000,
+      "proof_flags": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1879,
+      "symbol": "Bedrock_HSLA_Alloy",
+      "material": "BedrockHSLAAlloy",
+      "base": 1000,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1880,
+      "symbol": "Thaumium",
+      "material": "Thaumium",
+      "base": 250,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1881,
+      "symbol": "Manasteel",
+      "material": "Manasteel",
+      "base": 250,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1882,
+      "symbol": "VoidMetal",
+      "material": "VoidMetal",
+      "base": 500,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1883,
+      "symbol": "Terrasteel",
+      "material": "Terrasteel",
+      "base": 500,
+      "proof_flags": [
+        true,
+        true,
+        false,
+        true
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1884,
+      "symbol": "C",
+      "material": "Carbon",
+      "base": 1000,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "contact_damage": false,
+      "flammability": 0,
+      "recipe": false,
+      "blocking": true,
+      "explicit_temperature": 0
+    },
+    {
+      "line": 1885,
+      "symbol": "Ta4HfC5",
+      "material": "TantalumHafniumCarbide",
+      "base": 300,
+      "proof_flags": [
+        true,
+        false,
+        false,
+        true
+      ],
+      "contact_damage": true,
+      "flammability": 0,
+      "recipe": true,
+      "blocking": true,
+      "explicit_temperature": 0
+    }
+  ],
+  "core_variant_rows": 280,
+  "missing_contact_immunity": [
+    "Ironwood",
+    "Aluminium",
+    "Invar",
+    "Efrine",
+    "Netherite",
+    "GaiaSpirit",
+    "Draconium",
+    "DraconiumAwakened",
+    "Infinity",
+    "Adamantium",
+    "BedrockHSLAAlloy",
+    "Thaumium",
+    "Manasteel",
+    "VoidMetal",
+    "Terrasteel",
+    "Carbon"
+  ],
+  "nonblocking_families": [
+    "Rubber"
+  ],
+  "assertions": {
+    "catalog": 1710,
+    "channels": 21,
+    "safety": 27
+  },
+  "validation": "Java 17 compile four core classes, current CoreBehaviorContracts, FluidPipeAudit; only three named methods executed.",
+  "limitations": [
+    "Other core/API/test dependencies use cached output.",
+    "Temperature defaults checked as 1.25 * current material melting point; full original material temperatures are not independently reconstructed.",
+    "Contact, block strength and sensor findings are native source-chain conclusions; no game, native compile, reload, build or push."
+  ]
+}
