@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 大型锅炉目录、坐标与接口
+
+OriginalLargeBoilerParameters／StructureGrid 相对 `70f7e06d7` 在归一化十个已声明的形参／局部变量改名后，代码与字面量一致。Java 17 独立编译通过；core 五项额定值匹配原版，四向 36 格预览／检查角色相同，实际长整数容量与 bindInt 观察确认传感器边界。蒸汽分配和失效结构例子为源码算术／控制流核对，未执行原生机器。无 Gradle、游戏、GameTest、世界重启或新构建。详见 [回执](verification/large-boiler-audit-20261019.json)。
+
 ## 2026-10-19 / 固体与流化床核查
 
 BurningBoxDefinitions 113 项仅展开格式，与 `f82507cbd` 代码／字面量一致，Java 17 独立编译通过。实际 core 枚举固体 29、液体／气体／流化床各 28 项，燃料行种类仅 engine／gas／burn／hot。罐容量是将实际额定值代入原生构造公式的观察，未实例化 Minecraft 储罐。新差异依据原版及当前构造、加载、tick、队列和 capability 调用链；没有运行 Gradle、游戏、GameTest、存档重启或打包。见 [回执](verification/solid-fluidbed-audit-20261019.json)。

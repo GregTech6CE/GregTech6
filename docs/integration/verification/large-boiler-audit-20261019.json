@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "70f7e06d7a52d2771617a6e11ac0019735aa4152",
+  "findings": [
+    "ALIGN-031",
+    "ALIGN-032",
+    "ALIGN-033",
+    "ALIGN-034",
+    "ALIGN-035"
+  ],
+  "scope": "source-call-chain review plus actual core definitions; no native boiler execution",
+  "standardization": {
+    "code_and_literals_unchanged_after_declared_renames": [
+      "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerParameters.java"
+    ],
+    "structure_grid_parameter_local_renames": {
+      "fx": "frontX",
+      "fy": "frontY",
+      "fz": "frontZ",
+      "cx": "controllerX",
+      "cy": "controllerY",
+      "cz": "controllerZ",
+      "ox": "centerX",
+      "oy": "centerY",
+      "oz": "centerZ",
+      "p": "position"
+    },
+    "java17_independent_compile": true
+  },
+  "original_ratings_matched": [
+    {
+      "id": 17201,
+      "wall": 18022,
+      "output": 8192,
+      "hardness": 6.0,
+      "heat_capacity": 81920000,
+      "steam_capacity": 81920000,
+      "recommended_hu": 4096,
+      "original_line": 1248
+    },
+    {
+      "id": 17202,
+      "wall": 18026,
+      "output": 16384,
+      "hardness": 9.0,
+      "heat_capacity": 163840000,
+      "steam_capacity": 163840000,
+      "recommended_hu": 8192,
+      "original_line": 1250
+    },
+    {
+      "id": 17203,
+      "wall": 18023,
+      "output": 32768,
+      "hardness": 12.5,
+      "heat_capacity": 327680000,
+      "steam_capacity": 327680000,
+      "recommended_hu": 16384,
+      "original_line": 1251
+    },
+    {
+      "id": 17204,
+      "wall": 18025,
+      "output": 262144,
+      "hardness": 100.0,
+      "heat_capacity": 2621440000,
+      "steam_capacity": 2621440000,
+      "recommended_hu": 131072,
+      "original_line": 1252
+    },
+    {
+      "id": 17205,
+      "wall": 18027,
+      "output": 8192,
+      "hardness": 6.0,
+      "heat_capacity": 81920000,
+      "steam_capacity": 81920000,
+      "recommended_hu": 4096,
+      "original_line": 1249
+    }
+  ],
+  "core_geometry_observations": [
+    [
+      0,
+      -1,
+      36
+    ],
+    [
+      0,
+      1,
+      36
+    ],
+    [
+      -1,
+      0,
+      36
+    ],
+    [
+      1,
+      0,
+      36
+    ]
+  ],
+  "role_counts_including_controller": {
+    "AIR": 1,
+    "HEAT_INPUT": 9,
+    "FLUID_INPUT": 9,
+    "FLUID_OUTPUT": 17
+  },
+  "sensor_capacity_boundary": {
+    "actual_long": 2621440000,
+    "narrowed_interface": 2147483647,
+    "observation": "Actual core capacity and bindInt; native gibblMaximum caller was inspected, not instantiated"
+  },
+  "steam_allocation_example": {
+    "budget": 100,
+    "receivers": [
+      "top",
+      "north",
+      "south"
+    ],
+    "acceptance": [
+      100,
+      1,
+      100
+    ],
+    "original": [
+      49,
+      1,
+      50
+    ],
+    "port": [
+      33,
+      1,
+      66
+    ],
+    "evidence": "Manual arithmetic from original and port control flow, not a native simulation"
+  },
+  "source_hashes": {
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeBoiler.java": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+    "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+  },
+  "port_hashes": {
+    "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java": "ba3156b9f33d5a3e8d4970b3668e6fc1a9cff7159baf09fc9976e706f59ee6ac",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerParameters.java": "a2fa8715a8a78dfbb8ed3a49d04f2b933813a74b945be066208602303e26f586",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/OriginalLargeBoilerControllerBlockEntity.java": "fd068ff93677e075740c456dd45f8ae1acd36086f77a8522109810fe895819ff",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalLargeBoilerControllerBlock.java": "6bc703678aeef2a35a19e0eec2de81f2a295bfec680ea71b4f4ecb822c119dd2",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalLargeBoilerSpecs.java": "50e7f3e0e32b15ca4ac6046ac262ac96078ba353cabbdac0a8dad9cd8449ef2d",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/sensor/SensorBlockEntity.java": "8da206a54a6652869df93588061238fcc99f4abe7dc98f93e61a07e17100a5b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": "ee3eda16b46070490cec024ca29431484c498f20cbf65570049ff709c2d71919",
+    "multiversion/src/main/java/com/gregtech/gregtech/util/GTEntityHelper.java": "870b63171f28b14b3073c61520cfef2d1d703a281ed4ed04133b1a3586f195ab"
+  },
+  "not_run": [
+    "Gradle",
+    "Minecraft",
+    "native output handlers",
+    "cross-chunk unload/reload",
+    "GameTest",
+    "saved-world restart",
+    "new mod build"
+  ]
+}
