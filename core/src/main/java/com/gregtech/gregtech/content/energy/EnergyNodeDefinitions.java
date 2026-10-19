@@ -18,9 +18,9 @@ public final class EnergyNodeDefinitions {
         // so LV is galvanized steel and ULV (tin alloy) has no basic machine of its own.
         record Tier(String name, long v, GTMaterial mat) {}
         Tier[] tiers = {
-                new Tier("lv", 32, Materials.SteelGalvanized),
-                new Tier("mv", 128, Materials.Aluminium),
-                new Tier("hv", 512, Materials.StainlessSteel),
+                new Tier("lv", 32,   Materials.SteelGalvanized),
+                new Tier("mv", 128,  Materials.Aluminium),
+                new Tier("hv", 512,  Materials.StainlessSteel),
                 new Tier("ev", 2048, Materials.Chromium),
                 new Tier("iv", 8192, Materials.Titanium),
         };
@@ -48,15 +48,15 @@ public final class EnergyNodeDefinitions {
         // is one tier below the machine tiers above.
         record Step(String name, long hi, long lo, GTMaterial mat) {}
         Step[] steps = {
-                new Step("ulv_lv", 32, 8, Materials.TinAlloy),
-                new Step("lv_mv", 128, 32, Materials.SteelGalvanized),
-                new Step("mv_hv", 512, 128, Materials.Aluminium),
-                new Step("hv_ev", 2048, 512, Materials.StainlessSteel),
-                new Step("ev_iv", 8192, 2048, Materials.Chromium),
-                new Step("iv_luv", 32768, 8192, Materials.Titanium),
-                new Step("luv_zpm", 131072, 32768, Materials.Iridium),
-                new Step("zpm_uv", 524288, 131072, Materials.OsmiumElemental),
-                new Step("uv_xv", 2097152, 524288, Materials.Trinitanium),
+                new Step("ulv_lv",  32,      8,      Materials.TinAlloy),
+                new Step("lv_mv",   128,     32,     Materials.SteelGalvanized),
+                new Step("mv_hv",   512,     128,    Materials.Aluminium),
+                new Step("hv_ev",   2048,    512,    Materials.StainlessSteel),
+                new Step("ev_iv",   8192,    2048,   Materials.Chromium),
+                new Step("iv_luv",  32768,   8192,   Materials.Titanium),
+                new Step("luv_zpm", 131072,  32768,  Materials.Iridium),
+                new Step("zpm_uv",  524288,  131072, Materials.OsmiumElemental),
+                new Step("uv_xv",   2097152, 524288, Materials.Trinitanium),
         };
         for (Step s : steps) {
             result.add(EnergyNodeSpec.builder("transformer_" + s.name(), s.mat())

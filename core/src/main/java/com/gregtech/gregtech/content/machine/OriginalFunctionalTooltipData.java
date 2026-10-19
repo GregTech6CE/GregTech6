@@ -9,12 +9,12 @@ public final class OriginalFunctionalTooltipData {
     private OriginalFunctionalTooltipData() {}
     public record Manual(String recipeKey, String usageKey, String preparationKey, String faceKey,
                          boolean magnifier, boolean facingWrench) {}
-    private static final Manual MORTAR = new Manual("gt.recipe.mortar", "gt.lang.recipes.mortar.usage", null, "gt.lang.face.top", false, false);
-    private static final Manual GRINDSTONE = new Manual("gt.recipe.sharpener", "gt.lang.recipes.grindstone.usage", "gt.lang.recipes.grindstone.init", "gt.lang.face.any.but.sides", false, true);
-    private static final Manual SIFTING = new Manual("gt.recipe.sifter", "gt.lang.recipes.sifter.usage", null, "gt.lang.face.top", false, false);
-    private static final Manual MIXING = new Manual("gt.recipe.mixer", "gt.lang.recipes.mixingbowl.usage", null, "gt.lang.face.top", true, false);
-    private static final Manual BATH = new Manual("gt.recipe.bath", "gt.lang.recipes.bathingsink.usage", null, "gt.lang.face.top", true, false);
-    private static final Manual JUICER = new Manual("gt.recipe.juicer", "gt.lang.recipes.juicer.usage", null, "gt.lang.face.top", true, false);
+    private static final Manual MORTAR     = new Manual("gt.recipe.mortar",    "gt.lang.recipes.mortar.usage",      null,                              "gt.lang.face.top",           false, false);
+    private static final Manual GRINDSTONE = new Manual("gt.recipe.sharpener", "gt.lang.recipes.grindstone.usage",  "gt.lang.recipes.grindstone.init", "gt.lang.face.any.but.sides", false, true);
+    private static final Manual SIFTING    = new Manual("gt.recipe.sifter",    "gt.lang.recipes.sifter.usage",      null,                              "gt.lang.face.top",           false, false);
+    private static final Manual MIXING     = new Manual("gt.recipe.mixer",     "gt.lang.recipes.mixingbowl.usage",  null,                              "gt.lang.face.top",           true,  false);
+    private static final Manual BATH       = new Manual("gt.recipe.bath",      "gt.lang.recipes.bathingsink.usage", null,                              "gt.lang.face.top",           true,  false);
+    private static final Manual JUICER     = new Manual("gt.recipe.juicer",    "gt.lang.recipes.juicer.usage",      null,                              "gt.lang.face.top",           true,  false);
     public static Manual manual(String id) {
         if (id.equals("MORTAR") || id.startsWith("mortar_")) return MORTAR;
         return switch (id) {

@@ -18,10 +18,10 @@ public final class CheapWoodBarrelCatalog {
         }
     }
     public static final List<Entry> ENTRIES = List.of(
-            new Entry("wood_barrel", 32733, GT6Materials.Elements.Pb),
+            new Entry("wood_barrel",         32733, GT6Materials.Elements.Pb),
             new Entry("wood_barrel_bismuth", 32752, GT6Materials.Elements.Bi),
-            new Entry("wood_barrel_bronze", 32753, GT6Materials.Compounds.Bronze),
-            new Entry("wood_barrel_brass", 32754, GT6Materials.Compounds.Brass));
+            new Entry("wood_barrel_bronze",  32753, GT6Materials.Compounds.Bronze),
+            new Entry("wood_barrel_brass",   32754, GT6Materials.Compounds.Brass));
     public static Optional<Entry> entry(String id) {
         return ENTRIES.stream().filter(e -> e.id().equals(id)).findFirst();
     }

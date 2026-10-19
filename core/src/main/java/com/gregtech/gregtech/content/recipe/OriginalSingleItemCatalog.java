@@ -9,7 +9,7 @@ public final class OriginalSingleItemCatalog {
     private OriginalSingleItemCatalog() {}
     public record Compound(String item, String material) {}
     public static final List<Compound> COMPOUNDS = List.of(
-            new Compound("bronze_compound", "Bronze"), new Compound("brass_compound", "Brass"),
+            new Compound("bronze_compound",         "Bronze"), new Compound("brass_compound", "Brass"),
             new Compound("bismuth_bronze_compound", "BismuthBronze"),
             new Compound("arsenic_copper_compound", "ArsenicCopper"),
             new Compound("arsenic_bronze_compound", "ArsenicBronze"));

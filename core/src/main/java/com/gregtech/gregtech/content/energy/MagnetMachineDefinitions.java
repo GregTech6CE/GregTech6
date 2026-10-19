@@ -19,8 +19,8 @@ public final class MagnetMachineDefinitions {
     private static final GTMaterial[] FLUX_CASINGS = {
             Materials.Lead, Materials.Invar, Materials.Electrum,
             Materials.EnderiumBase, Materials.Enderium};
-    private static final long[] ELECTRIC_INPUT = {32, 128, 512, 2048, 8192};
-    private static final long[] FLUX_INPUT = {128, 512, 2048, 8192, 32768};
+    private static final long[] ELECTRIC_INPUT  = {32, 128, 512, 2048, 8192};
+    private static final long[] FLUX_INPUT      = {128, 512, 2048, 8192, 32768};
     private static final long[] MAGNETIC_OUTPUT = {16, 64, 256, 1024, 4096};
     private static final String[] FLUX_NAMES_EN = {"Lead", "Invar", "Electrum", "Enderium Base", "Enderium"};
 
