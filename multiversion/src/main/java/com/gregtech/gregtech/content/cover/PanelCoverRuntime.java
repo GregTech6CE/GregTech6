@@ -86,16 +86,22 @@ public final class PanelCoverRuntime {
         if(value(stack)==value)return false;stack.getOrCreateTag().putInt(VALUE,value);return true;
 //?}
     }
-    /** Exact source quantisation without overflowing long at large capacities. */
-    public static int scale(long amount,long capacity,int maximum){
-        if(amount<=0||capacity<=0)return 0;if(amount>=capacity)return maximum;
+    /**
+     * Original 15-step scale or 10-step display quantisation, evaluated without
+     * overflowing the long product used by the original formula.
+     */
+    public static int scale(long amount, long capacity, int maximum) {
+        if (amount <= 0 || capacity <= 0) return 0;
+        if (amount >= capacity) return maximum;
         // floor((capacity-amount)*(maximum-1)/capacity), using exact integer arithmetic.
-        long remaining=capacity-amount;
-        int quotient=remaining<=Long.MAX_VALUE/(maximum-1)
-            ?(int)(remaining*(maximum-1)/capacity)
-            :java.math.BigInteger.valueOf(remaining).multiply(java.math.BigInteger.valueOf(maximum-1)).divide(java.math.BigInteger.valueOf(capacity)).intValue();
-        return maximum-1-Math.min(maximum-2,quotient);
+        long remaining = capacity - amount;
+        int quotient = remaining <= Long.MAX_VALUE / (maximum - 1)
+                ? (int) (remaining * (maximum - 1) / capacity)
+                : java.math.BigInteger.valueOf(remaining).multiply(java.math.BigInteger.valueOf(maximum - 1))
+                        .divide(java.math.BigInteger.valueOf(capacity)).intValue();
+        return maximum - 1 - Math.min(maximum - 2, quotient);
     }
+
     private void refreshStopped(){
         if(!host.hasAttachedCovers())stopped=false;
         // Removing CoverControllerCovers leaves its stopped flag latched until all covers are gone.
