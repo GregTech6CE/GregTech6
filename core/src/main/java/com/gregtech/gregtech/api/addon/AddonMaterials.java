@@ -1,7 +1,10 @@
 package com.gregtech.gregtech.api.addon;
 
+import com.gregtech.gregtech.api.machine.crucible.CrucibleReactions;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.GTValues;
+import com.gregtech.gregtech.api.material.MaterialComponent;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
 import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.mod.ModData;
@@ -55,7 +58,11 @@ public final class AddonMaterials {
     public record AcceptedForm(String addonId, String materialName, String prefixName) {}
 
     private record Submission(String addonId, List<MaterialDefinition> materials,
-                              List<MaterialFormRequest> forms, Runnable link) {}
+                              List<MaterialFormRequest> forms, Runnable link,
+                              List<MaterialComposition> compositions,
+                              List<SmeltingTargetDeclaration> smeltingTargets,
+                              List<CrucibleReactionDeclaration> crucibleReactions,
+                              List<CrucibleReactionRemoval> crucibleRemovals) {}
 
     private record Pending(String addonId, MaterialDefinition definition) {}
 
@@ -85,7 +92,9 @@ public final class AddonMaterials {
             try {
                 List<MaterialDeclaration> declarations = contributor.materials();
                 warnIgnoredDeclarationIds(contributor.addonId(), declarations);
-                enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link);
+                enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
+                        contributor.compositions(), contributor.smeltingTargets(),
+                        contributor.crucibleReactions(), contributor.crucibleRemovals());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
@@ -126,16 +135,30 @@ public final class AddonMaterials {
      */
     public static synchronized void submit(String addonId, List<MaterialDefinition> materials,
                                            List<MaterialFormRequest> forms, Runnable link) {
+        submit(addonId, materials, forms, link, List.of(), List.of(), List.of(), List.of());
+    }
+
+    /** Test entry. Production addons return these lists from {@link AddonMaterialContributor}. */
+    public static synchronized void submit(String addonId, List<MaterialDefinition> materials,
+                                           List<MaterialFormRequest> forms, Runnable link,
+                                           List<MaterialComposition> compositions,
+                                           List<SmeltingTargetDeclaration> smeltingTargets,
+                                           List<CrucibleReactionDeclaration> crucibleReactions,
+                                           List<CrucibleReactionRemoval> crucibleRemovals) {
         List<MaterialDefinition> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         for (MaterialDefinition definition : copied) {
             GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + definition.name()
                     + "' declared numeric id " + definition.id() + "; the id is ignored");
         }
-        enqueue(addonId, copied, forms, link);
+        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals);
     }
 
     private static synchronized void enqueue(String addonId, List<MaterialDefinition> materials,
-                                             List<MaterialFormRequest> forms, Runnable link) {
+                                             List<MaterialFormRequest> forms, Runnable link,
+                                             List<MaterialComposition> compositions,
+                                             List<SmeltingTargetDeclaration> smeltingTargets,
+                                             List<CrucibleReactionDeclaration> crucibleReactions,
+                                             List<CrucibleReactionRemoval> crucibleRemovals) {
         if (closed) throw new IllegalStateException("Addon material queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -145,7 +168,11 @@ public final class AddonMaterials {
             throw new IllegalStateException("Addon '" + addonId + "' already submitted materials");
         List<MaterialDefinition> copiedMaterials = List.copyOf(Objects.requireNonNull(materials, "materials"));
         List<MaterialFormRequest> copiedForms = List.copyOf(Objects.requireNonNull(forms, "forms"));
-        QUEUE.put(addonId, new Submission(addonId, copiedMaterials, copiedForms, link == null ? () -> {} : link));
+        QUEUE.put(addonId, new Submission(addonId, copiedMaterials, copiedForms, link == null ? () -> {} : link,
+                List.copyOf(Objects.requireNonNull(compositions, "compositions")),
+                List.copyOf(Objects.requireNonNull(smeltingTargets, "smeltingTargets")),
+                List.copyOf(Objects.requireNonNull(crucibleReactions, "crucibleReactions")),
+                List.copyOf(Objects.requireNonNull(crucibleRemovals, "crucibleRemovals"))));
     }
 
     public static synchronized void closeQueue() {
@@ -240,6 +267,7 @@ public final class AddonMaterials {
                     canonical.setSourceMod(new ModData(submission.addonId, submission.addonId));
             }
         }
+        sealCrucibleAdditions();
     }
 
     /** Prefix checks happen after linking so a form can name a material created during link. */
@@ -270,6 +298,124 @@ public final class AddonMaterials {
             }
         }
         acceptedForms = List.copyOf(published);
+    }
+
+    /** Compositions, smelting targets and crucible rows, after every {@code link()} callback. */
+    private static void sealCrucibleAdditions() {
+        var explicit = new ArrayList<CrucibleReactions.AddonRow>();
+        var derived = new ArrayList<CrucibleReactions.AddonRow>();
+        var removals = new ArrayList<CrucibleReactions.AddonRemoval>();
+        var derivedMaterials = new IdentityHashMap<GTMaterial, Boolean>();
+        var crucibleFlags = new IdentityHashMap<GTMaterial, Boolean>();
+        for (Submission submission : snapshot()) {
+            for (MaterialComposition composition : submission.compositions) {
+                GTMaterial material = applyComposition(submission.addonId, composition, crucibleFlags);
+                if (!composition.crucible() || derivedMaterials.put(material, Boolean.TRUE) != null) continue;
+                var parts = new ArrayList<CrucibleReactions.Part>();
+                for (MaterialComposition.Part part : composition.parts()) {
+                    parts.add(new CrucibleReactions.Part(
+                            material(submission.addonId, part.material(), "composition"), part.amount() / GTValues.U));
+                }
+                derived.add(new CrucibleReactions.AddonRow(submission.addonId,
+                        new CrucibleReactions.Reaction(material, composition.divider(), List.copyOf(parts))));
+            }
+            for (SmeltingTargetDeclaration target : submission.smeltingTargets) applySmelting(submission.addonId, target);
+            for (CrucibleReactionDeclaration reaction : submission.crucibleReactions) {
+                explicit.add(new CrucibleReactions.AddonRow(submission.addonId,
+                        resolveReaction(submission.addonId, reaction)));
+            }
+            for (CrucibleReactionRemoval removal : submission.crucibleRemovals) {
+                removals.add(resolveRemoval(submission.addonId, removal));
+            }
+        }
+        CrucibleReactions.seal(explicit, derived, removals);
+    }
+
+    private static GTMaterial applyComposition(String addonId, MaterialComposition composition,
+                                               IdentityHashMap<GTMaterial, Boolean> flags) {
+        GTMaterial material = material(addonId, composition.material(), "composition");
+        requireOwned(addonId, material, "composition");
+        var components = new ArrayList<MaterialComponent>();
+        for (MaterialComposition.Part part : composition.parts()) {
+            GTMaterial component = material(addonId, part.material(), "composition");
+            if (component == material) throw new IllegalStateException("Addon '" + addonId
+                    + "' composition of '" + material.getName() + "' lists itself");
+            components.add(MaterialComponent.of(component, part.amount()));
+        }
+        Boolean previous = flags.putIfAbsent(material, composition.crucible());
+        if (previous != null && previous != composition.crucible()) {
+            throw new IllegalStateException("Addon '" + addonId + "' composition of '"
+                    + material.getName() + "' disagrees on the crucible flag");
+        }
+        if (material.hasComposition()) {
+            if (!sameComposition(material, composition.divider(), components)) {
+                throw new IllegalStateException("Addon '" + addonId + "' composition of '"
+                        + material.getName() + "' does not match the existing composition");
+            }
+            return material;
+        }
+        material.setComposition(composition.divider(), components.toArray(MaterialComponent[]::new));
+        return material;
+    }
+
+    private static boolean sameComposition(GTMaterial material, long divider, List<MaterialComponent> components) {
+        if (material.getCompositionDivider() != divider) return false;
+        var existing = material.getCompositionComponents();
+        if (existing.size() != components.size()) return false;
+        for (int i = 0; i < existing.size(); i++) {
+            if (existing.get(i).material() != components.get(i).material()
+                    || existing.get(i).amount() != components.get(i).amount()) return false;
+        }
+        return true;
+    }
+
+    private static void applySmelting(String addonId, SmeltingTargetDeclaration declaration) {
+        GTMaterial material = material(addonId, declaration.material(), "smelting target");
+        requireOwned(addonId, material, "smelting target");
+        GTMaterial target = material(addonId, declaration.target(), "smelting target");
+        boolean same = material.getTargetSmeltingMaterial().resolve() == target
+                && material.getTargetSmeltingAmount() == declaration.amount();
+        boolean untouched = material.getTargetSmeltingMaterial().resolve() == material
+                && material.getTargetSmeltingAmount() == GTValues.U
+                && !material.has(MaterialProperty.MELTING);
+        if (same) {
+            if (untouched) material.setSmelting(target, declaration.amount());
+            return;
+        }
+        if (!untouched) throw new IllegalStateException("Addon '" + addonId + "' smelting target for '"
+                + material.getName() + "' does not match the existing target");
+        material.setSmelting(target, declaration.amount());
+    }
+
+    private static CrucibleReactions.Reaction resolveReaction(String addonId, CrucibleReactionDeclaration declaration) {
+        GTMaterial output = material(addonId, declaration.output(), "crucible reaction");
+        var parts = new ArrayList<CrucibleReactions.Part>();
+        for (CrucibleReactionDeclaration.Part part : declaration.parts()) {
+            GTMaterial input = material(addonId, part.material(), "crucible reaction");
+            if (input == output) throw new IllegalStateException("Addon '" + addonId
+                    + "' crucible reaction output '" + output.getName() + "' is also an input");
+            parts.add(new CrucibleReactions.Part(input, part.ratio()));
+        }
+        return new CrucibleReactions.Reaction(output, declaration.yield(), List.copyOf(parts));
+    }
+
+    private static CrucibleReactions.AddonRemoval resolveRemoval(String addonId, CrucibleReactionRemoval removal) {
+        GTMaterial output = material(addonId, removal.output(), "crucible removal");
+        var inputs = new HashSet<GTMaterial>();
+        for (String name : removal.inputs()) inputs.add(material(addonId, name, "crucible removal"));
+        return new CrucibleReactions.AddonRemoval(addonId, output, inputs);
+    }
+
+    private static GTMaterial material(String addonId, String name, String where) {
+        GTMaterial found = GTMaterialRegistry.get(name);
+        if (!found.isValid()) throw new IllegalStateException("Addon '" + addonId + "' " + where
+                + " uses unknown material '" + name + "'");
+        return found.resolve();
+    }
+
+    private static void requireOwned(String addonId, GTMaterial material, String what) {
+        if (!owners(material).contains(addonId)) throw new IllegalStateException("Addon '" + addonId
+                + "' cannot set the " + what + " of '" + material.getName() + "'");
     }
 
     private static void addOwner(GTMaterial material, String addonId) {
