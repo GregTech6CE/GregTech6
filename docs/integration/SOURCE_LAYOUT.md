@@ -148,3 +148,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `multiversion/versions/1.21.1-neoforge/src/main/java/.../platform/neoforge/fluid/FluidCapabilities.java`：流体展示物品、便携小容器及坩埚的能力注册。
 
 注册表的类型 ID 与流体 ID、物品数据与容器能力之间的差异见 [专题报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。
+
+## 组件覆盖板与排水口
+
+- `core/.../content/cover/ComponentCoverRules.java`：泵、传送带、机械臂的档位、周期、方向、槽号；不操作世界。
+- `core/.../content/cover/DrainCoverRules.java`：三种世界水的产物映射与雨量公式。
+- `multiversion/src/main/java/.../content/cover/ComponentCoverRuntime.java`：覆盖板通过宿主／邻接能力搬运物品和流体。
+- 同目录 `CoverAttachmentBehaviors.java`：排水口世界取液、雨水、经验球、动物与通风口。
+- `BasicMachineBlockEntity`、`FluidPipeBlockEntity` 和 `PanelCoverRuntime`：分别提供本地或世界时钟，不能只读规则类判断实际调度。
+
+已有实现、未对齐边界和验证限制见 [覆盖板核查](COMPONENT_DRAIN_COVER_AUDIT.md)。

@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 //?}
 
-/** Native GT6 drain and air-vent behavior, driven by the original tick phases.
+/** Native GT6 drain and air-vent behavior, using original period constants with host-supplied clocks.
  * Drain operations preserve all-or-nothing fills, gravity and source-block rules, bulk GT waters,
  * XP conversion and entity walk-over products. Vents require a ticking fluid host and select air by
  * vanilla dimension or biome tags, including explicit void/space rejection.
@@ -53,9 +53,8 @@ public final class CoverAttachmentBehaviors {
     /**
      * One drain cover operation: pull the neighbouring fluid block and/or the rain into the machine.
      *
-     * <p>The two halves run on GT6's own two clocks — the fluid block on {@code % 20 == 5}, the rain
-     * on {@code % 100 == 10} ({@code CoverDrain:109,70}) — so a single entry point covers both and
-     * the caller only has to hand over its tick counter.</p>
+     * <p>The host supplies the clock. Current calls do not carry GT6's received-block-update
+     * flag, so this helper only runs on periodic phases and cannot implement its eager path.</p>
      *
      * @param level       the server level the machine stands in
      * @param machinePos  the machine's own position; the cover's face is {@code machinePos.relative(side)}
@@ -75,16 +74,7 @@ public final class CoverAttachmentBehaviors {
         return acted;
     }
 
-    /**
-     * GT6 {@code CoverDrain:110-155} without the {@code BlockBaseFluid} branch: a source fluid block
-     * in front of the cover is offered to the machine as one bucket and only disappears when the
-     * machine took all of it.
-     *
-     * <p>The all-or-nothing rule is the important half. GT6 calls {@code FL.fillAll}
-     * ({@code CoverDrain:148}) and removes the block only inside that {@code if}, so a full tank
-     * leaves the world untouched instead of destroying fluid — the same shape is kept here with a
-     * {@code SIMULATE} fill, which also avoids allocating the stack twice.</p>
-     */
+    /** Collect complete XP-orb groups, accounting for modern merged-orb counts. */
     private static boolean collectExperience(Level level,BlockPos pos,Direction side,IFluidHandler sink){
         var registered=GTFluids.still("XP");boolean mob=false;
         if(registered==null){registered=GTFluids.still("Mob");mob=true;}
@@ -110,6 +100,7 @@ public final class CoverAttachmentBehaviors {
         if(field!=null){var fluid=GTFluids.still(field);if(fluid!=null)sink.fill(new FluidStack(fluid.get(),amount),IFluidHandler.FluidAction.EXECUTE);}
     }
 
+    /** Source blocks and bulk waters; original quantum/custom drain callbacks are not implemented. */
     private static boolean drainFluidBlock(Level level, BlockPos machinePos, Direction side, IFluidHandler sink) {
         BlockPos front = machinePos.relative(side);
         if (!level.hasChunkAt(front)) return false;
@@ -174,7 +165,7 @@ public final class CoverAttachmentBehaviors {
         return sink.fill(rain, IFluidHandler.FluidAction.EXECUTE) > 0;
     }
 
-    /** Original rain obstruction and support checks; exposed for finite native world checks. */
+    /** Current rain obstruction/support adapter; original BlockMetaType handling is not included. */
     public static boolean canCollectRainAt(Level level, BlockPos machinePos, Direction side) {
         if (side == Direction.DOWN) return false;
         BlockPos front = machinePos.relative(side);

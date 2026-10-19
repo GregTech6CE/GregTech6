@@ -1,0 +1,79 @@
+{
+  "baseline": "2112f71fe",
+  "provenance": "GregTech-6 Team / Gregorius Techneticies; original LGPL sources read only and existing headers retained",
+  "original_sources": {
+    "gregapi/cover/covers/CoverPump.java": "d7425ae66212cbf5ffb8ab2ffb51e3b257a0e491166d7a25533017db2d1a7bf6",
+    "gregapi/cover/covers/CoverConveyor.java": "8b182ba4124f66e48b31b4f9863c00bfe6cf57f51fa7a5ef4b62dbe3a12bb8c4",
+    "gregapi/cover/covers/CoverRobotArm.java": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc",
+    "gregapi/cover/covers/CoverDrain.java": "6ffe36e186e9a72e5c3747a742bc4563d9af02f926a6ad5fbae98458bb9b5abb",
+    "gregtech/items/MultiItemTechnological.java": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+    "gregapi/data/FL.java": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+    "gregapi/util/WD.java": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRules.java": "5c2636d33b98ceaa32a1c1ef62f191cbafba0ecbe72d47f67749c1dc3e1cb248",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "4ce3f68f8ae8268acbf1da82dd91a4557b1244dff16d57b8db8ec2d0f41488a5",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverAttachmentBehaviors.java": "4ea78a6bdc348cc7ba1d2a645a6952032db761cb1e4f315f2c1d93fca3e97511",
+    "core/src/main/java/com/gregtech/gregtech/content/cover/DrainCoverRules.java": "7ba6b5d7bc6fddf8014dc488b17810583804ed8f36e63a04bd986af8101f3813",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "c7a6e0db9db4bb282eff27fb549cb521c0f6a2e80f3314ce747cabca4e6ee84f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": "2ff66903c17048e8e40b2016be2fa4a798db46d19add5964d889086a051ad330",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+    "multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverDrainRegressionTests.java": "0e612ca0c2d1f6f48f9f92473e12ecba9af84ff3eee317a6bbcfc7c558ba6f1c",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CoverAttachmentTests.java": "830adeb76bc9881df208cd69e4d8c4317dab1b43ae714a7c377bfe773765a80a",
+    "tools/integration/audit-probes/ComponentCoverRulesAudit.java": "9066f421f5aebb5307522341b2c23a14b6e8003dcc9d496d8ae39f30097c4c5b"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRules.java": {
+      "plain": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverAttachmentBehaviors.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "java": "Java 17; compiled only ComponentCoverRules, DrainCoverRules and ComponentCoverRulesAudit, no cached dependencies",
+  "observations": [
+    "TIER|0|PUMP=250|ITEM_INTERVAL=512",
+    "TIER|1|PUMP=1000|ITEM_INTERVAL=256",
+    "TIER|2|PUMP=4000|ITEM_INTERVAL=128",
+    "TIER|3|PUMP=16000|ITEM_INTERVAL=64",
+    "TIER|4|PUMP=64000|ITEM_INTERVAL=32",
+    "TIER|5|PUMP=256000|ITEM_INTERVAL=16",
+    "TIER|6|PUMP=1024000|ITEM_INTERVAL=8",
+    "TIER|7|PUMP=4096000|ITEM_INTERVAL=4",
+    "TIER|8|PUMP=16384000|ITEM_INTERVAL=2",
+    "TIER|9|PUMP=65536000|ITEM_INTERVAL=1",
+    "RULE_CHECKS|61484"
+  ],
+  "findings": [
+    "ALIGN-098",
+    "ALIGN-099",
+    "ALIGN-100",
+    "ALIGN-101"
+  ],
+  "limits": [
+    "Rules enumerate ten original tiers and nonnegative clocks 0..1023; no native transfer execution",
+    "Pump per-call rate limit and biome boundary examples are source-derived conditions, not gameplay reproductions",
+    "Existing native drain tests inspected only; pure timing rules do not prove actual host scheduling",
+    "No native compile, full tests, game, restart, build or push"
+  ]
+}

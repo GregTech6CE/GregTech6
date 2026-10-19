@@ -120,6 +120,10 @@
 | ALIGN-095 | 确认可调容量键混用，空罐首次填充未按输入流体查表。 | 原版配方／罐同用 Fluid 名称，空罐按输入查询。 | 当前罐用 type ID，三种世界水查成 minecraft:water；普通静态流体多为同 ID，不一概判失效，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 | ALIGN-096 | 确认基础配方机默认罐容量和倍率不同。 | 原版输入默认 1000／可覆盖、配方容量乘 parallel×2，输出 Long.MAX_VALUE。 | 当前输入 8000／倍率 1，基础输出 8000；独立输出覆写另列，不等同原版积压限制，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 | ALIGN-097 | 确认普通桶与物流桶物品缺少容器能力。 | 原版 MultiTileEntityItemInternal 转发桶的物品 fill／drain 并更新 NBT。 | 当前只有存液掉落数据和提示／堆叠限制，没有本模组提供的物品流体 handler；量杯等不在此缺口内，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
+| ALIGN-098 | 确认泵每源罐只尝试一次，不重复使用余下预算。 | 原版 CoverPump 在有进展且有预算时循环 FL.move。 | 当前 for 每个 tank 一次；单次调用限额的接收器可能低于额定吞吐，未原生复现，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
+| ALIGN-099 | 确认排水口世界取液范围收窄。 | 原版河湖／绿洲名单、量子份额及通用流体 drain 回调。 | 当前无限水只检查河流标签，普通路径限定 LiquidBlock 源；三种 GT 水独立批量路径已有，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
+| ALIGN-100 | 确认排水口缺少方块更新即时尝试，且宿主时钟不同。 | 原版 receivedBlockUpdate 或全局相位。 | 当前只周期调用，基础机／管道本地计数、其他宿主世界计时；周期相同不是相位相同，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
+| ALIGN-101 | 确认雨水气候取样位置不同。 | 原版宿主群系决定温度门控和产量，前方决定接雨条件。 | 当前从 front 群系算产量；群系边界可能不同，纯雨量公式已对应，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

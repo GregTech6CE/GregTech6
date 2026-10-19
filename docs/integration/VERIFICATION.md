@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 组件覆盖板规则与原生调用链
+
+相对 2112f71fe，五份生产文件代码／字面量不变，四份共享原生类分别展开两版核对。Java 17 仅编译 ComponentCoverRules、DrainCoverRules 与观察入口，十档和 0–1023 时钟及边界共 61484 个条件通过；规则结果不能作为搬运／世界交互实测。没有原生编译、完整测试、游戏、重启、构建或推送，见 [回执](verification/component-cover-audit-20261019.json)。
+
 ## 2026-10-19 / 可调容量源码与纯查询观察
 
 相对 1f87ed351，三份生产 Java 的代码／字面量等价，共享 FluidTankGT 两版分别展开核对。Java 17 仅运行 LongFluidStorage 的七项合成参数观察；原版公式、原生注册 ID、桶物品能力由源码链确认。本机 Forge 47.4.20／Neo 21.1.243 源码哈希留档，不声称原生游戏已验。未完整构建、重启或推送，见 [回执](verification/adaptive-fluid-audit-20261019.json)。

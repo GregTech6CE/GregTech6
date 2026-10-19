@@ -23,7 +23,11 @@ package com.gregtech.gregtech.content.cover;
 /** Loader-independent timing, placement, mode, slot and face rules of the component covers. */
 public final class ComponentCoverRules {
     private ComponentCoverRules() {}
-    public enum Kind { PUMP, CONVEYOR, ROBOT_ARM }
+
+    public enum Kind {
+        PUMP, CONVEYOR, ROBOT_ARM
+    }
+
     public static Kind kind(String behavior) {
         if (behavior == null) return null;
         return switch (behavior) {
@@ -33,26 +37,55 @@ public final class ComponentCoverRules {
             default -> null;
         };
     }
+
     public static boolean canAttach(Kind kind, boolean ticks, boolean fluids, boolean items) {
         return kind == null || ticks && (kind == Kind.PUMP ? fluids : items);
     }
+
     public static boolean due(Kind kind, int tier, long serverTime, boolean stopped) {
         return !stopped && (kind == Kind.PUMP ? Math.floorMod(serverTime, 20) == 5
                 : Math.floorMod(serverTime, itemInterval(tier)) == 0);
     }
-    public static int pumpThroughput(int tier) { return tier < 0 ? 1000 : 250 << (2 * tier); }
-    public static int itemInterval(int tier) { return tier < 0 ? 20 : Math.max(1, 512 >> tier); }
-    public static int toggle(int visual, boolean pipe) { return pipe || visual == 0 ? 1 : 0; }
+
+    public static int pumpThroughput(int tier) {
+        return tier < 0 ? 1000 : 250 << (2 * tier);
+    }
+
+    public static int itemInterval(int tier) {
+        return tier < 0 ? 20 : Math.max(1, 512 >> tier);
+    }
+
+    public static int toggle(int visual, boolean pipe) {
+        return pipe || visual == 0 ? 1 : 0;
+    }
+
     public static int slotStep(int slot, boolean sneaking, boolean pipe) {
         return (int) Math.max(Short.MIN_VALUE, Math.min(pipe ? -1 : Short.MAX_VALUE,
                 (long) slot + (sneaking ? -1 : 1)));
     }
-    public static int sourceSlot(int value) { return value < 0 ? -1 - value : -1; }
-    public static int targetSlot(int value) { return value < 0 ? -1 : value; }
-    public static boolean allowsInsert(int visual) { return visual != 0; }
-    public static boolean allowsExtract(int visual) { return visual == 0; }
+
+    public static int sourceSlot(int value) {
+        return value < 0 ? -1 - value : -1;
+    }
+
+    public static int targetSlot(int value) {
+        return value < 0 ? -1 : value;
+    }
+
+    public static boolean allowsInsert(int visual) {
+        return visual != 0;
+    }
+
+    public static boolean allowsExtract(int visual) {
+        return visual == 0;
+    }
+
     public static String texture(Kind kind, int visual) {
-        return switch (kind) { case PUMP -> "pump"; case CONVEYOR -> "conveyor"; case ROBOT_ARM -> "robotarm"; }
+        return switch (kind) {
+            case PUMP -> "pump";
+            case CONVEYOR -> "conveyor";
+            case ROBOT_ARM -> "robotarm";
+        }
                 + (visual == 0 ? "/out" : "/in");
     }
 }
