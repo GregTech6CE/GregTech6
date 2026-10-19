@@ -22,12 +22,22 @@ public final class GregTechConfig {
             .define("logMaterials", true);
 
 //? if >=1.21.1 {
-    /*private static final ModConfigSpec.BooleanValue MACHINE_EXPLOSIONS = BUILDER
+    /*private static final ModConfigSpec.BooleanValue OVERLOAD_EXPLOSIONS = BUILDER
 *///?} else {
-    private static final ForgeConfigSpec.BooleanValue MACHINE_EXPLOSIONS = BUILDER
+    private static final ForgeConfigSpec.BooleanValue OVERLOAD_EXPLOSIONS = BUILDER
 //?}
-            .comment("GT6 behaviour: machines explode when fed a higher voltage than they accept")
-            .define("machineOvervoltageExplosions", true);
+            .comment("Original GT6 machines.explode_by_overload; disabled by default.",
+                    "The obsolete machineOvervoltageExplosions setting is ignored because older builds generated it as true.")
+            .define("machines.explode_by_overload", false);
+
+//? if >=1.21.1 {
+    /*private static final ModConfigSpec.BooleanValue OVERLOAD_BREAKING = BUILDER
+*///?} else {
+    private static final ForgeConfigSpec.BooleanValue OVERLOAD_BREAKING = BUILDER
+//?}
+            .comment("Original GT6 machines.break_by_overload; remove only the overloaded machine without an area explosion.",
+                    "Disabled by default. Enabling explode_by_overload also enables removal.")
+            .define("machines.break_by_overload", false);
 
 //? if >=1.21.1 {
     /*public static final ModConfigSpec SPEC = BUILDER.build();
@@ -37,11 +47,20 @@ public final class GregTechConfig {
 
     public static boolean logMaterials = true;
 
-    public static boolean machineOvervoltageExplosions() {
+    public static boolean explodeByOverload() {
         try {
-            return MACHINE_EXPLOSIONS.get();
+            return OVERLOAD_EXPLOSIONS.get();
         } catch (IllegalStateException e) {
-            return true; // config not loaded yet (shouldn't happen during world ticks)
+            return false;
+        }
+    }
+
+    public static boolean breakByOverload() {
+        if (explodeByOverload()) return true;
+        try {
+            return OVERLOAD_BREAKING.get();
+        } catch (IllegalStateException e) {
+            return false;
         }
     }
 

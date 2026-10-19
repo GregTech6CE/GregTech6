@@ -112,12 +112,8 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
                 if (overvoltagePrevention < 100) {
                     overvoltagePrevention++;
                     ruBuffer = 0;
-                } else if (level != null && !level.isClientSide
-                        && com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-                    level.removeBlock(worldPosition, false);
-                    level.explode(null, worldPosition.getX() + .5, worldPosition.getY() + .5,
-                            worldPosition.getZ() + .5, PistonEngineState.voltageTier(size),
-                            Level.ExplosionInteraction.BLOCK);
+                } else {
+                    com.gregtech.gregtech.api.energy.MachineOverload.apply(this, magnitude, type);
                 }
             }
             return amount;

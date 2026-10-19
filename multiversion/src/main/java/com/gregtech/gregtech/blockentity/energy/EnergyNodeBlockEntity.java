@@ -592,22 +592,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     private void rotaryOverload(long size, GregTechTags.Tag type) {
-        buffer = 0;
-        if (magnetOverloads < 100) { magnetOverloads++; setChanged(); return; }
-        if (level != null && !level.isClientSide) {
-            if (com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-                float power = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(size, type);
-                level.removeBlock(worldPosition, false);
-                if (power >= 1) level.explode(null, worldPosition.getX()+0.5, worldPosition.getY()+0.5,
-                        worldPosition.getZ()+0.5, power, Level.ExplosionInteraction.BLOCK);
-            }
-//? if >=1.21.1 {
-            /*level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE.value(),
-*///?} else {
-            level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE,
-//?}
-                    net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
-        }
+        if (magnetOverloads < 100) { buffer = 0; magnetOverloads++; setChanged(); return; }
+        com.gregtech.gregtech.api.energy.MachineOverload.apply(this, size, type);
         setChanged();
     }
 
@@ -636,22 +622,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     private void magnetOverload(long packetSize) {
+        rotaryOverload(packetSize, spec.inType());
         buffer = 0;
-        if (magnetOverloads < 100) {
-            magnetOverloads++;
-            setChanged();
-            return;
-        }
-        if (level != null && !level.isClientSide
-                && com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-            float power = Math.min(8.0f, 3.0f + (float) (Math.log(
-                    (double) packetSize / Math.max(1, spec.inputRate() * 2)) / Math.log(2.0)));
-            level.removeBlock(worldPosition, false);
-            level.explode(null, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5,
-                    worldPosition.getZ() + 0.5, Math.max(3.0f, power),
-                    Level.ExplosionInteraction.BLOCK);
-        }
-        setChanged();
     }
 
     private void emitElectricTransformer(){
@@ -933,20 +905,9 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
     }
 
     private void batteryOvervoltage(long packet) {
-        if(level==null||level.isClientSide)return;
-//? if >=1.21.1 {
-        /*level.playSound(null,worldPosition,net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE.value(),
-*///?} else {
-        level.playSound(null,worldPosition,net.minecraft.sounds.SoundEvents.GENERIC_EXPLODE,
-//?}
-                net.minecraft.sounds.SoundSource.BLOCKS,1,1);
-        if(com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-            dropContents();
-            level.removeBlock(worldPosition,false);
-            float power=(float)Math.min(8,Math.max(1,Math.log(packet/8.0)/Math.log(4)));
-            level.explode(null,worldPosition.getX()+0.5,worldPosition.getY()+0.5,worldPosition.getZ()+0.5,
-                    power,Level.ExplosionInteraction.BLOCK);
-        }
+        if (level == null || level.isClientSide) return;
+        if (com.gregtech.gregtech.GregTechConfig.breakByOverload()) dropContents();
+        com.gregtech.gregtech.api.energy.MachineOverload.apply(this, packet, spec.inType());
     }
     @Override public com.gregtech.gregtech.api.machine.AdjacentEnergyControl adjacentEnergyControl() {
         if (!hasOriginalConverter() || !com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.respondsToAdjacent(spec)) return null;

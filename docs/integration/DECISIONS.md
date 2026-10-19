@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-20 / 原版过载选项与直接爆炸分开
+
+存在爆炸分支不意味着原版默认开启：以 GT_API 的配置读取默认值为准。采用 `machines.explode_by_overload=false` 与 `machines.break_by_overload=false`，弃用旧移植自动生成 true 的配置键，避免只改默认值而让旧安装继续爆炸。原生效果由双端共用 `MachineOverload` 执行，包大小、储能和转换规则仍归各设备／core。
+
+通用 overcharge 与设备直接 explode 分开；自动锻造锤过强正向 KU 的直接爆炸特例、锅炉压力危险继续保留。上一批高压输汽可以导致过载的结论保留，但撤回其足以证明原版默认会炸的推论。见 [证据及边界](verification/overload-defaults-20261020.md)。
+
 ## 2026-10-20 / 共用热流体循环与原版压力输出
 
 八种单方块热交换器与大型热交换器共用 `HeatExchangerRules.charge` 和原生流体边界 `HotFluidFuelCycle`；注册参数、含料和能量规则放在 core，两端只有共同原生代码及版本接口分支。缺失的六种磁通设备复用既有旋转转换器，不新建平台业务副本。

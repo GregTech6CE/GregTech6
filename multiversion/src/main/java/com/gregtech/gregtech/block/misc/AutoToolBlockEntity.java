@@ -32,11 +32,6 @@ public abstract class AutoToolBlockEntity extends GTEnergyBlockEntity {
     @Override public long getEnergyOffered(GregTechTags.Tag type,Direction side,long size) { return 0; }
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return input(); }
     @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type,Direction side) { return 0; }
-    protected boolean overvoltage(long size) {
-        if (!com.gregtech.gregtech.content.tool.AutomaticToolRules.overvoltage(size,input())) return false;
-        if(level!=null && !level.isClientSide) level.explode(null,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,2,net.minecraft.world.level.Level.ExplosionInteraction.BLOCK);
-        return true;
-    }
 //? if >=1.21.1 {
     /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.saveAdditional(tag,lookup);tag.putLong("gt.energy",energy);tag.putBoolean("gt.stopped",stopped); }
     @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { super.loadAdditional(tag,lookup);energy=Math.max(0,tag.getLong("gt.energy"));stopped=tag.getBoolean("gt.stopped"); }

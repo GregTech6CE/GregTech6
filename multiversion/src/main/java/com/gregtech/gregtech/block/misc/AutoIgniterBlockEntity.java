@@ -17,7 +17,10 @@ public class AutoIgniterBlockEntity extends AutoToolBlockEntity {
     @Override public long doInject(GregTechTags.Tag type,Direction side,long size,long amount,boolean execute) {
         if (!isEnergyAcceptingFrom(type,side,false) || size<=0 || amount<=0) return 0;
         if (execute) {
-            if(overvoltage(size)) return 1;
+            if (com.gregtech.gregtech.content.tool.AutomaticToolRules.overvoltage(size,input())) {
+                com.gregtech.gregtech.api.energy.MachineOverload.apply(this,size,energyType());
+                return 1;
+            }
             if(cooldown==0 && energy<input()*10) energy+=size;
             setChanged();
         }

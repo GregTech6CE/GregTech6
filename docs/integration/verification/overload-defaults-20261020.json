@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-20",
+  "original_authors": [
+    "GregTech-6 Team",
+    "Gregorius Techneticies"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master",
+  "original_sources": [
+    {
+      "path": "src/main/java/gregapi/GT_API.java",
+      "sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce"
+    },
+    {
+      "path": "src/main/java/gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "src/main/java/gregapi/tileentity/machines/MultiTileEntityBasicMachine.java",
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/energy/converters/MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/autotools/MultiTileEntityAutoToolHammer.java",
+      "sha256": "f47df299bf216988e91ccb84220c607e033a17f0b5140459c55e5b7873b38871"
+    },
+    {
+      "path": "src/main/java/gregtech/tileentity/autotools/MultiTileEntityAutoToolIgniter.java",
+      "sha256": "b99091878601e20d313167a18addd922fa28fcf9890c2bd72926beb01e687c1a"
+    }
+  ],
+  "defaults": {
+    "machines.explode_by_overload": false,
+    "machines.break_by_overload": false
+  },
+  "legacy_config": "machineOvervoltageExplosions=true seeded before launch; obsolete key removed by spec correction",
+  "tasks": [
+    "compileBothPlatforms",
+    ":multiversion:1.21.1-neoforge:runGameTestServer"
+  ],
+  "first_compile": "work/overload-feedback-20261020-compile.log; BUILD SUCCESSFUL in 3m 2s",
+  "final_run_log": "work\\overload-feedback-20261020-run.log",
+  "final_result": "BUILD SUCCESSFUL in 5m 34s",
+  "required_tests": 1,
+  "result": "passed",
+  "native_cases": [
+    "old generated true config does not enable the new default-false policy",
+    "RU and KU oversized input simulation and execution preserve the ordinary machine and valid stored energy",
+    "360 manual high-pressure boiler/turbine/bronze sluice calls",
+    "240 full-tank steam turbine conversion calls beyond overload protection",
+    "automatic hammer keeps direct explosion exception with generic overload damage disabled",
+    "break-only removes target without creating an explosion event",
+    "explicit explosion opt-in requests an explosion; simulation never does"
+  ],
+  "explosion_events": "explicit explosion events counted and cancelled by the fixture; area destruction is not verified",
+  "not_run": [
+    "full tests",
+    "client startup",
+    "user saved world",
+    "complete recipe production chain",
+    "saved-world restart"
+  ],
+  "audit_goal": "still paused by user"
+}
