@@ -67,7 +67,9 @@ final class LongDistanceRuntimeSmoke {
             var diamonds=new ItemStack(Items.DIAMOND,3);
             require(relay.insertItem(0,diamonds,true).isEmpty()&&relay.getStackInSlot(0).isEmpty(),"item simulation modified storage");
             require(relay.insertItem(0,diamonds,false).isEmpty()&&relay.getStackInSlot(0).getCount()==3,"item forwarding lost content");
-            require(relay.extractItem(0,2,false).getCount()==2&&relay.getStackInSlot(0).getCount()==1,"item extraction differs from original inventory delegate");
+            // Current-port regression only: GT6's sided canExtractItem2 returns false (ALIGN-073).
+            // Its direct decrStackSize delegate is not proof that automated extraction should be allowed.
+            require(relay.extractItem(0,2,false).getCount()==2&&relay.getStackInSlot(0).getCount()==1,"current relay extraction behavior changed (ALIGN-073 pending)");
             var middle=start.relative(facing.getOpposite(),2);level.setBlock(middle,block("long_dist_pipe_fluid").defaultBlockState(),3);
             require(relay.getSlots()==0,"item/fluid crossover route");
             level.setBlock(middle,block("long_dist_pipe_item").defaultBlockState(),3);require(relay.getSlots()>0,"same-tick item reconnection stale");
