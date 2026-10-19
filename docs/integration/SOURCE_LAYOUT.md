@@ -62,6 +62,8 @@
 
 ## 命名与修改约定
 
+物质制造机结构维护在 core `content/multiblock/SharedMatterFabricatorStructure.java`，主控 `MatterFabricatorBlockEntity` 只补充 QU 参数和处理器互换验证，实际加工／保存沿大型配方机父类。共用 `content/recipe/MatterRecipeLoader.java` 生成特殊转换与元素分离行，不能只搜索同名动态 RecipeMap。`tools/tests/test_fusion_resources.py` 已直接读取维护源码和三层资源位置，不再借助 native 工具视图；它是源引用检查，不能替代游戏渲染验证。
+
 聚变的实际运行入口是 shared `blockentity/machine/FusionReactorControllerBlockEntity.java` 的专用 ticker，不能只看 BasicMachine。部件结构数据在 core `content/multiblock/SharedFusionStructure.java`，原生 `FusionStructure.java` 只绑定共享数据。生成器 `tools/import_fusion_structure.py --source <原版控制器.java> --check` 可只读核对，`--output` 可指定临时输出；无需原生投影包装。内爆中空结构为 `SharedImplosionStructure`，三个特殊主控的参数入口为 `OriginalAdvancedControllerData`。运行行为差异见 [聚变／内爆核查](ADVANCED_CONTROLLER_AUDIT.md)。
 
 - 包名表达职责，不再新增 `a/b/c` 阶段目录或并列的 `loader/loaders`。

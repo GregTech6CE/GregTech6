@@ -74,7 +74,7 @@ Java 17 独立 core 观察：
 - 展开 `OriginalAdvancedControllerData` 与 `SharedImplosionStructure`，保持代码和字面量；不调整参数、角色、循环顺序。
 - `tools/import_fusion_structure.py` 改为真正生成 core 的 `SharedFusionStructure`，不覆盖原生 `FusionStructure` 适配器、不需要创建 native 投影视图。新增 `--source`、`--output`、只读 `--check`；拒绝来源与输出相同，尺寸／数量／重叠用显式异常检查。
 - 原生成器写旧原生类名和路径，不能再用它重建当前共享结构。当前生成结果与已维护表全文一致。`--check` 对不一致输出返回失败且不写文件。
-- 现有 `tools/tests/test_fusion_resources.py` 还读取原生适配器中的旧坐标列表和旧主控 blockstate 路径，不能作为本批完整结构／资源通过依据；本批未运行，后续需按当前资源层修订。
+- 当时 `tools/tests/test_fusion_resources.py` 仍从原生适配器寻找坐标、经工具视图读取 Forge 主控资源，本批未运行。后续第十四批已改为维护目录并分别检查两版主控；`fusion_reactor_main.json` 在 core 中仍存在、Forge 仍使用，不能说该资源已废弃。见 [后续核查](MATTER_AND_FUSION_CONTINUITY_AUDIT.md)。
 
 实际运行 Java 17 的参数／布局观察与两个格式化类、聚变表独立编译；生成器进行了全文核对、临时输出以及拒绝写入检查。详见 [回执](verification/advanced-controller-audit-20261019.json)。没有运行 Gradle、全套测试、GameTest、客户端、存档重启或打包；本批四项玩法差异尚未修复。
 

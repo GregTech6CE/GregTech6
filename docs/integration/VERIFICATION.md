@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 物质制造结构与聚变源检查
+
+SharedMatterFabricatorStructure 与 `f3b298f30` 代码／字面量等价，Java 17 独立编译和目录观察通过。149 个 core 位置与原版显式调用／中心空气匹配，顶部八格允许两种处理器；28 条特殊转换数值声明匹配。聚变四项定向源检查通过，模块不再导入 native_layout；仅验证源引用、tint 字段、两版主控状态组合和 18 条聚变数值。ALIGN-056 为源码顺序推导，无 Minecraft 重启、完整配方解析、全套测试或构建。见 [回执](verification/matter-controller-audit-20261019.json)。
+
 ## 2026-10-19 / 聚变与内爆参数、布局和生成器
 
 OriginalAdvancedControllerData／SharedImplosionStructure 与 `4f7932a5b` 代码和字面量一致。Java 17 独立编译这两类、SharedFusionStructure 和观察探针；观察聚变 886 格、四种角色数量、内爆 25 壁加一空气及两机额定参数。生成器默认核对、显式来源临时输出、差异拒绝且不写、来源输出冲突拒绝和无效来源拒绝通过；原版源码、共享结构表与原生适配器字节／mtime 未变。四项玩法差异为调用链核查，无 Gradle／GameTest／游戏／打包，见 [回执](verification/advanced-controller-audit-20261019.json)。

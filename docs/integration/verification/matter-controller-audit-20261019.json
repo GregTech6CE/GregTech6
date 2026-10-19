@@ -1,0 +1,324 @@
+{
+  "date": "2026-10-19",
+  "baseline": "f3b298f30",
+  "new_findings": [
+    "ALIGN-056"
+  ],
+  "finding_evidence": "Source tracing of fusion save/load, resumed execution and startup condition; not a game restart",
+  "format_only_code_and_literals_unchanged": [
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedMatterFabricatorStructure.java"
+  ],
+  "compilation": "Java 17: SharedMatterFabricatorStructure and MatterControllerAudit; passed",
+  "core_observations": [
+    "PARTS|{0=1, 18031=97, 18044=26, 18200=1, 18202=4, 18204=4, 18299=16}",
+    "LARGE|QU|1|1|2097152|64|true",
+    "COMPACT|1|QU|32|5000",
+    "COMPACT|2|QU|128|6250",
+    "COMPACT|3|QU|512|7500",
+    "COMPACT|4|QU|2048|8750",
+    "COMPACT|5|QU|8192|10000"
+  ],
+  "matter_structure_comparison": {
+    "parsed_original_calls": 157,
+    "unparsed_calls": 0,
+    "compared_positions": 149,
+    "cpu_alternative_positions": 8,
+    "coordinate_part_role_match": true,
+    "source_air_rule": "getAir(2,2,2), relative (0,2,2)"
+  },
+  "matter_special_numeric_recipes": {
+    "matched_rows": 28,
+    "rows": [
+      [
+        "Dilithium",
+        "dustDiv72",
+        1,
+        144,
+        "Ender_TE",
+        250,
+        16
+      ],
+      [
+        "Dilithium",
+        "dustTiny",
+        1,
+        1152,
+        "Ender_TE",
+        20000,
+        16
+      ],
+      [
+        "Dilithium",
+        "dustSmall",
+        1,
+        2592,
+        "Ender_TE",
+        45000,
+        16
+      ],
+      [
+        "Dilithium",
+        "dust",
+        1,
+        10368,
+        "Ender_TE",
+        180000,
+        16
+      ],
+      [
+        "Dilithium",
+        "gem",
+        1,
+        20736,
+        "Ender_TE",
+        360000,
+        16
+      ],
+      [
+        "Dilithium",
+        "blockDust",
+        1,
+        93312,
+        "Ender_TE",
+        1620000,
+        16
+      ],
+      [
+        "Dilithium",
+        "blockGem",
+        1,
+        186624,
+        "Ender_TE",
+        3240000,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustDiv72",
+        1,
+        144,
+        "Ender_TE",
+        250,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustTiny",
+        1,
+        1152,
+        "Ender_TE",
+        2000,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustSmall",
+        1,
+        2592,
+        "Ender_TE",
+        4500,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dust",
+        1,
+        10368,
+        "Ender_TE",
+        18000,
+        16
+      ],
+      [
+        "AncientDebris",
+        "ingot",
+        1,
+        10368,
+        "Ender_TE",
+        18000,
+        16
+      ],
+      [
+        "AncientDebris",
+        "blockDust",
+        1,
+        93312,
+        "Ender_TE",
+        162000,
+        16
+      ],
+      [
+        "AncientDebris",
+        "blockIngot",
+        1,
+        93312,
+        "Ender_TE",
+        162000,
+        16
+      ],
+      [
+        "Dilithium",
+        "dustDiv72",
+        0,
+        144,
+        "Ender",
+        144,
+        16
+      ],
+      [
+        "Dilithium",
+        "dustTiny",
+        0,
+        1152,
+        "Ender",
+        11520,
+        16
+      ],
+      [
+        "Dilithium",
+        "dustSmall",
+        0,
+        2592,
+        "Ender",
+        25920,
+        16
+      ],
+      [
+        "Dilithium",
+        "dust",
+        0,
+        10368,
+        "Ender",
+        103680,
+        16
+      ],
+      [
+        "Dilithium",
+        "gem",
+        0,
+        20736,
+        "Ender",
+        207360,
+        16
+      ],
+      [
+        "Dilithium",
+        "blockDust",
+        0,
+        93312,
+        "Ender",
+        933120,
+        16
+      ],
+      [
+        "Dilithium",
+        "blockGem",
+        0,
+        186624,
+        "Ender",
+        1866240,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustDiv72",
+        0,
+        144,
+        "Ender",
+        144,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustTiny",
+        0,
+        1152,
+        "Ender",
+        1152,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dustSmall",
+        0,
+        2592,
+        "Ender",
+        2592,
+        16
+      ],
+      [
+        "AncientDebris",
+        "dust",
+        0,
+        10368,
+        "Ender",
+        10368,
+        16
+      ],
+      [
+        "AncientDebris",
+        "ingot",
+        0,
+        10368,
+        "Ender",
+        10368,
+        16
+      ],
+      [
+        "AncientDebris",
+        "blockDust",
+        0,
+        93312,
+        "Ender",
+        93312,
+        16
+      ],
+      [
+        "AncientDebris",
+        "blockIngot",
+        0,
+        93312,
+        "Ender",
+        93312,
+        16
+      ]
+    ],
+    "scope": "numeric declarations only; does not resolve native items/fluids or deduplicate final recipes"
+  },
+  "fusion_source_tests": {
+    "count": 4,
+    "result": "test_exact_original_part_counts_and_energy_ports (tools.tests.test_fusion_resources.FusionResources.test_exact_original_part_counts_and_energy_ports) ... ok\ntest_part_models_use_existing_original_textures_and_separate_tint (tools.tests.test_fusion_resources.FusionResources.test_part_models_use_existing_original_textures_and_separate_tint) ... ok\ntest_platform_controller_states_reference_existing_models (tools.tests.test_fusion_resources.FusionResources.test_platform_controller_states_reference_existing_models) ... ok\ntest_source_reaction_values_are_preserved (tools.tests.test_fusion_resources.FusionResources.test_source_reaction_values_are_preserved) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.088s\n\nOK\n",
+    "imports_native_layout": false,
+    "scope": "source coordinates, both platform resource references/tint fields, 18 numeric recipe rows; not runtime rendering"
+  },
+  "original_sha256": {
+    "gregtech/tileentity/multiblocks/MultiTileEntityMatterFabricator.java": "5e4289450f65c76c15065784b6d04a30c825f2c3b0db5d376f46c5af7dd19a17",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/c/Loader_Recipes_Other.java": "60d8832d969461869f1b224a9cc28578515fcd60c591cd0992f4e26b8951a1a3",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedMatterFabricatorStructure.java": "9659a640d8533b67b1b80cf8c7616bc4f9910dffef0106ae78f9869138706e85",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MatterRecipeLoader.java": "e0ba8ca3e1623a2e1ce1e0b77eff0a78704dcfcc91a9a11828db30c46c11349d",
+    "tools/tests/test_fusion_resources.py": "158338907a304ecbe1f686dad9c8a1ed9117437509b2ecee759a2a522ba9cb6a",
+    "tools/integration/audit-probes/MatterControllerAudit.java": "224d4f211ed8e065c98a9d57b0553bf095474b5e6ecb70d3156588f5fa90045a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FusionReactorControllerBlockEntity.java": "cf52ce2cd9802ca0ea3db98942475943a6c720530b78b695223e6776f0131b5b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MatterFabricatorBlockEntity.java": "c515bbc17a26dcac6a7f1e5db8abe373c087bd5efb8f831875610db9298c9a24",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/CompactMatterFabricatorBlockEntity.java": "9e399cddeb74ad6323bab988a57d7d790ceb9b9f4ac2ac369a0f087962556d74",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java": "cbcf20ea5720f14743165dc896dc0ad72b9a0268ef75b5e5cba9bac61bffdc79",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a"
+  },
+  "not_run": [
+    "Gradle",
+    "all tests",
+    "GameTest",
+    "Minecraft",
+    "world restart",
+    "packaging"
+  ],
+  "unverified": [
+    "matter fluid units for every material phase",
+    "native recipe resolution and duplicate handling",
+    "cross-chunk structures",
+    "external ports and covers in game"
+  ]
+}
