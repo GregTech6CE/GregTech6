@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "27b63907fdb55615502f63ac4682057541171f33",
+  "version": "0.0.0",
+  "mod_id": "gt6ce",
+  "result": "BUILD SUCCESSFUL in 4m 8s",
+  "tasks": [
+    ":multiversion:1.20.1-forge:distributionJar",
+    ":multiversion:1.21.1-neoforge:jar"
+  ],
+  "log": "work/gameplay-feedback-20261019/build.log",
+  "not_run": [
+    "additional tests",
+    "game startup",
+    "comprehensive audit"
+  ],
+  "clarification": "unit feedback means JEI/EMI recipe lookup from physical material items; included in this source commit.",
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "build/deliveries/20261019-gameplay-feedback-27b63907f/gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 40553457,
+      "sha256": "d723c81d0f9582cc61c3e74514214cfd258c619ed0a8e82814958d6b5e63ac17"
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "build/deliveries/20261019-gameplay-feedback-27b63907f/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40405249,
+      "sha256": "9b64338c4c88a284ef3658ce7dbe044f7e1831ac1265424cf3b9fcb5bb5f0a0a"
+    }
+  ]
+}
