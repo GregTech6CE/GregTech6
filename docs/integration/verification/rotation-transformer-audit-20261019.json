@@ -1,0 +1,188 @@
+{
+  "date": "2026-10-19",
+  "baseline": "7b5508a08",
+  "classification": "progress: source audit, behavior-preserving readability edits and evidence",
+  "new_findings": [
+    "ALIGN-067",
+    "ALIGN-068",
+    "ALIGN-069"
+  ],
+  "extended_findings": [
+    "ALIGN-017",
+    "ALIGN-059"
+  ],
+  "validation": {
+    "code_and_literals_unchanged": [
+      "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+      "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxRotationRules.java"
+    ],
+    "java": "17",
+    "compiled": [
+      "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java",
+      "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxRotationRules.java",
+      "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java",
+      "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyPackets.java",
+      "tools/integration/audit-probes/RotationTransformerAudit.java"
+    ],
+    "native_compilation": false,
+    "gradle": false,
+    "game": false,
+    "build": false
+  },
+  "observations": [
+    "TRANSFORMER|wood|WoodTreated|8|2|16",
+    "TRANSFORMER|bronze|Bronze|32|8|64",
+    "TRANSFORMER|brass|Brass|32|8|64",
+    "TRANSFORMER|arsenic_copper|ArsenicCopper|32|8|64",
+    "TRANSFORMER|arsenic_bronze|ArsenicBronze|32|8|64",
+    "TRANSFORMER|steel|Steel|128|32|256",
+    "TRANSFORMER|titanium|Titanium|512|128|1024",
+    "TRANSFORMER|tungstensteel|Tungstensteel|2048|512|4096",
+    "TRANSFORMER|iridium|Iridium|8192|2048|16384",
+    "TRANSFORMER|iritanium|TitaniumIridium|32768|8192|65536",
+    "TRANSFORMER|trinitanium|Trinitanium|131072|32768|262144",
+    "TRANSFORMER|trinaquadalloy|Trinaquadalloy|524288|131072|1048576",
+    "TRANSFORMER|adamantium|Adamantium|2097152|524288|4194304",
+    "RU_NEGATIVE|32",
+    "LAST_PACKET|0",
+    "OVERSPEED_FITTING|0",
+    "OVERSPEED_GATE_CALLBACK|99",
+    "GEAR_HELPER|working=121|nonzeroRotations=600"
+  ],
+  "original_catalog_rows": [
+    {
+      "line": 1668,
+      "source_material": "WoodTreated",
+      "material": "WoodTreated",
+      "input": 8,
+      "output": 2,
+      "capacity_from_parent": 16
+    },
+    {
+      "line": 1677,
+      "source_material": "Bronze",
+      "material": "Bronze",
+      "input": 32,
+      "output": 8,
+      "capacity_from_parent": 64
+    },
+    {
+      "line": 1685,
+      "source_material": "Brass",
+      "material": "Brass",
+      "input": 32,
+      "output": 8,
+      "capacity_from_parent": 64
+    },
+    {
+      "line": 1693,
+      "source_material": "ArsenicCopper",
+      "material": "ArsenicCopper",
+      "input": 32,
+      "output": 8,
+      "capacity_from_parent": 64
+    },
+    {
+      "line": 1701,
+      "source_material": "ArsenicBronze",
+      "material": "ArsenicBronze",
+      "input": 32,
+      "output": 8,
+      "capacity_from_parent": 64
+    },
+    {
+      "line": 1709,
+      "source_material": "Steel",
+      "material": "Steel",
+      "input": 128,
+      "output": 32,
+      "capacity_from_parent": 256
+    },
+    {
+      "line": 1717,
+      "source_material": "Ti",
+      "material": "Titanium",
+      "input": 512,
+      "output": 128,
+      "capacity_from_parent": 1024
+    },
+    {
+      "line": 1725,
+      "source_material": "TungstenSteel",
+      "material": "Tungstensteel",
+      "input": 2048,
+      "output": 512,
+      "capacity_from_parent": 4096
+    },
+    {
+      "line": 1733,
+      "source_material": "Ir",
+      "material": "Iridium",
+      "input": 8192,
+      "output": 2048,
+      "capacity_from_parent": 16384
+    },
+    {
+      "line": 1741,
+      "source_material": "Iritanium",
+      "material": "TitaniumIridium",
+      "input": 32768,
+      "output": 8192,
+      "capacity_from_parent": 65536
+    },
+    {
+      "line": 1749,
+      "source_material": "Trinitanium",
+      "material": "Trinitanium",
+      "input": 131072,
+      "output": 32768,
+      "capacity_from_parent": 262144
+    },
+    {
+      "line": 1757,
+      "source_material": "Trinaquadalloy",
+      "material": "Trinaquadalloy",
+      "input": 524288,
+      "output": 131072,
+      "capacity_from_parent": 1048576
+    },
+    {
+      "line": 1765,
+      "source_material": "Ad",
+      "material": "Adamantium",
+      "input": 2097152,
+      "output": 524288,
+      "capacity_from_parent": 4194304
+    }
+  ],
+  "limits": [
+    "Native behavior and original boundary examples are source-derived, not world observations.",
+    "Gear helper enumeration is not a comparison against the full original entity.",
+    "Original V values evaluated as 8*4^tier; capacity derived from parent tInput*2.",
+    "Current oversized output reachability is unproven under normal injection.",
+    "No save restart, model rendering, external network or full registry validation."
+  ],
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/MT.java": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregtech/tileentity/energy/transformers/MultiTileEntityTransformerRotation.java": "8d4afc56a27b87ae9f978d1cee0d1c624b9309a4b5ba346b57c517d021c18bda",
+    "gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6",
+    "gregapi/tileentity/energy/TileEntityBase11Bidirectional.java": "e03bb5ec9205a3e9526782cf9fd145c2ee85d3a0e8632fad953674bd23202062",
+    "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Stats.java": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Converter.java": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxCatalog.java": "3f131d36eafd8f4739b082845eb99f59a6ffebb23203dc3a384ae5daa785d512",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxRotationRules.java": "c8403ba8bedec94c3fb6000b8813607556446a0280a632f28024c22943c60168",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTGearboxes.java": "411fda439f57a99884a233b56abb0c79686a2b0e090e620b87eb81aafbf596e1",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "6f5e09d5828768ed9634d872a9a48a407c303be717464fd26a91ed9387f7663c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java": "a8de64c9f415bba030b1c3b8fbaa05fc5c5aeb26a9d6dfa2f96240ce65e10e6b",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyPackets.java": "8706971077df366192d41af1480edb9da6dc7d5dbe7f1ac97574e1715ca1a4d7",
+    "tools/integration/audit-probes/RotationTransformerAudit.java": "ea03a38c052ef2f16c7c5549e707fbfa83865790fb5b9f9a6dcc435b225576f3"
+  }
+}

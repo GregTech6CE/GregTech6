@@ -1,7 +1,15 @@
 package com.gregtech.gregtech.content.energy;
-/** Original checkGears/getRotations; faces down/up/north/south/west/east and axes X=1/Y=2/Z=3. */
-public final class GearboxRotationRules {private GearboxRotationRules(){}
- public static boolean gearsWork(int gearMask,int axisCode){
+
+/**
+ * Gear engagement and direction rules adapted from the original checkGears/getRotations.
+ * Faces are down/up/north/south/west/east; axes are X=1/Y=2/Z=3.
+ * Unlike the original entity's diagnostic fallback, this stateless helper returns zero
+ * for inputs with neither an engaged gear nor an axle-driven gear.
+ */
+public final class GearboxRotationRules {
+    private GearboxRotationRules() {}
+
+    public static boolean gearsWork(int gearMask, int axisCode) {
         int mask = gearMask & 63;
         int count = Integer.bitCount(mask);
         if (count <= 1) return true;
@@ -22,18 +30,30 @@ public final class GearboxRotationRules {private GearboxRotationRules(){}
         int usedAxes = ((mask & 48) != 0 ? 1 : 0)
                 + ((mask & 3) != 0 ? 1 : 0) + ((mask & 12) != 0 ? 1 : 0);
         return usedAxes < 3;
- }
- public static int rotations(int gearMask,int axisCode,int input,boolean negative){
-  if(!gearsWork(gearMask,axisCode))return 0;
-  int face=1<<input,opposite=1<<(input^1),adjacent=gearMask&~face&~opposite;int result=negative?face:0;
-  int inputAxis=input<2?2:input<4?3:1;
-  if(axisCode!=0&&axisCode==inputAxis){
-   if(!negative)result|=opposite;
-   if((gearMask&face)!=0){if(!negative)result|=adjacent;return (result&gearMask&63)|64;}
-   if((gearMask&opposite)!=0){if(negative)result|=adjacent;return (result&gearMask&63)|64;}
-   return 0;
-  }
-  if((gearMask&face)!=0){if(negative)result|=opposite;if(!negative)result|=adjacent;return (result&gearMask&63)|64;}
-  return 0;
- }
+    }
+
+    public static int rotations(int gearMask, int axisCode, int input, boolean negative) {
+        if (!gearsWork(gearMask, axisCode)) return 0;
+        int face = 1 << input, opposite = 1 << (input ^ 1), adjacent = gearMask & ~face & ~opposite;
+        int result = negative ? face : 0;
+        int inputAxis = input < 2 ? 2 : input < 4 ? 3 : 1;
+        if (axisCode != 0 && axisCode == inputAxis) {
+            if (!negative) result |= opposite;
+            if ((gearMask & face) != 0) {
+                if (!negative) result |= adjacent;
+                return (result & gearMask & 63) | 64;
+            }
+            if ((gearMask & opposite) != 0) {
+                if (negative) result |= adjacent;
+                return (result & gearMask & 63) | 64;
+            }
+            return 0;
+        }
+        if ((gearMask & face) != 0) {
+            if (negative) result |= opposite;
+            if (!negative) result |= adjacent;
+            return (result & gearMask & 63) | 64;
+        }
+        return 0;
+    }
 }
