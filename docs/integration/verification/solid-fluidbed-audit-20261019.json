@@ -1,0 +1,300 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "f82507cbd576355af24d1a32ae7c84c52361694d",
+  "scope": "source audit and maintained core catalog; no native runtime",
+  "findings": [
+    "ALIGN-026",
+    "ALIGN-027",
+    "ALIGN-028",
+    "ALIGN-029",
+    "ALIGN-030"
+  ],
+  "extended_finding": "ALIGN-025",
+  "standardization": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxDefinitions.java",
+    "code_and_literals_unchanged": true,
+    "java17_independent_compile": true
+  },
+  "catalog_counts": {
+    "SOLID": 29,
+    "LIQUID": 28,
+    "GAS": 28,
+    "FLUIDIZED_BED": 28
+  },
+  "fuel_row_kinds": [
+    "engine",
+    "gas",
+    "burn",
+    "hot"
+  ],
+  "original_fluidbed_registration_attempts": 55,
+  "fluidbed_capacity_formula_observations": [
+    {
+      "id": "burning_box_fluidbed_lead",
+      "rate": 16,
+      "port_capacity": 160,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_bismuth",
+      "rate": 20,
+      "port_capacity": 200,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_bronze",
+      "rate": 24,
+      "port_capacity": 240,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_arsenic_copper",
+      "rate": 24,
+      "port_capacity": 240,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_arsenic_bronze",
+      "rate": 28,
+      "port_capacity": 280,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_invar",
+      "rate": 16,
+      "port_capacity": 160,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_steel",
+      "rate": 32,
+      "port_capacity": 320,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_chromium",
+      "rate": 112,
+      "port_capacity": 1120,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_titanium",
+      "rate": 96,
+      "port_capacity": 960,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_netherite",
+      "rate": 96,
+      "port_capacity": 960,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_tungsten",
+      "rate": 128,
+      "port_capacity": 1280,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_tungsten_steel",
+      "rate": 128,
+      "port_capacity": 1280,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_ta4hfc5",
+      "rate": 256,
+      "port_capacity": 2560,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_ultimet",
+      "rate": 256,
+      "port_capacity": 2560,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_lead",
+      "rate": 64,
+      "port_capacity": 640,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_dense_bismuth",
+      "rate": 80,
+      "port_capacity": 800,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_bronze",
+      "rate": 96,
+      "port_capacity": 960,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_arsenic_copper",
+      "rate": 96,
+      "port_capacity": 960,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_arsenic_bronze",
+      "rate": 112,
+      "port_capacity": 1120,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_invar",
+      "rate": 64,
+      "port_capacity": 640,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": false
+    },
+    {
+      "id": "burning_box_fluidbed_dense_steel",
+      "rate": 128,
+      "port_capacity": 1280,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_chromium",
+      "rate": 448,
+      "port_capacity": 4480,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_titanium",
+      "rate": 384,
+      "port_capacity": 3840,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_netherite",
+      "rate": 384,
+      "port_capacity": 3840,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_tungsten",
+      "rate": 512,
+      "port_capacity": 5120,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_tungsten_steel",
+      "rate": 512,
+      "port_capacity": 5120,
+      "original_capacity_for_builtin_rows": 1000,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_ta4hfc5",
+      "rate": 1024,
+      "port_capacity": 10240,
+      "original_capacity_for_builtin_rows": 1024,
+      "fits_original_block_dust_input": true
+    },
+    {
+      "id": "burning_box_fluidbed_dense_ultimet",
+      "rate": 1024,
+      "port_capacity": 10240,
+      "original_capacity_for_builtin_rows": 1024,
+      "fits_original_block_dust_input": true
+    }
+  ],
+  "fluidbed_cannot_fit_648_litres": 9,
+  "source_hashes": {
+    "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorFluidBed.java": "20f7dc1235a4d2e4d2891f1b57a538ae6ed5f0332af4ca77b7e9461fa6d189fc",
+    "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorSolid.java": "2a91b961b7ff13ae8752376c1c77bc6c5501897e85686f217ed3915c5ecf3c1a",
+    "gregtech/loaders/b/Loader_Fuels.java": "df4517a5c621527c62adee8245601a420b53f7e4d5e871283ac16fbcd4e68edc",
+    "gregapi/recipes/Recipe.java": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+    "gregapi/recipes/maps/RecipeMapFurnaceFuel.java": "8ba67c06a0083c52e5ef500902dc1af8747839cbb1d077266a0a0cb53a0481a6"
+  },
+  "port_hashes": {
+    "core/src/main/java/com/gregtech/gregtech/api/machine/BurningBoxDefinitions.java": "ce18f006722a0d689b9e25f12ae207bf4ea5f1329e9fff97582170927120e667",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/MaterialFuelRules.java": "a4a50ba84a11c698a64993fed1a2d345484602d9c87c861aa8a33d86e4b7707d",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalFuelRecipeRows.java": "ebe786dcf7373811eb0cee01b355d671c15e1e1e5ebaa6951f3c2f15e04f6c30",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java": "f71b61c70dbfd5aa009fad996d49159aa8c7942fbaa31628839772c1e82c63d7",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/SolidBurningBoxBlockEntity.java": "a8ab22acdd511ebf1d87077454bf69d89bdc725bed713dfb8b29184ba393c4c3",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/GTFacingMachineBlockEntity.java": "5a21e45558bbeb6cb9e8a4c42aa36d6a7e6a2ec577fe38f458d71be7adfc1a8a",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/FurnaceFuelHelper.java": "9ce4c2b7292ee8967a9a5537c3896d9ba7ebf30ef2a31331e94be6867a086a08",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java": "b3f1a8cb8e0f8eac95bdafcfa3c4f6f4c8000a2acc02316441d46b7b8468b518",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java": "53be146b2d7c5b394459e1d3afc9a2ef014fe4b5e08abfc2c204975faf6d39eb",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": "919a82a89f9631e6c65e0d891af79e608bd0670746b22bca4dfaaa88909c5907"
+  },
+  "reference_search": {
+    "tracked_production_files_inspected": 62272,
+    "pattern": "\\bFluidBed\\b|gt\\.recipe\\.fuels\\.fluidbed",
+    "matches": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/data/FuelRecipeMapDefinitions.java",
+        "line": 8,
+        "text": "FluidBed = new RecipeMapSpec(null, \"gt.recipe.fuels.fluidbed\", \"Fluidized Bed Fuels\", GUI + \"Default\", 1, 1, 0, 1, 1, 0, 1, false, false, true, true).viewer(true, true),"
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/lang/zh_cn.json",
+        "line": 23286,
+        "text": "\"gt.recipe.fuels.fluidbed\": \"流化床燃料\","
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+        "line": 56,
+        "text": "* Fluidized Bed — slot fuel (dust) + fluid calcite, FM.FluidBed RecipeMap, ash output."
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BurningBoxBlockEntity.java",
+        "line": 85,
+        "text": "case FLUIDIZED_BED -> FluidBed;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+        "line": 42,
+        "text": "FluidBed = fromDefinition(FuelRecipeMapDefinitions.FluidBed),"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+        "line": 53,
+        "text": "FluidBed, Burn, Gas, Hot, Plasma, Engine, Turbine, Magic);"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayExtinguisher.java",
+        "line": 33,
+        "text": "*       {@code ...FluidBed:203}) and the seven mini portals close ({@code MultiTileEntityMiniPortal*:119}).</li>"
+      }
+    ],
+    "limitation": "Reference search is supplemented by constructor, bootstrap and loader review; no assertion about externally supplied addon/datapack rows."
+  },
+  "not_run": [
+    "Gradle",
+    "Minecraft",
+    "GameTest",
+    "native tank construction",
+    "world restart",
+    "new mod build"
+  ]
+}
