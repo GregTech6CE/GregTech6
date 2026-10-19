@@ -1,0 +1,489 @@
+{
+  "date": "2026-10-19",
+  "baseline": "670aafb49",
+  "classification": "progress",
+  "findings": [
+    "ALIGN-074",
+    "ALIGN-075",
+    "ALIGN-076"
+  ],
+  "parity": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/AxleCatalog.java": {
+      "code_equal_after_private_renames": {
+        "mat": "material",
+        "speed": "maxSpeed",
+        "powers": "powerLimits",
+        "t": "family",
+        "s": "sizeTier"
+      },
+      "literals_unchanged": true
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/energy/AxleConnectionRules.java": {
+      "code_and_literals_equal": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/AxleBlockEntity.java": {
+      "code_and_literals_equal": true,
+      "both_native_projections_equal": true
+    }
+  },
+  "observations": [
+    "AXLE|axle_wood_1|WoodTreated|1|16|1|0|6.0",
+    "AXLE|axle_wood_2|WoodTreated|2|16|2|0|9.0",
+    "AXLE|axle_wood_3|WoodTreated|3|16|4|0|12.0",
+    "AXLE|axle_wood_4|WoodTreated|4|16|8|0|16.0",
+    "AXLE|axle_bronze_1|Bronze|1|64|2|0|6.0",
+    "AXLE|axle_bronze_2|Bronze|2|64|4|0|9.0",
+    "AXLE|axle_bronze_3|Bronze|3|64|8|0|12.0",
+    "AXLE|axle_bronze_4|Bronze|4|64|16|0|16.0",
+    "AXLE|axle_brass_1|Brass|1|64|2|0|6.0",
+    "AXLE|axle_brass_2|Brass|2|64|4|0|9.0",
+    "AXLE|axle_brass_3|Brass|3|64|8|0|12.0",
+    "AXLE|axle_brass_4|Brass|4|64|16|0|16.0",
+    "AXLE|axle_arsenic_copper_1|ArsenicCopper|1|64|2|0|6.0",
+    "AXLE|axle_arsenic_copper_2|ArsenicCopper|2|64|4|0|9.0",
+    "AXLE|axle_arsenic_copper_3|ArsenicCopper|3|64|8|0|12.0",
+    "AXLE|axle_arsenic_copper_4|ArsenicCopper|4|64|16|0|16.0",
+    "AXLE|axle_arsenic_bronze_1|ArsenicBronze|1|64|3|0|6.0",
+    "AXLE|axle_arsenic_bronze_2|ArsenicBronze|2|64|6|0|9.0",
+    "AXLE|axle_arsenic_bronze_3|ArsenicBronze|3|64|12|0|12.0",
+    "AXLE|axle_arsenic_bronze_4|ArsenicBronze|4|64|24|0|16.0",
+    "AXLE|axle_steel_1|Steel|1|256|4|0|6.0",
+    "AXLE|axle_steel_2|Steel|2|256|8|0|9.0",
+    "AXLE|axle_steel_3|Steel|3|256|16|0|12.0",
+    "AXLE|axle_steel_4|Steel|4|256|32|0|16.0",
+    "AXLE|axle_titanium_1|Titanium|1|1024|8|0|6.0",
+    "AXLE|axle_titanium_2|Titanium|2|1024|16|0|9.0",
+    "AXLE|axle_titanium_3|Titanium|3|1024|32|0|12.0",
+    "AXLE|axle_titanium_4|Titanium|4|1024|64|0|16.0",
+    "AXLE|axle_tungstensteel_1|Tungstensteel|1|4096|16|0|6.0",
+    "AXLE|axle_tungstensteel_2|Tungstensteel|2|4096|32|0|9.0",
+    "AXLE|axle_tungstensteel_3|Tungstensteel|3|4096|64|0|12.0",
+    "AXLE|axle_tungstensteel_4|Tungstensteel|4|4096|128|0|16.0",
+    "AXLE|axle_iridium_1|Iridium|1|16384|32|0|6.0",
+    "AXLE|axle_iridium_2|Iridium|2|16384|64|0|9.0",
+    "AXLE|axle_iridium_3|Iridium|3|16384|128|0|12.0",
+    "AXLE|axle_iridium_4|Iridium|4|16384|256|0|16.0",
+    "AXLE|axle_iritanium_1|TitaniumIridium|1|65536|64|0|6.0",
+    "AXLE|axle_iritanium_2|TitaniumIridium|2|65536|128|0|9.0",
+    "AXLE|axle_iritanium_3|TitaniumIridium|3|65536|256|0|12.0",
+    "AXLE|axle_iritanium_4|TitaniumIridium|4|65536|512|0|16.0",
+    "AXLE|axle_trinitanium_1|Trinitanium|1|262144|128|0|6.0",
+    "AXLE|axle_trinitanium_2|Trinitanium|2|262144|256|0|9.0",
+    "AXLE|axle_trinitanium_3|Trinitanium|3|262144|512|0|12.0",
+    "AXLE|axle_trinitanium_4|Trinitanium|4|262144|1024|0|16.0",
+    "AXLE|axle_trinaquadalloy_1|Trinaquadalloy|1|1048576|256|0|6.0",
+    "AXLE|axle_trinaquadalloy_2|Trinaquadalloy|2|1048576|512|0|9.0",
+    "AXLE|axle_trinaquadalloy_3|Trinaquadalloy|3|1048576|1024|0|12.0",
+    "AXLE|axle_trinaquadalloy_4|Trinaquadalloy|4|1048576|2048|0|16.0",
+    "AXLE|axle_adamantium_1|Adamantium|1|4194304|512|0|6.0",
+    "AXLE|axle_adamantium_2|Adamantium|2|4194304|1024|0|9.0",
+    "AXLE|axle_adamantium_3|Adamantium|3|4194304|2048|0|12.0",
+    "AXLE|axle_adamantium_4|Adamantium|4|4194304|4096|0|16.0",
+    "VALID_SIX_FACE_MASKS|10"
+  ],
+  "original_axle_rows": [
+    {
+      "line": 1663,
+      "material": "WoodTreated",
+      "speed": 16,
+      "power": 1,
+      "diameter": 6
+    },
+    {
+      "line": 1664,
+      "material": "WoodTreated",
+      "speed": 16,
+      "power": 2,
+      "diameter": 9
+    },
+    {
+      "line": 1665,
+      "material": "WoodTreated",
+      "speed": 16,
+      "power": 4,
+      "diameter": 12
+    },
+    {
+      "line": 1666,
+      "material": "WoodTreated",
+      "speed": 16,
+      "power": 8,
+      "diameter": 16
+    },
+    {
+      "line": 1672,
+      "material": "Bronze",
+      "speed": 64,
+      "power": 2,
+      "diameter": 6
+    },
+    {
+      "line": 1673,
+      "material": "Bronze",
+      "speed": 64,
+      "power": 4,
+      "diameter": 9
+    },
+    {
+      "line": 1674,
+      "material": "Bronze",
+      "speed": 64,
+      "power": 8,
+      "diameter": 12
+    },
+    {
+      "line": 1675,
+      "material": "Bronze",
+      "speed": 64,
+      "power": 16,
+      "diameter": 16
+    },
+    {
+      "line": 1680,
+      "material": "Brass",
+      "speed": 64,
+      "power": 2,
+      "diameter": 6
+    },
+    {
+      "line": 1681,
+      "material": "Brass",
+      "speed": 64,
+      "power": 4,
+      "diameter": 9
+    },
+    {
+      "line": 1682,
+      "material": "Brass",
+      "speed": 64,
+      "power": 8,
+      "diameter": 12
+    },
+    {
+      "line": 1683,
+      "material": "Brass",
+      "speed": 64,
+      "power": 16,
+      "diameter": 16
+    },
+    {
+      "line": 1688,
+      "material": "ArsenicCopper",
+      "speed": 64,
+      "power": 2,
+      "diameter": 6
+    },
+    {
+      "line": 1689,
+      "material": "ArsenicCopper",
+      "speed": 64,
+      "power": 4,
+      "diameter": 9
+    },
+    {
+      "line": 1690,
+      "material": "ArsenicCopper",
+      "speed": 64,
+      "power": 8,
+      "diameter": 12
+    },
+    {
+      "line": 1691,
+      "material": "ArsenicCopper",
+      "speed": 64,
+      "power": 16,
+      "diameter": 16
+    },
+    {
+      "line": 1696,
+      "material": "ArsenicBronze",
+      "speed": 64,
+      "power": 3,
+      "diameter": 6
+    },
+    {
+      "line": 1697,
+      "material": "ArsenicBronze",
+      "speed": 64,
+      "power": 6,
+      "diameter": 9
+    },
+    {
+      "line": 1698,
+      "material": "ArsenicBronze",
+      "speed": 64,
+      "power": 12,
+      "diameter": 12
+    },
+    {
+      "line": 1699,
+      "material": "ArsenicBronze",
+      "speed": 64,
+      "power": 24,
+      "diameter": 16
+    },
+    {
+      "line": 1704,
+      "material": "Steel",
+      "speed": 256,
+      "power": 4,
+      "diameter": 6
+    },
+    {
+      "line": 1705,
+      "material": "Steel",
+      "speed": 256,
+      "power": 8,
+      "diameter": 9
+    },
+    {
+      "line": 1706,
+      "material": "Steel",
+      "speed": 256,
+      "power": 16,
+      "diameter": 12
+    },
+    {
+      "line": 1707,
+      "material": "Steel",
+      "speed": 256,
+      "power": 32,
+      "diameter": 16
+    },
+    {
+      "line": 1712,
+      "material": "Titanium",
+      "speed": 1024,
+      "power": 8,
+      "diameter": 6
+    },
+    {
+      "line": 1713,
+      "material": "Titanium",
+      "speed": 1024,
+      "power": 16,
+      "diameter": 9
+    },
+    {
+      "line": 1714,
+      "material": "Titanium",
+      "speed": 1024,
+      "power": 32,
+      "diameter": 12
+    },
+    {
+      "line": 1715,
+      "material": "Titanium",
+      "speed": 1024,
+      "power": 64,
+      "diameter": 16
+    },
+    {
+      "line": 1720,
+      "material": "Tungstensteel",
+      "speed": 4096,
+      "power": 16,
+      "diameter": 6
+    },
+    {
+      "line": 1721,
+      "material": "Tungstensteel",
+      "speed": 4096,
+      "power": 32,
+      "diameter": 9
+    },
+    {
+      "line": 1722,
+      "material": "Tungstensteel",
+      "speed": 4096,
+      "power": 64,
+      "diameter": 12
+    },
+    {
+      "line": 1723,
+      "material": "Tungstensteel",
+      "speed": 4096,
+      "power": 128,
+      "diameter": 16
+    },
+    {
+      "line": 1728,
+      "material": "Iridium",
+      "speed": 16384,
+      "power": 32,
+      "diameter": 6
+    },
+    {
+      "line": 1729,
+      "material": "Iridium",
+      "speed": 16384,
+      "power": 64,
+      "diameter": 9
+    },
+    {
+      "line": 1730,
+      "material": "Iridium",
+      "speed": 16384,
+      "power": 128,
+      "diameter": 12
+    },
+    {
+      "line": 1731,
+      "material": "Iridium",
+      "speed": 16384,
+      "power": 256,
+      "diameter": 16
+    },
+    {
+      "line": 1736,
+      "material": "TitaniumIridium",
+      "speed": 65536,
+      "power": 64,
+      "diameter": 6
+    },
+    {
+      "line": 1737,
+      "material": "TitaniumIridium",
+      "speed": 65536,
+      "power": 128,
+      "diameter": 9
+    },
+    {
+      "line": 1738,
+      "material": "TitaniumIridium",
+      "speed": 65536,
+      "power": 256,
+      "diameter": 12
+    },
+    {
+      "line": 1739,
+      "material": "TitaniumIridium",
+      "speed": 65536,
+      "power": 512,
+      "diameter": 16
+    },
+    {
+      "line": 1744,
+      "material": "Trinitanium",
+      "speed": 262144,
+      "power": 128,
+      "diameter": 6
+    },
+    {
+      "line": 1745,
+      "material": "Trinitanium",
+      "speed": 262144,
+      "power": 256,
+      "diameter": 9
+    },
+    {
+      "line": 1746,
+      "material": "Trinitanium",
+      "speed": 262144,
+      "power": 512,
+      "diameter": 12
+    },
+    {
+      "line": 1747,
+      "material": "Trinitanium",
+      "speed": 262144,
+      "power": 1024,
+      "diameter": 16
+    },
+    {
+      "line": 1752,
+      "material": "Trinaquadalloy",
+      "speed": 1048576,
+      "power": 256,
+      "diameter": 6
+    },
+    {
+      "line": 1753,
+      "material": "Trinaquadalloy",
+      "speed": 1048576,
+      "power": 512,
+      "diameter": 9
+    },
+    {
+      "line": 1754,
+      "material": "Trinaquadalloy",
+      "speed": 1048576,
+      "power": 1024,
+      "diameter": 12
+    },
+    {
+      "line": 1755,
+      "material": "Trinaquadalloy",
+      "speed": 1048576,
+      "power": 2048,
+      "diameter": 16
+    },
+    {
+      "line": 1760,
+      "material": "Adamantium",
+      "speed": 4194304,
+      "power": 512,
+      "diameter": 6
+    },
+    {
+      "line": 1761,
+      "material": "Adamantium",
+      "speed": 4194304,
+      "power": 1024,
+      "diameter": 9
+    },
+    {
+      "line": 1762,
+      "material": "Adamantium",
+      "speed": 4194304,
+      "power": 2048,
+      "diameter": 12
+    },
+    {
+      "line": 1763,
+      "material": "Adamantium",
+      "speed": 4194304,
+      "power": 4096,
+      "diameter": 16
+    }
+  ],
+  "validation": {
+    "java": "17",
+    "compiled": [
+      "AxleCatalog",
+      "AxleConnectionRules",
+      "AxleSpec",
+      "AxleCatalogAudit"
+    ],
+    "native_compilation": false,
+    "gradle": false,
+    "game": false,
+    "build": false
+  },
+  "limits": [
+    "Gearbox scheduling and packet examples are source-derived, not native tick observations.",
+    "The ten-packet example assumes a sink accepting one packet per call with further same-tick demand.",
+    "No visual, overload drop, sound, restart or multichunk runtime validation.",
+    "Saturating arithmetic and malformed-packet rejection are protective differences, not reverted."
+  ],
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/tileentity/connectors/MultiTileEntityAxle.java": "033cbb9dc03d4d2471cdcb544ac9c566337acf393f79c8e4cfc97eb3dac790f7",
+    "gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/energy/AxleCatalog.java": "b91186f61946fc1565aae1e4192941e6f67ca7a32624f4d7439d954f6531be2d",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/AxleConnectionRules.java": "ca0cb888e7661a94ddb6e5f8c9bbb8bfc3769d8c7a52ee19ad8f9ad0f6cdf86d",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/AxleBlockEntity.java": "73bfaecf4722b7bbe62924526969c5a40a26f8c238eba828b25e6c970b35a176",
+    "core/src/main/java/com/gregtech/gregtech/api/energy/AxleSpec.java": "6c7702dd49aadd09908fd4ef7f5c45d86e528c1b20f36afbe9947d39ebbfc437",
+    "core/src/main/java/com/gregtech/gregtech/content/energy/GearboxRotationRules.java": "c8403ba8bedec94c3fb6000b8813607556446a0280a632f28024c22943c60168",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTAxles.java": "6ecc24aa4395c0db9c91241dcc0d4d63edd9c4776c88e4ddca78ce1d5cd04f99",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/GearboxBlockEntity.java": "f369a5e38fff95e3e8f7406dec4c24ee9cf87e2be0440647d4acb94db9a9b686",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/GearboxBlock.java": "a4812487dddbe20435b0db724402bbcf3b6401964b2a346f9be0539701d4d8e0",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": "26ae9451d2de14088d4fbc405db59260f457192de8ca27cbc79e10578b2bd51d",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/GearboxMechanicsRepairTests.java": "617bbcf60150642b76593af801cf5de358d612f2fb4582083504ef7780451011",
+    "tools/integration/audit-probes/AxleCatalogAudit.java": "19fc22cca6a4be9528cecdde690be9b9f5ed239a12bf05ea8183c90a7a308c61"
+  }
+}

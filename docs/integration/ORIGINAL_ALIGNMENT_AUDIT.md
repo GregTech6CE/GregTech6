@@ -96,6 +96,9 @@
 | ALIGN-071 | 确认长距离输出绕过通用能源适配。 | 原版经网络工具进入 EnergyCompat。 | 当前直接 instanceof IEnergyBlock，未用现有 EnergyBlockViews／FE 桥；公开附属 API 或 FE-only 邻居被排除，见 [报告](LONG_DISTANCE_ENERGY_AUDIT.md)。 |
 | ALIGN-072 | 确认长距离端点超压简化为无掉落删块。 | 原版 overcharge 按配置处理破坏并发送过载声音／日志。 | 当前发送／接收端超限均 destroyBlock(false)，不能视为相同过载后果；配置收尾仍延后，见 [报告](LONG_DISTANCE_ENERGY_AUDIT.md)。 |
 | ALIGN-073 | 确认长距离物品端点允许原版侧面合同禁止的自动化抽取。 | 原版直接 decrStackSize 委托，但 canExtractItem2=false，覆盖板父类仍强制该许可。 | 当前共用 ItemRelay.extractItem 无端点抽取限制；旧 smoke 把此行为误称原版对应，已纠正归因，玩法待修。见 [报告](PIPELINE_RELAY_AUDIT.md)。 |
+| ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
+| ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
+| ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 
 上述是具体范围，不表示这些系统完全未移植；ALIGN-009、010、012 有独立 core 观察，能源目录和弱燃料参数也有 core 枚举，其余结论依赖具体调用链核查，没有启动游戏。锅炉及液体／气体燃烧室的完整来源、相同部分和边界见 [专题核查](BOILER_BURNING_BOX_AUDIT.md)。
 
@@ -184,3 +187,5 @@
 第二十批核对长距离输电目录、扫描／归属、损耗与原生保存边界，新增 ALIGN-070–072；四份代码展开并保持行为。管道完整传输、燃线／区块事件、轴／可调齿轮箱及其余系统继续核查。见 [报告](LONG_DISTANCE_ENERGY_AUDIT.md)。
 
 第二十一批核对长距离管道侧面／温度／递归转发，新增 ALIGN-073，纠正运行时自检归因；十三项重复平台业务方法合并并验证源码等价。原版流体保存温度键不一致另作来源说明，不复制其错误。完整物流与其他队列继续，见 [报告](PIPELINE_RELAY_AUDIT.md)。
+
+第二十二批核对 52 种轴与可调齿轮箱运行状态，新增 ALIGN-074–076，整理目录私有命名和轴输送代码。保护性饱和算术保留；装入齿轮的回收、声音／视觉、物流网络与其它系统继续核查，见 [报告](AXLE_GEARBOX_AUDIT.md)。

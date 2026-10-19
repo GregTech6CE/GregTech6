@@ -286,44 +286,51 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     public long transferRotation(Direction fromSide, long speed, long power, Set<BlockPos> visited) {
         if (level == null || level.isClientSide || isRemoved() || timer < 1 || speed == 0
                 || speed == Long.MIN_VALUE || power <= 0
-                || !isEnergyAcceptingFrom(GregTechTags.Energy.RU,fromSide,false) || !visited.add(worldPosition)) return 0;
-        int next = speed < 0 ? 1+(fromSide.ordinal()&1) : 2-(fromSide.ordinal()&1);
-        if (rotationDir != next) { rotationDir=next; setChanged(); }
-        if (previousRotationDir == 0) return recordTransfer(speed,power,power);
-        Direction output=fromSide.getOpposite();
-        long used=0;
-        if (isEnergyEmittingTo(GregTechTags.Energy.RU,output,false)) {
-            BlockPos target=worldPosition.relative(output);
+                || !isEnergyAcceptingFrom(GregTechTags.Energy.RU, fromSide, false) || !visited.add(worldPosition)) return 0;
+        int next = speed < 0 ? 1 + (fromSide.ordinal() & 1) : 2 - (fromSide.ordinal() & 1);
+        if (rotationDir != next) {
+            rotationDir = next;
+            setChanged();
+        }
+        if (previousRotationDir == 0) return recordTransfer(speed, power, power);
+        Direction output = fromSide.getOpposite();
+        long used = 0;
+        if (isEnergyEmittingTo(GregTechTags.Energy.RU, output, false)) {
+            BlockPos target = worldPosition.relative(output);
             if (level.hasChunkAt(target) && !visited.contains(target)) {
-                BlockEntity neighbor=level.getBlockEntity(target);
+                BlockEntity neighbor = level.getBlockEntity(target);
                 if (neighbor instanceof AxleBlockEntity axle) {
-                    if (axle.isEnergyAcceptingFrom(GregTechTags.Energy.RU,fromSide,false))
-                        used=axle.transferRotation(fromSide,speed,power,visited);
+                    if (axle.isEnergyAcceptingFrom(GregTechTags.Energy.RU, fromSide, false))
+                        used = axle.transferRotation(fromSide, speed, power, visited);
                 } else {
                     visited.add(target);
-                    used=EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU,fromSide,speed,power,this,neighbor);
+                    used = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, fromSide, speed, power, this, neighbor);
                 }
             }
         }
-        return recordTransfer(speed,power,used);
+        return recordTransfer(speed, power, used);
     }
 
-    private long recordTransfer(long speed,long offered,long used) {
-        transferredSpeed = saturatedAdd(transferredSpeed,speed);
-        transferredPower = saturatedAdd(transferredPower,used);
-        long magnitude=Math.abs(speed);
-        long energy=used>0 && magnitude>Long.MAX_VALUE/used ? Long.MAX_VALUE : magnitude*used;
-        transferredEnergy=saturatedAdd(transferredEnergy,energy);
-        if (magnitude>maxSpeed() || transferredPower>maxPower()) {
-            level.playSound(null,worldPosition,net.minecraft.sounds.SoundEvents.ITEM_BREAK,net.minecraft.sounds.SoundSource.BLOCKS,1,1);
+    private long recordTransfer(long speed, long offered, long used) {
+        transferredSpeed = saturatedAdd(transferredSpeed, speed);
+        transferredPower = saturatedAdd(transferredPower, used);
+        long magnitude = Math.abs(speed);
+        long energy = used > 0 && magnitude > Long.MAX_VALUE / used ? Long.MAX_VALUE : magnitude * used;
+        transferredEnergy = saturatedAdd(transferredEnergy, energy);
+        if (magnitude > maxSpeed() || transferredPower > maxPower()) {
+            level.playSound(null, worldPosition, net.minecraft.sounds.SoundEvents.ITEM_BREAK, net.minecraft.sounds.SoundSource.BLOCKS, 1, 1);
             // Original popOff drops the axle once, then removes it.
-            level.destroyBlock(worldPosition,true);
+            level.destroyBlock(worldPosition, true);
             return offered;
         }
         return used;
     }
-    private static long saturatedAdd(long left,long right) {
-        try {return Math.addExact(left,right);} catch (ArithmeticException overflow) {return right<0?Long.MIN_VALUE:Long.MAX_VALUE;}
+    private static long saturatedAdd(long left, long right) {
+        try {
+            return Math.addExact(left, right);
+        } catch (ArithmeticException overflow) {
+            return right < 0 ? Long.MIN_VALUE : Long.MAX_VALUE;
+        }
     }
 
 //? if >=1.21.1 {

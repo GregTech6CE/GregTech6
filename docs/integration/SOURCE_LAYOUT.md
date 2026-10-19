@@ -105,3 +105,7 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 ## 能力转发器的共用业务
 
 共享 `blockentity/CapabilityRelayBlockEntity` 的 ItemRelay／FluidRelay 维护物品与流体操作；forwardItems／forwardFluids 只选择平台能力常量，不放业务规则。`LongDistEndpointBlockEntity` 选择路由、物品或流体类型和流体权限；`RelayVisitSet` 只保存线程访问集合，清理责任在调用者。源码去重核对入口为 `tools/integration/check_relay_sharing.py --baseline c07466737`，不依赖先生成完整原生视图。
+
+## 轴的转速与功率目录
+
+`content/energy/AxleCatalog` 以 material／maxSpeed／powerLimits 保存十三材料四尺寸，family／sizeTier 是目录循环变量；`api/energy/AxleSpec` 是公开规格。`AxleConnectionRules` 只核直线连接。实际输送和过载在共享 `blockentity/energy/AxleBlockEntity`，可调箱缓存／输出调度在独立 GearboxBlockEntity，不能互相替代审计，见 [报告](AXLE_GEARBOX_AUDIT.md)。
