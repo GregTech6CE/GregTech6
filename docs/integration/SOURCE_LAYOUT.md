@@ -62,6 +62,8 @@
 
 ## 命名与修改约定
 
+聚变的实际运行入口是 shared `blockentity/machine/FusionReactorControllerBlockEntity.java` 的专用 ticker，不能只看 BasicMachine。部件结构数据在 core `content/multiblock/SharedFusionStructure.java`，原生 `FusionStructure.java` 只绑定共享数据。生成器 `tools/import_fusion_structure.py --source <原版控制器.java> --check` 可只读核对，`--output` 可指定临时输出；无需原生投影包装。内爆中空结构为 `SharedImplosionStructure`，三个特殊主控的参数入口为 `OriginalAdvancedControllerData`。运行行为差异见 [聚变／内爆核查](ADVANCED_CONTROLLER_AUDIT.md)。
+
 - 包名表达职责，不再新增 `a/b/c` 阶段目录或并列的 `loader/loaders`。
 - 类名使用正常 Java 命名：如 `MaterialBootstrap`、`DeferredRegistrySubmission`、`FusionRecipeLoader`、`WoodCraftingRecipeInjector`、`OvenRecipeBridge`。
 - 公共类型名与文件名一致。生成目录名与数据来源名保留含义，不把所有 `GT` 前缀机械删除。

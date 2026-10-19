@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-19",
+  "baseline": "4f7932a5b",
+  "new_findings": [
+    "ALIGN-052",
+    "ALIGN-053",
+    "ALIGN-054",
+    "ALIGN-055"
+  ],
+  "finding_evidence": "Source call-chain comparison; not Minecraft observations",
+  "format_only_java_code_and_literals_unchanged": [
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalAdvancedControllerData.java",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedImplosionStructure.java"
+  ],
+  "compilation": "Java 17: two formatted classes, SharedFusionStructure and AdvancedControllerAudit; passed",
+  "core_observations": [
+    "FUSION_PARTS|{18002=36, 18003=576, 18008=53, 18045=144, 18200=3, 18201=12, 18202=12, 18299=50}",
+    "FUSION_ROLES|{CASING=454, ENERGY_INPUT=68, ENERGY_OUTPUT=4, ITEM_FLUID_IO=360}",
+    "IMPLOSION_ROLES|{AIR=1, ITEM_IO=25}",
+    "PARAMS|fusionreactor|TU|8192|1|16384|1|LU",
+    "PARAMS|implosioncompressor|TU|1|1|16|64|TU"
+  ],
+  "generator": {
+    "normal_runs": [
+      "Unchanged: C:\\Dev\\GregTech6\\core\\src\\main\\java\\com\\gregtech\\gregtech\\content\\multiblock\\SharedFusionStructure.java\nFusion: 886 parts plus controller",
+      "Wrote: C:\\Dev\\GregTech6\\work\\advanced-controller-audit-20261019\\SharedFusionStructure.java\nFusion: 886 parts plus controller",
+      "Unchanged: C:\\Dev\\GregTech6\\work\\advanced-controller-audit-20261019\\SharedFusionStructure.java\nFusion: 886 parts plus controller"
+    ],
+    "mismatched_check_refused_without_write": true,
+    "source_output_collision_refused": true,
+    "invalid_source_refused_without_output_write": true,
+    "original_shared_table_and_native_adapter_bytes_and_mtime_unchanged": true
+  },
+  "original_source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sha256": {
+    "gregtech/tileentity/multiblocks/MultiTileEntityFusionReactor.java": "5e5641a2cb69fc8402e5e8e6aec7694e9f956031e04af36f87c53835ecbdb5a4",
+    "gregtech/tileentity/multiblocks/MultiTileEntityImplosionCompressor.java": "3284ecf1b58f79a0421c3e2cfce470b1b2b3cef60ef3ea01c51f0645c66bd3cd",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockMachine.java": "daaacb82489056ddf8be9c3e594541fe0ec44ef2902be190556cdea361a05e06",
+    "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+  },
+  "current_sha256": {
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalAdvancedControllerData.java": "bed5ec6923453ab1f311d76a2e97ed59b03d4851a61c1abe7ec55c7b063cece7",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedImplosionStructure.java": "8e60cb41ad5b218999988643f4bdcd7d163e9bb48b5a5b65e409973c33183fdc",
+    "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedFusionStructure.java": "f7511989a3a656c75956597d50e7f41cb1a1abf80a78609eebee3823c8f84699",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/FusionStructure.java": "4fcdf8b9bf33a98f677a0a2e7a8142a814329267b84615571c069c985d34e0b0",
+    "core/src/main/java/com/gregtech/gregtech/data/BasicMachineOriginalParams.java": "7432073717be1f3239fb9bd36e508950f4e594ebb0de953850bd449ad986fb47",
+    "tools/import_fusion_structure.py": "d3665c111ee1dc358525fe098666f7a49827463146c671b0c0fd30979342aa62",
+    "tools/integration/audit-probes/AdvancedControllerAudit.java": "21f71f3245095f1a36462bd3d97089247a92d43751bc50eccb1050faa04a1a23",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FusionReactorControllerBlockEntity.java": "cf52ce2cd9802ca0ea3db98942475943a6c720530b78b695223e6776f0131b5b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ImplosionCompressorControllerBlockEntity.java": "0a5c0ea6802cd717b9735bf292ffb6e76c5d1744867f52a3b21dae94c3d3106a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "ab54b8c4b6db30b80b81f2c15f37e950d872c954c458af85fa1f8404ff4a424a",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeRecipeMachineBlockEntity.java": "cbcf20ea5720f14743165dc896dc0ad72b9a0268ef75b5e5cba9bac61bffdc79",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "c7a6e0db9db4bb282eff27fb549cb521c0f6a2e80f3314ce747cabca4e6ee84f",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java": "08398b0617b30013a8c37d30dec80f812bfa103c10dd23461eff5d1df23adbb8",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/block/machine/FusionReactorControllerBlock.java": "2974b690b03ef3b3cf64e1888bc423b5942a4eea35cd30ca75e4f107cedbd2bb"
+  },
+  "not_run": [
+    "Gradle",
+    "full tests",
+    "GameTest",
+    "Minecraft client/server",
+    "saved-world restart",
+    "packaging"
+  ],
+  "scope_limit": "No gameplay fix. No claim of complete structure, cover, port or controller parity."
+}

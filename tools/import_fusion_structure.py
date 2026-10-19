@@ -1,29 +1,27 @@
 """Translate GT6's exact octagon masks; generated coordinates are relative to the controller."""
 
-# Native paths are generated views; generators must use tools/native_tool.py.
-import sys as _native_sys
-from pathlib import Path as _NativePath
-_native_sys.path.insert(0, str(_NativePath(__file__).resolve().parents[0]))
-from native_layout import native_path, require_managed_writer
-if __name__ == "__main__": require_managed_writer()
-
+import argparse
 from pathlib import Path
 import re
 from collections import Counter
+from generator_output import write_or_check
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT.parent / 'gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityFusionReactor.java'
+OUTPUT = ROOT / 'core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedFusionStructure.java'
 
-def cells():
-    source = SOURCE.read_text(encoding='utf8').split('OCTAGONS =', 1)[1].split('};', 1)[0]
+def cells(source_path: Path):
+    source = source_path.read_text(encoding='utf8').split('OCTAGONS =', 1)[1].split('};', 1)[0]
     rows = re.findall(r'\{([FT,]+)\}', source)
-    assert len(rows) == 57
+    if len(rows) != 57 or any(len(row.split(',')) != 19 for row in rows):
+        raise ValueError('Expected three 19 by 19 octagon masks')
     result = {}
     def put(x, y, z, part, role='CASING'):
         position = (x, y, z + 2)
         if position == (0, 0, 0):
             return
-        assert position not in result, position
+        if position in result:
+            raise ValueError(f'Duplicate fusion position: {position}')
         result[position] = (part, role)
     cpu = 0
     for x in range(-2, 3):
@@ -57,25 +55,39 @@ def cells():
                         part = 18002 if y == 0 else 18045 if abs(y) == 1 else 18003
                         if abs(y) == 2: role = 'ITEM_FLUID_IO'
                     put(x-9,y,z-9,part,role)
-    assert Counter(p for p,r in result.values()) == {18003:576,18045:144,18299:50,18002:36,18008:53,18200:3,18201:12,18202:12}
+    counts = Counter(part for part, role in result.values())
+    expected = {18003:576,18045:144,18299:50,18002:36,18008:53,18200:3,18201:12,18202:12}
+    if counts != expected:
+        raise ValueError(f'Unexpected fusion part counts: {counts}')
     return result
 
-def main():
-    entries = cells()
+def render(entries):
     text = '''package com.gregtech.gregtech.content.multiblock;
 
-import com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role;
+import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;
 import java.util.List;
 
 /** Generated from GT6 MultiTileEntityFusionReactor by tools/import_fusion_structure.py.
  * CPU coordinates in this list are an assembly example; validation accepts all permutations. */
-public final class FusionStructure {
-    private FusionStructure() {}
-    public static final List<LargeMachineLayouts.Cell> CELLS = List.of(
+public final class SharedFusionStructure {
+    private SharedFusionStructure() {}
+    public static final List<SharedLargeMachineLayouts.Cell> CELLS = List.of(
 '''
-    text += ',\n'.join(f'        new LargeMachineLayouts.Cell({x},{y},{z},{part},Role.{role})' for (x,y,z),(part,role) in entries.items())
+    text += ',\n'.join(f'        new SharedLargeMachineLayouts.Cell({x},{y},{z},{part},Role.{role})' for (x,y,z),(part,role) in entries.items())
     text += '\n    );\n}\n'
-    (native_path(ROOT / 'src/main/java/com/gregtech/gregtech/content/multiblock/FusionStructure.java')).write_text(text,encoding='utf8')
+    return text
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source', type=Path, default=SOURCE, help='Original GT6 fusion controller Java source')
+    parser.add_argument('--output', type=Path, default=OUTPUT, help='Maintained shared core Java output')
+    parser.add_argument('--check', action='store_true', help='Compare output without writing')
+    args = parser.parse_args()
+    if args.source.resolve() == args.output.resolve():
+        parser.error('Source and output must be different files')
+    entries = cells(args.source)
+    write_or_check(args.output, render(entries), check=args.check)
     print(f'Fusion: {len(entries)} parts plus controller')
 
 if __name__ == '__main__':

@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 聚变与内爆参数、布局和生成器
+
+OriginalAdvancedControllerData／SharedImplosionStructure 与 `4f7932a5b` 代码和字面量一致。Java 17 独立编译这两类、SharedFusionStructure 和观察探针；观察聚变 886 格、四种角色数量、内爆 25 壁加一空气及两机额定参数。生成器默认核对、显式来源临时输出、差异拒绝且不写、来源输出冲突拒绝和无效来源拒绝通过；原版源码、共享结构表与原生适配器字节／mtime 未变。四项玩法差异为调用链核查，无 Gradle／GameTest／游戏／打包，见 [回执](verification/advanced-controller-audit-20261019.json)。
+
 ## 2026-10-19 / 动态表、构造标志与长配方
 
 RecipeMapSpec 相对 `4dc1031df` 代码／字面量一致，Java 17 独立编译通过。构造标志索引最终匹配 85 对，82 项 needsOutputs 不同，其余三标志一致；零未解析／未配对。解析样本覆盖注释、空格、字符串假调用及不支持表达式。core 观察 85 表标志、Bath／Unboxinator 槽数、大型离心机及钴材料定义；原生执行与原版限批为源码推导，没有运行游戏、全套测试或构建，见 [回执](verification/dynamic-recipe-audit-20261019.json)。
