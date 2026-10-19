@@ -17,6 +17,24 @@
 
 `core` 中的数据不能为了方便调用而依赖原生加载器。主源码、API、GameTest 和客户端探针分别维护，不能把测试逻辑塞回生产启动流程。
 
+## 批量材料数据从哪里看
+
+材料的实际数值定义位于 `core/src/main/java/com/gregtech/gregtech/content/material/generated/`。不要只看提供字段引用的 `Materials.java`、`GT6Materials.java` 或旧短名门面。
+
+| 要找的内容 | 实际文件（相对于 core 的 Java 根目录） |
+| --- | --- |
+| 元素、金属元素的颜色、熔点、沸点、密度、工具参数 | `content/material/generated/ElementMaterials.java`，例如 Iron |
+| 合金、化合物和其它复合材料 | `content/material/generated/CompoundMaterials.java`，例如 Bronze、Steel |
+| 矿物、石材、木材 | 同目录的 `OreMaterials.java`、`StoneMaterials.java`、`WoodMaterials.java` |
+| 金属／粉末／宝石等材料工厂的默认属性 | `api/material/MaterialFactories.java` |
+| 材料组成、矿物处理关系 | `data/generated/MaterialCompositionData.java`、`MaterialOreProcessing.java` |
+| 定义与后续关联的执行顺序 | `content/material/MaterialDefinitions.java` 的 `declare()`、`link()` |
+| 按名字、数字 ID 保存材料的运行时注册表 | `api/material/GTMaterialRegistry.java` 的 `BY_NAME`、`BY_ID`、`ALL_MATERIALS`；初始化在 `init()` |
+
+`Materials.java` 是方便手写业务使用的全名字段入口；`data/generated/GT6Materials.java` 主要保留原版短名引用并触发五类材料初始化，`data/ImportedMaterialData.java` 保留原版符号和少量特殊定义。它们不是另一套独立材料实例全集。新增补充材料另见 `SupplementalMaterials.java`、`ParticleMaterials.java`、`VanillaMatterMaterials.java`。
+
+这些材料数据属于共享 core，两版本共同读取。生成文件的持久修改需要同步对应生成器（`tools/transpile_gt6_materials.py` 与 `tools/modular_materials.py`），否则重新生成会覆盖。工厂继承／加工属性的已知缺口仍见审计主表，不能根据一个定义行推断所有后续加工行为。
+
 ## 初始化和配方从哪里看
 
 - Forge 入口：版本目录的 `com/gregtech/gregtech/GregTech.java`。按 `content`、`machine registration`、`material linking` 职责调用初始化步骤。

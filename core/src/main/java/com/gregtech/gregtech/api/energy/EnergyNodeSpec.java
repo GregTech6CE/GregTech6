@@ -7,11 +7,12 @@ import com.gregtech.gregtech.data.GregTechTags;
  * One GT6 energy-net node device (motor, dynamo, transformer, steam turbine,
  * solar panel, battery box, energy storage cabinet).
  *
- * <p>Model: input faces are every side except the front (FACING); each emitted
- * packet of {@code outputRate} {@code outType} units costs {@code inputRate}
- * {@code inType} units from the internal buffer (GT6 conversion losses are the
- * rate difference). Turbines take steam as fluid ({@code inputRate} = L per
- * packet); solar panels generate {@code outputRate} per bright daytime tick.</p>
+ * <p>This record describes rated values, not a universal conversion algorithm.
+ * Device rules determine packet limits, buffer consumption, accepted faces and
+ * environmental conditions. A converter may waste buffered input even when its
+ * output is refused. Steam turbines split a fluid batch over two ticks before
+ * conversion; their input rate is not a fixed fluid cost per emitted packet.
+ * Native block entities own fluid tanks, directional access and saved state.</p>
  */
 public record EnergyNodeSpec(
         String id,
@@ -52,9 +53,13 @@ public record EnergyNodeSpec(
 
     /** Legacy metadata accessor; a language-neutral core cannot resolve the player's locale. */
     @Deprecated
-    public String displayZh() { return displayEn; }
+    public String displayZh() {
+        return displayEn;
+    }
 
-    public static Builder builder(String id, GTMaterial casing) { return new Builder(id, casing); }
+    public static Builder builder(String id, GTMaterial casing) {
+        return new Builder(id, casing);
+    }
 
     public static final class Builder {
         private final String id;
@@ -68,17 +73,54 @@ public record EnergyNodeSpec(
         private long capacity;
         private int batterySlots;
         private String english;
-        private Builder(String id, GTMaterial casing) { this.id = id; this.casing = casing; }
-        public Builder kind(Kind value) { kind = value; return this; }
-        public Builder texture(String value) { texture = value; return this; }
-        public Builder input(GregTechTags.Tag type, long rate) { inputType = type; input = rate; return this; }
-        public Builder output(GregTechTags.Tag type, long rate) { outputType = type; output = rate; return this; }
-        public Builder capacity(long value) { capacity = value; return this; }
-        public Builder batterySlots(int count) { batterySlots=count; return this; }
-        public Builder name(String english) { this.english = english; return this; }
+        private Builder(String id, GTMaterial casing) {
+            this.id = id;
+            this.casing = casing;
+        }
+
+        public Builder kind(Kind value) {
+            kind = value;
+            return this;
+        }
+
+        public Builder texture(String value) {
+            texture = value;
+            return this;
+        }
+
+        public Builder input(GregTechTags.Tag type, long rate) {
+            inputType = type;
+            input = rate;
+            return this;
+        }
+
+        public Builder output(GregTechTags.Tag type, long rate) {
+            outputType = type;
+            output = rate;
+            return this;
+        }
+
+        public Builder capacity(long value) {
+            capacity = value;
+            return this;
+        }
+
+        public Builder batterySlots(int count) {
+            batterySlots = count;
+            return this;
+        }
+
+        public Builder name(String english) {
+            this.english = english;
+            return this;
+        }
+
         /** Compatibility only; translated names must use the shared language resources. */
         @Deprecated
-        public Builder names(String english, String ignoredTranslation) { return name(english); }
+        public Builder names(String english, String ignoredTranslation) {
+            return name(english);
+        }
+
         public EnergyNodeSpec build() {
             return new EnergyNodeSpec(id, casing, kind, texture, inputType, outputType, input, output, capacity, english, batterySlots);
         }

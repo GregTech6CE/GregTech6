@@ -1,0 +1,694 @@
+{
+  "date": "2026-10-19",
+  "baseline_commit": "57c86035ef283b2438f8d64c05778a1bf34ef137",
+  "scope": "Electric/Flux motors and dynamos, single-block steam turbines; base conversion, native boundary and environmental checks",
+  "source_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_sources": [
+    {
+      "path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+    },
+    {
+      "path": "gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "path": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+    },
+    {
+      "path": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "path": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+    },
+    {
+      "path": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+    },
+    {
+      "path": "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java",
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44"
+    },
+    {
+      "path": "gregapi/tileentity/energy/TileEntityBase11Motor.java",
+      "sha256": "debce53cfd8ccea8a4ff5da9bade918c0ba0f1be3bc88786d5b2dd530e78b6d8"
+    },
+    {
+      "path": "gregapi/tileentity/energy/TileEntityBase11Twotypes.java",
+      "sha256": "eec57ddb5f9d74b84599bf5dcbee331f8a62e468c5e4acaa54b351bcbe70e711"
+    },
+    {
+      "path": "gregapi/tileentity/behavior/TE_Behavior_Energy_Converter.java",
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4"
+    },
+    {
+      "path": "gregapi/tileentity/behavior/TE_Behavior_Energy_Stats.java",
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf"
+    },
+    {
+      "path": "gregtech/tileentity/energy/converters/MultiTileEntityTurbineSteam.java",
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf"
+    }
+  ],
+  "port_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "sha256": "6f5e09d5828768ed9634d872a9a48a407c303be717464fd26a91ed9387f7663c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "sha256": "02ea35cd8a1ce75d3e964cd31f77e64be5e361eeed1976e553dd7d8575e8075a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/OriginalMotorBlock.java",
+      "sha256": "725b7326d5891236dc64718f6faa5bd1a46862f367a28c5eca88902c933fde8b"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "sha256": "61055f405067b1dab5c72403119a2385176aceeca918643db602d33d58b552b6"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/OriginalRotaryConverter.java",
+      "sha256": "4f5d31a304cdc1ec73bb3ca7d0ef391d5861e7a340d7f559c690490deb8b1e74"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/OriginalSteamTurbines.java",
+      "sha256": "597727c3b18f3749cf6b16b3cdd56b08518b09e6d430b89e0ced72c2af08eeb4"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/OriginalThermalConverter.java",
+      "sha256": "93c6e272726dab841eae624ad90686a1690f058242d97790a0f66d39c88f2ded"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "sha256": "23ec0ee0bfcf2b99648ac3dc2d8fe7ef3915e09c031bf6edaf9f50d1d9a323cb"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "sha256": "f1c241bbe59ee6e6c5b7565472d72ca140a55f672d7d82fe1ff97da918ae65e0"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java",
+      "sha256": "a8de64c9f415bba030b1c3b8fbaa05fc5c5aeb26a9d6dfa2f96240ce65e10e6b"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/SteamTurbineConversion.java",
+      "sha256": "428b820737b73b2752908199efd1d883d804464a57f8ec74b6eb08fa5ef38c16"
+    }
+  ],
+  "source_parity": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "code_and_literals_unchanged": true
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java",
+      "code_and_literals_unchanged": true
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/SteamTurbineConversion.java",
+      "code_and_literals_unchanged": true
+    }
+  ],
+  "verification": "Java 17 independent compile of three edited core classes plus audit probe; existing unchanged compiled core dependencies",
+  "observations": [
+    {
+      "case": "undersized_eu_consumed_without_storage",
+      "matches_source_example": true
+    },
+    {
+      "case": "last_whole_packet_exceeds_capacity",
+      "matches_source_example": true
+    },
+    {
+      "case": "overvoltage_simulation_has_no_overload",
+      "matches_source_example": true
+    },
+    {
+      "case": "stopped_buffer_still_converts",
+      "matches_source_example": true
+    },
+    {
+      "case": "refused_output_still_wastes_input",
+      "matches_source_example": true
+    },
+    {
+      "case": "reverse_motor_packet_sign",
+      "matches_source_example": true
+    },
+    {
+      "case": "steam_overload_grace_two_ticks",
+      "matches_source_example": true
+    },
+    {
+      "case": "steam_threshold_and_integer_rounding",
+      "matches_source_example": true
+    },
+    {
+      "case": "pending_tick_does_not_consume_next_batch",
+      "matches_source_example": true
+    }
+  ],
+  "catalog_comparison": [
+    {
+      "source_line": 794,
+      "source_id": 1512,
+      "id": "steam_turbine_bronze",
+      "source_ratings": {
+        "input": 48,
+        "output": 16,
+        "capacity": 96
+      },
+      "observed_core": {
+        "input": 48,
+        "output": 16,
+        "capacity": 96
+      }
+    },
+    {
+      "source_line": 795,
+      "source_id": 1515,
+      "id": "steam_turbine_brass",
+      "source_ratings": {
+        "input": 72,
+        "output": 24,
+        "capacity": 144
+      },
+      "observed_core": {
+        "input": 72,
+        "output": 24,
+        "capacity": 144
+      }
+    },
+    {
+      "source_line": 796,
+      "source_id": 1518,
+      "id": "steam_turbine_invar",
+      "source_ratings": {
+        "input": 96,
+        "output": 32,
+        "capacity": 192
+      },
+      "observed_core": {
+        "input": 96,
+        "output": 32,
+        "capacity": 192
+      }
+    },
+    {
+      "source_line": 798,
+      "source_id": 1522,
+      "id": "steam_turbine_steel",
+      "source_ratings": {
+        "input": 192,
+        "output": 64,
+        "capacity": 384
+      },
+      "observed_core": {
+        "input": 192,
+        "output": 64,
+        "capacity": 384
+      }
+    },
+    {
+      "source_line": 799,
+      "source_id": 1525,
+      "id": "steam_turbine_chromium",
+      "source_ratings": {
+        "input": 288,
+        "output": 96,
+        "capacity": 576
+      },
+      "observed_core": {
+        "input": 288,
+        "output": 96,
+        "capacity": 576
+      }
+    },
+    {
+      "source_line": 800,
+      "source_id": 1527,
+      "id": "steam_turbine_ironwood",
+      "source_ratings": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      },
+      "observed_core": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      }
+    },
+    {
+      "source_line": 801,
+      "source_id": 1528,
+      "id": "steam_turbine_steeleaf",
+      "source_ratings": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      },
+      "observed_core": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      }
+    },
+    {
+      "source_line": 802,
+      "source_id": 1529,
+      "id": "steam_turbine_thaumium",
+      "source_ratings": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      },
+      "observed_core": {
+        "input": 384,
+        "output": 128,
+        "capacity": 768
+      }
+    },
+    {
+      "source_line": 804,
+      "source_id": 1530,
+      "id": "steam_turbine_titanium",
+      "source_ratings": {
+        "input": 768,
+        "output": 256,
+        "capacity": 1536
+      },
+      "observed_core": {
+        "input": 768,
+        "output": 256,
+        "capacity": 1536
+      }
+    },
+    {
+      "source_line": 805,
+      "source_id": 1531,
+      "id": "steam_turbine_fiery_steel",
+      "source_ratings": {
+        "input": 768,
+        "output": 256,
+        "capacity": 1536
+      },
+      "observed_core": {
+        "input": 768,
+        "output": 256,
+        "capacity": 1536
+      }
+    },
+    {
+      "source_line": 806,
+      "source_id": 1535,
+      "id": "steam_turbine_aluminium",
+      "source_ratings": {
+        "input": 1152,
+        "output": 384,
+        "capacity": 2304
+      },
+      "observed_core": {
+        "input": 1152,
+        "output": 384,
+        "capacity": 2304
+      }
+    },
+    {
+      "source_line": 807,
+      "source_id": 1538,
+      "id": "steam_turbine_magnalium",
+      "source_ratings": {
+        "input": 1536,
+        "output": 512,
+        "capacity": 3072
+      },
+      "observed_core": {
+        "input": 1536,
+        "output": 512,
+        "capacity": 3072
+      }
+    },
+    {
+      "source_line": 809,
+      "source_id": 1540,
+      "id": "steam_turbine_void_metal",
+      "source_ratings": {
+        "input": 2304,
+        "output": 768,
+        "capacity": 4608
+      },
+      "observed_core": {
+        "input": 2304,
+        "output": 768,
+        "capacity": 4608
+      }
+    },
+    {
+      "source_line": 810,
+      "source_id": 1545,
+      "id": "steam_turbine_trinitanium",
+      "source_ratings": {
+        "input": 3072,
+        "output": 1024,
+        "capacity": 6144
+      },
+      "observed_core": {
+        "input": 3072,
+        "output": 1024,
+        "capacity": 6144
+      }
+    },
+    {
+      "source_line": 811,
+      "source_id": 1548,
+      "id": "steam_turbine_graphene",
+      "source_ratings": {
+        "input": 6144,
+        "output": 2048,
+        "capacity": 12288
+      },
+      "observed_core": {
+        "input": 6144,
+        "output": 2048,
+        "capacity": 12288
+      }
+    },
+    {
+      "source_line": 849,
+      "source_id": 10021,
+      "id": "electric_motor_lv",
+      "source_ratings": {
+        "input": 32,
+        "output": 16,
+        "capacity": 64
+      },
+      "observed_core": {
+        "input": 32,
+        "output": 16,
+        "capacity": 64
+      }
+    },
+    {
+      "source_line": 850,
+      "source_id": 10022,
+      "id": "electric_motor_mv",
+      "source_ratings": {
+        "input": 128,
+        "output": 64,
+        "capacity": 256
+      },
+      "observed_core": {
+        "input": 128,
+        "output": 64,
+        "capacity": 256
+      }
+    },
+    {
+      "source_line": 851,
+      "source_id": 10023,
+      "id": "electric_motor_hv",
+      "source_ratings": {
+        "input": 512,
+        "output": 256,
+        "capacity": 1024
+      },
+      "observed_core": {
+        "input": 512,
+        "output": 256,
+        "capacity": 1024
+      }
+    },
+    {
+      "source_line": 852,
+      "source_id": 10024,
+      "id": "electric_motor_ev",
+      "source_ratings": {
+        "input": 2048,
+        "output": 1024,
+        "capacity": 4096
+      },
+      "observed_core": {
+        "input": 2048,
+        "output": 1024,
+        "capacity": 4096
+      }
+    },
+    {
+      "source_line": 853,
+      "source_id": 10025,
+      "id": "electric_motor_iv",
+      "source_ratings": {
+        "input": 8192,
+        "output": 4096,
+        "capacity": 16384
+      },
+      "observed_core": {
+        "input": 8192,
+        "output": 4096,
+        "capacity": 16384
+      }
+    },
+    {
+      "source_line": 856,
+      "source_id": 11021,
+      "id": "flux_motor_lv",
+      "source_ratings": {
+        "input": 128,
+        "output": 16,
+        "capacity": 256
+      },
+      "observed_core": {
+        "input": 128,
+        "output": 16,
+        "capacity": 256
+      }
+    },
+    {
+      "source_line": 857,
+      "source_id": 11022,
+      "id": "flux_motor_mv",
+      "source_ratings": {
+        "input": 512,
+        "output": 64,
+        "capacity": 1024
+      },
+      "observed_core": {
+        "input": 512,
+        "output": 64,
+        "capacity": 1024
+      }
+    },
+    {
+      "source_line": 858,
+      "source_id": 11023,
+      "id": "flux_motor_hv",
+      "source_ratings": {
+        "input": 2048,
+        "output": 256,
+        "capacity": 4096
+      },
+      "observed_core": null
+    },
+    {
+      "source_line": 859,
+      "source_id": 11024,
+      "id": "flux_motor_ev",
+      "source_ratings": {
+        "input": 8192,
+        "output": 1024,
+        "capacity": 16384
+      },
+      "observed_core": null
+    },
+    {
+      "source_line": 860,
+      "source_id": 11025,
+      "id": "flux_motor_iv",
+      "source_ratings": {
+        "input": 32768,
+        "output": 4096,
+        "capacity": 65536
+      },
+      "observed_core": null
+    },
+    {
+      "source_line": 946,
+      "source_id": 10111,
+      "id": "electric_dynamo_lv",
+      "source_ratings": {
+        "input": 32,
+        "output": 22,
+        "capacity": 64
+      },
+      "observed_core": {
+        "input": 32,
+        "output": 22,
+        "capacity": 64
+      }
+    },
+    {
+      "source_line": 947,
+      "source_id": 10112,
+      "id": "electric_dynamo_mv",
+      "source_ratings": {
+        "input": 128,
+        "output": 88,
+        "capacity": 256
+      },
+      "observed_core": {
+        "input": 128,
+        "output": 88,
+        "capacity": 256
+      }
+    },
+    {
+      "source_line": 948,
+      "source_id": 10113,
+      "id": "electric_dynamo_hv",
+      "source_ratings": {
+        "input": 512,
+        "output": 352,
+        "capacity": 1024
+      },
+      "observed_core": {
+        "input": 512,
+        "output": 352,
+        "capacity": 1024
+      }
+    },
+    {
+      "source_line": 949,
+      "source_id": 10114,
+      "id": "electric_dynamo_ev",
+      "source_ratings": {
+        "input": 2048,
+        "output": 1408,
+        "capacity": 4096
+      },
+      "observed_core": {
+        "input": 2048,
+        "output": 1408,
+        "capacity": 4096
+      }
+    },
+    {
+      "source_line": 950,
+      "source_id": 10115,
+      "id": "electric_dynamo_iv",
+      "source_ratings": {
+        "input": 8192,
+        "output": 5632,
+        "capacity": 16384
+      },
+      "observed_core": {
+        "input": 8192,
+        "output": 5632,
+        "capacity": 16384
+      }
+    },
+    {
+      "source_line": 953,
+      "source_id": 11111,
+      "id": "flux_dynamo_lv",
+      "source_ratings": {
+        "input": 32,
+        "output": 88,
+        "capacity": 64
+      },
+      "observed_core": {
+        "input": 32,
+        "output": 88,
+        "capacity": 64
+      }
+    },
+    {
+      "source_line": 954,
+      "source_id": 11112,
+      "id": "flux_dynamo_mv",
+      "source_ratings": {
+        "input": 128,
+        "output": 352,
+        "capacity": 256
+      },
+      "observed_core": {
+        "input": 128,
+        "output": 352,
+        "capacity": 256
+      }
+    },
+    {
+      "source_line": 955,
+      "source_id": 11113,
+      "id": "flux_dynamo_hv",
+      "source_ratings": {
+        "input": 512,
+        "output": 1408,
+        "capacity": 1024
+      },
+      "observed_core": null
+    },
+    {
+      "source_line": 956,
+      "source_id": 11114,
+      "id": "flux_dynamo_ev",
+      "source_ratings": {
+        "input": 2048,
+        "output": 5632,
+        "capacity": 4096
+      },
+      "observed_core": null
+    },
+    {
+      "source_line": 957,
+      "source_id": 11115,
+      "id": "flux_dynamo_iv",
+      "source_ratings": {
+        "input": 8192,
+        "output": 22528,
+        "capacity": 16384
+      },
+      "observed_core": null
+    }
+  ],
+  "missing_flux_devices": [
+    "flux_motor_hv",
+    "flux_motor_ev",
+    "flux_motor_iv",
+    "flux_dynamo_hv",
+    "flux_dynamo_ev",
+    "flux_dynamo_iv"
+  ],
+  "confirmed_differences": [
+    "ALIGN-017",
+    "ALIGN-018"
+  ],
+  "not_run": [
+    "Minecraft startup",
+    "GameTest",
+    "saved-world restart",
+    "native fluid capabilities",
+    "full build"
+  ],
+  "limitations": [
+    "Catalog rates are core observations, not a live Minecraft registry dump.",
+    "Environmental-check absence is source call-chain evidence, not a world simulation.",
+    "Independent examples do not prove all converter states or energy networks equivalent."
+  ]
+}
