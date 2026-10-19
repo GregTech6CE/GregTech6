@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "11f0f6b15c69de5b38f89825933c0c70e310f98b",
+  "version": "0.0.0",
+  "mod_id": "gt6ce",
+  "tasks": [
+    ":multiversion:1.20.1-forge:distributionJar",
+    ":multiversion:1.21.1-neoforge:jar"
+  ],
+  "result": "BUILD SUCCESSFUL in 6m 37s",
+  "log": "work/audit-pause-build-20261019/build.log",
+  "first_attempt": "Restricted process could not load Gradle native-platform.dll; preserved work/audit-pause-build-20261019/attempt-1-native-library.log; normal-permission retry succeeded",
+  "checks": [
+    "Distribution copy SHA-256 equality",
+    "ZIP CRC"
+  ],
+  "goal_status": "paused at user request",
+  "not_run": [
+    "full tests",
+    "game startup",
+    "continued original-functionality audit"
+  ],
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "build/deliveries/20261019-audit-paused-11f0f6b15/gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 40303048,
+      "sha256": "38947f00ec63bb8ef1791e4e1c66b662d79fb12bc366ae8dc2799cf4367d44ca",
+      "zip_crc": "passed"
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "build/deliveries/20261019-audit-paused-11f0f6b15/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40156043,
+      "sha256": "9448cb1ddca382eb4ef09e326a747f470a807feacd77645a165b33204926021d",
+      "zip_crc": "passed"
+    }
+  ]
+}

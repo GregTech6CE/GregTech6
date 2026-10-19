@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 用户请求的双版成品
+
+源码 11f0f6b15，运行 Forge distributionJar 与 NeoForge jar，BUILD SUCCESSFUL in 6m37s。受限环境首试无法加载 Gradle 原生库，正常权限重试成功，首试日志保留。交付副本与输出 SHA-256 一致，完整 ZIP CRC 通过；未游戏、完整测试或继续功能检查，见 [回执](verification/audit-pause-build-20261019.json)。
+
 ## 2026-10-19 / 补充定义表空白等价
 
 相对 329485ce8，17 份生产 Java 在归一 Git 换行后代码、字面量和注释保持一致，格式化幂等；109 份默认表格检查无待调整文件。175 组静态正则／源码非空匹配数量保持，三处放宽空白的读取规则前后分别提取同序的 60／89／89 条记录。未运行 Gradle、游戏或完整测试，见 [回执](verification/definition-table-formatting-supplement-20261019.json)。
