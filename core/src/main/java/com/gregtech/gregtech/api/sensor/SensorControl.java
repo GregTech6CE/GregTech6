@@ -1,6 +1,9 @@
 package com.gregtech.gregtech.api.sensor;
 
-/** Original eight sensor modes, independent of the machine being measured. */
+/**
+ * Original eight mode identities with the port's current threshold and scaling rules.
+ * Proportional redstone currently uses floor scaling, unlike the original UT.Code.scale.
+ */
 public final class SensorControl {
     public enum Mode { DISPLAY, PERCENT, GREATER, EQUAL, SMALLER, SCALE, FULL, NOT_FULL }
     public record Reading(long displayed, int signal) {}
@@ -24,15 +27,21 @@ public final class SensorControl {
         };
         return new Reading(number, signal);
     }
+    /** Floor-ratio helper; not the original nonzero intermediate redstone scale. */
     private static long scaled(long value, long maximum, int factor, int limit) {
         if (maximum <= 0 || value <= 0) return 0;
         return java.math.BigInteger.valueOf(value).multiply(java.math.BigInteger.valueOf(factor))
                 .divide(java.math.BigInteger.valueOf(maximum)).min(java.math.BigInteger.valueOf(limit)).longValue();
     }
     public static int thresholdChange(double x, double y, boolean hex) {
-        int sign = x >= 9 && x <= 11 ? -1 : x >= 12 && x <= 14 ? 1 : 0;
-        int step = y >= 6 && y <= 8 ? (hex ? 256 : 100) : y >= 9 && y <= 11 ? (hex ? 16 : 10) : y >= 12 && y <= 14 ? 1 : 0;
+        int sign = x >= 9 && x <= 11 ? -1
+                : x >= 12 && x <= 14 ? 1 : 0;
+        int step = y >= 6 && y <= 8 ? (hex ? 256 : 100)
+                : y >= 9 && y <= 11 ? (hex ? 16 : 10)
+                : y >= 12 && y <= 14 ? 1 : 0;
         return sign * step;
     }
-    public static boolean hasThreshold(Mode mode) { return mode == Mode.GREATER || mode == Mode.EQUAL || mode == Mode.SMALLER || mode == Mode.SCALE; }
+    public static boolean hasThreshold(Mode mode) {
+        return mode == Mode.GREATER || mode == Mode.EQUAL || mode == Mode.SMALLER || mode == Mode.SCALE;
+    }
 }
