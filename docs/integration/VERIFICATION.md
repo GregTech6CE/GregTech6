@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-19 / 选择器原版与平台源码核对
+
+相对 70d637645，PanelCover 和 PanelCoverRuntime 分别展开 Forge／Neo，四份代码／字面量比较通过，无行为改动。原版 CoverData 和选择器加载／tick 路径、当前电动机先面板后转换器的顺序留存来源哈希。未新增模拟测试、编译、GameTest、游戏、重启、构建或推送，见 [回执](verification/selector-panel-audit-20261019.json)。
+
 ## 2026-10-19 / 压力阀命名与连接源码
 
 相对 e25e2fb04，三份生产文件展开两版、两份旧 Forge GameTest 源码共八份比较通过；仅归一 valveConnectsThrough → valveBlocksPipeConnection 和一条反向断言说明。确认旧名称在维护 Java 源码中无剩余。未新增模拟测试、编译、GameTest 执行、游戏、重启、构建或推送，见 [回执](verification/pressure-valve-audit-20261019.json)。

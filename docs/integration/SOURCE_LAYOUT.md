@@ -186,3 +186,12 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `blockentity/machine/FluidPipeBlockEntity.java`：阀门最终安装限制与覆盖板计数调度。
 
 当前缺口与已有路径见 [压力阀核查](PRESSURE_VALVE_AUDIT.md)。
+
+## 模式选择器与按钮生命周期
+
+- `multiversion/src/main/java/.../content/cover/PanelCover.java`：手动、红石、按钮、输出与显示等面板角色定义。
+- 同目录 `PanelCoverRuntime.java` 的 beforeTick：控制器、固定标签、模式恢复、按钮计数；click／configure 处理玩家操作。
+- `ComponentCoverStorage.java`／`CoverDrops.java`：面板物品和全局停止状态的持久化入口；不能替代模式恢复流程验证。
+- `blockentity/energy/EnergyNodeBlockEntity.java` 的 tickOriginalConverter：面板与机器工作的先后顺序。
+
+停止合同、恢复和末轮复位差异见 [选择器核查](SELECTOR_PANEL_AUDIT.md)。

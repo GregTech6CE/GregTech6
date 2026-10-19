@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-19",
+  "baseline": "70d637645",
+  "provenance": "Original GregTech sources by Gregorius Techneticies / GregTech-6 Team, LGPL; source tree read only",
+  "original_sources": {
+    "gregapi/cover/covers/AbstractCoverAttachmentSelector.java": "3abc746f02483c3311c32cefd11f1761a8e18aef8e61e992657328ea7612fbf9",
+    "gregapi/cover/covers/CoverSelectorTag.java": "c05c5d6496a08544e454c382c077f5bd3d5c68fb681af9d1be9d6f82dd46ca89",
+    "gregapi/cover/covers/CoverSelectorManual.java": "444d71e3cc5c42949c3d31b734c6471ba00e6ab359a0a890ad123db7783593d1",
+    "gregapi/cover/covers/CoverSelectorButtonPanel.java": "b7f4202b201e79446726c81218c74c097107071b67daf66d6e867e69b7055157",
+    "gregapi/cover/covers/CoverSelectorRedstone.java": "c55f2fd21c3420df60b0624cb55eef372028de42c23304bb402dcc182dc0ce30",
+    "gregapi/cover/covers/CoverControllerCovers.java": "f24f1f82c87f1fa5b8433d107f6b027544f693e4ad3952bf52f97b03e9532b7a",
+    "gregapi/cover/CoverData.java": "e2069e2a2095a44e0ea1be7d38d9c4068cacb70f7850b2bc49a85e37d848da75",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java": "bdb09e176d08f1b23ba0b420ebf9cb36c832bfe2d0dc5002092269db5727a2c3",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "5c939ab63d83529e8f23f478d644f0a58430f2da73e0a0f1f6f18382daaff024",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java": "60097ed8a2510987a353ed0d7f17e0ef2059a7e58fc13169a59ac83008639313",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": "2ff66903c17048e8e40b2016be2fa4a798db46d19add5964d889086a051ad330",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java": "93ba17ff129cff2360f06f190ce418b8dc8bad4a90e26f75c9d780ac3b3d34c7",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "7c4c4661787d53bad2e8ada5e6ec36636a6d5f6a24a1fed0efdde46475570284",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "d687f2e32cbefca3c8c25f0299bd6ce7e6489f92a810e9eeb87435b46d931137",
+    "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/PanelCoverTests.java": "b7a77c31e07b4de56819bfbbbc9f2608031793222d0fe435700d682bf43e3944",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": "26ae9451d2de14088d4fbc405db59260f457192de8ca27cbc79e10578b2bd51d"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java": {
+      "forge": true,
+      "neoforge": true
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+      "forge": true,
+      "neoforge": true
+    }
+  },
+  "findings": [
+    "ALIGN-107: fixed selector tags incorrectly obey cover stopped flag and defer placement effect",
+    "ALIGN-108: manual/button one-shot load restoration consumed even when stopped skips it; host-persisted mode may mask effect",
+    "ALIGN-109: button auto-reset moved from post-work to pre-work stage"
+  ],
+  "positive_evidence": [
+    "Mode-capability placement gate present",
+    "Manual/button initial display copies current mode",
+    "Selector removal restores mode zero",
+    "Countdown stops while cover system stopped and resumes after it is enabled",
+    "Countdown values 10 down to 1 and eight button designs implemented; no off-by-one duration claim"
+  ],
+  "validation": "Source comparison only, 2 shared files projected for Forge and NeoForge; executable tokens and literals unchanged",
+  "not_run": [
+    "new probes",
+    "native compilation",
+    "GameTests",
+    "full test suite",
+    "game launch",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "Load finding is a source-level conditional scenario, not an observed saved-world loss",
+    "Button stage difference confirmed against native motor/converter tick order, not measured in game",
+    "Not full panel display, signal-side, controller priority, geometry or all-host acceptance"
+  ]
+}

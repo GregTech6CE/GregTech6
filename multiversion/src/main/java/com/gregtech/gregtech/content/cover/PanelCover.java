@@ -15,20 +15,40 @@ public enum PanelCover {
     CONDUCTOR_IN("redstone_conductor_cover_accept"), CONDUCTOR_OUT("redstone_conductor_cover_emit"),
     CONTROLLER("cover_controller"), SHUTTER("shutter_cover");
     public final String id;
-    PanelCover(String id){this.id=id;}
-    public boolean selector(){return this==MANUAL||this==REDSTONE||this==BUTTONS;}
-    public boolean energy(){return this==ENERGY||this==ENERGY_DISPLAY;}
-    public boolean output(){return this==EMITTER||this==PROGRESS||this==ENERGY||this==CONDUCTOR_OUT;}
-    public boolean strongConfig(){return output()&&this!=CONDUCTOR_OUT;}
-    public boolean invertible(){return this==PROGRESS||this==ENERGY||this==CONTROLLER||this==SHUTTER;}
-    public static PanelCover of(ItemStack stack){
-        if(stack.isEmpty())return null;
+    PanelCover(String id) {
+        this.id = id;
+    }
+
+    public boolean selector() {
+        return this == MANUAL || this == REDSTONE || this == BUTTONS;
+    }
+
+    public boolean energy() {
+        return this == ENERGY || this == ENERGY_DISPLAY;
+    }
+
+    public boolean output() {
+        return this == EMITTER || this == PROGRESS || this == ENERGY || this == CONDUCTOR_OUT;
+    }
+
+    public boolean strongConfig() {
+        return output() && this != CONDUCTOR_OUT;
+    }
+
+    public boolean invertible() {
+        return this == PROGRESS || this == ENERGY || this == CONTROLLER || this == SHUTTER;
+    }
+
+    public static PanelCover of(ItemStack stack) {
+        if (stack.isEmpty()) return null;
 //? if >=1.21.1 {
-        /*var key=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        /*var key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
 *///?} else {
-        var key=ForgeRegistries.ITEMS.getKey(stack.getItem());
+        var key = ForgeRegistries.ITEMS.getKey(stack.getItem());
 //?}
-        if(key!=null&&key.getNamespace().equals("gt6ce"))for(var cover:values())if(cover.id.equals(key.getPath()))return cover;
+        if (key != null && key.getNamespace().equals("gt6ce"))
+            for (var cover : values())
+                if (cover.id.equals(key.getPath())) return cover;
         return null;
     }
 }
