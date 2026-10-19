@@ -2,13 +2,13 @@
 
 [English](ADDON_API.md) | [中文](ADDON_API.zh-CN.md)
 
-API 版本 **7** 就是模组版本 **0.7.0**，平台是 Forge 1.20.1 与 NeoForge 1.21.1。按目标加载器编译对应的 SDK。SDK 里只有附属接口，没有 GT 内部类。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT 完成材料/物品关联和内置机器配方后，在 common setup 调用一次 `onRecipesReady`。按 Addon 模组 ID 排序调用；重复 ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为 FAILED。
+API 版本 **8** 就是模组版本 **0.8.0**，平台是 Forge 1.20.1 与 NeoForge 1.21.1。按目标加载器编译对应的 SDK。SDK 里只有附属接口，没有 GT 内部类。配方仍在自己的 `@Mod` 构造方法里注册 `GregTechAddon`；GT 完成材料/物品关联和内置机器配方后，在 common setup 调用一次 `onRecipesReady`。按 Addon 模组 ID 排序调用；重复 ID、晚注册、二次派发明确报错，回调异常使初始化失败，生命周期记为 FAILED。
 
 版本 3 的材料入口和机器入口在已安装的 GT 里仍会加载。它们已弃用，不在 SDK 里。新代码用 `AddonMaterialContributor` 和 `AddonMachineContributor`。
 
 ## 版本
 
-依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.7,)"`。GregTech 太旧时，加载器在附属的类加载之前拒绝。`context.apiVersion()` 返回 MINOR，只用于可选分支，例如 `context.apiVersion() >= 2`。它不能代替 `versionRange`，也不要要求等于某一个版本。
+依赖模组 id `gt6ce`，在 `mods.toml` 或 `neoforge.mods.toml` 里写 `versionRange="[0.8,)"`。GregTech 太旧时，加载器在附属的类加载之前拒绝。`context.apiVersion()` 返回 MINOR，只用于可选分支，例如 `context.apiVersion() >= 2`。它不能代替 `versionRange`，也不要要求等于某一个版本。
 
 `gradle.properties` 的 `mod_version` 是 `0.MINOR.PATCH`。`GregTechAddons.API_VERSION` 就是这个 MINOR。PATCH 不改这份 API。1.0 之前，MINOR 升级可以破坏附属调用。破坏一个已经写明的入口，要么等下面的移除表到期，要么在同一版的变更表里写明。
 
@@ -18,6 +18,7 @@ API 版本 **7** 就是模组版本 **0.7.0**，平台是 Forge 1.20.1 与 NeoFo
 
 | MINOR | 变更 |
 | --- | --- |
+| 8 | 坩埚成分、熔炼目标和合金反应。附属用材料名声明：成分可以选择是否据此生成一条坩埚反应，熔炼目标决定熔化后变成什么，显式反应和禁用改合金表。表在材料链接结束时冻结。模组版本从 0.8.0 起。版本 3 的入口从 0.8 改到 0.10，避免在这一 MINOR 里删掉它们。 |
 | 7 | 燃料能源机器。附属声明燃料表和一台流体燃料机器：效率、每 tick 一个能量包、储罐容量，以及正面、背面或背后 1 到 8 格。单方块和多方块都由 GT 注册并运行。模组版本从 0.7.0 起。材料数字入口保留到 0.9，避免在新增模板的同一 MINOR 里删掉它们。 |
 | 6 | 行为型机器。附属声明槽、储罐、开关、能源和 GUI 贴图，并提供 `MachineBehavior`。方块、物品栏、能源、菜单和存档由 GT 持有。模组版本从 0.6.0 起。版本 3 的入口保留到 0.8，避免在新增外壳的同一 MINOR 里删掉它们。 |
 | 4 | 附属接口单独成源码集，每个加载器一个只供编译的 SDK。材料、前缀、物品、流体、配方、工具和能源走下面的门面。模组版本从 0.4.0 起。版本 3 的注册和 `onRecipesReady` 保留。 |
@@ -30,10 +31,10 @@ API 版本 **7** 就是模组版本 **0.7.0**，平台是 Forge 1.20.1 与 NeoFo
 
 | 入口 | 弃用版本 | 替代 | 计划移除 |
 | --- | --- | --- | --- |
-| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.4 | AddonMachineContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.4 | AddonMaterialContributor | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.4 | MachineDeclaration | 0.8 |
-| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.4 | MachineLayout | 0.8 |
+| com.gregtech.gregtech.api.addon.GregTechMachineContributor | 0.4 | AddonMachineContributor | 0.10 |
+| com.gregtech.gregtech.api.addon.GregTechMaterialContributor | 0.4 | AddonMaterialContributor | 0.10 |
+| com.gregtech.gregtech.api.addon.AddonMachineDefinition | 0.4 | MachineDeclaration | 0.10 |
+| com.gregtech.gregtech.api.addon.AddonMachineLayout | 0.4 | MachineLayout | 0.10 |
 | com.gregtech.gregtech.api.addon.MaterialDeclaration#builder | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MIN | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
 | com.gregtech.gregtech.api.addon.AddonMaterials#ADDON_ID_MAX | 0.5 | MaterialDeclaration.builder(String) | 0.9 |
@@ -140,7 +141,7 @@ public final class MySourceBlockEntity extends BlockEntity implements GtSignalSo
 
 ## 材料与形态
 
-在 `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor` 里列出 `AddonMaterialContributor`。GT 在材料初始化开始时用自己的类加载器读这个文件，早于内置目录的 `declare()`。返回纯数据。服务构造方法以及 `materials()` / `forms()` 里不要碰 GT 的材料表。`link()` 在内置目录 `link()` 之后才调用，需要点名另一种材料的组成放在这里。
+在 `META-INF/services/com.gregtech.gregtech.api.addon.AddonMaterialContributor` 里列出 `AddonMaterialContributor`。GT 在材料初始化开始时用自己的类加载器读这个文件，早于内置目录的 `declare()`。返回纯数据。服务构造方法以及 `materials()` / `forms()` 里不要碰 GT 的材料表。`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 在内置目录 `link()` 之后读取。`link()` 也在这时调用，用来放这四张表没有覆盖的跨材料链接。
 
 ```java
 public final class MyMaterials implements AddonMaterialContributor {
@@ -171,6 +172,42 @@ GT 在内置目录之后按名字排序分配数字 id，从 10000 起。内置 
 翻译键是 `material.gt6ce.<小写名>`，来自 `GTMaterial.getTranslationKey()`。放在附属自己的 `assets/gt6ce/lang/en_us.json` 和 `zh_cn.json`。Minecraft 按键把这些文件和 GT 的语言文件合并。只有一个附属时，提示用 `tooltip.gt6ce.material_from_addon`（英文 “Added by the %s addon”）。共享中文文件里这个键保留英文回退，因为它不是原版 GT6 译文。多个附属共用一种材料时用 `tooltip.gt6ce.material_from_addons`。共享中文文件里这两个键都保留英文回退，因为它们不是原版 GT6 译文。
 
 `dust()` 材料（例如硝酸铵）生成 **6** 个物品。铁的自动形态是 **96** 个。`metal()` 就是用来声明这一大组形态的。Phase C 配方生成器会走过每一种材料，所以新材料会得到它的属性已经意味着的熔炉、粉碎机等配方行。卸掉附属后，这些 `gt6ce:` 物品按 Minecraft 原有规则变成缺失物品。坩埚或 USB 里已经找不到的名字会被跳过，卸掉附属不会把加载弄崩。卸掉附属后再开世界还没有实测。
+
+## 坩埚
+
+GT 形态丢进坩埚已经会化。数量是这个形态的材料重量。温度到了熔点，内容就变成这种材料的熔炼目标。不声明时，目标是它自己，1U 进 1U 出，坩埚熔炼页不列出它。模具仍按已有形状浇出熔融材料，前提是这个形态存在。
+
+`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 是 `AddonMaterialContributor` 上的纯数据。GT 在内置目录链接之后、配方加载之前读取。名字是材料名。`Cr` 和 `Chromium` 是同一种材料。未知名字、产量、比例或除数不大于 0、新反应没有原料、产物又出现在自己的原料里，都会启动失败，并写出附属 id。
+
+成分只能写给本附属声明的材料。每个分量是 `GTValues.U` 的正整数倍。除数会存进成分，有成分以后提示里的化学式改由成分生成。`crucible = true` 再加一条合金反应：比例是 `amount / U`，产量是除数。`crucible = false` 只存成分，不加反应。两个附属合并了同一种材料时，成分连同这个开关必须一致。
+
+熔炼目标也只能写给本附属的材料。`amount` 是每 1U 输入对应的产出，所以 `U` 表示 1:1。声明会给材料加上熔化标记，坩埚熔炼页才列出它。不声明就保持默认：熔成自己，没有熔化标记。
+
+显式合金行用的是系数，不是 U。3 份退火铜加 1 份锡得到 4 份青铜，就是产量 `4`、比例 `3` 和 `1`。产物可以是已有材料。禁用按产物和原料名字匹配。原料表为空就删掉这个产物的全部反应。否则原料名字的集合要相同，顺序和比例忽略。禁用放在所有附属加完之后，所以可以删掉别的附属加的行。没有命中只警告，不让启动失败。每条被删掉的行都带附属 id 记一条日志。
+
+合成顺序是：内置显式行、内置成分行、按附属 id 排序的附属显式行、附属成分行，然后禁用。判定规则不动：每 tick 只赢一条，最多一种固态原料，温度低于产物或原料熔点不反应，产出最多的那条胜出。附属行和另一条留下的行产物、产量、原料比例都相同，启动失败。原料比例相同但产量或产物不同，两行都留着，并警告产量更高的会把另一条抢走。要替换就先禁用旧行。
+
+表在材料链接结束时冻结。更早去读会启动失败。这些行没有数据包，也没有 `/reload`。搅拌机里同一条合金是另一张表，用 `gt6ce:machine_removal` 删。这一节不加坩埚方块、外壳、龙头或模具，也不声明任意非 GT 物品丢进去化成什么，也不写坩埚的温度和内容物。
+
+```java
+public List<MaterialComposition> compositions() {
+    return List.of(new MaterialComposition("SampleCrucibleAlloy", 4, List.of(
+            new MaterialComposition.Part("SampleAlloy", 3 * GTValues.U),
+            new MaterialComposition.Part("Copper", GTValues.U)), true));
+}
+public List<SmeltingTargetDeclaration> smeltingTargets() {
+    return List.of(new SmeltingTargetDeclaration("SampleAlloy", "SampleAlloy", GTValues.U));
+}
+public List<CrucibleReactionDeclaration> crucibleReactions() {
+    return List.of(new CrucibleReactionDeclaration("SampleCrucibleAlloy", 2, List.of(
+            new CrucibleReactionDeclaration.Part("SampleAlloy", 1),
+            new CrucibleReactionDeclaration.Part("Tin", 1))));
+}
+public List<CrucibleReactionRemoval> crucibleRemovals() {
+    return List.of(new CrucibleReactionRemoval("StainlessSteel",
+            List.of("WroughtIron", "Nichrome", "Chromium", "Manganese")));
+}
+```
 
 ## 配方机器
 
@@ -238,16 +275,16 @@ GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures
 
 ## 构建附属
 
-按目标加载器构建。Forge 运行 `gradlew.bat :multiversion:1.20.1-forge:addonSdkJar`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.7.0.jar`。NeoForge 运行 `gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar`，得到 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.7.0.jar`。每个 jar 是该加载器的只供编译 SDK：核心接口加上该加载器的平台接口，用 Mojang 名，并带许可声明。没有素材，也没有模组描述文件。用 `compileOnly files(...)` 依赖这一个 jar。不要再次打包或 shade 这些类。运行时由已安装的 GT 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从构建目录或 CI 产物取 jar。
+按目标加载器构建。Forge 运行 `gradlew.bat :multiversion:1.20.1-forge:addonSdkJar`，得到 `multiversion/versions/1.20.1-forge/build/addon-sdk/gt6ce-addon-sdk-1.20.1-forge-0.8.0.jar`。NeoForge 运行 `gradlew.bat :multiversion:1.21.1-neoforge:addonSdkJar`，得到 `multiversion/versions/1.21.1-neoforge/build/addon-sdk/gt6ce-addon-sdk-1.21.1-neoforge-0.8.0.jar`。每个 jar 是该加载器的只供编译 SDK：核心接口加上该加载器的平台接口，用 Mojang 名，并带许可声明。没有素材，也没有模组描述文件。用 `compileOnly files(...)` 依赖这一个 jar。不要再次打包或 shade 这些类。运行时由已安装的 GT 提供。Forge 生产 jar 是 SRG，不是编译依赖。目前没有 Maven 坐标，从构建目录或 CI 产物取 jar。
 
-附属须声明必需依赖模组 **`gt6ce`**，并写 `versionRange="[0.7,)"`。GT 内容和存档命名空间仍是 **`gt6ce`**。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
+附属须声明必需依赖模组 **`gt6ce`**，并写 `versionRange="[0.8,)"`。GT 内容和存档命名空间仍是 **`gt6ce`**。Forge 和 NeoForge 各编一份。一个 SDK 不会让 Forge 二进制在 NeoForge 上运行。
 
 ## 支持范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`AddonItems.stack`；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块用现有 GT 零件名，由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，单方块外壳由 GT 持有，附属不继承它，也不接触 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块用现有 GT 零件结构；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，其他能量网络仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack`；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块用现有 GT 零件名，由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，单方块外壳由 GT 持有，附属不继承它，也不接触 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块用现有 GT 零件结构；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，其他能量网络仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
-`onRecipesReady` 仍不是数据包重载事件。API 版本 7 增加流体燃料能源机器，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、新前缀、附属外壳、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+`onRecipesReady` 仍不是数据包重载事件。API 版本 8 增加坩埚成分、熔炼目标和合金反应，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、新前缀、附属外壳或坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。
