@@ -19,9 +19,12 @@ public class AutoHammerBlockEntity extends AutoToolBlockEntity {
         if(!isEnergyAcceptingFrom(type,side,false) || size==0 || size==Long.MIN_VALUE || amount<=0) return 0;
         if(execute) {
             if(size>0) {
-                if(overvoltage(size)) return amount;
                 pullingBack=false;
                 energy=com.gregtech.gregtech.content.tool.AutomaticToolRules.hammerStored(energy,size,amount);
+                // Unlike generic overcharge(), GT6's automatic hammer calls explode() directly.
+                if (com.gregtech.gregtech.content.tool.AutomaticToolRules.overvoltage(size,input()))
+                    com.gregtech.gregtech.api.energy.MachineOverload.explode(this,
+                            com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(size,energyType()));
             } else pullingBack=true;
             setChanged();
         }

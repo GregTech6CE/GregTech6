@@ -280,7 +280,7 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (!isEnergyAcceptingFrom(energy, side, false) || size == 0 || size == Long.MIN_VALUE || amount <= 0) return 0;
         long sizeAbs = Math.abs(size);
         if (sizeAbs > accepted.energyInMax()) {
-            if (doInject) explode(sizeAbs);
+            if (doInject) com.gregtech.gregtech.api.energy.MachineOverload.apply(this, sizeAbs, energy);
             return amount;
         }
         long taken = BasicMachineEnergy.accepted(stored, accepted.energyInMax(), size, amount);
@@ -289,20 +289,6 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             setChanged();
         }
         return taken;
-    }
-
-    private void explode(long size) {
-        if (level == null || level.isClientSide) return;
-        if (!com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-            stored = 0;
-            return;
-        }
-        float over = (float) ((double) size / Math.max(1, accepted.energyInMax()));
-        float power = Math.min(8.0F, 3.0F + (float) (Math.log(over) / Math.log(2.0)));
-        BlockPos pos = worldPosition;
-        level.removeBlock(pos, false);
-        level.explode(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-                Math.max(3.0F, power), Level.ExplosionInteraction.BLOCK);
     }
 
     @Override

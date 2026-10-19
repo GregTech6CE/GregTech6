@@ -213,7 +213,7 @@ public final class RotationEngineRepairTests {
 
         helper.assertTrue(engine.doEnergyInjection(GregTechTags.Energy.RU, Direction.WEST, 128, 1, true) == 1,
                 "the 101st oversized packet is still consumed");
-        if (com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
+        if (com.gregtech.gregtech.GregTechConfig.breakByOverload()) {
             helper.assertTrue(helper.getLevel().getBlockEntity(absolute) == null,
                     "the 101st overvoltage removes the unprotected engine");
         }

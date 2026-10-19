@@ -1222,7 +1222,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (size==0 || size==Long.MIN_VALUE || amount<=0 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
         long sizeAbs = Math.abs(size);
         if (sizeAbs > inputMaximum()) {
-            // Overvoltage — GT6: the machine blows up
+            // GT6 consumes oversized packets without crediting them; damage is opt-in.
             if (doInject) explodeFromOvervoltage(sizeAbs, energyType);
             return amount;
         }
@@ -1234,18 +1234,9 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return consumed;
     }
 
-    /** GT6 overvoltage: destroy the machine in an explosion (configurable). */
+    /** Original root overload policy, shared by EU, RU, KU and other machine inputs. */
     private void explodeFromOvervoltage(long size, GregTechTags.Tag energyType) {
-        if (level == null || level.isClientSide) return;
-        if (!com.gregtech.gregtech.GregTechConfig.machineOvervoltageExplosions()) {
-            mEnergy = 0;
-            return;
-        }
-        // Original overcharge uses the absolute packet tier and its energy type.
-        float power = com.gregtech.gregtech.content.energy.OriginalRotaryConverter.overloadPower(size, energyType);
-        level.removeBlock(worldPosition, false);
-        if (power >= 1) level.explode(null, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5,
-                worldPosition.getZ() + 0.5, power, net.minecraft.world.level.Level.ExplosionInteraction.BLOCK);
+        com.gregtech.gregtech.api.energy.MachineOverload.apply(this, size, energyType);
     }
 
     @Override
