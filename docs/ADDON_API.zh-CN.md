@@ -265,7 +265,17 @@ GregTech 在自己的模组总线上，用附属的命名空间注册方块、�
 
 不调用面方法时，仍是物品和流体六面进出、能量六面进入、没有自动面。调用了任意一个面方法，面罩就按声明来。面用 `BehaviorMachineDeclaration.Face`：底、顶、右、前、左、后。自动面缺省为无。传入 null 也是无。`cheapOverclocking(true)` 打开廉价超频。单方块不调用它就保持关闭，就算机器名撞上内置的廉价表也一样。大型配方机器不调用它时保持原规则：不是 TU 就廉价超频。`minimumLightAbove(14)` 表示正上方 `Level.getRawBrightness` 不到 14 就不开始新的加工。这是 1.7.10 `getBlockLightValue`：天空光和方块光取高的那个，夜晚不压暗。`0` 不检查。已经开始的加工不会被打断。
 
-`LARGE_RECIPE` 需要一张同名的 `MachineLayout`。格子是 `right`、`up`、`back`、零件名和 `StructureRole`。控制器在原点，原点不能再放零件。零件名用 `SharedLargeMachineParts` 的名字、`air`，或 `tank_wall`、`tank_wall_dense`、`centrifuge_part`、`heat_transmitter`、`distillation_tower_part`、`electrolyzer_part`。没有附属自己的外壳或端口。空结构、重复坐标、未知零件、没有 `LARGE_RECIPE` 机器的结构、没有结构的 `LARGE_RECIPE` 机器、未知能量类型、未知配方表，都会在启动时报错并写出附属 id。配方表名用 `[a-z0-9_.]+`，必须是这个入口返回的表，或一张内置机器配方表。燃料表不是机器配方表。`structureKeys` 是结构提示的翻译键，字符集是 `[a-z0-9_.]+`。
+`LARGE_RECIPE` 需要一张同名的 `MachineLayout`。格子是 `right`、`up`、`back`、零件名和 `StructureRole`。控制器在原点，原点不能再放零件。零件名用 `SharedLargeMachineParts` 的名字、`air`、`tank_wall`、`tank_wall_dense`、`centrifuge_part`、`heat_transmitter`、`distillation_tower_part`、`electrolyzer_part`，或 `parts()` 返回的名字。空结构、重复坐标、未知零件、没有 `LARGE_RECIPE` 机器的结构、没有结构的 `LARGE_RECIPE` 机器、未知能量类型、未知配方表，都会在启动时报错并写出附属 id。配方表名用 `[a-z0-9_.]+`，必须是这个入口返回的表，或一张内置机器配方表。燃料表不是机器配方表。`structureKeys` 是结构提示的翻译键，字符集是 `[a-z0-9_.]+`。
+
+`parts()` 返回外壳：
+
+```java
+public List<StructurePartDeclaration> parts() {
+    return List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F));
+}
+```
+
+名字是小写注册路径。材料写材料名。贴图是附属命名空间里的路径，留空表示用 GT 的金属墙，并按材料颜色染色。写了路径就是一张不染色的立方体贴图。硬度是正数，爆炸抗性和硬度相同。方块 id 是 `<附属 id>:<名字>`。GT 在内置多方块零件之后注册，挂在自己的总线上，命名空间是附属自己的，并生成方块状态和物品模型。名字是全局的。撞上 GT 零件名（包括 `tank_wall`）或另一个附属的零件名，启动失败，并写出两边。运行时 id 从 1000000 起，先按附属 id，再按声明顺序。结构存的是方块注册名，成形时比较世界里的方块。这个数字不进存档。零件只是外壳：没有储罐、能量、物品槽，也不自己 tick。
 
 GUI 路径如果含有 `命名空间:`，就保留这个命名空间。`textures/gui/machines/Press` 和 `gt6ce:textures/gui/machines/Gas` 仍解析成 `gt6ce:textures/gui/recipes/<文件名>.png`。附属路径 `my_addon:textures/gui/machines/press` 解析成 `my_addon:textures/gui/recipes/press.png`，文件放在 `assets/my_addon/textures/gui/recipes/press.png`。方块模型是 `<命名空间>:block/machine/basic/<机器类型名>`，再加 `_running` 和 `_active`。GT 只给 `gt6ce` 命名空间生成物品模型，附属自己带模型和方块状态。显示名是 `block.<命名空间>.<id>`。
 
@@ -314,7 +324,7 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 `efficiency` 是万分比，范围 1 到 100000。`energy` 是短名，例如 `RU`。`outputPerTick` 是一个包，范围 1 到 1,000,000,000,000。缓冲只在对方收下这个包之后才扣掉它。储罐容量是 1 到 1,024,000,000 mB，燃料罐和每个废液罐都用这个容量。废液罐数量等于燃料表的流体输出数。燃料表至少要有一个流体输入。`outputFront()` 和 `outputBack()` 向相邻面输出。`outputBehind(distance)` 注入到正面背后这么多格的方块。距离是 1 到 8。燃气涡轮的 4 格就是这种形式。没有任意坐标。
 
-`single()` 是单方块。`multi()` 需要一张名字等于 `machineType` 的 `MachineLayout`，零件用现有的 GT 零件。结构没成型时不烧燃料，也不输出。方块 id 是 `<附属>:<id>`。方块实体是 `be_<id>`，`/` 换成 `_`。模型是 `<附属>:block/machine/basic/<机器类型>`，再加 `_running` 和 `_active`。方块状态和模型由附属自己带。多方块出现在结构预览里。两种机器都是自己那张燃料表的 JEI 和 EMI 催化剂。停机开关用普通的机器控制。
+`single()` 是单方块。`multi()` 需要一张名字等于 `machineType` 的 `MachineLayout`。格子写 GT 零件名，或 `parts()` 里的外壳。结构没成型时不烧燃料，也不输出。方块 id 是 `<附属>:<id>`。方块实体是 `be_<id>`，`/` 换成 `_`。模型是 `<附属>:block/machine/basic/<机器类型>`，再加 `_running` 和 `_active`。方块状态和模型由附属自己带。多方块出现在结构预览里。两种机器都是自己那张燃料表的 JEI 和 EMI 催化剂。停机开关用普通的机器控制。
 
 ```java
 @Override public List<FuelMapDeclaration> fuelMaps() {
@@ -344,10 +354,10 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 ## 支持范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块用现有 GT 零件名，由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，单方块外壳由 GT 持有，附属不继承它，也不接触 NBT，`energyCapacity`、`emit`、`generate`、`setCapacity` 和 `onUse` 属于这层外壳，改过的容量由 GT 写成 `gt.capacity`；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块用现有 GT 零件结构；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `parts()` 里的外壳，机器和外壳都由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，单方块外壳由 GT 持有，附属不继承它，也不接触 NBT，`energyCapacity`、`emit`、`generate`、`setCapacity` 和 `onUse` 属于这层外壳，改过的容量由 GT 写成 `gt.capacity`；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `parts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
-`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标和合金反应，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、附属外壳或坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
+`onRecipesReady` 仍不是数据包重载事件。API 版本 0 包含坩埚成分、熔炼目标和合金反应，仍会把旧的材料数字 id 读成内置材料，并在这个方块或物品下次保存时写成名字。这一版不承诺固体燃料、能量转换、把内置引擎改到这套模板上、多方块行为机器、附属自绘 GUI、功能结构零件、坩埚方块、写入坩埚温度或内容物、任意非 GT 物品的熔化登记、坩埚数据包、不经入口就用数据包新建配方表、材料表的数据包重载、一份二进制同时跑两个加载器，或完整旧 GregAPI 替代。1.0 之前仅文档列出的入口作为兼容面。电压等级以[原GT6电压说明](VOLTAGE_TIERS.md)为准。
 
 SDK与项目代码采用LGPL-3.0-or-later；原作者、第三方代码和资产各自声明继续保留，见根LICENSE、COPYING、NOTICE。
