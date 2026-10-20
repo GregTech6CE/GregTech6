@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.internal.addon;
 
+import com.gregtech.gregtech.api.addon.SelectorTags;
 import com.gregtech.gregtech.api.addon.platform.AddonPlatform;
 import com.gregtech.gregtech.api.addon.platform.AddonTool;
 import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
@@ -12,9 +13,11 @@ import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.registry.GTItems;
+import com.gregtech.gregtech.registry.GTTechnological;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later. Installs the shared platform addon entry. */
@@ -42,6 +45,12 @@ public final class AddonPlatformServices {
             if (!resolved.isValid()) return ItemStack.EMPTY;
             ItemStack stack = GTItems.getStack(form, resolved, count);
             return stack == null ? ItemStack.EMPTY : stack;
+        }
+
+        @Override public ItemStack selectorTag(int configuration) {
+            SelectorTags.require(configuration);
+            Item item = GTTechnological.selectorTag(configuration);
+            return item == null ? ItemStack.EMPTY : new ItemStack(item);
         }
 
         @Override public boolean matchesTool(ItemStack stack, AddonTool tool) {

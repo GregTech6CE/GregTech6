@@ -27,6 +27,16 @@ public final class AddonSampleMod {
                         new ItemStack[]{new ItemStack(Items.IRON_NUGGET)},
                         null, null, 20, 16, 0, new int[]{5_000}));
                 if (added == null) throw new IllegalStateException("sample press chance row rejected");
+                var circuit = AddonRecipes.map("addon_sample.recipe.press").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.GOLD_INGOT), AddonItems.selectorTag(3)},
+                        new ItemStack[]{new ItemStack(Items.CLOCK)},
+                        null, null, 20, 16, 0));
+                if (circuit == null) throw new IllegalStateException("sample circuit row rejected");
+                var kept = AddonRecipes.map("addon_sample.recipe.press").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.COPPER_INGOT), new ItemStack(Items.EMERALD)},
+                        new ItemStack[]{new ItemStack(Items.BRICK)},
+                        null, null, 20, 16, 0, null, new int[]{1}));
+                if (kept == null) throw new IllegalStateException("sample kept input row rejected");
             }
         });
     }
