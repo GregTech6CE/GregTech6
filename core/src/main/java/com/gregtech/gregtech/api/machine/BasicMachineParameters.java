@@ -27,7 +27,10 @@ public record BasicMachineParameters(
         /** Minimum energy per tick accepted, from GT6 {@code NBT_INPUT_MIN}. */
         long energyInMin,
         /** Maximum energy per tick accepted, from GT6 {@code NBT_INPUT_MAX}. */
-        long energyInMax
+        long energyInMax,
+        boolean cheapOverclocking,
+        boolean cheapOverclockingSpecified,
+        int minimumLightAbove
 ) {
     public BasicMachineParameters {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -43,7 +46,18 @@ public record BasicMachineParameters(
         if (energyInMin < 1 || energyInMax < energyInMin)
             throw new IllegalArgumentException("Invalid energy range for " + id + ": "
                     + energyInMin + ".." + energyInMax);
+        if (minimumLightAbove < 0 || minimumLightAbove > 15)
+            throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
+    }
+
+    /** Built-in and older callers keep cheap overclocking on the name table and do not require light. */
+    public BasicMachineParameters(String id, GTMaterial material, String machineName, String energyType,
+                                  int tier, long energyIn, long energyOut, float hardness, float blastResistance,
+                                  MachineFaceMasks faceConfig, List<WeightedMaterial> constructionMaterials,
+                                  int parallelLimit, long energyInMin, long energyInMax) {
+        this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
+                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0);
     }
 
     /**
@@ -94,6 +108,9 @@ public record BasicMachineParameters(
         private List<WeightedMaterial> construction;
         private long energyInMin;
         private long energyInMax;
+        private boolean cheapOverclocking;
+        private boolean cheapOverclockingSpecified;
+        private int minimumLightAbove;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -109,12 +126,15 @@ public record BasicMachineParameters(
         public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
         public Builder faces(MachineFaceMasks value) { faces = value; return this; }
         public Builder constructionMaterials(List<WeightedMaterial> value) { construction = List.copyOf(value); return this; }
+        public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingSpecified = true; return this; }
+        public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public BasicMachineParameters build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineParameters(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
                     hardness, resistance, faces, construction, parallel,
                     energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
-                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn));
+                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
+                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove);
         }
     }
     public String textureFolder() { return machineName; }

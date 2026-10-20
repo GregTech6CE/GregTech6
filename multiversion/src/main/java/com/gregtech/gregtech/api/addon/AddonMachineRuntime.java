@@ -60,7 +60,7 @@ public final class AddonMachineRuntime {
         if (recipes == null)
             throw new IllegalStateException("Addon '" + accepted.addonId() + "' machine '"
                     + parameters.machineName() + "' uses unknown recipe map '" + definition.recipeMapName() + "'");
-        return BasicMachineSpec.builder(parameters.id(), parameters.material())
+        var spec = BasicMachineSpec.builder(parameters.id(), parameters.material())
                 .machineType(parameters.machineName())
                 .recipes(recipes)
                 .energy(parameters.energyTag(), parameters.energyIn())
@@ -76,6 +76,10 @@ public final class AddonMachineRuntime {
                 .processingEfficiency(definition.efficiency())
                 .constantEnergy(definition.constantEnergy())
                 .structureKeys(definition.structureKeys())
-                .build();
+                .minimumLightAbove(parameters.minimumLightAbove());
+        if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC
+                || parameters.cheapOverclockingSpecified())
+            spec.cheapOverclocking(parameters.cheapOverclocking());
+        return spec.build();
     }
 }

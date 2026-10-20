@@ -7,6 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
+import com.gregtech.gregtech.api.addon.RecipeOutputChances;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,14 +59,22 @@ public final class AddonRecipes {
             FluidStack[] fluidOutputs,
             long duration,
             long euPerTick,
-            long special
+            long special,
+            int[] outputChances
     ) {
+        /** Every item output is certain. */
+        public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
+                    long duration, long euPerTick, long special) {
+            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null);
+        }
+
         public Line {
             itemInputs = copyItems(itemInputs);
             itemOutputs = copyItems(itemOutputs);
             fluidInputs = copyFluids(fluidInputs);
             fluidOutputs = copyFluids(fluidOutputs);
             duration = Math.max(1, duration);
+            outputChances = RecipeOutputChances.normalize(outputChances, itemOutputs.length);
         }
 
         private static ItemStack[] copyItems(ItemStack[] stacks) {

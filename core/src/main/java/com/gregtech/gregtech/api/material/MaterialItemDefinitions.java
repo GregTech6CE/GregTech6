@@ -153,6 +153,13 @@ public final class MaterialItemDefinitions {
         }
         claim(core, true, seenIds, claimed);
         claim(addon, false, seenIds, claimed);
+        for (AddonMaterials.AcceptedForm form : AddonMaterials.acceptedForms()) {
+            MaterialPrefix prefix = PrefixRegistry.byName(form.prefixName());
+            GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
+            if (prefix == null || !material.isValid() || generates(prefix, material)) continue;
+            if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
+            claimPair(prefix, material, false, seenIds, claimed);
+        }
         List<Definition> definitions = new ArrayList<>();
         List<MaterialPrefix> automatic = candidatePrefixes();
         Set<MaterialPrefix> automaticPrefixes = new HashSet<>(automatic);
@@ -161,6 +168,13 @@ public final class MaterialItemDefinitions {
                 if (!generates(prefix, material)) continue;
                 definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
             }
+        }
+        for (AddonMaterials.AcceptedForm form : AddonMaterials.acceptedForms()) {
+            MaterialPrefix prefix = PrefixRegistry.byName(form.prefixName());
+            GTMaterial material = GTMaterialRegistry.get(form.materialName()).resolve();
+            if (prefix == null || !material.isValid() || generates(prefix, material)) continue;
+            if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
+            definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
         }
         rejectUngeneratedForms(automaticPrefixes);
         return List.copyOf(definitions);
@@ -181,7 +195,7 @@ public final class MaterialItemDefinitions {
             if (!automaticPrefixes.contains(prefix))
                 throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
                         + " / " + material.getName() + "' is not a generated form");
-            if (!generates(prefix, material))
+            if (!generates(prefix, material) && !AddonMaterials.explicitPlateOrFoil(prefix, material))
                 throw new IllegalStateException("Addon '" + form.addonId() + "' form '" + prefix.getName()
                         + " / " + material.getName() + "' is not generated for that material");
         }
@@ -191,21 +205,26 @@ public final class MaterialItemDefinitions {
         for (MaterialPrefix prefix : candidatePrefixes()) {
             for (GTMaterial material : materials) {
                 if (!generates(prefix, material)) continue;
-                String base = prefix.getItemId(material);
-                String itemId = base;
-                if (!seenIds.add(base)) {
-                    if (!core) {
-                        throw new IllegalStateException("Addon material " + material.getName() + " (id " + material.getId()
-                                + ") would take item id '" + base + "', which is already assigned. Core item ids stay fixed; rename the material.");
-                    }
-                    itemId = base + "_" + material.getId();
-                    if (!seenIds.add(itemId)) {
-                        throw new IllegalStateException("Could not allocate unique item id for " + prefix.getName() + " / " + material.getName());
-                    }
-                }
-                claimed.computeIfAbsent(material, ignored -> new HashMap<>()).put(prefix, itemId);
+                claimPair(prefix, material, core, seenIds, claimed);
             }
         }
+    }
+
+    private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
+                                  Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
+        String base = prefix.getItemId(material);
+        String itemId = base;
+        if (!seenIds.add(base)) {
+            if (!core) {
+                throw new IllegalStateException("Addon material " + material.getName() + " (id " + material.getId()
+                        + ") would take item id '" + base + "', which is already assigned. Core item ids stay fixed; rename the material.");
+            }
+            itemId = base + "_" + material.getId();
+            if (!seenIds.add(itemId)) {
+                throw new IllegalStateException("Could not allocate unique item id for " + prefix.getName() + " / " + material.getName());
+            }
+        }
+        claimed.computeIfAbsent(material, ignored -> new HashMap<>()).put(prefix, itemId);
     }
 
     /** Prefix validation retains the original five EMPTY ammunition components. */

@@ -38,7 +38,11 @@ public record BasicMachineSpec(
         int processingEfficiency,
         /** Constant draw while the machine is not using TU. */
         boolean constantEnergy,
-        List<String> structureKeys
+        List<String> structureKeys,
+        boolean cheapOverclocking,
+        /** When false, built-in and undeclared large machines keep their existing rule. */
+        boolean cheapOverclockingDeclared,
+        int minimumLightAbove
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -60,6 +64,8 @@ public record BasicMachineSpec(
         Objects.requireNonNull(controllerKind, "controller kind");
         if (processingEfficiency < 1 || processingEfficiency > 100_000)
             throw new IllegalArgumentException("Invalid processing efficiency for " + id);
+        if (minimumLightAbove < 0 || minimumLightAbove > 15)
+            throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
         structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
     }
@@ -74,7 +80,8 @@ public record BasicMachineSpec(
                 "gt6ce", MachineControllerKind.builtIn(machineName),
                 LargeMachineProcessingRules.efficiency(machineName),
                 LargeMachineProcessingRules.constantEnergy(false, machineName),
-                OriginalLargeRecipeMachineData.structureKeys(machineName));
+                OriginalLargeRecipeMachineData.structureKeys(machineName),
+                false, false, 0);
     }
 
     /**
@@ -143,6 +150,9 @@ public record BasicMachineSpec(
         private boolean constantEnergy = true;
         private boolean constantEnergySet;
         private List<String> structureKeys;
+        private boolean cheapOverclocking;
+        private boolean cheapOverclockingDeclared;
+        private int minimumLightAbove;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -164,6 +174,8 @@ public record BasicMachineSpec(
         public Builder processingEfficiency(int value) { efficiency = value; efficiencySet = true; return this; }
         public Builder constantEnergy(boolean value) { constantEnergy = value; constantEnergySet = true; return this; }
         public Builder structureKeys(List<String> value) { structureKeys = List.copyOf(value); return this; }
+        public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingDeclared = true; return this; }
+        public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineSpec(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
@@ -174,7 +186,8 @@ public record BasicMachineSpec(
                     kind != null ? kind : MachineControllerKind.builtIn(machineType),
                     efficiencySet ? efficiency : LargeMachineProcessingRules.efficiency(machineType),
                     constantEnergySet ? constantEnergy : LargeMachineProcessingRules.constantEnergy(false, machineType),
-                    structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType));
+                    structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
+                    cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove);
         }
     }
     public String textureFolder() { return machineName; }

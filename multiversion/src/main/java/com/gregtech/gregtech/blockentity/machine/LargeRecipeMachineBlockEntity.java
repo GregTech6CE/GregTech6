@@ -114,7 +114,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
     @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
     @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }
-    @Override protected boolean cheapOverclocking() { return !usesTimeEnergy(); }
+    @Override protected boolean cheapOverclocking() {
+        return com.gregtech.gregtech.api.addon.AddonOverclock.enabled(false,
+                spec() != null && spec().cheapOverclockingDeclared(),
+                spec() != null && spec().cheapOverclocking(),
+                !usesTimeEnergy());
+    }
     @Override protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && spec().constantEnergy(); }
     @Override protected int efficiency() { return spec().processingEfficiency(); }
     @Override protected boolean parallelScalesDuration() { return !usesTimeEnergy(); }

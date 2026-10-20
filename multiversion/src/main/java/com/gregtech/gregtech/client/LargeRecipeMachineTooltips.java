@@ -19,7 +19,9 @@ public final class LargeRecipeMachineTooltips {
                 .append(recipeName.withStyle(ChatFormatting.WHITE))
                 .append(Component.literal(spec.parallelLimit()>1?" (up to "+spec.parallelLimit()+"x processed per run)":"").withStyle(ChatFormatting.WHITE));
         boolean timed=spec.energyType().equals("TU");
-        if(!timed)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
+        boolean cheap=spec.cheapOverclockingDeclared()?spec.cheapOverclocking():!timed;
+        if(cheap)add(lines,"gt.lang.cheap.overclocking",ChatFormatting.YELLOW);
+        if(spec.minimumLightAbove()>0)lines.add(Component.translatable("gt.lang.requirement.light.above",spec.minimumLightAbove()).withStyle(ChatFormatting.GOLD));
         int efficiency=spec.processingEfficiency();
         if(efficiency!=10000)add(lines,"gt.lang.efficiency",ChatFormatting.YELLOW).append(": ")
                 .append(Component.literal(efficiency/100+"."+String.format(java.util.Locale.ROOT,"%02d",efficiency%100)+"%").withStyle(ChatFormatting.WHITE));
