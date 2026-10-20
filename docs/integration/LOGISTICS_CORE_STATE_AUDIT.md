@@ -36,6 +36,8 @@
 
 例如形成结构、100000EU与27控制CPU，原消息明确有100000EU和29m范围，当前没有这两项，也没有逐次搬运附加成本提示。BE已有storedEU与范围计算，不是底层没有数值。本条仅核这条右键消息，不扩大为Jade或所有界面都无法读能量。当前直接拼接的Structure Incomplete／Logic等同时扩003；不要求保留原Comsumption拼写错误或照搬已过时说明。
 
+第七十二批继续实际搬运后，254另扩过滤覆盖板放大镜缺所选样本／未设置提示和数量0含义；不是新造重复编号，详见[搬运专题](LOGISTICS_TRANSFER_AUDIT.md)。
+
 ## 已追到的路由入口与待续范围
 
 当前serverTick每20个世界gameTime尝试路由，逐tick扣固定能量；LogisticsNetwork以坐标快照扫描加载宿主并要求相邻双方开放。LogisticsRoutingPass共用core顺序，物品／流体先后、Generic／Semi／Filtered等级、存储整理及Dump有实际实现，直接物流存储、半过滤和保留物品也有分支。它们不是只注册空壳；本批读取这些声明主要为排除状态归因错误，尚未逐项接受所有搬运结果。

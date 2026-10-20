@@ -6,7 +6,7 @@
 
 基岩钻机17999真实方块是`OriginalBedrockDrillControllerBlock`，运行在共享`BedrockDrillControllerBlockEntity`，core的`AdvancedControllerRules`与`DirectMachinePowerRules`分别给出角色／常数和软容量注入计划。Neo能力监听在`BasicMachineRegistries`，原生罐恢复在版本专有`NativeMachineTankData`。同目录另一HorizontalDirectional类不能代替实际注册判断，见[钻机专题](BEDROCK_DRILL_AUDIT.md)。
 
-物流核心17997：core的`LogisticsCoreLayout`给结构／计数经济，`LogisticsCorePowerRules`委托共享软容量计划，`LogisticsRoutingRules`给路由顺序；共享BE负责世界验证、调度／显示／保存，`LogisticsRoutingPass`连接原生物品／流体端点。Forge实际注册在版本初始化的GTLasers，Neo在GTMultiblocks，入口差异不代表两套业务。见[结构与状态专题](LOGISTICS_CORE_STATE_AUDIT.md)；完整搬运／生命周期待续。
+物流核心17997：core的`LogisticsCoreLayout`给结构／计数经济，`LogisticsCorePowerRules`委托共享软容量计划，`LogisticsRoutingRules`给路由顺序；共享BE负责世界验证、调度／显示／保存，`LogisticsRoutingPass`连接原生物品／流体端点。Forge实际注册在版本初始化的GTLasers，Neo在GTMultiblocks，入口差异不代表两套业务。见[结构与状态专题](LOGISTICS_CORE_STATE_AUDIT.md)；数量／过滤／返还已继续[实际搬运核查](LOGISTICS_TRANSFER_AUDIT.md)，调度和生命周期待续。
 
 ## 先按层找代码
 
@@ -359,3 +359,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 第六十七批[大型发电机导航](LARGE_DYNAMO_AUDIT.md)：SharedLargeMachineParts原ID17221–17224→MultiblockBlockFactory→LargeDynamoControllerBlock及GTBlockEntities.LARGE_DYNAMO；BE只负责RU准入／旧键兼容，结构与75%转换在AxialGeneratorBlockEntity，档位由OriginalGeneratorParameters→AxialGeneratorDefinitions映射。SharedTurbineStructure／StructureGrid为纯坐标，AxialStructureTransform是原生坐标边界；后端部件查询与真正后4格输出须分别追。五源码展开与八局部命名仅提高可读性。
 
 第六十八批[大型换热器导航](LARGE_HEAT_EXCHANGER_AUDIT.md)：GTMultiblocks→LargeHeatExchangerControllerBlock／GTBlockEntities，BE负责世界17格认领、八出口与冷热能力／持久化；SharedHeatExchangerStructure给纯布局，HeatExchangerRules给纯数值计划，HotFluidFuelCycle处理原生流体／配方，HeatExchangerData处理版本设置／NBT。Neo流体入口在BasicMachineRegistries，而非单块用的SmelteryRegistries；制作由MultiblockCraftingRecipes→MultiblockRecipePack→MachineRecipeIngredients。六源展开只改善阅读，不增平台业务副本。
+
+物流覆盖板定义在core的`LogisticsCoverDefinition`，原生`LogisticsCoverType`只映射ItemStack；`LogisticsCoverInteraction`负责样本／优先级／数量及工具交互，`LogisticsItemRouter`／`LogisticsFluidRouter`负责实际能力搬运。模板FilterRules与覆盖板matches是不同合同，勿混用；本轮整理四源码，没有引入两套业务，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。
