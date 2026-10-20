@@ -119,7 +119,7 @@ public final class AddonSampleMachineTests {
         machine.inventory().setStackInSlot(0, new ItemStack(Items.IRON_INGOT));
         run(helper, machine, 32, 40);
         helper.assertTrue(machine.inventory().getStackInSlot(0).isEmpty(), "press consumed the ingot");
-        helper.assertTrue(machine.inventory().getStackInSlot(1).is(Items.GOLD_NUGGET), "press produced a gold nugget");
+        helper.assertTrue(machine.inventory().getStackInSlot(machine.inputSlots()).is(Items.GOLD_NUGGET), "press produced a gold nugget");
         helper.getLevel().removeBlock(pos, false);
         helper.succeed();
     }
