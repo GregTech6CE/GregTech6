@@ -56,7 +56,7 @@ public final class GTCreativeTabIcons {
     public static void register() {
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialPrefix prefix : PrefixRegistry.all()) {
-            if (prefix.isHiddenFromCreative()) {
+            if (prefix.isHiddenFromCreative() || prefix.isAddon()) {
                 continue;
             }
             MaterialPrefix bound = prefix;

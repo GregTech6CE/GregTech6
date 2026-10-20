@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.api.material;
 
 import com.gregtech.gregtech.api.addon.AddonMaterials;
+import com.gregtech.gregtech.api.mod.GregTechIdentity;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import java.util.ArrayList;
@@ -18,7 +19,11 @@ import java.util.Set;
 public final class MaterialItemDefinitions {
     private MaterialItemDefinitions() {}
 
-    public record Definition(String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
+    public record Definition(String namespace, String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
+        public Definition(String itemId, String baseItemId, MaterialPrefix prefix, GTMaterial material) {
+            this(GregTechIdentity.MOD_ID, itemId, baseItemId, prefix, material);
+        }
+
         public boolean hasIdSuffix() { return !itemId.equals(baseItemId); }
     }
 
@@ -160,6 +165,12 @@ public final class MaterialItemDefinitions {
             if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
             claimPair(prefix, material, false, seenIds, claimed);
         }
+        for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
+            for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+                if (!generates(prefix, material)) continue;
+                claimPair(prefix, material, false, seenIds, claimed, prefix.itemNamespace());
+            }
+        }
         List<Definition> definitions = new ArrayList<>();
         List<MaterialPrefix> automatic = candidatePrefixes();
         Set<MaterialPrefix> automaticPrefixes = new HashSet<>(automatic);
@@ -175,6 +186,13 @@ public final class MaterialItemDefinitions {
             if (prefix == null || !material.isValid() || generates(prefix, material)) continue;
             if (!AddonMaterials.explicitPlateOrFoil(prefix, material)) continue;
             definitions.add(new Definition(claimed.get(material).get(prefix), prefix.getItemId(material), prefix, material));
+        }
+        for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
+            for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+                if (!generates(prefix, material)) continue;
+                definitions.add(new Definition(prefix.itemNamespace(), claimed.get(material).get(prefix),
+                        prefix.getItemId(material), prefix, material));
+            }
         }
         rejectUngeneratedForms(automaticPrefixes);
         return List.copyOf(definitions);
@@ -212,15 +230,21 @@ public final class MaterialItemDefinitions {
 
     private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
                                   Map<GTMaterial, Map<MaterialPrefix, String>> claimed) {
+        claimPair(prefix, material, core, seenIds, claimed, GregTechIdentity.MOD_ID);
+    }
+
+    private static void claimPair(MaterialPrefix prefix, GTMaterial material, boolean core, Set<String> seenIds,
+                                  Map<GTMaterial, Map<MaterialPrefix, String>> claimed, String namespace) {
         String base = prefix.getItemId(material);
         String itemId = base;
-        if (!seenIds.add(base)) {
+        if (!seenIds.add(namespace + ":" + base)) {
             if (!core) {
                 throw new IllegalStateException("Addon material " + material.getName() + " (id " + material.getId()
-                        + ") would take item id '" + base + "', which is already assigned. Core item ids stay fixed; rename the material.");
+                        + ") would take item id '" + namespace + ":" + base
+                        + "', which is already assigned. Core item ids stay fixed; rename the material.");
             }
             itemId = base + "_" + material.getId();
-            if (!seenIds.add(itemId)) {
+            if (!seenIds.add(namespace + ":" + itemId)) {
                 throw new IllegalStateException("Could not allocate unique item id for " + prefix.getName() + " / " + material.getName());
             }
         }

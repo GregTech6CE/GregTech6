@@ -54,6 +54,11 @@ import java.util.TreeMap;
 public final class GTItems {
 //? if >=1.21.1 {
     /*public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(GregTechNeoForge.NAMESPACE);
+    private static final java.util.Map<String, DeferredRegister.Items> ADDON_ITEMS = new java.util.LinkedHashMap<>();
+    public static DeferredRegister.Items items(String namespace) {
+        if (GregTechNeoForge.NAMESPACE.equals(namespace)) return ITEMS;
+        return ADDON_ITEMS.computeIfAbsent(namespace, DeferredRegister::createItems);
+    }
     private static final Logger LOGGER = LogUtils.getLogger();
     public record CreativeEntry(GTMaterial material, DeferredHolder<Item, ? extends Item> item) {}
     private static final Map<String, NavigableMap<String, CreativeEntry>> BY_PREFIX = new HashMap<>();
@@ -61,6 +66,23 @@ public final class GTItems {
     private static boolean initialized;
 *///?} else {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, GregTech.NAMESPACE);
+    private static final java.util.Map<String, DeferredRegister<Item>> ADDON_ITEMS = new java.util.LinkedHashMap<>();
+
+    /** Built-in forms stay on {@link #ITEMS}. An addon prefix uses that addon's namespace. */
+    public static DeferredRegister<Item> items(String namespace) {
+        if (GregTech.NAMESPACE.equals(namespace)) return ITEMS;
+        return ADDON_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
+    }
+
+    public static void registerAddonItems(net.minecraftforge.eventbus.api.IEventBus bus) {
+        for (DeferredRegister<Item> register : ADDON_ITEMS.values()) register.register(bus);
+    }
+
+    public static java.util.Collection<RegistryObject<Item>> addonEntries() {
+        var entries = new java.util.ArrayList<RegistryObject<Item>>();
+        for (DeferredRegister<Item> register : ADDON_ITEMS.values()) entries.addAll(register.getEntries());
+        return entries;
+    }
 
     public record CreativeEntry(GTMaterial material, RegistryObject<Item> item) {}
     private static final Map<String, java.util.NavigableMap<String,CreativeEntry>> BY_PREFIX = new HashMap<>();
@@ -79,7 +101,7 @@ public final class GTItems {
                 LOGGER.warn("Duplicate item id '{}' for material {} (id={}); using '{}'",
                         definition.baseItemId(), material.getName(), material.getId(), definition.itemId());
             }
-            DeferredItem<Item> item = ITEMS.register(definition.itemId(), () ->
+            DeferredItem<Item> item = items(definition.namespace()).register(definition.itemId(), () ->
                     prefix==MaterialPrefix.coin?new com.gregtech.gregtech.item.CoinItem(new Item.Properties().stacksTo(64),material):com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)
                             ? new com.gregtech.gregtech.item.MaterialArrowItem(new Item.Properties().stacksTo(64),prefix,material)
                             : new MaterialItem(new Item.Properties().stacksTo(64), prefix, material));
@@ -87,6 +109,7 @@ public final class GTItems {
             ALL.add(item);
         }
         ITEMS.register(modEventBus);
+        for (DeferredRegister.Items register : ADDON_ITEMS.values()) register.register(modEventBus);
         initialized = true;
         return ALL.size();
     }

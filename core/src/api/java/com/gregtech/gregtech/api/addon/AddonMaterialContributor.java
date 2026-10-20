@@ -18,6 +18,12 @@ public interface AddonMaterialContributor {
     List<MaterialFormRequest> forms();
 
     /**
+     * Item prefixes this addon adds. GregTech registers them after the built-in prefixes.
+     * A name that already exists fails startup. Return pure data.
+     */
+    default List<PrefixDeclaration> prefixes() { return List.of(); }
+
+    /**
      * Compositions of this addon's own materials. Resolved after the built-in directory has linked.
      * A {@code crucible} composition also becomes one crucible reaction.
      */

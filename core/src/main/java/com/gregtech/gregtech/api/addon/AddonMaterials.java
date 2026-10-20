@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.api.addon;
 
 import com.gregtech.gregtech.api.machine.crucible.CrucibleReactions;
+import com.gregtech.gregtech.data.generated.MaterialWorkability;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.GTValues;
@@ -68,12 +69,17 @@ public final class AddonMaterials {
         return "plate".equals(name) || "foil".equals(name);
     }
 
+    private static final Set<String> COAL = Set.of(
+            "Coal", "Charcoal", "CoalCoke", "Lignite", "LigniteCoke", "Anthracite", "HydratedCoal", "PetroleumCoke");
+    private static final Set<String> MEAT = Set.of("MeatRaw", "MeatCooked", "MeatRotten");
+
     private record Submission(String addonId, List<MaterialDefinition> materials,
                               List<MaterialFormRequest> forms, Runnable link,
                               List<MaterialComposition> compositions,
                               List<SmeltingTargetDeclaration> smeltingTargets,
                               List<CrucibleReactionDeclaration> crucibleReactions,
-                              List<CrucibleReactionRemoval> crucibleRemovals) {}
+                              List<CrucibleReactionRemoval> crucibleRemovals,
+                              List<PrefixDeclaration> prefixes) {}
 
     private record Pending(String addonId, MaterialDefinition definition) {}
 
@@ -105,7 +111,7 @@ public final class AddonMaterials {
                 warnIgnoredDeclarationIds(contributor.addonId(), declarations);
                 enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
                         contributor.compositions(), contributor.smeltingTargets(),
-                        contributor.crucibleReactions(), contributor.crucibleRemovals());
+                        contributor.crucibleReactions(), contributor.crucibleRemovals(), contributor.prefixes());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
@@ -146,7 +152,7 @@ public final class AddonMaterials {
      */
     public static synchronized void submit(String addonId, List<MaterialDefinition> materials,
                                            List<MaterialFormRequest> forms, Runnable link) {
-        submit(addonId, materials, forms, link, List.of(), List.of(), List.of(), List.of());
+        submit(addonId, materials, forms, link, List.of(), List.of(), List.of(), List.of(), List.of());
     }
 
     /** Test entry. Production addons return these lists from {@link AddonMaterialContributor}. */
@@ -156,12 +162,23 @@ public final class AddonMaterials {
                                            List<SmeltingTargetDeclaration> smeltingTargets,
                                            List<CrucibleReactionDeclaration> crucibleReactions,
                                            List<CrucibleReactionRemoval> crucibleRemovals) {
+        submit(addonId, materials, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals, List.of());
+    }
+
+    /** Test entry. Production addons return prefixes from {@link AddonMaterialContributor#prefixes()}. */
+    public static synchronized void submit(String addonId, List<MaterialDefinition> materials,
+                                           List<MaterialFormRequest> forms, Runnable link,
+                                           List<MaterialComposition> compositions,
+                                           List<SmeltingTargetDeclaration> smeltingTargets,
+                                           List<CrucibleReactionDeclaration> crucibleReactions,
+                                           List<CrucibleReactionRemoval> crucibleRemovals,
+                                           List<PrefixDeclaration> prefixes) {
         List<MaterialDefinition> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         for (MaterialDefinition definition : copied) {
             GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + definition.name()
                     + "' declared numeric id " + definition.id() + "; the id is ignored");
         }
-        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals);
+        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals, prefixes);
     }
 
     private static synchronized void enqueue(String addonId, List<MaterialDefinition> materials,
@@ -169,7 +186,8 @@ public final class AddonMaterials {
                                              List<MaterialComposition> compositions,
                                              List<SmeltingTargetDeclaration> smeltingTargets,
                                              List<CrucibleReactionDeclaration> crucibleReactions,
-                                             List<CrucibleReactionRemoval> crucibleRemovals) {
+                                             List<CrucibleReactionRemoval> crucibleRemovals,
+                                             List<PrefixDeclaration> prefixes) {
         if (closed) throw new IllegalStateException("Addon material queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -183,7 +201,8 @@ public final class AddonMaterials {
                 List.copyOf(Objects.requireNonNull(compositions, "compositions")),
                 List.copyOf(Objects.requireNonNull(smeltingTargets, "smeltingTargets")),
                 List.copyOf(Objects.requireNonNull(crucibleReactions, "crucibleReactions")),
-                List.copyOf(Objects.requireNonNull(crucibleRemovals, "crucibleRemovals"))));
+                List.copyOf(Objects.requireNonNull(crucibleRemovals, "crucibleRemovals")),
+                List.copyOf(Objects.requireNonNull(prefixes, "prefixes"))));
     }
 
     public static synchronized void closeQueue() {
@@ -279,6 +298,83 @@ public final class AddonMaterials {
             }
         }
         sealCrucibleAdditions();
+    }
+
+    /**
+     * Addon prefixes register after every built-in prefix and before form checks.
+     * A colliding name fails startup. Items for these prefixes are appended later.
+     */
+    public static void publishPrefixes() {
+        for (Submission submission : snapshot()) {
+            for (PrefixDeclaration declaration : submission.prefixes) installPrefix(submission.addonId, declaration);
+        }
+    }
+
+    private static void installPrefix(String addonId, PrefixDeclaration declaration) {
+        MaterialPrefix existing = PrefixRegistry.conflict(declaration.name());
+        if (existing != null) throw new IllegalStateException("Addon '" + addonId + "' prefix '"
+                + declaration.name() + "' already exists as '" + existing.getName() + "'");
+        Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
+        long weight;
+        try {
+            weight = Math.multiplyExact(declaration.unitAmount(), GTValues.U);
+        } catch (ArithmeticException overflow) {
+            throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
+                    + "' unit amount overflows", overflow);
+        }
+        String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
+        MaterialPrefix.defineAddon(declaration.name(), label, declaration.displayPrefix(), declaration.displaySuffix(),
+                weight, addonId, declaration.texture(), material -> selected.contains(material.resolve()));
+    }
+
+    private static Set<GTMaterial> selectPrefixMaterials(String addonId, PrefixDeclaration declaration) {
+        boolean positive = false;
+        for (PrefixCondition condition : declaration.conditions()) if (condition.positive()) positive = true;
+        var selected = java.util.Collections.newSetFromMap(new IdentityHashMap<GTMaterial, Boolean>());
+        for (String name : declaration.materials()) {
+            GTMaterial found = GTMaterialRegistry.get(name);
+            if (!found.isValid()) throw new IllegalStateException("Addon '" + addonId + "' prefix '"
+                    + declaration.name() + "' uses unknown material '" + name + "'");
+            GTMaterial material = found.resolve();
+            if (material.has(MaterialProperty.HIDDEN)) throw new IllegalStateException("Addon '" + addonId
+                    + "' prefix '" + declaration.name() + "' cannot use hidden material '" + material.getName() + "'");
+            if (!positive) {
+                for (PrefixCondition condition : declaration.conditions()) {
+                    if (!matches(condition, material)) throw new IllegalStateException("Addon '" + addonId
+                            + "' prefix '" + declaration.name() + "' material '" + material.getName()
+                            + "' does not match " + condition);
+                }
+            }
+            selected.add(material);
+        }
+        if (positive) {
+            for (GTMaterial material : GTMaterialRegistry.sortedMaterials()) {
+                if (!material.isValid() || material.resolve() != material || material.has(MaterialProperty.HIDDEN)) continue;
+                boolean matches = true;
+                for (PrefixCondition condition : declaration.conditions()) {
+                    if (!matches(condition, material)) {
+                        matches = false;
+                        break;
+                    }
+                }
+                if (matches) selected.add(material);
+            }
+        }
+        if (selected.isEmpty()) throw new IllegalStateException("Addon '" + addonId + "' prefix '"
+                + declaration.name() + "' matches no material");
+        return selected;
+    }
+
+    private static boolean matches(PrefixCondition condition, GTMaterial material) {
+        return switch (condition) {
+            case HAS_TOOL_STATS -> material.getToolQuality() >= 1;
+            case SMITHABLE -> material.has(MaterialProperty.SMITHABLE);
+            case NOT_WOOD -> !material.has(MaterialProperty.WOOD);
+            case NOT_COAL -> !COAL.contains(material.getName());
+            case NOT_STONE -> !material.has(MaterialProperty.STONE);
+            case NOT_FOOD -> !MaterialWorkability.isFood(material);
+            case NOT_MEAT -> !MEAT.contains(material.getName());
+        };
     }
 
     /** Prefix checks happen after linking so a form can name a material created during link. */

@@ -72,7 +72,7 @@ public final class MaterialClientModels {
         PrefixRegistry.ensurePrefixesLoaded();
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
             for (MaterialPrefix prefix : PrefixRegistry.all()) {
-                if (!GTItems.hasBoundItems(prefix)) continue;
+                if (!GTItems.hasBoundItems(prefix) || prefix.isAddon()) continue;
 //? if >=1.21.1 {
                 /*// Neo 1.21 requires side-loaded models to use the standalone variant.
                 event.register(MaterialIcons.sharedModelStandalone(set, prefix));
@@ -100,13 +100,15 @@ public final class MaterialClientModels {
         for (var entry : GTItems.allEntries()) {
 //? if >=1.21.1 {
             /*com.gregtech.gregtech.api.material.MaterialFormItem item = (com.gregtech.gregtech.api.material.MaterialFormItem) entry.get();
+            if (item.getPrefix().isAddon()) continue;
             BakedModel model = resolveSharedModel(models, item);
             if (model == null) {
                 missing++;
             } else {
                 models.put(ModelResourceLocation.inventory(entry.getId()),item instanceof com.gregtech.gregtech.item.CoinItem?new CoinItemBakedModel(model):model);
 *///?} else {
-            if (!(entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)) {
+            if (!(entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)
+                    || materialItem.getPrefix().isAddon()) {
                 continue;
             }
 

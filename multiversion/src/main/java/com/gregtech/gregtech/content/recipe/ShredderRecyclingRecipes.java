@@ -67,6 +67,12 @@ public final class ShredderRecyclingRecipes {
                 recycle(material, prefix);
             }
         }
+        for (MaterialPrefix prefix : PrefixRegistry.addonPrefixes()) {
+            for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
+                if (material.has(MaterialProperty.ANTIMATTER) || !prefix.isValidFor(material)) continue;
+                recycle(material, prefix);
+            }
+        }
         if (!missing.isEmpty()) SKIPPED.add("prefixes the port does not have: " + missing);
 //? if >=1.21.1 {
         /*com.mojang.logging.LogUtils.getLogger().info("Registered {} GT6 shredder recycling recipes ({} prefixes missing: {})",
