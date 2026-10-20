@@ -85,7 +85,7 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.misc.BumbleHiveBlockEntity>> BUMBLE_HIVE=BLOCK_ENTITIES.register("bumble_hive",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.BumbleHiveBlockEntity::new,GTBumbleBlocks.allHives()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.BushBlockEntity>> BUSH=BLOCK_ENTITIES.register("bush",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.BushBlockEntity::new,GTBushes.allBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.FluidSpringBlockEntity>> FLUID_SPRING=BLOCK_ENTITIES.register("fluid_spring",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.FluidSpringBlockEntity::new,GTFluidSprings.allBlocks()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.CFoamBlockEntity>> CFOAM=BLOCK_ENTITIES.register("cfoam",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.CFoamBlockEntity::new,GTConstructionBlocks.CFOAM_FRESH.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.CFoamBlockEntity>> CFOAM=BLOCK_ENTITIES.register("cfoam",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.CFoamBlockEntity::new,GTConstructionVariants.wetFoams()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.misc.PileBlockEntity>> PILE=BLOCK_ENTITIES.register("pile",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.PileBlockEntity::new,GTMaterialPiles.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.misc.CoinPileBlockEntity>> COIN_PILE=BLOCK_ENTITIES.register("coin_pile",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.misc.CoinPileBlockEntity::new,GTCoinPiles.COIN_PILE.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.inventory.BookShelfBlockEntity>> BOOKSHELF=BLOCK_ENTITIES.register("bookshelf",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.inventory.BookShelfBlockEntity::new,GTBookShelves.all().stream().map(RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -529,7 +529,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.CFoamBlockEntity>> CFOAM =
             BLOCK_ENTITY_TYPES.register("cfoam", () ->
                     BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.CFoamBlockEntity::new,
-                            GTDecorBlocks.CFOAM_FRESH.get()).build(null));
+                            GTConstructionVariants.wetFoams()).build(null));
 
     /** GT6's fluid springs at bedrock (WorldgenFluidSpring). */
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.FluidSpringBlockEntity>> FLUID_SPRING =

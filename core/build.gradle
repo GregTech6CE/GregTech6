@@ -90,7 +90,8 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     coreBehaviorContracts: 'CoreBehaviorContracts',
     materialBehaviorContracts: 'MaterialBehaviorContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
-    machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts'
+    machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts',
+    machineInputContracts: 'MachineInputContracts'
 ].each { taskName, entryPoint ->
     def contract = tasks.register(taskName, JavaExec) {
         description = "Runs ${entryPoint} without Minecraft; reuses unchanged successful inputs."

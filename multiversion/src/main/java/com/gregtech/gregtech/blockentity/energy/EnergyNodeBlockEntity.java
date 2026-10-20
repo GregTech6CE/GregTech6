@@ -485,6 +485,8 @@ public class EnergyNodeBlockEntity extends GTEnergyBlockEntity implements com.gr
 
     public boolean isSteamConverter() { return isTurbine(); }
 
+    public int converterOverloads() { return magnetOverloads; }
+
     private void tickTurbine() {
         if (steamTank == null || spec.inputRate() <= 0) return;
         // Older port builds admitted arbitrary fluids. Never turn that saved water into RU.

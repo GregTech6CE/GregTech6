@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 /** Original BlockColored names use the whole source phrase, including its dye. */
-public final class ColoredConstructionBlockItem extends BlockItem {
+public final class ColoredConstructionBlockItem extends LegacyConstructionBlockItem {
     public ColoredConstructionBlockItem(Block block, Properties properties) { super(block, properties); }
 
     @Override public Component getName(ItemStack stack) {

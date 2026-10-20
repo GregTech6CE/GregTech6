@@ -113,7 +113,8 @@ public class QueueHopperBlockEntity extends BlockEntity implements IItemHandler,
         boolean processed = false;
         if (mCheck > 0) {
             mCheck--;
-        } else if ((mCheck == 0 || inventoryChanged || blockUpdated) && !hasRedstoneIncomingFromNonRail()) {
+        } else if ((mCheck == 0 || inventoryChanged || blockUpdated || level.getGameTime() % 20 == 0)
+                && !hasRedstoneIncomingFromNonRail()) {
             processed = true;
             Direction facing = getFacing();
             int last = lastSlot();

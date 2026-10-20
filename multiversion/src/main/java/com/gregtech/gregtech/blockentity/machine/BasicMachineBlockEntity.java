@@ -93,6 +93,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Processing state ─────────────────────────────────────────────────
     private long mEnergy;           // per-tick energy buffer (capped at energyInMax)
+    private final com.gregtech.gregtech.content.machine.MachineInputAverage inputAverage =
+            new com.gregtech.gregtech.content.machine.MachineInputAverage();
     private long mMinEnergy;        // per-tick energy cost for current recipe (after overclock)
     private long mMaxProgress;      // total energy needed for current recipe
     private int mParallelCount = 1; // GT6 large machine batch size for the running op
@@ -218,6 +220,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     @Override public long gibblMaximum(int side) { return java.util.Arrays.stream(tanksInput).mapToLong(FluidTankGT::capacity).sum(); }
     public FluidTankGT[] getTanksOutput() { return tanksOutput; }
     public long getEnergyTick() { return mEnergy; }
+
+    public double averageEnergyInput() {
+        return level == null ? 0 : inputAverage.average(level.getGameTime());
+    }
+
+    private void addReceivedEnergy(long size, long packets) {
+        long before = mEnergy;
+        mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, packets);
+        if (level != null) inputAverage.record(level.getGameTime(), Math.max(0, mEnergy - before));
+    }
     public boolean isRunning() { return mRunning; }
     public int getProgressPercent() {
         if (mMaxProgress <= 0) return 0;
@@ -344,7 +356,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             long requested = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, offered);
             if (requested <= 0) continue;
             long extracted = source.doEnergyExtraction(energyTag(), absDir.getOpposite(), size, requested, true);
-            if (extracted > 0) mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, extracted);
+            if (extracted > 0) addReceivedEnergy(size, extracted);
         }
     }
 
@@ -1247,7 +1259,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         }
         long consumed = BasicMachineEnergy.accepted(mEnergy, inputMaximum(), size, amount);
         if (doInject && consumed > 0) {
-            mEnergy = BasicMachineEnergy.add(mEnergy, inputMaximum(), size, consumed);
+            addReceivedEnergy(size, consumed);
             setChanged();
         }
         return consumed;
@@ -1669,6 +1681,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
                     ? inner.insertItem(slot, stack, simulate) : stack;
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (slot < be.inputSlots()) return ItemStack.EMPTY;
             Direction side = be.relativeToAbsolute(relativeSide);
             ItemStack existing = inner.getStackInSlot(slot);
             return com.gregtech.gregtech.content.cover.ComponentCoverRuntime.allowsItem(be.getCover(side),false) && canExtract && !be.isRemoved() && !be.isFaceShuttered(side)

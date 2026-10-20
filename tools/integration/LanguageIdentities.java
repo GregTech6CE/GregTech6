@@ -177,12 +177,14 @@ class LanguageIdentities {
         for (String binding : new String[]{"asphalt|asphalt|0", "concrete|concrete|7",
                 "concrete_reinforced|concrete.reinforced|7", "cfoam|cfoam|15",
                 "cfoam_fresh|cfoam.fresh|15",
-                "glass_clear|glass|7", "glass_glow|glass.glow|7",
+                "glass_clear|glass|7", "glass_glow|glass.glow|7", "glass_clear_slab|glass.slab.0|15",
                 "glass_glow_slab|glass.glow.slab.0|15", "cfoam_slab|cfoam.slab.0|15"}) {
             String[] parts = binding.split("\\|");
             row("block.gt6ce." + parts[0], "gt.block." + parts[1] + "." + parts[2], "");
-            for (int i = 0; i < colors.size(); i++)
+            for (int i = 0; i < colors.size(); i++) {
                 row("block.gt6ce." + parts[0] + "." + colors.get(i), "gt.block." + parts[1] + "." + i, "");
+                row("block.gt6ce." + parts[0] + "_" + colors.get(i), "gt.block." + parts[1] + "." + i, "");
+            }
         }
         // Retained sprite-only legacy blocks have no color state. Do not invent colored items for them.
         row("block.gt6ce.cfoam_fresh_owned", "gt.block.cfoam.fresh.15", "");

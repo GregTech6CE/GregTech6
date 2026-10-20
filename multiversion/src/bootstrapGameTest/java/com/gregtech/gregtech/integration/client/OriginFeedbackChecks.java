@@ -32,12 +32,12 @@ public final class OriginFeedbackChecks {
         receipt.addProperty("originCenterBiomesChecked",biomes.length);
         var asphalt=BuiltInRegistries.BLOCK.get(id("asphalt"));
         var road=level.getBlockState(new BlockPos(-4,height,64));
-        require(road.is(asphalt)&&road.getValue(com.gregtech.gregtech.block.misc.ConcreteBlock.COLOR)==DyeColor.GRAY,"Road is not source gray asphalt");
+        require(road.is(com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(asphalt,DyeColor.GRAY)),"Road is not source gray asphalt");
         require(level.getBlockState(new BlockPos(72,height-10,-72)).is(Blocks.TERRACOTTA),"Original uncolored mesa terracotta was dyed");
         int[] facilities={7133,4033,6033,5033,8033,14999,26304,32048,32057,32062,32702,32703,32705,32707,32709,32711,32719,32722,32727,32732,32735,32737,32739,32744,32750};
         for(int legacy:facilities)require(BuiltInRegistries.BLOCK.containsKey(id(NativeOriginFacilities.block(legacy))),"Missing source facility "+legacy);
         require(level.getBlockState(new BlockPos(17,height+1,-46)).is(Blocks.END_PORTAL_FRAME),"Original Nexus portal frame was not generated");
-        require(level.getBlockState(new BlockPos(34,height+15,-30)).is(BuiltInRegistries.BLOCK.get(id("glass_glow_slab"))),"Source test roof glow-glass slab missing");
+        require("glass_glow_slab".equals(com.gregtech.gregtech.registry.GTConstructionVariants.family(level.getBlockState(new BlockPos(34,height+15,-30)).getBlock())),"Source test roof glow-glass slab missing");
         var grind=level.getBlockEntity(new BlockPos(42,height+2,-18));
         require(grind instanceof com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity station&&station.stoneUses()==4,"Source grindstone not preloaded");
         var button=level.getBlockEntity(new BlockPos(44,height+2,-20));

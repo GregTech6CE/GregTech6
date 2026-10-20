@@ -34,11 +34,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * GT6 {@code BlockConcrete}/{@code BlockConcreteReinforced}: one block id with all sixteen dye
- * metadata values. The named colour state takes the place of 1.7.10 metadata and is copied to
- * dropped/picked items through vanilla's BlockStateTag.
+ * GT6 concrete/reinforced-concrete behavior. Retained palette IDs read the old color state;
+ * {@link FixedConstructionBlocks.Concrete} stores the color in each registered identity.
  */
-public final class ConcreteBlock extends Block {
+public class ConcreteBlock extends Block {
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     private static final TagKey<Item> IRON_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/iron"));
     private static final TagKey<Item> STEEL_RODS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "rods/steel"));
@@ -49,14 +48,15 @@ public final class ConcreteBlock extends Block {
     public ConcreteBlock(boolean reinforced, Properties properties) {
         super(properties);
         this.reinforced = reinforced;
-        registerDefaultState(stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY));
+        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
+                ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());
     }
 
     public boolean reinforced() { return reinforced; }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(COLOR);
+        if (!(this instanceof FixedConstructionColor)) builder.add(COLOR);
     }
 
     @Override
@@ -65,6 +65,8 @@ public final class ConcreteBlock extends Block {
     }
 
     public static ItemStack coloredItem(Block block, DyeColor color) {
+        Block variant = com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(block, color);
+        if (variant != null) return new ItemStack(variant);
         ItemStack stack = new ItemStack(block);
 //? if >=1.21.1 {
         /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,new net.minecraft.world.item.component.BlockItemStateProperties(java.util.Map.of("color",color.getName())));
@@ -77,6 +79,8 @@ public final class ConcreteBlock extends Block {
     }
 
     public static DyeColor itemColor(ItemStack stack) {
+        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof FixedConstructionColor fixed) return fixed.color();
 //? if >=1.21.1 {
         /*var data=stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
         return data==null?DyeColor.LIGHT_GRAY:DyeColor.byName(data.properties().getOrDefault("color","light_gray"),DyeColor.LIGHT_GRAY);
@@ -93,7 +97,7 @@ public final class ConcreteBlock extends Block {
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        return List.of(coloredItem(this, state.getValue(COLOR)));
+        return List.of(coloredItem(this, FixedConstructionColor.colorOf(state)));
     }
 
     @Override
@@ -102,7 +106,7 @@ public final class ConcreteBlock extends Block {
 *///?} else {
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
-        return coloredItem(this, state.getValue(COLOR));
+        return coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 
     private static int rodSlot(Player player) {
@@ -139,13 +143,13 @@ public final class ConcreteBlock extends Block {
 //? if >=1.21.1 {
         /*if (slot < 0) return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level.isClientSide) return net.minecraft.world.ItemInteractionResult.SUCCESS;
-        if (!level.setBlock(pos, GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState()
-                .setValue(COLOR, state.getValue(COLOR)), Block.UPDATE_ALL)) return net.minecraft.world.ItemInteractionResult.FAIL;
+        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTConstructionBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
+                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return net.minecraft.world.ItemInteractionResult.FAIL;
 *///?} else {
         if (slot < 0) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
-        if (!level.setBlock(pos, GTDecorBlocks.CONCRETE_REINFORCED.get().defaultBlockState()
-                .setValue(COLOR, state.getValue(COLOR)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
+        if (!level.setBlock(pos, FixedConstructionColor.recolor(GTDecorBlocks.CONCRETE_REINFORCED.get().defaultBlockState(),
+                FixedConstructionColor.colorOf(state)), Block.UPDATE_ALL)) return InteractionResult.FAIL;
 //?}
         if (!player.getAbilities().instabuild) player.getInventory().getItem(slot).shrink(1);
         GTToolHelper.damageForToolClickReturn(player.getItemInHand(hand), 10000, player,

@@ -2,7 +2,23 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.decor_concrete",
   "contents": [
-    "item:gt6ce:concrete"
+    "item:gt6ce:concrete",
+    "item:gt6ce:concrete_white",
+    "item:gt6ce:concrete_orange",
+    "item:gt6ce:concrete_magenta",
+    "item:gt6ce:concrete_light_blue",
+    "item:gt6ce:concrete_yellow",
+    "item:gt6ce:concrete_lime",
+    "item:gt6ce:concrete_pink",
+    "item:gt6ce:concrete_gray",
+    "item:gt6ce:concrete_light_gray",
+    "item:gt6ce:concrete_cyan",
+    "item:gt6ce:concrete_purple",
+    "item:gt6ce:concrete_blue",
+    "item:gt6ce:concrete_brown",
+    "item:gt6ce:concrete_green",
+    "item:gt6ce:concrete_red",
+    "item:gt6ce:concrete_black"
   ],
   "priority": 120
 }

@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:glass_glow_slab",
+    "gt6ce:glass_glow_slab_white",
+    "gt6ce:glass_glow_slab_orange",
+    "gt6ce:glass_glow_slab_magenta",
+    "gt6ce:glass_glow_slab_light_blue",
+    "gt6ce:glass_glow_slab_yellow",
+    "gt6ce:glass_glow_slab_lime",
+    "gt6ce:glass_glow_slab_pink",
+    "gt6ce:glass_glow_slab_gray",
+    "gt6ce:glass_glow_slab_light_gray",
+    "gt6ce:glass_glow_slab_cyan",
+    "gt6ce:glass_glow_slab_purple",
+    "gt6ce:glass_glow_slab_blue",
+    "gt6ce:glass_glow_slab_brown",
+    "gt6ce:glass_glow_slab_green",
+    "gt6ce:glass_glow_slab_red",
+    "gt6ce:glass_glow_slab_black"
+  ]
+}

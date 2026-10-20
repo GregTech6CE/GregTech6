@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-20 / 存储与四方向蒸汽网络定向验证
+
+修复大容量存储三种模式、料斗重试和输入槽抽取门控，Jade 改为实际均值／额定倍率；十类建筑色板拆成 160 个颜色 ID，保留旧加载。恢复原版流体管道更新前交错两相，四方向观察均为 64 RU/t、过载计数 0；最终验证及旧档／客户端等未测边界见[记录](verification/storage-direction-colors-20261020.md)。全面审计目标仍 active。
+
 ## 2026-10-20 / 第四十五批覆盖板宿主边界
 
 以 `b639b9b93` 为基线，六份原版和十六份当前源码留存哈希；ContainerStorageRules、ComponentCoverStorage、MassStorageRenderer 共五份 core／双版执行词法和字面量等价。共享旋转表与原版前六行、前六列逐元素一致，不声称完成所有库存／点击测试。没有新增测试、编译、游戏、保存重启、构建或推送，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)和[回执](verification/storage-cover-boundary-audit-20261020.json)。

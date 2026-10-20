@@ -5,7 +5,7 @@ import java.util.function.UnaryOperator;
 
 /** Bulk count is never encoded in an ItemStack count. Simulation never selects a filter. */
 public final class BulkStorageState<K> {
-    private final long capacity;
+    private long capacity;
     private final BiPredicate<K, K> same;
     private final UnaryOperator<K> copy;
     private K filter;
@@ -29,6 +29,12 @@ public final class BulkStorageState<K> {
 
     public long capacity() {
         return capacity;
+    }
+
+    /** Capacity changes never discard previously stored items. */
+    public void setCapacity(long capacity) {
+        if (capacity <= 0) throw new IllegalArgumentException("capacity");
+        this.capacity = capacity;
     }
 
     public boolean accepts(K key) {

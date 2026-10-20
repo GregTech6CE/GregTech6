@@ -4,13 +4,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 /** Transparent six-directional glass half blocks. Only a completely covered touching face is culled. */
-public final class ColoredGlassSlabBlock extends CFoamSlabBlock {
+public class ColoredGlassSlabBlock extends CFoamSlabBlock {
     public ColoredGlassSlabBlock(Properties properties) {super(properties);}
     @Override public boolean skipRendering(BlockState state,BlockState adjacent,Direction side) {
         Direction own=state.getValue(FACING);
         if(side==own.getOpposite())return false;
-        if(adjacent.getBlock() instanceof ColoredGlassBlock full && full.glow() == (state.getLightEmission() > 0) && state.getValue(COLOR)==adjacent.getValue(ColoredGlassBlock.COLOR))return true;
-        if(adjacent.getBlock() instanceof ColoredGlassSlabBlock && state.getValue(COLOR)==adjacent.getValue(COLOR)) {
+        if(adjacent.getBlock() instanceof ColoredGlassBlock full && full.glow() == (state.getLightEmission() > 0) && FixedConstructionColor.colorOf(state)==FixedConstructionColor.colorOf(adjacent))return true;
+        if(adjacent.getBlock() instanceof ColoredGlassSlabBlock && FixedConstructionColor.colorOf(state)==FixedConstructionColor.colorOf(adjacent)) {
             Direction other=adjacent.getValue(FACING);
             return other==side.getOpposite() || other!=side && other==own;
         }

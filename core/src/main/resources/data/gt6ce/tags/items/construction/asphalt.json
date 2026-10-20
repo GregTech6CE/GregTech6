@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:asphalt",
+    "gt6ce:asphalt_white",
+    "gt6ce:asphalt_orange",
+    "gt6ce:asphalt_magenta",
+    "gt6ce:asphalt_light_blue",
+    "gt6ce:asphalt_yellow",
+    "gt6ce:asphalt_lime",
+    "gt6ce:asphalt_pink",
+    "gt6ce:asphalt_gray",
+    "gt6ce:asphalt_light_gray",
+    "gt6ce:asphalt_cyan",
+    "gt6ce:asphalt_purple",
+    "gt6ce:asphalt_blue",
+    "gt6ce:asphalt_brown",
+    "gt6ce:asphalt_green",
+    "gt6ce:asphalt_red",
+    "gt6ce:asphalt_black"
+  ]
+}

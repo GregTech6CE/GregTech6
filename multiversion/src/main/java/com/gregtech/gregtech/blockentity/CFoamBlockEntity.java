@@ -32,6 +32,9 @@ public class CFoamBlockEntity extends BlockEntity {
 
     public long timer() { return timer; }
 
+    /** Repainting changes the registered block identity, but must not restart its drying grace period. */
+    public void restoreTimer(long timer) { this.timer = Math.max(0, timer); setChanged(); }
+
     public void tick() {
         if (level == null || level.isClientSide || dried) return;
         timer++;
@@ -48,8 +51,9 @@ public class CFoamBlockEntity extends BlockEntity {
     public boolean dry() {
         if (level == null || level.isClientSide || dried) return false;
         dried = true;
-        BlockState hardened = CFoamBlock.hardened().defaultBlockState()
-                .setValue(CFoamBlock.COLOR, getBlockState().getValue(CFoamBlock.COLOR));
+        BlockState hardened = com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(
+                CFoamBlock.hardened().defaultBlockState(),
+                com.gregtech.gregtech.block.misc.FixedConstructionColor.colorOf(getBlockState()));
         return level.setBlock(worldPosition, hardened, 3);
     }
 

@@ -32,6 +32,13 @@ import java.util.Map;
  */
 @JeiPlugin
 public final class GregTechJEIPlugin implements IModPlugin {
+    @Override public void onRuntimeAvailable(mezz.jei.api.runtime.IJeiRuntime runtime) {
+        var legacy = net.minecraft.core.registries.BuiltInRegistries.ITEM.stream()
+                .filter(item -> item instanceof com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem)
+                .map(ItemStack::new).toList();
+        runtime.getIngredientManager().removeIngredientsAtRuntime(mezz.jei.api.constants.VanillaTypes.ITEM_STACK, legacy);
+    }
+
     @Override public void registerVanillaCategoryExtensions(mezz.jei.api.registration.IVanillaCategoryExtensionRegistration registration) {
         ToolCraftingDisplay.register(registration);
     }

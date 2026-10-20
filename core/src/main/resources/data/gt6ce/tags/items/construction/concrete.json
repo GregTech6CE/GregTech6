@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:concrete",
+    "gt6ce:concrete_white",
+    "gt6ce:concrete_orange",
+    "gt6ce:concrete_magenta",
+    "gt6ce:concrete_light_blue",
+    "gt6ce:concrete_yellow",
+    "gt6ce:concrete_lime",
+    "gt6ce:concrete_pink",
+    "gt6ce:concrete_gray",
+    "gt6ce:concrete_light_gray",
+    "gt6ce:concrete_cyan",
+    "gt6ce:concrete_purple",
+    "gt6ce:concrete_blue",
+    "gt6ce:concrete_brown",
+    "gt6ce:concrete_green",
+    "gt6ce:concrete_red",
+    "gt6ce:concrete_black"
+  ]
+}

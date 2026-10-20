@@ -1,5 +1,7 @@
 # 大容量存储的工具、模式与封装核查
 
+2026-10-20 后续：ALIGN-137 的自动下送／溢出／模式门控已按玩家反馈修复并做 NeoForge 定向验证；ALIGN-126 的此宿主实例同修。以下保留本批发现时的边界，当前状态见[修复记录](verification/storage-direction-colors-20261020.md)。ALIGN-136 仍待实现。
+
 第四十四批，2026-10-20，基线 `ff30fdee0`。原版来源为 `gregapi/tileentity/inventories/MultiTileEntityMassStorage.java`，继续追踪胶带的实际宿主，以及两版方块入口、物品能力、工具类和物流子类。原作者来源和文件哈希见[回执](verification/mass-storage-control-audit-20261020.json)。
 
 ## 已有对应的路径

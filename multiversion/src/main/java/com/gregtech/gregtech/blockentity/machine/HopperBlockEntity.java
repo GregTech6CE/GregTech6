@@ -115,7 +115,8 @@ public class HopperBlockEntity extends BlockEntity implements IItemHandler, IIte
         boolean processed = false;
         if (mCheck > 0) {
             mCheck--;
-        } else if ((mCheck == 0 || inventoryChanged || blockUpdated) && !hasRedstoneIncomingFromNonRail()) {
+        } else if ((mCheck == 0 || inventoryChanged || blockUpdated || level.getGameTime() % 20 == 0)
+                && !hasRedstoneIncomingFromNonRail()) {
             processed = true;
             Direction facing = getFacing();
             // Phase 1: Output — push items out the facing side (skip UP, skip rail-without-cart)

@@ -608,6 +608,8 @@ public class RecipeMap {
         for (ItemStack in : aRecipe.mInputs) {
             if (empty(in)) continue;
             mRecipeItemMap.computeIfAbsent(in.getItem(), k -> new HashSet<>()).add(aRecipe);
+            for (var color : com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in))
+                mRecipeItemMap.computeIfAbsent(color.getItem(), k -> new HashSet<>()).add(aRecipe);
         }
         // Index by input fluids
         for (FluidStack f : aRecipe.mFluidInputs) {
@@ -669,10 +671,15 @@ public class RecipeMap {
         if (recipe == null || !mRecipeList.remove(recipe)) return false;
         for (ItemStack in : recipe.mInputs) {
             if (empty(in)) continue;
-            var pool = mRecipeItemMap.get(in.getItem());
-            if (pool == null) continue;
-            pool.remove(recipe);
-            if (pool.isEmpty()) mRecipeItemMap.remove(in.getItem());
+            var keys = new ArrayList<ItemStack>();
+            keys.add(in);
+            keys.addAll(com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(in));
+            for (var key : keys) {
+                var pool = mRecipeItemMap.get(key.getItem());
+                if (pool == null) continue;
+                pool.remove(recipe);
+                if (pool.isEmpty()) mRecipeItemMap.remove(key.getItem());
+            }
         }
         for (FluidStack fluid : recipe.mFluidInputs) {
             if (fluid == null || fluid.isEmpty()) continue;
@@ -764,7 +771,7 @@ public class RecipeMap {
     }
 
     private static boolean itemMatches(ItemStack recipe, ItemStack input) {
-        return recipe.getItem() == input.getItem() && input.getCount() >= recipe.getCount();
+        return RecipeInputs.matches(recipe, input) && input.getCount() >= recipe.getCount();
     }
 
     // ── Fluid helpers ────────────────────────────────────────────────────

@@ -318,29 +318,17 @@ public final class GTDungeonData {
     // ── the colour family (GT6's {@code DungeonData:153-166}) ──────────────────────────────────
 
     public boolean glass(int ax, int ay, int az) {
-//? if >=1.21.1 {
-        /*return set(ax, ay, az, GTConstructionBlocks.GLASS_CLEAR.get().defaultBlockState()
-*///?} else {
-        return set(ax, ay, az, GTDecorBlocks.GLASS_CLEAR.get().defaultBlockState()
-//?}
-                .setValue(ColoredGlassBlock.COLOR, GT6_DYES[color]));
+        return set(ax, ay, az, com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(
+                com.gregtech.gregtech.registry.GTConstructionBlocks.GLASS_CLEAR.get().defaultBlockState(), GT6_DYES[color]));
     }
     /** GT6's coloured glowing glass uses the same 16-colour metadata as its normal glass. */
     public boolean glassglow(int ax, int ay, int az) {
-//? if >=1.21.1 {
-        /*return set(ax, ay, az, GTConstructionBlocks.GLASS_GLOW.get().defaultBlockState()
-*///?} else {
-        return set(ax, ay, az, GTDecorBlocks.GLASS_GLOW.get().defaultBlockState()
-//?}
-                .setValue(ColoredGlassBlock.COLOR, GT6_DYES[color]));
+        return set(ax, ay, az, com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(
+                com.gregtech.gregtech.registry.GTConstructionBlocks.GLASS_GLOW.get().defaultBlockState(), GT6_DYES[color]));
     }
     public boolean colored(int ax, int ay, int az) {
-//? if >=1.21.1 {
-        /*return set(ax, ay, az, GTConstructionBlocks.CONCRETE.get().defaultBlockState()
-*///?} else {
-        return set(ax, ay, az, GTDecorBlocks.CONCRETE.get().defaultBlockState()
-//?}
-                .setValue(ConcreteBlock.COLOR, GT6_DYES[color]));
+        return set(ax, ay, az, com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(
+                com.gregtech.gregtech.registry.GTConstructionBlocks.CONCRETE.get().defaultBlockState(), GT6_DYES[color]));
     }
 
     /**
