@@ -11,8 +11,10 @@ import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.MaterialBlockDefinitions;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
 import com.gregtech.gregtech.api.material.MaterialItemDefinitions;
+import com.gregtech.gregtech.data.generated.MaterialForms;
 import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
@@ -28,10 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 
 /** Addon material queue, in its own JVM so a submission cannot change the core fingerprint process. */
 public final class AddonMaterialContracts {
     private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
+    /** Core block ids in definition order, taken before addon ore blocks were appended. */
+    private static final String BLOCK_ID_SHA256 = "2bf589f634a16f450fb0295757b342d7208793881c05d3315c36bde52c035735";
     private static int assertions;
     private static boolean linked;
 
@@ -57,6 +62,10 @@ public final class AddonMaterialContracts {
             case "scale" -> scale();
             case "softform" -> softPlate();
             case "oreraw" -> rawOreStillRejected();
+            case "ores" -> ores();
+            case "oremismatch" -> oreMismatch();
+            case "orelist" -> oreListMismatch();
+            case "oreunknown" -> oreUnknown();
             case "prefix" -> prefix();
             case "prefixname" -> prefixName();
             case "prefixcase" -> prefixCase();
@@ -265,6 +274,95 @@ public final class AddonMaterialContracts {
         expectThrows("not valid", "oreRaw", "SoftOre");
     }
 
+    private static void ores() throws Exception {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").displayName("Ore Metal").color(0x336699).metal().ores()
+                        .oreByproducts("Iron", "Copper").build(),
+                MaterialDeclaration.builder("PlainDust").displayName("Plain Dust").color(0x888888).dust().build(),
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()),
+                List.of(new MaterialFormRequest("OreMetal", "oreRaw")));
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()), List.of());
+        GTMaterialRegistry.init();
+        GTMaterial ore = GTMaterialRegistry.get("OreMetal").resolve();
+        GTMaterial plain = GTMaterialRegistry.get("PlainDust").resolve();
+        GTMaterial shared = GTMaterialRegistry.get("SharedOre").resolve();
+        check(MaterialForms.has(ore, "ORES") && AddonMaterials.hasOreForm(ore), "ores() is the ORES form");
+        check(!MaterialForms.has(plain, "ORES") && !AddonMaterials.hasOreForm(plain),
+                "a material without ores() has no ORES form");
+        check(ore.getByProducts().stream().map(GTMaterial::getName).toList().equals(List.of("Iron", "Copper")),
+                "byproducts keep declaration order");
+        check(plain.getByProducts().isEmpty() && shared.getByProducts().isEmpty(),
+                "omitted byproducts stay empty");
+        check(AddonMaterials.owners(shared).equals(List.of("aa_ore", "zz_ore")),
+                "matching ore declarations merge");
+        var oreItems = new TreeSet<String>();
+        int raw = 0;
+        boolean plainRaw = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (definition.material() == ore) oreItems.add(definition.prefix().getName());
+            if (definition.material() == ore && "oreRaw".equals(definition.prefix().getName())) raw++;
+            if (definition.material() == plain && "oreRaw".equals(definition.prefix().getName())) plainRaw = true;
+        }
+        check(oreItems.containsAll(List.of("oreRaw", "crushed", "crushedTiny", "crushedPurified",
+                "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny", "rockGt", "dustImpure")),
+                "ores() generates raw ore, impure dust and the processing chain: " + oreItems);
+        check(!oreItems.contains("rawOreChunk") && !oreItems.contains("dirtyGravel")
+                        && !oreItems.contains("dustPure") && !oreItems.contains("dustRefined"),
+                "ores() does not register the external ore forms: " + oreItems);
+        check(raw == 1 && !plainRaw, "requesting oreRaw does not add a second item, and a plain dust has none");
+        int lastCore = -1;
+        int oreBlock = -1;
+        int smallBlock = -1;
+        boolean plainOre = false;
+        boolean rawStorage = false;
+        var blocks = MaterialBlockDefinitions.all();
+        for (int i = 0; i < blocks.size(); i++) {
+            var definition = blocks.get(i);
+            if (GTMaterialRegistry.isCoreMaterial(definition.material())) lastCore = i;
+            if (definition.material() == plain && ("ore".equals(definition.prefix().getName())
+                    || "oreSmall".equals(definition.prefix().getName()))) plainOre = true;
+            if (definition.material() != ore) continue;
+            String prefix = definition.prefix().getName();
+            if ("ore".equals(prefix)) oreBlock = i;
+            if ("oreSmall".equals(prefix)) smallBlock = i;
+            if ("blockRaw".equals(prefix) || "crateGtRaw".equals(prefix) || "crateGt64Raw".equals(prefix)) rawStorage = true;
+        }
+        check(oreBlock > lastCore && smallBlock == oreBlock + 1, "addon ore blocks follow every core block");
+        check(blocks.get(oreBlock).blockId().equals("ore_oremetal")
+                        && blocks.get(smallBlock).blockId().equals("ore_small_oremetal"),
+                "addon ore block ids use the material name");
+        check(!plainOre && !rawStorage, "no ores() means no ore block, and ores() adds no raw storage block");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "ores do not change built-in block ids");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "ores do not change built-in item ids");
+    }
+
+    private static void oreMismatch() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()), List.of());
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().build()), List.of());
+        expectThrows("field ores", "ores", "SharedOre", "aa_ore", "zz_ore");
+    }
+
+    private static void oreListMismatch() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().oreByproducts("Iron", "Copper").build()), List.of());
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().oreByproducts("Copper", "Iron").build()), List.of());
+        expectThrows("field oreByproducts", "oreByproducts", "SharedOre");
+    }
+
+    private static void oreUnknown() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().oreByproducts("NotAMaterial").build()), List.of());
+        expectThrows("unknown material", "NotAMaterial", "OreMetal");
+    }
+
     private static void ungeneratedForm() {
         prepare();
         AddonMaterials.submit("aa_form", List.of(), List.of(new MaterialFormRequest("Diamond", "crystal")), null);
@@ -288,6 +386,7 @@ public final class AddonMaterialContracts {
                 "Material definitions are closed");
         check(oldBandEmpty(), "empty startup leaves the old addon band free");
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "an empty addon queue keeps the core item id sample");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "an empty addon queue keeps the core block id sample");
         check(PrefixRegistry.addonPrefixes().isEmpty(), "an empty addon queue adds no prefix");
         check(MaterialPrefix.foil.getMaterialWeight() == GTValues.U4, "built-in foil weight stays on the switch");
     }
@@ -392,6 +491,20 @@ public final class AddonMaterialContracts {
             return;
         }
         throw new AssertionError(message);
+    }
+
+    private static String coreBlockFingerprint() throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        for (MaterialBlockDefinitions.Definition definition : MaterialBlockDefinitions.all()) {
+            if (!GTMaterialRegistry.isCoreMaterial(definition.material())) continue;
+            String line = definition.blockId() + "\t" + definition.baseBlockId() + "\t"
+                    + definition.prefix().getName() + "\t" + definition.material().getName() + "\t"
+                    + definition.material().getId() + "\n";
+            digest.update(line.getBytes(StandardCharsets.UTF_8));
+        }
+        StringBuilder text = new StringBuilder();
+        for (byte value : digest.digest()) text.append(String.format("%02x", value));
+        return text.toString();
     }
 
     private static String coreAutomaticFingerprint() throws Exception {

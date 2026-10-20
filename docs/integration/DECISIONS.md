@@ -1,5 +1,19 @@
 # 实现选择记录
 
+## 2026-10-20 / 附属材料的矿
+
+附属材料用 `MaterialDeclaration.Builder.ores()` 声明有矿。这等于给这种材料加上 GT6 的 `ORES` 形态，所以 `oreRaw` 和矿处理前缀按原来的 `isValidFor` 通过，不逐个放行。
+
+因此会生成的物品，是候选表里本来就会发出、并且校验因此通过的那些：`oreRaw`、`crushed`、`crushedTiny`、`crushedPurified`、`crushedPurifiedTiny`、`crushedCentrifuged`、`crushedCentrifugedTiny`、`rockGt`，以及 `dustImpure`。不纯粉在移植版里跟着矿处理走，不看 GT6 那个没有材料使用的 `DIRTY_DUSTS`。`dustPure` 和 `dustRefined` 仍只看 `DIRTY_DUSTS`，不会出现。这些物品跟别的附属物品一样排在核心物品之后。`rawOreChunk`、`dirtyGravel` 这些不在候选表里，仍然不注册成物品。
+
+方块只追加 `ore` 和 `oreSmall`，排在现有方块表的最后，所以核心方块的 id 和相对顺序不变。母岩仍是方块状态。`ORES` 也会让 `blockRaw`、`crateGtRaw`、`crateGt64Raw` 的校验通过，这三种不注册。装箱配方按方块是否存在跳过，所以没有原矿块可合成。
+
+没有调用 `ores()` 的材料不出这些物品和方块。`forms()` 点名 `oreRaw` 在没有这个开关时仍然启动失败。点名 `ore` 或 `oreSmall` 失败，因为它们不是物品前缀。
+
+`oreByproducts` 是可选的材料名单，顺序就是 GT6 副产物顺序。写了就隐含 `ores()`。名字必须是已有材料，不能是隐藏材料。两个附属合并同一种材料时，开关和这份名单必须一致，否则启动失败。没有名单时副产物为空，洗矿和离心仍按 GT 的回退规则走。
+
+矿脉和世界生成不在这里。API 版本仍是 0。
+
 ## 2026-10-20 / 附属能量零件和带结构的行为机器
 
 能量零件是卡 25 外壳声明上的可选 `StructurePartEnergy`：能量短名、正的缓存、输出面、每 tick 的包大小和包数上限。EU 和 RU 用同一个声明，只换短名。没有这项的零件仍是外壳，注册、方块实体和“不自己 tick”都跟卡 25 一样。
