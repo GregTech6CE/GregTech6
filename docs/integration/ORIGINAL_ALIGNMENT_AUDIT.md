@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：已合并远端 `894f90ce0`，第五十八批展开核心反应堆源码，三组核专题继续；此前四个整类候选已共享，植物专题已归档。行为记录至 ALIGN-201，当前共 201 条正式记录，包含已修复／部分修复条目，不是 201 个未修复问题。初始文件清点和旧批次结论保留各自日期边界。
+2026-10-21 续核：已合并远端 `894f90ce0`，第五十九批归档核反应棒／核心／网络；此前核心源码已展开、四个整类候选已共享，植物专题已归档。行为记录至 ALIGN-210，当前共 210 条正式记录，包含已修复／部分修复条目，不是 210 个未修复问题。初始文件清点和旧批次结论保留各自日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -121,7 +121,7 @@
 | ALIGN-092 | 确认物流桶空桶软锤无法清除过滤。 | 原版父类先处理空桶清身份／自动输出，非空才检查 canBeSealed。 | 当前整个 toggleSoftHammerState 为空；保留过滤本身正常，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
 | ALIGN-093 | 确认共享储液容量查询／缩容改变原版合同。 | 原版缩容不改已有量，无可调表时报告名义容量。 | 当前缩容截量，查询额外以已有量作下限；部分多方块已有补偿，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
 | ALIGN-094 | 确认溢出销毁的接口分支不完整。 | 原版 add／fill 启用后报告消耗整个同种输入。 | 当前 add 仅满罐报告全部，原生 fill 未用标志；未发现启用业务调用，见 [报告](LOGISTICS_TANK_AUDIT.md)。 |
-| ALIGN-095 | 确认可调容量键混用，空罐首次填充未按输入流体查表。 | 原版配方／罐同用 Fluid 名称，空罐按输入查询。 | 当前罐用 type ID，三种世界水查成 minecraft:water；普通静态流体多为同 ID，不一概判失效，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
+| ALIGN-095 | 确认可调容量键／填充入口未按实际输入流体消费。 | 原配方／罐同用Fluid名称，空罐按输入查询；核热罐Steam可扩为10240000。 | 当前type ID混用及空罐无参fill见[原报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。59批扩到核热罐capacity(stack)虚覆写未被fill消费，401L水对应64160Steam超过实际64000许可；历史超量仍保留，非全旧罐截断，见[核心](NUCLEAR_CORE_AUDIT.md)。 |
 | ALIGN-096 | 确认基础配方机默认罐容量和倍率不同。 | 原版输入默认 1000／可覆盖、配方容量乘 parallel×2，输出 Long.MAX_VALUE。 | 当前输入 8000／倍率 1，基础输出 8000；独立输出覆写另列，不等同原版积压限制，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 | ALIGN-097 | 确认普通桶与物流桶物品缺少容器能力。 | 原版 MultiTileEntityItemInternal 转发桶的物品 fill／drain 并更新 NBT。 | 当前只有存液掉落数据和提示／堆叠限制，没有本模组提供的物品流体 handler；量杯等不在此缺口内，见 [报告](ADAPTIVE_FLUID_AND_ITEM_AUDIT.md)。 |
 | ALIGN-098 | 确认泵每源罐只尝试一次，不重复使用余下预算。 | 原版 CoverPump 在有进展且有预算时循环 FL.move。 | 当前 for 每个 tank 一次；单次调用限额的接收器可能低于额定吞吐，未原生复现，见 [报告](COMPONENT_DRAIN_COVER_AUDIT.md)。 |
@@ -228,6 +228,15 @@
 | ALIGN-199 | 确认自然石堆破坏未接Fortune数量。 | 原自然石getDrops读取1+rng(1+fortune)，手摆石则不放大。 | 当前RockBlock.getDrops未读真实TOOL／Fortune，只用BE count；Twig已有正确工具入口。自然与手摆explicit模式尚须分清，不能直接给全部物品放大，见[地表堆](SURFACE_PILES_AUDIT.md)。 |
 | ALIGN-200 | 确认普通石堆失去下方支撑未接邻居移除链。 | 原邻居变化检查支撑并掉物移除，实际方块分派已核。 | Rock只有canSurvive，默认原生updateShape原样返回、neighborChanged不重验；无其它本模组补偿。Twig已有updateShape，不误报同缺口，也不扩大到全部液体流入场景，见[地表堆](SURFACE_PILES_AUDIT.md)。 |
 | ALIGN-201 | 确认普通木棍／燧石潜行手摆未找到内置对应分支。 | 原GT_Proxy将stick族／vanilla flint放为手摆堆；手摆木棍固定掉普通stick。 | 当前RockItemPlacement仅rockGt／oreRaw，全局Pile事件其后仅锭／板／宝石板；vanilla stick／flint统一信息不满足这些门槛。其它石材手摆已有，不排除外部事件提供者，见[地表堆](SURFACE_PILES_AUDIT.md)。 |
+| ALIGN-202 | 确认空核棒挤压的直接输入前缀收窄。 | 原Extruder按合格U64..U前缀且整除U构造Zr输入，例如4小粉／9小搓粉。 | 当前ReactorRodRecipes仅ingot／dust，匹配仍要求同前缀；先拼整粉不等于原直接路线，通用挤压011另属PartRecipeLoader，见[核棒](NUCLEAR_ROD_AUDIT.md)。 |
+| ALIGN-203 | 确认空核棒挤压工时用密度替代原每U重量。 | 原max(64,trunc((melt−293)×(1+weight(U))/6144))，Zr每U约722.89kg，216tick。 | 当前直接getDensity使Zr落最低64tick；96EU/t、1U原料与1空棒仍对应，未枚举最终配方表，见[核棒](NUCLEAR_ROD_AUDIT.md)。 |
+| ALIGN-204 | 确认棒专属动态／解释提示未完整移植。 | 原核棒慢化、分钟与冷却剂改参轮播，增殖目标／loss及各类反应说明。 | 当前有定义栈只显示kind、裸Remaining和核棒基础四参数，缺对应动态／解释；与003硬编码语言问题分开，物理公式并非因此缺失，见[核棒](NUCLEAR_ROD_AUDIT.md)。 |
+| ALIGN-205 | 确认两种额外遗留棒可见但没有当前反应定义。 | 原GT目录46项，不含两种旧移植MOX／Am243物品；IC2自己的MOX不作GT定义证明。 | 当前共48注册，两旧FuelType回落definition=null、Core拒入；实际OriginCreativeContents扫描仍展示，不能用旧创页filter说已隐藏，见[核棒](NUCLEAR_ROD_AUDIT.md)。 |
+| ALIGN-206 | 确认核心物品自动化缺少上下侧限制。 | 原1x1／2x2仅上下访问，且核心或槽停止才可插拔。 | 当前两端对任意Direction提供同一items，保留停止槽门控；无覆盖板补偿，真实漏斗查询可从水平输入。不是漏斗水平吸取结论，见[核心](NUCLEAR_CORE_AUDIT.md)。 |
+| ALIGN-207 | 确认核心冷却／故障早于旧热液排出，可能误判堵塞。 | 原普通tick先推热液，服务器后置阶段才反应／冷却。 | 当前coolHeat/fail后才pushFluids；满工业热冷却液且邻罐可收时，原能先腾空间，当前可先清棒。独立于095Steam空罐扩容，保留不地形爆炸政策，见[核心](NUCLEAR_CORE_AUDIT.md)。 |
+| ALIGN-208 | 确认核心运行派生状态与消费者不同。 | 原mRunning汇总周期通量或reaction布尔，控制检测与接触同读它。 | 当前控制只lastHeat>0，接触只!stopped&&!failed；有效零热棒检测偏窄、开启空核接触门控偏宽。伤害限实际实体重叠入口，两个表现合为一项，见[核心](NUCLEAR_CORE_AUDIT.md)。 |
+| ALIGN-209 | 确认核中子邻接未保留Universal Extender委托路径。 | 原getAdjacentTileEntity沿通用扩展器delegate与返回面解析目标核心。 | 当前网络只查本tick核心的直接相邻BlockPos，不把扩展器解析为目标；直连四向／槽位已对应，不报所有扩展器或普通邻核失效，取舍待定，见[网络](NUCLEAR_NETWORK_AUDIT.md)。 |
+| ALIGN-210 | 确认共享辐射消费者缺原creative／IronGolem明确豁免。 | 原applyRadioactivity调用RadioHazmat helper，先豁免creative、原IronGolem／Wither。 | 当前creative会积持久dose；IronGolem缺显式豁免并尝试addEffect，未宣称六药效均生效或创意免伤失效。Wither已有undead保护，中心采样另列政策边界，见[网络](NUCLEAR_NETWORK_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -264,7 +273,7 @@
 | 储物、容器与传感器 | 普通／物流桶、计量、各类库存、原生爆炸、填槽、两版通知及共用菜单九类实际宿主已局部核查 | 差异见 ALIGN-077、083–097、112–120、136–163、168、172–173、179；六类同源回调和三类补偿／限制已分开，继续其它菜单、覆盖板归属、成组掉落、量子／中继桥、材料重量、手持仪表与保存恢复；源码链不等于游戏场景已运行 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
 | 养蜂与植物 | 已追自然巢、养蜂周期／保存门控、灌木生命周期／物理／生成及光莲实际两端所有权；确认ALIGN-164–167、169–171、174–178、183–188、194–195，温度计扩展085 | 光莲仅Forge碰撞／陆地回退有具体差异，Neo与GT水一般兼容已有；现代睡莲政策保留。全种类、可选整合、其余植物物理及真实保存重启继续 |
-| 核反应堆 | 待逐棒／冷却规则重核 | 中子、增殖、反射、慢化、辐射、冷却失效和保存 |
+| 核反应堆 | 已核46棒目录／常规单棒、11冷却表／真实填充、两端tick／订阅、直连布局／两阶段、槽能力和运行／辐射消费者；差异202–210与095扩围 | 模具返还与phase18候选排除；保存字段／标脏和不地形炸已有。继续启停／禁槽／耗尽／重载连续性、异常分派、外部棒／委托、极值／全药效与真实游戏／独立重启，不以给定N数学模型宣布整机验收 |
 | 世界生成、Nexus、roads | 前轮石层互斥已修；灌木噪声／九种池及普通石木堆内容、指示材料、采收／手摆主链已核，差异见186–188、196–201 | 陨铁／燧石／多木种已有，有限概率／层岩坐标反例不代替生成世界。其余特征布局、保护、维度、时序、地牢更新、全地质规则和自然资源分布继续 |
 | 模型、GUI、音效、颜色与光照 | 待按实际对象重核 | 引用链与可见渲染，不能继续复用旧“421 条警告”数量作为现状 |
 | 原版专属提示、材料含量与中英文 | 已确认 ALIGN-003，待全注册项重核 | 提示调用路径、动态字段、原文／补丁来源，不只检查 JSON |
@@ -300,6 +309,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第五十九批归档36份原版／92份当前来源、110份平台视图、七个原生工件35个entry，新增核合同202–210并扩展095。root重解析46棒参数并复算常规／Zr工时、直连槽位／20N、容量／几何；原o快照真实消费排除phase18误报。已有11表、催化剂／标脏／安全政策保留，未修玩法，见[棒](NUCLEAR_ROD_AUDIT.md)、[核心](NUCLEAR_CORE_AUDIT.md)、[网络](NUCLEAR_NETWORK_AUDIT.md)和[回执](verification/nuclear-contract-audit-20261021.json)。继续启动停机、异常／外部提供者、源码职责及全面队列。
 
 第五十八批仅展开反应堆核心236→560行、最长305→152，两份完整执行投影及字面量位置／注释／条件保持；core目录、物理／冷却参数与原生状态／网络导航另列，未把排版当核玩法完成，见[源码导航](NUCLEAR_SOURCE_LAYOUT.md)及[证明](verification/reactor-core-readability-20261021.json)。继续棒物理、核心生命周期与中子网络三组原版专题，候选未正式编号；其它方法职责和全面队列继续。
 

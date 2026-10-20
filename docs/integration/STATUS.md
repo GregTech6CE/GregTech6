@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十九批核反应棒、核心与实际网络消费者
+
+正式记录至210条，包含历史修复项；新增九项核合同，095扩展到Steam填充。46棒显式目录数值重解析一致，常规公式／11冷却表与直连四向布局已有；缺口在空棒配方、专用提示、两旧残留、水平能力、排液／故障次序、运行状态及委托／辐射豁免。phase18清m而反应读o的候选已排除，未修玩法或恢复地形爆炸。36原版／92当前来源、110视图、七工件35entry重核，见[棒](NUCLEAR_ROD_AUDIT.md)、[核心](NUCLEAR_CORE_AUDIT.md)、[网络](NUCLEAR_NETWORK_AUDIT.md)及[回执](verification/nuclear-contract-audit-20261021.json)。未编译／测试／构建／推送，全面goal active。
+
 ## 2026-10-21 / 第五十八批反应堆核心源码展开
 
 ReactorCoreBlockEntity的运行／冷却／推液、匿名能力与两端保存同步已从236行展开为560行，最长行305→152，完整双端执行、字面量位置、注释与条件保持。补充核反应堆职责导航，未改玩法或新增ALIGN，正式记录仍201条。棒物理、核心生命周期和中子网络的原版核查正在继续，不把目录表或覆写声明当真实消费已正确；见[导航](NUCLEAR_SOURCE_LAYOUT.md)及[证明](verification/reactor-core-readability-20261021.json)。未编译／测试／构建／推送，goal active。

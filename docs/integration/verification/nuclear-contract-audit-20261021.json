@@ -1,0 +1,4068 @@
+{
+  "date": "2026-10-21",
+  "batch": 59,
+  "draft_snapshots": {
+    "rods": {
+      "receipt_sha256": "f510f136ea43812dd02759d1a8334902fd439f4bf8842cd4a48356d1782bc3ea",
+      "readme_sha256": "42a5d0d3c96f9a0edda35afc851f2e5cbecc322b890b23c28077d0e7e8a4ef27"
+    },
+    "core": {
+      "receipt_sha256": "73ad5c3d37a63fab3c9e4a4aea25017b3f2e09f8627e097f23620755d7cf7834",
+      "readme_sha256": "641bfccfd13e49480cc6caa819a7485ec7e11c3d7a11d0a5d911fecef9fd8429"
+    },
+    "network": {
+      "receipt_sha256": "e3414a86ff32fb82c1e2958598d23eb126eab8c3894fae79705d7c09d9837a49",
+      "readme_sha256": "5491649d71e4abd96db0dec34acf9a54dc810f6e85b8e018c40db384d2909f9a"
+    }
+  },
+  "sources": {
+    "original": {
+      "C:/Dev/gregtech6-master/gregtech6-master/LICENSE": {
+        "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "LICENSE",
+            "observed_sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java": {
+        "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+            "observed_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+            "observed_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+            "observed_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Extruder.java": {
+        "sha256": "52f75bebf8ff40b80f5747a261794152a57620bddec9168dd1024bb2b91d207b",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Extruder.java",
+            "observed_sha256": "52f75bebf8ff40b80f5747a261794152a57620bddec9168dd1024bb2b91d207b"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/compat/Compat_Recipes_IndustrialCraft.java": {
+        "sha256": "cb61352e4d5d5764b3e61c548038e5aefd3f7738a837320c0f091684abd5686e",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/compat/Compat_Recipes_IndustrialCraft.java",
+            "observed_sha256": "cb61352e4d5d5764b3e61c548038e5aefd3f7738a837320c0f091684abd5686e"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/IItemReactorRod.java": {
+        "sha256": "c78abfcb1d04c58565bb4a367998b185e2675045c3c3abf2021d5e7ac018de6b",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/item/IItemReactorRod.java",
+            "observed_sha256": "c78abfcb1d04c58565bb4a367998b185e2675045c3c3abf2021d5e7ac018de6b"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/item/IItemReactorRod.java",
+            "observed_sha256": "c78abfcb1d04c58565bb4a367998b185e2675045c3c3abf2021d5e7ac018de6b"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java": {
+        "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/oredict/OreDictMaterial.java",
+            "observed_sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java": {
+        "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/data/MT.java",
+            "observed_sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java": {
+        "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/data/OP.java",
+            "observed_sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java": {
+        "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/data/CS.java",
+            "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/data/CS.java",
+            "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/data/CS.java",
+            "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java": {
+        "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregapi/util/UT.java",
+            "observed_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/util/UT.java",
+            "observed_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBase.java": {
+        "sha256": "bd469c677dbe7fc064942100607b89ea1e879ea98497bb81d499dd95c92a7867",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBase.java",
+            "observed_sha256": "bd469c677dbe7fc064942100607b89ea1e879ea98497bb81d499dd95c92a7867"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java": {
+        "sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java",
+            "observed_sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java",
+            "observed_sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java",
+            "observed_sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodDepleted.java": {
+        "sha256": "eb66f0a8543e0c99f2a20b624e1e811c241ce6a715cec5437ecf2e752580d608",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodDepleted.java",
+            "observed_sha256": "eb66f0a8543e0c99f2a20b624e1e811c241ce6a715cec5437ecf2e752580d608"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodAbsorber.java": {
+        "sha256": "36c8b5520bb98baab0d79295c592a471fa201625d43b0aea286e1929d60142d7",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodAbsorber.java",
+            "observed_sha256": "36c8b5520bb98baab0d79295c592a471fa201625d43b0aea286e1929d60142d7"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodAbsorber.java",
+            "observed_sha256": "36c8b5520bb98baab0d79295c592a471fa201625d43b0aea286e1929d60142d7"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodAbsorber.java",
+            "observed_sha256": "36c8b5520bb98baab0d79295c592a471fa201625d43b0aea286e1929d60142d7"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodReflector.java": {
+        "sha256": "8c8b1a795bb516ed49acfb3d6888f55044b9c65239ac9ab25e63fb0ba16b9ab6",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodReflector.java",
+            "observed_sha256": "8c8b1a795bb516ed49acfb3d6888f55044b9c65239ac9ab25e63fb0ba16b9ab6"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodReflector.java",
+            "observed_sha256": "8c8b1a795bb516ed49acfb3d6888f55044b9c65239ac9ab25e63fb0ba16b9ab6"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java": {
+        "sha256": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java",
+            "observed_sha256": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java",
+            "observed_sha256": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java": {
+        "sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java",
+            "observed_sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java",
+            "observed_sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java",
+            "observed_sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java": {
+        "sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java",
+            "observed_sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java",
+            "observed_sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java",
+            "observed_sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java": {
+        "sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+            "observed_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+            "observed_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java",
+            "observed_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java": {
+        "sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+            "observed_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+            "observed_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java",
+            "observed_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java": {
+        "sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+            "observed_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+            "observed_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java",
+            "observed_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java": {
+        "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/fluid/FluidTankGT.java",
+            "observed_sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10FacingDouble.java": {
+        "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+            "observed_sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java": {
+        "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+            "observed_sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java": {
+        "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+            "observed_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": {
+        "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+            "observed_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java": {
+        "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+            "observed_sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java": {
+        "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+            "observed_sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java": {
+        "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "gregapi/GT_API_Proxy.java",
+            "observed_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/GT_API_Proxy.java",
+            "observed_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityServerTickPost.java": {
+        "sha256": "736e6a78f74add8bc1e49780a0eda6de57186c6bdbc29e0727f31597f1fed7f9",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/tileentity/ITileEntityServerTickPost.java",
+            "observed_sha256": "736e6a78f74add8bc1e49780a0eda6de57186c6bdbc29e0727f31597f1fed7f9"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java": {
+        "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/tileentity/base/TileEntityBase01Root.java",
+            "observed_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/DelegatorTileEntity.java": {
+        "sha256": "d7ad2ddc84ee02b304e7f6d6ff4e478458b8d9290d173974e0fd27e80de3d224",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/tileentity/delegate/DelegatorTileEntity.java",
+            "observed_sha256": "d7ad2ddc84ee02b304e7f6d6ff4e478458b8d9290d173974e0fd27e80de3d224"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/ITileEntityDelegating.java": {
+        "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/tileentity/delegate/ITileEntityDelegating.java",
+            "observed_sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java": {
+        "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregapi/util/WD.java",
+            "observed_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java": {
+        "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+            "observed_sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtenderController.java": {
+        "sha256": "220238e5b50477ffbcb28bcc114dfc6e7a95570957525ef72fad307a17463688",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "gregtech/tileentity/extenders/MultiTileEntityExtenderController.java",
+            "observed_sha256": "220238e5b50477ffbcb28bcc114dfc6e7a95570957525ef72fad307a17463688"
+          }
+        ]
+      }
+    },
+    "current": {
+      "C:/Dev/GregTech6/docs/work/AGENTS.md": {
+        "sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/work/AGENTS.md",
+            "observed_sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "docs/work/AGENTS.md",
+            "observed_sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/PLAN.md": {
+        "sha256": "dd1769d7b959ad9513fd6f8527b490e9922bbc9b3d149eeae09254c13fbf3a87",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/integration/PLAN.md",
+            "observed_sha256": "e7edcd33fba5199376bae8dce25ffff9cc483bbc24dbf229185afaa63184d8e4"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/PLAN.md",
+            "observed_sha256": "08cea2b9c8f42950f0dd2e1ceef2a7d69c7e5e75119436502ff34c9ba5000eca"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/STATUS.md": {
+        "sha256": "db5dd76987049f3e51ec106b303b2676b27bf4da8c3319d79b0c37c294036071",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/integration/STATUS.md",
+            "observed_sha256": "41b0fb440c2fc5a54dd68e4ab1c5fa0a93476cdbbb694022b906a269f49dc0f8"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/STATUS.md",
+            "observed_sha256": "54265f3d991e6d94a0eb86f7c5b866bdf2f38278e049ca780021a91aa523da09"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/DECISIONS.md": {
+        "sha256": "299de270be296414009d30a9425eaaff6a312d03c21f1a579aae40a0c6615d00",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/integration/DECISIONS.md",
+            "observed_sha256": "dff2550f0edd0e76bc5803f82fbb4ba74dc1f2478dfa1c68e8d5b3e40701927c"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/DECISIONS.md",
+            "observed_sha256": "e2366c5c686644c11abefe764fad70f685c0de8e967fa249a2876688145605f9"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/VERIFICATION.md": {
+        "sha256": "d8005459a812a89eadef88d67949f862856d2028991008116d13ecc24c65ca17",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/integration/VERIFICATION.md",
+            "observed_sha256": "e3766b9dbce193cd5cb1ff696b81549442ccfcc2a1933389d8d94cac38f858f8"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/VERIFICATION.md",
+            "observed_sha256": "d758738c01f080e7cac30c8c011cd336a59b3d1af076d287e35fa1e106a7592e"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/SOURCES.md": {
+        "sha256": "d60be521c9734779151343b615118e27a2f7fd45eca16c2b69105ffc73be70ae",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "docs/integration/SOURCES.md",
+            "observed_sha256": "d60be521c9734779151343b615118e27a2f7fd45eca16c2b69105ffc73be70ae"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/NOTICE": {
+        "sha256": "a9b585391283b7f96f25bfc88808c3d6a747c36754e785a65817309c3528b3ae",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "NOTICE",
+            "observed_sha256": "a9b585391283b7f96f25bfc88808c3d6a747c36754e785a65817309c3528b3ae"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/LICENSE": {
+        "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "LICENSE",
+            "observed_sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/provenance/native-nuclear-integration.json": {
+        "sha256": "dfb42d1dd052ae68c191ef7a9feeca83625dcded981f47e3e742f4bf9f1df4d1",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/provenance/native-nuclear-integration.json",
+            "observed_sha256": "dfb42d1dd052ae68c191ef7a9feeca83625dcded981f47e3e742f4bf9f1df4d1"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "core/provenance/native-nuclear-integration.json",
+            "observed_sha256": "dfb42d1dd052ae68c191ef7a9feeca83625dcded981f47e3e742f4bf9f1df4d1"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java": {
+        "sha256": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java",
+            "observed_sha256": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java",
+            "observed_sha256": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java": {
+        "sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java",
+            "observed_sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java",
+            "observed_sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java": {
+        "sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java",
+            "observed_sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java",
+            "observed_sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/NuclearCraftingCatalog.java": {
+        "sha256": "920c2962d08f5f81317c6c501c63838eb16fa405b11594b5909d64f659ac7d03",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/NuclearCraftingCatalog.java",
+            "observed_sha256": "920c2962d08f5f81317c6c501c63838eb16fa405b11594b5909d64f659ac7d03"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java": {
+        "sha256": "39f2d2df1801a8d74b899ec39cf8eb5be3984539df62b6d4296dde2503e6564f",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java",
+            "observed_sha256": "39f2d2df1801a8d74b899ec39cf8eb5be3984539df62b6d4296dde2503e6564f"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java": {
+        "sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+            "observed_sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java": {
+        "sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+            "observed_sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java": {
+        "sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+            "observed_sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeCatalystLike.java": {
+        "sha256": "222b0a225d97dfaa464a53304fb8329c4d55a3f992c1e741ac2b511fabd197f0",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeCatalystLike.java",
+            "observed_sha256": "222b0a225d97dfaa464a53304fb8329c4d55a3f992c1e741ac2b511fabd197f0"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeCatalystInputs.java": {
+        "sha256": "8a9d18a6a4b62489cc013cf095996d309c24d2538537c74686a60461450cb3e0",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/api/recipe/RecipeCatalystInputs.java",
+            "observed_sha256": "8a9d18a6a4b62489cc013cf095996d309c24d2538537c74686a60461450cb3e0"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTExtruderGen.java": {
+        "sha256": "4bfb03a54bac503c412054c5b510fa7dc4e82636d690923b34cf5575d53cdd9a",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTExtruderGen.java",
+            "observed_sha256": "4bfb03a54bac503c412054c5b510fa7dc4e82636d690923b34cf5575d53cdd9a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java": {
+        "sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+            "observed_sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java": {
+        "sha256": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+            "observed_sha256": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+            "observed_sha256": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+            "observed_sha256": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java": {
+        "sha256": "fd6aee486d49e6477a7142e2903a4d246b3d0319d6818eb9acdf6533a0def384",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+            "observed_sha256": "fd6aee486d49e6477a7142e2903a4d246b3d0319d6818eb9acdf6533a0def384"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java": {
+        "sha256": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+            "observed_sha256": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java": {
+        "sha256": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java",
+            "observed_sha256": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java",
+            "observed_sha256": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodRecipes.java": {
+        "sha256": "70340f17606a8e35f08a02f8885fad1afb256e18dc478843502c82273af569bb",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodRecipes.java",
+            "observed_sha256": "70340f17606a8e35f08a02f8885fad1afb256e18dc478843502c82273af569bb"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": {
+        "sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+            "observed_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+            "observed_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+            "observed_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": {
+        "sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+            "observed_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+            "observed_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+            "observed_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java": {
+        "sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+            "observed_sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62"
+          },
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+            "observed_sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+            "observed_sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/PlacedReactorRodBlockEntity.java": {
+        "sha256": "78f5273d770361501543951c85513e5baa9abfdc220e2d502d0e96311a81c11c",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/PlacedReactorRodBlockEntity.java",
+            "observed_sha256": "78f5273d770361501543951c85513e5baa9abfdc220e2d502d0e96311a81c11c"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorRodBlock.java": {
+        "sha256": "0917f8453fedc9344e1a1873b6ff5f92f767afb658f1b6c7a2f2ab323e6556c0",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorRodBlock.java",
+            "observed_sha256": "0917f8453fedc9344e1a1873b6ff5f92f767afb658f1b6c7a2f2ab323e6556c0"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/CreativeTabBootstrap.java": {
+        "sha256": "9e330371c7b0402a9318a50cdd707fa65f6f239fd0805c83fadaab0f35a7ad64",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/CreativeTabBootstrap.java",
+            "observed_sha256": "9e330371c7b0402a9318a50cdd707fa65f6f239fd0805c83fadaab0f35a7ad64"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java": {
+        "sha256": "599d933ab4230cb65607658a50f64b498d25af7a4536f8eee5496216a7524b3a",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+            "observed_sha256": "599d933ab4230cb65607658a50f64b498d25af7a4536f8eee5496216a7524b3a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java": {
+        "sha256": "84c6aae0c5512e3a0c9b53f0608814b17d3a30d834bd2145e8e25003472096d5",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java",
+            "observed_sha256": "84c6aae0c5512e3a0c9b53f0608814b17d3a30d834bd2145e8e25003472096d5"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": {
+        "sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+            "observed_sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java": {
+        "sha256": "6d0c1d04d7795296dc3a498b545b7e53419e8ba1cc8ae4787bdf608b035aa41f",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+            "observed_sha256": "6d0c1d04d7795296dc3a498b545b7e53419e8ba1cc8ae4787bdf608b035aa41f"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java": {
+        "sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+            "observed_sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java": {
+        "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+            "observed_sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java": {
+        "sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+            "observed_sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": {
+        "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+            "observed_sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java": {
+        "sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+            "observed_sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java": {
+        "sha256": "b1df17a16b6bac123280a6fe18eb3c605ec6435110ba9a9168e7d61a4f70fb38",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+            "observed_sha256": "b1df17a16b6bac123280a6fe18eb3c605ec6435110ba9a9168e7d61a4f70fb38"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltipHandler.java": {
+        "sha256": "e157d9041e66f4bcb89dc63f2b4b31af2852a014a56d8958eb9d7fa2bfbd56a9",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltipHandler.java",
+            "observed_sha256": "e157d9041e66f4bcb89dc63f2b4b31af2852a014a56d8958eb9d7fa2bfbd56a9"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java": {
+        "sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+            "observed_sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java": {
+        "sha256": "d114eed8c74ed1baf43e338fbab1efab1aa2667e623a4874ba819e7faca20d3c",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java",
+            "observed_sha256": "d114eed8c74ed1baf43e338fbab1efab1aa2667e623a4874ba819e7faca20d3c"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java": {
+        "sha256": "8d760cc655af21650befb747940e5e9a65550f22b138d194a943dfa087f14e6b",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java",
+            "observed_sha256": "8d760cc655af21650befb747940e5e9a65550f22b138d194a943dfa087f14e6b"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/EnergyDeviceTooltips.java": {
+        "sha256": "b774a4454729a2c97a4acfeb21072434a6844bcdffad094a97a881494336a6f7",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/EnergyDeviceTooltips.java",
+            "observed_sha256": "b774a4454729a2c97a4acfeb21072434a6844bcdffad094a97a881494336a6f7"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java": {
+        "sha256": "5da95b4f0a47c8a2de5248eab864996f807b56945ee42708012110d46bf1de58",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java",
+            "observed_sha256": "5da95b4f0a47c8a2de5248eab864996f807b56945ee42708012110d46bf1de58"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": {
+        "sha256": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+            "observed_sha256": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java": {
+        "sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+            "observed_sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": {
+        "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+            "observed_sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": {
+        "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+        "observations": [
+          {
+            "audit": "rods",
+            "source_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+            "observed_sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+            "observed_sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java": {
+        "sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+            "observed_sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+            "observed_sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java": {
+        "sha256": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+            "observed_sha256": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+            "observed_sha256": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java": {
+        "sha256": "b0a7abf0ff80ef5c198e19192dc5d989436ddd488c89f0c6433d409a9839879a",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java",
+            "observed_sha256": "b0a7abf0ff80ef5c198e19192dc5d989436ddd488c89f0c6433d409a9839879a"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java",
+            "observed_sha256": "b0a7abf0ff80ef5c198e19192dc5d989436ddd488c89f0c6433d409a9839879a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java": {
+        "sha256": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+            "observed_sha256": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+            "observed_sha256": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java": {
+        "sha256": "fa197c772aec502e2857e246246a5b3ae30d4515ad6cbb474d5b73befb806d5e",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java",
+            "observed_sha256": "fa197c772aec502e2857e246246a5b3ae30d4515ad6cbb474d5b73befb806d5e"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java",
+            "observed_sha256": "fa197c772aec502e2857e246246a5b3ae30d4515ad6cbb474d5b73befb806d5e"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": {
+        "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+            "observed_sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java": {
+        "sha256": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java",
+            "observed_sha256": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java": {
+        "sha256": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+            "observed_sha256": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": {
+        "sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+            "observed_sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java": {
+        "sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+            "observed_sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": {
+        "sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+            "observed_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+            "observed_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": {
+        "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+            "observed_sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824"
+          },
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+            "observed_sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java": {
+        "sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+            "observed_sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java": {
+        "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+            "observed_sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java": {
+        "sha256": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+            "observed_sha256": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": {
+        "sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+            "observed_sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": {
+        "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+            "observed_sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+        "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+            "observed_sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": {
+        "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+            "observed_sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java": {
+        "sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+            "observed_sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java": {
+        "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+            "observed_sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java": {
+        "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+            "observed_sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java": {
+        "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+            "observed_sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java": {
+        "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+            "observed_sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java": {
+        "sha256": "4586190b0b7a8e03e683efb4797349f112b2d8f47b6c5374b86a5f96537b019a",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+            "observed_sha256": "4586190b0b7a8e03e683efb4797349f112b2d8f47b6c5374b86a5f96537b019a"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/FluidBootstrap.java": {
+        "sha256": "0b7c58a344b8535104f318fc411d8d4e51d64ad057a5957992bb752ed1ada4b6",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/FluidBootstrap.java",
+            "observed_sha256": "0b7c58a344b8535104f318fc411d8d4e51d64ad057a5957992bb752ed1ada4b6"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java": {
+        "sha256": "3fd5a1cab48767441ac5cbff550d7cdb808e0ba2a8f2f40e8ee15f6c54de3db3",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+            "observed_sha256": "3fd5a1cab48767441ac5cbff550d7cdb808e0ba2a8f2f40e8ee15f6c54de3db3"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/P3_NATIVE_NUCLEAR.md": {
+        "sha256": "6f9819e0b08d74da4e77c834f5e6998d8d7b7244c413fb5d048c2ae9693340c0",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/P3_NATIVE_NUCLEAR.md",
+            "observed_sha256": "6f9819e0b08d74da4e77c834f5e6998d8d7b7244c413fb5d048c2ae9693340c0"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/verification/overload-defaults-20261020.md": {
+        "sha256": "37424f11463161bed34234e6fd6425e76b50b061ef77f52514b7268d3d0feef2",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/verification/overload-defaults-20261020.md",
+            "observed_sha256": "37424f11463161bed34234e6fd6425e76b50b061ef77f52514b7268d3d0feef2"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/verification/machine-explosion-review-20261020.md": {
+        "sha256": "cda524574a35f954f860f118e002e6eafaace75d4f4de836857b042ebae243ee",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/verification/machine-explosion-review-20261020.md",
+            "observed_sha256": "cda524574a35f954f860f118e002e6eafaace75d4f4de836857b042ebae243ee"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md": {
+        "sha256": "2db905a3abaf52cfc1b1e90edf93d5c70ee626b3bcd550ac272ea8bb2211e477",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md",
+            "observed_sha256": "302324b5cbfd55e3610395b97d2e08b1af68e099cf84f8375b5a3b22ecdf7267"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/work/reactor-core-readability-20261021/proof.json": {
+        "sha256": "dac3c6d777310112aa783d0969895270cd7904d93f2d52833784a455f0bf5b26",
+        "observations": [
+          {
+            "audit": "core",
+            "source_relative_path": "work/reactor-core-readability-20261021/proof.json",
+            "observed_sha256": "dac3c6d777310112aa783d0969895270cd7904d93f2d52833784a455f0bf5b26"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java": {
+        "sha256": "01b32f56792e44ad88d0e6368be69168755a177d99368e25f358017851db28d5",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java",
+            "observed_sha256": "01b32f56792e44ad88d0e6368be69168755a177d99368e25f358017851db28d5"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java": {
+        "sha256": "b56ebd1839c541cca17463df8b3cd7198cf00dc4ef78779d0c64d373bdf39aa1",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java",
+            "observed_sha256": "b56ebd1839c541cca17463df8b3cd7198cf00dc4ef78779d0c64d373bdf39aa1"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/ReactorRodRenderer.java": {
+        "sha256": "c46fcf54c54b8643d7ef49c66023906a1d4fca4e7675c5bb23fabad099a8c623",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/client/ReactorRodRenderer.java",
+            "observed_sha256": "c46fcf54c54b8643d7ef49c66023906a1d4fca4e7675c5bb23fabad099a8c623"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java": {
+        "sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+            "observed_sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java": {
+        "sha256": "f3cc8096bda6f64d84e3d445a49e61d7afba75cbc043fef2981e480668863da7",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+            "observed_sha256": "f3cc8096bda6f64d84e3d445a49e61d7afba75cbc043fef2981e480668863da7"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java": {
+        "sha256": "3314eac50bb1f110b51db37f62ab237d495678c223a2b18ca61336d0a7ac6e26",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+            "observed_sha256": "3314eac50bb1f110b51db37f62ab237d495678c223a2b18ca61336d0a7ac6e26"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": {
+        "sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+            "observed_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java": {
+        "sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+        "observations": [
+          {
+            "audit": "network",
+            "source_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+            "observed_sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689"
+          }
+        ]
+      }
+    }
+  },
+  "narrative_refresh": [
+    {
+      "path": "docs/integration/PLAN.md",
+      "audit": "rods",
+      "observed_sha256": "e7edcd33fba5199376bae8dce25ffff9cc483bbc24dbf229185afaa63184d8e4",
+      "observed_document_revision": "67dff604d",
+      "sha256_at_batch59_archive": "dd1769d7b959ad9513fd6f8527b490e9922bbc9b3d149eeae09254c13fbf3a87",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/STATUS.md",
+      "audit": "rods",
+      "observed_sha256": "41b0fb440c2fc5a54dd68e4ab1c5fa0a93476cdbbb694022b906a269f49dc0f8",
+      "observed_document_revision": "67dff604d",
+      "sha256_at_batch59_archive": "db5dd76987049f3e51ec106b303b2676b27bf4da8c3319d79b0c37c294036071",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/DECISIONS.md",
+      "audit": "rods",
+      "observed_sha256": "dff2550f0edd0e76bc5803f82fbb4ba74dc1f2478dfa1c68e8d5b3e40701927c",
+      "observed_document_revision": "67dff604d",
+      "sha256_at_batch59_archive": "299de270be296414009d30a9425eaaff6a312d03c21f1a579aae40a0c6615d00",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/VERIFICATION.md",
+      "audit": "rods",
+      "observed_sha256": "e3766b9dbce193cd5cb1ff696b81549442ccfcc2a1933389d8d94cac38f858f8",
+      "observed_document_revision": "67dff604d",
+      "sha256_at_batch59_archive": "d8005459a812a89eadef88d67949f862856d2028991008116d13ecc24c65ca17",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/PLAN.md",
+      "audit": "core",
+      "observed_sha256": "08cea2b9c8f42950f0dd2e1ceef2a7d69c7e5e75119436502ff34c9ba5000eca",
+      "observed_document_revision": "e4867cf1e",
+      "sha256_at_batch59_archive": "dd1769d7b959ad9513fd6f8527b490e9922bbc9b3d149eeae09254c13fbf3a87",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/STATUS.md",
+      "audit": "core",
+      "observed_sha256": "54265f3d991e6d94a0eb86f7c5b866bdf2f38278e049ca780021a91aa523da09",
+      "observed_document_revision": "e4867cf1e",
+      "sha256_at_batch59_archive": "db5dd76987049f3e51ec106b303b2676b27bf4da8c3319d79b0c37c294036071",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/DECISIONS.md",
+      "audit": "core",
+      "observed_sha256": "e2366c5c686644c11abefe764fad70f685c0de8e967fa249a2876688145605f9",
+      "observed_document_revision": "e4867cf1e",
+      "sha256_at_batch59_archive": "299de270be296414009d30a9425eaaff6a312d03c21f1a579aae40a0c6615d00",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/VERIFICATION.md",
+      "audit": "core",
+      "observed_sha256": "d758738c01f080e7cac30c8c011cd336a59b3d1af076d287e35fa1e106a7592e",
+      "observed_document_revision": "e4867cf1e",
+      "sha256_at_batch59_archive": "d8005459a812a89eadef88d67949f862856d2028991008116d13ecc24c65ca17",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    },
+    {
+      "path": "docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md",
+      "audit": "core",
+      "observed_sha256": "302324b5cbfd55e3610395b97d2e08b1af68e099cf84f8375b5a3b22ecdf7267",
+      "observed_document_revision": "e4867cf1e",
+      "sha256_at_batch59_archive": "2db905a3abaf52cfc1b1e90edf93d5c70ee626b3bcd550ac272ea8bb2211e477",
+      "reason": "Batch58/59 documentation added after initial observation; no product behavior change."
+    }
+  ],
+  "reviewed_native_views": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java": {
+      "forge": {
+        "normalized_utf8_sha256": "618223f92029cb7846a57f6cf4d2de3fc8cb74d546392524262e0c00e7d1d77f",
+        "execution_signature_sha256": "f16afdd7485af4ebd5c388d849f0dfa5a09d3d319a02eadddfea3b647d30d8ae",
+        "tokens": 1149
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "d637dad98fc7de5526b4bb1f66159f6fe91638e43aaabae5be4ea15abcc186c4",
+        "execution_signature_sha256": "183c5fdd5617d748845a32cc306c4c3c8e2062de84c716afe6b7cf735808dc48",
+        "tokens": 1201
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java": {
+      "forge": {
+        "normalized_utf8_sha256": "0c82eb21ac4d8842aa4d8e16f50638b23dbb93de5f76e62ec1e052f95372ec5b",
+        "execution_signature_sha256": "3706fceee5731ea17d7a7abed2439d80f5a4ab9067a7584b50b18094da8ae7ae",
+        "tokens": 1689
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "c74f92393cf3d3a6b134e8943cdda0b1eaf8dfc8b3864b69068b78e9d5785446",
+        "execution_signature_sha256": "355468914d39830b5a122caec8ce6f32eaed8b7e4af6794c67d56dc595147b92",
+        "tokens": 1771
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java": {
+      "forge": {
+        "normalized_utf8_sha256": "9c05a6576cd9fe3ea6025017d92c0b05288122902650e40630797904261938c2",
+        "execution_signature_sha256": "ffcf22086a6c84930a6f09f808533c967b4767be26820f9064d37d9b527edbd1",
+        "tokens": 731
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "5bfb7c6ad678b4478abc0f6b669ea5325f2d71f9b2c6cd48acb46832af89aa7d",
+        "execution_signature_sha256": "5a17b3fd3066e1d20cdb2c5d6b4151d4319aa8194870248aef0d3e59e4d34f45",
+        "tokens": 775
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java": {
+      "forge": {
+        "normalized_utf8_sha256": "7a039d565a93ef4dcec83178c079f44b422c60c4f35dda49825a78b5770bc36f",
+        "execution_signature_sha256": "346b8fc4287a2ca2f7c556fb9ed932ccdf7147b6bcc567925b6f817f0d81c2e4",
+        "tokens": 390
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "7fa57bebc2f03ed51d198b518e58f41a59d9d9b2c63e1de246c14683f37eb7a0",
+        "execution_signature_sha256": "1ebfc7abccdec974c413ee2517ad197bea36004dd1e090cb95cf145ec83b3f5b",
+        "tokens": 392
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodRecipes.java": {
+      "forge": {
+        "normalized_utf8_sha256": "e30fc44ec0be98b4a3e4bb1c62b79c2e898f0024df7865cc367fe2895d879a72",
+        "execution_signature_sha256": "3af0f32272a1d00842f9d102dba6cf07200241b7824a0dbd1193cda55fec0b83",
+        "tokens": 2219
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "b95721021ca743bb8dea860e36f54c0e8222365603d4b660cb95c92e51bcfee4",
+        "execution_signature_sha256": "2e8c85f0d2c1694d66a3dc67c602fd91054ab785e3437b872cdf061d2f494f85",
+        "tokens": 2221
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": {
+      "forge": {
+        "normalized_utf8_sha256": "a7fc72a52e741aef29466ffe717523a667a115a4760ebc0201a043addf9826e4",
+        "execution_signature_sha256": "e89fe9ee477f4159eda469cb0779d4020097e0ab0cb9ef6898c2071c8070fd15",
+        "tokens": 1228
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "445eabac2257fad06ddeb3a0013a0d08a1e70b561b5df4ddfd8cba48da79bafa",
+        "execution_signature_sha256": "aca852536fb52416e858e39309ca7d6f717ae96480b303314cf42ea9eb2730a4",
+        "tokens": 1229
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": {
+      "forge": {
+        "normalized_utf8_sha256": "b4bd819497f42eec826a19852b83543ae3c51fa179b685366b991b7b35708758",
+        "execution_signature_sha256": "f4dc8345db389242660bb65a0c7052e23b2b4ac25e67c8dc1cf4a07a7464bc8b",
+        "tokens": 3703
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "3d9a004ef809e5b7645880415796a06159b863ebfad3f991ab0ebb171646ca55",
+        "execution_signature_sha256": "318885f2e691b07dde3509457692a2f08b7170bdc79226a1338bcdff323bd3e0",
+        "tokens": 3657
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java": {
+      "forge": {
+        "normalized_utf8_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+        "execution_signature_sha256": "1532e7f27593cd581373121abd42425b416a62495575c745545a0f95552c8618",
+        "tokens": 87
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+        "execution_signature_sha256": "1532e7f27593cd581373121abd42425b416a62495575c745545a0f95552c8618",
+        "tokens": 87
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/PlacedReactorRodBlockEntity.java": {
+      "forge": {
+        "normalized_utf8_sha256": "35029d5d559b6363a05662e29b44b406dc0856f75fccbfe1c07fb46d7ae2b50a",
+        "execution_signature_sha256": "51626ee9a872d5b71db721a13383959633332bdda5b04e71e5e2700bf579c37f",
+        "tokens": 351
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "61017204bca5a8fb7995c4dda179c4d27094f442213803ba29d12026ff5fe03d",
+        "execution_signature_sha256": "e8b33cadca211c5f1f479b90002ca19e0001c5335d141f27d65669e4431256e0",
+        "tokens": 385
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorRodBlock.java": {
+      "forge": {
+        "normalized_utf8_sha256": "2e540d100277e185aa60519194edb6cb352d524720c45fa99d7e7e077258c941",
+        "execution_signature_sha256": "1fd0d0f0ff81f4d04820d76a1c87a8318db47de1fd140a6133d3b6c92497d2be",
+        "tokens": 425
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "27ee5d2320fbea3279143a3aa72aa9be4dd1908b0ec548dc763e1c3a8ce0ad71",
+        "execution_signature_sha256": "c5ab8af095b59ea9acd20678c68019dfb0952bb691ae1d1001a635df3cd774c9",
+        "tokens": 483
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/CreativeTabBootstrap.java": {
+      "forge": {
+        "normalized_utf8_sha256": "e768440f912f5e19f50fd0c45a921dc8dcbd12a7fc59f295c71ec66a6ca7c96d",
+        "execution_signature_sha256": "fbf48b4a1924e17f75edcd109e91b0e2a4498a2de19c62f5787a0aaa03b2d1fa",
+        "tokens": 5501
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "e1891c373e08dee07bf3afde838118a21259c0be895f0eae3df1e6d520cad442",
+        "execution_signature_sha256": "da183084d3b548698f9667b3143cc110418ffe5c0c41e285770a466c1da937ab",
+        "tokens": 553
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java": {
+      "forge": {
+        "normalized_utf8_sha256": "e358a1be14315fdb9a99ea698dd8030e329a56f3163da28934852de24db30134",
+        "execution_signature_sha256": "13aca7f6d5d818029b09c7dec1c3d72dc8bfc1b0defb7d02d7508e0876665c5b",
+        "tokens": 2314
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "34455e47e3de1033fb42132ec0d22563597d1983c53bc0bcc8a28e88bb078afa",
+        "execution_signature_sha256": "d37baf64c2781a32920477f4e499418e6f53a8dc92268af6c2cf2015074f5f9f",
+        "tokens": 2426
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTCreativeTabs.java": {
+      "forge": {
+        "normalized_utf8_sha256": "731549c105d38b0b032072888f1dc3615ab6b01bc5a805d6acb43132d25fd058",
+        "execution_signature_sha256": "3803fde089713fa4ab9f35f7d97956e32225c48ee0535ef8d0dcf228df621064",
+        "tokens": 2805
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "c94ed92f237a5403f2e6b89311c85a6c37a5806c0c42250889dfa998df992d8a",
+        "execution_signature_sha256": "1c973af2c4ef015be0c4fbb02ee4cc18bf4328a886e5fed637fa9bfba3853485",
+        "tokens": 2145
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": {
+      "forge": {
+        "normalized_utf8_sha256": "e05cfe5f52429dc3b989c420f3ca6b378e2466fcc9113265aaecb7b4c4a57516",
+        "execution_signature_sha256": "9935e966ff3f1e27783895aab0e5feb9e21a8977025ffe36224710582ee9686d",
+        "tokens": 742
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "8fbc7b7fa64402127fe78e8dbdcfb368666abd2d20499a191aece5f881038040",
+        "execution_signature_sha256": "4f57fabb93e148865f0a4ce6157367ff35c1e2bdf664d22cc0a1b0d9b6dcaad8",
+        "tokens": 742
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java": {
+      "forge": {
+        "normalized_utf8_sha256": "27f0491b8dd3e82c70e8764d0495e2c0605c841fa407921fcc15530de1b54355",
+        "execution_signature_sha256": "46f071462164940f77b68f97d9d40512a8738abf75f21f3498802221bc06cc03",
+        "tokens": 514
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "d0ee4efc3e9fef3f4e16a0f93942d1e838faeb7777880709761c370233787f37",
+        "execution_signature_sha256": "f374998fcab6499e001a7a7e080a1a81fc8d25f715936158d3d5dd3647ac846e",
+        "tokens": 519
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java": {
+      "forge": {
+        "normalized_utf8_sha256": "806ffd9b2478cc6d4a2264817370523b409dad4bf2c660e74fa86f46e4c46c80",
+        "execution_signature_sha256": "403f1a898a7f15c5061e577eb42239d95e4e2ac12b89f781756ad279b5e285f7",
+        "tokens": 359
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "d87bdfe92bca6448ae642c11819a0f96a045cea3b19a9990ec753b08544fb821",
+        "execution_signature_sha256": "820dece11f79501c2da268fdf5353c712efd8080e4994eb134a1c08f5737197e",
+        "tokens": 411
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java": {
+      "forge": {
+        "normalized_utf8_sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+        "execution_signature_sha256": "224099a475b6647dd58e4aca5e3e98456d8c6ec3f9ea685a4666d8ffe0f19f57",
+        "tokens": 1049
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+        "execution_signature_sha256": "c41262f8e92159733cb62c02498168b99fad192049242e4748fec5de6264964d",
+        "tokens": 1051
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java": {
+      "forge": {
+        "normalized_utf8_sha256": "f4fd32a3b489b5beda3864598a621d639a91abdbb7ed6a35db1913d7c71ea0b5",
+        "execution_signature_sha256": "129b7bb2bd1aa5724d29cb8600fed7efb00abfd48ef39e239d97b2ab36d60a09",
+        "tokens": 791
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "472839942cd79850e0e8c0d8702a63b63ac2a041dfa61f43e62d1b1281e92255",
+        "execution_signature_sha256": "a7ad407d4a4fdc18fd1a538c8af42274d148c47050d7797aa3a37a426bf8c376",
+        "tokens": 804
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java": {
+      "forge": {
+        "normalized_utf8_sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+        "execution_signature_sha256": "032b23f51d7ef1e673b45433d62b1fdc0f5f6017c53b47970c6f56c7723e2724",
+        "tokens": 9306
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+        "execution_signature_sha256": "f6b00e83e029bbe812a54ce49206fc1bec25bed3f17755c0873d4d6e298b6846",
+        "tokens": 9312
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java": {
+      "forge": {
+        "normalized_utf8_sha256": "ff4b55eaa93cd0709698c8258ee8f536411a00e3ae844a491361450b2df8d54a",
+        "execution_signature_sha256": "66a1df3b50404079d00ac2ad12b9a76e49ca89fdbdc85e035e23b476d523fc11",
+        "tokens": 706
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "d9b58870f018559281f83125a0651892c7b2d155b545e8c6ef4911cf861c6c39",
+        "execution_signature_sha256": "c53c3a14e682b6cf8828abe17dd7126d77e916baf03d952bfef99b8b69773942",
+        "tokens": 756
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java": {
+      "forge": {
+        "normalized_utf8_sha256": "248fc43660e0091727f01e74425512fc3c2482ca3d91b606a0e23c116ddab354",
+        "execution_signature_sha256": "3407041412a550ac8fbc87a18f793fd7dd730dd600d25127ef30fe0a38f34a51",
+        "tokens": 759
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "732ad73925d268b8578c303d8a5c6838f02831a472752bb41f5d4a970ee63333",
+        "execution_signature_sha256": "92c4c6f256d7ba980f9681cb7a451ed1c67d90053f3688037922f3b2d0500fb2",
+        "tokens": 931
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltipHandler.java": {
+      "forge": {
+        "normalized_utf8_sha256": "306aa99aee5f340b3475a03d0a6e3cce4a5ade0f555ab489347a65215173d54f",
+        "execution_signature_sha256": "9baa67adbe3014512ec1ae1811594b90f641f77cb940774660aee43d17a9966d",
+        "tokens": 156
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "63899cb71df4a1c8c449f4a84bb52c80084336c46f5fc6f91495bf4b0bf31c33",
+        "execution_signature_sha256": "48a7781444c30dfdfcb4c59d341d9947bf2104631822641b1601da6a4ec64951",
+        "tokens": 157
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java": {
+      "forge": {
+        "normalized_utf8_sha256": "fa6e4af027d31e5318c1d7edd87fa9e2cbfa3dc7726590f25c9ee016931e8706",
+        "execution_signature_sha256": "20735abe595c5684ce22a372783b0e0dbc285f4674c69dd455502cead8127ba4",
+        "tokens": 1365
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "33ed4f56ed9eff1fa043e3aa67d125624789dddd3eb9a869b67569f705164023",
+        "execution_signature_sha256": "560214cb46b366a4dc56823f5231bbcab7e65a0ea3642af70c934c1511d61040",
+        "tokens": 1396
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltipHandler.java": {
+      "forge": {
+        "normalized_utf8_sha256": "9fb81324d854e72ae65e3ffd8ebd8c5b9a4fdcbe4c539a6097d202ab5ce38fa0",
+        "execution_signature_sha256": "f29cece741ba023687eb55bc4a15cdd2cae8fa62babd37ace28b3dca98be7c63",
+        "tokens": 317
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "ce249f209df9e42473e0118c7e7fb387255367ae02e9df703cb73ef498b86db0",
+        "execution_signature_sha256": "bbb08bbc5b5a94714557d3f60d038a6a61fef8eea97bc7b58184b186732f3867",
+        "tokens": 318
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MaterialTooltips.java": {
+      "forge": {
+        "normalized_utf8_sha256": "438754338d70fa657a3aeb3d6edbc67b3b42bd5d1e95badefab8bf043bd6006b",
+        "execution_signature_sha256": "695d71be99913a4c266d21bd994fb2ebd1b43b32a815232dbd5ee00956a27fe8",
+        "tokens": 2748
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "64a2752d455c783ba67e405b3d65e8536e4aad0412924535c097e103e320bb40",
+        "execution_signature_sha256": "3ff4c4a512343b12b0c5057b83469f97a10b7bc8cad83acabe915828a728664b",
+        "tokens": 2709
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/EnergyDeviceTooltips.java": {
+      "forge": {
+        "normalized_utf8_sha256": "096d36af8218f8c69e2daadd3f84865d201c895073ac08373a06acaad5b540dd",
+        "execution_signature_sha256": "3a8895f394d940003062d48565439674e2a8557cab9932f603100a9b775af06c",
+        "tokens": 1121
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "096d36af8218f8c69e2daadd3f84865d201c895073ac08373a06acaad5b540dd",
+        "execution_signature_sha256": "3a8895f394d940003062d48565439674e2a8557cab9932f603100a9b775af06c",
+        "tokens": 1121
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java": {
+      "forge": {
+        "normalized_utf8_sha256": "3755694c1f4b7e8b4c70153facb6b579e231cbdd7bae8acaaa63d5afc0b9add5",
+        "execution_signature_sha256": "68848d3ab81687eda56c56bffe27eac01651eddc0e8c1a0a6bcadf7efa6a5fbe",
+        "tokens": 1148
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "3755694c1f4b7e8b4c70153facb6b579e231cbdd7bae8acaaa63d5afc0b9add5",
+        "execution_signature_sha256": "68848d3ab81687eda56c56bffe27eac01651eddc0e8c1a0a6bcadf7efa6a5fbe",
+        "tokens": 1148
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": {
+      "forge": {
+        "normalized_utf8_sha256": "1cdcefcd46efddcb0ae85bf7e2c9b30c8db05af5d707a240857d5696225efac2",
+        "execution_signature_sha256": "d9f6ff5a1462e631dda16a39b7e48327fe257ad0ac1e3c2311bbfdb326cdee24",
+        "tokens": 14806
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "a27092e43aa4cf43098fb0470532d7fef0a13fb32c71018e6fb29065152ac9c7",
+        "execution_signature_sha256": "3d53e3558856faf87ae42df30fc431ad4908d066af463bf060158e9800d8c670",
+        "tokens": 14489
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java": {
+      "forge": {
+        "normalized_utf8_sha256": "661039949d38c48f475284659d022c01e0063aa18e2d180b842b0792f21a6de7",
+        "execution_signature_sha256": "b31957316bc68f7f45cc4cb9a1465ca3fc29a81d3d553d00876b5f93ec61ee8f",
+        "tokens": 975
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "e08c04a8b47355cbfb1dd0fe9caf9fb97bf3fd2030bbd31b5cda243988390f37",
+        "execution_signature_sha256": "0fc8696f3481decac0c8df92c4c8266de46435404a1775a2958e55a054a8937c",
+        "tokens": 1180
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java": {
+      "forge": {
+        "normalized_utf8_sha256": "3b566ddddb578be136f13a46c9d3a11f5520e1b30bbb4f1af0cc9ad02115b6fd",
+        "execution_signature_sha256": "85668df81a7ccff2f013af9126ca001bb7e6b790c7e6fb75fecd8f0b158cf8fa",
+        "tokens": 1130
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "9a214fb0610c0b8e257af6ee098eefad6a18f02ac1a1a16b0ed668c34b714f8d",
+        "execution_signature_sha256": "b00e741e6217dc9b3d136484009a855a6aabb9d9f5c095d6547ea9c23a9d4bb4",
+        "tokens": 1335
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java": {
+      "forge": {
+        "normalized_utf8_sha256": "31e192316da1afcfe5168f8101420a8826543bf07032c42fd48a4cc9a4691485",
+        "execution_signature_sha256": "bf5caca6e729cd1a4a31e6d6928923b8b763d4a45e9e628fd2375eab9113f985",
+        "tokens": 266
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "bdcca54fec3d0ff3944b7d57cadd265a702ce8d2ba04c8e979045f32738923da",
+        "execution_signature_sha256": "e27a3bce1b9bcc0aedc5ff26441a03ac30d340c7629b4c8de5e2835dfd6e36d0",
+        "tokens": 284
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java": {
+      "forge": {
+        "normalized_utf8_sha256": "5d27f4ebde36f4b84eaa018714e9fb72a3b0d90deedd2f64e9d846ad36568cc5",
+        "execution_signature_sha256": "fa502195785a75f0149fb88ef28c423346403c1866d742780c295e22c367a5e3",
+        "tokens": 584
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "2328548cfc9c248eb2083acdc6f117f4f071ec89b9075e1b90f4cb4b9da208ad",
+        "execution_signature_sha256": "d68ee4dc86a0a6292dadca691cbb86802159256586c1b6e206a29b2b09f016be",
+        "tokens": 586
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java": {
+      "forge": {
+        "normalized_utf8_sha256": "6d6964d20526be5f279cce6f76364c4cf28002a3b357c6b55b0c5240020b7f41",
+        "execution_signature_sha256": "fb6b162de1de58ee17e1343723a990554a364294e15cb46c9cb8fa7ff8db49b0",
+        "tokens": 194
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "6d6964d20526be5f279cce6f76364c4cf28002a3b357c6b55b0c5240020b7f41",
+        "execution_signature_sha256": "fb6b162de1de58ee17e1343723a990554a364294e15cb46c9cb8fa7ff8db49b0",
+        "tokens": 194
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java": {
+      "forge": {
+        "normalized_utf8_sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+        "execution_signature_sha256": "b6da4ca9b6fd90b53d1b19297d22b469fb83f185adb7bbb6733503d5dc0463c6",
+        "tokens": 1504
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+        "execution_signature_sha256": "ee04a2395e84edfdd211cd11a9304d033ee9792a53645bca8d4ef2ef06b23e05",
+        "tokens": 1527
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java": {
+      "forge": {
+        "normalized_utf8_sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+        "execution_signature_sha256": "71a36686d80c7d8807d6be10f7d97848c847362d3ee6892227ccca994d6ee8df",
+        "tokens": 374
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+        "execution_signature_sha256": "71a36686d80c7d8807d6be10f7d97848c847362d3ee6892227ccca994d6ee8df",
+        "tokens": 374
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": {
+      "forge": {
+        "normalized_utf8_sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+        "execution_signature_sha256": "76bb883bafaec0ce51149480182b4d475affa0e4ce7c32504a788456ae480dec",
+        "tokens": 179
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+        "execution_signature_sha256": "76bb883bafaec0ce51149480182b4d475affa0e4ce7c32504a788456ae480dec",
+        "tokens": 179
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java": {
+      "forge": {
+        "normalized_utf8_sha256": "6e15bb8594ec00c9b83c68a7c4d529f324afa1429efa580673c3ecea383f30af",
+        "execution_signature_sha256": "63bcaf4bf1bba2a91755b79ae250a310f7f00be4cd3b956622bc022b1358a5e5",
+        "tokens": 1284
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "c70d0ffd0ede2fc6dc7eaf164cb1e55a6c5ceccb13c7e4d2b7c1a86d45e40ee7",
+        "execution_signature_sha256": "a6963c071d9b24a9a39c36109db866fcfa5b914c3a030933c7c50d3724e01230",
+        "tokens": 1295
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": {
+      "forge": {
+        "normalized_utf8_sha256": "5d439572253a8130180d36cf95d504ca17470526e78969b00fbed49a089c6c05",
+        "execution_signature_sha256": "fb4250112c24adbca88dd8f837e4ab93b86e7fca1678a63f7ce1c5583da9917b",
+        "tokens": 938
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "49658149aad12ab4dff8ed0a5fb4b1e73b9d5e15fc184bd42c89c55eecc6d4a0",
+        "execution_signature_sha256": "8ac6b350a26b76bff8407f604839e35fde36f12fa374bf4c3787c272d782e839",
+        "tokens": 1156
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": {
+      "forge": {
+        "normalized_utf8_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+        "execution_signature_sha256": "4cb3a0db85aa3d74457a6bde380f06024422c3b3da65e03d2bd76dee5aa55885",
+        "tokens": 7970
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+        "execution_signature_sha256": "b1654a06948582c25a23a8708c607d990957a7c1917a531a8ff98b3a54322ceb",
+        "tokens": 6231
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java": {
+      "forge": {
+        "normalized_utf8_sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+        "execution_signature_sha256": "d2cad0c9c5f97231c774c5790d5d792bb496578a6722d18dbb08757c6bf4dbc5",
+        "tokens": 943
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+        "execution_signature_sha256": "8e98e3d78ad63761feacf5ce07d9b1070b15d73b25df0c05bee6dd980c4826c0",
+        "tokens": 343
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java": {
+      "forge": {
+        "normalized_utf8_sha256": "cb0296efe10c8dba4133e3c73e59512d4ac419d85f6c773c3bcf46ad151a106c",
+        "execution_signature_sha256": "5d624fa3543bbc605f63500e3c3177f0c6bec34d989eea3b74d8ae43a39ef4c5",
+        "tokens": 720
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "ebedc1fac0abb9ac84c4e944bf1ed7f01f620b3f5c51c02437fe1ac5bc23ac1b",
+        "execution_signature_sha256": "7e395e02f0b2f15f8e1b4ef183c10f74d9de06da0b0e75c0e6cf8312146d120e",
+        "tokens": 824
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": {
+      "forge": {
+        "normalized_utf8_sha256": "90aaf1d96a26123ab3b9d894aa19ca3c65d57cfc01da0af0703e6c62e1f2eb21",
+        "execution_signature_sha256": "c62ab607b36e70da3bf4ba5037f4bf576b3a17af84bdc04e7bd67d6af2f1b384",
+        "tokens": 1506
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "20be436cbf15cedb04085c445516c390201896499ca58f4c65e90045d3778718",
+        "execution_signature_sha256": "8afd48e6a8af4d536c1fe99b2bc2b61b27ac70fd79d95921968009763b60defc",
+        "tokens": 1526
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": {
+      "forge": {
+        "normalized_utf8_sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+        "execution_signature_sha256": "7a3847ccf5be6bcfaeeeb51823462faf96856349015840ca5f12ffdf9d99530b",
+        "tokens": 1338
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+        "execution_signature_sha256": "453d0a648e7c27a164019a853b880fda0b77cf739fd73980c9cab0cdb5940453",
+        "tokens": 1384
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+      "forge": {
+        "normalized_utf8_sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+        "execution_signature_sha256": "e0bd57c7f517e4a2f70b9f6c76273e832440faf2bb1d88c950bdb8bede463192",
+        "tokens": 3948
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+        "execution_signature_sha256": "78c667a4afb1a89cac50a3649ae186aab430fddac8d78424911806a8c7dab202",
+        "tokens": 3957
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": {
+      "forge": {
+        "normalized_utf8_sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+        "execution_signature_sha256": "686fc74d87cb152cface6367b495f51f5862db1f8f6e598094302612c4cbd881",
+        "tokens": 452
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+        "execution_signature_sha256": "8ee126d91bea7e2973482fb2e50d256adbf2b6b96e89bc77f62cdc9ebae2f86c",
+        "tokens": 474
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java": {
+      "forge": {
+        "normalized_utf8_sha256": "54b7cdcafa2d86d8a877acfae2694e9de59edd9675d5f96ed3769fe939d6140b",
+        "execution_signature_sha256": "d62bab150c31367f9b6757bb4a415c65f880ffc2af501ef8dd13511e8c3914e1",
+        "tokens": 567
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "e2c8e3c3f597e3b11c2fe39edd3f64c6b0a3d159b32d3777741115f662c23e45",
+        "execution_signature_sha256": "cc4019b20ffe4131970a882a35e3ef72f61f52e7deb32599b925e1dc2d125f39",
+        "tokens": 570
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java": {
+      "forge": {
+        "normalized_utf8_sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+        "execution_signature_sha256": "63ffea8d54cbe97b793c36182046f5a4fe9cb4578f2fbe5ac8a571405ebee00f",
+        "tokens": 462
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+        "execution_signature_sha256": "63ffea8d54cbe97b793c36182046f5a4fe9cb4578f2fbe5ac8a571405ebee00f",
+        "tokens": 462
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java": {
+      "forge": {
+        "normalized_utf8_sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+        "execution_signature_sha256": "ae869696945d0cf9784464d70c62a0d8be8d1ccfbe3d3bb434694e3fd5987fc1",
+        "tokens": 1598
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+        "execution_signature_sha256": "f56214206d2341f365dc067ee5be38ea4d6c8fe38edf6a4a3457e8e1da9990b0",
+        "tokens": 988
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java": {
+      "forge": {
+        "normalized_utf8_sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+        "execution_signature_sha256": "2b3db78cf32379e3e289d9ffe205e83886dbd647a4cd0a5b61a17c705fcf6b83",
+        "tokens": 56
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+        "execution_signature_sha256": "2b3db78cf32379e3e289d9ffe205e83886dbd647a4cd0a5b61a17c705fcf6b83",
+        "tokens": 56
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java": {
+      "forge": {
+        "normalized_utf8_sha256": "588cf4db65ad1df96de63918f0be6be767620a2cc4871b0b1e3e96677751de2a",
+        "execution_signature_sha256": "94d5c02959cf5e94ec905abf032952b95fec822a26c214d5a5def801ea69308b",
+        "tokens": 526
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "85a9b894ca4cae5a30163a2511fa11a0997e92ab6091c234157e89254ec1ffcf",
+        "execution_signature_sha256": "203856c10df7dfe17173accdeee1ec2a7721501940fe8bc16df26c9ebc5708da",
+        "tokens": 553
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/PlayerRadiation.java": {
+      "forge": {
+        "normalized_utf8_sha256": "2136c72c0bcaeb7d514f4797c3dbd512c540d69ee6ad8acb79d83f491212b826",
+        "execution_signature_sha256": "fb0b0bd17e4d7a3ff9bba1f494f0eb15ee7330cd34c8e7b4171d6a263fa72069",
+        "tokens": 533
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "9555d214ae82ac4dc8568c60f8ed23fa279aa0ed9ded6b74d47f05e448502bc4",
+        "execution_signature_sha256": "e164e2c15feb323477497645e2b6011a7083d68ea78dfd13268311bc56d54ffb",
+        "tokens": 528
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/ReactorRodRenderer.java": {
+      "forge": {
+        "normalized_utf8_sha256": "7e302d2d0919437dfa5ac13d08c750d94b537073c3458ab02e095795c25dd367",
+        "execution_signature_sha256": "355b699998f1c85409625eb889c708e615e7b2488db9a7c04499cceb17c08a0c",
+        "tokens": 272
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "7e302d2d0919437dfa5ac13d08c750d94b537073c3458ab02e095795c25dd367",
+        "execution_signature_sha256": "355b699998f1c85409625eb889c708e615e7b2488db9a7c04499cceb17c08a0c",
+        "tokens": 272
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java": {
+      "forge": {
+        "normalized_utf8_sha256": "864fd9121329c40ab59c6e2b4093d2eb8ca8c9a4d9c753b874ef9cf3b25e8076",
+        "execution_signature_sha256": "bf208856b9c6ea549d01c6a428ff76c7612100957b9ed6ae815ffb9ab391b97c",
+        "tokens": 1254
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "4e5b3ec29cbcac09befbb4a2d45b37f2754016f568f544a8868d822b2c4de4eb",
+        "execution_signature_sha256": "2020e1f09297520bed7bd9559224a92eaf8ecd614f3f6fe02d688e9d21946808",
+        "tokens": 1326
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java": {
+      "forge": {
+        "normalized_utf8_sha256": "2b51e7501e6d580b4cf083d30104753bca5da42c585ccb2e0ecaa46d8dc15add",
+        "execution_signature_sha256": "29fbe627aab93c12841b36b55020274db2ea8c940c30096ca783ececc48a6e0f",
+        "tokens": 1305
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "3fcc1686903c0c3ad1b96bacdbe59de545a609cd226ef4ca28aa2a009ff8e817",
+        "execution_signature_sha256": "daef00ec53a3d7ca56ee379a9ac65d8715b6ec312978358f7e973ccf86701c16",
+        "tokens": 1575
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java": {
+      "forge": {
+        "normalized_utf8_sha256": "de51df06a1e21b09a702faed3ed1189f9361047b134b09648f6217e8e24b97b3",
+        "execution_signature_sha256": "8126f7ce7c4ce13f322f10983ae4ab1b9f993dea04d02e3910a91fa6f6506f84",
+        "tokens": 2515
+      },
+      "neoforge": {
+        "normalized_utf8_sha256": "7919f5ebbe739fc396a7eb6f60a4096690050875fdb70a7f0898124254eab923",
+        "execution_signature_sha256": "b9aeaa021e5f016c1ea3b4e446352fbfbe103dbb328d868e5443fc6fa71b6120",
+        "tokens": 2587
+      }
+    }
+  },
+  "supplied_views_reverified": 70,
+  "native_dependencies": {
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar": {
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entries": {
+        "net/minecraft/server/MinecraftServer.class": "c8746828ef5885a6e0088d09431f154f11744580ac25927a67221689f649b356",
+        "net/minecraft/world/level/Level.class": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f",
+        "net/minecraft/world/level/chunk/LevelChunk.class": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e",
+        "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class": "3df8bbe152fb98ba776474e2cb550af1ae5df9905718dfc38738fece6a91a1d3",
+        "net/minecraft/server/level/ServerLevel.class": "0210ec59000410d4284eeec225699b49b592ba659c8a16b49ac76916192585d1",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "net/minecraft/world/entity/animal/IronGolem.class": "8767f680f5447c219fa3dec85f0dcf81017e79372509ab63b17d5b18ee211933",
+        "net/minecraft/world/entity/LivingEntity.class": "4d5d832b434153c4bbaed608b6d742730c0864830f283424f153bcb0ee5b4cab"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar": {
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": {
+        "net/minecraftforge/event/ForgeEventFactory.java": "972ed7acf998b6ef07d8a9b6ad1ed6a31e6e076b6ae63783b53da3170ea12895",
+        "net/minecraftforge/event/TickEvent.java": "e3c598ea70790cf01764ec9a97a291f7242c3229a554a738b313655408fb4c89",
+        "net/minecraftforge/items/VanillaInventoryCodeHooks.java": "98b0e71df1ceeba4fbc0d33a8d70ca5287e661322c9aa80ba0c9ceae891b9508"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar": {
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "entries": {
+        "net/minecraft/server/MinecraftServer.class": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+        "net/minecraft/world/level/Level.class": "74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
+        "net/minecraft/world/level/chunk/LevelChunk.class": "b6ce6fcd4c01e41008c184d4214f9b09dd7755daa1fb5c63eae3fa8324b8714f",
+        "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class": "598704d76f6bb3ddd9932054e71491e464739ce0beb7210bab6e34eb2a3f5ef1",
+        "net/minecraft/server/level/ServerLevel.class": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "9dec7da0f57d8eb770866c81c5e96a052a003b25f1504714c269e95acb6d8615",
+        "net/minecraft/world/entity/animal/IronGolem.class": "0d4b741b49270d235e8e7f99f247105e5439e31fa04a641de778a4e15448ab66",
+        "net/minecraft/world/entity/LivingEntity.class": "52130dfb8dc4b5c48ec1ef12bf19b40ff29f6e38fc25b02b94202553f75ce5f4"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar": {
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entries": {
+        "net/minecraft/server/MinecraftServer.java": "b906c6597095e206ade6a9db34f76993f667bdf2bfacaeca793ba9ce14e568ed",
+        "net/neoforged/neoforge/event/EventHooks.java": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff",
+        "net/neoforged/neoforge/event/tick/LevelTickEvent.java": "003bcde9c13737d60a1d6dc875d056011d97f0b56dce5cf42c031f7b6744cc8f",
+        "net/minecraft/world/level/Level.java": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+        "net/minecraft/server/level/ServerLevel.java": "8d1086b8e63b11d340853e7595a63f2f27edc0d690311c9a0d46d5098eb21925",
+        "net/minecraft/world/level/chunk/LevelChunk.java": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223",
+        "net/minecraft/world/level/block/entity/BlockEntity.java": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "net/neoforged/neoforge/items/VanillaInventoryCodeHooks.java": "45186cd2d7c51c8b7e96b9fa2425c11172d790aa9dda06a7f0e0718db0c53036"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.20/c354b21002937b393c4f86163a98dccdf1d51e72/javafmllanguage-1.20.1-47.4.20.jar": {
+      "sha256": "fb659dd963f14b2c34c2b935dcf1f7f40e8018c6900deaa9c673229893bb0218",
+      "entries": {
+        "net/minecraftforge/fml/common/Mod$EventBusSubscriber.class": "b8c8d33f4bd20a0749eea4587df5c1a0b3100db65ba6e9bcdfc70186b62be615",
+        "net/minecraftforge/fml/javafmlmod/AutomaticEventSubscriber.class": "d25ad6b6515003d59597946101bc18e2a56475e2ea9c704cca02113072120798"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar": {
+      "sha256": "ba406038d0ce8242391bb23b9974648748d217b67332c0db620fcabf50edbc37",
+      "entries": {
+        "net/neoforged/fml/common/EventBusSubscriber.class": "3dc71e9964588f3a53e220cbcd76cc2c4b103a1c96548a99a63e932388038ede",
+        "net/neoforged/fml/javafmlmod/AutomaticEventSubscriber.class": "c7ac0102b5f8114e5ebda79951daaa58ad4a71ff6c537cbf7cac2245111cfa7a"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-client-extra-aka-minecraft-resources.jar": {
+      "sha256": "8e9cf6f4b6eafb1c6bf745a67a61dd1736f31865cad409e5b2bec918667dab5e",
+      "entries": {
+        "data/minecraft/tags/entity_type/undead.json": "c929c7cfe35af23aee730d4bfa89ce89bbcc4709de173f2fdd06c17293030fe6",
+        "data/minecraft/tags/entity_type/arthropod.json": "57ffd101ffb514936de10d6719903806926d8542b6df03888865081281cbb0ac",
+        "data/minecraft/tags/entity_type/skeletons.json": "14173614d134b574ba08eb916219016262a520930462df4759b5c33e51ef5c14",
+        "data/minecraft/tags/entity_type/zombies.json": "5debc19c75fb520f526006bf92f93d813f024551e137182b0fc2f2259e2a7a14"
+      }
+    }
+  },
+  "unique_native_entries_reverified": 35,
+  "source_equivalence_from_batch58": {
+    "date": "2026-10-21",
+    "baseline": "67dff604d",
+    "scope": "One-file whitespace only: statement/method/annotation boundaries and both native save/load paths. No names, imports, tokens, comments, literals, directives, scopes or behavior changed.",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": {
+        "before_git_blob_sha256": "06bd7b53a2f9c453f8ecc91f23d07389266d21a0816a96ce6925e8c24bd44e04",
+        "initial_observed_raw_sha256": "7e8963ad5bda51505373466307e8d293d0563a8351c25d7e62bb4d8be03949ce",
+        "observed_raw_sha256": "d38d4fdc351ca43fdef3cffa98af78a75ffe6129efc6f172be842c13000734ec",
+        "after_raw_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+        "lines_before": 236,
+        "lines_after": 560,
+        "max_line_before": 305,
+        "max_line_after": 152,
+        "directive_count": 30,
+        "projections": {
+          "forge": {
+            "tokens": 3703,
+            "literal_count": 31,
+            "signature_sha256": "f4dc8345db389242660bb65a0c7052e23b2b4ac25e67c8dc1cf4a07a7464bc8b",
+            "original_view_sha256": "ca335b3ef2feffd07d3fc4aea0258362ce358d9ca879de49e98645e7101ba542",
+            "formatted_view_sha256": "1625d401fdfed78fb03e17cd357237be287e7105f95e3519ebcbafa87ec04596",
+            "comments_exactly_equal": true,
+            "comments": 5,
+            "exact_tokens_and_literal_positions_equal": true
+          },
+          "neoforge": {
+            "tokens": 3657,
+            "literal_count": 31,
+            "signature_sha256": "318885f2e691b07dde3509457692a2f08b7170bdc79226a1338bcdff323bd3e0",
+            "original_view_sha256": "dac0ec817d281496a48377e0fc01391331275009518150839a1d2fd07a9c9235",
+            "formatted_view_sha256": "c85ec987ae6d883b5c2e331fbd4a94d00a4a669c5664720a0149dd0555124b1d",
+            "comments_exactly_equal": true,
+            "comments": 5,
+            "exact_tokens_and_literal_positions_equal": true
+          }
+        }
+      }
+    },
+    "limits": "No generator, Gradle, compilation, Java initialization, tests, game, build, push or gameplay fix. Preview is a one-off formatter, not a new production/build dependency."
+  },
+  "root_rod_row_and_arithmetic_recheck": {
+    "date": "2026-10-21",
+    "catalogue_ids_rechecked": [
+      9201,
+      9202,
+      9203,
+      9204,
+      9210,
+      9219,
+      9220,
+      9221,
+      9222,
+      9229,
+      9230,
+      9231,
+      9232,
+      9233,
+      9239,
+      9240,
+      9241,
+      9249,
+      9250,
+      9260,
+      9261,
+      9310,
+      9319,
+      9320,
+      9321,
+      9322,
+      9329,
+      9330,
+      9331,
+      9332,
+      9333,
+      9339,
+      9340,
+      9341,
+      9349,
+      9350,
+      9360,
+      9361,
+      9410,
+      9420,
+      9430,
+      9440,
+      9411,
+      9421,
+      9431,
+      9441
+    ],
+    "catalogue_count": 46,
+    "original_explicit_parameter_rows_reparsed": true,
+    "current_parameter_rows_reparsed": true,
+    "finite_examples": {
+      "ordinary_results": [
+        274,
+        774,
+        586,
+        2344,
+        2000,
+        2002,
+        500
+      ],
+      "zirconium_weight_kg_per_U": 722.888888166,
+      "zirconium_original_raw_ticks": 216.20053870192223,
+      "zirconium_current_float32_raw_ticks": 2.2417821884155273,
+      "zirconium_original_ticks": 216,
+      "zirconium_current_ticks": 64
+    },
+    "scope": "Finite source arithmetic/row reparse, not Java/world execution or final recipe enumeration."
+  },
+  "root_spatial_recheck": {
+    "old_call_targets": {
+      "0": {
+        "NORTH": 1,
+        "WEST": 2
+      },
+      "1": {
+        "SOUTH": 0,
+        "WEST": 3
+      },
+      "2": {
+        "NORTH": 3,
+        "EAST": 0
+      },
+      "3": {
+        "SOUTH": 2,
+        "EAST": 1
+      }
+    },
+    "current_targets": {
+      "0": {
+        "NORTH": 1,
+        "WEST": 2
+      },
+      "1": {
+        "SOUTH": 0,
+        "WEST": 3
+      },
+      "2": {
+        "NORTH": 3,
+        "EAST": 0
+      },
+      "3": {
+        "SOUTH": 2,
+        "EAST": 1
+      }
+    },
+    "internal": {
+      "0": [
+        1,
+        2
+      ],
+      "1": [
+        0,
+        3
+      ],
+      "2": [
+        0,
+        3
+      ],
+      "3": [
+        1,
+        2
+      ]
+    },
+    "single_to_quad": {
+      "NORTH": [
+        1,
+        3
+      ],
+      "SOUTH": [
+        0,
+        2
+      ],
+      "WEST": [
+        2,
+        3
+      ],
+      "EAST": [
+        0,
+        1
+      ]
+    }
+  },
+  "root_capacity_arithmetic": {
+    "water_units": 401,
+    "steam_units": 64160,
+    "base_capacity": 64000,
+    "original_steam_capacity": 10240000,
+    "source_condition_only_not_world_run": true
+  },
+  "rod_catalogue": {
+    "entries": 46,
+    "by_kind": {
+      "ABSORBER": 1,
+      "BASE": 1,
+      "BREEDER": 4,
+      "DEPLETED": 17,
+      "MODERATOR": 1,
+      "NUCLEAR": 17,
+      "PRODUCT": 4,
+      "REFLECTOR": 1
+    },
+    "all_explicit_original_parameters_equal": true,
+    "rows": [
+      {
+        "original_id": 9201,
+        "current_id": "reactor_rod_9201",
+        "name": "Empty Reactor Rod",
+        "current_material": "Zirconium",
+        "original_material_field": "Zr",
+        "kind": "BASE",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 741,
+        "current_line": 8
+      },
+      {
+        "original_id": 9202,
+        "current_id": "reactor_rod_9202",
+        "name": "Neutron Absorber Rod",
+        "current_material": "CdInAgAlloy",
+        "original_material_field": "Cd_In_Ag_Alloy",
+        "kind": "ABSORBER",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 742,
+        "current_line": 9
+      },
+      {
+        "original_id": 9203,
+        "current_id": "reactor_rod_9203",
+        "name": "Neutron Reflector Rod",
+        "current_material": "Beryllium",
+        "original_material_field": "Be",
+        "kind": "REFLECTOR",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 743,
+        "current_line": 10
+      },
+      {
+        "original_id": 9204,
+        "current_id": "reactor_rod_9204",
+        "name": "Neutron Moderator Rod",
+        "current_material": "Graphite",
+        "original_material_field": "Graphite",
+        "kind": "MODERATOR",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 744,
+        "current_line": 11
+      },
+      {
+        "original_id": 9210,
+        "current_id": "fuel_rod_th_232",
+        "name": "Thorium-232 Fuel Rod",
+        "current_material": "Thorium",
+        "original_material_field": "Th",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 2,
+          "NUCLEAR_OTHER": 2,
+          "NUCLEAR_DIV": 32,
+          "NUCLEAR_MAX": 128,
+          "VALUE": 9310,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 2,
+          "NUCLEAR_OTHER": 2,
+          "NUCLEAR_DIV": 32,
+          "NUCLEAR_MAX": 128,
+          "VALUE": 9310
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 746,
+        "current_line": 12
+      },
+      {
+        "original_id": 9219,
+        "current_id": "reactor_rod_9219",
+        "name": "Cyanite Fuel Rod",
+        "current_material": "Cyanite",
+        "original_material_field": "Cyanite",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 2,
+          "NUCLEAR_OTHER": 2,
+          "NUCLEAR_DIV": 32,
+          "NUCLEAR_MAX": 64,
+          "VALUE": 9319,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 2,
+          "NUCLEAR_OTHER": 2,
+          "NUCLEAR_DIV": 32,
+          "NUCLEAR_MAX": 64,
+          "VALUE": 9319
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 747,
+        "current_line": 13
+      },
+      {
+        "original_id": 9220,
+        "current_id": "fuel_rod_u_238",
+        "name": "Uranium-238 Fuel Rod",
+        "current_material": "Uranium",
+        "original_material_field": "U_238",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 4,
+          "NUCLEAR_OTHER": 4,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 512,
+          "VALUE": 9320,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 4,
+          "NUCLEAR_OTHER": 4,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 512,
+          "VALUE": 9320
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 748,
+        "current_line": 14
+      },
+      {
+        "original_id": 9221,
+        "current_id": "fuel_rod_u_235",
+        "name": "Uranium-235 Fuel Rod",
+        "current_material": "Uranium235",
+        "original_material_field": "U_235",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 32,
+          "NUCLEAR_OTHER": 32,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9321,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 32,
+          "NUCLEAR_OTHER": 32,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9321
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 749,
+        "current_line": 15
+      },
+      {
+        "original_id": 9222,
+        "current_id": "reactor_rod_9222",
+        "name": "Uranium-233 Fuel Rod",
+        "current_material": "Uranium233",
+        "original_material_field": "U_233",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 32,
+          "NUCLEAR_OTHER": 32,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9322,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 32,
+          "NUCLEAR_OTHER": 32,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9322
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 750,
+        "current_line": 16
+      },
+      {
+        "original_id": 9229,
+        "current_id": "reactor_rod_9229",
+        "name": "Yellorium Fuel Rod",
+        "current_material": "Yellorium",
+        "original_material_field": "Yellorium",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 4,
+          "NUCLEAR_OTHER": 4,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 256,
+          "VALUE": 9329,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 6000000000,
+          "NUCLEAR_SELF": 4,
+          "NUCLEAR_OTHER": 4,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 256,
+          "VALUE": 9329
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 751,
+        "current_line": 17
+      },
+      {
+        "original_id": 9230,
+        "current_id": "reactor_rod_9230",
+        "name": "Plutonium-244 Fuel Rod",
+        "current_material": "Plutonium",
+        "original_material_field": "Pu",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9330,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 2048,
+          "VALUE": 9330
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 752,
+        "current_line": 18
+      },
+      {
+        "original_id": 9231,
+        "current_id": "reactor_rod_9231",
+        "name": "Plutonium-241 Fuel Rod",
+        "current_material": "Plutonium241",
+        "original_material_field": "Pu_241",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 3072,
+          "VALUE": 9331,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 3072,
+          "VALUE": 9331
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 753,
+        "current_line": 19
+      },
+      {
+        "original_id": 9232,
+        "current_id": "reactor_rod_9232",
+        "name": "Plutonium-243 Fuel Rod",
+        "current_material": "Plutonium243",
+        "original_material_field": "Pu_243",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9332,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9332
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 754,
+        "current_line": 20
+      },
+      {
+        "original_id": 9233,
+        "current_id": "fuel_rod_pu_239",
+        "name": "Plutonium-239 Fuel Rod",
+        "current_material": "Plutonium239",
+        "original_material_field": "Pu_239",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 2400000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9333,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 2400000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9333
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 755,
+        "current_line": 21
+      },
+      {
+        "original_id": 9239,
+        "current_id": "reactor_rod_9239",
+        "name": "Blutonium Fuel Rod",
+        "current_material": "Blutonium",
+        "original_material_field": "Blutonium",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 1024,
+          "VALUE": 9339,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 1024,
+          "VALUE": 9339
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 756,
+        "current_line": 22
+      },
+      {
+        "original_id": 9240,
+        "current_id": "reactor_rod_9240",
+        "name": "Americium-245 Fuel Rod",
+        "current_material": "Americium",
+        "original_material_field": "Am",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9340,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 64,
+          "NUCLEAR_OTHER": 64,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9340
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 757,
+        "current_line": 23
+      },
+      {
+        "original_id": 9241,
+        "current_id": "fuel_rod_am_241",
+        "name": "Americium-241 Fuel Rod",
+        "current_material": "Americium241",
+        "original_material_field": "Am_241",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9341,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 4096,
+          "VALUE": 9341
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 758,
+        "current_line": 24
+      },
+      {
+        "original_id": 9249,
+        "current_id": "reactor_rod_9249",
+        "name": "Ludicrite Fuel Rod",
+        "current_material": "Ludicrite",
+        "original_material_field": "Ludicrite",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 3072,
+          "VALUE": 9349,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 1200000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 3072,
+          "VALUE": 9349
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 759,
+        "current_line": 25
+      },
+      {
+        "original_id": 9250,
+        "current_id": "fuel_rod_co_60",
+        "name": "Cobalt-60 Fuel Rod",
+        "current_material": "Cobalt60",
+        "original_material_field": "Co_60",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 120000000,
+          "NUCLEAR_SELF": 8,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 256,
+          "VALUE": 9350,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 120000000,
+          "NUCLEAR_SELF": 8,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 16,
+          "NUCLEAR_MAX": 256,
+          "VALUE": 9350
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 760,
+        "current_line": 26
+      },
+      {
+        "original_id": 9260,
+        "current_id": "reactor_rod_9260",
+        "name": "Enriched Naquadah Fuel Rod",
+        "current_material": "NaquadahEnriched",
+        "original_material_field": "Nq_528",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 8192,
+          "VALUE": 9360,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 128,
+          "NUCLEAR_OTHER": 128,
+          "NUCLEAR_DIV": 4,
+          "NUCLEAR_MAX": 8192,
+          "VALUE": 9360
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 761,
+        "current_line": 27
+      },
+      {
+        "original_id": 9261,
+        "current_id": "reactor_rod_9261",
+        "name": "Naquadria Fuel Rod",
+        "current_material": "Naquadria",
+        "original_material_field": "Nq_522",
+        "kind": "NUCLEAR",
+        "current_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 512,
+          "NUCLEAR_OTHER": 512,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 16384,
+          "VALUE": 9361,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 12000000000,
+          "NUCLEAR_SELF": 512,
+          "NUCLEAR_OTHER": 512,
+          "NUCLEAR_DIV": 3,
+          "NUCLEAR_MAX": 16384,
+          "VALUE": 9361
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 762,
+        "current_line": 28
+      },
+      {
+        "original_id": 9310,
+        "current_id": "reactor_rod_9310",
+        "name": "Depleted Thorium-232 Fuel Rod",
+        "current_material": "Thorium",
+        "original_material_field": "Th",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 764,
+        "current_line": 29
+      },
+      {
+        "original_id": 9319,
+        "current_id": "reactor_rod_9319",
+        "name": "Depleted Cyanite Fuel Rod",
+        "current_material": "Cyanite",
+        "original_material_field": "Cyanite",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 765,
+        "current_line": 30
+      },
+      {
+        "original_id": 9320,
+        "current_id": "reactor_rod_9320",
+        "name": "Depleted Uranium-238 Fuel Rod",
+        "current_material": "Uranium",
+        "original_material_field": "U_238",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 766,
+        "current_line": 31
+      },
+      {
+        "original_id": 9321,
+        "current_id": "reactor_rod_9321",
+        "name": "Depleted Uranium-235 Fuel Rod",
+        "current_material": "Uranium235",
+        "original_material_field": "U_235",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 767,
+        "current_line": 32
+      },
+      {
+        "original_id": 9322,
+        "current_id": "reactor_rod_9322",
+        "name": "Depleted Uranium-233 Fuel Rod",
+        "current_material": "Uranium233",
+        "original_material_field": "U_233",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 768,
+        "current_line": 33
+      },
+      {
+        "original_id": 9329,
+        "current_id": "reactor_rod_9329",
+        "name": "Depleted Yellorium Fuel Rod",
+        "current_material": "Yellorium",
+        "original_material_field": "Yellorium",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 769,
+        "current_line": 34
+      },
+      {
+        "original_id": 9330,
+        "current_id": "reactor_rod_9330",
+        "name": "Depleted Plutonium-244 Fuel Rod",
+        "current_material": "Plutonium",
+        "original_material_field": "Pu",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 770,
+        "current_line": 35
+      },
+      {
+        "original_id": 9331,
+        "current_id": "reactor_rod_9331",
+        "name": "Depleted Plutonium-241 Fuel Rod",
+        "current_material": "Plutonium241",
+        "original_material_field": "Pu_241",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 771,
+        "current_line": 36
+      },
+      {
+        "original_id": 9332,
+        "current_id": "reactor_rod_9332",
+        "name": "Depleted Plutonium-243 Fuel Rod",
+        "current_material": "Plutonium243",
+        "original_material_field": "Pu_243",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 772,
+        "current_line": 37
+      },
+      {
+        "original_id": 9333,
+        "current_id": "reactor_rod_9333",
+        "name": "Depleted Plutonium-239 Fuel Rod",
+        "current_material": "Plutonium239",
+        "original_material_field": "Pu_239",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 773,
+        "current_line": 38
+      },
+      {
+        "original_id": 9339,
+        "current_id": "reactor_rod_9339",
+        "name": "Depleted Blutonium Fuel Rod",
+        "current_material": "Blutonium",
+        "original_material_field": "Blutonium",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 774,
+        "current_line": 39
+      },
+      {
+        "original_id": 9340,
+        "current_id": "reactor_rod_9340",
+        "name": "Depleted Americium-245 Fuel Rod",
+        "current_material": "Americium",
+        "original_material_field": "Am",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 775,
+        "current_line": 40
+      },
+      {
+        "original_id": 9341,
+        "current_id": "reactor_rod_9341",
+        "name": "Depleted Americium-241 Fuel Rod",
+        "current_material": "Americium241",
+        "original_material_field": "Am_241",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 776,
+        "current_line": 41
+      },
+      {
+        "original_id": 9349,
+        "current_id": "reactor_rod_9349",
+        "name": "Depleted Ludicrite Fuel Rod",
+        "current_material": "Ludicrite",
+        "original_material_field": "Ludicrite",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 777,
+        "current_line": 42
+      },
+      {
+        "original_id": 9350,
+        "current_id": "reactor_rod_9350",
+        "name": "Depleted Cobalt-60 Fuel Rod",
+        "current_material": "Cobalt60",
+        "original_material_field": "Co_60",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 778,
+        "current_line": 43
+      },
+      {
+        "original_id": 9360,
+        "current_id": "reactor_rod_9360",
+        "name": "Depleted Enriched Naquadah Fuel Rod",
+        "current_material": "NaquadahEnriched",
+        "original_material_field": "Nq_528",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 779,
+        "current_line": 44
+      },
+      {
+        "original_id": 9361,
+        "current_id": "reactor_rod_9361",
+        "name": "Depleted Naquadria Fuel Rod",
+        "current_material": "Naquadria",
+        "original_material_field": "Nq_522",
+        "kind": "DEPLETED",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 0,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {},
+        "explicit_parameters_equal": true,
+        "original_line": 780,
+        "current_line": 45
+      },
+      {
+        "original_id": 9410,
+        "current_id": "reactor_rod_9410",
+        "name": "Thorium-232 Breeder Rod",
+        "current_material": "Thorium",
+        "original_material_field": "Th",
+        "kind": "BREEDER",
+        "current_parameters": {
+          "MAXDURABILITY": 64000000,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9411,
+          "NUCLEAR_LOSS": 1000
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 64000000,
+          "NUCLEAR_LOSS": 1000,
+          "VALUE": 9411
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 782,
+        "current_line": 46
+      },
+      {
+        "original_id": 9420,
+        "current_id": "reactor_rod_9420",
+        "name": "Uranium-238 Breeder Rod",
+        "current_material": "Uranium",
+        "original_material_field": "U_238",
+        "kind": "BREEDER",
+        "current_parameters": {
+          "MAXDURABILITY": 256000000,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9421,
+          "NUCLEAR_LOSS": 2500
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 256000000,
+          "NUCLEAR_LOSS": 2500,
+          "VALUE": 9421
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 783,
+        "current_line": 47
+      },
+      {
+        "original_id": 9430,
+        "current_id": "reactor_rod_9430",
+        "name": "Lithium Breeder Rod",
+        "current_material": "Lithium",
+        "original_material_field": "Li",
+        "kind": "BREEDER",
+        "current_parameters": {
+          "MAXDURABILITY": 640000,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9431,
+          "NUCLEAR_LOSS": 250
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 640000,
+          "NUCLEAR_LOSS": 250,
+          "VALUE": 9431
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 784,
+        "current_line": 48
+      },
+      {
+        "original_id": 9440,
+        "current_id": "reactor_rod_9440",
+        "name": "Naquadah Breeder Rod",
+        "current_material": "Naquadah",
+        "original_material_field": "Nq",
+        "kind": "BREEDER",
+        "current_parameters": {
+          "MAXDURABILITY": 4096000000,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9441,
+          "NUCLEAR_LOSS": 10000
+        },
+        "original_explicit_parameters": {
+          "MAXDURABILITY": 4096000000,
+          "NUCLEAR_LOSS": 10000,
+          "VALUE": 9441
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 785,
+        "current_line": 49
+      },
+      {
+        "original_id": 9411,
+        "current_id": "reactor_rod_9411",
+        "name": "Uranium-233 Enriched Rod",
+        "current_material": "Uranium233",
+        "original_material_field": "U_233",
+        "kind": "PRODUCT",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9410,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "VALUE": 9410
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 787,
+        "current_line": 50
+      },
+      {
+        "original_id": 9421,
+        "current_id": "reactor_rod_9421",
+        "name": "Plutonium-239 Enriched Rod",
+        "current_material": "Plutonium239",
+        "original_material_field": "Pu_239",
+        "kind": "PRODUCT",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9420,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "VALUE": 9420
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 788,
+        "current_line": 51
+      },
+      {
+        "original_id": 9431,
+        "current_id": "reactor_rod_9431",
+        "name": "Tritium Enriched Rod",
+        "current_material": "Tritium",
+        "original_material_field": "T",
+        "kind": "PRODUCT",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9430,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "VALUE": 9430
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 789,
+        "current_line": 52
+      },
+      {
+        "original_id": 9441,
+        "current_id": "reactor_rod_9441",
+        "name": "Enriched Naquadah Enriched Rod",
+        "current_material": "NaquadahEnriched",
+        "original_material_field": "Nq_528",
+        "kind": "PRODUCT",
+        "current_parameters": {
+          "MAXDURABILITY": 0,
+          "NUCLEAR_SELF": 0,
+          "NUCLEAR_OTHER": 0,
+          "NUCLEAR_DIV": 1,
+          "NUCLEAR_MAX": 1,
+          "VALUE": 9440,
+          "NUCLEAR_LOSS": 0
+        },
+        "original_explicit_parameters": {
+          "VALUE": 9440
+        },
+        "explicit_parameters_equal": true,
+        "original_line": 790,
+        "current_line": 53
+      }
+    ]
+  },
+  "rod_examples": [
+    {
+      "case": "U235 plain, previous=1000",
+      "self": 32,
+      "emission": 274,
+      "flux": 1000,
+      "heat": 1000,
+      "life_loss": 100,
+      "original_current_agree": true
+    },
+    {
+      "case": "U235 plain, flux=3000",
+      "emission_previous_3000": 774,
+      "heat": 3000,
+      "life_loss_unmoderated": 586,
+      "life_loss_moderated": 2344,
+      "original_current_agree": true
+    },
+    {
+      "case": "U238 breeder loss2500, separate incoming3000 and4000",
+      "absorbed_per_side": [
+        500,
+        1500
+      ],
+      "total_flux": 2000,
+      "life_loss": 2000,
+      "heat": 1000,
+      "moderated_inputs_absorbed": 0,
+      "original_current_agree": true
+    },
+    {
+      "case": "absorber/product flux1001",
+      "absorber_heat": 2002,
+      "product_heat": 500,
+      "original_current_agree": true
+    },
+    {
+      "case": "moderator old contacts2, incoming30",
+      "reflected": 60,
+      "next_contacts_increment": 1,
+      "reflector_reflected": 30,
+      "original_current_agree": true
+    },
+    {
+      "case": "Zirconium empty rod extrusion declared parameters",
+      "melting_kelvin": 2128,
+      "environment_kelvin": 293,
+      "density_original_double": 6.506,
+      "weight_kg_per_U": 722.888888166,
+      "original_raw_ticks": 216.20053870192223,
+      "original_ticks": 216,
+      "current_density_float32": 6.50600004196167,
+      "current_raw_ticks_float32": 2.2417821884155273,
+      "current_ticks": 64,
+      "original_current_agree": false
+    }
+  ],
+  "rod_boundaries": [
+    "Empty rod extrusion direct input forms narrowed to ingot/dust versus original eligible-prefix loop; matching requires same material prefix.",
+    "Empty rod extrusion uses density instead of original getWeight(U), declared Zr216 to64 ticks.",
+    "Dedicated rod hover descriptions/coolant/stat/unit display is reduced; no general block tooltip replacement found.",
+    "Two legacy native-port MOX/Am243 rods remain registered without ReactorRodCatalog definition; current origin creative pages scan all registered native items and do not apply the old definition filter; core insertion rejects them."
+  ],
+  "core_contracts": [
+    "C1 directional slots: horizontal capability ignores original vertical gate",
+    "C2 cool/fail before hot-fluid push differs from original normal tick before post reaction",
+    "C3 missing original derived mRunning state: controls heat-only and contact switch-only",
+    "Existing ALIGN-095 extension: reactor Steam capacity(stack) override not consumed by fill capacity()"
+  ],
+  "core_source_notices": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/COPYING.LESSER",
+      "relative": "COPYING.LESSER",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/COPYING",
+      "relative": "COPYING",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/resources/LICENSE",
+      "relative": "src/main/resources/LICENSE",
+      "sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577"
+    }
+  ],
+  "network_provenance": {
+    "original_root": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java",
+    "current_root": "C:/Dev/GregTech6",
+    "original_header_author": [
+      "GregTech-6 Team",
+      "Gregorius Techneticies"
+    ],
+    "original_header_license": "LGPL-3.0-or-later",
+    "native_origins": "Local cached Minecraft, Forge, NeoForge and FML artifacts. No third-party native method bodies copied into this report.",
+    "projection_tool": {
+      "path": "C:/Dev/GregTech6/tools/integration/check_relay_sharing.py",
+      "relative": "tools/integration/check_relay_sharing.py",
+      "sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+      "bytes": 3423,
+      "lines": 69
+    }
+  },
+  "network_native_methods": [
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/server/MinecraftServer",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "eff77831097b5f3113c94cf83daa7ea5d6485e23d73a9fd9a6142ce47b6ba07e",
+      "stdout_bytes": 260593,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/level/Level",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "f9de0fad1081a73f3e35874485f3dceff820c0f7c5d3809ccca022b3e3e8d803",
+      "stdout_bytes": 119677,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/level/chunk/LevelChunk",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "f4673a229a3fddee097bc2e68edbf0b52ae1e5ece9848229005ac46ea022640f",
+      "stdout_bytes": 95318,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "d4e232596517cbb934e656dbac6d4db6a6c172c61d70d962604869422afe6068",
+      "stdout_bytes": 12740,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/server/level/ServerLevel",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "8e782ca09ce59c7a9b30f4dca8498ab5e20cb55a66376cd92b6dcf961afe4e2a",
+      "stdout_bytes": 264308,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/level/block/entity/BlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "c66636018e2b616cbd6a0d0fb37026ee2c5fe60dae5d58812d71b02bb4f59fe9",
+      "stdout_bytes": 25156,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/entity/animal/IronGolem",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "401e50cdc154fc4411e1a5b6a9195af37ecb1797f3a35b751efebae06f2e8b47",
+      "stdout_bytes": 41952,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_native",
+      "class": "net/minecraft/world/entity/LivingEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "32b4dc2bed459b19de16d26b052c2ee106f1be7f79052e4d1f504cf6b211c9a1",
+      "stdout_bytes": 516112,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "neo_native",
+      "class": "net/minecraft/world/entity/animal/IronGolem",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "c7d2d1c2f27641eb3ec31dc5e670cfabd1fb7ba7c65a8d73db3abfe24a00100c",
+      "stdout_bytes": 42469,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "neo_native",
+      "class": "net/minecraft/world/entity/LivingEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "98d7ca10cb9d8492ed660ce892dd8719c6a5c6ea76c263d8b20928734d08461a",
+      "stdout_bytes": 535960,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_fml",
+      "class": "net/minecraftforge/fml/common/Mod$EventBusSubscriber",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-v"
+      ],
+      "stdout_sha256": "2a751089a3beb75ed893e52750d77c27d4091ee34ebf906e82d0330c5fa12c8f",
+      "stdout_bytes": 4485,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "forge_fml",
+      "class": "net/minecraftforge/fml/javafmlmod/AutomaticEventSubscriber",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "29a80ffd03d2a8f4478e82d141f6c0c595179ef12d5e6e6cfc6a9d5693b1b54c",
+      "stdout_bytes": 16408,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "neo_fml",
+      "class": "net/neoforged/fml/common/EventBusSubscriber",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-v"
+      ],
+      "stdout_sha256": "a16de1978deaae0253688069e566a19c9c11df68a117989a53d7efa1d4dde68e",
+      "stdout_bytes": 4419,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    },
+    {
+      "artifact_id": "neo_fml",
+      "class": "net/neoforged/fml/javafmlmod/AutomaticEventSubscriber",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "b663fba659e6bb21981af15747513ab30b5101af61843b64fc0256029b2f103e",
+      "stdout_bytes": 24108,
+      "purpose": "Read-only native dispatch, ticker gates, subscriber defaults, inheritance or method presence; not a gameplay run."
+    }
+  ],
+  "network_actual_entries": {
+    "original": [
+      "Loader_MultiTileEntities 734-738: 9300/9200 registration",
+      "ReactorCore readFromNBT2/onTick2 -> two global post lists",
+      "GT_API_Proxy constructor registers buses; onServerTick END 478-509: all true pass then all false pass"
+    ],
+    "forge": [
+      "MachineBlockBootstrap / DeferredRegistrySubmission -> actual block and BE registries",
+      "ReactorCoreBlock[2x2].getTicker -> serverTick -> ReactorNetwork.enqueue",
+      "ForgeEventFactory.onPostLevelTick -> EVENT_BUS LevelTickEvent END -> ReactorNetwork.end"
+    ],
+    "neoforge": [
+      "GregTechNeoForge constructor -> GTEnergyNodes/GTBlockEntities registration",
+      "Native BlockEntityTicker -> ReactorNetwork.enqueue",
+      "MinecraftServer.tickChildren -> EventHooks.fireLevelTickPost -> GAME LevelTickEvent.Post -> ReactorNetwork.end"
+    ],
+    "native_participation": [
+      "Level.tickBlockEntities",
+      "ServerLevel.shouldTickBlocksAt -> distanceManager.inBlockTickingRange",
+      "LevelChunk.isTicking / FullChunkStatus.BLOCK_TICKING / entity-loading gate",
+      "BoundTickingBlockEntity.tick -> effective ticker only for nonremoved valid type"
+    ]
+  },
+  "network_phase_exclusion": {
+    "status": "Rejected earlier false-positive, not an alignment finding.",
+    "initial_error": "Treated original mNeutronCounts cleared at phase18 as the flux consumed by actual rod reactions.",
+    "original_actual_consumers": {
+      "Nuclear": "reaction 205 heat reads o; 215 durability loss reads o",
+      "Breeder": "reaction 83 heat reads o/2; 84 loss reads o",
+      "Absorber": "reaction 46 heat reads 2*o",
+      "Product": "reaction 55 heat reads o/2"
+    },
+    "phase18_state": {
+      "original_m": 0,
+      "original_o": 512,
+      "original_reaction_flux": 512,
+      "current_neutrons": 512,
+      "current_reaction_flux": 512
+    },
+    "continuous_cycle_model": {
+      "assumptions": [
+        "stable N=512",
+        "no rod conversion",
+        "adequate coolant",
+        "no stopped/disabled or save/load transition"
+      ],
+      "original_sum_N": 10240,
+      "current_sum_N": 10240
+    },
+    "reason": "Original false post snapshots m to o before m-=o. Reactions consume o. Current incoming=self at19 replaces the accumulator and persistent neutrons represent old o between exchanges.",
+    "not_proven": [
+      "Every external IItemReactorRod side effect",
+      "All int overflow vs bound saturation extremes",
+      "Global SERVER_TIME vs persistent per-Level gameTime absolute-phase migration policy"
+    ]
+  },
+  "network_geometry_boundary": {
+    "status": "Policy/adaptation observation, not a separate confirmed bug.",
+    "core": [
+      0,
+      64,
+      0
+    ],
+    "entity_position": [
+      0.5,
+      65,
+      0.5
+    ],
+    "neutrons": 512,
+    "exposure": 2,
+    "old_integer_origin_distance": 1.224744871391589,
+    "old_strength_after_long_cast": 0,
+    "current_center_distance": 0.5,
+    "current_strength_after_long_cast": 1,
+    "limits": "Supplied mathematical point above block, not a game dose measurement; AABB-vs-position filter also differs."
+  },
+  "network_load_boundaries": [
+    "Original registered post lists persist until dead/unregister; original normal tile tick is not re-required for each post pass.",
+    "Current network processes only cores enqueued by the native ticker this tick, then filters removed/hasChunkAt. Loaded does not mean block-ticking.",
+    "Neither the original default cross-chunk lookup nor current positions-only exchange unconditionally force loads all neighbors.",
+    "No runtime unload-between-enqueue-and-END, dimension removal, exception or recovery test.",
+    "WeakHashMap values hold cores which hold Level: weak key alone was not proven sufficient under an undrained abnormal path."
+  ],
+  "new_findings": [
+    "ALIGN-202",
+    "ALIGN-203",
+    "ALIGN-204",
+    "ALIGN-205",
+    "ALIGN-206",
+    "ALIGN-207",
+    "ALIGN-208",
+    "ALIGN-209",
+    "ALIGN-210"
+  ],
+  "extended_existing_findings": [
+    "ALIGN-095"
+  ],
+  "scope_limits": [
+    "46 original catalogue rods missing or ordinary rod formulas wholly unimplemented",
+    "Implicit extruder shape consumed: actual TechItem catalyst and RecipeInputs retention compensate",
+    "Original optional IC2 MOX compatibility item treated as a GT native rod",
+    "Runtime recipe counts/success or all-machine recipe completeness",
+    "Neutron spatial/timing, cooling, controls, running, save correctness audited by this subtask",
+    "Safe long arithmetic is bit-identical to original int overflow for unlimited critical flux",
+    "No tests, Gradle, game, build, commits or publication",
+    "Only this work directory README.md and sources.json written",
+    "No runtime bound-holder enumeration, working reactor, hopper, contact, restart, old-save or external-mod validation",
+    "Rod formulas/catalog and neutron/radial radiation delegated independently",
+    "Only README.md and sources.json in this scratch directory written.",
+    "No production or central/formal documentation edits.",
+    "No Gradle, tests, compilation, game, build, commit or upload.",
+    "Finite index substitution and supplied-state mathematical derivations are not world or default-seed tests.",
+    "Catalog/single-rod formulas and coolant/save/failure/contact-running gates belong to other audit agents.",
+    "Root re-parsed all 46 original/current catalogue declarations and independently recomputed finite rod/geometry/spatial/capacity arithmetic. No Java or world execution.",
+    "Rejected phase18 candidate: actual original reactions consume o snapshots, not m cleared at18. No 19N/20N defect is retained.",
+    "Creative claim is persistent dose accumulation; IronGolem claim is missing explicit exemption and addEffect path, not proof that every effect applies.",
+    "Nine new contract findings and one existing capacity extension; no gameplay fixes, generators, Gradle, compilation, new tests, game, restart, build or push."
+  ]
+}
