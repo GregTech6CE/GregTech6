@@ -337,3 +337,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 原生水、具名流体、材料绑定和温度相态是不同入口；`namedFluid`没有复用`GTFluids.stack`／`GeneratedRecipeResolver.named`的原生水处理。样本、公式和显式补偿见[分解核查](MATERIAL_DECOMPOSITION_AUDIT.md)。
 
 第六十批核辅助类已展开：core `content/nuclear/RodPhysicsMath.java` 的数量／向上取整与热／寿命运算，以及 `ReactorCoolantRules.java` 的11项冷却表／棒参数修饰改用明确参数名。原生Fluid解析仍看 `ReactorCoolants`，不能把表键当成已验证的实际注册流体；本次只做可读性保持，见[核导航](NUCLEAR_SOURCE_LAYOUT.md)。
+
+第六十一批补充[配置入口与真实消费](CONFIGURATION_CONTRACT_AUDIT.md)：共享`GregTechConfig.java`定义三个键，两版入口注册COMMON spec，默认文件由加载器命名为`gt6ce-common.toml`。两个过载getter由`MachineOverload`等消费；日志键当前未被读取。原版材料／掉落／世界生成配置只核了代表矩阵，Nexus全开与配置收尾仍按用户安排。核状态和异常边界分别见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。

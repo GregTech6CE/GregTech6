@@ -80,3 +80,7 @@ ReactorRodRecipes已有相关棒罐装、17条乏燃料及3条固态增殖产物
 空棒挤压的模具保留已沿真实消费确认，排除“数量1模具必被吃掉”：GTTechnological:48将含_shape_物品注册成TechItem(catalyst=true)，Recipe.isCatalystInput:84–88消费RecipeCatalystLike，RecipeInputs.consume:21–50预留后返还催化剂；BasicMachineBlockEntity:700实际使用该流程。原`.get(0)`和现代new ItemStack(shape)虽形式不同，已有保留补偿。
 
 本批没有真实注册表／JEI／EMI、临界反应堆、自动插拔、世界tick／跨区块、故障、辐射、双端客户端渲染、旧物品／旧NBT重启、专服或生存链实测。46目录和常规单棒规则已有对应，不意味着整个核反应堆完成对齐；周期、冷却、控制、运行状态与保存以同批其他子域报告为准。完整来源和静态推导见[统一回执](verification/nuclear-contract-audit-20261021.json)。
+
+## 第六十一批状态消费者续核
+
+禁用／停止慢化棒的旧contacts提交时点登记ALIGN-212；正常核燃料moderated交换已有对应，不将所有inactive棒一概判错。普通耗尽当tick先增热再换乏棒／产物、下tick走新Kind，以及Neo CUSTOM_DATA实际提交均有真实消费者；见[状态连续性](NUCLEAR_TRANSITION_AUDIT.md)。本次未改棒参数、损耗、产物或核玩法，也没有实际耗尽／重启验收。

@@ -49,3 +49,7 @@ Forge与Neo并非两份完整核心业务；不同的能力、NBT／HolderLookup
 两份文件的全部206／522项执行词法在七个方法／构造器参数绑定各自归一后相同，字符串位置、枚举顺序、数值、运算和导入也保持。不能用全局替换掩盖字段或其他作用域变化，具体映射和引用次数见[回执](verification/nuclear-helper-readability-20261021.json)。
 
 RodPhysicsMath的旧“Exact original”说明已更正：当前long运算／转int饱和与原版int溢出极值不同，不能由类注释担保完全等价。ReactorCoolantRules只保留换热数据与棒修饰职责说明；实际Fluid查找位于ReactorCoolants。本次未修核玩法，不新增ALIGN编号；启停、重载、异常分派与配置等专题继续。
+
+## 第六十一批状态与生命周期导航
+
+原版m／o两数组和Moderator接触计数各有不同提交者，当前setStopped／removeRod、Network.finishCycle与save/load的状态语义不能只按字段名对应。具体转换见[状态报告](NUCLEAR_TRANSITION_AUDIT.md)，网络END前中止／先remove后的异常必须分开，见[生命周期报告](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。同为WeakHashMap不保证值反持key时可回收；本批只归档，不未经设计地改变跨核心交换、异常恢复或安全停止行为。

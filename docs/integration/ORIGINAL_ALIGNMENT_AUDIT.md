@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：已合并远端 `894f90ce0`，第六十批展开两份core核辅助类并规范短参数名；第五十九批核专题、此前核心展开／四类共享和植物专题已归档。行为记录至 ALIGN-210，当前共 210 条正式记录，包含已修复／部分修复条目，不是 210 个未修复问题。初始文件清点和旧批次结论保留各自日期边界。
+2026-10-21 续核：已合并远端`894f90ce0`，第六十一批归档核状态／异常生命周期与配置代表矩阵；此前两份core辅助类、核心和四类共享已整理。行为记录至ALIGN-215，共215条正式记录，包含已修复／部分修复和明确保留的政策边界，不是215个未修复问题。初始清点及旧批次结论保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -27,7 +27,7 @@
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。不能把语言文件格式自检通过当作这些提示已经汉化。 |
-| ALIGN-004 | 配置功能仍明显不完整；这也符合之前将 cfg 放到收尾的安排。 | 原版 `gregapi/config/Config`、世界生成调度与加载器具有多项配置读取。 | 共享 `GregTechConfig` 只定义日志与过压爆炸两项；`GTWorldgenDefaults.STONE_LAYERS` 为常量。需完整列出原配置的现代适用性；Nexus／roads 默认开启本身不是错误。 |
+| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
@@ -237,6 +237,11 @@
 | ALIGN-208 | 确认核心运行派生状态与消费者不同。 | 原mRunning汇总周期通量或reaction布尔，控制检测与接触同读它。 | 当前控制只lastHeat>0，接触只!stopped&&!failed；有效零热棒检测偏窄、开启空核接触门控偏宽。伤害限实际实体重叠入口，两个表现合为一项，见[核心](NUCLEAR_CORE_AUDIT.md)。 |
 | ALIGN-209 | 确认核中子邻接未保留Universal Extender委托路径。 | 原getAdjacentTileEntity沿通用扩展器delegate与返回面解析目标核心。 | 当前网络只查本tick核心的直接相邻BlockPos，不把扩展器解析为目标；直连四向／槽位已对应，不报所有扩展器或普通邻核失效，取舍待定，见[网络](NUCLEAR_NETWORK_AUDIT.md)。 |
 | ALIGN-210 | 确认共享辐射消费者缺原creative／IronGolem明确豁免。 | 原applyRadioactivity调用RadioHazmat helper，先豁免creative、原IronGolem／Wither。 | 当前creative会积持久dose；IronGolem缺显式豁免并尝试addEffect，未宣称六药效均生效或创意免伤失效。Wither已有undead保护，中心采样另列政策边界，见[网络](NUCLEAR_NETWORK_AUDIT.md)。 |
+| ALIGN-211 | 短暂停启／取出立即清通量是已确认的更保守政策差异，保留现行为，不列作应恢复旧余通量的缺陷。 | 原软锤／on-off只改stopped，取出不清核心m/o；19后至18前短暂停再开可沿用旧通量。 | setStopped(true)／removeRod清neutrons，非19重启到下次交换前为0；给定U235+IC2为128／0，见[状态核查](NUCLEAR_TRANSITION_AUDIT.md)。 |
+| ALIGN-212 | 确认禁用／停止慢化棒跨交换周期时提前清旧接触倍数。 | Moderator计数只在受活动门控的reaction于19提交，继承updateModeration为空。 | Network对所有rods无条件finishCycle；无接收时旧contacts=1变0，再启用首次正束反射A／0；正常连续工作不因此失效，见[状态核查](NUCLEAR_TRANSITION_AUDIT.md)。 |
+| ALIGN-213 | 确认漏过交换后重载的单数组状态不足以表达原m/o分离。 | 18后可保存m=0/o=N，漏19后非交换相位恢复，先o=m，反应热0。 | 当前活动／current-version保存单N，gt.stopped=false恢复后非19仍以N反应；只限完整卸载漏交换条件，正常18误报仍排除，见[状态核查](NUCLEAR_TRANSITION_AUDIT.md)。 |
+| ALIGN-214 | 确认END前中止且再无该Level排空时，弱key未提供有效生命周期兜底。 | 原强列表也非完美停服清理；以后若再有全局END可移除dead成员。 | PENDING强value→Core→Level反持key，真实Post非finally、Unload无本类订阅；正常先remove／本handler异常明确不留key。未测堆增长，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -273,12 +278,12 @@
 | 储物、容器与传感器 | 普通／物流桶、计量、各类库存、原生爆炸、填槽、两版通知及共用菜单九类实际宿主已局部核查 | 差异见 ALIGN-077、083–097、112–120、136–163、168、172–173、179；六类同源回调和三类补偿／限制已分开，继续其它菜单、覆盖板归属、成组掉落、量子／中继桥、材料重量、手持仪表与保存恢复；源码链不等于游戏场景已运行 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
 | 养蜂与植物 | 已追自然巢、养蜂周期／保存门控、灌木生命周期／物理／生成及光莲实际两端所有权；确认ALIGN-164–167、169–171、174–178、183–188、194–195，温度计扩展085 | 光莲仅Forge碰撞／陆地回退有具体差异，Neo与GT水一般兼容已有；现代睡莲政策保留。全种类、可选整合、其余植物物理及真实保存重启继续 |
-| 核反应堆 | 已核46棒目录／常规单棒、11冷却表／真实填充、两端tick／订阅、直连布局／两阶段、槽能力和运行／辐射消费者；差异202–210与095扩围 | 模具返还与phase18候选排除；保存字段／标脏和不地形炸已有。继续启停／禁槽／耗尽／重载连续性、异常分派、外部棒／委托、极值／全药效与真实游戏／独立重启，不以给定N数学模型宣布整机验收 |
+| 核反应堆 | 已核46棒／11冷却表、实际tick／能力、直连布局、状态转换与原生保存、异常分派；差异202–215及095扩围，211保留安全政策 | 普通耗尽、Neo提交、标脏和正常18快照已有。继续外部棒／委托、极值／全药效、实际启停／卸载／重启和异常恢复设计，不把源码条件推演当整机验收 |
 | 世界生成、Nexus、roads | 前轮石层互斥已修；灌木噪声／九种池及普通石木堆内容、指示材料、采收／手摆主链已核，差异见186–188、196–201 | 陨铁／燧石／多木种已有，有限概率／层岩坐标反例不代替生成世界。其余特征布局、保护、维度、时序、地牢更新、全地质规则和自然资源分布继续 |
 | 模型、GUI、音效、颜色与光照 | 待按实际对象重核 | 引用链与可见渲染，不能继续复用旧“421 条警告”数量作为现状 |
 | 原版专属提示、材料含量与中英文 | 已确认 ALIGN-003，待全注册项重核 | 提示调用路径、动态字段、原文／补丁来源，不只检查 JSON |
 | 查看器与其他模组兼容 | 待逐集成重核 | JEI／EMI 转移、分类、页面、刷新与外部提供方；区分现代替代关系 |
-| 配置、网络与存档 | 已确认 ALIGN-004，余项待核 | 原配置矩阵、协议边界、所有状态字段、真实保存重启 |
+| 配置、网络与存档 | 004已扩展COMMON真实接线、两个有效过载设置／无效日志键及原配置代表矩阵；核网络／保存条件已专题化 | 继续剩余配置现代适用性、协议／同步、全部保存字段、真实磁盘／重载／多人／独立重启，见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md) |
 
 ## 源码结构改进
 
@@ -309,6 +314,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第六十一批归档核启停／禁槽／漏交换重载、异常队列／分派与配置消费者，新增211–215（211保留安全政策）并扩展004。36份原版／72份当前、58份平台视图和12工件49entry重核；给定128通量与状态见证不代世界验收。两个过载设置已有效、日志键未消费，正常18／普通耗尽／Neo提交不误报缺失；见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)、[配置](CONFIGURATION_CONTRACT_AUDIT.md)和[回执](verification/nuclear-transitions-config-audit-20261021.json)。未改玩法，全面队列继续。
 
 第六十批仅整理两份核辅助类25→97行、七处声明参数命名；完整执行词法逐作用域归一保持，11冷却表与运算不变，纠正过强职责说明。正式记录仍210条，不修核玩法，见[导航](NUCLEAR_SOURCE_LAYOUT.md)和[证明](verification/nuclear-helper-readability-20261021.json)；启停／重载、网络异常、配置消费者及全面队列继续。
 

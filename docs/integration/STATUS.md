@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第六十一批核状态、异常生命周期与配置合同
+
+新增211–215，含211保留安全政策；其余为禁槽慢化计数、漏交换重载、END前中止的强链及post异常隔离的限定合同。004纠正为三个配置键，两个过载getter有实际消费、日志开关无读取；COMMON原生load/save和缓存刷新已有。36原版／72当前、58视图、12工件49entry重核，见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)、[配置](CONFIGURATION_CONTRACT_AUDIT.md)和[回执](verification/nuclear-transitions-config-audit-20261021.json)。正式记录215条，未改玩法／编译／测试／构建／推送，全面goal active。
+
 ## 2026-10-21 / 第六十批核辅助类参数与流程可读性
 
 RodPhysicsMath从3→29行，ReactorCoolantRules从22→68行；n／d／r及构造器i／o等参数改为value、numerator／denominator、rod和明确的冷却参数名。完整执行流仅在七处已列明的参数作用域内归一后相同，206／522项词法、字面量位置、字段、顺序及数值保持；两条过强职责注释纠正，未改核玩法。正式记录仍210条，见[导航](NUCLEAR_SOURCE_LAYOUT.md)与[回执](verification/nuclear-helper-readability-20261021.json)。未编译／测试／构建／推送，用户材料表保留，全面goal active。

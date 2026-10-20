@@ -103,3 +103,9 @@ END再次检查isRemoved及hasChunkAt；完全卸载／移除后排除，本身�
 ReactorCoreBlockEntity 的67d Git原始SHA256为 `06bd7b53a2f9c453f8ecc91f23d07389266d21a0816a96ce6925e8c24bd44e04`，236行；首次工作树观察同236行，raw为 `7e8963ad5bda51505373466307e8d293d0563a8351c25d7e62bb4d8be03949ce`。根代理排版至560行、最终raw `ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b`；其 work/reactor-core-readability-20261021/proof.json 证明两端3703／3657执行tokens、字面量位置、注释和指令保持。方法锚点优先于旧行号。ReactorNetwork未改动，时序与空间审计不会因该排版变为玩法修复。
 
 [工作来源清单](C:/Dev/GregTech6/work/nuclear-network-audit-20261021/sources.json)保留21个原源码、22个当前源码、34个双端投影视图、7个原生artifact及14个字节码视图的绝对路径、相对路径与SHA256，以及条目哈希、布局表推导和有限反例。投影视图仅在内存读取共享维护源，不是新增业务实现；原生视图只记录方法锚点和哈希。统一回执归档这些证据，不依赖忽略目录持久存在。没有增加测试夹具或运行代码来冒充原生场景验证。
+
+## 第六十一批异常与状态连续性补充
+
+[生命周期报告](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)把此前WeakHashMap疑点收束为214条件合同：入队后尚未到本end便中止、同Level再无END且JVM继续，value→Core→Level强链无法靠弱key释放；正常本end先remove、该处理器自身异常不会留key。原post逐核心catch与当前事件外抛合同另列215，原对应fill在普通tick，不能假造同一fill被原post保护。
+
+[状态报告](NUCLEAR_TRANSITION_AUDIT.md)登记211保留安全清缓存政策、212禁槽慢化计数、213漏交换后的活动重载；正常phase18误报继续排除。旧原生停服全清理没有证据、当前也无实测崩服或堆增长，见[统一回执](verification/nuclear-transitions-config-audit-20261021.json)。

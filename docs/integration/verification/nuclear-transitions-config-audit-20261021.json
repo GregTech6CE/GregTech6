@@ -1,0 +1,3384 @@
+{
+  "date": "2026-10-21",
+  "batch": 61,
+  "observed_head_at_archive": "f252bcf5d3122bdbd0f63bc12fcdbc8d49956740",
+  "scope": "Nuclear transitions, pending-map lifetime and exception boundaries; native configuration registration/loading and representative original settings.",
+  "formal_records": {
+    "new": [
+      211,
+      212,
+      213,
+      214,
+      215
+    ],
+    "extended": [
+      4
+    ],
+    "policy_211": "Immediate stop/removal cache clearing is the current safer policy, not a request to restore residual flux."
+  },
+  "draft_identities": {
+    "nuclear-transition": {
+      "sources_sha256": "530cff8a1c59d97191d7f63393a3a9e7244d2d4a57ffb499b8c850086346ccfe",
+      "readme_sha256": "d8253315e5533d8e01a55856e18846709a4f04b9ba87825f25d68cbf381496d6"
+    },
+    "nuclear-network-lifecycle": {
+      "sources_sha256": "2904d891067d403a857947c3ea2048f47c2121f19e0ce30cd581e7dc42c1a698",
+      "readme_sha256": "5504cb16ab0e062a03de5c8413f38ae791c818a9889b14f8e1b1a4a91f2b554d"
+    },
+    "configuration-contract": {
+      "sources_sha256": "072845fff9fd89b6704b896a5db9fd49ce79befb47c0a1f6bbe2a317bded83cf",
+      "readme_sha256": "559691b8fe60e8899244213b6d09efa3bafdebda2e3ab5ceac352b7f92146d32"
+    }
+  },
+  "revalidation_summary": {
+    "unique_original_sources": 36,
+    "unique_current_sources": 72,
+    "unique_projected_inputs": 29,
+    "unique_platform_views": 58,
+    "provided_view_observations": 70,
+    "unique_native_artifacts": 12,
+    "unique_native_entries": 49,
+    "native_entry_observations": 53
+  },
+  "sources": {
+    "original": {
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java": {
+        "sha256_at_archive": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java": {
+        "sha256_at_archive": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java": {
+        "sha256_at_archive": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java": {
+        "sha256_at_archive": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java": {
+        "sha256_at_archive": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java": {
+        "sha256_at_archive": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBase.java": {
+        "sha256_at_archive": "bd469c677dbe7fc064942100607b89ea1e879ea98497bb81d499dd95c92a7867",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "bd469c677dbe7fc064942100607b89ea1e879ea98497bb81d499dd95c92a7867",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBase.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java": {
+        "sha256_at_archive": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodDepleted.java": {
+        "sha256_at_archive": "eb66f0a8543e0c99f2a20b624e1e811c241ce6a715cec5437ecf2e752580d608",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "eb66f0a8543e0c99f2a20b624e1e811c241ce6a715cec5437ecf2e752580d608",
+            "relative": "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodDepleted.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java": {
+        "sha256_at_archive": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+            "relative": "gregapi/block/multitileentity/MultiTileEntityItemInternal.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java": {
+        "sha256_at_archive": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+            "relative": "gregapi/block/multitileentity/MultiTileEntityRegistry.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+            "relative": "gregapi/block/multitileentity/MultiTileEntityRegistry.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java": {
+        "sha256_at_archive": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+            "relative": "gregapi/tileentity/base/TileEntityBase01Root.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+            "relative": "gregapi/tileentity/base/TileEntityBase01Root.java"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+            "relative": "src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": {
+        "sha256_at_archive": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+            "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java": {
+        "sha256_at_archive": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+            "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java": {
+        "sha256_at_archive": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+            "relative": "gregapi/GT_API_Proxy.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+            "relative": "gregapi/GT_API_Proxy.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java": {
+        "sha256_at_archive": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+            "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API.java": {
+        "sha256_at_archive": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+            "relative": "gregapi/GT_API.java"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+            "relative": "src/main/java/gregapi/GT_API.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityServerTickPost.java": {
+        "sha256_at_archive": "736e6a78f74add8bc1e49780a0eda6de57186c6bdbc29e0727f31597f1fed7f9",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "736e6a78f74add8bc1e49780a0eda6de57186c6bdbc29e0727f31597f1fed7f9",
+            "relative": "gregapi/tileentity/ITileEntityServerTickPost.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ArrayListNoNulls.java": {
+        "sha256_at_archive": "1c989d835c74f57a1d6c551fad99b505947994f0843c5e1f8efcfaafb3c9d21b",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "1c989d835c74f57a1d6c551fad99b505947994f0843c5e1f8efcfaafb3c9d21b",
+            "relative": "gregapi/code/ArrayListNoNulls.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java": {
+        "sha256_at_archive": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+            "relative": "gregapi/data/CS.java"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+            "relative": "src/main/java/gregapi/data/CS.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/LICENSE": {
+        "sha256_at_archive": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "016a44845714fdac2ec66de02e16142512a6d6ae4dd9d434a9005214606c1577",
+            "relative": "LICENSE"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/config/Config.java": {
+        "sha256_at_archive": "2a042710713454d905ab456a0ef3879e81d32670d4bd230445ea0d152e708eb7",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "2a042710713454d905ab456a0ef3879e81d32670d4bd230445ea0d152e708eb7",
+            "relative": "src/main/java/gregapi/config/Config.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/config/ConfigCategories.java": {
+        "sha256_at_archive": "32fa3151db3b7ffa1a640e64e96d15695bb86162a58aea9d3defc0b10df8c0ba",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "32fa3151db3b7ffa1a640e64e96d15695bb86162a58aea9d3defc0b10df8c0ba",
+            "relative": "src/main/java/gregapi/config/ConfigCategories.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/api/Abstract_Mod.java": {
+        "sha256_at_archive": "995e35d0529cea8bd010abe244dc9f807964ecb57b16a7de7acb89d00566d855",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "995e35d0529cea8bd010abe244dc9f807964ecb57b16a7de7acb89d00566d855",
+            "relative": "src/main/java/gregapi/api/Abstract_Mod.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenObject.java": {
+        "sha256_at_archive": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+            "relative": "src/main/java/gregapi/worldgen/WorldgenObject.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java": {
+        "sha256_at_archive": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+            "relative": "src/main/java/gregapi/worldgen/GT6WorldGenerator.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/network/packets/PacketConfig.java": {
+        "sha256_at_archive": "cc5f56013eb807a5e5fba883df08f78b89d964b45516ed513ff1a26646abc164",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "cc5f56013eb807a5e5fba883df08f78b89d964b45516ed513ff1a26646abc164",
+            "relative": "src/main/java/gregapi/network/packets/PacketConfig.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/MultiItemTool.java": {
+        "sha256_at_archive": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac",
+            "relative": "src/main/java/gregapi/item/multiitem/MultiItemTool.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT6_Main.java": {
+        "sha256_at_archive": "a7dca874bef8dd25c9f98d64ddd372f081faf17899d5053156d4f78f4b3499ed",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "a7dca874bef8dd25c9f98d64ddd372f081faf17899d5053156d4f78f4b3499ed",
+            "relative": "src/main/java/gregtech/GT6_Main.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT_Proxy.java": {
+        "sha256_at_archive": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c",
+            "relative": "src/main/java/gregtech/GT_Proxy.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_FlintAndTinder.java": {
+        "sha256_at_archive": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+            "relative": "src/main/java/gregtech/items/behaviors/Behavior_FlintAndTinder.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/entities/Override_Drops.java": {
+        "sha256_at_archive": "16ba0864619780495285aeb8a9eb692ed335d7272c5dbfbbc60daa2dbdc350fe",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "16ba0864619780495285aeb8a9eb692ed335d7272c5dbfbbc60daa2dbdc350fe",
+            "relative": "src/main/java/gregtech/entities/Override_Drops.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java": {
+        "sha256_at_archive": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+            "relative": "src/main/java/gregtech/loaders/b/Loader_Worldgen.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenStoneLayers.java": {
+        "sha256_at_archive": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c",
+            "relative": "src/main/java/gregtech/worldgen/WorldgenStoneLayers.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenStreets.java": {
+        "sha256_at_archive": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+            "relative": "src/main/java/gregtech/worldgen/center/WorldgenStreets.java"
+          }
+        ]
+      },
+      "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenNexus.java": {
+        "sha256_at_archive": "b4f7841c84d193dda38b7caa940cde249465a739b04992e5052cb9ab79fe22f0",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "b4f7841c84d193dda38b7caa940cde249465a739b04992e5052cb9ab79fe22f0",
+            "relative": "src/main/java/gregtech/worldgen/center/WorldgenNexus.java"
+          }
+        ]
+      }
+    },
+    "current": {
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": {
+        "sha256_at_archive": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java": {
+        "sha256_at_archive": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java": {
+        "sha256_at_archive": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "934f3c2bfbaacaf1a61ea4b0f62ad7ff540eed1b534f65392a3957bbe9a25f6a",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java": {
+        "sha256_at_archive": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "698970b8cabb557e766f080ebcb5322fb29389f9ec51c732cc78e26a8db64f0a",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java": {
+        "sha256_at_archive": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": {
+        "sha256_at_archive": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java": {
+        "sha256_at_archive": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java": {
+        "sha256_at_archive": "fb8d9fb6b73267b1945b8718363db3e101f663953a99b2382bf1cac72bb577ac",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "fb8d9fb6b73267b1945b8718363db3e101f663953a99b2382bf1cac72bb577ac",
+            "relative": "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java": {
+        "sha256_at_archive": "f84eb98d07c17294b7ec03e17180b8b4861c94615b1583243977ce2fc71ddc5c",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "f84eb98d07c17294b7ec03e17180b8b4861c94615b1583243977ce2fc71ddc5c",
+            "relative": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java": {
+        "sha256_at_archive": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java": {
+        "sha256_at_archive": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a",
+            "relative": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java": {
+        "sha256_at_archive": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java": {
+        "sha256_at_archive": "fd6aee486d49e6477a7142e2903a4d246b3d0319d6818eb9acdf6533a0def384",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "fd6aee486d49e6477a7142e2903a4d246b3d0319d6818eb9acdf6533a0def384",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/StackCustomData.java": {
+        "sha256_at_archive": "1a20f66d87e5a3f1e541239ec3b676f562baf40e13103999b2f4805c6e40cb1c",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "1a20f66d87e5a3f1e541239ec3b676f562baf40e13103999b2f4805c6e40cb1c",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/StackCustomData.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java": {
+        "sha256_at_archive": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java": {
+        "sha256_at_archive": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": {
+        "sha256_at_archive": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": {
+        "sha256_at_archive": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": {
+        "sha256_at_archive": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java"
+          },
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java": {
+        "sha256_at_archive": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/NUCLEAR_ROD_AUDIT.md": {
+        "sha256_at_archive": "c53bb47e27a43902b7d6a8849eb2e479342baa99daeaee7f54853de4e0326f78",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "c53bb47e27a43902b7d6a8849eb2e479342baa99daeaee7f54853de4e0326f78",
+            "relative": "docs/integration/NUCLEAR_ROD_AUDIT.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/NUCLEAR_CORE_AUDIT.md": {
+        "sha256_at_archive": "a454d2056e266b8b2b2d97ffcd6959a3d3b24a6133f19378a9960a8e3355811e",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "a454d2056e266b8b2b2d97ffcd6959a3d3b24a6133f19378a9960a8e3355811e",
+            "relative": "docs/integration/NUCLEAR_CORE_AUDIT.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/NUCLEAR_NETWORK_AUDIT.md": {
+        "sha256_at_archive": "bbd5674fc9c5c562a9f2651916e343901258e60d591d51afff7080efad95f1ab",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "bbd5674fc9c5c562a9f2651916e343901258e60d591d51afff7080efad95f1ab",
+            "relative": "docs/integration/NUCLEAR_NETWORK_AUDIT.md"
+          },
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "bbd5674fc9c5c562a9f2651916e343901258e60d591d51afff7080efad95f1ab",
+            "relative": "docs/integration/NUCLEAR_NETWORK_AUDIT.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/P3_NATIVE_NUCLEAR.md": {
+        "sha256_at_archive": "6f9819e0b08d74da4e77c834f5e6998d8d7b7244c413fb5d048c2ae9693340c0",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "6f9819e0b08d74da4e77c834f5e6998d8d7b7244c413fb5d048c2ae9693340c0",
+            "relative": "docs/integration/P3_NATIVE_NUCLEAR.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/verification/nuclear-helper-readability-20261021.json": {
+        "sha256_at_archive": "5cca76cf31b82f3397944cc15fea9b152a4e2ad1cc855fbadb5795536dea8c5c",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "5cca76cf31b82f3397944cc15fea9b152a4e2ad1cc855fbadb5795536dea8c5c",
+            "relative": "docs/integration/verification/nuclear-helper-readability-20261021.json"
+          },
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "5cca76cf31b82f3397944cc15fea9b152a4e2ad1cc855fbadb5795536dea8c5c",
+            "relative": "docs/integration/verification/nuclear-helper-readability-20261021.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/provenance/native-nuclear-integration.json": {
+        "sha256_at_archive": "dfb42d1dd052ae68c191ef7a9feeca83625dcded981f47e3e742f4bf9f1df4d1",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "dfb42d1dd052ae68c191ef7a9feeca83625dcded981f47e3e742f4bf9f1df4d1",
+            "relative": "core/provenance/native-nuclear-integration.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/tools/integration/check_relay_sharing.py": {
+        "sha256_at_archive": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+            "relative": "tools/integration/check_relay_sharing.py"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/tools/native_layout.py": {
+        "sha256_at_archive": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a",
+            "relative": "tools/native_layout.py"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/tools/integration/check_stonecutter_emi.py": {
+        "sha256_at_archive": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3",
+            "relative": "tools/integration/check_stonecutter_emi.py"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/work/AGENTS.md": {
+        "sha256_at_archive": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62",
+        "observations": [
+          {
+            "audit": "nuclear-transition",
+            "observed_sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62",
+            "relative": "docs/work/AGENTS.md"
+          },
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62",
+            "relative": "docs/work/AGENTS.md"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "d6223a333e58d4303a12ae6728c66b129f6a93314319663c66c0bf30b1ffdf62",
+            "relative": "docs/work/AGENTS.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java": {
+        "sha256_at_archive": "bcb368fea340e4b1618a7bb9246cd98f4658401d4fdce395a8ea99358aa90783",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "bcb368fea340e4b1618a7bb9246cd98f4658401d4fdce395a8ea99358aa90783",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java": {
+        "sha256_at_archive": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": {
+        "sha256_at_archive": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+            "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java": {
+        "sha256_at_archive": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+            "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": {
+        "sha256_at_archive": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle",
+            "observed_sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/PLAN.md": {
+        "sha256_at_archive": "01b6cc9fedaf26f2484c2a76645f6dbe47175dd04704686b966bf23bf38225ec",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "01b6cc9fedaf26f2484c2a76645f6dbe47175dd04704686b966bf23bf38225ec",
+            "relative": "docs/integration/PLAN.md"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "01b6cc9fedaf26f2484c2a76645f6dbe47175dd04704686b966bf23bf38225ec",
+            "relative": "docs/integration/PLAN.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/STATUS.md": {
+        "sha256_at_archive": "c5b161da6326d08bcbdb5d2e0250ba076f50df8dc7a3aea0c1252ada36ca06c7",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "c5b161da6326d08bcbdb5d2e0250ba076f50df8dc7a3aea0c1252ada36ca06c7",
+            "relative": "docs/integration/STATUS.md"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "c5b161da6326d08bcbdb5d2e0250ba076f50df8dc7a3aea0c1252ada36ca06c7",
+            "relative": "docs/integration/STATUS.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/DECISIONS.md": {
+        "sha256_at_archive": "fa64e303c43627c6a4c3dcde72220807363d9f6a0a0f903dd0fa3ec02a2d694f",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "fa64e303c43627c6a4c3dcde72220807363d9f6a0a0f903dd0fa3ec02a2d694f",
+            "relative": "docs/integration/DECISIONS.md"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "fa64e303c43627c6a4c3dcde72220807363d9f6a0a0f903dd0fa3ec02a2d694f",
+            "relative": "docs/integration/DECISIONS.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/VERIFICATION.md": {
+        "sha256_at_archive": "277d1c186bccad45261d2757136dea76e94172c529e9893731845de07eb2b929",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "277d1c186bccad45261d2757136dea76e94172c529e9893731845de07eb2b929",
+            "relative": "docs/integration/VERIFICATION.md"
+          },
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "277d1c186bccad45261d2757136dea76e94172c529e9893731845de07eb2b929",
+            "relative": "docs/integration/VERIFICATION.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/verification/nuclear-contract-audit-20261021.json": {
+        "sha256_at_archive": "6c21d264aea334d3951a3e2dbdb62b97f4e33f433e4b011dc21b216e44561ee1",
+        "observations": [
+          {
+            "audit": "nuclear-network-lifecycle:context",
+            "observed_sha256": "6c21d264aea334d3951a3e2dbdb62b97f4e33f433e4b011dc21b216e44561ee1",
+            "relative": "docs/integration/verification/nuclear-contract-audit-20261021.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md": {
+        "sha256_at_archive": "94d5884d96e18f78d763f5485efbdc16eec2b403986642d19d229b78f52dc028",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "94d5884d96e18f78d763f5485efbdc16eec2b403986642d19d229b78f52dc028",
+            "relative": "docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/NOTICE": {
+        "sha256_at_archive": "a9b585391283b7f96f25bfc88808c3d6a747c36754e785a65817309c3528b3ae",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "a9b585391283b7f96f25bfc88808c3d6a747c36754e785a65817309c3528b3ae",
+            "relative": "NOTICE"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/LICENSE": {
+        "sha256_at_archive": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+            "relative": "LICENSE"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/mod/GregTechIdentity.java": {
+        "sha256_at_archive": "dc034e507fabde9d07d4ff5a0baef5aabb02531ccc88f853fa999d30b40e1ac3",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "dc034e507fabde9d07d4ff5a0baef5aabb02531ccc88f853fa999d30b40e1ac3",
+            "relative": "core/src/main/java/com/gregtech/gregtech/api/mod/GregTechIdentity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java": {
+        "sha256_at_archive": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+            "relative": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java": {
+        "sha256_at_archive": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+            "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java": {
+        "sha256_at_archive": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+            "relative": "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenDefaults.java": {
+        "sha256_at_archive": "dee1eb1e832c2b557ac3ed332dfc73420e2224d3122429de028d0c94c8b59816",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "dee1eb1e832c2b557ac3ed332dfc73420e2224d3122429de028d0c94c8b59816",
+            "relative": "core/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenDefaults.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java": {
+        "sha256_at_archive": "4df6a0848dd20675d47f5d77ab90e97c3a8c7bbf43895f658421605575b863d4",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "4df6a0848dd20675d47f5d77ab90e97c3a8c7bbf43895f658421605575b863d4",
+            "relative": "core/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeins.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java": {
+        "sha256_at_archive": "4a676869f30549c07fee1906dbfcea2c64c881ceb21dd52e3f1895326ad27da2",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "4a676869f30549c07fee1906dbfcea2c64c881ceb21dd52e3f1895326ad27da2",
+            "relative": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java": {
+        "sha256_at_archive": "8cea451d838761f62c9957a8603d20600f6eee907c675875cea9a0cf7452dba8",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "8cea451d838761f62c9957a8603d20600f6eee907c675875cea9a0cf7452dba8",
+            "relative": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/loot/MobDropRules.java": {
+        "sha256_at_archive": "5d52b8695a10c55b85c5ecdcbf04792abf1fd070423fc9c699980aba6c20c112",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "5d52b8695a10c55b85c5ecdcbf04792abf1fd070423fc9c699980aba6c20c112",
+            "relative": "core/src/main/java/com/gregtech/gregtech/content/loot/MobDropRules.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": {
+        "sha256_at_archive": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+            "relative": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java": {
+        "sha256_at_archive": "9030ec33cfb2c5858d1b57e12d459073dc9fd19a21703082fdec168e3dc01346",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "9030ec33cfb2c5858d1b57e12d459073dc9fd19a21703082fdec168e3dc01346",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java": {
+        "sha256_at_archive": "d4fa9a25ad0208905a8c8de8c2a87620c1047301fb5604eb9b6694598d74ab47",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "d4fa9a25ad0208905a8c8de8c2a87620c1047301fb5604eb9b6694598d74ab47",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": {
+        "sha256_at_archive": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": {
+        "sha256_at_archive": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java": {
+        "sha256_at_archive": "10d206f23a6e6e3d0b46961eab00801789a103051fede566944618168422f367",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "10d206f23a6e6e3d0b46961eab00801789a103051fede566944618168422f367",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java": {
+        "sha256_at_archive": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java": {
+        "sha256_at_archive": "f9e2986f68574f8a6b034c31e91c214fb081766783a4900da0fb999d85cb7361",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "f9e2986f68574f8a6b034c31e91c214fb081766783a4900da0fb999d85cb7361",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java": {
+        "sha256_at_archive": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java": {
+        "sha256_at_archive": "abfa9ed80c2c5ea4769b3e3a011798ab236a9133d05d26c7073a2ed4176a518d",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "abfa9ed80c2c5ea4769b3e3a011798ab236a9133d05d26c7073a2ed4176a518d",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java": {
+        "sha256_at_archive": "22be083a3dbba90fd470b571dab7218fe0875fc2fd49bbed585de84d461a87a9",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "22be083a3dbba90fd470b571dab7218fe0875fc2fd49bbed585de84d461a87a9",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java": {
+        "sha256_at_archive": "74c0bac2f4f35b84227f1b8e61a272cbd27fe14e9b97c30b944c88edffea6b85",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "74c0bac2f4f35b84227f1b8e61a272cbd27fe14e9b97c30b944c88edffea6b85",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java": {
+        "sha256_at_archive": "5f68ac559acc98b30ebbced582e8b44d0d16505b91e3bcaa582d66819fcdab4c",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "5f68ac559acc98b30ebbced582e8b44d0d16505b91e3bcaa582d66819fcdab4c",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java": {
+        "sha256_at_archive": "b14d37b6ad2634da294e0e28e464599b81e0f6e358d9eaa634fc261780c156b4",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "b14d37b6ad2634da294e0e28e464599b81e0f6e358d9eaa634fc261780c156b4",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java": {
+        "sha256_at_archive": "c91205f96402146d650e5cff4b2fe5c59df04cb781cf478d10ee527214e81323",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "c91205f96402146d650e5cff4b2fe5c59df04cb781cf478d10ee527214e81323",
+            "relative": "multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": {
+        "sha256_at_archive": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+            "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json": {
+        "sha256_at_archive": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab",
+            "relative": "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/zz_gt_origin.json": {
+        "sha256_at_archive": "5d42a6cf98f7b2c720f498522f0318e7525c5e33d1d09913b20120bb9716642a",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "5d42a6cf98f7b2c720f498522f0318e7525c5e33d1d09913b20120bb9716642a",
+            "relative": "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/zz_gt_origin.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json": {
+        "sha256_at_archive": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json"
+          }
+        ]
+      },
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/zz_gt_origin.json": {
+        "sha256_at_archive": "bef33f1ca81f9765991a83772d17ecd311705309a405748951eac4bb9a426a20",
+        "observations": [
+          {
+            "audit": "configuration-contract",
+            "observed_sha256": "bef33f1ca81f9765991a83772d17ecd311705309a405748951eac4bb9a426a20",
+            "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/zz_gt_origin.json"
+          }
+        ]
+      }
+    }
+  },
+  "narrative_refresh": [],
+  "platform_views": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "forge",
+      "execution_sha256": "f4dc8345db389242660bb65a0c7052e23b2b4ac25e67c8dc1cf4a07a7464bc8b",
+      "tokens": 3703
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "neoforge",
+      "execution_sha256": "318885f2e691b07dde3509457692a2f08b7170bdc79226a1338bcdff323bd3e0",
+      "tokens": 3657
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "forge",
+      "execution_sha256": "1532e7f27593cd581373121abd42425b416a62495575c745545a0f95552c8618",
+      "tokens": 87
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "neoforge",
+      "execution_sha256": "1532e7f27593cd581373121abd42425b416a62495575c745545a0f95552c8618",
+      "tokens": 87
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "forge",
+      "execution_sha256": "b31957316bc68f7f45cc4cb9a1465ca3fc29a81d3d553d00876b5f93ec61ee8f",
+      "tokens": 975
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "neoforge",
+      "execution_sha256": "0fc8696f3481decac0c8df92c4c8266de46435404a1775a2958e55a054a8937c",
+      "tokens": 1180
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "forge",
+      "execution_sha256": "85668df81a7ccff2f013af9126ca001bb7e6b790c7e6fb75fecd8f0b158cf8fa",
+      "tokens": 1130
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "neoforge",
+      "execution_sha256": "b00e741e6217dc9b3d136484009a855a6aabb9d9f5c095d6547ea9c23a9d4bb4",
+      "tokens": 1335
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "platform": "forge",
+      "execution_sha256": "fa502195785a75f0149fb88ef28c423346403c1866d742780c295e22c367a5e3",
+      "tokens": 584
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "platform": "neoforge",
+      "execution_sha256": "d68ee4dc86a0a6292dadca691cbb86802159256586c1b6e206a29b2b09f016be",
+      "tokens": 586
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "forge",
+      "execution_sha256": "e89fe9ee477f4159eda469cb0779d4020097e0ab0cb9ef6898c2071c8070fd15",
+      "tokens": 1228
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "neoforge",
+      "execution_sha256": "aca852536fb52416e858e39309ca7d6f717ae96480b303314cf42ea9eb2730a4",
+      "tokens": 1229
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "platform": "forge",
+      "execution_sha256": "f16afdd7485af4ebd5c388d849f0dfa5a09d3d319a02eadddfea3b647d30d8ae",
+      "tokens": 1149
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "platform": "neoforge",
+      "execution_sha256": "183c5fdd5617d748845a32cc306c4c3c8e2062de84c716afe6b7cf735808dc48",
+      "tokens": 1201
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "platform": "forge",
+      "execution_sha256": "ffcf22086a6c84930a6f09f808533c967b4767be26820f9064d37d9b527edbd1",
+      "tokens": 731
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "platform": "neoforge",
+      "execution_sha256": "5a17b3fd3066e1d20cdb2c5d6b4151d4319aa8194870248aef0d3e59e4d34f45",
+      "tokens": 775
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+      "platform": "forge",
+      "execution_sha256": "3706fceee5731ea17d7a7abed2439d80f5a4ab9067a7584b50b18094da8ae7ae",
+      "tokens": 1689
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+      "platform": "neoforge",
+      "execution_sha256": "355468914d39830b5a122caec8ce6f32eaed8b7e4af6794c67d56dc595147b92",
+      "tokens": 1771
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "forge",
+      "execution_sha256": "71a36686d80c7d8807d6be10f7d97848c847362d3ee6892227ccca994d6ee8df",
+      "tokens": 374
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "neoforge",
+      "execution_sha256": "71a36686d80c7d8807d6be10f7d97848c847362d3ee6892227ccca994d6ee8df",
+      "tokens": 374
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "execution_sha256": "e0bd57c7f517e4a2f70b9f6c76273e832440faf2bb1d88c950bdb8bede463192",
+      "tokens": 3948
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "execution_sha256": "78c667a4afb1a89cac50a3649ae186aab430fddac8d78424911806a8c7dab202",
+      "tokens": 3957
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "execution_sha256": "4cb3a0db85aa3d74457a6bde380f06024422c3b3da65e03d2bd76dee5aa55885",
+      "tokens": 7970
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "execution_sha256": "b1654a06948582c25a23a8708c607d990957a7c1917a531a8ff98b3a54322ceb",
+      "tokens": 6231
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java",
+      "platform": "forge",
+      "execution_sha256": "c4230d79e607726e277eecf10535cb335ac21a9396e6db60df7041303ea623c0",
+      "tokens": 405
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java",
+      "platform": "neoforge",
+      "execution_sha256": "3718803d2300b14d5f682a0e849ce685a558df3b8bd1cf43e1f1584da987435d",
+      "tokens": 399
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "forge",
+      "execution_sha256": "fb4250112c24adbca88dd8f837e4ab93b86e7fca1678a63f7ce1c5583da9917b",
+      "tokens": 938
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "neoforge",
+      "execution_sha256": "8ac6b350a26b76bff8407f604839e35fde36f12fa374bf4c3787c272d782e839",
+      "tokens": 1156
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "forge",
+      "execution_sha256": "bf208856b9c6ea549d01c6a428ff76c7612100957b9ed6ae815ffb9ab391b97c",
+      "tokens": 1254
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "neoforge",
+      "execution_sha256": "2020e1f09297520bed7bd9559224a92eaf8ecd614f3f6fe02d688e9d21946808",
+      "tokens": 1326
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "platform": "forge",
+      "execution_sha256": "caba6b4d6c33b8ebceee793ab118b9a69c1ff7569333ec9e70f7fe469934f3ca",
+      "tokens": 196
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "platform": "neoforge",
+      "execution_sha256": "50e0b02fa851fb9e504c194acd8115acfe8bf257d9bf33d5cc6944e8fcb27f73",
+      "tokens": 199
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "forge",
+      "execution_sha256": "10ff6b38799e66b46636b2ee94a291090b27690e3338f08ed586c3b4a0cdc50b",
+      "tokens": 506
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "neoforge",
+      "execution_sha256": "59bdfe4f156e61365c3637da4e6b7513447ebba4e4adb6af93e744ed6a5577fc",
+      "tokens": 514
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "forge",
+      "execution_sha256": "04a55ae81fad6b542e678f4999df13348a8ac81e58f51c7845d102948046012e",
+      "tokens": 12365
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "neoforge",
+      "execution_sha256": "ee141df85bd814c0021c9fb0b04dfe5d06378bf015d58ec0cfe9e1047b74590a",
+      "tokens": 11940
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "forge",
+      "execution_sha256": "d9f6ff5a1462e631dda16a39b7e48327fe257ad0ac1e3c2311bbfdb326cdee24",
+      "tokens": 14806
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "neoforge",
+      "execution_sha256": "3d53e3558856faf87ae42df30fc431ad4908d066af463bf060158e9800d8c670",
+      "tokens": 14489
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "platform": "forge",
+      "execution_sha256": "d0959a8f044299e76cc5aba69c75037ff999f68a76837959679ae3902f2ce810",
+      "tokens": 2476
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "platform": "neoforge",
+      "execution_sha256": "6701d9c5cf525c14b82bce8847f682aac98dab8fa46b90946cc346647fdcf1e9",
+      "tokens": 2502
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "execution_sha256": "9783227cf6a0ad58f072fd607ceb19e035eb9816204436719213841e439f57f8",
+      "tokens": 2017
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "execution_sha256": "7b187bb04085d7ce92543333e324f70e72f4b99a453b9eaad2c716be9b5d8d09",
+      "tokens": 1964
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "platform": "forge",
+      "execution_sha256": "771d52a2f3713b7b6cd6cf8397499c7a28d6c354cf931f06cc1dca8a05f9cdcd",
+      "tokens": 619
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "platform": "neoforge",
+      "execution_sha256": "ce93ecf4847a188cfe37bd60837391ae2a40c154f7ab8266c389655b19468f6c",
+      "tokens": 619
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "execution_sha256": "88f60beff4bc8a5daab0821562a6f61ce3324bc84129d3ede79504e7952b1773",
+      "tokens": 3637
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "execution_sha256": "bdfee889f799a4fa4bc3c44513adf054c9d3dbcafb666e4215b8419ae43e5673",
+      "tokens": 3745
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java",
+      "platform": "forge",
+      "execution_sha256": "7df229a6abaf02a07f4408cbd2196818b1605808251bbc2e994e62f03aaa0e57",
+      "tokens": 2203
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java",
+      "platform": "neoforge",
+      "execution_sha256": "ecba8edba82a28973621afd8cedbd1da288fc5b6070d5569a940e912192759ae",
+      "tokens": 2325
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "platform": "forge",
+      "execution_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d",
+      "tokens": 693
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "platform": "neoforge",
+      "execution_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d",
+      "tokens": 693
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "platform": "forge",
+      "execution_sha256": "bffaf740e5636dc5944fd990d63659d0f0e35cc13113a967e3e28f447d11f61a",
+      "tokens": 169
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "platform": "neoforge",
+      "execution_sha256": "911b201c23b69c64a082fac8e6d4b275d00fc5f9fef47ff40b7661e63e6f836f",
+      "tokens": 169
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "platform": "forge",
+      "execution_sha256": "6759a74879a3609288c4d27d7051dd175e875569ad7228ef426cf73c4fd21c1a",
+      "tokens": 2064
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "platform": "neoforge",
+      "execution_sha256": "b6c86df0741d9b8ddfc54484c661d0a07848afb647a5cf80907be2a1ee9f0732",
+      "tokens": 2059
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "platform": "forge",
+      "execution_sha256": "0426a3fb8f24dad25260f26b7210aff380a4da7c270c8d44a71a6d183736d1a6",
+      "tokens": 1439
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "platform": "neoforge",
+      "execution_sha256": "0426a3fb8f24dad25260f26b7210aff380a4da7c270c8d44a71a6d183736d1a6",
+      "tokens": 1439
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java",
+      "platform": "forge",
+      "execution_sha256": "8fb922b109b0746ad7606e592fb6230a29bf3ed639370ba69f40a7d8e4d02d0a",
+      "tokens": 1328
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java",
+      "platform": "neoforge",
+      "execution_sha256": "dc6355add127095f309a30f1d9b7d73703be68dd115ea74464c70762e09aa038",
+      "tokens": 1316
+    }
+  ],
+  "provided_view_observations": [
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "b4bd819497f42eec826a19852b83543ae3c51fa179b685366b991b7b35708758",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "3d9a004ef809e5b7645880415796a06159b863ebfad3f991ab0ebb171646ca55",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "forge",
+      "observed_view_sha256": "661039949d38c48f475284659d022c01e0063aa18e2d180b842b0792f21a6de7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "e08c04a8b47355cbfb1dd0fe9caf9fb97bf3fd2030bbd31b5cda243988390f37",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "forge",
+      "observed_view_sha256": "3b566ddddb578be136f13a46c9d3a11f5520e1b30bbb4f1af0cc9ad02115b6fd",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "9a214fb0610c0b8e257af6ee098eefad6a18f02ac1a1a16b0ed668c34b714f8d",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "platform": "forge",
+      "observed_view_sha256": "5d27f4ebde36f4b84eaa018714e9fb72a3b0d90deedd2f64e9d846ad36568cc5",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "2328548cfc9c248eb2083acdc6f117f4f071ec89b9075e1b90f4cb4b9da208ad",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "forge",
+      "observed_view_sha256": "a7fc72a52e741aef29466ffe717523a667a115a4760ebc0201a043addf9826e4",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "445eabac2257fad06ddeb3a0013a0d08a1e70b561b5df4ddfd8cba48da79bafa",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "platform": "forge",
+      "observed_view_sha256": "618223f92029cb7846a57f6cf4d2de3fc8cb74d546392524262e0c00e7d1d77f",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "d637dad98fc7de5526b4bb1f66159f6fe91638e43aaabae5be4ea15abcc186c4",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "platform": "forge",
+      "observed_view_sha256": "9c05a6576cd9fe3ea6025017d92c0b05288122902650e40630797904261938c2",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "5bfb7c6ad678b4478abc0f6b669ea5325f2d71f9b2c6cd48acb46832af89aa7d",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+      "platform": "forge",
+      "observed_view_sha256": "0c82eb21ac4d8842aa4d8e16f50638b23dbb93de5f76e62ec1e052f95372ec5b",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "c74f92393cf3d3a6b134e8943cdda0b1eaf8dfc8b3864b69068b78e9d5785446",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "forge",
+      "observed_view_sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "observed_view_sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "observed_view_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-transition",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "forge",
+      "observed_view_sha256": "a7fc72a52e741aef29466ffe717523a667a115a4760ebc0201a043addf9826e4",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "445eabac2257fad06ddeb3a0013a0d08a1e70b561b5df4ddfd8cba48da79bafa",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "b4bd819497f42eec826a19852b83543ae3c51fa179b685366b991b7b35708758",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "3d9a004ef809e5b7645880415796a06159b863ebfad3f991ab0ebb171646ca55",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "52c818458320fad1b06746b0120621f36582df5f16b8d20e65b372d280c254e7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "forge",
+      "observed_view_sha256": "661039949d38c48f475284659d022c01e0063aa18e2d180b842b0792f21a6de7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCoreBlock.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "e08c04a8b47355cbfb1dd0fe9caf9fb97bf3fd2030bbd31b5cda243988390f37",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "forge",
+      "observed_view_sha256": "3b566ddddb578be136f13a46c9d3a11f5520e1b30bbb4f1af0cc9ad02115b6fd",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/ReactorCore2x2Block.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "9a214fb0610c0b8e257af6ee098eefad6a18f02ac1a1a16b0ed668c34b714f8d",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java",
+      "platform": "forge",
+      "observed_view_sha256": "3bdf93d4180df5b0466f840ad87d9a48df23392be1ded43024bf8a00a61b13c9",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "c4d2baa254755b385c657e15f117b5a6ee93697b79233c6c999b064f4b3aacc1",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "forge",
+      "observed_view_sha256": "5d439572253a8130180d36cf95d504ca17470526e78969b00fbed49a089c6c05",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "49658149aad12ab4dff8ed0a5fb4b1e73b9d5e15fc184bd42c89c55eecc6d4a0",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "observed_view_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "forge",
+      "observed_view_sha256": "864fd9121329c40ab59c6e2b4093d2eb8ca8c9a4d9c753b874ef9cf3b25e8076",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "nuclear-network-lifecycle",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "4e5b3ec29cbcac09befbb4a2d45b37f2754016f568f544a8868d822b2c4de4eb",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "platform": "forge",
+      "observed_view_sha256": "b411f734f7a2681a58c3c2f54db314736f1993870540d5e9e9dcd3fdbe4eb483",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "3ae0934eba73f4c9c25e999be1fcb913d6907fb36f5b5d04187662bf9ea0b2eb",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "forge",
+      "observed_view_sha256": "559ae55470195c4027bf480426a199adc548883c1d6bf001460cf8dcfe9f102c",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "5ecf08ca94d6d4e5c237bb20e110b12d6bb09e409e1210bb656f92b6e351ef8c",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "9209614f96e2dad85f3ba047af0fd6fe36fd7dc22b513fb4fcefa5401b50de89",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "0d73597ad9e432198e87f64af4f6f54649e8dc0acda97ba3508c95c29aa489ef",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "1cdcefcd46efddcb0ae85bf7e2c9b30c8db05af5d707a240857d5696225efac2",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "a27092e43aa4cf43098fb0470532d7fef0a13fb32c71018e6fb29065152ac9c7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "platform": "forge",
+      "observed_view_sha256": "9df90c6a88b880751d1957da845e358915351234af8001a137ff2d533926111c",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "3159110b13a4e15c8da777362b28a210124ee3c7f7e1e309109c6506cd072d62",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "observed_view_sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "platform": "forge",
+      "observed_view_sha256": "7c0ae81bc4a593166b3ee95c5a7a7ef3e5f45b3c426d8d0cb6c6def863e0b6a7",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "03a274e0340f9d895d90b772ddbc1dff14ff10264aab65e5531bd7f5c3e594c3",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "observed_view_sha256": "0fd1f86e16e3ef80042f578e50b1543c9eb8d36b6c539c843afd11fab3d494ce",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "e7d2e2be99fe3c7cbc2493c2f098246d336cd980ac0917de903e50db08914062",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java",
+      "platform": "forge",
+      "observed_view_sha256": "5e3a5a522bba4fbd1cf813b0c8301801c5a079ae8d9393c08bd22cc5c638e57d",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/MobDropEvents.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "0eb875b860092499c7ec7419d8fda334cfb6f627626aab15c5684365800c14e5",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "platform": "forge",
+      "observed_view_sha256": "034fa427c9c0105dc731dc722ce24c12268d1234550babdae5b11891c8abe800",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "034fa427c9c0105dc731dc722ce24c12268d1234550babdae5b11891c8abe800",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "platform": "forge",
+      "observed_view_sha256": "84c41e2983b21fd91786e33dfa0b6cd6c71d57b5f21086856f6ee2b0aedfb3ab",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSpawnEvents.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "a10aaae7d8ceb0806927b18a970d9e1f975fe7eab19ae6694d52a327c59019b1",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "platform": "forge",
+      "observed_view_sha256": "8a76c9fb1b5f6ce3efedbcaed00dde5323973c4ab0eacd090a3ff0371b74a679",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "16c36d49fa7a845f392d5f4a0d6a4161ce67b406855ffafec1dd6b8293da3424",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "platform": "forge",
+      "observed_view_sha256": "e8dd0a28c7303cd35a0c8d142915f111ebf0695ff72b23b20b8e592342861017",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "e8dd0a28c7303cd35a0c8d142915f111ebf0695ff72b23b20b8e592342861017",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java",
+      "platform": "forge",
+      "observed_view_sha256": "45cabcc9d1e96dc1b791fc261d277e032684f4b74273dd6ef8bc0e07e7e401cf",
+      "newline_policy": "universal-newline"
+    },
+    {
+      "audit": "configuration-contract",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/jei/WorldgenInfoData.java",
+      "platform": "neoforge",
+      "observed_view_sha256": "43ce51958dec5ca22e4f19204182af439cd0278e02818afaf0ed8424de68a6ff",
+      "newline_policy": "universal-newline"
+    }
+  ],
+  "native_artifacts": {
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar": {
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "bytes": 19236214
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar": {
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "bytes": 9409913
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar": {
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "bytes": 1621486
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar": {
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "bytes": 23546205
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.20/c354b21002937b393c4f86163a98dccdf1d51e72/javafmllanguage-1.20.1-47.4.20.jar": {
+      "sha256": "fb659dd963f14b2c34c2b935dcf1f7f40e8018c6900deaa9c673229893bb0218",
+      "bytes": 16851
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar": {
+      "sha256": "ba406038d0ce8242391bb23b9974648748d217b67332c0db620fcabf50edbc37",
+      "bytes": 505633
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/eventbus/6.2.33/3fae69cfa9c5095bcc25c0a8a3ed9b26c156f922/eventbus-6.2.33.jar": {
+      "sha256": "c9c9aab0979e08a0489fc497ba433276648d5192608e53535bad881dfe14d712",
+      "bytes": 64014
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar": {
+      "sha256": "705e24f37752809499a5cd0c7dd31eaabf3d933c5d3b2060168e94e9ef62593a",
+      "bytes": 30340
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-userdev.jar": {
+      "sha256": "67c888ee155f78a823e1cd3ed611027ea2bc029a5f6b9caa13343a9d4f10ad8d",
+      "bytes": 3040490
+    },
+    "C:/Program Files/Java/jdk-21/lib/src.zip": {
+      "sha256": "53458a4228000e3ac958c8915f910263e78f7dc41173f406da333cf829e9b7a0",
+      "bytes": 44931601
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar": {
+      "sha256": "d6e80ff86208e3d1a5d80425d1a45ee89c092322288bbf14c47cfb0b6d6c722c",
+      "bytes": 118909
+    },
+    "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar": {
+      "sha256": "c11c83b344cb92ce9e815db2ed4b53fd7770b97098d5ebd10edde28595c12af0",
+      "bytes": 1796744
+    }
+  },
+  "native_entries": [
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+      "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+      "bytes": 13236
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/chunk/LevelChunk.class",
+      "sha256": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e",
+      "bytes": 38422
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+      "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+      "bytes": 14908
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/chunk/LevelChunk.java",
+      "sha256": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223",
+      "bytes": 34107
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/server/MinecraftServer.class",
+      "sha256": "c8746828ef5885a6e0088d09431f154f11744580ac25927a67221689f649b356",
+      "bytes": 94782
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class",
+      "sha256": "3df8bbe152fb98ba776474e2cb550af1ae5df9905718dfc38738fece6a91a1d3",
+      "bytes": 6843
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/common/MinecraftForge.java",
+      "sha256": "3df0e1f5e9c380fb5c7639f0febb06d825300647fa1e8438ebc7c1cd3728bfe9",
+      "bytes": 3794
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/event/ForgeEventFactory.java",
+      "sha256": "972ed7acf998b6ef07d8a9b6ad1ed6a31e6e076b6ae63783b53da3170ea12895",
+      "bytes": 46333
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/event/TickEvent.java",
+      "sha256": "e3c598ea70790cf01764ec9a97a291f7242c3229a554a738b313655408fb4c89",
+      "bytes": 3376
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/event/level/LevelEvent.java",
+      "sha256": "03ab52764ac6ea2e67e81d4ff8181ad6e33ed751f4aca91390c5e77542dc3e15",
+      "bytes": 7136
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/common/ForgeConfig.java",
+      "sha256": "44c74e998012dca6c187a9740c9e510b3ee555092a266c0d274687dc716fc211",
+      "bytes": 11480
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "entry": "net/minecraft/server/MinecraftServer.class",
+      "sha256": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+      "bytes": 105439
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "entry": "net/minecraft/world/level/chunk/LevelChunk.class",
+      "sha256": "b6ce6fcd4c01e41008c184d4214f9b09dd7755daa1fb5c63eae3fa8324b8714f",
+      "bytes": 38303
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "entry": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class",
+      "sha256": "598704d76f6bb3ddd9932054e71491e464739ce0beb7210bab6e34eb2a3f5ef1",
+      "bytes": 7148
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+      "sha256": "9dec7da0f57d8eb770866c81c5e96a052a003b25f1504714c269e95acb6d8615",
+      "bytes": 22303
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/server/MinecraftServer.java",
+      "sha256": "b906c6597095e206ade6a9db34f76993f667bdf2bfacaeca793ba9ce14e568ed",
+      "bytes": 83629
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java",
+      "sha256": "611205fdc0afec68787b55c499800eabf87c44a260667989c3a61b02454b9c1a",
+      "bytes": 4674
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/event/EventHooks.java",
+      "sha256": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff",
+      "bytes": 59299
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/event/tick/LevelTickEvent.java",
+      "sha256": "003bcde9c13737d60a1d6dc875d056011d97f0b56dce5cf42c031f7b6744cc8f",
+      "bytes": 2056
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/event/level/LevelEvent.java",
+      "sha256": "03e3ce8f132bb0679d08b4e979287e93d6f5f1e5b5fac2236abc44fd824591c7",
+      "bytes": 6819
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/common/NeoForge.java",
+      "sha256": "17c527cf78cce08c409e7934e56e2c6ea4d545ffcffe697d126ad0ecb078638d",
+      "bytes": 742
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/common/NeoForgeConfig.java",
+      "sha256": "e6437d1ee9eae97955b960818446b67a71fe4b8ab4f2b4bf3c7bf32077b4183a",
+      "bytes": 9076
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.20/c354b21002937b393c4f86163a98dccdf1d51e72/javafmllanguage-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/common/Mod$EventBusSubscriber.class",
+      "sha256": "b8c8d33f4bd20a0749eea4587df5c1a0b3100db65ba6e9bcdfc70186b62be615",
+      "bytes": 964
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.4.20/c354b21002937b393c4f86163a98dccdf1d51e72/javafmllanguage-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/javafmlmod/AutomaticEventSubscriber.class",
+      "sha256": "d25ad6b6515003d59597946101bc18e2a56475e2ea9c704cca02113072120798",
+      "bytes": 7973
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/common/EventBusSubscriber.class",
+      "sha256": "3dc71e9964588f3a53e220cbcd76cc2c4b103a1c96548a99a63e932388038ede",
+      "bytes": 970
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/javafmlmod/AutomaticEventSubscriber.class",
+      "sha256": "c7ac0102b5f8114e5ebda79951daaa58ad4a71ff6c537cbf7cac2245111cfa7a",
+      "bytes": 10337
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/eventbus/6.2.33/3fae69cfa9c5095bcc25c0a8a3ed9b26c156f922/eventbus-6.2.33.jar",
+      "entry": "net/minecraftforge/eventbus/EventBus.class",
+      "sha256": "360edf26dbc34033e1f0a2e6cfdd3468f7c6580b167b00b1671ca4b696380303",
+      "bytes": 26475
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/eventbus/6.2.33/3fae69cfa9c5095bcc25c0a8a3ed9b26c156f922/eventbus-6.2.33.jar",
+      "entry": "net/minecraftforge/eventbus/BusBuilderImpl.class",
+      "sha256": "2551d96a7357986d00ec3eb4d4505eb1a858a2a5afa4aa564eb335f374b7dc0f",
+      "bytes": 3418
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar",
+      "entry": "net/neoforged/bus/EventBus.class",
+      "sha256": "cda8876c904d1374f77bbff02e8cdb01fba48ae0f528c69713eaefa11b5128a4",
+      "bytes": 20572
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar",
+      "entry": "net/neoforged/bus/BusBuilderImpl.class",
+      "sha256": "5a8242f88eec57d469fc830149a3032400c31abb2b0c9231b8ebbe6852ccdef4",
+      "bytes": 2364
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-userdev.jar",
+      "entry": "config.json",
+      "sha256": "8d85b1033bf80e4fcae4d4d88b2a173557cd0e25a138811f65cf5a5e079a1f0c",
+      "bytes": 9077
+    },
+    {
+      "path": "C:/Program Files/Java/jdk-21/lib/src.zip",
+      "entry": "java.base/java/util/WeakHashMap.java",
+      "sha256": "316dcaec8d7e2604b31c6d1be070c68f33b46be061f6b6de05bedebb02b9d98b",
+      "bytes": 48214
+    },
+    {
+      "path": "C:/Program Files/Java/jdk-21/lib/src.zip",
+      "entry": "java.base/java/util/HashSet.java",
+      "sha256": "802822bbbe581af5504d751e4f7ea4cb12ac4ddccef61463fa59c8a845598d89",
+      "bytes": 14739
+    },
+    {
+      "path": "C:/Program Files/Java/jdk-21/lib/src.zip",
+      "entry": "java.base/java/util/HashMap.java",
+      "sha256": "ab6f9986b42f366303ac42cfd7d13fc9f420eff51ca6a81c09f375747442a729",
+      "bytes": 97878
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/common/ForgeConfigSpec.java",
+      "sha256": "05444ca231b2beaecaa4ddf7db2b5af18ac284c6c2215de9dba9d3c6b900bc3a",
+      "bytes": 45043
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/fml/core/ModStateProvider.java",
+      "sha256": "bc6cd06fa8a5dd102442ebbd4909678395f5203fa32a591bcf0a78329800de9d",
+      "bytes": 6244
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+      "entry": "net/minecraftforge/network/ConfigSync.java",
+      "sha256": "2f03a41f115685cd4cfc8c4816a52db1a192909e5b129a9dccd45551bb788f8c",
+      "bytes": 1765
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/config/ModConfig.class",
+      "sha256": "fba955a7c64bc94fe282f6adfc0cd1de8606928257efbfa4651eae2be933c95c",
+      "bytes": 4991
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/config/ConfigTracker.class",
+      "sha256": "083c416c3f1ac71345bce9212edceca756210a607df33a168ff8148d5ab6768f",
+      "bytes": 8266
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/config/ConfigFileTypeHandler.class",
+      "sha256": "b95f4ac0e77289b016c02f1d5d07fb35ad0c4792423ef80aa92ba3620058d42e",
+      "bytes": 9313
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+      "entry": "net/minecraftforge/fml/config/ConfigFileTypeHandler$ConfigWatcher.class",
+      "sha256": "20ab8da315baa390b3bd9e272abe4ddf0b50ea7a9f21663539913180079ca95d",
+      "bytes": 3030
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/common/ModConfigSpec.java",
+      "sha256": "e2af2d8e8cc251ea5b6d9be81fad320e011e5d8c6b46f42d41cb85a3bd8f92a6",
+      "bytes": 64208
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/internal/CommonModLoader.java",
+      "sha256": "913e2309fb9fc404cc32fbb2249bdb88d150a9c1aca7d5c50a6cde8e67a34db0",
+      "bytes": 4189
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/7c3c8a58e626916d133b20bc249e1a7e5f1a306b/neoforge-21.1.243-sources.jar",
+      "entry": "net/neoforged/neoforge/network/ConfigSync.java",
+      "sha256": "c57f5672b8c8d284a76044316648a110f83124b4579402df46211f482f76f749",
+      "bytes": 1550
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/config/ModConfig.class",
+      "sha256": "f808464e312f83e2548c728c21b8911a188e8c9f1457f4aed8177d84ae4a15eb",
+      "bytes": 3995
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/config/ConfigTracker.class",
+      "sha256": "e8680453a8ecf0e273194a091f4dfbc64f55bf4ada948cc48846aae069b85fca",
+      "bytes": 19948
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/config/LoadedConfig.class",
+      "sha256": "3826338c5a0c5b001e78da258600610e1f0f05761a96b4054509d1409b4c8451",
+      "bytes": 3252
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/config/ConfigWatcher.class",
+      "sha256": "2b7bea51e2474d4202b9d96b9f9c7e9e77f975a8eb3cc81abd4962315d479139",
+      "bytes": 2778
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+      "entry": "net/neoforged/fml/ModContainer.class",
+      "sha256": "b21b0e39461ab25162e3963e2c7fe26a72b42dda193a8d26ec5dd8c0aa2d3e55",
+      "bytes": 8032
+    }
+  ],
+  "native_readonly_view_metadata": {
+    "transitions": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "relative": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "archive_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry_sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236,
+        "identity": "Minecraft 1.20.1 / Forge 47.4.20 mapped official binary",
+        "purpose": "Actual world BE save/load dispatch; no native code execution",
+        "javap_command": [
+          "javap",
+          "-classpath",
+          "<archive>",
+          "-p",
+          "-c",
+          "net.minecraft.world.level.block.entity.BlockEntity"
+        ],
+        "complete_javap_utf8_sha256": "d1a65777a09968107817b5990d32efc006521622d5eea05eadd0e396ee41dbe3",
+        "methods": [
+          {
+            "signature": "public void load(net.minecraft.nbt.CompoundTag);",
+            "view_sha256": "e1b77dde8597e7e0504347afca11880cc87617ea7b18ba1b402ecbbbc9887345",
+            "instructions": []
+          },
+          {
+            "signature": "public final net.minecraft.nbt.CompoundTag saveWithFullMetadata();",
+            "view_sha256": "7db5768063091bc6a036f44039dee029d688e853660924994c541171ff0624a2",
+            "instructions": [
+              "1: invokevirtual #124                // Method saveWithoutMetadata:()Lnet/minecraft/nbt/CompoundTag;"
+            ]
+          },
+          {
+            "signature": "public final net.minecraft.nbt.CompoundTag saveWithoutMetadata();",
+            "view_sha256": "ebb53f7d2854957a2611ad1a59ed72b368c5d3cc7dac5264d270678f9f70e692",
+            "instructions": [
+              "10: invokevirtual #136                // Method saveAdditional:(Lnet/minecraft/nbt/CompoundTag;)V"
+            ]
+          },
+          {
+            "signature": "public static net.minecraft.world.level.block.entity.BlockEntity loadStatic(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.nbt.CompoundTag);",
+            "view_sha256": "68ae477ba75ff0fe25a3f37f511c992d7e0baadf2ab85896a63824e16b46e022",
+            "instructions": []
+          },
+          {
+            "signature": "private static net.minecraft.world.level.block.entity.BlockEntity lambda$loadStatic$2(java.lang.String);",
+            "view_sha256": "9def5c600f3503306bb1ce567bb1bcc960dfea267734f46253832f6eefb18293",
+            "instructions": []
+          },
+          {
+            "signature": "private static net.minecraft.world.level.block.entity.BlockEntity lambda$loadStatic$1(net.minecraft.nbt.CompoundTag, java.lang.String, net.minecraft.world.level.block.entity.BlockEntity);",
+            "view_sha256": "a46fe556438ab7cd26fbb297f7cf05a9178400876a25c9c3a2dc452cc50f2c05",
+            "instructions": [
+              "2: invokevirtual #421                // Method load:(Lnet/minecraft/nbt/CompoundTag;)V"
+            ]
+          },
+          {
+            "signature": "private static net.minecraft.world.level.block.entity.BlockEntity lambda$loadStatic$0(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, java.lang.String, net.minecraft.world.level.block.entity.BlockEntityType);",
+            "view_sha256": "a70353f206a3d46045cb6243bdbce3ab04edfbfff0f0325588c72e80a89c8224",
+            "instructions": []
+          }
+        ]
+      },
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "relative": "net/minecraft/world/level/chunk/LevelChunk.class",
+        "entry": "net/minecraft/world/level/chunk/LevelChunk.class",
+        "archive_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+        "entry_sha256": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e",
+        "bytes": 38422,
+        "identity": "Minecraft 1.20.1 / Forge 47.4.20 mapped official binary",
+        "purpose": "Actual world BE save/load dispatch; no native code execution",
+        "javap_command": [
+          "javap",
+          "-classpath",
+          "<archive>",
+          "-p",
+          "-c",
+          "net.minecraft.world.level.chunk.LevelChunk"
+        ],
+        "complete_javap_utf8_sha256": "7fbe0b0ac8b4c7c6fff52b1fed9304ed217dafc7ed38556aadaca83e2fff5878",
+        "methods": [
+          {
+            "signature": "public net.minecraft.nbt.CompoundTag getBlockEntityNbtForSaving(net.minecraft.core.BlockPos);",
+            "view_sha256": "c5f43194d628161c47dd3a9e13fce2abb3afe1ab135b327e2cda913c1a980fa0",
+            "instructions": [
+              "18: invokevirtual #778                // Method net/minecraft/world/level/block/entity/BlockEntity.saveWithFullMetadata:()Lnet/minecraft/nbt/CompoundTag;"
+            ]
+          },
+          {
+            "signature": "private net.minecraft.world.level.block.entity.BlockEntity promotePendingBlockEntity(net.minecraft.core.BlockPos, net.minecraft.nbt.CompoundTag);",
+            "view_sha256": "80124cc05ec4f623d7a80bc52ca4b360785d6c02367384d144872d2494f8b619",
+            "instructions": [
+              "70: invokestatic  #1011               // Method net/minecraft/world/level/block/entity/BlockEntity.loadStatic:(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/level/block/entity/BlockEntity;"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "relative": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "archive_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry_sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "bytes": 14908,
+        "identity": "Minecraft 1.21.1 / NeoForge 21.1.243 merged sources",
+        "purpose": "Actual world BE save/load dispatch; no native code execution",
+        "anchors": [
+          {
+            "line": 77,
+            "text": "protected void loadAdditional(CompoundTag p_338466_, HolderLookup.Provider p_338445_) {"
+          },
+          {
+            "line": 82,
+            "text": "public final void loadWithComponents(CompoundTag p_338356_, HolderLookup.Provider p_338558_) {"
+          },
+          {
+            "line": 83,
+            "text": "this.loadAdditional(p_338356_, p_338558_);"
+          },
+          {
+            "line": 91,
+            "text": "this.loadAdditional(p_338387_, p_338713_);"
+          },
+          {
+            "line": 94,
+            "text": "protected void saveAdditional(CompoundTag p_187471_, HolderLookup.Provider p_323635_) {"
+          },
+          {
+            "line": 100,
+            "text": "public final CompoundTag saveWithFullMetadata(HolderLookup.Provider p_323767_) {"
+          },
+          {
+            "line": 101,
+            "text": "CompoundTag compoundtag = this.saveWithoutMetadata(p_323767_);"
+          },
+          {
+            "line": 107,
+            "text": "CompoundTag compoundtag = this.saveWithoutMetadata(p_324357_);"
+          },
+          {
+            "line": 112,
+            "text": "public final CompoundTag saveWithoutMetadata(HolderLookup.Provider p_324030_) {"
+          },
+          {
+            "line": 114,
+            "text": "this.saveAdditional(compoundtag, p_324030_);"
+          },
+          {
+            "line": 124,
+            "text": "this.saveAdditional(compoundtag, p_338656_);"
+          },
+          {
+            "line": 162,
+            "text": "public static BlockEntity loadStatic(BlockPos p_155242_, BlockState p_155243_, CompoundTag p_155244_, HolderLookup.Provider p_323542_) {"
+          },
+          {
+            "line": 178,
+            "text": "p_337992_.loadWithComponents(p_155244_, p_323542_);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "relative": "net/minecraft/world/level/chunk/LevelChunk.java",
+        "entry": "net/minecraft/world/level/chunk/LevelChunk.java",
+        "archive_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+        "entry_sha256": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223",
+        "bytes": 34107,
+        "identity": "Minecraft 1.21.1 / NeoForge 21.1.243 merged sources",
+        "purpose": "Actual world BE save/load dispatch; no native code execution",
+        "anchors": [
+          {
+            "line": 338,
+            "text": "BlockEntity blockentity1 = this.promotePendingBlockEntity(p_62868_, compoundtag);"
+          },
+          {
+            "line": 416,
+            "text": "public CompoundTag getBlockEntityNbtForSaving(BlockPos p_62932_, HolderLookup.Provider p_323699_) {"
+          },
+          {
+            "line": 420,
+            "text": "CompoundTag compoundtag1 = blockentity.saveWithFullMetadata(this.level.registryAccess());"
+          },
+          {
+            "line": 564,
+            "text": "private BlockEntity promotePendingBlockEntity(BlockPos p_62871_, CompoundTag p_62872_) {"
+          },
+          {
+            "line": 575,
+            "text": "blockentity = BlockEntity.loadStatic(p_62871_, blockstate, p_62872_, this.level.registryAccess());"
+          }
+        ]
+      }
+    ],
+    "network": [
+      {
+        "artifact_id": "forge_native",
+        "class": "net/minecraft/server/MinecraftServer",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "eff77831097b5f3113c94cf83daa7ea5d6485e23d73a9fd9a6142ce47b6ba07e",
+        "stdout_bytes": 260593,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_native",
+        "class": "net/minecraft/world/level/chunk/LevelChunk",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "f4673a229a3fddee097bc2e68edbf0b52ae1e5ece9848229005ac46ea022640f",
+        "stdout_bytes": 95318,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_native",
+        "class": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "d4e232596517cbb934e656dbac6d4db6a6c172c61d70d962604869422afe6068",
+        "stdout_bytes": 12740,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_native",
+        "class": "net/minecraft/world/level/block/entity/BlockEntity",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "c66636018e2b616cbd6a0d0fb37026ee2c5fe60dae5d58812d71b02bb4f59fe9",
+        "stdout_bytes": 25156,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_native",
+        "class": "net/minecraft/server/MinecraftServer",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "301d7fd3531f80b10b98ad8c8c78164649af6f1eb4b6a5df434b7c0c6e6149b3",
+        "stdout_bytes": 301671,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_native",
+        "class": "net/minecraft/world/level/chunk/LevelChunk",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "0d9f771518efe6d02983b96f924e325f1ab6bfa78b034bd6a505055174c60d5c",
+        "stdout_bytes": 98753,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_native",
+        "class": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "21c44f2acc1568ad899251ba63390cf98dec7dabb049d58727f796be56efafac",
+        "stdout_bytes": 14462,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_native",
+        "class": "net/minecraft/world/level/block/entity/BlockEntity",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "bc836ecc072be7312aba6345209e4bad1f7642335b9cda7ed59e72da836e6dec",
+        "stdout_bytes": 41884,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_native",
+        "class": "net/minecraft/world/level/chunk/LevelChunk",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-v"
+        ],
+        "stdout_sha256": "47f5129955c257974454e4b5f7ddeef5537274242020e0ce7b085bc505964a1f",
+        "stdout_bytes": 283686,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_bus",
+        "class": "net/minecraftforge/eventbus/EventBus",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "0ed0061d3780775851be0360b4d9543493ed9f40e805ae89732e6939b599b60b",
+        "stdout_bytes": 56541,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_bus",
+        "class": "net/minecraftforge/eventbus/BusBuilderImpl",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "3e2f0f2d13255f663ad74058614238e54ad3182cf1f82f0d4c0e05da5f585605",
+        "stdout_bytes": 7310,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_bus",
+        "class": "net/neoforged/bus/EventBus",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "62d7605095651c4c205003b5cdc269e2b4e267c33f9e166efddc84f2b12c3f8c",
+        "stdout_bytes": 46174,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_bus",
+        "class": "net/neoforged/bus/BusBuilderImpl",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "e4b9474826c6d8ed3d9dd168f40b4c69d07419a6ba1c116b4eac4de7c7f79ebd",
+        "stdout_bytes": 2875,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_fml",
+        "class": "net/minecraftforge/fml/common/Mod$EventBusSubscriber",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-v"
+        ],
+        "stdout_sha256": "2a751089a3beb75ed893e52750d77c27d4091ee34ebf906e82d0330c5fa12c8f",
+        "stdout_bytes": 4485,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "forge_fml",
+        "class": "net/minecraftforge/fml/javafmlmod/AutomaticEventSubscriber",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "29a80ffd03d2a8f4478e82d141f6c0c595179ef12d5e6e6cfc6a9d5693b1b54c",
+        "stdout_bytes": 16408,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_fml",
+        "class": "net/neoforged/fml/common/EventBusSubscriber",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-v"
+        ],
+        "stdout_sha256": "a16de1978deaae0253688069e566a19c9c11df68a117989a53d7efa1d4dde68e",
+        "stdout_bytes": 4419,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      },
+      {
+        "artifact_id": "neo_fml",
+        "class": "net/neoforged/fml/javafmlmod/AutomaticEventSubscriber",
+        "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+        "options": [
+          "-p",
+          "-c"
+        ],
+        "stdout_sha256": "b663fba659e6bb21981af15747513ab30b5101af61843b64fc0256029b2f103e",
+        "stdout_bytes": 24108,
+        "retained": "Only identity/hash and method anchors; no native body copied to durable report."
+      }
+    ],
+    "configuration": [
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+          "net.minecraftforge.fml.config.ModConfig"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "fba955a7c64bc94fe282f6adfc0cd1de8606928257efbfa4651eae2be933c95c",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+          "net.minecraftforge.fml.config.ConfigTracker"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "083c416c3f1ac71345bce9212edceca756210a607df33a168ff8148d5ab6768f",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+          "net.minecraftforge.fml.config.ConfigFileTypeHandler"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "b95f4ac0e77289b016c02f1d5d07fb35ad0c4792423ef80aa92ba3620058d42e",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.4.20/e8cc697c69f3911e76caa2f005d9486597cd7448/fmlcore-1.20.1-47.4.20.jar",
+          "net.minecraftforge.fml.config.ConfigFileTypeHandler$ConfigWatcher"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "20ab8da315baa390b3bd9e272abe4ddf0b50ea7a9f21663539913180079ca95d",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+          "net.neoforged.fml.config.ModConfig"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "f808464e312f83e2548c728c21b8911a188e8c9f1457f4aed8177d84ae4a15eb",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+          "net.neoforged.fml.config.ConfigTracker"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "e8680453a8ecf0e273194a091f4dfbc64f55bf4ada948cc48846aae069b85fca",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+          "net.neoforged.fml.config.LoadedConfig"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "3826338c5a0c5b001e78da258600610e1f0f05761a96b4054509d1409b4c8451",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+          "net.neoforged.fml.config.ConfigWatcher"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "2b7bea51e2474d4202b9d96b9f9c7e9e77f975a8eb3cc81abd4962315d479139",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      },
+      {
+        "tool": "C:/Program Files/Zulu/zulu-25/bin/javap.exe",
+        "arguments": [
+          "-c",
+          "-p",
+          "-classpath",
+          "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/4.0.43/fb10b7bf2f568a9676ad8b426b19c23badbbd98a/loader-4.0.43.jar",
+          "net.neoforged.fml.ModContainer"
+        ],
+        "exit_code_observed": 0,
+        "class_entry_sha256": "b21b0e39461ab25162e3963e2c7fe26a72b42dda193a8d26ec5dd8c0aa2d3e55",
+        "purpose": "Read-only classfile inspection; no target class initialization, JVM mod launch, config load/save or game execution",
+        "stdout_record": "Tool output read in session; raw class-entry identity retained instead of copying full native methods"
+      }
+    ],
+    "method": "Root rehashes artifacts and class/source ZIP entries, retains agents read-only method inspection metadata; no second javap invocation or target code initialization."
+  },
+  "native_version_binding": {
+    "forge": {
+      "metadata_artifact": "forge_userdev",
+      "entry": "config.json",
+      "libraries": [
+        "net.minecraftforge:eventbus:6.2.33"
+      ]
+    },
+    "neoforge": {
+      "metadata": {
+        "path": "C:/Users/90499/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/21.1.243/a67a1962ee71401a180a3bb9f599963ac316113f/neoforge-21.1.243.module",
+        "relative": "neoforge-21.1.243.module",
+        "sha256": "e74898edaaca6e482e64cb2bbe66b4accd27a7e1041eccaa0fa6535c5b461f48",
+        "bytes": 20592,
+        "lines": 801
+      },
+      "bus_dependencies": [
+        {
+          "variant": "modDevApiElements",
+          "dependency": {
+            "group": "net.neoforged",
+            "module": "bus",
+            "version": {
+              "requires": "8.0.5"
+            }
+          }
+        },
+        {
+          "variant": "modDevRuntimeElements",
+          "dependency": {
+            "group": "net.neoforged",
+            "module": "bus",
+            "version": {
+              "requires": "8.0.5"
+            }
+          }
+        }
+      ]
+    },
+    "jdk": {
+      "path": "C:/Program Files/Java/jdk-21/release",
+      "relative": "release",
+      "sha256": "34e76e80f5d7943354c6c3e23879bd201cb6a2449ed5831f5eadb9b47d0fed5d",
+      "bytes": 1282,
+      "lines": 9
+    }
+  },
+  "transition_claims": [
+    {
+      "id": "T1",
+      "status": "Confirmed source transition difference; more conservative current clearing policy, no automatic restoration recommendation",
+      "original": [
+        "MultiTileEntityReactorCore.java:185-190,317",
+        "MultiTileEntityReactorCore1x1.java:84,197-199",
+        "MultiTileEntityReactorCore2x2.java:108,224-226"
+      ],
+      "current": [
+        "ReactorCoreBlockEntity.java:118-122,152-159",
+        "ReactorInteraction.java:15-16",
+        "MachineControls.java:setEnabled",
+        "ReactorNetwork.java:19-phase exchange/end react"
+      ],
+      "condition": "19-cycle flux N>0; stop in phase0 and restart phase1 before reaction, prior to18 clearing; adequate coolant/output; original/modern phases aligned",
+      "counterexample": "U235 self32 * industrial coolant4 =128: restart heat128 original vs0 modern until next exchange"
+    },
+    {
+      "id": "T2",
+      "status": "Confirmed inactive Moderator counter commit differs; not all rod moderation flags",
+      "original": [
+        "MultiTileEntityReactorRodBase.java:86 no-op updateModeration",
+        "MultiTileEntityReactorRodModerator.java:73-88 reaction-only contacts commit/reflection",
+        "MultiTileEntityReactorCore2x2.java:102-105,225"
+      ],
+      "current": [
+        "ReactorNetwork.java:81 unconditional finishCycle all rods",
+        "RodPhysics.java:finishCycle MODERATOR and receive MODERATOR",
+        "StackCustomData.java:14 committed update"
+      ],
+      "condition": "Prior contacts1; stop/disable moderator across19; reactivate before next19 and receive positive beamA",
+      "counterexample": "First reflection A original vs0 modern, then both rebuild next contacts"
+    },
+    {
+      "id": "T3",
+      "status": "Confirmed conditional persistence/consumer representation difference; not missing save or normal18 heat",
+      "original": [
+        "MultiTileEntityReactorCore.java:65-97 arrays m/o read/write",
+        "MultiTileEntityReactorCore1x1.java:84,197-199",
+        "MultiTileEntityReactorCore2x2.java:108,224-226",
+        "TileEntityBase04MultiTileEntities.java:82-122 native entry",
+        "TileEntityBase01Root.java:377-379 unload/dead",
+        "GT_API_Proxy.java:478-509 dead removal"
+      ],
+      "current": [
+        "ReactorCoreBlockEntity.java:371-391,435-455 save;467-475 current flag/stopped/one neutron array restore",
+        "ReactorNetwork.java:end only19 exchanges then react"
+      ],
+      "condition": "Active core saved after18 (originalm0/oN, modernN), unloaded across19 and resumes ticking atphase0; modern reactor_version present andgt.stopped=false; phases aligned; no shutdown absolute-clock claim",
+      "counterexample": "Original first reaction o=m0 soheat0; modern restoredN and noexchange soheatN"
+    }
+  ],
+  "network_claims": [
+    {
+      "name": "Conditional undrained Level retention despite weak key",
+      "status": "Confirmed object graph and missing cleanup under the explicit path assumptions, not an observed heap leak.",
+      "strong_path": [
+        "ReactorNetwork static PENDING",
+        "WeakHashMap entry.value",
+        "HashSet member Core",
+        "BlockEntity.level",
+        "same Level key"
+      ],
+      "assumptions": [
+        "A real native server core ticker has enqueued C under L.",
+        "Before ReactorNetwork.end removes L, world tick or earlier END listener throws and Post/end is skipped.",
+        "L has no later successful ReactorNetwork.end and the JVM/static class remains live."
+      ],
+      "native_reachability": "Both native server tick implementations can skip Post on a world-tick exception. stopServer emits Unload, but Network has no consumer; default removal does not null Core.level.",
+      "counter_boundaries": [
+        "If this end handler entered remove before throwing, this path does not apply.",
+        "Same L later END drains it.",
+        "Complete normal tick drains before ordinary unload.",
+        "No measured GC, heap-growth, world-switch loop, process-survival or injected exception evidence."
+      ]
+    },
+    {
+      "name": "Per-core original post exception containment absent in current END listener",
+      "status": "Confirmed conditional control-flow contract difference; no asserted existing crash reproducer.",
+      "original": "Within each individual onServerTickPost callback try, catch Throwable removes that phase member, setError and print, then continues loop. Catch cleanup itself can throw; two phase lists are independent.",
+      "current": "An exchange throw aborts following react calls; a react throw aborts later cores. Native bus logs then rethrows. Earlier mutations are not rolled back; current level map entry was already removed.",
+      "actual_external_consumer": "react -> pushFluids -> hot output pushTank -> Forge/Neo external fluid capability fill(SIMULATE/EXECUTE), with no local catch. No specific provider alleged to throw.",
+      "native_no_compensation": "removeErroringBlockEntities wraps native ticker enqueue only; actual END react lies outside it. runServer outer handling records crash and stops, not per-core continuation."
+    }
+  ],
+  "configuration_contracts": [
+    {
+      "family": "overload policy",
+      "original": "GT_API578-587 default explosions/breaking false; TileEntityBase01Root494-504 consumes",
+      "current": "GregTechConfig31/40 + two registerConfig COMMON calls + getters50-64 + MachineOverload26-34, EnergyNode911/912",
+      "status": "real native configuration with active server consumer; do not report absent lifecycle handler"
+    },
+    {
+      "family": "material logging",
+      "original": "Modern port-only option; no claim original exact-key equivalence",
+      "current": "LOG_MATERIALS22 and public logMaterials48 have no read site; Forge97-98 and Neo166-169 registry logs are unconditional",
+      "status": "declared/persisted but no observable consumer; candidate extension of004"
+    },
+    {
+      "family": "stone mode",
+      "original": "WorldgenObject49 reads enabled and64-70 per-dimension; Loader_Worldgen59 stonelayers true; WorldgenStoneLayers54 -> GENERATE_STONE; GT6WorldGenerator125 chooses strata vs old veins",
+      "current": "GTWorldgenDefaults6 constant true; StoneLayerFeature75 / GTOreVeins79 / GTOreVeinFeature54 / WorldgenInfoData63 consume; native biome JSON installs both features",
+      "status": "default already correct, mode not configurable; remove_feature datapack does not flip activeOverworldVeins"
+    },
+    {
+      "family": "mob lead/meat/junk toggles",
+      "original": "GT_API519-523 defaults true; Override_Drops686/690/705 guards actual conversion",
+      "current": "MobDropEvents115-145 and core MobDropRules have no options in Context; source passes default behavior unconditionally",
+      "status": "default-enabled behavior exists, operator cannot disable these branches via native config"
+    },
+    {
+      "family": "per-material tool parameters",
+      "original": "GT_API250-256 reads Materials and OreProcessing; MultiItemTool182 uses configured durability at tool creation",
+      "current": "GTMaterial.setToolStats335-340 and ManualToolRules8-12 carry actual values, without configuration overlay in production sources",
+      "status": "deferred breadth of004; generated identity/data and addon API are not a built-in config file"
+    },
+    {
+      "family": "flint chance",
+      "original": "GT6_Main111 clamps setting1..100, Behavior_FlintAndTinder51/53 consumes",
+      "current": "GTToolItem101-104 supplies DEFAULT_FLINT_CHANCE30",
+      "status": "already ALIGN-133, do not number again"
+    },
+    {
+      "family": "Nexus/roads all enabled",
+      "original": "Loader_Worldgen646-650 defaults false for five center modules",
+      "current": "GTOriginFeature44/45/51/53 supplies enabled modules; OriginSpawnEvents adapts spawn",
+      "status": "explicit user policy: all on now, cfg deferred; not a default bug"
+    }
+  ],
+  "configuration_declared_settings": {
+    "forge": [
+      {
+        "path": "logMaterials",
+        "default": true
+      },
+      {
+        "path": "machines.explode_by_overload",
+        "default": false
+      },
+      {
+        "path": "machines.break_by_overload",
+        "default": false
+      }
+    ],
+    "neoforge": [
+      {
+        "path": "logMaterials",
+        "default": true
+      },
+      {
+        "path": "machines.explode_by_overload",
+        "default": false
+      },
+      {
+        "path": "machines.break_by_overload",
+        "default": false
+      }
+    ]
+  },
+  "configuration_reference_scan": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 9,
+      "text": "public final class GregTechConfig {"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 17,
+      "text": "/*private static final ModConfigSpec.BooleanValue LOG_MATERIALS = BUILDER"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 19,
+      "text": "private static final ForgeConfigSpec.BooleanValue LOG_MATERIALS = BUILDER"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 22,
+      "text": ".define(\"logMaterials\", true);"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 48,
+      "text": "public static boolean logMaterials = true;"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java",
+      "line": 67,
+      "text": "private GregTechConfig() {}"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "line": 5,
+      "text": "import com.gregtech.gregtech.GregTechConfig;"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "line": 30,
+      "text": "if (GregTechConfig.breakByOverload()) {"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "line": 32,
+      "text": "explode(machine, GregTechConfig.explodeByOverload() ? power : 0.1F);"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "line": 911,
+      "text": "if (com.gregtech.gregtech.GregTechConfig.breakByOverload()) dropContents();"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "line": 60,
+      "text": "context.registerConfig(ModConfig.Type.COMMON, GregTechConfig.SPEC);"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "line": 34,
+      "text": "modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON,com.gregtech.gregtech.GregTechConfig.SPEC);"
+    }
+  ],
+  "root_finite_witness": {
+    "sha256": "5b2bebda40b39abd4bc80399c46fcf3dcd2135146bcc29e300238df83c673264",
+    "derivation": {
+      "kind": "Source-derived finite state/arithmetic witnesses; no production code executed.",
+      "u235_self": 32,
+      "industrial_self_multiplier": 4,
+      "isolated_flux": 128,
+      "normal_phase18_false_positive_excluded": {
+        "old_m_after_clear": 0,
+        "old_o_consumed": 128,
+        "current_n_consumed": 128,
+        "old_heat": 128,
+        "current_heat": 128
+      },
+      "short_stop_restart": {
+        "condition": "Stop at phase0 and restart at phase1 before reaction, after phase19 and before phase18.",
+        "old_retained_flux": 128,
+        "current_after_stop": 0,
+        "restart_old_heat": 128,
+        "restart_current_heat": 0,
+        "policy": "Current immediate clearing is safer; no restoration proposed."
+      },
+      "disabled_moderator_contacts": {
+        "condition": "Moderator with prior contacts=1 stays disabled across phase19, then receives a positive beam after re-enable at next exchange.",
+        "incoming": 128,
+        "old_retained_contacts": 1,
+        "current_committed_contacts": 0,
+        "old_first_reflection": 128,
+        "current_first_reflection": 0,
+        "contacts_accumulated_for_next_cycle": 1
+      },
+      "missed_exchange_reload": {
+        "saved_old": {
+          "m": 0,
+          "o": 128,
+          "stopped": false
+        },
+        "saved_current": {
+          "neutrons": 128,
+          "stopped": false,
+          "current_version": true
+        },
+        "condition": "Core misses phase19 exchange after phase18 save/unload; reloads ticking at phase0; clocks aligned.",
+        "first_reaction_old_heat": 0,
+        "first_reaction_current_heat": 128
+      },
+      "overload_configuration_truth_table": [
+        {
+          "explode_setting": false,
+          "break_setting": false,
+          "effective_break": false,
+          "area_explosion": false
+        },
+        {
+          "explode_setting": false,
+          "break_setting": true,
+          "effective_break": true,
+          "area_explosion": false
+        },
+        {
+          "explode_setting": true,
+          "break_setting": false,
+          "effective_break": true,
+          "area_explosion": true
+        },
+        {
+          "explode_setting": true,
+          "break_setting": true,
+          "effective_break": true,
+          "area_explosion": true
+        }
+      ],
+      "limits": [
+        "Adequate coolant and output space assumed; no failure path in these examples.",
+        "World unload/reload scheduling, native holders, selectors, actual tool use and JVM effects were not executed.",
+        "Normal uninterrupted phase19 exchange remains outside the reload counterexample."
+      ]
+    }
+  },
+  "independent_review": "Transition reviewer independently checked network qualifications and finite witnesses. Original fill lives in ordinary tick, so no claim that identical fill exceptions were protected by original post catch.",
+  "readability_proof": "verification/nuclear-helper-readability-20261021.json",
+  "helper_sources": [
+    {
+      "path": "tools/integration/check_relay_sharing.py",
+      "sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a"
+    },
+    {
+      "path": "tools/native_layout.py",
+      "sha256": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+    },
+    {
+      "path": "tools/integration/check_source.py",
+      "sha256": "7a9901280b629a1c45f3cdcdfa55d8e3a7973538daecadb4976390121c6acfe3"
+    },
+    {
+      "path": "tools/integration/check_stonecutter_emi.py",
+      "sha256": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3"
+    }
+  ],
+  "native_tool": {
+    "path": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+    "sha256": "e5e027e3fd9cac6b972a2634fcdc1d0448fb21abd8da36fbc488772c199166c1"
+  },
+  "limitations": [
+    "Batch61 changes only one misleading queue-lifetime comment, with both native execution streams preserved; no gameplay change. Batch60 helper readability is recorded separately.",
+    "No Java target initialization, compilation, Gradle, new tests, game, config disk mutation/reload, actual unload/restart, crash injection, GC/heap measurement, build or push.",
+    "Native bytecode was read by agents; root verifies binary/source identity and inspects selected native source anchors, not a second full decompilation.",
+    "Configuration matrix is representative and does not cover every original option.",
+    "Exception propagation is conditional on a callback throwing; normal valid cores are not proven to crash.",
+    "Pending retention requires enqueue, no own END drain, no future END for the same Level, and a continuing JVM; normal completed ticks and post-remove exceptions are excluded.",
+    "Original shutdown is not proven perfectly clean; old global END can later remove dead members."
+  ],
+  "comment_correction": {
+    "path": "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java",
+    "baseline": "f252bcf5d",
+    "baseline_git_sha256": "f5a3a0d418ec4eef87fed96c1fabc73e8c5c84a563e1c6bdda3c34c3d25eaa89",
+    "observed_worktree_before_sha256": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+    "final_raw_sha256": "3358de3deafd8e021e8d3a9f7fffc269c0289c1b1ea2b755bec93dab9bc260b9",
+    "newline_normalization": "CRLF to LF for comment and platform comparisons; initial raw and Git identities retained separately.",
+    "platforms": [
+      {
+        "platform": "forge",
+        "complete_execution_tokens": 1228,
+        "execution_tokens_and_literal_positions_equal": true,
+        "before_normalized_view_sha256": "a7fc72a52e741aef29466ffe717523a667a115a4760ebc0201a043addf9826e4",
+        "after_normalized_view_sha256": "75c27d68d62f9a692107f8283ce159eb06178cd24c8ecbc1ea6b75ef06e1b671"
+      },
+      {
+        "platform": "neoforge",
+        "complete_execution_tokens": 1229,
+        "execution_tokens_and_literal_positions_equal": true,
+        "before_normalized_view_sha256": "445eabac2257fad06ddeb3a0013a0d08a1e70b561b5df4ddfd8cba48da79bafa",
+        "after_normalized_view_sha256": "8842d1a1db1b36c14d5f0304fef34501645cfe1ca82246e4256f37696548a7a8"
+      }
+    ],
+    "only_comment_changed": true,
+    "before_comment": "/**\n     * Cores enqueued during the current level tick, drained by {@link #end} at the end of that tick.\n     *\n     * <p>Weakly keyed: the entry normally lasts less than one tick, but a level that stops ticking\n     * between an {@link #enqueue} and its end-of-tick drain (an aborted tick, a removed dimension, a\n     * shutdown) would otherwise stay reachable from this static map for the rest of the JVM's life,\n     * keeping the whole dimension with it. {@code Level} does not override equals/hashCode, so weak\n     * keys are the same identity keys as before.</p>\n     */",
+    "after_comment": "/**\n     * Cores enqueued during the current level tick, drained by {@link #end} at the end of that tick.\n     *\n     * <p>The normal handler removes the entry before exchange and reaction. Weak keys alone do not\n     * guarantee cleanup if a level stops ticking before that drain: each value strongly holds cores,\n     * whose level field can refer back to the key. This class currently has no unload/stop cleanup\n     * hook, so an entry can remain if the same level never receives another end-of-tick event.</p>\n     */",
+    "reason": "Correct a disproven weak-key cleanup guarantee; no runtime cleanup or exception behavior changed."
+  }
+}

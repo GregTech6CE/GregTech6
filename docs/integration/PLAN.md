@@ -1,5 +1,7 @@
 # GregTech 6 整合计划与验收合同
 
+第六十一批进展（2026-10-21）：核状态／异常生命周期新增211–215，211明确保留即时清通量的安全政策，004扩展原生COMMON注册和配置代表矩阵。36原版／72当前、58视图及12工件49entry重核；正常18、普通耗尽和Neo提交已有。两个过载设置有效，日志项无消费，Nexus全开／cfg收尾政策不改，见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)、[配置](CONFIGURATION_CONTRACT_AUDIT.md)与[回执](verification/nuclear-transitions-config-audit-20261021.json)。正式记录至215条，未改玩法；外部提供者、极值、真实存档／配置验收和全面队列继续。
+
 第六十批进展（2026-10-21）：两份core核辅助类由25→97行，七处声明的短参数改为明确名称；206／522项完整执行词法在逐方法参数绑定归一后保持，其余名称、数值、字段和运算不变。纠正“完全原版算术”和本类执行流体查找的过强说明，见[源码导航](NUCLEAR_SOURCE_LAYOUT.md)与[回执](verification/nuclear-helper-readability-20261021.json)。未改玩法，正式记录仍210条；启停／重载、网络异常及配置消费者核查继续。
 
 第五十九批进展（2026-10-21）：核反应棒／核心／网络新增ALIGN-202–210九项合同，扩展095的Steam容量宿主。46目录显式数值、11冷却表、常规单棒与直连布局已有对应；模具催化剂与phase18误报明确排除。36份原版／92份当前来源、110份平台视图、七个原生工件35个entry重核，有限算术不代世界验收，见[棒](NUCLEAR_ROD_AUDIT.md)、[核心](NUCLEAR_CORE_AUDIT.md)、[网络](NUCLEAR_NETWORK_AUDIT.md)。未改玩法，正式记录至210条；继续启动／停机／异常、外部提供者和其它全面队列。

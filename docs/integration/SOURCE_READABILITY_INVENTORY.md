@@ -64,3 +64,5 @@
 本批 OriginalStorageTooltipData 仅展开列表、分支和方法，544 个词法项、54 个字面量、3 个注释保持。其它存储整理见[源链报告](SAFE_LOCKER_AUDIT.md)。[盘点摘要](verification/source-readability-inventory-20261020.json)保存范围、候选与摘要哈希；完整逐文件 scratch 清单未作为玩法证明。本轮没有用目录盘点声称全部代码已标准化，后续压行与职责拆分继续。
 
 第六十批完成两份core核辅助类展开及七个参数作用域的有意义命名：RodPhysicsMath 3→29行、最长646→101；ReactorCoolantRules 22→68行、最长244→86。完整206／522项执行流仅归一列明的参数绑定后保持，两条过强职责说明另行更正，未改玩法或公开API名称。见[核导航](NUCLEAR_SOURCE_LAYOUT.md)和[证明](verification/nuclear-helper-readability-20261021.json)；其余职责与压行整理继续。
+
+第六十一批依据实际对象图纠正ReactorNetwork的弱key生命周期保证注释；代码没有新增卸载清理，不能将文档修正当架构缺口已修。完整双端1228／1229项执行词法保持，原观察和最终源身份分别归档，见[生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)及[证明](verification/nuclear-transitions-config-audit-20261021.json)。
