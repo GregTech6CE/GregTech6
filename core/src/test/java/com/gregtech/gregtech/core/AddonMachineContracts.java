@@ -5,6 +5,7 @@ import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.ExclusiveOutputRules;
 import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
@@ -77,6 +78,7 @@ public final class AddonMachineContracts {
             case "knobs" -> knobs();
             case "face" -> faceDisagree();
             case "bstore" -> behaviorStore();
+            case "brange" -> behaviorRange();
             case "epart" -> energyPlain();
             case "emax" -> energyMax();
             case "eunknown" -> energyUnknown();
@@ -375,6 +377,30 @@ public final class AddonMachineContracts {
                         .gui("aa_sample:textures/gui/machine.png")
                         .energyOutputs(BehaviorMachineDeclaration.Face.BACK).energyOut("ZZ").energyOutMax(32, 1).build()));
         expectInstall("aa_sample", "unknown energy output", "ZZ");
+    }
+
+    private static void behaviorRange() {
+        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
+        check(plain.maxRange() == 0, "range defaults to 0");
+        var miner = BehaviorMachineDeclaration.builder("miner", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(4).build();
+        check(miner.maxRange() == 4, "declared range");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(-1).build(), "range must be");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").maxRange(BehaviorRangeRules.LIMIT + 1).build(), "range must be");
+        expectThrows(IllegalStateException.class, () -> BehaviorRangeRules.requireUsable(0), "range is 0");
+        expectThrows(IllegalStateException.class, () -> BehaviorRangeRules.requireRadius(0, 1), "range is 0");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorRangeRules.requireInside(4, 5, 0, 0), "outside range");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorRangeRules.requireInside(4, 0, 0, 0), "machine block");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorRangeRules.requireRadius(4, 5), "outside range");
+        BehaviorRangeRules.requireInside(4, 4, -4, 4);
+        assertions++;
+        BehaviorRangeRules.requireRadius(4, 0);
+        assertions++;
+        check(BehaviorRangeRules.inside(4, 4, 0, 0) && !BehaviorRangeRules.inside(0, 1, 0, 0), "closed range rejects a neighbor");
+        check(BehaviorRangeRules.BREAKS_PER_TICK == 1 && BehaviorRangeRules.ITEMS_PER_TICK == 16, "tick budget");
     }
 
     private static void bounds() {

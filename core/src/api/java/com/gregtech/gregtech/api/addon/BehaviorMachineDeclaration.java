@@ -35,7 +35,8 @@ public record BehaviorMachineDeclaration(
         List<Face> energyOutputFaces,
         String energyOut,
         long energyOutSize,
-        long energyOutAmount
+        long energyOutAmount,
+        int maxRange
 ) {
     public static final int SLOT = 18;
     public static final int TANK_WIDTH = 18;
@@ -92,6 +93,8 @@ public record BehaviorMachineDeclaration(
             throw new IllegalArgumentException("Behavior machine '" + id + "' repeats an energy face");
         if (energyCapacity < 0)
             throw new IllegalArgumentException("Behavior machine '" + id + "' has a negative energy capacity");
+        if (maxRange < 0 || maxRange > BehaviorRangeRules.LIMIT)
+            throw new IllegalArgumentException("Behavior machine '" + id + "' range must be 0.." + BehaviorRangeRules.LIMIT);
         boolean outputs = !energyOutputFaces.isEmpty() || !energyOut.isBlank() || energyOutSize != 0 || energyOutAmount != 0;
         if (outputs) {
             if (energyOutputFaces.isEmpty() || energyOut.isBlank() || energyOutSize < 1 || energyOutAmount < 1)
@@ -212,6 +215,7 @@ public record BehaviorMachineDeclaration(
         private String energyOut = "";
         private long energyOutSize;
         private long energyOutAmount;
+        private int maxRange;
         private final List<ItemSlot> items = new ArrayList<>();
         private final List<FluidSlot> fluids = new ArrayList<>();
         private final List<Toggle> toggles = new ArrayList<>();
@@ -244,6 +248,8 @@ public record BehaviorMachineDeclaration(
             energyOutAmount = amount;
             return this;
         }
+        /** Cube half-extent for {@code breakBlock} and {@code collectItems}. Zero closes both. */
+        public Builder maxRange(int value) { maxRange = value; return this; }
         public Builder item(int x, int y, SlotRole role) { items.add(new ItemSlot(x, y, role)); return this; }
         public Builder fluid(int capacity, int x, int y, SlotRole role) { fluids.add(new FluidSlot(capacity, x, y, role)); return this; }
         public Builder toggle(String translationKey, int x, int y, boolean initiallyOn) {
@@ -255,7 +261,7 @@ public record BehaviorMachineDeclaration(
         public BehaviorMachineDeclaration build() {
             return new BehaviorMachineDeclaration(id, material, machineType, energy, energyPerTick, tier, blockEntityId,
                     guiWidth, guiHeight, gui, energyX, energyY, energyFaces, items, fluids, toggles, progress,
-                    energyCapacity, energyOutputFaces, energyOut, energyOutSize, energyOutAmount);
+                    energyCapacity, energyOutputFaces, energyOut, energyOutSize, energyOutAmount, maxRange);
         }
     }
 }

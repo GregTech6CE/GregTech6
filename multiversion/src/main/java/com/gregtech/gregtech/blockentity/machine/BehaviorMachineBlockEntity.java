@@ -3,6 +3,7 @@ package com.gregtech.gregtech.blockentity.machine;
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.BehaviorMachineHosts;
 import com.gregtech.gregtech.api.addon.platform.BehaviorState;
 //? if >=1.21.1 {
@@ -41,13 +42,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -77,6 +84,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /** Shell block entity. The addon behavior never sees this class. */
 public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlock, MenuProvider {
@@ -106,6 +114,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private final PartBindings<BlockPos, MultiblockLayout.Role> structureBindings = new PartBindings<>();
     private boolean formed;
     private List<EnergyPart> energyParts = List.of();
+    private int breaksLeft;
+    private int itemsLeft;
+    @Nullable private UUID placerId;
+    private String placerName = "";
 
     public BehaviorMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -168,6 +180,14 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         return true;
     }
 
+    public void rememberPlacer(Player player) {
+        if (player == null) return;
+        placerId = player.getUUID();
+        String name = player.getGameProfile().getName();
+        placerName = name == null ? "" : name;
+        setChanged();
+    }
+
     public void dropContents() {
         if (level == null) return;
         behavior.beforeBreak(context);
@@ -182,6 +202,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     public boolean structureFormed() { return formed; }
 
     private void tickServer(Level level, BlockPos pos) {
+        breaksLeft = BehaviorRangeRules.BREAKS_PER_TICK;
+        itemsLeft = BehaviorRangeRules.ITEMS_PER_TICK;
         pollEnergy(level, pos);
         refreshStructure();
         powered = stored > 0;
@@ -432,6 +454,10 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         if (capacitySet) tag.putLong("gt.capacity", capacity);
         tag.putInt("gt.progress", progress);
         tag.putInt("gt.toggles", toggles);
+        if (placerId != null) {
+            tag.putString("gt.placer", placerId.toString());
+            tag.putString("gt.placer_name", placerName);
+        }
 //? if >=1.21.1 {
 /*        tag.put("gt.items", items.serializeNBT(lookup));
 *///?} else {
@@ -463,6 +489,16 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         stored = Math.max(0, Math.min(bufferCapacity(), tag.getLong("gt.energy")));
         progress = tag.getInt("gt.progress");
         toggles = tag.getInt("gt.toggles");
+        placerId = null;
+        placerName = "";
+        if (tag.contains("gt.placer")) {
+            try {
+                placerId = UUID.fromString(tag.getString("gt.placer"));
+                placerName = tag.getString("gt.placer_name");
+            } catch (IllegalArgumentException ignored) {
+                placerId = null;
+            }
+        }
 //? if >=1.21.1 {
 /*        if (tag.contains("gt.items")) items.deserializeNBT(lookup, tag.getCompound("gt.items"));
 *///?} else {
@@ -486,6 +522,94 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
 /*        if (tag.contains("gt.behavior")) state.load(lookup, tag.getCompound("gt.behavior"));
 *///?} else {
         if (tag.contains("gt.behavior")) state.load(tag.getCompound("gt.behavior"));
+//?}
+    }
+
+    private boolean breakOne(BlockPos target) {
+        if (level == null || level.isClientSide || !(level instanceof ServerLevel server) || target == null) return false;
+        int dx = target.getX() - worldPosition.getX();
+        int dy = target.getY() - worldPosition.getY();
+        int dz = target.getZ() - worldPosition.getZ();
+        if (!BehaviorRangeRules.inside(declaration.maxRange(), dx, dy, dz)) return false;
+        if (breaksLeft <= 0 || !level.hasChunkAt(target)) return false;
+        BlockState state = level.getBlockState(target);
+        if (state.isAir() || state.getDestroySpeed(level, target) < 0) return false;
+        Player actor = actor(server);
+        List<ItemStack> drops = Block.getDrops(state, server, target, level.getBlockEntity(target), actor, ItemStack.EMPTY);
+        if (!dropsFit(drops) || !breakAllowed(server, target, state, actor)) return false;
+        if (!level.setBlock(target, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL)) return false;
+        for (ItemStack drop : drops) context.insertOutput(drop);
+        breaksLeft--;
+        setChanged();
+        return true;
+    }
+
+    private int collect(int radius, boolean voidThem) {
+        if (level == null || level.isClientSide || !(level instanceof ServerLevel server)) return 0;
+        if (!BehaviorRangeRules.radiusAllowed(declaration.maxRange(), radius) || itemsLeft <= 0) return 0;
+        var box = new AABB(worldPosition.getX() - radius, worldPosition.getY() - radius, worldPosition.getZ() - radius,
+                worldPosition.getX() + radius + 1.0, worldPosition.getY() + radius + 1.0, worldPosition.getZ() + radius + 1.0);
+        int taken = 0;
+        for (ItemEntity entity : server.getEntitiesOfClass(ItemEntity.class, box)) {
+            if (itemsLeft <= 0) break;
+            if (!entity.isAlive()) continue;
+            ItemStack stack = entity.getItem();
+            if (stack.isEmpty()) continue;
+            if (voidThem) {
+                entity.discard();
+            } else {
+                int before = stack.getCount();
+                ItemStack left = context.insertOutput(stack.copy());
+                if (left.getCount() == before) continue;
+                if (left.isEmpty()) entity.discard();
+                else entity.setItem(left);
+            }
+            itemsLeft--;
+            taken++;
+        }
+        if (taken > 0) setChanged();
+        return taken;
+    }
+
+    private boolean dropsFit(List<ItemStack> drops) {
+        ItemStack[] before = new ItemStack[items.getSlots()];
+        for (int i = 0; i < before.length; i++) before[i] = items.getStackInSlot(i).copy();
+        boolean ok = true;
+        for (ItemStack drop : drops) {
+            if (drop == null || drop.isEmpty()) continue;
+            if (!context.insertOutput(drop).isEmpty()) { ok = false; break; }
+        }
+        for (int i = 0; i < before.length; i++) items.setStackInSlot(i, before[i]);
+        return ok;
+    }
+
+    private Player actor(ServerLevel server) {
+        if (placerId != null && server.getServer() != null) {
+            ServerPlayer online = server.getServer().getPlayerList().getPlayer(placerId);
+            if (online != null) return online;
+        }
+        UUID id = placerId == null ? new UUID(0, 0) : placerId;
+        String name = placerName == null || placerName.isBlank() ? "gt6ce" : placerName;
+        if (name.length() > 16) name = name.substring(0, 16);
+        var profile = new com.mojang.authlib.GameProfile(id, name);
+//? if >=1.21.1 {
+/*        var fake = net.neoforged.neoforge.common.util.FakePlayerFactory.get(server, profile);
+*///?} else {
+        var fake = net.minecraftforge.common.util.FakePlayerFactory.get(server, profile);
+//?}
+        fake.setPos(worldPosition.getX() + 0.5, worldPosition.getY(), worldPosition.getZ() + 0.5);
+        return fake;
+    }
+
+    private static boolean breakAllowed(ServerLevel server, BlockPos pos, BlockState state, Player player) {
+//? if >=1.21.1 {
+/*        var event = new net.neoforged.neoforge.event.level.BlockEvent.BreakEvent(server, pos, state, player);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
+        return !event.isCanceled();
+*///?} else {
+        var event = new net.minecraftforge.event.level.BlockEvent.BreakEvent(server, pos, state, player);
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event);
+        return !event.isCanceled();
 //?}
     }
 
@@ -589,6 +713,8 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         @Override public boolean structureFormed() { return formed; }
         @Override public List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
         @Override public BehaviorState state() { return state; }
+        @Override public boolean breakBlock(BlockPos pos) { return breakOne(pos); }
+        @Override public int collectItems(int radius, boolean voidThem) { return collect(radius, voidThem); }
     }
 
     private void refreshStructure() {
