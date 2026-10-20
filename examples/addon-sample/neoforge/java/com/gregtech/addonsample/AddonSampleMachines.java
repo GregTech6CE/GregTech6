@@ -29,7 +29,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
 
     @Override public List<RecipeMapDeclaration> recipeMaps() {
         return List.of(
-                map("addon_sample.recipe.press", "Sample Press", "press"),
+                map("addon_sample.recipe.press", "Sample Press", "press", 2),
                 map("addon_sample.recipe.large_press", "Large Sample Press", "large_press"));
     }
 
@@ -93,8 +93,12 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     @Override public MachineBehavior create(String machineType) { return new Irrigator(); }
 
     private static RecipeMapDeclaration map(String name, String title, String gui) {
+        return map(name, title, gui, 1);
+    }
+
+    private static RecipeMapDeclaration map(String name, String title, String gui, int inputItems) {
         return new RecipeMapDeclaration(name, title, "addon_sample:textures/gui/machines/" + gui,
-                1, 1, 1, 0, 0, 0, 1, true, false, false, false);
+                inputItems, 1, 1, 0, 0, 0, 1, true, false, false, false);
     }
 
     private static final BehaviorMachineDeclaration IRRIGATOR = BehaviorMachineDeclaration.builder("irrigator", "Steel")

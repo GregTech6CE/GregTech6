@@ -30,6 +30,9 @@ public final class AddonPlatform {
     public interface Services {
         ItemStack stack(String prefix, String material, int count);
 
+        /** Integrated circuit {@code configuration}, or an empty stack when that item is not registered yet. */
+        ItemStack selectorTag(int configuration);
+
         boolean matchesTool(ItemStack stack, AddonTool tool);
 
         void damageTool(ItemStack stack, int amount, LivingEntity user, EquipmentSlot slot);
