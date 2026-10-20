@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
@@ -184,7 +185,8 @@ public class KineticRotationEngineBlockEntity extends EngineBaseBlockEntity {
             if (!isEnergyAcceptingFrom(GregTechTags.Energy.RU, side, false)) continue;
             long demand = getEnergyDemanded(GregTechTags.Energy.RU, side, inputRate());
             if (demand <= 0) break;
-            if (!(level.getBlockEntity(worldPosition.relative(side)) instanceof IEnergyBlock source)) continue;
+            IEnergyBlock source = EnergyBlockViews.view(level.getBlockEntity(worldPosition.relative(side)));
+            if (source == null) continue;
             Direction sourceSide = side.getOpposite();
             if (!source.isEnergyEmittingTo(GregTechTags.Energy.RU, sourceSide, false)) continue;
             long offered = source.getEnergyOffered(GregTechTags.Energy.RU, sourceSide, inputRate());

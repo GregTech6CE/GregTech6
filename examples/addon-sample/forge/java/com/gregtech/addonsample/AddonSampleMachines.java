@@ -12,6 +12,8 @@ import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, tank-wall multiblock, and an irrigator behavior machine. */
+/** Sample press, tank-wall multiblock, irrigator, rotation buffer and hand crank. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -86,11 +88,20 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .efficiency(5_000).energy("RU", 32).tank(8_000).outputBehind(4).multi().build());
     }
 
-    @Override public List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(IRRIGATOR); }
+    @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
+        return List.of(IRRIGATOR, ROTATION_BUFFER, HAND_CRANK);
+    }
 
-    @Override public Set<String> machineTypes() { return Set.of("irrigator"); }
+    @Override public Set<String> machineTypes() { return Set.of("irrigator", "ru_buffer", "hand_crank"); }
 
-    @Override public MachineBehavior create(String machineType) { return new Irrigator(); }
+    @Override public MachineBehavior create(String machineType) {
+        return switch (machineType) {
+            case "irrigator" -> new Irrigator();
+            case "ru_buffer" -> new RotationBuffer();
+            case "hand_crank" -> new HandCrank();
+            default -> throw new IllegalArgumentException(machineType);
+        };
+    }
 
     private static RecipeMapDeclaration map(String name, String title, String gui) {
         return new RecipeMapDeclaration(name, title, "addon_sample:textures/gui/machines/" + gui,
@@ -104,6 +115,28 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
             .fluid(8000, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
             .toggle("addon_sample.irrigator.water", 26, 64, true)
+            .build();
+
+    /** Stores RU from the sides and, while the switch is on, emits one packet from the back. */
+    private static final BehaviorMachineDeclaration ROTATION_BUFFER = BehaviorMachineDeclaration.builder("ru_buffer", "Steel")
+            .machineType("ru_buffer").energy("RU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyFaces(List.of(BehaviorMachineDeclaration.Face.LEFT, BehaviorMachineDeclaration.Face.RIGHT,
+                    BehaviorMachineDeclaration.Face.TOP, BehaviorMachineDeclaration.Face.BOTTOM))
+            .energyCapacity(32_000)
+            .energyOutputs(BehaviorMachineDeclaration.Face.BACK)
+            .energyOut("RU").energyOutMax(32, 1)
+            .toggle("addon_sample.ru_buffer.release", 116, 64, false)
+            .build();
+
+    /** A click stores one RU packet and pushes it out the front. */
+    private static final BehaviorMachineDeclaration HAND_CRANK = BehaviorMachineDeclaration.builder("hand_crank", "Steel")
+            .machineType("hand_crank").energy("RU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM))
+            .energyCapacity(32)
+            .energyOutputs(BehaviorMachineDeclaration.Face.FRONT)
+            .energyOut("RU").energyOutMax(32, 1)
             .build();
 
     /** Waters one dry farmland within two blocks, spending water and EU. */
@@ -158,6 +191,32 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 }
             }
             return null;
+        }
+    }
+
+    /** Keeps RU and releases one packet per tick from the back while the switch is on. */
+    private static final class RotationBuffer implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (context.toggle(0) && context.energy() >= 32) context.emit(32, 1);
+        }
+    }
+
+    /** Right-click produces one RU packet and pushes it out the front. */
+    private static final class HandCrank implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (context.energy() >= 32) context.emit(32, 1);
+        }
+
+        @Override public boolean onUse(MachineBehaviorContext context, Player player, InteractionHand hand) {
+            context.generate(32);
+            if (context.energy() >= 32) context.emit(32, 1);
+            return true;
         }
     }
 }

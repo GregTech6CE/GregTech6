@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.blockentity.energy;
 
-import com.gregtech.gregtech.api.energy.IEnergyBlock;
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.block.energy.ElectricWireBlock;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
 import com.gregtech.gregtech.data.GregTechTags;
@@ -48,8 +48,8 @@ public final class LaserFiberBlockEntity extends GTEnergyBlockEntity {
             public boolean loaded(BlockPos node){return level.hasChunkAt(node);}
             public boolean fiber(BlockPos node){return level.getBlockEntity(node) instanceof LaserFiberBlockEntity;}
             public boolean connected(BlockPos node,int direction){return level.getBlockEntity(node) instanceof LaserFiberBlockEntity fiber&&fiber.connected(Direction.values()[direction]);}
-            public boolean accepts(BlockPos node,int direction){return level.getBlockEntity(node) instanceof IEnergyBlock receiver&&receiver.isEnergyAcceptingFrom(type,Direction.values()[direction],false);}
-            public long inject(BlockPos node,int direction,long size,long amount,boolean execute){return level.getBlockEntity(node) instanceof IEnergyBlock receiver?receiver.doEnergyInjection(type,Direction.values()[direction],size,amount,execute):0;}
+            public boolean accepts(BlockPos node,int direction){var receiver=EnergyBlockViews.view(level.getBlockEntity(node));return receiver!=null&&receiver.isEnergyAcceptingFrom(type,Direction.values()[direction],false);}
+            public long inject(BlockPos node,int direction,long size,long amount,boolean execute){var receiver=EnergyBlockViews.view(level.getBlockEntity(node));return receiver==null?0:receiver.doEnergyInjection(type,Direction.values()[direction],size,amount,execute);}
             public void record(BlockPos node,long size,long accepted){if(level.getBlockEntity(node) instanceof LaserFiberBlockEntity fiber)fiber.recordTransfer(size,accepted);}
         });
     }
