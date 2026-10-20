@@ -150,7 +150,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['service', 'name', 'id', 'addons', 'range', 'form', 'invalid', 'late', 'mismatch', 'casefold', 'corecase', 'order', 'named', 'softform', 'oreraw', 'ores', 'oremismatch', 'orelist', 'oreunknown', 'prefix', 'prefixname', 'prefixcase', 'prefixmiss', 'prefixcond'].each { scenario ->
+['service', 'name', 'id', 'addons', 'range', 'form', 'invalid', 'late', 'mismatch', 'casefold', 'corecase', 'order', 'named', 'softform', 'oreraw', 'ores', 'oremismatch', 'orelist', 'oreunknown', 'vein', 'veinname', 'veinore', 'veindup', 'veinbad', 'prefix', 'prefixname', 'prefixcase', 'prefixmiss', 'prefixcond'].each { scenario ->
     def contract = tasks.register("addonMaterialContracts_${scenario}", JavaExec) {
         description = "Runs addon material scenario ${scenario} in its own JVM."
         group = 'verification'
