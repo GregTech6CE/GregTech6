@@ -72,14 +72,14 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 //? if >=1.21.1 {
-/*/^* Original bulk-storage controls and harvest rules at the Neo block/components boundary. ^/
+/*/^* Bulk-storage front interaction and harvest at the Neo boundary; tool gaps: ALIGN-136–137. ^/
 public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
     public MassStorageBlock(GTMaterial material, Properties properties) {
         super(properties); this.material = material;
 *///?} else {
-/** GT6 Mass Storage front controls, tape packing and harvest behavior. */
+/** Bulk-storage front interaction, tape packing and harvest; tool gaps: ALIGN-136–137. */
 public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     @Nullable

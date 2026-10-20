@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-20",
+  "batch": 44,
+  "baseline": "ff30fdee0",
+  "provenance": "Read-only Gregorius Techneticies / GregTech-6 Team original LGPL-3.0-or-later sources; existing notices retained",
+  "original_sources": {
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+    "gregapi/item/multiitem/behaviors/Behavior_Tool.java": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+    "gregtech/items/tools/machine/GT_Tool_Screwdriver.java": "0cb7f909f6f9d4272ee6eb63ab9aafdc4b5889f093b2133f1531fbe703bcd56f",
+    "gregtech/items/behaviors/Behavior_Duct_Tape.java": "cca99b4fc11f1ce47245286bf94717e8535c8e6f0ecb9ffd8428207ed25e7262"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/api/inventory/BulkStorageState.java": "bfa8ce61c7f9a53d3f411cfd55b21ceb2310f6953ca078fe175792120e111804",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageFace.java": "1dfe4512cb46b0ec8e755e16c12f4839bb145cec28c0fad2429c14ce963367f3",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java": "618e5b73f394a0958bd31cbc788fe9464496c309cad318cbf61c02dc824b5de5",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java": "a1fae4525a057e267ef1ee95cebc7befe1af57dab997df696d1d6d3b601aea9f",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/LogisticsMassStorageBlockEntity.java": "3809c1bfbbb2644025e6f24451ea45c9a7a711229f72cf27a19a44d09ca9c702",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LogisticsMassStorageBlock.java": "8ada6c823fa6940fe68272e9ad9df640b448f4c11138412f23c514344be84bcd",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageMaterialForms.java": "8ac532a3b5b503908836afb4d8afc875f9711ffe9ed1253d1a7e1a2626261e15",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+    "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+    "core/src/main/java/com/gregtech/gregtech/content/storage/OriginalStorageTooltipData.java": "95776c2e114beef85ab9eb7ca1f48bc6cec97e70cdc6aec3733219891d32bb15",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolItems.java": "790ce1d3ead22c318d96fff6452ead2670044af9ebcb81ef858666a76363a41c",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmelteryToolItem.java": "430230d45e047a9d8f3335adfc68a226c40413b518752ee94cc3163a7c673345",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageCapabilities.java": "ab86ba6a349a64b9ef0f63c46e336899c861aa31fdeaea4139625a26a26ce279"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/api/inventory/BulkStorageState.java": {
+      "projections": {
+        "core": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 417
+        }
+      },
+      "change": "Whitespace only"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageFace.java": {
+      "projections": {
+        "forge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 349
+        },
+        "neoforge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 349
+        }
+      },
+      "change": "Whitespace only"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java": {
+      "projections": {
+        "forge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 1951
+        },
+        "neoforge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 1780
+        }
+      },
+      "change": "Class documentation only"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java": {
+      "projections": {
+        "forge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 1825
+        },
+        "neoforge": {
+          "java_tokens": true,
+          "literals": true,
+          "token_count": 1894
+        }
+      },
+      "change": "Class documentation only"
+    }
+  },
+  "projection_method": "check_relay_sharing.project for maintained Stonecutter source; core read directly",
+  "prior_batch_strengthening": "Rechecked all four batch-43 projections with exposed maintained Neo code; recorded hashes retained",
+  "findings": {
+    "ALIGN-136": "Mass-storage pincers pickup and soft-hammer drain have no host implementation despite tooltip promises",
+    "ALIGN-137": "Active downward output and overflow mode controls, ticks, buffer and bottom input gate are absent; packed state also blocks screwdriver mode"
+  },
+  "extended_finding": {
+    "ALIGN-126": "Mass-storage screwdriver uses fixed damage 1 rather than converting original tool return 10000"
+  },
+  "positive_source_paths": [
+    "Tape budget gate and minimum 100 return",
+    "Knife/scissors untape with converted 1000 return",
+    "Packed whole-item retention, separate fractional drops and creative full-state pick",
+    "Six button amounts and fractional filter retention"
+  ],
+  "evidence_kind": "Source call chains only; no game execution or new model tests",
+  "not_run": [
+    "Gradle",
+    "native compilation",
+    "full test suite",
+    "GameTests",
+    "client",
+    "dedicated server",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "External pipes/logistics can still move inventory",
+    "No full external-tag family or front-cover interaction audit",
+    "The earlier addon merge compilation does not establish these tool behaviors",
+    "Full audit remains incomplete"
+  ]
+}

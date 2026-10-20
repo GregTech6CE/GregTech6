@@ -43,7 +43,8 @@
           "literals": true
         }
       },
-      "change": "Documentation comments only; correct overstatements of original parity"
+      "change": "Documentation comments only; correct overstatements of original parity",
+      "projection_method": "check_relay_sharing.project: expose maintained Neo bodies before clean_java"
     },
     "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": {
       "before_sha256": "f0b447d02bfc3a7a439ad5d33468e98f7147790e265d847f43aa9f2ae3a42072",
@@ -58,7 +59,8 @@
           "literals": true
         }
       },
-      "change": "Documentation comments only; correct overstatements of original parity"
+      "change": "Documentation comments only; correct overstatements of original parity",
+      "projection_method": "check_relay_sharing.project: expose maintained Neo bodies before clean_java"
     }
   },
   "findings": {
