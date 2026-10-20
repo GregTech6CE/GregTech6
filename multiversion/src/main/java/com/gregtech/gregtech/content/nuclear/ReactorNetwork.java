@@ -27,11 +27,10 @@ public final class ReactorNetwork {
     /**
      * Cores enqueued during the current level tick, drained by {@link #end} at the end of that tick.
      *
-     * <p>Weakly keyed: the entry normally lasts less than one tick, but a level that stops ticking
-     * between an {@link #enqueue} and its end-of-tick drain (an aborted tick, a removed dimension, a
-     * shutdown) would otherwise stay reachable from this static map for the rest of the JVM's life,
-     * keeping the whole dimension with it. {@code Level} does not override equals/hashCode, so weak
-     * keys are the same identity keys as before.</p>
+     * <p>The normal handler removes the entry before exchange and reaction. Weak keys alone do not
+     * guarantee cleanup if a level stops ticking before that drain: each value strongly holds cores,
+     * whose level field can refer back to the key. This class currently has no unload/stop cleanup
+     * hook, so an entry can remain if the same level never receives another end-of-tick event.</p>
      */
     private static final Map<Level,Set<ReactorCoreBlockEntity>> PENDING=new WeakHashMap<>();
     private ReactorNetwork(){}
