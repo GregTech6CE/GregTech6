@@ -12,14 +12,22 @@ import java.util.Set;
 /** Position-based, chunk-safe GT6 logistics flood fill. Never keeps block entities alive. */
 public final class LogisticsNetwork {
     public record Snapshot(Set<BlockPos> positions, int farthestDistance) {
-        public static Snapshot empty() { return new Snapshot(Set.of(), 0); }
-        public boolean contains(BlockPos pos) { return positions.contains(pos); }
-        public int size() { return positions.size(); }
+        public static Snapshot empty() {
+            return new Snapshot(Set.of(), 0);
+        }
+
+        public boolean contains(BlockPos pos) {
+            return positions.contains(pos);
+        }
+
+        public int size() {
+            return positions.size();
+        }
     }
 
     private LogisticsNetwork() {}
 
-    /** GT6 seeds every logistics tile in the 5x5x5 cube, then traverses mutual open sides. */
+    /** Seed loaded physical hosts in the core cube, then cross mutual open sides without delegate lookup. */
     public static Snapshot scan(Level level, BlockPos controller, Direction front, int range) {
 //? if >=1.21.1 {
         /*BlockPos center = controller.relative(front.getOpposite(), LogisticsCoreLayout.RADIUS);
@@ -28,14 +36,16 @@ public final class LogisticsNetwork {
 //?}
         var visited = new LinkedHashSet<BlockPos>();
         var queue = new ArrayDeque<BlockPos>();
-        for (int x = -2; x <= 2; x++) for (int y = -2; y <= 2; y++) for (int z = -2; z <= 2; z++) {
-            BlockPos pos = center.offset(x, y, z);
-            // GT6 seeds every ITileEntityLogistics inside the core cube, even
-            // a part whose faces are currently closed; the face test is only
-            // applied when crossing to a neighbouring position.
-            if (level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof LogisticsHost
-                    && visited.add(pos.immutable())) queue.add(pos.immutable());
-        }
+        for (int x = -2; x <= 2; x++)
+            for (int y = -2; y <= 2; y++)
+                for (int z = -2; z <= 2; z++) {
+                    BlockPos pos = center.offset(x, y, z);
+                    // GT6 seeds every ITileEntityLogistics inside the core cube, even
+                    // a part whose faces are currently closed; the face test is only
+                    // applied when crossing to a neighbouring position.
+                    if (level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof LogisticsHost
+                            && visited.add(pos.immutable())) queue.add(pos.immutable());
+                }
 
         int farthest = 0;
         while (!queue.isEmpty()) {
@@ -56,8 +66,8 @@ public final class LogisticsNetwork {
         return new Snapshot(Collections.unmodifiableSet(new LinkedHashSet<>(visited)), farthest);
     }
 
-    public static int chebyshev(BlockPos a, BlockPos b) {
-        return Math.max(Math.abs(a.getX() - b.getX()),
-                Math.max(Math.abs(a.getY() - b.getY()), Math.abs(a.getZ() - b.getZ())));
+    public static int chebyshev(BlockPos origin, BlockPos target) {
+        return Math.max(Math.abs(origin.getX() - target.getX()),
+                Math.max(Math.abs(origin.getY() - target.getY()), Math.abs(origin.getZ() - target.getZ())));
     }
 }

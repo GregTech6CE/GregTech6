@@ -1,5 +1,11 @@
 # 验证账本
 
+## 2026-10-21 / 第七十三批物流节点与原生异常、同步边界
+
+24原／32当前、46平台视图、本机2工件14entry／7只读javap重核。原撬棍→getCoverItem继承、万能代理及实际连接／注册、单项回调捕获对现代原生ticker错误分支、Neo默认loadWithComponents同步、原生fresh CompoundTag与最终掉落Mixin均沿消费者检查，见[回执](verification/logistics-network-audit-20261021.json)。有限坐标和抛错合同未摆世界／故障注入，不以source hash宣称全文件或完整物流验收。
+
+五源码八完整执行流281、574／574、1382／1420、381／377、66在仅列明局部绑定归一后保持，原始字面量位置另核，四处说明纠正，其余注释／Stonecutter及用户材料摘要保持。未编译／初始化、Gradle、测试、客户端、实际存档重启、构建或推送；正式记录至260，全面goal active。
+
 ## 2026-10-21 / 第七十二批物流搬运来源与完整源码比较
 
 23原／25当前、40平台视图与本机2工件15entry／7只读javap归档，实际ItemStack→Item→扩展默认损伤getter及PotionItem无覆盖链已追；药效分别存Potion／POTION_CONTENTS。源10／目的32／目标64的10对0搬运、条件1000L无缓冲、工具100／10／100／1对1／1／1／0均是有限源码分支推导，未执行目标代码，见[回执](verification/logistics-transfer-audit-20261021.json)。

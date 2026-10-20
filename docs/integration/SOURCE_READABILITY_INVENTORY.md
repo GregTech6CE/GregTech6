@@ -86,3 +86,5 @@
 2026-10-21 第七十一批：物流核心布局／输入、BE／Block及路由薄边界五份展开，tick块缩进与局部名称明确，重复LogisticsCoverHost import精确去一条。四处说明限定模拟软上限／无电复位／扫描绑定／需求值；八完整执行在该import去除与限定绑定后保持。见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)，路由、生命周期与其余源码整理继续。
 
 2026-10-21 第七十二批：LogisticsCoverDefinition／Type展开共享定义与原生映射方法，Interaction展开Neo数据／拒绝条件和反馈，两段old／next改为previousValue／nextTargetSize；FluidRouter拆拥挤条件与选择表达式。四源码七完整执行流540、370／370、1720／1729、1518／1521在限定绑定归一后保持，三处说明纠正。交互最长行174降到119／122，用户材料表不动，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)及[回执](verification/logistics-transfer-audit-20261021.json)；其余可读性与全面核查继续。
+
+2026-10-21 第七十三批：LogisticsNetwork展开种子三循环／快照方法，距离a／b改为origin／target；LogisticsCovers展开数据与同步／掉落，循环i改为faceIndex；物流线BE展开两版保存。ExtenderSpec展开八定义，RelayRoutingRules由3→12行，保留66项完整执行；五源总八份完整执行和原始字面量位置保持，四处说明限定，用户材料不动，见[网络专题](LOGISTICS_NETWORK_AUDIT.md)和[回执](verification/logistics-network-audit-20261021.json)。全面可读性队列继续。

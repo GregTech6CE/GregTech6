@@ -361,3 +361,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 第六十八批[大型换热器导航](LARGE_HEAT_EXCHANGER_AUDIT.md)：GTMultiblocks→LargeHeatExchangerControllerBlock／GTBlockEntities，BE负责世界17格认领、八出口与冷热能力／持久化；SharedHeatExchangerStructure给纯布局，HeatExchangerRules给纯数值计划，HotFluidFuelCycle处理原生流体／配方，HeatExchangerData处理版本设置／NBT。Neo流体入口在BasicMachineRegistries，而非单块用的SmelteryRegistries；制作由MultiblockCraftingRecipes→MultiblockRecipePack→MachineRecipeIngredients。六源展开只改善阅读，不增平台业务副本。
 
 物流覆盖板定义在core的`LogisticsCoverDefinition`，原生`LogisticsCoverType`只映射ItemStack；`LogisticsCoverInteraction`负责样本／优先级／数量及工具交互，`LogisticsItemRouter`／`LogisticsFluidRouter`负责实际能力搬运。模板FilterRules与覆盖板matches是不同合同，勿混用；本轮整理四源码，没有引入两套业务，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。
+
+物流网络的物理扫描与坐标快照在`LogisticsNetwork`，安装物及显示数据在`LogisticsCovers`，线的持久化／原生同步在`LogisticsWireBlockEntity`；能力代理的目标选择在`ExtenderSpec`／`RelayRoutingRules`和原生`ExtenderBlockEntity`／`CapabilityRelayBlockEntity`，不等于物流节点委托。五源码已展开并保留执行，见[网络与生命周期核查](LOGISTICS_NETWORK_AUDIT.md)。
