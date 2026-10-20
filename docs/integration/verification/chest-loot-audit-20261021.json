@@ -1,0 +1,392 @@
+{
+  "date": "2026-10-21",
+  "batch": 48,
+  "baseline": "cce17c8e3",
+  "read_only_review_baseline": "03be2061d2dc61fcdbcc1680d42f4e0f56ab032d",
+  "provenance": "Gregorius Techneticies / GregTech-6 Team; original LGPL-3.0-or-later notices retained.",
+  "original_sources": {
+    "gregtech/tileentity/misc/MultiTileEntityLootCrate.java": "915a6491fb0fed745c1312f1e8b6d1d516912219efadea1cf5439b4f831e38fb",
+    "gregapi/block/multitileentity/example/MultiTileEntityChest.java": "3ff277040006dc7a64d2a3a386b1395cf89e7fabb7ac1701dee18d3f6cddc4a8",
+    "gregapi/util/ST.java": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+    "gregtech/loaders/c/Loader_Loot.java": "200794dc2b3e34e48cd8dba12c4b822097031c949fec2acb53677b48c7493fa4",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+    "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregtech/worldgen/ChestGenHooksChestReplacer.java": "2953e9c6b7dbf79cef534662838c83592d861d290273d49f8b8e242c1ef2422a",
+    "gregtech/worldgen/TwilightTreasureReplacer.java": "bdb6d1c164e53b2e1db692e4e081ac91a83f6223be0b7f6e7fcbada1d3243eb1"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/block/LootCrateBlock.java": "c28f8259cfc57beceacdb02efb2a8073aac8650d91ea896ffd9711f303eff8db",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LootChestBlock.java": "1829c10e964578f5c6e54ce8e4b309e42bbb40ac1ab70bc2d50fa5b9e0d6ad29",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": "1ea004ec7edfd08f9024c4ba54541a486f7f5d406b520306a1c4071eadb4f14c",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java": "2197fe8158fdc77068b6737283ba627ca4befb6465aff94e89a8ae1aa8304138",
+    "core/src/main/java/com/gregtech/gregtech/content/loot/LootRollRules.java": "46c3bafb982dc83e8802a5c0dcbc9d70a624e671c333065d8a622d9b9b6569dd",
+    "core/src/main/java/com/gregtech/gregtech/content/loot/LootChestCatalog.java": "2f9dba075eed905902866d8c64163aaebbd7d8a2ed10d53895a788ab285bc8a3",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTLootGen.java": "1e7b8829c428775abefce68f5a1c84c2b52b5aa04a7c2af187120c6e268683ff",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java": "eca9a254575e9712af6b87891d2776fe6fb75cad0c3e24a5741d96c23a1b7d0f",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/SharedDecorBlocks.java": "86e5de465fa6e8aad011541a0588ba03722794de2267e53c3dc700fc4d09787b",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java": "9924c93cbcbfc12d75bed1e4a4dcebf63052a13f408e1cfd90cb2e4c150f2e1a",
+    "core/src/main/resources/data/gt6ce/recipes/tools/loot_crate.json": "985aa078a603be7ce552823a23026c4ce28c3e64cede334d5fa47d980e7e6ee8",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingDecor.java": "c9709fc4b81f2fc0c4949bed72b1a61035e06a1b27948d2a6a5b65ae282ddd7e",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/data/PortableCraftingRecipePack.java": "ef43031da03c3cf062900df9629f1bf15066e567ef550fc4d9c5df28ed241832",
+    "core/src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java": "5bbc6eba4d0f0448b3816aa48eca79ac56a64dfa027430b24da9f8049bdb5470",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlockItem.java": "6ca11d491b3fb40dda46763afb706e8787eab1a89d3678ed5a10c30ff4a42eed",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolItems.java": "790ce1d3ead22c318d96fff6452ead2670044af9ebcb81ef858666a76363a41c",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/StorageBlockTooltips.java": "06718484bf5a771e5326225b2d1ddf36e59f6531d69fe177d21db9fe5be0b111",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MetalChestVisuals.java": "30fa6acfa8caa333b5c86a64b82f58e8ea76247ca978fb0ca649ea10631b3815",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MetalChestRenderer.java": "2ef9353f72cc03eb4f975645f758afcaaaaf7c3c5cf6a599759bb98286ae253a",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MetalChestItemRenderer.java": "19b2a9d910f4a605611e3ea8ba2b687701302cab45af4177b26bca53b8b00a61",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java": "2247701388f8374a4e187e4fbb3e5c9b205ccbb2a5ba1d3abbac9df6a559eb7e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java": "650f4b5dd215d3572623fab689d928824ea99acba8dc89efec50073b300d3670",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java": "592e473ce11f0976bd3d44119216195037253760e7dcf99340b3bbd7ef3a706f",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java": "1dd5eb2d07ec7387eb0fc8daa5b22d33b541ba4c3ec17ed648f4a90ba7ee3538",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/OriginalHandCraftingRows.java": "24b08a45cca6d8cc52506f50ae11d8506cf5de0667be5faa29499260c1a7cdb2",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/recipe/RuntimeRecipeLifecycle.java": "6cd276453c0c95561c2bbd35d4c3632fee6c376df7ff6146e0b7ef4a8bc56b8f",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/recipe/HandToolCraftingRecipeInjector.java": "498785dd6403dd2f364da8dcea67ace76b22d71ddbc3ffc7e92271590f04158c",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java": "d34e3f5c9aa7c289582a9fd20bd3792947962f7c4dd4f1e03acf22ee4fe457b4",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/MetalChestCapabilities.java": "59c8b8806a35ac0da2af10fb4da11460de1244373d6236787c3bd89654e73505",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmelteryToolItem.java": "430230d45e047a9d8f3335adfc68a226c40413b518752ee94cc3163a7c673345",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/data/ManualToolRecipePack.java": "a407242999ca6d847694f81a0b1ad5df2a9eeb5cd4d6f6127c71d35522556eaf",
+    "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+    "core/src/main/java/com/gregtech/gregtech/content/book/BookShelfRules.java": "aa06c3d98ce9122be35f614e865ec6720a8a7e2b11e99cf7c45737320bdaf2e4",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/book/GTBookList.java": "a8846bf6cbf595a3d7a6b20a0b9dbdf23fc4a0869ccd9e63fe4eefa0a9edfe84"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/book/BookShelfRules.java": {
+      "before_sha256": "e870a77c8b0222a70bfd5a4130682777ff71660cfe0569dc4b3a7f5d4c5b8db2",
+      "after_sha256": "aa06c3d98ce9122be35f614e865ec6720a8a7e2b11e99cf7c45737320bdaf2e4",
+      "projections": {
+        "core": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 480,
+          "signature_sha256": "6a020040a0236aaf16aa481821085d67387212007b3895d87beb2eaf76fe0c7a"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/book/GTBookList.java": {
+      "before_sha256": "20d4fd20fada2e245fffabcb095f7e645761df9f3aeff8522a760b115437203d",
+      "after_sha256": "a8846bf6cbf595a3d7a6b20a0b9dbdf23fc4a0869ccd9e63fe4eefa0a9edfe84",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 476,
+          "signature_sha256": "4c970a76cf0b4ce2f3e1ebb796f0227aea2cc22538395c60f7ffa4f523dd76a5"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 480,
+          "signature_sha256": "26b0a070598ee0f8d617459ebb69c368072cec5e77becb62f8b873866ec35e5f"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": {
+      "before_sha256": "9b7fc175bdb440e6b25e7dc41dc2466544b01a1466bcd06df055da9583ce6d91",
+      "after_sha256": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 1680,
+          "signature_sha256": "f43d9b68ca5284f332456e98eff6c86c556d69287f7668a5f88e4010106f9942"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 1885,
+          "signature_sha256": "fcebcd6afd97ce4c24b9253c28461d1688e5899007627485935d98908fc53ff0"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MetalChestVisuals.java": {
+      "before_sha256": "54955cb7cb89b9acbb0b651b61ccc330090a5788fbcc2538215102b6e55e9411",
+      "after_sha256": "30fa6acfa8caa333b5c86a64b82f58e8ea76247ca978fb0ca649ea10631b3815",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 762,
+          "signature_sha256": "8b855a691babe39562574b8719f4bbfc08f655bcbab59dae7ec24dbf2f157f6f"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 727,
+          "signature_sha256": "65434dc4f49b6cb78a95b6ab61b2d25569e09a1122c24dfbd4f51c94ad4f7f67"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": {
+      "before_sha256": "7b44c062cf38e2277a4f47f2af2f9546806201dbc72e5d255116c1ed2c25cba3",
+      "after_sha256": "1ea004ec7edfd08f9024c4ba54541a486f7f5d406b520306a1c4071eadb4f14c",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 2350,
+          "signature_sha256": "c400d5778faf8689cff387187a07cc5cf6e09649b989f7c9f9f3edd0eeba8df5"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 2234,
+          "signature_sha256": "e47df9940121688b7ed88688f24d6bff183d9846e35acd0df1f6358aac44999a"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java": {
+      "before_sha256": "a417cf81d9d61922a16c5c9b01eb661b96c0cd9d48e2e7bcb1996c2364b1c725",
+      "after_sha256": "eca9a254575e9712af6b87891d2776fe6fb75cad0c3e24a5741d96c23a1b7d0f",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 449,
+          "signature_sha256": "5a62509dc4ed340e4bea890d4e57c8343db9e9df77850c95cb4c16b146c8d21b"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 463,
+          "signature_sha256": "8c64ec741a2567af2a26bae7909241018db73e4444b62c0e7b11c0835659d987"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/LootCrateBlock.java": {
+      "before_sha256": "35586dc6c390741cfc0c01fadc813e39e525195553d70a55f8b81a0b6717060c",
+      "after_sha256": "c28f8259cfc57beceacdb02efb2a8073aac8650d91ea896ffd9711f303eff8db",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 845,
+          "signature_sha256": "962d3bc4c165ab1c6450a34b8d8e4577198caae3ff094a0d2e59e7b2206725b3"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 948,
+          "signature_sha256": "2619851aee133d441ea183029704d158781b3916dfd500d4ae2d3f6ea420a78f"
+        }
+      }
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/loot/LootRollRules.java": {
+      "before_sha256": "ba809556750994803049731f18878ec6e053ed9e7b8bd1993d87c494005763b7",
+      "after_sha256": "46c3bafb982dc83e8802a5c0dcbc9d70a624e671c333065d8a622d9b9b6569dd",
+      "projections": {
+        "core": {
+          "tokens_and_literal_positions_equal": true,
+          "token_count": 161,
+          "signature_sha256": "c676d1e9a2f4e7670965f506ebb10ab1f9fb54e78a094666b3daad265e268f46"
+        }
+      }
+    }
+  },
+  "additional_exact_format_proofs": {
+    "bookshelf-readability-20261021": {
+      "date": "2026-10-21",
+      "baseline": "cce17c8e3bce545bbea03ab0bf7ac09456b73aeb",
+      "observed_head": "cce17c8e3bce545bbea03ab0bf7ac09456b73aeb",
+      "production_changes": "Two owned sources only: whitespace/line breaks plus GTBookList explanatory comments. No whitelist, formula, ID, ordering or runtime changes.",
+      "projection_scope": "Maintained Neo comment bodies explicitly exposed via check_relay_sharing.project before native branch selection; all Java literals kept at their token positions.",
+      "verification_scope": "Static source comparisons only. No Gradle, compilation, new tests, game, build, commit or push.",
+      "files": {
+        "core/src/main/java/com/gregtech/gregtech/content/book/BookShelfRules.java": {
+          "sha256_before": "cfc605f973ebed73b1208773aa8d2e7723b71e7bf4b80e634dcf27ad614f061b",
+          "sha256_after": "aa06c3d98ce9122be35f614e865ec6720a8a7e2b11e99cf7c45737320bdaf2e4",
+          "lines_before": 14,
+          "lines_after": 64,
+          "before_matches_git_baseline_after_line_endings": true,
+          "stonecutter_directives_identical": true,
+          "stonecutter_directive_count": 0,
+          "projections": {
+            "core": {
+              "java_token_count_with_literal_positions": 480,
+              "java_tokens_and_literal_positions_identical": true,
+              "literal_count": 23,
+              "all_literals_identical": true,
+              "comments_identical": true,
+              "comments_changed_intentionally": false,
+              "token_stream_sha256": "3079639be140bf8fd3398d7544256f3ef76ca1683641fdbe560f4f9c67df2b54"
+            }
+          }
+        },
+        "multiversion/src/main/java/com/gregtech/gregtech/content/book/GTBookList.java": {
+          "sha256_before": "186bedf0330b3035fb589247bf42b86030851fd32290e2855d9fafe1d322dc60",
+          "sha256_after": "a8846bf6cbf595a3d7a6b20a0b9dbdf23fc4a0869ccd9e63fe4eefa0a9edfe84",
+          "lines_before": 124,
+          "lines_after": 130,
+          "before_matches_git_baseline_after_line_endings": true,
+          "stonecutter_directives_identical": true,
+          "stonecutter_directive_count": 15,
+          "projections": {
+            "forge": {
+              "java_token_count_with_literal_positions": 476,
+              "java_tokens_and_literal_positions_identical": true,
+              "literal_count": 2,
+              "all_literals_identical": true,
+              "comments_identical": false,
+              "comments_changed_intentionally": true,
+              "token_stream_sha256": "378d5b71c41fca738a3b9d0d519162497ce66aa4b4e96aa35b2e3f8e555a02bd"
+            },
+            "neoforge": {
+              "java_token_count_with_literal_positions": 480,
+              "java_tokens_and_literal_positions_identical": true,
+              "literal_count": 2,
+              "all_literals_identical": true,
+              "comments_identical": false,
+              "comments_changed_intentionally": true,
+              "token_stream_sha256": "8e63a956c6c7f27e0d3ede7363a1fb4e42e4433d6e2695534c83ac34f9f52927"
+            }
+          }
+        }
+      }
+    },
+    "chest-readability-20261021": {
+      "date": "2026-10-21",
+      "baseline": "cce17c8e3bce545bbea03ab0bf7ac09456b73aeb",
+      "production_changes": "Whitespace and line breaks only in two owned chest sources.",
+      "projection_method": "check_relay_sharing.project explicitly exposes maintained Neo comment bodies before platform selection.",
+      "verification_scope": "Exact static token/literal-position/comment/directive comparisons only; no Gradle, compilation, tests, gameplay, commits or central document edits.",
+      "files": {
+        "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": {
+          "sha256_before": "8b9076e0b635957e6ca3a042515716b3f00fb0281b7504c432338ce01934efad",
+          "git_baseline_sha256": "9b7fc175bdb440e6b25e7dc41dc2466544b01a1466bcd06df055da9583ce6d91",
+          "sha256_after": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+          "before_matches_git_baseline_after_line_endings": true,
+          "maintained_source_differs_only_in_whitespace": true,
+          "stonecutter_directives_identical": true,
+          "stonecutter_directive_count": 12,
+          "nested_comment_escape_markers_identical": true,
+          "nested_comment_escape_marker_count": 0,
+          "lines_before": 203,
+          "lines_after": 259,
+          "projections": {
+            "forge": {
+              "java_tokens_and_literal_positions_identical": true,
+              "java_token_count_with_literal_positions": 1680,
+              "literal_count": 4,
+              "java_source_view_code_tokens_and_literals_identical": true,
+              "comments_identical": true,
+              "comment_count": 4,
+              "lines_before": 190,
+              "lines_after": 229,
+              "max_code_line_chars_before": 151,
+              "max_code_line_chars_after": 110,
+              "expected_branch_witnesses_present": [
+                "publicInteractionResultuse(",
+                "net.minecraft.world.item.BlockItem.setBlockEntityData("
+              ],
+              "token_stream_sha256": "f43d9b68ca5284f332456e98eff6c86c556d69287f7668a5f88e4010106f9942"
+            },
+            "neoforge": {
+              "java_tokens_and_literal_positions_identical": true,
+              "java_token_count_with_literal_positions": 1885,
+              "literal_count": 6,
+              "java_source_view_code_tokens_and_literals_identical": true,
+              "comments_identical": true,
+              "comment_count": 4,
+              "lines_before": 194,
+              "lines_after": 249,
+              "max_code_line_chars_before": 532,
+              "max_code_line_chars_after": 110,
+              "expected_branch_witnesses_present": [
+                "useItemOn(",
+                "useWithoutItem(",
+                "CustomData.of(data)",
+                "MapCodec.unit(this)"
+              ],
+              "token_stream_sha256": "fcebcd6afd97ce4c24b9253c28461d1688e5899007627485935d98908fc53ff0"
+            }
+          }
+        },
+        "multiversion/src/main/java/com/gregtech/gregtech/client/MetalChestVisuals.java": {
+          "sha256_before": "bcf139b5d5531512f544d793ad44d90d459c8f0778e548b2e5c4556fd5afe806",
+          "git_baseline_sha256": "54955cb7cb89b9acbb0b651b61ccc330090a5788fbcc2538215102b6e55e9411",
+          "sha256_after": "30fa6acfa8caa333b5c86a64b82f58e8ea76247ca978fb0ca649ea10631b3815",
+          "before_matches_git_baseline_after_line_endings": true,
+          "maintained_source_differs_only_in_whitespace": true,
+          "stonecutter_directives_identical": true,
+          "stonecutter_directive_count": 3,
+          "nested_comment_escape_markers_identical": true,
+          "nested_comment_escape_marker_count": 0,
+          "lines_before": 62,
+          "lines_after": 67,
+          "projections": {
+            "forge": {
+              "java_tokens_and_literal_positions_identical": true,
+              "java_token_count_with_literal_positions": 762,
+              "literal_count": 11,
+              "java_source_view_code_tokens_and_literals_identical": true,
+              "comments_identical": true,
+              "comment_count": 2,
+              "lines_before": 59,
+              "lines_after": 64,
+              "max_code_line_chars_before": 222,
+              "max_code_line_chars_after": 103,
+              "expected_branch_witnesses_present": [
+                "((color>>16)&255)/255F"
+              ],
+              "token_stream_sha256": "8b855a691babe39562574b8719f4bbfc08f655bcbab59dae7ec24dbf2f157f6f"
+            },
+            "neoforge": {
+              "java_tokens_and_literal_positions_identical": true,
+              "java_token_count_with_literal_positions": 727,
+              "literal_count": 11,
+              "java_source_view_code_tokens_and_literals_identical": true,
+              "comments_identical": true,
+              "comment_count": 2,
+              "lines_before": 59,
+              "lines_after": 63,
+              "max_code_line_chars_before": 222,
+              "max_code_line_chars_after": 103,
+              "expected_branch_witnesses_present": [
+                "0xFF000000|color",
+                "overlay,-1)"
+              ],
+              "token_stream_sha256": "65434dc4f49b6cb78a95b6ab61b2d25569e09a1122c24dfbd4f51c94ad4f7f67"
+            }
+          }
+        }
+      }
+    }
+  },
+  "external_dependency_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/src/main/java/net/minecraftforge/common/ChestGenHooks.java",
+      "accessed": "2026-10-21",
+      "publisher": "MinecraftForge official source repository",
+      "reviewed_functions": {
+        "getCount": "209–212 one-based source lines; exclusive maximum for distinct bounds",
+        "getOneItem": "220–225 one-based source lines; weighted entry then first stack",
+        "generateStacks": "101–124 one-based source lines; inclusive item count"
+      },
+      "raw_bytes_hash_available": false,
+      "note": "Read using web primary source; no invented raw-byte SHA or code copied into production.",
+      "root_reverified": "2026-10-21; official primary source read via web tool."
+    }
+  ],
+  "new_findings": [
+    "ALIGN-152",
+    "ALIGN-153",
+    "ALIGN-154",
+    "ALIGN-155",
+    "ALIGN-156",
+    "ALIGN-157",
+    "ALIGN-158",
+    "ALIGN-159",
+    "ALIGN-160",
+    "ALIGN-161"
+  ],
+  "extended_findings": [
+    "ALIGN-139",
+    "ALIGN-142"
+  ],
+  "clarified_findings": [
+    "ALIGN-102"
+  ],
+  "verification_scope": "Source call chains, primary dependency review and exact token comparisons only. No Gradle, compilation, new tests, game, old-save restart, build or push."
+}

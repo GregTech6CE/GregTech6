@@ -278,3 +278,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `recipe/FiniteBottleFillingRecipe.java`：装瓶配方的消耗／余料版本边界；core `content/recipe/generated/GeneratedRecipeSink.java`：唯一配方表的线程内 consumer 与 finally 恢复，属于运行桥接，不是普通数据行。
 
 缺项与十一份投影等价边界见[本批报告](BOTTLE_BOOKSHELF_AUDIT.md)。
+
+## 金属箱、战利品与专用模型
+
+- `block/inventory/MetalChestBlock.java`、`blockentity/inventory/MetalChestBlockEntity.java`：GUI 箱、物品掉落、能力、盖子与 pending／消费状态；`LootChestBlock` 保存专用目录的表身份。
+- `client/MetalChestVisuals.java`：世界／物品共用的专用 RGB 参数与模型；普通 block tint Mixin 不会自动覆盖它。
+- `block/LootCrateBlock.java`：一次性撬棍板条箱；与 GUI 箱经验生命周期不同。
+- core `content/loot/LootRollRules.java`、共享 `content/loot/GTLootTables.java`：权重、计数与表填充；当前 inclusive count 不等于原版两种计数合同均已对齐。
+- 书架 `BookShelfRules` 集合／坐标公式与 `GTBookList` 说明已展开；仍是当前子集，不是完整 BOOK_REGISTER。
+
+源码范围和十四份等价投影见[箱子报告](CHEST_LOOT_AUDIT.md)。
