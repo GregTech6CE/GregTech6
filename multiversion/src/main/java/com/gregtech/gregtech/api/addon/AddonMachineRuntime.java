@@ -76,7 +76,9 @@ public final class AddonMachineRuntime {
                 .processingEfficiency(definition.efficiency())
                 .constantEnergy(definition.constantEnergy())
                 .structureKeys(definition.structureKeys())
-                .minimumLightAbove(parameters.minimumLightAbove());
+                .minimumLightAbove(parameters.minimumLightAbove())
+                .searchOutputTanks(parameters.searchOutputTanks())
+                .exclusiveOutputs(parameters.exclusiveOutputs());
         if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC
                 || parameters.cheapOverclockingSpecified())
             spec.cheapOverclocking(parameters.cheapOverclocking());

@@ -138,9 +138,14 @@ public final class MachineEmiRecipe implements EmiRecipe {
         for (int i = 0; i < items.length; i++) {
             if (items[i] == null || items[i].isEmpty()) continue;
             var p = MachineGuiLayout.item(input, i, count, input ? map.mInputFluidCount : map.mOutputFluidCount);
-            var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(recipe.getOutputChance(i) / 10000f),p.x()-1,p.y()-1,scale,offset));
+            int chance = input ? 0 : recipe.getOutputChance(i);
+            var slot = widgets.add(new FittedSlot(input ? ingredients.ingredient(recipe,i) : EmiStack.of(items[i]).setChance(chance / 10000f),p.x()-1,p.y()-1,scale,offset));
             if (input && recipe.isCatalystInput(i)) slot.catalyst(true).appendTooltip(Component.translatable("gt6ce.jei.catalyst"));
-            if (!input) slot.recipeContext(this);
+            if (!input) {
+                slot.recipeContext(this);
+                if (com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.enabled(map))
+                    slot.appendTooltip(Component.translatable("gt6ce.jei.chance", chance / 100.0));
+            }
         }
         for (int i = 0; i < fluids.length; i++) {
             if (fluids[i] == null || fluids[i].isEmpty()) continue;

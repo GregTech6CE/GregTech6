@@ -30,7 +30,9 @@ public record BasicMachineParameters(
         long energyInMax,
         boolean cheapOverclocking,
         boolean cheapOverclockingSpecified,
-        int minimumLightAbove
+        int minimumLightAbove,
+        boolean searchOutputTanks,
+        boolean exclusiveOutputs
 ) {
     public BasicMachineParameters {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -57,7 +59,7 @@ public record BasicMachineParameters(
                                   MachineFaceMasks faceConfig, List<WeightedMaterial> constructionMaterials,
                                   int parallelLimit, long energyInMin, long energyInMax) {
         this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
-                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0);
+                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0, false, false);
     }
 
     /**
@@ -111,6 +113,8 @@ public record BasicMachineParameters(
         private boolean cheapOverclocking;
         private boolean cheapOverclockingSpecified;
         private int minimumLightAbove;
+        private boolean searchOutputTanks;
+        private boolean exclusiveOutputs;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -128,13 +132,16 @@ public record BasicMachineParameters(
         public Builder constructionMaterials(List<WeightedMaterial> value) { construction = List.copyOf(value); return this; }
         public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingSpecified = true; return this; }
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
+        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
+        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
         public BasicMachineParameters build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineParameters(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
                     hardness, resistance, faces, construction, parallel,
                     energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
                     energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
-                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove);
+                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
+                    searchOutputTanks, exclusiveOutputs);
         }
     }
     public String textureFolder() { return machineName; }
