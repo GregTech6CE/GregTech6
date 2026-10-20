@@ -5,8 +5,10 @@ import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.addon.GregTechMaterialContributor;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
 import com.gregtech.gregtech.api.addon.PrefixCondition;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
+import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.GTMaterial;
@@ -19,6 +21,7 @@ import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.ModReferences;
+import com.gregtech.gregtech.worldgen.GTOreVeins;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -66,6 +69,11 @@ public final class AddonMaterialContracts {
             case "oremismatch" -> oreMismatch();
             case "orelist" -> oreListMismatch();
             case "oreunknown" -> oreUnknown();
+            case "vein" -> vein();
+            case "veinname" -> veinName();
+            case "veinore" -> veinOre();
+            case "veindup" -> veinDuplicate();
+            case "veinbad" -> veinBad();
             case "prefix" -> prefix();
             case "prefixname" -> prefixName();
             case "prefixcase" -> prefixCase();
@@ -363,6 +371,92 @@ public final class AddonMaterialContracts {
         expectThrows("unknown material", "NotAMaterial", "OreMetal");
     }
 
+    private static void vein() throws Exception {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()),
+                List.of(new OreVeinDeclaration("ore_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "Copper", "Tin")),
+                List.of(new SmallOreDeclaration("ore_metal", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "OreMetal"),
+                        new SmallOreDeclaration("ore_metal_end", SmallOreDeclaration.END, 20, 60, 2, "OreMetal")));
+        AddonMaterials.submitWorldgen("zz_vein", List.of(),
+                List.of(new OreVeinDeclaration("late_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 5, 3, 16,
+                        "OreMetal", "Iron", "Copper", "Tin")),
+                List.of());
+        GTMaterialRegistry.init();
+        var active = GTOreVeins.activeOverworldVeins();
+        check(active.stream().map(GTOreVeins.OreVein::name).toList().equals(List.of("ore_metal", "late_metal")),
+                "stone layers keep built-in large veins out, and addon veins follow addon id: " + active);
+        check(active.get(0).between().getName().equals("Copper") && active.get(0).top().getName().equals("OreMetal"),
+                "vein materials resolve");
+        check(GTOreVeins.OVERWORLD_VEINS.size() == 31, "the built-in overworld vein table stays put");
+        var small = GTOreVeins.activeOverworldSmallOres();
+        check(small.size() == GTOreVeins.OVERWORLD_SMALL_ORES.size() + 1
+                        && small.subList(0, GTOreVeins.OVERWORLD_SMALL_ORES.size()).equals(GTOreVeins.OVERWORLD_SMALL_ORES)
+                        && small.get(small.size() - 1).name().equals("ore_metal"),
+                "small ores are appended after the built-in table");
+        var endSmall = GTOreVeins.activeEndSmallOres();
+        check(endSmall.size() == GTOreVeins.END_SMALL_ORES.size() + 1
+                        && endSmall.get(endSmall.size() - 1).name().equals("ore_metal_end"),
+                "an end small ore is appended to the end table");
+        check(GTOreVeins.activeEndVeins().equals(GTOreVeins.END_VEINS), "an overworld vein does not enter the end table");
+        check(GTOreVeins.activeNetherSmallOres().equals(GTOreVeins.NETHER_SMALL_ORES),
+                "an overworld small ore does not enter the nether table");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "veins do not change built-in item ids");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "veins do not change built-in block ids");
+    }
+
+    private static void veinName() {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()),
+                List.of(new OreVeinDeclaration("iron", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal")),
+                List.of());
+        expectThrows("built-in", "iron", "aa_vein", "minecraft:overworld");
+    }
+
+    private static void veinOre() {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("PlainDust").dust().build()),
+                List.of(),
+                List.of(new SmallOreDeclaration("plain", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "PlainDust")));
+        expectThrows("has no ore", "PlainDust", "aa_vein");
+    }
+
+    private static void veinDuplicate() {
+        prepare();
+        var vein = new OreVeinDeclaration("ore_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                "OreMetal", "OreMetal", "OreMetal", "OreMetal");
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()), List.of(vein), List.of());
+        AddonMaterials.submitWorldgen("zz_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()), List.of(vein), List.of());
+        expectThrows("already", "zz_vein", "aa_vein", "ore_metal");
+    }
+
+    private static void veinBad() {
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("Iron", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "lower-case");
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("sample", "minecraft:the_nether", 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "the_nether");
+        expectThrows(IllegalArgumentException.class,
+                () -> new SmallOreDeclaration("sample", "twilight:forest", 10, 40, 4, "Copper"),
+                "dimension");
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("sample", OreVeinDeclaration.OVERWORLD, 40, 10, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "Y range");
+        expectThrows(IllegalArgumentException.class,
+                () -> new SmallOreDeclaration("sample", SmallOreDeclaration.OVERWORLD, 10, 40, 0, "Copper"),
+                "amount");
+    }
+
     private static void ungeneratedForm() {
         prepare();
         AddonMaterials.submit("aa_form", List.of(), List.of(new MaterialFormRequest("Diamond", "crystal")), null);
@@ -388,6 +482,15 @@ public final class AddonMaterialContracts {
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "an empty addon queue keeps the core item id sample");
         check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "an empty addon queue keeps the core block id sample");
         check(PrefixRegistry.addonPrefixes().isEmpty(), "an empty addon queue adds no prefix");
+        check(GTOreVeins.activeOverworldVeins().isEmpty(), "an empty addon queue adds no overworld vein");
+        check(GTOreVeins.activeOverworldSmallOres().equals(GTOreVeins.OVERWORLD_SMALL_ORES),
+                "an empty addon queue keeps the small ore table");
+        check(GTOreVeins.activeNetherSmallOres().equals(GTOreVeins.NETHER_SMALL_ORES),
+                "an empty addon queue keeps the nether small ore table");
+        check(GTOreVeins.activeEndSmallOres().equals(GTOreVeins.END_SMALL_ORES),
+                "an empty addon queue keeps the end small ore table");
+        check(GTOreVeins.activeEndVeins().equals(GTOreVeins.END_VEINS),
+                "an empty addon queue keeps the end vein table");
         check(MaterialPrefix.foil.getMaterialWeight() == GTValues.U4, "built-in foil weight stays on the switch");
     }
 

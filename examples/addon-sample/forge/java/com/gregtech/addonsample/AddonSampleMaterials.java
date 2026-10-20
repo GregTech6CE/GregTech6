@@ -6,7 +6,9 @@ import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialComposition;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
+import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
 import com.gregtech.gregtech.api.material.GTValues;
 
@@ -43,6 +45,15 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<MaterialFormRequest> forms() {
         return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"));
+    }
+
+    @Override public List<OreVeinDeclaration> oreVeins() {
+        return List.of(new OreVeinDeclaration("sample_alloy", OreVeinDeclaration.OVERWORLD, 10, 40, 40, 3, 16,
+                "SampleAlloy", "SampleAlloy", "Copper", "Tin"));
+    }
+
+    @Override public List<SmallOreDeclaration> smallOres() {
+        return List.of(new SmallOreDeclaration("sample_alloy", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "SampleAlloy"));
     }
 
     @Override public List<PrefixDeclaration> prefixes() {

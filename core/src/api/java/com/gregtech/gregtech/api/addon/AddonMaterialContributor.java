@@ -41,6 +41,18 @@ public interface AddonMaterialContributor {
      */
     default List<CrucibleReactionRemoval> crucibleRemovals() { return List.of(); }
 
+    /**
+     * Large ore veins. GregTech appends them after the built-in veins of the same dimension.
+     * A name that already exists in that dimension fails startup. Return pure data.
+     */
+    default List<OreVeinDeclaration> oreVeins() { return List.of(); }
+
+    /**
+     * Small ores. GregTech appends them after the built-in small ores of the same dimension.
+     * A name that already exists in that dimension fails startup. Return pure data.
+     */
+    default List<SmallOreDeclaration> smallOres() { return List.of(); }
+
     /** Other cross-material links. New materials still belong in {@link #materials()}. */
     default void link() {}
 }
