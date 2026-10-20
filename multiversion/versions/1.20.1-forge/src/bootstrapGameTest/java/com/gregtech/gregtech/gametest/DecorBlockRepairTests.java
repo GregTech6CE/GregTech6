@@ -2,6 +2,7 @@ package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.block.misc.ColoredGlassBlock;
 import com.gregtech.gregtech.block.misc.ConcreteBlock;
+import com.gregtech.gregtech.block.misc.FixedConstructionColor;
 import com.gregtech.gregtech.block.misc.GregLanternBlock;
 import com.gregtech.gregtech.block.misc.RoadStripeRailBlock;
 import com.gregtech.gregtech.registry.GTDecorBlocks;
@@ -38,10 +39,9 @@ public final class DecorBlockRepairTests {
             h.assertTrue(ConcreteBlock.itemColor(concrete) == color
                             && ConcreteBlock.itemColor(reinforced) == color
                             && ColoredGlassBlock.itemColor(glow) == color,
-                    "all GT6 dye metadata variants survive as BlockStateTag: " + color);
+                    "all GT6 dye variants have their registered color identity: " + color);
         }
-        var red = GTDecorBlocks.CONCRETE.get().defaultBlockState()
-                .setValue(ConcreteBlock.COLOR, DyeColor.RED);
+        var red = FixedConstructionColor.recolor(GTDecorBlocks.CONCRETE.get().defaultBlockState(), DyeColor.RED);
         level.setBlock(h.absolutePos(POS), red, 3);
         var drops = Block.getDrops(red, level, h.absolutePos(POS), null);
         h.assertTrue(drops.size() == 1 && ConcreteBlock.itemColor(drops.get(0)) == DyeColor.RED,
@@ -54,8 +54,7 @@ public final class DecorBlockRepairTests {
                         && GTDecorBlocks.CONCRETE_REINFORCED.get().defaultBlockState()
                                 .is(BlockTags.NEEDS_DIAMOND_TOOL),
                 "survival mining honors GT6's concrete harvest levels 1 and 3");
-        var cyanGlow = GTDecorBlocks.GLASS_GLOW.get().defaultBlockState()
-                .setValue(ColoredGlassBlock.COLOR, DyeColor.CYAN);
+        var cyanGlow = FixedConstructionColor.recolor(GTDecorBlocks.GLASS_GLOW.get().defaultBlockState(), DyeColor.CYAN);
         h.assertTrue(cyanGlow.getLightEmission(level, h.absolutePos(POS)) == 15
                         && cyanGlow.getLightBlock(level, h.absolutePos(POS)) == 0,
                 "GT6 colored glow glass emits 15 light without blocking light");

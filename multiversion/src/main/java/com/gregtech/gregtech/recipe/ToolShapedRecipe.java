@@ -42,7 +42,7 @@ public class ToolShapedRecipe implements CraftingRecipe, com.gregtech.gregtech.a
   return toolsUsable(input);
  }
  private static boolean coloredConstruction(ItemStack stack) {
-  return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR);
+  return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&(item.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor || item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR));
  }
  private void displayConstructionColor() {
   if(constructionColor.isEmpty())return;
@@ -86,7 +86,7 @@ public class ToolShapedRecipe extends ShapedRecipe implements com.gregtech.gregt
         return toolsUsable(inventory);
     }
     private static boolean coloredConstruction(ItemStack stack) {
-        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR);
+        return stack.getItem() instanceof net.minecraft.world.item.BlockItem item&&(item.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor || item.getBlock().defaultBlockState().hasProperty(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR));
     }
     private void displayConstructionColor() {
         if(constructionColor.isEmpty())return;

@@ -2,7 +2,23 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.decor_glass_glow",
   "contents": [
-    "item:gt6ce:glass_glow"
+    "item:gt6ce:glass_glow",
+    "item:gt6ce:glass_glow_white",
+    "item:gt6ce:glass_glow_orange",
+    "item:gt6ce:glass_glow_magenta",
+    "item:gt6ce:glass_glow_light_blue",
+    "item:gt6ce:glass_glow_yellow",
+    "item:gt6ce:glass_glow_lime",
+    "item:gt6ce:glass_glow_pink",
+    "item:gt6ce:glass_glow_gray",
+    "item:gt6ce:glass_glow_light_gray",
+    "item:gt6ce:glass_glow_cyan",
+    "item:gt6ce:glass_glow_purple",
+    "item:gt6ce:glass_glow_blue",
+    "item:gt6ce:glass_glow_brown",
+    "item:gt6ce:glass_glow_green",
+    "item:gt6ce:glass_glow_red",
+    "item:gt6ce:glass_glow_black"
   ],
   "priority": 120
 }

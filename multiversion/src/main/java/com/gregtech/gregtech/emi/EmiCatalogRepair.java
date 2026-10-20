@@ -12,7 +12,9 @@ final class EmiCatalogRepair {
         try {
         // EMI publishes only its API at compile time. Keep this version-specific index bridge isolated.
         var field = Class.forName("dev.emi.emi.registry.EmiStackList").getField("stacks");
-        var original = (java.util.List<EmiStack>) field.get(null);
+        var original = ((java.util.List<EmiStack>) field.get(null)).stream()
+                .filter(stack -> !(stack.getItemStack().getItem() instanceof
+                        com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem)).toList();
         var sorted = new ArrayList<EmiStack>();
         for (var stack : original) {
             if (!stack.getId().getNamespace().equals("gt6ce")) continue;

@@ -1447,6 +1447,70 @@
       "source_key": "gt.block.asphalt.11",
       "value": "Yellow Asphalt"
     },
+    "block.gt6ce.asphalt_black": {
+      "source_key": "gt.block.asphalt.0",
+      "value": "Black Asphalt"
+    },
+    "block.gt6ce.asphalt_blue": {
+      "source_key": "gt.block.asphalt.4",
+      "value": "Blue Asphalt"
+    },
+    "block.gt6ce.asphalt_brown": {
+      "source_key": "gt.block.asphalt.3",
+      "value": "Brown Asphalt"
+    },
+    "block.gt6ce.asphalt_cyan": {
+      "source_key": "gt.block.asphalt.6",
+      "value": "Cyan Asphalt"
+    },
+    "block.gt6ce.asphalt_gray": {
+      "source_key": "gt.block.asphalt.8",
+      "value": "Gray Asphalt"
+    },
+    "block.gt6ce.asphalt_green": {
+      "source_key": "gt.block.asphalt.2",
+      "value": "Green Asphalt"
+    },
+    "block.gt6ce.asphalt_light_blue": {
+      "source_key": "gt.block.asphalt.12",
+      "value": "Light Blue Asphalt"
+    },
+    "block.gt6ce.asphalt_light_gray": {
+      "source_key": "gt.block.asphalt.7",
+      "value": "Light Gray Asphalt"
+    },
+    "block.gt6ce.asphalt_lime": {
+      "source_key": "gt.block.asphalt.10",
+      "value": "Lime Asphalt"
+    },
+    "block.gt6ce.asphalt_magenta": {
+      "source_key": "gt.block.asphalt.13",
+      "value": "Magenta Asphalt"
+    },
+    "block.gt6ce.asphalt_orange": {
+      "source_key": "gt.block.asphalt.14",
+      "value": "Orange Asphalt"
+    },
+    "block.gt6ce.asphalt_pink": {
+      "source_key": "gt.block.asphalt.9",
+      "value": "Pink Asphalt"
+    },
+    "block.gt6ce.asphalt_purple": {
+      "source_key": "gt.block.asphalt.5",
+      "value": "Purple Asphalt"
+    },
+    "block.gt6ce.asphalt_red": {
+      "source_key": "gt.block.asphalt.1",
+      "value": "Red Asphalt"
+    },
+    "block.gt6ce.asphalt_white": {
+      "source_key": "gt.block.asphalt.15",
+      "value": "White Asphalt"
+    },
+    "block.gt6ce.asphalt_yellow": {
+      "source_key": "gt.block.asphalt.11",
+      "value": "Yellow Asphalt"
+    },
     "block.gt6ce.auto_hammer_aluminium": {
       "source_key": "gt.multitileentity.15002",
       "value": "Automatic Hammer (Steel)"
@@ -4145,6 +4209,22 @@
       "source_key": "gt.block.cfoam.11",
       "value": "Yellow C-Foam"
     },
+    "block.gt6ce.cfoam_black": {
+      "source_key": "gt.block.cfoam.0",
+      "value": "Black C-Foam"
+    },
+    "block.gt6ce.cfoam_blue": {
+      "source_key": "gt.block.cfoam.4",
+      "value": "Blue C-Foam"
+    },
+    "block.gt6ce.cfoam_brown": {
+      "source_key": "gt.block.cfoam.3",
+      "value": "Brown C-Foam"
+    },
+    "block.gt6ce.cfoam_cyan": {
+      "source_key": "gt.block.cfoam.6",
+      "value": "Cyan C-Foam"
+    },
     "block.gt6ce.cfoam_fresh": {
       "source_key": "gt.block.cfoam.fresh.15",
       "value": "White Fresh C-Foam"
@@ -4213,9 +4293,81 @@
       "source_key": "gt.block.cfoam.fresh.11",
       "value": "Yellow Fresh C-Foam"
     },
+    "block.gt6ce.cfoam_fresh_black": {
+      "source_key": "gt.block.cfoam.fresh.0",
+      "value": "Black Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_blue": {
+      "source_key": "gt.block.cfoam.fresh.4",
+      "value": "Blue Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_brown": {
+      "source_key": "gt.block.cfoam.fresh.3",
+      "value": "Brown Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_cyan": {
+      "source_key": "gt.block.cfoam.fresh.6",
+      "value": "Cyan Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_gray": {
+      "source_key": "gt.block.cfoam.fresh.8",
+      "value": "Gray Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_green": {
+      "source_key": "gt.block.cfoam.fresh.2",
+      "value": "Green Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_light_blue": {
+      "source_key": "gt.block.cfoam.fresh.12",
+      "value": "Light Blue Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_light_gray": {
+      "source_key": "gt.block.cfoam.fresh.7",
+      "value": "Light Gray Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_lime": {
+      "source_key": "gt.block.cfoam.fresh.10",
+      "value": "Lime Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_magenta": {
+      "source_key": "gt.block.cfoam.fresh.13",
+      "value": "Magenta Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_orange": {
+      "source_key": "gt.block.cfoam.fresh.14",
+      "value": "Orange Fresh C-Foam"
+    },
     "block.gt6ce.cfoam_fresh_owned": {
       "source_key": "gt.block.cfoam.fresh.15",
       "value": "White Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_pink": {
+      "source_key": "gt.block.cfoam.fresh.9",
+      "value": "Pink Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_purple": {
+      "source_key": "gt.block.cfoam.fresh.5",
+      "value": "Purple Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_red": {
+      "source_key": "gt.block.cfoam.fresh.1",
+      "value": "Red Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_white": {
+      "source_key": "gt.block.cfoam.fresh.15",
+      "value": "White Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_fresh_yellow": {
+      "source_key": "gt.block.cfoam.fresh.11",
+      "value": "Yellow Fresh C-Foam"
+    },
+    "block.gt6ce.cfoam_gray": {
+      "source_key": "gt.block.cfoam.8",
+      "value": "Gray C-Foam"
+    },
+    "block.gt6ce.cfoam_green": {
+      "source_key": "gt.block.cfoam.2",
+      "value": "Green C-Foam"
     },
     "block.gt6ce.cfoam_hardened": {
       "source_key": "gt.block.cfoam.15",
@@ -4224,6 +4376,38 @@
     "block.gt6ce.cfoam_hardened_owned": {
       "source_key": "gt.block.cfoam.15",
       "value": "White C-Foam"
+    },
+    "block.gt6ce.cfoam_light_blue": {
+      "source_key": "gt.block.cfoam.12",
+      "value": "Light Blue C-Foam"
+    },
+    "block.gt6ce.cfoam_light_gray": {
+      "source_key": "gt.block.cfoam.7",
+      "value": "Light Gray C-Foam"
+    },
+    "block.gt6ce.cfoam_lime": {
+      "source_key": "gt.block.cfoam.10",
+      "value": "Lime C-Foam"
+    },
+    "block.gt6ce.cfoam_magenta": {
+      "source_key": "gt.block.cfoam.13",
+      "value": "Magenta C-Foam"
+    },
+    "block.gt6ce.cfoam_orange": {
+      "source_key": "gt.block.cfoam.14",
+      "value": "Orange C-Foam"
+    },
+    "block.gt6ce.cfoam_pink": {
+      "source_key": "gt.block.cfoam.9",
+      "value": "Pink C-Foam"
+    },
+    "block.gt6ce.cfoam_purple": {
+      "source_key": "gt.block.cfoam.5",
+      "value": "Purple C-Foam"
+    },
+    "block.gt6ce.cfoam_red": {
+      "source_key": "gt.block.cfoam.1",
+      "value": "Red C-Foam"
     },
     "block.gt6ce.cfoam_slab": {
       "source_key": "gt.block.cfoam.slab.0.15",
@@ -4292,6 +4476,78 @@
     "block.gt6ce.cfoam_slab.yellow": {
       "source_key": "gt.block.cfoam.slab.0.11",
       "value": "Yellow C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_black": {
+      "source_key": "gt.block.cfoam.slab.0.0",
+      "value": "Black C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_blue": {
+      "source_key": "gt.block.cfoam.slab.0.4",
+      "value": "Blue C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_brown": {
+      "source_key": "gt.block.cfoam.slab.0.3",
+      "value": "Brown C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_cyan": {
+      "source_key": "gt.block.cfoam.slab.0.6",
+      "value": "Cyan C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_gray": {
+      "source_key": "gt.block.cfoam.slab.0.8",
+      "value": "Gray C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_green": {
+      "source_key": "gt.block.cfoam.slab.0.2",
+      "value": "Green C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_light_blue": {
+      "source_key": "gt.block.cfoam.slab.0.12",
+      "value": "Light Blue C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_light_gray": {
+      "source_key": "gt.block.cfoam.slab.0.7",
+      "value": "Light Gray C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_lime": {
+      "source_key": "gt.block.cfoam.slab.0.10",
+      "value": "Lime C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_magenta": {
+      "source_key": "gt.block.cfoam.slab.0.13",
+      "value": "Magenta C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_orange": {
+      "source_key": "gt.block.cfoam.slab.0.14",
+      "value": "Orange C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_pink": {
+      "source_key": "gt.block.cfoam.slab.0.9",
+      "value": "Pink C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_purple": {
+      "source_key": "gt.block.cfoam.slab.0.5",
+      "value": "Purple C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_red": {
+      "source_key": "gt.block.cfoam.slab.0.1",
+      "value": "Red C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_white": {
+      "source_key": "gt.block.cfoam.slab.0.15",
+      "value": "White C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_slab_yellow": {
+      "source_key": "gt.block.cfoam.slab.0.11",
+      "value": "Yellow C-Foam Slab"
+    },
+    "block.gt6ce.cfoam_white": {
+      "source_key": "gt.block.cfoam.15",
+      "value": "White C-Foam"
+    },
+    "block.gt6ce.cfoam_yellow": {
+      "source_key": "gt.block.cfoam.11",
+      "value": "Yellow C-Foam"
     },
     "block.gt6ce.charging_crafting_table": {
       "source_key": "gt.multitileentity.5510",
@@ -4933,6 +5189,62 @@
       "source_key": "gt.block.concrete.11",
       "value": "Yellow Concrete"
     },
+    "block.gt6ce.concrete_black": {
+      "source_key": "gt.block.concrete.0",
+      "value": "Black Concrete"
+    },
+    "block.gt6ce.concrete_blue": {
+      "source_key": "gt.block.concrete.4",
+      "value": "Blue Concrete"
+    },
+    "block.gt6ce.concrete_brown": {
+      "source_key": "gt.block.concrete.3",
+      "value": "Brown Concrete"
+    },
+    "block.gt6ce.concrete_cyan": {
+      "source_key": "gt.block.concrete.6",
+      "value": "Cyan Concrete"
+    },
+    "block.gt6ce.concrete_gray": {
+      "source_key": "gt.block.concrete.8",
+      "value": "Gray Concrete"
+    },
+    "block.gt6ce.concrete_green": {
+      "source_key": "gt.block.concrete.2",
+      "value": "Green Concrete"
+    },
+    "block.gt6ce.concrete_light_blue": {
+      "source_key": "gt.block.concrete.12",
+      "value": "Light Blue Concrete"
+    },
+    "block.gt6ce.concrete_light_gray": {
+      "source_key": "gt.block.concrete.7",
+      "value": "Light Gray Concrete"
+    },
+    "block.gt6ce.concrete_lime": {
+      "source_key": "gt.block.concrete.10",
+      "value": "Lime Concrete"
+    },
+    "block.gt6ce.concrete_magenta": {
+      "source_key": "gt.block.concrete.13",
+      "value": "Magenta Concrete"
+    },
+    "block.gt6ce.concrete_orange": {
+      "source_key": "gt.block.concrete.14",
+      "value": "Orange Concrete"
+    },
+    "block.gt6ce.concrete_pink": {
+      "source_key": "gt.block.concrete.9",
+      "value": "Pink Concrete"
+    },
+    "block.gt6ce.concrete_purple": {
+      "source_key": "gt.block.concrete.5",
+      "value": "Purple Concrete"
+    },
+    "block.gt6ce.concrete_red": {
+      "source_key": "gt.block.concrete.1",
+      "value": "Red Concrete"
+    },
     "block.gt6ce.concrete_reinforced": {
       "source_key": "gt.block.concrete.reinforced.7",
       "value": "Light Gray Reinforced Concrete"
@@ -5000,6 +5312,78 @@
     "block.gt6ce.concrete_reinforced.yellow": {
       "source_key": "gt.block.concrete.reinforced.11",
       "value": "Yellow Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_black": {
+      "source_key": "gt.block.concrete.reinforced.0",
+      "value": "Black Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_blue": {
+      "source_key": "gt.block.concrete.reinforced.4",
+      "value": "Blue Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_brown": {
+      "source_key": "gt.block.concrete.reinforced.3",
+      "value": "Brown Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_cyan": {
+      "source_key": "gt.block.concrete.reinforced.6",
+      "value": "Cyan Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_gray": {
+      "source_key": "gt.block.concrete.reinforced.8",
+      "value": "Gray Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_green": {
+      "source_key": "gt.block.concrete.reinforced.2",
+      "value": "Green Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_light_blue": {
+      "source_key": "gt.block.concrete.reinforced.12",
+      "value": "Light Blue Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_light_gray": {
+      "source_key": "gt.block.concrete.reinforced.7",
+      "value": "Light Gray Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_lime": {
+      "source_key": "gt.block.concrete.reinforced.10",
+      "value": "Lime Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_magenta": {
+      "source_key": "gt.block.concrete.reinforced.13",
+      "value": "Magenta Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_orange": {
+      "source_key": "gt.block.concrete.reinforced.14",
+      "value": "Orange Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_pink": {
+      "source_key": "gt.block.concrete.reinforced.9",
+      "value": "Pink Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_purple": {
+      "source_key": "gt.block.concrete.reinforced.5",
+      "value": "Purple Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_red": {
+      "source_key": "gt.block.concrete.reinforced.1",
+      "value": "Red Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_white": {
+      "source_key": "gt.block.concrete.reinforced.15",
+      "value": "White Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_reinforced_yellow": {
+      "source_key": "gt.block.concrete.reinforced.11",
+      "value": "Yellow Reinforced Concrete"
+    },
+    "block.gt6ce.concrete_white": {
+      "source_key": "gt.block.concrete.15",
+      "value": "White Concrete"
+    },
+    "block.gt6ce.concrete_yellow": {
+      "source_key": "gt.block.concrete.11",
+      "value": "Yellow Concrete"
     },
     "block.gt6ce.control_processor_unit": {
       "source_key": "gt.multitileentity.18202",
@@ -7093,6 +7477,202 @@
       "source_key": "gt.block.glass.11",
       "value": "Yellow Glass"
     },
+    "block.gt6ce.glass_clear_black": {
+      "source_key": "gt.block.glass.0",
+      "value": "Black Glass"
+    },
+    "block.gt6ce.glass_clear_blue": {
+      "source_key": "gt.block.glass.4",
+      "value": "Blue Glass"
+    },
+    "block.gt6ce.glass_clear_brown": {
+      "source_key": "gt.block.glass.3",
+      "value": "Brown Glass"
+    },
+    "block.gt6ce.glass_clear_cyan": {
+      "source_key": "gt.block.glass.6",
+      "value": "Cyan Glass"
+    },
+    "block.gt6ce.glass_clear_gray": {
+      "source_key": "gt.block.glass.8",
+      "value": "Gray Glass"
+    },
+    "block.gt6ce.glass_clear_green": {
+      "source_key": "gt.block.glass.2",
+      "value": "Green Glass"
+    },
+    "block.gt6ce.glass_clear_light_blue": {
+      "source_key": "gt.block.glass.12",
+      "value": "Light Blue Glass"
+    },
+    "block.gt6ce.glass_clear_light_gray": {
+      "source_key": "gt.block.glass.7",
+      "value": "Light Gray Glass"
+    },
+    "block.gt6ce.glass_clear_lime": {
+      "source_key": "gt.block.glass.10",
+      "value": "Lime Glass"
+    },
+    "block.gt6ce.glass_clear_magenta": {
+      "source_key": "gt.block.glass.13",
+      "value": "Magenta Glass"
+    },
+    "block.gt6ce.glass_clear_orange": {
+      "source_key": "gt.block.glass.14",
+      "value": "Orange Glass"
+    },
+    "block.gt6ce.glass_clear_pink": {
+      "source_key": "gt.block.glass.9",
+      "value": "Pink Glass"
+    },
+    "block.gt6ce.glass_clear_purple": {
+      "source_key": "gt.block.glass.5",
+      "value": "Purple Glass"
+    },
+    "block.gt6ce.glass_clear_red": {
+      "source_key": "gt.block.glass.1",
+      "value": "Red Glass"
+    },
+    "block.gt6ce.glass_clear_slab": {
+      "source_key": "gt.block.glass.slab.0.15",
+      "value": "White Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.black": {
+      "source_key": "gt.block.glass.slab.0.0",
+      "value": "Black Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.blue": {
+      "source_key": "gt.block.glass.slab.0.4",
+      "value": "Blue Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.brown": {
+      "source_key": "gt.block.glass.slab.0.3",
+      "value": "Brown Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.cyan": {
+      "source_key": "gt.block.glass.slab.0.6",
+      "value": "Cyan Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.gray": {
+      "source_key": "gt.block.glass.slab.0.8",
+      "value": "Gray Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.green": {
+      "source_key": "gt.block.glass.slab.0.2",
+      "value": "Green Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.light_blue": {
+      "source_key": "gt.block.glass.slab.0.12",
+      "value": "Light Blue Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.light_gray": {
+      "source_key": "gt.block.glass.slab.0.7",
+      "value": "Light Gray Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.lime": {
+      "source_key": "gt.block.glass.slab.0.10",
+      "value": "Lime Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.magenta": {
+      "source_key": "gt.block.glass.slab.0.13",
+      "value": "Magenta Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.orange": {
+      "source_key": "gt.block.glass.slab.0.14",
+      "value": "Orange Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.pink": {
+      "source_key": "gt.block.glass.slab.0.9",
+      "value": "Pink Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.purple": {
+      "source_key": "gt.block.glass.slab.0.5",
+      "value": "Purple Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.red": {
+      "source_key": "gt.block.glass.slab.0.1",
+      "value": "Red Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.white": {
+      "source_key": "gt.block.glass.slab.0.15",
+      "value": "White Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab.yellow": {
+      "source_key": "gt.block.glass.slab.0.11",
+      "value": "Yellow Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_black": {
+      "source_key": "gt.block.glass.slab.0.0",
+      "value": "Black Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_blue": {
+      "source_key": "gt.block.glass.slab.0.4",
+      "value": "Blue Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_brown": {
+      "source_key": "gt.block.glass.slab.0.3",
+      "value": "Brown Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_cyan": {
+      "source_key": "gt.block.glass.slab.0.6",
+      "value": "Cyan Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_gray": {
+      "source_key": "gt.block.glass.slab.0.8",
+      "value": "Gray Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_green": {
+      "source_key": "gt.block.glass.slab.0.2",
+      "value": "Green Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_light_blue": {
+      "source_key": "gt.block.glass.slab.0.12",
+      "value": "Light Blue Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_light_gray": {
+      "source_key": "gt.block.glass.slab.0.7",
+      "value": "Light Gray Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_lime": {
+      "source_key": "gt.block.glass.slab.0.10",
+      "value": "Lime Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_magenta": {
+      "source_key": "gt.block.glass.slab.0.13",
+      "value": "Magenta Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_orange": {
+      "source_key": "gt.block.glass.slab.0.14",
+      "value": "Orange Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_pink": {
+      "source_key": "gt.block.glass.slab.0.9",
+      "value": "Pink Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_purple": {
+      "source_key": "gt.block.glass.slab.0.5",
+      "value": "Purple Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_red": {
+      "source_key": "gt.block.glass.slab.0.1",
+      "value": "Red Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_white": {
+      "source_key": "gt.block.glass.slab.0.15",
+      "value": "White Glass Slab"
+    },
+    "block.gt6ce.glass_clear_slab_yellow": {
+      "source_key": "gt.block.glass.slab.0.11",
+      "value": "Yellow Glass Slab"
+    },
+    "block.gt6ce.glass_clear_white": {
+      "source_key": "gt.block.glass.15",
+      "value": "White Glass"
+    },
+    "block.gt6ce.glass_clear_yellow": {
+      "source_key": "gt.block.glass.11",
+      "value": "Yellow Glass"
+    },
     "block.gt6ce.glass_glow": {
       "source_key": "gt.block.glass.glow.7",
       "value": "Light Gray Glow Glass"
@@ -7161,6 +7741,62 @@
       "source_key": "gt.block.glass.glow.11",
       "value": "Yellow Glow Glass"
     },
+    "block.gt6ce.glass_glow_black": {
+      "source_key": "gt.block.glass.glow.0",
+      "value": "Black Glow Glass"
+    },
+    "block.gt6ce.glass_glow_blue": {
+      "source_key": "gt.block.glass.glow.4",
+      "value": "Blue Glow Glass"
+    },
+    "block.gt6ce.glass_glow_brown": {
+      "source_key": "gt.block.glass.glow.3",
+      "value": "Brown Glow Glass"
+    },
+    "block.gt6ce.glass_glow_cyan": {
+      "source_key": "gt.block.glass.glow.6",
+      "value": "Cyan Glow Glass"
+    },
+    "block.gt6ce.glass_glow_gray": {
+      "source_key": "gt.block.glass.glow.8",
+      "value": "Gray Glow Glass"
+    },
+    "block.gt6ce.glass_glow_green": {
+      "source_key": "gt.block.glass.glow.2",
+      "value": "Green Glow Glass"
+    },
+    "block.gt6ce.glass_glow_light_blue": {
+      "source_key": "gt.block.glass.glow.12",
+      "value": "Light Blue Glow Glass"
+    },
+    "block.gt6ce.glass_glow_light_gray": {
+      "source_key": "gt.block.glass.glow.7",
+      "value": "Light Gray Glow Glass"
+    },
+    "block.gt6ce.glass_glow_lime": {
+      "source_key": "gt.block.glass.glow.10",
+      "value": "Lime Glow Glass"
+    },
+    "block.gt6ce.glass_glow_magenta": {
+      "source_key": "gt.block.glass.glow.13",
+      "value": "Magenta Glow Glass"
+    },
+    "block.gt6ce.glass_glow_orange": {
+      "source_key": "gt.block.glass.glow.14",
+      "value": "Orange Glow Glass"
+    },
+    "block.gt6ce.glass_glow_pink": {
+      "source_key": "gt.block.glass.glow.9",
+      "value": "Pink Glow Glass"
+    },
+    "block.gt6ce.glass_glow_purple": {
+      "source_key": "gt.block.glass.glow.5",
+      "value": "Purple Glow Glass"
+    },
+    "block.gt6ce.glass_glow_red": {
+      "source_key": "gt.block.glass.glow.1",
+      "value": "Red Glow Glass"
+    },
     "block.gt6ce.glass_glow_slab": {
       "source_key": "gt.block.glass.glow.slab.0.15",
       "value": "White Glow Glass Slab"
@@ -7228,6 +7864,78 @@
     "block.gt6ce.glass_glow_slab.yellow": {
       "source_key": "gt.block.glass.glow.slab.0.11",
       "value": "Yellow Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_black": {
+      "source_key": "gt.block.glass.glow.slab.0.0",
+      "value": "Black Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_blue": {
+      "source_key": "gt.block.glass.glow.slab.0.4",
+      "value": "Blue Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_brown": {
+      "source_key": "gt.block.glass.glow.slab.0.3",
+      "value": "Brown Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_cyan": {
+      "source_key": "gt.block.glass.glow.slab.0.6",
+      "value": "Cyan Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_gray": {
+      "source_key": "gt.block.glass.glow.slab.0.8",
+      "value": "Gray Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_green": {
+      "source_key": "gt.block.glass.glow.slab.0.2",
+      "value": "Green Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_light_blue": {
+      "source_key": "gt.block.glass.glow.slab.0.12",
+      "value": "Light Blue Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_light_gray": {
+      "source_key": "gt.block.glass.glow.slab.0.7",
+      "value": "Light Gray Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_lime": {
+      "source_key": "gt.block.glass.glow.slab.0.10",
+      "value": "Lime Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_magenta": {
+      "source_key": "gt.block.glass.glow.slab.0.13",
+      "value": "Magenta Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_orange": {
+      "source_key": "gt.block.glass.glow.slab.0.14",
+      "value": "Orange Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_pink": {
+      "source_key": "gt.block.glass.glow.slab.0.9",
+      "value": "Pink Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_purple": {
+      "source_key": "gt.block.glass.glow.slab.0.5",
+      "value": "Purple Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_red": {
+      "source_key": "gt.block.glass.glow.slab.0.1",
+      "value": "Red Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_white": {
+      "source_key": "gt.block.glass.glow.slab.0.15",
+      "value": "White Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_slab_yellow": {
+      "source_key": "gt.block.glass.glow.slab.0.11",
+      "value": "Yellow Glow Glass Slab"
+    },
+    "block.gt6ce.glass_glow_white": {
+      "source_key": "gt.block.glass.glow.15",
+      "value": "White Glow Glass"
+    },
+    "block.gt6ce.glass_glow_yellow": {
+      "source_key": "gt.block.glass.glow.11",
+      "value": "Yellow Glow Glass"
     },
     "block.gt6ce.glowtus_black": {
       "source_key": "gt.block.lilypad.glowtus.0",

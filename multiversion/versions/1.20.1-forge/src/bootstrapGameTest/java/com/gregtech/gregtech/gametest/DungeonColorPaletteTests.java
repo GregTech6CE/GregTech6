@@ -2,6 +2,7 @@ package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.block.misc.ConcreteBlock;
 import com.gregtech.gregtech.block.misc.ColoredGlassBlock;
+import com.gregtech.gregtech.block.misc.FixedConstructionColor;
 import com.gregtech.gregtech.block.stone.StoneType;
 import com.gregtech.gregtech.registry.GTDecorBlocks;
 import com.gregtech.gregtech.worldgen.GTDungeonFeature;
@@ -42,8 +43,8 @@ public final class DungeonColorPaletteTests {
         for (int i = 0; i < GT6_ORDER.length; i++) {
             helper.assertTrue(data(helper, i).colored(1, 1, 1), "concrete placed for GT6 dye " + i);
             var state = helper.getLevel().getBlockState(pos);
-            helper.assertTrue(state.is(GTDecorBlocks.CONCRETE.get())
-                            && state.getValue(ConcreteBlock.COLOR) == GT6_ORDER[i],
+            helper.assertTrue(state.getBlock() instanceof ConcreteBlock
+                            && FixedConstructionColor.colorOf(state) == GT6_ORDER[i],
                     "GT6 concrete metadata " + i + " is " + GT6_ORDER[i]);
         }
         helper.succeed();
@@ -55,8 +56,8 @@ public final class DungeonColorPaletteTests {
         for (int i = 0; i < GT6_ORDER.length; i++) {
             helper.assertTrue(data(helper, i).glass(1, 1, 1), "glass placed for GT6 dye " + i);
             var state = helper.getLevel().getBlockState(pos);
-            helper.assertTrue(state.is(GTDecorBlocks.GLASS_CLEAR.get())
-                            && state.getValue(ColoredGlassBlock.COLOR) == GT6_ORDER[i],
+            helper.assertTrue(state.getBlock() instanceof ColoredGlassBlock glass && !glass.glow()
+                            && FixedConstructionColor.colorOf(state) == GT6_ORDER[i],
                     "GT6 clear glass metadata " + i + " is " + GT6_ORDER[i]);
         }
         helper.succeed();
@@ -67,8 +68,8 @@ public final class DungeonColorPaletteTests {
         GTDungeonData red = data(helper, 1);
         helper.assertTrue(red.glassglow(1, 1, 1), "glowing glass placed");
         var state = helper.getLevel().getBlockState(helper.absolutePos(new BlockPos(1, 1, 1)));
-        helper.assertTrue(state.is(GTDecorBlocks.GLASS_GLOW.get())
-                        && state.getValue(ColoredGlassBlock.COLOR) == DyeColor.RED
+        helper.assertTrue(state.getBlock() instanceof ColoredGlassBlock glass && glass.glow()
+                        && FixedConstructionColor.colorOf(state) == DyeColor.RED
                         && state.getLightEmission() == 15,
                 "GT6 glowing glass colour and light are both preserved");
         helper.succeed();

@@ -332,12 +332,12 @@ public final class GregTechClient {
             } else if (block instanceof com.gregtech.gregtech.block.misc.ConcreteBlock) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0
                         ? com.gregtech.gregtech.block.misc.ConcreteBlock.tint(
-                                state.getValue(com.gregtech.gregtech.block.misc.ConcreteBlock.COLOR))
+                                com.gregtech.gregtech.block.misc.FixedConstructionColor.colorOf(state))
                         : 0xFFFFFF, block);
             } else if (block instanceof com.gregtech.gregtech.block.misc.ColoredGlassBlock) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0
                         ? com.gregtech.gregtech.block.misc.ConcreteBlock.tint(
-                                state.getValue(com.gregtech.gregtech.block.misc.ColoredGlassBlock.COLOR))
+                                com.gregtech.gregtech.block.misc.FixedConstructionColor.colorOf(state))
                         : 0xFFFFFF, block);
             } else if (block instanceof com.gregtech.gregtech.block.tool.AdvancedButtonBlock) {
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0

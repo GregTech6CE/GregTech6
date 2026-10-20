@@ -2,7 +2,23 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.decor_asphalt",
   "contents": [
-    "item:gt6ce:asphalt"
+    "item:gt6ce:asphalt",
+    "item:gt6ce:asphalt_white",
+    "item:gt6ce:asphalt_orange",
+    "item:gt6ce:asphalt_magenta",
+    "item:gt6ce:asphalt_light_blue",
+    "item:gt6ce:asphalt_yellow",
+    "item:gt6ce:asphalt_lime",
+    "item:gt6ce:asphalt_pink",
+    "item:gt6ce:asphalt_gray",
+    "item:gt6ce:asphalt_light_gray",
+    "item:gt6ce:asphalt_cyan",
+    "item:gt6ce:asphalt_purple",
+    "item:gt6ce:asphalt_blue",
+    "item:gt6ce:asphalt_brown",
+    "item:gt6ce:asphalt_green",
+    "item:gt6ce:asphalt_red",
+    "item:gt6ce:asphalt_black"
   ],
   "priority": 120
 }
