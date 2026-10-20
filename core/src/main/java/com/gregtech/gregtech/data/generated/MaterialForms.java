@@ -2302,8 +2302,13 @@ public final class MaterialForms {
         return flags == null ? Set.of() : flags;
     }
 
-    /** Whether GT6 registers the given item-generator form for a material. */
+    /**
+     * Whether GT6 registers the given item-generator form for a material.
+     * An addon material that declared ores also has {@code ORES}. That overlay is not part of the generated table.
+     */
     public static boolean has(GTMaterial material, String flag) {
+        if (material != null && "ORES".equals(flag)
+                && com.gregtech.gregtech.api.addon.AddonMaterials.hasOreForm(material)) return true;
         return of(material).contains(flag);
     }
 
