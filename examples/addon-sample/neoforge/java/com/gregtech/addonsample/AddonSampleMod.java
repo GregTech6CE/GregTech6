@@ -3,6 +3,7 @@ package com.gregtech.addonsample;
 import com.gregtech.gregtech.api.addon.GregTechAddon;
 import com.gregtech.gregtech.api.addon.GregTechAddons;
 import com.gregtech.gregtech.api.addon.GregTechMaterials;
+import com.gregtech.gregtech.api.addon.platform.AddonFluids;
 import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
@@ -53,6 +54,15 @@ public final class AddonSampleMod {
                         new FluidStack[]{new FluidStack(Fluids.WATER, 250)}, null,
                         20, 16, 0, new int[]{6_000, 4_000}));
                 if (read == null) throw new IllegalStateException("sample detector read row rejected");
+                var hydrogen = AddonFluids.still("Hydrogen", 2);
+                if (hydrogen == null || hydrogen.isEmpty())
+                    throw new IllegalStateException("sample hydrogen missing");
+                var fuel = AddonRecipes.map("addon_sample.fuel.gas").add(new AddonRecipes.Line(
+                        null, null,
+                        new FluidStack[]{hydrogen},
+                        new FluidStack[]{new FluidStack(Fluids.WATER, 3)},
+                        2, -16, 0));
+                if (fuel == null) throw new IllegalStateException("sample hydrogen fuel rejected");
             }
         });
     }
