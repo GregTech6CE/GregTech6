@@ -22,6 +22,7 @@ import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.data.GregTechTags;
 import java.util.*;
@@ -124,7 +125,8 @@ public class LongDistanceTransformerBlockEntity extends com.gregtech.gregtech.bl
             if(!execute) return amount; // Original simulation validates the route, not downstream demand.
             var out=receiver.front().getOpposite(); var pos=receiver.worldPosition.relative(out);
             if(!level.hasChunkAt(pos)) return 0;
-            if(level.getBlockEntity(pos) instanceof IEnergyBlock sink) {
+            IEnergyBlock sink=EnergyBlockViews.view(level.getBlockEntity(pos));
+            if(sink!=null) {
                 long used=Math.max(0,Math.min(amount,sink.doEnergyInjection(type,out.getOpposite(),size<0?-output:output,amount,true)));
                 if(used>0){active=true;receiver.active=true;setChanged();receiver.setChanged();}return used;
             }

@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.block.energy;
 
-import com.gregtech.gregtech.api.energy.IEnergyBlock;
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.tool.*;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.*;
@@ -54,7 +54,8 @@ public final class LaserFiberBlock extends Block implements EntityBlock,ToolInte
             var neighbor=pos.relative(side);
             if(!level.hasChunkAt(neighbor))continue;
             var entity=level.getBlockEntity(neighbor);
-            if(entity instanceof IEnergyBlock energy && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.LU,side.getOpposite(),true)
+            var energy = EnergyBlockViews.view(entity);
+            if(energy != null && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.LU,side.getOpposite(),true)
                     || energy.isEnergyEmittingTo(GregTechTags.Energy.LU,side.getOpposite(),true)) || level.getBlockState(neighbor).getBlock() instanceof LaserFiberBlock){
                 next=next.setValue(ElectricWireBlock.propFor(side),true);
                 var other=level.getBlockState(neighbor);

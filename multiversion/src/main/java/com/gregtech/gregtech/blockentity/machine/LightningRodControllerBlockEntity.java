@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
 import com.gregtech.gregtech.block.machine.OriginalLightningRodControllerBlock;
@@ -51,8 +52,8 @@ public class LightningRodControllerBlockEntity extends GTEnergyBlockEntity imple
         if(!machine.isStructureOk()) { if(machine.energy!=0) {machine.energy=0;machine.setChanged();}return; }
         if(machine.energy>=PACKET) {
             long sent=0;var below=pos.below();
-            if(level.hasChunkAt(below)&&level.getBlockEntity(below) instanceof IEnergyBlock target)
-                sent=target.doEnergyInjection(GregTechTags.Energy.EU,Direction.UP,PACKET,Math.min(16,machine.energy/PACKET),true);
+            IEnergyBlock target=level.hasChunkAt(below)?EnergyBlockViews.view(level.getBlockEntity(below)):null;
+            if(target!=null) sent=target.doEnergyInjection(GregTechTags.Energy.EU,Direction.UP,PACKET,Math.min(16,machine.energy/PACKET),true);
             machine.energy-=com.gregtech.gregtech.content.multiblock.AdvancedControllerRules.lightningDrain(machine.energy,sent);machine.setChanged();return;
         }
         if(machine.rodLength>0 && level.random.nextInt(1000000)<Math.min(100,machine.rodLength)

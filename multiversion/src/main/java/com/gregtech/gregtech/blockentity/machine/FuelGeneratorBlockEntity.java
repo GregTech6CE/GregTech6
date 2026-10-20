@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.blockentity.machine;
 
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 //? if >=1.21.1 {
@@ -155,7 +156,9 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
     private long injectBehind(long packet) {
         Direction back = front().getOpposite();
         BlockPos target = worldPosition.relative(back, declaration().output().distance());
-        if (level == null || !level.hasChunkAt(target) || !(level.getBlockEntity(target) instanceof IEnergyBlock receiver)) return 0;
+        if (level == null || !level.hasChunkAt(target)) return 0;
+        IEnergyBlock receiver = EnergyBlockViews.view(level.getBlockEntity(target));
+        if (receiver == null) return 0;
         return receiver.doEnergyInjection(energyType(), back.getOpposite(), packet, 1, true);
     }
 

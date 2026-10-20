@@ -1,5 +1,7 @@
 package com.gregtech.gregtech.api.addon.platform;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
@@ -37,4 +39,10 @@ public interface MachineBehavior {
 
     /** The block is about to drop its contents. Inventory and state items are dropped afterwards. */
     default void beforeBreak(MachineBehaviorContext context) {}
+
+    /**
+     * A player used this block. Return true when the behavior handled it.
+     * The default returns false and the machine menu opens. A wrench and a fluid container are handled first.
+     */
+    default boolean onUse(MachineBehaviorContext context, Player player, InteractionHand hand) { return false; }
 }
