@@ -68,3 +68,5 @@
 第六十一批依据实际对象图纠正ReactorNetwork的弱key生命周期保证注释；代码没有新增卸载清理，不能将文档修正当架构缺口已修。完整双端1228／1229项执行词法保持，原观察和最终源身份分别归档，见[生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)及[证明](verification/nuclear-transitions-config-audit-20261021.json)。
 
 第六十二批按当前真实源码选中ToolShapedRecipe和ToolShapelessRecipe，维护行254→456、168→247；旧FiniteBottleFillingRecipe／GeneratedRecipeSink已整理，不重复改写。匹配／工具返还／流体格位／网络编码流程展开，一处Neo载体闭合位置整理，四份完整词法、字面量、真实注释与指令保持。见[工具导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)及[证明](verification/tool-recipe-readability-20261021.json)；密度筛选仍非重复／缺陷计数。
+
+第六十四批整理PumpCatalog 12→27、PumpWorkRules 4→18维护行，all局部out/i/t改pumps/tierIndex/tier；原生PumpBlockEntity的输入预算、冷却、getter、Neo推液和NBT边界展开。完整core237／124与Forge1961／Neo1877项执行流在列明局部绑定归一后保持，其余标识符、数据、分支和指令不动，见[泵导航](ROTATIONAL_PUMP_AUDIT.md)与[证明](verification/rotational-pump-audit-20261021.json)。不是泵玩法修复或所有源码标准化完成。

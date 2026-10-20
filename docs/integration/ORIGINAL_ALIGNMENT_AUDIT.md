@@ -244,10 +244,17 @@
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
 | ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
-| ALIGN-218 | 确认两种电力太阳能板默认堆叠上限16→64。 | 原10050／10051注册stack16，经ClassContainer与ItemInternal实际消费。 | GTEnergyNodes两端只给蒸汽涡轮stacksTo16，Solar用原生默认64；32块由至少2槽变可1槽。只核这两种，未实测库存，见[太阳能板](SOLAR_PANEL_AUDIT.md)。 |
+| ALIGN-218 | 确认两太阳能板与四旋转泵默认堆叠上限16→64。 | 原10050／10051、16001–16004注册stack16，经ClassContainer与ItemInternal消费。 | 两太阳能和四泵均plain BlockItem默认64；32块可由至少2槽变1槽。只核这六项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)与[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过单块换热器专用整罐。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-222 | 确认旋转泵相连液体搜索被独立区域逐列扫描替代。 | 从正面同族液体连通扩散，按轻重切层，有3000／20刻重查。 | 当前先扫入口(-64,-64)列、高度-64起，入口空气也可抽孤立远源；固定向下／source扫描不等价，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-223 | 确认旋转泵RU输入范围和异常包处理不同。 | 四档有效存能R/2–2R；低速包消耗但不存，超限进保护计数。 | 当前固定8–R，青铜48被拒、8被存；无原过载反馈，不据此恢复爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 当前最多481包到8177，余15拒17包且<8192不抽，条件持续则停；额定32正常，既有8191测试不是原版舍入证明，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-225 | 确认旋转泵世界排液对象和回调准入不同。 | 同族流动块也以最低16RU清除，IFluidBlock查询实际排液结果。 | 当前仅source并造1000L，随后整个BlockState换空气；两版含水半砖返回source，可被整体移除。未游戏复现，保留整桶／移除成功保护，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-226 | 确认旋转泵只读出液罐变为允许外部填充的双向能力。 | 无盖泵fillable=null，Root.fill返回0；抽取任意面、主动推四侧。 | 两端直接返回tank，空罐fill1000可成功，四侧未排空时暂停抽新源；容量差异仅在特定量条件适用，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-227 | 确认旋转泵缺少原开关与运行检测宿主。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider及PanelCoverHost；实际物品安装和find均无接入。与原无开关的219区别见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-228 | 确认四档旋转泵硬度／抗爆统一后丢失原规格。 | 原7/7、6/6、9/9、12.5/12.5由Paintable字段及MTE Block实际getter消费。 | 当前四档Properties.strength(4,6)，无PumpBlock覆写；未量测实际挖掘／爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -279,7 +286,7 @@
 | 坩埚、相变、铸造 | 已确认 ALIGN-001，待核其余分支 | 致死回收、热采掘、冷却目标、过热与材料守恒 |
 | 单方块机器 | 共用加工执行／中断／供能已确认 ALIGN-040–047，逐控制器及其余分支继续 | 配方映射、输入输出、额定值、超载、工具交互与持久化 |
 | 多方块与部件 | 大型锅炉、焦炉、聚变／内爆的部分结构／执行链已核查；物质制造结构／参数／特殊配方声明已对照 | 结构位置、部件角色、断开行为、建造与诊断、部件共用身份；整体绑定差异见 ALIGN-036，聚变输出／控制、内爆音效及聚变连续恢复见 ALIGN-052–056；物质制造最终配方解析、其它主控及跨区块行为继续 |
-| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪LU水晶注册消费；本批核两种太阳能板与八种单块热交换器实际主链 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，太阳能堆叠218、换热状态／点火／玩家排液219–221另列，原火／邻液扩017与工具成本扩126；其余能源设备及实际保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
+| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪LU水晶注册消费；另核两种太阳能板、八种单块热交换器与四旋转泵实际主链 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，太阳能堆叠218、换热状态／点火／玩家排液219–221另列，原火／邻液扩017与工具成本扩126；旋转泵搜索／输入／能力／控制及物性222–228已记录，其余能源设备及实际保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
 | 电线、流体／物品管道、长距离物流 | 待逐网络重核 | 优先级、路由、丢包、接收端卸载与跨区块边界 |
 | 储物、容器与传感器 | 普通／物流桶、计量、各类库存、原生爆炸、填槽、两版通知及共用菜单九类实际宿主已局部核查 | 差异见 ALIGN-077、083–097、112–120、136–163、168、172–173、179；六类同源回调和三类补偿／限制已分开，继续其它菜单、覆盖板归属、成组掉落、量子／中继桥、材料重量、手持仪表与保存恢复；源码链不等于游戏场景已运行 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
@@ -320,6 +327,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第六十四批核四旋转泵实际搜索／输入／能力／控制与物性，新增222–228并扩218；17原／24当前、30视图、两个原生工件8entry及有限17RU停泵见证归档，三份源码仅展开与局部命名，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)和[回执](verification/rotational-pump-audit-20261021.json)。不把源推导当游戏，不将RU泵误加进易水风险；大型涡轮、避雷针和全面队列继续。
 
 第六十三批核扩展／太阳能／单块热交换器新增216–221，003／017／126扩围，110／111／132／209沿既有合同。46原版／130当前、126视图、52 API库存、39资源及6工件30entry重核；8换热和2太阳能注册参数重新解析，根算术见证不代游戏。原有新参数棒、天气输出、普通换热及保存保留，FuelRod误导Javadoc更正不改执行，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[换热器](HEAT_EXCHANGER_AUDIT.md)及[回执](verification/nuclear-solar-heat-audit-20261021.json)。全面队列继续。
 

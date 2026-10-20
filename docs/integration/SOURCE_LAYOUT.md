@@ -343,3 +343,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 第六十二批补充[工具参与工作台配方导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)：ToolShapedRecipe／ToolShapelessRecipe处理工具返还、镜像／形态与空容器限制；工具本身的头柄／整体制作另看GTToolRecipes及相应配方类。两版包装serializer注册分别在Forge ToolBootstrap和NeoRecipeSerializers，不能与GTToolRecipeSerializers的tool-kind／pattern编码混为一层。
 
 第六十三批能源导航补充：[太阳能板](SOLAR_PANEL_AUDIT.md)从core SolarPanelEnergy／EnergyNodeDefinitions追到GTEnergyNodes与EnergyNodeBlockEntity.tickSolar；[单块换热器](HEAT_EXCHANGER_AUDIT.md)从HeatExchangerCatalog／GTHeatExchangers追到HeatExchangerBlockEntity、HotFluidFuelCycle和共用HeatExchangerRules。大型主控另有结构与出口，HeatExchangerData不能作为单块保存补偿。核棒参数扩展／支持SDK／耗尽出口区别见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。
+
+第六十四批[旋转泵导航](ROTATIONAL_PUMP_AUDIT.md)：core PumpCatalog／PumpSpec负责四档定义，PumpWorkRules只给当前阈值与包预算；真实世界搜索／删块、保存和推液均在原生PumpBlockEntity，PumpBlock给ticker、GTPumps与两端入口完成注册。控制／覆盖板没有因父类有能量API而自动接通，EngineCapabilities只是Neo流体能力桥。三处all局部变量与压行展开，不改抽液算法。

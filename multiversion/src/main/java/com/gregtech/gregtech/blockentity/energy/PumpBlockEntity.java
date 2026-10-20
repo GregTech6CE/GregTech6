@@ -69,8 +69,8 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -80,7 +80,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         pumpX = tag.getInt("pumpX");
         pumpZ = tag.getInt("pumpZ");
 //? if >=1.21.1 {
-        /*tank.readFromNBT(tag.getCompound("tank"),lookup);
+        /*tank.readFromNBT(tag.getCompound("tank"), lookup);
 *///?} else {
         tank.readFromNBT(tag.getCompound("tank"));
 //?}
@@ -88,8 +88,8 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*public void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*public void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     public void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -100,7 +100,7 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         tag.putInt("pumpZ", pumpZ);
         CompoundTag tankTag = new CompoundTag();
 //? if >=1.21.1 {
-        /*tank.writeToNBT(tankTag,lookup);
+        /*tank.writeToNBT(tankTag, lookup);
 *///?} else {
         tank.writeToNBT(tankTag);
 //?}
@@ -108,7 +108,9 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     }
 
 //? if >=1.21.1 {
-    /*public IFluidHandler fluidHandler(@Nullable Direction side){return tank;}
+    /*public IFluidHandler fluidHandler(@Nullable Direction side) {
+        return tank;
+    }
 *///?} else {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
@@ -157,8 +159,9 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
     public long doEnergyInjection(GregTechTags.Tag energyType, @Nullable Direction side, long size, long amount, boolean doInject) {
         if (side == null || energyType != GregTechTags.Energy.RU || amount <= 0 || size == Long.MIN_VALUE
                 || !isEnergyAcceptingFrom(energyType, side, false)) return 0;
-        long packet=Math.abs(size);
-        long absorbed=com.gregtech.gregtech.content.energy.PumpWorkRules.accepted(energyBuffer,size,amount,getEnergySizeInputMax(energyType,side));
+        long packet = Math.abs(size);
+        long absorbed = com.gregtech.gregtech.content.energy.PumpWorkRules.accepted(
+                energyBuffer, size, amount, getEnergySizeInputMax(energyType, side));
         if (doInject && absorbed > 0) {
             energyBuffer += packet * absorbed;
             setChanged();
@@ -181,13 +184,34 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         return room <= 0 ? 0 : room / packet;
     }
 
-    @Override public long getEnergyOffered(GregTechTags.Tag energyType, @Nullable Direction side, long size) { return 0; }
-    @Override public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) { return 8; }
-    @Override public long getEnergySizeOutputMin(GregTechTags.Tag energyType, @Nullable Direction side) { return 0; }
-    @Override public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) { return spec().inputSpeed(); }
-    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) { return 0; }
-    @Override public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) { return spec().inputSpeed(); }
-    @Override public long getEnergySizeOutputMax(GregTechTags.Tag energyType, @Nullable Direction side) { return 0; }
+    @Override
+    public long getEnergyOffered(GregTechTags.Tag energyType, @Nullable Direction side, long size) {
+        return 0;
+    }
+    @Override
+    public long getEnergySizeInputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return 8;
+    }
+    @Override
+    public long getEnergySizeOutputMin(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return 0;
+    }
+    @Override
+    public long getEnergySizeInputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return spec().inputSpeed();
+    }
+    @Override
+    public long getEnergySizeOutputRecommended(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return 0;
+    }
+    @Override
+    public long getEnergySizeInputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return spec().inputSpeed();
+    }
+    @Override
+    public long getEnergySizeOutputMax(GregTechTags.Tag energyType, @Nullable Direction side) {
+        return 0;
+    }
 
     // --- Tick logic ---
 
@@ -197,7 +221,10 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         // prevents another world source from being removed until an output accepts it.
         pump.pushFluidToNeighbors();
         if (pump.energyBuffer < ENERGY_TO_START_DRAIN || !pump.tank.isEmpty()) return;
-        if (pump.scanCooldown > 0) { pump.scanCooldown--; return; }
+        if (pump.scanCooldown > 0) {
+            pump.scanCooldown--;
+            return;
+        }
 
         // Scan for fluid blocks in front of the pump
         Direction facing = state.getValue(PumpBlock.FACING);
@@ -253,17 +280,22 @@ public class PumpBlockEntity extends GTEnergyBlockEntity {
         Direction facing = getBlockState().getValue(PumpBlock.FACING);
         for (Direction side : Direction.values()) {
             if (side == facing || side == facing.getOpposite() || tank.isEmpty()) continue;
-            if(!level.hasChunkAt(worldPosition.relative(side)))continue;
+            if (!level.hasChunkAt(worldPosition.relative(side))) continue;
             BlockEntity be = level.getBlockEntity(worldPosition.relative(side));
             if (be == null) continue;
 //? if >=1.21.1 {
-            /*IFluidHandler handler=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,be.getBlockPos(),side.getOpposite());
-            if(handler==null)continue;
-            var offer=tank.drain(1000,IFluidHandler.FluidAction.SIMULATE);if(offer.isEmpty())continue;
-            int capacity=handler.fill(offer,IFluidHandler.FluidAction.SIMULATE);if(capacity<=0)continue;
-            offer.setAmount(Math.min(offer.getAmount(),capacity));
-            int received=handler.fill(offer,IFluidHandler.FluidAction.EXECUTE);
-            if(received>0)tank.drain(Math.min(received,offer.getAmount()),IFluidHandler.FluidAction.EXECUTE);
+            /*IFluidHandler handler = level.getCapability(
+                    net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                    be.getBlockPos(), side.getOpposite());
+            if (handler == null) continue;
+            var offer = tank.drain(1000, IFluidHandler.FluidAction.SIMULATE);
+            if (offer.isEmpty()) continue;
+            int capacity = handler.fill(offer, IFluidHandler.FluidAction.SIMULATE);
+            if (capacity <= 0) continue;
+            offer.setAmount(Math.min(offer.getAmount(), capacity));
+            int received = handler.fill(offer, IFluidHandler.FluidAction.EXECUTE);
+            if (received > 0)
+                tank.drain(Math.min(received, offer.getAmount()), IFluidHandler.FluidAction.EXECUTE);
 
 *///?} else {
             LazyOptional<IFluidHandler> cap = be.getCapability(ForgeCapabilities.FLUID_HANDLER, side.getOpposite());

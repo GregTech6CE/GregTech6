@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第六十四批旋转泵与三份源码可读性
+
+四档泵注册／ticker／两端能力实际接通，普通抽源门槛、每桶成本、四侧旧液输出及手工配方已有。新增222–228，218扩六对象；相连搜索、有效范围、17RU到8177的门槛停滞、含水方块被换空气、外部可填、开关／检测和物性分别留证。core237／124与双端1961／1877执行流保持，三个all局部变量单独归一。见[专题](ROTATIONAL_PUMP_AUDIT.md)与[回执](verification/rotational-pump-audit-20261021.json)。未改玩法／新测试／游戏／构建／推送；仍有大型能源、世界／保存、模型和全面队列。
+
 ## 2026-10-21 / 第六十三批核扩展、太阳能与单块热交换器
 
 正式记录至221条；新增六项条件／规格合同，003／017／126扩围。参数棒可自行注册、内置46耗尽／封闭11冷却表、太阳能天气／单包输出、八换热器／16hot行和普通换热保存已有，不误报整族缺失。排液必须追onItemUseFirst非PASS的真实截断，不能只看interact。46原版／130当前、126平台视图、52 API库存、39资源及6工件30entry重核，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[换热](HEAT_EXCHANGER_AUDIT.md)和[回执](verification/nuclear-solar-heat-audit-20261021.json)。仅FuelRod Javadoc纠错，无玩法／编译／测试／构建／推送；goal active。
