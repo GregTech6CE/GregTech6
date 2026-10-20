@@ -74,9 +74,37 @@ public final class GTOreVeins {
     /** Sum of all overworld vein weights (GT6 picks {@code random.nextInt(totalWeight)} per grid cell). */
     public static final int TOTAL_VEIN_WEIGHT = OVERWORLD_VEINS.stream().mapToInt(OreVein::weight).sum();
 
-    /** GT6 uses stone strata instead of all old Overworld large veins by default. */
+    /**
+     * GT6 uses stone strata instead of the old Overworld large veins by default.
+     * Addon veins are still appended, so a default world generates those and not the legacy table.
+     */
     public static List<OreVein> activeOverworldVeins() {
-        return GTWorldgenDefaults.STONE_LAYERS ? List.of() : OVERWORLD_VEINS;
+        return append(GTWorldgenDefaults.STONE_LAYERS ? List.of() : OVERWORLD_VEINS, AddonOreVeins.overworldVeins());
+    }
+
+    /** Built-in End veins, then addon End veins. Selection uses the sum of this list. */
+    public static List<OreVein> activeEndVeins() {
+        return append(END_VEINS, AddonOreVeins.endVeins());
+    }
+
+    public static List<SmallOre> activeOverworldSmallOres() {
+        return append(OVERWORLD_SMALL_ORES, AddonOreVeins.overworldSmall());
+    }
+
+    public static List<SmallOre> activeNetherSmallOres() {
+        return append(NETHER_SMALL_ORES, AddonOreVeins.netherSmall());
+    }
+
+    public static List<SmallOre> activeEndSmallOres() {
+        return append(END_SMALL_ORES, AddonOreVeins.endSmall());
+    }
+
+    private static <T> List<T> append(List<T> base, List<T> extra) {
+        if (extra.isEmpty()) return base;
+        var out = new java.util.ArrayList<T>(base.size() + extra.size());
+        out.addAll(base);
+        out.addAll(extra);
+        return List.copyOf(out);
     }
 
     /**

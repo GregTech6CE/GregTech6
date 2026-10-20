@@ -211,7 +211,7 @@ Two addons may declare the same name. The display name, color, texture, melting 
 
 GregTech assigns numeric ids after the built-in directory, sorted by name, starting at 10000. Built-in ids do not change. The assigned id exists only in memory: a different set of addons can number the same name differently, and nothing in a save reads that number back. `GregTechMaterials.find(int)` still resolves whatever id this session assigned. `dust()` generates the dust items. `metal()` generates those dusts plus the ingot, plate, rod, gear and related forms that the built-in directory already knows how to generate. It does not add a prefix.
 
-`ores()` gives the material GregTech's `ORES` form. That is what makes the raw ore item, the rock, the impure dust, and the crushed, washed and centrifuged forms pass the existing checks. Purified and refined dusts stay off, because those still require the unused `DIRTY_DUSTS` flag. It also registers the `ore` and `oreSmall` blocks. Those two are appended after the blocks the directory already emits, so built-in block ids stay put. The host rock is a block state on that one block, the same as a built-in ore. `ores()` does not register a raw-ore storage block or a raw-ore crate, and it does not add a vein. `oreByproducts("Copper", "Tin")` turns `ores()` on and sets the byproducts in that order; the first name is the wash byproduct. Leave it out and the byproduct list is empty. The wash and centrifuge recipes still follow the built-in fallback. A byproduct name has to be a material that exists at startup, and it cannot be hidden. Two addons that share the material have to agree on `ores()` and on that list. `forms()` cannot name `ore` or `oreSmall`. `forms()` of `oreRaw` still fails when the material did not declare `ores()`.
+`ores()` gives the material GregTech's `ORES` form. That is what makes the raw ore item, the rock, the impure dust, and the crushed, washed and centrifuged forms pass the existing checks. Purified and refined dusts stay off, because those still require the unused `DIRTY_DUSTS` flag. It also registers the `ore` and `oreSmall` blocks. Those two are appended after the blocks the directory already emits, so built-in block ids stay put. The host rock is a block state on that one block, the same as a built-in ore. `ores()` does not register a raw-ore storage block or a raw-ore crate. Veins are a separate declaration, below. `oreByproducts("Copper", "Tin")` turns `ores()` on and sets the byproducts in that order; the first name is the wash byproduct. Leave it out and the byproduct list is empty. The wash and centrifuge recipes still follow the built-in fallback. A byproduct name has to be a material that exists at startup, and it cannot be hidden. Two addons that share the material have to agree on `ores()` and on that list. `forms()` cannot name `ore` or `oreSmall`. `forms()` of `oreRaw` still fails when the material did not declare `ores()`.
 
 Saves store the name. Crucible contents are `{name, amount}` under `gt.materials`. The crucible display field `gt.display.material` is the name, or an empty string when the crucible is not showing a material. USB sticks and drive files keep the key `gt.replicator.data` and store the name as a string. A save written by an older build still loads: a numeric `id`, or a numeric `gt.replicator.data` / `gt.display.material`, resolves a built-in id and does not resolve an addon id. An unknown name is skipped, as an unknown id already was. There is no numeric suffix for an addon item-id collision.
 
@@ -243,6 +243,28 @@ public List<PrefixDeclaration> prefixes() {
 The items are registered in the **addon's** namespace, after the generated `gt6ce:` forms. The order is addon id, then declaration order, then material name. The path has the same shape as a built-in form, `sample_blank_iron`. A path collision inside that namespace fails startup. The item does not take a `gt6ce:` id and does not change the built-in item id list. `forms()` cannot name this prefix; the material list on the declaration chooses the items. `GregTechPrefixes.exists` is true for the name after startup. `AddonItems.stack` returns the item.
 
 GregTech does not add crafting recipes for the prefix. A block prefix is not part of this entry. API version stays 0.
+
+## World generation
+
+`oreVeins()` and `smallOres()` on `AddonMaterialContributor` add large veins and small ores. GregTech appends them after the built-in rows of that dimension. The name is the identity inside one dimension and one kind: a large vein and a small ore may share a name, and the same name may be used in another dimension. A name that already belongs to a built-in row, or to another addon, fails startup and names both sides.
+
+```java
+public List<OreVeinDeclaration> oreVeins() {
+    return List.of(new OreVeinDeclaration("sample_alloy", "minecraft:overworld",
+            10, 40, 40, 3, 16, "SampleAlloy", "SampleAlloy", "Copper", "Tin"));
+}
+
+public List<SmallOreDeclaration> smallOres() {
+    return List.of(new SmallOreDeclaration("sample_alloy", "minecraft:overworld",
+            20, 60, 4, "SampleAlloy"));
+}
+```
+
+The fields are the built-in ones. `weight`, `density`, `size` and `amount` are positive. `minY` and `maxY` use the same pre-remap heights as the built-in tables, inside 0..255, with min below max. The overworld generator stretches that range. A large vein names four materials: top, bottom, between and spread. A small ore names one. Each material has to exist and have an ore block. An addon material needs `ores()`. A built-in material has to be one that already receives an ore block. An unknown or hidden material fails startup.
+
+Dimensions are `minecraft:overworld`, `minecraft:the_nether` and `minecraft:the_end`. A large vein cannot use the nether, because that generator does not place large veins. Any other dimension fails. There is no separate generator for it. The overworld table is also what generates in a dimension that is neither the nether nor the end.
+
+Stone layers stay the GregTech table. Addon ores are not inserted into a stone layer. With stone layers on, the legacy overworld large veins stay off, and the addon large veins are the ones that generate. They are picked by weight together with whatever built-in veins that table still contains. Adding weight changes `nextInt` for that table, so the same seed can place a different built-in vein. That happens for the End, where the built-in large veins stay on. Small ores are appended, and each row consumes its own random draws, so the built-in small ores keep their positions. API version stays 0.
 
 ## Crucible
 
@@ -440,7 +462,7 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 ## Supported scope
 
 - Shared addon registration, version/context and recipe-ready lifecycle.
-- `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. `prefixes()` adds an item prefix in the addon's namespace. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` name materials and are applied when materials link.
+- `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. `prefixes()` adds an item prefix in the addon's namespace. `oreVeins()` and `smallOres()` append large veins and small ores after the built-in rows of `minecraft:overworld`, `minecraft:the_nether` or `minecraft:the_end`. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` name materials and are applied when materials link.
 - `AddonItems.stack(prefix, material, count)`, `AddonItems.selectorTag(n)` for programmed circuit 0..24, and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate.
 - `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row. `keptInputs` names item inputs that stay in the machine; a count of 0 is still rejected.
 - `AddonMachineContributor` recipe machines and large recipe machines. Energy is a short name such as `EU`. A multiblock names a GregTech part, a casing, or an energy part from `parts()`. GregTech registers the machine and the part in the addon's namespace. Layout roles are `StructureRole`. `fluidPipes()` and `itemPipes()` add one material row each; GregTech expands them into the built-in sizes in the addon's namespace.

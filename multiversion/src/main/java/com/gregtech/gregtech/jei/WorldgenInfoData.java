@@ -66,22 +66,24 @@ public class WorldgenInfoData {
             out.add(new VeinInfo(v.name(), "minecraft:overworld", v.minY(), v.maxY(), v.weight(),
                     overworldWeight, v.top(), v.bottom(), v.between(), v.spread(), true));
         }
-        for (GTOreVeins.OreVein v : GTOreVeins.END_VEINS) {
+        var end = GTOreVeins.activeEndVeins();
+        int endWeight = end.stream().mapToInt(GTOreVeins.OreVein::weight).sum();
+        for (GTOreVeins.OreVein v : end) {
             out.add(new VeinInfo(v.name(), "minecraft:the_end", v.minY(), v.maxY(), v.weight(),
-                    GTOreVeins.TOTAL_END_VEIN_WEIGHT, v.top(), v.bottom(), v.between(), v.spread(), false));
+                    endWeight, v.top(), v.bottom(), v.between(), v.spread(), false));
         }
         return out;
     }
 
     public static List<SmallOreInfo> buildSmallOres() {
         List<SmallOreInfo> out = new ArrayList<>();
-        for (GTOreVeins.SmallOre o : GTOreVeins.OVERWORLD_SMALL_ORES) {
+        for (GTOreVeins.SmallOre o : GTOreVeins.activeOverworldSmallOres()) {
             out.add(new SmallOreInfo(o.name(), "minecraft:overworld", o.minY(), o.maxY(), o.amount(), o.material(), true));
         }
-        for (GTOreVeins.SmallOre o : GTOreVeins.NETHER_SMALL_ORES) {
+        for (GTOreVeins.SmallOre o : GTOreVeins.activeNetherSmallOres()) {
             out.add(new SmallOreInfo(o.name(), "minecraft:the_nether", o.minY(), o.maxY(), o.amount(), o.material(), false));
         }
-        for (GTOreVeins.SmallOre o : GTOreVeins.END_SMALL_ORES) {
+        for (GTOreVeins.SmallOre o : GTOreVeins.activeEndSmallOres()) {
             out.add(new SmallOreInfo(o.name(), "minecraft:the_end", o.minY(), o.maxY(), o.amount(), o.material(), false));
         }
         return out;
