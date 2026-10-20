@@ -2,6 +2,8 @@ package com.gregtech.addonsample;
 
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.FluidPipeDeclaration;
+import com.gregtech.gregtech.api.addon.ItemPipeDeclaration;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.FuelMapDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, tank-wall multiblock, irrigator, rotation buffer and hand crank. */
+/** Sample press, tank-wall multiblock, irrigator, rotation buffer, hand crank and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -58,6 +60,14 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
 
     @Override public List<StructurePartDeclaration> parts() {
         return List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F));
+    }
+
+    @Override public List<FluidPipeDeclaration> fluidPipes() {
+        return List.of(new FluidPipeDeclaration("teflon", "Teflon", 125, true, true, false, false, 600, 0));
+    }
+
+    @Override public List<ItemPipeDeclaration> itemPipes() {
+        return List.of(new ItemPipeDeclaration("pvc", "PVC", 32768, 1));
     }
 
     @Override public List<MachineLayout> layouts() {

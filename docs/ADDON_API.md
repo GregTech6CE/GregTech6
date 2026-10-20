@@ -318,6 +318,24 @@ public List<StructurePartDeclaration> parts() {
 
 The name is a lower-case registry path. The material is a material name. The texture is a path in the addon's namespace, or empty. Empty uses the GregTech metal wall tinted with the material colour. A path is a cube of that texture and is not tinted. Hardness is a positive float, and the blast resistance is the same value. The block id is `<addonId>:<name>`. GregTech registers it after the built-in multiblock parts, on GregTech's bus, in the addon's namespace, and generates the blockstate and item model. Names are global. A GregTech part name, including `tank_wall`, or another addon's name, fails startup and names both sides. Runtime ids start at 1000000, in addon id order and then declaration order. A structure stores the block registry name. Forming compares the blocks in the world. The number is not save data. The part is a casing: it has no tank, energy, item slots or tick.
 
+`fluidPipes()` and `itemPipes()` add pipe rows. GregTech expands each row into the built-in sizes and appends those blocks after the built-in pipes.
+
+```java
+public List<FluidPipeDeclaration> fluidPipes() {
+    return List.of(new FluidPipeDeclaration("teflon", "Teflon", 125, true, true, false, false, 600, 0));
+}
+
+public List<ItemPipeDeclaration> itemPipes() {
+    return List.of(new ItemPipeDeclaration("pvc", "PVC", 32768, 1));
+}
+```
+
+`idSuffix` is the material part of the block path. A fluid suffix that matches a built-in fluid pipe, or another addon's fluid pipe, fails startup and names both sides. Item pipes use the same rule inside the item-pipe catalog. The same suffix may be a fluid pipe and an item pipe, because the paths differ. `maxTemperature` of `0` means the material melting point times 1.25. `stepSize` is the medium item pipe's routing cost and must be at least 4.
+
+A fluid row becomes seven blocks, tiny through nonuple. An item row becomes six, including the three restrictive sizes. The block ids are `<addonId>:pipe_<size>_<suffix>` and `<addonId>:item_pipe_<size>_<suffix>`. GregTech registers them on its own bus, in the addon's namespace, and does not insert them into the `gt6ce` pipe registers. They use the existing `gt6ce:fluid_pipe` and `gt6ce:item_pipe` block-entity types, so fluid and items save with the block.
+
+Crafting, welder rows and material recovery use the built-in pipe rules. A material with no `plateCurved` skips the shaped recipe and the welder row. The addon ships `block.<namespace>.<path>` translations. GregTech emits a placeholder blockstate; the dynamic pipe model replaces it. These rows are not built-in pipes. API version stays 0.
+
 The GUI path keeps a namespace written before `:`. Both `textures/gui/machines/Press` and `gt6ce:textures/gui/machines/Gas` still resolve to `gt6ce:textures/gui/recipes/<file>.png`. An addon path `my_addon:textures/gui/machines/press` resolves to `my_addon:textures/gui/recipes/press.png`, so the file on disk is `assets/my_addon/textures/gui/recipes/press.png`. Block models resolve to `<namespace>:block/machine/basic/<machineName>` plus `_running` and `_active`. GregTech still generates item models only for the `gt6ce` namespace; the addon ships its own models and blockstates. The display name is `block.<namespace>.<id>`.
 
 New maps are created before `onRecipesReady`, JEI, EMI and the datapack baseline, and they join `RecipeMap.RECIPE_MAP_LIST`. Add rows from `onRecipesReady` or with a `gt6ce:machine` datapack. JEI catalysts and the multiblock preview follow the registered machine list. A large machine with a layout is included in the preview. The crafting recipe is the addon's own datapack; GregTech does not generate one.
@@ -412,7 +430,7 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 - `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. `prefixes()` adds an item prefix in the addon's namespace. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` name materials and are applied when materials link.
 - `AddonItems.stack(prefix, material, count)`, `AddonItems.selectorTag(n)` for programmed circuit 0..24, and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate.
 - `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row. `keptInputs` names item inputs that stay in the machine; a count of 0 is still rejected.
-- `AddonMachineContributor` recipe machines and large recipe machines. Energy is a short name such as `EU`. A multiblock names a GregTech part or a casing from `parts()`. GregTech registers the machine and the casing in the addon's namespace. Layout roles are `StructureRole`.
+- `AddonMachineContributor` recipe machines and large recipe machines. Energy is a short name such as `EU`. A multiblock names a GregTech part or a casing from `parts()`. GregTech registers the machine and the casing in the addon's namespace. Layout roles are `StructureRole`. `fluidPipes()` and `itemPipes()` add one material row each; GregTech expands them into the built-in sizes in the addon's namespace.
 - `BehaviorMachineDeclaration` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the single-block shell. The addon does not subclass it and does not touch NBT. `energyCapacity`, `emit`, `generate`, `setCapacity` and `onUse` are part of that shell. GregTech stores a changed capacity as `gt.capacity`.
 - `FuelMapDeclaration` and `FuelGeneratorDeclaration`. A fuel map joins JEI, EMI and the datapack overlay. A generator burns fluid and emits one packet per tick from the front, the back, or 1 to 8 blocks behind. A multiblock layout may name a GregTech part or a casing from `parts()`.
 - `GTValues`, `GTVoltageTiers`, `BasicMachineEnergy` and `MachineWorkCost`.

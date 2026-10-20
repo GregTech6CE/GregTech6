@@ -99,6 +99,13 @@ public final class FluidTransportDefinitions {
     };
 
 
+    /** Built-in suffixes, in registration order. Addon rows are not included. */
+    public static List<String> builtinFluidSuffixes() {
+        var suffixes = new ArrayList<String>();
+        for (var family : FLUID_PIPE_MATS) suffixes.add(family.idSuffix());
+        return List.copyOf(suffixes);
+    }
+
     public static List<PipeSpec> pipes() {
         var result = new ArrayList<PipeSpec>();
         for (var family : FLUID_PIPE_MATS)
@@ -109,6 +116,7 @@ public final class FluidTransportDefinitions {
                         family.maxTemperature > 0 ? family.maxTemperature
                                 : (long) (family.material.getMeltingPoint() * 1.25D),
                         family.flammability));
+        result.addAll(com.gregtech.gregtech.api.addon.AddonPipes.addonFluidSpecs());
         return List.copyOf(result);
     }
     public static List<TankSpec> tanks() {

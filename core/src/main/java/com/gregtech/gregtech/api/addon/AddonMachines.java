@@ -49,7 +49,10 @@ public final class AddonMachines {
     private record Submission(String addonId, List<RecipeMapSpec> recipeMaps,
                               List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
                               List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                              List<FuelGeneratorDeclaration> generators, List<StructurePartDeclaration> parts) {}
+                              List<FuelGeneratorDeclaration> generators, List<StructurePartDeclaration> parts,
+                              List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
+    /** Pipe rows queued before install, in addon-id order. */
+    public record QueuedPipes(String addonId, List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
                              boolean constantEnergy, List<String> structureKeys, MachineFaceMasks faces,
                              boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
@@ -81,7 +84,8 @@ public final class AddonMachines {
             try {
                 accept(contributor.addonId(), maps(contributor.recipeMaps()), machines(contributor.machines()),
                         layouts(contributor.layouts()), contributor.behaviorMachines(),
-                        fuelSpecs(contributor.fuelMaps()), contributor.fuelGenerators(), contributor.parts());
+                        fuelSpecs(contributor.fuelMaps()), contributor.fuelGenerators(), contributor.parts(),
+                        contributor.fluidPipes(), contributor.itemPipes());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -206,6 +210,16 @@ public final class AddonMachines {
                                            List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
                                            List<FuelGeneratorDeclaration> generators,
                                            List<StructurePartDeclaration> parts) {
+        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts, List.of(), List.of());
+    }
+
+    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
+    public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
+                                           List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGeneratorDeclaration> generators,
+                                           List<StructurePartDeclaration> parts,
+                                           List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {
         if (installed) throw new IllegalStateException("Addon machine queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -220,7 +234,17 @@ public final class AddonMachines {
                 List.copyOf(Objects.requireNonNull(behavior, "behaviorMachines")),
                 List.copyOf(Objects.requireNonNull(fuelMaps, "fuelMaps")),
                 List.copyOf(Objects.requireNonNull(generators, "fuelGenerators")),
-                List.copyOf(Objects.requireNonNull(parts, "parts"))));
+                List.copyOf(Objects.requireNonNull(parts, "parts")),
+                List.copyOf(Objects.requireNonNull(fluidPipes, "fluidPipes")),
+                List.copyOf(Objects.requireNonNull(itemPipes, "itemPipes"))));
+    }
+
+    /** Queued pipe rows, in addon-id order. Empty until a contributor submits pipes. */
+    public static synchronized List<QueuedPipes> queuedPipes() {
+        var rows = new ArrayList<QueuedPipes>();
+        for (Submission submission : QUEUE.values())
+            rows.add(new QueuedPipes(submission.addonId, submission.fluidPipes, submission.itemPipes));
+        return List.copyOf(rows);
     }
 
     /** Names of the built-in machine recipe maps. Fuel maps are not machine maps. */
@@ -258,6 +282,7 @@ public final class AddonMachines {
     public static synchronized void install(Set<String> reservedMachineNames, Set<String> knownRecipeMaps) {
         if (installed) return;
         collectContributors();
+        AddonPipes.validate();
         Objects.requireNonNull(reservedMachineNames, "reservedMachineNames");
         Objects.requireNonNull(knownRecipeMaps, "knownRecipeMaps");
         var mapOwner = new LinkedHashMap<String, String>();
