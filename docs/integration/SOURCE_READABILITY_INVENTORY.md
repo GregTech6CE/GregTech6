@@ -49,6 +49,8 @@
 
 第五十五批对全部1041份共享原生维护输入显式投影2082次，确认四项完整类体重复候选，并排除MetalChestBlockItem和GTEngines的声明／原生职责边界。VanillaProcessingRecipes与AlloyRecipeLoader已合并954→334行，四份完整执行词法／字面量位置保持；Chemical及有真实加载顺序差异的GeneratedRecipeResolver独立继续。171项方法级密度结果未经逐项核查，不是缺陷数，见[结构报告](NATIVE_BODY_SHARING_AUDIT.md)和[全量身份回执](verification/native-body-sharing-audit-20261021.json)。
 
+第五十七批继续完成后两项Chemical与GeneratedRecipeResolver整类共享，1775→641行；四个候选总2729→975行。解析器两端加载顺序、注册表查找／命名空间表达式和所有公开接口保持，四份完整执行／字面量位置相同；旧数量、永久缺失、入口和统计注释单独纠正。未审方法级／大职责和其它原生注册边界继续，见[共享报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[证明](verification/chemical-resolver-sharing-20261021.json)。用户WoodMaterials和CompoundMaterials排版未改。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属

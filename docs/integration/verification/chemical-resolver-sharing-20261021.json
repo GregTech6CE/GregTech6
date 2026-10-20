@@ -1,0 +1,2593 @@
+{
+  "date": "2026-10-21",
+  "batch": 57,
+  "files": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ChemicalRecipeLoader.java": {
+      "baseline": "e5c6b2021",
+      "baseline_raw_sha256": "830a1a239182477acaa7ba53014f7a6ff5c66ab73561277848fe52afecdedb47",
+      "agent_shared_snapshot_sha256": "ecea4b1b4d28bd937821dbd3a36169ecd5b66622ad57929313a377a1a5944fac",
+      "final_raw_sha256": "047cd0884edeb7ce8a9bf46559f0137d054ed697e707bf9aa6ec9e73e400c2b4",
+      "lines_before": 605,
+      "lines_final": 216,
+      "condition_blocks_final": 3,
+      "platforms": {
+        "forge": {
+          "tokens": 1919,
+          "signature_sha256": "e75695cfdcabb1625f86c7729737cabf9f821565e6180ceaf5c985b1ec1311c1",
+          "ordered_literal_positions": [
+            {
+              "token_index": 225,
+              "literal": "\"NaCl\""
+            },
+            {
+              "token_index": 237,
+              "literal": "\"SaltWater\""
+            },
+            {
+              "token_index": 249,
+              "literal": "\"NaCl\""
+            },
+            {
+              "token_index": 251,
+              "literal": "\"NaOH\""
+            },
+            {
+              "token_index": 256,
+              "literal": "\"KCl\""
+            },
+            {
+              "token_index": 258,
+              "literal": "\"KOH\""
+            },
+            {
+              "token_index": 263,
+              "literal": "\"LiCl\""
+            },
+            {
+              "token_index": 265,
+              "literal": "\"LiOH\""
+            },
+            {
+              "token_index": 273,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 283,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 343,
+              "literal": "\"Cl\""
+            },
+            {
+              "token_index": 351,
+              "literal": "\"HCl\""
+            },
+            {
+              "token_index": 358,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 372,
+              "literal": "\"S\""
+            },
+            {
+              "token_index": 379,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 386,
+              "literal": "\"SO2\""
+            },
+            {
+              "token_index": 400,
+              "literal": "\"SO2\""
+            },
+            {
+              "token_index": 407,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 414,
+              "literal": "\"SO3\""
+            },
+            {
+              "token_index": 438,
+              "literal": "\"SO3\""
+            },
+            {
+              "token_index": 446,
+              "literal": "\"H2SO4\""
+            },
+            {
+              "token_index": 467,
+              "literal": "\"N\""
+            },
+            {
+              "token_index": 474,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 482,
+              "literal": "\"NH3\""
+            },
+            {
+              "token_index": 496,
+              "literal": "\"Oil_ExtraHeavy\""
+            },
+            {
+              "token_index": 509,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 511,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 513,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 515,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 535,
+              "literal": "\"Oil_Heavy\""
+            },
+            {
+              "token_index": 548,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 550,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 552,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 554,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 574,
+              "literal": "\"Oil_Medium\""
+            },
+            {
+              "token_index": 587,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 589,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 591,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 593,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 613,
+              "literal": "\"Oil_Normal\""
+            },
+            {
+              "token_index": 626,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 628,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 630,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 632,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 652,
+              "literal": "\"Oil_Light\""
+            },
+            {
+              "token_index": 665,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 667,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 669,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 671,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 691,
+              "literal": "\"Oil_Soulsand\""
+            },
+            {
+              "token_index": 704,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 706,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 708,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 710,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 730,
+              "literal": "\"Biomass\""
+            },
+            {
+              "token_index": 735,
+              "literal": "\"BiomassIC2\""
+            },
+            {
+              "token_index": 742,
+              "literal": "\"[gregtech] Chemistry recipes: {} added, {} skipped (missing fluids/materials)\""
+            },
+            {
+              "token_index": 946,
+              "literal": "\"BioEthanol\""
+            },
+            {
+              "token_index": 961,
+              "literal": "\"Ethanol\""
+            },
+            {
+              "token_index": 971,
+              "literal": "\"Glycerol\""
+            },
+            {
+              "token_index": 981,
+              "literal": "\"Methane\""
+            },
+            {
+              "token_index": 1224,
+              "literal": "\"Cl\""
+            },
+            {
+              "token_index": 1234,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 1244,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 1823,
+              "literal": "\"GenGas_\""
+            },
+            {
+              "token_index": 1827,
+              "literal": "\"GenLiquid_\""
+            }
+          ],
+          "baseline_view_sha256": "ce33eccb1e75edb4b53af482175720d4c307c0f31c18486cc9f47e7a20eff77e",
+          "final_view_sha256": "42d5244037b80cc5042bfa325fab6f2f6ba815882d5383e530fa0006e6711b3b",
+          "exact_execution_and_literals_equal": true
+        },
+        "neoforge": {
+          "tokens": 1943,
+          "signature_sha256": "35969fac6b75ad4bbfffcd99d606ac79e2ced9465f236763aeeb40579d65cf31",
+          "ordered_literal_positions": [
+            {
+              "token_index": 229,
+              "literal": "\"NaCl\""
+            },
+            {
+              "token_index": 241,
+              "literal": "\"SaltWater\""
+            },
+            {
+              "token_index": 253,
+              "literal": "\"NaCl\""
+            },
+            {
+              "token_index": 255,
+              "literal": "\"NaOH\""
+            },
+            {
+              "token_index": 260,
+              "literal": "\"KCl\""
+            },
+            {
+              "token_index": 262,
+              "literal": "\"KOH\""
+            },
+            {
+              "token_index": 267,
+              "literal": "\"LiCl\""
+            },
+            {
+              "token_index": 269,
+              "literal": "\"LiOH\""
+            },
+            {
+              "token_index": 277,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 287,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 347,
+              "literal": "\"Cl\""
+            },
+            {
+              "token_index": 355,
+              "literal": "\"HCl\""
+            },
+            {
+              "token_index": 362,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 376,
+              "literal": "\"S\""
+            },
+            {
+              "token_index": 383,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 390,
+              "literal": "\"SO2\""
+            },
+            {
+              "token_index": 404,
+              "literal": "\"SO2\""
+            },
+            {
+              "token_index": 411,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 418,
+              "literal": "\"SO3\""
+            },
+            {
+              "token_index": 442,
+              "literal": "\"SO3\""
+            },
+            {
+              "token_index": 450,
+              "literal": "\"H2SO4\""
+            },
+            {
+              "token_index": 471,
+              "literal": "\"N\""
+            },
+            {
+              "token_index": 478,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 486,
+              "literal": "\"NH3\""
+            },
+            {
+              "token_index": 500,
+              "literal": "\"Oil_ExtraHeavy\""
+            },
+            {
+              "token_index": 513,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 515,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 517,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 519,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 539,
+              "literal": "\"Oil_Heavy\""
+            },
+            {
+              "token_index": 552,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 554,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 556,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 558,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 578,
+              "literal": "\"Oil_Medium\""
+            },
+            {
+              "token_index": 591,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 593,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 595,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 597,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 617,
+              "literal": "\"Oil_Normal\""
+            },
+            {
+              "token_index": 630,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 632,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 634,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 636,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 656,
+              "literal": "\"Oil_Light\""
+            },
+            {
+              "token_index": 669,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 671,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 673,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 675,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 695,
+              "literal": "\"Oil_Soulsand\""
+            },
+            {
+              "token_index": 708,
+              "literal": "\"Fuel\""
+            },
+            {
+              "token_index": 710,
+              "literal": "\"Diesel\""
+            },
+            {
+              "token_index": 712,
+              "literal": "\"Kerosine\""
+            },
+            {
+              "token_index": 714,
+              "literal": "\"Petrol\""
+            },
+            {
+              "token_index": 734,
+              "literal": "\"Biomass\""
+            },
+            {
+              "token_index": 739,
+              "literal": "\"BiomassIC2\""
+            },
+            {
+              "token_index": 746,
+              "literal": "\"[gregtech] Chemistry recipes: {} added, {} skipped (missing fluids/materials)\""
+            },
+            {
+              "token_index": 950,
+              "literal": "\"BioEthanol\""
+            },
+            {
+              "token_index": 965,
+              "literal": "\"Ethanol\""
+            },
+            {
+              "token_index": 975,
+              "literal": "\"Glycerol\""
+            },
+            {
+              "token_index": 985,
+              "literal": "\"Methane\""
+            },
+            {
+              "token_index": 1244,
+              "literal": "\"Cl\""
+            },
+            {
+              "token_index": 1254,
+              "literal": "\"H\""
+            },
+            {
+              "token_index": 1264,
+              "literal": "\"O\""
+            },
+            {
+              "token_index": 1843,
+              "literal": "\"GenGas_\""
+            },
+            {
+              "token_index": 1847,
+              "literal": "\"GenLiquid_\""
+            }
+          ],
+          "baseline_view_sha256": "736ecbac9234e26dc3650debd80bdd9b966b6d53575a1c4b388083c4121a7786",
+          "final_view_sha256": "68bb8a734f2be0d3465161e1b5cd3a7a98142acb39fe3c8d4609df4c9869074f",
+          "exact_execution_and_literals_equal": true
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java": {
+      "baseline": "93b993c95",
+      "baseline_raw_sha256": "891e5f6d9b731857076e3bc12de8904d37d864b377931c33fe7263df8b5c4224",
+      "agent_shared_snapshot_sha256": "6da5820d65974d88663cf9ff9a6aabe6ffa496fb54b435a4ebc9369254897566",
+      "final_raw_sha256": "cf6ed36f4fb4962b9163789f60c0e01780d3fd4985bcc464f3377a6dc821ed13",
+      "lines_before": 1170,
+      "lines_final": 425,
+      "condition_blocks_final": 6,
+      "platforms": {
+        "forge": {
+          "tokens": 2966,
+          "signature_sha256": "919745b15c01d7f52283e1e112f93c113285e2711f470bf60a9c71f49a5e6d78",
+          "ordered_literal_positions": [
+            {
+              "token_index": 382,
+              "literal": "\"chem\""
+            },
+            {
+              "token_index": 391,
+              "literal": "\"other\""
+            },
+            {
+              "token_index": 400,
+              "literal": "\"potions\""
+            },
+            {
+              "token_index": 409,
+              "literal": "\"food\""
+            },
+            {
+              "token_index": 418,
+              "literal": "\"extruder\""
+            },
+            {
+              "token_index": 427,
+              "literal": "\"vanilla\""
+            },
+            {
+              "token_index": 436,
+              "literal": "\"temporary\""
+            },
+            {
+              "token_index": 445,
+              "literal": "\"ores\""
+            },
+            {
+              "token_index": 454,
+              "literal": "\"combs\""
+            },
+            {
+              "token_index": 463,
+              "literal": "\"technology\""
+            },
+            {
+              "token_index": 474,
+              "literal": "\"[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)\""
+            },
+            {
+              "token_index": 495,
+              "literal": "\"[gregtech] accepted-missing content ({}): {}\""
+            },
+            {
+              "token_index": 507,
+              "literal": "\", \""
+            },
+            {
+              "token_index": 650,
+              "literal": "':'"
+            },
+            {
+              "token_index": 784,
+              "literal": "\"[gregtech] chem skip (no map): {}\""
+            },
+            {
+              "token_index": 862,
+              "literal": "\"[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}\""
+            },
+            {
+              "token_index": 874,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 879,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 889,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 894,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 904,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 909,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 919,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 924,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 1022,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 1041,
+              "literal": "\"i\""
+            },
+            {
+              "token_index": 1051,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1067,
+              "literal": "\"tech\""
+            },
+            {
+              "token_index": 1077,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1093,
+              "literal": "\"v\""
+            },
+            {
+              "token_index": 1103,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1119,
+              "literal": "\"cell\""
+            },
+            {
+              "token_index": 1129,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1295,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 1307,
+              "literal": "\"omd\""
+            },
+            {
+              "token_index": 1361,
+              "literal": "\"i\""
+            },
+            {
+              "token_index": 1367,
+              "literal": "\"Empty\""
+            },
+            {
+              "token_index": 1452,
+              "literal": "\"blockDust\""
+            },
+            {
+              "token_index": 1616,
+              "literal": "\"book\""
+            },
+            {
+              "token_index": 1642,
+              "literal": "\"tag\""
+            },
+            {
+              "token_index": 1678,
+              "literal": "\"v\""
+            },
+            {
+              "token_index": 1706,
+              "literal": "\"minecraft\""
+            },
+            {
+              "token_index": 1756,
+              "literal": "\"cell\""
+            },
+            {
+              "token_index": 1805,
+              "literal": "\"tech\""
+            },
+            {
+              "token_index": 1871,
+              "literal": "':'"
+            },
+            {
+              "token_index": 2079,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 2092,
+              "literal": "\"w\""
+            },
+            {
+              "token_index": 2113,
+              "literal": "\"f\""
+            },
+            {
+              "token_index": 2134,
+              "literal": "\"m\""
+            },
+            {
+              "token_index": 2155,
+              "literal": "\"fr\""
+            },
+            {
+              "token_index": 2324,
+              "literal": "\"chocolatemilk\""
+            },
+            {
+              "token_index": 2326,
+              "literal": "\"ChocolateMilk\""
+            },
+            {
+              "token_index": 2330,
+              "literal": "\"darkchocolatemilk\""
+            },
+            {
+              "token_index": 2332,
+              "literal": "\"ChocolateMilk_Dark\""
+            },
+            {
+              "token_index": 2555,
+              "literal": "\"GenGas_\""
+            },
+            {
+              "token_index": 2575,
+              "literal": "\"GenLiquid_\""
+            },
+            {
+              "token_index": 2629,
+              "literal": "\"liquid.\""
+            },
+            {
+              "token_index": 2649,
+              "literal": "\"gas.\""
+            },
+            {
+              "token_index": 2686,
+              "literal": "\"GenMolten_\""
+            }
+          ],
+          "baseline_view_sha256": "5b1d028dab7a142278f8b4d84aa718423f01f96e16cc4c4fcf08d613a93ab83a",
+          "final_view_sha256": "db4b73f38d7f4c8b78557fb9b7724048532ea3a9a8409f1d039aef6304225bab",
+          "exact_execution_and_literals_equal": true,
+          "load_all_order": [
+            [
+              "chem",
+              "GTChemGen"
+            ],
+            [
+              "other",
+              "GTOtherGen"
+            ],
+            [
+              "potions",
+              "GTPotionGen"
+            ],
+            [
+              "food",
+              "GTFoodGen"
+            ],
+            [
+              "extruder",
+              "GTExtruderGen"
+            ],
+            [
+              "vanilla",
+              "GTVanillaGen"
+            ],
+            [
+              "temporary",
+              "GTTemporaryGen"
+            ],
+            [
+              "ores",
+              "GTOresGen"
+            ],
+            [
+              "combs",
+              "GTCombGen"
+            ],
+            [
+              "technology",
+              "GTTechnologyRecipes"
+            ]
+          ]
+        },
+        "neoforge": {
+          "tokens": 2970,
+          "signature_sha256": "caaf25a8ed04648c1db0cdf792702a6896b7c64817e8e5853f1c9ace517feb0c",
+          "ordered_literal_positions": [
+            {
+              "token_index": 386,
+              "literal": "\"chem\""
+            },
+            {
+              "token_index": 395,
+              "literal": "\"other\""
+            },
+            {
+              "token_index": 404,
+              "literal": "\"potions\""
+            },
+            {
+              "token_index": 413,
+              "literal": "\"food\""
+            },
+            {
+              "token_index": 422,
+              "literal": "\"extruder\""
+            },
+            {
+              "token_index": 431,
+              "literal": "\"vanilla\""
+            },
+            {
+              "token_index": 440,
+              "literal": "\"temporary\""
+            },
+            {
+              "token_index": 449,
+              "literal": "\"ores\""
+            },
+            {
+              "token_index": 458,
+              "literal": "\"technology\""
+            },
+            {
+              "token_index": 467,
+              "literal": "\"combs\""
+            },
+            {
+              "token_index": 478,
+              "literal": "\"[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)\""
+            },
+            {
+              "token_index": 499,
+              "literal": "\"[gregtech] accepted-missing content ({}): {}\""
+            },
+            {
+              "token_index": 511,
+              "literal": "\", \""
+            },
+            {
+              "token_index": 654,
+              "literal": "':'"
+            },
+            {
+              "token_index": 788,
+              "literal": "\"[gregtech] chem skip (no map): {}\""
+            },
+            {
+              "token_index": 866,
+              "literal": "\"[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}\""
+            },
+            {
+              "token_index": 878,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 883,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 893,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 898,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 908,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 913,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 923,
+              "literal": "\"|\""
+            },
+            {
+              "token_index": 928,
+              "literal": "\"ok\""
+            },
+            {
+              "token_index": 1026,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 1045,
+              "literal": "\"i\""
+            },
+            {
+              "token_index": 1055,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1071,
+              "literal": "\"tech\""
+            },
+            {
+              "token_index": 1081,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1097,
+              "literal": "\"v\""
+            },
+            {
+              "token_index": 1107,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1123,
+              "literal": "\"cell\""
+            },
+            {
+              "token_index": 1133,
+              "literal": "\"0\""
+            },
+            {
+              "token_index": 1299,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 1311,
+              "literal": "\"omd\""
+            },
+            {
+              "token_index": 1365,
+              "literal": "\"i\""
+            },
+            {
+              "token_index": 1371,
+              "literal": "\"Empty\""
+            },
+            {
+              "token_index": 1456,
+              "literal": "\"blockDust\""
+            },
+            {
+              "token_index": 1620,
+              "literal": "\"book\""
+            },
+            {
+              "token_index": 1646,
+              "literal": "\"tag\""
+            },
+            {
+              "token_index": 1682,
+              "literal": "\"v\""
+            },
+            {
+              "token_index": 1712,
+              "literal": "\"minecraft\""
+            },
+            {
+              "token_index": 1762,
+              "literal": "\"cell\""
+            },
+            {
+              "token_index": 1811,
+              "literal": "\"tech\""
+            },
+            {
+              "token_index": 1877,
+              "literal": "':'"
+            },
+            {
+              "token_index": 1905,
+              "literal": "\"gt6ce\""
+            },
+            {
+              "token_index": 2079,
+              "literal": "\":\""
+            },
+            {
+              "token_index": 2092,
+              "literal": "\"w\""
+            },
+            {
+              "token_index": 2113,
+              "literal": "\"f\""
+            },
+            {
+              "token_index": 2134,
+              "literal": "\"m\""
+            },
+            {
+              "token_index": 2155,
+              "literal": "\"fr\""
+            },
+            {
+              "token_index": 2324,
+              "literal": "\"chocolatemilk\""
+            },
+            {
+              "token_index": 2326,
+              "literal": "\"ChocolateMilk\""
+            },
+            {
+              "token_index": 2330,
+              "literal": "\"darkchocolatemilk\""
+            },
+            {
+              "token_index": 2332,
+              "literal": "\"ChocolateMilk_Dark\""
+            },
+            {
+              "token_index": 2559,
+              "literal": "\"GenGas_\""
+            },
+            {
+              "token_index": 2579,
+              "literal": "\"GenLiquid_\""
+            },
+            {
+              "token_index": 2633,
+              "literal": "\"liquid.\""
+            },
+            {
+              "token_index": 2653,
+              "literal": "\"gas.\""
+            },
+            {
+              "token_index": 2690,
+              "literal": "\"GenMolten_\""
+            }
+          ],
+          "baseline_view_sha256": "b9fc99e3f7f5b609d5165846e65480868170bd53c16b903ad5e8ecb9c72ed54a",
+          "final_view_sha256": "9993e12c6ff5d1c00b090ea51d07992510b68c0184af6ecae48ed065ee572226",
+          "exact_execution_and_literals_equal": true,
+          "load_all_order": [
+            [
+              "chem",
+              "GTChemGen"
+            ],
+            [
+              "other",
+              "GTOtherGen"
+            ],
+            [
+              "potions",
+              "GTPotionGen"
+            ],
+            [
+              "food",
+              "GTFoodGen"
+            ],
+            [
+              "extruder",
+              "GTExtruderGen"
+            ],
+            [
+              "vanilla",
+              "GTVanillaGen"
+            ],
+            [
+              "temporary",
+              "GTTemporaryGen"
+            ],
+            [
+              "ores",
+              "GTOresGen"
+            ],
+            [
+              "technology",
+              "GTTechnologyRecipes"
+            ],
+            [
+              "combs",
+              "GTCombGen"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "drafts": {
+    "chemical": {
+      "receipt_sha256": "395c9955b6c982a6d072e03caeb49554b4e3fa90c1c7f61a37b0029bec328819",
+      "readme_sha256": "a42085ac98c8e9700a4637a8ed5bb01ac926e121d457c64f4648745280cb8026",
+      "sharing_proof_before_root_comment_corrections": {
+        "date": "2026-10-21",
+        "baseline": "e5c6b2021",
+        "scope": "Collapse duplicated native ChemicalRecipeLoader class bodies. Keep native imports and make/gasOrLiquid holder/query differences conditional. Every executable token and literal position is identical separately for Forge and NeoForge. No behavior fix, generator execution, compilation, tests, Gradle, game, build or commit.",
+        "files": {
+          "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/ChemicalRecipeLoader.java": {
+            "before_sha256": "830a1a239182477acaa7ba53014f7a6ff5c66ab73561277848fe52afecdedb47",
+            "after_sha256": "ecea4b1b4d28bd937821dbd3a36169ecd5b66622ad57929313a377a1a5944fac",
+            "lines_before": 605,
+            "lines_after": 216,
+            "condition_blocks_after": 3,
+            "projections": {
+              "forge": {
+                "tokens_and_literal_positions_equal": true,
+                "tokens": 1919,
+                "literal_positions": [
+                  {
+                    "token_index": 225,
+                    "literal": "\"NaCl\""
+                  },
+                  {
+                    "token_index": 237,
+                    "literal": "\"SaltWater\""
+                  },
+                  {
+                    "token_index": 249,
+                    "literal": "\"NaCl\""
+                  },
+                  {
+                    "token_index": 251,
+                    "literal": "\"NaOH\""
+                  },
+                  {
+                    "token_index": 256,
+                    "literal": "\"KCl\""
+                  },
+                  {
+                    "token_index": 258,
+                    "literal": "\"KOH\""
+                  },
+                  {
+                    "token_index": 263,
+                    "literal": "\"LiCl\""
+                  },
+                  {
+                    "token_index": 265,
+                    "literal": "\"LiOH\""
+                  },
+                  {
+                    "token_index": 273,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 283,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 343,
+                    "literal": "\"Cl\""
+                  },
+                  {
+                    "token_index": 351,
+                    "literal": "\"HCl\""
+                  },
+                  {
+                    "token_index": 358,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 372,
+                    "literal": "\"S\""
+                  },
+                  {
+                    "token_index": 379,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 386,
+                    "literal": "\"SO2\""
+                  },
+                  {
+                    "token_index": 400,
+                    "literal": "\"SO2\""
+                  },
+                  {
+                    "token_index": 407,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 414,
+                    "literal": "\"SO3\""
+                  },
+                  {
+                    "token_index": 438,
+                    "literal": "\"SO3\""
+                  },
+                  {
+                    "token_index": 446,
+                    "literal": "\"H2SO4\""
+                  },
+                  {
+                    "token_index": 467,
+                    "literal": "\"N\""
+                  },
+                  {
+                    "token_index": 474,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 482,
+                    "literal": "\"NH3\""
+                  },
+                  {
+                    "token_index": 496,
+                    "literal": "\"Oil_ExtraHeavy\""
+                  },
+                  {
+                    "token_index": 509,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 511,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 513,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 515,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 535,
+                    "literal": "\"Oil_Heavy\""
+                  },
+                  {
+                    "token_index": 548,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 550,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 552,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 554,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 574,
+                    "literal": "\"Oil_Medium\""
+                  },
+                  {
+                    "token_index": 587,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 589,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 591,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 593,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 613,
+                    "literal": "\"Oil_Normal\""
+                  },
+                  {
+                    "token_index": 626,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 628,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 630,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 632,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 652,
+                    "literal": "\"Oil_Light\""
+                  },
+                  {
+                    "token_index": 665,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 667,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 669,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 671,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 691,
+                    "literal": "\"Oil_Soulsand\""
+                  },
+                  {
+                    "token_index": 704,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 706,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 708,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 710,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 730,
+                    "literal": "\"Biomass\""
+                  },
+                  {
+                    "token_index": 735,
+                    "literal": "\"BiomassIC2\""
+                  },
+                  {
+                    "token_index": 742,
+                    "literal": "\"[gregtech] Chemistry recipes: {} added, {} skipped (missing fluids/materials)\""
+                  },
+                  {
+                    "token_index": 946,
+                    "literal": "\"BioEthanol\""
+                  },
+                  {
+                    "token_index": 961,
+                    "literal": "\"Ethanol\""
+                  },
+                  {
+                    "token_index": 971,
+                    "literal": "\"Glycerol\""
+                  },
+                  {
+                    "token_index": 981,
+                    "literal": "\"Methane\""
+                  },
+                  {
+                    "token_index": 1224,
+                    "literal": "\"Cl\""
+                  },
+                  {
+                    "token_index": 1234,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 1244,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 1823,
+                    "literal": "\"GenGas_\""
+                  },
+                  {
+                    "token_index": 1827,
+                    "literal": "\"GenLiquid_\""
+                  }
+                ],
+                "signature_sha256": "e75695cfdcabb1625f86c7729737cabf9f821565e6180ceaf5c985b1ec1311c1",
+                "source_view_before_sha256": "ce33eccb1e75edb4b53af482175720d4c307c0f31c18486cc9f47e7a20eff77e",
+                "source_view_after_sha256": "a6387dd19cc69a6e756f25b72146bf9f931fe53bbc547beda346b093c1e1d6b9",
+                "comments_before": 24,
+                "comments_after": 24,
+                "comments_exactly_equal": true,
+                "comment_changes": [],
+                "comment_scope": "Shared comments retain the existing Forge wording; masked Neo comment delimiters may become ordinary Javadoc. No recipe/behavior attribution added."
+              },
+              "neoforge": {
+                "tokens_and_literal_positions_equal": true,
+                "tokens": 1943,
+                "literal_positions": [
+                  {
+                    "token_index": 229,
+                    "literal": "\"NaCl\""
+                  },
+                  {
+                    "token_index": 241,
+                    "literal": "\"SaltWater\""
+                  },
+                  {
+                    "token_index": 253,
+                    "literal": "\"NaCl\""
+                  },
+                  {
+                    "token_index": 255,
+                    "literal": "\"NaOH\""
+                  },
+                  {
+                    "token_index": 260,
+                    "literal": "\"KCl\""
+                  },
+                  {
+                    "token_index": 262,
+                    "literal": "\"KOH\""
+                  },
+                  {
+                    "token_index": 267,
+                    "literal": "\"LiCl\""
+                  },
+                  {
+                    "token_index": 269,
+                    "literal": "\"LiOH\""
+                  },
+                  {
+                    "token_index": 277,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 287,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 347,
+                    "literal": "\"Cl\""
+                  },
+                  {
+                    "token_index": 355,
+                    "literal": "\"HCl\""
+                  },
+                  {
+                    "token_index": 362,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 376,
+                    "literal": "\"S\""
+                  },
+                  {
+                    "token_index": 383,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 390,
+                    "literal": "\"SO2\""
+                  },
+                  {
+                    "token_index": 404,
+                    "literal": "\"SO2\""
+                  },
+                  {
+                    "token_index": 411,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 418,
+                    "literal": "\"SO3\""
+                  },
+                  {
+                    "token_index": 442,
+                    "literal": "\"SO3\""
+                  },
+                  {
+                    "token_index": 450,
+                    "literal": "\"H2SO4\""
+                  },
+                  {
+                    "token_index": 471,
+                    "literal": "\"N\""
+                  },
+                  {
+                    "token_index": 478,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 486,
+                    "literal": "\"NH3\""
+                  },
+                  {
+                    "token_index": 500,
+                    "literal": "\"Oil_ExtraHeavy\""
+                  },
+                  {
+                    "token_index": 513,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 515,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 517,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 519,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 539,
+                    "literal": "\"Oil_Heavy\""
+                  },
+                  {
+                    "token_index": 552,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 554,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 556,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 558,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 578,
+                    "literal": "\"Oil_Medium\""
+                  },
+                  {
+                    "token_index": 591,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 593,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 595,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 597,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 617,
+                    "literal": "\"Oil_Normal\""
+                  },
+                  {
+                    "token_index": 630,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 632,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 634,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 636,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 656,
+                    "literal": "\"Oil_Light\""
+                  },
+                  {
+                    "token_index": 669,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 671,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 673,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 675,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 695,
+                    "literal": "\"Oil_Soulsand\""
+                  },
+                  {
+                    "token_index": 708,
+                    "literal": "\"Fuel\""
+                  },
+                  {
+                    "token_index": 710,
+                    "literal": "\"Diesel\""
+                  },
+                  {
+                    "token_index": 712,
+                    "literal": "\"Kerosine\""
+                  },
+                  {
+                    "token_index": 714,
+                    "literal": "\"Petrol\""
+                  },
+                  {
+                    "token_index": 734,
+                    "literal": "\"Biomass\""
+                  },
+                  {
+                    "token_index": 739,
+                    "literal": "\"BiomassIC2\""
+                  },
+                  {
+                    "token_index": 746,
+                    "literal": "\"[gregtech] Chemistry recipes: {} added, {} skipped (missing fluids/materials)\""
+                  },
+                  {
+                    "token_index": 950,
+                    "literal": "\"BioEthanol\""
+                  },
+                  {
+                    "token_index": 965,
+                    "literal": "\"Ethanol\""
+                  },
+                  {
+                    "token_index": 975,
+                    "literal": "\"Glycerol\""
+                  },
+                  {
+                    "token_index": 985,
+                    "literal": "\"Methane\""
+                  },
+                  {
+                    "token_index": 1244,
+                    "literal": "\"Cl\""
+                  },
+                  {
+                    "token_index": 1254,
+                    "literal": "\"H\""
+                  },
+                  {
+                    "token_index": 1264,
+                    "literal": "\"O\""
+                  },
+                  {
+                    "token_index": 1843,
+                    "literal": "\"GenGas_\""
+                  },
+                  {
+                    "token_index": 1847,
+                    "literal": "\"GenLiquid_\""
+                  }
+                ],
+                "signature_sha256": "35969fac6b75ad4bbfffcd99d606ac79e2ced9465f236763aeeb40579d65cf31",
+                "source_view_before_sha256": "736ecbac9234e26dc3650debd80bdd9b966b6d53575a1c4b388083c4121a7786",
+                "source_view_after_sha256": "d756870588fb3577b0611cf41bee638868c555b95faf2fc5a64c2e95eb0c0c67",
+                "comments_before": 24,
+                "comments_after": 24,
+                "comments_exactly_equal": false,
+                "comment_changes": [
+                  {
+                    "before": "/*\n\n * Core industrial chemistry chains, ported from GT6 {@code Loader_Recipes_Chem}.\n\n *\n\n * <p>GT6 amounts are atom-count units: 1 atom = 1 U = 1000 mB of material gas/liquid\n\n * (water: 3 atoms = 3000 mB). Covered here: salt water, chloralkali electrolysis,\n\n * hydrochloric + sulfuric acid chains, ammonia. The remaining ~350 chem recipes\n\n * (organics, dyes, polymers) are tracked as follow-up work.</p>\n\n */",
+                    "after": "/**\n * Core industrial chemistry chains, ported from GT6 {@code Loader_Recipes_Chem}.\n *\n * <p>GT6 amounts are atom-count units: 1 atom = 1 U = 1000 mB of material gas/liquid\n * (water: 3 atoms = 3000 mB). Covered here: salt water, chloralkali electrolysis,\n * hydrochloric + sulfuric acid chains, ammonia. The remaining ~350 chem recipes\n * (organics, dyes, polymers) are tracked as follow-up work.</p>\n */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* GT6 oil refining: crude → fuel/diesel/kerosine/petrol with per-output chances. */",
+                    "after": "/** GT6 oil refining: crude → fuel/diesel/kerosine/petrol with per-output chances. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* FluidStack from an FL registry key, or null when not registered. */",
+                    "after": "/** FluidStack from an FL registry key, or null when not registered. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* dust salt + 3 water → Cl/H/O gases + hydroxide dust (GT6 chloralkali). */",
+                    "after": "/** dust salt + 3 water → Cl/H/O gases + hydroxide dust (GT6 chloralkali). */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Burner Mixer takes up to 6 fluid inputs — used for gas-phase oxidation steps. */",
+                    "after": "/** Burner Mixer takes up to 6 fluid inputs — used for gas-phase oxidation steps. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Material fluid (gas/liquid/named), amount in atom units (1 U = 1000 mB). */",
+                    "after": "/** Material fluid (gas/liquid/named), amount in atom units (1 U = 1000 mB). */",
+                    "words_equal": true
+                  }
+                ],
+                "comment_scope": "Shared comments retain the existing Forge wording; masked Neo comment delimiters may become ordinary Javadoc. No recipe/behavior attribution added."
+              }
+            }
+          }
+        },
+        "helper_sources": [
+          {
+            "path": "tools/integration/check_source.py",
+            "sha256": "7a9901280b629a1c45f3cdcdfa55d8e3a7973538daecadb4976390121c6acfe3"
+          },
+          {
+            "path": "tools/integration/check_relay_sharing.py",
+            "sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a"
+          },
+          {
+            "path": "tools/native_layout.py",
+            "sha256": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+          },
+          {
+            "path": "tools/integration/check_stonecutter_emi.py",
+            "sha256": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3"
+          }
+        ],
+        "proof_helper_sha256": "86e3e26437af7d388765e46cd822b6ac367c92fc92bb688150787991e9002e4e",
+        "projection_method": "Expose maintained Neo /* bodies, restore /^* ... ^/ nested comments, then explicitly select each platform before Java Unicode/comment/literal lexing. Full streams include package/imports, types, branch operators, numbers and ordered literals; whitespace is never simply deleted."
+      }
+    },
+    "resolver": {
+      "receipt_sha256": "9f82cfd88fa0cd939bd3de014f93c91a7d30f5ce06a85af29b1675c8bdd83444",
+      "readme_sha256": "ec4c53e61e5fc1d131bf41faa87e609da4f760180e2b4302b23aba51cf035f1e",
+      "sharing_proof_before_root_comment_corrections": {
+        "date": "2026-10-21",
+        "baseline": "93b993c95",
+        "scope": "Collapse duplicated native GeneratedRecipeResolver class bodies. Keep native imports, platform-specific table order, registry lookup/namespace expressions and holder/query differences conditional. Every executable token and literal position is identical separately for Forge and NeoForge. No behavior fix, generator execution, compilation, tests, Gradle, game, build or commit.",
+        "files": {
+          "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java": {
+            "before_sha256": "891e5f6d9b731857076e3bc12de8904d37d864b377931c33fe7263df8b5c4224",
+            "after_sha256": "6da5820d65974d88663cf9ff9a6aabe6ffa496fb54b435a4ebc9369254897566",
+            "lines_before": 1170,
+            "lines_after": 427,
+            "condition_blocks_after": 6,
+            "projections": {
+              "forge": {
+                "tokens_and_literal_positions_equal": true,
+                "tokens": 2966,
+                "literal_positions": [
+                  {
+                    "token_index": 382,
+                    "literal": "\"chem\""
+                  },
+                  {
+                    "token_index": 391,
+                    "literal": "\"other\""
+                  },
+                  {
+                    "token_index": 400,
+                    "literal": "\"potions\""
+                  },
+                  {
+                    "token_index": 409,
+                    "literal": "\"food\""
+                  },
+                  {
+                    "token_index": 418,
+                    "literal": "\"extruder\""
+                  },
+                  {
+                    "token_index": 427,
+                    "literal": "\"vanilla\""
+                  },
+                  {
+                    "token_index": 436,
+                    "literal": "\"temporary\""
+                  },
+                  {
+                    "token_index": 445,
+                    "literal": "\"ores\""
+                  },
+                  {
+                    "token_index": 454,
+                    "literal": "\"combs\""
+                  },
+                  {
+                    "token_index": 463,
+                    "literal": "\"technology\""
+                  },
+                  {
+                    "token_index": 474,
+                    "literal": "\"[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)\""
+                  },
+                  {
+                    "token_index": 495,
+                    "literal": "\"[gregtech] accepted-missing content ({}): {}\""
+                  },
+                  {
+                    "token_index": 507,
+                    "literal": "\", \""
+                  },
+                  {
+                    "token_index": 650,
+                    "literal": "':'"
+                  },
+                  {
+                    "token_index": 784,
+                    "literal": "\"[gregtech] chem skip (no map): {}\""
+                  },
+                  {
+                    "token_index": 862,
+                    "literal": "\"[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}\""
+                  },
+                  {
+                    "token_index": 874,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 879,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 889,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 894,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 904,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 909,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 919,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 924,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 1022,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 1041,
+                    "literal": "\"i\""
+                  },
+                  {
+                    "token_index": 1051,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1067,
+                    "literal": "\"tech\""
+                  },
+                  {
+                    "token_index": 1077,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1093,
+                    "literal": "\"v\""
+                  },
+                  {
+                    "token_index": 1103,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1119,
+                    "literal": "\"cell\""
+                  },
+                  {
+                    "token_index": 1129,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1295,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 1307,
+                    "literal": "\"omd\""
+                  },
+                  {
+                    "token_index": 1361,
+                    "literal": "\"i\""
+                  },
+                  {
+                    "token_index": 1367,
+                    "literal": "\"Empty\""
+                  },
+                  {
+                    "token_index": 1452,
+                    "literal": "\"blockDust\""
+                  },
+                  {
+                    "token_index": 1616,
+                    "literal": "\"book\""
+                  },
+                  {
+                    "token_index": 1642,
+                    "literal": "\"tag\""
+                  },
+                  {
+                    "token_index": 1678,
+                    "literal": "\"v\""
+                  },
+                  {
+                    "token_index": 1706,
+                    "literal": "\"minecraft\""
+                  },
+                  {
+                    "token_index": 1756,
+                    "literal": "\"cell\""
+                  },
+                  {
+                    "token_index": 1805,
+                    "literal": "\"tech\""
+                  },
+                  {
+                    "token_index": 1871,
+                    "literal": "':'"
+                  },
+                  {
+                    "token_index": 2079,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 2092,
+                    "literal": "\"w\""
+                  },
+                  {
+                    "token_index": 2113,
+                    "literal": "\"f\""
+                  },
+                  {
+                    "token_index": 2134,
+                    "literal": "\"m\""
+                  },
+                  {
+                    "token_index": 2155,
+                    "literal": "\"fr\""
+                  },
+                  {
+                    "token_index": 2324,
+                    "literal": "\"chocolatemilk\""
+                  },
+                  {
+                    "token_index": 2326,
+                    "literal": "\"ChocolateMilk\""
+                  },
+                  {
+                    "token_index": 2330,
+                    "literal": "\"darkchocolatemilk\""
+                  },
+                  {
+                    "token_index": 2332,
+                    "literal": "\"ChocolateMilk_Dark\""
+                  },
+                  {
+                    "token_index": 2555,
+                    "literal": "\"GenGas_\""
+                  },
+                  {
+                    "token_index": 2575,
+                    "literal": "\"GenLiquid_\""
+                  },
+                  {
+                    "token_index": 2629,
+                    "literal": "\"liquid.\""
+                  },
+                  {
+                    "token_index": 2649,
+                    "literal": "\"gas.\""
+                  },
+                  {
+                    "token_index": 2686,
+                    "literal": "\"GenMolten_\""
+                  }
+                ],
+                "load_all_order_before": [
+                  [
+                    "chem",
+                    "GTChemGen"
+                  ],
+                  [
+                    "other",
+                    "GTOtherGen"
+                  ],
+                  [
+                    "potions",
+                    "GTPotionGen"
+                  ],
+                  [
+                    "food",
+                    "GTFoodGen"
+                  ],
+                  [
+                    "extruder",
+                    "GTExtruderGen"
+                  ],
+                  [
+                    "vanilla",
+                    "GTVanillaGen"
+                  ],
+                  [
+                    "temporary",
+                    "GTTemporaryGen"
+                  ],
+                  [
+                    "ores",
+                    "GTOresGen"
+                  ],
+                  [
+                    "combs",
+                    "GTCombGen"
+                  ],
+                  [
+                    "technology",
+                    "GTTechnologyRecipes"
+                  ]
+                ],
+                "load_all_order_after": [
+                  [
+                    "chem",
+                    "GTChemGen"
+                  ],
+                  [
+                    "other",
+                    "GTOtherGen"
+                  ],
+                  [
+                    "potions",
+                    "GTPotionGen"
+                  ],
+                  [
+                    "food",
+                    "GTFoodGen"
+                  ],
+                  [
+                    "extruder",
+                    "GTExtruderGen"
+                  ],
+                  [
+                    "vanilla",
+                    "GTVanillaGen"
+                  ],
+                  [
+                    "temporary",
+                    "GTTemporaryGen"
+                  ],
+                  [
+                    "ores",
+                    "GTOresGen"
+                  ],
+                  [
+                    "combs",
+                    "GTCombGen"
+                  ],
+                  [
+                    "technology",
+                    "GTTechnologyRecipes"
+                  ]
+                ],
+                "signature_sha256": "919745b15c01d7f52283e1e112f93c113285e2711f470bf60a9c71f49a5e6d78",
+                "source_view_before_sha256": "5b1d028dab7a142278f8b4d84aa718423f01f96e16cc4c4fcf08d613a93ab83a",
+                "source_view_after_sha256": "22fb8dce6ef05ae1fd1826611eb1b26c54ddd1a80023eaec9c0ddc3ade313f76",
+                "comments_before": 40,
+                "comments_after": 40,
+                "comments_exactly_equal": true,
+                "comment_changes": [],
+                "comment_scope": "Shared comments retain the existing Forge wording; masked Neo comment delimiters may become ordinary Javadoc. No recipe/behavior attribution added."
+              },
+              "neoforge": {
+                "tokens_and_literal_positions_equal": true,
+                "tokens": 2970,
+                "literal_positions": [
+                  {
+                    "token_index": 386,
+                    "literal": "\"chem\""
+                  },
+                  {
+                    "token_index": 395,
+                    "literal": "\"other\""
+                  },
+                  {
+                    "token_index": 404,
+                    "literal": "\"potions\""
+                  },
+                  {
+                    "token_index": 413,
+                    "literal": "\"food\""
+                  },
+                  {
+                    "token_index": 422,
+                    "literal": "\"extruder\""
+                  },
+                  {
+                    "token_index": 431,
+                    "literal": "\"vanilla\""
+                  },
+                  {
+                    "token_index": 440,
+                    "literal": "\"temporary\""
+                  },
+                  {
+                    "token_index": 449,
+                    "literal": "\"ores\""
+                  },
+                  {
+                    "token_index": 458,
+                    "literal": "\"technology\""
+                  },
+                  {
+                    "token_index": 467,
+                    "literal": "\"combs\""
+                  },
+                  {
+                    "token_index": 478,
+                    "literal": "\"[gregtech] Transpiled GT6 recipes: {} added, {} skipped (missing content)\""
+                  },
+                  {
+                    "token_index": 499,
+                    "literal": "\"[gregtech] accepted-missing content ({}): {}\""
+                  },
+                  {
+                    "token_index": 511,
+                    "literal": "\", \""
+                  },
+                  {
+                    "token_index": 654,
+                    "literal": "':'"
+                  },
+                  {
+                    "token_index": 788,
+                    "literal": "\"[gregtech] chem skip (no map): {}\""
+                  },
+                  {
+                    "token_index": 866,
+                    "literal": "\"[gregtech] chem skip ({}): in={} fIn={} fOut={} out={}\""
+                  },
+                  {
+                    "token_index": 878,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 883,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 893,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 898,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 908,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 913,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 923,
+                    "literal": "\"|\""
+                  },
+                  {
+                    "token_index": 928,
+                    "literal": "\"ok\""
+                  },
+                  {
+                    "token_index": 1026,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 1045,
+                    "literal": "\"i\""
+                  },
+                  {
+                    "token_index": 1055,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1071,
+                    "literal": "\"tech\""
+                  },
+                  {
+                    "token_index": 1081,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1097,
+                    "literal": "\"v\""
+                  },
+                  {
+                    "token_index": 1107,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1123,
+                    "literal": "\"cell\""
+                  },
+                  {
+                    "token_index": 1133,
+                    "literal": "\"0\""
+                  },
+                  {
+                    "token_index": 1299,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 1311,
+                    "literal": "\"omd\""
+                  },
+                  {
+                    "token_index": 1365,
+                    "literal": "\"i\""
+                  },
+                  {
+                    "token_index": 1371,
+                    "literal": "\"Empty\""
+                  },
+                  {
+                    "token_index": 1456,
+                    "literal": "\"blockDust\""
+                  },
+                  {
+                    "token_index": 1620,
+                    "literal": "\"book\""
+                  },
+                  {
+                    "token_index": 1646,
+                    "literal": "\"tag\""
+                  },
+                  {
+                    "token_index": 1682,
+                    "literal": "\"v\""
+                  },
+                  {
+                    "token_index": 1712,
+                    "literal": "\"minecraft\""
+                  },
+                  {
+                    "token_index": 1762,
+                    "literal": "\"cell\""
+                  },
+                  {
+                    "token_index": 1811,
+                    "literal": "\"tech\""
+                  },
+                  {
+                    "token_index": 1877,
+                    "literal": "':'"
+                  },
+                  {
+                    "token_index": 1905,
+                    "literal": "\"gt6ce\""
+                  },
+                  {
+                    "token_index": 2079,
+                    "literal": "\":\""
+                  },
+                  {
+                    "token_index": 2092,
+                    "literal": "\"w\""
+                  },
+                  {
+                    "token_index": 2113,
+                    "literal": "\"f\""
+                  },
+                  {
+                    "token_index": 2134,
+                    "literal": "\"m\""
+                  },
+                  {
+                    "token_index": 2155,
+                    "literal": "\"fr\""
+                  },
+                  {
+                    "token_index": 2324,
+                    "literal": "\"chocolatemilk\""
+                  },
+                  {
+                    "token_index": 2326,
+                    "literal": "\"ChocolateMilk\""
+                  },
+                  {
+                    "token_index": 2330,
+                    "literal": "\"darkchocolatemilk\""
+                  },
+                  {
+                    "token_index": 2332,
+                    "literal": "\"ChocolateMilk_Dark\""
+                  },
+                  {
+                    "token_index": 2559,
+                    "literal": "\"GenGas_\""
+                  },
+                  {
+                    "token_index": 2579,
+                    "literal": "\"GenLiquid_\""
+                  },
+                  {
+                    "token_index": 2633,
+                    "literal": "\"liquid.\""
+                  },
+                  {
+                    "token_index": 2653,
+                    "literal": "\"gas.\""
+                  },
+                  {
+                    "token_index": 2690,
+                    "literal": "\"GenMolten_\""
+                  }
+                ],
+                "load_all_order_before": [
+                  [
+                    "chem",
+                    "GTChemGen"
+                  ],
+                  [
+                    "other",
+                    "GTOtherGen"
+                  ],
+                  [
+                    "potions",
+                    "GTPotionGen"
+                  ],
+                  [
+                    "food",
+                    "GTFoodGen"
+                  ],
+                  [
+                    "extruder",
+                    "GTExtruderGen"
+                  ],
+                  [
+                    "vanilla",
+                    "GTVanillaGen"
+                  ],
+                  [
+                    "temporary",
+                    "GTTemporaryGen"
+                  ],
+                  [
+                    "ores",
+                    "GTOresGen"
+                  ],
+                  [
+                    "technology",
+                    "GTTechnologyRecipes"
+                  ],
+                  [
+                    "combs",
+                    "GTCombGen"
+                  ]
+                ],
+                "load_all_order_after": [
+                  [
+                    "chem",
+                    "GTChemGen"
+                  ],
+                  [
+                    "other",
+                    "GTOtherGen"
+                  ],
+                  [
+                    "potions",
+                    "GTPotionGen"
+                  ],
+                  [
+                    "food",
+                    "GTFoodGen"
+                  ],
+                  [
+                    "extruder",
+                    "GTExtruderGen"
+                  ],
+                  [
+                    "vanilla",
+                    "GTVanillaGen"
+                  ],
+                  [
+                    "temporary",
+                    "GTTemporaryGen"
+                  ],
+                  [
+                    "ores",
+                    "GTOresGen"
+                  ],
+                  [
+                    "technology",
+                    "GTTechnologyRecipes"
+                  ],
+                  [
+                    "combs",
+                    "GTCombGen"
+                  ]
+                ],
+                "signature_sha256": "caaf25a8ed04648c1db0cdf792702a6896b7c64817e8e5853f1c9ace517feb0c",
+                "source_view_before_sha256": "b9fc99e3f7f5b609d5165846e65480868170bd53c16b903ad5e8ecb9c72ed54a",
+                "source_view_after_sha256": "a47bb8ae893c83c700f690037bec161adc5dc0db1d7a6969989cccfcb338feb3",
+                "comments_before": 40,
+                "comments_after": 40,
+                "comments_exactly_equal": false,
+                "comment_changes": [
+                  {
+                    "before": "/*\n\n * Runtime resolver for the transpiled GT6 chemistry data ({@link GTChemGen}).\n\n *\n\n * <p>Recipes whose materials/fluids are absent in the port are skipped and\n\n * counted — GT6 behaved the same way for missing cross-mod content. The\n\n * residual skips reference content the port deliberately does not register\n\n * (cross-mod compounds such as Desh, or chemistry-only intermediates such as\n\n * CrO2); per the Wave 35 decision these are accepted as permanently missing\n\n * rather than back-filled (B8). {@link #loadAll()} logs the exact unresolved\n\n * tokens each run so the set stays auditable instead of being a silent number.</p>\n\n */",
+                    "after": "/**\n * Runtime resolver for the transpiled GT6 chemistry data ({@link GTChemGen}).\n *\n * <p>Recipes whose materials/fluids are absent in the port are skipped and\n * counted — GT6 behaved the same way for missing cross-mod content. The\n * residual skips reference content the port deliberately does not register\n * (cross-mod compounds such as Desh, or chemistry-only intermediates such as\n * CrO2); per the Wave 35 decision these are accepted as permanently missing\n * rather than back-filled (B8). {@link #loadAll()} logs the exact unresolved\n * tokens each run so the set stays auditable instead of being a silent number.</p>\n */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Distinct content tokens (material/fluid, amount stripped) that failed to resolve. */",
+                    "after": "/** Distinct content tokens (material/fluid, amount stripped) that failed to resolve. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/*\n\n     * Entry point — called from Loader_Recipes_Chem after the core chains.\n\n     * <p>\n\n     * Every transpiled GT6 loader has its own generated class; they all feed the same resolver, so\n\n     * a recipe that names content this port does not register is skipped and recorded instead of\n\n     * being guessed at.\n\n     * </p>\n\n     */",
+                    "after": "/**\n     * Entry point — called from Loader_Recipes_Chem after the core chains.\n     * <p>\n     * Every transpiled GT6 loader has its own generated class; they all feed the same resolver, so\n     * a recipe that names content this port does not register is skipped and recorded instead of\n     * being guessed at.\n     * </p>\n     */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* One transpiled GT6 loader's outcome, for the coverage tests and the round reports. */",
+                    "after": "/** One transpiled GT6 loader's outcome, for the coverage tests and the round reports. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Per-loader transpile results of {@link #loadAll()}. */",
+                    "after": "/** Per-loader transpile results of {@link #loadAll()}. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Record the failing spec (trailing amount stripped) for the audit summary. */",
+                    "after": "/** Record the failing spec (trailing amount stripped) for the audit summary. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Transpiled GT6 chemistry recipes that were registered. */",
+                    "after": "/** Transpiled GT6 chemistry recipes that were registered. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Transpiled recipes skipped because their content does not exist in this port. */",
+                    "after": "/** Transpiled recipes skipped because their content does not exist in this port. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Distinct content tokens (material/fluid/prefix, amount stripped) that failed to resolve. */",
+                    "after": "/** Distinct content tokens (material/fluid/prefix, amount stripped) that failed to resolve. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/*\n\n     * Resolve one transpiled item spec ({@code i:<prefix>:<material>:<count>},\n\n     * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}, …) to a stack.\n\n     *\n\n     * <p>Public so other generated data can reuse the same grammar — the GT loot rows\n\n     * ({@code GTLootGen}) and their tests do.</p>\n\n     *\n\n     * @return the stack, or {@code null} when the spec cannot be resolved\n\n     */",
+                    "after": "/**\n     * Resolve one transpiled item spec ({@code i:<prefix>:<material>:<count>},\n     * {@code tech:<item>:<count>}, {@code v:<vanilla item>:<count>}, …) to a stack.\n     *\n     * <p>Public so other generated data can reuse the same grammar — the GT loot rows\n     * ({@code GTLootGen}) and their tests do.</p>\n     *\n     * @return the stack, or {@code null} when the spec cannot be resolved\n     */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/*\n\n     * Resolves a fluid spec ({@code m:<material>:<mb>}, {@code f:<registry name>:<mb>}, {@code w:<mb>})\n\n     * for the hand-ported packs that reuse this loader's grammar (e.g. {@code GTMainRecipes}).\n\n     *\n\n     * @return the fluid, or null when the referenced content is absent\n\n     */",
+                    "after": "/**\n     * Resolves a fluid spec ({@code m:<material>:<mb>}, {@code f:<registry name>:<mb>}, {@code w:<mb>})\n     * for the hand-ported packs that reuse this loader's grammar (e.g. {@code GTMainRecipes}).\n     *\n     * @return the fluid, or null when the referenced content is absent\n     */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* @return resolved stack, or null/empty when the referenced content is absent. */",
+                    "after": "/** @return resolved stack, or null/empty when the referenced content is absent. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* @return resolved fluid, or null when the referenced content is absent. */",
+                    "after": "/** @return resolved fluid, or null when the referenced content is absent. */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* field key by raw 1.7.10 registry name (\"nitrofuel\", \"gas.natural\", ...). */",
+                    "after": "/** field key by raw 1.7.10 registry name (\"nitrofuel\", \"gas.natural\", ...). */",
+                    "words_equal": true
+                  },
+                  {
+                    "before": "/* Material fluid: generated gas/liquid (1U=1000mB) or molten (1U=144mB) or named. */",
+                    "after": "/** Material fluid: generated gas/liquid (1U=1000mB) or molten (1U=144mB) or named. */",
+                    "words_equal": true
+                  }
+                ],
+                "comment_scope": "Shared comments retain the existing Forge wording; masked Neo comment delimiters may become ordinary Javadoc. No recipe/behavior attribution added."
+              }
+            }
+          }
+        },
+        "helper_sources": [
+          {
+            "path": "tools/integration/check_source.py",
+            "sha256": "7a9901280b629a1c45f3cdcdfa55d8e3a7973538daecadb4976390121c6acfe3"
+          },
+          {
+            "path": "tools/integration/check_relay_sharing.py",
+            "sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a"
+          },
+          {
+            "path": "tools/native_layout.py",
+            "sha256": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+          },
+          {
+            "path": "tools/integration/check_stonecutter_emi.py",
+            "sha256": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3"
+          }
+        ],
+        "proof_helper_sha256": "bac6fcda1d31581fac1bc48c4ebe493595e662babf7fe60901dfb04f0a1b4d4d",
+        "projection_method": "Expose maintained Neo /* bodies, restore /^* ... ^/ nested comments, then explicitly select each platform before Java Unicode/comment/literal lexing. Full streams include package/imports, types, branch operators, numbers and ordered literals; whitespace is never simply deleted."
+      }
+    }
+  },
+  "actual_entrypoint": {
+    "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+    "sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502",
+    "chemical": "runStep(ChemicalRecipeLoader, new ChemicalRecipeLoader())",
+    "resolver": "last runStep(imported recipe tables, GeneratedRecipeResolver::loadAll)"
+  },
+  "root_comment_corrections": [
+    "Chemical class summary describes current helper quantities and separately loaded generated data; removes unverified remaining recipe count.",
+    "Resolver class summary no longer assumes every unresolved token is approved permanently absent optional content.",
+    "Resolver loadAll names the actual MachineRecipeBootstrap caller, not an old loader name.",
+    "Resolver added counts non-null map registration results; skipped includes map rejection as well as resolution. This differs from loaders that count submissions."
+  ],
+  "maintained_lines": {
+    "before": 1775,
+    "final": 641,
+    "removed": 1134
+  },
+  "new_alignment_findings": [],
+  "limits": [
+    "Every executable token and literal position unchanged for each native platform, including imports, FQN expressions, null/caching/exception behavior and table order.",
+    "Agent sharing proofs describe intermediate comments; root final source/view hashes and exact execution checks are recorded separately after comment corrections.",
+    "Baseline four full-body candidates are now shared; unreviewed method-level duplication, large responsibilities, native interfaces and all gameplay coverage remain separate.",
+    "No generators, Gradle, compilation, new tests, Java initialization, runtime recipe registry, game, build, push or behavior fixes."
+  ]
+}

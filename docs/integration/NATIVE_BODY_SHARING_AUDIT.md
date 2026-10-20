@@ -39,3 +39,7 @@ VanillaProcessingRecipes与AlloyRecipeLoader合计954→334维护行，减少620
 没有新增原版／第三方代码导入；已有来源注释和署名保留。用户WoodMaterials编辑及CompoundMaterials列对齐未纳入本批改动。未运行生成器、Gradle、Java编译、测试、游戏、存档重启、构建或推送；源码执行不变不代表已完成配方玩法验收。
 
 继续独立处理ChemicalRecipeLoader、保留加载顺序的GeneratedRecipeResolver，再审方法级职责和版本边界。全面原版核查仍继续光莲、地表堆和其它未核系统，不能把四个候选处理完当全部架构完成。
+
+## 第五十七批后续结果
+
+上述后两候选已于第五十七批完成：Chemical605→216行，解析器1170→425行，四份完整执行／字面量位置保持，真实表顺序条件保留。四个基线候选现共2729→975行；少量过强旧说明另行纠正，原观察与最终摘要分开，见[后续报告](RECIPE_RESOLVER_SHARING_AUDIT.md)及[证明](verification/chemical-resolver-sharing-20261021.json)。本页第五十五批表格保留当时状态；方法级筛选和其它职责继续，不将此后续结果回填成当时已完成或全部架构完成。

@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十七批化学与解析器业务共享
+
+继前两文件后，Chemical／GeneratedRecipeResolver再减少1134维护行；四个完整类体候选共2729→975行。两端四份执行词法／字面量位置及解析器表序逐项保持，Forge／Neo真实顺序和注册表API条件继续保留；纠正少量旧说明，未修配方玩法。正式ALIGN仍201条，未编译／测试／构建／推送，见[报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[最终证明](verification/chemical-resolver-sharing-20261021.json)。方法职责、其它原生边界与全面核查继续，goal active。
+
 ## 2026-10-21 / 第五十六批光莲与石木地表堆
 
 正式记录至201条，包含历史修复项；新增八项具体差异。光莲只登记Forge清空碰撞与PLAINS泥土回退，Neo前置注册、水面物品及现代睡莲政策不误判；地表堆已有罕见物品／多木种，仍有概率、指示关联、数量和交互回调缺口。源码与六个原生工件52个entry、74份平台视图重核，理想概率和两个层岩坐标独立复算；未运行世界或修玩法，见[光莲](GLOWTUS_AUDIT.md)、[石木堆](SURFACE_PILES_AUDIT.md)及[回执](verification/surface-plant-audit-20261021.json)。整体goal active。

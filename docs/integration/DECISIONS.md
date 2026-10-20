@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-21 / 解析器顺序、原生表达式与统计语义分别保持
+
+Chemical和GeneratedRecipeResolver现各维护一份业务；解析器明确保留两端combs／technology次序、原生注册表查找及命名空间表达式，不能因当前常量值相同就擅自改字面量或先后。去重后完整执行和字面量位置保持，声明作用域不变。
+
+少量注释单独纠正：未解析token不一律等同已批准永久缺失；实际入口是MachineRecipeBootstrap；Resolver added按map返回非null而增、skipped还含map拒绝，不能套用其它加载器的提交计数说明。日志字符串与运行操作保留，中间共享证明与最终注释后hash分别归档，见[报告](RECIPE_RESOLVER_SHARING_AUDIT.md)。
+
 ## 2026-10-21 / 植物实际注册所有权与有限生成反例
 
 Neo光莲由前置GTPlants占有，后备GTRemainingIconBlocks的普通物品／noCollission不代表实际路径。两平台原生植物支撑分派不同；Forge的PLAINS回退须连实际canSurvive／BlockItem入口确认。保留已有现代睡莲与一般GT水族政策，不因旧光莲船／形状不同擅自回退用户选择。
