@@ -51,6 +51,8 @@
 
 第五十七批继续完成后两项Chemical与GeneratedRecipeResolver整类共享，1775→641行；四个候选总2729→975行。解析器两端加载顺序、注册表查找／命名空间表达式和所有公开接口保持，四份完整执行／字面量位置相同；旧数量、永久缺失、入口和统计注释单独纠正。未审方法级／大职责和其它原生注册边界继续，见[共享报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[证明](verification/chemical-resolver-sharing-20261021.json)。用户WoodMaterials和CompoundMaterials排版未改。
 
+第五十八批完成原盘点中的ReactorCoreBlockEntity压行展开：236→560行、最长305→152；包含被Neo注释包裹的能力和保存同步。两份执行投影、各31字面量位置／5注释和30条件保持，未拆改状态或行为。棒目录／纯算术／冷却参数与原生网络／实体／流体身份导航见[核反应堆源码](NUCLEAR_SOURCE_LAYOUT.md)及[证明](verification/reactor-core-readability-20261021.json)；仍有其它压行／大职责待续，不把本次格式整理算成核反应堆完成。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属

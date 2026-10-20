@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十八批反应堆核心源码展开
+
+ReactorCoreBlockEntity的运行／冷却／推液、匿名能力与两端保存同步已从236行展开为560行，最长行305→152，完整双端执行、字面量位置、注释与条件保持。补充核反应堆职责导航，未改玩法或新增ALIGN，正式记录仍201条。棒物理、核心生命周期和中子网络的原版核查正在继续，不把目录表或覆写声明当真实消费已正确；见[导航](NUCLEAR_SOURCE_LAYOUT.md)及[证明](verification/reactor-core-readability-20261021.json)。未编译／测试／构建／推送，goal active。
+
 ## 2026-10-21 / 第五十七批化学与解析器业务共享
 
 继前两文件后，Chemical／GeneratedRecipeResolver再减少1134维护行；四个完整类体候选共2729→975行。两端四份执行词法／字面量位置及解析器表序逐项保持，Forge／Neo真实顺序和注册表API条件继续保留；纠正少量旧说明，未修配方玩法。正式ALIGN仍201条，未编译／测试／构建／推送，见[报告](RECIPE_RESOLVER_SHARING_AUDIT.md)与[最终证明](verification/chemical-resolver-sharing-20261021.json)。方法职责、其它原生边界与全面核查继续，goal active。

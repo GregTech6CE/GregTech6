@@ -65,6 +65,8 @@ DecompositionRecipeLoader、VanillaProcessingRecipes、AlloyRecipeLoader、Chemi
 
 配方表本身的名称、物品槽／储罐数和构造标志在 core 的 `data/MachineRecipeMapDefinitions.java`，数据结构是 `api/recipe/RecipeMapSpec.java`；原生 `data/MachineRecipeMaps.java` 将它们转成 RecipeMap。`dynamicRecipes`／`contextualRecipes` 安装动态查询入口，fake 展示行不参与机器加工。当前表标志和动态入口仍有确认缺口，见 [动态配方核查](DYNAMIC_RECIPE_AUDIT.md)。只读工具 `tools/integration/inventory_recipe_map_flags.py` 使用 `--source <原版RM.java> --current <当前定义文件> --output <报告>` 比对四个尾部标志，报告未解析行；它不会替代配方执行验收。
 
+核反应堆的棒目录／冷却参数／纯算术位于core `content/nuclear`；实际棒ItemStack数据、流体身份、网络tick与实体状态位于共享原生同名内容包及`blockentity/energy`。核心压行已展开，三组原版行为专题继续，见[核反应堆职责导航](NUCLEAR_SOURCE_LAYOUT.md)。
+
 ## 机器参数与运行行为从哪里看
 
 流体管道和普通储罐目录在 core `content/transport/fluid/FluidTransportDefinitions.java`；管道规格 `PipeSpec`、通道均衡 `FluidPipeChannels`、危险数值 `FluidPipeSafety` 均属 core。Forge 由 `content/fluid/FluidPipeDefinitions` 消费，Neo 由 `content/transport/fluid/FluidTransportRegistries` 消费；共享 `FluidPipeBlockEntity` 负责通道状态、邻居交互和危险处理。数值表中的防护不等于接触伤害开关或仪表接口已接入，见 [流体管道核查](FLUID_PIPE_AUDIT.md)。
