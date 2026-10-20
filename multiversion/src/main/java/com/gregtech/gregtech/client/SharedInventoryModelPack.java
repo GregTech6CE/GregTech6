@@ -171,21 +171,28 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts()) {
             ResourceLocation id = part.block().getId();
             String texture = part.texture() == null ? "" : part.texture();
-            if (texture.isEmpty()) {
-                result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
-                        "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/multiblock/steel_wall\"}}}".getBytes(StandardCharsets.UTF_8));
-                result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
-                        "{\"parent\":\"gt6ce:block/machine/multiblock/steel_wall\"}".getBytes(StandardCharsets.UTF_8));
-                continue;
+            boolean energy = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
+            String model = texture.isEmpty()
+                    ? "gt6ce:block/machine/multiblock/steel_wall"
+                    : id.getNamespace() + ":block/" + id.getPath();
+            if (!texture.isEmpty()) {
+                String cube = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\""
+                        + id.getNamespace() + ":" + texture + "\"}}";
+                result.put(named(id.getNamespace(), "models/block/" + id.getPath() + ".json"), cube.getBytes(StandardCharsets.UTF_8));
             }
-            String model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\""
-                    + id.getNamespace() + ":" + texture + "\"}}";
-            result.put(named(id.getNamespace(), "models/block/" + id.getPath() + ".json"), model.getBytes(StandardCharsets.UTF_8));
-            result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
-                    ("{\"variants\":{\"\":{\"model\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}}}").getBytes(StandardCharsets.UTF_8));
+            String blockstate = energy
+                    ? facingBlockstate(model)
+                    : "{\"variants\":{\"\":{\"model\":\"" + model + "\"}}}";
+            result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
-                    ("{\"parent\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}").getBytes(StandardCharsets.UTF_8));
+                    ("{\"parent\":\"" + model + "\"}").getBytes(StandardCharsets.UTF_8));
         }
+    }
+
+    private static String facingBlockstate(String model) {
+        String variant = "{\"model\":\"" + model + "\"}";
+        return "{\"variants\":{\"facing=north\":" + variant + ",\"facing=south\":" + variant
+                + ",\"facing=west\":" + variant + ",\"facing=east\":" + variant + "}}";
     }
 
     /** Placeholder so the bakery has a model to replace with the dynamic pipe shape. */

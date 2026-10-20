@@ -1,5 +1,17 @@
 # 实现选择记录
 
+## 2026-10-20 / 附属能量零件和带结构的行为机器
+
+能量零件是卡 25 外壳声明上的可选 `StructurePartEnergy`：能量短名、正的缓存、输出面、每 tick 的包大小和包数上限。EU 和 RU 用同一个声明，只换短名。没有这项的零件仍是外壳，注册、方块实体和“不自己 tick”都跟卡 25 一样。
+
+有这项的零件方块 id 仍是 `<附属 id>:<名字>`，挂在附属自己的 DeferredRegister 上。它不进 `gt6ce:multiblock_port` 的合法方块，以免读档时工厂建成外壳实体、丢掉缓存。方块实体是 `gt6ce:addon_energy_part`，类仍是外壳实体的子类，所以现有结构匹配的 `instanceof` 不用改。朝向是水平的，输出面相对这个朝向。缓存、已设定的包和停机写在零件自己的 NBT：`gt.part_energy`、`gt.part_output`、`gt.part_amount`、`gt.part_stopped`。
+
+能调用 `charge`、`setOutput`、`stop` 的控制器是行为机器。大型配方机器没有附属 tick。结构名等于行为机器的 `machineType` 时，这张结构有控制器；行为机器不是必须带结构。成形发生在行为之前。`structureFormed()` 为假时 `energyParts()` 是空的。`setOutput` 超过声明上限直接失败，不截断。`charge` 加到容量为止，零件已经不属于这台机器时返回 0。
+
+零件只在格子角色是 `ENERGY_OUTPUT`、绑在已成形的行为机器上、并且没有停机时，按声明顺序用 `EnergyTransfer.emitEnergyToSide` 往外推。邻居经 `EnergyBlockViews` 看见它。邻居不抽这份缓存，也不能往里灌。`ENERGY_INPUT` 只留给控制器读写，不对外发能。一个零件只认一个控制器坐标：第二台结构在这个坐标还被占着时不能成形。拆掉一格会释放零件并停机。
+
+这不包含液体电池、潮汐发电，也不把内置单方块变换器改成多方块。API 版本仍是 0。
+
 ## 2026-10-20 / 附属管子的身份、档位和配方
 
 附属管子挂在 `AddonMachineContributor` 上。一行流体管是 `FluidPipeDeclaration`：后缀、材料名、基础容量、防气、防酸、防等离子、防魔法、耐温和可燃性。耐温 `0` 按材料熔点的 1.25 倍计算，和内置行一样。一行物品管是 `ItemPipeDeclaration`：后缀、材料名、中号步长和格子数。步长至少 4，这样大号和限流大号仍是正数。
