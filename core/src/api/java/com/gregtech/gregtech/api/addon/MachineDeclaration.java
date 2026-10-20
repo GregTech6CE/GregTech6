@@ -16,6 +16,9 @@ import java.util.Objects;
  * {@code cheapOverclockingSpecified} is false until the builder sets it. A basic machine still
  * reads the boolean, whose default is off, and does not consult the built-in name table.
  * {@code minimumLightAbove} of 0 does not check the block above.
+ * {@code searchOutputTanks} tries the output tanks only after the input tanks miss, and that job
+ * drains the tanks that matched. {@code exclusiveOutputs} rolls the first item chance once and
+ * requires every static row to have exactly two item outputs.
  */
 public record MachineDeclaration(
         String id,
@@ -42,7 +45,9 @@ public record MachineDeclaration(
         BehaviorMachineDeclaration.Face fluidAutoOutput,
         boolean cheapOverclocking,
         boolean cheapOverclockingSpecified,
-        int minimumLightAbove
+        int minimumLightAbove,
+        boolean searchOutputTanks,
+        boolean exclusiveOutputs
 ) {
     public MachineDeclaration {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -115,6 +120,8 @@ public record MachineDeclaration(
         private boolean cheapOverclocking;
         private boolean cheapOverclockingSpecified;
         private int minimumLightAbove;
+        private boolean searchOutputTanks;
+        private boolean exclusiveOutputs;
 
         private Builder(String id, String material) {
             this.id = id;
@@ -144,13 +151,16 @@ public record MachineDeclaration(
         public Builder fluidAutoOutput(BehaviorMachineDeclaration.Face face) { facesSpecified = true; fluidAutoOutput = face; return this; }
         public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingSpecified = true; return this; }
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
+        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
+        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
 
         public MachineDeclaration build() {
             return new MachineDeclaration(id, material, machineType, energy, energyPerTick, tier, parallel,
                     recipeMap, kind, efficiency, constantEnergy, structureKeys, facesSpecified,
                     itemInputs, itemOutputs, fluidInputs, fluidOutputs, energyInputs,
                     itemAutoInput, itemAutoOutput, fluidAutoInput, fluidAutoOutput,
-                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove);
+                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
+                    searchOutputTanks, exclusiveOutputs);
         }
     }
 }

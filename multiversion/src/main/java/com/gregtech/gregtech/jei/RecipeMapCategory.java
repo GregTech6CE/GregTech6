@@ -74,7 +74,8 @@ public final class RecipeMapCategory implements IRecipeCategory<Recipe> {
                     : com.gregtech.gregtech.api.material.MaterialDisplayBinding.alternatives(items[i]);
             if(!materialAliases.isEmpty())builder.addInvisibleIngredients(role).addItemStacks(materialAliases);
             int chance=recipe.getOutputChance(i);
-            if(!input&&chance<10000) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
+            boolean showChance=!input&&(chance<10000||com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.enabled(map));
+            if(showChance) itemSlot.addTooltipCallback((view,tooltip)->tooltip.add(
                     Component.translatable("gt6ce.jei.chance",chance/100.0).withStyle(net.minecraft.ChatFormatting.YELLOW)));
         }
         for(int i=0;i<fluids.length;i++) {

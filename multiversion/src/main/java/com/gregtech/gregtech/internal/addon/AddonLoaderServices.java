@@ -77,11 +77,13 @@ public final class AddonLoaderServices {
         @Override public String name() { return map.mNameInternal; }
 
         @Override public AddonRecipes.Line add(AddonRecipes.Line line) {
+            com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addRecipe(recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
         @Override public AddonRecipes.Line addDisplay(AddonRecipes.Line line) {
+            com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addFakeRecipe(false, recipe(line));
             return recipe == null ? null : line(recipe);
         }

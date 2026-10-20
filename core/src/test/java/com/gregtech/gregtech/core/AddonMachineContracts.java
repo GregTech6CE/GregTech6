@@ -5,6 +5,7 @@ import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.ExclusiveOutputRules;
 import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.addon.AddonMachineLayout;
@@ -89,6 +90,7 @@ public final class AddonMachineContracts {
         check(!plain.facesSpecified(), "default faces are unspecified");
         check(!plain.cheapOverclocking() && !plain.cheapOverclockingSpecified(), "default cheap overclock is off and unset");
         check(plain.minimumLightAbove() == 0, "default light gate is off");
+        check(!plain.searchOutputTanks() && !plain.exclusiveOutputs(), "default output-tank search and exclusive outputs are off");
         check(!AddonOverclock.enabled(true, true, plain.cheapOverclocking(), true), "addon basic ignores a cheap built-in name");
         check(AddonOverclock.enabled(false, false, false, true), "built-in legacy cheap stays");
         check(!AddonOverclock.enabled(false, true, false, true), "an explicit off replaces a large machine's legacy cheap rule");
@@ -117,6 +119,20 @@ public final class AddonMachineContracts {
         check(half[0] == 5_000 && half[1] == 10_000, "declared chances are kept");
         expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{5_000}, 2), "does not match");
         expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{0}, 1), "1..");
+
+        var detector = MachineDeclaration.builder("detector", "Steel").energy("EU", 32).recipeMap("aa.recipe.detector")
+                .searchOutputTanks(true).exclusiveOutputs(true).build();
+        check(detector.searchOutputTanks() && detector.exclusiveOutputs(), "both switches opt in");
+        ExclusiveOutputRules.requirePair(2, 2);
+        assertions++;
+        check(ExclusiveOutputRules.choose(6_000, bound -> 0) == 0, "a low roll takes the first output");
+        check(ExclusiveOutputRules.choose(6_000, bound -> 5_999) == 0, "the last success takes the first output");
+        check(ExclusiveOutputRules.choose(6_000, bound -> 6_000) == 1, "the boundary takes the second output");
+        check(ExclusiveOutputRules.choose(10_000, bound -> { throw new AssertionError("certain first output"); }) == 0,
+                "a certain first output needs no roll");
+        expectThrows(IllegalArgumentException.class, () -> ExclusiveOutputRules.requirePair(1, 1), "exactly 2");
+        expectThrows(IllegalArgumentException.class, () -> ExclusiveOutputRules.requirePair(2, 1), "exactly 2");
+        expectThrows(IllegalArgumentException.class, () -> ExclusiveOutputRules.requirePair(3, 3), "exactly 2");
     }
 
     private static void faceDisagree() {

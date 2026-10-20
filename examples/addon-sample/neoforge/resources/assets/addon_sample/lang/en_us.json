@@ -5,6 +5,7 @@
   "addon_sample.ru_buffer.release": "Release rotation",
   "block.addon_sample.hand_crank": "Sample Hand Crank",
   "block.addon_sample.sample_press": "Sample Press",
+  "block.addon_sample.sample_detector": "Sample Detector",
   "block.addon_sample.large_sample_press": "Large Sample Press",
   "addon_sample.structure.press.1": "3 wide, 2 high and 3 deep. One cell is a Sample Wall; the rest are Tank Walls. The controller is the front center.",
   "block.addon_sample.sample_wall": "Sample Wall",

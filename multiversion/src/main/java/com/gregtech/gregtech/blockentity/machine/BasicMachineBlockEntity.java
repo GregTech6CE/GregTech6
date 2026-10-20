@@ -89,6 +89,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     private FluidTankGT[] tanksInput;
     private FluidTankGT[] tanksOutput;
+    /** Set by the latest recipe search. Not saved: the next search decides again. */
+    private boolean matchedOutputTanks;
     private FaceConfig faceConfig = FaceConfig.ALL_SIDES;
 
     // ── Processing state ─────────────────────────────────────────────────
@@ -527,7 +529,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         workPossible=false;
         if(recipeMap==null||itemHandler==null)return;
         var recipe=findRecipeWithUsbPort();
-        if(recipe!=null){int parallel=computeParallel(recipe);workPossible=parallel>0&&com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
+        if(recipe!=null && exclusivePairOrPlain(recipe)){int parallel=computeParallel(recipe, matchedFluids());workPossible=parallel>0&&com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy())!=null;}
     }
     private void updateCoverSignals(){
         if(level==null||level.isClientSide||isRemoved())return;
@@ -672,24 +674,26 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         if (!switchesAllowRunning()) return;
         if (!structureComplete()) return;
         Recipe recipe = findRecipeWithUsbPort();
-        if (recipe == null) {
+        if (recipe == null || !exclusivePairOrPlain(recipe)) {
             mMaxProgress = 0;
             mCurrentRecipe = null;
             return;
         }
 
-        int parallel = computeParallel(recipe);
+        var fluids = matchedFluids();
+        int parallel = computeParallel(recipe, fluids);
         var cost=com.gregtech.gregtech.api.recipe.MachineWorkCost.calculate(recipe.mEUt,recipe.mDuration,parallel,
                 parallelScalesDuration(),efficiency(),inputMinimum(),inputMaximum(),cheapOverclocking(),usesTimeEnergy());
         if(cost==null)return;
         mMinEnergy=cost.minimumPower();
         mMaxProgress=cost.totalWork();
 
-        var remaining = com.gregtech.gregtech.api.recipe.RecipeInputs.consume(recipe, recipeInputItems(), recipeInputFluids(), parallel);
+        var remaining = com.gregtech.gregtech.api.recipe.RecipeInputs.consume(recipe, recipeInputItems(), fluids, parallel);
         if (remaining == null || parallel < 1) { mMaxProgress=0; mCurrentRecipe=null; return; }
-        pendingOutputs = com.gregtech.gregtech.api.recipe.MachineWorkOutputs.roll(recipe,parallel,level.random::nextInt);
+        pendingOutputs = com.gregtech.gregtech.api.recipe.MachineWorkOutputs.roll(recipe,parallel,level.random::nextInt,usesExclusiveOutputs());
         for(int i=0;i<remaining.items().size();i++) itemHandler.setStackInSlot(i,remaining.items().get(i));
-        for(int i=0;i<tanksInput.length;i++) tanksInput[i].setFluid(remaining.fluids().get(i));
+        var drained = matchedOutputTanks ? tanksOutput : tanksInput;
+        for(int i=0;i<drained.length;i++) drained[i].setFluid(remaining.fluids().get(i));
         setChanged();
 
         mParallelCount = parallel;
@@ -700,21 +704,28 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     /** GT6's printer and replicator accept a USB cable in place of a retained stick. */
     @Nullable
     private Recipe findRecipeWithUsbPort() {
-
-//? if >=1.21.1 {
-/*        if(recipeMap==null||itemHandler==null)return null;
-        var items=itemHandler.stacks();var fluids=tanksToList(tanksInput);
-        Recipe direct=recipeMap.findRecipe(items,fluids,recipeMap.mNeedsOutputs,recipeMap.mInputItemsCount,recipeMap.mOutputItemsCount, level, this, autocraftingProgram.getStackInSlot(0));
-        return direct!=null?direct:com.gregtech.gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,recipeInputItems(),recipeInputFluids());
-*///?} else {
+        matchedOutputTanks = false;
         if (recipeMap == null || itemHandler == null) return null;
-        var inputStacks = itemHandler.stacks();
-        var inputFluids = tanksToList(tanksInput);
-        Recipe direct = recipeMap.findRecipe(inputStacks, inputFluids, recipeMap.mNeedsOutputs,
+        var items = itemHandler.stacks();
+        Recipe direct = recipeMap.findRecipe(items, tanksToList(tanksInput), recipeMap.mNeedsOutputs,
                 recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
                 level, this, autocraftingProgram.getStackInSlot(0));
-        if (direct != null || recipeMap != MachineRecipeMaps.Printer && recipeMap != MachineRecipeMaps.Replicator)
-            return direct;
+        // Items stay on the input slots. Only the fluid list changes for the second search.
+        if (direct == null && usesOutputTankSearch() && tanksOutput != null && tanksOutput.length > 0) {
+            Recipe fromOutput = recipeMap.findRecipe(items, tanksToList(tanksOutput), recipeMap.mNeedsOutputs,
+                    recipeMap.mInputItemsCount, recipeMap.mOutputItemsCount,
+                    level, this, autocraftingProgram.getStackInSlot(0));
+            if (fromOutput != null) {
+                matchedOutputTanks = true;
+                direct = fromOutput;
+            }
+        }
+        if (direct != null) return direct;
+
+//? if >=1.21.1 {
+/*        return com.gregtech.gregtech.content.recipe.MachineContextRecipes.find(this,recipeMap,recipeInputItems(),recipeInputFluids());
+*///?} else {
+        if (recipeMap != MachineRecipeMaps.Printer && recipeMap != MachineRecipeMaps.Replicator) return null;
         int requiredTier = recipeMap == MachineRecipeMaps.Printer ? 1 : 3;
         for (int slot = 0; slot < recipeMap.mInputItemsCount; slot++) {
             ItemStack cable = itemHandler.getStackInSlot(slot);
@@ -731,6 +742,21 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     }
 
+    private boolean usesOutputTankSearch() { return spec != null && spec.searchOutputTanks(); }
+    private boolean usesExclusiveOutputs() { return spec != null && spec.exclusiveOutputs(); }
+
+    /** A plain machine accepts any row. An exclusive machine accepts only a pair, and skips the rest. */
+    private boolean exclusivePairOrPlain(Recipe recipe) {
+        if (!usesExclusiveOutputs()) return true;
+        int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+        return com.gregtech.gregtech.api.addon.ExclusiveOutputRules.isPair(declared,
+                com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.mOutputs));
+    }
+
+    private java.util.List<FluidStack> matchedFluids() {
+        return matchedOutputTanks ? outputTankFluids() : recipeInputFluids();
+    }
+
     /** GT6 {@code NBT_PARALLEL} batch limits for the large machines. */
     private int parallelLimit() {
         return spec == null ? 1 : spec.parallelLimit();
@@ -745,13 +771,16 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     private java.util.List<FluidStack> recipeInputFluids() {
         return java.util.Arrays.stream(tanksInput).map(t -> t.getFluidInTank(0)).toList();
     }
-    private int computeParallel(Recipe recipe) {
+    private java.util.List<FluidStack> outputTankFluids() {
+        return java.util.Arrays.stream(tanksOutput).map(t -> t.getFluidInTank(0)).toList();
+    }
+    private int computeParallel(Recipe recipe, java.util.List<FluidStack> fluids) {
         int low=0,high=parallelLimit();
         // Original BasicMachine:730/743 caps power-scaled parallel batches at nominal input.
         if(!parallelScalesDuration() && !usesTimeEnergy() && recipe.mEUt>0)
             high=(int)Math.min(high,Math.max(1,spec.energyIn()/recipe.mEUt));
         for(var fluid:recipe.mFluidOutputs) if(fluid!=null && !fluid.isEmpty()) high=Math.min(high,Integer.MAX_VALUE/fluid.getAmount());
-        var items=recipeInputItems(); var fluids=recipeInputFluids();
+        var items=recipeInputItems();
         while(low<high) {
             int mid=low+(high-low+1)/2;
             if(com.gregtech.gregtech.api.recipe.RecipeInputs.consume(recipe,items,fluids,mid)!=null) low=mid; else high=mid-1;

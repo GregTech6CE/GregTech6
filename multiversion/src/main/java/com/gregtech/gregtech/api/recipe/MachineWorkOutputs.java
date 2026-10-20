@@ -19,8 +19,24 @@ public final class MachineWorkOutputs {
     private final List<ItemStack> items=new ArrayList<>();
     private final List<FluidStack> fluids=new ArrayList<>();
     public static MachineWorkOutputs roll(Recipe recipe,int parallel,java.util.function.IntUnaryOperator random) {
+        return roll(recipe, parallel, random, false);
+    }
+    /** {@code exclusive} rolls the first item chance once and emits that one item, scaled by the batch. */
+    public static MachineWorkOutputs roll(Recipe recipe,int parallel,java.util.function.IntUnaryOperator random,boolean exclusive) {
         var result=new MachineWorkOutputs();
-        for(int i=0;i<recipe.mOutputs.length;i++) {
+        if (exclusive) {
+            int declared = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+            com.gregtech.gregtech.api.addon.ExclusiveOutputRules.requirePair(declared,
+                    com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(recipe.mOutputs));
+            int index = com.gregtech.gregtech.api.addon.ExclusiveOutputRules.choose(recipe.getOutputChance(0), random);
+            var output = recipe.mOutputs[index];
+            long count = (long) output.getCount() * parallel;
+            while (count > 0) {
+                int take = (int) Math.min(count, output.getMaxStackSize());
+                result.items.add(output.copyWithCount(take));
+                count -= take;
+            }
+        } else for(int i=0;i<recipe.mOutputs.length;i++) {
             var output=recipe.mOutputs[i]; long count=recipe.rollOutputCount(i,parallel,random);
             while(count>0) { int take=(int)Math.min(count,output.getMaxStackSize()); result.items.add(output.copyWithCount(take)); count-=take; }
         }
