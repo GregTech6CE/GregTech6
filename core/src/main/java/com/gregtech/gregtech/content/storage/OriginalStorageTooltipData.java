@@ -8,6 +8,7 @@ import java.util.List;
 /** Original row choices, independent of Minecraft item/NBT and loader APIs. */
 public final class OriginalStorageTooltipData {
     private OriginalStorageTooltipData() {}
+
     public static final long MASS_CAPACITY = 1_000_000;
     public static final String SLOT_COUNT  = "gt.multitileentity.hopper.tooltip.1";
     public static final String STACK_SIZE  = "gt.multitileentity.hopper.tooltip.2";
@@ -24,23 +25,42 @@ public final class OriginalStorageTooltipData {
     public static final String UNTAPE      = "gt.lang.use.untape";
     public static final String PINCERS     = "gt.lang.use.pincers.to.take";
 
-    public record Hopper(int slots, int stackSize, boolean showStackSize, boolean exact, List<String> tools) {}
+    public record Hopper(
+            int slots,
+            int stackSize,
+            boolean showStackSize,
+            boolean exact,
+            List<String> tools) {}
+
     public static Hopper hopper(int sourceSlots, boolean queue, Integer savedMode, boolean savedExact) {
         int mode = savedMode == null ? queue ? 64 : 0 : savedMode;
         return new Hopper(Math.max(queue ? 2 : 1, sourceSlots), mode, queue || mode > 0,
                 !queue && savedExact, queue ? List.of(SCREWDRIVER, MAGNIFIER, RESET)
                                           : List.of(SCREWDRIVER, MONKEY, MAGNIFIER, RESET));
     }
+
     public static List<String> massTools(int mode) {
         var tools = new ArrayList<>(List.of(PINCERS, "gt.lang.use.cutter.to.toggle", SCREWDRIVER, OUTPUTS));
-        if ((mode & 8) == 0) { tools.add(RESET); tools.add(TAPE); }
-        else tools.add(UNTAPE);
+        if ((mode & 8) == 0) {
+            tools.add(RESET);
+            tools.add(TAPE);
+        } else
+            tools.add(UNTAPE);
         tools.add(MAGNIFIER);
         return List.copyOf(tools);
     }
-    public static List<String> drawerTools() { return List.of(INPUTS); }
-    public static List<String> craftingTableTools() { return List.of(INPUTS, SCREWDRIVER); }
-    public static List<String> bookShelfTools() { return List.of(PINCERS, MAGNIFIER); }
+
+    public static List<String> drawerTools() {
+        return List.of(INPUTS);
+    }
+
+    public static List<String> craftingTableTools() {
+        return List.of(INPUTS, SCREWDRIVER);
+    }
+
+    public static List<String> bookShelfTools() {
+        return List.of(PINCERS, MAGNIFIER);
+    }
 
     /** Only source ChestGenHooks names with an explicit adopted modern table identity. */
     public static String lootKey(String table) {
@@ -52,10 +72,12 @@ public final class OriginalStorageTooltipData {
             case "minecraft:chests/stronghold_corridor", "van.STRONGHOLD_CORRIDOR" -> "strongholdCorridor";
             case "minecraft:chests/desert_pyramid", "van.PYRAMID_DESERT_CHEST" -> "pyramidDesertyChest";
             case "minecraft:chests/jungle_temple", "van.PYRAMID_JUNGLE_CHEST" -> "pyramidJungleChest";
-            case "minecraft:chests/jungle_temple_dispenser", "van.PYRAMID_JUNGLE_DISPENSER" -> "pyramidJungleDispenser";
+            case "minecraft:chests/jungle_temple_dispenser", "van.PYRAMID_JUNGLE_DISPENSER" ->
+                    "pyramidJungleDispenser";
             case "minecraft:chests/village/village_weaponsmith", "van.VILLAGE_BLACKSMITH" -> "villageBlacksmith";
             case "minecraft:chests/spawn_bonus_chest", "van.BONUS_CHEST" -> "bonusChest";
-            case "gt.flawless", "gt.gems", "gt.misc", "gt.seeds", "gt.saplings", "gt.books", "gt.bottles", "gt.matdicts" -> table;
+            case "gt.flawless", "gt.gems", "gt.misc", "gt.seeds", "gt.saplings", "gt.books",
+                    "gt.bottles", "gt.matdicts" -> table;
             default -> null;
         };
         return name == null ? null : "loot." + name;
