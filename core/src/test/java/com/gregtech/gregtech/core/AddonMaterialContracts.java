@@ -51,6 +51,8 @@ public final class AddonMaterialContracts {
             case "order" -> nameOrder();
             case "named" -> namedDeclaration();
             case "scale" -> scale();
+            case "softform" -> softPlate();
+            case "oreraw" -> rawOreStillRejected();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -225,6 +227,33 @@ public final class AddonMaterialContracts {
         System.out.println("scale dustMaterials=" + dusts + " metalMaterials=" + metals
                 + " dustItems=" + dustItems + " metalItems=" + metalItems + " coreItems=" + coreItems
                 + " initMs=" + initMs + " itemListMs=" + itemsMs + " heapMb=" + heapMb);
+    }
+
+    private static void softPlate() throws Exception {
+        prepare();
+        AddonMaterials.submit("aa_soft", List.of(MaterialDefinition.builder(1, "SoftRubber").dust().build()),
+                List.of(new MaterialFormRequest("SoftRubber", "plate"), new MaterialFormRequest("SoftRubber", "foil")), null);
+        GTMaterialRegistry.init();
+        boolean plate = false;
+        boolean foil = false;
+        boolean family = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (!"SoftRubber".equals(definition.material().getName())) continue;
+            String prefix = definition.prefix().getName();
+            if ("plate".equals(prefix)) plate = true;
+            if ("foil".equals(prefix)) foil = true;
+            if ("plateDense".equals(prefix) || "plateDouble".equals(prefix)) family = true;
+        }
+        check(plate && foil, "a dust material can explicitly request a plate and a foil");
+        check(!family, "the request does not add the rest of the plate family");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "explicit plates do not change built-in item ids");
+    }
+
+    private static void rawOreStillRejected() {
+        prepare();
+        AddonMaterials.submit("aa_ore", List.of(MaterialDefinition.builder(1, "SoftOre").dust().build()),
+                List.of(new MaterialFormRequest("SoftOre", "oreRaw")), null);
+        expectThrows("not valid", "oreRaw", "SoftOre");
     }
 
     private static void ungeneratedForm() {

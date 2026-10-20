@@ -633,7 +633,14 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
         return original == null || original.parallelDuration();
     }
     // Loader_MultiTileEntities 22010 explicitly enables cheap overclocking for the Melter.
-    protected boolean cheapOverclocking() { return spec!=null&&com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.cheapOverclocking(spec.machineName(),spec.tier()); }
+    protected boolean cheapOverclocking() {
+        boolean addonBasic = spec != null && !"gt6ce".equals(spec.namespace())
+                && spec.controllerKind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC;
+        return com.gregtech.gregtech.api.addon.AddonOverclock.enabled(addonBasic,
+                spec != null && spec.cheapOverclockingDeclared(),
+                spec != null && spec.cheapOverclocking(),
+                spec != null && com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.cheapOverclocking(spec.machineName(), spec.tier()));
+    }
     protected boolean requiresConstantEnergy() { return !usesTimeEnergy()&&(spec==null||!com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.noConstantPower(spec.machineName(),spec.tier())); }
     protected int efficiency() { return spec==null?10000:com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier()); }
 
@@ -647,8 +654,18 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected boolean recipeStartAllowed() { return !sourceRequiresIgnition()||sourceIgnitionTicks>0||mActive; }
     protected void onProcessFinished() {if(sourceRequiresIgnition())sourceIgnitionTicks=com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.IGNITION_TICKS;}
 
+    /** 1.7.10 {@code World.getBlockLightValue}: max of sky and block light, with night not subtracted. */
+    private boolean lightAllowsStart() {
+        int minimum = spec == null ? 0 : spec.minimumLightAbove();
+        if (minimum <= 0 || level == null) return true;
+        BlockPos above = worldPosition.above();
+        if (!level.hasChunkAt(above)) return false;
+        return level.getRawBrightness(above, 0) >= minimum;
+    }
+
     private void checkRecipe() {
         if (!recipeStartAllowed()) return;
+        if (!lightAllowsStart()) return;
         if (recipeMap == null) return;
         if (!switchesAllowRunning()) return;
         if (!structureComplete()) return;

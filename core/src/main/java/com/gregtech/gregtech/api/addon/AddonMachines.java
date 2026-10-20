@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon;
 
+import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
 import com.gregtech.gregtech.api.machine.MachineControllerKind;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -45,7 +46,8 @@ public final class AddonMachines {
                               List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
                               List<FuelGeneratorDeclaration> generators) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
-                             boolean constantEnergy, List<String> structureKeys) {}
+                             boolean constantEnergy, List<String> structureKeys, MachineFaceMasks faces,
+                             boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelGeneratorDeclaration.Output output, FuelGeneratorDeclaration.Kind kind) {}
     private record BehaviorSignature(String energy, List<BehaviorMachineDeclaration.SlotRole> items,
@@ -114,8 +116,11 @@ public final class AddonMachines {
                     .energy(energy(declaration.energy()), declaration.energyPerTick())
                     .tier(declaration.tier())
                     .parallel(declaration.parallel())
-                    .build();
-            definitions.add(new AddonMachineDefinition(parameters, declaration.recipeMap(),
+                    .faces(faces(declaration))
+                    .minimumLightAbove(declaration.minimumLightAbove());
+            if (declaration.cheapOverclockingSpecified()) parameters.cheapOverclocking(declaration.cheapOverclocking());
+            var built = parameters.build();
+            definitions.add(new AddonMachineDefinition(built, declaration.recipeMap(),
                     declaration.kind() == MachineDeclaration.Kind.LARGE_RECIPE
                             ? MachineControllerKind.LARGE_RECIPE : MachineControllerKind.BASIC,
                     declaration.efficiency(), declaration.constantEnergy(), declaration.structureKeys()));
@@ -134,6 +139,25 @@ public final class AddonMachines {
             layouts.add(new AddonMachineLayout(layout.machineName(), cells));
         }
         return List.copyOf(layouts);
+    }
+
+    private static MachineFaceMasks faces(MachineDeclaration declaration) {
+        if (!declaration.facesSpecified()) return MachineFaceMasks.ALL_SIDES;
+        return new MachineFaceMasks(mask(declaration.itemInputs()), mask(declaration.itemOutputs()),
+                mask(declaration.fluidInputs()), mask(declaration.fluidOutputs()),
+                mask(declaration.energyInputs()), 0,
+                auto(declaration.itemAutoInput()), auto(declaration.itemAutoOutput()),
+                auto(declaration.fluidAutoInput()), auto(declaration.fluidAutoOutput()));
+    }
+
+    private static int mask(List<BehaviorMachineDeclaration.Face> faces) {
+        int mask = 0;
+        for (BehaviorMachineDeclaration.Face face : faces) mask |= face.bit();
+        return mask;
+    }
+
+    private static int auto(BehaviorMachineDeclaration.Face face) {
+        return face == null ? MachineFaceMasks.AUTO_NONE : face.index();
     }
 
     private static GregTechTags.Tag energy(String shortName) {
@@ -294,7 +318,9 @@ public final class AddonMachines {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses the same machine name as addon '" + previousOwner + "'");
                 var signature = new Signature(definition.recipeMapName(), definition.kind(), definition.efficiency(),
-                        definition.constantEnergy(), definition.structureKeys());
+                        definition.constantEnergy(), definition.structureKeys(), parameters.faceConfig(),
+                        parameters.cheapOverclocking(), parameters.cheapOverclockingSpecified(),
+                        parameters.minimumLightAbove());
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName

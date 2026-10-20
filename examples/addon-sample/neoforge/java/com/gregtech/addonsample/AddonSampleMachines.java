@@ -37,7 +37,16 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         return List.of(
                 MachineDeclaration.builder("sample_press", "Steel")
                         .machineType("samplepress").energy("EU", 32).tier(1)
-                        .recipeMap("addon_sample.recipe.press").basic().build(),
+                        .recipeMap("addon_sample.recipe.press").basic()
+                        .itemInputs(BehaviorMachineDeclaration.Face.TOP)
+                        .itemOutputs(BehaviorMachineDeclaration.Face.BOTTOM)
+                        .fluidInputs(BehaviorMachineDeclaration.Face.LEFT)
+                        .fluidOutputs(BehaviorMachineDeclaration.Face.RIGHT)
+                        .energyInputs(BehaviorMachineDeclaration.Face.BACK)
+                        .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+                        .cheapOverclocking(true)
+                        .minimumLightAbove(14)
+                        .build(),
                 MachineDeclaration.builder("large_sample_press", "Steel")
                         .machineType("largesamplepress").energy("EU", 512).tier(1)
                         .recipeMap("addon_sample.recipe.large_press").largeRecipe()

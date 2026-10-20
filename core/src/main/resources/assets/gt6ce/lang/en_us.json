@@ -8534,6 +8534,7 @@
   "gt.lang.recipes.sifter.usage": "Place Input on Top and rightclick it",
   "gt.lang.reminder.extenders": "Remember to use Universal Extenders if you need to literally cut Corners",
   "gt.lang.requirement.ignite.fire": "Requires ignition by Flint and Tinder or similar!",
+  "gt.lang.requirement.light.above": "Requires light level %s on the block above",
   "gt.lang.requirement.water.pure": "Requires any Water. Use distilled Water for best efficiency!",
   "gt.lang.structure": "Structure",
   "gt.lang.thermal.mass": "Thermal Mass: ",

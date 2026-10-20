@@ -57,6 +57,17 @@ public final class AddonMaterials {
 
     public record AcceptedForm(String addonId, String materialName, String prefixName) {}
 
+    /**
+     * An addon material may request {@code plate} or {@code foil} even when it has no ingot.
+     * Core materials keep {@code MaterialPrefix.isValidFor}. Other prefixes stay on that check.
+     */
+    public static boolean explicitPlateOrFoil(com.gregtech.gregtech.data.MaterialPrefix prefix, GTMaterial material) {
+        if (prefix == null || material == null || !material.isValid() || GTMaterialRegistry.isCoreMaterial(material.resolve()))
+            return false;
+        String name = prefix.getName();
+        return "plate".equals(name) || "foil".equals(name);
+    }
+
     private record Submission(String addonId, List<MaterialDefinition> materials,
                               List<MaterialFormRequest> forms, Runnable link,
                               List<MaterialComposition> compositions,
@@ -288,7 +299,7 @@ public final class AddonMaterials {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + prefix.getName() + " / " + material.resolve().getName()
                             + "' is not a generated form");
-                if (!prefix.isValidFor(material.resolve()))
+                if (!prefix.isValidFor(material.resolve()) && !explicitPlateOrFoil(prefix, material.resolve()))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + prefix.getName() + " / " + material.resolve().getName()
                             + "' is not valid for that material");

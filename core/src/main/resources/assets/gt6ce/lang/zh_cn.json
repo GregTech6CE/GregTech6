@@ -11739,6 +11739,7 @@
   "gt.lang.requirement.chunk.loader": "需要区块载入才能正常工作!",
   "gt.lang.requirement.empty.ashes": "需要清理灰烬",
   "gt.lang.requirement.ignite.fire": "需要打火石之类的东西点火",
+  "gt.lang.requirement.light.above": "Requires light level %s on the block above",
   "gt.lang.requirement.molten.calcite": "需要装入熔融方解石才能工作!",
   "gt.lang.requirement.unstacked": "堆叠时不可用!",
   "gt.lang.requirement.water": "需要输入水",
