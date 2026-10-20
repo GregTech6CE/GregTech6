@@ -2,6 +2,7 @@ package com.gregtech.addonsample;
 
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
 import com.gregtech.gregtech.api.addon.FluidPipeDeclaration;
 import com.gregtech.gregtech.api.addon.ItemPipeDeclaration;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
@@ -12,10 +13,12 @@ import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
 import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.StructurePartEnergy;
 import com.gregtech.gregtech.api.addon.StructureRole;
+import com.gregtech.gregtech.api.addon.platform.AddonFluids;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, detector, tank-wall multiblock, irrigator, miner, void hopper, rotation buffer, hand crank, transformer and pipes. */
+/** Sample press, detector, tank-wall multiblock, irrigator, miner, void hopper, rotation buffer, hand crank, transformer, gas compressor, compressed drum and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -84,6 +87,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         return List.of(new ItemPipeDeclaration("pvc", "PVC", 32768, 1));
     }
 
+    @Override public List<CompressedGasTankDeclaration> compressedGasTanks() {
+        return List.of(new CompressedGasTankDeclaration("sample_drum", "Steel", 12_800_000, false, false, false));
+    }
+
     @Override public List<MachineLayout> layouts() {
         var cells = new ArrayList<MachineLayout.Cell>();
         for (int up = 0; up < 2; up++) {
@@ -121,11 +128,12 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER);
+        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, COMPRESSOR);
     }
 
     @Override public Set<String> machineTypes() {
-        return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank", "sample_transformer");
+        return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
+                "sample_transformer", "samplecompressor");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -136,6 +144,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
             case "sample_transformer" -> new Transformer();
+            case "samplecompressor" -> new Compressor();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
@@ -205,6 +214,14 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .energyCapacity(32)
             .energyOutputs(BehaviorMachineDeclaration.Face.FRONT)
             .energyOut("RU").energyOutMax(32, 1)
+            .build();
+
+    /** KU on the bottom, gas in the tank, compressed drum on the back. */
+    private static final BehaviorMachineDeclaration COMPRESSOR = BehaviorMachineDeclaration.builder("sample_compressor", "Steel")
+            .machineType("samplecompressor").energy("KU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM))
+            .fluid(8000, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
             .build();
 
     /** Waters one dry farmland within two blocks, spending water and EU. */
@@ -353,6 +370,36 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 if (move > 0 && context.consume(move)) part.charge(move);
                 if (part.stored() > 0) part.setOutput(32, 1);
             }
+        }
+    }
+
+    /** Offers stored gas to the drum behind this block. The KU is spent even when the drum takes nothing. */
+    private static final class Compressor implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) {
+            return AddonFluids.gas(stack);
+        }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            long ku = context.energy();
+            if (ku <= 0) {
+                context.working(false);
+                return;
+            }
+            FluidStack stored = context.fluid(0);
+            int offer = stored == null || stored.isEmpty() ? 0
+                    : (int) Math.min(stored.getAmount(), Math.min(Integer.MAX_VALUE, ku * 10L));
+            int storedAmount = 0;
+            if (offer > 0) {
+                FluidStack pushed = stored.copy();
+                pushed.setAmount(offer);
+                Direction back = context.facing().getOpposite();
+                storedAmount = context.pushCompressedGas(back, pushed);
+                if (storedAmount > 0) context.drain(0, storedAmount, false);
+            }
+            context.consume(ku);
+            context.working(storedAmount > 0);
         }
     }
 }

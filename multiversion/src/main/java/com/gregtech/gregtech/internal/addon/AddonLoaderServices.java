@@ -52,6 +52,10 @@ public final class AddonLoaderServices {
             RecipeMap map = RecipeMap.RECIPE_MAPS.get(name);
             return map == null ? null : new MapView(map);
         }
+
+        @Override public boolean gas(net.minecraft.world.level.material.Fluid fluid) {
+            return com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid);
+        }
     }
 
     private static FluidStack flowing(String name, int millibuckets) {

@@ -11704,6 +11704,8 @@
   "gt.lang.pistonpush": "活塞能推动这个方块",
   "gt.lang.proof.acid": "抗腐蚀",
   "gt.lang.proof.gas": "不漏气",
+  "gt6ce.tank.compressed.store": "Stores gas. Pipes and containers cannot fill it.",
+  "gt6ce.tank.compressed.compressor": "A gas compressor fills it. Machines can drain it.",
   "gt.lang.proof.heat": "内容物限定温度:",
   "gt.lang.proof.liquid": "可以存储液体",
   "gt.lang.proof.magic": "可以存储魔法",

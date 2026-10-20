@@ -86,6 +86,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         emitStructureParts(result);
         emitAddonPipes(result);
+        emitCompressedTanks(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -195,6 +196,23 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
                 + ",\"facing=west\":" + variant + ",\"facing=east\":" + variant + "}}";
     }
 
+    /** Iron cube so a drum has a model before an addon ships its own. */
+    private static void emitCompressedTanks(Map<ResourceLocation, byte[]> result) {
+        byte[] model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}"
+                .getBytes(StandardCharsets.UTF_8);
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock)) continue;
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            String path = id.getPath();
+            result.put(named(id.getNamespace(), "models/block/" + path + ".json"), model);
+            result.put(named(id.getNamespace(), "blockstates/" + path + ".json"),
+                    ("{\"variants\":{\"\":{\"model\":\"" + id.getNamespace() + ":block/" + path + "\"}}}")
+                            .getBytes(StandardCharsets.UTF_8));
+            result.put(named(id.getNamespace(), "models/item/" + path + ".json"),
+                    ("{\"parent\":\"" + id.getNamespace() + ":block/" + path + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
     /** Placeholder so the bakery has a model to replace with the dynamic pipe shape. */
     private static void emitAddonPipes(Map<ResourceLocation, byte[]> result) {
         String blockstate = "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}}}";
@@ -263,6 +281,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             names.add(prefix.itemNamespace());
         for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts())
             names.add(part.block().getId().getNamespace());
+        for (var block : BuiltInRegistries.BLOCK)
+            if (block instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock)
+                names.add(BuiltInRegistries.BLOCK.getKey(block).getNamespace());
         names.addAll(com.gregtech.gregtech.registry.AddonPipeRegistration.namespaces());
         return Set.copyOf(names);
     }

@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.ExclusiveOutputRules;
@@ -82,6 +83,9 @@ public final class AddonMachineContracts {
             case "epart" -> energyPlain();
             case "emax" -> energyMax();
             case "eunknown" -> energyUnknown();
+            case "gasok" -> gasOk();
+            case "gasdup" -> gasDuplicate();
+            case "gasmat" -> gasMaterial();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -665,6 +669,43 @@ public final class AddonMachineContracts {
     private static void check(boolean valid, String message) {
         assertions++;
         if (!valid) throw new AssertionError(message);
+    }
+
+    private static void gasOk() {
+        prepare();
+        GTMaterialRegistry.init();
+        expectThrows(IllegalArgumentException.class,
+                () -> new CompressedGasTankDeclaration("sample_drum", "Steel", 0, false, false, false),
+                "capacity");
+        int melt = GTMaterialRegistry.get("Steel").getMeltingPoint();
+        var drum = new CompressedGasTankDeclaration("sample_drum", "Steel", 12_800_000, false, false, false);
+        check(drum.gasProof() && !drum.acidProof() && !drum.plasmaProof() && !drum.magicProof(), "gas proof is fixed");
+        tanks("aa_gas", drum);
+        tanks("aa_other", drum);
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.compressedGasTanks().size() == 2, "same path in two namespaces");
+        check(AddonMachines.compressedGasTanks().get(0).meltingPoint() == melt, "melting point");
+        check(AddonMachines.compressedGasTanks().get(0).declaration().capacity() == 12_800_000, "capacity kept");
+    }
+
+    private static void gasDuplicate() {
+        prepare();
+        GTMaterialRegistry.init();
+        var drum = new CompressedGasTankDeclaration("sample_drum", "Steel", 1000, false, false, false);
+        tanks("aa_gas", drum, drum);
+        expectInstall("aa_gas", "sample_drum", "twice");
+    }
+
+    private static void gasMaterial() {
+        prepare();
+        GTMaterialRegistry.init();
+        tanks("aa_gas", new CompressedGasTankDeclaration("sample_drum", "NotAMaterial", 1000, false, false, false));
+        expectInstall("aa_gas", "unknown", "material", "NotAMaterial");
+    }
+
+    private static void tanks(String addon, CompressedGasTankDeclaration... drums) {
+        AddonMachines.accept(addon, List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(), List.of(), List.of(), List.of(drums));
     }
 
     public static final class EnergyContributor implements GregTechMachineContributor {

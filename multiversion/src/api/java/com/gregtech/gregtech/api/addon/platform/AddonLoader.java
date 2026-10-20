@@ -5,6 +5,7 @@ package com.gregtech.gregtech.api.addon.platform;
 *///?} else {
 import net.minecraftforge.fluids.FluidStack;
 //?}
+import net.minecraft.world.level.material.Fluid;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
@@ -31,5 +32,8 @@ public final class AddonLoader {
 
         /** Null when no machine recipe map uses {@code name}. */
         AddonRecipes.Map map(String name);
+
+        /** True when {@code fluid} is a gas. Empty and liquids are false. */
+        boolean gas(Fluid fluid);
     }
 }

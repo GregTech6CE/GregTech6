@@ -29,5 +29,7 @@
   "block.addon_sample.item_pipe_huge_pvc": "Huge PVC Item Pipe",
   "block.addon_sample.item_pipe_restrictive_medium_pvc": "Restrictive Medium PVC Item Pipe",
   "block.addon_sample.item_pipe_restrictive_large_pvc": "Restrictive Large PVC Item Pipe",
-  "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe"
+  "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe",
+  "block.addon_sample.sample_drum": "Sample Compressed Gas Drum",
+  "block.addon_sample.sample_compressor": "Sample Gas Compressor"
 }

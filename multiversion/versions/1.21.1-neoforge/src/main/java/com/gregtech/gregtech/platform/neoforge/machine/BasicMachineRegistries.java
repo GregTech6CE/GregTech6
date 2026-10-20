@@ -52,6 +52,7 @@ public final class BasicMachineRegistries {
   BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);MENUS.register(bus);
   BehaviorMachineRegistration.register(bus);
   FuelGeneratorRegistration.register(bus);
+  CompressedGasTankRegistration.register(bus);
   bus.addListener(BasicMachineRegistries::capabilities);
   bus.addListener(com.gregtech.gregtech.network.MachinePayloads::register);
  }
