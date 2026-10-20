@@ -120,12 +120,16 @@ public class MaterialItem extends Item implements com.gregtech.gregtech.api.mate
         if ("Empty".equals(material.getName()) && prefix.hasEmptyAmmunitionForm())
             return MaterialPresentation.formName(prefix.getName(), material,
                     Component.translatable(getDescriptionId() + "_empty"));
-        return MaterialPresentation.formName(prefix.getName(), material,
-                Component.translatable(getDescriptionId(), MaterialPresentation.name(material)));
+        Component fallback = prefix.isAddon()
+                ? Component.translatableWithFallback(getDescriptionId(),
+                prefix.displayPrefix() + "%s" + prefix.displaySuffix(), MaterialPresentation.name(material))
+                : Component.translatable(getDescriptionId(), MaterialPresentation.name(material));
+        return MaterialPresentation.formName(prefix.getName(), material, fallback);
     }
 
     @Override
     public String getDescriptionId() {
+        if (prefix.isAddon()) return "item." + prefix.itemNamespace() + "." + prefix.getRegistryName();
 //? if >=1.21.1 {
         /*return "item.gt6ce." + prefix.getRegistryName();
 *///?} else {

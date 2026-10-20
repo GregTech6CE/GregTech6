@@ -5,6 +5,10 @@ import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.addon.GregTechMaterialContributor;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.PrefixCondition;
+import com.gregtech.gregtech.api.addon.PrefixDeclaration;
+import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
+import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
@@ -53,6 +57,11 @@ public final class AddonMaterialContracts {
             case "scale" -> scale();
             case "softform" -> softPlate();
             case "oreraw" -> rawOreStillRejected();
+            case "prefix" -> prefix();
+            case "prefixname" -> prefixName();
+            case "prefixcase" -> prefixCase();
+            case "prefixmiss" -> prefixMissing();
+            case "prefixcond" -> prefixCondition();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -279,6 +288,81 @@ public final class AddonMaterialContracts {
                 "Material definitions are closed");
         check(oldBandEmpty(), "empty startup leaves the old addon band free");
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "an empty addon queue keeps the core item id sample");
+        check(PrefixRegistry.addonPrefixes().isEmpty(), "an empty addon queue adds no prefix");
+        check(MaterialPrefix.foil.getMaterialWeight() == GTValues.U4, "built-in foil weight stays on the switch");
+    }
+
+    private static void prefix() throws Exception {
+        expectThrows(IllegalArgumentException.class,
+                () -> new PrefixDeclaration("wide", "", " Wide", 1, "item/wide", List.of(), Set.of(PrefixCondition.NOT_WOOD)),
+                "needs materials");
+        prepare();
+        AddonMaterials.submit("aa_prefix",
+                List.of(MaterialDefinition.builder(1, "PrefixDust").dust().build()),
+                List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8, "item/sample_blank",
+                        List.of("Iron", "PrefixDust"), Set.of())));
+        GTMaterialRegistry.init();
+        MaterialPrefix prefix = PrefixRegistry.byName("sampleBlank");
+        check(prefix != null && prefix.isAddon() && "aa_prefix".equals(prefix.itemNamespace()),
+                "the prefix is registered in the addon namespace");
+        check(prefix.getMaterialWeight() == 8 * GTValues.U, "the declared unit amount is 8U");
+        check(MaterialPrefix.foil.getMaterialWeight() == GTValues.U4, "built-in foil weight stays on the switch");
+        var melted = CrucibleInputRules.materialItem(GTMaterialRegistry.get("Iron"), prefix);
+        check(melted.material.getName().equals("Iron") && melted.amount == 8 * GTValues.U,
+                "the crucible reads the declared amount");
+        int iron = -1;
+        int dust = -1;
+        var all = MaterialItemDefinitions.all();
+        for (int i = 0; i < all.size(); i++) {
+            var definition = all.get(i);
+            if (!"sampleBlank".equals(definition.prefix().getName())) continue;
+            check("aa_prefix".equals(definition.namespace()), "prefix items use the addon namespace");
+            if ("Iron".equals(definition.material().getName())) iron = i;
+            if ("PrefixDust".equals(definition.material().getName())) dust = i;
+        }
+        check(iron >= 0 && dust == iron + 1 && dust == all.size() - 1,
+                "prefix items are appended in material-name order");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "addon prefixes do not change built-in item ids");
+    }
+
+    private static void prefixName() {
+        prepare();
+        AddonMaterials.submit("aa_hit", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("ingot", "Ingot ", "", 1, "item/hit", List.of("Iron"), Set.of())));
+        expectThrows("already exists", "ingot");
+    }
+
+    private static void prefixCase() {
+        prepare();
+        AddonMaterials.submit("aa_case", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("iNgot", "Ingot ", "", 1, "item/case", List.of("Iron"), Set.of())));
+        expectThrows("already exists", "iNgot", "ingot");
+    }
+
+    private static void prefixMissing() {
+        prepare();
+        AddonMaterials.submit("aa_miss", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("missingBlank", "", " Blank", 1, "item/missing",
+                        List.of("NotAMaterial"), Set.of())));
+        expectThrows("unknown material", "NotAMaterial");
+    }
+
+    private static void prefixCondition() throws Exception {
+        prepare();
+        AddonMaterials.submit("aa_cond", List.of(), List.of(), null, List.of(), List.of(), List.of(), List.of(),
+                List.of(new PrefixDeclaration("toolBit", "", " Tool Bit", 2, "item/tool_bit", List.of(),
+                        Set.of(PrefixCondition.HAS_TOOL_STATS, PrefixCondition.SMITHABLE, PrefixCondition.NOT_WOOD))));
+        GTMaterialRegistry.init();
+        MaterialPrefix prefix = PrefixRegistry.byName("toolBit");
+        check(prefix.getMaterialWeight() == 2 * GTValues.U, "a condition prefix still uses its declared amount");
+        check(prefix.isValidFor(GTMaterialRegistry.get("Steel")), "steel matches tool stats and smithable");
+        check(!prefix.isValidFor(GTMaterialRegistry.get("Wood")), "wood is excluded");
+        check(!prefix.isValidFor(GTMaterialRegistry.get("Coal")), "coal is not a smithable tool material");
+        int items = 0;
+        for (var definition : MaterialItemDefinitions.all()) if (definition.prefix() == prefix) items++;
+        check(items > 0 && items < 2000, "the condition does not cover every material: " + items);
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
     }
 
     private static void prepare() {

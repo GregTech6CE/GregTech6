@@ -3,6 +3,7 @@ package com.gregtech.gregtech.data;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.MaterialProperty;
+import com.gregtech.gregtech.api.mod.GregTechIdentity;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.generated.MaterialForms;
 import com.gregtech.gregtech.content.material.generated.WoodMaterials;
@@ -514,19 +515,45 @@ private final String name;
     private final String textureFileName;
     private final boolean hiddenFromCreative;
     private final String registryName;
+    /** Null for a built-in prefix, which keeps the weight switch. Already multiplied by {@link GTValues#U}. */
+    private final Long explicitWeight;
+    private final String displayPrefixText;
+    private final String displaySuffixText;
+    private final String textureNamespace;
+    private final String texturePath;
     /** GT6 {@code OreDictPrefix.mHeatDamage}: damage dealt per item while carried (hot ingot = 3.0). */
     private float heatDamage;
 
     private MaterialPrefix(String name, String displayName, Predicate<GTMaterial> validator,
                          MaterialPrefix parent, String textureFileName, boolean hiddenFromCreative) {
+        this(name, displayName, validator, parent, textureFileName, hiddenFromCreative, null, null, null, null, null);
+    }
+
+    private MaterialPrefix(String name, String displayName, Predicate<GTMaterial> validator,
+                         MaterialPrefix parent, String textureFileName, boolean hiddenFromCreative,
+                         Long explicitWeight, String displayPrefixText, String displaySuffixText,
+                         String textureNamespace, String texturePath) {
         this.name = name;
         this.displayName = displayName;
         this.validator = validator;
         this.parent = parent;
         this.textureFileName = textureFileName;
         this.hiddenFromCreative = hiddenFromCreative;
+        this.explicitWeight = explicitWeight;
+        this.displayPrefixText = displayPrefixText;
+        this.displaySuffixText = displaySuffixText;
+        this.textureNamespace = textureNamespace;
+        this.texturePath = texturePath;
         this.registryName = camelToSnake(name);
         PrefixRegistry.register(this);
+    }
+
+    /** Registers one addon prefix. {@code explicitWeight} is the per-item amount, already in {@link GTValues#U} units. */
+    public static MaterialPrefix defineAddon(String name, String tabLabel, String displayPrefix, String displaySuffix,
+                                            long explicitWeight, String textureNamespace, String texturePath,
+                                            Predicate<GTMaterial> validator) {
+        return new MaterialPrefix(name, tabLabel, validator, null, null, false,
+                explicitWeight, displayPrefix, displaySuffix, textureNamespace, texturePath);
     }
 
     private static MaterialPrefix def(String name, String displayName, Predicate<GTMaterial> validator) {
@@ -564,6 +591,7 @@ private final String name;
 
     /** Amount of material (in {@link GTValues#U} units) represented by one item of this prefix. */
     public long getMaterialWeight() {
+        if (explicitWeight != null) return explicitWeight;
         return switch (registryName) {
             // GT6 OP.pipe* associations, independent of flow capacity and restrictive steel rings.
             case "pipe_tiny" -> GTValues.U / 2;
@@ -696,6 +724,33 @@ private final String name;
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    /** English text before the material name. Empty for a built-in prefix. */
+    public String displayPrefix() {
+        return displayPrefixText == null ? "" : displayPrefixText;
+    }
+
+    /** English text after the material name. Empty for a built-in prefix. */
+    public String displaySuffix() {
+        return displaySuffixText == null ? "" : displaySuffixText;
+    }
+
+    public boolean isAddon() {
+        return textureNamespace != null;
+    }
+
+    /** Registry namespace of the generated items. Built-in forms stay {@code gt6ce}. */
+    public String itemNamespace() {
+        return textureNamespace == null ? GregTechIdentity.MOD_ID : textureNamespace;
+    }
+
+    public String textureNamespace() {
+        return textureNamespace;
+    }
+
+    public String addonTexturePath() {
+        return texturePath;
     }
 
     public boolean isValidFor(GTMaterial material) {

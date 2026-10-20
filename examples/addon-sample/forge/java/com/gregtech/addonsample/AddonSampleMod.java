@@ -22,6 +22,8 @@ public final class AddonSampleMod {
                     throw new IllegalStateException("sample steel missing");
                 if (AddonItems.stack("plate", "SampleRubber").isEmpty() || AddonItems.stack("foil", "SampleRubber").isEmpty())
                     throw new IllegalStateException("sample rubber plate or foil missing");
+                if (AddonItems.stack("sampleBlank", "Iron").isEmpty() || AddonItems.stack("sampleBlank", "SampleAlloy").isEmpty())
+                    throw new IllegalStateException("sample blank missing");
                 var added = AddonRecipes.map("addon_sample.recipe.press").add(new AddonRecipes.Line(
                         new ItemStack[]{new ItemStack(Items.IRON_INGOT)},
                         new ItemStack[]{new ItemStack(Items.IRON_NUGGET)},
