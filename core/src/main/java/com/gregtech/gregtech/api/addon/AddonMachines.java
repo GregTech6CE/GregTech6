@@ -55,7 +55,8 @@ public final class AddonMachines {
     public record QueuedPipes(String addonId, List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
                              boolean constantEnergy, List<String> structureKeys, MachineFaceMasks faces,
-                             boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
+                             boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove,
+                             boolean searchOutputTanks, boolean exclusiveOutputs) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelGeneratorDeclaration.Output output, FuelGeneratorDeclaration.Kind kind) {}
     private record BehaviorSignature(String energy, String energyOut, List<BehaviorMachineDeclaration.SlotRole> items,
@@ -126,7 +127,9 @@ public final class AddonMachines {
                     .tier(declaration.tier())
                     .parallel(declaration.parallel())
                     .faces(faces(declaration))
-                    .minimumLightAbove(declaration.minimumLightAbove());
+                    .minimumLightAbove(declaration.minimumLightAbove())
+                    .searchOutputTanks(declaration.searchOutputTanks())
+                    .exclusiveOutputs(declaration.exclusiveOutputs());
             if (declaration.cheapOverclockingSpecified()) parameters.cheapOverclocking(declaration.cheapOverclocking());
             var built = parameters.build();
             definitions.add(new AddonMachineDefinition(built, declaration.recipeMap(),
@@ -395,7 +398,7 @@ public final class AddonMachines {
                 var signature = new Signature(definition.recipeMapName(), definition.kind(), definition.efficiency(),
                         definition.constantEnergy(), definition.structureKeys(), parameters.faceConfig(),
                         parameters.cheapOverclocking(), parameters.cheapOverclockingSpecified(),
-                        parameters.minimumLightAbove());
+                        parameters.minimumLightAbove(), parameters.searchOutputTanks(), parameters.exclusiveOutputs());
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName

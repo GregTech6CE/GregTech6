@@ -7,7 +7,9 @@ import com.gregtech.gregtech.api.addon.platform.AddonItems;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 @Mod("addon_sample")
 public final class AddonSampleMod {
@@ -39,6 +41,18 @@ public final class AddonSampleMod {
                         new ItemStack[]{new ItemStack(Items.BRICK)},
                         null, null, 20, 16, 0, null, new int[]{1}));
                 if (kept == null) throw new IllegalStateException("sample kept input row rejected");
+                var filled = AddonRecipes.map("addon_sample.recipe.detector").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.COBBLESTONE)},
+                        new ItemStack[]{new ItemStack(Items.GOLD_NUGGET), new ItemStack(Items.IRON_NUGGET)},
+                        null, new FluidStack[]{new FluidStack(Fluids.WATER, 250)},
+                        20, 16, 0, new int[]{6_000, 4_000}));
+                if (filled == null) throw new IllegalStateException("sample detector fill row rejected");
+                var read = AddonRecipes.map("addon_sample.recipe.detector").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.IRON_INGOT)},
+                        new ItemStack[]{new ItemStack(Items.EMERALD), new ItemStack(Items.DIAMOND)},
+                        new FluidStack[]{new FluidStack(Fluids.WATER, 250)}, null,
+                        20, 16, 0, new int[]{6_000, 4_000}));
+                if (read == null) throw new IllegalStateException("sample detector read row rejected");
             }
         });
     }

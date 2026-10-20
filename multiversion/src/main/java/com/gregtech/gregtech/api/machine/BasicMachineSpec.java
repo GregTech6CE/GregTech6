@@ -42,7 +42,11 @@ public record BasicMachineSpec(
         boolean cheapOverclocking,
         /** When false, built-in and undeclared large machines keep their existing rule. */
         boolean cheapOverclockingDeclared,
-        int minimumLightAbove
+        int minimumLightAbove,
+        /** After the input tanks miss, search the output tanks and drain the tanks that matched. */
+        boolean searchOutputTanks,
+        /** Roll the first item chance once. The row must have exactly two item outputs. */
+        boolean exclusiveOutputs
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -81,7 +85,7 @@ public record BasicMachineSpec(
                 LargeMachineProcessingRules.efficiency(machineName),
                 LargeMachineProcessingRules.constantEnergy(false, machineName),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
-                false, false, 0);
+                false, false, 0, false, false);
     }
 
     /**
@@ -153,6 +157,8 @@ public record BasicMachineSpec(
         private boolean cheapOverclocking;
         private boolean cheapOverclockingDeclared;
         private int minimumLightAbove;
+        private boolean searchOutputTanks;
+        private boolean exclusiveOutputs;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -176,6 +182,8 @@ public record BasicMachineSpec(
         public Builder structureKeys(List<String> value) { structureKeys = List.copyOf(value); return this; }
         public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingDeclared = true; return this; }
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
+        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
+        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineSpec(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
@@ -187,7 +195,8 @@ public record BasicMachineSpec(
                     efficiencySet ? efficiency : LargeMachineProcessingRules.efficiency(machineType),
                     constantEnergySet ? constantEnergy : LargeMachineProcessingRules.constantEnergy(false, machineType),
                     structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
-                    cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove);
+                    cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove,
+                    searchOutputTanks, exclusiveOutputs);
         }
     }
     public String textureFolder() { return machineName; }

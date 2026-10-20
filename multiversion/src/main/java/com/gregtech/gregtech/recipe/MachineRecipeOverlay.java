@@ -238,6 +238,14 @@ public final class MachineRecipeOverlay {
 
     private static void add(RecipeMap map, ItemStack[] items, ItemStack[] outputs, long[] chances,
             FluidStack[] fluidInputs, FluidStack[] fluidOutputs, MachineRecipeSpec spec, Tally tally) {
+        if (com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.enabled(map)
+                && !com.gregtech.gregtech.api.addon.ExclusiveOutputRules.isPair(outputs.length,
+                com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(outputs))) {
+            tally.rejected++;
+            problem(spec.map() + " exclusive outputs need exactly 2 item outputs: "
+                    + com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.nonEmptyItems(outputs));
+            return;
+        }
         var copiedOutputs = new ItemStack[outputs.length];
         for (int i = 0; i < outputs.length; i++) copiedOutputs[i] = outputs[i].copy();
         var copiedFluidInputs = new FluidStack[fluidInputs.length];
