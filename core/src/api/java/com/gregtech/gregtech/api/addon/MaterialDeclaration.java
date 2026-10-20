@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.addon;
 
+import java.util.List;
 import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
@@ -17,7 +18,9 @@ public record MaterialDeclaration(
         boolean dust,
         boolean gas,
         boolean liquid,
-        boolean metal
+        boolean metal,
+        boolean ores,
+        List<String> oreByproducts
 ) {
     public MaterialDeclaration {
         if (id < 0 || id >= 10_000) throw new IllegalArgumentException("Material ID must be 0..9999: " + id);
@@ -30,6 +33,13 @@ public record MaterialDeclaration(
         if (meltingPoint < 0 || boilingPoint < 0 || !Float.isFinite(density) || density < 0)
             throw new IllegalArgumentException("Invalid physical properties for " + name);
         formula = formula == null ? "" : formula;
+        oreByproducts = oreByproducts == null ? List.of() : List.copyOf(oreByproducts);
+        if (!ores && !oreByproducts.isEmpty())
+            throw new IllegalArgumentException("Ore byproducts require ores: " + name);
+        for (String byproduct : oreByproducts) {
+            if (byproduct == null || !byproduct.matches("[A-Za-z][A-Za-z0-9_]*"))
+                throw new IllegalArgumentException("Use a material name for an ore byproduct of " + name);
+        }
     }
 
     /** Declares a material by name. GregTech assigns the numeric id at startup. */
@@ -58,6 +68,8 @@ public record MaterialDeclaration(
         private boolean gas;
         private boolean liquid;
         private boolean metal;
+        private boolean ores;
+        private List<String> oreByproducts = List.of();
 
         private Builder(int id, String name) {
             this.id = id;
@@ -84,9 +96,27 @@ public record MaterialDeclaration(
         public Builder gas() { gas = true; return this; }
         public Builder liquid() { liquid = true; return this; }
 
+        /**
+         * Ore and small-ore blocks, the raw ore item, and the crushed, washed and centrifuged forms.
+         * This is GregTech's {@code ORES} form. It does not add a worldgen vein.
+         */
+        public Builder ores() { ores = true; return this; }
+
+        /**
+         * Ore-processing byproducts, in GregTech's order. The first is the wash byproduct.
+         * Calling this also turns {@link #ores()} on.
+         */
+        public Builder oreByproducts(String... materials) {
+            ores = true;
+            if (materials == null || materials.length == 0)
+                throw new IllegalArgumentException("Ore byproducts need a material name");
+            oreByproducts = List.of(materials);
+            return this;
+        }
+
         public MaterialDeclaration build() {
             return new MaterialDeclaration(id, name, displayName, color, meltingPoint, boilingPoint, density,
-                    formula, dust, gas, liquid, metal);
+                    formula, dust, gas, liquid, metal, ores, oreByproducts);
         }
     }
 }
