@@ -54,7 +54,8 @@ public final class LogisticsFluidRouter {
                 }
             }
             if (!(hostEntity instanceof LogisticsCoverHost host)) continue;
-            if(hostEntity instanceof com.gregtech.gregtech.content.cover.PanelCoverHost panels&&panels.panels().stopped())continue;
+            if (hostEntity instanceof com.gregtech.gregtech.content.cover.PanelCoverHost panels
+                    && panels.panels().stopped()) continue;
             for (Direction face : Direction.values()) {
                 ItemStack cover = host.logisticsCovers().get(face);
                 LogisticsCoverType type = LogisticsCoverType.of(cover);
@@ -64,7 +65,8 @@ public final class LogisticsFluidRouter {
                         && type.role() != LogisticsCoverType.Role.STORAGE)) continue;
 
 //? if >=1.21.1 {
-                /*FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover,level.registryAccess()) : FluidStack.EMPTY;
+                /*FluidStack filter = type.filtered()
+                        ? LogisticsCoverInteraction.fluidFilter(cover, level.registryAccess()) : FluidStack.EMPTY;
 *///?} else {
                 FluidStack filter = type.filtered() ? LogisticsCoverInteraction.fluidFilter(cover) : FluidStack.EMPTY;
 //?}
@@ -128,8 +130,10 @@ public final class LogisticsFluidRouter {
                 return 0;
             int limit = (int) Math.min(Integer.MAX_VALUE, 16_000L * conversion);
             // GT6's moveFluids(list,list) walks imports first and stops on the first transfer.
-            List<Endpoint> sources = (sourceRole == LogisticsCoverType.Role.IMPORT ? imports : storages).get(sourceRank);
-            List<Endpoint> destinations = (destinationRole == LogisticsCoverType.Role.EXPORT ? exports : storages).get(destinationRank);
+            List<Endpoint> sources = (sourceRole == LogisticsCoverType.Role.IMPORT
+                    ? imports : storages).get(sourceRank);
+            List<Endpoint> destinations = (destinationRole == LogisticsCoverType.Role.EXPORT
+                    ? exports : storages).get(destinationRank);
             for (Endpoint source : sources)
                 for (Endpoint destination : destinations) {
                     if (source.targetPos.equals(destination.targetPos)) continue;
@@ -167,8 +171,8 @@ public final class LogisticsFluidRouter {
                 source.handler.fill(drained, IFluidHandler.FluidAction.EXECUTE);
                 continue;
             }
-            // Recheck after the real drain: a handler is allowed to change between simulation and
-            // execution. A reduced fill is returned to the source rather than silently discarded.
+            // Recheck after the real drain in case the destination changed since simulation.
+            // Try to return any remainder; a rejected return is not buffered here.
             int moved = destination.handler.fill(drained, IFluidHandler.FluidAction.EXECUTE);
             moved = Math.max(0, Math.min(moved, drained.getAmount()));
             if (moved < drained.getAmount()) {
