@@ -99,6 +99,13 @@ public final class SharedLargeMachineParts {private SharedLargeMachineParts(){}
      * Returns -1 when the name is not a GregTech structure part.
      */
     public static int idForName(String name) {
+        int builtin = builtinId(name);
+        if (builtin >= 0) return builtin;
+        return com.gregtech.gregtech.api.addon.AddonMachines.partId(name);
+    }
+
+    /** Built-in part id, or -1. Does not look at addon parts. */
+    public static int builtinId(String name) {
         if (name == null) return -1;
         if (name.equals("air")) return 0;
         for (Part part : DEFINITIONS) if (part.name().equals(name)) return part.originalId();

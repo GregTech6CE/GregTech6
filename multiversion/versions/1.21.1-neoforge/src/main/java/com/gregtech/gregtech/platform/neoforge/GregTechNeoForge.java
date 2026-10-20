@@ -96,6 +96,8 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.registry.GTSounds.bootstrap();
         com.gregtech.gregtech.content.transport.fluid.FluidTransportRegistries.register(modEventBus);
         com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.register(modEventBus);
+        com.gregtech.gregtech.registry.GTMultiblocks.registerAddonParts();
+        com.gregtech.gregtech.registry.GTMultiblocks.registerAddonBlocks(modEventBus);
         com.gregtech.gregtech.recipe.NeoRecipeSerializers.register(modEventBus);
         com.gregtech.gregtech.registry.GTChemicalBatteries.register(modEventBus);
         com.gregtech.gregtech.registry.GTWires.register(modEventBus);

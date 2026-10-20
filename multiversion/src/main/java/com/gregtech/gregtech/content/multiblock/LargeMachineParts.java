@@ -17,6 +17,11 @@ public final class LargeMachineParts {
             if (holder != null && holder.isPresent() && holder.get() == block)
                 return GTMaterialRegistry.get(part.material()).getColor();
         }
+        for (var part : GTMultiblocks.addonParts()) {
+            var holder = part.block();
+            if (holder.isPresent() && holder.get() == block)
+                return GTMaterialRegistry.get(part.material()).getColor();
+        }
         return null;
     }
 }
