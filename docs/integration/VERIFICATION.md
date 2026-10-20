@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-20 / 第四十五批覆盖板宿主边界
+
+以 `b639b9b93` 为基线，六份原版和十六份当前源码留存哈希；ContainerStorageRules、ComponentCoverStorage、MassStorageRenderer 共五份 core／双版执行词法和字面量等价。共享旋转表与原版前六行、前六列逐元素一致，不声称完成所有库存／点击测试。没有新增测试、编译、游戏、保存重启、构建或推送，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)和[回执](verification/storage-cover-boundary-audit-20261020.json)。
+
 ## 2026-10-20 / 第四十四批大容量存储源链
 
 以 `ff30fdee0` 为基线，四份原版和十四份当前源码留存哈希；两份空白排版、两份类说明纠错，共七份 core／Forge／Neo 的执行词法与字面量保持。投影显式解开维护源码里的 Neo 注释体，并核实实际 Neo 方法／导入存在；上一批四份投影以同一方式重核通过，保留其当时的来源哈希。没有新增测试、编译、GameTest、客户端、重启、构建或推送，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)和[回执](verification/mass-storage-control-audit-20261020.json)。

@@ -20,7 +20,8 @@ public final class MassStorageRenderer<T extends MassStorageBlockEntity> impleme
     @Override
     public void render(T be, float partialTick, PoseStack ps,
                        MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        // GT6 isFaceVisible() hides the storage display while duct-taped.
+        // This reproduces the taped-state gate only. Original isFaceVisible also
+        // excludes opaque front covers; that host check is still absent (ALIGN-138).
         if (be.isPacked()) return;
         ItemStack shown = be.template();
         if (be.getLevel() == null) return;
