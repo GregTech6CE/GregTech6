@@ -1,0 +1,1212 @@
+{
+  "date": "2026-10-21",
+  "batch": 50,
+  "baseline": "2d14d4009",
+  "provenance": "Gregorius Techneticies / GregTech-6 Team; original LGPL-3.0-or-later notices retained. Native source and full method bodies remain ignored scratch, not imported production source.",
+  "original_sources": {
+    "gregtech/tileentity/tools/MultiTileEntityBumbliary.java": "72bd7595c28b4859d82e6196e0e355655fac40de671171d8f71c6c009d452840",
+    "gregtech/tileentity/tools/MultiTileEntityBumbliaryAdvanced.java": "4c519554584b81a6a871764e56eb10a426947c80b4cdacf5b2b932ec0551f9e9",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+    "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+    "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregapi/tileentity/base/TileEntityBase07Paintable.java": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+    "gregapi/tileentity/ITileEntityNeedsSaving.java": "3102531e35ac1e79fce433fdaa78da56d92b7eb159d1c6771a592d454c075109",
+    "gregapi/GT_API_Proxy.java": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+    "gregapi/util/WD.java": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+    "gregapi/tileentity/base/TileEntityBase09FacingSingle.java": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+    "gregapi/block/multitileentity/example/MultiTileEntityChest.java": "3ff277040006dc7a64d2a3a386b1395cf89e7fabb7ac1701dee18d3f6cddc4a8",
+    "gregapi/tileentity/inventories/MultiTileEntityBookShelf.java": "fd800dac1e09138cbbe97d7c2f4594cd9795385cb3759bf49f02427f75573313",
+    "gregtech/tileentity/inventories/MultiTileEntityBottleCrate.java": "bb6f17b3a1237539fedef6d3dd62c7ff4eb505ecc22647f5aa3b8b3cf5e17f90",
+    "gregapi/tileentity/ITileEntityAdjacentInventoryUpdatable.java": "87d5d8b029a4e5859de4c0fb7ba6c01bba5761ce6e08d55ba481377b8cf0fcc1",
+    "gregtech/tileentity/inventories/MultiTileEntityHopper.java": "70670f0cd2232a0e5cac49603b1014991c16819e9294d49968fc44b217b9c4a6",
+    "gregtech/tileentity/inventories/MultiTileEntityQueueHopper.java": "324b8ffa681347a9d41acce42ff719345bfb79d60b30c6f67a4a8c699205eaa9",
+    "gregtech/tileentity/tools/MultiTileEntityDustFunnel.java": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d",
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+    "gregtech/tileentity/extenders/MultiTileEntityExtender.java": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+    "gregtech/tileentity/extenders/MultiTileEntityBridge.java": "5bdb146ffe635f31c83df595714ca9e7fda012c7e13485948b45a2c4228e6168",
+    "gregapi/gui/ContainerCommonChest.java": "55da0e9ee9415ee3a6007494a022cedbaf5ce02d6cc3b9aa457a309db3230c1a",
+    "gregapi/gui/ContainerCommon.java": "b7aeb98a5e2f998897f1b6f7e8e0c71e7e938f320675d1797ddf4199c7db2331",
+    "gregapi/gui/Slot_Base.java": "6b9aef5b84287570587518a7383de81d8ed1ed543a9e49c700755beb8d0f426f",
+    "gregapi/gui/Slot_Normal.java": "bcf1b8dd35ae32d2d6f910fcf8ec554fa8540383ea1f7f4a94a37c926daedaf6",
+    "gregapi/tileentity/connectors/MultiTileEntityPipeItem.java": "0e9aa956b807d8390b20dd70f224b2b8d0a7be8df25fe66660abffda8b88069b",
+    "gregtech/tileentity/misc/MultiTileEntityBumbleHive.java": "e49c7ee115ecf0dc8d14e5a732d375f74a530038931078d2baf85d2bb687fd12",
+    "gregapi/block/multitileentity/MultiTileEntityBlock.java": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+    "gregapi/block/multitileentity/IMultiTileEntity.java": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/BumbliaryBlockEntity.java": "f05fdbd5e22c566488c8bb4d7fe4c7ec19df8b0d82cef8e808ee18f9ffe0ae65",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/tool/BumbliaryBlock.java": "d859918a1edd7752499f7a8bfe306310cdeaee7f1dc17154daf87061242e7df3",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java": "777d695d41f8c8d8989bdec7290116080e4e44b682ab839f8e6bf6b054f1f9a1",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidPipeTickPhases.java": "bcb368fea340e4b1618a7bb9246cd98f4658401d4fdce395a8ea99358aa90783",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+    "multiversion/src/main/java/com/gregtech/gregtech/event/MaterialWashingHandler.java": "db5d5ea5745abdddf764a4b908e19401df6a5c835df081861bf9c7b8ddb12707",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": "1ea004ec7edfd08f9024c4ba54541a486f7f5d406b520306a1c4071eadb4f14c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BookShelfBlockEntity.java": "845ea62d90fe15ef541cc8310c6238af088dde39af6e79dd4e9fcf698b4ef635",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java": "1ea6eb55cb39586c3072abc07832c07b2038c6f51be2a04e19d2f7d487c8473b",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/BookShelfBlock.java": "909f73a82af51ce5fa6e485ebb5f6897f16b0d7817b33f803947005e93fcfa96",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java": "84edb2a390d76a7fb4aebe3801dd225655eed38183cb1fbd1ee94b3453ee6a0e",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java": "fcda36909a1f202b514b6486162e0ec33c4d52a8a47afbf1901e0528e12eb228",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java": "755bd0bb93438682fda4d58f2dc39cad1d1c9a4f8d3e33037f4384106d368526",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java": "f3657ce15e34af7267a165adf48781f7d88befaec5100889b3718f5e584ac591",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java": "fd31a8c02a7008fc48cbd8dbf5e6b352adaf509b3930638dd8c8ca3aba98cf33",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java": "fca6e8c7b828074c78cf8593c5c22f16ff5898c7617d1cc3d435c17942ea1fb0",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java": "76bf63409ea64698bb4a743e2ac2f77fa57d7e1af21b664c7e6da7228a19b38a",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/NativeItemInventories.java": "ebf62dae2231b7ed89ccb93f75b4f483e697b5f42357c0372f30501a83776fba",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/machine/ITileEntityAdjacentInventoryUpdatable.java": "2df12c95acac059a8072a5587bf66ce406ee849541c420488d99d65b13f039b7",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java": "7457198b0ceb7154afc6f68d996293aab34ce631d95aeae1d0be93a02ff0bb02",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java": "b1ad5bd6d587a7a85408aff7efcccf3ac71d8f1d762649f9792706bc4679d7fd",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java": "cf64f9ff48465803dbc0c52f308eeb877ad37868911f62fbee2b36c857784143",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java": "03bf62e4694673c88c3df2863f8cd4edda0918439cf8bcb9861b5584554e5a60",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java": "59f914c4fb2b1c478e87e1e6b9f7f2afe467035b387cdf59f7c7b1137054ad53",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java": "650f4b5dd215d3572623fab689d928824ea99acba8dc89efec50073b300d3670",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/MetalChestCapabilities.java": "59c8b8806a35ac0da2af10fb4da11460de1244373d6236787c3bd89654e73505",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/BookShelfCapabilities.java": "fb97a711a92e05ae8bf265058dba4b190a160df7bc269b8271cf44b0165b3b70",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java": "348f88a4058be64affff9b74fd54d1100c71397ca1758da83ec96f316a0bbb2b",
+    "tools/integration/check_relay_sharing.py": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+    "tools/integration/check_stonecutter_emi.py": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3",
+    "tools/native_layout.py": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/BumbleHiveBlock.java": "a418c95d9f7a078db6ae59fedcfda922de0e90f08c2ecfae755605d8e10629eb",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedBumbleHiveBlock.java": "cf5f4e16582ade9f254349c8cbd0f65cddbcae7282cb0d06fbb25a9bb2556981",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/BumbleHiveBlockEntity.java": "b68e2d5a5aaa75315adefec06ca3be1cb65dbacdb89afa30fce1f2ee6608c2de",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBumbleBlocks.java": "31656d2487fca1e68d76c9faddc937792a0ee2c3134df58bbcf503f42ae84124",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBumbleHivesFeature.java": "246431be1c5337d942bd0fb75781a7ce85eb8179da0fe2a1107f0f480d04b209",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+    "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBeeGenes.java": "88338040b4c8555361f28fc1fc272762c33487522e3e3288c05095cce8cf27aa"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBeeGenes.java": {
+      "before_sha256": "b834a24132c91974017b172386a5ce2b8c21649acc972addba88732e8aa0f16b",
+      "after_sha256": "88338040b4c8555361f28fc1fc272762c33487522e3e3288c05095cce8cf27aa",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 1617,
+          "signature_sha256": "d5584e20adc76b0f627fd592eb0afdc1acd43061ec8dc633c6f7944c0911e325"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 1625,
+          "signature_sha256": "ecf58de3fc3f151e7191424e1f6637035bdab8e5629faa2659f5947dfb524603"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBumbleBlocks.java": {
+      "before_sha256": "e37905814661abc434cb976ca1d77967d69673d5eaf4bea0bc912efa1c952d5f",
+      "after_sha256": "31656d2487fca1e68d76c9faddc937792a0ee2c3134df58bbcf503f42ae84124",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 423,
+          "signature_sha256": "8b88326c205c12b413e0461eee9294da50d3300bd28fb9f62d382bdece8d6fd3"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 423,
+          "signature_sha256": "8b88326c205c12b413e0461eee9294da50d3300bd28fb9f62d382bdece8d6fd3"
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/BumbleHiveBlock.java": {
+      "before_sha256": "441fd304e3d0172d9f16de9b00b0ec16826e039b06910dfc7e07e709edfbca42",
+      "after_sha256": "a418c95d9f7a078db6ae59fedcfda922de0e90f08c2ecfae755605d8e10629eb",
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 725,
+          "signature_sha256": "8ab49eed2ce49e0283f1f1226882b85e0665647825f5e8ee5a1bbdf836f22fc8"
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 754,
+          "signature_sha256": "299f79e2549ff2b57a7a2ee9c6b38569b0b0f189c646c5ce62f659fa5632e6a9"
+        }
+      }
+    }
+  },
+  "additional_format_proof": {
+    "date": "2026-10-21",
+    "baseline": "2d14d4009",
+    "scope": "Whitespace and two comment clarifications only. Exact executable token and literal-position equality after explicitly exposing maintained NeoForge bodies. No compilation, tests, Gradle, game, build or commit.",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBeeGenes.java": {
+        "before_sha256": "b834a24132c91974017b172386a5ce2b8c21649acc972addba88732e8aa0f16b",
+        "after_sha256": "88338040b4c8555361f28fc1fc272762c33487522e3e3288c05095cce8cf27aa",
+        "lines_before": 232,
+        "lines_after": 308,
+        "stonecutter_directives_equal": true,
+        "directives": [
+          "//? if >=1.21.1 {",
+          "//?} else {",
+          "//?}",
+          "//? if >=1.21.1 {",
+          "//?} else {",
+          "//?}",
+          "//? if >=1.21.1 {",
+          "//?} else {",
+          "//?}"
+        ],
+        "projections": {
+          "forge": {
+            "tokens_and_literal_positions_equal": true,
+            "tokens": 1617,
+            "signature_sha256": "d5584e20adc76b0f627fd592eb0afdc1acd43061ec8dc633c6f7944c0911e325",
+            "comments": 18,
+            "comment_changes": [
+              {
+                "before": "/** GT6's {@code getBumbleGenes(Random)}: the plains defaults. */",
+                "after": "/** Fallback genome for a bee stack without genes, using the current plains-based defaults. */"
+              },
+              {
+                "before": "// ── genes (GT6's setters clamp exactly like {@code UT.Code.bind}) ─────",
+                "after": "// ── gene accessors and stored ranges ─────────────────────────────────"
+              }
+            ]
+          },
+          "neoforge": {
+            "tokens_and_literal_positions_equal": true,
+            "tokens": 1625,
+            "signature_sha256": "ecf58de3fc3f151e7191424e1f6637035bdab8e5629faa2659f5947dfb524603",
+            "comments": 18,
+            "comment_changes": [
+              {
+                "before": "/** GT6's {@code getBumbleGenes(Random)}: the plains defaults. */",
+                "after": "/** Fallback genome for a bee stack without genes, using the current plains-based defaults. */"
+              },
+              {
+                "before": "// ── genes (GT6's setters clamp exactly like {@code UT.Code.bind}) ─────",
+                "after": "// ── gene accessors and stored ranges ─────────────────────────────────"
+              }
+            ]
+          }
+        }
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBumbleBlocks.java": {
+        "before_sha256": "e37905814661abc434cb976ca1d77967d69673d5eaf4bea0bc912efa1c952d5f",
+        "after_sha256": "31656d2487fca1e68d76c9faddc937792a0ee2c3134df58bbcf503f42ae84124",
+        "lines_before": 28,
+        "lines_after": 56,
+        "stonecutter_directives_equal": true,
+        "directives": [],
+        "projections": {
+          "forge": {
+            "tokens_and_literal_positions_equal": true,
+            "tokens": 423,
+            "signature_sha256": "8b88326c205c12b413e0461eee9294da50d3300bd28fb9f62d382bdece8d6fd3",
+            "comments": 1,
+            "comment_changes": []
+          },
+          "neoforge": {
+            "tokens_and_literal_positions_equal": true,
+            "tokens": 423,
+            "signature_sha256": "8b88326c205c12b413e0461eee9294da50d3300bd28fb9f62d382bdece8d6fd3",
+            "comments": 1,
+            "comment_changes": []
+          }
+        }
+      }
+    }
+  },
+  "reviewed_notification_platform_views": [
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "source_view_sha256": "3c21c0572c578fc3e2b3296b7c786b7e8055c8a8a421b40f41156f0e41dda893",
+      "code_and_literals_sha256": "6dcfbff0177fb55807d07d1b2e7b540d4e14108eecf8a5667ba35fcb133edd9e",
+      "lines": 289,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BookShelfBlockEntity.java",
+      "source_view_sha256": "07d310e42a845492701cb483c874c884919002adf46346b87748c96c20107dcb",
+      "code_and_literals_sha256": "ad1f4756a96cdcca85b09f57b8dd6c7e01cea31426f7b2169e374f1bc62a0a38",
+      "lines": 220,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java",
+      "source_view_sha256": "0c5249d2c47b42d8bc05e9be1550230b794a4469facc0c682d067724f6538dab",
+      "code_and_literals_sha256": "871214aba72566af8c769de14527b3e5f013f0b36b5e859c3637811cc72e9ffe",
+      "lines": 161,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "source_view_sha256": "f7e2aa8d0971f6185ed162768f991a38e89f59afd66b162d3c3e917d0ebc187c",
+      "code_and_literals_sha256": "476d8a1a1c7100611ee2f8a19eb0197d7b48604f4d92760fed0b3bff6f1dce77",
+      "lines": 229,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/BookShelfBlock.java",
+      "source_view_sha256": "ac8b829503a776e93bfbc7e08545473bdd1bb738ca132cb034a23db22af95891",
+      "code_and_literals_sha256": "ce66c6c691df41f61c68bf09da540e0f8d8ed3dcc794f4532ef8b5c15c4b19cf",
+      "lines": 290,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java",
+      "source_view_sha256": "4e450b3d3882d4c72bea938646e539979ffb418d47512f09f6ef201e417fd268",
+      "code_and_literals_sha256": "2b006e581fcdd5fa96c13a6d5384636bc198ea9243e16bc69af6e7c3279ebcef",
+      "lines": 178,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+      "source_view_sha256": "3e2df3c3b6c4557bdcfb18a0b80deba792cc4c0665ce96d0dcb8e1a76360f40d",
+      "code_and_literals_sha256": "16d2a358926c3862d244087b1e07e5ec6384c16b2976ecf6e924d3dd0a13d1a4",
+      "lines": 722,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "source_view_sha256": "811a4184c5943ca42912c17c3069c0fc55561faa50a518c5e8bf668088fbde39",
+      "code_and_literals_sha256": "0b74cb5369ee464490173f57696f6f2fa9938dffa04fca858f8f355ffae2615d",
+      "lines": 684,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "source_view_sha256": "fbaa2df17c2d188d06666ae7cab8a69cc2779ba2aa8b3e346b7a83e06367d958",
+      "code_and_literals_sha256": "3cb6f412857a2298019b0d8beaffcc9a800cc1d2918b5adb2eec273542d0c768",
+      "lines": 1167,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java",
+      "source_view_sha256": "9009e6ce2439f8d946dd7d2c7189574a9752427ae65f8ccd542391698c85d243",
+      "code_and_literals_sha256": "8751b579bf64c82cbd6e24a2ca845a9be18fd760104eca3f8c39db0c6556973b",
+      "lines": 287,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java",
+      "source_view_sha256": "af6c3d1b4a0a0cd3b01fdc0328d914140a26f16df512b25c650553232fe88057",
+      "code_and_literals_sha256": "2d9edd492095dfaab3f91116720125000c60a82c690fea8b938a6339e4fb0054",
+      "lines": 283,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "source_view_sha256": "f759213610e723d2e89cf591e1eecae78768ceb1a5659cf70618dfc9f930e2bd",
+      "code_and_literals_sha256": "459af894f1a6c18120fb729e94596cd0caa5604e557bc2edc392f24b06cc2589",
+      "lines": 367,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/NativeItemInventories.java",
+      "source_view_sha256": "2f5d0fc560d6a0e8e36af798302f4d67fde34887d9ffbdadcddc09363a826861",
+      "code_and_literals_sha256": "19bb01556d0a915de1deb9fc1e2d527cadddb7ceb159feddfc824a7da9cff6be",
+      "lines": 20,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/ITileEntityAdjacentInventoryUpdatable.java",
+      "source_view_sha256": "0faf39d623dbe89a7e5562ed8eee21d7c8a3b27752902c24b2332900b5d1bddd",
+      "code_and_literals_sha256": "72b846dfba6b5b4331e854a51f6d656ff5fa7df586ad9ce7b171913961b1c8cf",
+      "lines": 17,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "source_view_sha256": "b5e9b6975d3acdd28f8a61d48b0a0c5477a8f0955e7253612156b5d532fc749a",
+      "code_and_literals_sha256": "9b983797aa1afb71e4bcc3d45f419876d828176f026d51c50e5bd669ae5cfe05",
+      "lines": 217,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "source_view_sha256": "48b86c352c3963e9b67d873f24bb1b936c150df54732a3d49903d16280cc373e",
+      "code_and_literals_sha256": "5a99ad436faff476574e77f301b2b344d9687de088422f13a76564f3a699f3ee",
+      "lines": 109,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "source_view_sha256": "aa3c9708163dae5cd45f7a2ecc1aae11cb18f490be2c03b3c8829ecaa848ae20",
+      "code_and_literals_sha256": "d17c8250630c0ad46fac100fd3aa2e72ab13a670ccf7f356da904a929bf82a99",
+      "lines": 331,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "source_view_sha256": "1cdcefcd46efddcb0ae85bf7e2c9b30c8db05af5d707a240857d5696225efac2",
+      "code_and_literals_sha256": "5b3f3b931176875f10ece5b46a6bb13b22c1af3e79c682a7e7454989a2f91394",
+      "lines": 1926,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "source_view_sha256": "8882d3995b323bdb9b88cfa069ba74f6689ff3f0fa14165da53af77c459dcb50",
+      "code_and_literals_sha256": "f2a34290e843e84c853a71d597baeb761449c7fa36e79e67a4e9cf8e0b967073",
+      "lines": 159,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "source_view_sha256": "214785a3e7b67db6bdb2b6e5cfc23414dcada82e8fc0fb49728e21f56348f3b9",
+      "code_and_literals_sha256": "3c51bd7b339b6c5bf1b1f48d7085946e9859418de6d4d68d9137ee26f9192f12",
+      "lines": 111,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "source_view_sha256": "cb0296efe10c8dba4133e3c73e59512d4ac419d85f6c773c3bcf46ad151a106c",
+      "code_and_literals_sha256": "832960c4782855f4ec4eb7ae7d3f1dd28a66bbc171eb6a71f0353de82f5ba0ff",
+      "lines": 125,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "source_view_sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "code_and_literals_sha256": "eff74ed1aaf10f74fe551fa93d133a3b3d1f624048b50aaa4dfaad14ef8fe36f",
+      "lines": 100,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "forge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "source_view_sha256": "45179869f598e46ffc1d66f0ed692b015f178d4c067f074da0b1e613f669167f",
+      "code_and_literals_sha256": "e8394ef3335adf43616a3e8af19387e8f0db927f1d45d99b872b97d88cd2d317",
+      "lines": 24,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "source_view_sha256": "aa5aa06ba7ba2ddb542c57cb1a2e713cd8ac65a820002fdc66a025504f20e67e",
+      "code_and_literals_sha256": "2c9ce85d7557ea6a9a6f49b7b5fd6ebc28bb11cd331756b9b3e58fc725c00279",
+      "lines": 260,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BookShelfBlockEntity.java",
+      "source_view_sha256": "230a5b75fcc808db8140a3025cee894d36031743347f5b57a2c20bea1694ea56",
+      "code_and_literals_sha256": "12f6ee18103cb6ab30de7bed9dd94d0e47922f3c416f33a68265c13be325d81c",
+      "lines": 200,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java",
+      "source_view_sha256": "4c11bce55fc83950a7d153d08c71d74ac6629843c32ef68d36c8056e1a4af8f6",
+      "code_and_literals_sha256": "61deab01cdc1e7d811de8272c941abfbaa2e582a53efe7aa8937bd03d57bf802",
+      "lines": 139,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "source_view_sha256": "bc19c0979d75bd0dcbb0ab53795e413a4580ddb3b9a3099652df7f2d9732fea8",
+      "code_and_literals_sha256": "5147d4a7ebe5184b2a8eccef717ba09111fd99cf014017f8aa3aa3d8050bad60",
+      "lines": 249,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/BookShelfBlock.java",
+      "source_view_sha256": "8009a1cb726bf1bf88d712f73216c14433733a238ae45987876a20c45be03517",
+      "code_and_literals_sha256": "8efbcea8607aca667d87c005989b8e74af8a204af1ed3f9a0f89f762528dcf64",
+      "lines": 292,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java",
+      "source_view_sha256": "0018277cd4bc6db65795ebfd65a9688ba177c0dbe1163767cf38f0b3dad2a3ef",
+      "code_and_literals_sha256": "d269c63bf0b7a08b7dcd92c4d16bdfb4581b95512920db62d1907f6eec238d83",
+      "lines": 193,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+      "source_view_sha256": "95f18af1a598f49dcdd3ad53d13a8dbc0b8ce17bbf2b5f4543d62bcceeaeaa80",
+      "code_and_literals_sha256": "2d42774ca5e6b26d7ce35bd4770b770550e833bedc615e907431f0a937659407",
+      "lines": 707,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "source_view_sha256": "aa6f09849b63ffdfdacdb71ac713d06d8d47d79fb1a56f685a6e1d16edf3764d",
+      "code_and_literals_sha256": "33c51ceae4cb6393bf3394b9e681909c98cbec025f99f77fe7830fdab960bbfc",
+      "lines": 669,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "source_view_sha256": "698697a2d6d2810579dc513c0fed17baa7dec6903e7201ba9dfe58fa6736f3de",
+      "code_and_literals_sha256": "dc2246825d616a3c19aad2c65ee96cc5ca22d6e6a0279185da37dd3f1092080d",
+      "lines": 1144,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java",
+      "source_view_sha256": "fa6f4fc4de85e44a89be5a61bc5a5f07c6116c9a522e081c6662f03c7d5513d9",
+      "code_and_literals_sha256": "6f7ef48c44b7c6d84198c012a2665b1a0907e65c77f9d9d2cca70a8e0f93668e",
+      "lines": 289,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java",
+      "source_view_sha256": "31a7bd36176a4113903dbb5905cc26f5398527c0429ee7cff172801dae191087",
+      "code_and_literals_sha256": "7dac35e40da3b2f6f558e77743b45436b2e82dba5df54d6677fe53963620d05c",
+      "lines": 285,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "source_view_sha256": "9fe9e04793dfb8cc7cfed8668389147a01ef0dc756aca3a21f97ab5228f572d6",
+      "code_and_literals_sha256": "909542fed1e9dfaf397315b972c740271a294bfea3b16edd9e2266f498cf47e5",
+      "lines": 369,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/NativeItemInventories.java",
+      "source_view_sha256": "de345a1e0faa3ebbe6caf5b274cf77d3d90b3047e82ee868f8ce333ee632604c",
+      "code_and_literals_sha256": "53325440705eea04088ed9ebdc651b0c3b29d79e560832a19dd6e95084c41833",
+      "lines": 19,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/ITileEntityAdjacentInventoryUpdatable.java",
+      "source_view_sha256": "0faf39d623dbe89a7e5562ed8eee21d7c8a3b27752902c24b2332900b5d1bddd",
+      "code_and_literals_sha256": "72b846dfba6b5b4331e854a51f6d656ff5fa7df586ad9ce7b171913961b1c8cf",
+      "lines": 17,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DustFunnelBlockEntity.java",
+      "source_view_sha256": "694f6d6910fafd886ae1c7fd7de7cf551714d210fca1374b26fbfea46ee1ed17",
+      "code_and_literals_sha256": "7ef86dbb66e78a5c34d58566c6af12b730ea5346968b32e761a700caa30e189d",
+      "lines": 194,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/DustFunnelBlock.java",
+      "source_view_sha256": "59c94031937b64543b8515e6f9e8815e39a30fd6f129ff3783a458e85797b453",
+      "code_and_literals_sha256": "6bc2cf60130937440ce319562f1eac0581313b3fa491ec5b47ef78aa6a8e7962",
+      "lines": 111,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "source_view_sha256": "10d80d05de416b382ea591f4f63369a30d62fc8def26ab463d906ea0feba9722",
+      "code_and_literals_sha256": "5e87a1c5a162a89dcbc68e851f528a43e67d6270bccb4a6e656e3b98bd3dfae5",
+      "lines": 298,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "source_view_sha256": "a27092e43aa4cf43098fb0470532d7fef0a13fb32c71018e6fb29065152ac9c7",
+      "code_and_literals_sha256": "b2c10017000b513519caeb5b666a37df1f3ea576a8af05129191541878d75295",
+      "lines": 1850,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "source_view_sha256": "3cef37dd6b666d29a2f88b6427ec782b6d07e7308178d682b7920b124e2c205a",
+      "code_and_literals_sha256": "aaf91c787e4f87cfe1032e419b0091041d6256d87f151002ff812d43915ff07f",
+      "lines": 153,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "source_view_sha256": "3829c910f8ff69e1c3d2e7ef42677da0094736e30657ad96c53fd64e497ad57a",
+      "code_and_literals_sha256": "95b65ee2746b67cf8cbf4287361504483959f6eed98751da0fcc6052bc009fcc",
+      "lines": 111,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "source_view_sha256": "ebedc1fac0abb9ac84c4e944bf1ed7f01f620b3f5c51c02437fe1ac5bc23ac1b",
+      "code_and_literals_sha256": "fcf7ea46ae62efb812e43643f46f8e4e9a9043dce4e475326d43953cb9092b90",
+      "lines": 125,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "source_view_sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "code_and_literals_sha256": "62aae0e73200d43be85ba99c8835e15d5f2fdfb2dda65f7514b13ec03e064acc",
+      "lines": 100,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    },
+    {
+      "platform": "neoforge",
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "source_view_sha256": "fea8c12c972e55cf24d704b598c56d2da63968bb4d64d1c72aa39ff55f6daec5",
+      "code_and_literals_sha256": "659e96a2a07e57628cd7a876647e75ea15b04d03d1e8d2e8670c50f5e6a4c8b4",
+      "lines": 24,
+      "persisted_file": false,
+      "selection": "check_relay_sharing.project exposes masked Neo Stonecutter bodies before selecting the platform"
+    }
+  ],
+  "native_dependencies": {
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar": {
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entries": {
+        "net/minecraft/server/level/ChunkMap.class": "0588dab076bd1558e48925d10fe499eedbb1fdd9e0c479d922daa31b32975f42",
+        "net/minecraft/world/level/chunk/ChunkAccess.class": "bc726dcb749faec8476b59e0153d86d3b32e61fb6c80248504a46fc7289f248a",
+        "net/minecraft/world/level/chunk/LevelChunk.class": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e",
+        "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class": "3df8bbe152fb98ba776474e2cb550af1ae5df9905718dfc38738fece6a91a1d3",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "net/minecraft/world/level/Level.class": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f",
+        "net/minecraft/server/level/ServerChunkCache.class": "3d922fb36f54154a1d56bc50e1ff66ce96f9702d230106c5f948779643f7eb95",
+        "net/minecraft/server/level/ServerLevel.class": "0210ec59000410d4284eeec225699b49b592ba659c8a16b49ac76916192585d1",
+        "net/minecraft/server/MinecraftServer.class": "c8746828ef5885a6e0088d09431f154f11744580ac25927a67221689f649b356",
+        "net/minecraft/world/level/chunk/storage/ChunkSerializer.class": "ba60daef731e0af40e36857b348a16472df17235356462177e1421a07f56e98d",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.class": "cb9e336ed4cc15436f20a129bb7fdd188d9a9198adb7e443566788de62f99b49",
+        "net/minecraft/world/inventory/Slot.class": "31d0ae00785872909de5d946f3c11081524a93eff5fc6012ad5a173d15d01549",
+        "net/minecraft/world/inventory/AbstractContainerMenu.class": "4e6b9c7bd35cac672e491957afbda2ce565c509be9f0f1acddf8496554ac301a",
+        "net/minecraft/world/SimpleContainer.class": "d733c4ac3913724dbd7f527d69ccaf80fdea8d087db5637fbf74495edaea9216",
+        "net/minecraftforge/items/ItemStackHandler.class": "6706adae3f06eee55319aa95cfe50f760d76016a6c71dee24037d6af59763c9f",
+        "net/minecraftforge/items/SlotItemHandler.class": "1b04f6629aed979c90eace4f1437de6760eb70c1a50b92b20a712607fd1f0afa",
+        "net/minecraftforge/items/VanillaInventoryCodeHooks.class": "c867db7fab2c3d3458e18ea1d0d42730b0bc9f10e25256734ac6d6423a9881ab",
+        "net/minecraft/world/level/block/FireBlock.class": "7da6ad34163b77056f16c81db152d7a658f154cdf0d7ffbd83ebd6b70860a046",
+        "net/minecraft/world/entity/boss/enderdragon/EnderDragon.class": "fce2465e976f190b84c224a9e16e8b30d6fb3a96c0842ecca9341fa14f6448b1",
+        "net/minecraftforge/common/extensions/IForgeBlock.class": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0",
+        "net/minecraft/world/level/material/LavaFluid.class": "b3386e383a94552973970853ea5f25ccff3b5b8e1a579e5bf916ea431e668515",
+        "net/minecraftforge/common/ForgeHooks.class": "60fe69ff19cabd485565deb24139199ae706ba3b9563efffbb96c70e3baffba9"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar": {
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "entries": {
+        "net/minecraft/server/level/ChunkMap.class": "3fe2bcc86035b0f34273d5d1f16663cfb08d5a674bfae40e658b0203c1d98084",
+        "net/minecraft/world/level/chunk/ChunkAccess.class": "797e5fd8e456dc099667cea6a3e17abc71fcea65e7959930b96da99c5993ce12",
+        "net/minecraft/world/level/chunk/LevelChunk.class": "b6ce6fcd4c01e41008c184d4214f9b09dd7755daa1fb5c63eae3fa8324b8714f",
+        "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity.class": "598704d76f6bb3ddd9932054e71491e464739ce0beb7210bab6e34eb2a3f5ef1",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "9dec7da0f57d8eb770866c81c5e96a052a003b25f1504714c269e95acb6d8615",
+        "net/minecraft/world/level/Level.class": "74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
+        "net/minecraft/server/level/ServerChunkCache.class": "4642723a90acdc04f8c7e0135fbc42c4d56a7c17f7f392bc39f0e94dac5dadd1",
+        "net/minecraft/server/level/ServerLevel.class": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+        "net/minecraft/server/MinecraftServer.class": "3f1b7a260a249ae836d9d71bf0a0fe7575b62aff48f2b8fac10dd06aaa9efd2f",
+        "net/minecraft/world/level/chunk/storage/ChunkSerializer.class": "2e19e5f3851b6a9accc21bb04b9163c120495659dee1e91bd0d0ed88beefff90",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.class": "07e9bb22c69472c1de394c2518d72420fb7ee9f05555572a351cd87224d06b0f",
+        "net/minecraft/world/inventory/Slot.class": "89115c56fff496b2cb46a15f92bbcf342b383baad3ed6f5461a253c5d9c00ca7",
+        "net/minecraft/world/inventory/AbstractContainerMenu.class": "4d70e437f94ff4d448e17fcc9d287ea400ef716e34b2adc308a01cf4e688f893",
+        "net/minecraft/world/SimpleContainer.class": "ce1499b616ee0762b939f9ca3ffc053a00f10a6736f26845173e99a20e2647e0",
+        "net/neoforged/neoforge/items/ItemStackHandler.class": "9d842a44ed64512baca32d64f2726a93d62603dfc46448c71e8fd416dc604122",
+        "net/neoforged/neoforge/items/SlotItemHandler.class": "f22a04893387feb58fc9c64f317b83bca8b2de47fc2635033fe5a46d67090d28",
+        "net/neoforged/neoforge/items/VanillaInventoryCodeHooks.class": "3339a93061ed8eb2ed1e751c30e64c712c4360bd65eecd8ad4ce8cb6e6754941"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar": {
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entries": {
+        "net/minecraft/server/level/ChunkMap.java": "8051062b0f0b25b1f64704371b0d0fb0e9bfc06dd289eae297163bee5164d648",
+        "net/minecraft/world/level/chunk/ChunkAccess.java": "f29217541a45b5df25b13a32a8ef96031c34cb9832ac4d9ec2f3d031fba1f8f2",
+        "net/minecraft/world/level/chunk/LevelChunk.java": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223",
+        "net/minecraft/world/level/block/entity/BlockEntity.java": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "net/minecraft/world/level/Level.java": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+        "net/minecraft/server/level/ServerChunkCache.java": "02465fed32fb76cf2bc415c6ec58ba3d7cdf7b2580af2de6f9ba0c278c1bf306",
+        "net/minecraft/server/level/ServerLevel.java": "8d1086b8e63b11d340853e7595a63f2f27edc0d690311c9a0d46d5098eb21925",
+        "net/minecraft/server/MinecraftServer.java": "b906c6597095e206ade6a9db34f76993f667bdf2bfacaeca793ba9ce14e568ed",
+        "net/minecraft/world/level/chunk/storage/ChunkSerializer.java": "9c8e13e48fa82ce2d8112df0149d5365eef3a66ea7f694eff72a029e04afb395",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.java": "3ecf1cd3c9c8563f66bfa10ace876d146abde1c7a4ad61f0110284b432f3444b",
+        "net/minecraft/world/inventory/Slot.java": "8e384c39b105493d097603cc29d3ba971f27e7d9c35e480889b6b2021ec720b3",
+        "net/minecraft/world/inventory/AbstractContainerMenu.java": "1ecb13a9c33aba83666b229558278871ff28c76c477cfe96c13124ae55de232d",
+        "net/minecraft/world/SimpleContainer.java": "6a0ba6c20c4b254183473d2bfeafaca782abe8f5a7a7784211f8811ae2075125",
+        "net/neoforged/neoforge/common/extensions/IBlockExtension.java": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+        "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+        "net/neoforged/neoforge/items/ItemStackHandler.java": "2c73babcc9449b12f8b75dbb61d019aea043e647b8604edcfea7796ec19ba029",
+        "net/neoforged/neoforge/items/SlotItemHandler.java": "872fe32c96263fcda22c36922255d07f678a29677920869353f3a05358201f10",
+        "net/neoforged/neoforge/items/VanillaInventoryCodeHooks.java": "45186cd2d7c51c8b7e96b9fa2425c11172d790aa9dda06a7f0e0718db0c53036",
+        "net/minecraft/world/level/block/FireBlock.java": "e432f52570d435099d36f5713dfea052065a6b5603d59c824109315fd31abf61",
+        "net/minecraft/world/level/material/LavaFluid.java": "4acb2837d8adb7df22641536f08a7c3eeedb0759cdddeeeff622ace2f5ebe435",
+        "net/minecraft/world/entity/boss/enderdragon/EnderDragon.java": "9c38ef4d5996e00a7b78d2e128e807370f22ad9db2822807f6ba1b23389ee4dd",
+        "net/minecraft/world/level/block/state/BlockBehaviour.java": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+        "net/neoforged/neoforge/common/CommonHooks.java": "1c01b3c4aabdfeb9b0bc74ddbe3f481bc1762ce8e5e4cfb550417fd7e0f0b929",
+        "net/neoforged/neoforge/event/EventHooks.java": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/com/mojang/minecraft/1.7.10/minecraft-1.7.10-client.jar": {
+      "sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entries": {
+        "apx.class": "3c72c3c1eb377f7d073d01f50bc979b632206085d2a68c19c9c98d3596872efe",
+        "ms.class": "12246247369f3427c584ea5d5859bfce25c23a5cd988513b8250cb5d468575f7"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forge-1.7.10-10.13.4.1614-1.7.10-universal.jar": {
+      "sha256": "00d1ca02192c7efb87da95552ebf247021f1e1d642f86d0a03076314def11529",
+      "entries": {
+        "deobfuscation_data-1.7.10.lzma": "dbc4ace5029244e5bfa70422d637848c8b932f459e94ec503fdafc5e5f7d5aa2"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar": {
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": {
+        "net/minecraftforge/common/extensions/IForgeBlock.java": "a65330ebe8ac2935ed0bdce7eaa0ba7aa0e0ac5c57677d2774565f71bb949502",
+        "net/minecraftforge/common/extensions/IForgeBlockState.java": "b85e021bf08067a83d8181f423470652db1cd1de53d6963edf3b97b970fca743",
+        "net/minecraftforge/items/ItemStackHandler.java": "056424ca0f84ec388530cd93af0d2e1a384eaeb731486ffdf6491b215f5d0cd0",
+        "net/minecraftforge/items/SlotItemHandler.java": "a82ed04df2adec2e32ce3d0fa07aad5bd7c0d350b40002255f421445c7045c1c",
+        "net/minecraftforge/items/VanillaInventoryCodeHooks.java": "98b0e71df1ceeba4fbc0d33a8d70ca5287e661322c9aa80ba0c9ceae891b9508"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_repo/versions/1.20.1/client.jar": {
+      "sha256": "56b71336d2b4fdffd197f56595b0da93e32a946f78f382a299b8f4b92758bb0f",
+      "entries": {
+        "data/minecraft/tags/blocks/dragon_immune.json": "8ade075beaae70bbfbb2c697f6df1a0ddef582077e6f0e3daba5b320f1e22c6a",
+        "data/minecraft/tags/blocks/dragon_transparent.json": "fceddc0e5ad8b41c33a47f6ad3d232a57c04b8f1d3ca2f1fc1edf37741591e03"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/neoformruntime/artifacts/minecraft_1.21.1_client.jar": {
+      "sha256": "499f6897d1837516680f3114072d8106e11c9adcd933fe5cf051b551089b0c99",
+      "entries": {
+        "data/minecraft/tags/block/dragon_immune.json": "8ade075beaae70bbfbb2c697f6df1a0ddef582077e6f0e3daba5b320f1e22c6a",
+        "data/minecraft/tags/block/dragon_transparent.json": "fceddc0e5ad8b41c33a47f6ad3d232a57c04b8f1d3ca2f1fc1edf37741591e03"
+      }
+    }
+  },
+  "unique_native_entries_reverified": 75,
+  "official_primary_patch_reads": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/entity/boss/EntityDragon.java.patch",
+      "saved_sha256": "26842b53c29a81b5c4b19e887ff20226b090242cc90c4e91f9dd9f2a103de701",
+      "scratch_file": "EntityDragon-1.7.10.java.patch",
+      "note": "Read-only HTTPS download after web cache misses; raw bytes saved, hashed, never executed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/block/BlockFire.java.patch",
+      "saved_sha256": "bd60fddcb96fe2efcfca57b9e329655b687891d8af9649b86555111ac0de9ac0",
+      "scratch_file": "BlockFire-1.7.10.java.patch",
+      "note": "Read-only HTTPS download after web cache misses; raw bytes saved, hashed, never executed."
+    }
+  ],
+  "native_persistence_observations": {
+    "neo_source_lines": {
+      "BlockEntity.java": "191-200 setChanged dispatch",
+      "Level.java": "941-944 blockEntityChanged marks chunk",
+      "LevelChunk.java": "416-422 BE saveWithFullMetadata; 704-738 ticker does not auto-dirty",
+      "ChunkAccess.java": "269-274 plain unsaved flag; 380-385 inhabitedTime does not mark unsaved",
+      "ChunkMap.java": "413-438 full/ordinary save; 505-519 unload; 716-747 shared isUnsaved gate; 763 serializer",
+      "ServerChunkCache.java": "299-306 save/close delegation",
+      "ServerLevel.java": "807-827 save delegation and separate entity save",
+      "MinecraftServer.java": "622 stop save; 924-929 autosave",
+      "ChunkSerializer.java": "359-366 BE enumeration after dirty gate"
+    },
+    "forge_offsets": {
+      "ChunkMap.save(ChunkAccess)": "11 isUnsaved; 15 branch; 18-19 false return; 20-22 clear dirty; 106-111 ChunkSerializer.write",
+      "ChunkMap.lambda$scheduleUnload$14": "73-79 call same save",
+      "ChunkAccess.isUnsaved": "0-4 return field only",
+      "ChunkAccess.incrementInhabitedTime": "0-10 only long increment"
+    },
+    "original_native_mappings": [
+      "CL apx net/minecraft/world/chunk/Chunk",
+      "CL ms net/minecraft/world/gen/ChunkProviderServer",
+      "MD apx/a (Z)Z net/minecraft/world/chunk/Chunk/func_76601_a (Z)Z",
+      "MD apx/e ()V net/minecraft/world/chunk/Chunk/func_76630_e ()V",
+      "MD ms/a (ZLqk;)Z net/minecraft/world/gen/ChunkProviderServer/func_73151_a (ZLnet/minecraft/util/IProgressUpdate;)Z"
+    ],
+    "original_global_saving": "GT_API_Proxy 154-155 event registration, 600-604 server world END tick, 682-685 every 20 ticks WD.mark instances of inherited ITileEntityNeedsSaving; WD 314-325 setChunkModified"
+  },
+  "persistence_javap_metadata": [
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.server.level.ChunkMap"
+      ],
+      "stdout_sha256": "b9cd18d93d4bce9c3ae520d85c67cc64eeb007d1d382aad493d48098c5b7bdc2",
+      "stdout_bytes": 253178,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.chunk.ChunkAccess"
+      ],
+      "stdout_sha256": "7d2ba2069f8c35d41b16eee662574b856c135cdc2c4548063846c4779c416a35",
+      "stdout_bytes": 48982,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.chunk.LevelChunk"
+      ],
+      "stdout_sha256": "480227be06c97a1b8482a3f95a8ee6b2f4c71d022ba3239d68bef10fd9294ce5",
+      "stdout_bytes": 98224,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.chunk.LevelChunk$BoundTickingBlockEntity"
+      ],
+      "stdout_sha256": "4124a828539b66f77a6836d1e5f6eeeb4604f5895200ee1aede454c77e48fde1",
+      "stdout_bytes": 13066,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.block.entity.BlockEntity"
+      ],
+      "stdout_sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+      "stdout_bytes": 25862,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.Level"
+      ],
+      "stdout_sha256": "99304f0da6337fd3e21605c221d4e9d1cb8ab902366e9eb17e0906501d8679a4",
+      "stdout_bytes": 123457,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.server.level.ServerChunkCache"
+      ],
+      "stdout_sha256": "92c1979f55eff2e0a60e47b9916bd76642ac68786afa2d19c05b9257b64a6ccb",
+      "stdout_bytes": 73977,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.server.level.ServerLevel"
+      ],
+      "stdout_sha256": "14021de7caabc340ecbc2d38a903e21b97ca99cc7e3328fdb32dcba72f168604",
+      "stdout_bytes": 272068,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.server.MinecraftServer"
+      ],
+      "stdout_sha256": "34adc4a13df260c1f6657798904b68de777f5b7add3011726a452f6678c11bbc",
+      "stdout_bytes": 268129,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.chunk.storage.ChunkSerializer"
+      ],
+      "stdout_sha256": "5ecfed8ac19f087790d928e6683eb86a9646419f5ffc429a9e3a576101a15471",
+      "stdout_bytes": 108543,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "net.minecraft.server.level.ChunkMap"
+      ],
+      "stdout_sha256": "5709b2be00d419ab69530bc0908ce91212231c6dd6ce4484b32a4e64289bcc52",
+      "stdout_bytes": 216999,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "net.minecraft.world.level.chunk.ChunkAccess"
+      ],
+      "stdout_sha256": "36947251a5545321c0573fc1dd09b7d9db895129b0d2c28b6ecbb3110e309b30",
+      "stdout_bytes": 56407,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "apx"
+      ],
+      "stdout_sha256": "0cfdad55c5719586c1a21f1b9e8b3d5f8fe3fe025506d22681d73271b0d17e99",
+      "stdout_bytes": 124108,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "ms"
+      ],
+      "stdout_sha256": "71b35eb728cc70af7ce9cb710cc0430bbece9e02e468f2f58c45bd22b37f9979",
+      "stdout_bytes": 24928,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit": 0,
+      "storage": "in-memory only; no generated javap file"
+    }
+  ],
+  "notification_javap_metadata": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.entity.BlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "95c2fae552d67eb60d8adf99fb4c7cda0915587bd0b1eee17f33bce4c22589ac",
+      "method_headers": [
+        "public void setChanged();",
+        "protected static void setChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.Level",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "db5b49aae91f6ca9de49fa06c3e526493ee34945adc9bedf4bdf34778b58446c",
+      "method_headers": [
+        "public void updateNeighbourForOutputSignal(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.server.level.ServerLevel",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "b99523fb683d433352fea62a2a386f392165f4314740136178b47e6fd444b183",
+      "method_headers": [
+        "public void sendBlockUpdated(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.BlockState, int);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.entity.HopperBlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "a99babc259c82470ea4c898372c75557ff513ae06748210c0c1dc26710de6278",
+      "method_headers": [
+        "public static void pushItemsTick(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.HopperBlockEntity);",
+        "public static boolean suckInItems(net.minecraft.world.level.Level, net.minecraft.world.level.block.entity.Hopper);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.inventory.Slot",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "24291f5a282e28d7def605172e2d64e327d02cd67b8b37141de63a441d29b60e",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.SimpleContainer",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "7b1f5f17e13c3c02f143f2f104069791952508de11117aaf258b050d7990f391",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "4107c812d01ff0ca598bccb205871f99ad98562fc6532e0817af21749d6325a0",
+      "method_headers": [
+        "protected boolean moveItemStackTo(net.minecraft.world.item.ItemStack, int, int, boolean);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraftforge.items.SlotItemHandler",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "62f1f6ff12df046826fdb8fbc64e9d684490eefb7e20d5376d4f3c2d874662b9",
+      "method_headers": [
+        "public net.minecraftforge.items.SlotItemHandler(net.minecraftforge.items.IItemHandler, int, int, int);",
+        "public int getMaxStackSize();",
+        "public int getMaxStackSize(net.minecraft.world.item.ItemStack);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.level.block.entity.BlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "9941afea555aa60b5d19016db72e2bda93808eab775695c0041367ccdef08576",
+      "method_headers": [
+        "public void setChanged();",
+        "protected static void setChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.level.Level",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "17a30d0eeaeeb9c3d41ed1f30e59c33593e9858aedaba70fbc46f2eefe62e027",
+      "method_headers": [
+        "public void updateNeighbourForOutputSignal(net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.server.level.ServerLevel",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "775b95d120a74f2bf92133c47e0dd555adb04a72de84f5ff1c53445be5b64ad4",
+      "method_headers": [
+        "public void sendBlockUpdated(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.BlockState, int);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.level.block.entity.HopperBlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "1c1b3d189038f7655e1ccf570963089860ef9a3a368d9f2ad658b0a054d91788",
+      "method_headers": [
+        "public static void pushItemsTick(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.HopperBlockEntity);",
+        "public static boolean suckInItems(net.minecraft.world.level.Level, net.minecraft.world.level.block.entity.Hopper);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.inventory.Slot",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "90a9884aac5eda628e8f018e7cd589c68d58659ab5e88cd31bb8660e10ea68d9",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.SimpleContainer",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "af2c6aedc65041788dc7c2c4666b9e9a029aaf9fabe115a0c1aa77360eefde04",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "5930dca8de930dae46a6fa7ce860dc368071b5571738bb12e3cf4ef95204401f",
+      "method_headers": [
+        "protected boolean moveItemStackTo(net.minecraft.world.item.ItemStack, int, int, boolean);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.neoforged.neoforge.items.SlotItemHandler",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "5456d83b067676fe270a1d140fd0bc265065486303ae705ffcbe880c81dddc38",
+      "method_headers": [
+        "public net.neoforged.neoforge.items.SlotItemHandler(net.neoforged.neoforge.items.IItemHandler, int, int, int);",
+        "public int getMaxStackSize();",
+        "public int getMaxStackSize(net.minecraft.world.item.ItemStack);"
+      ]
+    }
+  ],
+  "hive_javap_scratch_sha256": {
+    "EnderDragon.forge.javap.txt": "7da31dec14b6b672233ef4ddf546581ea165581851117ae245394157e0eae217",
+    "FireBlock.forge.javap.txt": "81656de4d74b6f3f59d57d17e4ec972381a0312d2126bd9b301160d63917e279",
+    "ForgeHooks.forge.javap.txt": "1c444d695ed5b8bed1ae25666092f95c12861483c3a188dee465ee022b9c18a9",
+    "IForgeBlock.forge.javap.txt": "e506a76a14b6070370f30a55bb75acd6bd09e8906fd148b9cb1a4e2996c867ed",
+    "LavaFluid.forge.javap.txt": "43bff7369dfa836c27fb38339937411969df51827dc9398a106aa5ca4c2734bf"
+  },
+  "new_findings": [
+    "ALIGN-169",
+    "ALIGN-170",
+    "ALIGN-171",
+    "ALIGN-172",
+    "ALIGN-173"
+  ],
+  "scope_limits": [
+    "Hive fire and dragon behavior limited to built-in defaults; external tag packs, griefing settings and event cancellation not run.",
+    "Bee life/countdown rewind requires a clean chunk and absence of other dirty triggers; normal brood transitions already dirty through inventory.",
+    "Missing native GT inventory broadcast changes notification timing; existing retries do not support a permanent-stall claim.",
+    "Partial chest shift-out retains a nonempty source stack; complete transfer invokes setter. Neo merge-in differs from Forge setter side effects.",
+    "No Gradle, compilation, new tests, game, actual save/restart, build, push or gameplay changes in this batch."
+  ],
+  "archive_attempt_notes": [
+    "Initial physical-source scratch collection referenced two moved Java paths and stopped before writing its receipt. Paths were resolved with rg --files and the scratch collector completed.",
+    "Formatting proof initially compared CRLF/LF comment spelling literally; executable tokens were equal. Only comment line endings were normalized for the comment comparison."
+  ]
+}

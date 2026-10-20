@@ -298,3 +298,10 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 库存外部爆炸应从实际原生 `state.getDrops`／`onBlockExploded`／`onRemove` 追踪；`CoverDropMixin` 的静态助手不是该入口。方块物品与散落库存的掉落合同分开，见[核查](INVENTORY_EXPLOSION_AUDIT.md)。
 
 养蜂来源与未核完边界见[周期报告](BUMBLE_LIFECYCLE_AUDIT.md)，战利品首空槽／原随机覆盖见[填槽报告](LOOT_SLOT_AUDIT.md)。没有将原生反编译源码纳入项目生产目录。
+
+## 保存时机、库存通知与共用菜单
+
+- `BumbliaryBlockEntity` 的寿命／配对计时写读与 `setChanged` 时机分开；实际区块保存有 isUnsaved 门控，见[持久化核查](BUMBLE_PERSISTENCE_AUDIT.md)。
+- `MetalChestBlockEntity` 的普通 handler 回调、`HopperContainerMenu.quickMoveStack` 的原位变化与原生 SlotItemHandler 适配分别核对；菜单使用相同基类不保证每个宿主补偿方式相同。
+- `api/machine/ITileEntityAdjacentInventoryUpdatable` 是专用通知合同；`setChanged`／`sendBlockUpdated`／普通邻居事件不会按名称自动转换为它。接收方与轮询范围见[库存报告](INVENTORY_NOTIFICATION_AUDIT.md)。
+- BumbleBeeGenes 和 GTBumbleBlocks 已展开两版边界；BumbleHiveBlock 的旧 COLOR 只是历史兼容，新变种身份仍是 FixedBumbleHiveBlock。火焰及末影龙保护的实际原生来源见[自然巢报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。
