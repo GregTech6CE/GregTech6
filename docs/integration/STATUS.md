@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第六十二批工具配方执行源码展开
+
+ToolShapedRecipe 254→456行，ToolShapelessRecipe 168→247行；四份平台视图最长行现为150／150／148／149。循环与返还退出点、版本Codec和buffer顺序保持，Neo共用闭合括号边界整理也通过完整词法／字面量／注释比较。见[导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)和[回执](verification/tool-recipe-readability-20261021.json)；正式记录仍215条，不修配方玩法。未编译／测试／构建／推送，用户材料保留，全面goal active。
+
 ## 2026-10-21 / 第六十一批核状态、异常生命周期与配置合同
 
 新增211–215，含211保留安全政策；其余为禁槽慢化计数、漏交换重载、END前中止的强链及post异常隔离的限定合同。004纠正为三个配置键，两个过载getter有实际消费、日志开关无读取；COMMON原生load/save和缓存刷新已有。36原版／72当前、58视图、12工件49entry重核，见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)、[配置](CONFIGURATION_CONTRACT_AUDIT.md)和[回执](verification/nuclear-transitions-config-audit-20261021.json)。正式记录215条，未改玩法／编译／测试／构建／推送，全面goal active。

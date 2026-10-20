@@ -1,5 +1,7 @@
 # GregTech 6 整合计划与验收合同
 
+第六十二批进展（2026-10-21）：工具有序／无序配方维护源422→703行，展开匹配、磨损／电动工具返还、有限容器格位映射和Codec／buffer边界。四份完整执行流2040／2101／1157／1251项、字面量位置／注释及条件顺序保持；一处Neo闭合括号在masked载体间整理，选中平台范围不变，见[源码导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)与[回执](verification/tool-recipe-readability-20261021.json)。正式记录仍215条，未改配方；核扩展、太阳能板、单块热交换器与全面队列继续。
+
 第六十一批进展（2026-10-21）：核状态／异常生命周期新增211–215，211明确保留即时清通量的安全政策，004扩展原生COMMON注册和配置代表矩阵。36原版／72当前、58视图及12工件49entry重核；正常18、普通耗尽和Neo提交已有。两个过载设置有效，日志项无消费，Nexus全开／cfg收尾政策不改，见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)、[配置](CONFIGURATION_CONTRACT_AUDIT.md)与[回执](verification/nuclear-transitions-config-audit-20261021.json)。正式记录至215条，未改玩法；外部提供者、极值、真实存档／配置验收和全面队列继续。
 
 第六十批进展（2026-10-21）：两份core核辅助类由25→97行，七处声明的短参数改为明确名称；206／522项完整执行词法在逐方法参数绑定归一后保持，其余名称、数值、字段和运算不变。纠正“完全原版算术”和本类执行流体查找的过强说明，见[源码导航](NUCLEAR_SOURCE_LAYOUT.md)与[回执](verification/nuclear-helper-readability-20261021.json)。未改玩法，正式记录仍210条；启停／重载、网络异常及配置消费者核查继续。
