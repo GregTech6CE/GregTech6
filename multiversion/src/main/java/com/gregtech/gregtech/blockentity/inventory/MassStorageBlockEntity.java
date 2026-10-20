@@ -33,7 +33,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-/** GT6 standard bulk storage core. Item identity and long count share one transaction path. */
+/**
+ * Bulk item identity, long count and material fractions share one transaction path.
+ * Tape packing and filter reset are implemented; the original active downward-output
+ * and overflow modes still lack execution here (ALIGN-137).
+ */
 //? if >=1.21.1 {
 /*public class MassStorageBlockEntity extends BlockEntity implements com.gregtech.gregtech.item.behavior.BehaviorDuctTape.Tapeable {
 *///?} else {
