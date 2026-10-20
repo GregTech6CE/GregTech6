@@ -2,8 +2,7 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-A community integration project bringing GregTech 6 to modern Minecraft, with a shared core and dedicated Forge and NeoForge implementations.
-
+A GregTech 6 (GT6) port to modern Minecraft: 1.20.1 Forge and 1.21.1 NeoForge, with a shared core and dedicated Forge and NeoForge implementations.
 The **`main`** branch manages all native source sets and resources with **Stonecutter 0.7.11**. The former main branch is preserved as **`old`**. See the [migration and generator guide](docs/integration/STONECUTTER_MIGRATION.md).
 
 For code entry points and naming conventions, see the [source layout guide](docs/integration/SOURCE_LAYOUT.md). The ongoing [original GT6 alignment audit](docs/integration/ORIGINAL_ALIGNMENT_AUDIT.md) distinguishes confirmed gaps from unverified behavior.
