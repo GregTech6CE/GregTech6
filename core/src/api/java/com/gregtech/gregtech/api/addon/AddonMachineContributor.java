@@ -19,7 +19,10 @@ public interface AddonMachineContributor {
 
     default List<MachineLayout> layouts() { return List.of(); }
 
-    /** Structure casings. Names are global and may be used from {@link MachineLayout}. */
+    /**
+     * Structure casings and energy parts. Names are global and may be used from {@link MachineLayout}.
+     * A part with no energy role is a casing. {@link StructurePartEnergy} makes it an energy part.
+     */
     default List<StructurePartDeclaration> parts() { return List.of(); }
 
     /**

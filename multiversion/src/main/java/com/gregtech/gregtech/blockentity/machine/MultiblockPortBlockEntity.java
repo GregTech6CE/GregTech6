@@ -19,7 +19,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.*;
 
 /** Transient binding is rebuilt after chunk load; no duplicated inventory or heat is stored here. */
-public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
+public class MultiblockPortBlockEntity extends GTEnergyBlockEntity implements
         com.gregtech.gregtech.content.logistics.LogisticsCoverHost,
         com.gregtech.gregtech.api.machine.ITileEntityCrucible,
         com.gregtech.gregtech.api.multiblock.BoundMachinePort,
@@ -33,8 +33,14 @@ public final class MultiblockPortBlockEntity extends GTEnergyBlockEntity impleme
     private LazyOptional<IFluidHandler> fluid=LazyOptional.empty();
 //?}
     public MultiblockPortBlockEntity(BlockPos pos, BlockState state) {
-        super(com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),pos,state);
+        this(com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(), pos, state);
     }
+    protected MultiblockPortBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,
+                                        BlockPos pos, BlockState state) {
+        super(type, pos, state);
+    }
+    protected BlockPos controllerPos() { return controller; }
+    protected MultiblockLayout.Role boundRole() { return role; }
     private MultiblockPortOwner owner() {
         if(isRemoved() || level==null || controller==null || !level.hasChunkAt(controller)) return null;
         return level.getBlockEntity(controller) instanceof MultiblockPortOwner owner?owner:null;
