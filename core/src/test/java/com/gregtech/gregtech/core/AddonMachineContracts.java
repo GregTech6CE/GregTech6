@@ -9,6 +9,7 @@ import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
+import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
@@ -22,6 +23,7 @@ import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.api.recipe.RecipeMapSpec;
 import com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules;
 import com.gregtech.gregtech.content.multiblock.SharedLargeMachineLayouts;
+import com.gregtech.gregtech.content.multiblock.SharedLargeMachineParts;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.ModReferences;
 
@@ -48,6 +50,10 @@ public final class AddonMachineContracts {
             case "kind" -> kind();
             case "duplicate" -> duplicate();
             case "part" -> unknownPart();
+            case "partok" -> partOk();
+            case "partname" -> partName();
+            case "partmat" -> partMaterial();
+            case "partdup" -> partDuplicate();
             case "map" -> unknownMap();
             case "energy" -> unknownEnergy();
             case "controller" -> noController();
@@ -163,6 +169,55 @@ public final class AddonMachineContracts {
         expectInstall("aa_sample", "unknown", "part", "not_a_part");
     }
 
+    private static void partOk() {
+        prepare();
+        GTMaterialRegistry.init();
+        int steel = SharedLargeMachineParts.idForName("steel_wall");
+        int walls = SharedLargeMachineParts.DEFINITIONS.size();
+        AddonMachines.accept("aa_part", List.of(map("aa.recipe.press")),
+                List.of(large("large_press", "largesamplepress", "aa.recipe.press")),
+                List.of(new AddonMachineLayout("largesamplepress", List.of(
+                        new AddonMachineLayout.Cell(1, 0, 0, "sample_wall", StructureGrid.Role.CASING)))),
+                List.of(), List.of(), List.of(),
+                List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F),
+                        new StructurePartDeclaration("sample_cap", "Iron", "block/sample_cap", 4.0F)));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.structureParts().isEmpty() == false && AddonMachines.structureParts().size() == 2, "two parts");
+        check(AddonMachines.partId("sample_wall") == 1_000_000, "first runtime id");
+        check(AddonMachines.partId("sample_cap") == 1_000_001, "second runtime id");
+        check(SharedLargeMachineParts.idForName("sample_wall") == 1_000_000, "lookup sees the addon part");
+        check(SharedLargeMachineParts.idForName("steel_wall") == steel && steel == 18009, "steel wall stays 18009");
+        check(SharedLargeMachineParts.DEFINITIONS.size() == walls, "built-in table unchanged");
+        check(SharedLargeMachineParts.builtinId("sample_wall") < 0, "addon name is not built in");
+        var cells = SharedLargeMachineLayouts.cells("largesamplepress");
+        check(cells != null && cells.size() == 1 && cells.get(0).part() == 1_000_000, "layout stored the runtime id");
+    }
+
+    private static void partName() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(new StructurePartDeclaration("steel_wall", "Steel", "", 6.0F)));
+        expectInstall("aa_part", "steel_wall", "built-in");
+    }
+
+    private static void partMaterial() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(new StructurePartDeclaration("sample_wall", "NotAMaterial", "", 6.0F)));
+        expectInstall("aa_part", "unknown", "material", "NotAMaterial");
+    }
+
+    private static void partDuplicate() {
+        prepare();
+        GTMaterialRegistry.init();
+        var part = new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F);
+        AddonMachines.accept("aa_one", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(part));
+        AddonMachines.accept("aa_two", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(part));
+        expectInstall("aa_two", "sample_wall", "aa_one");
+    }
+
     private static void unknownMap() {
         prepare();
         GTMaterialRegistry.init();
@@ -196,6 +251,8 @@ public final class AddonMachineContracts {
         check(AddonMachines.machines().get(0).definition().kind() == MachineControllerKind.LARGE_RECIPE, "large recipe kind");
         var cells = SharedLargeMachineLayouts.cells("largesamplepress");
         check(cells != null && cells.size() == 1 && cells.get(0).part() == 18002, "tank wall name became its numeric id");
+        check(AddonMachines.structureParts().isEmpty(), "no addon parts leaves the part table empty");
+        check(SharedLargeMachineParts.idForName("steel_wall") == 18009, "steel wall id is unchanged");
         check(AddonMachines.recipeMaps().size() == 1, "one recipe map accepted");
         boolean closed = false;
         try {

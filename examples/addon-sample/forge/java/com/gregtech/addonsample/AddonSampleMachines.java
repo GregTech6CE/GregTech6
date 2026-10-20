@@ -7,6 +7,7 @@ import com.gregtech.gregtech.api.addon.FuelMapDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineLayout;
 import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
+import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
@@ -55,6 +56,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .structureKeys(List.of("addon_sample.structure.press.1")).build());
     }
 
+    @Override public List<StructurePartDeclaration> parts() {
+        return List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F));
+    }
+
     @Override public List<MachineLayout> layouts() {
         var cells = new ArrayList<MachineLayout.Cell>();
         for (int up = 0; up < 2; up++) {
@@ -63,7 +68,8 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                     if (right == 0 && up == 0 && back == 0) continue;
                     var role = back == 1 && right == 0
                             ? StructureRole.ENERGY_INPUT : StructureRole.ITEM_FLUID_IO;
-                    cells.add(new MachineLayout.Cell(right, up, back, "tank_wall", role));
+                    String part = right == 1 && up == 0 && back == 0 ? "sample_wall" : "tank_wall";
+                    cells.add(new MachineLayout.Cell(right, up, back, part, role));
                 }
             }
         }

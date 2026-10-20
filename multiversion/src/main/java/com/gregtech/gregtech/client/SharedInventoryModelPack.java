@@ -84,6 +84,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         if (resources != null) return resources;
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
+        emitStructureParts(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -165,15 +166,42 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         return resources;
     }
 
+    private static void emitStructureParts(Map<ResourceLocation, byte[]> result) {
+        for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts()) {
+            ResourceLocation id = part.block().getId();
+            String texture = part.texture() == null ? "" : part.texture();
+            if (texture.isEmpty()) {
+                result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
+                        "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/multiblock/steel_wall\"}}}".getBytes(StandardCharsets.UTF_8));
+                result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
+                        "{\"parent\":\"gt6ce:block/machine/multiblock/steel_wall\"}".getBytes(StandardCharsets.UTF_8));
+                continue;
+            }
+            String model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\""
+                    + id.getNamespace() + ":" + texture + "\"}}";
+            result.put(named(id.getNamespace(), "models/block/" + id.getPath() + ".json"), model.getBytes(StandardCharsets.UTF_8));
+            result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
+                    ("{\"variants\":{\"\":{\"model\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}}}").getBytes(StandardCharsets.UTF_8));
+            result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
+                    ("{\"parent\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
 //? if >=1.21.1 {
     /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static ResourceLocation itemModel(ResourceLocation item) {
         return ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "models/item/" + item.getPath() + ".json");
     }
+    private static ResourceLocation named(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
 *///?} else {
     private static ResourceLocation location(String path) { return new ResourceLocation("gt6ce", path); }
     private static ResourceLocation itemModel(ResourceLocation item) {
         return new ResourceLocation(item.getNamespace(), "models/item/" + item.getPath() + ".json");
+    }
+    private static ResourceLocation named(String namespace, String path) {
+        return new ResourceLocation(namespace, path);
     }
 //?}
 
@@ -210,6 +238,8 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         names.add("gt6ce");
         for (var prefix : com.gregtech.gregtech.api.prefix.PrefixRegistry.addonPrefixes())
             names.add(prefix.itemNamespace());
+        for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts())
+            names.add(part.block().getId().getNamespace());
         return Set.copyOf(names);
     }
 

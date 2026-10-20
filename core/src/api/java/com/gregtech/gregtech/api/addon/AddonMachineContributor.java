@@ -19,6 +19,9 @@ public interface AddonMachineContributor {
 
     default List<MachineLayout> layouts() { return List.of(); }
 
+    /** Structure casings. Names are global and may be used from {@link MachineLayout}. */
+    default List<StructurePartDeclaration> parts() { return List.of(); }
+
     /** Behavior machines. Pair each machine type with a platform {@code BehaviorMachineContributor}. */
     default List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(); }
 
