@@ -16,7 +16,8 @@ public final class TransportCraftingCatalog {
     private static Input item(String id){return new Input("item",id,null);}
     private static Input tag(String id){return new Input("tag",id,null);}
     private static Input tool(String id){return item("gt6ce:tool_"+id);}
-    private static Row shaped(String path,List<String> pattern,Map<Character,Input> key,String output,boolean empty){return new Row(path,pattern,key,"gt6ce:"+output,1,false,empty);}
+    private static Row shaped(String path,List<String> pattern,Map<Character,Input> key,String output,boolean empty){return new Row(path,pattern,key,idOf(output),1,false,empty);}
+    private static String idOf(String path){return com.gregtech.gregtech.api.addon.AddonPipes.namespace(path)+":"+path;}
     private static Row plain(String path,String output,GTMaterial material,PipeSpec.PipeSize size){
         var pattern=switch(size){case TINY->List.of("sP ","wzh");case SMALL->List.of(" P ","wzh");case MEDIUM->List.of("PPP","wzh");default->List.of("PPP","wzh","PPP");};
         return shaped("pipe/"+path,pattern,Map.of('P',form(size==PipeSpec.PipeSize.HUGE?"plateDouble":"plateCurved",material),
@@ -24,24 +25,24 @@ public final class TransportCraftingCatalog {
     }
     public static List<Row> rows(){
         var rows=new ArrayList<Row>();
-        for(var spec:FluidTransportDefinitions.pipes()){
+        for (var spec:FluidTransportDefinitions.pipes()){
             String suffix=spec.id().substring(("pipe_"+spec.size().name().toLowerCase(Locale.ROOT)+"_").length());
             if(spec.size()==PipeSpec.PipeSize.QUADRUPLE||spec.size()==PipeSpec.PipeSize.NONUPLE){
                 boolean quad=spec.size()==PipeSpec.PipeSize.QUADRUPLE;
-                String plain="gt6ce:pipe_"+(quad?"medium_":"small_")+suffix;
+                String plain=idOf("pipe_"+(quad?"medium_":"small_")+suffix);
                 rows.add(shaped("pipe/fluid/"+spec.id(),quad?List.of("PP","PP"):List.of("PPP","PPP","PPP"),Map.of('P',item(plain)),spec.id(),true));
-                rows.add(new Row("pipe/unpack/"+spec.id(),List.of(),Map.of('P',item("gt6ce:"+spec.id())),plain,quad?4:9,true,true));
+                rows.add(new Row("pipe/unpack/"+spec.id(),List.of(),Map.of('P',item(idOf(spec.id()))),plain,quad?4:9,true,true));
             }else if(!Set.of("wood","treated_wood","plastic","rubber","carbon").contains(suffix)){
                 // Original aRecipe=false for these five: ordinary Wood has its separate existing patterns.
                 rows.add(plain("fluid/"+spec.id(),spec.id(),spec.material(),spec.size()));
             }
         }
-        for(var mat:ItemPipeCatalog.ITEM_PIPE_MATS)for(var size:ItemPipeSpec.ItemPipeSize.values()){
+        for(var mat:ItemPipeCatalog.mats())for(var size:ItemPipeSpec.ItemPipeSize.values()){
             String id="item_pipe_"+size.name().toLowerCase(Locale.ROOT)+"_"+mat.idSuffix();
             if(size.restrictive()){
                 var base=switch(size){case RESTRICTIVE_MEDIUM->"medium";case RESTRICTIVE_LARGE->"large";default->"huge";};
                 var pattern=switch(size){case RESTRICTIVE_MEDIUM->List.of(" h ","RPR"," R ");case RESTRICTIVE_LARGE->List.of("hR ","RPR"," R ");default->List.of(" h ","RPR","RRR");};
-                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item("gt6ce:item_pipe_"+base+"_"+mat.idSuffix()),'R',form("ring",com.gregtech.gregtech.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
+                rows.add(shaped("pipe/restrictive/"+id,pattern,Map.of('P',item(idOf("item_pipe_"+base+"_"+mat.idSuffix())),'R',form("ring",com.gregtech.gregtech.data.MaterialGroups.Steel),'h',tool("hammer")),id,true));
             }else rows.add(plain("item/"+id,id,mat.material(),PipeSpec.PipeSize.valueOf(size.name())));
         }
         for(var spec:FluidTransportDefinitions.tanks()){

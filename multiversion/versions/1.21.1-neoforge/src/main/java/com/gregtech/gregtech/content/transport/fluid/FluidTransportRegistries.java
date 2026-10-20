@@ -42,12 +42,14 @@ public final class FluidTransportRegistries {
                     TANKS.stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
             ENTITIES.register("fluid_pipe", () -> BlockEntityType.Builder.of(FluidPipeBlockEntity::new,
-                    PIPES.stream().map(DeferredHolder::get).toArray(Block[]::new)).build(null));
+                    com.gregtech.gregtech.registry.AddonPipeRegistration.fluidPipeBlocks(
+                            PIPES.stream().map(DeferredHolder::get))).build(null));
 
     public static List<DeferredBlock<TankBlock>> tanks() { return List.copyOf(TANKS); }
     public static List<DeferredBlock<FluidPipeBlock>> pipes() { return List.copyOf(PIPES); }
 
     public static void register(IEventBus bus) {
+        com.gregtech.gregtech.api.addon.AddonMachines.collectContributors();
         for (TankSpec spec : FluidTransportDefinitions.tanks()) {
             var block = BLOCKS.register(spec.id(), () -> new TankBlock(spec, TankBlock.defaultProperties(spec)));
             TANKS.add(block);
@@ -57,6 +59,11 @@ public final class FluidTransportRegistries {
             if (spec.id().equals("drum_steel")) DRUM_STEEL = block;
         }
         for (PipeSpec spec : FluidTransportDefinitions.pipes()) {
+            String owner = com.gregtech.gregtech.api.addon.AddonPipes.owner(spec.id());
+            if (owner != null) {
+                com.gregtech.gregtech.registry.AddonPipeRegistration.queueFluid(owner, spec);
+                continue;
+            }
             var block = BLOCKS.register(spec.id(), () -> new FluidPipeBlock(spec, FluidPipeBlock.defaultProperties(spec)));
             PIPES.add(block);
             ITEMS.register(spec.id(), () -> new FluidTransportBlockItem(

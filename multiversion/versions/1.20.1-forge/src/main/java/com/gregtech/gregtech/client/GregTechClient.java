@@ -247,6 +247,14 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, entry.get().asItem());
             }
         });
+        com.gregtech.gregtech.registry.AddonPipeRegistration.fluidBlocks().forEach(pipe -> {
+            int tint = pipe.spec().material().getColor();
+            event.register((stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe.asItem());
+        });
+        com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks().forEach(pipe -> {
+            int tint = pipe.spec().material().getColor();
+            event.register((stack, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe.asItem());
+        });
         // Axle item tints
         com.gregtech.gregtech.registry.GTAxles.all().forEach(entry -> {
             if (entry.isPresent()) {
@@ -435,6 +443,14 @@ public final class GregTechClient {
                 int tint = pipe.spec().material().getColor();
                 event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe);
             }
+        });
+        com.gregtech.gregtech.registry.AddonPipeRegistration.fluidBlocks().forEach(pipe -> {
+            int tint = pipe.spec().material().getColor();
+            event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe);
+        });
+        com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks().forEach(pipe -> {
+            int tint = pipe.spec().material().getColor();
+            event.register((state, level, pos, tintIndex) -> tintIndex == 0 ? tint : 0xFFFFFF, pipe);
         });
         GTTanks.all().forEach(entry -> {
             if (entry.isPresent()) {

@@ -85,6 +85,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> result = new HashMap<>();
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         emitStructureParts(result);
+        emitAddonPipes(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -187,6 +188,21 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         }
     }
 
+    /** Placeholder so the bakery has a model to replace with the dynamic pipe shape. */
+    private static void emitAddonPipes(Map<ResourceLocation, byte[]> result) {
+        String blockstate = "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}}}";
+        String item = "{\"parent\":\"gt6ce:block/machine/pipe_tiny_steel_core\"}";
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.fluidBlocks()) emitPipe(result, block, blockstate, item);
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks()) emitPipe(result, block, blockstate, item);
+    }
+
+    private static void emitPipe(Map<ResourceLocation, byte[]> result, net.minecraft.world.level.block.Block block,
+                                 String blockstate, String item) {
+        ResourceLocation id = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block);
+        result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
+        result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"), item.getBytes(StandardCharsets.UTF_8));
+    }
+
 //? if >=1.21.1 {
     /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
     private static ResourceLocation itemModel(ResourceLocation item) {
@@ -240,6 +256,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             names.add(prefix.itemNamespace());
         for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts())
             names.add(part.block().getId().getNamespace());
+        names.addAll(com.gregtech.gregtech.registry.AddonPipeRegistration.namespaces());
         return Set.copyOf(names);
     }
 

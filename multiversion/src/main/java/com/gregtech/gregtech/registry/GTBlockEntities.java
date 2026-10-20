@@ -56,7 +56,7 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RockBlockEntity>> ROCK =
             BLOCK_ENTITIES.register("rock", () -> BlockEntityType.Builder.of(RockBlockEntity::new, GTBlocks.ROCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.tool.DynamiteBlockEntity>> DYNAMITE=BLOCK_ENTITIES.register("dynamite",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.tool.DynamiteBlockEntity::new,GTToolBlocks.DYNAMITE.get(),GTToolBlocks.BOOMSTICK.get(),GTToolBlocks.DYNAMITE_STRONG.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity>> ITEM_PIPE=BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity::new,GTItemPipes.all().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity>> ITEM_PIPE=BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity::new,AddonPipeRegistration.itemPipeBlocks(GTItemPipes.all().stream().map(DeferredHolder::get))).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.HopperBlockEntity>> HOPPER=BLOCK_ENTITIES.register("hopper",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.HopperBlockEntity::new,com.gregtech.gregtech.content.transport.HopperRegistries.hoppers().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.QueueHopperBlockEntity>> QUEUE_HOPPER=BLOCK_ENTITIES.register("queue_hopper",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.QueueHopperBlockEntity::new,com.gregtech.gregtech.content.transport.HopperRegistries.queues().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.TreeHoleBlockEntity>> TREE_HOLE=BLOCK_ENTITIES.register("tree_hole",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.TreeHoleBlockEntity::new,GTTreeHoles.blocks().toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -238,10 +238,9 @@ public final class GTBlockEntities {
 
     public static final RegistryObject<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
             BLOCK_ENTITY_TYPES.register("fluid_pipe", () -> {
-                FluidPipeBlock[] blocks = GTFluidPipes.all().stream()
-                        .filter(RegistryObject::isPresent)
-                        .map(RegistryObject::get)
-                        .toArray(FluidPipeBlock[]::new);
+                FluidPipeBlock[] blocks = java.util.Arrays.stream(AddonPipeRegistration.fluidPipeBlocks(
+                        GTFluidPipes.all().stream().filter(RegistryObject::isPresent).map(RegistryObject::get)))
+                        .map(block -> (FluidPipeBlock) block).toArray(FluidPipeBlock[]::new);
                 return BlockEntityType.Builder.of(FluidPipeBlockEntity::new, blocks).build(null);
             });
 
@@ -421,10 +420,9 @@ public final class GTBlockEntities {
 
     public static final RegistryObject<BlockEntityType<ItemPipeBlockEntity>> ITEM_PIPE =
             BLOCK_ENTITY_TYPES.register("item_pipe", () -> {
-                ItemPipeBlock[] blocks = GTItemPipes.all().stream()
-                        .filter(RegistryObject::isPresent)
-                        .map(RegistryObject::get)
-                        .toArray(ItemPipeBlock[]::new);
+                ItemPipeBlock[] blocks = java.util.Arrays.stream(AddonPipeRegistration.itemPipeBlocks(
+                        GTItemPipes.all().stream().filter(RegistryObject::isPresent).map(RegistryObject::get)))
+                        .map(block -> (ItemPipeBlock) block).toArray(ItemPipeBlock[]::new);
                 return BlockEntityType.Builder.of(ItemPipeBlockEntity::new, blocks).build(null);
             });
 
