@@ -21,11 +21,13 @@ public final class ItemLogisticsClientSetup {
  @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event){event.registerBlockEntityRenderer(GTBlockEntities.ITEM_PIPE.get(),ItemPipeCoverRenderer::new);}
  @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event){
   for(var entry:GTItemPipes.all()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}
+  for(var block:com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks())event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);
   for(var entry:HopperRegistries.hoppers()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}
   for(var entry:HopperRegistries.queues()){var block=entry.get();event.register((state,level,pos,layer)->layer==0?block.spec().tintRgb():0xFFFFFF,block);}
  }
  @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event){
   for(var entry:GTItemPipes.all()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());}
+  for(var block:com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks())event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());
   for(var entry:HopperRegistries.hoppers()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());}
   for(var entry:HopperRegistries.queues()){var block=entry.get();event.register(ItemColorARGB.opaque((stack,layer)->layer==0?block.spec().tintRgb():0xFFFFFF),block.asItem());}
  }
@@ -35,6 +37,12 @@ public final class ItemLogisticsClientSetup {
   for(String path:new String[]{"iron_block","stone","dirt"}){var model=models.get(ModelResourceLocation.inventory(ResourceLocation.withDefaultNamespace(path)));if(model!=null&&model.isGui3d()&&model.getTransforms()!=ItemTransforms.NO_TRANSFORMS){transforms=model.getTransforms();break;}}
   for(var entry:GTItemPipes.all()){
    var block=entry.get();var spec=block.spec();String set=spec.material().getTextureSet().name().toLowerCase(java.util.Locale.ROOT);String size=spec.size().name().toLowerCase(java.util.Locale.ROOT).replace("restrictive_","");
+   var overlay=spec.size().name().startsWith("RESTRICTIVE_")?id("block/iconsets/pipe_restrictor"):null;
+   var model=new PipeWireBakedModel(Math.max(1,spec.diameter()*8),id("block/material_icons/"+set+"/pipeside"),0,id("block/material_icons/"+set+"/pipe"+size),0,0,overlay).itemTransforms(transforms);
+   var key=BuiltInRegistries.BLOCK.getKey(block);for(var state:block.getStateDefinition().getPossibleStates())models.put(BlockModelShaper.stateToModelLocation(key,state),model);models.put(ModelResourceLocation.inventory(key),model);
+  }
+  for(var block:com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks()){
+   var spec=block.spec();String set=spec.material().getTextureSet().name().toLowerCase(java.util.Locale.ROOT);String size=spec.size().name().toLowerCase(java.util.Locale.ROOT).replace("restrictive_","");
    var overlay=spec.size().name().startsWith("RESTRICTIVE_")?id("block/iconsets/pipe_restrictor"):null;
    var model=new PipeWireBakedModel(Math.max(1,spec.diameter()*8),id("block/material_icons/"+set+"/pipeside"),0,id("block/material_icons/"+set+"/pipe"+size),0,0,overlay).itemTransforms(transforms);
    var key=BuiltInRegistries.BLOCK.getKey(block);for(var state:block.getStateDefinition().getPossibleStates())models.put(BlockModelShaper.stateToModelLocation(key,state),model);models.put(ModelResourceLocation.inventory(key),model);

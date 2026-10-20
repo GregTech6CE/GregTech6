@@ -94,6 +94,11 @@ public final class PipeRecipes {
             fluid.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));
         }
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.fluidBlocks()) {
+            PipeSpec spec = block.spec();
+            fluid.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
+                    .putIfAbsent(spec.size(), new ItemStack(block.asItem()));
+        }
         Map<String, Map<ItemPipeSpec.ItemPipeSize, ItemStack>> item = new HashMap<>();
         for (var holder : GTItemPipes.all()) {
 //? if >=1.21.1 {
@@ -104,6 +109,11 @@ public final class PipeRecipes {
             ItemPipeSpec spec = holder.get().spec();
             item.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
                     .put(spec.size(), new ItemStack(holder.get().asItem()));
+        }
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks()) {
+            ItemPipeSpec spec = block.spec();
+            item.computeIfAbsent(spec.material().getName(), k -> new HashMap<>())
+                    .putIfAbsent(spec.size(), new ItemStack(block.asItem()));
         }
 
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {

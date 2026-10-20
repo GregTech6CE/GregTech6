@@ -90,9 +90,11 @@ class LanguageIdentities {
             String[] parts = binding.split("\\|");
             row("block.gt6ce." + parts[0], "gt.multitileentity." + parts[1], "");
         }
-        for (var pipe : com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes())
+        for (var pipe : com.gregtech.gregtech.content.transport.fluid.FluidTransportDefinitions.pipes()) {
+            if (com.gregtech.gregtech.api.addon.AddonPipes.owner(pipe.id()) != null) continue;
             row("block.gt6ce." + pipe.id(), "@pipe.fluid." + pipe.material().getName()
                     + "." + pipe.size().name(), "");
+        }
         for (var mat : com.gregtech.gregtech.content.transport.ItemPipeCatalog.ITEM_PIPE_MATS)
             for (var size : com.gregtech.gregtech.api.machine.ItemPipeSpec.ItemPipeSize.values())
                 row("block.gt6ce.item_pipe_" + size.name().toLowerCase(Locale.ROOT) + "_" + mat.idSuffix(),

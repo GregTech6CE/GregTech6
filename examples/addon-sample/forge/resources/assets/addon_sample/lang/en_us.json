@@ -10,5 +10,18 @@
   "block.addon_sample.sample_wall": "Sample Wall",
   "block.addon_sample.sample_engine": "Sample Engine",
   "block.addon_sample.sample_turbine": "Sample Turbine",
-  "item.addon_sample.sample_blank": "%s Sample Blank"
+  "item.addon_sample.sample_blank": "%s Sample Blank",
+  "block.addon_sample.pipe_tiny_teflon": "Tiny Teflon Fluid Pipe",
+  "block.addon_sample.pipe_small_teflon": "Small Teflon Fluid Pipe",
+  "block.addon_sample.pipe_medium_teflon": "Medium Teflon Fluid Pipe",
+  "block.addon_sample.pipe_large_teflon": "Large Teflon Fluid Pipe",
+  "block.addon_sample.pipe_huge_teflon": "Huge Teflon Fluid Pipe",
+  "block.addon_sample.pipe_quadruple_teflon": "Quadruple Teflon Fluid Pipe",
+  "block.addon_sample.pipe_nonuple_teflon": "Nonuple Teflon Fluid Pipe",
+  "block.addon_sample.item_pipe_medium_pvc": "Medium PVC Item Pipe",
+  "block.addon_sample.item_pipe_large_pvc": "Large PVC Item Pipe",
+  "block.addon_sample.item_pipe_huge_pvc": "Huge PVC Item Pipe",
+  "block.addon_sample.item_pipe_restrictive_medium_pvc": "Restrictive Medium PVC Item Pipe",
+  "block.addon_sample.item_pipe_restrictive_large_pvc": "Restrictive Large PVC Item Pipe",
+  "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe"
 }

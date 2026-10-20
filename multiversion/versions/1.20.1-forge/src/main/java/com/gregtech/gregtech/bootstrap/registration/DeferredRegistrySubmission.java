@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.bootstrap.registration;
 
 import com.gregtech.gregtech.bootstrap.InitializationStep;
+import com.gregtech.gregtech.registry.AddonPipeRegistration;
 import com.gregtech.gregtech.registry.GTBlocks;
 import com.gregtech.gregtech.registry.GTItems;
 import com.gregtech.gregtech.registry.GTMultiblocks;
@@ -24,6 +25,7 @@ public record DeferredRegistrySubmission(IEventBus bus) implements Initializatio
         GTBlocks.BLOCK_ITEMS.register(bus);
         GTMultiblocks.registerAddonParts();
         GTMultiblocks.registerAddonBlocks(bus);
+        AddonPipeRegistration.submit(bus);
         // GTIconSetBlocks uses GTBlocks.BLOCKS / GTBlocks.BLOCK_ITEMS directly
         GTSounds.REGISTRY.register(bus);
         GTMenuTypes.MENU_TYPES.register(bus);

@@ -62,6 +62,15 @@ public final class PipeWireClientModels {
             replaced += replace(models, block,
                     new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
         }
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.fluidBlocks()) {
+            PipeSpec spec = block.spec();
+            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            double half = Math.max(1.0, spec.diameter() * 8.0);
+            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
+            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe"
+                    + spec.size().name().toLowerCase(Locale.ROOT));
+            replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, null));
+        }
 
         for (var entry : GTItemPipes.all()) {
             if (!entry.isPresent()) continue;
@@ -75,6 +84,16 @@ public final class PipeWireClientModels {
             ResourceLocation overlay = spec.restrictive() ? RESTRICTOR_TEX : null;
             replaced += replace(models, block,
                     new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
+        }
+        for (var block : com.gregtech.gregtech.registry.AddonPipeRegistration.itemBlocks()) {
+            ItemPipeSpec spec = block.spec();
+            String set = spec.material().getTextureSet().name().toLowerCase(Locale.ROOT);
+            double half = Math.max(1.0, spec.diameter() * 8.0);
+            String sizeName = spec.size().name().toLowerCase(Locale.ROOT).replace("restrictive_", "");
+            ResourceLocation side = GregTech.id("block/material_icons/" + set + "/pipeside");
+            ResourceLocation end = GregTech.id("block/material_icons/" + set + "/pipe" + sizeName);
+            ResourceLocation overlay = spec.restrictive() ? RESTRICTOR_TEX : null;
+            replaced += replace(models, block, new PipeWireBakedModel(half, side, 0, end, 0, 0, overlay));
         }
 
         for (var entry : GTWires.all()) {
