@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 //?}
 
+import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 
 import java.util.Arrays;
@@ -52,6 +53,10 @@ public final class AddonRecipes {
         Line find(List<ItemStack> items, List<FluidStack> fluids, boolean needsOutputs, int inputSlots, int outputSlots);
     }
 
+    /**
+     * One recipe row. {@code keptInputs} lists item-input indexes the machine checks for and does not consume.
+     * Null marks nothing. A count of 0 is rejected; leave the count at 1 and name the index here.
+     */
     public record Line(
             ItemStack[] itemInputs,
             ItemStack[] itemOutputs,
@@ -60,21 +65,60 @@ public final class AddonRecipes {
             long duration,
             long euPerTick,
             long special,
-            int[] outputChances
+            int[] outputChances,
+            int[] keptInputs
     ) {
-        /** Every item output is certain. */
+        private static final ThreadLocal<Boolean> READING = ThreadLocal.withInitial(() -> Boolean.FALSE);
+
+        /**
+         * A stored row, including an empty slot a built-in recipe already kept.
+         * Adding that row again still rejects an item input whose count is not positive.
+         */
+        public static Line read(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs,
+                                FluidStack[] fluidOutputs, long duration, long euPerTick, long special,
+                                int[] outputChances, int[] keptInputs) {
+            READING.set(Boolean.TRUE);
+            try {
+                return new Line(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special,
+                        outputChances, keptInputs);
+            } finally {
+                READING.remove();
+            }
+        }
+
+        /** Every item output is certain. No item input is marked kept. */
         public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
                     long duration, long euPerTick, long special) {
-            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null);
+            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, null, null);
+        }
+
+        /** No item input is marked kept. */
+        public Line(ItemStack[] itemInputs, ItemStack[] itemOutputs, FluidStack[] fluidInputs, FluidStack[] fluidOutputs,
+                    long duration, long euPerTick, long special, int[] outputChances) {
+            this(itemInputs, itemOutputs, fluidInputs, fluidOutputs, duration, euPerTick, special, outputChances, null);
         }
 
         public Line {
-            itemInputs = copyItems(itemInputs);
+            itemInputs = copyItemInputs(itemInputs);
             itemOutputs = copyItems(itemOutputs);
             fluidInputs = copyFluids(fluidInputs);
             fluidOutputs = copyFluids(fluidOutputs);
             duration = Math.max(1, duration);
             outputChances = RecipeOutputChances.normalize(outputChances, itemOutputs.length);
+            keptInputs = RecipeKeptInputs.normalize(keptInputs, itemInputs.length);
+        }
+
+        private static ItemStack[] copyItemInputs(ItemStack[] stacks) {
+            if (stacks == null) return new ItemStack[0];
+            if (READING.get()) return copyItems(stacks);
+            ItemStack[] copy = new ItemStack[stacks.length];
+            for (int i = 0; i < stacks.length; i++) {
+                ItemStack stack = stacks[i];
+                int count = stack == null || stack.isEmpty() ? 0 : stack.getCount();
+                RecipeKeptInputs.requirePositiveCount(count, i);
+                copy[i] = stack.copy();
+            }
+            return copy;
         }
 
         private static ItemStack[] copyItems(ItemStack[] stacks) {

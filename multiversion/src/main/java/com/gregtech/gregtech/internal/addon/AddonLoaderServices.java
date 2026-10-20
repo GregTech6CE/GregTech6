@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.internal.addon;
 
+import com.gregtech.gregtech.api.addon.RecipeKeptInputs;
 import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
 import com.gregtech.gregtech.api.addon.platform.AddonLoader;
@@ -114,10 +115,16 @@ public final class AddonLoaderServices {
     }
 
     private static Recipe recipe(AddonRecipes.Line line) {
+        ItemStack[] inputs = line.itemInputs();
+        for (int i = 0; i < inputs.length; i++) {
+            ItemStack stack = inputs[i];
+            RecipeKeptInputs.requirePositiveCount(stack == null || stack.isEmpty() ? 0 : stack.getCount(), i);
+        }
         long[] chances = new long[line.outputChances().length];
         for (int i = 0; i < chances.length; i++) chances[i] = line.outputChances()[i];
-        return new Recipe(line.itemInputs(), line.itemOutputs(), null, chances,
-                line.fluidInputs(), line.fluidOutputs(), line.duration(), line.euPerTick(), line.special());
+        return new Recipe(inputs, line.itemOutputs(), null, chances,
+                line.fluidInputs(), line.fluidOutputs(), line.duration(), line.euPerTick(), line.special())
+                .withCatalystInputs(line.keptInputs());
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
@@ -126,7 +133,7 @@ public final class AddonLoaderServices {
         for (int i = 0; i < outputs; i++)
             chances[i] = recipe.mChances != null && i < recipe.mChances.length
                     ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
-        return new AddonRecipes.Line(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
-                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances);
+        return AddonRecipes.Line.read(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
+                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances, recipe.explicitCatalystInputs());
     }
 }
