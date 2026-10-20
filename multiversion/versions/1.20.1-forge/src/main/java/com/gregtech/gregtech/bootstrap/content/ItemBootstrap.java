@@ -31,7 +31,7 @@ public record ItemBootstrap() implements InitializationStep {
                 LOGGER.warn("Duplicate item id '{}' for material {} (id={}); using '{}'",
                         definition.baseItemId(), material.getName(), material.getId(), definition.itemId());
             }
-            RegistryObject<Item> registered = GTItems.ITEMS.register(definition.itemId(), () ->
+            RegistryObject<Item> registered = GTItems.items(definition.namespace()).register(definition.itemId(), () ->
                     prefix == MaterialPrefix.coin
                             ? new CoinItem(new Item.Properties().stacksTo(64), material)
                             : com.gregtech.gregtech.content.recipe.MaterialArrowRules.isArrow(prefix, material)

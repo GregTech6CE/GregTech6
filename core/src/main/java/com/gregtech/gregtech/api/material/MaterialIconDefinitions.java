@@ -33,6 +33,18 @@ public final class MaterialIconDefinitions {
         return generatedModelJson(resolveTextureSet(material), prefix);
     }
 
+    /** One generated item model. The texture lives in the addon namespace and is tinted by material colour. */
+    public static String addonItemModel(MaterialPrefix prefix) {
+        return """
+                {
+                  "parent": "minecraft:item/generated",
+                  "textures": {
+                    "layer0": "%s:%s"
+                  }
+                }
+                """.formatted(prefix.textureNamespace(), prefix.addonTexturePath());
+    }
+
     public static String sharedModelJson(MaterialTextureSet set, MaterialPrefix prefix) {
         if (prefix == MaterialPrefix.coin) return "{\"parent\":\"gt6ce:item/coin_minted\"}";
         return generatedModelJson(set, prefix);

@@ -139,10 +139,10 @@ private GTCreativeTabs() {}
             MaterialPrefix bound = prefix;
 //? if >=1.21.1 {
             /*DeferredHolder<CreativeModeTab,CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup." + "gt6ce" + "." + bound.getRegistryName()))
+                    .title(tabTitle(bound))
 *///?} else {
             RegistryObject<CreativeModeTab> tab = TABS.register(prefix.getRegistryName(), () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup." + GregTech.NAMESPACE + "." + bound.getRegistryName()))
+                    .title(tabTitle(bound))
 //?}
                     .withSearchBar()
                     .icon(() -> iconFor(bound))
@@ -503,6 +503,13 @@ private GTCreativeTabs() {}
         }
         ItemStack icon = GTCreativeTabIcons.stackFor(prefix);
         return icon.isEmpty() ? new ItemStack(Items.IRON_BLOCK) : icon;
+    }
+
+    private static Component tabTitle(MaterialPrefix prefix) {
+        String key = "itemGroup.gt6ce." + prefix.getRegistryName();
+        return prefix.isAddon()
+                ? Component.translatableWithFallback(key, prefix.getDisplayName())
+                : Component.translatable(key);
     }
 
     private static ItemStack iconFor(MaterialPrefix prefix) {

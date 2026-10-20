@@ -263,6 +263,7 @@ public final class GTMaterialRegistry {
                 resolved.add(canonical);
             }
             coreMaterials = Set.copyOf(resolved);
+            AddonMaterials.publishPrefixes();
             AddonMaterials.publishForms();
             phase = RegistrationPhase.READY;
         } catch (RuntimeException | Error failure) {
