@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十六批光莲与石木地表堆
+
+正式记录至201条，包含历史修复项；新增八项具体差异。光莲只登记Forge清空碰撞与PLAINS泥土回退，Neo前置注册、水面物品及现代睡莲政策不误判；地表堆已有罕见物品／多木种，仍有概率、指示关联、数量和交互回调缺口。源码与六个原生工件52个entry、74份平台视图重核，理想概率和两个层岩坐标独立复算；未运行世界或修玩法，见[光莲](GLOWTUS_AUDIT.md)、[石木堆](SURFACE_PILES_AUDIT.md)及[回执](verification/surface-plant-audit-20261021.json)。整体goal active。
+
 ## 2026-10-21 / 第五十五批整类平台业务盘点与共享
 
 1041份维护Java全部展开两端，确认四项完整类体候选并排除两个仅声明边界。VanillaProcessingRecipes与AlloyRecipeLoader已共用业务，合计减少620维护行；两平台四份完整执行词法／字面量位置相同。Chemical及保留combs／technology顺序差异的解析器继续独立处理；不是配方玩法修复，正式ALIGN仍193条，见[报告](NATIVE_BODY_SHARING_AUDIT.md)与[回执](verification/native-body-sharing-audit-20261021.json)。未编译／测试／构建／推送，整体goal active。

@@ -1,0 +1,1762 @@
+{
+  "date": "2026-10-21",
+  "batch": 56,
+  "source_roots": {
+    "current": "C:\\Dev\\GregTech6",
+    "original": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java"
+  },
+  "provenance": {
+    "original_root": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java",
+    "authors": "GregTech-6 Team; Gregorius Techneticies where original source headers specify",
+    "license": "LGPL-3.0-or-later retained in headers",
+    "live_upstream_verified": false,
+    "user_WoodMaterials": "Read-only hash captured; no edit by this audit."
+  },
+  "sources": {
+    "original": {
+      "gregtech/blocks/plants/BlockGlowtus.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/plants/BlockGlowtus.java",
+        "observed_sha256": "94e4db28baae9208fb086002af0e7b2ac56192871ebd73a8cd93dc9d5a43656f"
+      },
+      "gregapi/block/misc/BlockBaseLilyPad.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/misc/BlockBaseLilyPad.java",
+        "observed_sha256": "790ba4358a00ba06d247aa8bdc682a423912967b895eed41a3d7d2e1ea31c9f7"
+      },
+      "gregapi/block/BlockBaseMeta.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBaseMeta.java",
+        "observed_sha256": "342c9ec05b253c0da024e5a18bdf21f9ac613b79fa4c0c39291ebfaaf79b0da4"
+      },
+      "gregapi/block/BlockBaseSealable.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBaseSealable.java",
+        "observed_sha256": "6c608095009b42351ccc207b82f4d24c91f15d59fb65b1d232609dfc01e914fc"
+      },
+      "gregapi/block/BlockBase.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBase.java",
+        "observed_sha256": "9a5d3e32274fe807c910ccb7722e43226d90b434d18fd20d4fa40bcd5145f237"
+      },
+      "gregapi/block/ItemBlockBase.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/ItemBlockBase.java",
+        "observed_sha256": "e870c4c7c84d57656a7406948ba28c12d9d62bc8bcdd522659fb3453f64184a3"
+      },
+      "gregtech/loaders/a/Loader_Blocks.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Blocks.java",
+        "observed_sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb"
+      },
+      "gregtech/blocks/fluids/BlockWaterlike.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/fluids/BlockWaterlike.java",
+        "observed_sha256": "d4376c101292f1d831047a1af75b6e87a1a0efda0dd4350be67b12cb80c71f4c"
+      },
+      "gregapi/util/WD.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+        "observed_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095"
+      },
+      "gregapi/data/CS.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+        "observed_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5"
+      },
+      "gregapi/data/RM.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+        "observed_sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6"
+      },
+      "gregapi/old/Textures.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/old/Textures.java",
+        "observed_sha256": "2c89ed8e110dffe1c33c86c1e5707fa1f2b70ea3490d5d2d67a5305c8eca9d0c"
+      },
+      "gregtech/worldgen/WorldgenGlowtus.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenGlowtus.java",
+        "observed_sha256": "368b09d90bc82278540cad15a235ba221e706277b3bb9ae9f9d59e7399288af1"
+      },
+      "gregtech/loaders/b/Loader_Worldgen.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+        "observed_sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a"
+      },
+      "gregtech/items/tools/early/GT_Tool_Sense.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/early/GT_Tool_Sense.java",
+        "observed_sha256": "ee99e7640a189daf0a7b453bdec00ef9f88cf4ac4c2f0ef92abc2d8969cadb73"
+      },
+      "gregtech/worldgen/WorldgenRocks.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenRocks.java",
+        "observed_sha256": "3c4101e25ce8c12d3990f1f4afda751314cbe3e5633a499ad23aadb2be5716fc"
+      },
+      "gregtech/worldgen/WorldgenSticks.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenSticks.java",
+        "observed_sha256": "1d389b2a4d860781bcf3253209dc4403971e1537790787518e5b05056365032d"
+      },
+      "gregtech/worldgen/NoiseGenerator.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/NoiseGenerator.java",
+        "observed_sha256": "33cd02431ca1f7ca8c0dab7c1831082c942ec713e5b299cbcb9810338d4b87ac"
+      },
+      "gregtech/tileentity/placeables/MultiTileEntityRock.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityRock.java",
+        "observed_sha256": "34db5a8ef1711292b14b99595aa515b51448923508b56473dda13615a4e94368"
+      },
+      "gregtech/tileentity/misc/MultiTileEntityRock.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityRock.java",
+        "observed_sha256": "c6e56f2fdb2d0cf9f5786472a91ccf4a4c64cb3604a91cfa372499b6fbe89a4a"
+      },
+      "gregtech/tileentity/placeables/MultiTileEntityRockPlaced.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityRockPlaced.java",
+        "observed_sha256": "6c2a19a5c4c5573ca4569ea51ad1b6362ca16cba330a5eea7a00d7e72f34cfca"
+      },
+      "gregtech/tileentity/placeables/MultiTileEntityStick.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityStick.java",
+        "observed_sha256": "5c1ab697b907de91617d7c6fce216f87223882f2cd87196e0d903be484ba2ab0"
+      },
+      "gregtech/tileentity/placeables/MultiTileEntityStickPlaced.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/placeables/MultiTileEntityStickPlaced.java",
+        "observed_sha256": "f72e4bcb2b80775b16cd4e68180931c302f036e4e1ea6cddb6d990422a5ecdf1"
+      },
+      "gregtech/loaders/b/Loader_MultiTileEntities.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+        "observed_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393"
+      },
+      "gregapi/worldgen/WorldgenOnSurface.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOnSurface.java",
+        "observed_sha256": "6b772c111e643d11086d9bec11366b05ffa85fb41bdacf18cfcf08b6b6b5f753"
+      },
+      "gregapi/worldgen/GT6WorldGenerator.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/GT6WorldGenerator.java",
+        "observed_sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b"
+      },
+      "gregapi/GT_API_Proxy.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+        "observed_sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819"
+      },
+      "gregapi/block/multitileentity/MultiTileEntityBlock.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+        "observed_sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7"
+      },
+      "gregapi/tileentity/notick/TileEntityBase03MultiTileEntities.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/notick/TileEntityBase03MultiTileEntities.java",
+        "observed_sha256": "679c001f2cf9c6122cff2074e8b45fc360f2463101eb88f3dd22c8d78954bd39"
+      },
+      "gregtech/GT_Proxy.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/GT_Proxy.java",
+        "observed_sha256": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c"
+      },
+      "gregapi/load/LoaderItemList.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/load/LoaderItemList.java",
+        "observed_sha256": "d3bdea0d388c5ec510269e8ac3a6c234ad4df9e35fa39e8996f65cdd5bd410b0"
+      },
+      "gregtech/worldgen/WorldgenStoneLayers.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenStoneLayers.java",
+        "observed_sha256": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c"
+      },
+      "gregapi/worldgen/WorldgenOresBedrock.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresBedrock.java",
+        "observed_sha256": "cfd42311493c2e18283bcaf286df8bd0e3ae0924a07be178b0dee273c0d03a1a"
+      },
+      "gregapi/worldgen/WorldgenOresLarge.java": {
+        "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/worldgen/WorldgenOresLarge.java",
+        "observed_sha256": "f8d81467df97431f15097acfb381a4db3dcbeb817335bb3181060da872da310c"
+      }
+    },
+    "current": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/IconSetLilyBlock.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/IconSetLilyBlock.java",
+        "observed_sha256": "dfa2ec5a5c4f9522daf340afb6bb02dda280704b122fa91be96a07038c9ee75f"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+        "observed_sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+        "observed_sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java",
+        "observed_sha256": "fbd4c9eed860b2907c0af1649f43b02fa270064d5df6e416372f0b130aefe873"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java",
+        "observed_sha256": "9365506a34416799515ae69ac370f7286f190fe4de233e12fbdd4e86e0dd43cf"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/GTWaterParity.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/GTWaterParity.java",
+        "observed_sha256": "bd37214e20becfb06db7f4ce767374f9959ed9b55efb5f3d9d5d95fd4b6a6919"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/WaterFamilyIdentity.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/WaterFamilyIdentity.java",
+        "observed_sha256": "a3684e10174c5182b2108e0ee8ef8f62b680ab1a0ed2e1048fbe5eaabb99ac3d"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterSurfaceMixin.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterSurfaceMixin.java",
+        "observed_sha256": "9c489ed33350a9ac7d2bdc730acda6b1af58b246c8d2a5f20eab484dc428ac0c"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterPlacementMixin.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterPlacementMixin.java",
+        "observed_sha256": "b1fdf08d0fe7adcacb4fc48667df84ef5a5380587f168b91bfeb53280dae4356"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java",
+        "observed_sha256": "160cbc22fae6eb1a864566492aa8575287b4421cd1efe831e1fb63e490b89b6a"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+        "observed_sha256": "049e96dbead037754ac0d397005597ac00dd41ede9901d2999bc173faf4a44fa"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GlowtusProcessingRecipes.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GlowtusProcessingRecipes.java",
+        "observed_sha256": "a1bb7cf9245003a0f07c2c2986609a9f10ea8c193bca6c6cd806e30acf24bec6"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+        "observed_sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java",
+        "observed_sha256": "b3f94c706a5666c20d57e33481a52a74fa3d08c34ce2dff16bb0f96fa70867cd"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java",
+        "observed_sha256": "178854cbc35d7b94735d39114fbb129b0ecd297d0903a4ef96884eb2f844e09e"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ToolPlantHarvest.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ToolPlantHarvest.java",
+        "observed_sha256": "617d4e19a8e2bde228dee4e6630fad5dca09e3f5c0581a87bfdd4556c5f7ae12"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+        "observed_sha256": "5389ba014c90d6d6534054e7f30423002397254a4545e4a9998b0f89b75b7efb"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMaterialRegistration.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMaterialRegistration.java",
+        "observed_sha256": "578be4a14641907af0f23de2e99a595c4309be8c18ae038dc735baed36f6d3ab"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java",
+        "observed_sha256": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTPlants.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTPlants.java",
+        "observed_sha256": "4a73e14f45b27837d0858cb77224ecfbe632a416007cf2d815e7601b87cae2d0"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java",
+        "observed_sha256": "e6bb4b8774bd7e103fe1c0f5275bd41dcd85e9f3946023e907618324bbdd4d2d"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+        "observed_sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020"
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/plant/IconPlantCatalog.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/plant/IconPlantCatalog.java",
+        "observed_sha256": "28105fad501d5d5a0dc608c8a4dee6b48db651ec600feb87880300db0960b792"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceFloraRules.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceFloraRules.java",
+        "observed_sha256": "753d1574b051127d569a8e62d596c802db278f73ec116ebe972fbdd7324de540"
+      },
+      "core/src/main/java/com/gregtech/gregtech/data/BlockHarvestNames.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/BlockHarvestNames.java",
+        "observed_sha256": "ccf529455e480790123bfbbfe7cc595cd61b231568dce42096a910b5c2e25766"
+      },
+      "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+        "observed_sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+        "observed_sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+        "observed_sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/resources/data/minecraft/tags/fluids/water.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/minecraft/tags/fluids/water.json",
+        "observed_sha256": "e4842dca6303037cdda3f7d7eba05e2ff95b5609026c67dd8390dac437777542"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/resources/data/minecraft/tags/fluid/water.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/minecraft/tags/fluid/water.json",
+        "observed_sha256": "e4842dca6303037cdda3f7d7eba05e2ff95b5609026c67dd8390dac437777542"
+      },
+      "docs/integration/DECISIONS.md": {
+        "path": "C:/Dev/GregTech6/docs/integration/DECISIONS.md",
+        "observed_sha256": "aef1c06eb446bb86c2c9a8e2cb4e33be59f31946ca47235a3da6bfe3a76ad649"
+      },
+      "docs/integration/verification/visual-plants-20261003.md": {
+        "path": "C:/Dev/GregTech6/docs/integration/verification/visual-plants-20261003.md",
+        "observed_sha256": "46799e9b36fa1c45b195cb677867d402b0f868a85703cb4fe5252ab9dbb9de17"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_black.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_black.json",
+        "observed_sha256": "93725e6649207e0ab4ce7f61c3c514a0e0022adc3a34e63967f7a167d29e9486"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_black.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_black.json",
+        "observed_sha256": "a13c05def93ebe1a3cd50f2d65896abb53bd95379c548aae0dd887f7b70c2f62"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_black.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_black.json",
+        "observed_sha256": "7afbb5d10cf57f7053830f9030a139be044a4f7cbe8a76e92eb0f7a12a03dea5"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_red.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_red.json",
+        "observed_sha256": "cbe5fc170b29a7b06896b2ca5a87a86e9434a65de1e0577f51917e0c5d2c0520"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_red.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_red.json",
+        "observed_sha256": "d5646f2ed7fd24695d5789b7def1b6ced8951db93eb1b1af67e46944456cbe19"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_red.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_red.json",
+        "observed_sha256": "633e5ed404d58120058e703f6ebd988cc459e0d036eb719b19badeb36789f0f8"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_green.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_green.json",
+        "observed_sha256": "cdd35a2787845f25a6372ae47236cfdbdd0ce9160ae22733538b35304a07211d"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_green.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_green.json",
+        "observed_sha256": "b092cf4b49e30f2323bd41bfe793a9dcc863337c60b8f4ad9df40410a02009f0"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_green.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_green.json",
+        "observed_sha256": "dc82f0b00801d0cb6b6e23bbe6738330bcffe2b1bcf006f769cc611ad50d5fe9"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_brown.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_brown.json",
+        "observed_sha256": "c8efa5360a4733c7fcd2a61243264dcfddd04e0eed0d016b39b38c08e9d34662"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_brown.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_brown.json",
+        "observed_sha256": "5bcf19d733d4d26167e36e12ad7cbd8602677393447fd841273bd2dbd376dd1d"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_brown.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_brown.json",
+        "observed_sha256": "fcccbe36f190924b01f12a66c1de587442fa569d873d970397b59ff799b6f044"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_blue.json",
+        "observed_sha256": "ed83dfb9db15d34bd4ab90ead443a5f96e72773a0a70d3222ce8d02b74fba55e"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_blue.json",
+        "observed_sha256": "cde0a8aa64fbb41e81ed08bbe98c47c55901af9262a9dccfc117eca90f19cd4a"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_blue.json",
+        "observed_sha256": "0b5e7f04b77785378826ddd8e281ff18aac1f2e24e9fddb084d00fbbaead79e7"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_purple.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_purple.json",
+        "observed_sha256": "00e4012034c9c3c36f784018692dc12a387090e53d8bb5c351017d058548dae9"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_purple.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_purple.json",
+        "observed_sha256": "b4f9673dc7c63655df5658179e1123addb2ddda4f0e580da63413b01a6933468"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_purple.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_purple.json",
+        "observed_sha256": "fbad3ac6d4295a7a99c440734b08b6f629bb807077a1647d12fffe4532df4293"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_cyan.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_cyan.json",
+        "observed_sha256": "b824c7b7192eb98f001d4c23df2767eaf90374141bc0b831f975eb0bd621ba65"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_cyan.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_cyan.json",
+        "observed_sha256": "a32250205c1d426346cf4b9d9b10c71b9a0f1cd36a8a0ef06588814398f9d6fd"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_cyan.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_cyan.json",
+        "observed_sha256": "52bbfebf23c8c025e1e1de1ef22d16d945f741756a486ca0deae32e393a99cf1"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_light_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_light_gray.json",
+        "observed_sha256": "4034433e5954d09c41fdee691499724b7360463dff3382b109500daed136f7a1"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_light_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_light_gray.json",
+        "observed_sha256": "cead1a57f99219839a7964d34b7c7c695d31ad5b9d54e8732e52b65618faa25b"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_light_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_light_gray.json",
+        "observed_sha256": "22a3d238135bc3d0011fbc6fd198cd9edcef9616ed05aab7be1d83252c5d593a"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_gray.json",
+        "observed_sha256": "f0bb530b448b8f29cb0b46957013c4b54f6322d65ce89af77a425f7cb1ad33c1"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_gray.json",
+        "observed_sha256": "b3a1e40b9172084f53dfa6f08e580e4770af4d4ec3e6f7c28bb06420cadeadef"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_gray.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_gray.json",
+        "observed_sha256": "7e0872aa1c68d6714d19ce583007636ac4d0cbeb96578185ab5f3ca2d0a2b99b"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_pink.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_pink.json",
+        "observed_sha256": "cbefab884a199dd0a6c3c5d6ccee6e5bc6404fe274ac6ebe08b29e78bc329de6"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_pink.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_pink.json",
+        "observed_sha256": "841bbf6f29c1228e893c0b5ad9266620103b11cbbb945d13159e58e8e9014184"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_pink.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_pink.json",
+        "observed_sha256": "3e31043f8bd34ffb3423bc629a47133198c5a982ae1c1efada33880d05c2cf9e"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_lime.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_lime.json",
+        "observed_sha256": "5f6207effe7b596e245e0604b86cc0c110414722a33f09547ade2377efb753f1"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_lime.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_lime.json",
+        "observed_sha256": "9095e740a670e6d27da62445f91bd24185c9b42d89e9e61219a438ada868f9c9"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_lime.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_lime.json",
+        "observed_sha256": "7838b79d1c79a3fb7eb137e4c8d40016395267d153915e60bc6b76fb197eb2fe"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_yellow.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_yellow.json",
+        "observed_sha256": "165630e03986c19fa4dfaa077dd33f02447f6d7f8743aeb49e770608d6273c7c"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_yellow.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_yellow.json",
+        "observed_sha256": "55e9a3b81c6a0b3594e6ccd73510ed1dd4126d192964b455de9a5dc6b64e6c86"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_yellow.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_yellow.json",
+        "observed_sha256": "e57a29cd6b8faf0cf030f8a198936a87fe147e940dc8dfc0061c0ff0c8c002c6"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_light_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_light_blue.json",
+        "observed_sha256": "cc9fec292628e129f1c05fa26d7d21bac84976076cc9c21c575c931d28673f8b"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_light_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_light_blue.json",
+        "observed_sha256": "1c9bfa37385da82c9b6ba4df88889a9ba7dc783093f6ddb6d1607763a91f24fc"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_light_blue.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_light_blue.json",
+        "observed_sha256": "3caa9d6d3673777152857e9b65620d7d4295c03ce3208028d075eae5f899d948"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_magenta.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_magenta.json",
+        "observed_sha256": "c40831f72f95e3444be4e1d68d624f03c9929db05cdda7e7c3e7746eb6e788ea"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_magenta.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_magenta.json",
+        "observed_sha256": "432e1dfa6530e3fda9503256a3b32e8f975c7f368795da99d389b64b184dd40a"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_magenta.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_magenta.json",
+        "observed_sha256": "abc41b7a32e4c1242c45b94c721967a3211b8fac83dbe0c951e0d013e6670f38"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_orange.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_orange.json",
+        "observed_sha256": "683bebb36abece288f1757579c4c2d0c3f65067e0f4bd03b4c1b9f68956a55dd"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_orange.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_orange.json",
+        "observed_sha256": "2337af2656d39b5fa7257dbb221df8f82395f568273d090b8a84234c52b08fee"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_orange.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_orange.json",
+        "observed_sha256": "0d898f7b541d40a208e21cfc0f423f4d68e3db8df50fde2b3d4ee882fee6d34d"
+      },
+      "core/src/main/resources/assets/gt6ce/blockstates/glowtus_white.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/glowtus_white.json",
+        "observed_sha256": "0704667793a5e98aac62fa65ce637bc8a9e81aa5d4efdac1b9a040c92ee9e4fb"
+      },
+      "core/src/main/resources/assets/gt6ce/models/item/glowtus_white.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/glowtus_white.json",
+        "observed_sha256": "86f3190bc04cd22002c80ed85b615e946ffd7d57988dedc91be3e645f6a760a0"
+      },
+      "core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_white.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/glowtus_white.json",
+        "observed_sha256": "159b40aba9799fa154dae9410b9b6899c78caa537a155e862b2bd90025ed3947"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java",
+        "observed_sha256": "208e1d097bd5493114bf57402b1d9048129c8bb81e7c02a45eafcbf6d7590299"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRockPlacement.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRockPlacement.java",
+        "observed_sha256": "f2d14fe0561454ce73d597d31e088535dd507bd05f467425e848e14a62e856a4"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/RockBlock.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/RockBlock.java",
+        "observed_sha256": "bfe4cfc8b3929064e6f3bd99413f146d8fa51a605639b0320c89ba6855f69624"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/TwigBlock.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/TwigBlock.java",
+        "observed_sha256": "43de4595ca1286c9af5d72a713ee9d3d6a61fec173c3dcd1a8664b1c3355da5a"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java",
+        "observed_sha256": "b65690a099329e7347ccd1141bba4e6d7cb580395997093a96cb91701ffe033e"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/RockItemPlacement.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/RockItemPlacement.java",
+        "observed_sha256": "d38d9ca2bd4c761eb2e5b494e95f340e4e4cc91c40716d346de5c4203aca1b17"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+        "observed_sha256": "2c7b01554d0900783cf90ae5610c1bca0e8a9d24385ba99f1f5a420491b9d2b1"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+        "observed_sha256": "e86d104123fe591ab2dc9e7cdb33c838cdddf289062fe18325d1f3216eac24df"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java",
+        "observed_sha256": "b0a15bfe704689d6fbeec9b7b13d02e0df828af5ba1af4eba53eda335cd9ea19"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+        "observed_sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+        "observed_sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+        "observed_sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+        "observed_sha256": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java",
+        "observed_sha256": "1ef1a45a45cde7ca9b7044ec979696ea4343819057b6be9c1cf746e3cc408818"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java",
+        "observed_sha256": "5f68ac559acc98b30ebbced582e8b44d0d16505b91e3bcaa582d66819fcdab4c"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenScale.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenScale.java",
+        "observed_sha256": "4a60e0227076a6cadb7e3f71776e7006300e1333fe5a6c254065c3271671d433"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java",
+        "observed_sha256": "b14d37b6ad2634da294e0e28e464599b81e0f6e358d9eaa634fc261780c156b4"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java",
+        "observed_sha256": "25a586df9334cb6cad4e8eb8e954901608a715eb132b1b5b59cdb3ecd1b5efba"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+        "observed_sha256": "7729334502f0a6bd420f9bf88f21ee265238a90764fcd1288ae3adea2a59e738"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/RockTwigJadeProvider.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/RockTwigJadeProvider.java",
+        "observed_sha256": "7f8ff7d1338c3eb8655b2284698f5680a1607e73369f83d949be00b82b278bbc"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java": {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java",
+        "observed_sha256": "bc7fb087141eea3b0679def9eb9c937218d2fa3382dd54305fd023fe02c9a0a8"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceTwigRules.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceTwigRules.java",
+        "observed_sha256": "8b4045d38308943939757b0e3872f020814406b6c5709b2701a6f5c07e749129"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/TerrainWorldgenRules.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/TerrainWorldgenRules.java",
+        "observed_sha256": "1e938a712c749f393f62ff95db628faec0405d60eff1884512f1c1a0ed63ed45"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/GTCellNoise.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTCellNoise.java",
+        "observed_sha256": "de5c31d8e04b26088d85fc0d91a6fc5c1e8e283e1c4b845c068d9762773fb809"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayersGen.java",
+        "observed_sha256": "dcb26167aac2a8142a536ccad6389cbb1b23f283c76d8e4c9de8704478de5e39"
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenDefaults.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenDefaults.java",
+        "observed_sha256": "dee1eb1e832c2b557ac3ed332dfc73420e2224d3122429de028d0c94c8b59816"
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/material/VanillaUnificationDefinitions.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/VanillaUnificationDefinitions.java",
+        "observed_sha256": "ce8628e93540b74e1d6d1d713d124ad5f7c77a2b9ca033c903c89e873fa7aad9"
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+        "observed_sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+        "observed_sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+      },
+      "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+        "observed_sha256": "5f5ef7ae19ccbe9a66af4f56319f6a447f38ca0b882fa6e22ea2112cf8f5f4ce"
+      },
+      "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+        "observed_sha256": "ef0fd403d4aadc2c7c6ff4b4426ae7d2a912a5e040e0d7c1310b224d2410b3d5"
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+        "observed_sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d"
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+        "observed_sha256": "b4fd742f5e59e419a2cdaed2bf51960954bbecc5c33380aae9abd91cc2aff818"
+      },
+      "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+        "observed_sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd"
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java": {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+        "observed_sha256": "c7d57dd245d55fb32acb17f4fd0bdda7ca04b68a0a65887cddbf4304e8616d4e"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+        "observed_sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+        "observed_sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+        "observed_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477"
+      },
+      "multiversion/build.gradle": {
+        "path": "C:/Dev/GregTech6/multiversion/build.gradle",
+        "observed_sha256": "59958be8c7402d9d93758b00329c486c900ed4510b5e5000e513a240d7c751b4"
+      },
+      "gradle/platform-forge.gradle": {
+        "path": "C:/Dev/GregTech6/gradle/platform-forge.gradle",
+        "observed_sha256": "3f795e07f147b82f4be5920bd8d1201a4f829a4c5489007bbeb89ba0cfe60fb8"
+      },
+      "gradle/platform-neoforge.gradle": {
+        "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+        "observed_sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_rocks.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_rocks.json",
+        "observed_sha256": "4eb666f09ffcc468036e93071552b780b027f55de97b5efc0ddbcf2b0d4d745d"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_rocks.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_rocks.json",
+        "observed_sha256": "a7d1c96f0374be66a9413165cb08af4cd6e2dbfc96b7f19ca211c18f3378bfc9"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_surface_flora.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_surface_flora.json",
+        "observed_sha256": "cdfc1af6e9a1bd9aea810cee4a7d5b713b56775cfd80aeaa55d0301b4327a469"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_surface_flora.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_surface_flora.json",
+        "observed_sha256": "6069339b37f83a4689c07a1a0c9fe167e07863deb94c0beaa6f23d7ae0379ea1"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_stone_layers.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_stone_layers.json",
+        "observed_sha256": "15fe20568ccb1ff94b320e1e0a8c0589774747bbe936984cb142829a2779ff1e"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_stone_layers.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_stone_layers.json",
+        "observed_sha256": "a92fbcc501399b5cd33d2171898607aa101e6e051274e6be2f2f2a914ed733dd"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_bedrock_ores.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_bedrock_ores.json",
+        "observed_sha256": "c12d57a76bf6629e67339106141ef0f2bac1357689d7b42d000bb11bce57de42"
+      },
+      "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_bedrock_ores.json": {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_bedrock_ores.json",
+        "observed_sha256": "79afe3698b575fbad67524032d315a19a1a039a9d005fc9039c2d4fbd73c5be3"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_rocks.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_rocks.json",
+        "observed_sha256": "1d4a87da30af9b73014b658bb3f81fb0cecc6387302f9270eb8ed6c314f003f4"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_rocks.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_rocks.json",
+        "observed_sha256": "020b2c098b44957074a63571d926dda802b5c99ee131940f6f843fb99c414a1e"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_surface_flora.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_surface_flora.json",
+        "observed_sha256": "a241029c9769778810e48b6d0f009dad13c23a3bcbb2affed6b02ca44b8269ba"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_surface_flora.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_surface_flora.json",
+        "observed_sha256": "afb1fd29f8ec47e8255e7b6d01cc9f4c3f42a8f9b5cb8971685a3bb8d4072e62"
+      },
+      "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_overworld_ores.json",
+        "observed_sha256": "e3f34c56c6c28d4d7e9a6cd5963170984819d1638d57ad6c7050c8cb1eef40ab"
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json": {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_overworld_ores.json",
+        "observed_sha256": "fd99b095d3df7c219f48e53df9a5ed3f4b411a9bb2ca25b8875d87b59bda85ba"
+      }
+    }
+  },
+  "narrative_refresh": [
+    {
+      "path": "docs/integration/DECISIONS.md",
+      "observed_sha256": "aef1c06eb446bb86c2c9a8e2cb4e33be59f31946ca47235a3da6bfe3a76ad649",
+      "final_sha256_at_archive": "3351689ee905c46c95003cb1c061dcc0a6bc77d8a089188606f7ecf84e52c901",
+      "reason": "Later narrative batch55 only; product source unchanged."
+    }
+  ],
+  "draft_snapshots": {
+    "glowtus": {
+      "baseline": "f42d88cb2bf2d4444c624e722e8bb722d42d35d8",
+      "receipt_sha256": "c61077142a7434d22cb0d84d9219fa4fbea3d19ca6b85c5dce1ae6c9e63e6186",
+      "readme_sha256": "5a924e7c54425e77e0a08604e09e901d1a546c794d0e1fad8f7b0d22a71b2b27"
+    },
+    "surface-piles": {
+      "baseline": "f42d88cb2bf2d4444c624e722e8bb722d42d35d8",
+      "receipt_sha256": "8815499a6691da5d70169e2b7c0d2ef34e6a4170c4d0fa51469be88d5722c8c6",
+      "readme_sha256": "94fd056b8aee99664074a6f949f98255cf86953635360890cc16e9af6f190999"
+    }
+  },
+  "native_dependencies": {
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar": {
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entries": {
+        "net/minecraft/world/level/block/WaterlilyBlock.class": "532121dc807dc088e1cbee2bfa98ef576eff1b9de49303bec3ab1777724c8b1b",
+        "net/minecraft/world/level/block/BushBlock.class": "0ae1a83d735d3120c5bdb31f3ff112ac87e42a95e5bfbb9fb0dd71546e5c5fe9",
+        "net/minecraft/world/level/block/Block.class": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+        "net/minecraft/world/level/block/state/BlockBehaviour.class": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+        "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+        "net/minecraft/world/level/BlockCollisions.class": "eee626a5285c542cdc826c88e363d44a748a02f9e142b32d5bf8aa7087263253",
+        "net/minecraft/world/item/PlaceOnWaterBlockItem.class": "289600c54d0324b3b4bdae48a2e2737b45f5228ed92d29733c7aa310a9eeb532",
+        "net/minecraft/world/item/BlockItem.class": "2b3e1defc87df357543458f44516b32b7519bb42746690fc24cee8ba6db4defc",
+        "net/minecraftforge/common/IPlantable.class": "ebb9d092b61e231af234f13edb25570459d8c58317d772886c6c6a5151b6438c",
+        "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+        "net/minecraft/world/item/Item.class": "b0e69c533ce7ea00deeeb5d369bcc71ca345fcaf380e3c136e178bd67d8b87a6",
+        "net/minecraft/world/item/Items.class": "fa22d3fb9d3492dac4b521d3bd6cb02ef0824f53acd17f2368adcc4583380ff0"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar": {
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": {
+        "net/minecraftforge/common/extensions/IForgeBlock.java": "a65330ebe8ac2935ed0bdce7eaa0ba7aa0e0ac5c57677d2774565f71bb949502",
+        "net/minecraftforge/common/IPlantable.java": "e90bb99ebf1165e772fa745eb36c07591d4f760762cf07ebf3edecc346510a2e",
+        "patches/net/minecraft/world/level/block/BushBlock.java.patch": "eb072a85c4228e003cbb2ad4e415d0db663a72ce672c53c985d8a3dea05eba9b",
+        "patches/net/minecraft/world/level/block/Block.java.patch": "0ef37770e4d2d95447f01faf9027c0b934377e32dbb3f11a705f8cbf3bf6827c",
+        "net/minecraftforge/common/world/ForgeBiomeModifiers.java": "1a6f913895303b467aef2cd8a641c7e18a45a7f2cee41c822e5ffabc002459a8"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar": {
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entries": {
+        "net/minecraft/world/level/block/WaterlilyBlock.java": "8367c813b992b0c13bb35457b6d5585939ed225c3422c8031807a7fdd2c008c0",
+        "net/minecraft/world/level/block/BushBlock.java": "fb9139d82a96366324d3210b333769bfb5b8076802f53a177a22fce4b507f432",
+        "net/minecraft/world/level/block/Block.java": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+        "net/minecraft/world/level/block/state/BlockBehaviour.java": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+        "net/minecraft/world/item/BlockItem.java": "f26f291ad73176d372d7916d05eb396358f41d08dbffcca02f1d425972b5c7ea",
+        "net/minecraft/world/item/Item.java": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+        "net/minecraft/world/item/PlaceOnWaterBlockItem.java": "99b743b1d2856af27e95eaa81ecec3161aefc796094f38bf9d2adbaabec02395",
+        "net/minecraft/world/level/BlockCollisions.java": "9193dedca03cc9325554d2c23619ac9039f8b9be8f4ce0cc6da998a9e60efce6",
+        "net/minecraft/world/level/CollisionGetter.java": "141df74cc1803f4b1cbf13a28e7d04434d6152fbfb60e522b941f0c3a0c4161d",
+        "net/minecraft/world/level/ClipContext.java": "ebbd6c812a07a9a1fef400c9d6b03b22590a7fdc27ed191debbe97ea87f150a4",
+        "net/minecraft/world/entity/Entity.java": "ca0586cb259e95dbd29524bf2db0ed7eaccfa5ca3a3c21492f5072c6ceef44bb",
+        "net/neoforged/neoforge/common/extensions/IBlockExtension.java": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+        "net/neoforged/neoforge/common/world/BiomeModifiers.java": "6accc01fea47e128b14e4e3dcce1853df974a26ac2522c95d69b9b4445dfe7a6",
+        "net/minecraft/world/level/levelgen/placement/PlacedFeature.java": "7c21b727ae882b94ef42f7a2ff756ea7494026321e2b6ae506e8246f2e4f2b59",
+        "net/minecraft/world/item/Items.java": "06842ee1e1ac94d3698d174020a98f592a926ed645397d6bfd38cb4b5f652ef2"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar": {
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "entries": {
+        "net/minecraft/world/level/block/WaterlilyBlock.class": "32d9c270c454d42ce2a4fb988420433c6fba16ca50ce4e11df10d8d3db116340",
+        "net/minecraft/world/level/block/BushBlock.class": "635db1ee954ca1a4a37ffef8a29cbb25a8e8aa1c7dc26b861637a817a04bfaea",
+        "net/minecraft/world/level/block/Block.class": "8e07f9765ce7d3f086c98f99a5ddc9eea15b36e466c2413328c6598f8ef64f3f",
+        "net/minecraft/world/level/block/state/BlockBehaviour.class": "9d4b517d48afdaa2183e345ec25ae97efe0f0346b9f4add1de1dbb2f46d863b0",
+        "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class": "8a34b944666351bd720d95142dbc77f963848b5579b534eb1cbda9644e123dbb",
+        "net/minecraft/world/level/BlockCollisions.class": "d436dd362ac28f0a691fc4acc70d6c5b7a34d8f418ccd04c13813f899dfe9b90",
+        "net/minecraft/world/item/PlaceOnWaterBlockItem.class": "71cae310244b51e49414766de2a777283f714b3340fc5d30e456b5453b098162",
+        "net/minecraft/world/item/BlockItem.class": "ac9287c03ef5b83a30aa2ec6ec6dd320219071f30a33c9ef433fdfb328b040f0",
+        "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class": "4d2a5f975c4c10fbd8aaee50e51bc5562adf953d4e70d51045795d91da76f7a6",
+        "net/minecraft/world/item/Item.class": "d4234cf5acb218b2056a38845170ec8266e16dc39ae0ed5fe5328cac153af462",
+        "net/minecraft/world/item/Items.class": "b673529696d56d6e15e1096da557a41e6578b0d8b51ee429e4a8894ecaec9bba"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/com/mojang/minecraft/1.7.10/minecraft-1.7.10-client.jar": {
+      "sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entries": {
+        "aji.class": "d3af9ac23bc8ea67d02ad824d70e5c43fc2dc1b938e7bd5612ffb818abb43dd4",
+        "ajr.class": "88a1b7f01877f7c91f1c1082303ef0ea765a4b0f8985f38f82e83c891e38cebf",
+        "aoj.class": "e7254d68d21484816fc3d728c13cf80155fcd4f895d0248418943d6c62bba77a",
+        "ajn.class": "f0e86a9012d8bd90d9c78b6a68cfe094c79516b3586d5bdca52caa27352c8fa5",
+        "xi.class": "1685addf4a89dc50f7d5caba67584378e40377e302ce403ce6b8739cc6285324"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forge-1.7.10-10.13.4.1614-1.7.10-universal.jar": {
+      "sha256": "00d1ca02192c7efb87da95552ebf247021f1e1d642f86d0a03076314def11529",
+      "entries": {
+        "deobfuscation_data-1.7.10.lzma": "dbc4ace5029244e5bfa70422d637848c8b932f459e94ec503fdafc5e5f7d5aa2",
+        "net/minecraftforge/fluids/BlockFluidBase.class": "aa4d79ad67fa8bef0c5f4f238ae83bae3720e8cff7fef04ac5548d92de46d657",
+        "net/minecraftforge/fluids/BlockFluidClassic.class": "a23f43698a06f2ea00316606c5341c793f9f99bf878d8d0ce6560e486a51f049",
+        "binpatches.pack.lzma": "e0e1dddc20235d6b05faaacb7b7167f8631de9ab9187a80853093ba24b32c0ec"
+      }
+    }
+  },
+  "unique_native_entries_reverified": 52,
+  "platform_views": {
+    "multiversion/src/main/java/com/gregtech/gregtech/block/IconSetLilyBlock.java": {
+      "forge": "c411c08790b5a2c993cce810cc6f2a343b491dfab4669995934b7b2122334a17",
+      "neoforge": "d2e52fd20894b37273b972de2b9d776f753b58df035a398509cf0383a1624821"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java": {
+      "forge": "864fd9121329c40ab59c6e2b4093d2eb8ca8c9a4d9c753b874ef9cf3b25e8076",
+      "neoforge": "4e5b3ec29cbcac09befbb4a2d45b37f2754016f568f544a8868d822b2c4de4eb"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java": {
+      "forge": "c6518c4b280e8572a840c3a244a2e616a2b0cab78a50c17a65dc9a45694639c9",
+      "neoforge": "cfdf1a224d8701d6778b4e214609745dcb6670fd72a1bdb2c69902a7a07bb4d4"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java": {
+      "forge": "3caa093bf26a94bf442f337cc2cdefc752353d316829b8c8448c52db3bb776b0",
+      "neoforge": "21fb4b548974bb0ae008ccedbc15848ca42796cd50f13e005d0361fdc1a647bb"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTWorldWaterFluid.java": {
+      "forge": "d9e9590bbfbd88874c9d5e01fa498a3de981d6e764608262568844ac95f826d4",
+      "neoforge": "a064c3b1a687d08e345de60bca5d24a5847c9efa2c39bfee03941263aa968f1d"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/GTWaterParity.java": {
+      "forge": "8eb084d4b94a451e6d9e6b5541a78e2b4affcd3de555f72945165f3b2cf9ecd7",
+      "neoforge": "8eb084d4b94a451e6d9e6b5541a78e2b4affcd3de555f72945165f3b2cf9ecd7"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/WaterFamilyIdentity.java": {
+      "forge": "6c1daa99707a9bff28d1f74f06832a0baad73823596e59ecd06716ff5ec2a52c",
+      "neoforge": "6c1daa99707a9bff28d1f74f06832a0baad73823596e59ecd06716ff5ec2a52c"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterSurfaceMixin.java": {
+      "forge": "24ff9d82212693cbe4ce2da41264c88ed51f468f2a3dd171a498390ce46362f6",
+      "neoforge": "24ff9d82212693cbe4ce2da41264c88ed51f468f2a3dd171a498390ce46362f6"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterPlacementMixin.java": {
+      "forge": "6bb56c3761ef5c453325c98dd77c8134adad998cdb63fa2eed6a5c52d9a71fdb",
+      "neoforge": "19629b27086c3af34267b9c562e19a0343195df861ec7b4afed17bc3f96eae70"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java": {
+      "forge": "9a046bf13183ee4414a36c7c6916116699751df4e47c7d5c88917e2e00cb4c13",
+      "neoforge": "026a32bb9fa9d836745311af071a40986e99bb5d5e05b1770bf4fcc014e0f704"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java": {
+      "forge": "6bdc674625a31ce5e2104657b2bdce87768fd3357ea971545a851446be0a0305",
+      "neoforge": "848e7fb4094680b2400ea7f0aa5ed3f3ce5bbcc9d3a75f6aeb970cfde286decf"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GlowtusProcessingRecipes.java": {
+      "forge": "37b974a2f17585c2b930cc2d4131d70a2dc8a068b9d11a1015f63bb9933b9add",
+      "neoforge": "1a61f8fd2c79a9b2591427efed899c854e3caccc804cb6ea31be9c0faf4918ff"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java": {
+      "forge": "e05cfe5f52429dc3b989c420f3ca6b378e2466fcc9113265aaecb7b4c4a57516",
+      "neoforge": "8fbc7b7fa64402127fe78e8dbdcfb368666abd2d20499a191aece5f881038040"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java": {
+      "forge": "ba321a1628e695cf505abca6b0ae7df30608652f25ea31658f52950820c58253",
+      "neoforge": "870773a3df01f6c24f205d4e85d201fac8149bfb75a8c43134a24e76ad4d58f5"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java": {
+      "forge": "421c062df1496e71ed5f0a17aab9ea8bf04a6e7d75de7facbba13c78dd16b01b",
+      "neoforge": "421c062df1496e71ed5f0a17aab9ea8bf04a6e7d75de7facbba13c78dd16b01b"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ToolPlantHarvest.java": {
+      "forge": "123981e80e58e15245bfc7e77ba6aaf61262e2c9f077cbd58f3a3b629e3d69fd",
+      "neoforge": "65317b4b920451434e2efb496acefff11f692a0069379d3bc98cef04de37f52d"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRocksFeature.java": {
+      "forge": "2773a3e27806cd14b40f54c481b271440a6fef530c7e09c2e72b7993cb871049",
+      "neoforge": "670eed3ab7c47a6ecefc8535205161745ea6544ba728a817e9297ecb0597b908"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTRockPlacement.java": {
+      "forge": "17950288a478956f48315078f05850b7042562fcc5998ec1c9d639c16514795a",
+      "neoforge": "17950288a478956f48315078f05850b7042562fcc5998ec1c9d639c16514795a"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/RockBlock.java": {
+      "forge": "71a9e89883aba1a56af32b31a2238e24a2e4826ee83e69027c2513621d24e47b",
+      "neoforge": "573cdfad8f67f697fe8f8781ab194321cfc9c93b5088b2e4901e50698ca85889"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/TwigBlock.java": {
+      "forge": "4f4c2b1ab6e59b70bca00a30f3a33b85bea3b41ddf073c93b4039f881151836d",
+      "neoforge": "c87d6f05a82d13f2ccda6856fabcc339c2a183dbb04c6fd54bf520119c7aacba"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/RockBlockEntity.java": {
+      "forge": "e0f6424ab39323b2b64e836cf905f6e4b3807b94bed57d7361d6f38281137f84",
+      "neoforge": "3de0fc87176b82f7767b3a54d91b86677ece602d465bc2d7003e364d4a28d6d2"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/RockItemPlacement.java": {
+      "forge": "59f168807911a7270b082844893201cb56af867d7592df3e90cbcf98c56a786c",
+      "neoforge": "59f168807911a7270b082844893201cb56af867d7592df3e90cbcf98c56a786c"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java": {
+      "forge": "38867aad6780955726681a00d823b380c043b52c4f81700701bed51191ee0add",
+      "neoforge": "5ec3ab33dc152397eaada3987769e2e0c7d377514c3f63b568ac92f60631e1cc"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java": {
+      "forge": "5cf1513a5a1b6bd81ee381fcf147fbc4dd06dbcd40ffa3db62d8165ad24e08a6",
+      "neoforge": "173ce6806b99707419c04316e738fc9019cace8cccd375f60a98182f9186841c"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/PileBlockEntity.java": {
+      "forge": "5cf4574f4e7c180ea30cd6aff4edefcc6fcedbe765bb214a9f6b43e3151fbbf8",
+      "neoforge": "15bf5339462b1bc749bee00d9ced462c33f77382c88490cb5eaad43ef13a7af8"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java": {
+      "forge": "ff4b55eaa93cd0709698c8258ee8f536411a00e3ae844a491361450b2df8d54a",
+      "neoforge": "d9b58870f018559281f83125a0651892c7b2d155b545e8c6ef4911cf861c6c39"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": {
+      "forge": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "neoforge": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java": {
+      "forge": "38e292eadf7a41464366232d978fe073b09c79830f1f8c3340e15b0a6251df2e",
+      "neoforge": "3e22440ac645fef47e5675bf2a305f3f3779f6c1aee4714aaa557e9e86806c24"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java": {
+      "forge": "d161c1d7f3cd586ea9a307b388a0e108724a2eabdaa880379065dab4817195bd",
+      "neoforge": "a0ec31a109299891cb5a75aa811fea43d325f64f448c4acf5279648e92fa653e"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenBiomes.java": {
+      "forge": "65149cfffc22d9a6916e1a15c9e13efbba1e0bdb18cd6f3baa8a5742a93af174",
+      "neoforge": "65149cfffc22d9a6916e1a15c9e13efbba1e0bdb18cd6f3baa8a5742a93af174"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTStoneLayerFeature.java": {
+      "forge": "8a76c9fb1b5f6ce3efedbcaed00dde5323973c4ab0eacd090a3ff0371b74a679",
+      "neoforge": "16c36d49fa7a845f392d5f4a0d6a4161ce67b406855ffafec1dd6b8293da3424"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTWorldgenScale.java": {
+      "forge": "4e6640bdeb5f1f5be273863aab953ab3e7ae571f36d56beb356100185e36a4b3",
+      "neoforge": "4e6640bdeb5f1f5be273863aab953ab3e7ae571f36d56beb356100185e36a4b3"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOreVeinFeature.java": {
+      "forge": "e8dd0a28c7303cd35a0c8d142915f111ebf0695ff72b23b20b8e592342861017",
+      "neoforge": "e8dd0a28c7303cd35a0c8d142915f111ebf0695ff72b23b20b8e592342861017"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBedrockOreFeature.java": {
+      "forge": "d6b731c15fd79de83166e149c37c9fbc59a77ede910346c9e8175be0430c357c",
+      "neoforge": "24ba5578e3b9436cfd77e3e4945fe64aa04aeea1f6e0416bd33a8876a7bba1c1"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java": {
+      "forge": "19aea3ccfc8eeb6062b27062974a9795e08b1a7f30edf99421daa82bd0e65eb2",
+      "neoforge": "47a0aab407c104ce6c3f93d4791bb3aacef1ec1b5d50ab8978ac5b6187148d22"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/RockTwigJadeProvider.java": {
+      "forge": "d6391016328f7988da00f491ec6c5b4eef5eb21944e2457e256e6e9b0ce3f78b",
+      "neoforge": "d6391016328f7988da00f491ec6c5b4eef5eb21944e2457e256e6e9b0ce3f78b"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java": {
+      "forge": "6a453305cb5a12cba2ed70b55fcc71cd1e2e23f04dc7f0461b79ac4cce978932",
+      "neoforge": "6a453305cb5a12cba2ed70b55fcc71cd1e2e23f04dc7f0461b79ac4cce978932"
+    }
+  },
+  "supplied_pile_platform_views_reverified": 48,
+  "glow_native_observations": [
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.block.WaterlilyBlock",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.WaterlilyBlock"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "be1d941a4b68afd6377f6d435914512e1d06619f7784ae8895670f075b0bc325",
+      "stdout_bytes": 4879,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.block.BushBlock",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.BushBlock"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "ac5e48be1bca41959d0ea068d330b992165af8709c9aa098c5634b95ee2ae39d",
+      "stdout_bytes": 7223,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.block.Block",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.Block"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f",
+      "stdout_bytes": 96385,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.block.state.BlockBehaviour",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.state.BlockBehaviour"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332",
+      "stdout_bytes": 34593,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.block.state.BlockBehaviour$Properties",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.state.BlockBehaviour$Properties"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "stdout_bytes": 42600,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.level.BlockCollisions",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.BlockCollisions"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "9d05039ed3292d39fc1a9f8fec38e42112ff26ae8f5ac38e9725a23e23580225",
+      "stdout_bytes": 15383,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.item.PlaceOnWaterBlockItem",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.item.PlaceOnWaterBlockItem"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "da0204dbb90d90ea4dd14146be64ab35111967d90633f864d579247b4e2bcbc7",
+      "stdout_bytes": 3304,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraft.world.item.BlockItem",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.item.BlockItem"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "1560c6f16bac60a295c59f29b2f4b64ec6207fc62cae8816edf147e5fa464fec",
+      "stdout_bytes": 35805,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "forge_mapped",
+      "class_name": "net.minecraftforge.common.IPlantable",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "-c",
+        "-p",
+        "net.minecraftforge.common.IPlantable"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "ab1117400d8d429b24444684f667859dbfd632447d5c60ac0a64a3e201ce5e0b",
+      "stdout_bytes": 3799,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.block.WaterlilyBlock",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.WaterlilyBlock"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "19388462b3af5e021b2d3c9b01e4b79e738216484ae94e68522cd355170ad341",
+      "stdout_bytes": 5571,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.block.BushBlock",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.BushBlock"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "1ed93cb7d1a64eba96fe314ad5d78b490e8923be7cd6ce5abf3e28b8098d6520",
+      "stdout_bytes": 6237,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.block.Block",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.Block"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "99f29329cd97609ae8db8df2fa45566dbb72358c32d2546df6f6a4dff0e7c190",
+      "stdout_bytes": 80277,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.block.state.BlockBehaviour",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.state.BlockBehaviour"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "2e5bb77c7d43782a9c5ab09eead1898cb40d447684481f4b99445b5b221077d3",
+      "stdout_bytes": 47340,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.block.state.BlockBehaviour$Properties",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.block.state.BlockBehaviour$Properties"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "281c91bddbf1df8471637a73c415b2d7b75cb110adae0993b54665ce4f85aed2",
+      "stdout_bytes": 40901,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.level.BlockCollisions",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.level.BlockCollisions"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "bb01f66f7a917fd40fde0871a727821e55f688ae550043d358aea949cf16696f",
+      "stdout_bytes": 15240,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.item.PlaceOnWaterBlockItem",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.item.PlaceOnWaterBlockItem"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "0669fb96eca567ab955dff81f6d4751656a598b4e6de5d6a46d62b885d99a7c1",
+      "stdout_bytes": 3304,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "neo_binary",
+      "class_name": "net.minecraft.world.item.BlockItem",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+        "-c",
+        "-p",
+        "net.minecraft.world.item.BlockItem"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "bbb03970c480118c9b3ef27d0cae6a366daaecba103c1ac3d7baf843848b1ce1",
+      "stdout_bytes": 31624,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_client",
+      "class_name": "aji",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "-c",
+        "-p",
+        "aji"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e780569472495ffe7754efcf9a35617930c057266cf6998bb7fb32102ce61b6d",
+      "stdout_bytes": 226344,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_client",
+      "class_name": "ajr",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "-c",
+        "-p",
+        "ajr"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "a21e064f33555ed8efc08470223a5aca0374666e0e5539e817a0d2bd0d9e846d",
+      "stdout_bytes": 5075,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_client",
+      "class_name": "aoj",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "-c",
+        "-p",
+        "aoj"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "9af65584ac9c7bd8c8e3d5e0c5ebcc84b5ed2914fa894f0f25ed069ec45a16b6",
+      "stdout_bytes": 4287,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_client",
+      "class_name": "ajn",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "-c",
+        "-p",
+        "ajn"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "8f966e6a1ab189aab23ae325ca8e1b782227bb9a970b7154dc8cf519ef731296",
+      "stdout_bytes": 67447,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_client",
+      "class_name": "xi",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "-c",
+        "-p",
+        "xi"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "00ad7ca90a4af76400805a8e6cf1908e78ddca5cdc9aab5450e477d52880c31f",
+      "stdout_bytes": 53105,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_forge",
+      "class_name": "net.minecraftforge.fluids.BlockFluidBase",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\net\\minecraftforge\\forge\\1.7.10-10.13.4.1614-1.7.10\\forge-1.7.10-10.13.4.1614-1.7.10-universal.jar",
+        "-c",
+        "-p",
+        "net.minecraftforge.fluids.BlockFluidBase"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "471e093b4f383eaa42aa5803559848e8e82228f39ddb0a3b10713e74144898cd",
+      "stdout_bytes": 36222,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    },
+    {
+      "artifact": "original_forge",
+      "class_name": "net.minecraftforge.fluids.BlockFluidClassic",
+      "command": [
+        "C:\\Program Files\\Zulu\\zulu-25\\bin\\javap.exe",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\net\\minecraftforge\\forge\\1.7.10-10.13.4.1614-1.7.10\\forge-1.7.10-10.13.4.1614-1.7.10-universal.jar",
+        "-c",
+        "-p",
+        "net.minecraftforge.fluids.BlockFluidClassic"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "b0f84a8a6a9a24b4f572d0f8155aae2790e5fa1d5bb9fdf0fb9f807b541c8bc4",
+      "stdout_bytes": 27580,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_storage": "In-memory only; no extracted class or javap file written by this audit."
+    }
+  ],
+  "glow_supporting_mapping": [
+    {
+      "path": "C:/Dev/GregTech6/work/inventory-explosion-audit-20261021/original-native/deobfuscation-data.srg",
+      "relative": "work/inventory-explosion-audit-20261021/original-native/deobfuscation-data.srg",
+      "sha256": "0069d604ec188e89229fd0d2f929f06a93fa858b6bad3657b17e8a8f3bb97132",
+      "size": 2051436,
+      "author": "MinecraftForge SRG mappings",
+      "license_evidence": "Derived from existing local original Forge deobfuscation_data-1.7.10.lzma; not a current project gameplay source."
+    }
+  ],
+  "glow_inspection_limits": [
+    "Only actual owner factories are used: Forge GTIconSetBlocks; Neo GTPlants before GTRemainingIconBlocks seen-ID fallback.",
+    "Original native 1.7.10 Forge binary patches were not replayed. The optional remote official EntityBoat/BlockLilyPad patch requests failed (web cache miss and proxy connection refusal). No nonexistent remote content hash is claimed.",
+    "An in-memory old pack200 unpack attempt returned error and wrote no successful intermediate artifact. This is source-evidence availability, not a production build/test failure.",
+    "No Gradle, compiler, tests, gameplay, world restart, build, commit, production edits or central document edits.",
+    "Native jars are previously existing cached build dependencies; hashing/javap is not evidence that this baseline was compiled or tested.",
+    "All 16 blockstate/item/block-model JSON files are included as source data. No pixel, GPU, arbitrary third-party fluid or full recipe test is claimed."
+  ],
+  "pile_bytecode_observations": [
+    {
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.state.BlockBehaviour",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "4f7a519524136790967ca9923c140ed4e36fef2481fa1c309e26ba277bbdece7",
+      "persisted": false,
+      "selected_anchors": [
+        {
+          "view_line": 146,
+          "text": "public net.minecraft.world.level.block.state.BlockState updateShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos);"
+        },
+        {
+          "view_line": 156,
+          "text": "public void neighborChanged(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.core.BlockPos, boolean);"
+        },
+        {
+          "view_line": 280,
+          "text": "public java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.storage.loot.LootParams$Builder);"
+        }
+      ]
+    },
+    {
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "90f3dd80da0c006166b80375279407de56d2db47b2b2103a0d06e853720834dd",
+      "persisted": false,
+      "selected_anchors": [
+        {
+          "view_line": 755,
+          "text": "public void neighborChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.core.BlockPos, boolean);"
+        },
+        {
+          "view_line": 916,
+          "text": "public java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.storage.loot.LootParams$Builder);"
+        },
+        {
+          "view_line": 975,
+          "text": "public net.minecraft.world.level.block.state.BlockState updateShape(net.minecraft.core.Direction, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos);"
+        }
+      ]
+    },
+    {
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.Block",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "865dda475e8745bb35abaf8e99b5bc7c112e86af340073e7defa73f179443199",
+      "persisted": false,
+      "selected_anchors": [
+        {
+          "view_line": 541,
+          "text": "public static java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.block.state.BlockState, net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.BlockEntity);"
+        },
+        {
+          "view_line": 563,
+          "text": "public static java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.block.state.BlockState, net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.BlockEntity, net.minecraft.world.entity.Entity, net.minecraft.world.item.ItemStack);"
+        },
+        {
+          "view_line": 940,
+          "text": "public void playerDestroy(net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.BlockEntity, net.minecraft.world.item.ItemStack);"
+        }
+      ]
+    },
+    {
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.item.Item",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "2f25607ee9c3417563683714794fa49546e275b044f58c8681d0254564d094f9",
+      "persisted": false,
+      "selected_anchors": [
+        {
+          "view_line": 154,
+          "text": "public net.minecraft.world.InteractionResult useOn(net.minecraft.world.item.context.UseOnContext);"
+        }
+      ]
+    },
+    {
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.item.Items",
+      "options": [
+        "-p",
+        "-c"
+      ],
+      "stdout_sha256": "90db56dca49c0de1fb8bb137051058de973bfb14c53c30e9abdd498ecd5f7745",
+      "persisted": false,
+      "selected_anchors": [
+        {
+          "view_line": 5358,
+          "text": "7914: putstatic     #4461               // Field CARROT_ON_A_STICK:Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "view_line": 5371,
+          "text": "7946: putstatic     #4468               // Field WARPED_FUNGUS_ON_A_STICK:Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "view_line": 5661,
+          "text": "8652: ldc_w         #4614               // String flint_and_steel"
+        },
+        {
+          "view_line": 6205,
+          "text": "10050: ldc_w         #4877              // String stick"
+        },
+        {
+          "view_line": 6213,
+          "text": "10070: putstatic     #4879              // Field STICK:Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "view_line": 6562,
+          "text": "10987: ldc_w         #5045              // String flint"
+        },
+        {
+          "view_line": 6570,
+          "text": "11007: putstatic     #5047              // Field FLINT:Lnet/minecraft/world/item/Item;"
+        },
+        {
+          "view_line": 9761,
+          "text": "19309: putstatic     #7100              // Field DEBUG_STICK:Lnet/minecraft/world/item/Item;"
+        }
+      ]
+    }
+  ],
+  "pile_selected_method_anchors": {
+    "Neo BlockBehaviour.java": {
+      "default_updateShape_returns_input": "157-159",
+      "default_neighborChanged_debug_only": "165-167",
+      "state_shape_delegation": "774-775"
+    },
+    "Neo Block.java": {
+      "shape_AIR_destroy_unless_drop_suppression": "167-180",
+      "real_tool_loot_context": "273-281",
+      "playerDestroy_dropResources": "372-375"
+    },
+    "Neo Item.java": {
+      "default_useOn_PASS": "143-145"
+    },
+    "Neo Items.java": {
+      "STICK_FLINT_are_plain_Item": "1038,1141"
+    },
+    "Original MultiTileEntityBlock.java": {
+      "fortune_harvest_dispatch": "260-262",
+      "neighbor_dispatch": "302"
+    },
+    "Original LoaderItemList.java": {
+      "default_vanilla_stick_or_optional_TFC": "774"
+    }
+  },
+  "pile_production_reference_scan": {
+    "roots": [
+      "C:/Dev/GregTech6/multiversion/src/main/java",
+      "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java",
+      "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "java_files": 1242,
+    "pattern": "RockItemPlacement|GTBlocks\\.TWIGS|TWIGS\\.get\\(|GTSurfaceFlora\\.twigs\\(",
+    "matches": [
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+        "line": 115,
+        "text": "return RockItemPlacement.place(context);"
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/RockItemPlacement.java",
+        "line": 16,
+        "text": "public final class RockItemPlacement {"
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/RockItemPlacement.java",
+        "line": 17,
+        "text": "private RockItemPlacement() {}"
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFlora.java",
+        "line": 20,
+        "text": "public static Block twigs(){return GTBlocks.TWIGS.get();}"
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTSurfaceFloraFeature.java",
+        "line": 89,
+        "text": "return level.setBlock(pos, GTSurfaceFlora.twigs().defaultBlockState(), 2);"
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java",
+        "line": 65,
+        "text": "var rockResult = com.gregtech.gregtech.item.RockItemPlacement.place("
+      },
+      {
+        "relative": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+        "line": 202,
+        "text": "if(legacyId==32756) level.setBlock(pos,com.gregtech.gregtech.registry.GTBlocks.TWIGS.get().defaultBlockState(),2);"
+      }
+    ],
+    "limitation": "Direct references; the missing built-in manual path conclusion also follows actual useOn/global event/prefix gates and vanilla form data. External/addon event handlers not ruled out."
+  },
+  "pile_pools": {
+    "normal_litter_per_successful_placement": {
+      "plain_Stone_rockGt": "1/2",
+      "minecraft_flint": "11/24",
+      "MeteoricIron_rockGt": "1/32",
+      "MeteoricIron_oreRaw": "1/96"
+    },
+    "explicit_item_has_no_material_bonus": true,
+    "twig_selection_at_harvest_not_fixed_NBT": true,
+    "twig_ordinary_mixed": {
+      "WoodDead": "1/16",
+      "WoodMossy": "1/16",
+      "WoodRotten": "1/16",
+      "biome_wood_or_normal_stick": "13/16"
+    },
+    "special_twig_rows": "! rows bypass ordinary mixed roll. Optional dimensions conditional.",
+    "placed_original_stick": "Fixed IL.Stick1; vanilla by default, optional TFC binding per LoaderItemList774."
+  },
+  "pile_derivations": {
+    "kind": "Limited source arithmetic, not world generation or new production test fixture",
+    "twig_density": {
+      "assumptions": "All256 columns same qualifying biome and valid flat groundY64/airabove, no other changes/obstacles, random draws interpreted as uniform independent; duplicate occupied columns do not place twice. Not a fixed native RNG/world-seed replay or measured density.",
+      "s": "255/256",
+      "original_expected": "128*(1-s**(2*m))",
+      "current_expected": "256*(1-(1/2+1/2*s*(1/2+1/2*s)**(m-1))**2)",
+      "values": [
+        {
+          "multiplier": 1,
+          "old_fraction": "511/512",
+          "current_fraction": "1023/1024",
+          "old_expected_distinct_columns": 0.998046875,
+          "current_expected_distinct_columns": 0.9990234375
+        },
+        {
+          "multiplier": 2,
+          "old_fraction": "66716671/33554432",
+          "current_fraction": "401540607/268435456",
+          "old_expected_distinct_columns": 1.9883117377758026,
+          "current_expected_distinct_columns": 1.4958553276956081
+        },
+        {
+          "multiplier": 3,
+          "old_fraction": "6532979820031/2199023255552",
+          "current_fraction": "140120620993023/70368744177664",
+          "old_expected_distinct_columns": 2.9708552665538264,
+          "current_expected_distinct_columns": 1.9912337875357338
+        }
+      ]
+    },
+    "strata": {
+      "table_length": 131,
+      "table_float32_big_endian_sha256": "f8a923f008d4438b3ebd875ac51c612cdc53907ec4e84f28d59ce3c377372ebd",
+      "semantics": "Each Java float arithmetic step rounded through binary32; signed32-bit hash/cubic overflow. Math.round floor(v+0.5) for these positive finite samples. After loop y111 slide, scan[3] is noiseY112. All table rows kept by resolver.",
+      "witnesses": [
+        {
+          "seed": 0,
+          "x": 340,
+          "z": 128,
+          "noiseY": 64,
+          "scaled_float32": [
+            3.059999942779541,
+            4.800000190734863,
+            1.1519999504089355
+          ],
+          "winning_cell": [
+            3,
+            5,
+            1
+          ],
+          "offset_index": 67,
+          "squared_distance": 0.49835628271102905,
+          "raw_float32": 0.16711752116680145,
+          "index": 76,
+          "layer": {
+            "stoneType": "\"LIMESTONE\"",
+            "blockId": "null",
+            "material": "Limestone",
+            "noDeep": "false"
+          }
+        },
+        {
+          "seed": 0,
+          "x": 340,
+          "z": 128,
+          "noiseY": 112,
+          "scaled_float32": [
+            3.059999942779541,
+            8.40000057220459,
+            1.1519999504089355
+          ],
+          "winning_cell": [
+            3,
+            8,
+            1
+          ],
+          "offset_index": 78,
+          "squared_distance": 0.6445122361183167,
+          "raw_float32": 0.47316774725914,
+          "index": 96,
+          "layer": {
+            "stoneType": "\"GNEISS\"",
+            "blockId": "null",
+            "material": "Gneiss",
+            "noDeep": "false"
+          }
+        }
+      ],
+      "reachability": "Conditional valid exposed stone column atY64, airabove, no ore hit at exposed layer, successful indicator roll. No claim about actual defaultseed0 terrain or chosen RNG placement."
+    }
+  },
+  "root_finite_math_recheck": {
+    "twig_density": [
+      {
+        "m": 1,
+        "old_exact": "511/512",
+        "current_exact": "1023/1024"
+      },
+      {
+        "m": 2,
+        "old_exact": "66716671/33554432",
+        "current_exact": "401540607/268435456"
+      },
+      {
+        "m": 3,
+        "old_exact": "6532979820031/2199023255552",
+        "current_exact": "140120620993023/70368744177664"
+      }
+    ],
+    "strata_witnesses": [
+      {
+        "x": 340,
+        "y": 64,
+        "z": 128,
+        "index": 76,
+        "material": "Limestone",
+        "seed": 0
+      },
+      {
+        "x": 340,
+        "y": 112,
+        "z": 128,
+        "index": 96,
+        "material": "Gneiss",
+        "seed": 0
+      }
+    ]
+  },
+  "new_findings": [
+    "ALIGN-194",
+    "ALIGN-195",
+    "ALIGN-196",
+    "ALIGN-197",
+    "ALIGN-198",
+    "ALIGN-199",
+    "ALIGN-200",
+    "ALIGN-201"
+  ],
+  "limits": [
+    "No renewed absent flint/meteor/wood-variant allegation from historical reports.",
+    "No repeat of common bush surface/biome audit: normal rocks have their own scanner and chunk gate.",
+    "No world-density measurement, defaultseed terrain/selection claim, whole geology validation or full bedrock indicator distribution audit.",
+    "No blanket water-flow survival claim; selected support-removal witness has no fluid.",
+    "No default failure from missing optional dimension/providers; no full visual/snow/audio/magnifyingglass/save-runtime certification.",
+    "Two Forge Glowtus implementation differences preserve the existing modern-waterlily and general water-family policy.",
+    "Neo GTPlants owns registration before the remaining-icon fallback; fallback BlockItem/noCollision is not the active lily path.",
+    "Original optional Forge1.7.10 boat binary patches were not replayed; failed fetches/unpack are recorded, not invented provenance.",
+    "Cached native artifact/entry hashes and prior javap metadata do not prove this baseline was compiled or run.",
+    "All mathematical witnesses are finite source arithmetic, not Java execution, world-seed terrain or measured world density.",
+    "No production edits, generators, Gradle, compilation, new tests, game, build, push or gameplay fixes in batch56."
+  ]
+}
