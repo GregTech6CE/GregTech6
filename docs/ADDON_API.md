@@ -80,6 +80,27 @@ This uses the existing GT recipe system, not a parallel addon recipe registry. C
 
 The seven-argument `Line` leaves every item output certain. Pass an `int` per item output, in parts per 10_000, when an output is not certain. `10000` is certain. An empty array is the same as omitting it. The length must match the item outputs, and each value is 1 to 10000. Fluid outputs stay certain. The machine, JEI, EMI and the datapack overlay all read that chance from the recipe row. A datapack item output already uses the same `chance` field.
 
+`AddonItems.selectorTag(n)` is programmed circuit `n`: `integrated_circuit_0` through `integrated_circuit_24`, with a count of 1. A value outside 0..24 fails startup. The circuit is already a catalyst item, so the machine checks that it is present and does not consume it. Listing its index in `keptInputs` is allowed and does not change that.
+
+`keptInputs` is the last array on `Line`: indexes of item inputs the machine must see and must not consume. Leave each count at 1 or more. Null and an empty array mark nothing, and that row matches the same inputs it did before. An index outside the item inputs, or a repeated index, fails startup. A count of 0 still fails startup, and the message names `keptInputs`. EMI draws a marked input as a catalyst, the same way it draws a built-in catalyst input. The datapack overlay is unchanged: a count of 0 there is still rejected, and the overlay has no kept-input field.
+
+```java
+var circuit = new com.gregtech.gregtech.api.addon.platform.AddonRecipes.Line(
+        new net.minecraft.world.item.ItemStack[]{
+            new net.minecraft.world.item.ItemStack(MyItems.MY_ORE.get()),
+            com.gregtech.gregtech.api.addon.platform.AddonItems.selectorTag(3)},
+        new net.minecraft.world.item.ItemStack[]{
+            com.gregtech.gregtech.api.addon.platform.AddonItems.stack("dust", "Copper")},
+        null, null, 16, 16, 0);
+var kept = new com.gregtech.gregtech.api.addon.platform.AddonRecipes.Line(
+        new net.minecraft.world.item.ItemStack[]{
+            new net.minecraft.world.item.ItemStack(MyItems.MY_ORE.get()),
+            new net.minecraft.world.item.ItemStack(MyItems.MY_LENS.get())},
+        new net.minecraft.world.item.ItemStack[]{
+            com.gregtech.gregtech.api.addon.platform.AddonItems.stack("dust", "Tin")},
+        null, null, 16, 16, 0, null, new int[]{1});
+```
+
 ## Machine recipe datapacks
 
 A datapack can add or remove static rows on a machine recipe map that already exists. Put the JSON in the vanilla recipe directory: `data/<namespace>/recipes/` on Forge 1.20.1, and `data/<namespace>/recipe/` on NeoForge 1.21.1. It cannot create a map, and it does not see or edit dynamic providers. The same JSON is what KubeJS `event.custom()` submits. There is no KubeJS plugin. `event.remove({type: "gt6ce:machine"})` removes the marker recipes from the vanilla recipe manager; the next reload then rebuilds the machine maps from the markers that remain.
@@ -356,8 +377,8 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 
 - Shared addon registration, version/context and recipe-ready lifecycle.
 - `AddonMaterialContributor` materials and extra forms of existing prefixes, declared by name and generated as `gt6ce:` items. `dust()` and `metal()` select the generated set. Read materials through `GregTechMaterials`. Test a prefix with `GregTechPrefixes.exists`. Numeric ids are assigned at startup from 10000 and are not save data. `compositions()`, `smeltingTargets()`, `crucibleReactions()` and `crucibleRemovals()` name materials and are applied when materials link.
-- `AddonItems.stack(prefix, material, count)` and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate.
-- `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row.
+- `AddonItems.stack(prefix, material, count)`, `AddonItems.selectorTag(n)` for programmed circuit 0..24, and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate.
+- `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row. `keptInputs` names item inputs that stay in the machine; a count of 0 is still rejected.
 - `AddonMachineContributor` recipe machines and large recipe machines. Energy is a short name such as `EU`. A multiblock uses existing GregTech part names. GregTech registers the blocks in the addon's namespace. Layout roles are `StructureRole`.
 - `BehaviorMachineDeclaration` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the single-block shell. The addon does not subclass it and does not touch NBT. `energyCapacity`, `emit`, `generate`, `setCapacity` and `onUse` are part of that shell. GregTech stores a changed capacity as `gt.capacity`.
 - `FuelMapDeclaration` and `FuelGeneratorDeclaration`. A fuel map joins JEI, EMI and the datapack overlay. A generator burns fluid and emits one packet per tick from the front, the back, or 1 to 8 blocks behind. A multiblock uses an existing GregTech part layout.

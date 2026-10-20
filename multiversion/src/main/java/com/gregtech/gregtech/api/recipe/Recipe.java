@@ -78,7 +78,19 @@ public class Recipe {
         return this;
     }
     public boolean isCatalystInput(int index) {
-        return catalystInputs.get(index) || !mExplicitCatalystsOnly && mInputs[index].getItem() instanceof com.gregtech.gregtech.api.recipe.RecipeCatalystLike tool && tool.isCatalyst();
+        boolean marked = catalystInputs.get(index);
+        boolean itemCatalyst = !marked && !mExplicitCatalystsOnly
+                && mInputs[index].getItem() instanceof RecipeCatalystLike tool && tool.isCatalyst();
+        return RecipeCatalystInputs.isCatalyst(mExplicitCatalystsOnly, marked, itemCatalyst);
+    }
+
+    /** Indexes passed to {@link #withCatalystInputs(int...)}, in ascending order. Implicit catalyst items are not listed. */
+    public int[] explicitCatalystInputs() {
+        int[] indices = new int[catalystInputs.cardinality()];
+        int cursor = 0;
+        for (int bit = catalystInputs.nextSetBit(0); bit >= 0; bit = catalystInputs.nextSetBit(bit + 1))
+            indices[cursor++] = bit;
+        return indices;
     }
 
     // ── Output helpers ───────────────────────────────────────────────────
