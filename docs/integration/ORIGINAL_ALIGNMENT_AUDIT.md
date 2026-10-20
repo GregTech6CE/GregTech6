@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第六十八批核大型换热器实际主链、扩展设置与制作范围，先前大型发电机／避雷针等专题保留各自边界。行为记录至ALIGN-243，共243条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是243个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第六十九批核17996禁刷怪塔的实际供电、范围、刷怪事件、仪表／工具和保存；大型换热器等旧专题保留各自边界。行为记录至ALIGN-247，共247条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是247个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -59,7 +59,7 @@
 | ALIGN-033 | 确认大型锅炉缺少外部爆炸连锁。 | 原版 onExploded 在表值 >4 时引爆，威力随汽量变化。 | 当前玩家拆机、自身爆炸与高压不掉落存在，缺外部爆炸回调。 |
 | ALIGN-034 | 确认大型锅炉工具损耗和除垢伤害入口不同。 | 原版排空返回实际量，温度计返回工具消耗，除垢调用热伤害及热防护判断。 | 当前排空固定 100，温度计分支只显示信息；除垢直接用 inFire，未经过现有 GTEntityHelper 热防护入口。 |
 | ALIGN-035 | 确认精金大型锅炉压力传感器最大容量被截断。 | 原版 getGibblMax 返回长整数容量。 | 当前 gibblMaximum 调用 int getCapacity：2,621,440,000 变成 2,147,483,647；内部储罐和表针长整数计算未因此缩水。 |
-| ALIGN-036 | 确认已核多方块的认领与缺区块缓存策略存在差异。 | 原焦炉／大型涡轮逐格检查并认领正确部件，缺关键区块保留旧形成状态。 | 当前共用 LargeRecipeMachine 首次遇错即清空已绑定部件，仅完整候选才整体绑定；部件工具／传感器转发也依赖这份主控引用。大型蒸汽／燃气涡轮相同认领／缺区块差异亦已扩围，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。四档Dynamo共享相同轴向父类的整体认领／缺区块策略，已扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器当前已逐件保留有效子集，仅扩原缺区块缓存／当前重查与释放的子情况，不套全候选认领结论，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-036 | 确认已核多方块的认领与缺区块缓存策略存在差异。 | 原焦炉／大型涡轮逐格检查并认领正确部件，缺关键区块保留旧形成状态。 | 当前共用 LargeRecipeMachine 首次遇错即清空已绑定部件，仅完整候选才整体绑定；部件工具／传感器转发也依赖这份主控引用。大型蒸汽／燃气涡轮相同认领／缺区块差异亦已扩围，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。四档Dynamo共享相同轴向父类的整体认领／缺区块策略，已扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器当前已逐件保留有效子集，仅扩原缺区块缓存／当前重查与释放的子情况，不套全候选认领结论，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996禁刷怪塔亦是完整候选后整体认领、未加载立即失败／清理，与原有效子集及缺区块缓存不同，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
 | ALIGN-037 | 确认焦炉自动排液时机、速率和目标优先级不同。 | 原版在 doWork 前排液，默认最大搬运量；九格目标按世界 X/Z 遍历。 | 当前停机／未形成提前返回，普通 autoIO 单次 1000 L；目标顺序随朝向旋转。外部管道主动抽取不包含在此结论中。 |
 | ALIGN-038 | 确认焦炉缺少原版流体积压停产阈值。 | BasicMachine.canOutput 对同种已有液体检查 max(16000,1+单次输出×并行上限)，有指定豁免。 | 当前 fluidsFit 只看剩余容量，焦炉输出罐为 Long.MAX_VALUE；500 L／煤、16 并行的原版阈值为 16000 L。不是应把储罐容量硬改成 16000。 |
 | ALIGN-039 | 确认焦炉点火窗口最后一刻的启动许可不同。 | 原版 doWork 末尾递减，剩余 1 tick 时仍可开新配方。 | 当前 beforeMachineTick 先减为 0，再检查启动；已有进行中任务不因此取消。部分输出刷新的差异另待原生状态验证。 |
@@ -103,7 +103,7 @@
 | ALIGN-074 | 确认可调齿轮箱余量输出失去当 tick 输入触发要求。 | 原版 mUsedGear 门控输出，并以 mIgnorePower 控制模拟／实际回压。 | 当前只要旧缓存非空便继续尝试，模拟仍返回提供量；停供后行为不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-075 | 确认可调齿轮箱输出轮次、份额和优先序不同。 | 原版有进展就继续，按 power/3 分配且每轮推进顺序。 | 当前最多三轮、按剩余输出面分配、tick 末推进一次；限量接收器吞吐可能不同，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
 | ALIGN-076 | 确认可调齿轮箱缺少通用开关／运行状态接口。 | 原版实现 SwitchableOnOff／RunningActively。 | 当前只实现 IEnergyBlock，MachineControl.find 返回 null；软锤手动停启仍存在，见 [报告](AXLE_GEARBOX_AUDIT.md)。 |
-| ALIGN-077 | 确认导线、管道及普通桶未接入原版进度指标；有些覆盖板可用但读数语义不同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 管道／桶无专用进度接口，但 CoverProgress 会回退到内容物占比；不能写成完全不可安装或无读数，见 [补查](DISPLAY_METER_AUDIT.md) 和 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。 |
+| ALIGN-077 | 确认部分宿主的进度覆盖板未读取原指标；有些可用但读数语义不同。 | 原版分别返回安培、搬运次数乘 64、传输液量、发酵时间及对应上限。 | 管道／桶无专用进度接口，但 CoverProgress 会回退到内容物占比；不能写成完全不可安装或无读数，见 [补查](DISPLAY_METER_AUDIT.md) 和 [导线](ELECTRIC_WIRE_AUDIT.md)、[物品管道](ITEM_PIPE_AUDIT.md)、[流体管道](FLUID_PIPE_AUDIT.md)、[普通桶](BARREL_AUDIT.md)。17996普通进度覆盖板回退到剩余电量，刻后0／4096替代原范围255／256；专用进度／压强传感器已有正确接口，不合并误报，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
 | ALIGN-078 | 确认导线缺少建筑泡沫包覆与硬化绝缘。 | 原版连接器支持湿／干泡沫，导线硬化后免除接触电击。 | 当前导线没有包覆状态；硬化剂／去除剂只识别独立泡沫方块，见 [报告](ELECTRIC_WIRE_AUDIT.md)。 |
 | ALIGN-079 | 确认物品管道库存槽数被当作单槽容量。 | 原版 NBT_INV_SIZE 创建多槽库存，每槽正常上限 64。 | 当前固定一个槽、槽上限 spec.invSize，涉及缓存种类及存档结构，见 [报告](ITEM_PIPE_AUDIT.md)。 |
 | ALIGN-080 | 确认物品管道吞吐限流缺失且计数单位不同。 | 原版每次成功搬运计一堆，扫描／发送检查每秒容量。 | 当前按物品数累加，仅保存和显示，无容量准入，见 [报告](ITEM_PIPE_AUDIT.md)。 |
@@ -244,7 +244,7 @@
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
 | ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
-| ALIGN-218 | 确认已核20种能源设备默认堆叠上限16→64。 | 原两太阳能、四泵、八大型涡轮、四大型发电机、17998避雷输出及17197大型换热器均注册stack16并被原Item消费。 | 当前对应plain BlockItem默认64；只核这20项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)与[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-218 | 确认已核21种能源设备默认堆叠上限16→64。 | 原两太阳能、四泵、八大型涡轮、四大型发电机、17998避雷输出、17197大型换热器及17996禁刷怪塔均注册stack16并被原Item消费。 | 当前对应plain BlockItem默认64；只核这21项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)与[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996原stack16、当前普通BlockItem64，已核能源设备扩为21项，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
 | ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
@@ -258,8 +258,8 @@
 | ALIGN-229 | 确认大型燃气涡轮可变即时输出被最大包整批与下一刻队列替代。 | 燃料不足最大批次仍可按HU/RU比达到半额门槛，当刻转换。 | 最低档256L氢=4096HU，原可当刻尝试2730RU，当前<12288不转换；凑满后仍延后发送，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-230 | 确认大型燃气涡轮拒收后的能量／燃烧政策不同。 | 原storage≥max特例在尝试后无条件回写tEnergy-max，即使NBT waste=false。 | 当前保留ruStored并停烧后续燃料；768L氢、持续拒收两刻后原HU=0／现存8192RU。保护政策不自动回退，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-231 | 确认部分大型转换器过载变为持久锁停。 | 原前100次保护清storage但不置mStopped，启动头两刻另有处理，后续破坏受配置。 | 当前首次output超限置overloaded／stopped并清pending，远程开关不能复位；满合法罐98304L可达。该分支无爆炸，不自动恢复危险行为，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。四Dynamo输入8193RU等超限也首次持久锁停，原Base11只先计数清缓存；不恢复危险效果，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。 |
-| ALIGN-232 | 确认部分能源主控的能力查询反复全扫结构。 | 原未变更checkStructure(false)用缓存，部件查询不重跑35格循环。 | 当前每次target→isStructureOk建立Map／扫35格／bind35次，稳定20查询至少700次；非TPS测量，缓存需保留现代失效保护，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针44支撑／柱也有逐tick和查询重扫，但没有涡轮的bind，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo共享35格重扫／绑定父类，同样扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器部件查询及tick重扫17格并重绑有效件，完整20次可达340次；原缓存不重跑，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。 |
-| ALIGN-233 | 确认部分多方块未接专用结构建造与形成诊断入口。 | 原Base10把建造棒坐标／库存传到两类checkStructure2，Util可放墙认领并报告形成。 | 当前主控不是MultiblockToolTarget，普通建造棒仍复制平面；部件转发也缺目标接口。预览不替代功能，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针专用建造／形成诊断入口同样未接，预览地图没有工具消费者，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo也无专用目标接口，部件有owner仍无法转到专用建造／形成诊断，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。 |
+| ALIGN-232 | 确认部分能源主控的能力查询反复全扫结构。 | 原未变更checkStructure(false)用缓存，部件查询不重跑35格循环。 | 当前每次target→isStructureOk建立Map／扫35格／bind35次，稳定20查询至少700次；非TPS测量，缓存需保留现代失效保护，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针44支撑／柱也有逐tick和查询重扫，但没有涡轮的bind，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo共享35格重扫／绑定父类，同样扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器部件查询及tick重扫17格并重绑有效件，完整20次可达340次；原缓存不重跑，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996每tick与有效部件查询重建63格／认领，20次完整查询1260格，同属源次数推导，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
+| ALIGN-233 | 确认部分多方块未接专用结构建造与形成诊断入口。 | 原Base10把建造棒坐标／库存传到两类checkStructure2，Util可放墙认领并报告形成。 | 当前主控不是MultiblockToolTarget，普通建造棒仍复制平面；部件转发也缺目标接口。预览不替代功能，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针专用建造／形成诊断入口同样未接，预览地图没有工具消费者，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo也无专用目标接口，部件有owner仍无法转到专用建造／形成诊断，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。17996也缺专用目标接口，原建造／形成诊断与Square Radius详情未接；现有预览不能替代，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
 | ALIGN-234 | 确认避雷针结构只有方块身份检查，缺原认领与争用。 | 原44件支撑／每段柱都checkAndSetTarget，NOTHING仍认主并拒绝别台有效占用。 | 当前只验block／数长度，无bind；X差2的两个底座可共享15件同时通过，部件无可解析owner。未搭世界，见[避雷针](LIGHTNING_ROD_AUDIT.md)。 |
 | ALIGN-235 | 确认避雷针顶端整列空气换成天空亮度准入。 | 原逐格WD.air直到世界高度，不把透明块当空气。 | 当前canSeeSky是SKY亮度≥max；亮度15的玻璃顶条件原拒／现可过，非高度偏移，未光照实测，见[避雷针](LIGHTNING_ROD_AUDIT.md)。 |
 | ALIGN-236 | 确认避雷针能量接口规格／抽取与原不同，含原错误的现代适配。 | 原tick32768但getter1024/2048/4096，emitting查询因false参数恒false、pull0；直接推送仍工作。 | 现申报16384/32768/65536、可拉16包，无与push共享每刻预算。不是能量复制，不恢复原错误getter或尾端透支，见[避雷针](LIGHTNING_ROD_AUDIT.md)。 |
@@ -270,6 +270,10 @@
 | ALIGN-241 | 确认大型发电机后端能源输出面查询放宽为六面。 | 原部件mode检查后回传Dynamo.isOutput，只允许朝向的反面。 | 当前输出角色查询不使用side，已形成无盖EU端口六面true；主动推送仍仅后4格、offered pull为0，不等于侧向输电或复制，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。 |
 | ALIGN-242 | 确认大型换热器指定目录外能源时缺原公开身份扩展。 | TagData.createTagData可公开新增／复用标识，原读取自定义emitted并尝试八路插入。 | 当前仅查内置20种ALL，未知类型null；热16384仍先扣完、零次插入。默认HU正常，属于扩展合同，未运行addon，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-243 | 确认大型换热器制作定义未保留ANY.Cu铜管范围。 | OP.pipeHuge.dat(ANY.Cu)经CR／官方Forge矿辞列表匹配，可接受合格组成员。 | 当前pipe:huge@Copper走单物品分支，未选已有any_范围；默认铜仍有正常路径，当前无内置退火铜流体管，不捏造默认合成失败，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-244 | 确认17996主控的进电面及大电包接收范围收窄。 | 原实际isEnergyAcceptingFrom无面限制，公共入口可接受8192EU包；4096仅报告上限，没有本机过载爆炸。 | 当前主控仅底／null，doInject拒绝>4096；基座仍六面、低包公共门控仍吞而不存。有界保护不自动撤销，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
+| ALIGN-245 | 确认17996刷怪事件优先级改变条件性兼容结果。 | 原GT代理LOWEST，官方FML监听顺序在LOW之后。 | 当前两端默认NORMAL；真实最终结果消费者允许后续LOW监听者覆盖拒绝。只作给定addon允许事件的分支推导，未报自然刷怪全面失效，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
+| ALIGN-246 | 确认17996运行电量持久化与原不同；保留当前改善政策。 | 原mEnergy初始0，本类及已核父保存链无该字段写入。 | 当前显式保存energy／range，合法累积8192重载仍保留；不恢复旧丢电，也不与普通掉落混同。尚未磁盘重启验收，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
+| ALIGN-247 | 确认17996缺少原接受能源身份设置读取。 | 原gt.energy.accepted经TagData.createTagData，主控／基座／电容均使用配置身份。 | 当前固定EU，已知RU设置也未读取；与242未知身份注册分开，默认EU路径已有，未运行自定义能源，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

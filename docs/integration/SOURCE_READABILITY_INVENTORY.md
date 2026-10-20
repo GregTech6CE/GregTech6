@@ -78,3 +78,5 @@
 第六十七批整理LargeDynamoControllerBlockEntity、LargeDynamoControllerBlock、AxialGeneratorDefinitions、AxialStructureTransform和SharedTurbineStructure：展开压行方法／三重循环／平台读取，八个局部与lambda短名改为cellPos、parameters、firstOriginalId、offset及ticker参数。九份完整执行流与字面量位置保持，offset方法名不随变量归一，注释／指令不变，见[导航](LARGE_DYNAMO_AUDIT.md)及[回执](verification/large-dynamo-audit-20261021.json)。没有重命名公开API或修改材料表；其余压行、大职责边界及全面核查继续。
 
 第六十八批整理LargeHeatExchangerControllerBlockEntity、LargeHeatExchangerControllerBlock、HotFluidFuelCycle、HeatExchangerData、HeatExchangerRules、SharedHeatExchangerStructure。结构局部／lambda、燃料候选、defaults与batchCount改为明确名字，展开压行、平台能力／保存及三重循环；十份完整执行流和字面量位置保持。未跟随局部名改包名context、原builder或Charge.batches组件；仅一条过强“原循环等价”说明限缩，许可证头／其它注释／指令保留，见[导航](LARGE_HEAT_EXCHANGER_AUDIT.md)及[回执](verification/large-heat-exchanger-audit-20261021.json)。未改用户材料或公开二进制方法签名，全面可读性队列继续。
+
+2026-10-21 第六十九批：禁刷怪塔四份压行源码已展开，局部／ticker参数明确命名，七份完整执行视图保持；ControllerStructureLayouts的重复63格改读core布局，方法外两视图保持，内部以原／core／旧预览有序单元证明。不是只改文件名，也不把共享改动冒称完整词法不变，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。其它压行与职责整理继续。

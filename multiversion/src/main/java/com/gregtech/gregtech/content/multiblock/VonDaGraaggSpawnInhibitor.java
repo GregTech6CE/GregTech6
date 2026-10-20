@@ -1,6 +1,5 @@
 package com.gregtech.gregtech.content.multiblock;
 
-
 //? if >=1.21.1 {
 //?} else {
 import com.gregtech.gregtech.GregTech;
@@ -37,7 +36,8 @@ import java.util.WeakHashMap;
 public final class VonDaGraaggSpawnInhibitor {
     private static final WeakHashMap<ServerLevel, Set<BlockPos>> ACTIVE = new WeakHashMap<>();
 
-    private VonDaGraaggSpawnInhibitor() {}
+    private VonDaGraaggSpawnInhibitor() {
+    }
 
     public static void register(ServerLevel level, BlockPos pos) {
         ACTIVE.computeIfAbsent(level, ignored -> new HashSet<>()).add(pos.immutable());
@@ -50,7 +50,7 @@ public final class VonDaGraaggSpawnInhibitor {
 
     /** GT6 checks a square horizontal range and exempts mossy cobblestone within ±5 blocks. */
     public static boolean inhibits(ServerLevel level, BlockPos controller, int range, BlockPos spawn) {
-        if(!VonDaGraaggRules.within(spawn.getX()-controller.getX(),spawn.getZ()-controller.getZ(),range))return false;
+        if (!VonDaGraaggRules.within(spawn.getX() - controller.getX(), spawn.getZ() - controller.getZ(), range)) return false;
         for (int dy = -5; dy <= 5; dy++) {
             BlockPos nearby = spawn.offset(0, dy, 0);
             if (level.isInWorldBounds(nearby)) {
