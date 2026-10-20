@@ -4,6 +4,8 @@
 
 禁刷怪塔17996的纯数值／唯一布局在core的`VonDaGraaggRules`；共享原生BE负责验证与供能，`VonDaGraaggSpawnInhibitor`负责刷怪事件，`ControllerStructureLayouts`的本机预览委托core而不再重复63格。实际消费者及可读性边界见[专题](VON_DA_GRAAGG_AUDIT.md)。
 
+基岩钻机17999真实方块是`OriginalBedrockDrillControllerBlock`，运行在共享`BedrockDrillControllerBlockEntity`，core的`AdvancedControllerRules`与`DirectMachinePowerRules`分别给出角色／常数和软容量注入计划。Neo能力监听在`BasicMachineRegistries`，原生罐恢复在版本专有`NativeMachineTankData`。同目录另一HorizontalDirectional类不能代替实际注册判断，见[钻机专题](BEDROCK_DRILL_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

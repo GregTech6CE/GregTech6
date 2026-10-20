@@ -80,3 +80,5 @@
 第六十八批整理LargeHeatExchangerControllerBlockEntity、LargeHeatExchangerControllerBlock、HotFluidFuelCycle、HeatExchangerData、HeatExchangerRules、SharedHeatExchangerStructure。结构局部／lambda、燃料候选、defaults与batchCount改为明确名字，展开压行、平台能力／保存及三重循环；十份完整执行流和字面量位置保持。未跟随局部名改包名context、原builder或Charge.batches组件；仅一条过强“原循环等价”说明限缩，许可证头／其它注释／指令保留，见[导航](LARGE_HEAT_EXCHANGER_AUDIT.md)及[回执](verification/large-heat-exchanger-audit-20261021.json)。未改用户材料或公开二进制方法签名，全面可读性队列继续。
 
 2026-10-21 第六十九批：禁刷怪塔四份压行源码已展开，局部／ticker参数明确命名，七份完整执行视图保持；ControllerStructureLayouts的重复63格改读core布局，方法外两视图保持，内部以原／core／旧预览有序单元证明。不是只改文件名，也不把共享改动冒称完整词法不变，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。其它压行与职责整理继续。
+
+2026-10-21 第七十批：基岩钻机BE／实际OriginalBlock展开结构、产物与两版保存，局部／lambda明确命名；Neo NativeMachineTankData也从3→16行。五份完整执行视图保持，去掉“必须有矿”的过强说明，见[钻机](BEDROCK_DRILL_AUDIT.md)。遗留HorizontalDirectional类的公开扩展可达性另核，不因无仓库构造引用就宣称已完成死代码清理；其余可读性与全面队列继续。

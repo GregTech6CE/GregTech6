@@ -1,0 +1,2081 @@
+{
+  "batch": 70,
+  "date": "2026-10-21",
+  "baseline": "2840bb4c734a002c1e0981ea84d426be5ba33214",
+  "scope": "Original 17999 bedrock drill actual registration, supports/ports, RU/lubricant, products, tools, controls and persistence.",
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityBedrockDrill.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityBedrockDrill.java",
+      "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "relative": "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/IMultiBlockEnergy.java",
+      "relative": "gregapi/tileentity/multiblocks/IMultiBlockEnergy.java",
+      "sha256": "5998de96a2473247f3527e2e82d3f66fd379f1b2d5986f994b8f3b59d414f5f3",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/IMultiBlockFluidHandler.java",
+      "relative": "gregapi/tileentity/multiblocks/IMultiBlockFluidHandler.java",
+      "sha256": "f12c7bb7295911077fbf288f2d4a74996f9b846e81675a7d90e5566345885456",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "relative": "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "relative": "gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/machines/ITileEntityRunningPossible.java",
+      "relative": "gregapi/tileentity/machines/ITileEntityRunningPossible.java",
+      "sha256": "da5405c24405a235f4571a2f77e1b6ced1ef5e7f0ce3fc1dae9803066bcb6c62",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverDetectorRunningPossible.java",
+      "relative": "gregapi/cover/covers/CoverDetectorRunningPossible.java",
+      "sha256": "2a6c8b7e501ed125a31e7046e66107769b72d4c377e2d8c0b013177e6d4c9409",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "relative": "gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/TagData.java",
+      "relative": "gregapi/code/TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/TD.java",
+      "relative": "gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "relative": "gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Rocks.java",
+      "relative": "gregtech/loaders/a/Loader_Rocks.java",
+      "sha256": "858fb3115a143c2c5d88c0e79c6baa7bd9ac69fa2cf2aee2f000fc27487b92db",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java",
+      "sha256": "aec5e3ac0a8ce3d00e6bf509f0b0e611760708463e121fb000c26695381c1d47",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalControllerTooltipData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalControllerTooltipData.java",
+      "sha256": "4e26416e94ba12042a75c9078d777e84324e41389a2defd105589e5c97271204",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/DirectMachinePowerRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/energy/DirectMachinePowerRules.java",
+      "sha256": "89588c1dba468ded78f554f7bc2c154741041e20372e645b2dc5ec019f4d9e0d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "sha256": "e11743331fef31f59fc0b5063280d4cd45fc288b2c1f0153a3c4580ee935110e",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "sha256": "ba3156b9f33d5a3e8d4970b3668e6fc1a9cff7159baf09fc9976e706f59ee6ac",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "sha256": "f5fd88157da470bc4852c83db2bd741b70380693622324cbff2919b04bf23522",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/energy/EnergyGate.java",
+      "sha256": "a8de64c9f415bba030b1c3b8fbaa05fc5c5aeb26a9d6dfa2f96240ce65e10e6b",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/prefix/BlockMaterialPrefix.java",
+      "sha256": "7f422fdcc327884f2bccbf4813c04eafcb5cc7c134eaa640f836d397d8253684",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/stone/StoneType.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/block/stone/StoneType.java",
+      "sha256": "a47bb04b0237707a646a9aea86ddf06b8fe365086c4fb0e9dc20393442fb7f64",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "sha256": "23ec0ee0bfcf2b99648ac3dc2d8fe7ef3915e09c031bf6edaf9f50d1d9a323cb",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "sha256": "df9fffcc012f709d3e48620030c57a541fdc89d0638ff3b93fff09140ae96136",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "sha256": "24e8afff6c1ec6855b0981f554210c8c16ce016b696dd7e29ab2fad7beba5d62",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "sha256": "827a115b3cc2ae6c61c1e9d8dc5b7f7f5ab7c24680b1a359b8e4d32d735ac9cc",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "sha256": "49611214ddc4df30334d6d206dc9a35804dc0c7c2c5a6d465cec232d275e8e39",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "sha256": "cc6ffcf1a4a3092639d4f033cbea86a76e32daf9b392203927256e5f2725199e",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "sha256": "0d4aa3fcb4813f7f0bfdc7adf115c872411dc771daa184f46458a4f5f717ffb6",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "sha256": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "sha256": "4ea7f5146c1f0eaae94b4eda9a7b10bba214e12992b6726259d8ab022cd82f0f",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "sha256": "3610c1e2802c1d87745bc91d26ba9495cfe80426c8dc1ff1f9e382c988ef8b72",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "sha256": "6edfc16394dd94bf904b46b8331bb7a20be8091728dfcfac7645979dc8c49df4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "sha256": "764485a90f5ae072cd4974a304518cb7e34c22f6b5d9186735194968c79799c4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java",
+      "sha256": "5da95b4f0a47c8a2de5248eab864996f807b56945ee42708012110d46bf1de58",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "sha256": "d4fa9a25ad0208905a8c8de8c2a87620c1047301fb5604eb9b6694598d74ab47",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "sha256": "805753278aeee564a940c51e2f470a4009dc523ea7e43a2a0f548ab5d48576fd",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "sha256": "99b323a4149fe20fc6a1de0ac1c7f14e5de0287bb7841ce2dff09f5585fa3fe8",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "sha256": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "sha256": "814f4c96789f6088b1b2f8f4093f87008c3d00530ce78cab72ec220db6ed238c",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "sha256": "5b50a6700e7e36c1a49526fa0abef59e9f689a43763326f72ce6f8e79f4dbe92",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java",
+      "sha256": "2649a65f8b02ed8c36432195fe70ddb8cdb9ff9ef8ff47640099632ef7daeb8d",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "sha256": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "sha256": "ba8912db5d12e52d956529ca60a9292eb5ffdd9df30d5882f9bbd7b74bf6b050",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java",
+      "sha256": "1da4b4f8904e41a3ba2556a65e0484b9e7300bf28969a0038f71d0f127ad7e3c",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Only declarations and consumer contracts named in the report; not whole-file acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "909a7e2cb3b5ab5b4eb78a859c984e1a0ab9f374c9a59eba6d68ca2a62e2b9aa",
+      "tokens": 2771
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "4671a1aa9e3b280086428ccb1be58f2f6dd18b16c43b7ecc628c06938a99122b",
+      "tokens": 2702
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "platform": "forge",
+      "sha256": "2506b275149f7e4051a8b5c30719842d928c7b7c9ce539f07d30195cbc61c17b",
+      "tokens": 1000
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "149baf41580adbd43d81519f0250b3a23cdf732fc9cdde83dc081b38f897e501",
+      "tokens": 1322
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "platform": "forge",
+      "sha256": "3d4ac9adb465424ddc810c05bca6f5157f7877580010b9d0761ff349749ade98",
+      "tokens": 976
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BedrockDrillControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "39946d60ca95c04ddae5b4672f7b9cdab8068f08cf09f68e648c5c31aa4ff6e6",
+      "tokens": 1195
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "platform": "forge",
+      "sha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "tokens": 355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "platform": "neoforge",
+      "sha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "tokens": 355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "forge",
+      "sha256": "beaddd1655acb58f0fd38a23e7587bdb3ba88e713796b6ec1f989a3647a6ab58",
+      "tokens": 1522
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "neoforge",
+      "sha256": "353248cbb43f1c11a9fb1a3680e7dff9d693fdb8121f40e38fce72c14a652be4",
+      "tokens": 1529
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "forge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "neoforge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "forge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "neoforge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "forge",
+      "sha256": "864fd9121329c40ab59c6e2b4093d2eb8ca8c9a4d9c753b874ef9cf3b25e8076",
+      "tokens": 1254
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "neoforge",
+      "sha256": "4e5b3ec29cbcac09befbb4a2d45b37f2754016f568f544a8868d822b2c4de4eb",
+      "tokens": 1326
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "forge",
+      "sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+      "tokens": 1598
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "neoforge",
+      "sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+      "tokens": 988
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "forge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "neoforge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "forge",
+      "sha256": "c6518c4b280e8572a840c3a244a2e616a2b0cab78a50c17a65dc9a45694639c9",
+      "tokens": 948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "neoforge",
+      "sha256": "cfdf1a224d8701d6778b4e214609745dcb6670fd72a1bdb2c69902a7a07bb4d4",
+      "tokens": 973
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "platform": "forge",
+      "sha256": "303b186224f34669c0087b575fe8cfc7ebbb1a4db76f5c2e13837cc25ebe7a93",
+      "tokens": 1987
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/OreBlock.java",
+      "platform": "neoforge",
+      "sha256": "83efc49c6a5251fe74344664e3e8a9cdd0907c364552470070440266616d0673",
+      "tokens": 2020
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "platform": "forge",
+      "sha256": "e635cddb44fede5e3cb0f893e62b758a8983f032a9ce6fe319dcb988dc17bd79",
+      "tokens": 441
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/OreHostStone.java",
+      "platform": "neoforge",
+      "sha256": "e635cddb44fede5e3cb0f893e62b758a8983f032a9ce6fe319dcb988dc17bd79",
+      "tokens": 441
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "forge",
+      "sha256": "cf7ea64d569c6ae4e18a277c220ca979b9c9aa6df0e981d6725e1574f6d62784",
+      "tokens": 3334
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "neoforge",
+      "sha256": "6adb2e1e3aa958e2859f09f68e809114564e32a93b48028e67e58cbb39f08870",
+      "tokens": 3330
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "forge",
+      "sha256": "bc3e26ff2a5ab0f97cbda4cc390db50a24965ed400da10415f2a32c2b813aea6",
+      "tokens": 1748
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "neoforge",
+      "sha256": "0e1fb06ebdc38f72433f072451a4a371b4e22be6273bba95601fac151ae9f917",
+      "tokens": 1730
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java",
+      "platform": "forge",
+      "sha256": "3755694c1f4b7e8b4c70153facb6b579e231cbdd7bae8acaaa63d5afc0b9add5",
+      "tokens": 1148
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/OriginalControllerTooltips.java",
+      "platform": "neoforge",
+      "sha256": "3755694c1f4b7e8b4c70153facb6b579e231cbdd7bae8acaaa63d5afc0b9add5",
+      "tokens": 1148
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "forge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "neoforge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "forge",
+      "sha256": "559ae55470195c4027bf480426a199adc548883c1d6bf001460cf8dcfe9f102c",
+      "tokens": 506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "platform": "neoforge",
+      "sha256": "5ecf08ca94d6d4e5c237bb20e110b12d6bb09e409e1210bb656f92b6e351ef8c",
+      "tokens": 514
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "platform": "forge",
+      "sha256": "213eb3a5aa2780ee18488437f00d7e279aa3ae67d45989e0532bd1e30f633b70",
+      "tokens": 206
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "platform": "neoforge",
+      "sha256": "5e5e33b5b9f9b55454e9c5cfed0b6f1a96b12dfb88e22456e1a3bae5713ecc1b",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "platform": "forge",
+      "sha256": "e8b366c75f0cd2732f86c7b5a01bdbe48ce5bb0ab252bd5fca9e21f540015d5a",
+      "tokens": 247
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "platform": "neoforge",
+      "sha256": "5802f1af4490d686655b41db0a7cef1a8fb85df29f2b93f2c1aa525ab22f1f67",
+      "tokens": 249
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "forge",
+      "sha256": "d2471a24f9e0dfe11cf97d79c73032c65eaa116d4c3884ce58832cdbfa53109b",
+      "tokens": 2699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8f0f169e68ed10ea3e0541bd2d9eec2c7f5e3af9a9f86df0d7e75eb296745d6e",
+      "tokens": 2583
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "forge",
+      "sha256": "7e2845689b3649198a83686a41a276fca769c09a398c434387e2cf4dcfb86acd",
+      "tokens": 335
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "neoforge",
+      "sha256": "dfe256632e7d85d09ee4dd18a6430538d97f96297a8c01824ce5f78be75ed586",
+      "tokens": 339
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "forge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "neoforge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "forge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "neoforge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java",
+      "platform": "forge",
+      "sha256": "020ddd8a135c1823f6ad166d2414bd8735666672536216e27b2fff0cc92b56b7",
+      "tokens": 469
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverProgress.java",
+      "platform": "neoforge",
+      "sha256": "020ddd8a135c1823f6ad166d2414bd8735666672536216e27b2fff0cc92b56b7",
+      "tokens": 469
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "tokens": 3948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "tokens": 3957
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "platform": "forge",
+      "sha256": "54b7cdcafa2d86d8a877acfae2694e9de59edd9675d5f96ed3769fe939d6140b",
+      "tokens": 567
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "platform": "neoforge",
+      "sha256": "e2c8e3c3f597e3b11c2fe39edd3f64c6b0a3d159b32d3777741115f662c23e45",
+      "tokens": 570
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "platform": "forge",
+      "sha256": "cb0296efe10c8dba4133e3c73e59512d4ac419d85f6c773c3bcf46ad151a106c",
+      "tokens": 720
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "platform": "neoforge",
+      "sha256": "ebedc1fac0abb9ac84c4e944bf1ed7f01f620b3f5c51c02437fe1ac5bc23ac1b",
+      "tokens": 824
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "forge",
+      "sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+      "tokens": 943
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "neoforge",
+      "sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+      "tokens": 343
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "forge",
+      "sha256": "2bb4f27bd51fc1d2b2bbc3bea19dec63f54f9919cd3828373a38ce354c719249",
+      "tokens": 360
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "neoforge",
+      "sha256": "c44b2be441c5e1dee11d8bddf347168365cfe8f348435b5c9f8b403b3884b7b3",
+      "tokens": 394
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlockEntity.class",
+        "sha256": "d44150d4c0a5ef2925e96c1fc4f26d86fbec42aaa5e64d024bd776078fc4350f",
+        "bytes": 5340
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/CapabilityProvider.class",
+        "sha256": "91d7ff7fd801cbbd2f2db9da73b522660a9f449aca0a5c6ff7b90155116d483b",
+        "bytes": 7480
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProviderImpl.class",
+        "sha256": "5447d66c0b1b85f0f1717c0fce3abde948cce9a83b412a203ada6f45b74f3cdc",
+        "bytes": 1069
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProvider.class",
+        "sha256": "b14d3946e0166f56834b57dce27d349be75df89da57f2270613d0c41daaf585b",
+        "bytes": 1386
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilitySerializable.class",
+        "sha256": "0215d540d077e620685c04df41d1df8b68d0fcf34c1356a683da22394fcb3aad",
+        "bytes": 470
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/util/INBTSerializable.class",
+        "sha256": "9733c3c98b59df9f9cf780adc0edccd4cf11921061fdba03e2b4e7f479605766",
+        "bytes": 351
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/fluids/capability/templates/FluidTank.class",
+        "sha256": "b96b641137eca1c9fa63b1b0a91f10a44195311017dad9be689792389d5e02bc",
+        "bytes": 5940
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntityType$Builder.class",
+        "sha256": "46fdc51a5fb80e77420f0ee05e5807103f7b8463e274ca931875e5721e974fc0",
+        "bytes": 2763
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/fluids/capability/templates/FluidTank.java",
+        "sha256": "e624731b737f5be737f211f5e94483ece29eddb8ea82270ea55d108b3e93c082",
+        "bytes": 4498,
+        "extracted": "work/bedrock-drill-audit-20261021/neo-FluidTank.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntityType.java",
+        "sha256": "4883305676756df769f5df5c6e5a3c5f1daa80b33df349b4c636240cdce60f7f",
+        "bytes": 16922,
+        "extracted": "work/bedrock-drill-audit-20261021/neo-BlockEntityType.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-BlockEntity.javap.txt",
+        "sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.extensions.IForgeBlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlockEntity.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-IForgeBlockEntity.javap.txt",
+        "sha256": "fc3335021429e8ef5450d96d82875aea19d44fdff01a71d409af76546f0507c0",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.CapabilityProvider",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/CapabilityProvider.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-CapabilityProvider.javap.txt",
+        "sha256": "bbc91403687e84cd1265ae0d2f451b326c630ecff35a002cc9ae314d91711689",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilityProviderImpl",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProviderImpl.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-ICapabilityProviderImpl.javap.txt",
+        "sha256": "4531f19b7fa36db2fde60e5ef21cc172d04dd98c9860f4cd25bcb9ce1353058c",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilityProvider",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProvider.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-ICapabilityProvider.javap.txt",
+        "sha256": "83c687b9d569cee0b13991715b844de4ca0da49c494b4f895d9e88ad329371f4",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilitySerializable",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilitySerializable.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-ICapabilitySerializable.javap.txt",
+        "sha256": "09936f3a7e237f811047a2673cedbd06b3e905d2360dae2dd3395fddf1938457",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.util.INBTSerializable",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/util/INBTSerializable.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-INBTSerializable.javap.txt",
+        "sha256": "d569c6f102318d765782bffa0d0f1269f9a72f01fa6f828d12bda3d00f8bc9d1",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraftforge.fluids.capability.templates.FluidTank",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/fluids/capability/templates/FluidTank.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-FluidTank.javap.txt",
+        "sha256": "45ee069fea779ca77efc6ee9860834af0a29efc441094a51f1c57bb77b0a7448",
+        "kind": "Read-only javap; no class initialization or compilation."
+      },
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntityType$Builder",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntityType$Builder.class",
+        "output": "work/bedrock-drill-audit-20261021/forge-BlockEntityType$Builder.javap.txt",
+        "sha256": "3110f89c3b70f577d619e5ec50224e9d7e166e75779f818edb5936c9be9a2080",
+        "kind": "Read-only javap; no class initialization or compilation."
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "2840bb4c734a002c1e0981ea84d426be5ba33214",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BedrockDrillControllerBlockEntity.java": {
+        "before_raw_sha256": "d1a9a17bbc99885ac38252bb8d975eac40b620b4782bc398eba760dcd041f79e",
+        "after_raw_sha256": "24e8afff6c1ec6855b0981f554210c8c16ce016b696dd7e29ab2fad7beba5d62",
+        "scoped_regions": [
+          [
+            "public boolean isStructureOk()",
+            "private void release(",
+            {
+              "usesOriginalController": "originalId",
+              "candidateParts": "parts",
+              "depositPos": "floor",
+              "partPos": "pos",
+              "expectedBlock": "expected",
+              "partPosition": "p",
+              "partRole": "r"
+            }
+          ],
+          [
+            "private ItemStack nextProduct()",
+            "//? if >=1.21.1",
+            {
+              "brokenOre": "broken",
+              "rawOre": "raw",
+              "hostStone": "host"
+            }
+          ]
+        ],
+        "comment_correction": [
+          "/** GT6 drilling cycle: intact bedrock deposit, 32768 RU and 100 mB lubricant per output. */",
+          "/** Current bedrock drilling cycle: 32768 RU and 100 mB lubricant per produced item. */"
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2771,
+            "execution_sha256": "d1dcac4afa7408224b90e42fcc83ed7bd921728a0040c28f44ad4f7137726897",
+            "before_lines": 168,
+            "after_lines": 330,
+            "before_max_line": 303,
+            "after_max_line": 141
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2702,
+            "execution_sha256": "685ed8efb4a021357eb6badd36f8c14695c1e08ef78a7cb327e5c1de912fc587",
+            "before_lines": 158,
+            "after_lines": 318,
+            "before_max_line": 445,
+            "after_max_line": 141
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalBedrockDrillControllerBlock.java": {
+        "before_raw_sha256": "f69485459cfac8fbfb2e6018e0d6f23620d1ca6241cd5f95a2494a138374c7f2",
+        "after_raw_sha256": "827a115b3cc2ae6c61c1e9d8dc5b7f7f5ab7c24680b1a359b8e4d32d735ac9cc",
+        "scoped_regions": [
+          [
+            "public <T extends BlockEntity> BlockEntityTicker<T> getTicker",
+            "//? if >=1.21.1",
+            {
+              "tickLevel": "world",
+              "tickPos": "pos",
+              "tickState": "current",
+              "blockEntity": "be"
+            }
+          ]
+        ],
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1000,
+            "execution_sha256": "aef234aeda83ef658f6437c2bfc264e8f44cb6689935e8ad51e632607d0ec280",
+            "before_lines": 127,
+            "after_lines": 139,
+            "before_max_line": 153,
+            "after_max_line": 150
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1322,
+            "execution_sha256": "d343aa03ffcb14bf217f90f2a87a42286e4ae38e7fa2189cfcb4e83f3adaa6ae",
+            "before_lines": 129,
+            "after_lines": 161,
+            "before_max_line": 566,
+            "after_max_line": 141
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/NativeMachineTankData.java": {
+        "before_raw_sha256": "fe6a3e6c8f908a3ac0511ac68bdef3c9f123b41814969969f9dad47750b80681",
+        "after_raw_sha256": "1da4b4f8904e41a3ba2556a65e0484b9e7300bf28969a0038f71d0f127ad7e3c",
+        "scoped_regions": [],
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 174,
+            "execution_sha256": "313feaea5773cc77a6d2c0cfd71004638771f114b9c506950e9baf007823c3f3",
+            "before_lines": 3,
+            "after_lines": 16,
+            "before_max_line": 462,
+            "after_max_line": 114
+          }
+        ]
+      }
+    },
+    "limit": "Source-only formatting, declared scoped bindings and one corrected description; no execution/semantic edits."
+  },
+  "registration": {
+    "source_line": "aMat = MT.Ti;                   aRegistry.add(\"Bedrock Mining Drill Controller\"                     , \"Multiblock Machines\", 17999, 17101, MultiTileEntityBedrockDrill.class        , aMat.mToolQuality, 16, aMachine   , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   9.0F, NBT_RESISTANCE,   9.0F, NBT_TEXTURE, \"bedrockdrill\"            , NBT_RECIPEMAP, RM.BedrockOreList, NBT_ENERGY_ACCEPTED, TD.Energy.RU), \"PYP\", \"CMC\", \"GIG\", 'M', OP.casingMachineDense.dat(aMat), 'G', OP.gearGt.dat(MT.TungstenSteel), 'I', OP.toolHeadDrill.dat(MT.TungstenSteel), 'P', IL.Processor_Crystal_Ruby, 'Y', IL.CONVEYERS[5], 'C', OD_CIRCUITS[6]);",
+    "original_id": 17999,
+    "stack": 16,
+    "hardness": 9,
+    "resistance": 9,
+    "energy": "RU"
+  },
+  "finite_witness": {
+    "geometry": {
+      "kind": "Independent finite source-formula reconstruction, no target Java execution.",
+      "supports": [
+        [
+          -1,
+          -4,
+          -1,
+          18103,
+          "CASING"
+        ],
+        [
+          -1,
+          -3,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -2,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -1,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          0,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -4,
+          0,
+          18103,
+          "CASING"
+        ],
+        [
+          -1,
+          -3,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -2,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -1,
+          0,
+          18026,
+          "ENERGY_INPUT"
+        ],
+        [
+          -1,
+          0,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -4,
+          1,
+          18103,
+          "CASING"
+        ],
+        [
+          -1,
+          -3,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -2,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          -1,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          -1,
+          0,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -4,
+          -1,
+          18103,
+          "CASING"
+        ],
+        [
+          0,
+          -3,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -2,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -1,
+          -1,
+          18026,
+          "ENERGY_INPUT"
+        ],
+        [
+          0,
+          0,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -4,
+          0,
+          18103,
+          "CASING"
+        ],
+        [
+          0,
+          -3,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -2,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -1,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -4,
+          1,
+          18103,
+          "CASING"
+        ],
+        [
+          0,
+          -3,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -2,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          0,
+          -1,
+          1,
+          18026,
+          "ENERGY_INPUT"
+        ],
+        [
+          0,
+          0,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -4,
+          -1,
+          18103,
+          "CASING"
+        ],
+        [
+          1,
+          -3,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -2,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -1,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          0,
+          -1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -4,
+          0,
+          18103,
+          "CASING"
+        ],
+        [
+          1,
+          -3,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -2,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -1,
+          0,
+          18026,
+          "ENERGY_INPUT"
+        ],
+        [
+          1,
+          0,
+          0,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -4,
+          1,
+          18103,
+          "CASING"
+        ],
+        [
+          1,
+          -3,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -2,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          -1,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ],
+        [
+          1,
+          0,
+          1,
+          18026,
+          "FLUID_INPUT"
+        ]
+      ],
+      "floor_cells": 9,
+      "supports_count": 44,
+      "head_count": 9,
+      "wall_count": 35,
+      "energy_inputs": 4,
+      "fluid_inputs": 31,
+      "casing_only": 9
+    },
+    "normal_work": {
+      "energy_before": 32768,
+      "lubricant_before": 100,
+      "output_empty": true,
+      "formed": true,
+      "given": "Product resolves to a valid item; no other input or inventory changes.",
+      "energy_after": 0,
+      "lubricant_after": 0,
+      "output_count": 1
+    },
+    "soft_buffer": {
+      "legal_size": 4096,
+      "amount": 10,
+      "initial_energy": 0,
+      "energy_after": 40960,
+      "feedback": 10,
+      "next_oversize_8192_feedback": 0,
+      "next_oversize_explosion": false,
+      "energy_40000_oversize_8192_execute_requests_strength_6": true,
+      "scope": "Formed current rig, nonnegative arithmetic in range; source-only, no explosion."
+    },
+    "unformed_gate": {
+      "given": "Resident main, correct RU type, 2048 packet, amount1, empty buffer, invalid structure.",
+      "old_injected_energy": 2048,
+      "current_injected_energy": 0,
+      "queued_output": "Uncovered top and valid accepting upper inventory, preexisting one output.",
+      "old_output_attempts": 1,
+      "current_output_attempts": 0
+    },
+    "ore_weights_scope": "Selector branch probabilities only, not proof of all final item/material registrations.",
+    "ore_weights": [
+      {
+        "full_floor_ore_cells": 9,
+        "pool_entries": 18,
+        "ore_probability": "9/64",
+        "overall_bedrock_dust_probability": "11/12800"
+      },
+      {
+        "small_floor_ore_cells": 9,
+        "pool_entries": 9,
+        "ore_probability": "9/128"
+      },
+      {
+        "plain_bedrock_cells": 9,
+        "pool_entries": 0,
+        "ore_probability": "0",
+        "stone_cycle_allowed": true
+      }
+    ],
+    "stone_pool": {
+      "original_stones": [
+        "GraniteBlack",
+        "GraniteRed",
+        "Basalt",
+        "Marble",
+        "Limestone",
+        "Granite",
+        "Diorite",
+        "Andesite",
+        "Komatiite",
+        "SchistGreen",
+        "SchistBlue",
+        "Kimberlite",
+        "Quartzite",
+        "PrismarineLight",
+        "PrismarineDark",
+        "Slate",
+        "Shale"
+      ],
+      "current_stone_ids": [
+        "granite_black",
+        "granite_red",
+        "basalt",
+        "marble",
+        "limestone",
+        "granite",
+        "diorite",
+        "andesite",
+        "komatiite",
+        "greenschist",
+        "blueschist",
+        "kimberlite",
+        "quartzite",
+        "prismarine_light",
+        "prismarine_dark",
+        "slate",
+        "shale",
+        "chalk",
+        "dolomite",
+        "gabbro",
+        "gneiss",
+        "gypsum",
+        "oilshale",
+        "rhyolite",
+        "salt",
+        "sylvite",
+        "talc"
+      ],
+      "original_counts_without_with_deepslate": [
+        18,
+        19
+      ],
+      "current_count": 29,
+      "switch_probability_per_successful_cycle": "1/1000",
+      "common_index_17": {
+        "original_ordinary_overworld": "vanilla cobblestone",
+        "current": "stone_chalk_cobble"
+      },
+      "limit": "Conditional mid-run selector, no initial placement RNG or saved-world index migration equivalence claimed."
+    },
+    "alternate_lubricant": {
+      "given": "A distinct registered fluid name explicitly added to the original public LUBRICANT set.",
+      "old_empty_tank_accepts": true,
+      "current_empty_tank_accepts": false,
+      "limit": "No external fluid/addon registered or filled; default own Lubricant still has its normal path."
+    },
+    "plunger": {
+      "given": "Uncovered main, usable plunger, 2000 L valid lubricant; no externally injected IFluidHandler implementation.",
+      "original_removed_litres": 2000,
+      "current_forge_removed_litres": 0,
+      "current_neoforge_removed_litres": 1000,
+      "limit": "Declared hierarchy, actual native ancestry, handler and item route only; no player click dispatched."
+    },
+    "possible_detector": {
+      "given": "Formed rig, at least100 L lubricant; energy/output need not permit a work cycle.",
+      "original_running_possible": true,
+      "current_provider": false,
+      "current_fallback_supports_switch": false,
+      "current_machine_cover_installation": false,
+      "limit": "Source qualification only, no cover installed."
+    },
+    "query_cost": {
+      "complete_queries": 20,
+      "supports_per_query": 44,
+      "floor_per_query": 9,
+      "support_checks": 880,
+      "floor_checks": 180,
+      "limit": "Conditional complete-source counts, not performance/TPS measurement."
+    }
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "new_alignment_records": [
+    248,
+    249,
+    250,
+    251
+  ],
+  "extended_alignment_records": [
+    36,
+    110,
+    218,
+    232,
+    233,
+    247
+  ],
+  "excluded_false_positives": [
+    "17999 creates the original controller with nine18103 heads; no missing real machine or required single ore-floor block.",
+    "Neo actual entrypoint registers both item/fluid capability consumers; Forge exposes equivalent native capabilities.",
+    "Ordinary output uses placeable broken ore and a single extraction-only output slot; not globally oreRaw-only.",
+    "Full floor ore weighting2, small weighting1, 128-selector and conditional bedrock dust branch exist.",
+    "Soft40000 buffer, whole-batch acceptance, cached-above-capacity early refusal, simulate guard and explicit strength6 danger were repaired earlier and remain.",
+    "World save retains energy above nominal soft capacity, stone selector, output and lubricant; no unsupported hard clamp accusation.",
+    "Final ordinary loot is stripped of machine runtime data by configured CoverDropMixin; clone/pick remains a separate unaccepted path.",
+    "Legacy JEI drill row and duplicate BlockEntityType builder argument do not prove duplicate registrations: canonical map replaces the old preview row.",
+    "Old HBM/Hexorium and named legacy dimensions require a separate modern counterpart/registration audit; not asserted as a default-world outage."
+  ],
+  "limits": [
+    "Original LGPL notices/authors are retained in source identity evidence; no original or native method copied into production.",
+    "Modern negative world height, bounded overflow and current unformed input protection are recorded without reverting safety policies.",
+    "Public BedrockDrillControllerBlock has no in-repo construction reference, but removal/public-extension reachability remains unaccepted.",
+    "Merged preview roles, client instrumentation, exact initial selector setup, external fluids/materials/dimensions and actual save restart remain separate work.",
+    "No Java compilation/target initialization, Gradle, tests, game, pack generation, simulated player interactions, saved-world restart, build or push."
+  ],
+  "root_revalidation": {
+    "kind": "Named source identities, five complete ordered execution/literal views, scoped bindings, comments/directives, native ancestry/consumers and added documentation.",
+    "original_sources": 30,
+    "current_sources": 62,
+    "platform_views": 86,
+    "readability_files": 3,
+    "readability_execution_views": 5,
+    "native_artifacts": 2,
+    "native_entries": 11,
+    "native_readonly_views": 9,
+    "ledger_contiguous": [
+      1,
+      251
+    ],
+    "new_or_added_local_links": 44,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false
+  }
+}
