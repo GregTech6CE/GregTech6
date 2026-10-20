@@ -37,6 +37,8 @@
 
 这些材料数据属于共享 core，两版本共同读取。生成文件的持久修改需要同步对应生成器（`tools/transpile_gt6_materials.py` 与 `tools/modular_materials.py`），否则重新生成会覆盖。工厂继承／加工属性的已知缺口仍见审计主表，不能根据一个定义行推断所有后续加工行为。
 
+CompoundMaterials 现保留用户统一颜色列；生成端和独立排版入口使用同一计算规则。`dust(...).setTextureSet(...)` 与 `elec(..., texture)` 来自不同工厂签名，不能互换工厂统一外观写法，见[说明与七表重现](MATERIAL_TABLE_FORMATTING_20261020.md)。
+
 ## 初始化和配方从哪里看
 
 ### 定义表的空格与列对齐
@@ -255,3 +257,14 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `api/tool/GTToolHelper.java` 与 core `ManualToolRules.clickDamage`：直接损耗和原版返回成本的转换边界。
 
 已核作物条件和诊断／损耗缺口见 [本轮报告](CROP_MAGNIFIER_AUDIT.md)。
+
+## 保险箱、钥匙与衣柜
+
+- core `content/storage/SafeLockRules.java`：十种钥匙材料、所有者门控与绑定／复制／开关纯规则。
+- 共享 `block/inventory/SafeBlock.java`、`blockentity/inventory/SafeBlockEntity.java`：真实交互入口、15 槽、锁状态和世界保存；钥匙物品是 `item/GTDungeonKeyItem.java`。
+- `registry/GTDungeonKeys.java` 只解析规范物品引用，实际注册由 GTMultiItems 持有，不能再加一套别名物品。
+- 共享 `block/inventory/LockerBlock.java`、`blockentity/inventory/LockerBlockEntity.java`：普通衣柜四装备槽与更衣；充电家族仍缺失。
+- core `registry/GTStorageMetals.java`：60 材料规格；`data/UtilityCraftingRows.java` 与共享 `data/OriginalHandCraftingRows.java` 都要核查，后者的旧配方不会因前者存在而自动失效。
+- core `content/storage/OriginalStorageTooltipData.java`：存储提示的行选择；不是玩法实现清单。
+
+各宿主锁权限、正面限制、自动化和拆除不同，见[核查](SAFE_LOCKER_AUDIT.md)。全量路径／命名和剩余压行候选见[布局盘点](SOURCE_READABILITY_INVENTORY.md)。

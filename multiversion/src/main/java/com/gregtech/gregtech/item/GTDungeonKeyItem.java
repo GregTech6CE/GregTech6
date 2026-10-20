@@ -31,7 +31,7 @@ import java.util.List;
  *   <li><b>The item id is not a material prefix.</b> GT6's keys are ore-dictionary entries of
  *       {@code OD.itemKey} built from a plate of the key's material, not one of its material forms; the
  *       port has no {@code key} prefix in its form table, so the keys are registered as plain items
- *       ({@code key_brass}, {@code key_bronze}, ...) instead of adding a tenth-of-a-material form that
+ *       ({@code brass_key}, {@code bronze_key}, ...) instead of adding a tenth-of-a-material form that
  *       would have to be handled by every material loop of the port.</li>
  *   <li><b>Name and id.</b> GT6's {@code getWithNameAndNBT} writes the name into the vanilla
  *       {@code display.Name} tag, which is where 1.20.1 reads a custom name from as well, so

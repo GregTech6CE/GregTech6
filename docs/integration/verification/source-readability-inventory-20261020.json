@@ -1,0 +1,1534 @@
+{
+  "baseline": "36833296ce3e4ce84c35511f4d576bb53f167d7d",
+  "observed_head": "36833296ce3e4ce84c35511f4d576bb53f167d7d",
+  "meaning": "Read-only tracked-file layout and lexical-density inventory. Heuristics rank manual review, not bugs, proof of unnecessary classes, or gameplay parity.",
+  "counts": {
+    "tracked_java_files": 2253,
+    "production_files": 1790,
+    "layers": {
+      "core-api": 39,
+      "core-domain": 496,
+      "shared-or-core-test": 141,
+      "addon-example": 8,
+      "shared-native-api": 13,
+      "shared-native-main": 1041,
+      "1.20.1-forge-bootstrapGameTest": 248,
+      "1.20.1-forge-main": 72,
+      "1.20.1-forge-test": 10,
+      "1.21.1-neoforge-bootstrapGameTest": 28,
+      "1.21.1-neoforge-main": 129,
+      "other-tracked": 28
+    },
+    "production_in_generated_data_directories": 37
+  },
+  "opaque_production_paths": [],
+  "old_loader_type_names_in_production_code": [],
+  "old_native_directory_residue_not_source_inputs": {
+    "src": {
+      "java_files_on_disk": 0,
+      "files": [],
+      "tracked_java_files": []
+    },
+    "neoforge/src": {
+      "java_files_on_disk": 0,
+      "files": [],
+      "tracked_java_files": []
+    }
+  },
+  "upstream_reference_not_production_source": {
+    "root": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java",
+    "exists": true,
+    "java_file_count": 1229,
+    "opaque_path_count": 37,
+    "opaque_paths": [
+      "gregtech/loaders/a/Loader_Blocks.java",
+      "gregtech/loaders/a/Loader_Fluids.java",
+      "gregtech/loaders/a/Loader_Items.java",
+      "gregtech/loaders/a/Loader_Ores.java",
+      "gregtech/loaders/a/Loader_Others.java",
+      "gregtech/loaders/a/Loader_PrefixBlocks.java",
+      "gregtech/loaders/a/Loader_Rails.java",
+      "gregtech/loaders/a/Loader_Rocks.java",
+      "gregtech/loaders/a/Loader_Tools.java",
+      "gregtech/loaders/a/Loader_Woods.java",
+      "gregtech/loaders/b/Loader_Books.java",
+      "gregtech/loaders/b/Loader_Fuels.java",
+      "gregtech/loaders/b/Loader_ItemIterator.java",
+      "gregtech/loaders/b/Loader_Late_Items_And_Blocks.java",
+      "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "gregtech/loaders/b/Loader_OreProcessing.java",
+      "gregtech/loaders/b/Loader_Worldgen.java",
+      "gregtech/loaders/c/Loader_BlockResistance.java",
+      "gregtech/loaders/c/Loader_Loot.java",
+      "gregtech/loaders/c/Loader_Recipes_Alloys.java",
+      "gregtech/loaders/c/Loader_Recipes_Chem.java",
+      "gregtech/loaders/c/Loader_Recipes_Crops.java",
+      "gregtech/loaders/c/Loader_Recipes_Decomp.java",
+      "gregtech/loaders/c/Loader_Recipes_Extruder.java",
+      "gregtech/loaders/c/Loader_Recipes_Food.java",
+      "gregtech/loaders/c/Loader_Recipes_Foreign.java",
+      "gregtech/loaders/c/Loader_Recipes_Furnace.java",
+      "gregtech/loaders/c/Loader_Recipes_Handlers.java",
+      "gregtech/loaders/c/Loader_Recipes_Hints.java",
+      "gregtech/loaders/c/Loader_Recipes_OreDict.java",
+      "gregtech/loaders/c/Loader_Recipes_Ores.java",
+      "gregtech/loaders/c/Loader_Recipes_Other.java",
+      "gregtech/loaders/c/Loader_Recipes_Potions.java",
+      "gregtech/loaders/c/Loader_Recipes_Replace.java",
+      "gregtech/loaders/c/Loader_Recipes_Temporary.java",
+      "gregtech/loaders/c/Loader_Recipes_Vanilla.java",
+      "gregtech/loaders/c/Loader_Recipes_Woods.java"
+    ],
+    "path_list_sha256": "85d6a7f0f3febb4001c7782ea29b3aca0c66a24387252e3b4778c8404cca9926",
+    "meaning": "Original reference files are not build source sets. Preserve their original naming."
+  },
+  "short_production_filenames_review_only": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/platform/Mc.java",
+      "types": [
+        "Mc"
+      ]
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/util/OM.java",
+      "types": [
+        "OM"
+      ]
+    }
+  ],
+  "public_type_filename_mismatch_candidates": [],
+  "densest_production_non_generated_directory": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+      "sha256": "8cea451d838761f62c9957a8603d20600f6eee907c675875cea9a0cf7452dba8",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 822,
+        "max_code_line_chars": 319,
+        "code_lines_over_160": 33,
+        "code_lines_four_semicolons": 51,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": [
+          {
+            "line": 421,
+            "chars": 162,
+            "semicolons": 4,
+            "open_braces": 0
+          },
+          {
+            "line": 422,
+            "chars": 162,
+            "semicolons": 4,
+            "open_braces": 0
+          },
+          {
+            "line": 456,
+            "chars": 319,
+            "semicolons": 9,
+            "open_braces": 2
+          },
+          {
+            "line": 457,
+            "chars": 319,
+            "semicolons": 9,
+            "open_braces": 2
+          },
+          {
+            "line": 458,
+            "chars": 319,
+            "semicolons": 9,
+            "open_braces": 2
+          },
+          {
+            "line": 459,
+            "chars": 319,
+            "semicolons": 9,
+            "open_braces": 2
+          }
+        ]
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkCorridor3.java",
+      "sha256": "8c2214aa303b0708be85c774b895d6d2a8fc0c49e75962e603dc287b96ddc1db",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 237,
+        "max_code_line_chars": 102,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 32,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 235,
+          "max_code_line_chars": 102,
+          "code_lines_over_160": 0,
+          "code_lines_four_semicolons": 32,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 236,
+          "max_code_line_chars": 102,
+          "code_lines_over_160": 0,
+          "code_lines_four_semicolons": 32,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/worldgen/TreeShapeRules.java",
+      "sha256": "8907de442c26d0567279b86f5e30a7681886cf701927cbc978df80618794e25c",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 396,
+        "max_code_line_chars": 160,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 28,
+        "code_lines_three_open_braces": 1,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java",
+      "sha256": "7e8963ad5bda51505373466307e8d293d0563a8351c25d7e62bb4d8be03949ce",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 236,
+        "max_code_line_chars": 298,
+        "code_lines_over_160": 14,
+        "code_lines_four_semicolons": 16,
+        "code_lines_three_open_braces": 2,
+        "compressed_line_examples": [
+          {
+            "line": 50,
+            "chars": 209,
+            "semicolons": 4,
+            "open_braces": 1
+          },
+          {
+            "line": 55,
+            "chars": 196,
+            "semicolons": 4,
+            "open_braces": 1
+          },
+          {
+            "line": 61,
+            "chars": 182,
+            "semicolons": 6,
+            "open_braces": 1
+          },
+          {
+            "line": 165,
+            "chars": 181,
+            "semicolons": 3,
+            "open_braces": 3
+          },
+          {
+            "line": 190,
+            "chars": 176,
+            "semicolons": 5,
+            "open_braces": 3
+          },
+          {
+            "line": 193,
+            "chars": 298,
+            "semicolons": 8,
+            "open_braces": 0
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 196,
+          "max_code_line_chars": 298,
+          "code_lines_over_160": 14,
+          "code_lines_four_semicolons": 16,
+          "code_lines_three_open_braces": 2,
+          "compressed_line_examples": [
+            {
+              "line": 44,
+              "chars": 209,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 49,
+              "chars": 196,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 55,
+              "chars": 182,
+              "semicolons": 6,
+              "open_braces": 1
+            },
+            {
+              "line": 150,
+              "chars": 181,
+              "semicolons": 3,
+              "open_braces": 3
+            },
+            {
+              "line": 162,
+              "chars": 176,
+              "semicolons": 5,
+              "open_braces": 3
+            },
+            {
+              "line": 165,
+              "chars": 298,
+              "semicolons": 8,
+              "open_braces": 0
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 190,
+          "max_code_line_chars": 305,
+          "code_lines_over_160": 13,
+          "code_lines_four_semicolons": 15,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": [
+            {
+              "line": 42,
+              "chars": 209,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 47,
+              "chars": 196,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 53,
+              "chars": 182,
+              "semicolons": 6,
+              "open_braces": 1
+            },
+            {
+              "line": 146,
+              "chars": 181,
+              "semicolons": 3,
+              "open_braces": 3
+            },
+            {
+              "line": 157,
+              "chars": 305,
+              "semicolons": 8,
+              "open_braces": 0
+            },
+            {
+              "line": 160,
+              "chars": 165,
+              "semicolons": 6,
+              "open_braces": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "sha256": "12b33c6bf1c32b524672248511ad5e26b546c5b2f110a32e4debc6c21d867eb3",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 29,
+        "max_code_line_chars": 165,
+        "code_lines_over_160": 1,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 15,
+        "compressed_line_examples": [
+          {
+            "line": 16,
+            "chars": 165,
+            "semicolons": 1,
+            "open_braces": 7
+          }
+        ]
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/worldgen/SurfaceTwigRules.java",
+      "sha256": "8b4045d38308943939757b0e3872f020814406b6c5709b2701a6f5c07e749129",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 47,
+        "max_code_line_chars": 107,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 1,
+        "code_lines_three_open_braces": 13,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/FiniteBottleFillingRecipe.java",
+      "sha256": "ae450426671c641188c27b7fc556b9861c9b654208fde7e1c0abea14d21add5b",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 215,
+        "max_code_line_chars": 229,
+        "code_lines_over_160": 1,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 185,
+          "max_code_line_chars": 229,
+          "code_lines_over_160": 1,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 33,
+          "max_code_line_chars": 1002,
+          "code_lines_over_160": 12,
+          "code_lines_four_semicolons": 8,
+          "code_lines_three_open_braces": 4,
+          "compressed_line_examples": [
+            {
+              "line": 3,
+              "chars": 568,
+              "semicolons": 13,
+              "open_braces": 0
+            },
+            {
+              "line": 11,
+              "chars": 293,
+              "semicolons": 4,
+              "open_braces": 4
+            },
+            {
+              "line": 12,
+              "chars": 417,
+              "semicolons": 7,
+              "open_braces": 3
+            },
+            {
+              "line": 14,
+              "chars": 313,
+              "semicolons": 3,
+              "open_braces": 3
+            },
+            {
+              "line": 26,
+              "chars": 360,
+              "semicolons": 4,
+              "open_braces": 2
+            },
+            {
+              "line": 27,
+              "chars": 510,
+              "semicolons": 6,
+              "open_braces": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+      "sha256": "d75309bf4b5b3e40ddc6494b65802f4906ee716dcf62de571d2a3baf600b7e13",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 289,
+        "max_code_line_chars": 296,
+        "code_lines_over_160": 13,
+        "code_lines_four_semicolons": 8,
+        "code_lines_three_open_braces": 2,
+        "compressed_line_examples": [
+          {
+            "line": 158,
+            "chars": 164,
+            "semicolons": 6,
+            "open_braces": 0
+          },
+          {
+            "line": 285,
+            "chars": 296,
+            "semicolons": 8,
+            "open_braces": 3
+          },
+          {
+            "line": 287,
+            "chars": 174,
+            "semicolons": 8,
+            "open_braces": 0
+          },
+          {
+            "line": 288,
+            "chars": 289,
+            "semicolons": 8,
+            "open_braces": 4
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 245,
+          "max_code_line_chars": 296,
+          "code_lines_over_160": 13,
+          "code_lines_four_semicolons": 8,
+          "code_lines_three_open_braces": 2,
+          "compressed_line_examples": [
+            {
+              "line": 139,
+              "chars": 164,
+              "semicolons": 6,
+              "open_braces": 0
+            },
+            {
+              "line": 241,
+              "chars": 296,
+              "semicolons": 8,
+              "open_braces": 3
+            },
+            {
+              "line": 243,
+              "chars": 174,
+              "semicolons": 8,
+              "open_braces": 0
+            },
+            {
+              "line": 244,
+              "chars": 289,
+              "semicolons": 8,
+              "open_braces": 4
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 245,
+          "max_code_line_chars": 362,
+          "code_lines_over_160": 12,
+          "code_lines_four_semicolons": 9,
+          "code_lines_three_open_braces": 2,
+          "compressed_line_examples": [
+            {
+              "line": 138,
+              "chars": 164,
+              "semicolons": 6,
+              "open_braces": 0
+            },
+            {
+              "line": 241,
+              "chars": 362,
+              "semicolons": 8,
+              "open_braces": 3
+            },
+            {
+              "line": 243,
+              "chars": 174,
+              "semicolons": 8,
+              "open_braces": 0
+            },
+            {
+              "line": 244,
+              "chars": 289,
+              "semicolons": 8,
+              "open_braces": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEngines.java",
+      "sha256": "993b0a402c6a15add8999903db8661f5c486077a7d478be25a83602ce3eb8499",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 35,
+        "max_code_line_chars": 152,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 1,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 12,
+          "max_code_line_chars": 152,
+          "code_lines_over_160": 0,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 25,
+          "max_code_line_chars": 496,
+          "code_lines_over_160": 15,
+          "code_lines_four_semicolons": 8,
+          "code_lines_three_open_braces": 2,
+          "compressed_line_examples": [
+            {
+              "line": 3,
+              "chars": 496,
+              "semicolons": 10,
+              "open_braces": 0
+            },
+            {
+              "line": 4,
+              "chars": 283,
+              "semicolons": 2,
+              "open_braces": 5
+            },
+            {
+              "line": 6,
+              "chars": 462,
+              "semicolons": 8,
+              "open_braces": 1
+            },
+            {
+              "line": 17,
+              "chars": 429,
+              "semicolons": 7,
+              "open_braces": 2
+            },
+            {
+              "line": 18,
+              "chars": 413,
+              "semicolons": 7,
+              "open_braces": 2
+            },
+            {
+              "line": 19,
+              "chars": 417,
+              "semicolons": 7,
+              "open_braces": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceCenterBiomes.java",
+      "sha256": "a46e2ba397cce0630c66e28cd99cae56f5ad1c0b54ce7ec1c46b84f69de1b446",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 239,
+        "max_code_line_chars": 159,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 10,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeGasTurbineControllerBlockEntity.java",
+      "sha256": "48442e142a4fe76cc4e313563f70894472b725ffc3888e9bd1dea0581d0b8a5f",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 139,
+        "max_code_line_chars": 420,
+        "code_lines_over_160": 17,
+        "code_lines_four_semicolons": 7,
+        "code_lines_three_open_braces": 1,
+        "compressed_line_examples": [
+          {
+            "line": 89,
+            "chars": 165,
+            "semicolons": 7,
+            "open_braces": 0
+          },
+          {
+            "line": 101,
+            "chars": 181,
+            "semicolons": 5,
+            "open_braces": 2
+          },
+          {
+            "line": 111,
+            "chars": 246,
+            "semicolons": 5,
+            "open_braces": 2
+          },
+          {
+            "line": 133,
+            "chars": 420,
+            "semicolons": 10,
+            "open_braces": 1
+          },
+          {
+            "line": 134,
+            "chars": 364,
+            "semicolons": 7,
+            "open_braces": 1
+          },
+          {
+            "line": 135,
+            "chars": 241,
+            "semicolons": 4,
+            "open_braces": 1
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 129,
+          "max_code_line_chars": 420,
+          "code_lines_over_160": 17,
+          "code_lines_four_semicolons": 7,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": [
+            {
+              "line": 84,
+              "chars": 165,
+              "semicolons": 7,
+              "open_braces": 0
+            },
+            {
+              "line": 96,
+              "chars": 181,
+              "semicolons": 5,
+              "open_braces": 2
+            },
+            {
+              "line": 106,
+              "chars": 246,
+              "semicolons": 5,
+              "open_braces": 2
+            },
+            {
+              "line": 123,
+              "chars": 420,
+              "semicolons": 10,
+              "open_braces": 1
+            },
+            {
+              "line": 124,
+              "chars": 364,
+              "semicolons": 7,
+              "open_braces": 1
+            },
+            {
+              "line": 125,
+              "chars": 241,
+              "semicolons": 4,
+              "open_braces": 1
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 122,
+          "max_code_line_chars": 638,
+          "code_lines_over_160": 15,
+          "code_lines_four_semicolons": 6,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": [
+            {
+              "line": 81,
+              "chars": 165,
+              "semicolons": 7,
+              "open_braces": 0
+            },
+            {
+              "line": 93,
+              "chars": 181,
+              "semicolons": 5,
+              "open_braces": 2
+            },
+            {
+              "line": 103,
+              "chars": 246,
+              "semicolons": 5,
+              "open_braces": 2
+            },
+            {
+              "line": 118,
+              "chars": 489,
+              "semicolons": 10,
+              "open_braces": 1
+            },
+            {
+              "line": 119,
+              "chars": 638,
+              "semicolons": 10,
+              "open_braces": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GunToolItem.java",
+      "sha256": "36e008f4cf8ddfddbc552845bfb8739e8708d16fe9ae269684df52464b03182e",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 181,
+        "max_code_line_chars": 409,
+        "code_lines_over_160": 23,
+        "code_lines_four_semicolons": 7,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": [
+          {
+            "line": 56,
+            "chars": 292,
+            "semicolons": 4,
+            "open_braces": 1
+          },
+          {
+            "line": 57,
+            "chars": 267,
+            "semicolons": 4,
+            "open_braces": 1
+          },
+          {
+            "line": 80,
+            "chars": 287,
+            "semicolons": 7,
+            "open_braces": 1
+          },
+          {
+            "line": 138,
+            "chars": 308,
+            "semicolons": 4,
+            "open_braces": 2
+          },
+          {
+            "line": 152,
+            "chars": 371,
+            "semicolons": 4,
+            "open_braces": 1
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 161,
+          "max_code_line_chars": 409,
+          "code_lines_over_160": 23,
+          "code_lines_four_semicolons": 7,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": [
+            {
+              "line": 53,
+              "chars": 292,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 54,
+              "chars": 267,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 77,
+              "chars": 287,
+              "semicolons": 7,
+              "open_braces": 1
+            },
+            {
+              "line": 127,
+              "chars": 308,
+              "semicolons": 4,
+              "open_braces": 2
+            },
+            {
+              "line": 139,
+              "chars": 371,
+              "semicolons": 4,
+              "open_braces": 1
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 160,
+          "max_code_line_chars": 409,
+          "code_lines_over_160": 25,
+          "code_lines_four_semicolons": 7,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": [
+            {
+              "line": 53,
+              "chars": 292,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 54,
+              "chars": 267,
+              "semicolons": 4,
+              "open_braces": 1
+            },
+            {
+              "line": 77,
+              "chars": 287,
+              "semicolons": 7,
+              "open_braces": 1
+            },
+            {
+              "line": 126,
+              "chars": 308,
+              "semicolons": 4,
+              "open_braces": 2
+            },
+            {
+              "line": 138,
+              "chars": 375,
+              "semicolons": 4,
+              "open_braces": 1
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "densest_generated_data_directory": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/generated/GTFoodStatsGen.java",
+      "sha256": "c03d11d525ed5a2bd4f032d3ff9a7c6e1b8ea16426b879a13147617a8161513f",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 12,
+        "max_code_line_chars": 438,
+        "code_lines_over_160": 2,
+        "code_lines_four_semicolons": 2,
+        "code_lines_three_open_braces": 1,
+        "compressed_line_examples": [
+          {
+            "line": 10,
+            "chars": 438,
+            "semicolons": 6,
+            "open_braces": 3
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 10,
+          "max_code_line_chars": 438,
+          "code_lines_over_160": 2,
+          "code_lines_four_semicolons": 2,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": [
+            {
+              "line": 8,
+              "chars": 438,
+              "semicolons": 6,
+              "open_braces": 3
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 10,
+          "max_code_line_chars": 434,
+          "code_lines_over_160": 2,
+          "code_lines_four_semicolons": 2,
+          "code_lines_three_open_braces": 1,
+          "compressed_line_examples": [
+            {
+              "line": 8,
+              "chars": 434,
+              "semicolons": 6,
+              "open_braces": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeSink.java",
+      "sha256": "4a6dd3fca4601c6bd65d50f9420d6f9fc1e29988321855984bf4ca9d737cffb9",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 9,
+        "max_code_line_chars": 322,
+        "code_lines_over_160": 3,
+        "code_lines_four_semicolons": 1,
+        "code_lines_three_open_braces": 1,
+        "compressed_line_examples": [
+          {
+            "line": 7,
+            "chars": 217,
+            "semicolons": 5,
+            "open_braces": 3
+          }
+        ]
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTEnchantmentTable.java",
+      "sha256": "4c49a747f64e5fedaa0cd93c34030a44e580f13ee5cd2bb2d9ebae4a2eb1fa74",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 204,
+        "max_code_line_chars": 901,
+        "code_lines_over_160": 42,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/GTFoodItemsGen.java",
+      "sha256": "b751b8a0e476ca43b6cc16dfe919aef7f22eda5329857e68b0c04b4707f917ed",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 875,
+        "max_code_line_chars": 894,
+        "code_lines_over_160": 36,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialDataFacts.java",
+      "sha256": "c9c3119a2e46a67e40e3a1e1b0bafbe223173573e5db6dc104f42c7d033acc05",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 69,
+        "max_code_line_chars": 729,
+        "code_lines_over_160": 4,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/GTSensorRecipesGen.java",
+      "sha256": "421b926b3695c9c5390d558b215a36ba14869e9b594d144a8d51311495048c54",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 45,
+        "max_code_line_chars": 484,
+        "code_lines_over_160": 21,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOresGen.java",
+      "sha256": "8ab7afc28555b28fd7d2626311ab789ae3243a6e5357d140b8d4ad70a7d72f9b",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 165,
+        "max_code_line_chars": 478,
+        "code_lines_over_160": 91,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+      "sha256": "ef0fd403d4aadc2c7c6ff4b4426ae7d2a912a5e040e0d7c1310b224d2410b3d5",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 2325,
+        "max_code_line_chars": 402,
+        "code_lines_over_160": 1,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 583,
+        "max_code_line_chars": 327,
+        "code_lines_over_160": 569,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+      "sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 186,
+        "max_code_line_chars": 298,
+        "code_lines_over_160": 172,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/StoneMaterials.java",
+      "sha256": "cc86196560bc2366cb749b9a2e478bbd22b60848a5d345e3bb604b1c5d43d5c3",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 84,
+        "max_code_line_chars": 274,
+        "code_lines_over_160": 71,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOtherGen.java",
+      "sha256": "e710352c4de8cf333394f811b011f1147fd37ceec92a6b898e87cdb2a9bc956a",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": true,
+      "metrics": {
+        "lines": 292,
+        "max_code_line_chars": 273,
+        "code_lines_over_160": 22,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    }
+  ],
+  "largest_production_non_generated_directory": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java",
+      "sha256": "82c04e294915c49937e383b940b6800a623301dc1de7779506df9b73aac88987",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 2659,
+        "max_code_line_chars": 108,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+      "sha256": "9924c93cbcbfc12d75bed1e4a4dcebf63052a13f408e1cfd90cb2e4c150f2e1a",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 2586,
+        "max_code_line_chars": 99,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 2048,
+        "max_code_line_chars": 386,
+        "code_lines_over_160": 21,
+        "code_lines_four_semicolons": 6,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": [
+          {
+            "line": 252,
+            "chars": 185,
+            "semicolons": 7,
+            "open_braces": 2
+          },
+          {
+            "line": 1824,
+            "chars": 219,
+            "semicolons": 4,
+            "open_braces": 1
+          }
+        ]
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 1926,
+          "max_code_line_chars": 386,
+          "code_lines_over_160": 21,
+          "code_lines_four_semicolons": 6,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": [
+            {
+              "line": 241,
+              "chars": 185,
+              "semicolons": 7,
+              "open_braces": 2
+            },
+            {
+              "line": 1718,
+              "chars": 219,
+              "semicolons": 4,
+              "open_braces": 1
+            }
+          ]
+        },
+        "neoforge": {
+          "lines": 1850,
+          "max_code_line_chars": 386,
+          "code_lines_over_160": 27,
+          "code_lines_four_semicolons": 7,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": [
+            {
+              "line": 228,
+              "chars": 185,
+              "semicolons": 7,
+              "open_braces": 2
+            },
+            {
+              "line": 550,
+              "chars": 208,
+              "semicolons": 4,
+              "open_braces": 0
+            },
+            {
+              "line": 1642,
+              "chars": 219,
+              "semicolons": 4,
+              "open_braces": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1297,
+        "max_code_line_chars": 149,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "sha256": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1263,
+        "max_code_line_chars": 246,
+        "code_lines_over_160": 7,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 1169,
+          "max_code_line_chars": 246,
+          "code_lines_over_160": 7,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 1145,
+          "max_code_line_chars": 246,
+          "code_lines_over_160": 8,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/ItemPipeBlockEntity.java",
+      "sha256": "f3657ce15e34af7267a165adf48781f7d88befaec5100889b3718f5e584ac591",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1263,
+        "max_code_line_chars": 199,
+        "code_lines_over_160": 6,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 1167,
+          "max_code_line_chars": 199,
+          "code_lines_over_160": 6,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 1144,
+          "max_code_line_chars": 286,
+          "code_lines_over_160": 10,
+          "code_lines_four_semicolons": 4,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": [
+            {
+              "line": 808,
+              "chars": 195,
+              "semicolons": 4,
+              "open_braces": 0
+            },
+            {
+              "line": 940,
+              "chars": 222,
+              "semicolons": 5,
+              "open_braces": 1
+            },
+            {
+              "line": 945,
+              "chars": 286,
+              "semicolons": 5,
+              "open_braces": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "sha256": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1242,
+        "max_code_line_chars": 334,
+        "code_lines_over_160": 14,
+        "code_lines_four_semicolons": 3,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 1172,
+          "max_code_line_chars": 334,
+          "code_lines_over_160": 14,
+          "code_lines_four_semicolons": 3,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 1123,
+          "max_code_line_chars": 334,
+          "code_lines_over_160": 16,
+          "code_lines_four_semicolons": 3,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+      "sha256": "e319f98ceaf4d213630c824d8e19ec4c962cb0b044e1c6be1c3043d36c232ab1",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1228,
+        "max_code_line_chars": 108,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java",
+      "sha256": "b340ad93e5ae47e53a5c3cc3c8f3cd56a9d49e463c845296307805197cc459e0",
+      "layer": "shared-native-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1193,
+        "max_code_line_chars": 169,
+        "code_lines_over_160": 1,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      },
+      "projected_metrics": {
+        "forge": {
+          "lines": 1155,
+          "max_code_line_chars": 169,
+          "code_lines_over_160": 1,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        },
+        "neoforge": {
+          "lines": 1154,
+          "max_code_line_chars": 177,
+          "code_lines_over_160": 1,
+          "code_lines_four_semicolons": 0,
+          "code_lines_three_open_braces": 0,
+          "compressed_line_examples": []
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1057,
+        "max_code_line_chars": 207,
+        "code_lines_over_160": 97,
+        "code_lines_four_semicolons": 0,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1",
+      "layer": "core-domain",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 1009,
+        "max_code_line_chars": 149,
+        "code_lines_over_160": 0,
+        "code_lines_four_semicolons": 1,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": []
+      }
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/blockentity/machine/SmeltingCrucibleBlockEntity.java",
+      "sha256": "3bcdefdce2084103f7537ace4c85ee052f6493decfbe58369c13a33c0478f2b7",
+      "layer": "1.20.1-forge-main",
+      "production": true,
+      "generated_data_directory": false,
+      "metrics": {
+        "lines": 973,
+        "max_code_line_chars": 247,
+        "code_lines_over_160": 5,
+        "code_lines_four_semicolons": 2,
+        "code_lines_three_open_braces": 0,
+        "compressed_line_examples": [
+          {
+            "line": 150,
+            "chars": 179,
+            "semicolons": 4,
+            "open_braces": 1
+          }
+        ]
+      }
+    }
+  ],
+  "date": "2026-10-20",
+  "full_scratch_inventory_sha256": "777217cc4c2e7744aaafcbe9ccd53454f085a5d46e080d39a1e2709167520b6b",
+  "manifest_scope": "Source layout observation only; not gameplay parity, defect count or completion proof.",
+  "production_path_sha256": "421cc2e12338f5a0655c1cbc7abd2d4c38d56a513487e9f453118aa81407af20",
+  "tooltip_format_equivalence": {
+    "path": "core/src/main/java/com/gregtech/gregtech/content/storage/OriginalStorageTooltipData.java",
+    "baseline": "36833296ce3e4ce84c35511f4d576bb53f167d7d",
+    "sha256_before": "95776c2e114beef85ab9eb7ca1f48bc6cec97e70cdc6aec3733219891d32bb15",
+    "sha256_after": "9a5ee3aa5bebfbb3801d491c280db81256a948ff7b88218549ce2013b64395b4",
+    "token_stream_sha256": "729a684e3c747cb8d429c0f3602451abd01b7e35d7fe9bced93ba277b3daca47",
+    "java_lexical_token_count": 544,
+    "java_lexical_tokens_identical": true,
+    "literal_count": 54,
+    "all_literals_identical": true,
+    "comment_count": 3,
+    "all_comments_identical": true,
+    "before_snapshot_matches_git_baseline": true,
+    "lines_before": 63,
+    "lines_after": 85,
+    "meaning": "Whitespace/line breaks only; not a gameplay or original-tooltip completeness test."
+  },
+  "completed_after_inventory": {
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java": {
+      "lines_before": 4,
+      "sha256_after": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+      "lines_after": 81,
+      "max_code_line_chars_before": 3929,
+      "max_code_line_chars_after": 151,
+      "java_tokens_and_literal_positions_identical": true,
+      "comments_identical": true,
+      "stonecutter_directives_identical": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/EngineClientSetup.java": {
+      "lines_before": 9,
+      "sha256_after": "52d853eaa89480e02d8bd1aeceb391c4af3209278a36aacbaaa87e294a059b96",
+      "lines_after": 84,
+      "max_code_line_chars_before": 815,
+      "max_code_line_chars_after": 112,
+      "java_tokens_and_literal_positions_identical": true,
+      "comments_identical": true,
+      "stonecutter_directives_identical": true
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java": {
+      "lines_before": 6,
+      "sha256_after": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "lines_after": 54,
+      "max_code_line_chars_before": 1413,
+      "max_code_line_chars_after": 119,
+      "java_tokens_and_literal_positions_identical": true,
+      "comments_identical": true,
+      "stonecutter_directives_identical": true
+    }
+  }
+}
