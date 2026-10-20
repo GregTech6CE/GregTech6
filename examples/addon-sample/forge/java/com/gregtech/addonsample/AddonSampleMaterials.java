@@ -17,6 +17,9 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<MaterialDeclaration> materials() {
         var materials = new ArrayList<MaterialDeclaration>();
+        materials.add(MaterialDeclaration.builder("SampleRubber")
+                .displayName("Sample Rubber").color(0xE8E8E8).meltingPointKelvin(350)
+                .boilingPointKelvin(600).density(1.2F).dust().build());
         materials.add(MaterialDeclaration.builder("AmmoniumNitrate")
                 .displayName("Ammonium Nitrate").color(0xC8D6C0).chemicalFormula("NH4NO3")
                 .meltingPointKelvin(443).boilingPointKelvin(483).density(1.72F).dust().build());
@@ -36,7 +39,7 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
     }
 
     @Override public List<MaterialFormRequest> forms() {
-        return List.of();
+        return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"));
     }
 
     @Override public List<MaterialComposition> compositions() {

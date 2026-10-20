@@ -62,6 +62,14 @@ public final class MachineTooltips {
                 .append(recipeName.copy().withStyle(ChatFormatting.WHITE))
                 .withStyle(ChatFormatting.AQUA));
 
+        if (spec.cheapOverclocking()) {
+            tooltip.add(Component.translatable("gt.lang.cheap.overclocking").withStyle(ChatFormatting.YELLOW));
+        }
+        if (spec.minimumLightAbove() > 0) {
+            tooltip.add(Component.translatable("gt.lang.requirement.light.above", spec.minimumLightAbove())
+                    .withStyle(ChatFormatting.GOLD));
+        }
+
         // Energy IN
         if (spec.energyIn() > 0) {
             String dirs = TooltipHelper.dirMaskToString(fc.energyInputs());

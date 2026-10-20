@@ -1,9 +1,13 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
+import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.RecipeOutputChances;
+import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.addon.AddonMachineLayout;
 import com.gregtech.gregtech.api.addon.AddonMachines;
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
@@ -61,9 +65,61 @@ public final class AddonMachineContracts {
             case "fuelname" -> fuelNameCollision();
             case "fuelmachine" -> recipeMachineCannotUseFuelMap();
             case "fuelbounds" -> fuelBounds();
+            case "knobs" -> knobs();
+            case "face" -> faceDisagree();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
+    }
+
+    private static void knobs() {
+        var plain = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press").basic().build();
+        check(!plain.facesSpecified(), "default faces are unspecified");
+        check(!plain.cheapOverclocking() && !plain.cheapOverclockingSpecified(), "default cheap overclock is off and unset");
+        check(plain.minimumLightAbove() == 0, "default light gate is off");
+        check(!AddonOverclock.enabled(true, true, plain.cheapOverclocking(), true), "addon basic ignores a cheap built-in name");
+        check(AddonOverclock.enabled(false, false, false, true), "built-in legacy cheap stays");
+        check(!AddonOverclock.enabled(false, true, false, true), "an explicit off replaces a large machine's legacy cheap rule");
+
+        var declared = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
+                .itemInputs(BehaviorMachineDeclaration.Face.TOP)
+                .itemOutputs(BehaviorMachineDeclaration.Face.BOTTOM)
+                .energyInputs(BehaviorMachineDeclaration.Face.BACK)
+                .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+                .cheapOverclocking(true)
+                .minimumLightAbove(14)
+                .build();
+        check(declared.facesSpecified() && declared.itemAutoOutput() == BehaviorMachineDeclaration.Face.BOTTOM, "declared faces");
+        check(declared.cheapOverclocking() && declared.cheapOverclockingSpecified(), "cheap overclock opt-in");
+        check(AddonOverclock.enabled(true, true, declared.cheapOverclocking(), false), "opt-in cheap overclock is on");
+        check(declared.minimumLightAbove() == 14, "light gate");
+        int top = 0;
+        for (var face : declared.itemInputs()) top |= face.bit();
+        check(top == (1 << BehaviorMachineDeclaration.Face.TOP.index()), "top bit matches the face index");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").minimumLightAbove(16).build(), "light");
+        int[] certain = RecipeOutputChances.normalize(null, 2);
+        check(certain.length == 2 && certain[0] == 10_000 && certain[1] == 10_000, "missing chances are certain");
+        check(RecipeOutputChances.normalize(new int[0], 1)[0] == 10_000, "an empty chance list is certain");
+        int[] half = RecipeOutputChances.normalize(new int[]{5_000, 10_000}, 2);
+        check(half[0] == 5_000 && half[1] == 10_000, "declared chances are kept");
+        expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{5_000}, 2), "does not match");
+        expectThrows(IllegalArgumentException.class, () -> RecipeOutputChances.normalize(new int[]{0}, 1), "1..");
+    }
+
+    private static void faceDisagree() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")), List.of(
+                faced("press_a", "samplepress", MachineFaceMasks.ALL_SIDES),
+                faced("press_b", "samplepress", MachineFaceMasks.TOP_IN_BOTTOM_OUT)), List.of());
+        expectInstall("samplepress", "disagrees");
+    }
+
+    private static AddonMachineDefinition faced(String id, String machineName, MachineFaceMasks faces) {
+        return new AddonMachineDefinition(BasicMachineParameters.builder(id, GTMaterialRegistry.get("Steel"))
+                .machineType(machineName).energy(GregTechTags.Energy.EU, 32).tier(1).faces(faces).build(),
+                "aa.recipe.press", MachineControllerKind.BASIC, 10_000, true, List.of());
     }
 
     private static void kind() {

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.internal.addon;
 
+import com.gregtech.gregtech.api.addon.RecipeOutputChances;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
 import com.gregtech.gregtech.api.addon.platform.AddonLoader;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
@@ -113,12 +114,19 @@ public final class AddonLoaderServices {
     }
 
     private static Recipe recipe(AddonRecipes.Line line) {
-        return new Recipe(line.itemInputs(), line.itemOutputs(), null, null,
+        long[] chances = new long[line.outputChances().length];
+        for (int i = 0; i < chances.length; i++) chances[i] = line.outputChances()[i];
+        return new Recipe(line.itemInputs(), line.itemOutputs(), null, chances,
                 line.fluidInputs(), line.fluidOutputs(), line.duration(), line.euPerTick(), line.special());
     }
 
     private static AddonRecipes.Line line(Recipe recipe) {
+        int outputs = recipe.mOutputs == null ? 0 : recipe.mOutputs.length;
+        int[] chances = new int[outputs];
+        for (int i = 0; i < outputs; i++)
+            chances[i] = recipe.mChances != null && i < recipe.mChances.length
+                    ? (int) recipe.mChances[i] : RecipeOutputChances.CERTAIN;
         return new AddonRecipes.Line(recipe.mInputs, recipe.mOutputs, recipe.mFluidInputs, recipe.mFluidOutputs,
-                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue);
+                recipe.mDuration, recipe.mEUt, recipe.mSpecialValue, chances);
     }
 }
