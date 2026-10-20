@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第六十三批核扩展、太阳能与单块热交换器
+
+正式记录至221条；新增六项条件／规格合同，003／017／126扩围。参数棒可自行注册、内置46耗尽／封闭11冷却表、太阳能天气／单包输出、八换热器／16hot行和普通换热保存已有，不误报整族缺失。排液必须追onItemUseFirst非PASS的真实截断，不能只看interact。46原版／130当前、126平台视图、52 API库存、39资源及6工件30entry重核，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[换热](HEAT_EXCHANGER_AUDIT.md)和[回执](verification/nuclear-solar-heat-audit-20261021.json)。仅FuelRod Javadoc纠错，无玩法／编译／测试／构建／推送；goal active。
+
 ## 2026-10-21 / 第六十二批工具配方执行源码展开
 
 ToolShapedRecipe 254→456行，ToolShapelessRecipe 168→247行；四份平台视图最长行现为150／150／148／149。循环与返还退出点、版本Codec和buffer顺序保持，Neo共用闭合括号边界整理也通过完整词法／字面量／注释比较。见[导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)和[回执](verification/tool-recipe-readability-20261021.json)；正式记录仍215条，不修配方玩法。未编译／测试／构建／推送，用户材料保留，全面goal active。

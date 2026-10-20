@@ -17,12 +17,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * GT6-style nuclear fuel rod with NBT.
+ * Fuel-rod block item backed by a shared reactor definition when available.
  *
- * <p>Each fuel rod stores: fuel type (enum), remaining health (0 = depleted),
- * and enrichment level. These are inserted into reactor cores. Unlike the old
- * 1x1 core which used bare {@link MaterialPrefix#stick} items, fuel rods carry
- * the state needed for neutron flux simulation and breeding.</p>
+ * <p>Reactor execution reads remaining life and moderation from stack data through
+ * {@code RodPhysics}. The {@code FuelType} constructor and health keys remain for
+ * legacy port content. Compatibility-only items without a definition are not
+ * accepted by the current reactor cores.</p>
  */
 public class FuelRodItem extends net.minecraft.world.item.BlockItem {
 

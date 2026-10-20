@@ -84,3 +84,7 @@ ReactorRodRecipes已有相关棒罐装、17条乏燃料及3条固态增殖产物
 ## 第六十一批状态消费者续核
 
 禁用／停止慢化棒的旧contacts提交时点登记ALIGN-212；正常核燃料moderated交换已有对应，不将所有inactive棒一概判错。普通耗尽当tick先增热再换乏棒／产物、下tick走新Kind，以及Neo CUSTOM_DATA实际提交均有真实消费者；见[状态连续性](NUCLEAR_TRANSITION_AUDIT.md)。本次未改棒参数、损耗、产物或核玩法，也没有实际耗尽／重启验收。
+
+## 第六十三批外部棒扩展续核
+
+216／217区分参数棒与行为回调：public FuelRodItem(Rod)可接受未进ALL的记录并自行原生注册，不是拒绝第47棒；但普通Item的按栈／核心上下文回调无当前消费者，耗尽product仍先查封闭ALL。外部已注册产物10001也会在查registry前得到EMPTY，见[扩展合同](NUCLEAR_EXTENSION_AUDIT.md)。内置46条正常耗尽及11冷却表已有，未证明真实第三方addon损坏，也不误报原有registerCoolant API丢失。

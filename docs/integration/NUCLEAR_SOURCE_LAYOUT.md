@@ -53,3 +53,7 @@ RodPhysicsMath的旧“Exact original”说明已更正：当前long运算／转
 ## 第六十一批状态与生命周期导航
 
 原版m／o两数组和Moderator接触计数各有不同提交者，当前setStopped／removeRod、Network.finishCycle与save/load的状态语义不能只按字段名对应。具体转换见[状态报告](NUCLEAR_TRANSITION_AUDIT.md)，网络END前中止／先remove后的异常必须分开，见[生命周期报告](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。同为WeakHashMap不保证值反持key时可回收；本批只归档，不未经设计地改变跨核心交换、异常恢复或安全停止行为。
+
+## 第六十三批实现类与支持SDK边界
+
+核棒public实现类／Rod记录允许参数扩展；独立SDK只打包core/native API源集，不能把main实现类公开构造器当成受支持API。52份API库存及真实棒分派／耗尽出口见[扩展专题](NUCLEAR_EXTENSION_AUDIT.md)。FuelRodItem误导旧核棒身份的Javadoc已更正，运行词法保持；本批不新增回调注册器或改变耗尽解析。

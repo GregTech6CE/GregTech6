@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：已合并远端`894f90ce0`，第六十二批展开两份工具配方并整理Neo载体边界；此前核状态／生命周期、配置代表矩阵与源码共享已归档。行为记录至ALIGN-215，共215条正式记录，包含已修复／部分修复和明确保留的政策边界，不是215个未修复问题。初始清点及旧批次结论保留日期边界。
+2026-10-21 续核：已合并远端`894f90ce0`，第六十三批归档核扩展、太阳能板与单块热交换器；此前工具配方源码、核生命周期和配置专题已整理。行为记录至ALIGN-221，共221条正式记录，包含已修复／部分修复与保留政策，不是221个未修复问题。旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -26,7 +26,7 @@
 | --- | --- | --- | --- |
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
-| ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。不能把语言文件格式自检通过当作这些提示已经汉化。 |
+| ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。单块热交换器放大镜也直接拼Input／Output，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。语言文件格式自检不证明这些提示已汉化。 |
 | ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
@@ -40,7 +40,7 @@
 | ALIGN-014 | 确认部分通用加工固定耗时替代了原版材料工作性分支，也遗漏部分过滤条件。 | `Loader_Recipes_Handlers:262–319,371–393`；`RecipeMapHandlerPrefix.getCosts`。 | `PartRecipeLoader` 的轧制、杆拉细丝、卷弯、箔／轨道与车床方法使用固定时长。困难材料品质 3、1U 锭→板，原版参数算得 1024 tick，当前传 16；具体范围不包含已有独立工作性计算的 Welder 和物理导线入口。 |
 | ALIGN-015 | 确认车床／切割的部分材料余料未返回。 | 原版车床／切割行启用 pulverized remains，`RecipeMapHandlerPrefix:213–218` 按差额和粉碎目标返回。 | `PartRecipeLoader.roll`、`cut` 只输出主产物，如板→透镜、透镜→环、小板切割。锭／宝石→杆有专用余料但未按粉碎目标转换；不能扩大成所有加工都无副产物。 |
 | ALIGN-016 | 确认通用材料切割的冷却液矩阵、时长和品质用量倍率不同。 | `Loader_Recipes_Handlers:628–652` 实际循环前四种冷却液；`RecipeMapHandlerPrefix:218` 按品质+1缩放。 | 当前 `cut` 只注册水、基础时长与 `max(16,duration)` 水量；品质 3 的长杆水路线，原版参数为 64 tick／256 mB，当前 16 tick／16 mB。其他显式切割配方未全部核查。 |
-| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。电变压器 emitElectricTransformer 及电池盒 serverTick 同样缺少活动环境分支，见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
+| ALIGN-017 | 确认转换器未接入原版运行环境风险检查。 | `TileEntityBase10EnergyConverter.onTick2` 每 600 tick 检查活动设备；Root 与 Covers 按能量类型、侧面、覆盖板和配置处理火／水／雨／雷。 | `EnergyNodeBlockEntity.tickOriginalConverter` 只保留不运行时衰减过载次数；易损集合存在但未消费。电变压器 emitElectricTransformer 及电池盒 serverTick 同样缺少活动环境分支，见 [电变压器核查](ELECTRIC_TRANSFORMER_AUDIT.md)。太阳能板活动火／邻液缺口亦属此项，但原雨／雷免疫true，取消waterlogged政策保留，见[太阳能板](SOLAR_PANEL_AUDIT.md)。范围及概率见 [能源核查](ENERGY_CONVERTER_AUDIT.md)，不能推为所有蒸汽设备都应遇水损坏。 |
 | ALIGN-018 | 已修复注册缺项（2026-10-20）；完整设备行为不由此保证。 | 原版注册 11023–11025、11113–11115，无外部依赖条件。 | 当前 FluxRotaryCatalog 具有五档，六台高档设备的注册、配方、模型、材料及原文名称已补齐；见[修复记录](verification/gameplay-and-single-machines-20261020.md)。 |
 | ALIGN-019 | 确认小锅炉工具交互差异。 | 原版 BoilerTank 的排空器先水后蒸汽，温度计读取储存热量。 | 当前先蒸汽后水、固定排空消耗，并缺少锅炉温度计分支；Jade 不能代替物品交互。 |
 | ALIGN-020 | 确认小锅炉缺少外部爆炸触发的高压连锁处理。 | 原版 BoilerTank.onExploded 在表值 >4 时再次爆炸。 | 当前只有自身过热／满罐及玩家拆除分支；抑制高压掉落不是爆炸回调。 |
@@ -152,7 +152,7 @@
 | ALIGN-123 | 确认扫描仪缺少逐段异常隔离。 | 原版各段独立捕获后继续诊断。 | 当前本地调用链没有恢复；异常可中断扫描，未故障注入或复现崩溃，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
 | ALIGN-124 | 确认扫描缺少方块调试与可修改事件合同。 | 原版自身多方块接口提供 debug，末尾事件可改文本／费用并取消结果。 | 当前直接返回固定诊断，没有提供者／事件调用；现代扩展桥接待设计，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
 | ALIGN-125 | 确认通用放大镜吞掉过滤器专属诊断。 | 原版报告物品／元数据／通配或实际流体及空名单。 | 当前只报正常／反向和强／弱即取消事件；机械臂和物流有独立路径，不算全部失效，见 [报告](CROP_MAGNIFIER_AUDIT.md)。 |
-| ALIGN-126 | 确认部分面板／库存工具损耗未遵循返回成本。 | 原版按目标返回 ×100/10000 向上取整，操作成本各异。 | 当前放大镜不扣、配置固定 1；大容量存储三种模式工具已在 2026-10-20 按原返回 10000 换算修复，其余入口仍待接齐，不应全局乘 100；见[面板报告](CROP_MAGNIFIER_AUDIT.md)和[库存报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
+| ALIGN-126 | 确认部分面板／库存工具损耗未遵循返回成本。 | 原版按目标返回 ×100/10000 向上取整，操作成本各异。 | 当前放大镜不扣、配置固定 1；大容量存储三种模式工具已在 2026-10-20 按原返回 10000 换算修复，单块换热器cold0／hot1000的可达专用入口请求10／1已扩围，通用冷罐拦截另列221；见[换热器](HEAT_EXCHANGER_AUDIT.md)。其余入口仍待接齐，不应全局乘 100；见[面板报告](CROP_MAGNIFIER_AUDIT.md)和[库存报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-127 | 确认易燃起火器少一次普通概率判定。 | 原版增强判定失败后仍试基础概率；默认组合 75.5%。 | 当前只抽一次 65%；普通 30%／低耐久 100% 已对应，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-128 | 确认一次性点火物创造消耗未豁免。 | 原版失败或有效目标处理后均检查无限物品资格。 | 当前 singleUse 直接 usedUp；多次打火机已有豁免，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
@@ -242,6 +242,12 @@
 | ALIGN-213 | 确认漏过交换后重载的单数组状态不足以表达原m/o分离。 | 18后可保存m=0/o=N，漏19后非交换相位恢复，先o=m，反应热0。 | 当前活动／current-version保存单N，gt.stopped=false恢复后非19仍以N反应；只限完整卸载漏交换条件，正常18误报仍排除，见[状态核查](NUCLEAR_TRANSITION_AUDIT.md)。 |
 | ALIGN-214 | 确认END前中止且再无该Level排空时，弱key未提供有效生命周期兜底。 | 原强列表也非完美停服清理；以后若再有全局END可移除dead成员。 | PENDING强value→Core→Level反持key，真实Post非finally、Unload无本类订阅；正常先remove／本handler异常明确不留key。未测堆增长，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
+| ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
+| ALIGN-218 | 确认两种电力太阳能板默认堆叠上限16→64。 | 原10050／10051注册stack16，经ClassContainer与ItemInternal实际消费。 | GTEnergyNodes两端只给蒸汽涡轮stacksTo16，Solar用原生默认64；32块由至少2槽变可1槽。只核这两种，未实测库存，见[太阳能板](SOLAR_PANEL_AUDIT.md)。 |
+| ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过单块换热器专用整罐。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -273,12 +279,12 @@
 | 坩埚、相变、铸造 | 已确认 ALIGN-001，待核其余分支 | 致死回收、热采掘、冷却目标、过热与材料守恒 |
 | 单方块机器 | 共用加工执行／中断／供能已确认 ALIGN-040–047，逐控制器及其余分支继续 | 配方映射、输入输出、额定值、超载、工具交互与持久化 |
 | 多方块与部件 | 大型锅炉、焦炉、聚变／内爆的部分结构／执行链已核查；物质制造结构／参数／特殊配方声明已对照 | 结构位置、部件角色、断开行为、建造与诊断、部件共用身份；整体绑定差异见 ALIGN-036，聚变输出／控制、内爆音效及聚变连续恢复见 ALIGN-052–056；物质制造最终配方解析、其它主控及跨区块行为继续 |
-| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪 LU 水晶注册消费 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，剩余能源设备及保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
+| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪LU水晶注册消费；本批核两种太阳能板与八种单块热交换器实际主链 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，太阳能堆叠218、换热状态／点火／玩家排液219–221另列，原火／邻液扩017与工具成本扩126；其余能源设备及实际保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
 | 电线、流体／物品管道、长距离物流 | 待逐网络重核 | 优先级、路由、丢包、接收端卸载与跨区块边界 |
 | 储物、容器与传感器 | 普通／物流桶、计量、各类库存、原生爆炸、填槽、两版通知及共用菜单九类实际宿主已局部核查 | 差异见 ALIGN-077、083–097、112–120、136–163、168、172–173、179；六类同源回调和三类补偿／限制已分开，继续其它菜单、覆盖板归属、成组掉落、量子／中继桥、材料重量、手持仪表与保存恢复；源码链不等于游戏场景已运行 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
 | 养蜂与植物 | 已追自然巢、养蜂周期／保存门控、灌木生命周期／物理／生成及光莲实际两端所有权；确认ALIGN-164–167、169–171、174–178、183–188、194–195，温度计扩展085 | 光莲仅Forge碰撞／陆地回退有具体差异，Neo与GT水一般兼容已有；现代睡莲政策保留。全种类、可选整合、其余植物物理及真实保存重启继续 |
-| 核反应堆 | 已核46棒／11冷却表、实际tick／能力、直连布局、状态转换与原生保存、异常分派；差异202–215及095扩围，211保留安全政策 | 普通耗尽、Neo提交、标脏和正常18快照已有。继续外部棒／委托、极值／全药效、实际启停／卸载／重启和异常恢复设计，不把源码条件推演当整机验收 |
+| 核反应堆 | 已核46棒／11冷却、直连／状态／能力／保存与异常、外部参数棒／回调／耗尽解析；差异202–217及095，211保留政策 | 参数新棒可注册、普通耗尽／Neo提交／标脏／正常18已有。继续极值／全药效、实际addon／启停／重载／多人／恢复设计；不将接口库存或源码条件推演当整机验收 |
 | 世界生成、Nexus、roads | 前轮石层互斥已修；灌木噪声／九种池及普通石木堆内容、指示材料、采收／手摆主链已核，差异见186–188、196–201 | 陨铁／燧石／多木种已有，有限概率／层岩坐标反例不代替生成世界。其余特征布局、保护、维度、时序、地牢更新、全地质规则和自然资源分布继续 |
 | 模型、GUI、音效、颜色与光照 | 待按实际对象重核 | 引用链与可见渲染，不能继续复用旧“421 条警告”数量作为现状 |
 | 原版专属提示、材料含量与中英文 | 已确认 ALIGN-003，待全注册项重核 | 提示调用路径、动态字段、原文／补丁来源，不只检查 JSON |
@@ -314,6 +320,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第六十三批核扩展／太阳能／单块热交换器新增216–221，003／017／126扩围，110／111／132／209沿既有合同。46原版／130当前、126视图、52 API库存、39资源及6工件30entry重核；8换热和2太阳能注册参数重新解析，根算术见证不代游戏。原有新参数棒、天气输出、普通换热及保存保留，FuelRod误导Javadoc更正不改执行，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[换热器](HEAT_EXCHANGER_AUDIT.md)及[回执](verification/nuclear-solar-heat-audit-20261021.json)。全面队列继续。
 
 第六十二批展开工具有序／无序合成422→703维护行，四份完整执行流／字面量／注释保持，条件顺序不变；一处Neo载体闭合位置使共用括号两端都结束方法。没有改配方或新增ALIGN，正式记录仍215条，见[源码导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)和[证明](verification/tool-recipe-readability-20261021.json)。核扩展／太阳能板／单块热交换器专题及其它全面队列继续。
 

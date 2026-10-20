@@ -341,3 +341,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 第六十一批补充[配置入口与真实消费](CONFIGURATION_CONTRACT_AUDIT.md)：共享`GregTechConfig.java`定义三个键，两版入口注册COMMON spec，默认文件由加载器命名为`gt6ce-common.toml`。两个过载getter由`MachineOverload`等消费；日志键当前未被读取。原版材料／掉落／世界生成配置只核了代表矩阵，Nexus全开与配置收尾仍按用户安排。核状态和异常边界分别见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。
 
 第六十二批补充[工具参与工作台配方导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)：ToolShapedRecipe／ToolShapelessRecipe处理工具返还、镜像／形态与空容器限制；工具本身的头柄／整体制作另看GTToolRecipes及相应配方类。两版包装serializer注册分别在Forge ToolBootstrap和NeoRecipeSerializers，不能与GTToolRecipeSerializers的tool-kind／pattern编码混为一层。
+
+第六十三批能源导航补充：[太阳能板](SOLAR_PANEL_AUDIT.md)从core SolarPanelEnergy／EnergyNodeDefinitions追到GTEnergyNodes与EnergyNodeBlockEntity.tickSolar；[单块换热器](HEAT_EXCHANGER_AUDIT.md)从HeatExchangerCatalog／GTHeatExchangers追到HeatExchangerBlockEntity、HotFluidFuelCycle和共用HeatExchangerRules。大型主控另有结构与出口，HeatExchangerData不能作为单块保存补偿。核棒参数扩展／支持SDK／耗尽出口区别见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。
