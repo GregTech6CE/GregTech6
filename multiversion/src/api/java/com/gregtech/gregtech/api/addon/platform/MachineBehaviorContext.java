@@ -111,4 +111,12 @@ public interface MachineBehaviorContext {
      * A radius outside the declaration, or a declaration whose range is 0, takes nothing.
      */
     int collectItems(int radius, boolean voidThem);
+
+    /**
+     * Stores {@code stack} in the compressed gas drum on {@code face}.
+     * Returns how many millibuckets that drum accepted.
+     * A missing drum, a pipe, or an ordinary tank accepts nothing.
+     * This writes the drum immediately. The behavior removes the fluid from its own tank.
+     */
+    int pushCompressedGas(Direction face, FluidStack stack);
 }
