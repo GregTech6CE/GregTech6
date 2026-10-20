@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.api.multiblock.*;
 import com.gregtech.gregtech.blockentity.GTEnergyBlockEntity;
@@ -77,8 +78,8 @@ public abstract class AxialGeneratorBlockEntity extends GTEnergyBlockEntity impl
         if(output>=grade().output()/2) {
             converting=true;
             var target=worldPosition.relative(front().getOpposite(),4);
-            if(level.hasChunkAt(target)&&level.getBlockEntity(target) instanceof IEnergyBlock receiver)
-                emitted=receiver.doEnergyInjection(outputType(),front(),output,1,true)>0;
+            IEnergyBlock receiver=level.hasChunkAt(target)?EnergyBlockViews.view(level.getBlockEntity(target)):null;
+            if(receiver!=null) emitted=receiver.doEnergyInjection(outputType(),front(),output,1,true)>0;
         }
         energy=Math.max(0,energy-grade().inputMaximum());setChanged();
     }

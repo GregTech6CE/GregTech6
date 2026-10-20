@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.block.tool;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
-import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.data.GregTechTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -223,7 +223,7 @@ public class CrankBlock extends DirectionalBlock {
             // GT6 does not care - the crank turns either way.
             long accepted = 0;
             var target = level.getBlockEntity(pos.relative(mounting));
-            if (target instanceof IEnergyBlock) {
+            if (EnergyBlockViews.view(target) != null) {
                 accepted = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, handle, speed,
                         1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);
             }

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.api.fluid.FluidPort;
 import com.gregtech.gregtech.api.multiblock.*;
@@ -94,8 +95,8 @@ public class LargeGasTurbineControllerBlockEntity extends GTEnergyBlockEntity im
     private void pushOutput(){
         if(ruStored<=0)return;
         var side=front().getOpposite();var pos=worldPosition.relative(side,4);
-        if(level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof IEnergyBlock receiver
-                &&receiver.doEnergyInjection(GregTechTags.Energy.RU,side.getOpposite(),ruStored,1,true)>0){emitted=true;ruStored=0;setChanged();}
+        IEnergyBlock receiver=level.hasChunkAt(pos)?EnergyBlockViews.view(level.getBlockEntity(pos)):null;
+        if(receiver!=null&&receiver.doEnergyInjection(GregTechTags.Energy.RU,side.getOpposite(),ruStored,1,true)>0){emitted=true;ruStored=0;setChanged();}
     }
     @Override public IFluidHandler portFluids(MultiblockLayout.Role role){return switch(role){case FLUID_INPUT->input;case FLUID_OUTPUT->output;case FLUID_IO->this;default->null;};}
     @Override public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role){return role==MultiblockLayout.Role.ENERGY_OUTPUT?List.of(GregTechTags.Energy.RU):List.of();}

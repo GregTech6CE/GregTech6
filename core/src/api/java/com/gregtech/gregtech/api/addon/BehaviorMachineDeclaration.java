@@ -30,7 +30,12 @@ public record BehaviorMachineDeclaration(
         List<ItemSlot> items,
         List<FluidSlot> fluids,
         List<Toggle> toggles,
-        Progress progress
+        Progress progress,
+        long energyCapacity,
+        List<Face> energyOutputFaces,
+        String energyOut,
+        long energyOutSize,
+        long energyOutAmount
 ) {
     public static final int SLOT = 18;
     public static final int TANK_WIDTH = 18;
@@ -76,6 +81,8 @@ public record BehaviorMachineDeclaration(
             throw new IllegalArgumentException("Invalid gui texture for " + id + ": " + gui);
         Objects.requireNonNull(progress, "progress");
         energyFaces = List.copyOf(energyFaces == null ? List.of() : energyFaces);
+        energyOutputFaces = List.copyOf(energyOutputFaces == null ? List.of() : energyOutputFaces);
+        energyOut = energyOut == null ? "" : energyOut;
         items = List.copyOf(items == null ? List.of() : items);
         fluids = List.copyOf(fluids == null ? List.of() : fluids);
         toggles = List.copyOf(toggles == null ? List.of() : toggles);
@@ -83,6 +90,16 @@ public record BehaviorMachineDeclaration(
             throw new IllegalArgumentException("Behavior machine '" + id + "' accepts energy on no face");
         if (energyFaces.stream().distinct().count() != energyFaces.size())
             throw new IllegalArgumentException("Behavior machine '" + id + "' repeats an energy face");
+        if (energyCapacity < 0)
+            throw new IllegalArgumentException("Behavior machine '" + id + "' has a negative energy capacity");
+        boolean outputs = !energyOutputFaces.isEmpty() || !energyOut.isBlank() || energyOutSize != 0 || energyOutAmount != 0;
+        if (outputs) {
+            if (energyOutputFaces.isEmpty() || energyOut.isBlank() || energyOutSize < 1 || energyOutAmount < 1)
+                throw new IllegalArgumentException("Behavior machine '" + id
+                        + "' energy output needs faces, a type and a maximum");
+            if (energyOutputFaces.stream().distinct().count() != energyOutputFaces.size())
+                throw new IllegalArgumentException("Behavior machine '" + id + "' repeats an energy output face");
+        }
         if (items.size() > 54 || fluids.size() > 8 || toggles.size() > 16)
             throw new IllegalArgumentException("Behavior machine '" + id + "' has too many slots");
         for (FluidSlot fluid : fluids) {
@@ -137,6 +154,14 @@ public record BehaviorMachineDeclaration(
         return mask;
     }
 
+    public boolean emitsEnergy() { return !energyOutputFaces.isEmpty(); }
+
+    public int energyOutMask() {
+        int mask = 0;
+        for (Face face : energyOutputFaces) mask |= face.bit();
+        return mask;
+    }
+
     public int initialToggles() {
         int bits = 0;
         for (int i = 0; i < toggles.size(); i++) if (toggles.get(i).initiallyOn()) bits |= 1 << i;
@@ -182,6 +207,11 @@ public record BehaviorMachineDeclaration(
         private int energyX = 8;
         private int energyY = 8;
         private List<Face> energyFaces = List.of(Face.BOTTOM, Face.TOP, Face.LEFT, Face.RIGHT, Face.BACK);
+        private long energyCapacity;
+        private List<Face> energyOutputFaces = List.of();
+        private String energyOut = "";
+        private long energyOutSize;
+        private long energyOutAmount;
         private final List<ItemSlot> items = new ArrayList<>();
         private final List<FluidSlot> fluids = new ArrayList<>();
         private final List<Toggle> toggles = new ArrayList<>();
@@ -202,6 +232,18 @@ public record BehaviorMachineDeclaration(
         public Builder guiSize(int width, int height) { guiWidth = width; guiHeight = height; return this; }
         public Builder energyGauge(int x, int y) { energyX = x; energyY = y; return this; }
         public Builder energyFaces(List<Face> faces) { energyFaces = faces; return this; }
+        /** Zero keeps the per-tick drain. A positive value is the stored-energy cap. */
+        public Builder energyCapacity(long value) { energyCapacity = value; return this; }
+        public Builder energyOutputs(Face... faces) {
+            energyOutputFaces = faces == null ? List.of() : List.of(faces);
+            return this;
+        }
+        public Builder energyOut(String shortName) { energyOut = shortName; return this; }
+        public Builder energyOutMax(long size, long amount) {
+            energyOutSize = size;
+            energyOutAmount = amount;
+            return this;
+        }
         public Builder item(int x, int y, SlotRole role) { items.add(new ItemSlot(x, y, role)); return this; }
         public Builder fluid(int capacity, int x, int y, SlotRole role) { fluids.add(new FluidSlot(capacity, x, y, role)); return this; }
         public Builder toggle(String translationKey, int x, int y, boolean initiallyOn) {
@@ -212,7 +254,8 @@ public record BehaviorMachineDeclaration(
 
         public BehaviorMachineDeclaration build() {
             return new BehaviorMachineDeclaration(id, material, machineType, energy, energyPerTick, tier, blockEntityId,
-                    guiWidth, guiHeight, gui, energyX, energyY, energyFaces, items, fluids, toggles, progress);
+                    guiWidth, guiHeight, gui, energyX, energyY, energyFaces, items, fluids, toggles, progress,
+                    energyCapacity, energyOutputFaces, energyOut, energyOutSize, energyOutAmount);
         }
     }
 }

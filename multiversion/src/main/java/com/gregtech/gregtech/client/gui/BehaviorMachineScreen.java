@@ -102,7 +102,7 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
         int top = topPos + declaration.energyY();
         blit(graphics, left, top, BehaviorMachineDeclaration.UV_ENERGY_U, BehaviorMachineDeclaration.UV_ENERGY_V,
                 BehaviorMachineDeclaration.ENERGY_WIDTH, BehaviorMachineDeclaration.ENERGY_HEIGHT);
-        long max = menu.machine().accepted().energyInMax();
+        long max = menu.machine().energyBarMax();
         int filled = scaled(menu.energy(), max, BehaviorMachineDeclaration.ENERGY_HEIGHT);
         blit(graphics, left, top + BehaviorMachineDeclaration.ENERGY_HEIGHT - filled,
                 BehaviorMachineDeclaration.UV_ENERGY_FULL_U, BehaviorMachineDeclaration.ENERGY_HEIGHT - filled,
