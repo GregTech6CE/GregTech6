@@ -29,14 +29,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, tank-wall multiblock, irrigator, rotation buffer, hand crank, transformer and pipes. */
+/** Sample press, detector, tank-wall multiblock, irrigator, rotation buffer, hand crank, transformer and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
     @Override public List<RecipeMapDeclaration> recipeMaps() {
         return List.of(
                 map("addon_sample.recipe.press", "Sample Press", "press", 2),
-                map("addon_sample.recipe.large_press", "Large Sample Press", "large_press"));
+                map("addon_sample.recipe.large_press", "Large Sample Press", "large_press"),
+                new RecipeMapDeclaration("addon_sample.recipe.detector", "Sample Detector",
+                        "addon_sample:textures/gui/machines/press",
+                        1, 2, 1, 1, 1, 0, 1, true, false, false, false));
     }
 
     @Override public List<MachineDeclaration> machines() {
@@ -52,6 +55,12 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                         .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
                         .cheapOverclocking(true)
                         .minimumLightAbove(14)
+                        .build(),
+                MachineDeclaration.builder("sample_detector", "Steel")
+                        .machineType("sampledetector").energy("EU", 32).tier(1)
+                        .recipeMap("addon_sample.recipe.detector").basic()
+                        .searchOutputTanks(true)
+                        .exclusiveOutputs(true)
                         .build(),
                 MachineDeclaration.builder("large_sample_press", "Steel")
                         .machineType("largesamplepress").energy("EU", 512).tier(1)
