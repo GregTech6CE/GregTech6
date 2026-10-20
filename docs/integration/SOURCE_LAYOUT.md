@@ -325,3 +325,9 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 共享`registry/GTBushes.java`的注册工厂设置实际BlockBehaviour属性；`strength(.2f)`后还有`instabreak()`，最终值必须沿原生实现读取。`BushBlock`的选框、碰撞、光遮挡与墙内谓词各有消费者，见[物理核查](BERRY_BUSH_PHYSICAL_AUDIT.md)。
 - 共享`worldgen/GTBushesFeature.java`选择候选列、群系、噪声索引和枝条；core`worldgen/GTCellNoise.java`只供噪声算法／偏移表。调用者半坐标并非原整数除法，不再在类说明中保证同坐标同莓种。
 - 共享`worldgen/GTSurfaceFloraFeature.surface`负责实际向下扫描；两版`GTFeatures`、configured/placed feature及biome_modifier共同决定可达性。九种自然成员与未核完的中心／高度／替换规则见[生成核查](BERRY_BUSH_WORLDGEN_AUDIT.md)。
+
+## 通用材料分解与流体组件解析
+
+- 共享`content/recipe/DecompositionRecipeLoader.java`现为一份业务流程，只有原生FluidStack／holder类型及查询分支；`MachineRecipeBootstrap`在实际setup链中调用，随后显式化学／生成行仍可追加。
+- 组成来自core `data/generated/MaterialCompositionData.java`，原处理地图标志并不等于组成；目前加载器按ELEMENT启发式选图，不能从注释或标签名字存在推断已接线。
+- 原生水、具名流体、材料绑定和温度相态是不同入口；`namedFluid`没有复用`GTFluids.stack`／`GeneratedRecipeResolver.named`的原生水处理。样本、公式和显式补偿见[分解核查](MATERIAL_DECOMPOSITION_AUDIT.md)。

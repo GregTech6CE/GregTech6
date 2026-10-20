@@ -45,6 +45,8 @@
 
 第五十三批展开GTBushes注册／目录／物品工厂（43→58行），同时展开真实Neo注释体；GTBushesFeature整理换行并纠正三处过强原版归因（136→135行），明确算法表保留与调用半坐标差异。两份共享源码四份执行投影相同，注册顺序、地面／群系谓词、随机次数与字面量不变，见[物理](BERRY_BUSH_PHYSICAL_AUDIT.md)、[生成](BERRY_BUSH_WORLDGEN_AUDIT.md)及[回执](verification/bush-physical-worldgen-audit-20261021.json)。
 
+第五十四批去掉DecompositionRecipeLoader中整份平台业务重复：336→124行、同一run/namedFluid流程，只在原生导入、holder类型和可用性查询处保留条件。选中Forge/Neo后850/858项执行词法与字面量位置逐项相同，class说明纠正原处理方式与当前启发式混同；不是只压缩空行，也没有借去重改变配方，见[报告](MATERIAL_DECOMPOSITION_AUDIT.md)与[回执](verification/material-decomposition-audit-20261021.json)。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属

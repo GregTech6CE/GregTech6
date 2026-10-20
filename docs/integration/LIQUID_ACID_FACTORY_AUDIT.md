@@ -81,6 +81,8 @@
 
 ## 纹理与分解配方的后续合同边界
 
+2026-10-21第五十四批续核已沿通用分解入口增加8个非酸样本，准入／地图、输入、工作参数、原生水与相态分别归档189–193，见[分解核查](MATERIAL_DECOMPOSITION_AUDIT.md)。以下保留第五十二批的酸族边界；这次没有把19酸族逐材料重复编号，也没有把显式化学补偿改写成缺失。
+
 原 19 条均为 SET_FLUID，当前为 FINE／SHINY／RUBY；当前枚举已有 FLUID，而且生成器还独立保留 `SET_FLUID → FINE` 映射。因此只补 LIQUID_FACTORIES 集合不足以恢复原纹理。MaterialIconDefinitions.resolveTextureSet:9–20 优先显式 textureSet，后续模型路径会使用它；没有发现重新设置本族纹理的补偿。但原生流体渲染的 FluidVisualPolicy 先选专用流体 sprite，只有 molten／plasma 路径用材料图标集替换模板，故不能宣布所有世界酸液贴图都错误。本批不为这条尚需区分图标／流体路径的边界新增编号。
 
 原 Loader_Recipes_Decomp.java:38 起按 DECOMPOSABLE 与显式 CENTRIFUGE／ELECTROLYSER 选择地图，并先尝试液体／气体输入。原工厂明确授予处理地图的三条为 H2SiF6、BlackVitriol → Electrolyzer，AquaRegia → Centrifuge；另 16 条 dcmp 声明本身只授予可分解，不能据此要求它们全加相同电解配方。
