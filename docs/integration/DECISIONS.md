@@ -10,6 +10,14 @@
 
 `onUse` 缺省不处理，菜单照常打开。扳手和流体容器仍先处理。水车用已有的 `level()` 和 `pos()` 看相邻水，不加新入口。API 版本仍是 0。
 
+## 2026-10-20 / 编程电路与不消耗的物品输入
+
+附属配方收成 `Recipe` 时不设置 `mExplicitCatalystsOnly`。这个标志为假时，显式下标和 `RecipeCatalystLike.isCatalyst()` 的物品都算催化剂；为真时只认显式下标，模具和编程电路也会被扣掉。`SelectorTagItem` 以催化剂身份注册，所以附属行里的编程电路不写 `keptInputs` 也不消耗，写了只是再记一次显式位，不报错。
+
+机器选配方走 `RecipeMap.findRecipe`，输入是机器物品栏里的栈。`BasicMachineBlockEntity.getTagSelectorCircuit` 只读盖板上的编程电路，没有任何调用方，不参与选配方。0 到 24 号电路是不同物品，同输入、不同电路号的两行不会互相覆盖。
+
+不消耗的普通输入用物品下标，数量保持至少 1。数量 0 仍拒绝，错误信息指向 `keptInputs`。数据包覆盖层不加这个字段。EMI 已经按 `isCatalystInput` 把催化剂单独画出；JEI 的机器页只给特殊工具槽加催化剂提示，物品输入和内置配方一样，不另画。API 版本仍是 0。
+
 ## 2026-10-20 / 附属配方机器的面、廉价超频、光照和输出概率
 
 面不写时保持 `MachineFaceMasks.ALL_SIDES`。写了就用 `BehaviorMachineDeclaration.Face` 的底、顶、右、前、左、后收成同一套位。自动面缺省为无。单方块附属机器只读声明上的廉价超频，缺省关闭，不和内置机器名表取或。大型配方机器没有显式声明时仍是「非 TU 即廉价」。光照门读正上方 `getRawBrightness(pos, 0)`，与 1.7.10 `getBlockLightValue` 一样含天空光、不扣夜晚。`0` 不检查，已经开工的进度不回退。物品输出概率是万分比，缺省 10000，长度必须对齐；流体输出仍是必定。没有锭的附属材料可以显式要 `plate` 和 `foil`，不改 `dust()` / `metal()` 的自动集合，也不放行内置材料或其他前缀。
