@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-21",
+  "batch": 60,
+  "baseline": "b11081f4fe26695a970dd180fe17104a0c606e24",
+  "scope": "Two shared pure-Java nuclear helpers: whitespace, seven declarations with explicit parameter names, two corrected responsibility comments.",
+  "method": "Full ordered Java execution tokens, including literal positions and imports; normalize only the enumerated method/constructor parameter bindings, then require equality across the complete file.",
+  "files": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java",
+      "baseline_git_blob_sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165",
+      "observed_worktree_sha256": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165",
+      "final_sha256": "fb8d9fb6b73267b1945b8718363db3e101f663953a99b2382bf1cac72bb577ac",
+      "lines_before": 3,
+      "lines_after": 29,
+      "maximum_line_before": 646,
+      "maximum_line_after": 101,
+      "execution_tokens": 206,
+      "normalized_execution_sha256": "7e43fa86eec423ca99913c522c5a02749b966f48023f00c81bd6e8da07bb66b4",
+      "complete_execution_stream_equal_after_scoped_parameter_rename": true,
+      "parameter_renames": [
+        {
+          "declaration": "public static int bound (",
+          "parameter_names": {
+            "n": "value"
+          },
+          "occurrences_in_scope": {
+            "n": 2
+          },
+          "token_range": [
+            22,
+            54
+          ]
+        },
+        {
+          "declaration": "public static long ceil (",
+          "parameter_names": {
+            "n": "numerator",
+            "d": "denominator"
+          },
+          "occurrences_in_scope": {
+            "n": 3,
+            "d": 3
+          },
+          "token_range": [
+            54,
+            84
+          ]
+        }
+      ],
+      "comments_before": [
+        "/** Exact original neutron/lifetime arithmetic, independent of stack storage. */"
+      ],
+      "comments_after": [
+        "/** Shared neutron heat and lifetime arithmetic, with bounded conversion to int. */"
+      ],
+      "comment_reason": "Describe current shared arithmetic/data responsibilities; remove unproven exact-original and fluid-lookup claims."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java",
+      "baseline_git_blob_sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09",
+      "observed_worktree_sha256": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09",
+      "final_sha256": "f84eb98d07c17294b7ec03e17180b8b4861c94615b1583243977ce2fc71ddc5c",
+      "lines_before": 22,
+      "lines_after": 68,
+      "maximum_line_before": 244,
+      "maximum_line_after": 86,
+      "execution_tokens": 522,
+      "normalized_execution_sha256": "aa597916defaf3307a869f9d70dcef3fd0ca51834f3c67ff4447938533f9d18b",
+      "complete_execution_stream_equal_after_scoped_parameter_rename": true,
+      "parameter_renames": [
+        {
+          "declaration": "ReactorCoolantRules (",
+          "parameter_names": {
+            "i": "inputKey",
+            "o": "outputKey",
+            "h": "heatPerUnit",
+            "e": "outputExpansion",
+            "d": "heatDivisor",
+            "m": "moderating"
+          },
+          "occurrences_in_scope": {
+            "i": 2,
+            "o": 2,
+            "h": 2,
+            "e": 2,
+            "d": 2,
+            "m": 2
+          },
+          "token_range": [
+            208,
+            254
+          ]
+        },
+        {
+          "declaration": "public int self (",
+          "parameter_names": {
+            "r": "rod"
+          },
+          "occurrences_in_scope": {
+            "r": 5
+          },
+          "token_range": [
+            254,
+            319
+          ]
+        },
+        {
+          "declaration": "public int emission (",
+          "parameter_names": {
+            "r": "rod"
+          },
+          "occurrences_in_scope": {
+            "r": 4
+          },
+          "token_range": [
+            319,
+            372
+          ]
+        },
+        {
+          "declaration": "public int divisor (",
+          "parameter_names": {
+            "r": "rod"
+          },
+          "occurrences_in_scope": {
+            "r": 4
+          },
+          "token_range": [
+            372,
+            432
+          ]
+        },
+        {
+          "declaration": "public int maximum (",
+          "parameter_names": {
+            "r": "rod"
+          },
+          "occurrences_in_scope": {
+            "r": 7
+          },
+          "token_range": [
+            432,
+            521
+          ]
+        }
+      ],
+      "comments_before": [
+        "/** Original heat conversion units; identity lookup never accepts a fluid by substring. */"
+      ],
+      "comments_after": [
+        "/** Shared coolant conversion values and rod-parameter modifiers. */"
+      ],
+      "comment_reason": "Describe current shared arithmetic/data responsibilities; remove unproven exact-original and fluid-lookup claims."
+    }
+  ],
+  "protected_user_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256_at_verification": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "policy": "User formatting preserved; not edited or staged in this batch."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256_at_verification": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "policy": "User formatting preserved; not edited or staged in this batch."
+    }
+  ],
+  "limitations": [
+    "No gameplay, enum order, field/API names, constants, operators, overflow behavior, defaults or storage changed.",
+    "Readability equivalence is not original gameplay parity.",
+    "No generator, Gradle, Java compilation/initialization, new tests, game, restart, build or push."
+  ]
+}

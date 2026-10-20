@@ -62,3 +62,5 @@
 本轮已将用户 CompoundMaterials 的统一 RGB 列同步到生成端，七表可重现，见[材料排版记录](MATERIAL_TABLE_FORMATTING_20261020.md)。仍发现旧 `extract_compositions.py` 固定其它磁盘路径，未执行它，也不据此断言当前生产组成错误。
 
 本批 OriginalStorageTooltipData 仅展开列表、分支和方法，544 个词法项、54 个字面量、3 个注释保持。其它存储整理见[源链报告](SAFE_LOCKER_AUDIT.md)。[盘点摘要](verification/source-readability-inventory-20261020.json)保存范围、候选与摘要哈希；完整逐文件 scratch 清单未作为玩法证明。本轮没有用目录盘点声称全部代码已标准化，后续压行与职责拆分继续。
+
+第六十批完成两份core核辅助类展开及七个参数作用域的有意义命名：RodPhysicsMath 3→29行、最长646→101；ReactorCoolantRules 22→68行、最长244→86。完整206／522项执行流仅归一列明的参数绑定后保持，两条过强职责说明另行更正，未改玩法或公开API名称。见[核导航](NUCLEAR_SOURCE_LAYOUT.md)和[证明](verification/nuclear-helper-readability-20261021.json)；其余职责与压行整理继续。

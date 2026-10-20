@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第六十批核辅助类参数与流程可读性
+
+RodPhysicsMath从3→29行，ReactorCoolantRules从22→68行；n／d／r及构造器i／o等参数改为value、numerator／denominator、rod和明确的冷却参数名。完整执行流仅在七处已列明的参数作用域内归一后相同，206／522项词法、字面量位置、字段、顺序及数值保持；两条过强职责注释纠正，未改核玩法。正式记录仍210条，见[导航](NUCLEAR_SOURCE_LAYOUT.md)与[回执](verification/nuclear-helper-readability-20261021.json)。未编译／测试／构建／推送，用户材料表保留，全面goal active。
+
 ## 2026-10-21 / 第五十九批核反应棒、核心与实际网络消费者
 
 正式记录至210条，包含历史修复项；新增九项核合同，095扩展到Steam填充。46棒显式目录数值重解析一致，常规公式／11冷却表与直连四向布局已有；缺口在空棒配方、专用提示、两旧残留、水平能力、排液／故障次序、运行状态及委托／辐射豁免。phase18清m而反应读o的候选已排除，未修玩法或恢复地形爆炸。36原版／92当前来源、110视图、七工件35entry重核，见[棒](NUCLEAR_ROD_AUDIT.md)、[核心](NUCLEAR_CORE_AUDIT.md)、[网络](NUCLEAR_NETWORK_AUDIT.md)及[回执](verification/nuclear-contract-audit-20261021.json)。未编译／测试／构建／推送，全面goal active。

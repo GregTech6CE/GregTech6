@@ -335,3 +335,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 共享`content/recipe/DecompositionRecipeLoader.java`现为一份业务流程，只有原生FluidStack／holder类型及查询分支；`MachineRecipeBootstrap`在实际setup链中调用，随后显式化学／生成行仍可追加。
 - 组成来自core `data/generated/MaterialCompositionData.java`，原处理地图标志并不等于组成；目前加载器按ELEMENT启发式选图，不能从注释或标签名字存在推断已接线。
 - 原生水、具名流体、材料绑定和温度相态是不同入口；`namedFluid`没有复用`GTFluids.stack`／`GeneratedRecipeResolver.named`的原生水处理。样本、公式和显式补偿见[分解核查](MATERIAL_DECOMPOSITION_AUDIT.md)。
+
+第六十批核辅助类已展开：core `content/nuclear/RodPhysicsMath.java` 的数量／向上取整与热／寿命运算，以及 `ReactorCoolantRules.java` 的11项冷却表／棒参数修饰改用明确参数名。原生Fluid解析仍看 `ReactorCoolants`，不能把表键当成已验证的实际注册流体；本次只做可读性保持，见[核导航](NUCLEAR_SOURCE_LAYOUT.md)。

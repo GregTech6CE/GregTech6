@@ -41,3 +41,11 @@ Forge与Neo并非两份完整核心业务；不同的能力、NBT／HolderLookup
 ## 第五十九批专题归档
 
 随后完成的[棒目录／物理](NUCLEAR_ROD_AUDIT.md)、[核心](NUCLEAR_CORE_AUDIT.md)、[网络](NUCLEAR_NETWORK_AUDIT.md)登记ALIGN-202–210，扩展095容量实例。46目录、11冷却表、常规公式和直连布局已有；phase18及模具消耗候选排除。58批排版保留原行为，不能用本导航的历史“仍在核对”段落覆盖59批已有证据，也不能把59批局部静态核查当全反应堆验收。
+
+## 第六十批纯领域辅助类展开
+
+2026-10-21，以b11081f4f为基线，RodPhysicsMath由3→29行，ReactorCoolantRules由22→68行，最长行分别646→101与244→86。向上取整使用numerator／denominator，限制使用value，棒参数使用rod，冷却构造器使用inputKey／outputKey、heatPerUnit、outputExpansion、heatDivisor和moderating；公开类型／方法／字段名未变。
+
+两份文件的全部206／522项执行词法在七个方法／构造器参数绑定各自归一后相同，字符串位置、枚举顺序、数值、运算和导入也保持。不能用全局替换掩盖字段或其他作用域变化，具体映射和引用次数见[回执](verification/nuclear-helper-readability-20261021.json)。
+
+RodPhysicsMath的旧“Exact original”说明已更正：当前long运算／转int饱和与原版int溢出极值不同，不能由类注释担保完全等价。ReactorCoolantRules只保留换热数据与棒修饰职责说明；实际Fluid查找位于ReactorCoolants。本次未修核玩法，不新增ALIGN编号；启停、重载、异常分派与配置等专题继续。
