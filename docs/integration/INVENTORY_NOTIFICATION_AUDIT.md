@@ -91,6 +91,8 @@ GT 漏斗／队列的 findInputSource、findOutputTarget 分别使用当前平�
 
 ## ALIGN-173：部分 shift 转出没有触发箱子自身库存回调
 
+2026-10-21第五十一批续核：该项的同源范围现已扩展到箱子、保险箱、抽屉、普通／队列漏斗及末影垃圾桶六类；工作台储物页、电池盒、垃圾场有不同补偿／限制，不一并列错。Queue必须先通过原生mayPickup，只有合法末格且允许多件堆叠的部分转出进入173；非末格手动取出被拒另记179。以下保留本批最初箱子证据，完整范围与许可前置链见[共用菜单核查](SHARED_MENU_AUDIT.md)。
+
 这是独立于上述“箱子已经回调之后没有广播”的路径：部分操作连箱子自己的 handler 回调也没有到达。
 
 原 [ContainerCommon.java:498](C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/ContainerCommon.java:498) transferStackInSlot 在 502 行先 markDirtyGUI，519 行还对保留非空的源槽调用 onSlotChanged。ContainerCommonChest:39 起用 Slot_Normal，Slot_Base:97 把 onSlotChanged 送给库存 markDirtyGUI，Base05:139／108 由此置 mInventoryChanged。原箱子会在随后的 onTick 消费通知标志。

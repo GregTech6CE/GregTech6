@@ -305,3 +305,10 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `MetalChestBlockEntity` 的普通 handler 回调、`HopperContainerMenu.quickMoveStack` 的原位变化与原生 SlotItemHandler 适配分别核对；菜单使用相同基类不保证每个宿主补偿方式相同。
 - `api/machine/ITileEntityAdjacentInventoryUpdatable` 是专用通知合同；`setChanged`／`sendBlockUpdated`／普通邻居事件不会按名称自动转换为它。接收方与轮询范围见[库存报告](INVENTORY_NOTIFICATION_AUDIT.md)。
 - BumbleBeeGenes 和 GTBumbleBlocks 已展开两版边界；BumbleHiveBlock 的旧 COLOR 只是历史兼容，新变种身份仍是 FixedBumbleHiveBlock。火焰及末影龙保护的实际原生来源见[自然巢报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。
+
+## 灌木环境与手动库存菜单
+
+- core `content/plant/BushGrowthRules.java`：四阶段／byte计数的纯计算；共享 `blockentity/BushBlockEntity.java` 负责支撑、现代雨／光查询和保存，不能把 helper 差异藏在核心规则相同的结论里。
+- 共享 `block/plant/BushBlock.java` 是实际放置、采收和枝条几何入口；`registry/GTBushes.java` 与两版注册目录决定扁平物种，旧berry键仅作兼容。已实现与差异见[灌木报告](BERRY_BUSH_AUDIT.md)。
+- core `api/inventory/InventorySlotLayout.java` 保存当前菜单坐标；共享 `client/gui/HopperContainerMenu.java` 负责普通槽和shift。两个许可扩展方法当前未被槽工厂消费，不等于底层handler没有验证。
+- Queue的自动化handler、手动GUI许可和原生doClick入口要一起核对；九类真实菜单宿主的六类同源回调、三类补偿／约束见[共用菜单报告](SHARED_MENU_AUDIT.md)。

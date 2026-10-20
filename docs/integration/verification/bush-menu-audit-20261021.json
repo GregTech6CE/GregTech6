@@ -1,0 +1,1791 @@
+{
+  "date": "2026-10-21",
+  "batch": 51,
+  "format_baseline": "396a9ee55",
+  "provenance": "Original Gregorius Techneticies / GregTech-6 Team LGPL-3.0-or-later notices retained. Native sources and complete bytecode method bodies remain local ignored evidence; none imported into production.",
+  "original_sources": {
+    "gregtech/tileentity/plants/MultiTileEntityBush.java": "b56bed74378f647c66d98e4b241da47c838114165088ac020a952bf258bf890a",
+    "gregtech/worldgen/WorldgenBushes.java": "e1a1f5f3262f9a00c900485ca44b8b3843b9a5def54ba8fa4b8d39c934e60a7d",
+    "gregtech/worldgen/NoiseGenerator.java": "33cd02431ca1f7ca8c0dab7c1831082c942ec713e5b299cbcb9810338d4b87ac",
+    "gregapi/worldgen/WorldgenOnSurface.java": "6b772c111e643d11086d9bec11366b05ffa85fb41bdacf18cfcf08b6b6b5f753",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/b/Loader_Worldgen.java": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+    "gregtech/blocks/BlockGrass.java": "dfc34e552b169a88c05c666509d82e0f05010e119081069ab33bcedf94473016",
+    "gregtech/items/MultiItemFood.java": "bc66d27a6428a3d62e3000b6bae4c8b0f1a775dad00d139bff507b201acd6598",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregapi/util/WD.java": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+    "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+    "gregapi/block/multitileentity/MultiTileEntityBlock.java": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+    "gregapi/gui/ContainerCommon.java": "b7aeb98a5e2f998897f1b6f7e8e0c71e7e938f320675d1797ddf4199c7db2331",
+    "gregapi/gui/ContainerCommonChest.java": "55da0e9ee9415ee3a6007494a022cedbaf5ce02d6cc3b9aa457a309db3230c1a",
+    "gregapi/gui/Slot_Base.java": "6b9aef5b84287570587518a7383de81d8ed1ed543a9e49c700755beb8d0f426f",
+    "gregapi/gui/ContainerCommonDefault.java": "d7f5fdc3795ce87234970830d80a77c189274a0de3ee2712fd1e683c51785409",
+    "gregapi/gui/Slot_Normal.java": "bcf1b8dd35ae32d2d6f910fcf8ec554fa8540383ea1f7f4a94a37c926daedaf6",
+    "gregapi/tileentity/base/TileEntityBase07Paintable.java": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+    "gregapi/tileentity/base/TileEntityBase08Directional.java": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+    "gregapi/tileentity/base/TileEntityBase09FacingSingle.java": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+    "gregtech/tileentity/inventories/MultiTileEntityQueueHopper.java": "324b8ffa681347a9d41acce42ff719345bfb79d60b30c6f67a4a8c699205eaa9",
+    "gregtech/tileentity/inventories/MultiTileEntityHopper.java": "70670f0cd2232a0e5cac49603b1014991c16819e9294d49968fc44b217b9c4a6",
+    "gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java": "b6ae781187ca65def5cfbeec586fa52dffbfc8c355e720639145bf5aca587b24",
+    "gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java": "3de85a8940f78692d4c73c9aa66328f1147c0794f5b7dcc1423c0558292268d3"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/block/plant/BushBlock.java": "7819e314dfe5d4ce4776599f45e67c579e9803deadece30ea5aa6b8dcd1fc54e",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java": "ec83c3aa9f88ee5aa38428942a800881ded79ea9f8ab601634395e5a169cff11",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/plant/GTBerryBushes.java": "574757e3b122c810215ba95f9b90036490849d393c716090e4973af2baad1b54",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBushes.java": "9716aa5e0282cd3e5d268be67524e514e3bd6dc1549f8f6f79ef22de437ef581",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/BushBlockItem.java": "18fbfc9ef1ca072cc5412175203b2cabcb1c7a559cbf739a2f6277036617b763",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBushesFeature.java": "dc0125fe183d622d1c97c7167c68fb99448463996c8964d063956acd399ebc33",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTSurfaceBlocks.java": "f7704b1095b4e9afa762d4f082cef311dc778231393cc365880f7e4040b2562e",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+    "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java": "0d51e41b7b7ac6bb4b22619785039675badeb4254d74fa4c85e0016c48d79e87",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java": "5389ba014c90d6d6534054e7f30423002397254a4545e4a9998b0f89b75b7efb",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTGrassSoils.java": "45c501aaf7d844e6ba6970bb017a4ad07e9074d19cffa896cea3adbcefd53eea",
+    "core/src/main/java/com/gregtech/gregtech/content/plant/BerryBushCatalog.java": "41cb7f436e25968f18174210fc8583cbd0d588268e38218115f10aa5edde7ba4",
+    "core/src/main/java/com/gregtech/gregtech/content/plant/MaterialBerryBushCatalog.java": "da6d939672520c02bd596f3019774ed6991a65037811a9c0fda9287f97bbabbd",
+    "core/src/main/java/com/gregtech/gregtech/content/plant/BushGrowthRules.java": "87f46ef069daa7bfb38db04a87c4ea723d1786fb73289873a75c07d329fb38f9",
+    "core/src/main/java/com/gregtech/gregtech/block/GrassSoilCatalog.java": "65689267e60c0ef02a19f0733bae826a418677f9d3db5712c66802d64f009030",
+    "core/src/main/java/com/gregtech/gregtech/worldgen/GTCellNoise.java": "de5c31d8e04b26088d85fc0d91a6fc5c1e8e283e1c4b845c068d9762773fb809",
+    "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_bushes.json": "cda406d563823bd72e6a09e6df5fe5020b7da9aaace3519d7ff68661d713b49c",
+    "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_bushes.json": "42d5cd3d948dc99c3536793a807c9a25fcf5d712df42fe4cc6cbc0f2755f12c1",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_bushes.json": "9e7d05578de777b9b7aed3502d9b6a425b830af065e221b78a5fec5f5ea48314",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_bushes.json": "c8e6219928c63ff36c4d7baa8705d7841e23df9f0b3b80f647db8371a8f1b15f",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/minecraft/tags/blocks/dirt.json": "64323d93ed77f3864a3bc3cc1942a3c2161f61526913bf9367f100b61ef70f97",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+    "core/src/main/java/com/gregtech/gregtech/api/tool/ToolDefinition.java": "f9bcf97a169a2e1e8e98350a16198e590e82533e9c5580dc479430c58fa033dd",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolItems.java": "790ce1d3ead22c318d96fff6452ead2670044af9ebcb81ef858666a76363a41c",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+    "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java": "1e5d9a04d9c2b608171b735f46f506839d8f5bd23b71c5962d3d2471d6e9cce8",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/BlockLootPack.java": "160cbc22fae6eb1a864566492aa8575287b4421cd1efe831e1fb63e490b89b6a",
+    "multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java": "049e96dbead037754ac0d397005597ac00dd41ede9901d2999bc173faf4a44fa",
+    "multiversion/src/main/java/com/gregtech/gregtech/recipe/MachineRecipeLifecycle.java": "bcbda6aa8f6521f06ae55f352f15313a4f924c401b21570f5a68069ef3c0c143",
+    "multiversion/src/main/java/com/gregtech/gregtech/event/CrucibleInteractionHandler.java": "3ca6100a528dcc3135255f917bdfaf8475110ae536416aff112b80e317a02981",
+    "multiversion/src/main/java/com/gregtech/gregtech/event/SmelteryInteractionHandler.java": "cbabb352debf76abb6782db4b964720dd191d3d798de2435b98be1227ad70f4c",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/PilePlacementHandler.java": "e86d104123fe591ab2dc9e7cdb33c838cdddf289062fe18325d1f3216eac24df",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/food/SandwichPlacementHandler.java": "ec25e0332cbd1f4fbb11f0d0614dfdb22dda196680d7761dcc35b4cce195a436",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ToolBootstrap.java": "ae7f9b5afcd9a2940657575ef0b6ee726e1d74622254dc639c27f22dd6dadb6f",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/smeltery/SmelteryToolItem.java": "430230d45e047a9d8f3335adfc68a226c40413b518752ee94cc3163a7c673345",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/minecraft/tags/blocks/mineable/shovel.json": "69fea357e7e89f770062e1ce8c310defa446b34baf7bd5dcb1a73767b00a940d",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/data/minecraft/tags/block/mineable/shovel.json": "f5b59953e42c25c44c4d655372404f53d2f644f689fde03105d1166ad054d354",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java": "f2362d223fe7f7a95cbf63c9de344f520965df8ed77734ca11e849ea7c8a9c71",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java": "273c1cff1910c61ae2b51010177f0afa8600b71ceac031c760a06f616c3afeed",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java": "0eb01fd35f9fefc39cce315d285ee665b67fcb49fd84e4ed6a8089b8ba4518c0",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": "1ea004ec7edfd08f9024c4ba54541a486f7f5d406b520306a1c4071eadb4f14c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/SafeBlockEntity.java": "1d10c22ac752df050bb76867b26285de9217fa43511ac018a16d974cc38834d6",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java": "b57ae8f2f6b7e82b680e60941d7824394b9b3c7c479101b4fb7ccd8d73089adc",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java": "4f61612ddaf1e96fe17f3ee42e340d9a222c00c697d936fe0fbe8c2a8449b8e8",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java": "c5c83bd7ff122ce439c240ccc02dcc6550b17ad3db86764a6f6c3899553ffa33",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java": "fcda36909a1f202b514b6486162e0ec33c4d52a8a47afbf1901e0528e12eb228",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java": "755bd0bb93438682fda4d58f2dc39cad1d1c9a4f8d3e33037f4384106d368526",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java": "d75309bf4b5b3e40ddc6494b65802f4906ee716dcf62de571d2a3baf600b7e13",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlockEntity.java": "6bf2ae7aba2363a9c77b51dbb2f2653467a84741201014ed2a5ed665ce6336b8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/SafeBlock.java": "899f446a5b46abd9c9119f746c91f194507b2d17cfa261184f933e6a28b801e2",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java": "2f43df2fa7baa5caa5bf74f18165bf3cc6fdd168c4139cd977a3731888235f0b",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java": "ce735f79021b6a4f04c296479ad658fe0a34ecfd25bf0f74b81840a872aaf895",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java": "fb6e37ba7378fcbbabf07cefd5e81de39905e07a0193d47ced28f945d9031a3b",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java": "fd31a8c02a7008fc48cbd8dbf5e6b352adaf509b3930638dd8c8ca3aba98cf33",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java": "fca6e8c7b828074c78cf8593c5c22f16ff5898c7617d1cc3d435c17942ea1fb0",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java": "a2beda8d582254a0eb37f6e6c664f2ff9040127bd1e60cd7b4a9cbf640acfb5a",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java": "18b03fa0d2ef7811ebe18545c9c64754df53acbf39070693ffde43dc2bb8fd2b",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlock.java": "e58fbc6d004f152cd78db10017eac984049dbf495d7d2867ee6cef62c82e51c5",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlock.java": "e78e773707c69efc93fb9b81ee740a31243528a54123af20f38fda528f739265",
+    "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java": "42d5ff7ad2344babcfda28416d1d7369197a48647ba9d10d57fc686f7482cff9",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java": "4ac2cbe64ceaf7ca8011899f170aa6de5c05e248f673f06f6226dcc27d393cc9",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java": "eca9a254575e9712af6b87891d2776fe6fb75cad0c3e24a5741d96c23a1b7d0f",
+    "core/src/main/java/com/gregtech/gregtech/api/inventory/InventorySlotLayout.java": "4bb5ca4b43dea88a714933625ae95428011bc2fc567e3ae67d0e53795242ff8c",
+    "core/src/main/java/com/gregtech/gregtech/content/transport/HopperControlRules.java": "60b972c2df12d5a5338f32b13042061792dda99264f62878b4d8bafa70db7dac",
+    "core/src/main/java/com/gregtech/gregtech/content/storage/GarbageStorageRules.java": "21da276cc20e1fbaea0490259943c9d384d967bc35e9dca9030187331b58a5cc",
+    "core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java": "fac83ebd2b5d098a556f526f23cabc14a60d649e89cfd2f6773cc167bf6c89e0",
+    "core/src/main/java/com/gregtech/gregtech/content/storage/SafeLockRules.java": "71c4326a60dee87be4947643a7364ca8083b9239ba871035d935a95eb7e550ee",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMachines.java": "a1b861b45922f0941b57b2fbd0e63e11b98ac6cda3e1fffedea604b88930a82e",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/api/machine/MachineRegistry.java": "cde15163ca3270b40fd603c9180e417b03ddba7df4a1220163c3d0b4a358f0ff",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/DeferredRegistrySubmission.java": "e46df82fbff29df6f097e228f47e12c6c9a521cc94237301047c6bd6ad7b1689",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTSafes.java": "bacef7812c3a621a44f02ca41e8c6d72244e123031e0a1a39f383c37253e4059",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java": "d34e3f5c9aa7c289582a9fd20bd3792947962f7c4dd4f1e03acf22ee4fe457b4",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTCraftingTables.java": "d22625edc8e7ec816564494ef349ca3949c63203e734e7b473c8842e598115b3",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java": "a587a6138eaee75e03dc20ba09b54a99e14cbbfbc85eebac29903f1bc2b992b9",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/transport/HopperRegistries.java": "e7dddfd6e88180cb45bb0dfd9836ece17ce918fe1f886a8c04e2d34b02accc55",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/InventoryClientSetup.java": "5a7e6559dae98709e5e06cb54e50afc646586cf1ca16f941aa53bfa76bc8bea4",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+    "tools/integration/check_relay_sharing.py": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+    "tools/integration/check_stonecutter_emi.py": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3",
+    "tools/native_layout.py": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+  },
+  "auxiliary_sources": {
+    "work/inventory-explosion-audit-20261021/original-native/deobfuscation-data.srg": "0069d604ec188e89229fd0d2f929f06a93fa858b6bad3657b17e8a8f3bb97132"
+  },
+  "draft_snapshots": {
+    "berry-bush-audit-20261021": {
+      "baseline": "2d14d400914e0e2567d20dd0c546efdf43cb65c1",
+      "receipt_sha256": "06f4311c79225d0ace059e3b57850464173605409a8246fee036312a07cbb744",
+      "readme_sha256": "722112249d2c8ba56321786a105df0cef6af07f0bbea134c915ddfdae43d23b8",
+      "style_refresh": [
+        {
+          "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java",
+          "observed_sha256": "d822544674bc6e19f0c25eaeb3bd1d32f473c7a387d57a117e2d73a5a8c47c6d",
+          "final_sha256": "ec83c3aa9f88ee5aa38428942a800881ded79ea9f8ab601634395e5a169cff11",
+          "reason": "Only known formatting/comment changes, exact executable projections reverified."
+        },
+        {
+          "relative": "core/src/main/java/com/gregtech/gregtech/content/plant/BushGrowthRules.java",
+          "observed_sha256": "b4771e2ec3cf2164e4e007ad0a5d12e53a49bae1bac0906044c78e5e0682bf15",
+          "final_sha256": "87f46ef069daa7bfb38db04a87c4ea723d1786fb73289873a75c07d329fb38f9",
+          "reason": "Only known formatting/comment changes, exact executable projections reverified."
+        }
+      ]
+    },
+    "berry-crosscheck-20261021": {
+      "baseline": "396a9ee55",
+      "receipt_sha256": "fa61099e305e37ce0fa82cd0267dacb027e4b92abc6c714c81e60f8936310e2f",
+      "readme_sha256": null,
+      "style_refresh": []
+    },
+    "shared-menu-dirty-audit-20261021": {
+      "baseline": "2d14d400914e0e2567d20dd0c546efdf43cb65c1",
+      "receipt_sha256": "c694cd52f27130625205642b76b32913f67a69f557c136dc4c0aae8010e22c58",
+      "readme_sha256": "9e7dc35a8513d6cf808d268cc5a4392d351ccc7ce010c19600e459ac2a88bf41",
+      "style_refresh": [
+        {
+          "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+          "observed_sha256": "59f914c4fb2b1c478e87e1e6b9f7f2afe467035b387cdf59f7c7b1137054ad53",
+          "final_sha256": "f2362d223fe7f7a95cbf63c9de344f520965df8ed77734ca11e849ea7c8a9c71",
+          "reason": "Only known formatting/comment changes, exact executable projections reverified."
+        },
+        {
+          "relative": "core/src/main/java/com/gregtech/gregtech/api/inventory/InventorySlotLayout.java",
+          "observed_sha256": "f565e0604add1d53e8020d70b53935a4ad11bb16020d2e42c56175e2a3229d76",
+          "final_sha256": "4bb5ca4b43dea88a714933625ae95428011bc2fc567e3ae67d0e53795242ff8c",
+          "reason": "Only known formatting/comment changes, exact executable projections reverified."
+        }
+      ]
+    },
+    "menu-permission-audit-20261021": {
+      "baseline": "396a9ee55168c9297b2db76a5eda0e73a73b0d43",
+      "receipt_sha256": "b89e32e589b9f6bc8ef57c39e1d2867a28f5718feaed8b3135e65c6355c4ce27",
+      "readme_sha256": "e763774cd83cd39f41074f6c598702613d533ea7019def76d00a63f856f9b275",
+      "style_refresh": []
+    }
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/plant/BushGrowthRules.java": {
+      "baseline": "396a9ee55",
+      "before_sha256": "b4771e2ec3cf2164e4e007ad0a5d12e53a49bae1bac0906044c78e5e0682bf15",
+      "after_sha256": "87f46ef069daa7bfb38db04a87c4ea723d1786fb73289873a75c07d329fb38f9",
+      "stonecutter_directives_equal": true,
+      "projections": {
+        "core": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 130,
+          "signature_sha256": "7141cb86cbe9d62221ccdfa4662b53b7d233dd4899031a83293c5f4a80510915",
+          "comment_changes": []
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/BushBlockEntity.java": {
+      "baseline": "396a9ee55",
+      "before_sha256": "0a186dc0f0394f5f5d246f19cacd9c1d90a49c194df531b2c54bf9c089cfcac4",
+      "after_sha256": "ec83c3aa9f88ee5aa38428942a800881ded79ea9f8ab601634395e5a169cff11",
+      "stonecutter_directives_equal": true,
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 1518,
+          "signature_sha256": "bd9031720627a4786f41f4f54bb5fbe6f915d5aa0501b2155bc5d45d55d7ceb0",
+          "comment_changes": [
+            {
+              "before": "/**\n * GT6's berry bush logic ({@code MultiTileEntityBush}).\n *\n * <p>GT6 grows a bush every 128 ticks by {@code mSpeed} increments, where {@code mSpeed} is 1 on\n * plantable ground, plus the same amount again when it is raining, or — under a roof — when the light\n * level is above 9. A stage advances whenever GT6's byte-sized growth counter overflows, i.e. every\n * 256 increments ({@code if (++mGrowth == 0) mStage++}), which its own comment calls out as a\n * deliberate quirk. The port keeps all of it: 128-tick cycles, one stage per 256 increments, the\n * rain and light bonuses.\n */",
+              "after": "/**\n * GT6's berry bush logic ({@code MultiTileEntityBush}).\n *\n * <p>The shared rules retain the 128-tick growth cycle and byte-sized counter rollover: one stage\n * advances per 256 growth increments. Rain and light inputs currently come from modern Level\n * queries; their environment contracts differ from the original GT6 helpers and are audited\n * separately. This entity also maintains the current fixed-species identity and legacy migration.\n */"
+            }
+          ]
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 1557,
+          "signature_sha256": "2b97e82aa9e9d5383c0a7cbc45ca4ba96c5b425855da869d2d2cb240c4041cb8",
+          "comment_changes": [
+            {
+              "before": "/**\n * GT6's berry bush logic ({@code MultiTileEntityBush}).\n *\n * <p>GT6 grows a bush every 128 ticks by {@code mSpeed} increments, where {@code mSpeed} is 1 on\n * plantable ground, plus the same amount again when it is raining, or — under a roof — when the light\n * level is above 9. A stage advances whenever GT6's byte-sized growth counter overflows, i.e. every\n * 256 increments ({@code if (++mGrowth == 0) mStage++}), which its own comment calls out as a\n * deliberate quirk. The port keeps all of it: 128-tick cycles, one stage per 256 increments, the\n * rain and light bonuses.\n */",
+              "after": "/**\n * GT6's berry bush logic ({@code MultiTileEntityBush}).\n *\n * <p>The shared rules retain the 128-tick growth cycle and byte-sized counter rollover: one stage\n * advances per 256 growth increments. Rain and light inputs currently come from modern Level\n * queries; their environment contracts differ from the original GT6 helpers and are audited\n * separately. This entity also maintains the current fixed-species identity and legacy migration.\n */"
+            }
+          ]
+        }
+      }
+    },
+    "core/src/main/java/com/gregtech/gregtech/api/inventory/InventorySlotLayout.java": {
+      "baseline": "396a9ee55",
+      "before_sha256": "f565e0604add1d53e8020d70b53935a4ad11bb16020d2e42c56175e2a3229d76",
+      "after_sha256": "4bb5ca4b43dea88a714933625ae95428011bc2fc567e3ae67d0e53795242ff8c",
+      "stonecutter_directives_equal": true,
+      "projections": {
+        "core": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 3039,
+          "signature_sha256": "8d1faf46bf9af448130c9a32494166ef3b83c101e2d67cd44f314a0fa9160d60",
+          "comment_changes": [
+            {
+              "before": "/** Original exact hopper/battery-box/queue inventory coordinates, shared by both native menus. */",
+              "after": "/** Shared coordinates for the current hopper, battery box and queue inventory menus. */"
+            }
+          ]
+        }
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java": {
+      "baseline": "396a9ee55",
+      "before_sha256": "e79cbc62d4d61e3eb87a91d770b6c2f935932c9b1ae5c30345a3a8450bec463f",
+      "after_sha256": "f2362d223fe7f7a95cbf63c9de344f520965df8ed77734ca11e849ea7c8a9c71",
+      "stonecutter_directives_equal": true,
+      "projections": {
+        "forge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 679,
+          "signature_sha256": "f42cca7cfc044643fadb28f0e2833add74b6ddb2ffa7c3d6f0a7da4ec8496801",
+          "comment_changes": [
+            {
+              "before": "/**\n * GT6 hopper / queuehopper container ({@code ContainerCommonDefault}).\n * Dynamically lays out slots based on {@code slotCount} matching the original GT6 layouts.\n */",
+              "after": "/**\n * Shared hopper and queue menu using the current {@code InventorySlotLayout} coordinates.\n * Original GT6 menu behavior is audited separately from this shared layout.\n */"
+            },
+            {
+              "before": "/** Override in subclasses for queuehopper permissions. */",
+              "after": "/** Subclass hooks; this base menu's slot factory does not consult them. */"
+            }
+          ]
+        },
+        "neoforge": {
+          "tokens_and_literal_positions_equal": true,
+          "tokens": 685,
+          "signature_sha256": "a388dd26cd2c0d3c0968a2148e7adce6cad85133fde8596c41d4a1139a262ca9",
+          "comment_changes": [
+            {
+              "before": "/**\n * GT6 hopper / queuehopper container ({@code ContainerCommonDefault}).\n * Dynamically lays out slots based on {@code slotCount} matching the original GT6 layouts.\n */",
+              "after": "/**\n * Shared hopper and queue menu using the current {@code InventorySlotLayout} coordinates.\n * Original GT6 menu behavior is audited separately from this shared layout.\n */"
+            },
+            {
+              "before": "/** Override in subclasses for queuehopper permissions. */",
+              "after": "/** Subclass hooks; this base menu's slot factory does not consult them. */"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "reviewed_platform_views": [
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "platform": "forge",
+      "source_view_sha256": "b56671b7feacc6fc487cb78c27ee1d8481c53b03b621ffad7589b7c78ef735f1",
+      "code_and_literals_sha256": "3c51bd7b339b6c5bf1b1f48d7085946e9859418de6d4d68d9137ee26f9192f12",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "214785a3e7b67db6bdb2b6e5cfc23414dcada82e8fc0fb49728e21f56348f3b9"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "b56671b7feacc6fc487cb78c27ee1d8481c53b03b621ffad7589b7c78ef735f1"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "platform": "forge",
+      "source_view_sha256": "5e9528d0c412bd82faaa4cd2a0df672ce131cd7066e3d885f716b21decaf6056",
+      "code_and_literals_sha256": "c678a8f97c175ebcdd7ca95172d520946d03dbbae4c48ffbc22137c0bb3547dd",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "5e9528d0c412bd82faaa4cd2a0df672ce131cd7066e3d885f716b21decaf6056"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "5e9528d0c412bd82faaa4cd2a0df672ce131cd7066e3d885f716b21decaf6056"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java",
+      "platform": "forge",
+      "source_view_sha256": "1a541ac8c7a0100ac4da76f1f2788d489cdf1dc44464dcf900b0371c01241514",
+      "code_and_literals_sha256": "c1e336cfeb9ee9f30509cecd2b12b0480442213bbc8e80d3ddb3f21518bff6eb",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "1a541ac8c7a0100ac4da76f1f2788d489cdf1dc44464dcf900b0371c01241514"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "3c21c0572c578fc3e2b3296b7c786b7e8055c8a8a421b40f41156f0e41dda893",
+      "code_and_literals_sha256": "6dcfbff0177fb55807d07d1b2e7b540d4e14108eecf8a5667ba35fcb133edd9e",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "3c21c0572c578fc3e2b3296b7c786b7e8055c8a8a421b40f41156f0e41dda893"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "3c21c0572c578fc3e2b3296b7c786b7e8055c8a8a421b40f41156f0e41dda893"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/SafeBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "7822f87d5857d69a382c3f961c7ccf98f7686bbe79612cf66aa0f2b4ae7aeb27",
+      "code_and_literals_sha256": "523840086678ebbfd8ece977bbe71c2dfb888163d2f0b4238b20a7e00fba2335",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "7822f87d5857d69a382c3f961c7ccf98f7686bbe79612cf66aa0f2b4ae7aeb27"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "7822f87d5857d69a382c3f961c7ccf98f7686bbe79612cf66aa0f2b4ae7aeb27"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "63b93176c65f1a0596350a5670830199acc5f011c1e7ab9361fce033391da301",
+      "code_and_literals_sha256": "551a00356df4ba2f946744d9cf26030dab63366183e4527f2039dd9ae1448291",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "63b93176c65f1a0596350a5670830199acc5f011c1e7ab9361fce033391da301"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "63b93176c65f1a0596350a5670830199acc5f011c1e7ab9361fce033391da301"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "e527c17dc219bbea9369170b454b8f6794b0aae856f08cc6c029fc300b163072",
+      "code_and_literals_sha256": "211415b4dbccf538d67a9749bb970deabce4613d886418bc547676525f9214d1",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "e527c17dc219bbea9369170b454b8f6794b0aae856f08cc6c029fc300b163072"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "e527c17dc219bbea9369170b454b8f6794b0aae856f08cc6c029fc300b163072"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "5c51e541c5e6128a242e14844ac3d5a1409895f7f6660cf2764a401bbb6eb0d9",
+      "code_and_literals_sha256": "0e37410a1a5128dc332d76df5eeed49c8c29bb6a4e0c8f619c22b3a36eeea725",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "5c51e541c5e6128a242e14844ac3d5a1409895f7f6660cf2764a401bbb6eb0d9"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "5c51e541c5e6128a242e14844ac3d5a1409895f7f6660cf2764a401bbb6eb0d9"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "3e2df3c3b6c4557bdcfb18a0b80deba792cc4c0665ce96d0dcb8e1a76360f40d",
+      "code_and_literals_sha256": "16d2a358926c3862d244087b1e07e5ec6384c16b2976ecf6e924d3dd0a13d1a4",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "3e2df3c3b6c4557bdcfb18a0b80deba792cc4c0665ce96d0dcb8e1a76360f40d"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "3e2df3c3b6c4557bdcfb18a0b80deba792cc4c0665ce96d0dcb8e1a76360f40d"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "811a4184c5943ca42912c17c3069c0fc55561faa50a518c5e8bf668088fbde39",
+      "code_and_literals_sha256": "0b74cb5369ee464490173f57696f6f2fa9938dffa04fca858f8f355ffae2615d",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "811a4184c5943ca42912c17c3069c0fc55561faa50a518c5e8bf668088fbde39"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "811a4184c5943ca42912c17c3069c0fc55561faa50a518c5e8bf668088fbde39"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "9209614f96e2dad85f3ba047af0fd6fe36fd7dc22b513fb4fcefa5401b50de89",
+      "code_and_literals_sha256": "e7a7b075b5fc3a90870ce6316f6a60c994c8a5a28c63cab8982dcc2d1439898a",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "9209614f96e2dad85f3ba047af0fd6fe36fd7dc22b513fb4fcefa5401b50de89"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "9209614f96e2dad85f3ba047af0fd6fe36fd7dc22b513fb4fcefa5401b50de89"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "e24537a97a60b17227d64f876a55ed3c5a260815aa977036f8870a46e6a81d60",
+      "code_and_literals_sha256": "ca85ea8dd25f0e6ccaf411f6cba87c9efc9843d871a5d8c8740707f791063c7a",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "e24537a97a60b17227d64f876a55ed3c5a260815aa977036f8870a46e6a81d60"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "e24537a97a60b17227d64f876a55ed3c5a260815aa977036f8870a46e6a81d60"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "20881499a6bf53167c43ae87bde9bbd4bce275da1a8f2864e4b465e59f3aa347",
+      "code_and_literals_sha256": "8325773365e58291388be3616bef972ef2d88d6548bad4c71855f2a375eb0d1e",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "20881499a6bf53167c43ae87bde9bbd4bce275da1a8f2864e4b465e59f3aa347"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "f7e2aa8d0971f6185ed162768f991a38e89f59afd66b162d3c3e917d0ebc187c",
+      "code_and_literals_sha256": "476d8a1a1c7100611ee2f8a19eb0197d7b48604f4d92760fed0b3bff6f1dce77",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "f7e2aa8d0971f6185ed162768f991a38e89f59afd66b162d3c3e917d0ebc187c"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/SafeBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "82c428681501d5cee146bf547a2bc495cf7b03b0254407d2bec4de7d356c87b7",
+      "code_and_literals_sha256": "07460da2a84167cafaf605390af8bed3bd08cf88f98e98585e08355841b55382",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "82c428681501d5cee146bf547a2bc495cf7b03b0254407d2bec4de7d356c87b7"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "82c428681501d5cee146bf547a2bc495cf7b03b0254407d2bec4de7d356c87b7"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "82c3801708589db5e17241000eeb3f9b35b8279de76294e672170b1c600e529d",
+      "code_and_literals_sha256": "c777f96601334461d0266caed9d5fd2a7399146bcfaa5366696de89089ffe924",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "82c3801708589db5e17241000eeb3f9b35b8279de76294e672170b1c600e529d"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "3ef707814416e7c392cc8c3e583e0a3269e670213856e4e729fde1fe7058d68e",
+      "code_and_literals_sha256": "960b1306a95b916ae8d731781c4f039d800891281a5b1d7430aff7b0ad43a768",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "3ef707814416e7c392cc8c3e583e0a3269e670213856e4e729fde1fe7058d68e"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "3ef707814416e7c392cc8c3e583e0a3269e670213856e4e729fde1fe7058d68e"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "10614a5faf2d14709d11a655ae0be7c00aa84b60f2af227ac59c705cc24be4f8",
+      "code_and_literals_sha256": "81aea1a8ce4eb87f5557201614e0f983f9a980fcf262063e40796167266a0b4e",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "10614a5faf2d14709d11a655ae0be7c00aa84b60f2af227ac59c705cc24be4f8"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "10614a5faf2d14709d11a655ae0be7c00aa84b60f2af227ac59c705cc24be4f8"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "9009e6ce2439f8d946dd7d2c7189574a9752427ae65f8ccd542391698c85d243",
+      "code_and_literals_sha256": "8751b579bf64c82cbd6e24a2ca845a9be18fd760104eca3f8c39db0c6556973b",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "9009e6ce2439f8d946dd7d2c7189574a9752427ae65f8ccd542391698c85d243"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "9009e6ce2439f8d946dd7d2c7189574a9752427ae65f8ccd542391698c85d243"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "af6c3d1b4a0a0cd3b01fdc0328d914140a26f16df512b25c650553232fe88057",
+      "code_and_literals_sha256": "2d9edd492095dfaab3f91116720125000c60a82c690fea8b938a6339e4fb0054",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "af6c3d1b4a0a0cd3b01fdc0328d914140a26f16df512b25c650553232fe88057"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "af6c3d1b4a0a0cd3b01fdc0328d914140a26f16df512b25c650553232fe88057"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "78d8afa18dcfe8bae9dd1217c2c2bffe17339dc62eaf9b25f2c869e1b094fe85",
+      "code_and_literals_sha256": "401677a42607cd10450e9a565a6e5c2a8f7d0b874cec659e5d5d35ca23afcb8b",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "78d8afa18dcfe8bae9dd1217c2c2bffe17339dc62eaf9b25f2c869e1b094fe85"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "717b1748f0f997290be12bd6a9f6512a4253974ac9f361c2ce7d8443ae31e460",
+      "code_and_literals_sha256": "4675a4f312d273478fe28087ca4cf31925b573395a090c86a0137895d374e355",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "717b1748f0f997290be12bd6a9f6512a4253974ac9f361c2ce7d8443ae31e460"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "834dddb5329faa9beb711f15c0cde2fd2846768a2ceef33e1be830a630995d01",
+      "code_and_literals_sha256": "4b5f0c1017afdfc1a2d27af82e1b947a8cff07c0b77f23649ae081738e83c342",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "834dddb5329faa9beb711f15c0cde2fd2846768a2ceef33e1be830a630995d01"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "c89618ded2bfe1b46da2db5d928d85efb4018367899c223fa35d82e292a99fcb",
+      "code_and_literals_sha256": "db040792a32de81b3028962fc87d3662534ef34fccf95a451b29f88de788f2df",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "c89618ded2bfe1b46da2db5d928d85efb4018367899c223fa35d82e292a99fcb"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "platform": "forge",
+      "source_view_sha256": "1d17bb1de142491450e614c0e8507e71d689df2a1f5a21d3eefd3c899853b3ad",
+      "code_and_literals_sha256": "9ccc526283856a333c9c073f5524379035d3b289db95778e10ab664e737c0d23",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "1d17bb1de142491450e614c0e8507e71d689df2a1f5a21d3eefd3c899853b3ad"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "1d17bb1de142491450e614c0e8507e71d689df2a1f5a21d3eefd3c899853b3ad"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "forge",
+      "source_view_sha256": "4d233443744f2752349fae053ce58e2eb038814b77f5341a2d50054a53e53a05",
+      "code_and_literals_sha256": "a89cc945c1a75d99ded7a20d89c82a48903818be018900313cea9706b0a5e074",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "4d233443744f2752349fae053ce58e2eb038814b77f5341a2d50054a53e53a05"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "4d233443744f2752349fae053ce58e2eb038814b77f5341a2d50054a53e53a05"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "source_view_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "code_and_literals_sha256": "ce61fdd231d078e4ce01dc010ff256353f7ea0107a567c165e62af75aabce036",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "forge",
+      "source_view_sha256": "5d439572253a8130180d36cf95d504ca17470526e78969b00fbed49a089c6c05",
+      "code_and_literals_sha256": "a22f18bc61502e37e72cb230627736f63fbd64a3204d429cb8a091c72f20ac0a",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "5d439572253a8130180d36cf95d504ca17470526e78969b00fbed49a089c6c05"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "platform": "forge",
+      "source_view_sha256": "1a99348df76d1ea31a2cff312dd4d3db75dcabf0fe18a360fda625735fd02c0d",
+      "code_and_literals_sha256": "9b73a56bcd796194cd7870b4abaf69bfb0ec4b84a9cca94eece3235c243ca085",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "1a99348df76d1ea31a2cff312dd4d3db75dcabf0fe18a360fda625735fd02c0d"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+      "platform": "neoforge",
+      "source_view_sha256": "496f04037d0b95ed5767b6565f2261d20e4b152447720c913a3359fed113b3ca",
+      "code_and_literals_sha256": "95b65ee2746b67cf8cbf4287361504483959f6eed98751da0fcc6052bc009fcc",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "3829c910f8ff69e1c3d2e7ef42677da0094736e30657ad96c53fd64e497ad57a"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "496f04037d0b95ed5767b6565f2261d20e4b152447720c913a3359fed113b3ca"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+      "platform": "neoforge",
+      "source_view_sha256": "81b8a7b97d0486fa1885a6fd4ddd9df50364d0587b5c8dd2a4bca3e050e228d3",
+      "code_and_literals_sha256": "96891539164cd2b1a3bd0f18eb6a8ced89f25103f1e71106d143579c9802b5cc",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "81b8a7b97d0486fa1885a6fd4ddd9df50364d0587b5c8dd2a4bca3e050e228d3"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "81b8a7b97d0486fa1885a6fd4ddd9df50364d0587b5c8dd2a4bca3e050e228d3"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java",
+      "platform": "neoforge",
+      "source_view_sha256": "da034419231cf80a0fedf8333bb52efc0565f080cf31b3a581e751e9a1e0e681",
+      "code_and_literals_sha256": "fc1f66cc7911a69c7338ae2affa2113a716de79acf6266b859616cd4667cbcb7",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "da034419231cf80a0fedf8333bb52efc0565f080cf31b3a581e751e9a1e0e681"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "aa5aa06ba7ba2ddb542c57cb1a2e713cd8ac65a820002fdc66a025504f20e67e",
+      "code_and_literals_sha256": "2c9ce85d7557ea6a9a6f49b7b5fd6ebc28bb11cd331756b9b3e58fc725c00279",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "aa5aa06ba7ba2ddb542c57cb1a2e713cd8ac65a820002fdc66a025504f20e67e"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "aa5aa06ba7ba2ddb542c57cb1a2e713cd8ac65a820002fdc66a025504f20e67e"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/SafeBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "2ad88867400e47c0e6aa2e406910aa9cd93a933df4c508a368c53a53465e2f1e",
+      "code_and_literals_sha256": "bce9b3c1f6b4ed892a659c79ca27846a6603353a38d13e5363ad5aab107d60d2",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "2ad88867400e47c0e6aa2e406910aa9cd93a933df4c508a368c53a53465e2f1e"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "2ad88867400e47c0e6aa2e406910aa9cd93a933df4c508a368c53a53465e2f1e"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "5dc6a94c6c5e92d8bdb5e4502c3bfec79cffa3af661fdd46397a26ac2a7ded7b",
+      "code_and_literals_sha256": "311ec73a96fb8f576af06bc0a2d6de688c631e50908d34dff88f9e3627b2c767",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "5dc6a94c6c5e92d8bdb5e4502c3bfec79cffa3af661fdd46397a26ac2a7ded7b"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "5dc6a94c6c5e92d8bdb5e4502c3bfec79cffa3af661fdd46397a26ac2a7ded7b"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "1df241bd755b9cc18ad23571a0ce8a724dbc90b5c22e8128acaaa9ec7af58969",
+      "code_and_literals_sha256": "d772e4a2d55d383cbe6f6bc4f41073509104b91af29ecc97c5523b1c5e385fde",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "1df241bd755b9cc18ad23571a0ce8a724dbc90b5c22e8128acaaa9ec7af58969"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "1df241bd755b9cc18ad23571a0ce8a724dbc90b5c22e8128acaaa9ec7af58969"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageDumpBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "55e349d501aa003a81ba9c8a02332065f647709e5ba4fac07080f2a356e0e74f",
+      "code_and_literals_sha256": "756f24ebee74fb163712c29cbdb984e06060ea3daab229c719896586997f4966",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "55e349d501aa003a81ba9c8a02332065f647709e5ba4fac07080f2a356e0e74f"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "55e349d501aa003a81ba9c8a02332065f647709e5ba4fac07080f2a356e0e74f"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "95f18af1a598f49dcdd3ad53d13a8dbc0b8ce17bbf2b5f4543d62bcceeaeaa80",
+      "code_and_literals_sha256": "2d42774ca5e6b26d7ce35bd4770b770550e833bedc615e907431f0a937659407",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "95f18af1a598f49dcdd3ad53d13a8dbc0b8ce17bbf2b5f4543d62bcceeaeaa80"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "95f18af1a598f49dcdd3ad53d13a8dbc0b8ce17bbf2b5f4543d62bcceeaeaa80"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "aa6f09849b63ffdfdacdb71ac713d06d8d47d79fb1a56f685a6e1d16edf3764d",
+      "code_and_literals_sha256": "33c51ceae4cb6393bf3394b9e681909c98cbec025f99f77fe7830fdab960bbfc",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "aa6f09849b63ffdfdacdb71ac713d06d8d47d79fb1a56f685a6e1d16edf3764d"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "aa6f09849b63ffdfdacdb71ac713d06d8d47d79fb1a56f685a6e1d16edf3764d"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "0d73597ad9e432198e87f64af4f6f54649e8dc0acda97ba3508c95c29aa489ef",
+      "code_and_literals_sha256": "f1b9cdb9b8271ed4673aaf51124eb64095f341cfaf822f23d5b3ca7d3bbad445",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "0d73597ad9e432198e87f64af4f6f54649e8dc0acda97ba3508c95c29aa489ef"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "0d73597ad9e432198e87f64af4f6f54649e8dc0acda97ba3508c95c29aa489ef"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "66ca5bbfa10574cf4f8b10a82da00f699c391b9aeaafc24fdf8d4ad9df664301",
+      "code_and_literals_sha256": "fa8b13e4f3d356a5f9acd741b3cb170262dac8b8f42c8e3bbabe63311581442a",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "66ca5bbfa10574cf4f8b10a82da00f699c391b9aeaafc24fdf8d4ad9df664301"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "66ca5bbfa10574cf4f8b10a82da00f699c391b9aeaafc24fdf8d4ad9df664301"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "7fe6210766b7d646c7fc22dfc8ba98743814d7de9af8204182a869074e8bdd05",
+      "code_and_literals_sha256": "841103733703f3f1c2c7bb24a1c6cd6d3cebbc11eb8ad10dda1369ef3db92ac9",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "7fe6210766b7d646c7fc22dfc8ba98743814d7de9af8204182a869074e8bdd05"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "bc19c0979d75bd0dcbb0ab53795e413a4580ddb3b9a3099652df7f2d9732fea8",
+      "code_and_literals_sha256": "5147d4a7ebe5184b2a8eccef717ba09111fd99cf014017f8aa3aa3d8050bad60",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "bc19c0979d75bd0dcbb0ab53795e413a4580ddb3b9a3099652df7f2d9732fea8"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/SafeBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "cfec52c35d99a3b84cfafc0c01a33b837e7d4dd55a3a149732baf41d04311f06",
+      "code_and_literals_sha256": "0835b95b4784c1a3823b94f824706392cff42317cd3172955db1ab86acf2a27c",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "cfec52c35d99a3b84cfafc0c01a33b837e7d4dd55a3a149732baf41d04311f06"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "cfec52c35d99a3b84cfafc0c01a33b837e7d4dd55a3a149732baf41d04311f06"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "6fb79627f3512176b245e15ddcbc4110cd9d88ae4394ee6adbd50c56f39a7c2c",
+      "code_and_literals_sha256": "827166c536549441c08f5185e751e5561d56ebad4c43f94818654a6f24fa2170",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "6fb79627f3512176b245e15ddcbc4110cd9d88ae4394ee6adbd50c56f39a7c2c"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "b8dcdadc23949a036a411fa9e01533234a48483c950b4064c68697b6f673c968",
+      "code_and_literals_sha256": "daf4abe49eac2cebaea7e73ff7f57f51a920fe9e026c239fb7c7a239ccd15f7c",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "b8dcdadc23949a036a411fa9e01533234a48483c950b4064c68697b6f673c968"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "b8dcdadc23949a036a411fa9e01533234a48483c950b4064c68697b6f673c968"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/EnderGarbageDumpBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "acfb748a48da01c936bdf9097cad5e1d639da1a529216890c6b532ae86fb4130",
+      "code_and_literals_sha256": "69ea09c4af3f36accdb01761cf7f05b58982bc8b78d49361c3e5e1fd914e09d6",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "acfb748a48da01c936bdf9097cad5e1d639da1a529216890c6b532ae86fb4130"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "acfb748a48da01c936bdf9097cad5e1d639da1a529216890c6b532ae86fb4130"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/HopperBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "fa6f4fc4de85e44a89be5a61bc5a5f07c6116c9a522e081c6662f03c7d5513d9",
+      "code_and_literals_sha256": "6f7ef48c44b7c6d84198c012a2665b1a0907e65c77f9d9d2cca70a8e0f93668e",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "fa6f4fc4de85e44a89be5a61bc5a5f07c6116c9a522e081c6662f03c7d5513d9"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "fa6f4fc4de85e44a89be5a61bc5a5f07c6116c9a522e081c6662f03c7d5513d9"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/QueueHopperBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "31a7bd36176a4113903dbb5905cc26f5398527c0429ee7cff172801dae191087",
+      "code_and_literals_sha256": "7dac35e40da3b2f6f558e77743b45436b2e82dba5df54d6677fe53963620d05c",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "31a7bd36176a4113903dbb5905cc26f5398527c0429ee7cff172801dae191087"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "31a7bd36176a4113903dbb5905cc26f5398527c0429ee7cff172801dae191087"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/EnergyNodeBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "1699b1b487eefc01699ee116e0ba4ef30d20cd9b1e7b3e12559fe264b2dac72a",
+      "code_and_literals_sha256": "6bd76c37f4fc7a52f56f9d2b4f6d0fcc1e6d48caae8f602dcc4e21ad30b47a3d",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "1699b1b487eefc01699ee116e0ba4ef30d20cd9b1e7b3e12559fe264b2dac72a"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/energy/BatteryBoxBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "717b1748f0f997290be12bd6a9f6512a4253974ac9f361c2ce7d8443ae31e460",
+      "code_and_literals_sha256": "4675a4f312d273478fe28087ca4cf31925b573395a090c86a0137895d374e355",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "717b1748f0f997290be12bd6a9f6512a4253974ac9f361c2ce7d8443ae31e460"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "afaeeb4609539d528218a8544a312616490ed379f51ba051839841c481efbe64",
+      "code_and_literals_sha256": "ae905fd7236ed0f68b0bd473b8506062b08d4f41152506a981de5416c4148cbc",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "afaeeb4609539d528218a8544a312616490ed379f51ba051839841c481efbe64"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ChargingCraftingTableBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "00ef634527ab8a307ec88551aaf461a90c338cc7e0ae6c950448bb1aaf9ff205",
+      "code_and_literals_sha256": "3ce4da06deb969b7cf1c324be10e2580d9b2891b528f211fc7dd6ff4a07f482c",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "00ef634527ab8a307ec88551aaf461a90c338cc7e0ae6c950448bb1aaf9ff205"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/world/GarbageData.java",
+      "platform": "neoforge",
+      "source_view_sha256": "b39a7bd0e48e702e58612ad626dfc1b20607b329516efb11b7c50327205cd46f",
+      "code_and_literals_sha256": "fe1f78c7aaedf06c62c6e0c2a0477a552905f5899cee73cf380bdba20a82df42",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "b39a7bd0e48e702e58612ad626dfc1b20607b329516efb11b7c50327205cd46f"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "b39a7bd0e48e702e58612ad626dfc1b20607b329516efb11b7c50327205cd46f"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "neoforge",
+      "source_view_sha256": "a8ea0fc21de2d553bb829cebe2bd51f12915b9efb387e584e65938c6ff3cb4ba",
+      "code_and_literals_sha256": "306933e12b6e829b9df8e0db876622380e2e86fca1834b013d0adfb607724efa",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "a8ea0fc21de2d553bb829cebe2bd51f12915b9efb387e584e65938c6ff3cb4ba"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "a8ea0fc21de2d553bb829cebe2bd51f12915b9efb387e584e65938c6ff3cb4ba"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "source_view_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "code_and_literals_sha256": "b528570511d93f6f550b1f7af857aba0259b76889e10e13bcdb8849da4a2e7f2",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3"
+        },
+        {
+          "draft": "menu-permission-audit-20261021",
+          "source_view_sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "platform": "neoforge",
+      "source_view_sha256": "49658149aad12ab4dff8ed0a5fb4b1e73b9d5e15fc184bd42c89c55eecc6d4a0",
+      "code_and_literals_sha256": "2daccd349c8361a8d4d3c9642b5d8aeda466958c3149403cf12bb5559466f850",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "49658149aad12ab4dff8ed0a5fb4b1e73b9d5e15fc184bd42c89c55eecc6d4a0"
+        }
+      ]
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "platform": "neoforge",
+      "source_view_sha256": "35b9470859ddeeb8a8a77ad6538f2d45684efccc90dc1bc1460f24439010fe7b",
+      "code_and_literals_sha256": "e4efafdc0ecee08517f95e5eea2fa980fa69d08e2d3c59f716023706446f6d0d",
+      "observed_views": [
+        {
+          "draft": "shared-menu-dirty-audit-20261021",
+          "source_view_sha256": "35b9470859ddeeb8a8a77ad6538f2d45684efccc90dc1bc1460f24439010fe7b"
+        }
+      ]
+    }
+  ],
+  "native_dependencies": {
+    "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar": {
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entries": {
+        "net/minecraft/world/level/Level.class": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f",
+        "net/minecraft/world/level/block/state/BlockBehaviour.class": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "net/minecraft/server/level/ServerLevel.class": "0210ec59000410d4284eeec225699b49b592ba659c8a16b49ac76916192585d1",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.class": "cb9e336ed4cc15436f20a129bb7fdd188d9a9198adb7e443566788de62f99b49",
+        "net/minecraft/world/inventory/Slot.class": "31d0ae00785872909de5d946f3c11081524a93eff5fc6012ad5a173d15d01549",
+        "net/minecraft/world/inventory/AbstractContainerMenu.class": "4e6b9c7bd35cac672e491957afbda2ce565c509be9f0f1acddf8496554ac301a",
+        "net/minecraft/world/SimpleContainer.class": "d733c4ac3913724dbd7f527d69ccaf80fdea8d087db5637fbf74495edaea9216",
+        "net/minecraftforge/items/ItemStackHandler.class": "6706adae3f06eee55319aa95cfe50f760d76016a6c71dee24037d6af59763c9f",
+        "net/minecraftforge/items/SlotItemHandler.class": "1b04f6629aed979c90eace4f1437de6760eb70c1a50b92b20a712607fd1f0afa",
+        "net/minecraftforge/items/VanillaInventoryCodeHooks.class": "c867db7fab2c3d3458e18ea1d0d42730b0bc9f10e25256734ac6d6423a9881ab",
+        "net/minecraftforge/items/wrapper/InvWrapper.class": "ac52b8d9bd6a61631ef7670d0a07e26f751adf2ee1209a6bdc0a8bce4c889877"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar": {
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "entries": {
+        "net/minecraft/world/level/Level.class": "74a062f0d480674152fa4665bd7b483fca52de8dd3b07178c1a6c40d3fae3fae",
+        "net/minecraft/world/level/block/state/BlockBehaviour.class": "9d4b517d48afdaa2183e345ec25ae97efe0f0346b9f4add1de1dbb2f46d863b0",
+        "net/minecraft/world/level/block/entity/BlockEntity.class": "9dec7da0f57d8eb770866c81c5e96a052a003b25f1504714c269e95acb6d8615",
+        "net/minecraft/server/level/ServerLevel.class": "19b42e51848fd27df3683dacf694baa5126ee9f0665f12afdc65f82493a1e5a3",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.class": "07e9bb22c69472c1de394c2518d72420fb7ee9f05555572a351cd87224d06b0f",
+        "net/minecraft/world/inventory/Slot.class": "89115c56fff496b2cb46a15f92bbcf342b383baad3ed6f5461a253c5d9c00ca7",
+        "net/minecraft/world/inventory/AbstractContainerMenu.class": "4d70e437f94ff4d448e17fcc9d287ea400ef716e34b2adc308a01cf4e688f893",
+        "net/minecraft/world/SimpleContainer.class": "ce1499b616ee0762b939f9ca3ffc053a00f10a6736f26845173e99a20e2647e0",
+        "net/neoforged/neoforge/items/ItemStackHandler.class": "9d842a44ed64512baca32d64f2726a93d62603dfc46448c71e8fd416dc604122",
+        "net/neoforged/neoforge/items/SlotItemHandler.class": "f22a04893387feb58fc9c64f317b83bca8b2de47fc2635033fe5a46d67090d28",
+        "net/neoforged/neoforge/items/VanillaInventoryCodeHooks.class": "3339a93061ed8eb2ed1e751c30e64c712c4360bd65eecd8ad4ce8cb6e6754941",
+        "net/neoforged/neoforge/items/wrapper/InvWrapper.class": "9ea90f1dd827719198853348c7545bd9af83f86afc484a48e8bfa7a1368f846c"
+      }
+    },
+    "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar": {
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entries": {
+        "net/minecraft/world/level/Level.java": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+        "net/minecraft/world/level/block/state/BlockBehaviour.java": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+        "net/minecraft/world/level/block/entity/BlockEntity.java": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "net/minecraft/server/level/ServerLevel.java": "8d1086b8e63b11d340853e7595a63f2f27edc0d690311c9a0d46d5098eb21925",
+        "net/minecraft/world/level/block/entity/HopperBlockEntity.java": "3ecf1cd3c9c8563f66bfa10ace876d146abde1c7a4ad61f0110284b432f3444b",
+        "net/minecraft/world/inventory/Slot.java": "8e384c39b105493d097603cc29d3ba971f27e7d9c35e480889b6b2021ec720b3",
+        "net/minecraft/world/inventory/AbstractContainerMenu.java": "1ecb13a9c33aba83666b229558278871ff28c76c477cfe96c13124ae55de232d",
+        "net/minecraft/world/SimpleContainer.java": "6a0ba6c20c4b254183473d2bfeafaca782abe8f5a7a7784211f8811ae2075125",
+        "net/neoforged/neoforge/common/extensions/IBlockExtension.java": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+        "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+        "net/neoforged/neoforge/items/ItemStackHandler.java": "2c73babcc9449b12f8b75dbb61d019aea043e647b8604edcfea7796ec19ba029",
+        "net/neoforged/neoforge/items/SlotItemHandler.java": "872fe32c96263fcda22c36922255d07f678a29677920869353f3a05358201f10",
+        "net/neoforged/neoforge/items/VanillaInventoryCodeHooks.java": "45186cd2d7c51c8b7e96b9fa2425c11172d790aa9dda06a7f0e0718db0c53036",
+        "net/neoforged/neoforge/items/wrapper/InvWrapper.java": "6eb972e32e3b686cc51dc2728b39de408ef8e63b536ca6ffe9c5f5a486e66aea"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/com/mojang/minecraft/1.7.10/minecraft-1.7.10-client.jar": {
+      "sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entries": {
+        "ahb.class": "e682175e53be8972a6d04dff07da5780467754a7ffce2e396643c102893fd58a",
+        "aqo.class": "8b437d8d18e21cf8adf86534b4c969462a8ede4cd05e8f14a8bce9077288c6be"
+      }
+    },
+    "C:/Minecraft整合包/GTNH2.7.0小凡君/PrismLauncher-Windows-MSVC-Portable-8.3/libraries/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forge-1.7.10-10.13.4.1614-1.7.10-universal.jar": {
+      "sha256": "00d1ca02192c7efb87da95552ebf247021f1e1d642f86d0a03076314def11529",
+      "entries": {
+        "deobfuscation_data-1.7.10.lzma": "dbc4ace5029244e5bfa70422d637848c8b932f459e94ec503fdafc5e5f7d5aa2"
+      }
+    },
+    "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar": {
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": {
+        "net/minecraftforge/common/extensions/IForgeBlock.java": "a65330ebe8ac2935ed0bdce7eaa0ba7aa0e0ac5c57677d2774565f71bb949502",
+        "net/minecraftforge/common/extensions/IForgeBlockState.java": "b85e021bf08067a83d8181f423470652db1cd1de53d6963edf3b97b970fca743",
+        "net/minecraftforge/items/ItemStackHandler.java": "056424ca0f84ec388530cd93af0d2e1a384eaeb731486ffdf6491b215f5d0cd0",
+        "net/minecraftforge/items/SlotItemHandler.java": "a82ed04df2adec2e32ce3d0fa07aad5bd7c0d350b40002255f421445c7045c1c",
+        "net/minecraftforge/items/VanillaInventoryCodeHooks.java": "98b0e71df1ceeba4fbc0d33a8d70ca5287e661322c9aa80ba0c9ceae891b9508",
+        "net/minecraftforge/items/wrapper/InvWrapper.java": "edb520b13fb6565c6b41af814f4d98307bd94c7e66ac8f0720c8d077aba4ae8c"
+      }
+    }
+  },
+  "unique_native_entries_reverified": 47,
+  "berry_native_evidence": {
+    "neo_source_lines": {
+      "Level.java": "1016-1025 isRainingAt requires biome RAIN",
+      "BlockBehaviour.java": "157-166 default updateShape/neighborChanged do not check bush support"
+    },
+    "forge_isRainingAt_offsets": "53 getPrecipitationAt; 58 RAIN field; 61 comparison",
+    "original_mappings": [
+      "MD ahb/n (III)F net/minecraft/world/World/func_72801_o (III)F",
+      "FD aqo/h net/minecraft/world/WorldProvider/field_76573_f",
+      "MD aqo/a ()V net/minecraft/world/WorldProvider/func_76556_a ()V"
+    ],
+    "original_brightness_contract": "ahb.n indexes aqo.h; aqo.a generates ordinary dimension table; GT helper casts float to long before multiplying by 15."
+  },
+  "berry_javap_metadata": [
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.Level"
+      ],
+      "stdout_sha256": "99304f0da6337fd3e21605c221d4e9d1cb8ab902366e9eb17e0906501d8679a4",
+      "stdout_bytes": 123457,
+      "exit": 0,
+      "storage": "in-memory only"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "net.minecraft.world.level.block.state.BlockBehaviour"
+      ],
+      "stdout_sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332",
+      "stdout_bytes": 34593,
+      "exit": 0,
+      "storage": "in-memory only"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "ahb"
+      ],
+      "stdout_sha256": "fbef1098b75e803373f06a588f17a6bfa9c02549801f71c9643b07761bac54bd",
+      "stdout_bytes": 310129,
+      "exit": 0,
+      "storage": "in-memory only"
+    },
+    {
+      "argv": [
+        "javap",
+        "-p",
+        "-c",
+        "-classpath",
+        "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+        "aqo"
+      ],
+      "stdout_sha256": "e5865af4f0c7c8f0e2e7506f7f92842019d9c877b81e5aa27a51485f892b54a4",
+      "stdout_bytes": 16435,
+      "exit": 0,
+      "storage": "in-memory only"
+    }
+  ],
+  "shared_menu_bytecode_metadata": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.entity.BlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "f0033ace2f7f436e93d623c0ef29f34e6d6cd524ec4dcd2727d786682a18ee57",
+      "method_headers": [
+        "public void setChanged();",
+        "protected static void setChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.level.block.entity.HopperBlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "d565f7b19861e9011d5f3a4f977d82769fa6a61b33c552f173d99fc37ab9691a",
+      "method_headers": [
+        "public static void pushItemsTick(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.HopperBlockEntity);",
+        "public static boolean suckInItems(net.minecraft.world.level.Level, net.minecraft.world.level.block.entity.Hopper);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.inventory.Slot",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "8da20839a07b96e8e41e866ce5c0fa373456c7783ab2464f0369ebdcaa15fcca",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.SimpleContainer",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "e9034b4aa3063433a73c5bd57cc52a811091e2c339cc9a8ee01be428774cd76d",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "74945e60e6bdf54b6eae412ec7101f14420544d7e6cf63f8ae3cec0b12d963d7",
+      "method_headers": [
+        "protected boolean moveItemStackTo(net.minecraft.world.item.ItemStack, int, int, boolean);"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "class": "net.minecraftforge.items.SlotItemHandler",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "42079d16590811ccd75f182868e8ba8f918712918cc66cd4d43d47432d245f17",
+      "method_headers": [
+        "public net.minecraftforge.items.SlotItemHandler(net.minecraftforge.items.IItemHandler, int, int, int);",
+        "public int getMaxStackSize();",
+        "public int getMaxStackSize(net.minecraft.world.item.ItemStack);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.level.block.entity.BlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "30b4394d05f6ba891c63c910bc8072ba29f788e49663d9a0cd9b68cb0dd9f997",
+      "method_headers": [
+        "public void setChanged();",
+        "protected static void setChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.level.block.entity.HopperBlockEntity",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "c306fc2f19e407d926e9ee2d90bcc5f34a35de49edeacd067cf8c85b8631e690",
+      "method_headers": [
+        "public static void pushItemsTick(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.entity.HopperBlockEntity);",
+        "public static boolean suckInItems(net.minecraft.world.level.Level, net.minecraft.world.level.block.entity.Hopper);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.inventory.Slot",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "5ae50717717cc5128bcccbf36dee752a92abb1ae13ed16e954324f3928935173",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.SimpleContainer",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "339b63acb391f4afac772bd51161fa29574ff0f5110d2067f0dcf59be8060541",
+      "method_headers": [
+        "public void setChanged();"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "38a5639a16e2a176d60ea4d16b3c6944c93353aedf7ed0fc63e302f86c2d76ff",
+      "method_headers": [
+        "protected boolean moveItemStackTo(net.minecraft.world.item.ItemStack, int, int, boolean);"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "class": "net.neoforged.neoforge.items.SlotItemHandler",
+      "tool": "C:/Program Files/Java/jdk-21/bin/javap.exe",
+      "selected_methods_sha256": "2162eefa8db48896dbd55212c425e4401b198c15643322a3e66060a5ba67ac4f",
+      "method_headers": [
+        "public net.neoforged.neoforge.items.SlotItemHandler(net.neoforged.neoforge.items.IItemHandler, int, int, int);",
+        "public int getMaxStackSize();",
+        "public int getMaxStackSize(net.minecraft.world.item.ItemStack);"
+      ]
+    }
+  ],
+  "menu_permission_bytecode_metadata": [
+    {
+      "platform": "forge",
+      "class": "net.minecraftforge.items.SlotItemHandler",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "sha256": "9b2346a9a8faba56c68b622b7c95112dadee0894a6562959fc36da9fde2f04eb",
+      "method_headers": [
+        "public boolean mayPlace(net.minecraft.world.item.ItemStack);",
+        "public void set(net.minecraft.world.item.ItemStack);",
+        "public boolean mayPickup(net.minecraft.world.entity.player.Player);",
+        "public net.minecraft.world.item.ItemStack remove(int);"
+      ],
+      "selected_methods_sha256": "6ac9d908c691d1689bd05f39cf6c81b972e92f541370628acb4ac991a7e9d685"
+    },
+    {
+      "platform": "forge",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "selected_doClick_quickmove_snippets": [
+        "     674: iload_1\n     675: invokevirtual #276                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;\n     678: checkcast     #223                // class net/minecraft/world/inventory/Slot\n     681: astore        7\n     683: aload         7\n     685: aload         4\n     687: invokevirtual #648                // Method net/minecraft/world/inventory/Slot.mayPickup:(Lnet/minecraft/world/entity/player/Player;)Z\n     690: ifne          694\n     693: return\n     694: aload_0\n     695: aload         4\n     697: iload_1\n     698: invokevirtual #650                // Method quickMoveStack:(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;\n     701: astore        8\n     703: aload         8\n     705: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n     708: ifne          736\n     711: aload         7",
+        "     701: astore        8\n     703: aload         8\n     705: invokevirtual #561                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n     708: ifne          736\n     711: aload         7\n     713: invokevirtual #280                // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;\n     716: aload         8\n     718: invokestatic  #653                // Method net/minecraft/world/item/ItemStack.isSameItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z\n     721: ifeq          736\n     724: aload_0\n     725: aload         4\n     727: iload_1\n     728: invokevirtual #650                // Method quickMoveStack:(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;\n     731: astore        8\n     733: goto          703\n     736: goto          1090\n     739: iload_1\n     740: ifge          744"
+      ],
+      "meaning": "Initial QUICK_MOVE call is preceded by Slot.mayPickup and return on false. The second loop call is already inside that accepted branch.",
+      "sha256": "eb290128900a95f45e36855d178326680cdac5e19806756490d6bfe225348124"
+    },
+    {
+      "platform": "neoforge",
+      "class": "net.neoforged.neoforge.items.SlotItemHandler",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "sha256": "87c94799bda82b45258fb079589d453e6c98e6cf93c05db8d2233e809146cb5d",
+      "method_headers": [
+        "public boolean mayPlace(net.minecraft.world.item.ItemStack);",
+        "public void set(net.minecraft.world.item.ItemStack);",
+        "public boolean mayPickup(net.minecraft.world.entity.player.Player);",
+        "public net.minecraft.world.item.ItemStack remove(int);"
+      ],
+      "selected_methods_sha256": "38d99067da38fe0d61e14672a877e80692c3d328370e174a6a0ed5bdc2bd7e96"
+    },
+    {
+      "platform": "neoforge",
+      "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243.jar",
+      "selected_doClick_quickmove_snippets": [
+        "     674: iload_1\n     675: invokevirtual #169                // Method net/minecraft/core/NonNullList.get:(I)Ljava/lang/Object;\n     678: checkcast     #130                // class net/minecraft/world/inventory/Slot\n     681: astore        7\n     683: aload         7\n     685: aload         4\n     687: invokevirtual #469                // Method net/minecraft/world/inventory/Slot.mayPickup:(Lnet/minecraft/world/entity/player/Player;)Z\n     690: ifne          694\n     693: return\n     694: aload_0\n     695: aload         4\n     697: iload_1\n     698: invokevirtual #473                // Method quickMoveStack:(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;\n     701: astore        8\n     703: aload         8\n     705: invokevirtual #382                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n     708: ifne          736\n     711: aload         7",
+        "     701: astore        8\n     703: aload         8\n     705: invokevirtual #382                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z\n     708: ifne          736\n     711: aload         7\n     713: invokevirtual #173                // Method net/minecraft/world/inventory/Slot.getItem:()Lnet/minecraft/world/item/ItemStack;\n     716: aload         8\n     718: invokestatic  #477                // Method net/minecraft/world/item/ItemStack.isSameItem:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z\n     721: ifeq          736\n     724: aload_0\n     725: aload         4\n     727: iload_1\n     728: invokevirtual #473                // Method quickMoveStack:(Lnet/minecraft/world/entity/player/Player;I)Lnet/minecraft/world/item/ItemStack;\n     731: astore        8\n     733: goto          703\n     736: goto          1071\n     739: iload_1\n     740: ifge          744"
+      ],
+      "meaning": "Initial QUICK_MOVE call is preceded by Slot.mayPickup and return on false. The second loop call is already inside that accepted branch.",
+      "sha256": "e042d6c4a570c3b387a905eed81bf6771a125d1f14c9cd651df9deda9f42b910"
+    }
+  ],
+  "menu_host_scan": {
+    "roots": [
+      "core/src/main/java/",
+      "multiversion/src/main/java/",
+      "multiversion/versions/1.20.1-forge/src/main/java/",
+      "multiversion/versions/1.21.1-neoforge/src/main/java/"
+    ],
+    "java_files_scanned": 1738,
+    "matching_files": 12,
+    "hits": [
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+        "line": 4,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+        "line": 232,
+        "text": "public HopperContainerMenu storageMenu(int id,Inventory player) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AdvancedCraftingTableBlockEntity.java",
+        "line": 233,
+        "text": "return new HopperContainerMenu(GTMenuTypes.forSlotCount(36),id,player,view(IntStream.range(35,71).toArray(),false)) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+        "line": 384,
+        "text": "(id, inv, p) -> new com.gregtech.gregtech.client.gui.HopperContainerMenu("
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+        "line": 5,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+        "line": 78,
+        "text": "public HopperContainerMenu createMenu(int page, int id, Inventory playerInventory) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+        "line": 80,
+        "text": "return new HopperContainerMenu(GTMenuTypes.forSlotCount(PAGE_SIZE), id, playerInventory,"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+        "line": 3,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/EnderGarbageBlockEntity.java",
+        "line": 79,
+        "text": "return new HopperContainerMenu(GTMenuTypes.forSlotCount(9), containerId, playerInv, inventory);"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+        "line": 3,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+        "line": 227,
+        "text": "private static final class ChestMenu extends HopperContainerMenu {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/SafeBlockEntity.java",
+        "line": 101,
+        "text": "public com.gregtech.gregtech.client.gui.HopperContainerMenu createMenu(int id, net.minecraft.world.entity.player.Inventory playerInventory) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/SafeBlockEntity.java",
+        "line": 109,
+        "text": "return new com.gregtech.gregtech.client.gui.HopperContainerMenu(com.gregtech.gregtech.registry.GTMenuTypes.forSlotCount(15),"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+        "line": 6,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/HopperBlockEntity.java",
+        "line": 735,
+        "text": "return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this);"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+        "line": 6,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/QueueHopperBlockEntity.java",
+        "line": 696,
+        "text": "return new HopperContainerMenu(GTMenuTypes.forSlotCount(invsize()), containerId, playerInv, this);"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/GarbageDumpContainerMenu.java",
+        "line": 22,
+        "text": "public class GarbageDumpContainerMenu extends HopperContainerMenu {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 24,
+        "text": "public class HopperContainerMenu extends AbstractContainerMenu {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 30,
+        "text": "public HopperContainerMenu(MenuType<?> type, int containerId, Inventory playerInv, IItemHandler inventory) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 39,
+        "text": "public HopperContainerMenu(int containerId, Inventory playerInv, int slotCount) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 44,
+        "text": "protected HopperContainerMenu(MenuType<?> type, int containerId, Inventory playerInv, int slotCount) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java",
+        "line": 20,
+        "text": "public class HopperScreen extends AbstractContainerScreen<HopperContainerMenu> {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperScreen.java",
+        "line": 26,
+        "text": "public HopperScreen(HopperContainerMenu menu, Inventory playerInv, Component title) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 9,
+        "text": "import com.gregtech.gregtech.client.gui.HopperContainerMenu;"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 31,
+        "text": "public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.HopperContainerMenu>> GARBAGE_DUMP=MENU_TYPES.register(\"garbage_dump\",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.GarbageDumpContainerMenu(id,inventory)));"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 36,
+        "text": "private static final java.util.Map<Integer,net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.HopperContainerMenu>>> BY_SIZE=new java.util.HashMap<>();"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 37,
+        "text": "static{for(int n:HOPPER_SIZES)BY_SIZE.put(n,MENU_TYPES.register(\"hopper_\"+n,()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.HopperContainerMenu(id,inventory,n))));}"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 38,
+        "text": "public static net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.HopperContainerMenu> forSlotCount(int n){var exact=BY_SIZE.get(n);if(exact!=null)return exact.get();for(int size:HOPPER_SIZES)if(size>=n)return BY_SIZE.get(size).get();return BY_SIZE.get(36).get();}"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 39,
+        "text": "public static Iterable<net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.HopperContainerMenu>>> allHopperTypes(){return BY_SIZE.values();}"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 49,
+        "text": "private static final Map<Integer, RegistryObject<MenuType<HopperContainerMenu>>> BY_SIZE = new HashMap<>();"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 54,
+        "text": "() -> IForgeMenuType.create((w, i, b) -> new HopperContainerMenu(w, i, n))));"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 59,
+        "text": "public static MenuType<HopperContainerMenu> forSlotCount(int n) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 60,
+        "text": "RegistryObject<MenuType<HopperContainerMenu>> exact = BY_SIZE.get(n);"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 70,
+        "text": "public static Iterable<RegistryObject<MenuType<HopperContainerMenu>>> allHopperTypes() {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 85,
+        "text": "public static final RegistryObject<MenuType<HopperContainerMenu>> GARBAGE_DUMP ="
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+        "line": 87,
+        "text": "() -> IForgeMenuType.create((w, i, b) -> (HopperContainerMenu)"
+      }
+    ],
+    "classification": "9 server host families. Registry/client dummy constructors and HopperScreen generic type references are not extra persisted hosts."
+  },
+  "menu_hosts": [
+    {
+      "host": "MetalChestBlockEntity: metal/reinforced wood/flattened loot chests",
+      "slots": "54",
+      "menu": "ChestMenu extends HopperContainerMenu",
+      "open": "MetalChestBlock:206 -> createMenu:222 -> ChestMenu:227",
+      "status": "same contract; no menu override or unconditional inventory dirty tick",
+      "scope": "partial shift output both; existing-stack shift input Neo; Forge getter setter side effect exception"
+    },
+    {
+      "host": "SafeBlockEntity",
+      "slots": "15",
+      "menu": "HopperContainerMenu with InvWrapper(SimpleContainer)",
+      "open": "SafeBlock:126-127 -> SafeBlockEntity.createMenu:101-119",
+      "status": "same contract despite normal SimpleContainer listener; createMenu marks dirty only when opening",
+      "scope": "partial shift output both; Neo existing-stack merge bypasses listener"
+    },
+    {
+      "host": "DrawerQuadBlockEntity",
+      "slots": "36 per page; four pages",
+      "menu": "HopperContainerMenu with view mapping actual slots",
+      "open": "DrawerQuadBlock:106-107 -> createMenu:78-87",
+      "status": "same contract; anonymous override only stillValid; callback also refills legacy overflow",
+      "scope": "partial shift output both; Neo existing-stack merge bypasses callback"
+    },
+    {
+      "host": "HopperBlockEntity",
+      "slots": "material-dependent",
+      "menu": "HopperContainerMenu backed by this IItemHandlerModifiable",
+      "open": "HopperBlock:225 -> createMenu:734-735",
+      "status": "same contract; mutation methods setChanged+inventoryChanged; timer retries are not unconditional dirty calls",
+      "scope": "partial shift output both; Neo existing-stack merge; redstone/blocked transport may leave no later compensating mutation"
+    },
+    {
+      "host": "QueueHopperBlockEntity",
+      "slots": "material-dependent",
+      "menu": "HopperContainerMenu backed by this IItemHandlerModifiable",
+      "open": "QueueHopperBlock:172/221 -> createMenu:695-696",
+      "status": "same contract; handler mutation flags only; same conditional transport compensation",
+      "scope": "requires current slot capacity/count >1; mode=1 cannot partially remove a valid single item"
+    },
+    {
+      "host": "EnderGarbageBlockEntity (bin)",
+      "slots": "9",
+      "menu": "HopperContainerMenu backed by ItemStackHandler",
+      "open": "EnderGarbageBlock:101 -> createMenu:78-79",
+      "status": "same operation gap; 100t dump can conditionally mark dirty by clearing slots, except redstone pause etc",
+      "scope": "not an unconditional permanent save failure"
+    },
+    {
+      "host": "EnergyNodeBlockEntity (battery boxes)",
+      "slots": "batterySlots count; each slot limit 1",
+      "menu": "HopperContainerMenu backed by batterySlots",
+      "open": "EnergyNodeBlock:266 -> batteryMenu:382-386",
+      "status": "exclude normal partial-stack example: valid per-slot count is 1; battery tick unconditionally setChanged:413",
+      "scope": "do not create extra defect merely due shared base class"
+    },
+    {
+      "host": "AdvancedCraftingTableBlockEntity and ChargingCraftingTableBlockEntity storage page",
+      "slots": "36 storage slots",
+      "menu": "anonymous HopperContainerMenu",
+      "open": "AdvancedCraftingTableBlock:59-60 -> storageMenu:232-238; charging block/entity inherit",
+      "status": "explicitly compensated: clicked/quickMove inventoryChanged, broadcastChanges setChanged",
+      "scope": "exclude from same missed-callback defect; mock crafting AbstractContainerMenu is not this menu"
+    },
+    {
+      "host": "EnderGarbageDumpBlockEntity",
+      "slots": "54 live global SavedData view",
+      "menu": "GarbageDumpContainerMenu override",
+      "open": "EnderGarbageDumpBlock:89 -> createMenu:120-121",
+      "status": "excluded: shift input returns empty; shift output uses handler.extractItem and GarbageData.setDirty",
+      "scope": "viewItem returns a copy, not raw stored stack; no base quickMove mutation"
+    }
+  ],
+  "permission_hook_scan": {
+    "roots": [
+      "core/src/main/java/",
+      "multiversion/src/main/java/",
+      "multiversion/versions/1.20.1-forge/src/main/java/",
+      "multiversion/versions/1.21.1-neoforge/src/main/java/"
+    ],
+    "java_files_scanned": 1738,
+    "hits": [
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 116,
+        "text": "protected boolean canInsertIntoSlot(int slot) {"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/HopperContainerMenu.java",
+        "line": 120,
+        "text": "protected boolean canExtractFromSlot(int slot) {"
+      }
+    ],
+    "meaning": "Only two declarations; no production caller and no subclass override found."
+  },
+  "queue_173_scope": "Shared missed-dirty contract applies only to legal, permitted last-slot source stacks that can be partially moved and remain nonempty; not arbitrary Queue GUI source slots.",
+  "new_findings": [
+    "ALIGN-174",
+    "ALIGN-175",
+    "ALIGN-176",
+    "ALIGN-177",
+    "ALIGN-178",
+    "ALIGN-179"
+  ],
+  "extended_existing_findings": [
+    "ALIGN-173"
+  ],
+  "archive_attempt_notes": [
+    "First archival attempt assumed the independent berry cross-check also had a README; it contains only sources.json. The missing optional document stopped the collector before receipt creation; optional README handling was corrected."
+  ],
+  "scope_limits": [
+    "Berry rain differs only where modern biome precipitation rejects rain; ordinary rain biomes retain their bonus.",
+    "Original under-roof helper casts before multiplication. This may be an original defect; do not silently restore it while formatting.",
+    "Default own colored-grass admission and normal non-sneaking magnifier interactions were traced; external packs/events and live clicks not run.",
+    "Shared notification scope covers six host families, not every operation. Battery boxes, workbench storage and garbage dumps have distinct limits or compensation.",
+    "Queue partial shift requires passing native mayPickup, a legal last-slot source and a mode allowing a nonempty remainder. Non-last-slot manual GUI refusal is separate ALIGN-179.",
+    "No Gradle, compilation, new tests, game, true save/restart, build, push or gameplay changes in this batch.",
+    "User WoodMaterials edits were preserved and excluded from staged audit changes; CompoundMaterials was read but not edited."
+  ]
+}

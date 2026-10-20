@@ -39,6 +39,8 @@
 
 第五十批继续展开 BumbleBeeGenes（232→308 行）与 GTBumbleBlocks（28→56 行），明确 NBT／组件、默认基因和注册工厂边界；自然巢说明纠正旧颜色身份及火焰参数归因。三份源码六份执行投影保持，见[自然巢](BUMBLE_HIVE_PHYSICAL_AUDIT.md)与[回执](verification/inventory-persistence-audit-20261021.json)。更大的养蜂实体及共用菜单仍待按职责核查／整理，没有将说明纠正算成玩法修复。
 
+第五十一批已展开共用 InventorySlotLayout（247→254行）、HopperContainerMenu（115→123行）、BushGrowthRules（6→18行）及BushBlockEntity的压行／版本边界（215→229行）。四份源码六份执行投影保持，坐标值、计数和随机调用不变；说明不再声称所有原版菜单／环境已完全一致。共用菜单九类实际宿主及手动权限归属已追踪，见[菜单](SHARED_MENU_AUDIT.md)、[灌木](BERRY_BUSH_AUDIT.md)与[回执](verification/bush-menu-audit-20261021.json)。用户WoodMaterials编辑保持未纳入本批，CompoundMaterials统一RGB列继续保留。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属
