@@ -74,9 +74,11 @@ public final class GTMultiblocks {
         for (var part : com.gregtech.gregtech.api.addon.AddonMachines.structureParts()) {
             var declaration = part.declaration();
             float hardness = declaration.hardness();
-            var block = registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(
-                    BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness, hardness)
-                            .requiresCorrectToolForDrops()));
+            var properties = BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness, hardness)
+                    .requiresCorrectToolForDrops();
+            var block = declaration.energy() == null
+                    ? registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(properties))
+                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(properties, declaration.energy()));
             if (NAMED.put(part.id(), block) != null)
                 throw new IllegalStateException("Addon structure part id already used: " + part.id());
             ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));
@@ -133,7 +135,15 @@ public final class GTMultiblocks {
             if (block instanceof MultiblockPortBlock) blocks.add(block);
             //?}
         }
-        for (var part : ADDON_PARTS) blocks.add(part.block().get());
+        for (var part : ADDON_PARTS)
+            if (!(part.block().get() instanceof AddonEnergyPartBlock)) blocks.add(part.block().get());
+        return blocks.toArray(Block[]::new);
+    }
+    /** Addon energy parts. Empty when no addon declared one. Not valid for {@code gt6ce:multiblock_port}. */
+    public static Block[] energyPartBlocks() {
+        var blocks = new ArrayList<Block>();
+        for (var part : ADDON_PARTS)
+            if (part.block().get() instanceof AddonEnergyPartBlock energy) blocks.add(energy);
         return blocks.toArray(Block[]::new);
     }
     private static List<RegisteredBlock<Block>> range(int low, int high) {

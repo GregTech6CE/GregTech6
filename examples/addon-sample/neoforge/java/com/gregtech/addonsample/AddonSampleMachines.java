@@ -10,6 +10,7 @@ import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineLayout;
 import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
 import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
+import com.gregtech.gregtech.api.addon.StructurePartEnergy;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, tank-wall multiblock, irrigator, rotation buffer, hand crank and pipes. */
+/** Sample press, tank-wall multiblock, irrigator, rotation buffer, hand crank, transformer and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -59,7 +60,11 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<StructurePartDeclaration> parts() {
-        return List.of(new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F));
+        return List.of(
+                new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F),
+                new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
+                        new StructurePartEnergy("EU", 100_000L,
+                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 4)));
     }
 
     @Override public List<FluidPipeDeclaration> fluidPipes() {
@@ -85,7 +90,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         }
         return List.of(new MachineLayout("largesamplepress", cells),
                 new MachineLayout("sample_turbine", List.of(
-                        new MachineLayout.Cell(0, 0, 1, "tank_wall", StructureRole.FLUID_INPUT))));
+                        new MachineLayout.Cell(0, 0, 1, "tank_wall", StructureRole.FLUID_INPUT))),
+                new MachineLayout("sample_transformer", List.of(
+                        new MachineLayout.Cell(0, 0, 1, "sample_emitter", StructureRole.ENERGY_OUTPUT))));
     }
 
     @Override public List<FuelMapDeclaration> fuelMaps() {
@@ -105,16 +112,17 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, ROTATION_BUFFER, HAND_CRANK);
+        return List.of(IRRIGATOR, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER);
     }
 
-    @Override public Set<String> machineTypes() { return Set.of("irrigator", "ru_buffer", "hand_crank"); }
+    @Override public Set<String> machineTypes() { return Set.of("irrigator", "ru_buffer", "hand_crank", "sample_transformer"); }
 
     @Override public MachineBehavior create(String machineType) {
         return switch (machineType) {
             case "irrigator" -> new Irrigator();
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
+            case "sample_transformer" -> new Transformer();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
@@ -147,6 +155,16 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .energyOutputs(BehaviorMachineDeclaration.Face.BACK)
             .energyOut("RU").energyOutMax(32, 1)
             .toggle("addon_sample.ru_buffer.release", 116, 64, false)
+            .build();
+
+    /** Receives EU on the free faces and moves it into the emitter one block behind. */
+    private static final BehaviorMachineDeclaration TRANSFORMER = BehaviorMachineDeclaration.builder("sample_transformer", "Steel")
+            .machineType("sample_transformer").energy("EU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyFaces(List.of(BehaviorMachineDeclaration.Face.FRONT, BehaviorMachineDeclaration.Face.LEFT,
+                    BehaviorMachineDeclaration.Face.RIGHT, BehaviorMachineDeclaration.Face.TOP,
+                    BehaviorMachineDeclaration.Face.BOTTOM))
+            .energyCapacity(32_000)
             .build();
 
     /** A click stores one RU packet and pushes it out the front. */
@@ -237,6 +255,22 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             context.generate(32);
             if (context.energy() >= 32) context.emit(32, 1);
             return true;
+        }
+    }
+
+    /** Moves stored EU into the emitter behind the controller and arms a 32 EU packet. */
+    private static final class Transformer implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (!context.structureFormed()) return;
+            for (var part : context.energyParts()) {
+                long room = part.capacity() - part.stored();
+                long move = Math.min(context.energy(), Math.max(0, room));
+                if (move > 0 && context.consume(move)) part.charge(move);
+                if (part.stored() > 0) part.setOutput(32, 1);
+            }
         }
     }
 }

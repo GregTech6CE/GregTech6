@@ -337,6 +337,14 @@ public final class AddonMachines {
                 if (material == null || !material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
                             + "' uses unknown material '" + declaration.material() + "'");
+                if (declaration.energy() != null) {
+                    try {
+                        energy(declaration.energy().type());
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                                + "' uses unknown energy type '" + declaration.energy().type() + "'", failure);
+                    }
+                }
                 if (nextPartId < 0)
                     throw new IllegalStateException("Addon structure part ids overflowed");
                 var part = new StructurePart(submission.addonId, nextPartId, declaration);
@@ -401,8 +409,12 @@ public final class AddonMachines {
         }
         var acceptedGenerators = generators(machineOwner, machineSignature, idOwner, reservedMachineNames,
                 fuelOwner, acceptedFuelMaps, largeNames);
+        var behaviorNames = new HashSet<String>();
+        for (Submission submission : QUEUE.values())
+            for (BehaviorMachineDeclaration declaration : submission.behavior)
+                behaviorNames.add(declaration.machineType());
         for (PreparedLayout layout : preparedLayouts) {
-            if (!largeNames.contains(layout.machineName))
+            if (!largeNames.contains(layout.machineName) && !behaviorNames.contains(layout.machineName))
                 throw new IllegalStateException("Addon '" + layout.addonId + "' layout '"
                         + layout.machineName + "' has no controller");
         }

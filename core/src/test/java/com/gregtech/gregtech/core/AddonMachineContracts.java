@@ -76,6 +76,9 @@ public final class AddonMachineContracts {
             case "knobs" -> knobs();
             case "face" -> faceDisagree();
             case "bstore" -> behaviorStore();
+            case "epart" -> energyPlain();
+            case "emax" -> energyMax();
+            case "eunknown" -> energyUnknown();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -424,11 +427,60 @@ public final class AddonMachineContracts {
     private static void behaviorLayout() {
         prepare();
         GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("irrigator")));
         AddonMachines.accept("aa_sample", List.of(), List.of(),
                 List.of(new AddonMachineLayout("irrigator", List.of(
                         new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING)))),
                 List.of(irrigator("irrigator", 8000, BehaviorMachineDeclaration.SlotRole.INPUT, "", "EU")));
-        expectInstall("aa_sample", "irrigator", "no", "controller");
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(SharedLargeMachineLayouts.cells("irrigator") != null, "behavior machine owns the layout");
+        check(AddonMachines.behaviorMachines().size() == 1, "behavior machine accepted");
+    }
+
+    private static void energyPlain() {
+        var casing = new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F);
+        check(casing.energy() == null, "casing has no energy role");
+        prepare();
+        GTMaterialRegistry.init();
+        int steel = SharedLargeMachineParts.idForName("steel_wall");
+        AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(casing, new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
+                        new com.gregtech.gregtech.api.addon.StructurePartEnergy("EU", 1_000,
+                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1))));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.structureParts().get(0).declaration().energy() == null, "installed casing matches card 25");
+        var energy = AddonMachines.structureParts().get(1).declaration().energy();
+        check(energy != null && "EU".equals(energy.type()) && energy.capacity() == 1_000, "energy role kept");
+        check(SharedLargeMachineParts.idForName("steel_wall") == steel && steel == 18009, "steel wall stays 18009");
+        check(AddonMachines.partId("sample_wall") == 1_000_000, "casing id still starts at 1000000");
+    }
+
+    private static void energyMax() {
+        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
+                "EU", 0, List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1), "capacity", "positive");
+        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
+                "EU", 10, List.of(BehaviorMachineDeclaration.Face.FRONT, BehaviorMachineDeclaration.Face.FRONT), 32, 1),
+                "repeats");
+        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
+                "EU", 10, List.of(), 32, 1), "output face");
+        expectThrows(IllegalArgumentException.class, () -> new com.gregtech.gregtech.api.addon.StructurePartEnergy(
+                "EU", 10, List.of(BehaviorMachineDeclaration.Face.FRONT), 0, 1), "positive");
+        var energy = new com.gregtech.gregtech.api.addon.StructurePartEnergy("RU", 100,
+                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1);
+        check(energy.accept(90, 50) == 10, "charge stops at capacity");
+        check(energy.accept(100, 5) == 0, "full buffer accepts nothing");
+        expectThrows(IllegalArgumentException.class, () -> energy.requireOutput(64, 1), "exceeds");
+        energy.requireOutput(32, 1);
+    }
+
+    private static void energyUnknown() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_part", List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                List.of(new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
+                        new com.gregtech.gregtech.api.addon.StructurePartEnergy("ZZ", 1_000,
+                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 1))));
+        expectInstall("aa_part", "unknown energy", "ZZ");
     }
 
     private static BehaviorMachineDeclaration irrigator(String id, int capacity,

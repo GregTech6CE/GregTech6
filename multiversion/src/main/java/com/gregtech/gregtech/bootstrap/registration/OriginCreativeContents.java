@@ -75,7 +75,7 @@ public final class OriginCreativeContents {
             if(id.contains("crucible")&&!id.contains("large"))return "smelting_crucibles";
             if(id.startsWith("mold")||id.contains("casting_basin"))return "molds";
             if(id.contains("faucet")||id.contains("crossing"))return "crucibles_faucets";
-            if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock"))return "multiblocks";
+            if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock"))return "multiblocks";
             if(idClass.contains("Wood")||idClass.contains("Log")||idClass.contains("Leaves")||id.contains("planks"))return "woods";
             if(idClass.contains("Wire"))return id.contains("redstone")?"redstone_wires":"wires";
             if(idClass.contains("Tank")||idClass.contains("Drum")||idClass.contains("PortableFluid"))return "fluid_containers";
@@ -104,14 +104,20 @@ public final class OriginCreativeContents {
             boolean addonPipe = item instanceof BlockItem pipeItem
                     && (pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock
                     || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
-            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe)
+            boolean addonPart = item instanceof BlockItem partItem
+                    && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
+            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart)
                     || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
 *///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
             boolean addonPipe = item instanceof BlockItem pipeItem
                     && (pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock
                     || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
-            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            boolean addonPart = item instanceof BlockItem partItem
+                    && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
+            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
