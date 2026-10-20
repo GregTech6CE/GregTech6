@@ -1,0 +1,731 @@
+{
+  "entries": {
+    "block.gt6ce.bottlecrate": {
+      "english": "Bottlecrate",
+      "source_english": "Bottlecrate",
+      "source_key": "block.cruciblecraft.bottle_crate_8600",
+      "source_value": "瓶箱"
+    },
+    "block.gt6ce.casing_machine": {
+      "english": "%s Machine Casing",
+      "source_english": "%s Machine Casing",
+      "source_key": "item.cruciblecraft.material_form.machine_casing",
+      "source_value": "%s机器外壳"
+    },
+    "block.gt6ce.crate": {
+      "english": "Crate",
+      "source_english": "Crate",
+      "source_key": "block.cruciblecraft.gt_wood.crate",
+      "source_value": "板条箱"
+    },
+    "block.gt6ce.gas_natural_gas": {
+      "english": "Natural Gas",
+      "source_english": "Natural Gas",
+      "source_key": "block.cruciblecraft.natural_gas",
+      "source_value": "天然气"
+    },
+    "block.gt6ce.gear": {
+      "english": "Gear",
+      "source_english": "Gear",
+      "source_key": "emi.cruciblecraft.group.gear",
+      "source_value": "齿轮"
+    },
+    "block.gt6ce.liquid_extra_heavy_oil": {
+      "english": "Extra Heavy Oil",
+      "source_english": "Extra Heavy Oil",
+      "source_key": "block.cruciblecraft.oil_extra_heavy",
+      "source_value": "超重油"
+    },
+    "block.gt6ce.liquid_heavy_oil": {
+      "english": "Heavy Oil",
+      "source_english": "Heavy Oil",
+      "source_key": "block.cruciblecraft.oil_heavy",
+      "source_value": "重油"
+    },
+    "block.gt6ce.liquid_light_oil": {
+      "english": "Light Oil",
+      "source_english": "Light Oil",
+      "source_key": "block.cruciblecraft.oil_light",
+      "source_value": "轻油"
+    },
+    "block.gt6ce.liquid_medium_oil": {
+      "english": "Medium Oil",
+      "source_english": "Medium Oil",
+      "source_key": "block.cruciblecraft.oil_medium",
+      "source_value": "中油"
+    },
+    "block.gt6ce.ore": {
+      "english": "%s Ore",
+      "source_english": "%s Ore",
+      "source_key": "block.cruciblecraft.gt_hosted_ore.named",
+      "source_value": "%s矿石"
+    },
+    "block.gt6ce.ore_broken": {
+      "english": "Broken %s Ore",
+      "source_english": "Broken %s Ore",
+      "source_key": "block.cruciblecraft.gt_broken_ore.named",
+      "source_value": "破碎%s矿石"
+    },
+    "block.gt6ce.ore_small": {
+      "english": "Small %s Ore",
+      "source_english": "Small %s Ore",
+      "source_key": "block.cruciblecraft.gt_small_ore.named",
+      "source_value": "%s小型矿石"
+    },
+    "block.gt6ce.plate": {
+      "english": "Plate",
+      "source_english": "Plate",
+      "source_key": "emi.cruciblecraft.group.plate",
+      "source_value": "板"
+    },
+    "block.gt6ce.sensor_kilogibblometer": {
+      "english": "Kilo-Gibbl-O-Meter Sensor",
+      "source_english": "Kilo-Gibbl-O-Meter Sensor",
+      "source_key": "block.cruciblecraft.kilo_gibblometer",
+      "source_value": "千吉伯计传感器"
+    },
+    "block.gt6ce.watergeothermal": {
+      "english": "Geothermal Water",
+      "source_english": "Geothermal Water",
+      "source_key": "block.cruciblecraft.water_geothermal",
+      "source_value": "地热水"
+    },
+    "death.attack.gt6ce.crusher": {
+      "english": "%1$s was crushed to a pulp",
+      "source_english": "%s was crushed to a pulp",
+      "source_key": "death.attack.crusher",
+      "source_value": "%s 被碾成了肉酱"
+    },
+    "death.attack.gt6ce.electric": {
+      "english": "%1$s was electrocuted",
+      "source_english": "%s was electrocuted",
+      "source_key": "death.attack.electricity",
+      "source_value": "%s 被电死了"
+    },
+    "fluid_type.gt6ce.glowstone": {
+      "english": "Glowstone",
+      "source_english": "Glowstone",
+      "source_key": "material.cruciblecraft.glowstone",
+      "source_value": "荧石"
+    },
+    "fluid_type.gt6ce.molten.ad": {
+      "english": "Molten Adamantium",
+      "source_english": "Molten Adamantium",
+      "source_key": "fluid_type.cruciblecraft.molten_adamantium",
+      "source_value": "熔融艾德曼合金"
+    },
+    "fluid_type.gt6ce.molten.ag": {
+      "english": "Molten Silver",
+      "source_english": "Molten Silver",
+      "source_key": "fluid_type.cruciblecraft.molten_silver",
+      "source_value": "熔融银"
+    },
+    "fluid_type.gt6ce.molten.al": {
+      "english": "Molten Aluminium",
+      "source_english": "Molten Aluminium",
+      "source_key": "fluid_type.cruciblecraft.molten_aluminium",
+      "source_value": "熔融铝"
+    },
+    "fluid_type.gt6ce.molten.al2o3": {
+      "english": "Molten Alumina",
+      "source_english": "Molten Alumina",
+      "source_key": "fluid_type.cruciblecraft.molten_alumina",
+      "source_value": "熔融氧化铝"
+    },
+    "fluid_type.gt6ce.molten.alf3": {
+      "english": "Molten Aluminium Fluoride",
+      "source_english": "Molten Aluminium Fluoride",
+      "source_key": "fluid_type.cruciblecraft.molten_aluminium_fluoride",
+      "source_value": "熔融氟化铝"
+    },
+    "fluid_type.gt6ce.molten.as": {
+      "english": "Molten Arsenic",
+      "source_english": "Molten Arsenic",
+      "source_key": "fluid_type.cruciblecraft.molten_arsenic",
+      "source_value": "熔融砷"
+    },
+    "fluid_type.gt6ce.molten.atl": {
+      "english": "Molten Atlarus",
+      "source_english": "Molten Atlarus",
+      "source_key": "fluid_type.cruciblecraft.molten_atlarus",
+      "source_value": "熔融金钻"
+    },
+    "fluid_type.gt6ce.molten.au": {
+      "english": "Molten Gold",
+      "source_english": "Molten Gold",
+      "source_key": "fluid_type.cruciblecraft.molten_gold",
+      "source_value": "熔融金"
+    },
+    "fluid_type.gt6ce.molten.b": {
+      "english": "Molten Boron",
+      "source_english": "Molten Boron",
+      "source_key": "fluid_type.cruciblecraft.molten_boron",
+      "source_value": "熔融硼"
+    },
+    "fluid_type.gt6ce.molten.ba": {
+      "english": "Molten Barium",
+      "source_english": "Molten Barium",
+      "source_key": "fluid_type.cruciblecraft.molten_barium",
+      "source_value": "熔融钡"
+    },
+    "fluid_type.gt6ce.molten.be": {
+      "english": "Molten Beryllium",
+      "source_english": "Molten Beryllium",
+      "source_key": "fluid_type.cruciblecraft.molten_beryllium",
+      "source_value": "熔融铍"
+    },
+    "fluid_type.gt6ce.molten.bi": {
+      "english": "Molten Bismuth",
+      "source_english": "Molten Bismuth",
+      "source_key": "fluid_type.cruciblecraft.molten_bismuth",
+      "source_value": "熔融铋"
+    },
+    "fluid_type.gt6ce.molten.c": {
+      "english": "Molten Carbon",
+      "source_english": "Molten Carbon",
+      "source_key": "fluid_type.cruciblecraft.molten_carbon",
+      "source_value": "熔融碳"
+    },
+    "fluid_type.gt6ce.molten.ca": {
+      "english": "Molten Calcium",
+      "source_english": "Molten Calcium",
+      "source_key": "fluid_type.cruciblecraft.molten_calcium",
+      "source_value": "熔融钙"
+    },
+    "fluid_type.gt6ce.molten.cacl2": {
+      "english": "Molten Calcium Chloride",
+      "source_english": "Molten Calcium Chloride",
+      "source_key": "fluid_type.cruciblecraft.molten_calcium_chloride",
+      "source_value": "熔融氯化钙"
+    },
+    "fluid_type.gt6ce.molten.caco3": {
+      "english": "Molten Calcite",
+      "source_english": "Molten Calcite",
+      "source_key": "fluid_type.cruciblecraft.molten_calcite",
+      "source_value": "熔融方解石"
+    },
+    "fluid_type.gt6ce.molten.caf2": {
+      "english": "Molten Fluorite",
+      "source_english": "Molten Fluorite",
+      "source_key": "fluid_type.cruciblecraft.molten_fluorite",
+      "source_value": "熔融萤石"
+    },
+    "fluid_type.gt6ce.molten.concrete": {
+      "english": "Molten Concrete",
+      "source_english": "Molten Concrete",
+      "source_key": "fluid_type.cruciblecraft.molten_concrete",
+      "source_value": "熔融混凝土"
+    },
+    "fluid_type.gt6ce.molten.cr": {
+      "english": "Molten Chromium",
+      "source_english": "Molten Chromium",
+      "source_key": "fluid_type.cruciblecraft.molten_chromium",
+      "source_value": "熔融铬"
+    },
+    "fluid_type.gt6ce.molten.cs": {
+      "english": "Molten Caesium",
+      "source_english": "Molten Caesium",
+      "source_key": "fluid_type.cruciblecraft.molten_caesium",
+      "source_value": "熔融铯"
+    },
+    "fluid_type.gt6ce.molten.ferrovanadium": {
+      "english": "Molten Vanadium Magnetite",
+      "source_english": "Molten Vanadium Magnetite",
+      "source_key": "fluid_type.cruciblecraft.molten_vanadium_magnetite",
+      "source_value": "熔融钒磁铁矿"
+    },
+    "fluid_type.gt6ce.molten.ge": {
+      "english": "Molten Germanium",
+      "source_english": "Molten Germanium",
+      "source_key": "fluid_type.cruciblecraft.molten_germanium",
+      "source_value": "熔融锗"
+    },
+    "fluid_type.gt6ce.molten.glass": {
+      "english": "Molten Glass",
+      "source_english": "Molten Glass",
+      "source_key": "fluid_type.cruciblecraft.molten_glass",
+      "source_value": "熔融玻璃"
+    },
+    "fluid_type.gt6ce.molten.hg": {
+      "english": "Molten Mercury",
+      "source_english": "Molten Mercury",
+      "source_key": "fluid_type.cruciblecraft.molten_mercury",
+      "source_value": "熔融汞"
+    },
+    "fluid_type.gt6ce.molten.ir": {
+      "english": "Molten Iridium",
+      "source_english": "Molten Iridium",
+      "source_key": "fluid_type.cruciblecraft.molten_iridium",
+      "source_value": "熔融铱"
+    },
+    "fluid_type.gt6ce.molten.k": {
+      "english": "Molten Potassium",
+      "source_english": "Molten Potassium",
+      "source_key": "fluid_type.cruciblecraft.molten_potassium",
+      "source_value": "熔融钾"
+    },
+    "fluid_type.gt6ce.molten.k2co3": {
+      "english": "Molten Potassium Carbonate",
+      "source_english": "Molten Potassium Carbonate",
+      "source_key": "fluid_type.cruciblecraft.molten_potassium_carbonate",
+      "source_value": "熔融碳酸钾"
+    },
+    "fluid_type.gt6ce.molten.li": {
+      "english": "Molten Lithium",
+      "source_english": "Molten Lithium",
+      "source_key": "fluid_type.cruciblecraft.molten_lithium",
+      "source_value": "熔融锂"
+    },
+    "fluid_type.gt6ce.molten.mercury": {
+      "english": "Molten Mercury",
+      "source_english": "Molten Mercury",
+      "source_key": "fluid_type.cruciblecraft.molten_mercury",
+      "source_value": "熔融汞"
+    },
+    "fluid_type.gt6ce.molten.mg": {
+      "english": "Molten Magnesium",
+      "source_english": "Molten Magnesium",
+      "source_key": "fluid_type.cruciblecraft.molten_magnesium",
+      "source_value": "熔融镁"
+    },
+    "fluid_type.gt6ce.molten.mgcl2": {
+      "english": "Molten Magnesium Chloride",
+      "source_english": "Molten Magnesium Chloride",
+      "source_key": "fluid_type.cruciblecraft.molten_magnesium_chloride",
+      "source_value": "熔融氯化镁"
+    },
+    "fluid_type.gt6ce.molten.mn": {
+      "english": "Molten Manganese",
+      "source_english": "Molten Manganese",
+      "source_key": "fluid_type.cruciblecraft.molten_manganese",
+      "source_value": "熔融锰"
+    },
+    "fluid_type.gt6ce.molten.mo": {
+      "english": "Molten Molybdenum",
+      "source_english": "Molten Molybdenum",
+      "source_key": "fluid_type.cruciblecraft.molten_molybdenum",
+      "source_value": "熔融钼"
+    },
+    "fluid_type.gt6ce.molten.na": {
+      "english": "Molten Sodium",
+      "source_english": "Molten Sodium",
+      "source_key": "fluid_type.cruciblecraft.molten_sodium",
+      "source_value": "熔融钠"
+    },
+    "fluid_type.gt6ce.molten.na2co3": {
+      "english": "Molten Sodium Carbonate",
+      "source_english": "Molten Sodium Carbonate",
+      "source_key": "fluid_type.cruciblecraft.molten_sodium_carbonate",
+      "source_value": "熔融碳酸钠"
+    },
+    "fluid_type.gt6ce.molten.nd": {
+      "english": "Molten Neodymium",
+      "source_english": "Molten Neodymium",
+      "source_key": "fluid_type.cruciblecraft.molten_neodymium",
+      "source_value": "熔融钕"
+    },
+    "fluid_type.gt6ce.molten.ni": {
+      "english": "Molten Nickel",
+      "source_english": "Molten Nickel",
+      "source_key": "fluid_type.cruciblecraft.molten_nickel",
+      "source_value": "熔融镍"
+    },
+    "fluid_type.gt6ce.molten.nq": {
+      "english": "Molten Naquadah",
+      "source_english": "Molten Naquadah",
+      "source_key": "fluid_type.cruciblecraft.molten_naquadah",
+      "source_value": "熔融硅岩"
+    },
+    "fluid_type.gt6ce.molten.nq_522": {
+      "english": "Molten Naquadria",
+      "source_english": "Molten Naquadria",
+      "source_key": "fluid_type.cruciblecraft.molten_naquadria",
+      "source_value": "熔融硅岩金属化合物"
+    },
+    "fluid_type.gt6ce.molten.pb": {
+      "english": "Molten Lead",
+      "source_english": "Molten Lead",
+      "source_key": "fluid_type.cruciblecraft.molten_lead",
+      "source_value": "熔融铅"
+    },
+    "fluid_type.gt6ce.molten.plastic": {
+      "english": "Molten Plastic",
+      "source_english": "Molten Plastic",
+      "source_key": "fluid_type.cruciblecraft.molten_plastic",
+      "source_value": "熔融塑料"
+    },
+    "fluid_type.gt6ce.molten.pt": {
+      "english": "Molten Platinum",
+      "source_english": "Molten Platinum",
+      "source_key": "fluid_type.cruciblecraft.molten_platinum",
+      "source_value": "熔融铂"
+    },
+    "fluid_type.gt6ce.molten.ra": {
+      "english": "Molten Radium",
+      "source_english": "Molten Radium",
+      "source_key": "fluid_type.cruciblecraft.molten_radium",
+      "source_value": "熔融镭"
+    },
+    "fluid_type.gt6ce.molten.rb": {
+      "english": "Molten Rubidium",
+      "source_english": "Molten Rubidium",
+      "source_key": "fluid_type.cruciblecraft.molten_rubidium",
+      "source_value": "熔融铷"
+    },
+    "fluid_type.gt6ce.molten.s": {
+      "english": "Molten Sulfur",
+      "source_english": "Molten Sulfur",
+      "source_key": "fluid_type.cruciblecraft.molten_sulfur",
+      "source_value": "熔融硫"
+    },
+    "fluid_type.gt6ce.molten.sb": {
+      "english": "Molten Antimony",
+      "source_english": "Molten Antimony",
+      "source_key": "fluid_type.cruciblecraft.molten_antimony",
+      "source_value": "熔融锑"
+    },
+    "fluid_type.gt6ce.molten.si": {
+      "english": "Molten Silicon",
+      "source_english": "Molten Silicon",
+      "source_key": "fluid_type.cruciblecraft.molten_silicon",
+      "source_value": "熔融硅"
+    },
+    "fluid_type.gt6ce.molten.sn": {
+      "english": "Molten Tin",
+      "source_english": "Molten Tin",
+      "source_key": "fluid_type.cruciblecraft.molten_tin",
+      "source_value": "熔融锡"
+    },
+    "fluid_type.gt6ce.molten.sr": {
+      "english": "Molten Strontium",
+      "source_english": "Molten Strontium",
+      "source_key": "fluid_type.cruciblecraft.molten_strontium",
+      "source_value": "熔融锶"
+    },
+    "fluid_type.gt6ce.molten.te": {
+      "english": "Molten Tellurium",
+      "source_english": "Molten Tellurium",
+      "source_key": "fluid_type.cruciblecraft.molten_tellurium",
+      "source_value": "熔融碲"
+    },
+    "fluid_type.gt6ce.molten.ti": {
+      "english": "Molten Titanium",
+      "source_english": "Molten Titanium",
+      "source_key": "fluid_type.cruciblecraft.molten_titanium",
+      "source_value": "熔融钛"
+    },
+    "fluid_type.gt6ce.molten.tio2": {
+      "english": "Molten Rutile",
+      "source_english": "Molten Rutile",
+      "source_key": "fluid_type.cruciblecraft.molten_rutile",
+      "source_value": "熔融金红石"
+    },
+    "fluid_type.gt6ce.molten.u_238": {
+      "english": "Molten Uranium",
+      "source_english": "Molten Uranium",
+      "source_key": "fluid_type.cruciblecraft.molten_uranium",
+      "source_value": "熔融铀"
+    },
+    "fluid_type.gt6ce.molten.w": {
+      "english": "Molten Tungsten",
+      "source_english": "Molten Tungsten",
+      "source_key": "fluid_type.cruciblecraft.molten_tungsten",
+      "source_value": "熔融钨"
+    },
+    "fluid_type.gt6ce.molten.zn": {
+      "english": "Molten Zinc",
+      "source_english": "Molten Zinc",
+      "source_key": "fluid_type.cruciblecraft.molten_zinc",
+      "source_value": "熔融锌"
+    },
+    "fluid_type.gt6ce.molten_al2o3": {
+      "english": "Molten Alumina",
+      "source_english": "Molten Alumina",
+      "source_key": "fluid_type.cruciblecraft.molten_alumina",
+      "source_value": "熔融氧化铝"
+    },
+    "fluid_type.gt6ce.molten_mercury": {
+      "english": "Molten Mercury",
+      "source_english": "Molten Mercury",
+      "source_key": "fluid_type.cruciblecraft.molten_mercury",
+      "source_value": "熔融汞"
+    },
+    "fluid_type.gt6ce.molten_plastic": {
+      "english": "Molten Plastic",
+      "source_english": "Molten Plastic",
+      "source_key": "fluid_type.cruciblecraft.molten_plastic",
+      "source_value": "熔融塑料"
+    },
+    "fluid_type.gt6ce.redstone": {
+      "english": "Redstone",
+      "source_english": "Redstone",
+      "source_key": "material.cruciblecraft.redstone",
+      "source_value": "红石"
+    },
+    "gt.jei.fluid.state": {
+      "english": "State: %s",
+      "source_english": "State: %s",
+      "source_key": "jade.cruciblecraft.source.state",
+      "source_value": "状态：%s"
+    },
+    "gt6ce.jei.costs": {
+      "english": "Costs: %s %s",
+      "source_english": "Costs: %s %s",
+      "source_key": "emi.cruciblecraft.processing.costs",
+      "source_value": "消耗：%s %s"
+    },
+    "gt6ce.jei.gain": {
+      "english": "Gain: %s %s",
+      "source_english": "Gain: %s %s",
+      "source_key": "emi.cruciblecraft.processing.gain",
+      "source_value": "获得：%s %s"
+    },
+    "gt6ce.jei.time_mins": {
+      "english": "Time: %s mins",
+      "source_english": "Time: %s mins",
+      "source_key": "emi.cruciblecraft.processing.time_mins",
+      "source_value": "时间：%s 分钟"
+    },
+    "gt6ce.jei.time_secs": {
+      "english": "Time: %s secs",
+      "source_english": "Time: %s secs",
+      "source_key": "emi.cruciblecraft.processing.time_secs",
+      "source_value": "时间：%s 秒"
+    },
+    "gt6ce.jei.time_ticks": {
+      "english": "Time: %s ticks",
+      "source_english": "Time: %s ticks",
+      "source_key": "emi.cruciblecraft.processing.time_ticks",
+      "source_value": "时间：%s tick"
+    },
+    "gui.gt6ce.empty": {
+      "english": "Empty",
+      "source_english": "Empty",
+      "source_key": "jade.cruciblecraft.converter.tank_empty",
+      "source_value": "空"
+    },
+    "item.gt6ce.bolt": {
+      "english": "%s Bolt",
+      "source_english": "%s Bolt",
+      "source_key": "item.cruciblecraft.material_form.bolt",
+      "source_value": "%s螺栓"
+    },
+    "item.gt6ce.dust": {
+      "english": "%s Dust",
+      "source_english": "%s Dust",
+      "source_key": "item.cruciblecraft.material_form.dust",
+      "source_value": "%s粉"
+    },
+    "item.gt6ce.foil": {
+      "english": "%s Foil",
+      "source_english": "%s Foil",
+      "source_key": "item.cruciblecraft.material_form.foil",
+      "source_value": "%s箔"
+    },
+    "item.gt6ce.gear_gt": {
+      "english": "%s Gear",
+      "source_english": "%s Gear",
+      "source_key": "item.cruciblecraft.material_form.gear",
+      "source_value": "%s齿轮"
+    },
+    "item.gt6ce.ingot": {
+      "english": "%s Ingot",
+      "source_english": "%s Ingot",
+      "source_key": "item.cruciblecraft.material_form.ingot",
+      "source_value": "%s锭"
+    },
+    "item.gt6ce.lens": {
+      "english": "%s Lens",
+      "source_english": "%s Lens",
+      "source_key": "item.cruciblecraft.material_form.lens",
+      "source_value": "%s透镜"
+    },
+    "item.gt6ce.nugget": {
+      "english": "%s Nugget",
+      "source_english": "%s Nugget",
+      "source_key": "item.cruciblecraft.material_form.nugget",
+      "source_value": "%s粒"
+    },
+    "item.gt6ce.plant_gt_berry": {
+      "english": "%s Berry",
+      "source_english": "%s Berry",
+      "source_key": "item.cruciblecraft.material_form.plant_gt_berry",
+      "source_value": "%s浆果"
+    },
+    "item.gt6ce.plant_gt_blossom": {
+      "english": "%s Blossom",
+      "source_english": "%s Blossom",
+      "source_key": "item.cruciblecraft.material_form.plant_gt_blossom",
+      "source_value": "%s花"
+    },
+    "item.gt6ce.plant_gt_twig": {
+      "english": "%s Twig",
+      "source_english": "%s Twig",
+      "source_key": "item.cruciblecraft.material_form.plant_gt_twig",
+      "source_value": "%s枝条"
+    },
+    "item.gt6ce.plant_gt_wart": {
+      "english": "%s Wart",
+      "source_english": "%s Wart",
+      "source_key": "item.cruciblecraft.material_form.plant_gt_wart",
+      "source_value": "%s疣"
+    },
+    "item.gt6ce.plate": {
+      "english": "%s Plate",
+      "source_english": "%s Plate",
+      "source_key": "item.cruciblecraft.material_form.plate",
+      "source_value": "%s板"
+    },
+    "item.gt6ce.ring": {
+      "english": "%s Ring",
+      "source_english": "%s Ring",
+      "source_key": "item.cruciblecraft.material_form.ring",
+      "source_value": "%s环"
+    },
+    "item.gt6ce.rotor": {
+      "english": "%s Rotor",
+      "source_english": "%s Rotor",
+      "source_key": "item.cruciblecraft.material_form.rotor",
+      "source_value": "%s转子"
+    },
+    "item.gt6ce.round": {
+      "english": "%s Round",
+      "source_english": "%s Round",
+      "source_key": "item.cruciblecraft.material_form.round",
+      "source_value": "%s滚珠"
+    },
+    "item.gt6ce.screw": {
+      "english": "%s Screw",
+      "source_english": "%s Screw",
+      "source_key": "item.cruciblecraft.material_form.screw",
+      "source_value": "%s螺丝"
+    },
+    "item.gt6ce.spring": {
+      "english": "%s Spring",
+      "source_english": "%s Spring",
+      "source_key": "item.cruciblecraft.material_form.spring",
+      "source_value": "%s弹簧"
+    },
+    "item.gt6ce.stick": {
+      "english": "%s Rod",
+      "source_english": "%s Rod",
+      "source_key": "item.cruciblecraft.material_form.rod",
+      "source_value": "%s杆"
+    },
+    "jade.gt6ce.boiler.heat_nocap": {
+      "english": "Heat: %s HU",
+      "source_english": "Heat: %s HU",
+      "source_key": "jade.cruciblecraft.reactor.heat",
+      "source_value": "热量：%s HU"
+    },
+    "jade.gt6ce.crucible.buffer": {
+      "english": "Buffered heat: %1$s HU",
+      "source_english": "Buffered heat: %s HU",
+      "source_key": "jade.cruciblecraft.buffered_heat",
+      "source_value": "缓冲热量：%s HU"
+    },
+    "jade.gt6ce.crucible.melt_limit": {
+      "english": "Meltdown at: %1$s K",
+      "source_english": "Meltdown at: %s K",
+      "source_key": "jade.cruciblecraft.meltdown_at",
+      "source_value": "熔毁点：%s K"
+    },
+    "jade.gt6ce.crucible.state.molten": {
+      "english": "molten",
+      "source_english": "molten",
+      "source_key": "jade.cruciblecraft.render_state.molten",
+      "source_value": "熔融"
+    },
+    "jade.gt6ce.crucible.state.solid": {
+      "english": "solid",
+      "source_english": "solid",
+      "source_key": "jade.cruciblecraft.render_state.solid",
+      "source_value": "固态"
+    },
+    "jade.gt6ce.crucible.temperature": {
+      "english": "Temperature: %1$s K",
+      "source_english": "Temperature: %s K",
+      "source_key": "jade.cruciblecraft.temperature_k",
+      "source_value": "温度：%s K"
+    },
+    "jade.gt6ce.mold.state.molten": {
+      "english": "molten",
+      "source_english": "molten",
+      "source_key": "jade.cruciblecraft.render_state.molten",
+      "source_value": "熔融"
+    },
+    "jade.gt6ce.mold.state.solid": {
+      "english": "solid",
+      "source_english": "solid",
+      "source_key": "jade.cruciblecraft.render_state.solid",
+      "source_value": "固态"
+    },
+    "material.gt6ce.hf": {
+      "english": "Hydrogen Fluoride",
+      "source_english": "Hydrogen Fluoride",
+      "source_key": "fluid_type.cruciblecraft.hydrogen_fluoride",
+      "source_value": "氟化氢"
+    },
+    "message.gt6ce.engine.piston.idle": {
+      "english": "Idle",
+      "source_english": "Idle",
+      "source_key": "screen.cruciblecraft.processing.status.idle",
+      "source_value": "空闲"
+    },
+    "message.gt6ce.engine.piston.running": {
+      "english": "Running",
+      "source_english": "Running",
+      "source_key": "screen.cruciblecraft.processing.status.running",
+      "source_value": "运行中"
+    },
+    "message.gt6ce.reactor.running": {
+      "english": "Running",
+      "source_english": "Running",
+      "source_key": "screen.cruciblecraft.processing.status.running",
+      "source_value": "运行中"
+    },
+    "subtitles.gt6ce.screwdriver": {
+      "english": "Screwdriver",
+      "source_english": "Screwdriver",
+      "source_key": "emi.cruciblecraft.group.tool.screwdriver",
+      "source_value": "螺丝刀"
+    },
+    "tooltip.gt6ce.crucible.meltdown": {
+      "english": "Melts down when stored Heat is too much! (%1$s K)",
+      "source_english": "Melts down when stored Heat is too much! (%s K)",
+      "source_key": "tooltip.cruciblecraft.fluid_barrel.meltdown",
+      "source_value": "储存的热量过高时会熔毁！（%s K）"
+    },
+    "tooltip.gt6ce.crucible_temperature": {
+      "english": "Temperature: %s K",
+      "source_english": "Temperature: %s K",
+      "source_key": "jade.cruciblecraft.temperature_k",
+      "source_value": "温度：%s K"
+    },
+    "tooltip.gt6ce.machine.range": {
+      "english": "Range: %1$s",
+      "source_english": "Range: %s",
+      "source_key": "tooltip.cruciblecraft.redstone_wire.range",
+      "source_value": "范围：%s"
+    },
+    "tooltip.gt6ce.portable_fluid.empty": {
+      "english": "Empty",
+      "source_english": "Empty",
+      "source_key": "jade.cruciblecraft.converter.tank_empty",
+      "source_value": "空"
+    },
+    "tooltip.gt6ce.tank.info.auto_output": {
+      "english": "Won't fill vertically adjacent Tanks",
+      "source_english": "Won't fill vertically adjacent Tanks",
+      "source_key": "message.cruciblecraft.fluid_barrel.auto_off",
+      "source_value": "不会灌入上下相邻的储罐"
+    },
+    "tooltip.gt6ce.tool_durability": {
+      "english": "Durability: %1$s / %2$s",
+      "source_english": "Durability: %s / %s",
+      "source_key": "jade.cruciblecraft.anvil_durability",
+      "source_value": "耐久：%s / %s"
+    }
+  },
+  "origin": "Verbatim copies from CrucibleCraft src/generated/resources/assets/cruciblecraft/lang. A row exists only when the English sentence matches, ignoring placeholder spelling. No phrase is composed. XV tiers, ported stone blocks, and the wire-harvest Cutter label are absent on purpose."
+}
