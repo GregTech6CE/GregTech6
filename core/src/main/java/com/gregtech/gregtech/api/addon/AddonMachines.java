@@ -32,8 +32,13 @@ public final class AddonMachines {
     private static List<AcceptedMachine> machines = List.of();
     private static List<AcceptedBehavior> behaviorMachines = List.of();
     private static List<AcceptedFuel> fuelGenerators = List.of();
+    private static List<StructurePart> structureParts = List.of();
+    private static java.util.Map<String, StructurePart> partsByName = java.util.Map.of();
 
     private AddonMachines() {}
+
+    /** Runtime-only structure part. The numeric id is assigned at startup and is not saved. */
+    public record StructurePart(String addonId, int id, StructurePartDeclaration declaration) {}
 
     public record AcceptedRecipeMap(String addonId, RecipeMapSpec spec) {}
     public record AcceptedMachine(String addonId, AddonMachineDefinition definition) {}
@@ -44,7 +49,10 @@ public final class AddonMachines {
     private record Submission(String addonId, List<RecipeMapSpec> recipeMaps,
                               List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
                               List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                              List<FuelGeneratorDeclaration> generators) {}
+                              List<FuelGeneratorDeclaration> generators, List<StructurePartDeclaration> parts,
+                              List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
+    /** Pipe rows queued before install, in addon-id order. */
+    public record QueuedPipes(String addonId, List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
                              boolean constantEnergy, List<String> structureKeys, MachineFaceMasks faces,
                              boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
@@ -76,7 +84,8 @@ public final class AddonMachines {
             try {
                 accept(contributor.addonId(), maps(contributor.recipeMaps()), machines(contributor.machines()),
                         layouts(contributor.layouts()), contributor.behaviorMachines(),
-                        fuelSpecs(contributor.fuelMaps()), contributor.fuelGenerators());
+                        fuelSpecs(contributor.fuelMaps()), contributor.fuelGenerators(), contributor.parts(),
+                        contributor.fluidPipes(), contributor.itemPipes());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -192,6 +201,25 @@ public final class AddonMachines {
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
                                            List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
                                            List<FuelGeneratorDeclaration> generators) {
+        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, List.of());
+    }
+
+    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
+    public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
+                                           List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGeneratorDeclaration> generators,
+                                           List<StructurePartDeclaration> parts) {
+        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts, List.of(), List.of());
+    }
+
+    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
+    public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
+                                           List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGeneratorDeclaration> generators,
+                                           List<StructurePartDeclaration> parts,
+                                           List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {
         if (installed) throw new IllegalStateException("Addon machine queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -205,7 +233,18 @@ public final class AddonMachines {
                 List.copyOf(Objects.requireNonNull(layouts, "layouts")),
                 List.copyOf(Objects.requireNonNull(behavior, "behaviorMachines")),
                 List.copyOf(Objects.requireNonNull(fuelMaps, "fuelMaps")),
-                List.copyOf(Objects.requireNonNull(generators, "fuelGenerators"))));
+                List.copyOf(Objects.requireNonNull(generators, "fuelGenerators")),
+                List.copyOf(Objects.requireNonNull(parts, "parts")),
+                List.copyOf(Objects.requireNonNull(fluidPipes, "fluidPipes")),
+                List.copyOf(Objects.requireNonNull(itemPipes, "itemPipes"))));
+    }
+
+    /** Queued pipe rows, in addon-id order. Empty until a contributor submits pipes. */
+    public static synchronized List<QueuedPipes> queuedPipes() {
+        var rows = new ArrayList<QueuedPipes>();
+        for (Submission submission : QUEUE.values())
+            rows.add(new QueuedPipes(submission.addonId, submission.fluidPipes, submission.itemPipes));
+        return List.copyOf(rows);
     }
 
     /** Names of the built-in machine recipe maps. Fuel maps are not machine maps. */
@@ -243,6 +282,7 @@ public final class AddonMachines {
     public static synchronized void install(Set<String> reservedMachineNames, Set<String> knownRecipeMaps) {
         if (installed) return;
         collectContributors();
+        AddonPipes.validate();
         Objects.requireNonNull(reservedMachineNames, "reservedMachineNames");
         Objects.requireNonNull(knownRecipeMaps, "knownRecipeMaps");
         var mapOwner = new LinkedHashMap<String, String>();
@@ -280,6 +320,33 @@ public final class AddonMachines {
                 acceptedFuelMaps.add(new AcceptedRecipeMap(submission.addonId, spec));
             }
         }
+        var builtParts = new ArrayList<StructurePart>();
+        var partNames = new LinkedHashMap<String, StructurePart>();
+        int nextPartId = 1_000_000;
+        for (Submission submission : QUEUE.values()) {
+            for (StructurePartDeclaration declaration : submission.parts) {
+                String name = declaration.name();
+                if (SharedLargeMachineParts.builtinId(name) >= 0)
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                            + "' uses a built-in part name");
+                StructurePart previous = partNames.get(name);
+                if (previous != null)
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                            + "' uses the same name as addon '" + previous.addonId() + "'");
+                var material = GTMaterialRegistry.get(declaration.material());
+                if (material == null || !material.isValid())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                            + "' uses unknown material '" + declaration.material() + "'");
+                if (nextPartId < 0)
+                    throw new IllegalStateException("Addon structure part ids overflowed");
+                var part = new StructurePart(submission.addonId, nextPartId, declaration);
+                nextPartId++;
+                partNames.put(name, part);
+                builtParts.add(part);
+            }
+        }
+        structureParts = List.copyOf(builtParts);
+        partsByName = java.util.Map.copyOf(partNames);
         var preparedLayouts = new ArrayList<PreparedLayout>();
         var layoutNames = new HashSet<String>();
         for (Submission submission : QUEUE.values()) {
@@ -368,6 +435,14 @@ public final class AddonMachines {
     public static List<AcceptedMachine> machines() { return machines; }
     public static List<AcceptedBehavior> behaviorMachines() { return behaviorMachines; }
     public static List<AcceptedFuel> fuelGenerators() { return fuelGenerators; }
+    public static List<StructurePart> structureParts() { return structureParts; }
+
+    /** Runtime id of an addon structure part, or -1. */
+    public static int partId(String name) {
+        StructurePart part = partsByName.get(name);
+        return part == null ? -1 : part.id();
+    }
+
     public static boolean installed() { return installed; }
 
     private static List<AcceptedFuel> generators(java.util.Map<String, String> machineOwner,

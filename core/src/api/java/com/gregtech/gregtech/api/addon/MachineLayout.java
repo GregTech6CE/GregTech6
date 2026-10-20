@@ -14,7 +14,7 @@ public record MachineLayout(String machineName, List<Cell> cells) {
         if (cells.isEmpty()) throw new IllegalArgumentException("Layout '" + machineName + "' is empty");
     }
 
-    /** {@code part} is an existing GregTech structure part name, {@code air}, or one of the structure casings. */
+    /** {@code part} is a GregTech structure part name, {@code air}, a structure casing, or an addon part name. */
     public record Cell(int right, int up, int back, String part, StructureRole role) {
         public Cell {
             if (part == null || part.isBlank()) throw new IllegalArgumentException("Missing structure part");

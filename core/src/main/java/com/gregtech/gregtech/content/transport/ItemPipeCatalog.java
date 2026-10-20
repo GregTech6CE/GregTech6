@@ -1,9 +1,9 @@
 package com.gregtech.gregtech.content.transport;
 
-import com.gregtech.gregtech.content.material.Materials;
-import com.gregtech.gregtech.api.machine.ItemPipeSpec;
 import com.gregtech.gregtech.api.material.GTMaterial;
-import com.gregtech.gregtech.data.generated.GT6Materials;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Built-in GT6 definitions; registration IDs and ordering are preserved. */
 public final class ItemPipeCatalog {
@@ -36,5 +36,14 @@ public final class ItemPipeCatalog {
             new ItemPipeMat("osmiridium",       com.gregtech.gregtech.content.material.generated.CompoundMaterials.Osmiridium,      1024,  32),
             new ItemPipeMat("vibranium_silver", com.gregtech.gregtech.content.material.generated.CompoundMaterials.VibraniumSilver, 64,    512),
     };
+
+    /** Built-in rows, then addon rows in addon-id order. */
+    public static List<ItemPipeMat> mats() {
+        var rows = new ArrayList<ItemPipeMat>();
+        java.util.Collections.addAll(rows, ITEM_PIPE_MATS);
+        for (var line : com.gregtech.gregtech.api.addon.AddonPipes.itemLines())
+            rows.add(new ItemPipeMat(line.idSuffix(), line.material(), line.stepSize(), line.invSize()));
+        return List.copyOf(rows);
+    }
 
 }

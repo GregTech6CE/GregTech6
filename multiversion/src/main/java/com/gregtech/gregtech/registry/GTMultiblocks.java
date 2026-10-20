@@ -3,14 +3,28 @@ import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.block.machine.*;
 import com.gregtech.gregtech.content.multiblock.*;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+//? if >=1.21.1 {
+/*import net.minecraft.core.registries.Registries;
+import net.neoforged.neoforge.registries.DeferredRegister;
+*///?} else {
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+//?}
 import java.util.*;
 /** One registration catalog for original multiblock controllers and structural parts. */
 public final class GTMultiblocks {
     private GTMultiblocks() {}
     private static final Map<Integer, RegisteredBlock<Block>> NAMED = new LinkedHashMap<>();
     private static final Map<String, RegisteredBlock<Block>> CONTROLLERS = new LinkedHashMap<>();
+    private static final List<AddonPart> ADDON_PARTS = new ArrayList<>();
+    private static boolean addonQueued;
+    public record AddonPart(RegisteredBlock<Block> block, String material, String texture) {}
     public static RegisteredBlock<Block> CENTRIFUGE_PART, ELECTROLYZER_PART, HEAT_TRANSMITTER,
             DISTILLATION_TOWER_PART, TANK_WALL, TANK_WALL_DENSE, FIRE_BRICKS,
             IMPLOSION_COMPRESSOR_WALL, LARGE_NIOBIUM_TITANIUM_COIL, LARGE_COPPER_COIL,
@@ -51,7 +65,52 @@ public final class GTMultiblocks {
         DISTILLATION_TOWER_MAIN = RegisteredBlock.wrap(spec.id(),
                 com.gregtech.gregtech.api.machine.MachineRegistry.registerBasicMachine(spec, props -> new MultiblockControllerBlock(spec, props)));
         //?}
+        registerAddonParts();
     }
+    /** Queues addon casings after the built-in parts. A call before addon machines install does nothing. */
+    public static void registerAddonParts() {
+        if (addonQueued || !com.gregtech.gregtech.api.addon.AddonMachines.installed()) return;
+        addonQueued = true;
+        for (var part : com.gregtech.gregtech.api.addon.AddonMachines.structureParts()) {
+            var declaration = part.declaration();
+            float hardness = declaration.hardness();
+            var block = registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(
+                    BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness, hardness)
+                            .requiresCorrectToolForDrops()));
+            if (NAMED.put(part.id(), block) != null)
+                throw new IllegalStateException("Addon structure part id already used: " + part.id());
+            ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));
+        }
+    }
+//? if >=1.21.1 {
+    /*private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new LinkedHashMap<>();
+    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new LinkedHashMap<>();
+    private static RegisteredBlock<Block> registerAddon(String namespace, String path, java.util.function.Supplier<Block> factory) {
+        var blocks = ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.BLOCK, id));
+        var items = ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(Registries.ITEM, id));
+        var holder = blocks.register(path, factory);
+        items.register(path, () -> new BlockItem(holder.get(), new Item.Properties()));
+        return new RegisteredBlock<>(ResourceLocation.fromNamespaceAndPath(namespace, path), holder);
+    }
+    public static void registerAddonBlocks(net.neoforged.bus.api.IEventBus bus) {
+        for (var register : ADDON_BLOCKS.values()) register.register(bus);
+        for (var register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
+    }
+    *///?} else {
+    private static final Map<String, DeferredRegister<Block>> ADDON_BLOCKS = new LinkedHashMap<>();
+    private static final Map<String, DeferredRegister<Item>> ADDON_BLOCK_ITEMS = new LinkedHashMap<>();
+    private static RegisteredBlock<Block> registerAddon(String namespace, String path, java.util.function.Supplier<Block> factory) {
+        var blocks = ADDON_BLOCKS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.BLOCKS, id));
+        var items = ADDON_BLOCK_ITEMS.computeIfAbsent(namespace, id -> DeferredRegister.create(ForgeRegistries.ITEMS, id));
+        var holder = blocks.register(path, factory);
+        items.register(path, () -> new BlockItem(holder.get(), new Item.Properties()));
+        return new RegisteredBlock<>(new ResourceLocation(namespace, path), holder);
+    }
+    public static void registerAddonBlocks(net.minecraftforge.eventbus.api.IEventBus bus) {
+        for (var register : ADDON_BLOCKS.values()) register.register(bus);
+        for (var register : ADDON_BLOCK_ITEMS.values()) register.register(bus);
+    }
+//?}
     private static BlockBehaviour.Properties properties(float hardness) {
         return BlockBehaviour.Properties.of().strength(hardness, hardness).requiresCorrectToolForDrops();
     }
@@ -61,6 +120,21 @@ public final class GTMultiblocks {
     public static RegisteredBlock<Block> findPart(int id) { return NAMED.get(id); }
     public static List<RegisteredBlock<Block>> parts() {
         return OriginalMultiblockPartData.ALL.stream().map(part -> NAMED.get(part.originalId())).toList();
+    }
+    public static List<AddonPart> addonParts() { return List.copyOf(ADDON_PARTS); }
+    /** Core structure ports plus addon casings. The block-entity type is built from this list. */
+    public static Block[] portBlocks() {
+        var blocks = new ArrayList<Block>();
+        for (var part : parts()) {
+            Block block = part.get();
+            //? if >=1.21.1 {
+            /*blocks.add(block);
+            *///?} else {
+            if (block instanceof MultiblockPortBlock) blocks.add(block);
+            //?}
+        }
+        for (var part : ADDON_PARTS) blocks.add(part.block().get());
+        return blocks.toArray(Block[]::new);
     }
     private static List<RegisteredBlock<Block>> range(int low, int high) {
         return NAMED.entrySet().stream().filter(entry -> entry.getKey() >= low && entry.getKey() <= high).map(Map.Entry::getValue).toList();

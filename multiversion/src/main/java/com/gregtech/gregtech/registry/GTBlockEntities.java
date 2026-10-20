@@ -56,12 +56,12 @@ public final class GTBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RockBlockEntity>> ROCK =
             BLOCK_ENTITIES.register("rock", () -> BlockEntityType.Builder.of(RockBlockEntity::new, GTBlocks.ROCK.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.tool.DynamiteBlockEntity>> DYNAMITE=BLOCK_ENTITIES.register("dynamite",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.tool.DynamiteBlockEntity::new,GTToolBlocks.DYNAMITE.get(),GTToolBlocks.BOOMSTICK.get(),GTToolBlocks.DYNAMITE_STRONG.get()).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity>> ITEM_PIPE=BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity::new,GTItemPipes.all().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity>> ITEM_PIPE=BLOCK_ENTITIES.register("item_pipe",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.ItemPipeBlockEntity::new,AddonPipeRegistration.itemPipeBlocks(GTItemPipes.all().stream().map(DeferredHolder::get))).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.HopperBlockEntity>> HOPPER=BLOCK_ENTITIES.register("hopper",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.HopperBlockEntity::new,com.gregtech.gregtech.content.transport.HopperRegistries.hoppers().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.QueueHopperBlockEntity>> QUEUE_HOPPER=BLOCK_ENTITIES.register("queue_hopper",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.QueueHopperBlockEntity::new,com.gregtech.gregtech.content.transport.HopperRegistries.queues().stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.TreeHoleBlockEntity>> TREE_HOLE=BLOCK_ENTITIES.register("tree_hole",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.TreeHoleBlockEntity::new,GTTreeHoles.blocks().toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.tool.PortableContainerBlockEntity>> PORTABLE_CONTAINER=BLOCK_ENTITIES.register("portable_container",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.tool.PortableContainerBlockEntity::new,GTToolBlocks.PORTABLE.stream().map(DeferredHolder::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity>> MULTIBLOCK_PORT=BLOCK_ENTITIES.register("multiblock_port",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::new,GTMultiblocks.parts().stream().map(com.gregtech.gregtech.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity>> MULTIBLOCK_PORT=BLOCK_ENTITIES.register("multiblock_port",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::new,GTMultiblocks.portBlocks()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity>> COKE_OVEN=BLOCK_ENTITIES.register("coke_oven",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.CokeOvenControllerBlockEntity::new,GTMultiblocks.COKE_OVEN_MAIN.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity>> CRYO_DISTILLATION=BLOCK_ENTITIES.register("cryo_distillation",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::new,GTMultiblocks.CRYO_DISTILLATION_MAIN.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity>> MULTIBLOCK_TANK=BLOCK_ENTITIES.register("multiblock_tank",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.machine.MultiblockTankControllerBlockEntity::new,GTMultiblocks.tanks().stream().map(com.gregtech.gregtech.registry.RegisteredBlock::get).toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
@@ -238,10 +238,9 @@ public final class GTBlockEntities {
 
     public static final RegistryObject<BlockEntityType<FluidPipeBlockEntity>> FLUID_PIPE =
             BLOCK_ENTITY_TYPES.register("fluid_pipe", () -> {
-                FluidPipeBlock[] blocks = GTFluidPipes.all().stream()
-                        .filter(RegistryObject::isPresent)
-                        .map(RegistryObject::get)
-                        .toArray(FluidPipeBlock[]::new);
+                FluidPipeBlock[] blocks = java.util.Arrays.stream(AddonPipeRegistration.fluidPipeBlocks(
+                        GTFluidPipes.all().stream().filter(RegistryObject::isPresent).map(RegistryObject::get)))
+                        .map(block -> (FluidPipeBlock) block).toArray(FluidPipeBlock[]::new);
                 return BlockEntityType.Builder.of(FluidPipeBlockEntity::new, blocks).build(null);
             });
 
@@ -301,9 +300,7 @@ public final class GTBlockEntities {
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity>> MULTIBLOCK_PORT =
             BLOCK_ENTITY_TYPES.register("multiblock_port", () -> BlockEntityType.Builder.of(
                     com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::new,
-                    GTMultiblocks.parts().stream().map(com.gregtech.gregtech.registry.RegisteredBlock::get)
-                            .filter(block -> block instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock)
-                            .toArray(net.minecraft.world.level.block.Block[]::new)).build(null));
+                    GTMultiblocks.portBlocks()).build(null));
 
     public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.machine.VonDaGraaggControllerBlockEntity>> VON_DA_GRAAGG =
             BLOCK_ENTITY_TYPES.register("von_da_graagg", () -> BlockEntityType.Builder.of(
@@ -423,10 +420,9 @@ public final class GTBlockEntities {
 
     public static final RegistryObject<BlockEntityType<ItemPipeBlockEntity>> ITEM_PIPE =
             BLOCK_ENTITY_TYPES.register("item_pipe", () -> {
-                ItemPipeBlock[] blocks = GTItemPipes.all().stream()
-                        .filter(RegistryObject::isPresent)
-                        .map(RegistryObject::get)
-                        .toArray(ItemPipeBlock[]::new);
+                ItemPipeBlock[] blocks = java.util.Arrays.stream(AddonPipeRegistration.itemPipeBlocks(
+                        GTItemPipes.all().stream().filter(RegistryObject::isPresent).map(RegistryObject::get)))
+                        .map(block -> (ItemPipeBlock) block).toArray(ItemPipeBlock[]::new);
                 return BlockEntityType.Builder.of(ItemPipeBlockEntity::new, blocks).build(null);
             });
 

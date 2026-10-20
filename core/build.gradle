@@ -110,7 +110,27 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['kind', 'duplicate', 'part', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore'].each { scenario ->
+['plain', 'expand', 'fluidhit', 'itemhit', 'dup', 'twice', 'order', 'shape', 'missing', 'derived', 'share'].each { scenario ->
+    def contract = tasks.register("addonPipeContracts_${scenario}", JavaExec) {
+        description = "Runs addon pipe scenario ${scenario} in its own JVM."
+        group = 'verification'
+        dependsOn tasks.named('testClasses')
+        classpath = sourceSets.test.runtimeClasspath
+        mainClass = 'com.gregtech.gregtech.core.AddonPipeContracts'
+        args scenario
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
+        def marker = layout.buildDirectory.file("reports/contracts/addonPipeContracts_${scenario}.passed")
+        outputs.file(marker)
+        doFirst { marker.get().asFile.delete() }
+        doLast {
+            marker.get().asFile.parentFile.mkdirs()
+            marker.get().asFile.setText("addonPipeContracts ${scenario}: passed\n", 'UTF-8')
+        }
+    }
+    tasks.named('check').configure { dependsOn contract }
+}
+
+['kind', 'duplicate', 'part', 'partok', 'partname', 'partmat', 'partdup', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore'].each { scenario ->
     def contract = tasks.register("addonMachineContracts_${scenario}", JavaExec) {
         description = "Runs addon machine scenario ${scenario} in its own JVM."
         group = 'verification'
