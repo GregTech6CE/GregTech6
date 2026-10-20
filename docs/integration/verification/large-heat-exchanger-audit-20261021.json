@@ -1,0 +1,1720 @@
+{
+  "date": "2026-10-21",
+  "batch": 68,
+  "baseline": "fa352343eee3cbc5bf8cfab460694f44aac1622d",
+  "scope": "Registered large heat exchanger17197: shape, main/part capabilities, eight heat outlets, fuel/tanks, tools, controls, settings and crafting scope; six readability edits.",
+  "formal_records": [
+    242,
+    243
+  ],
+  "extends_existing": [
+    3,
+    36,
+    110,
+    218,
+    232
+  ],
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLargeHeatExchanger.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityLargeHeatExchanger.java",
+      "sha256": "17e76c7595c2a229efe93dcf728d9a32a3301789ee843fa2c9e9aecfca885bfb",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "relative": "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/IMultiBlockFluidHandler.java",
+      "relative": "gregapi/tileentity/multiblocks/IMultiBlockFluidHandler.java",
+      "sha256": "f12c7bb7295911077fbf288f2d4a74996f9b846e81675a7d90e5566345885456",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/IMultiBlockEnergy.java",
+      "relative": "gregapi/tileentity/multiblocks/IMultiBlockEnergy.java",
+      "sha256": "5998de96a2473247f3527e2e82d3f66fd379f1b2d5986f994b8f3b59d414f5f3",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "relative": "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/behavior/TE_Behavior.java",
+      "relative": "gregapi/tileentity/behavior/TE_Behavior.java",
+      "sha256": "415156c403dfdcf30b47782335237cfe39b01f1b217a7c121163156de8eb9633",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/behavior/TE_Behavior_Active_Trinary.java",
+      "relative": "gregapi/tileentity/behavior/TE_Behavior_Active_Trinary.java",
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "relative": "gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverDetectorRunningActively.java",
+      "relative": "gregapi/cover/covers/CoverDetectorRunningActively.java",
+      "sha256": "d2a2ddf68773ab85ef8446254ff3e982ca890ad334ee2f70ff4260eb234b785f",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverDetectorRunningPassively.java",
+      "relative": "gregapi/cover/covers/CoverDetectorRunningPassively.java",
+      "sha256": "c85626d8b4829d95ebe3cd6465d7e40ebd88fe25dcd03f35dbb9c5613cff4d7a",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "relative": "gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/TagData.java",
+      "relative": "gregapi/code/TagData.java",
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/Recipe.java",
+      "relative": "gregapi/recipes/Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapFuel.java",
+      "relative": "gregapi/recipes/maps/RecipeMapFuel.java",
+      "sha256": "86d8ee81bd5842dc624bd031a66fe4c87ab6599225e596531462e9d7ab28cf27",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/AdvancedCraftingShaped.java",
+      "relative": "gregapi/recipes/AdvancedCraftingShaped.java",
+      "sha256": "a39c084235ae893785d83b3a1b099e9e3aec89fdd2a462315ce036abc9859137",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "relative": "gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictItemData.java",
+      "relative": "gregapi/oredict/OreDictItemData.java",
+      "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "relative": "gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictManager.java",
+      "relative": "gregapi/oredict/OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/ANY.java",
+      "relative": "gregapi/data/ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FM.java",
+      "relative": "gregapi/data/FM.java",
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/CR.java",
+      "relative": "gregapi/util/CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Fuels.java",
+      "relative": "gregtech/loaders/b/Loader_Fuels.java",
+      "sha256": "df4517a5c621527c62adee8245601a420b53f7e4d5e871283ac16fbcd4e68edc",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/HeatExchangerRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/HeatExchangerRules.java",
+      "sha256": "73d8df31ab9e6e95712962e4d73de4c83c51c91f18e3fd6fc4a93a89023f9f8a",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedHeatExchangerStructure.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedHeatExchangerStructure.java",
+      "sha256": "7d8ec90a03277eb408dfcadc799f3d1a48634d8f594bd5ee8a957dd79bf983a9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalGeneratorParameters.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalGeneratorParameters.java",
+      "sha256": "36dc38289ae6709fa29e56c387a244c15421f8d24698a64698c520c6c04eb5e5",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalUtilityControllerData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalUtilityControllerData.java",
+      "sha256": "53537f0889df1954e1a7609eca7a65944742d1c7c815e8c2ede4b569259f8f6b",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineLayouts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineLayouts.java",
+      "sha256": "f1ef993473d682fd47ce17e61bc3092fa38c6dce2ad6e61994f8fb81781f6071",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "sha256": "ba3156b9f33d5a3e8d4970b3668e6fc1a9cff7159baf09fc9976e706f59ee6ac",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "sha256": "e11743331fef31f59fc0b5063280d4cd45fc288b2c1f0153a3c4580ee935110e",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java",
+      "sha256": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/GregTechTags.java",
+      "sha256": "23ec0ee0bfcf2b99648ac3dc2d8fe7ef3915e09c031bf6edaf9f50d1d9a323cb",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "sha256": "df9fffcc012f709d3e48620030c57a541fdc89d0638ff3b93fff09140ae96136",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "sha256": "9892ddbb14b26cba85c787c281e5efd916fde92fabab993a3a629dc3a83d429b",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalFuelRecipeRows.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/recipe/OriginalFuelRecipeRows.java",
+      "sha256": "ebe786dcf7373811eb0cee01b355d671c15e1e1e5ebaa6951f3c2f15e04f6c30",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportDefinitions.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/FluidTransportDefinitions.java",
+      "sha256": "16698d415e5ff44441a5596ca41279005fe4607e56a5aa57aa66eea047a13ae6",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeCatalog.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/transport/ItemPipeCatalog.java",
+      "sha256": "7f2f07a0b684824b3a4df195aa875210523816f2cf5ed1d87945b7cd54b1ef90",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "sha256": "1b5a1a311d8ba7b026f483e6cba02225eab4abca068fd222b60b5248ed6d53bf",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "sha256": "18569119d94394499e7cbe3b304ff08db63e04ea56dde96b1a2a4519a02d5d18",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HotFluidFuelCycle.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HotFluidFuelCycle.java",
+      "sha256": "d2c9eaa1e222ee74d1393e595ef780aaa6e1ee9904903262d7aef7f11bac5720",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HeatExchangerData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HeatExchangerData.java",
+      "sha256": "c583021d6948c2e99d68e6fa3442925c10be9d51f4c15af709de35df386f8f1a",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "sha256": "805753278aeee564a940c51e2f470a4009dc523ea7e43a2a0f548ab5d48576fd",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "sha256": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "sha256": "814f4c96789f6088b1b2f8f4093f87008c3d00530ce78cab72ec220db6ed238c",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "sha256": "5b50a6700e7e36c1a49526fa0abef59e9f689a43763326f72ce6f8e79f4dbe92",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "sha256": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java",
+      "sha256": "b3f1a8cb8e0f8eac95bdafcfa3c4f6f4c8000a2acc02316441d46b7b8468b518",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "sha256": "53be146b2d7c5b394459e1d3afc9a2ef014fe4b5e08abfc2c204975faf6d39eb",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "sha256": "7ce3161c68a0504dde23baaf4747f0b5cb12a4c2f7bec8893713b6737f41f799",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "sha256": "adbd3c0a681d3dfe6a2123ca5db6129c3b2d6ea7bd12c38e2275487e5e215de4",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sha256": "090335d671e4733c31e19d4154037ee5877db9e9328a6ef8779a12448ce90867",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "sha256": "15250cb214193886839ace219dad62f93ca18b891bde60ab7331f108be0c79a9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "sha256": "6a177b710727a914bb65696bf54799575c14e9c950b32c142eb9c4e318e4bc98",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "sha256": "ba8912db5d12e52d956529ca60a9292eb5ffdd9df30d5882f9bbd7b74bf6b050",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "sha256": "938745a345577e6f5d32f2fe6f2fb85910a7686fbaaf3aec537eed7b6111cba1",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "sha256": "6edfc16394dd94bf904b46b8331bb7a20be8091728dfcfac7645979dc8c49df4",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Only named declarations and consumers traced in the report; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/SourceBlockProperties.java",
+      "sha256": "7d2defd50583dd887a8f8002c14aef06045c160c6fcc54054ea75426a67769b1",
+      "scope": "Additional traced original-id metadata and actual tool parameter consumer; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolRules.java",
+      "sha256": "2f395327c20346f754cf51352379f80e555f4136187ccf3091f9d8169e202546",
+      "scope": "Additional traced original-id metadata and actual tool parameter consumer; not whole-file acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "a74c1d3d4b87789e51f84a068aa1b249b46cac7c2253a2ad102019ad92f29113",
+      "tokens": 3168
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "64db3c662fd29559b6a4d96137c9734e1b550101bbfd133b1fee33b734cbadf7",
+      "tokens": 3103
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "platform": "forge",
+      "sha256": "155a059cbb1fbc1f4480071e9833291037ee7848ccf84e7d90d2b74a34d90ee7",
+      "tokens": 924
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "d01d9f0a3c4c885c9158216895b7d378c6a1c4cb7af719d24a88b4853c93bc95",
+      "tokens": 1185
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HotFluidFuelCycle.java",
+      "platform": "forge",
+      "sha256": "abe5ed7e9d14ab094748899c82f04db9d49fb1f637fc7bdd1a39aa9e2c2e71fd",
+      "tokens": 496
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HotFluidFuelCycle.java",
+      "platform": "neoforge",
+      "sha256": "cfd68e10c76815ee4af765758c7aec445d5cd1de0f5e1f76fdf6713505bf948f",
+      "tokens": 502
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HeatExchangerData.java",
+      "platform": "forge",
+      "sha256": "10b1a954a2da73e43cf17161ab3d715b308fb3560631f4c400099697e1d34549",
+      "tokens": 392
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HeatExchangerData.java",
+      "platform": "neoforge",
+      "sha256": "be57797317ac8b1e3f398b942456419732557d25f1ed3afa7108c6598ad4fb15",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "forge",
+      "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+      "tokens": 1504
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "neoforge",
+      "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+      "tokens": 1527
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "platform": "forge",
+      "sha256": "213eb3a5aa2780ee18488437f00d7e279aa3ae67d45989e0532bd1e30f633b70",
+      "tokens": 206
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidPort.java",
+      "platform": "neoforge",
+      "sha256": "5e5e33b5b9f9b55454e9c5cfed0b6f1a96b12dfb88e22456e1a3bae5713ecc1b",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "platform": "forge",
+      "sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+      "tokens": 9306
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "platform": "neoforge",
+      "sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+      "tokens": 9312
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "platform": "forge",
+      "sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+      "tokens": 1049
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "platform": "neoforge",
+      "sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+      "tokens": 1051
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "forge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "neoforge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "forge",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "tokens": 506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "neoforge",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "tokens": 506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "forge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "neoforge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "forge",
+      "sha256": "d2471a24f9e0dfe11cf97d79c73032c65eaa116d4c3884ce58832cdbfa53109b",
+      "tokens": 2699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8f0f169e68ed10ea3e0541bd2d9eec2c7f5e3af9a9f86df0d7e75eb296745d6e",
+      "tokens": 2583
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "forge",
+      "sha256": "7e2845689b3649198a83686a41a276fca769c09a398c434387e2cf4dcfb86acd",
+      "tokens": 335
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "neoforge",
+      "sha256": "dfe256632e7d85d09ee4dd18a6430538d97f96297a8c01824ce5f78be75ed586",
+      "tokens": 339
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "forge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "neoforge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "forge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "neoforge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java",
+      "platform": "forge",
+      "sha256": "b3d94ecf5f5a8a1fba761350a3138bef00ac92f25590db51afa2aea2f3529bbc",
+      "tokens": 960
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/FuelRecipeLoader.java",
+      "platform": "neoforge",
+      "sha256": "3632f8f9110fbb2ad60f25b1fbd4b3f115f63be2dbac181f979896e062501b6c",
+      "tokens": 973
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "platform": "forge",
+      "sha256": "53be146b2d7c5b394459e1d3afc9a2ef014fe4b5e08abfc2c204975faf6d39eb",
+      "tokens": 594
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/FuelRecipeMaps.java",
+      "platform": "neoforge",
+      "sha256": "53be146b2d7c5b394459e1d3afc9a2ef014fe4b5e08abfc2c204975faf6d39eb",
+      "tokens": 594
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "platform": "forge",
+      "sha256": "1481e226e7157933aab05cb646e33143472a55de15a02b3b6ebc2a99267ed9da",
+      "tokens": 1983
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "platform": "neoforge",
+      "sha256": "d5f0aec6229070183a184a013b3c80948882bd5a5a2987be803823161eb1a2a4",
+      "tokens": 2140
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "platform": "forge",
+      "sha256": "31d21a0afc5d0ee992fe66c96ecbdb79d13e66353e9868c5b775eda979039a8a",
+      "tokens": 4412
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "platform": "neoforge",
+      "sha256": "8dbc7d40daed7fd351d4eb21069270d1ad261e46910849f83ecd9eeb4a3f098e",
+      "tokens": 4321
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "platform": "forge",
+      "sha256": "1261b3386c1d0052f3d31d86c327ac54676bf8d3957874c5d9af5fc540bb95b6",
+      "tokens": 2040
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "platform": "neoforge",
+      "sha256": "ba6ef2706bf26810dc7544d97efa9a40791a2609449dd536e8cd749938c6fff2",
+      "tokens": 2101
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "platform": "forge",
+      "sha256": "944a1df655f50d8519c5cfc91945e03fb717724939eab44b8fa96d9979c97984",
+      "tokens": 745
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "platform": "neoforge",
+      "sha256": "37159b5c6a8c6b68e0b43f900224dd53406f4d8635dbf0719a0dcfdb5b2e21f6",
+      "tokens": 764
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "forge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "neoforge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "forge",
+      "sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+      "tokens": 374
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControls.java",
+      "platform": "neoforge",
+      "sha256": "70dcffeb473d385c3e6163636dc11949be4094bb6081a0c232ccfbb676c87eb5",
+      "tokens": 374
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "tokens": 3948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "tokens": 3957
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "platform": "forge",
+      "sha256": "54b7cdcafa2d86d8a877acfae2694e9de59edd9675d5f96ed3769fe939d6140b",
+      "tokens": 567
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "platform": "neoforge",
+      "sha256": "e2c8e3c3f597e3b11c2fe39edd3f64c6b0a3d159b32d3777741115f662c23e45",
+      "tokens": 570
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "forge",
+      "sha256": "2bb4f27bd51fc1d2b2bbc3bea19dec63f54f9919cd3828373a38ce354c719249",
+      "tokens": 360
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "neoforge",
+      "sha256": "c44b2be441c5e1dee11d8bddf347168365cfe8f348435b5c9f8b403b3884b7b3",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "platform": "forge",
+      "sha256": "aff29c33f98e48049ea1662bd34ea4d362bc336844bc61375fbc36426a5e5530",
+      "tokens": 1308
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "platform": "neoforge",
+      "sha256": "aff29c33f98e48049ea1662bd34ea4d362bc336844bc61375fbc36426a5e5530",
+      "tokens": 1308
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "forge",
+      "sha256": "cf7ea64d569c6ae4e18a277c220ca979b9c9aa6df0e981d6725e1574f6d62784",
+      "tokens": 3334
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "neoforge",
+      "sha256": "6adb2e1e3aa958e2859f09f68e809114564e32a93b48028e67e58cbb39f08870",
+      "tokens": 3330
+    }
+  ],
+  "finite_witness": {
+    "kind": "Source parsing, bounded coordinate/order reconstruction and arithmetic; no target class, recipe pack, game or test execution.",
+    "defaults": {
+      "original_id": 17197,
+      "rate_hu": 16384,
+      "efficiency": 10000,
+      "hot_capacity": 163840,
+      "heat_refill_target": 32768,
+      "cold_backpressure": 327680,
+      "cold_nominal_capacity": 9223372036854775807,
+      "original_stack_limit": 16,
+      "current_default_stack_limit": 64,
+      "hardness_and_resistance": 6
+    },
+    "structure": {
+      "ordered_original_and_current_cells": [
+        [
+          -1,
+          0,
+          -1,
+          18024
+        ],
+        [
+          0,
+          0,
+          -1,
+          18024
+        ],
+        [
+          1,
+          0,
+          -1,
+          18024
+        ],
+        [
+          -1,
+          0,
+          0,
+          18024
+        ],
+        [
+          1,
+          0,
+          0,
+          18024
+        ],
+        [
+          -1,
+          0,
+          1,
+          18024
+        ],
+        [
+          0,
+          0,
+          1,
+          18024
+        ],
+        [
+          1,
+          0,
+          1,
+          18024
+        ],
+        [
+          -1,
+          1,
+          -1,
+          18101
+        ],
+        [
+          0,
+          1,
+          -1,
+          18101
+        ],
+        [
+          1,
+          1,
+          -1,
+          18101
+        ],
+        [
+          -1,
+          1,
+          0,
+          18101
+        ],
+        [
+          0,
+          1,
+          0,
+          18024
+        ],
+        [
+          1,
+          1,
+          0,
+          18101
+        ],
+        [
+          -1,
+          1,
+          1,
+          18101
+        ],
+        [
+          0,
+          1,
+          1,
+          18101
+        ],
+        [
+          1,
+          1,
+          1,
+          18101
+        ]
+      ],
+      "part_count": 17,
+      "dense_walls": 9,
+      "heat_transmitters": 8,
+      "bottom_input_ports": 8,
+      "builder_cell_order_same": true,
+      "partial_binding": "Current loop keeps valid subset even when another cell is missing; do not apply axial all-or-none claim to this class."
+    },
+    "eight_outlets": {
+      "original_order": [
+        [
+          0,
+          2,
+          -1
+        ],
+        [
+          -1,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          -1
+        ],
+        [
+          -1,
+          2,
+          -1
+        ],
+        [
+          -1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "current_order": [
+        [
+          -1,
+          2,
+          -1
+        ],
+        [
+          -1,
+          2,
+          0
+        ],
+        [
+          -1,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          -1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          -1
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "same_set": true,
+      "same_order": false,
+      "ordinary_equal_offer_per_outlet_at_heat32800": 2048,
+      "total_heat_debit": 16384,
+      "limit": "Order difference observed; no built-in shared-state receiver consequence established."
+    },
+    "lava_refill": {
+      "initial_heat": 0,
+      "available_hot_litres": 1000,
+      "per_litre_hu": 80,
+      "consumed_litres": 410,
+      "cold_made_litres": 410,
+      "resulting_heat": 32800,
+      "condition": "Default rate/efficiency, compatible empty cold tank; fuel identities resolved, before automatic cold export."
+    },
+    "backpressure_once": {
+      "initial_cold": 327679,
+      "consumed_lava": 410,
+      "resulting_cold": 328089,
+      "limit": "Both implementations can cross20R in one refill;20R is an entry gate, not hard capacity."
+    },
+    "zero_efficiency": {
+      "available_input": 1000,
+      "consumed_input": 1000,
+      "made_cold": 1000,
+      "added_heat": 0,
+      "limit": "Single valid1L input/output row, compatible cold tank; repeated original loop and bounded plan agree."
+    },
+    "unknown_output_type": {
+      "requested_id": "ENERGY.AUDIT_EXTENSION",
+      "known_current_energy_ids": [
+        "ENERGY.ELECTRICITY",
+        "ENERGY.KINETIC_ROTATION",
+        "ENERGY.KINETIC_PUSH",
+        "ENERGY.HEAT",
+        "ENERGY.CRYO",
+        "ENERGY.LIGHT",
+        "ENERGY.MAGNETIC",
+        "ENERGY.NEUTRON",
+        "ENERGY.QUANTUM",
+        "ENERGY.TIME",
+        "ENERGY.REDSTONE_FLUX",
+        "ENERGY.MINECRAFT_JOULES",
+        "ENERGY.STEAM",
+        "ENERGY.AIR",
+        "ENERGY.VIS_ORDO",
+        "ENERGY.VIS_AER",
+        "ENERGY.VIS_AQUA",
+        "ENERGY.VIS_TERRA",
+        "ENERGY.VIS_IGNIS",
+        "ENERGY.VIS_PERDITIO"
+      ],
+      "initial_heat": 16384,
+      "per_outlet_amount": 2048,
+      "current_heat_after_emission": 0,
+      "old_possible_insertion_attempts": 8,
+      "current_insertion_attempts": 0,
+      "condition": "Original addon registers the new TagData and receiver; effective emitted-id setting is retained, destinations loaded. No hot refill in this example.",
+      "limit": "Extension contract; defaultHU remains supported. No addon or native energy algorithm executed."
+    },
+    "crafting_scope": {
+      "original_pipe": "OP.pipeHuge.dat(ANY.Cu)",
+      "current_pipe_definition": "pipe:huge@Copper",
+      "current_resolution": "Single item from exact size/material lookup; no any_ branch.",
+      "old_and_current_group_members_declared": [
+        "Copper",
+        "AnnealedCopper"
+      ],
+      "current_builtin_fluid_pipe_annealed_copper_present": false,
+      "limit": "No extra built-in pipe is invented as a failed test. This is missing group/ore registration scope, not proof default crafting is unavailable."
+    },
+    "saved_over_capacity": {
+      "nominal_hot_capacity": 163840,
+      "saved_hot_amount": 200000,
+      "restored_amount": 200000,
+      "limit": "Source setFluid occurs after capacity setup and uses raw long amount; no disk round-trip performed."
+    }
+  },
+  "readability": {
+    "baseline": "fa352343eee3cbc5bf8cfab460694f44aac1622d",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LargeHeatExchangerControllerBlockEntity.java": {
+        "before_raw_sha256": "a1dc12bdeae34fed35944be60a2acaa5e094e206899264eccbfe2b750a76897f",
+        "after_raw_sha256": "1b5a1a311d8ba7b026f483e6cba02225eab4abca068fd222b60b5248ed6d53bf",
+        "scoped_bindings": {
+          "partPos": "pos",
+          "expectedBlock": "expected",
+          "candidateParts": "parts",
+          "completeStructure": "complete",
+          "claimedParts": "claimed",
+          "partPosition": "p",
+          "partRole": "r"
+        },
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 3168,
+            "normalized_execution_sha256": "7a6748b60eb00922920e4499c0eb23e6cff8677b3a148f6e3078f878196cf18b",
+            "before_lines": 225,
+            "after_lines": 440,
+            "before_max_line": 254,
+            "after_max_line": 155
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 3103,
+            "normalized_execution_sha256": "5ad1921de3331b6a95408dc6d8d7bebbd69444e3a2f27da14f75dee7fcd60caa",
+            "before_lines": 220,
+            "after_lines": 425,
+            "before_max_line": 254,
+            "after_max_line": 155
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LargeHeatExchangerControllerBlock.java": {
+        "before_raw_sha256": "4605091b3db58bb53bb82f7d2391c1f2f75e98eb4b6f59b5a59f53b42c481dd1",
+        "after_raw_sha256": "18569119d94394499e7cbe3b304ff08db63e04ea56dde96b1a2a4519a02d5d18",
+        "scoped_bindings": {
+          "stateBuilder": "b",
+          "placementContext": "ctx",
+          "tickLevel": "l",
+          "tickPos": "p",
+          "tickState": "s",
+          "blockEntity": "be"
+        },
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 924,
+            "normalized_execution_sha256": "dc898457068b558082db5feed4117d307ea30e779f5bf4cc27837299ad84d136",
+            "before_lines": 73,
+            "after_lines": 105,
+            "before_max_line": 240,
+            "after_max_line": 200
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1185,
+            "normalized_execution_sha256": "7705118397af88bf5dcd302beae0731bae1b7d403ae8f517f1018733e81681f4",
+            "before_lines": 76,
+            "after_lines": 126,
+            "before_max_line": 565,
+            "after_max_line": 200
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HotFluidFuelCycle.java": {
+        "before_raw_sha256": "7c78d61bee1c0705158cd480f37f477223c1e2bad0a40b1e6d4c89b49b75c5cd",
+        "after_raw_sha256": "d2c9eaa1e222ee74d1393e595ef780aaa6e1ee9904903262d7aef7f11bac5720",
+        "scoped_bindings": {
+          "lastRecipe": "last",
+          "idleResult": "idle",
+          "fuelRecipe": "recipe"
+        },
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 496,
+            "normalized_execution_sha256": "eabda6b09055bac2d7d3eda00bc1395186457782bb999404834319c8f936a085",
+            "before_lines": 43,
+            "after_lines": 57,
+            "before_max_line": 125,
+            "after_max_line": 129
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 502,
+            "normalized_execution_sha256": "d6f2e0fda09754de49c0a74da6641e0ec590641732ba15b6db26795105a9ad42",
+            "before_lines": 43,
+            "after_lines": 57,
+            "before_max_line": 132,
+            "after_max_line": 138
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/HeatExchangerData.java": {
+        "before_raw_sha256": "23c29d9de2c13a7ed09bbe5c4cfe0b9e06b3822d15f439b14da2da023eea11a5",
+        "after_raw_sha256": "c583021d6948c2e99d68e6fa3442925c10be9d51f4c15af709de35df386f8f1a",
+        "scoped_bindings": {
+          "defaults": "d"
+        },
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 392,
+            "normalized_execution_sha256": "0f00d558674c457f338827b704b1c6479366c0bc04dd1b066205a86b72cb9f85",
+            "before_lines": 44,
+            "after_lines": 52,
+            "before_max_line": 110,
+            "after_max_line": 118
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 452,
+            "normalized_execution_sha256": "8423255cca1c4b9cf9d6caf6aa797eeec8f15ffb1f5ccde4c3ca542de5a05285",
+            "before_lines": 47,
+            "after_lines": 55,
+            "before_max_line": 129,
+            "after_max_line": 132
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/HeatExchangerRules.java": {
+        "before_raw_sha256": "1ca9f242712b562ee7d646de91d1c392176c25654878131a83a8198433a3c09e",
+        "after_raw_sha256": "73d8df31ab9e6e95712962e4d73de4c83c51c91f18e3fd6fc4a93a89023f9f8a",
+        "scoped_bindings": {
+          "totalBatchEnergy": "energy",
+          "batchCount": "count"
+        },
+        "comment_correction": {
+          "before": "/** Equivalent to the source repeated single-charge loop, including zero-efficiency fuel consumption. */",
+          "after": "/** Plan repeated fuel batches within long bounds, including zero-efficiency consumption. */"
+        },
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 569,
+            "normalized_execution_sha256": "351935d255a1f26ae133eb84e7a3cf3ca2378ec058f8a737683bff71fb929aac",
+            "before_lines": 44,
+            "after_lines": 71,
+            "before_max_line": 131,
+            "after_max_line": 143
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedHeatExchangerStructure.java": {
+        "before_raw_sha256": "e7b5d86a6ce50058b0c575751ee5940ee59d8637e6bc24de4cce94870f7d915a",
+        "after_raw_sha256": "7d8ec90a03277eb408dfcadc799f3d1a48634d8f594bd5ee8a957dd79bf983a9",
+        "scoped_bindings": {},
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 253,
+            "normalized_execution_sha256": "a2be4050897b845c34c2382b28c0829b3a13eaf483bf1f438fbb659042db0601",
+            "before_lines": 27,
+            "after_lines": 31,
+            "before_max_line": 97,
+            "after_max_line": 98
+          }
+        ]
+      }
+    },
+    "limit": "Source-only comparison; formatting, listed local/parameter bindings and one bounded-arithmetic description. No gameplay changes."
+  },
+  "external_primary_evidence": {
+    "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/src/main/java/net/minecraftforge/oredict/ShapedOreRecipe.java",
+    "authority": "Official MinecraftForge1.7.10 source, opened2026-10-21,240 returned lines.",
+    "anchors": [
+      "Constructor string ingredient uses OreDictionary.getOres.",
+      "checkMatch iterates ArrayList candidates with OreDictionary.itemMatches."
+    ],
+    "limit": "Reference evidence only; no assertion of a raw HTTP artifact hash; no native source copied to production."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "policy": "User material formatting unchanged and not staged."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "policy": "User material formatting unchanged and not staged."
+    }
+  ],
+  "excluded_candidates": [
+    "Neo large-heat fluid capability is explicitly registered by BasicMachineRegistries, distinct from the single-block SmelteryRegistries hook.",
+    "Unformed-shell heat/fuel processing is present in original onTick2 too; no new formation gate is imposed.",
+    "Top transmitters have NOTHING role; actual heat injection bypasses their transport capability in both implementations.",
+    "Current partial valid-part binding is intentional and matches original partial policy; only unload/cache/claim subcases extend036.",
+    "Current read-only machine control exists; detector install still fails common supportsSwitch gate under110. Do not extend missing-provider219.",
+    "No original on/off interface, default rain/fire structural checks disabled by Base10, no original plunger special tank purge; do not add such requirements.",
+    "Current long-aware restore retains over-capacity saved contents; generic setCapacity alone would be an incomplete trace.",
+    "Original Trinary.save reads rather than writes activity/history keys; current persistence and overflow bounds are retained improvements, not rolled back.",
+    "Ordinary harvested machine state is cleared by configured CoverDropMixin; local block getDrops snapshot is not final drop state.",
+    "Outlet iteration order differs but identical ordinary offers/positions are established; no additional built-in consequence invented."
+  ],
+  "provenance": "Original controller: GregTech-6 Team2025, Gregorius Techneticies, LGPL-3.0-or-later. All source headers retain independent notices. Existing port source only reformatted/renamed; no old/native method bodies or assets newly copied.",
+  "limitations": [
+    "No Java compilation/initialization, Gradle, test, resource-pack generation, game, fluid/energy execution, real builder/cover/save interaction, restart, build or push.",
+    "Finite arithmetic and consumer traces are not runtime acceptance; dynamic RecipeMap handlers, extreme saved data, receivers/addons, recipe tags, models and the broader goal remain unaccepted."
+  ],
+  "root_revalidation": {
+    "kind": "Source identities, full selected tokens/literal positions, comments/directives, bounded source witnesses and new documentation only.",
+    "original_sources": 38,
+    "current_sources": 61,
+    "platform_views": 82,
+    "readability_files": 6,
+    "readability_execution_views": 10,
+    "ledger_contiguous": [
+      1,
+      243
+    ],
+    "new_or_added_local_links": 37,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false,
+    "external_primary_reference": "Official Forge1.7.10 ShapedOreRecipe constructor/list matcher; link and limits recorded, no raw HTTP hash claimed."
+  }
+}

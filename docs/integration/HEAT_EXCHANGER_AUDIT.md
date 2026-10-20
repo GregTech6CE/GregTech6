@@ -111,3 +111,7 @@ HeatExchangerData.settings／restore的实际调用者主要是LargeHeatExchange
 根代理从原add调用的第3项识别真实注册ID（第4项9103是共用类型参数，不能也当作ID命中），重新解析八项额定／效率／stack16及两种太阳能额定／stack16。给定r128／目标256、Lava80HU/L，100%四批320HU、90%四批288HU；cold2000L低于20r2560，通用排出1000后余1000；cold0／hot1000的专用耐久请求10／1。仅为源码标量／算术，不运行换热、玩家工具或随机火焰。
 
 interact中的放大镜仍直接使用Component.literal的Input／Output，归既有003未入语言系统的宿主扩围，不据两个字样推断全部工具提示。原生火焰与onItemUseFirst截断入口、可达分支及未验边界见[统一回执](verification/nuclear-solar-heat-audit-20261021.json)；不擅自改变火险／耐久／交互或覆盖板行为。
+
+## 第六十八批大型设备边界
+
+大型17197的实际专题现见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)：主链、17件建造和Neo能力已有，新增242–243。它已有只读MachineControl.Provider，不属于本篇219的缺提供者；统一检测器switch安装门控沿110扩宿主。它也没有单块设备的专用整罐plunger，因此不直接扩221。共有HotFluidFuelCycle／HeatExchangerData／HeatExchangerRules本批仅整理排版与局部命名，十份执行流保持，当前批次没有重跑本篇旧Neo场景。
