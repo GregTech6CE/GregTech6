@@ -6,7 +6,7 @@ import java.util.List;
  * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Machine entry discovered with {@link java.util.ServiceLoader}.
  * List this class in {@code META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor}.
- * GregTech loads it after materials are initialized and before machine blocks are registered.
+ * GregTech loads it after materials are initialized and before pipes or machine blocks are registered.
  * Return pure data. Do not register blocks.
  */
 public interface AddonMachineContributor {
@@ -18,6 +18,21 @@ public interface AddonMachineContributor {
     default List<MachineDeclaration> machines() { return List.of(); }
 
     default List<MachineLayout> layouts() { return List.of(); }
+
+    /** Structure casings. Names are global and may be used from {@link MachineLayout}. */
+    default List<StructurePartDeclaration> parts() { return List.of(); }
+
+    /**
+     * Fluid-pipe materials. Each row expands into the seven built-in sizes.
+     * {@code idSuffix} must not match a built-in fluid pipe or another addon's fluid pipe.
+     */
+    default List<FluidPipeDeclaration> fluidPipes() { return List.of(); }
+
+    /**
+     * Item-pipe materials. Each row expands into the six built-in sizes.
+     * {@code idSuffix} must not match a built-in item pipe or another addon's item pipe.
+     */
+    default List<ItemPipeDeclaration> itemPipes() { return List.of(); }
 
     /** Behavior machines. Pair each machine type with a platform {@code BehaviorMachineContributor}. */
     default List<BehaviorMachineDeclaration> behaviorMachines() { return List.of(); }
