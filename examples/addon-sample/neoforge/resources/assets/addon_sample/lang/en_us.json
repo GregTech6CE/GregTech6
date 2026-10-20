@@ -1,6 +1,9 @@
 {
   "block.addon_sample.irrigator": "Sample Irrigator",
   "addon_sample.irrigator.water": "Water farmland",
+  "block.addon_sample.sample_miner": "Sample Miner",
+  "block.addon_sample.sample_hopper": "Sample Void Hopper",
+  "addon_sample.hopper.void": "Void items",
   "block.addon_sample.ru_buffer": "Sample Rotation Buffer",
   "addon_sample.ru_buffer.release": "Release rotation",
   "block.addon_sample.hand_crank": "Sample Hand Crank",
