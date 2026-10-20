@@ -50,7 +50,7 @@ public final class AddonMachines {
                              boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelGeneratorDeclaration.Output output, FuelGeneratorDeclaration.Kind kind) {}
-    private record BehaviorSignature(String energy, List<BehaviorMachineDeclaration.SlotRole> items,
+    private record BehaviorSignature(String energy, String energyOut, List<BehaviorMachineDeclaration.SlotRole> items,
                                      List<BehaviorMachineDeclaration.SlotRole> fluids, List<String> toggleKeys) {}
     private record PreparedLayout(String addonId, String machineName, List<SharedLargeMachineLayouts.Cell> cells) {}
 
@@ -461,6 +461,14 @@ public final class AddonMachines {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
                             + declaration.id() + "' uses unknown energy type '" + declaration.energy() + "'", failure);
                 }
+                if (declaration.emitsEnergy()) {
+                    try {
+                        energy(declaration.energyOut());
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                + declaration.id() + "' uses unknown energy output '" + declaration.energyOut() + "'", failure);
+                    }
+                }
                 String machineName = declaration.machineType();
                 String previousId = idOwner.putIfAbsent(submission.addonId + ":" + declaration.id(), submission.addonId);
                 if (previousId != null)
@@ -476,7 +484,7 @@ public final class AddonMachines {
                 if (machineSignature.containsKey(machineName) || generatorNames.contains(machineName))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' disagrees with an earlier definition of that machine");
-                var signature = new BehaviorSignature(declaration.energy(),
+                var signature = new BehaviorSignature(declaration.energy(), declaration.energyOut(),
                         declaration.items().stream().map(BehaviorMachineDeclaration.ItemSlot::role).toList(),
                         declaration.fluids().stream().map(BehaviorMachineDeclaration.FluidSlot::role).toList(),
                         declaration.toggles().stream().map(BehaviorMachineDeclaration.Toggle::translationKey).toList());

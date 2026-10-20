@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
@@ -11,6 +12,7 @@ import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
+import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
 import com.gregtech.gregtech.api.machine.MachineControllerKind;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
@@ -67,6 +69,7 @@ public final class AddonMachineContracts {
             case "fuelbounds" -> fuelBounds();
             case "knobs" -> knobs();
             case "face" -> faceDisagree();
+            case "bstore" -> behaviorStore();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -247,6 +250,55 @@ public final class AddonMachineContracts {
                 .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
                 .fluid(1000, 8, 8, BehaviorMachineDeclaration.SlotRole.INPUT).build(),
                 "overlaps");
+    }
+
+    private static void behaviorStore() {
+        check(BehaviorEnergyRules.finishTick(100, 0, 32) == BasicMachineEnergy.drain(100, 32), "default capacity drains");
+        check(BehaviorEnergyRules.finishTick(100, 0, 32) == 68, "drain leaves the remainder");
+        long kept = BehaviorEnergyRules.finishTick(100, 1000, 32);
+        check(kept == 100, "capacity keeps energy");
+        check(BehaviorEnergyRules.finishTick(kept, 1000, 32) == 100, "kept across a second tick");
+        check(BehaviorEnergyRules.finishTick(1500, 1000, 32) == 1000, "capacity caps stored energy");
+        check(BehaviorEnergyRules.buffer(0, 64) == 64, "drain buffer is the rated maximum");
+        check(BehaviorEnergyRules.buffer(1000, 64) == 1000, "storage buffer is the capacity");
+        check(BehaviorEnergyRules.readCapacity(false, 0, 500) == 500, "missing gt.capacity uses the declaration");
+        check(BehaviorEnergyRules.readCapacity(true, 800, 500) == 800, "gt.capacity is kept");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.readCapacity(true, -1, 500), "gt.capacity");
+        BehaviorEnergyRules.requireEmit(32, 1, 32, 4);
+        assertions++;
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(64, 1, 32, 4), "exceeds");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorEnergyRules.requireEmit(32, 5, 32, 4), "exceeds");
+        expectThrows(IllegalStateException.class, () -> BehaviorEnergyRules.requireEmit(32, 1, 0, 0), "no energy output");
+
+        var stored = BehaviorMachineDeclaration.builder("ru_buffer", "Steel")
+                .energy("RU", 32).gui("aa_sample:textures/gui/machine.png")
+                .energyCapacity(32_000)
+                .energyFaces(List.of(BehaviorMachineDeclaration.Face.LEFT, BehaviorMachineDeclaration.Face.RIGHT))
+                .energyOutputs(BehaviorMachineDeclaration.Face.BACK)
+                .energyOut("RU").energyOutMax(32, 1)
+                .build();
+        check(stored.energyCapacity() == 32_000, "declared capacity");
+        check(stored.energyOutSize() == 32 && stored.energyOutAmount() == 1, "output maximum");
+        check(stored.emitsEnergy() && stored.energyOutputFaces().size() == 1, "one output face");
+        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
+        check(plain.energyCapacity() == 0 && !plain.emitsEnergy() && plain.energyOut().isEmpty(), "storage defaults stay empty");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyCapacity(-1).build(), "negative energy capacity");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").energyOut("RU").build(), "energy output needs");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+                .energyOutputs(BehaviorMachineDeclaration.Face.BACK, BehaviorMachineDeclaration.Face.BACK)
+                .energyOut("RU").energyOutMax(32, 1).build(), "repeats an energy output face");
+
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(
+                BehaviorMachineDeclaration.builder("ru_buffer", "Steel").energy("RU", 32)
+                        .gui("aa_sample:textures/gui/machine.png")
+                        .energyOutputs(BehaviorMachineDeclaration.Face.BACK).energyOut("ZZ").energyOutMax(32, 1).build()));
+        expectInstall("aa_sample", "unknown energy output", "ZZ");
     }
 
     private static void bounds() {

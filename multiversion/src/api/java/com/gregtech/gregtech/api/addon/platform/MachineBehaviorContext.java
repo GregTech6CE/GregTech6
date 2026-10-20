@@ -52,6 +52,26 @@ public interface MachineBehaviorContext {
     /** Removes {@code amount} from {@link #energy()}. Returns false when there is less than that. */
     boolean consume(long amount);
 
+    /**
+     * Adds as much of {@code amount} as the buffer can hold.
+     * The buffer is the declared capacity, or the rated input maximum when that capacity is 0.
+     * Returns how much was stored.
+     */
+    long generate(long amount);
+
+    /** Stored-energy cap. Zero means the machine still drains its rated input each tick. */
+    long capacity();
+
+    /** Changes {@link #capacity()} for later ticks and for the cap at the end of this tick. */
+    void setCapacity(long capacity);
+
+    /**
+     * Pushes {@code amount} packets of {@code size} out of the declared output faces.
+     * Spends {@code size} for each packet a neighbor accepts and returns how many packets left.
+     * A request above the declared maximum throws.
+     */
+    long emit(long size, long amount);
+
     boolean toggle(int index);
 
     void setToggle(int index, boolean on);

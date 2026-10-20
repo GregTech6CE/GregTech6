@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.blockentity.energy;
 
 import com.gregtech.gregtech.api.energy.AxleSpec;
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.EnergyNet;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
@@ -113,7 +114,8 @@ public class AxleBlockEntity extends BlockEntity implements IEnergyConductor, IE
     }
 
     private static boolean canConnectTo(BlockEntity entity,Direction side) {
-        return entity instanceof IEnergyBlock energy && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.RU,side,true)
+        IEnergyBlock energy = EnergyBlockViews.view(entity);
+        return energy != null && (energy.isEnergyAcceptingFrom(GregTechTags.Energy.RU,side,true)
                 || energy.isEnergyEmittingTo(GregTechTags.Energy.RU,side,true));
     }
 

@@ -134,6 +134,7 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
             if (!level.isClientSide) pour(player, hand, machine, fluidItem);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        if (!level.isClientSide && machine.onUse(player, hand)) return InteractionResult.sidedSuccess(false);
 //? if >=1.21.1 {
 /*        if (!level.isClientSide && player instanceof ServerPlayer server && !NeoToolBindings.isTool(held))
             server.openMenu(machine, buf -> buf.writeBlockPos(pos));

@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
 import com.gregtech.gregtech.data.GregTechTags.Tag;
 import net.minecraft.core.*;
@@ -56,7 +57,9 @@ public abstract class EnergyRelayBlockEntity extends CapabilityRelayBlockEntity 
             var destinationLevel=targetLevel(destination);
             if(!destinationLevel.hasChunkAt(destination.position()))return absent;
             var entity=destinationLevel.getBlockEntity(destination.position());
-            if(entity==null||entity.isRemoved()||!(entity instanceof IEnergyBlock energy))return absent;
+            if(entity==null||entity.isRemoved())return absent;
+            IEnergyBlock energy=EnergyBlockViews.view(entity);
+            if(energy==null)return absent;
             return operation.apply(energy,destination.side());
         }finally{visited.remove(this);if(visited.isEmpty())ACTIVE.remove();}
     }

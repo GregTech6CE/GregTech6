@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.blockentity.machine;
 
+import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
@@ -335,7 +336,8 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
             if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) continue;
 //?}
 
-            if (!(be instanceof IEnergyBlock source)) continue;
+            IEnergyBlock source = EnergyBlockViews.view(be);
+            if (source == null) continue;
             if (!source.isEnergyEmittingTo(energyTag(), absDir.getOpposite(), false)) continue;
             long offered = source.getEnergyOffered(energyTag(), absDir.getOpposite(), size);
             if (offered <= 0) continue;
