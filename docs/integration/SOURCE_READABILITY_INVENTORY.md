@@ -82,3 +82,5 @@
 2026-10-21 第六十九批：禁刷怪塔四份压行源码已展开，局部／ticker参数明确命名，七份完整执行视图保持；ControllerStructureLayouts的重复63格改读core布局，方法外两视图保持，内部以原／core／旧预览有序单元证明。不是只改文件名，也不把共享改动冒称完整词法不变，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。其它压行与职责整理继续。
 
 2026-10-21 第七十批：基岩钻机BE／实际OriginalBlock展开结构、产物与两版保存，局部／lambda明确命名；Neo NativeMachineTankData也从3→16行。五份完整执行视图保持，去掉“必须有矿”的过强说明，见[钻机](BEDROCK_DRILL_AUDIT.md)。遗留HorizontalDirectional类的公开扩展可达性另核，不因无仓库构造引用就宣称已完成死代码清理；其余可读性与全面队列继续。
+
+2026-10-21 第七十一批：物流核心布局／输入、BE／Block及路由薄边界五份展开，tick块缩进与局部名称明确，重复LogisticsCoverHost import精确去一条。四处说明限定模拟软上限／无电复位／扫描绑定／需求值；八完整执行在该import去除与限定绑定后保持。见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)，路由、生命周期与其余源码整理继续。

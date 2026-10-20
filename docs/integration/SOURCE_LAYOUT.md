@@ -6,6 +6,8 @@
 
 基岩钻机17999真实方块是`OriginalBedrockDrillControllerBlock`，运行在共享`BedrockDrillControllerBlockEntity`，core的`AdvancedControllerRules`与`DirectMachinePowerRules`分别给出角色／常数和软容量注入计划。Neo能力监听在`BasicMachineRegistries`，原生罐恢复在版本专有`NativeMachineTankData`。同目录另一HorizontalDirectional类不能代替实际注册判断，见[钻机专题](BEDROCK_DRILL_AUDIT.md)。
 
+物流核心17997：core的`LogisticsCoreLayout`给结构／计数经济，`LogisticsCorePowerRules`委托共享软容量计划，`LogisticsRoutingRules`给路由顺序；共享BE负责世界验证、调度／显示／保存，`LogisticsRoutingPass`连接原生物品／流体端点。Forge实际注册在版本初始化的GTLasers，Neo在GTMultiblocks，入口差异不代表两套业务。见[结构与状态专题](LOGISTICS_CORE_STATE_AUDIT.md)；完整搬运／生命周期待续。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
