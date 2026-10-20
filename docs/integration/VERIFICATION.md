@@ -1,5 +1,9 @@
 # 验证账本
 
+## 2026-10-21 / 旋转泵后备覆盖板结论修正
+
+沿Mixin再追10份配置／宿主／事件／能力来源及12视图，撤回227中“无PanelCoverHost、所有物品安装即失败”的过强结论；正常Mixin会补宿主、存储与tick，未补MachineControl.Provider和泵stopped／历史。fallback计量supportsSwitch=false，缺口限定原开关／运行检测。回执追加纠错身份，原17／24／30观察保留，不把运行Mixin或实际安装冒称已验；详见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。
+
 ## 2026-10-21 / 第六十四批四泵消费者与局部绑定保持
 
 17份原来源／24份当前输入与15维护输入的30平台视图留痕，重新解析四条真实原注册的第三ID、额定／stack／硬度／抗爆；两个原生工件8entry逐项摘要，Forge三类只读javap、Neo既存源码证明含水半砖source及正常pickup。源数学17×481=8177、余15拒包与原482×17=8194不等于运行目标算法或游戏复现，见[回执](verification/rotational-pump-audit-20261021.json)。

@@ -253,7 +253,7 @@
 | ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 当前最多481包到8177，余15拒17包且<8192不抽，条件持续则停；额定32正常，既有8191测试不是原版舍入证明，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-225 | 确认旋转泵世界排液对象和回调准入不同。 | 同族流动块也以最低16RU清除，IFluidBlock查询实际排液结果。 | 当前仅source并造1000L，随后整个BlockState换空气；两版含水半砖返回source，可被整体移除。未游戏复现，保留整桶／移除成功保护，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-226 | 确认旋转泵只读出液罐变为允许外部填充的双向能力。 | 无盖泵fillable=null，Root.fill返回0；抽取任意面、主动推四侧。 | 两端直接返回tank，空罐fill1000可成功，四侧未排空时暂停抽新源；容量差异仅在特定量条件适用，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
-| ALIGN-227 | 确认旋转泵缺少原开关与运行检测宿主。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider及PanelCoverHost；实际物品安装和find均无接入。与原无开关的219区别见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-227 | 确认旋转泵缺少原开关与运行状态接口。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider；Mixin后备覆盖板宿主已有，撤回全安装失败说法。fallback只有计量、supportsSwitch=false，原控制／运行检测未接通，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-228 | 确认四档旋转泵硬度／抗爆统一后丢失原规格。 | 原7/7、6/6、9/9、12.5/12.5由Paintable字段及MTE Block实际getter消费。 | 当前四档Properties.strength(4,6)，无PumpBlock覆写；未量测实际挖掘／爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。

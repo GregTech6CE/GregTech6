@@ -814,5 +814,129 @@
     "ledger_unique_contiguous": 228,
     "new_local_links_checked": 26,
     "gameplay_execution": "not run"
+  },
+  "fallback_cover_correction": {
+    "date": "2026-10-21",
+    "anchor": "ALIGN-227",
+    "previous_overstatement_retracted": "Pump has no PanelCoverHost; PanelItem/PanelBlockItem host check necessarily fails and no cover runtime exists.",
+    "corrected_scope": "Configured BlockEntity mixin supplies FallbackCoverHost -> PanelCoverHost, storage/install/ticks; actual pump lacks MachineControl.Provider and stopped/running history. CoverProgress has supportsSwitch=false, running/active=false, so machine-control/detector support remains absent. No blanket cover-install failure claimed.",
+    "sources": [
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+        "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+        "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+        "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+        "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+        "sha256": "777d695d41f8c8d8989bdec7290116080e4e44b682ab839f8e6bf6b054f1f9a1"
+      },
+      {
+        "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+        "sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046"
+      },
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+        "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf"
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+        "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542"
+      },
+      {
+        "path": "gradle/platform-forge.gradle",
+        "sha256": "3f795e07f147b82f4be5920bd8d1201a4f829a4c5489007bbeb89ba0cfe60fb8"
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/resources/META-INF/neoforge.mods.toml",
+        "sha256": "631ac3bcab25b1e8c5fb7254725980bb65db24fec9aae0990d5c3585c6936388"
+      }
+    ],
+    "platform_views": [
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+        "platform": "forge",
+        "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+        "tokens": 812
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+        "platform": "neoforge",
+        "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+        "tokens": 905
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+        "platform": "forge",
+        "sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+        "tokens": 943
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+        "platform": "neoforge",
+        "sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+        "tokens": 343
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+        "platform": "forge",
+        "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+        "tokens": 25
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+        "platform": "neoforge",
+        "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+        "tokens": 25
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+        "platform": "forge",
+        "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+        "tokens": 1338
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+        "platform": "neoforge",
+        "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+        "tokens": 1384
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+        "platform": "forge",
+        "sha256": "25e99475019fc9bc2644f4ea2ff4b46e57becbdf4bcfff73b0b39dc058bb1f32",
+        "tokens": 405
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+        "platform": "neoforge",
+        "sha256": "e65ad6d0b3ba156083ce7064aadcbb025423c530c7edb54d703a2e14f1d907c4",
+        "tokens": 164
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+        "platform": "forge",
+        "sha256": "15530d931bc1d7a25ea9badfde385fe32ddecea7b43efb7722b835170976f52b",
+        "tokens": 648
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+        "platform": "neoforge",
+        "sha256": "1bb263ea515be60a71860e66a1e27d262584ab922f391f9375ad6b153e08285b",
+        "tokens": 669
+      }
+    ],
+    "runtime_limit": "Mixin transformation and player attachment not run; this is configured-source consumer evidence.",
+    "original_batch_counts": "Original 17/24 sources and 30 views remain baseline observations; these 10 sources/12 views are an explicit correction supplement."
   }
 }
