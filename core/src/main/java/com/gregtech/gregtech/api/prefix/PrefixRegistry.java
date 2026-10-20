@@ -37,6 +37,26 @@ public final class PrefixRegistry {
         ALL.add(prefix);
     }
 
+    /** Built-in or earlier addon prefix that already owns this name, ignoring case and registry spelling. */
+    public static MaterialPrefix conflict(String name) {
+        if (name == null || name.isEmpty()) return null;
+        MaterialPrefix direct = byName(name);
+        if (direct != null) return direct;
+        String snake = MaterialPrefix.camelToSnake(name);
+        for (MaterialPrefix prefix : all()) {
+            if (prefix.getName().equalsIgnoreCase(name) || prefix.getRegistryName().equals(snake)) return prefix;
+        }
+        return null;
+    }
+
+    /** Addon prefixes in registration order: addon id, then declaration order. */
+    public static List<MaterialPrefix> addonPrefixes() {
+        ensurePrefixesLoaded();
+        var addon = new ArrayList<MaterialPrefix>();
+        for (MaterialPrefix prefix : ALL) if (prefix.isAddon()) addon.add(prefix);
+        return List.copyOf(addon);
+    }
+
     /**
      * Must run MaterialPrefix static initializers before reading {@link #ALL}.
      * Otherwise {@code PrefixRegistry.all()} returns empty and no items register.

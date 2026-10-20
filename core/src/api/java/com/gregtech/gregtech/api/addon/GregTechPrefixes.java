@@ -3,8 +3,9 @@ package com.gregtech.gregtech.api.addon;
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
- * Prefix names GregTech already generates, such as {@code dust}, {@code dustTiny}, {@code ingot} and {@code plantGtBerry}.
- * Addons cannot declare a prefix. Aliases known to GregTech, such as {@code dustTiny} for the tiny-dust form, resolve here.
+ * Prefix names GregTech already generates, such as {@code dust}, {@code dustTiny}, {@code ingot} and {@code plantGtBerry},
+ * plus prefixes an addon declared with {@link PrefixDeclaration}. Aliases known to GregTech, such as {@code casingSmall}
+ * for the item casing, resolve here. {@link #exists} is true for an addon prefix after material startup.
  */
 public final class GregTechPrefixes {
     private GregTechPrefixes() {}

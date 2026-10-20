@@ -86,6 +86,10 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
+            if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
+                result.put(itemModel(id), MaterialIconDefinitions.addonItemModel(material.getPrefix()).getBytes(StandardCharsets.UTF_8));
+                continue;
+            }
             if (id.getNamespace().equals("gt6ce") && !id.getPath().equals("bottle_crate")
                     && item instanceof BlockItem crateItem
                     && crateItem.getBlock() instanceof com.gregtech.gregtech.block.inventory.BottleCrateBlock crate) {
@@ -163,8 +167,14 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
 //? if >=1.21.1 {
     /*private static ResourceLocation location(String path) { return ResourceLocation.fromNamespaceAndPath("gt6ce", path); }
+    private static ResourceLocation itemModel(ResourceLocation item) {
+        return ResourceLocation.fromNamespaceAndPath(item.getNamespace(), "models/item/" + item.getPath() + ".json");
+    }
 *///?} else {
     private static ResourceLocation location(String path) { return new ResourceLocation("gt6ce", path); }
+    private static ResourceLocation itemModel(ResourceLocation item) {
+        return new ResourceLocation(item.getNamespace(), "models/item/" + item.getPath() + ".json");
+    }
 //?}
 
     @Override
@@ -195,7 +205,12 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     @Override
     public Set<String> getNamespaces(PackType type) {
-        return type == PackType.CLIENT_RESOURCES ? Set.of("gt6ce") : Set.of();
+        if (type != PackType.CLIENT_RESOURCES) return Set.of();
+        var names = new HashSet<String>();
+        names.add("gt6ce");
+        for (var prefix : com.gregtech.gregtech.api.prefix.PrefixRegistry.addonPrefixes())
+            names.add(prefix.itemNamespace());
+        return Set.copyOf(names);
     }
 
     @Override

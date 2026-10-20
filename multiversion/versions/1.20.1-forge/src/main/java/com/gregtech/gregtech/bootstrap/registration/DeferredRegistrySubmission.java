@@ -13,6 +13,7 @@ public record DeferredRegistrySubmission(IEventBus bus) implements Initializatio
     @Override
     public void run() {
         GTItems.ITEMS.register(bus);
+        GTItems.registerAddonItems(bus);
         GTTechnological.ITEMS.register(bus);
         com.gregtech.gregtech.registry.GTMultiItems.register(bus);
         // §108: the few GT6 food items the port was actually missing (today: none - the 266 food

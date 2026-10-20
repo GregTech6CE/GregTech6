@@ -99,6 +99,10 @@ public final class GregTechClient {
                 event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
             }
         });
+        for (var entry : com.gregtech.gregtech.registry.GTItems.addonEntries()) {
+            if (entry.get() instanceof com.gregtech.gregtech.api.material.MaterialFormItem materialItem)
+                event.register((stack, tintIndex) -> tintIndex == 0 ? materialItem.getTintColor() : 0xFFFFFF, entry.get());
+        }
         com.gregtech.gregtech.registry.GTMiscBlocks.all().forEach(entry -> {
             if (!(entry.get() instanceof com.gregtech.gregtech.block.misc.PanelBlock)
                     && !(entry.get() instanceof com.gregtech.gregtech.block.misc.AutoToolBlock)

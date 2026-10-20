@@ -6,11 +6,13 @@ import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialComposition;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.PrefixDeclaration;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
 import com.gregtech.gregtech.api.material.GTValues;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public final class AddonSampleMaterials implements AddonMaterialContributor {
     @Override public String addonId() { return "addon_sample"; }
@@ -40,6 +42,11 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<MaterialFormRequest> forms() {
         return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"));
+    }
+
+    @Override public List<PrefixDeclaration> prefixes() {
+        return List.of(new PrefixDeclaration("sampleBlank", "", " Sample Blank", 8, "item/sample_blank",
+                List.of("Iron", "SampleAlloy"), Set.of()));
     }
 
     @Override public List<MaterialComposition> compositions() {
