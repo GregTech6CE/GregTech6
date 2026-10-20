@@ -27,9 +27,9 @@ import java.util.List;
  * GT6's wild bumblebee hive ({@code MultiTileEntityBumbleHive}): a painted block that holds the
  * colony the world generator put in it.
  *
- * <p>GT6 stores the hive's dye colour in its NBT ({@code NBT_COLOR}) and renders a coloured base
- * texture with an overlay on top; the port bakes the sixteen colour combinations into textures and
- * carries the colour as a block state property, so no custom colour handler is needed.</p>
+ * <p>Current registrations use {@link FixedBumbleHiveBlock}, with the colour in the registered block
+ * identity. The colour state and migration ticker here support the port's earlier state-based hives;
+ * newly generated fixed variants do not carry that state.</p>
  *
  * <p>Breaking rule ({@code MultiTileEntityBumbleHive:97-99}): only a player's break sets
  * {@code mDroppable}, and only then does the hive hand out its contents — a piston, an explosion or
@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class BumbleHiveBlock extends Block implements EntityBlock {
 
-    /** GT6's {@code NBT_COLOR} as a block state, so one block covers all sixteen dye colours. */
+    /** Legacy colour state; current fixed variants omit this property. */
     public static final EnumProperty<DyeColor> COLOR =
             EnumProperty.create("color", DyeColor.class);
 
@@ -75,7 +75,7 @@ public class BumbleHiveBlock extends Block implements EntityBlock {
         return new BumbleHiveBlockEntity(pos, state);
     }
 
-    /** GT6's default properties: pumpkin hardness, 300 flammability, solid on every side. */
+    /** Physical properties only; fire behaviour is inherited from the native block defaults. */
     public static Properties defaultProperties() {
         return Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(1.0F, 1.0F)
                 .sound(SoundType.WOOD).ignitedByLava();
