@@ -13,14 +13,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-/** Shared face storage. Cover configuration lives in the installed ItemStack NBT. */
+/** Shared face storage; installed stack data holds filters, priority and target quantity. */
 public final class LogisticsCovers {
     private static final String NBT_PREFIX = "gt.logistics.cover.";
     private final BlockEntity owner;
     private final LogisticsHost host;
     private final ItemStack[] faces = {
-            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY,
-            ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY
+        ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY,
+        ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY
     };
     private final byte[] displaySignals = new byte[6];
     private final byte[] displayVisuals = new byte[6];
@@ -31,14 +31,23 @@ public final class LogisticsCovers {
     }
 //? if >=1.21.1 {
 
-    /*public HolderLookup.Provider registries() { return owner.getLevel().registryAccess(); }
+    /*public HolderLookup.Provider registries() {
+        return owner.getLevel().registryAccess();
+    }
 *///?} else {
 //?}
 
-    public ItemStack get(Direction face) { return faces[face.ordinal()]; }
+    public ItemStack get(Direction face) {
+        return faces[face.ordinal()];
+    }
 
-    public int displaySignal(Direction face) { return displaySignals[face.ordinal()] & 15; }
-    public int displayVisual(Direction face) { return displayVisuals[face.ordinal()] & 255; }
+    public int displaySignal(Direction face) {
+        return displaySignals[face.ordinal()] & 15;
+    }
+
+    public int displayVisual(Direction face) {
+        return displayVisuals[face.ordinal()] & 255;
+    }
 
     /** Update a CPU display only when the powered core scans this host, as in GT6. */
     public void setDisplay(Direction face, int used, int total) {
@@ -79,11 +88,11 @@ public final class LogisticsCovers {
 *///?} else {
                         && neighbor.getValue(ElectricWireBlock.propFor(face.getOpposite())))
 //?}
-                    owner.getLevel().setBlockAndUpdate(neighborPos,
+                owner.getLevel().setBlockAndUpdate(neighborPos,
 //? if >=1.21.1 {
-                            /*neighbor.setValue(PipeConnections.propFor(face.getOpposite()), false));
+                        /*neighbor.setValue(PipeConnections.propFor(face.getOpposite()), false));
 *///?} else {
-                            neighbor.setValue(ElectricWireBlock.propFor(face.getOpposite()), false));
+                        neighbor.setValue(ElectricWireBlock.propFor(face.getOpposite()), false));
 //?}
             }
             owner.getLevel().setBlockAndUpdate(owner.getBlockPos(),
@@ -111,8 +120,8 @@ public final class LogisticsCovers {
 
     public void changed() {
         owner.setChanged();
-        if(com.gregtech.gregtech.content.cover.ComponentCoverFallback.uses(owner)){
-            ((com.gregtech.gregtech.content.cover.FallbackCoverHost)owner).gregtechComponentStorage(true);
+        if (com.gregtech.gregtech.content.cover.ComponentCoverFallback.uses(owner)) {
+            ((com.gregtech.gregtech.content.cover.FallbackCoverHost) owner).gregtechComponentStorage(true);
             com.gregtech.gregtech.content.cover.ComponentCoverFallback.track(owner);
         }
         if (owner.getLevel() != null && !owner.getLevel().isClientSide)
@@ -120,54 +129,56 @@ public final class LogisticsCovers {
     }
 
 //? if >=1.21.1 {
-    /*public void save(CompoundTag tag,HolderLookup.Provider lookup) {
+    /*public void save(CompoundTag tag, HolderLookup.Provider lookup) {
 *///?} else {
     public void save(CompoundTag tag) {
 //?}
-        for (int i = 0; i < faces.length; i++) if (!faces[i].isEmpty()) {
+        for (int faceIndex = 0; faceIndex < faces.length; faceIndex++)
+            if (!faces[faceIndex].isEmpty()) {
 //? if >=1.21.1 {
-            /*tag.put(NBT_PREFIX + i, faces[i].save(lookup));
+                /*tag.put(NBT_PREFIX + faceIndex, faces[faceIndex].save(lookup));
 *///?} else {
-            tag.put(NBT_PREFIX + i, faces[i].save(new CompoundTag()));
+                tag.put(NBT_PREFIX + faceIndex, faces[faceIndex].save(new CompoundTag()));
 //?}
-            if (LogisticsCoverType.of(faces[i]) != null
-                    && LogisticsCoverType.of(faces[i]).role() == LogisticsCoverType.Role.DISPLAY) {
-                tag.putByte(NBT_PREFIX + i + ".signal", displaySignals[i]);
-                tag.putByte(NBT_PREFIX + i + ".visual", displayVisuals[i]);
+                if (LogisticsCoverType.of(faces[faceIndex]) != null
+                        && LogisticsCoverType.of(faces[faceIndex]).role() == LogisticsCoverType.Role.DISPLAY) {
+                    tag.putByte(NBT_PREFIX + faceIndex + ".signal", displaySignals[faceIndex]);
+                    tag.putByte(NBT_PREFIX + faceIndex + ".visual", displayVisuals[faceIndex]);
+                }
             }
-        }
     }
 
 //? if >=1.21.1 {
-    /*public void load(CompoundTag tag,HolderLookup.Provider lookup) {
+    /*public void load(CompoundTag tag, HolderLookup.Provider lookup) {
 *///?} else {
     public void load(CompoundTag tag) {
 //?}
-        for (int i = 0; i < faces.length; i++)
-            faces[i] = tag.contains(NBT_PREFIX + i)
+        for (int faceIndex = 0; faceIndex < faces.length; faceIndex++)
+            faces[faceIndex] = tag.contains(NBT_PREFIX + faceIndex)
 //? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? ItemStack.parseOptional(lookup,tag.getCompound(NBT_PREFIX + i)) : ItemStack.EMPTY;
+        /*// Version-specific branch.
+                    ? ItemStack.parseOptional(lookup, tag.getCompound(NBT_PREFIX + faceIndex)) : ItemStack.EMPTY;
 *///?} else {
-// Version-specific branch.
-                    ? ItemStack.of(tag.getCompound(NBT_PREFIX + i)) : ItemStack.EMPTY;
+        // Version-specific branch.
+                    ? ItemStack.of(tag.getCompound(NBT_PREFIX + faceIndex)) : ItemStack.EMPTY;
 //?}
-        for (int i = 0; i < faces.length; i++) {
-            var type = LogisticsCoverType.of(faces[i]);
+        for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
+            var type = LogisticsCoverType.of(faces[faceIndex]);
             boolean display = type != null && type.role() == LogisticsCoverType.Role.DISPLAY;
-            displaySignals[i] = (byte) (display ? Math.max(0, Math.min(15,
-                    tag.getByte(NBT_PREFIX + i + ".signal"))) : 0);
-            displayVisuals[i] = (byte) (display ? Math.max(0, Math.min(10,
-                    tag.getByte(NBT_PREFIX + i + ".visual"))) : 0);
+            displaySignals[faceIndex] = (byte) (display ? Math.max(0, Math.min(15,
+                    tag.getByte(NBT_PREFIX + faceIndex + ".signal"))) : 0);
+            displayVisuals[faceIndex] = (byte) (display ? Math.max(0, Math.min(10,
+                    tag.getByte(NBT_PREFIX + faceIndex + ".visual"))) : 0);
         }
     }
 
     public void dropAll() {
-        for (int i = 0; i < faces.length; i++) {
-            if (!faces[i].isEmpty()&&!com.gregtech.gregtech.content.cover.CoverDrops.retained(owner)) BlockContents.drop(owner, faces[i]);
-            faces[i] = ItemStack.EMPTY;
-            displaySignals[i] = 0;
-            displayVisuals[i] = 0;
+        for (int faceIndex = 0; faceIndex < faces.length; faceIndex++) {
+            if (!faces[faceIndex].isEmpty() && !com.gregtech.gregtech.content.cover.CoverDrops.retained(owner))
+                BlockContents.drop(owner, faces[faceIndex]);
+            faces[faceIndex] = ItemStack.EMPTY;
+            displaySignals[faceIndex] = 0;
+            displayVisuals[faceIndex] = 0;
         }
         changed();
     }
