@@ -1,0 +1,475 @@
+{
+  "date": "2026-10-21",
+  "batch": 49,
+  "baseline": "bbdcb7f73",
+  "provenance": "Gregorius Techneticies / GregTech-6 Team; original LGPL-3.0-or-later notices retained. Native Minecraft decompilations stay ignored scratch and are not imported production source.",
+  "original_sources": {
+    "gregtech/tileentity/tools/MultiTileEntityBumbliary.java": "72bd7595c28b4859d82e6196e0e355655fac40de671171d8f71c6c009d452840",
+    "gregtech/tileentity/tools/MultiTileEntityBumbliaryAdvanced.java": "4c519554584b81a6a871764e56eb10a426947c80b4cdacf5b2b932ec0551f9e9",
+    "gregtech/tileentity/misc/MultiTileEntityBumbleHive.java": "e49c7ee115ecf0dc8d14e5a732d375f74a530038931078d2baf85d2bb687fd12",
+    "gregtech/worldgen/WorldgenHives.java": "57d466950319c4f96b1e47e3017a63fb3fb6fb8a5286088887661554225d8a56",
+    "gregtech/items/MultiItemBumbles.java": "9659bf3392efb96b876b02601322825e77f0ec6418af4dc4c07bb57f88285a6a",
+    "gregapi/item/bumble/IItemBumbleBee.java": "f8f30f15f95ca2e18b38fb3114a89518f3a265395d790e3c47a46fe352e78468",
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+    "gregapi/util/WD.java": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregtech/loaders/a/Loader_Items.java": "1784f1aeccc3d8e70f214c9eb06de81f2f2f28f17b4f57b24acc05d049605c07",
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+    "gregtech/loaders/b/Loader_Worldgen.java": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+    "gregapi/block/multitileentity/IMultiTileEntity.java": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+    "gregapi/block/multitileentity/MultiTileEntityBlock.java": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+    "gregapi/block/multitileentity/MultiTileEntityBlockInternal.java": "b30b0ca9b0e882d62ab23d9e7e8d2974798cf73441165e9168421766024ab7ed",
+    "gregapi/tileentity/base/TileEntityBase01Root.java": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+    "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+    "gregapi/tileentity/inventories/MultiTileEntityBookShelf.java": "fd800dac1e09138cbbe97d7c2f4594cd9795385cb3759bf49f02427f75573313",
+    "gregtech/tileentity/inventories/MultiTileEntityBottleCrate.java": "bb6f17b3a1237539fedef6d3dd62c7ff4eb505ecc22647f5aa3b8b3cf5e17f90",
+    "gregapi/block/multitileentity/example/MultiTileEntityChest.java": "3ff277040006dc7a64d2a3a386b1395cf89e7fabb7ac1701dee18d3f6cddc4a8",
+    "gregapi/util/ST.java": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+    "gregtech/loaders/c/Loader_Loot.java": "200794dc2b3e34e48cd8dba12c4b822097031c949fec2acb53677b48c7493fa4",
+    "gregtech/worldgen/ChestGenHooksChestReplacer.java": "2953e9c6b7dbf79cef534662838c83592d861d290273d49f8b8e242c1ef2422a"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbleGenomeRules.java": "54a29552c3e5678bdcbd23a130dffaa6ebe4906dcbe16e7f0cfbe11faa21cdda",
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbleSpeciesRules.java": "e5b162f49bddd4a545611e5b0ee41be2db26552f9538826625df6f3f422af187",
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbliarySlotLayouts.java": "ccbc606761d92e0eb37129af1426171eb525b075d21cd38abdfbdeec5e3cadc3",
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleSpecies.java": "094699260e2fadfcfac81c83e0b26f241f86731c428e9f11b473899249c7df4c",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/tool/BumbliaryBlock.java": "d859918a1edd7752499f7a8bfe306310cdeaee7f1dc17154daf87061242e7df3",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/BumbliaryBlockEntity.java": "f05fdbd5e22c566488c8bb4d7fe4c7ec19df8b0d82cef8e808ee18f9ffe0ae65",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/BumbleHiveBlock.java": "f11f254f298ab07127db4d52a18deea5217ad91c6f8414c0e6eac7c5295e8a3d",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedBumbleHiveBlock.java": "cf5f4e16582ade9f254349c8cbd0f65cddbcae7282cb0d06fbb25a9bb2556981",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/misc/BumbleHiveBlockEntity.java": "b68e2d5a5aaa75315adefec06ca3be1cb65dbacdb89afa30fce1f2ee6608c2de",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBeeGenes.java": "b8b6e87df07b8a84cc0f709484ec0d8316886a4a0eb43e8ef12d0353d94f0b11",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBeeType.java": "1450eece5fc1075fb502efd795cea2b9de11bf82d43ae89943dcf31a34388545",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleBreeding.java": "b92296a82d8997c00079f622a8be5a054e345b41e88a707d9666d806a7c92494",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleProducts.java": "1f66684e59f2c7e5549f0378d0f954b51dae5a77079f4dd365ddef4690c6d4bf",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/GTBumbleMutations.java": "1c815b7670412d66a5ffa2232bf1c8e420876ba5b6c7d2fa41d6754c51a716a2",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleSting.java": "54e100610ea68661cdf58e58b1eeaa9c274c686a04a3402d72889ab74ae5b663",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/bumble/BumbleWorkplace.java": "f85c6bd9a915f1e361ffa3b60c18b9e7d59ca423068fe80f757306cbe125e95c",
+    "multiversion/src/main/java/com/gregtech/gregtech/damage/GTHazmat.java": "6cb07f6dbf0daeae91a14852405ac5638aaf5b981ea5b1a8ab9f4628a365b70b",
+    "multiversion/src/main/java/com/gregtech/gregtech/damage/GTDamageTypes.java": "0036a77746558ca05d37ed4feeef67dd32e5bb27e324900e99dc30d95c6148ed",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTBumbleHivesFeature.java": "246431be1c5337d942bd0fb75781a7ce85eb8179da0fe2a1107f0f480d04b209",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBumbleBlocks.java": "e37905814661abc434cb976ca1d77967d69673d5eaf4bea0bc912efa1c952d5f",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+    "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+    "core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_bumble_hives.json": "31c07b592f30327489981842687482b257ec9b987f3a2bdc26f89fbf65c75604",
+    "core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_bumble_hives.json": "59eee1ca46ec08e39ecb585fcbf8b74cf01101ca20972e6b8ee9f32fe5e0f23c",
+    "core/src/main/resources/data/gt6ce/damage_type/bumble.json": "62e5317ce2181badd31dc42a3845a810a7b7c28f1a91c4a44743cde159b8070b",
+    "core/src/main/resources/data/gt6ce/damage_type/bumble_fire.json": "79ddb6916f27c741e900326f097719a0f18fa219f09f442e1d4622890ed11374",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_bumble_hives.json": "def6d0ea7a8211949323e6cf0c7b86dac30bc5bfa24760f55251ea8a627568b7",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_bumble_hives.json": "74721b2faf36efea0f88cbe4ee82493883a8ae37f2fdb698a42226eead324812",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/loot_tables/blocks/bumble_hive_light_gray.json": "7b20c9c7fadd0630564ee31853a5b2a39a25b99493cc239fa002434b0443f849",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/loot_table/blocks/bumble_hive_light_gray.json": "7b20c9c7fadd0630564ee31853a5b2a39a25b99493cc239fa002434b0443f849",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": "294f2c67814fd53f205a85b1f5e49979d602595116b9e96e09e12976be1c42ac",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/BookShelfBlock.java": "909f73a82af51ce5fa6e485ebb5f6897f16b0d7817b33f803947005e93fcfa96",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java": "84edb2a390d76a7fb4aebe3801dd225655eed38183cb1fbd1ee94b3453ee6a0e",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": "1ea004ec7edfd08f9024c4ba54541a486f7f5d406b520306a1c4071eadb4f14c",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BookShelfBlockEntity.java": "845ea62d90fe15ef541cc8310c6238af088dde39af6e79dd4e9fcf698b4ef635",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java": "1ea6eb55cb39586c3072abc07832c07b2038c6f51be2a04e19d2f7d487c8473b",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverHarvestMixin.java": "72460988818d795b4f96bc1d4cea41b0b578bd197c72aa7fe4014166ee26e828",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverRemovalMixin.java": "1c2653c067d578010094c39cae7921ae1509406347a7193d2894cf058dde965b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+    "multiversion/src/main/java/com/gregtech/gregtech/util/GTItemDrops.java": "75972ca67d53cbe63655be593be939a697b2142670f0305cb3d5e3cc1cd718e8",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+    "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java": "2197fe8158fdc77068b6737283ba627ca4befb6465aff94e89a8ae1aa8304138",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LootChestBlock.java": "1829c10e964578f5c6e54ce8e4b309e42bbb40ac1ab70bc2d50fa5b9e0d6ad29",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java": "eca9a254575e9712af6b87891d2776fe6fb75cad0c3e24a5741d96c23a1b7d0f",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java": "b340ad93e5ae47e53a5c3cc3c8f3cd56a9d49e463c845296307805197cc459e0",
+    "core/src/main/java/com/gregtech/gregtech/content/loot/LootChestCatalog.java": "2f9dba075eed905902866d8c64163aaebbd7d8a2ed10d53895a788ab285bc8a3",
+    "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTLootGen.java": "1e7b8829c428775abefce68f5a1c84c2b52b5aa04a7c2af187120c6e268683ff",
+    "core/src/main/java/com/gregtech/gregtech/content/loot/LootRollRules.java": "46c3bafb982dc83e8802a5c0dcbc9d70a624e671c333065d8a622d9b9b6569dd",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java": "d34e3f5c9aa7c289582a9fd20bd3792947962f7c4dd4f1e03acf22ee4fe457b4",
+    "tools/integration/check_relay_sharing.py": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a",
+    "tools/integration/check_stonecutter_emi.py": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3",
+    "tools/native_layout.py": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbleGenomeRules.java": {
+      "before_sha256": "44045e60681a8ab4d781a95e4e8ff6fb14633d4ca6253cb31a52dbf6e4d96453",
+      "after_sha256": "54a29552c3e5678bdcbd23a130dffaa6ebe4906dcbe16e7f0cfbe11faa21cdda",
+      "tokens_and_literal_positions_equal": true,
+      "tokens": 667,
+      "lines_before": 21,
+      "lines_after": 58,
+      "signature_sha256": "ac2ea6bb28f8d907a2ea5440ac474732e03bb4746c703d4b11bbb8aaf248a339"
+    },
+    "core/src/main/java/com/gregtech/gregtech/content/bumble/BumbleSpeciesRules.java": {
+      "before_sha256": "c062d59198fa7a2891cdb58b7b03423d5291f932db0bad1d31599db8c39b4c54",
+      "after_sha256": "e5b162f49bddd4a545611e5b0ee41be2db26552f9538826625df6f3f422af187",
+      "tokens_and_literal_positions_equal": true,
+      "tokens": 420,
+      "lines_before": 42,
+      "lines_after": 75,
+      "signature_sha256": "7735ff2dd2a90c3e335ce41ff8d144cfbeefa9f90701bfd783033c27f41584c8"
+    }
+  },
+  "reviewed_loot_platform_views": [
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java",
+      "platform": "forge",
+      "sha256": "d9f4ee2c4623355a691d896d9168ca5965fd64486278dbf7ef200510014a7311",
+      "code_and_literals_sha256": "ca9fc5c45a0b0a7c04bbffa8b5d108503b706529f4ff8cd110910d0f3bdd43e3"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3c21c0572c578fc3e2b3296b7c786b7e8055c8a8a421b40f41156f0e41dda893",
+      "code_and_literals_sha256": "6dcfbff0177fb55807d07d1b2e7b540d4e14108eecf8a5667ba35fcb133edd9e"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "platform": "forge",
+      "sha256": "f7e2aa8d0971f6185ed162768f991a38e89f59afd66b162d3c3e917d0ebc187c",
+      "code_and_literals_sha256": "476d8a1a1c7100611ee2f8a19eb0197d7b48604f4d92760fed0b3bff6f1dce77"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LootChestBlock.java",
+      "platform": "forge",
+      "sha256": "bb8e0419ccc869d9d096b3e5ef0df2072c1906db5d962d6d1299f25591ad0c1d",
+      "code_and_literals_sha256": "72ae748f00d77392a38371c0f0a65350e43fbf8d476e01678c306444a4874bfc"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "platform": "forge",
+      "sha256": "1a99348df76d1ea31a2cff312dd4d3db75dcabf0fe18a360fda625735fd02c0d",
+      "code_and_literals_sha256": "9b73a56bcd796194cd7870b4abaf69bfb0ec4b84a9cca94eece3235c243ca085"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "code_and_literals_sha256": "ce61fdd231d078e4ce01dc010ff256353f7ea0107a567c165e62af75aabce036"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java",
+      "platform": "forge",
+      "sha256": "e69367789503a3ee66ec05413ad54bf47c123997d66a334ea74957ce0dc4f77c",
+      "code_and_literals_sha256": "2faba94b66a5196298bf7b2085a119723ac5e0c3ec320fffee9d0eb22b664d1f"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/content/loot/GTLootTables.java",
+      "platform": "neoforge",
+      "sha256": "c52117bda7e59625533c749853984bf255601932bb32d5c59245f678c6b8ca9b",
+      "code_and_literals_sha256": "07f00e88ac6ff015fcf5dc7a5a53b5bf4df886859f98012b6c53e1ac9c9bd2e7"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "aa5aa06ba7ba2ddb542c57cb1a2e713cd8ac65a820002fdc66a025504f20e67e",
+      "code_and_literals_sha256": "2c9ce85d7557ea6a9a6f49b7b5fd6ebc28bb11cd331756b9b3e58fc725c00279"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java",
+      "platform": "neoforge",
+      "sha256": "bc19c0979d75bd0dcbb0ab53795e413a4580ddb3b9a3099652df7f2d9732fea8",
+      "code_and_literals_sha256": "5147d4a7ebe5184b2a8eccef717ba09111fd99cf014017f8aa3aa3d8050bad60"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LootChestBlock.java",
+      "platform": "neoforge",
+      "sha256": "bb8e0419ccc869d9d096b3e5ef0df2072c1906db5d962d6d1299f25591ad0c1d",
+      "code_and_literals_sha256": "72ae748f00d77392a38371c0f0a65350e43fbf8d476e01678c306444a4874bfc"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLootChests.java",
+      "platform": "neoforge",
+      "sha256": "35b9470859ddeeb8a8a77ad6538f2d45684efccc90dc1bc1460f24439010fe7b",
+      "code_and_literals_sha256": "e4efafdc0ecee08517f95e5eea2fa980fa69d08e2d3c59f716023706446f6d0d"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "code_and_literals_sha256": "b528570511d93f6f550b1f7af857aba0259b76889e10e13bcdb8849da4a2e7f2"
+    },
+    {
+      "maintained_source": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java",
+      "platform": "neoforge",
+      "sha256": "99a6b1bda563a300f7956803cd5b0321d081f60298c1f82c52f22cd47db43feb",
+      "code_and_literals_sha256": "97d0ae14a6cc9dc7b9062e923f15f51fe3b948e0245e1c38b6a3e3e6cc09ab7e"
+    }
+  ],
+  "inventory_explosion_platform_projection_signatures": {
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MetalChestBlock.java": {
+      "forge": "b06e3370a8fe9dde4c0e2baf3f2468051952faeb36b8e227a71f3e4d3ce307ba",
+      "neoforge": "eb903f6959f7a24432c03bc754f4ea3255f7cb49c0961679c9bd3e1aaff5f2bf"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/BookShelfBlock.java": {
+      "forge": "a54dcb2bc74ceae6772b87ebedd58d8f9341aa471940350994217d24e37ce04a",
+      "neoforge": "cd71cf71b2fac77977eb9be577919d48b0c85a59d9440730e64c5f40557006a7"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/BottleCrateBlock.java": {
+      "forge": "ef2f4a1da4e1387c3248c40112378ccf1bcbff831939d667fa860b297f1d755d",
+      "neoforge": "773853deab522e66d3cde56f3a6ca1bef3ae3c9c65b36befcb32478a5293036e"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MetalChestBlockEntity.java": {
+      "forge": "3a3b41f310a673bc0336825cecbba07e0af1e666955accac2ce1cf14f9234f7a",
+      "neoforge": "3d47f3387f7829ee458aeb9c29812107458ffdb4cf84517548d96188f8a9f73f"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BookShelfBlockEntity.java": {
+      "forge": "33de6445698f44caee2ff3c5ec38c5aecba17ee482a794ae9845ba73db9e05a1",
+      "neoforge": "4ba6d9f9b2f9fc62e8fd2473bd80eeb2e130884f4a452ddbb2fa98e972c31b5c"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/BottleCrateBlockEntity.java": {
+      "forge": "5e0e8f5a8c3962e30fca4e5d59ba4b5c810e1416a10438fe71b19ed3483c12fc",
+      "neoforge": "d7f41c535befb8d94dfcfa929f734562dd53c3ed3b21767e645f4e3b1657581f"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java": {
+      "forge": "4372ca8edca283e10a3ed704c9c8d2746ef3fd124442c8857aaecd948dbc0f06",
+      "neoforge": "4372ca8edca283e10a3ed704c9c8d2746ef3fd124442c8857aaecd948dbc0f06"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverHarvestMixin.java": {
+      "forge": "107aeb6c3abc8b170d9310e183dad9d3466039fa5c82dbba9c1aefe63646006f",
+      "neoforge": "107aeb6c3abc8b170d9310e183dad9d3466039fa5c82dbba9c1aefe63646006f"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverRemovalMixin.java": {
+      "forge": "862f96dc6ed118c081752f6a4d40cd021bddf0759d40083aa966695b9660d2ab",
+      "neoforge": "862f96dc6ed118c081752f6a4d40cd021bddf0759d40083aa966695b9660d2ab"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java": {
+      "forge": "d07452a43fdc2b57481873c6f768904dbadd100f63d83fba7dd615c28c7b2075",
+      "neoforge": "a4f16d9d9781dfecbddf189678dfecf17f7524eacec00865e2357dd994b22df0"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": {
+      "forge": "356d1c2ee1a9feeba505081ceb1d43e23a5174d672124ebff764425f43da9fca",
+      "neoforge": "0318ae5c720291c70626ce922c312406607329cd90c1f5abb3fddab3628d4eb3"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/util/GTItemDrops.java": {
+      "forge": "d1531a5aa4fbff5a38c42f1c4063afcff4d29259cf6cf8c75d4a15a4b3b83b61",
+      "neoforge": "d1531a5aa4fbff5a38c42f1c4063afcff4d29259cf6cf8c75d4a15a4b3b83b61"
+    }
+  },
+  "native_dependencies": {
+    "forge_mapped_binary": {
+      "artifact": "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\minecraft_user_repo\\net\\minecraftforge\\forge\\1.20.1-47.4.20_mapped_official_1.20.1\\forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entries": [
+        {
+          "entry": "net/minecraft/world/level/Explosion.class",
+          "sha256": "96b621b54f73fd24a2a693357bb3f2da84c3e6f88500f41bb85db1d16df0c98a"
+        },
+        {
+          "entry": "net/minecraft/world/level/Explosion$BlockInteraction.class",
+          "sha256": "62b809c88b99b2305535455b89200ed544d8ca7a1960b54c6d1b3244066a6631"
+        },
+        {
+          "entry": "net/minecraft/world/level/block/Block.class",
+          "sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de"
+        },
+        {
+          "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+          "sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288"
+        },
+        {
+          "entry": "net/minecraft/world/level/Level.class",
+          "sha256": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f"
+        },
+        {
+          "entry": "net/minecraft/world/level/chunk/LevelChunk.class",
+          "sha256": "2d74f57e549e8e190bfcc83771ff3b97042638ed10e8aaa0e45e8728f5d7c13e"
+        },
+        {
+          "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+          "sha256": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0"
+        },
+        {
+          "entry": "net/minecraftforge/common/extensions/IForgeBlockState.class",
+          "sha256": "4932dc7f069fe4c963a2ce0358fa68edc4d2e9e483e44d85f3de0584471e4b60"
+        },
+        {
+          "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+          "sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70"
+        }
+      ]
+    },
+    "forge_source": {
+      "artifact": "C:\\Users\\90499\\.gradle\\caches\\forge_gradle\\maven_downloader\\net\\minecraftforge\\forge\\1.20.1-47.4.20\\forge-1.20.1-47.4.20-sources.jar",
+      "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b",
+      "entries": [
+        {
+          "entry": "net/minecraftforge/common/extensions/IForgeBlock.java",
+          "sha256": "a65330ebe8ac2935ed0bdce7eaa0ba7aa0e0ac5c57677d2774565f71bb949502"
+        },
+        {
+          "entry": "net/minecraftforge/common/extensions/IForgeBlockState.java",
+          "sha256": "b85e021bf08067a83d8181f423470652db1cd1de53d6963edf3b97b970fca743"
+        }
+      ]
+    },
+    "neo_source": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243-sources.jar",
+      "version": "NeoForge 21.1.243 / Minecraft 1.21.1",
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entries": {
+        "net/minecraft/world/level/Explosion.java": {
+          "sha256": "c0a5ca9a60ecedab11b73ed3a087e00066f5f5d42b73982937d18591e7742af7",
+          "bytes": 18249,
+          "lines": 468
+        },
+        "net/minecraft/world/level/Level.java": {
+          "sha256": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+          "bytes": 47720,
+          "lines": 1248
+        },
+        "net/minecraft/world/level/chunk/LevelChunk.java": {
+          "sha256": "c014a13e2ef391901113b080362ad6db4bdd4a65c7ad47b8c6aecd8bd89b6223",
+          "bytes": 34107,
+          "lines": 811
+        },
+        "net/minecraft/world/level/block/Block.java": {
+          "sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+          "bytes": 26236,
+          "lines": 586
+        },
+        "net/minecraft/world/level/block/state/BlockBehaviour.java": {
+          "sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+          "bytes": 57256,
+          "lines": 1277
+        },
+        "net/neoforged/neoforge/common/extensions/IBlockExtension.java": {
+          "sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+          "bytes": 51004,
+          "lines": 1047
+        },
+        "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java": {
+          "sha256": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+          "bytes": 36203,
+          "lines": 781
+        },
+        "net/neoforged/neoforge/event/level/ExplosionEvent.java": {
+          "sha256": "175ab5441d134db879647830c51027c0962e3629f5652af27ab78777c6f14bac",
+          "bytes": 2895,
+          "lines": 83
+        },
+        "net/neoforged/neoforge/event/EventHooks.java": {
+          "sha256": "83f577d8c146b0bb80e359054cc490829b3664ffbaf3b61a2cb141c6d2cc61ff",
+          "bytes": 59299,
+          "lines": 1157
+        },
+        "net/minecraft/world/level/storage/loot/functions/ApplyExplosionDecay.java": {
+          "sha256": "afa9b3befc06b491ba5457b1f7a874ae221663a42e2a9d3dc1d33223b5f27ae7",
+          "bytes": 1760,
+          "lines": 51
+        },
+        "net/minecraft/world/level/storage/loot/predicates/ExplosionCondition.java": {
+          "sha256": "7e8ef7c86d3418cf623771c9a9f48908fb6e5ec8e882835836f2c427ce0f6e47",
+          "bytes": 1433,
+          "lines": 42
+        }
+      }
+    },
+    "neo_binary": {
+      "path": "C:\\Dev\\GregTech6\\multiversion\\versions\\1.21.1-neoforge\\build\\moddev\\artifacts\\neoforge-21.1.243.jar",
+      "sha256": "9a99670ebf7e9f40ad66153a37f9d8c5b6406fdca9f07b83acdc52cb1842adb6",
+      "entries": {
+        "net/minecraft/world/level/Explosion.class": "3b656cd810d9fbbe001b4477ee5dff9f243c75d42458cd54fababed971da3e07",
+        "net/minecraft/world/level/block/state/BlockBehaviour.class": "9d4b517d48afdaa2183e345ec25ae97efe0f0346b9f4add1de1dbb2f46d863b0",
+        "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class": "4d2a5f975c4c10fbd8aaee50e51bc5562adf953d4e70d51045795d91da76f7a6",
+        "net/minecraft/world/level/block/Block.class": "8e07f9765ce7d3f086c98f99a5ddc9eea15b36e466c2413328c6598f8ef64f3f",
+        "net/neoforged/neoforge/common/extensions/IBlockExtension.class": "4018a3041dd156b81eb158af084bfea53353fb593ffcb51dc9b87ed0cd9d0615"
+      }
+    },
+    "original_1_7_10_native": {
+      "client_artifact": "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+      "client_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "forge_artifact": "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\net\\minecraftforge\\forge\\1.7.10-10.13.4.1614-1.7.10\\forge-1.7.10-10.13.4.1614-1.7.10-universal.jar",
+      "forge_sha256": "00d1ca02192c7efb87da95552ebf247021f1e1d642f86d0a03076314def11529",
+      "mapping_entry": "deobfuscation_data-1.7.10.lzma",
+      "mapping_entry_sha256": "dbc4ace5029244e5bfa70422d637848c8b932f459e94ec503fdafc5e5f7d5aa2",
+      "explosion_entry": "agw.class",
+      "explosion_entry_sha256": "e0d9653484190310b0c616aba3634102a80629fbb402a03fdfae108aa89defcd",
+      "method_mappings": [
+        "MD: agw/b ()Ljava/util/Map; net/minecraft/world/Explosion/func_77277_b ()Ljava/util/Map;",
+        "MD: agw/a (Z)V net/minecraft/world/Explosion/func_77279_a (Z)V",
+        "MD: agw/c ()Lsv; net/minecraft/world/Explosion/func_94613_c ()Lnet/minecraft/entity/EntityLivingBase;",
+        "MD: agw/a ()V net/minecraft/world/Explosion/func_77278_a ()V"
+      ]
+    }
+  },
+  "additional_original_native_witnesses": {
+    "client_artifact": "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\com\\mojang\\minecraft\\1.7.10\\minecraft-1.7.10-client.jar",
+    "client_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+    "forge_artifact": "C:\\Minecraft整合包\\GTNH2.7.0小凡君\\PrismLauncher-Windows-MSVC-Portable-8.3\\libraries\\net\\minecraftforge\\forge\\1.7.10-10.13.4.1614-1.7.10\\forge-1.7.10-10.13.4.1614-1.7.10-universal.jar",
+    "forge_sha256": "00d1ca02192c7efb87da95552ebf247021f1e1d642f86d0a03076314def11529",
+    "mapping_entry": "deobfuscation_data-1.7.10.lzma",
+    "mapping_entry_sha256": "dbc4ace5029244e5bfa70422d637848c8b932f459e94ec503fdafc5e5f7d5aa2",
+    "explosion_entry": "agw.class",
+    "explosion_entry_sha256": "e0d9653484190310b0c616aba3634102a80629fbb402a03fdfae108aa89defcd",
+    "method_mappings": [
+      "MD: agw/b ()Ljava/util/Map; net/minecraft/world/Explosion/func_77277_b ()Ljava/util/Map;",
+      "MD: agw/a (Z)V net/minecraft/world/Explosion/func_77279_a (Z)V",
+      "MD: agw/c ()Lsv; net/minecraft/world/Explosion/func_94613_c ()Lnet/minecraft/entity/EntityLivingBase;",
+      "MD: agw/a ()V net/minecraft/world/Explosion/func_77278_a ()V"
+    ],
+    "reviewed_entries": {
+      "qx.class": "8b0b70d0371e9f9482b6fb574e15e9e601fe0f45198cd5f5a4829ffe7c4a411b",
+      "ahu.class": "f089c5156a2e31832967ed1ceade3b84ce0fb14971d40391ddce445970e205f9",
+      "aip.class": "9b3be07a39121e4a85e069da8214b1996f98764c4ee17875e29f519a857ce462"
+    }
+  },
+  "native_jar_entries_reverified": 32,
+  "scratch_javap_sha256": {
+    "forge\\BlockStateBase.javap.txt": "90f3dd80da0c006166b80375279407de56d2db47b2b2103a0d06e853720834dd",
+    "forge\\Explosion.javap.txt": "9e2ea6909c8f12bd44f2a300dceec7606d3cef939bf2c1181db3d004f75fb69c",
+    "forge\\IForgeBlock.javap.txt": "e506a76a14b6070370f30a55bb75acd6bd09e8906fd148b9cb1a4e2996c867ed",
+    "neo\\BlockBehaviour.javap.txt": "a1ed54989d5ab0d35cbfdde5776e57f43b60db3770c187380460dd0e902371ac",
+    "neo\\BlockStateBase.javap.txt": "856088fd9768d83bf8172832e1ea44a9b5cb3cc8be80f7f84a9ee0724253f891",
+    "neo\\Explosion.javap.txt": "1c39391815595a98a52da0c50243b05726cd498543bb8fca36ea3f10d90d0091",
+    "neo\\IBlockExtension.javap.txt": "bbcd855f077b49a28751a86ab224c7b1df6a7b8d08983b0d972ff65406382b67",
+    "original-native/qx.javap.txt": "57399fb1bde156913fb63321286b0f33197336439f67b4dcf2b949c98ad5fe0b",
+    "original-native/ahu.javap.txt": "f3f15a962044ee51c7539ee18be6ccc2c95106a10bb74914465a909f05136c30",
+    "original-native/aip.javap.txt": "e07f0a0c06fd50b7732d5eb83f7e820e2b445aacfd05c17a9a6560da8570ee27"
+  },
+  "decompiler": {
+    "name": "Vineflower",
+    "version": "1.10.1",
+    "sha256": "b9b208e50793b64657a6b6292067526613f549de7405f9243624b02f4276e409",
+    "limitations": "Missing inner classes and unrelated enum switches produced warnings. Reviewed explosion drop/removal order has separate javap instruction evidence."
+  },
+  "external_primary_reviews": [
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/world/Explosion.java.patch",
+      "access_date": "2026-10-21",
+      "method_context": "Preserves func_149690_a drop call, replaces following raw AIR replacement and block callback with onBlockExploded.",
+      "meaning": "Read via web tool; raw bytes not saved, so no fabricated raw remote SHA-256. Local vanilla class and local Forge mapping hashes are independent evidence.",
+      "root_reverified": "2026-10-21 via web tool; drop call precedes patched callback at one-based lines 20–25."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/util/WeightedRandomChestContent.java.patch",
+      "access_date": "2026-10-21",
+      "root_review": "one-based lines 16–24 retain random target slot assignment after generateChestContent; remote raw bytes were not saved and no raw remote SHA-256 is claimed."
+    }
+  ],
+  "default_bee_temperature_witness": {
+    "plains": "ahu static initializer creates aip and stores field p = field_76772_c; aip constructor offsets 6,8,10 pass .8f,.4f to a(FF).",
+    "temperature_assignment": "ahu.a(FF) offset 26 writes first parameter to ao = field_76750_F; rainfall offset 31 writes ap = field_76751_G.",
+    "original_GT_formula": "max(1,(long)(273-3+temperature*20)); plains .8 gives 286K.",
+    "current_fallback_formula": "273+round(.8f*20) gives 289K; limited to random() fallback for bees lacking genes."
+  },
+  "new_findings": [
+    "ALIGN-162",
+    "ALIGN-163",
+    "ALIGN-164",
+    "ALIGN-165",
+    "ALIGN-166",
+    "ALIGN-167",
+    "ALIGN-168"
+  ],
+  "extended_findings": [
+    "ALIGN-085"
+  ],
+  "excluded_candidate": "Iron-golem immunity is supplied by the pre-switch insect-hazmat check in both originals and current code; not a missing native bee behavior.",
+  "archive_attempt_notes": "Initial archive helper expected every dependency entry collection to be a dict; Forge metadata uses a list. Helper was corrected to accept both schemas before writing this receipt. No source or gameplay test failed.",
+  "verification_scope": "Read-only source/native-class call chains and exact formatting token/literal positions only. No new tests, Gradle, compilation, game, old-save restart, build, push or machine-overload behavior change."
+}

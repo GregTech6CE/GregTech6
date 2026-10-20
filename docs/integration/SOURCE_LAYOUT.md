@@ -288,3 +288,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 书架 `BookShelfRules` 集合／坐标公式与 `GTBookList` 说明已展开；仍是当前子集，不是完整 BOOK_REGISTER。
 
 源码范围和十四份等价投影见[箱子报告](CHEST_LOOT_AUDIT.md)。
+
+## 养蜂规则与原生库存爆炸
+
+- core `content/bumble/BumbleGenomeRules.java`：鲜基因范围、天气阈值及逐基因遗传；`BumbleSpeciesRules.java`：二十条组合、突变和产物概率。两份已展开排版，不意味着已修复所有边界。
+- 共享 `content/bumble/BumbleBeeGenes.java`：Forge NBT／Neo components 边界和默认基因回退；`BumbleBreeding.java`：后代构造和配对成本。
+- 共享 `block/tool/BumbliaryBlock.java`、`blockentity/tool/BumbliaryBlockEntity.java`：普通／高级养蜂箱服务端周期、库存、工作与寿终晋升。自然蜂巢另在 `block/misc/BumbleHiveBlock.java`／`FixedBumbleHiveBlock.java`，新生成使用扁平 ID。
+- 共享 `content/bumble/BumbleSting.java` 先经过 `damage/GTHazmat.java`；不能孤立看攻击分支判断铁傀儡保护。
+- 库存外部爆炸应从实际原生 `state.getDrops`／`onBlockExploded`／`onRemove` 追踪；`CoverDropMixin` 的静态助手不是该入口。方块物品与散落库存的掉落合同分开，见[核查](INVENTORY_EXPLOSION_AUDIT.md)。
+
+养蜂来源与未核完边界见[周期报告](BUMBLE_LIFECYCLE_AUDIT.md)，战利品首空槽／原随机覆盖见[填槽报告](LOOT_SLOT_AUDIT.md)。没有将原生反编译源码纳入项目生产目录。

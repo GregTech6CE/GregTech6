@@ -35,6 +35,8 @@
 
 2026-10-21 续：表中 GTEngines、FiniteBottleFillingRecipe 的隐藏 Neo 体及 core GeneratedRecipeSink 也已展开，五份执行投影保持；瓶框三份整理另有六份投影。表中对应行保留原盘点数值，当前不再列作待整理，见[第四十七批](BOTTLE_BOOKSHELF_AUDIT.md)。大型业务类与其它压行仍继续。
 
+2026-10-21 再续：core BumbleGenomeRules 与 BumbleSpeciesRules 已从 21／42 行展开为 58／75 行，667／420 个执行词法项及字面量位置保持，随机顺序和数值没有改变。原生养蜂实体／基因边界仍有压行和职责整理待续，见[第四十九批](BUMBLE_LIFECYCLE_AUDIT.md)。用户 CompoundMaterials 的 570 条定义仍是等号第 66 列／RGB 第 141 列，内容／注释未变，格式化入口不再改写它。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属
