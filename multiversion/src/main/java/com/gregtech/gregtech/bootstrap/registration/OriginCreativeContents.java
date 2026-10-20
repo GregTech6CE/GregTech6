@@ -107,7 +107,9 @@ public final class OriginCreativeContents {
             boolean addonPart = item instanceof BlockItem partItem
                     && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
                     || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
-            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart)
+            boolean addonDrum = item instanceof BlockItem drumItem
+                    && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
+            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum)
                     || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
 *///?} else {
             var itemId = BuiltInRegistries.ITEM.getKey(item);
@@ -117,7 +119,9 @@ public final class OriginCreativeContents {
             boolean addonPart = item instanceof BlockItem partItem
                     && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
                     || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
-            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            boolean addonDrum = item instanceof BlockItem drumItem
+                    && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
+            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart && !addonDrum)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;

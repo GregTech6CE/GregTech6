@@ -8520,6 +8520,8 @@
   "gt.lang.pistonpush": "Pistons can push this Block",
   "gt.lang.proof.acid": "Can handle Acids",
   "gt.lang.proof.gas": "Can handle Gases",
+  "gt6ce.tank.compressed.store": "Stores gas. Pipes and containers cannot fill it.",
+  "gt6ce.tank.compressed.compressor": "A gas compressor fills it. Machines can drain it.",
   "gt.lang.proof.magic": "Can handle Magic",
   "gt.lang.proof.plasma": "Can handle Plasma",
   "gt.lang.recipes": "Recipes",

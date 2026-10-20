@@ -45,4 +45,11 @@ public interface AddonMachineContributor {
 
     /** Fuel generators. A multiblock names its layout through {@code machineType}. */
     default List<FuelGeneratorDeclaration> fuelGenerators() { return List.of(); }
+
+    /**
+     * Compressed gas drums. Ordinary fluid insertion is closed.
+     * A behavior fills one through {@code MachineBehaviorContext#pushCompressedGas}.
+     * Fuel machines and pipes drain it.
+     */
+    default List<CompressedGasTankDeclaration> compressedGasTanks() { return List.of(); }
 }

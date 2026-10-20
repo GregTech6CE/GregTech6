@@ -715,6 +715,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         @Override public BehaviorState state() { return state; }
         @Override public boolean breakBlock(BlockPos pos) { return breakOne(pos); }
         @Override public int collectItems(int radius, boolean voidThem) { return collect(radius, voidThem); }
+        @Override public int pushCompressedGas(Direction face, FluidStack stack) {
+            if (face == null || stack == null || stack.isEmpty() || level == null) return 0;
+            BlockPos target = worldPosition.relative(face);
+            if (!level.hasChunkAt(target)) return 0;
+            if (!(level.getBlockEntity(target) instanceof CompressedGasTankBlockEntity drum)) return 0;
+            return drum.fillCompressed(stack);
+        }
     }
 
     private void refreshStructure() {

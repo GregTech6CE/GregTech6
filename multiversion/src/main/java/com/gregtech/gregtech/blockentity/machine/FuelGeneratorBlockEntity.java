@@ -102,6 +102,7 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
         if (level == null || level.isClientSide) return;
         boolean running = refreshStructure() && !stopped;
         if (running) {
+            pullCompressedGas();
             burn();
             emit();
         }
@@ -110,6 +111,31 @@ public class FuelGeneratorBlockEntity extends BlockEntity implements IEnergyBloc
 
     /** Multiblock controllers replace this with the structure check. */
     protected boolean refreshStructure() { return true; }
+
+    /** Takes up to 1000 mB from adjacent compressed gas drums when the fuel map accepts that gas. */
+    private void pullCompressedGas() {
+        int budget = Math.min(1000, fuel.getCapacity() - fuel.getFluidAmount());
+        if (budget <= 0 || level == null) return;
+        for (Direction side : Direction.values()) {
+            if (budget <= 0) return;
+            BlockPos neighbor = worldPosition.relative(side);
+            if (!level.hasChunkAt(neighbor)) continue;
+            if (!(level.getBlockEntity(neighbor) instanceof CompressedGasTankBlockEntity drum)) continue;
+            FluidStack preview = drum.drain(budget, IFluidHandler.FluidAction.SIMULATE);
+            if (preview.isEmpty() || !fuel.isFluidValid(preview)) continue;
+            int room = fuel.fill(preview, IFluidHandler.FluidAction.SIMULATE);
+            if (room <= 0) continue;
+            FluidStack taken = drum.drain(room, IFluidHandler.FluidAction.EXECUTE);
+            if (taken.isEmpty()) continue;
+            int storedAmount = fuel.fill(taken, IFluidHandler.FluidAction.EXECUTE);
+            if (storedAmount < taken.getAmount()) {
+                FluidStack leftover = taken.copy();
+                leftover.setAmount(taken.getAmount() - storedAmount);
+                drum.fillCompressed(leftover);
+            }
+            budget -= storedAmount;
+        }
+    }
 
     private void burn() {
         if (recipes == null || fuel.isEmpty()) return;
