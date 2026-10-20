@@ -72,3 +72,5 @@
 第六十四批整理PumpCatalog 12→27、PumpWorkRules 4→18维护行，all局部out/i/t改pumps/tierIndex/tier；原生PumpBlockEntity的输入预算、冷却、getter、Neo推液和NBT边界展开。完整core237／124与Forge1961／Neo1877项执行流在列明局部绑定归一后保持，其余标识符、数据、分支和指令不动，见[泵导航](ROTATIONAL_PUMP_AUDIT.md)与[证明](verification/rotational-pump-audit-20261021.json)。不是泵玩法修复或所有源码标准化完成。
 
 第六十五批展开四份大型发电参数／涡轮执行源，grades局部list/i/material改gradesByMaterial/gradeIndex/gasGrade；保留私有record、公共名称、四档数据和平台边界。core441及六端1684／1712、1323／1174、2615／2494项在仅局部绑定归一后相同，字面量位置／指令保持；一条气轮Javadoc移除只适用最低档的材质限定，见[导航](LARGE_TURBINE_AUDIT.md)与[证明](verification/large-turbine-audit-20261021.json)。其余职责／压行整理继续，没有把排版计作玩法修复。
+
+第六十六批展开AdvancedControllerRules 7→24行，以及LightningRodControllerBlockEntity的五层／柱、天气竞争、能量接口、生命周期与两端存档；原生视图85／86→188／192行。lightningDrain.sent改sentPackets，结构局部pos／required／pillar改partPos／requiredBlock／rodBlock，完整166／1505／1558项在限定绑定归一后保持，见[导航](LIGHTNING_ROD_AUDIT.md)和[证明](verification/lightning-rod-audit-20261021.json)。core说明不再泛称原版规则全部一致，其余名称／数值／声明／指令不动；旧未注册类仅盘点，未删公开实现类或新增兼容ID。
