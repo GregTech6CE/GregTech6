@@ -43,6 +43,8 @@
 
 第五十二批展开MaterialFactories长参数和方法（132→147行），以当前实现说明取代三处过强原版归因；1304项执行词法与字面量位置相同，不改变public接口、工厂属性和调用顺序。原elec／cent与当前gem／MAGICAL的实质差异进入[材料核查](LIQUID_ACID_FACTORY_AUDIT.md)，没有借排版偷偷修正；生成材料表与用户空格均保持。
 
+第五十三批展开GTBushes注册／目录／物品工厂（43→58行），同时展开真实Neo注释体；GTBushesFeature整理换行并纠正三处过强原版归因（136→135行），明确算法表保留与调用半坐标差异。两份共享源码四份执行投影相同，注册顺序、地面／群系谓词、随机次数与字面量不变，见[物理](BERRY_BUSH_PHYSICAL_AUDIT.md)、[生成](BERRY_BUSH_WORLDGEN_AUDIT.md)及[回执](verification/bush-physical-worldgen-audit-20261021.json)。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属

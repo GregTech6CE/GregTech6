@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十三批灌木物理与生成边界
+
+正式记录增至188条，包含历史修复项；新增六项具体合同差异。确认instabreak最终清掉硬度／抗爆、火表参数缺失与核心条件性墙内检测；生成噪声表本身保留，实际半坐标、原木射线和群系门控不同。两份源码只排版／说明，未改参数／随机顺序；没有构建或世界实测，见[物理](BERRY_BUSH_PHYSICAL_AUDIT.md)、[生成](BERRY_BUSH_WORLDGEN_AUDIT.md)及[回执](verification/bush-physical-worldgen-audit-20261021.json)。材料分解与其它系统继续，全面目标active。
+
 ## 2026-10-21 / 第五十二批液态酸工厂与实际属性消费
 
 归档至182条正式记录，包含历史修复项。新增三项：19种酸的额外固体／部分宝石形态、氟硅酸误魔法属性进入管道危险链、黑矾液态注册漏项。后续补偿已恢复全部酸性和组成、18种真实流体及多项化学行，不能据生成声明误报全部未移植。MaterialFactories只整理排版和说明，用户材料表未改；未构建／游戏测试，见[报告](LIQUID_ACID_FACTORY_AUDIT.md)与[回执](verification/liquid-acid-factory-audit-20261021.json)。全面核查仍active。

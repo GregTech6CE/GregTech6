@@ -319,3 +319,9 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `tools/transpile_gt6_materials.py`先识别源工厂族，`tools/modular_materials.py`再拆分声明；用户整理的CompoundMaterials保持独立颜色列。不要直接运行旧脚本覆盖采用后的数据。
 - core `content/material/MaterialDefinitions.java`的link加载组成／事实／形态补偿；`content/fluid/FluidDefinitions.prepare`在实际流体注册前补状态。`data/generated/MaterialForms.java`只是前缀准入侧表，不能替代GTMaterial.GAS/LIQUID。
 - `api/fluid/FluidHazards.isMagic`读取生成流体关联材料，`FluidPipeBlockEntity.checkSafety`真正消费危险标志。三项差异与已有补偿见[液态酸核查](LIQUID_ACID_FACTORY_AUDIT.md)。
+
+## 灌木物理与世界生成入口
+
+- 共享`registry/GTBushes.java`的注册工厂设置实际BlockBehaviour属性；`strength(.2f)`后还有`instabreak()`，最终值必须沿原生实现读取。`BushBlock`的选框、碰撞、光遮挡与墙内谓词各有消费者，见[物理核查](BERRY_BUSH_PHYSICAL_AUDIT.md)。
+- 共享`worldgen/GTBushesFeature.java`选择候选列、群系、噪声索引和枝条；core`worldgen/GTCellNoise.java`只供噪声算法／偏移表。调用者半坐标并非原整数除法，不再在类说明中保证同坐标同莓种。
+- 共享`worldgen/GTSurfaceFloraFeature.surface`负责实际向下扫描；两版`GTFeatures`、configured/placed feature及biome_modifier共同决定可达性。九种自然成员与未核完的中心／高度／替换规则见[生成核查](BERRY_BUSH_WORLDGEN_AUDIT.md)。
