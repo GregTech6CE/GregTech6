@@ -82,7 +82,9 @@ public final class AddonMaterials {
                               List<CrucibleReactionDeclaration> crucibleReactions,
                               List<CrucibleReactionRemoval> crucibleRemovals,
                               List<PrefixDeclaration> prefixes,
-                              List<OreDeclaration> ores) {}
+                              List<OreDeclaration> ores,
+                              List<OreVeinDeclaration> veins,
+                              List<SmallOreDeclaration> smallOres) {}
 
     private record OreDeclaration(String materialName, List<String> byproducts) {}
 
@@ -119,7 +121,7 @@ public final class AddonMaterials {
                 enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
                         contributor.compositions(), contributor.smeltingTargets(),
                         contributor.crucibleReactions(), contributor.crucibleRemovals(), contributor.prefixes(),
-                        oreDeclarations(declarations));
+                        oreDeclarations(declarations), contributor.oreVeins(), contributor.smallOres());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
@@ -169,7 +171,7 @@ public final class AddonMaterials {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         warnIgnoredDeclarationIds(addonId, copied);
         enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
-                oreDeclarations(copied));
+                oreDeclarations(copied), List.of(), List.of());
     }
 
     /** Test entry. Production addons return these lists from {@link AddonMaterialContributor}. */
@@ -179,7 +181,8 @@ public final class AddonMaterials {
                                            List<SmeltingTargetDeclaration> smeltingTargets,
                                            List<CrucibleReactionDeclaration> crucibleReactions,
                                            List<CrucibleReactionRemoval> crucibleRemovals) {
-        submit(addonId, materials, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals, List.of(), List.of());
+        submit(addonId, materials, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals,
+                List.of(), List.of(), List.of(), List.of());
     }
 
     /** Test entry. Production addons return prefixes from {@link AddonMaterialContributor#prefixes()}. */
@@ -191,7 +194,16 @@ public final class AddonMaterials {
                                            List<CrucibleReactionRemoval> crucibleRemovals,
                                            List<PrefixDeclaration> prefixes) {
         submit(addonId, materials, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals,
-                prefixes, List.of());
+                prefixes, List.of(), List.of(), List.of());
+    }
+
+    /** Test entry. Production addons return veins from {@link AddonMaterialContributor#oreVeins()}. */
+    public static synchronized void submitWorldgen(String addonId, List<MaterialDeclaration> materials,
+                                                   List<OreVeinDeclaration> veins, List<SmallOreDeclaration> smallOres) {
+        List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
+        warnIgnoredDeclarationIds(addonId, copied);
+        enqueue(addonId, definitions(copied), List.of(), () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
+                oreDeclarations(copied), veins, smallOres);
     }
 
     private static synchronized void submit(String addonId, List<MaterialDefinition> materials,
@@ -201,13 +213,16 @@ public final class AddonMaterials {
                                             List<CrucibleReactionDeclaration> crucibleReactions,
                                             List<CrucibleReactionRemoval> crucibleRemovals,
                                             List<PrefixDeclaration> prefixes,
-                                            List<OreDeclaration> ores) {
+                                            List<OreDeclaration> ores,
+                                            List<OreVeinDeclaration> veins,
+                                            List<SmallOreDeclaration> smallOres) {
         List<MaterialDefinition> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         for (MaterialDefinition definition : copied) {
             GTMaterialRegistry.warn("Addon '" + addonId + "' material '" + definition.name()
                     + "' declared numeric id " + definition.id() + "; the id is ignored");
         }
-        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals, prefixes, ores);
+        enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals,
+                prefixes, ores, veins, smallOres);
     }
 
     private static synchronized void enqueue(String addonId, List<MaterialDefinition> materials,
@@ -217,7 +232,9 @@ public final class AddonMaterials {
                                              List<CrucibleReactionDeclaration> crucibleReactions,
                                              List<CrucibleReactionRemoval> crucibleRemovals,
                                              List<PrefixDeclaration> prefixes,
-                                             List<OreDeclaration> ores) {
+                                             List<OreDeclaration> ores,
+                                             List<OreVeinDeclaration> veins,
+                                             List<SmallOreDeclaration> smallOres) {
         if (closed) throw new IllegalStateException("Addon material queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -233,7 +250,9 @@ public final class AddonMaterials {
                 List.copyOf(Objects.requireNonNull(crucibleReactions, "crucibleReactions")),
                 List.copyOf(Objects.requireNonNull(crucibleRemovals, "crucibleRemovals")),
                 List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
-                List.copyOf(Objects.requireNonNull(ores, "ores"))));
+                List.copyOf(Objects.requireNonNull(ores, "ores")),
+                List.copyOf(Objects.requireNonNull(veins, "veins")),
+                List.copyOf(Objects.requireNonNull(smallOres, "smallOres"))));
     }
 
     private static List<OreDeclaration> oreDeclarations(List<MaterialDeclaration> declarations) {
@@ -337,6 +356,16 @@ public final class AddonMaterials {
         if ((left == null) != (right == null)) return "ores";
         if (left != null && !left.byproducts().equals(right.byproducts())) return "oreByproducts";
         return null;
+    }
+
+    /** Veins resolve after linking, so a row can name a material created in {@code link()}. */
+    public static void publishOreVeins() {
+        var queued = new ArrayList<com.gregtech.gregtech.worldgen.AddonOreVeins.Submission>();
+        for (Submission submission : snapshot()) {
+            queued.add(new com.gregtech.gregtech.worldgen.AddonOreVeins.Submission(
+                    submission.addonId, submission.veins, submission.smallOres));
+        }
+        com.gregtech.gregtech.worldgen.AddonOreVeins.publish(queued);
     }
 
     /** Byproduct names resolve after linking, so a list can name a material created in {@code link()}. */

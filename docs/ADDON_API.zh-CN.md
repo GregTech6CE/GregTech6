@@ -186,7 +186,7 @@ public final class MyMaterials implements AddonMaterialContributor {
 
 GT 在内置目录之后按名字排序分配数字 id，从 10000 起。内置 id 不变。分到的数字只在内存里：装的附属不同，同一个名字的数字可以不同，存档不会按这个数字读回来。`GregTechMaterials.find(int)` 仍能解析这次启动分到的 id。`dust()` 生成粉。`metal()` 在粉之外再生成锭、板、杆、齿轮等内置目录已经会生成的形态，不新增前缀。
 
-`ores()` 给这种材料加上 GT6 的 `ORES` 形态。原矿物品、岩石、不纯粉，以及粉碎、洗涤、离心那一串，因此按现有校验生成。纯粉和精炼粉仍然不生成，它们只看没有材料使用的 `DIRTY_DUSTS`。同时注册 `ore` 和 `oreSmall` 两种方块，追加在目录已经发出的方块之后，内置方块 id 不变。母岩仍是这一个方块上的方块状态，和内置矿石一样。`ores()` 不注册原矿储物块，也不注册原矿箱，也不加矿脉。`oreByproducts("Copper", "Tin")` 会打开 `ores()`，并按这个顺序写下副产物；第一个名字是洗涤副产物。不写则副产物为空。洗涤和离心仍走内置的回退。副产物名字必须是启动时存在的材料，不能是隐藏材料。两个附属共用一种材料时，`ores()` 和这份名单必须一致。`forms()` 不能点名 `ore` 或 `oreSmall`。材料没有声明 `ores()` 时，`forms()` 点名 `oreRaw` 仍然失败。
+`ores()` 给这种材料加上 GT6 的 `ORES` 形态。原矿物品、岩石、不纯粉，以及粉碎、洗涤、离心那一串，因此按现有校验生成。纯粉和精炼粉仍然不生成，它们只看没有材料使用的 `DIRTY_DUSTS`。同时注册 `ore` 和 `oreSmall` 两种方块，追加在目录已经发出的方块之后，内置方块 id 不变。母岩仍是这一个方块上的方块状态，和内置矿石一样。`ores()` 不注册原矿储物块，也不注册原矿箱。矿脉是下面单独的声明。`oreByproducts("Copper", "Tin")` 会打开 `ores()`，并按这个顺序写下副产物；第一个名字是洗涤副产物。不写则副产物为空。洗涤和离心仍走内置的回退。副产物名字必须是启动时存在的材料，不能是隐藏材料。两个附属共用一种材料时，`ores()` 和这份名单必须一致。`forms()` 不能点名 `ore` 或 `oreSmall`。材料没有声明 `ores()` 时，`forms()` 点名 `oreRaw` 仍然失败。
 
 存档写名字。坩埚内容在 `gt.materials` 里是 `{name, amount}`。坩埚显示字段 `gt.display.material` 是名字，没有要显示的材料时是空字符串。USB 和硬盘文件仍用键 `gt.replicator.data`，值改成名字字符串。旧构建写的数字 `id`，以及数字形式的 `gt.replicator.data` / `gt.display.material`，仍能读回内置材料，读不回附属材料。找不到的名字会跳过，和原来找不到 id 一样。附属物品 id 冲突不会加数字后缀。
 
@@ -218,6 +218,28 @@ public List<PrefixDeclaration> prefixes() {
 物品注册在**附属自己的**命名空间，排在生成出来的 `gt6ce:` 形态之后。顺序是附属 id、声明顺序、材料名。路径和内置形态一样，例如 `sample_blank_iron`。同一个命名空间里路径撞车就启动失败。它不占用 `gt6ce:` 的 id，也不改内置物品 id 列表。`forms()` 不能点这个前缀，材料由声明上的名单决定。启动之后 `GregTechPrefixes.exists` 对这个名字返回真。`AddonItems.stack` 能取到物品。
 
 GT 不为这个前缀添加加工配方。这一节不包括方块前缀。API 版本仍是 0。
+
+## 世界生成
+
+`oreVeins()` 和 `smallOres()` 挂在 `AddonMaterialContributor` 上，分别加大矿脉和小矿。GT 把它们追加在该维度内置行之后。名字是同一维度、同一种类里的身份：大矿脉和小矿可以同名，另一个维度也可以再用这个名字。撞上内置行或另一个附属，启动失败，并写出两边。
+
+```java
+public List<OreVeinDeclaration> oreVeins() {
+    return List.of(new OreVeinDeclaration("sample_alloy", "minecraft:overworld",
+            10, 40, 40, 3, 16, "SampleAlloy", "SampleAlloy", "Copper", "Tin"));
+}
+
+public List<SmallOreDeclaration> smallOres() {
+    return List.of(new SmallOreDeclaration("sample_alloy", "minecraft:overworld",
+            20, 60, 4, "SampleAlloy"));
+}
+```
+
+字段和内置表一样。`weight`、`density`、`size`、`amount` 都是正数。`minY` 和 `maxY` 用内置表那套重映射之前的高度，落在 0 到 255 里，并且下限低于上限。主世界生成器会把这段高度拉开。大矿脉写四种材料：顶层、底层、中间层、散布层。小矿写一种。每种材料必须存在，并且有矿石方块。附属材料要调用 `ores()`。内置材料必须是本来就会有矿石方块的那种。未知材料或隐藏材料会启动失败。
+
+维度是 `minecraft:overworld`、`minecraft:the_nether` 和 `minecraft:the_end`。下界没有大矿脉生成器，所以大矿脉不能写下界。别的维度直接失败，不为它单做生成器。既不是下界也不是末地的维度，生成时走主世界这张表。
+
+石层仍是 GT 自己的表，附属矿不写进石层。石层开着时，主世界旧的大矿脉保持关闭，生成的是附属大矿脉。它们和这张表里还在的内置矿脉按权重一起抽。权重变了，`nextInt` 的上界也变，所以同一个种子可能抽到另一条内置矿脉。末地的内置大矿脉仍开着，会碰到这件事。小矿是追加在后面的，每一行只用自己的随机数，内置小矿的位置不变。API 版本仍是 0。
 
 ## 坩埚
 
@@ -385,7 +407,7 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 ## 支持范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `parts()` 里的外壳和能量零件，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`energyCapacity`、`emit`、`generate`、`setCapacity` 和 `onUse` 属于这层外壳，同名结构让 `structureFormed()` 和 `energyParts()` 可用，`charge`、`setOutput` 和 `stop` 写能量零件，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `parts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`，前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名）；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `parts()` 里的外壳和能量零件，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`energyCapacity`、`emit`、`generate`、`setCapacity` 和 `onUse` 属于这层外壳，同名结构让 `structureFormed()` 和 `energyParts()` 可用，`charge`、`setOutput` 和 `stop` 写能量零件，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `parts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
