@@ -312,3 +312,10 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - 共享 `block/plant/BushBlock.java` 是实际放置、采收和枝条几何入口；`registry/GTBushes.java` 与两版注册目录决定扁平物种，旧berry键仅作兼容。已实现与差异见[灌木报告](BERRY_BUSH_AUDIT.md)。
 - core `api/inventory/InventorySlotLayout.java` 保存当前菜单坐标；共享 `client/gui/HopperContainerMenu.java` 负责普通槽和shift。两个许可扩展方法当前未被槽工厂消费，不等于底层handler没有验证。
 - Queue的自动化handler、手动GUI许可和原生doClick入口要一起核对；九类真实菜单宿主的六类同源回调、三类补偿／约束见[共用菜单报告](SHARED_MENU_AUDIT.md)。
+
+## 液态材料工厂与补偿
+
+- core `api/material/MaterialFactories.java`：当前工厂默认属性和纹理入口，长参数／方法已展开；不是所有默认值都与原版同名helper等价。
+- `tools/transpile_gt6_materials.py`先识别源工厂族，`tools/modular_materials.py`再拆分声明；用户整理的CompoundMaterials保持独立颜色列。不要直接运行旧脚本覆盖采用后的数据。
+- core `content/material/MaterialDefinitions.java`的link加载组成／事实／形态补偿；`content/fluid/FluidDefinitions.prepare`在实际流体注册前补状态。`data/generated/MaterialForms.java`只是前缀准入侧表，不能替代GTMaterial.GAS/LIQUID。
+- `api/fluid/FluidHazards.isMagic`读取生成流体关联材料，`FluidPipeBlockEntity.checkSafety`真正消费危险标志。三项差异与已有补偿见[液态酸核查](LIQUID_ACID_FACTORY_AUDIT.md)。

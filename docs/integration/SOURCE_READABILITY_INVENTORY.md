@@ -41,6 +41,8 @@
 
 第五十一批已展开共用 InventorySlotLayout（247→254行）、HopperContainerMenu（115→123行）、BushGrowthRules（6→18行）及BushBlockEntity的压行／版本边界（215→229行）。四份源码六份执行投影保持，坐标值、计数和随机调用不变；说明不再声称所有原版菜单／环境已完全一致。共用菜单九类实际宿主及手动权限归属已追踪，见[菜单](SHARED_MENU_AUDIT.md)、[灌木](BERRY_BUSH_AUDIT.md)与[回执](verification/bush-menu-audit-20261021.json)。用户WoodMaterials编辑保持未纳入本批，CompoundMaterials统一RGB列继续保留。
 
+第五十二批展开MaterialFactories长参数和方法（132→147行），以当前实现说明取代三处过强原版归因；1304项执行词法与字面量位置相同，不改变public接口、工厂属性和调用顺序。原elec／cent与当前gem／MAGICAL的实质差异进入[材料核查](LIQUID_ACID_FACTORY_AUDIT.md)，没有借排版偷偷修正；生成材料表与用户空格均保持。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属
