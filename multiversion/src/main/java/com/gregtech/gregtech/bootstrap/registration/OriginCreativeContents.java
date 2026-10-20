@@ -101,10 +101,17 @@ public final class OriginCreativeContents {
             boolean addonMachine = item instanceof BlockItem blockItem
                     && blockItem.getBlock() instanceof com.gregtech.gregtech.block.machine.BasicMachineBlock machine
                     && !"gt6ce".equals(machine.basicSpec().namespace());
-            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine)
+            boolean addonPipe = item instanceof BlockItem pipeItem
+                    && (pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock
+                    || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
+            if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe)
                     || item instanceof MaterialFormItem || item instanceof CreativeTabIconItem) continue;
 *///?} else {
-            if(!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals("gt6ce")||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
+            var itemId = BuiltInRegistries.ITEM.getKey(item);
+            boolean addonPipe = item instanceof BlockItem pipeItem
+                    && (pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.FluidPipeBlock
+                    || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
+            if((!itemId.getNamespace().equals("gt6ce") && !addonPipe)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;
 //?}
             if(item instanceof BlockItem b && b.getBlock() instanceof MaterialBlockLike)continue;
             if(java.util.Set.of("fluid_spring","tap","fluid_funnel","cap_nozzle","nozzle","cure_all").contains(BuiltInRegistries.ITEM.getKey(item).getPath()))continue;
