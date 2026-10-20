@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import java.util.List;
 //? if >=1.21.1 {
 /*import net.neoforged.neoforge.fluids.FluidStack;
 *///?} else {
@@ -83,6 +84,15 @@ public interface MachineBehaviorContext {
 
     /** Lights the working face for this tick. */
     void working(boolean working);
+
+    /**
+     * True when this machine has no layout, or the layout matched this tick.
+     * A machine with a layout is false until that match succeeds.
+     */
+    boolean structureFormed();
+
+    /** Energy parts bound by the formed layout. Empty when {@link #structureFormed()} is false. */
+    List<EnergyPart> energyParts();
 
     BehaviorState state();
 }

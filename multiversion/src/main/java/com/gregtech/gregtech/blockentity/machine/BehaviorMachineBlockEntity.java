@@ -9,8 +9,12 @@ import com.gregtech.gregtech.api.addon.platform.BehaviorState;
 /*import com.gregtech.gregtech.api.addon.platform.EnergyBlock;
 *///?} else {
 //?}
+import com.gregtech.gregtech.api.addon.platform.EnergyPart;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
+import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
+import com.gregtech.gregtech.api.multiblock.PartBindings;
+import com.gregtech.gregtech.content.multiblock.LargeMachineLayouts;
 import com.gregtech.gregtech.api.energy.EnergyBlockViews;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.energy.IEnergyBlock;
@@ -69,6 +73,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 //?}
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +103,9 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     private int progress;
     private boolean working;
     private boolean powered;
+    private final PartBindings<BlockPos, MultiblockLayout.Role> structureBindings = new PartBindings<>();
+    private boolean formed;
+    private List<EnergyPart> energyParts = List.of();
 
     public BehaviorMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -171,8 +179,11 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
         }
     }
 
+    public boolean structureFormed() { return formed; }
+
     private void tickServer(Level level, BlockPos pos) {
         pollEnergy(level, pos);
+        refreshStructure();
         powered = stored > 0;
         working = false;
         behavior.tick(context);
@@ -575,7 +586,92 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
             }
         }
         @Override public void working(boolean value) { working = value; }
+        @Override public boolean structureFormed() { return formed; }
+        @Override public List<EnergyPart> energyParts() { return formed ? energyParts : List.of(); }
         @Override public BehaviorState state() { return state; }
+    }
+
+    private void refreshStructure() {
+        var layout = LargeMachineLayouts.cells(declaration.machineType());
+        if (layout == null) {
+            formed = true;
+            energyParts = List.of();
+            return;
+        }
+        formed = claimStructure(layout);
+        if (!formed) energyParts = List.of();
+    }
+
+    private boolean claimStructure(List<LargeMachineLayouts.Cell> layout) {
+        if (level == null || isRemoved()) {
+            structureBindings.clear(this::releaseStructure);
+            return false;
+        }
+        Direction front = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
+                ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
+        var parts = new LinkedHashMap<BlockPos, MultiblockLayout.Role>();
+        for (var cell : layout) {
+            BlockPos cellPos = cell.at(worldPosition, front);
+            if (!level.hasChunkAt(cellPos)) {
+                structureBindings.clear(this::releaseStructure);
+                return false;
+            }
+            if (cell.role() == MultiblockLayout.Role.AIR) {
+                if (level.isEmptyBlock(cellPos)) continue;
+                structureBindings.clear(this::releaseStructure);
+                return false;
+            }
+            if (level.getBlockState(cellPos).getBlock() != cell.block()
+                    || !(level.getBlockEntity(cellPos) instanceof MultiblockPortBlockEntity)) {
+                structureBindings.clear(this::releaseStructure);
+                return false;
+            }
+            parts.put(cellPos, cell.role());
+        }
+        boolean claimed = structureBindings.update(parts,
+                pos -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
+                this::releaseStructure);
+        if (!claimed) return false;
+        var found = new ArrayList<EnergyPart>();
+        for (BlockPos cellPos : parts.keySet()) {
+            if (level.getBlockEntity(cellPos) instanceof AddonEnergyPartBlockEntity energy)
+                found.add(new EnergyPartView(energy));
+        }
+        energyParts = List.copyOf(found);
+        return true;
+    }
+
+    private void releaseStructure(BlockPos pos) {
+        if (level != null && level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)
+            part.release(worldPosition);
+    }
+
+    @Override public void setRemoved() {
+        structureBindings.clear(this::releaseStructure);
+        energyParts = List.of();
+        formed = false;
+        super.setRemoved();
+    }
+
+    private final class EnergyPartView implements EnergyPart {
+        private final AddonEnergyPartBlockEntity part;
+        private EnergyPartView(AddonEnergyPartBlockEntity part) { this.part = part; }
+        @Override public BlockPos pos() { return part.getBlockPos(); }
+        @Override public String name() { return part.path(); }
+        @Override public long stored() { return part.stored(); }
+        @Override public long capacity() { return part.capacity(); }
+        @Override public long charge(long amount) {
+            return part.isBoundTo(worldPosition) ? part.charge(amount) : 0;
+        }
+        @Override public void setOutput(long size, long amount) {
+            if (!part.isBoundTo(worldPosition))
+                throw new IllegalStateException("Energy part is not bound to this machine");
+            part.setOutput(size, amount);
+        }
+        @Override public void stop() {
+            if (part.isBoundTo(worldPosition)) part.stop();
+        }
     }
 
     private final class PipeItems implements IItemHandler {
