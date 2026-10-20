@@ -47,6 +47,8 @@
 
 第五十四批去掉DecompositionRecipeLoader中整份平台业务重复：336→124行、同一run/namedFluid流程，只在原生导入、holder类型和可用性查询处保留条件。选中Forge/Neo后850/858项执行词法与字面量位置逐项相同，class说明纠正原处理方式与当前启发式混同；不是只压缩空行，也没有借去重改变配方，见[报告](MATERIAL_DECOMPOSITION_AUDIT.md)与[回执](verification/material-decomposition-audit-20261021.json)。
 
+第五十五批对全部1041份共享原生维护输入显式投影2082次，确认四项完整类体重复候选，并排除MetalChestBlockItem和GTEngines的声明／原生职责边界。VanillaProcessingRecipes与AlloyRecipeLoader已合并954→334行，四份完整执行词法／字面量位置保持；Chemical及有真实加载顺序差异的GeneratedRecipeResolver独立继续。171项方法级密度结果未经逐项核查，不是缺陷数，见[结构报告](NATIVE_BODY_SHARING_AUDIT.md)和[全量身份回执](verification/native-body-sharing-audit-20261021.json)。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属

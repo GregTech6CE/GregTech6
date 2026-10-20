@@ -1,5 +1,11 @@
 # 实现选择记录
 
+## 2026-10-21 / 整类共享保留每端真实执行顺序
+
+完整投影盘点只把四份配方类体列为已读候选，不把741份有条件输入或171项未审密度结果当重复问题。小型客户端桥和职责不同的注册边界保留，公共core规则不强迫所有原生代码相同。
+
+先合并VanillaProcessingRecipes与AlloyRecipeLoader，共用原配方流程，只保留导入／holder边界；完整执行词法与字面量位置不变。GeneratedRecipeResolver的Forge先combs后technology、Neo相反是现有真实差异，后续合并必须保留，不能用token相似度或相同常量值替代证明。没有借去重改材料／配方语义，见[结构报告](NATIVE_BODY_SHARING_AUDIT.md)。
+
 ## 2026-10-21 / 分解处理标志、相态与原生查询保留独立合同
 
 组成本身不推导原处理地图；setAloy还可追加离心，不能只看工厂名。工作参数要沿真实重载签名分清EUt／duration，比较优化前公式后仍保留地图优化／碰撞边界。原生水没有GT still holder是有意复用，不是水注册遗漏；正确helper在别处存在也不等于本入口已消费。

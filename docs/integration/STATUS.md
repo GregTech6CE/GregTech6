@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第五十五批整类平台业务盘点与共享
+
+1041份维护Java全部展开两端，确认四项完整类体候选并排除两个仅声明边界。VanillaProcessingRecipes与AlloyRecipeLoader已共用业务，合计减少620维护行；两平台四份完整执行词法／字面量位置相同。Chemical及保留combs／technology顺序差异的解析器继续独立处理；不是配方玩法修复，正式ALIGN仍193条，见[报告](NATIVE_BODY_SHARING_AUDIT.md)与[回执](verification/native-body-sharing-audit-20261021.json)。未编译／测试／构建／推送，整体goal active。
+
 ## 2026-10-21 / 第五十四批材料分解与平台业务去重
 
 正式记录至193条，包含历史修复项；新增五项通用分解差异，覆盖两个相反方向的机器误选、无粉输入、功率／工时、水输出跳过及冰组分相态。现有化学行、现代电解机输入放宽和配方优化／碰撞均保留边界。加载器336→124行，共用同一业务，两端执行内容不变；未构建／游戏测试，见[报告](MATERIAL_DECOMPOSITION_AUDIT.md)与[回执](verification/material-decomposition-audit-20261021.json)。光莲／地表堆等核查继续，整体goal active。

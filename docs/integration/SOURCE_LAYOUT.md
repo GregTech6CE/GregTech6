@@ -61,6 +61,8 @@ CompoundMaterials 现保留用户统一颜色列；生成端和独立排版入�
 - Forge 的工作台配方随 RecipeManager 重载注入，见 `recipe/RuntimeRecipeLifecycle.java`。`*RecipeInjector` 表示这些注入器，不与初始化机器配方混用。
 - 导入配方表位于 core 的 `content/recipe/generated`；原生 `GeneratedRecipeResolver` 负责物品／流体解析，`GeneratedRecipeSink` 负责向当前解析上下文输出纯数据。`GTTechnologyRecipes` 是手写的原版嵌入配方目录，不是机器控制器。
 
+DecompositionRecipeLoader、VanillaProcessingRecipes、AlloyRecipeLoader目前各共用一份业务，仅原生导入／holder查询留条件。整类重复盘点另有ChemicalRecipeLoader和GeneratedRecipeResolver后续候选；后者两端combs／technology顺序实际不同，不能为共享改成单一顺序，见[结构盘点](NATIVE_BODY_SHARING_AUDIT.md)。这不代表其它741份条件输入都需要删除分支。
+
 配方表本身的名称、物品槽／储罐数和构造标志在 core 的 `data/MachineRecipeMapDefinitions.java`，数据结构是 `api/recipe/RecipeMapSpec.java`；原生 `data/MachineRecipeMaps.java` 将它们转成 RecipeMap。`dynamicRecipes`／`contextualRecipes` 安装动态查询入口，fake 展示行不参与机器加工。当前表标志和动态入口仍有确认缺口，见 [动态配方核查](DYNAMIC_RECIPE_AUDIT.md)。只读工具 `tools/integration/inventory_recipe_map_flags.py` 使用 `--source <原版RM.java> --current <当前定义文件> --output <报告>` 比对四个尾部标志，报告未解析行；它不会替代配方执行验收。
 
 ## 机器参数与运行行为从哪里看
