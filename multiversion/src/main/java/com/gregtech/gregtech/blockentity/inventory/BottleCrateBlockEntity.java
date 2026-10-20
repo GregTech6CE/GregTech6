@@ -27,7 +27,8 @@ public class BottleCrateBlockEntity extends BlockEntity {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
-            if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            if (level != null && !level.isClientSide)
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
 
         @Override
@@ -67,7 +68,7 @@ public class BottleCrateBlockEntity extends BlockEntity {
         return -1;
     }
 
-    /** One bottle into the first free slot; the leftover is empty when it fit. */
+    /** Insert into the first free slot and return the unaccepted remainder. */
     public ItemStack insert(ItemStack held) {
         int slot = firstFree();
         if (slot < 0 || !com.gregtech.gregtech.block.inventory.BottleCrateBlock.isBottle(held)) return held;
@@ -80,7 +81,7 @@ public class BottleCrateBlockEntity extends BlockEntity {
         return slot < 0 ? ItemStack.EMPTY : items.extractItem(slot, 1, false);
     }
 
-    /** Every bottle of the crate, in slot order - what the crate drops when it is broken. */
+    /** Copies of nonempty slots; block removal retains inventory through packedStack instead. */
     public java.util.List<ItemStack> contents() {
         java.util.List<ItemStack> out = new java.util.ArrayList<>();
         for (int slot = 0; slot < SLOTS; slot++) {
@@ -92,8 +93,8 @@ public class BottleCrateBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
         tag.put("gt_bottles", items.serializeNBT(lookup));
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
@@ -104,8 +105,8 @@ public class BottleCrateBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -114,7 +115,7 @@ public class BottleCrateBlockEntity extends BlockEntity {
         CompoundTag inventory = tag.getCompound("gt_bottles").copy();
         inventory.putInt("Size", SLOTS);
 //? if >=1.21.1 {
-        /*items.deserializeNBT(lookup,inventory);
+        /*items.deserializeNBT(lookup, inventory);
 *///?} else {
         items.deserializeNBT(inventory);
 //?}

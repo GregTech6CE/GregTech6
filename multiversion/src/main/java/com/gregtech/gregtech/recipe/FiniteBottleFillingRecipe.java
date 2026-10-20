@@ -1,34 +1,183 @@
 package com.gregtech.gregtech.recipe;
 //? if >=1.21.1 {
-/*import com.mojang.serialization.*;import net.minecraft.core.*;import net.minecraft.network.RegistryFriendlyByteBuf;import net.minecraft.network.codec.*;import net.minecraft.resources.ResourceLocation;import net.minecraft.world.item.*;import net.minecraft.world.item.crafting.*;import net.minecraft.world.level.Level;import net.minecraft.world.level.material.Fluid;import net.neoforged.neoforge.common.crafting.*;import net.neoforged.neoforge.fluids.*;import net.neoforged.neoforge.fluids.capability.IFluidHandler;import net.minecraft.core.registries.BuiltInRegistries;
+/*import com.mojang.serialization.*;
+import net.minecraft.core.*;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.common.crafting.*;
+import net.neoforged.neoforge.fluids.*;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.minecraft.core.registries.BuiltInRegistries;
 /^* Source finite 1000mB filling, retaining a drained physical vessel and native codecs. ^/
 public final class FiniteBottleFillingRecipe implements CraftingRecipe {
- private final ShapelessRecipe base;public FiniteBottleFillingRecipe(ShapelessRecipe base){this.base=base;}
- @Override public boolean matches(CraftingInput input,Level level){return base.matches(input,level);}
- @Override public ItemStack assemble(CraftingInput input,HolderLookup.Provider lookup){return base.assemble(input,lookup);}
- @Override public ItemStack getResultItem(HolderLookup.Provider lookup){return base.getResultItem(lookup);}
- @Override public boolean canCraftInDimensions(int width,int height){return base.canCraftInDimensions(width,height);}
- @Override public String getGroup(){return base.getGroup();}@Override public CraftingBookCategory category(){return base.category();}@Override public NonNullList<Ingredient> getIngredients(){return base.getIngredients();}@Override public RecipeSerializer<?> getSerializer(){return SERIALIZER;}
- @Override public NonNullList<ItemStack> getRemainingItems(CraftingInput input){var remains=base.getRemainingItems(input);for(int slot=0;slot<input.size();slot++){var original=input.getItem(slot);for(var ingredient:getIngredients())if(ingredient.getCustomIngredient() instanceof ContainerIngredient container&&container.test(original)){remains.set(slot,ContainerIngredient.drainOne(original));break;}}return remains;}
- public static final MapCodec<FiniteBottleFillingRecipe> CODEC=new ShapelessRecipe.Serializer().codec().xmap(FiniteBottleFillingRecipe::new,recipe->recipe.base);
- public static final RecipeSerializer<FiniteBottleFillingRecipe> SERIALIZER=new RecipeSerializer<>(){public MapCodec<FiniteBottleFillingRecipe> codec(){return CODEC;}public StreamCodec<RegistryFriendlyByteBuf,FiniteBottleFillingRecipe> streamCodec(){return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());}};
- public record ContainerIngredient(String fluidKey,boolean allowLubricantBottle) implements ICustomIngredient {
-  public ContainerIngredient(String fluidKey){this(fluidKey,false);}
-  public ContainerIngredient{if(allowLubricantBottle&&!"Lubricant".equals(fluidKey))throw new IllegalArgumentException("250mB bottle alternative is only valid for industrial lubricant");}
-  public static final MapCodec<ContainerIngredient> CODEC=com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance->instance.group(Codec.STRING.fieldOf("fluid").forGetter(ContainerIngredient::fluidKey),Codec.BOOL.optionalFieldOf("allow_lubricant_bottle",false).forGetter(ContainerIngredient::allowLubricantBottle)).apply(instance,ContainerIngredient::new));
-  public boolean accepts(Fluid fluid){
-   Fluid wanted=com.gregtech.gregtech.content.food.GTDrinks.fluidForField(fluidKey);
-   if(wanted!=null&&fluid==wanted)return true;
-   if(!"Lubricant".equals(fluidKey))return false;
-   var holder=com.gregtech.gregtech.registry.GTFluids.still("LubRoCant");
-   return holder!=null&&holder.isBound()&&fluid==holder.get();
-  }
-  public ItemStack example(){Fluid fluid=com.gregtech.gregtech.content.food.GTDrinks.fluidForField(fluidKey);if(fluid==null&&fluidKey.equals("Lubricant")){var holder=com.gregtech.gregtech.registry.GTFluids.still("LubRoCant");if(holder!=null&&holder.isBound())fluid=holder.get();}if(fluid==null)throw new IllegalStateException("Missing bottle fluid "+fluidKey);
-   for(String id:new String[]{"fluid_cell_tin","fluid_cell_wax_magic","fluid_cell_tungsten"}){var item=BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce",id));if(item==Items.AIR)continue;var stack=new ItemStack(item);var handler=FluidUtil.getFluidHandler(stack).orElse(null);if(handler!=null&&handler.fill(new FluidStack(fluid,1000),IFluidHandler.FluidAction.EXECUTE)==1000)return handler.getContainer();}throw new IllegalStateException("No finite physical 1000mB vessel for "+fluidKey);}
-  @Override public boolean test(ItemStack input){if(input==null||input.isEmpty()||input.getItem() instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem||com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(input))return false;if(allowLubricantBottle&&input.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle)return accepts(bottle.fluid());var one=input.copyWithCount(1);var handler=FluidUtil.getFluidHandler(one).orElse(null);if(handler==null)return false;var before=FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);if(before.isEmpty()||!accepts(before.getFluid())||before.getAmount()<1000)return false;var requested=before.copyWithAmount(1000);var taken=handler.drain(requested,IFluidHandler.FluidAction.EXECUTE);if(!FluidStack.isSameFluidSameComponents(taken,requested)||taken.getAmount()!=1000)return false;var after=FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);return before.getAmount()-after.getAmount()==1000;}
-  static ItemStack drainOne(ItemStack input){if(input.getItem() instanceof com.gregtech.gregtech.item.BottleItem)return com.gregtech.gregtech.item.BottleItem.emptyBottle();var handler=FluidUtil.getFluidHandler(input.copyWithCount(1)).orElseThrow();var before=FluidUtil.getFluidContained(input).orElse(FluidStack.EMPTY);var drained=handler.drain(before.copyWithAmount(1000),IFluidHandler.FluidAction.EXECUTE);if(drained.getAmount()!=1000)throw new IllegalStateException("Bottle recipe failed to drain 1000mB");return handler.getContainer();}
-  @Override public java.util.stream.Stream<ItemStack> getItems(){var vessels=java.util.stream.Stream.of(example());return allowLubricantBottle?java.util.stream.Stream.concat(vessels,java.util.stream.Stream.of(new ItemStack(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce","lubricant_bottle"))))):vessels;}@Override public boolean isSimple(){return false;}@Override public IngredientType<?> getType(){return NeoRecipeSerializers.FINITE_CONTAINER.get();}
- }
+    private final ShapelessRecipe base;
+
+    public FiniteBottleFillingRecipe(ShapelessRecipe base) {
+        this.base = base;
+    }
+
+    @Override
+    public boolean matches(CraftingInput input, Level level) {
+        return base.matches(input, level);
+    }
+
+    @Override
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider lookup) {
+        return base.assemble(input, lookup);
+    }
+
+    @Override
+    public ItemStack getResultItem(HolderLookup.Provider lookup) {
+        return base.getResultItem(lookup);
+    }
+
+    @Override
+    public boolean canCraftInDimensions(int width, int height) {
+        return base.canCraftInDimensions(width, height);
+    }
+
+    @Override
+    public String getGroup() {
+        return base.getGroup();
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        return base.category();
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return base.getIngredients();
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        var remains = base.getRemainingItems(input);
+        for (int slot = 0; slot < input.size(); slot++) {
+            var original = input.getItem(slot);
+            for (var ingredient : getIngredients())
+                if (ingredient.getCustomIngredient() instanceof ContainerIngredient container
+                        && container.test(original)) {
+                    remains.set(slot, ContainerIngredient.drainOne(original));
+                    break;
+                }
+        }
+        return remains;
+    }
+
+    public static final MapCodec<FiniteBottleFillingRecipe> CODEC = new ShapelessRecipe.Serializer()
+            .codec().xmap(FiniteBottleFillingRecipe::new, recipe -> recipe.base);
+    public static final RecipeSerializer<FiniteBottleFillingRecipe> SERIALIZER = new RecipeSerializer<>() {
+        public MapCodec<FiniteBottleFillingRecipe> codec() {
+            return CODEC;
+        }
+
+        public StreamCodec<RegistryFriendlyByteBuf, FiniteBottleFillingRecipe> streamCodec() {
+            return ByteBufCodecs.fromCodecWithRegistries(CODEC.codec());
+        }
+    };
+
+    public record ContainerIngredient(String fluidKey, boolean allowLubricantBottle) implements ICustomIngredient {
+        public ContainerIngredient(String fluidKey) {
+            this(fluidKey, false);
+        }
+
+        public ContainerIngredient {
+            if (allowLubricantBottle && !"Lubricant".equals(fluidKey))
+                throw new IllegalArgumentException("250mB bottle alternative is only valid for industrial lubricant");
+        }
+
+        public static final MapCodec<ContainerIngredient> CODEC =
+                com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec(instance -> instance.group(
+                        Codec.STRING.fieldOf("fluid").forGetter(ContainerIngredient::fluidKey),
+                        Codec.BOOL.optionalFieldOf("allow_lubricant_bottle", false)
+                                .forGetter(ContainerIngredient::allowLubricantBottle))
+                        .apply(instance, ContainerIngredient::new));
+
+        public boolean accepts(Fluid fluid) {
+            Fluid wanted = com.gregtech.gregtech.content.food.GTDrinks.fluidForField(fluidKey);
+            if (wanted != null && fluid == wanted) return true;
+            if (!"Lubricant".equals(fluidKey)) return false;
+            var holder = com.gregtech.gregtech.registry.GTFluids.still("LubRoCant");
+            return holder != null && holder.isBound() && fluid == holder.get();
+        }
+
+        public ItemStack example() {
+            Fluid fluid = com.gregtech.gregtech.content.food.GTDrinks.fluidForField(fluidKey);
+            if (fluid == null && fluidKey.equals("Lubricant")) {
+                var holder = com.gregtech.gregtech.registry.GTFluids.still("LubRoCant");
+                if (holder != null && holder.isBound()) fluid = holder.get();
+            }
+            if (fluid == null) throw new IllegalStateException("Missing bottle fluid " + fluidKey);
+            for (String id : new String[]{"fluid_cell_tin", "fluid_cell_wax_magic", "fluid_cell_tungsten"}) {
+                var item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("gt6ce", id));
+                if (item == Items.AIR) continue;
+                var stack = new ItemStack(item);
+                var handler = FluidUtil.getFluidHandler(stack).orElse(null);
+                if (handler != null && handler.fill(new FluidStack(fluid, 1000),
+                        IFluidHandler.FluidAction.EXECUTE) == 1000) return handler.getContainer();
+            }
+            throw new IllegalStateException("No finite physical 1000mB vessel for " + fluidKey);
+        }
+
+        @Override
+        public boolean test(ItemStack input) {
+            if (input == null || input.isEmpty()
+                    || input.getItem() instanceof com.gregtech.gregtech.platform.neoforge.fluid.FluidDisplayItem
+                    || com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(input)) return false;
+            if (allowLubricantBottle && input.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle)
+                return accepts(bottle.fluid());
+            var one = input.copyWithCount(1);
+            var handler = FluidUtil.getFluidHandler(one).orElse(null);
+            if (handler == null) return false;
+            var before = FluidUtil.getFluidContained(one).orElse(FluidStack.EMPTY);
+            if (before.isEmpty() || !accepts(before.getFluid()) || before.getAmount() < 1000) return false;
+            var requested = before.copyWithAmount(1000);
+            var taken = handler.drain(requested, IFluidHandler.FluidAction.EXECUTE);
+            if (!FluidStack.isSameFluidSameComponents(taken, requested) || taken.getAmount() != 1000) return false;
+            var after = FluidUtil.getFluidContained(handler.getContainer()).orElse(FluidStack.EMPTY);
+            return before.getAmount() - after.getAmount() == 1000;
+        }
+
+        static ItemStack drainOne(ItemStack input) {
+            if (input.getItem() instanceof com.gregtech.gregtech.item.BottleItem)
+                return com.gregtech.gregtech.item.BottleItem.emptyBottle();
+            var handler = FluidUtil.getFluidHandler(input.copyWithCount(1)).orElseThrow();
+            var before = FluidUtil.getFluidContained(input).orElse(FluidStack.EMPTY);
+            var drained = handler.drain(before.copyWithAmount(1000), IFluidHandler.FluidAction.EXECUTE);
+            if (drained.getAmount() != 1000) throw new IllegalStateException("Bottle recipe failed to drain 1000mB");
+            return handler.getContainer();
+        }
+
+        @Override
+        public java.util.stream.Stream<ItemStack> getItems() {
+            var vessels = java.util.stream.Stream.of(example());
+            return allowLubricantBottle ? java.util.stream.Stream.concat(vessels,
+                    java.util.stream.Stream.of(new ItemStack(BuiltInRegistries.ITEM.get(
+                            ResourceLocation.fromNamespaceAndPath("gt6ce", "lubricant_bottle"))))) : vessels;
+        }
+
+        @Override
+        public boolean isSimple() {
+            return false;
+        }
+
+        @Override
+        public IngredientType<?> getType() {
+            return NeoRecipeSerializers.FINITE_CONTAINER.get();
+        }
+    }
 *///?} else {
 
 import com.google.gson.JsonElement;
@@ -67,20 +216,25 @@ import java.util.stream.Stream;
  * bottle count; the drained vessel returns in the crafting grid.
  */
 public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
-    public static ContainerIngredient container(String fluidKey) { return new ContainerIngredient(fluidKey); }
+    public static ContainerIngredient container(String fluidKey) {
+        return new ContainerIngredient(fluidKey);
+    }
 
     public static final RecipeSerializer<FiniteBottleFillingRecipe> SERIALIZER = new RecipeSerializer<>() {
         private final ShapelessRecipe.Serializer vanilla = new ShapelessRecipe.Serializer();
 
-        @Override public FiniteBottleFillingRecipe fromJson(ResourceLocation id, JsonObject json) {
+        @Override
+        public FiniteBottleFillingRecipe fromJson(ResourceLocation id, JsonObject json) {
             return new FiniteBottleFillingRecipe(vanilla.fromJson(id, json));
         }
 
-        @Override public FiniteBottleFillingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        @Override
+        public FiniteBottleFillingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             return new FiniteBottleFillingRecipe(vanilla.fromNetwork(id, buffer));
         }
 
-        @Override public void toNetwork(FriendlyByteBuf buffer, FiniteBottleFillingRecipe recipe) {
+        @Override
+        public void toNetwork(FriendlyByteBuf buffer, FiniteBottleFillingRecipe recipe) {
             vanilla.toNetwork(buffer, recipe);
         }
     };
@@ -90,9 +244,13 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
                 base.getResultItem(RegistryAccess.EMPTY), base.getIngredients());
     }
 
-    @Override public RecipeSerializer<?> getSerializer() { return SERIALIZER; }
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
 
-    @Override public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
         NonNullList<ItemStack> remains = super.getRemainingItems(inventory);
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             ItemStack original = inventory.getItem(slot);
@@ -113,9 +271,19 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
     /** Accepts only a drainable finite 1000 mB item, never the creative/display fluid item. */
     public static final class ContainerIngredient extends AbstractIngredient {
         private static final IIngredientSerializer<ContainerIngredient> SERIALIZER = new IIngredientSerializer<>() {
-            @Override public ContainerIngredient parse(FriendlyByteBuf buffer) { return new ContainerIngredient(buffer.readUtf(), buffer.readBoolean()); }
-            @Override public ContainerIngredient parse(JsonObject json) { return new ContainerIngredient(json.get("fluid").getAsString(), json.has("allow_lubricant_bottle") && json.get("allow_lubricant_bottle").getAsBoolean()); }
-            @Override public void write(FriendlyByteBuf buffer, ContainerIngredient ingredient) {
+            @Override
+            public ContainerIngredient parse(FriendlyByteBuf buffer) {
+                return new ContainerIngredient(buffer.readUtf(), buffer.readBoolean());
+            }
+
+            @Override
+            public ContainerIngredient parse(JsonObject json) {
+                return new ContainerIngredient(json.get("fluid").getAsString(),
+                        json.has("allow_lubricant_bottle") && json.get("allow_lubricant_bottle").getAsBoolean());
+            }
+
+            @Override
+            public void write(FriendlyByteBuf buffer, ContainerIngredient ingredient) {
                 buffer.writeUtf(ingredient.fluidKey);
                 buffer.writeBoolean(ingredient.allowLubricantBottle);
             }
@@ -172,7 +340,8 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             throw new IllegalStateException("Could not fill a finite 1000 mB " + fluidKey + " cell");
         }
 
-        @Override public boolean test(@Nullable ItemStack input) {
+        @Override
+        public boolean test(@Nullable ItemStack input) {
             if (input == null || input.isEmpty() || input.getItem() instanceof FluidItem
                     || FluidDisplayBinding.hasPayload(input)) return false;
             if (allowLubricantBottle && input.getItem() instanceof com.gregtech.gregtech.item.BottleItem bottle)
@@ -201,9 +370,18 @@ public final class FiniteBottleFillingRecipe extends ShapelessRecipe {
             return handler.getContainer();
         }
 
-        @Override public boolean isSimple() { return false; }
-        @Override public IIngredientSerializer<? extends Ingredient> getSerializer() { return SERIALIZER; }
-        @Override public JsonElement toJson() {
+        @Override
+        public boolean isSimple() {
+            return false;
+        }
+
+        @Override
+        public IIngredientSerializer<? extends Ingredient> getSerializer() {
+            return SERIALIZER;
+        }
+
+        @Override
+        public JsonElement toJson() {
             JsonObject json = new JsonObject();
             json.addProperty("type", GregTech.id("finite_fluid_container_1000").toString());
             json.addProperty("fluid", fluidKey);
