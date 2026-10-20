@@ -27,7 +27,8 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
                 .meltingPointKelvin(443).boilingPointKelvin(483).density(1.72F).dust().build());
         materials.add(MaterialDeclaration.builder("SampleAlloy")
                 .displayName("Sample Alloy").color(0x8A9BB0).meltingPointKelvin(450)
-                .boilingPointKelvin(2000).density(7F).metal().build());
+                .boilingPointKelvin(2000).density(7F).metal().ores()
+                .oreByproducts("Copper", "Tin").build());
         materials.add(MaterialDeclaration.builder("SampleCrucibleAlloy")
                 .displayName("Sample Crucible Alloy").color(0xC4A574).meltingPointKelvin(1400)
                 .boilingPointKelvin(2500).density(8F).metal().build());
