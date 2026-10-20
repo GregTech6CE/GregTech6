@@ -70,3 +70,5 @@
 第六十二批按当前真实源码选中ToolShapedRecipe和ToolShapelessRecipe，维护行254→456、168→247；旧FiniteBottleFillingRecipe／GeneratedRecipeSink已整理，不重复改写。匹配／工具返还／流体格位／网络编码流程展开，一处Neo载体闭合位置整理，四份完整词法、字面量、真实注释与指令保持。见[工具导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)及[证明](verification/tool-recipe-readability-20261021.json)；密度筛选仍非重复／缺陷计数。
 
 第六十四批整理PumpCatalog 12→27、PumpWorkRules 4→18维护行，all局部out/i/t改pumps/tierIndex/tier；原生PumpBlockEntity的输入预算、冷却、getter、Neo推液和NBT边界展开。完整core237／124与Forge1961／Neo1877项执行流在列明局部绑定归一后保持，其余标识符、数据、分支和指令不动，见[泵导航](ROTATIONAL_PUMP_AUDIT.md)与[证明](verification/rotational-pump-audit-20261021.json)。不是泵玩法修复或所有源码标准化完成。
+
+第六十五批展开四份大型发电参数／涡轮执行源，grades局部list/i/material改gradesByMaterial/gradeIndex/gasGrade；保留私有record、公共名称、四档数据和平台边界。core441及六端1684／1712、1323／1174、2615／2494项在仅局部绑定归一后相同，字面量位置／指令保持；一条气轮Javadoc移除只适用最低档的材质限定，见[导航](LARGE_TURBINE_AUDIT.md)与[证明](verification/large-turbine-audit-20261021.json)。其余职责／压行整理继续，没有把排版计作玩法修复。

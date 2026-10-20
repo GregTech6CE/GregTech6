@@ -59,7 +59,7 @@
 | ALIGN-033 | 确认大型锅炉缺少外部爆炸连锁。 | 原版 onExploded 在表值 >4 时引爆，威力随汽量变化。 | 当前玩家拆机、自身爆炸与高压不掉落存在，缺外部爆炸回调。 |
 | ALIGN-034 | 确认大型锅炉工具损耗和除垢伤害入口不同。 | 原版排空返回实际量，温度计返回工具消耗，除垢调用热伤害及热防护判断。 | 当前排空固定 100，温度计分支只显示信息；除垢直接用 inFire，未经过现有 GTEntityHelper 热防护入口。 |
 | ALIGN-035 | 确认精金大型锅炉压力传感器最大容量被截断。 | 原版 getGibblMax 返回长整数容量。 | 当前 gibblMaximum 调用 int getCapacity：2,621,440,000 变成 2,147,483,647；内部储罐和表针长整数计算未因此缩水。 |
-| ALIGN-036 | 确认焦炉不完整结构的部件绑定策略不同。 | 原版 CokeOven 逐格检查并认领正确部件，缺区块保留旧形成状态。 | 当前共用 LargeRecipeMachine 首次遇错即清空已绑定部件，仅完整候选才整体绑定；部件工具／传感器转发也依赖这份主控引用。 |
+| ALIGN-036 | 确认已核多方块不完整结构的部件绑定策略不同。 | 原焦炉／大型涡轮逐格检查并认领正确部件，缺关键区块保留旧形成状态。 | 当前共用 LargeRecipeMachine 首次遇错即清空已绑定部件，仅完整候选才整体绑定；部件工具／传感器转发也依赖这份主控引用。大型蒸汽／燃气涡轮相同认领／缺区块差异亦已扩围，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-037 | 确认焦炉自动排液时机、速率和目标优先级不同。 | 原版在 doWork 前排液，默认最大搬运量；九格目标按世界 X/Z 遍历。 | 当前停机／未形成提前返回，普通 autoIO 单次 1000 L；目标顺序随朝向旋转。外部管道主动抽取不包含在此结论中。 |
 | ALIGN-038 | 确认焦炉缺少原版流体积压停产阈值。 | BasicMachine.canOutput 对同种已有液体检查 max(16000,1+单次输出×并行上限)，有指定豁免。 | 当前 fluidsFit 只看剩余容量，焦炉输出罐为 Long.MAX_VALUE；500 L／煤、16 并行的原版阈值为 16000 L。不是应把储罐容量硬改成 16000。 |
 | ALIGN-039 | 确认焦炉点火窗口最后一刻的启动许可不同。 | 原版 doWork 末尾递减，剩余 1 tick 时仍可开新配方。 | 当前 beforeMachineTick 先减为 0，再检查启动；已有进行中任务不因此取消。部分输出刷新的差异另待原生状态验证。 |
@@ -137,7 +137,7 @@
 | ALIGN-108 | 确认手动／按钮选择器停止加载时丢失面板恢复机会。 | 原版 onCoverLoaded 无条件用保存值恢复模式。 | 当前 stopped 跳过循环但仍清 restore，恢复后读宿主模式覆盖面板；宿主独立保存可能掩盖，未实测重启，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-109 | 确认按钮复位比原版提前一个机器工作阶段。 | 原版 post-work tick 将倒计时 2 变 1 并清零模式。 | 当前 beforeTick 清零，电动机随后执行转换器；末轮机器采用模式不同，不是 10→1 数量规则错误，见 [报告](SELECTOR_PANEL_AUDIT.md)。 |
 | ALIGN-110 | 确认通用检测／自动红石控制丢失成功状态。 | 原版专用成功接口，控制扩展器转发目标状态。 | MachineControl 无该字段，通用 State 固定 false，安装仅看 supportsSwitch；基础机另有 successful 专用输出，不算全失效，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
-| ALIGN-111 | 确认控制扩展器未转发独立开工条件。 | 原版直接查询目标 getStateRunningPossible。 | 当前默认 active 或 progressMax>0 近似，可能漏掉有配方但尚未启动的目标；条件案例未游戏验证，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。 |
+| ALIGN-111 | 确认通用控制未保留独立开工条件。 | 原版直接查询目标 getStateRunningPossible。 | 当前默认 active 或 progressMax>0 近似，可能漏掉有配方但尚未启动的目标；条件案例未游戏验证，见 [报告](CONTROLLER_DETECTOR_AUDIT.md)。大型涡轮原possible恒true、当前idle默认false的具体宿主已确认，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-112 | 确认显示面板缺少原版图层独立高亮。 | 能源显示及状态的部分指示图层 aGlow=true，构造器使用自带亮度 240。 | 当前仅字符串图层，全部传环境 light；源码确认，暗室实际观感未验，见 [报告](DISPLAY_METER_AUDIT.md)。 |
 | ALIGN-113 | 确认独立传感器比例／百分比红石分档不同。 | 原版中间正值使用 1+value×14/max。 | 当前 floor(value×15/max)，50% 为 7 而非 8，零阈值也不同；不可改错覆盖板自己的量化，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
 | ALIGN-114 | 确认堆叠计错误按物品数除以 64。 | 原版数可访问的非空堆，最大为槽位数。 | 当前 count/64、slotLimit 总和/64；单个物品显示 0，见 [报告](SENSOR_EXECUTION_AUDIT.md)。 |
@@ -165,7 +165,7 @@
 | ALIGN-136 | 确认大容量存储缺少钳子取物与软锤清空入口。 | 原版分别处理背包转移／分批正面掉落及余料。 | 两版方块／实体及工具入口未补齐，提示仍列出这些操作；按钮和外部抽取不是替代，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-137 | 2026-10-20 玩家反馈修复：自动下送／溢出执行已补齐。 | 位 1／4 切换、ticker、容量 +256、超额下送、底面输入门控及封装时模式切换已接入。 | NeoForge 定向运行验证真实活动扳手、下方箱子输出和溢出；其他存储工具／覆盖板问题另列，见[修复记录](verification/storage-direction-colors-20261020.md)。 |
 | ALIGN-138 | 确认大容量存储遗漏正面覆盖板门控。 | 原版任何正面覆盖板阻止普通取放，不透明板另隐藏显示。 | 普通装饰板的事件链仍 PASS 到按钮；渲染也缺可见性判断，未客户端验收，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)。 |
-| ALIGN-139 | 确认部分库存宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。 |
+| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-140 | 确认保险箱覆盖板操作遗漏宿主锁权限。 | 原版普通／工具覆盖板入口先调用 allowInteraction，检查认主或开锁。 | 当前事件提前消费，只有世界建造权限，没有 Safe 的锁门控；不等于世界保护失效或外部能力盗取内容，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-141 | 确认机械箱首次非正面普通右键不认主。 | 原版先 allowRightclick／allowInteraction 认主，随后限制 GUI 正面。 | 当前先非正面 PASS；现有背面不认主测试固定了不同合同，不作为对齐证据，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-142 | 确认保险箱和普通箱遗漏点击面邻块阻挡查询。 | 原版 Base04 普通入口查询 WD.obstructed；保险箱工具路径也查询。 | 当前锁／工具和普通箱顶面开盖条件不能补该查询；下半砖示例未运行，不推定所有方块缺失，见[保险箱](SAFE_LOCKER_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。 |
@@ -244,10 +244,10 @@
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
 | ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
-| ALIGN-218 | 确认两太阳能板与四旋转泵默认堆叠上限16→64。 | 原10050／10051、16001–16004注册stack16，经ClassContainer与ItemInternal消费。 | 两太阳能和四泵均plain BlockItem默认64；32块可由至少2槽变1槽。只核这六项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)与[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-218 | 确认已核14种能源设备默认堆叠上限16→64。 | 原两太阳能、四泵、八大型蒸汽／燃气涡轮均注册stack16并被原Item消费。 | 当前对应plain BlockItem默认64；只核这14项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)与[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
-| ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过单块换热器专用整罐。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
+| ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-222 | 确认旋转泵相连液体搜索被独立区域逐列扫描替代。 | 从正面同族液体连通扩散，按轻重切层，有3000／20刻重查。 | 当前先扫入口(-64,-64)列、高度-64起，入口空气也可抽孤立远源；固定向下／source扫描不等价，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-223 | 确认旋转泵RU输入范围和异常包处理不同。 | 四档有效存能R/2–2R；低速包消耗但不存，超限进保护计数。 | 当前固定8–R，青铜48被拒、8被存；无原过载反馈，不据此恢复爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-224 | 确认旋转泵整包下舍入可能令合法恒定输入达不到启动门槛。 | 8192需求按包向上取整，青铜17包可达8194。 | 当前最多481包到8177，余15拒17包且<8192不抽，条件持续则停；额定32正常，既有8191测试不是原版舍入证明，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
@@ -255,6 +255,11 @@
 | ALIGN-226 | 确认旋转泵只读出液罐变为允许外部填充的双向能力。 | 无盖泵fillable=null，Root.fill返回0；抽取任意面、主动推四侧。 | 两端直接返回tank，空罐fill1000可成功，四侧未排空时暂停抽新源；容量差异仅在特定量条件适用，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-227 | 确认旋转泵缺少原开关与运行状态接口。 | 原SwitchableOnOff／RunningActively由控制／检测盖消费，停机拒供能及新源抽取、仍推旧液。 | 当前无stopped／历史／MachineControl.Provider；Mixin后备覆盖板宿主已有，撤回全安装失败说法。fallback只有计量、supportsSwitch=false，原控制／运行检测未接通，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
 | ALIGN-228 | 确认四档旋转泵硬度／抗爆统一后丢失原规格。 | 原7/7、6/6、9/9、12.5/12.5由Paintable字段及MTE Block实际getter消费。 | 当前四档Properties.strength(4,6)，无PumpBlock覆写；未量测实际挖掘／爆炸，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)。 |
+| ALIGN-229 | 确认大型燃气涡轮可变即时输出被最大包整批与下一刻队列替代。 | 燃料不足最大批次仍可按HU/RU比达到半额门槛，当刻转换。 | 最低档256L氢=4096HU，原可当刻尝试2730RU，当前<12288不转换；凑满后仍延后发送，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
+| ALIGN-230 | 确认大型燃气涡轮拒收后的能量／燃烧政策不同。 | 原storage≥max特例在尝试后无条件回写tEnergy-max，即使NBT waste=false。 | 当前保留ruStored并停烧后续燃料；768L氢、持续拒收两刻后原HU=0／现存8192RU。保护政策不自动回退，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
+| ALIGN-231 | 确认大型蒸汽涡轮过载变为持久锁停。 | 原前100次保护清storage但不置mStopped，启动头两刻另有处理，后续破坏受配置。 | 当前首次output超限置overloaded／stopped并清pending，远程开关不能复位；满合法罐98304L可达。该分支无爆炸，不自动恢复危险行为，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
+| ALIGN-232 | 确认大型涡轮的能力查询反复全扫并认领结构。 | 原未变更checkStructure(false)用缓存，部件查询不重跑35格循环。 | 当前每次target→isStructureOk建立Map／扫35格／bind35次，稳定20查询至少700次；非TPS测量，缓存需保留现代失效保护，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
+| ALIGN-233 | 确认大型涡轮未接专用结构建造与形成诊断入口。 | 原Base10把建造棒坐标／库存传到两类checkStructure2，Util可放墙认领并报告形成。 | 当前主控不是MultiblockToolTarget，普通建造棒仍复制平面；部件转发也缺目标接口。预览不替代功能，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -286,7 +291,7 @@
 | 坩埚、相变、铸造 | 已确认 ALIGN-001，待核其余分支 | 致死回收、热采掘、冷却目标、过热与材料守恒 |
 | 单方块机器 | 共用加工执行／中断／供能已确认 ALIGN-040–047，逐控制器及其余分支继续 | 配方映射、输入输出、额定值、超载、工具交互与持久化 |
 | 多方块与部件 | 大型锅炉、焦炉、聚变／内爆的部分结构／执行链已核查；物质制造结构／参数／特殊配方声明已对照 | 结构位置、部件角色、断开行为、建造与诊断、部件共用身份；整体绑定差异见 ALIGN-036，聚变输出／控制、内爆音效及聚变连续恢复见 ALIGN-052–056；物质制造最终配方解析、其它主控及跨区块行为继续 |
-| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪LU水晶注册消费；另核两种太阳能板、八种单块热交换器与四旋转泵实际主链 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，太阳能堆叠218、换热状态／点火／玩家排液219–221另列，原火／邻液扩017与工具成本扩126；旋转泵搜索／输入／能力／控制及物性222–228已记录，其余能源设备及实际保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
+| 能量生产与转换 | 已核电／Flux 动力转换、十五种单方块蒸汽涡轮、26 种小锅炉、五种大型锅炉及四种燃烧室主要路径；另核九档电变压器、二十种电池盒及二十五种化学电池目录，追踪LU水晶注册消费；另核两种太阳能板、八种单块热交换器、四旋转泵及八大型蒸汽／燃气涡轮实际主链 | 核心边界例子、额定目录与原生调用链已记录；固体自动化／外部燃料、全材料灰渣、其他多方块、旋转／长距离转换、LU 充能器／便携电源缺项已登记，太阳能堆叠218、换热状态／点火／玩家排液219–221另列，原火／邻液扩017与工具成本扩126；旋转泵搜索／输入／能力／控制及物性222–228已记录，大型涡轮转换／反馈／查询／工具229–233及已知宿主扩围；其余能源设备及实际保存重启仍待核，见 [能源核查](ENERGY_CONVERTER_AUDIT.md)、[锅炉核查](BOILER_BURNING_BOX_AUDIT.md)、[固体／流化床](SOLID_FLUIDBED_AUDIT.md) 和 [大型锅炉](LARGE_BOILER_AUDIT.md) |
 | 电线、流体／物品管道、长距离物流 | 待逐网络重核 | 优先级、路由、丢包、接收端卸载与跨区块边界 |
 | 储物、容器与传感器 | 普通／物流桶、计量、各类库存、原生爆炸、填槽、两版通知及共用菜单九类实际宿主已局部核查 | 差异见 ALIGN-077、083–097、112–120、136–163、168、172–173、179；六类同源回调和三类补偿／限制已分开，继续其它菜单、覆盖板归属、成组掉落、量子／中继桥、材料重量、手持仪表与保存恢复；源码链不等于游戏场景已运行 |
 | 覆盖板、面板与红石 | 待逐行为重核 | 安装面、厚度、信号方向、过滤、同步与拆除 |
@@ -327,6 +332,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第六十五批八大型涡轮新增229–233，036／111／139／218／221扩宿主；26原／47当前、72视图、八注册／六向源坐标及有限燃料例子归档，四份源码展开并保持执行。普通掉落已有清理补偿，不报完整NBT携带缺陷；Mixin后备宿主纳入实际链。见[专题](LARGE_TURBINE_AUDIT.md)与[回执](verification/large-turbine-audit-20261021.json)，继续大型发电机／避雷针／大型换热与全面队列。
 
 第六十四批核四旋转泵实际搜索／输入／能力／控制与物性，新增222–228并扩218；17原／24当前、30视图、两个原生工件8entry及有限17RU停泵见证归档，三份源码仅展开与局部命名，见[旋转泵](ROTATIONAL_PUMP_AUDIT.md)和[回执](verification/rotational-pump-audit-20261021.json)。不把源推导当游戏，不将RU泵误加进易水风险；大型涡轮、避雷针和全面队列继续。
 
