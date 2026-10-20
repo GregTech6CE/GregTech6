@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, detector, tank-wall multiblock, irrigator, rotation buffer, hand crank, transformer and pipes. */
+/** Sample press, detector, tank-wall multiblock, irrigator, miner, void hopper, rotation buffer, hand crank, transformer and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -121,14 +121,18 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER);
+        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER);
     }
 
-    @Override public Set<String> machineTypes() { return Set.of("irrigator", "ru_buffer", "hand_crank", "sample_transformer"); }
+    @Override public Set<String> machineTypes() {
+        return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank", "sample_transformer");
+    }
 
     @Override public MachineBehavior create(String machineType) {
         return switch (machineType) {
             case "irrigator" -> new Irrigator();
+            case "sampleminer" -> new Miner();
+            case "samplehopper" -> new VoidHopper();
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
             case "sample_transformer" -> new Transformer();
@@ -152,6 +156,23 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
             .fluid(8000, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
             .toggle("addon_sample.irrigator.water", 26, 64, true)
+            .build();
+
+    /** Breaks one block under itself per tick and keeps the scan index. */
+    private static final BehaviorMachineDeclaration MINER = BehaviorMachineDeclaration.builder("sample_miner", "Steel")
+            .machineType("sampleminer").energy("EU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+            .maxRange(2)
+            .build();
+
+    /** Pulls item entities into the output slot, or voids them while the switch is on. */
+    private static final BehaviorMachineDeclaration VOID_HOPPER = BehaviorMachineDeclaration.builder("sample_hopper", "Steel")
+            .machineType("samplehopper").energy("EU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+            .toggle("addon_sample.hopper.void", 26, 64, false)
+            .maxRange(4)
             .build();
 
     /** Stores RU from the sides and, while the switch is on, emits one packet from the back. */
@@ -238,6 +259,58 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 }
             }
             return null;
+        }
+    }
+
+    /** Walks the cube under the machine. Air is skipped. One break spends 16 EU. */
+    private static final class Miner implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (context.energy() < 16) {
+                context.progress(0);
+                return;
+            }
+            int range = 2;
+            int step = context.state().getInt("step");
+            int width = range * 2 + 1;
+            int span = range * width * width;
+            for (int guard = 0; guard < 64; guard++) {
+                int index = Math.floorMod(step, span);
+                int layer = width * width;
+                int dy = -1 - index / layer;
+                int rest = index % layer;
+                BlockPos pos = context.pos().offset(rest / width - range, dy, rest % width - range);
+                if (!context.level().hasChunkAt(pos)) break;
+                var state = context.level().getBlockState(pos);
+                if (state.isAir() || state.getDestroySpeed(context.level(), pos) < 0) {
+                    step++;
+                    continue;
+                }
+                context.working(true);
+                if (!context.breakBlock(pos)) break;
+                context.consume(16);
+                step++;
+                break;
+            }
+            context.state().setInt("step", step);
+            context.progress(span == 0 ? 0 : Math.floorMod(step, span) / (float) span);
+        }
+    }
+
+    /** Collects item entities in a 4-block cube. The switch discards them instead. */
+    private static final class VoidHopper implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (context.energy() < 8) return;
+            int taken = context.collectItems(4, context.toggle(0));
+            if (taken > 0) {
+                context.consume(8);
+                context.working(true);
+            }
         }
     }
 
