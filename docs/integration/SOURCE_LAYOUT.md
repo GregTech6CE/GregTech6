@@ -268,3 +268,13 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - core `content/storage/OriginalStorageTooltipData.java`：存储提示的行选择；不是玩法实现清单。
 
 各宿主锁权限、正面限制、自动化和拆除不同，见[核查](SAFE_LOCKER_AUDIT.md)。全量路径／命名和剩余压行候选见[布局盘点](SOURCE_READABILITY_INVENTORY.md)。
+
+## 瓶框、书架与原生配方桥接
+
+- `block/inventory/BottleCrateBlock.java`：世界 X/Z 格子与整组取放；`blockentity/inventory/BottleCrateBlockEntity.java`：handler、同步、packedStack 和拆除快照。
+- core `content/storage/ContainerStorageRules.java` 与共享 `content/tool/BottleCrateGeometry.java`：瓶身／液体／瓶颈坐标；不随框朝向旋转格子。
+- `block/BookShelfBlock.java`、`blockentity/inventory/BookShelfBlockEntity.java`：书面交互、附魔、控制、loot 和保存；core `content/book/BookShelfRules.java` 与共享 `content/book/GTBookList.java`：当前允许集和书点，完整原版陈列登记仍缺部分。
+- `registry/GTEngines.java`：Forge 走现有 MachineRegistry，Neo 走各类型实体构造分支，维护两版本体均已展开。
+- `recipe/FiniteBottleFillingRecipe.java`：装瓶配方的消耗／余料版本边界；core `content/recipe/generated/GeneratedRecipeSink.java`：唯一配方表的线程内 consumer 与 finally 恢复，属于运行桥接，不是普通数据行。
+
+缺项与十一份投影等价边界见[本批报告](BOTTLE_BOOKSHELF_AUDIT.md)。

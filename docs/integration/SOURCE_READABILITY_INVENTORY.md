@@ -33,6 +33,8 @@
 
 盘点后已完成表中前三份 Neo 入口：StorageContainerClientSetup 4→81 行、EngineClientSetup 9→84 行、GTRelaysFilters 6→54 行；词法、字面量、注释和条件指令均保持。其原长行指标作为整理前的证据保留，不再列作当前待办。Neo GTSafes／SafeClientSetup 也已在本批展开。
 
+2026-10-21 续：表中 GTEngines、FiniteBottleFillingRecipe 的隐藏 Neo 体及 core GeneratedRecipeSink 也已展开，五份执行投影保持；瓶框三份整理另有六份投影。表中对应行保留原盘点数值，当前不再列作待整理，见[第四十七批](BOTTLE_BOOKSHELF_AUDIT.md)。大型业务类与其它压行仍继续。
+
 346 个生产文件命中分号／花括号密度启发式，包括正常循环和布局数据，不能称为 346 个缺陷。坐标、形状、配方数据行可以保留紧凑表示；大类应按稳定职责拆分，不能只为降低行长移动代码。
 
 ## 生成数据归属
