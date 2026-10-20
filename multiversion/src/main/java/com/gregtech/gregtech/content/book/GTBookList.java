@@ -13,17 +13,17 @@ import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**
- * GT6's book registry ({@code LoaderBookList}, {@code BooksGT.BOOK_REGISTER} /
- * {@code BOOKS_NORMAL} / {@code BOOKS_ENCHANTED}) — what a {@link
- * com.gregtech.gregtech.block.BookShelfBlock GT book shelf} accepts and how much enchanting power
- * each stored item is worth.
+ * Native item-stack adapter for the shelf classifications currently adopted in {@link BookShelfRules}.
+ * It supplies accepted display items, automated extraction exclusions and stored-item book points
+ * to {@link com.gregtech.gregtech.block.BookShelfBlock}.
  *
  * <p>GT6 keeps three sets: the {@code BOOK_REGISTER} map (everything that can be <em>displayed</em>
  * on a shelf — books, paper, maps, frames, buttons, levers, torches and stone decoys),
  * {@code BOOKS_NORMAL} (plain books, worth one enchantment point) and {@code BOOKS_ENCHANTED}
- * (enchanted books, worth two). The port's own manuals and material dictionaries are vanilla written
- * books (§21/§31), so they fall into {@code BOOKS_NORMAL} automatically. GT6's two dusty loot
- * books are separate items; both are also normal books.
+ * (enchanted books, worth two). The current rules contain a fixed subset of that registry, including
+ * vanilla books, adopted colored book IDs and the two dusty loot books. They do not yet include all
+ * original technological display items or optional external book registrations. The points returned
+ * here describe contents only; they do not include the original MAGICAL material base bonus.
  */
 public final class GTBookList {
     private GTBookList() {}
@@ -41,21 +41,25 @@ public final class GTBookList {
         return id != null && (id.toString().equals(DUSTY_GUIDE) || id.toString().equals(DUSTY_DICTIONARY));
     }
 
-    /** GT6 {@code BooksGT.BOOK_REGISTER}: everything that can sit on a shelf. */
+    /** Current adopted subset of GT6 {@code BooksGT.BOOK_REGISTER}. */
     public static boolean canPlace(ItemStack stack) {
 //? if >=1.21.1 {
-        /*return !stack.isEmpty() && BookShelfRules.canPlace(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+        /*return !stack.isEmpty()
+                && BookShelfRules.canPlace(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
 *///?} else {
-        return !stack.isEmpty() && BookShelfRules.canPlace(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+        return !stack.isEmpty()
+                && BookShelfRules.canPlace(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
 //?}
     }
 
-    /** GT6 {@code BooksGT.BOOKS_NORMAL} — worth one enchantment point. */
+    /** Current one-point book classification, corresponding to GT6 {@code BooksGT.BOOKS_NORMAL}. */
     public static boolean isNormalBook(ItemStack stack) {
 //? if >=1.21.1 {
-        /*return !stack.isEmpty() && BookShelfRules.enchantPower(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString())==1;
+        /*return !stack.isEmpty()
+                && BookShelfRules.enchantPower(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()) == 1;
 *///?} else {
-        return !stack.isEmpty() && BookShelfRules.enchantPower(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString())==1;
+        return !stack.isEmpty()
+                && BookShelfRules.enchantPower(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString()) == 1;
 //?}
     }
 
@@ -64,7 +68,7 @@ public final class GTBookList {
         return stack.is(Items.ENCHANTED_BOOK);
     }
 
-    /** Any book, plain or enchanted. */
+    /** Whether the current classifications treat this stack as a plain or enchanted book. */
     public static boolean isBook(ItemStack stack) {
         return isNormalBook(stack) || isEnchantedBook(stack);
     }
@@ -72,20 +76,22 @@ public final class GTBookList {
     /** GT6 excludes its button, lever, torch and cobblestone decoys from automated extraction. */
     public static boolean canAutoExtract(ItemStack stack) {
 //? if >=1.21.1 {
-        /*return !stack.isEmpty() && BookShelfRules.canAutoExtract(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
+        /*return !stack.isEmpty()
+                && BookShelfRules.canAutoExtract(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
 *///?} else {
-        return !stack.isEmpty() && BookShelfRules.canAutoExtract(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+        return !stack.isEmpty()
+                && BookShelfRules.canAutoExtract(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
 //?}
     }
 
-    /** GT6 {@code MultiTileEntityBookShelf.getEnchantPowerBonus}: +1 per book, +2 per enchanted book. */
+    /** Stored-item points used by GT6's shelf: +1 per classified plain book, +2 per enchanted book. */
     public static int enchantPower(ItemStack stack) {
         if (isEnchantedBook(stack)) return 2;
         if (isNormalBook(stack)) return 1;
         return 0;
     }
 
-    /** The shelf's total enchanting power across its slots. */
+    /** Total stored-item points, before division by twelve and any material bonus. */
     public static int enchantPower(ItemStackHandler inventory) {
         int points = 0;
         for (int slot = 0; slot < inventory.getSlots(); slot++) {
@@ -114,7 +120,7 @@ public final class GTBookList {
      * @param hitY  hit y within the block (0..1, GT6's {@code tCoords[1]})
      */
     public static int slotFor(boolean front, double hitX, double hitY) {
-        return BookShelfRules.slotFor(front,hitX,hitY);
+        return BookShelfRules.slotFor(front, hitX, hitY);
     }
 
     /** Unused, but keeps the vanilla bookshelf block referenced for the javadoc above. */

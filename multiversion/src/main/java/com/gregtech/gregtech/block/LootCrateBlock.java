@@ -64,7 +64,7 @@ public class LootCrateBlock extends Block {
         return VANILLA_TABLES.get(random.nextInt(VANILLA_TABLES.size()));
     }
 
-    /** One roll of a random vanilla loot table (GT6's {@code generateOneVanillaLoot}). */
+    /** Run a random modern table, then choose one output stack; GT6 chose one weighted entry. */
     public static List<ItemStack> rollVanillaLoot(ServerLevel level, BlockPos pos, RandomSource random) {
 //? if >=1.21.1 {
         /*LootTable table = level.getServer().reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,randomTable(random)));
