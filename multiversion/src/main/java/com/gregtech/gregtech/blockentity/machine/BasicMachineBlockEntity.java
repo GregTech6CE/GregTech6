@@ -644,21 +644,10 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     protected boolean usesTimeEnergy() { return spec!=null&&spec.energyTag()==GregTechTags.Energy.TU; }
     protected long inputMinimum() { return spec.energyInMin(); }
     protected long inputMaximum() { return spec.energyInMax(); }
-    protected boolean parallelScalesDuration() {
-        var original = spec == null ? null : com.gregtech.gregtech.data.BasicMachineOriginalParams.find(spec.machineName(), spec.tier());
-        return original == null || original.parallelDuration();
-    }
-    // Loader_MultiTileEntities 22010 explicitly enables cheap overclocking for the Melter.
-    protected boolean cheapOverclocking() {
-        boolean addonBasic = spec != null && !"gt6ce".equals(spec.namespace())
-                && spec.controllerKind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC;
-        return com.gregtech.gregtech.api.addon.AddonOverclock.enabled(addonBasic,
-                spec != null && spec.cheapOverclockingDeclared(),
-                spec != null && spec.cheapOverclocking(),
-                spec != null && com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.cheapOverclocking(spec.machineName(), spec.tier()));
-    }
-    protected boolean requiresConstantEnergy() { return !usesTimeEnergy()&&(spec==null||!com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.noConstantPower(spec.machineName(),spec.tier())); }
-    protected int efficiency() { return spec==null?10000:com.gregtech.gregtech.content.machine.OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier()); }
+    protected boolean parallelScalesDuration() { return spec == null || spec.parallelScalesDuration(); }
+    protected boolean cheapOverclocking() { return spec != null && spec.cheapOverclocking(); }
+    protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && (spec == null || spec.constantEnergy()); }
+    protected int efficiency() { return spec==null?10000:spec.processingEfficiency(); }
 
     protected boolean structureComplete() {
         return true;
