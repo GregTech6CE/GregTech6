@@ -1,0 +1,1490 @@
+{
+  "batch": 81,
+  "date": "2026-10-21",
+  "baseline": "b7becd03486bb2662cc9b817fb59d991c64b9654",
+  "new_records": [
+    275,
+    276
+  ],
+  "scope": "Eight shared relay variants, native registration and live forwarding; null-side component/filter installation failure and missing permissions/ticks for restored native cover slots.",
+  "counts": {
+    "original_sources": 25,
+    "current_sources": 34,
+    "shared_platform_views": 48,
+    "readability_files": 3,
+    "readability_execution_views": 5
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "sha256": "5bdb146ffe635f31c83df595714ca9e7fda012c7e13485948b45a2c4228e6168",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtenderController.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtenderController.java",
+      "sha256": "220238e5b50477ffbcb28bcc114dfc6e7a95570957525ef72fad307a17463688",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/CoverData.java",
+      "relative": "gregapi/cover/CoverData.java",
+      "sha256": "e2069e2a2095a44e0ea1be7d38d9c4068cacb70f7850b2bc49a85e37d848da75",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachment.java",
+      "relative": "gregapi/cover/covers/AbstractCoverAttachment.java",
+      "sha256": "80de1877f10359939f03f7da221bc23fe0927a1368f206062b36df2efe957bf7",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverDefault.java",
+      "relative": "gregapi/cover/covers/AbstractCoverDefault.java",
+      "sha256": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverFilterItem.java",
+      "relative": "gregapi/cover/covers/CoverFilterItem.java",
+      "sha256": "aef369a78515dcee7f1acc869597f503cb89429d9bbce373d9e537cac66086ae",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverFilterFluid.java",
+      "relative": "gregapi/cover/covers/CoverFilterFluid.java",
+      "sha256": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverConveyor.java",
+      "relative": "gregapi/cover/covers/CoverConveyor.java",
+      "sha256": "8b182ba4124f66e48b31b4f9863c00bfe6cf57f51fa7a5ef4b62dbe3a12bb8c4",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverPump.java",
+      "relative": "gregapi/cover/covers/CoverPump.java",
+      "sha256": "d7425ae66212cbf5ffb8ab2ffb51e3b257a0e491166d7a25533017db2d1a7bf6",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRobotArm.java",
+      "relative": "gregapi/cover/covers/CoverRobotArm.java",
+      "sha256": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "relative": "gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "relative": "gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemTechnological.java",
+      "relative": "gregtech/items/MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "sha256": "e514a34f0793c0c2dfcd5d7a6b77a6b16c8419c6bb35d11ca4c20dd0386c51fa",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "sha256": "7d83c9905ac30cd22cc6d57960c440afde9e788a90c397352905e0b4ed4ca233",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java",
+      "sha256": "45befd9c8e4007673a93dcb70aec0c304a0857612b7c15b2d4661fb13e65ed83",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRules.java",
+      "sha256": "5c2636d33b98ceaa32a1c1ef62f191cbafba0ecbe72d47f67749c1dc3e1cb248",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/TechnologicalItemDefinitions.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/recipe/TechnologicalItemDefinitions.java",
+      "sha256": "ed15884a595a7f809dacc7232ceba5732f4b26449e9d4bf3184a8e93c1938a0f",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "sha256": "cf0e2c90e37aea17437863ba1b150a9fec8c31802e48b3c7231dd4b4c9953a00",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "sha256": "d950252aa67b5d4e3a18d17b9338c5b4b2e4685de1dac4ced457c080a8d00dec",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "sha256": "1fa31a356a1fd7bd3c7d6539ceb5b66fa0a8b9efd7543109860466e47a0f623b",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "sha256": "6d0c1d04d7795296dc3a498b545b7e53419e8ba1cc8ae4787bdf608b035aa41f",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "sha256": "31d7cbd2fd4e2a38d68cce5333b2ac82567c35371833c07534a17b6b5264a3f4",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+      "sha256": "777d695d41f8c8d8989bdec7290116080e4e44b682ab839f8e6bf6b054f1f9a1",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "sha256": "91324b807b0c1ccfa432c642fc4a99f8832e1037b03fa8bbdc364aa58fec3b0e",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "sha256": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "sha256": "9d2a58b9c4a3614ae67ee7ef2580008ae4d5980d1e25f96022009c8f0e11e8a5",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "sha256": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "sha256": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named8-spec relay routes and shared capability wrappers, installed-cover filters/direction and active-component scheduling; not whole-file/system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "b1078af28147c59ecec2a33a895eb1a6c76f833365ff0ea8c6e8be5fb69cb905",
+      "tokens": 1552
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f4a54e134ad48189cf46c573def50a121b85a7aa8681713dade9cdd665025da6",
+      "tokens": 1453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "0b84c76fe5f76320c545904cd8dcf87c22bececa3e6e431735ecbd5a8de1a22d",
+      "tokens": 1610
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "a0cc44b95ccc1219d39e8c2ca8c6875f7d50bea6b2825a2746e093e1bdcf78eb",
+      "tokens": 1511
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "forge",
+      "sha256": "bd11d82b9e9c3919d34f9f0e2a8f42ce6c589a619db67e3e2e5b41f3d1274021",
+      "tokens": 2515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "e0b1224543bb7da5cd2060efac30c22571e48ff7b2f25f8607d58991e603ed38",
+      "tokens": 2587
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "forge",
+      "sha256": "d0b244aef47f5e8ebc1318cf40419bfdcadbc939c39b46d2dc8bd91c5de9da39",
+      "tokens": 1305
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "neoforge",
+      "sha256": "4e737f33d8dd560ecce86ad5bf6129ed8cd00b2f775faacf15a6f7e4a633d8b3",
+      "tokens": 1575
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "forge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "neoforge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "platform": "forge",
+      "sha256": "27f0491b8dd3e82c70e8764d0495e2c0605c841fa407921fcc15530de1b54355",
+      "tokens": 514
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "platform": "neoforge",
+      "sha256": "d0ee4efc3e9fef3f4e16a0f93942d1e838faeb7777880709761c370233787f37",
+      "tokens": 519
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "platform": "forge",
+      "sha256": "90aaf1d96a26123ab3b9d894aa19ca3c65d57cfc01da0af0703e6c62e1f2eb21",
+      "tokens": 1506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "platform": "neoforge",
+      "sha256": "20be436cbf15cedb04085c445516c390201896499ca58f4c65e90045d3778718",
+      "tokens": 1526
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "platform": "forge",
+      "sha256": "cb0296efe10c8dba4133e3c73e59512d4ac419d85f6c773c3bcf46ad151a106c",
+      "tokens": 720
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverAccess.java",
+      "platform": "neoforge",
+      "sha256": "ebedc1fac0abb9ac84c4e944bf1ed7f01f620b3f5c51c02437fe1ac5bc23ac1b",
+      "tokens": 824
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "platform": "forge",
+      "sha256": "15530d931bc1d7a25ea9badfde385fe32ddecea7b43efb7722b835170976f52b",
+      "tokens": 648
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "platform": "neoforge",
+      "sha256": "1bb263ea515be60a71860e66a1e27d262584ab922f391f9375ad6b153e08285b",
+      "tokens": 669
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+      "platform": "forge",
+      "sha256": "25e99475019fc9bc2644f4ea2ff4b46e57becbdf4bcfff73b0b39dc058bb1f32",
+      "tokens": 405
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallbackEvents.java",
+      "platform": "neoforge",
+      "sha256": "e65ad6d0b3ba156083ce7064aadcbb025423c530c7edb54d703a2e14f1d907c4",
+      "tokens": 164
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "tokens": 3948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "tokens": 3957
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "platform": "forge",
+      "sha256": "77ad3062a5afaaa33aef2695f4da7ee04dfb998054eebcf61d04fa77fbe3f094",
+      "tokens": 3174
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverUtilityBehaviors.java",
+      "platform": "neoforge",
+      "sha256": "76b3ac54181093427f6985bec25c562c577cbbe6f90abefba15d9db38cd7afc8",
+      "tokens": 3299
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "platform": "forge",
+      "sha256": "e9e14b42415d326cd818a75213b260ef248cf294b6462f94f488cb1c6da6b5eb",
+      "tokens": 907
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "platform": "neoforge",
+      "sha256": "18c1d3e4a78facc0d055104af13f36e62e53ad0e75470919d99d696633568de4",
+      "tokens": 896
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "forge",
+      "sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+      "tokens": 943
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "neoforge",
+      "sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+      "tokens": 343
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "120bd77dadf304d5418db0b64328a700195858511a156b7d99b1d008052b136c",
+      "tokens": 873
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "2561f6ee2466ed57c8405a9ca32d92e6323b95b54612293d4fa604e3231f4a90",
+      "tokens": 895
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "forge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/machine/MachineControl.java",
+      "platform": "neoforge",
+      "sha256": "1ad6d3bddfdb46e4de55f471b2f2cf879c57c9e53106aa53187cd147779087b2",
+      "tokens": 179
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "forge",
+      "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "neoforge",
+      "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "9dda275fe97166aaabea7a8a71d9a5d4808a60d4c2fa182e3e316e734265d38e",
+      "tokens": 779
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "9dda275fe97166aaabea7a8a71d9a5d4808a60d4c2fa182e3e316e734265d38e",
+      "tokens": 779
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "7ed058acf80b6fa14a0bd011bc6b11614b78d87fc5d7e141f6d0b0718170f972",
+      "tokens": 1106
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "8600889d116537da0ff0dcc7d9158227145f6a2ff1091cef099a3f499241269a",
+      "tokens": 1104
+    }
+  ],
+  "readability": {
+    "baseline": "b7becd03486bb2662cc9b817fb59d991c64b9654",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java": {
+        "before_raw_sha256": "03bf62e4694673c88c3df2863f8cd4edda0918439cf8bcb9861b5584554e5a60",
+        "after_raw_sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+        "rename_scopes": [
+          [
+            "protected final <T",
+            "/** Platform capabilities",
+            {
+              "active": "visited"
+            }
+          ],
+          [
+            "private final class ItemRelay",
+            null,
+            {
+              "h": "targetHandler"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1552,
+            "execution_sha256": "8ea1e838d2d07ad31b7e26031464d696e2532ce4cd8b489a61b51d860ba5bfad",
+            "before_lines": 159,
+            "after_lines": 227,
+            "before_max_line": 210,
+            "after_max_line": 155
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1453,
+            "execution_sha256": "a0db33edec74659995484166cbedbbff7d6b05b014802fcc164f4312092c1de5",
+            "before_lines": 153,
+            "after_lines": 216,
+            "before_max_line": 176,
+            "after_max_line": 155
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java": {
+        "before_raw_sha256": "92762cd956c5bdabe8f90c2a4bfd5966db5d50406cfbbefe4f9f66bfaabb77bf",
+        "after_raw_sha256": "cf0e2c90e37aea17437863ba1b150a9fec8c31802e48b3c7231dd4b4c9953a00",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "e": "recipient",
+              "s": "recipientSide"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Native GT packet forwarding. No buffers, energy conversion, absolute-value conversion or chunk loads. */",
+            "/** Forwards signed GT energy queries and external FE; subclasses own target resolution. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1610,
+            "execution_sha256": "c4d78c8149ad15a28de6ef8031d6b8eb105b2bbcd8b894982d0e4d9cca1b268d",
+            "before_lines": 71,
+            "after_lines": 190,
+            "before_max_line": 205,
+            "after_max_line": 154
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1511,
+            "execution_sha256": "e8fea6be7cb4b764c3e74b46cbabb5107816cb844b1c4f093b28337f31b30cd9",
+            "before_lines": 69,
+            "after_lines": 180,
+            "before_max_line": 206,
+            "after_max_line": 143
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java": {
+        "before_raw_sha256": "348f88a4058be64affff9b74fd54d1100c71397ca1758da83ec96f316a0bbb2b",
+        "after_raw_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "e": "event",
+              "be": "blockEntity"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 902,
+            "execution_sha256": "466da88739c0439b61ebd857d99143ca5d6d531116e2255ef892614fadeb9175",
+            "before_lines": 6,
+            "after_lines": 72,
+            "before_max_line": 2801,
+            "after_max_line": 123
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, listed method-local/lambda/event names and one source-backed comment correction. No gameplay edits."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "finite_source_witnesses": {
+    "kind": "Finite source-branch and declared route analysis, no Java target execution, capability or world fixture.",
+    "routes": {
+      "opposing_front_secondary_cases": 168,
+      "ordered_sha256": "6f2a97500473875a286954c185b44fc31f1a5f11d4a15d00b4d73276bc1620a8",
+      "limit": "Opposing front/secondary profiles and six queries. Not full wrench/placement validation or all selectable secondary profiles."
+    },
+    "installation": [
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "forge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "item_filter",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30000,
+        "cover": "compact_electric_conveyor_lv",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "fluid_filter",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 0,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 1,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 2,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 3,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 4,
+        "original_can_attach": true,
+        "current_can_attach": false
+      },
+      {
+        "platform": "neoforge",
+        "original_id": 30001,
+        "cover": "compact_electric_pump_lv",
+        "face": 5,
+        "original_can_attach": true,
+        "current_can_attach": false
+      }
+    ],
+    "installation_chain": "Own getCover excludes fallback; both default and injected componentItems/componentFluids then request null side, but relay exposes requires nonnull side. No relay-specific component accessor override.",
+    "installation_limit": "Built-in current source path without third-party capability injection; loaded healthy target. Null-side lookup is not accepted as a legitimate replacement for original cover placement.",
+    "restored_cover_permissions": [
+      {
+        "cover": "item_filter",
+        "state": "empty whitelist, not stopped",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "condition": "Restored native gt_cover_n state, loaded willing target inventory/tank; ordinary30000/30001, no shutter. Not a normal survival installation witness."
+      },
+      {
+        "cover": "fluid_filter",
+        "state": "empty whitelist, not stopped",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "condition": "Restored native gt_cover_n state, loaded willing target inventory/tank; ordinary30000/30001, no shutter. Not a normal survival installation witness."
+      },
+      {
+        "cover": "compact_electric_conveyor_lv",
+        "visual": 0,
+        "operation": "extract/drain",
+        "original_allows": true,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_conveyor_lv",
+        "visual": 0,
+        "operation": "insert/fill",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_conveyor_lv",
+        "visual": 1,
+        "operation": "extract/drain",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_conveyor_lv",
+        "visual": 1,
+        "operation": "insert/fill",
+        "original_allows": true,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_pump_lv",
+        "visual": 0,
+        "operation": "extract/drain",
+        "original_allows": true,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_pump_lv",
+        "visual": 0,
+        "operation": "insert/fill",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_pump_lv",
+        "visual": 1,
+        "operation": "extract/drain",
+        "original_allows": false,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      },
+      {
+        "cover": "compact_electric_pump_lv",
+        "visual": 1,
+        "operation": "insert/fill",
+        "original_allows": true,
+        "current_extender_allows": true,
+        "state": "Restored gt_cover_n; normal installation is blocked by null-side host lookup."
+      }
+    ],
+    "active_components": {
+      "case": "Conveyor or pump restored by native gt_cover_n load on ordinary30000/30001, loaded endpoints and due source phase. Normal installation is blocked (275).",
+      "original_component_callback_reached": true,
+      "current_extender_component_callback_reached": false,
+      "original_chain": "Base06 finalonTick callsCoverData.tickPre; Conveyor/Pump have server/clock/stop/handler gates and transfer calls.",
+      "current_chain": "Native load restores covers without canAttach, then source ticker onlytickSignals -> panels.beforeTick/afterTick; tickAttachments onlydrain/air_vent; fallbackuses=false because the relay overridesgetCover.",
+      "limit": "A reached callback is not an actual moved-stack/litre measurement. Drain/air-vent and panel callbacks exist; not all cover ticks are absent."
+    },
+    "signed_energy": "Typed GT query/injection methods forward size/amount/execute without abs; actual external FE has separate native capability wrapper. Existing loaded/removed/visit guards remain.",
+    "redstone_limit": "Universal nonbridge current queries compute live values while the original stores tick values; sided bridge/comparator engine behavior and real feedback loops remain unaccepted."
+  },
+  "positive_routes": [
+    "Actual ForgegetCapability and NeoStorageContainerCapabilities expose relay item/fluid/FE wrappers.",
+    "Each operation resolves the current target, applies loaded/removed/slot guards, forwards simulation and returns target results; no local buffer or imposed throughput.",
+    "Typed EnergyBlockViews accepts internal and addon energy providers; do not report addon energy universally missing.",
+    "Only shutter gating is retained locally on the extender; ComponentCoverAccess implements broader rules for hosts that actually opt in.",
+    "PanelCoverRuntime has panel updates and drain/air-vent dispatch branches; null-side handler lookup still blocks these fluid handlers. Do not equate an existing callback with working transfer."
+  ],
+  "rejected_candidate": {
+    "claim": "A loaded willing destination makes normal filter/conveyor/pump installation succeed on the extender.",
+    "why_rejected": "Root review found inherited/Mixin component handler lookup uses null side for own cover hosts. CapabilityRelayBlockEntity exposes(null) is false; no scoped override exists. Counts and docs corrected before commit."
+  },
+  "remaining": [
+    "All selected-secondary/wrench/placement states, actual inventory-change notifications, redstone/cached-phase and bridge unsided comparator behavior, every cover/shutter/energy combination, addon handler failures, real transfers/cycles/client/restart and the full project queue."
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, world fixture, build or push.",
+    "Source and finite route evidence do not accept the entire relay hierarchy, subclass route scans or all native capability consumers.",
+    "The original alignment and source readability goal remains active."
+  ],
+  "previous_goal_turn": "Progress: committedb7becd034 with spray/remover target and relay paint-state evidence plus seven source readability improvements.",
+  "root_validation": {
+    "named_source_hashes": 59,
+    "shared_platform_views": 48,
+    "readability_files": 3,
+    "complete_execution_views": 5,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 1,
+    "protected_material_hashes": 2,
+    "relative_route_cases": 168,
+    "normal_installation_branches": 48,
+    "restored_cover_permission_branches": 10,
+    "rejected_normal_installation_candidate": true,
+    "restored_state_scope_explicit": true,
+    "contiguous_ledger_records": 276,
+    "documents_checked": 8,
+    "added_local_links_checked": 11,
+    "limit": "File and finite source-branch review only; no Java compilation/initialization, Gradle, tests, runtime/world interaction, save migration, build or push."
+  }
+}

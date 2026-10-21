@@ -102,3 +102,5 @@
 2026-10-21 第七十九批：PaintState9→42行、PaintingRules11→73行、Paintable3→10行，16色逐行列出，mix的a／b改firstRgb／secondRgb，restore的flag改paintedFlag；三共享颜色Mixin展开保存／更新／回调，两个cir改callback。六源九完整执行170、544、45、832／865、210／210、202／230及原始字面量位置保持，两处职责说明纠正／用户材料不动，见[喷漆专题](PAINT_STATE_AUDIT.md)及[回执](verification/paint-state-audit-20261021.json)。其余宿主与全面源码核查继续。
 
 2026-10-21 第八十批：ExtenderBlockEntity展开覆盖板／保存更新／路由／控制／信号，SourceExtenderBlock展开两版工具交互和ticker，c／be分别限定方法内改control／blockEntity。清漆陈旧大说明改为实际目标和委托边界；PaintTargets／FixedConstructionColor缩进、WolfCollarAccessor和六项GrassSoilCatalog也已整理。七源十三完整执行557／557、770／770、412／412、81／81、2515／2587、1305／1575、133与未归一字面量位置保持，六说明纠正／用户材料不动，见[专题](PAINT_TARGETS_AUDIT.md)及[回执](verification/paint-targets-audit-20261021.json)。其它源码与全面原版核查继续。
+
+2026-10-21 第八十一批：CapabilityRelayBlockEntity展开缓存／失效／内层包装，active与h限定区域改visited／targetHandler；EnergyRelayBlockEntity展开FE及19项GT转发，e／s改recipient／recipientSide，保留target方法及所有成员名。Neo StorageContainerCapabilities拆注册，e／be改event／blockEntity，注册表达式顺序不变。三源五完整执行1552／1453、1610／1511、902与字面量位置保持，唯一说明限定子类目标职责，材料未动，见[专题](EXTENDER_CAPABILITIES_AUDIT.md)和[回执](verification/extender-capabilities-audit-20261021.json)；全面队列继续。

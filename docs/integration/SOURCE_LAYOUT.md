@@ -20,6 +20,8 @@
 
 喷漆／清漆的本地目标在`PaintTargets`，`BehaviorSprayColorRemover`补原版陶瓦／玻璃／玻璃板回退；清漆的原WD.te委托不可由物品／流体能力转发替代。扩展器实际Block是`SourceExtenderBlock`，BE的`saveAdditional`与`getUpdateTag`是两条合同；代理路径在`ExtenderSpec`／`RelayRoutingRules`及BE中，六草身份在core `GrassSoilCatalog`并由两版专有注册消费，见[目标与扩展器](PAINT_TARGETS_AUDIT.md)。
 
+代理基类：`CapabilityRelayBlockEntity`负责按面缓存包装和每次实时解析目标，`EnergyRelayBlockEntity`追加GT能源及FE；子类负责具体路由。Neo注册边界在`StorageContainerCapabilities`。原生宿主的覆盖板处理器查询须保留选中面，当前null方向先阻止安装；恢复gt_cover_n另须核是否消费`ComponentCoverAccess`及`ComponentCoverRuntime.tick`。后备资格排除自带getCover的宿主，见[能力与更新专题](EXTENDER_CAPABILITIES_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

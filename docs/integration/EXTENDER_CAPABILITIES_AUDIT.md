@@ -1,0 +1,45 @@
+# 扩展器／桥能力与覆盖板入口核查
+
+2026-10-21，第八十一批，基线 `b7becd034`。新增ALIGN-275–276；正式276条包含已修、部分修复和政策记录，不是276个未修复问题。来源、限定样本及源码保持证据见[回执](verification/extender-capabilities-audit-20261021.json)。全面检查继续。
+
+## 已有的实际能力与路由
+
+Forge在CapabilityRelayBlockEntity.getCapability暴露物品／流体，EnergyRelayBlockEntity补FE；Neo的StorageContainerCapabilities为实际EXTENDER类型注册itemHandler／fluidHandler／fluxHandler。两版八项SourceExtenderBlock均创建ExtenderBlockEntity，实体类型注册包含这组方块。不能把覆盖板的问题说成整个扩展器没有能力入口。
+
+每次操作重新解析目标和目标面，检查已加载、实体未移除和槽位范围；查询复制ItemStack／FluidStack，动作传递simulate／FluidAction并返回目标结果。包装本身没有本地库存、流体罐或额外限速。四扩展器前／次面相对的六设置与四桥的六查询，共168个有限路由样本与原公式相符；不能据此验收其它次面组合、扳手、放置和通知。
+
+IEnergyBlock转发有符号size、amount、execute；EnergyBlockViews同时接受内部接口和addon能源适配，外部FE有独立原生包装。保留移除／已加载／重复访问／finally保护；子类目标解析可能扫描其它区块，不能宣称整个继承树绝不加载区块。原万能代理经delegate交付目标，未证明原能源消费者先问代理覆盖板，因此不添加推测性的能源门控。长距离物品线抽取仍沿用073，不能关闭全部转发器抽取。
+
+## ALIGN-275：原生覆盖板安装查询丢失方向
+
+原普通物品扩展器30000经Base10→09→08→07→06→05具有库存接口，Base06.canTick为true；普通流体扩展器30001还实现IFluidHandler。原CoverConveyor／Pump的安装门槛是可更新及对应接口，满足这些门槛。Item Filter仅拦截相邻物品管之间的安装，普通扩展器不属于该例外；Fluid Filter继承默认附件许可。
+
+当前过滤器、紧凑传送带与泵均有真实技术物品注册，CoverItems识别为对应行为。实际右键事件进入ComponentCoverInteraction／UtilityCoverInteraction，并最终调用ExtenderBlockEntity.attachCover及panels.canAttach；不存在只因类名相符就认定可达的捷径。
+
+关键在宿主库存获取：ExtenderBlockEntity有自己的getCover，ComponentCoverFallback.uses因而为false。PanelCoverHost默认方法和注入BlockEntity的ComponentCoverHostMixin，在这种原生宿主分支中都用null方向查询能力。扩展器没有componentItems／componentFluids覆盖，自己也不直接实现IItemHandler／IFluidHandler；CapabilityRelayBlockEntity.exposes又要求side非null。所以原生组件查询得不到本应按所选面暴露的处理器，即使目标箱／罐已加载且可用也一样。
+
+ComponentCoverRuntime.canAttach据此拒绝传送带／泵；PanelCoverRuntime的item_filter／fluid_filter条件同样失败。回执列两平台、四种代表覆盖板和六面共48个有限安装分支。范围是当前内建入口、无第三方额外能力注入、健康已加载目标；本批没有游戏交互。排液器和通气孔也依赖componentFluids，因此属于同类入口风险，未扩大这48个样本的计数。
+
+根复核否定了初稿“目标存在即可装上”的候选结论；初稿遗漏了null方向和Mixin原生分支。已在提交前修正，不能把普通生存失败写成“能装上但不搬运”。
+
+## ALIGN-276：恢复后的原生覆盖板权限和主动更新缺消费者
+
+两版现有load／loadAdditional直接读取gt_cover_n到covers数组，再panels.loaded，不重新调用canAttach。以下结论明确以已有这些数据的恢复状态为条件；不声称当前普通生存可以制造该状态，也不声称已验证旧世界迁移。
+
+原30000经Base06最终canInsertItem／canExtractItem先问覆盖板intercept；原30001的fill／drain也先检查覆盖板。空白名单Item／Fluid Filter会阻止，输出模式传送带／泵阻止同面的insert／fill，输入模式阻止extract／drain。
+
+当前ExtenderBlockEntity.permitsItem／permitsFluid仅检查闸板。ItemRelay／FluidRelay只调用这些谓词；已有ComponentCoverAccess虽然实现过滤与方向，但该原生宿主没有选用，两版能力Mixin又因uses=false退出。对已恢复覆盖板、无闸板和已加载可用目标，回执列两过滤条件及八组件方向条件；最终数量由目标决定，未实际插物或灌水。
+
+原Base06.final onTick在子类onTick2前后分派CoverData.tickPre／tickPost；Conveyor／Pump在服务端、周期、停止和接口门槛通过后执行ST.move／FL.move。当前实际SourceExtenderBlock ticker只tickSignals→panels.beforeTick／afterTick；tickAttachments只分派drain／air_vent，没有ComponentCoverRuntime.tick。fallback追踪又排除own getCover。恢复的主动组件缺更新回调，而且275的宿主处理器入口问题仍在；单独补一个tick调用不能完成修复。
+
+面板控制／显示有自己的更新，排液器和通气孔有回调分支但同受275处理器查询限制，不写成所有覆盖板都不更新，也不把“有回调”写成已能排液。今后修复应分别处理按面入口、原生操作权限和唯一更新所有者，避免让其它已有独立更新宿主执行两次。
+
+## 源码整理及尚未验收范围
+
+展开CapabilityRelayBlockEntity缓存、失效及ItemRelay／FluidRelay，限定局部active→visited、h→targetHandler。EnergyRelayBlockEntity展开FE及19项GT方法，lambda e／s→recipient／recipientSide；真正的target方法和成员名保持，注释限定子类负责目标解析。Neo StorageContainerCapabilities拆开20项注册，e／be→event／blockEntity，表达式及注册顺序保持；最长行由2801降至123。
+
+三源五平台完整执行流1552／1453、1610／1511、902在明确局部名称归一后保持；原始字面量位置、唯一注释纠正、其它注释、Stonecutter条件及用户两材料表摘要单独复核。25原版／34当前源码和48共享平台视图归档。
+
+原普通扩展器缓存红石值，当前查询实时计算；桥的比较器原接口有面而现代原生入口无面。完整通知／强弱信号／缓存时点／反馈环继续，不能由路由样本证明对齐。possible／success沿用110，漆色273–274不重新编号。
+
+未Java编译／目标初始化、Gradle、测试、游戏、实际能力操作、包投递、世界重启、构建或推送。其它宿主、完整红石／能源／覆盖板组合和全面项目队列继续，goal保持active。

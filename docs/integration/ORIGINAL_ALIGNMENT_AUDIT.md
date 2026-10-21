@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十批追清漆代理和扩展器漆色更新，新增273–274并扩132／135。行为记录至ALIGN-274，共274条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是274个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十一批核扩展器覆盖板无面安装失败与恢复状态消费者，新增275–276。行为记录至ALIGN-276，共276条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是276个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -301,6 +301,8 @@
 | ALIGN-272 | 确认Neo喷漆物品主染色面最终alpha为0。 | 原普通BlockTextureDefault禁alpha，实际顶点提交255；Forge1.20.1相应ItemRenderer固定1。 | 正常红漆主阀保留BE数据，后置ItemPaintColorMixin清高八位，Neo实际ARGB解码及顶点乘法得到0；不泛称overlay／整物品全消失，未GPU实测，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-273 | 确认清漆剂未沿万能代理操作委托目标。 | 原WD.te识别ITileEntityDelegating，30255／30755的ALL模式返回出口邻格，再对目标removePaint。 | 当前PaintTargets.unpaint仅查本地；未喷漆代理后有红漆目标时，十二面向源样本原清目标、现无操作，未游戏实测，见[清漆](PAINT_TARGETS_AUDIT.md)。 |
 | ALIGN-274 | 确认八扩展器漆色漏入客户端更新tag。 | 原updateClientData全量标记由Base03发送，Base07／08包带RGB。 | 当前getUpdateTag仅saveCovers并绕过祖先Mixin，空覆盖板例Forge包为null、Neo空tag，客户端收不到服务端新红漆；世界save仍调用super，不报完全不保存，见[同步](PAINT_TARGETS_AUDIT.md)。 |
+| ALIGN-275 | 确认扩展器原生覆盖板处理器查询丢失方向，阻止过滤器／主动组件安装。 | 原普通30000／30001具库存／流体及canTick接口，满足原过滤器、传送带和泵安装门槛。 | 默认及Mixin原生分支以null查询，而转发器exposes拒绝null；48有限安装分支。根复核否定初稿可正常装上的假设，见[入口](EXTENDER_CAPABILITIES_AUDIT.md)。 |
+| ALIGN-276 | 确认恢复后的原生覆盖板缺过滤／方向权限和主动组件tick。 | 原Base06最终库存权限及Extender流体入口问intercept；final onTick分派CoverData.tickPre。 | 限现有load恢复gt_cover_n：现谓词只看闸板，Mixin／fallback排除own getCover，ticker只panel链。不是普通安装成功，也不是实际搬运量测，见[恢复消费者](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
