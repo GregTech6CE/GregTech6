@@ -206,8 +206,14 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
-    @Override protected long inputMinimum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(),spec().energyTag()==GregTechTags.Energy.HU); }
-    @Override protected long inputMaximum() { return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy()); }
+    @Override protected long inputMinimum() {
+        if (spec().energyRangeDeclared()) return spec().energyInMin();
+        return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(), spec().energyTag()==GregTechTags.Energy.HU);
+    }
+    @Override protected long inputMaximum() {
+        if (spec().energyRangeDeclared()) return spec().energyInMax();
+        return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy());
+    }
     @Override protected boolean cheapOverclocking() {
         return com.gregtech.gregtech.api.addon.AddonOverclock.enabled(false,
                 spec() != null && spec().cheapOverclockingDeclared(),

@@ -21,6 +21,8 @@ import java.util.Objects;
  * requires every static row to have exactly two item outputs. A large recipe machine may name one
  * cell for item output, fluid output, item input and fluid input. The origin is rejected. Each
  * component is from -16 to 16. Naming a cell leaves that channel's automatic face unset; setting both fails.
+ * {@code energyInMin} and {@code energyInMax} stay {@code 0} until {@code energyRange} is set.
+ * A TU machine cannot declare a range. The nominal input may sit outside the range.
  */
 public record MachineDeclaration(
         String id,
@@ -53,7 +55,9 @@ public record MachineDeclaration(
         Target itemOutputTarget,
         Target fluidOutputTarget,
         Target itemInputSource,
-        Target fluidInputSource
+        Target fluidInputSource,
+        long energyInMin,
+        long energyInMax
 ) {
     public MachineDeclaration {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -90,7 +94,17 @@ public record MachineDeclaration(
         rejectAutomaticFace(id, "fluid output", fluidOutputTarget, fluidAutoOutput);
         rejectAutomaticFace(id, "item input", itemInputSource, itemAutoInput);
         rejectAutomaticFace(id, "fluid input", fluidInputSource, fluidAutoInput);
+        if (energyInMin != 0 || energyInMax != 0) {
+            if (energyInMin < 1 || energyInMax < energyInMin)
+                throw new IllegalArgumentException("Invalid energy range for " + id + ": "
+                        + energyInMin + ".." + energyInMax);
+            if ("TU".equalsIgnoreCase(energy))
+                throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
+        }
     }
+
+    /** {@code false} when both bounds are {@code 0}, which is the unset range. */
+    public boolean energyRangeSpecified() { return energyInMin != 0 || energyInMax != 0; }
 
     private static void rejectAutomaticFace(String id, String channel, Target target, BehaviorMachineDeclaration.Face automatic) {
         if (target != null && automatic != null)
@@ -155,6 +169,8 @@ public record MachineDeclaration(
         private Target fluidOutputTarget;
         private Target itemInputSource;
         private Target fluidInputSource;
+        private long energyInMin;
+        private long energyInMax;
 
         private Builder(String id, String material) {
             this.id = id;
@@ -198,6 +214,8 @@ public record MachineDeclaration(
         public Builder fluidInputSource(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
             fluidInputSource = new Target(right, up, back, receiver); return this;
         }
+        /** Accepted packet size. {@code 0, 0} leaves the range unset. {@code 1 <= min <= max}. */
+        public Builder energyRange(long min, long max) { energyInMin = min; energyInMax = max; return this; }
 
         public MachineDeclaration build() {
             return new MachineDeclaration(id, material, machineType, energy, energyPerTick, tier, parallel,
@@ -206,7 +224,8 @@ public record MachineDeclaration(
                     itemAutoInput, itemAutoOutput, fluidAutoInput, fluidAutoOutput,
                     cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
                     searchOutputTanks, exclusiveOutputs,
-                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource,
+                    energyInMin, energyInMax);
         }
     }
 }

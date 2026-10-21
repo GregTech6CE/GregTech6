@@ -2,10 +2,14 @@ package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.AddonOverclock;
+import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
 import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.MachineLayout;
+import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
+import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.BehaviorRangeRules;
 import com.gregtech.gregtech.api.addon.ExclusiveOutputRules;
 import com.gregtech.gregtech.api.addon.RecipeOutputChances;
@@ -87,6 +91,9 @@ public final class AddonMachineContracts {
             case "gasdup" -> gasDuplicate();
             case "gasmat" -> gasMaterial();
             case "iotarget" -> ioTarget();
+            case "erange" -> energyRange();
+            case "erangedisagree" -> energyRangeDisagree();
+            case "erangetu" -> energyRangeTu();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -754,6 +761,141 @@ public final class AddonMachineContracts {
                 "installed targets match the declaration");
     }
 
+    private static void energyRange() throws Exception {
+        var unset = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press").basic().build();
+        check(!unset.energyRangeSpecified() && unset.energyInMin() == 0 && unset.energyInMax() == 0, "an unset range is 0..0");
+        check(MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
+                .energyRange(0, 0).build().energyRangeSpecified() == false, "0..0 is still unset");
+        var outside = MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
+                .energyRange(64, 256).build();
+        check(outside.energyRangeSpecified() && outside.energyPerTick() == 32
+                && outside.energyInMin() == 64 && outside.energyInMax() == 256, "nominal may sit outside the range");
+        check(MachineDeclaration.builder("press", "Steel").energy("EU", 32).recipeMap("aa.recipe.press")
+                .energyRange(1, 1).build().energyInMax() == 1, "a single accepted size is allowed");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(8, 4).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(0, 8).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").energyRange(8, 0).build(), "Invalid energy range");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("time_press", "Steel")
+                .energy("TU", 1).recipeMap("aa.recipe.press").energyRange(1, 16).build(), "TU", "energy range");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("time_press", "Steel")
+                .energy("tu", 1).recipeMap("aa.recipe.press").largeRecipe().energyRange(1, 32).build(), "TU", "energy range");
+        prepare();
+        GTMaterialRegistry.init();
+        var steel = GTMaterialRegistry.get("Steel");
+        var basic = BasicMachineParameters.builder("plain_press", steel).machineType("sampleplain")
+                .energy(GregTechTags.Energy.EU, 32).build();
+        check(!basic.energyRangeSpecified() && basic.energyInMin() == 16 && basic.energyInMax() == 64,
+                "an undeclared single block is half to double");
+        check(basic.acceptedEnergyInMin(false) == 16 && basic.acceptedEnergyInMax(false) == 64,
+                "accepted single block range matches the stored default");
+        var timed = BasicMachineParameters.builder("time_press", steel).machineType("sampletime")
+                .energy(GregTechTags.Energy.TU, 1).build();
+        check(!timed.energyRangeSpecified() && timed.energyInMin() == 1 && timed.energyInMax() == 16,
+                "an undeclared TU single block stays 1..16");
+        var large = BasicMachineParameters.builder("large_press", steel).machineType("largesamplepress")
+                .energy(GregTechTags.Energy.EU, 512).omitEnergyRange().build();
+        check(!large.energyRangeSpecified() && large.energyInMin() == 0 && large.energyInMax() == 0,
+                "an undeclared large machine records no range");
+        check(large.acceptedEnergyInMin(true) == 512 && large.acceptedEnergyInMax(true) == 4096,
+                "an undeclared large EU machine accepts 512..4096");
+        var heat = BasicMachineParameters.builder("large_heat", steel).machineType("largeheat")
+                .energy(GregTechTags.Energy.HU, 512).omitEnergyRange().build();
+        check(heat.acceptedEnergyInMin(true) == 1 && heat.acceptedEnergyInMax(true) == 4096,
+                "an undeclared large HU machine accepts 1..4096");
+        var largeTime = BasicMachineParameters.builder("large_time", steel).machineType("largetime")
+                .energy(GregTechTags.Energy.TU, 1).omitEnergyRange().build();
+        check(largeTime.acceptedEnergyInMin(true) == 1 && largeTime.acceptedEnergyInMax(true) == 16,
+                "an undeclared large TU machine accepts 1..16");
+        check(large.acceptedEnergyInMin(false) == BasicMachineParameters.defaultEnergyInMin("EU", 512)
+                && large.acceptedEnergyInMax(false) == BasicMachineParameters.defaultEnergyInMax("EU", 512),
+                "the same unset numbers read as a single block are half to double");
+        var declared = BasicMachineParameters.builder("wide_press", steel).machineType("samplewide")
+                .energy(GregTechTags.Energy.EU, 32).energyRange(64, 256).build();
+        check(declared.energyRangeSpecified() && declared.energyIn() == 32
+                && declared.acceptedEnergyInMin(true) == 64 && declared.acceptedEnergyInMax(true) == 256,
+                "a declared range replaces the large rule");
+        expectThrows(IllegalArgumentException.class, () -> BasicMachineParameters.builder("bad_press", steel)
+                .energy(GregTechTags.Energy.EU, 32).energyRange(8, 4).build(), "Invalid energy range");
+        loadMachine(RangeContributor.class);
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        var byId = new java.util.HashMap<String, BasicMachineParameters>();
+        for (var machine : AddonMachines.machines())
+            byId.put(machine.definition().parameters().id(), machine.definition().parameters());
+        var slow = byId.get("press_slow");
+        check(slow != null && !slow.energyRangeSpecified() && slow.energyInMin() == 16 && slow.energyInMax() == 64,
+                "installed single block keeps half to double");
+        var fast = byId.get("press_fast");
+        check(fast != null && !fast.energyRangeSpecified() && fast.energyInMin() == 32 && fast.energyInMax() == 128,
+                "a second tier with no declaration keeps its own half to double");
+        var time = byId.get("time_press");
+        check(time != null && !time.energyRangeSpecified() && time.energyInMin() == 1 && time.energyInMax() == 16,
+                "installed TU single block stays 1..16");
+        var installedLarge = byId.get("large_press");
+        check(installedLarge != null && !installedLarge.energyRangeSpecified()
+                && installedLarge.energyInMin() == 0 && installedLarge.energyInMax() == 0
+                && installedLarge.acceptedEnergyInMin(true) == LargeMachineProcessingRules.inputMinimum(false, false)
+                && installedLarge.acceptedEnergyInMax(true) == LargeMachineProcessingRules.inputMaximum(false),
+                "installed large EU machine stays on the processing rule");
+        var installedHeat = byId.get("large_heat");
+        check(installedHeat != null && installedHeat.acceptedEnergyInMin(true) == 1 && installedHeat.acceptedEnergyInMax(true) == 4096,
+                "installed large HU machine stays on 1..4096");
+        var wide = byId.get("large_wide");
+        check(wide != null && wide.energyRangeSpecified() && wide.energyIn() == 512
+                && wide.energyInMin() == 256 && wide.energyInMax() == 2048,
+                "installed declaration replaces the large rule");
+        var low = byId.get("large_low");
+        var high = byId.get("large_high");
+        check(low != null && high != null && low.energyRangeSpecified() && high.energyRangeSpecified()
+                && low.energyInMin() == 64 && low.energyInMax() == 256
+                && high.energyIn() == 256 && high.energyInMin() == 64 && high.energyInMax() == 256,
+                "two nominals can share one declared range");
+    }
+
+    private static void energyRangeDisagree() throws Exception {
+        prepare();
+        GTMaterialRegistry.init();
+        loadMachine(RangeDisagreeContributor.class);
+        expectInstall("largesame", "disagrees");
+    }
+
+    private static void energyRangeTu() {
+        prepare();
+        GTMaterialRegistry.init();
+        var timed = BasicMachineParameters.builder("time_press", GTMaterialRegistry.get("Steel"))
+                .machineType("sampletime").energy(GregTechTags.Energy.TU, 1).energyRange(1, 32).build();
+        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")), List.of(
+                new AddonMachineDefinition(timed, "aa.recipe.press", MachineControllerKind.BASIC, 10_000, true, List.of())),
+                List.of());
+        expectInstall("sampletime", "TU", "energy range");
+    }
+
+    private static MachineLayout wall(String name) {
+        return new MachineLayout(name, List.of(new MachineLayout.Cell(1, 0, 0, "tank_wall", StructureRole.CASING)));
+    }
+
+    private static RecipeMapDeclaration pressMap() {
+        return new RecipeMapDeclaration("aa.recipe.press", "Sample", "aa_sample:textures/gui/machines/press",
+                1, 1, 1, 0, 0, 0, 1, true, false, false, false);
+    }
+
+    private static void loadMachine(Class<?> contributor) {
+        try {
+            Path root = Files.createTempDirectory("gt-addon-machines");
+            Path service = root.resolve("META-INF/services/com.gregtech.gregtech.api.addon.AddonMachineContributor");
+            Files.createDirectories(service.getParent());
+            Files.writeString(service, contributor.getName() + "\n", StandardCharsets.UTF_8);
+            try (URLClassLoader loader = new URLClassLoader(new URL[]{root.toUri().toURL()},
+                    AddonMachineContracts.class.getClassLoader())) {
+                AddonMachines.collectContributors(loader);
+            }
+        } catch (java.io.IOException failure) {
+            throw new java.io.UncheckedIOException(failure);
+        }
+    }
+
     private static AddonMachineLayout layout(String name) {
         return new AddonMachineLayout(name, List.of(
                 new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING)));
@@ -845,5 +987,45 @@ public final class AddonMachineContracts {
             return List.of(new AddonMachineLayout("largesamplepress", List.of(
                     new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING))));
         }
+    }
+
+    public static final class RangeContributor implements AddonMachineContributor {
+        @Override public String addonId() { return "aa_sample"; }
+        @Override public List<RecipeMapDeclaration> recipeMaps() { return List.of(pressMap()); }
+        @Override public List<MachineDeclaration> machines() {
+            return List.of(
+                    MachineDeclaration.builder("press_slow", "Steel").machineType("samplepress")
+                            .energy("EU", 32).recipeMap("aa.recipe.press").basic().build(),
+                    MachineDeclaration.builder("press_fast", "Steel").machineType("samplepress")
+                            .energy("EU", 64).recipeMap("aa.recipe.press").basic().build(),
+                    MachineDeclaration.builder("time_press", "Steel").machineType("sampletime")
+                            .energy("TU", 1).recipeMap("aa.recipe.press").basic().build(),
+                    MachineDeclaration.builder("large_press", "Steel").machineType("largesamplepress")
+                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    MachineDeclaration.builder("large_heat", "Steel").machineType("largeheat")
+                            .energy("HU", 512).recipeMap("aa.recipe.press").largeRecipe().build(),
+                    MachineDeclaration.builder("large_wide", "Steel").machineType("largewide")
+                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().energyRange(256, 2048).build(),
+                    MachineDeclaration.builder("large_low", "Steel").machineType("largerange")
+                            .energy("EU", 128).recipeMap("aa.recipe.press").largeRecipe().energyRange(64, 256).build(),
+                    MachineDeclaration.builder("large_high", "Steel").machineType("largerange")
+                            .energy("EU", 256).recipeMap("aa.recipe.press").largeRecipe().energyRange(64, 256).build());
+        }
+        @Override public List<MachineLayout> layouts() {
+            return List.of(wall("largesamplepress"), wall("largeheat"), wall("largewide"), wall("largerange"));
+        }
+    }
+
+    public static final class RangeDisagreeContributor implements AddonMachineContributor {
+        @Override public String addonId() { return "aa_sample"; }
+        @Override public List<RecipeMapDeclaration> recipeMaps() { return List.of(pressMap()); }
+        @Override public List<MachineDeclaration> machines() {
+            return List.of(
+                    MachineDeclaration.builder("large_a", "Steel").machineType("largesame")
+                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().energyRange(256, 2048).build(),
+                    MachineDeclaration.builder("large_b", "Steel").machineType("largesame")
+                            .energy("EU", 512).recipeMap("aa.recipe.press").largeRecipe().build());
+        }
+        @Override public List<MachineLayout> layouts() { return List.of(wall("largesame")); }
     }
 }
