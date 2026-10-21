@@ -32,7 +32,10 @@ public class ManualToolBlockEntity extends BlockEntity {
         MORTAR("Mortar"), GRINDSTONE("Sharpening"), SIFTING("Sifting");
 
         final String map;
-        Kind(String map) { this.map = map; }
+        Kind(String map) {
+            this.map = map;
+        }
+
         public RecipeMap recipeMap() {
             return switch (this) {
                 case MORTAR -> MachineRecipeMaps.Mortar;
@@ -42,7 +45,8 @@ public class ManualToolBlockEntity extends BlockEntity {
         }
     }
 
-    private final net.minecraft.core.NonNullList<ItemStack> outputs = net.minecraft.core.NonNullList.withSize(com.gregtech.gregtech.content.tool.ManualWorkRules.OUTPUTS, ItemStack.EMPTY);
+    private final net.minecraft.core.NonNullList<ItemStack> outputs = net.minecraft.core.NonNullList.withSize(
+            com.gregtech.gregtech.content.tool.ManualWorkRules.OUTPUTS, ItemStack.EMPTY);
     private int stoneUses;
     private ItemStack lastHeld = ItemStack.EMPTY;
     private java.util.UUID siftingPlayer;
@@ -57,8 +61,13 @@ public class ManualToolBlockEntity extends BlockEntity {
                 ? tool.kind() : Kind.MORTAR;
     }
 
-    public Kind kind() { return kind; }
-    public ItemStack work() { return work; }
+    public Kind kind() {
+        return kind;
+    }
+
+    public ItemStack work() {
+        return work;
+    }
 
     /** GT6's workshop grindstone starts with 1..4 abrasive uses (its NBT_STATE). */
     public boolean setDungeonGrindstoneUses(int uses) {
@@ -68,7 +77,9 @@ public class ManualToolBlockEntity extends BlockEntity {
         return true;
     }
 
-    public int stoneUses() { return stoneUses; }
+    public int stoneUses() {
+        return stoneUses;
+    }
 
     private RecipeMap map() {
         return kind.recipeMap();
@@ -93,7 +104,10 @@ public class ManualToolBlockEntity extends BlockEntity {
         }
         if (kind == Kind.SIFTING) {
             if (side != net.minecraft.core.Direction.UP) {
-                for (int i = 0; i < outputs.size(); i++) { give(player, outputs.get(i)); outputs.set(i, ItemStack.EMPTY); }
+                for (int i = 0; i < outputs.size(); i++) {
+                    give(player, outputs.get(i));
+                    outputs.set(i, ItemStack.EMPTY);
+                }
                 markUpdated();
                 return;
             }
@@ -109,7 +123,10 @@ public class ManualToolBlockEntity extends BlockEntity {
             return;
         }
         if (kind == Kind.GRINDSTONE) {
-            if (held.isEmpty()) { progress = 0; return; }
+            if (held.isEmpty()) {
+                progress = 0;
+                return;
+            }
             if (stoneUses <= 0) {
                 stoneUses = abrasiveUses(held);
                 if (stoneUses > 0) {
@@ -120,9 +137,15 @@ public class ManualToolBlockEntity extends BlockEntity {
                 return;
             }
 //? if >=1.21.1 {
-            /*if (!ItemStack.isSameItemSameComponents(lastHeld, held)) { progress = 0; lastHeld = held.copyWithCount(1); }
+            /*if (!ItemStack.isSameItemSameComponents(lastHeld, held)) {
+                progress = 0;
+                lastHeld = held.copyWithCount(1);
+            }
 *///?} else {
-            if (!ItemStack.isSameItemSameTags(lastHeld, held)) { progress = 0; lastHeld = held.copyWithCount(1); }
+            if (!ItemStack.isSameItemSameTags(lastHeld, held)) {
+                progress = 0;
+                lastHeld = held.copyWithCount(1);
+            }
 //?}
             if (!player.getAbilities().instabuild && ++progress < com.gregtech.gregtech.content.tool.ManualWorkRules.GRIND_CLICKS) return;
             int enchantmentXp = removableEnchantmentXp(held);
@@ -153,7 +176,7 @@ public class ManualToolBlockEntity extends BlockEntity {
                 || held.is(net.minecraft.world.item.Items.ENCHANTED_BOOK)) return 0;
 //? if >=1.21.1 {
         /*var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantmentsForCrafting(held);
-        if (enchantments.keySet().stream().anyMatch(holder->holder.is(net.minecraft.tags.EnchantmentTags.CURSE))) return 0;
+        if (enchantments.keySet().stream().anyMatch(holder -> holder.is(net.minecraft.tags.EnchantmentTags.CURSE))) return 0;
         int sum = enchantments.entrySet().stream().mapToInt(entry -> entry.getKey().value().getMinCost(entry.getIntValue())).sum();
 *///?} else {
         var enchantments = net.minecraft.world.item.enchantment.EnchantmentHelper.getEnchantments(held);
@@ -164,9 +187,10 @@ public class ManualToolBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(net.minecraft.world.level.Level level, BlockPos pos, BlockState state, ManualToolBlockEntity tool) {
-        if (tool.kind != Kind.SIFTING || tool.siftingPlayer == null || !com.gregtech.gregtech.content.tool.ManualWorkRules.siftDue(level.getGameTime())) return;
+        if (tool.kind != Kind.SIFTING || tool.siftingPlayer == null
+                || !com.gregtech.gregtech.content.tool.ManualWorkRules.siftDue(level.getGameTime())) return;
         Player player = level.getPlayerByUUID(tool.siftingPlayer);
-        if (player == null || player.distanceToSqr(pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5) > 64
+        if (player == null || player.distanceToSqr(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) > 64
                 || !(player.pick(5, 1, false) instanceof net.minecraft.world.phys.BlockHitResult hit)
                 || !hit.getBlockPos().equals(pos) || hit.getDirection() != net.minecraft.core.Direction.UP) {
             tool.siftingPlayer = null;
@@ -175,8 +199,8 @@ public class ManualToolBlockEntity extends BlockEntity {
         if (tool.work.isEmpty() || tool.outputs.stream().anyMatch(stack -> !stack.isEmpty())) return;
         var haste = player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SPEED);
         var fatigue = player.getEffect(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN);
-        tool.progress += com.gregtech.gregtech.content.tool.ManualWorkRules.siftIncrement(haste==null?-1:haste.getAmplifier());
-        int threshold = com.gregtech.gregtech.content.tool.ManualWorkRules.siftThreshold(fatigue==null?-1:fatigue.getAmplifier());
+        tool.progress += com.gregtech.gregtech.content.tool.ManualWorkRules.siftIncrement(haste == null ? -1 : haste.getAmplifier());
+        int threshold = com.gregtech.gregtech.content.tool.ManualWorkRules.siftThreshold(fatigue == null ? -1 : fatigue.getAmplifier());
         if (player.getAbilities().instabuild || tool.progress >= threshold) tool.craft(player, tool.work, true);
         else tool.markUpdated();
     }
@@ -195,13 +219,17 @@ public class ManualToolBlockEntity extends BlockEntity {
     private Recipe recipe(ItemStack input) {
         if (input.isEmpty()) return null;
         Recipe recipe = map().findRecipe(List.of(input), List.<FluidStack>of(), false, 1, 12);
-        return recipe != null && !recipe.mFakeRecipe && recipe.mEUt >= -com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU && recipe.mEUt <= com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU && recipe.mInputs.length == 1 ? recipe : null;
+        return recipe != null && !recipe.mFakeRecipe && recipe.mEUt >= -com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU
+                && recipe.mEUt <= com.gregtech.gregtech.content.tool.ManualWorkRules.MAX_GU && recipe.mInputs.length == 1 ? recipe : null;
     }
 
     private void craft(Player player, ItemStack input, boolean retainOutputs) {
         Recipe recipe = recipe(input);
         progress = 0;
-        if (recipe == null) { markUpdated(); return; }
+        if (recipe == null) {
+            markUpdated();
+            return;
+        }
         // Installed sifter input is inventory, even when its current operator is creative.
         if (retainOutputs || !player.getAbilities().instabuild) input.shrink(recipe.mInputs[0].getCount());
         for (int i = 0; i < recipe.mOutputs.length; i++) {
@@ -238,7 +266,8 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     public void dropContents() {
         if (level != null) for (int i = 0; i < outputs.size(); i++) {
-            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5, worldPosition.getZ() + .5, outputs.get(i));
+            com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5,
+                    worldPosition.getZ() + .5, outputs.get(i));
             outputs.set(i, ItemStack.EMPTY);
         }
         if (level != null && !work.isEmpty()) {
@@ -250,8 +279,8 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -259,7 +288,7 @@ public class ManualToolBlockEntity extends BlockEntity {
         tag.putInt("gt.progress", progress);
         tag.putInt("gt.stone_uses", stoneUses);
 //? if >=1.21.1 {
-        /*net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs,lookup);
+        /*net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs, lookup);
         if (!work.isEmpty()) tag.put("gt.work", work.saveOptional(lookup));
 *///?} else {
         net.minecraft.world.ContainerHelper.saveAllItems(tag, outputs);
@@ -269,8 +298,8 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -279,8 +308,8 @@ public class ManualToolBlockEntity extends BlockEntity {
         stoneUses = Math.max(0, tag.getInt("gt.stone_uses"));
         outputs.clear();
 //? if >=1.21.1 {
-        /*net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs,lookup);
-        work = tag.contains("gt.work") ? ItemStack.parseOptional(lookup,tag.getCompound("gt.work")) : ItemStack.EMPTY;
+        /*net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs, lookup);
+        work = tag.contains("gt.work") ? ItemStack.parseOptional(lookup, tag.getCompound("gt.work")) : ItemStack.EMPTY;
 *///?} else {
         net.minecraft.world.ContainerHelper.loadAllItems(tag, outputs);
         work = tag.contains("gt.work") ? ItemStack.of(tag.getCompound("gt.work")) : ItemStack.EMPTY;
@@ -295,7 +324,7 @@ public class ManualToolBlockEntity extends BlockEntity {
 //?}
         CompoundTag tag = new CompoundTag();
 //? if >=1.21.1 {
-        /*saveAdditional(tag,lookup);
+        /*saveAdditional(tag, lookup);
 *///?} else {
         saveAdditional(tag);
 //?}
@@ -304,9 +333,13 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*public void handleUpdateTag(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) { loadAdditional(tag,lookup); }
+    /*public void handleUpdateTag(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        loadAdditional(tag, lookup);
+    }
 *///?} else {
-    public void handleUpdateTag(CompoundTag tag) { load(tag); }
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
+    }
 //?}
 
     @Override
@@ -316,8 +349,8 @@ public class ManualToolBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,net.minecraft.core.HolderLookup.Provider lookup) {
-        if (pkt.getTag() != null) loadAdditional(pkt.getTag(),lookup);
+    /*public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, net.minecraft.core.HolderLookup.Provider lookup) {
+        if (pkt.getTag() != null) loadAdditional(pkt.getTag(), lookup);
 *///?} else {
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         if (pkt.getTag() != null) load(pkt.getTag());
