@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.core;
 
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
+import com.gregtech.gregtech.api.addon.BehaviorRecipeCatalysts;
 import com.gregtech.gregtech.api.addon.AddonOverclock;
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
 import com.gregtech.gregtech.api.addon.AddonMachineDefinition;
@@ -94,6 +95,9 @@ public final class AddonMachineContracts {
             case "erange" -> energyRange();
             case "erangedisagree" -> energyRangeDisagree();
             case "erangetu" -> energyRangeTu();
+            case "bcatalyst" -> behaviorCatalyst();
+            case "bunknown" -> unknownBehaviorMap();
+            case "bforeign" -> foreignBehaviorMap();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -928,6 +932,70 @@ public final class AddonMachineContracts {
     private static void check(boolean valid, String message) {
         assertions++;
         if (!valid) throw new AssertionError(message);
+    }
+
+    private static void behaviorCatalyst() {
+        var index = new java.util.LinkedHashMap<String, List<String>>();
+        var compressor = new java.util.ArrayList<>(List.of("centrifuge"));
+        index.put("gt.recipe.compressor", compressor);
+        BehaviorRecipeCatalysts.add(index, List.of(), "boiler", name -> name, Object::equals);
+        check(index.size() == 1 && index.get("gt.recipe.compressor") == compressor,
+                "an empty name list leaves the catalyst index unchanged");
+        BehaviorRecipeCatalysts.add(index, List.of("missing"), "boiler", name -> null, Object::equals);
+        check(index.size() == 1 && index.get("gt.recipe.compressor") == compressor,
+                "an unresolved map adds no catalyst");
+        BehaviorRecipeCatalysts.add(index, List.of("aa.fuel.solid", "gt.recipe.fuels.engine"), "boiler",
+                name -> name, Object::equals);
+        check(index.get("gt.recipe.compressor") == compressor, "existing catalysts stay in place");
+        check(List.of("boiler").equals(index.get("aa.fuel.solid")), "the behavior machine is a catalyst");
+        check(List.of("boiler").equals(index.get("gt.recipe.fuels.engine")), "a second map is listed");
+        BehaviorRecipeCatalysts.add(index, List.of("aa.fuel.solid"), "boiler", name -> name, Object::equals);
+        check(index.get("aa.fuel.solid").size() == 1, "the same machine is not listed twice");
+
+        var plain = BehaviorMachineDeclaration.builder("irrigator", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").build();
+        check(plain.recipeMaps().isEmpty(), "recipe maps default to empty");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+                .recipeMaps("aa.fuel.solid", "aa.fuel.solid").build(), "repeats");
+        expectThrows(IllegalArgumentException.class, () -> BehaviorMachineDeclaration.builder("bad_press", "Steel")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png")
+                .recipeMaps("Not A Map").build(), "Invalid recipe map");
+
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("boiler")));
+        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")), List.of(), List.of(),
+                List.of(boiler("aa.recipe.press", "gt.recipe.fuels.engine", "aa.fuel.solid")),
+                List.of(fuelMap("aa.fuel.solid")), List.of());
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        check(AddonMachines.behaviorMachines().size() == 1, "the boiler is accepted");
+        check(List.of("aa.recipe.press", "gt.recipe.fuels.engine", "aa.fuel.solid")
+                        .equals(AddonMachines.behaviorMachines().get(0).declaration().recipeMaps()),
+                "own maps and a built-in fuel map are kept");
+    }
+
+    private static void unknownBehaviorMap() {
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_sample", Set.of("boiler")));
+        AddonMachines.accept("aa_sample", List.of(), List.of(), List.of(), List.of(boiler("aa.fuel.missing")));
+        expectInstall("aa_sample", "boiler", "unknown", "aa.fuel.missing");
+    }
+
+    private static void foreignBehaviorMap() {
+        prepare();
+        GTMaterialRegistry.init();
+        BehaviorMachineFactories.collect(Map.of("aa_two", Set.of("boiler")));
+        AddonMachines.accept("aa_one", List.of(), List.of(), List.of(), List.of(),
+                List.of(fuelMap("aa.fuel.solid")), List.of());
+        AddonMachines.accept("aa_two", List.of(), List.of(), List.of(), List.of(boiler("aa.fuel.solid")));
+        expectInstall("aa_two", "boiler", "unknown", "aa.fuel.solid");
+    }
+
+    private static BehaviorMachineDeclaration boiler(String... maps) {
+        return BehaviorMachineDeclaration.builder("boiler", "Steel").machineType("boiler")
+                .energy("EU", 32).gui("aa_sample:textures/gui/machine.png").recipeMaps(maps).build();
     }
 
     private static void gasOk() {

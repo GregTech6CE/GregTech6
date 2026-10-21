@@ -137,6 +137,17 @@ public final class RecipeMachines {
             add(result, RecipeMap.RECIPE_MAPS.get(entry.get().declaration().fuelMap()), new ItemStack(entry.get()));
 
 
+//? if >=1.21.1 {
+/*        for (var entry : com.gregtech.gregtech.platform.neoforge.machine.BehaviorMachineRegistration.all())
+*///?} else {
+        for (var entry : com.gregtech.gregtech.registry.BehaviorMachineRegistration.all()) if (entry.isPresent())
+//?}
+
+            com.gregtech.gregtech.api.addon.BehaviorRecipeCatalysts.add(result,
+                    entry.get().declaration().recipeMaps(), new ItemStack(entry.get()),
+                    RecipeMap.RECIPE_MAPS::get, RecipeMachines::sameStack);
+
+
         for(var entry:com.gregtech.gregtech.content.multiblock.GasTurbineDefinitions.blocks())
 
             add(result,com.gregtech.gregtech.data.FuelRecipeMaps.Gas,new ItemStack(entry.get()));
@@ -174,13 +185,19 @@ public final class RecipeMachines {
 
 
 
+        if(list.stream().noneMatch(existing->sameStack(existing,stack))) list.add(stack);
+
+
+
+    }
+
+    private static boolean sameStack(ItemStack existing, ItemStack stack) {
+
 //? if >=1.21.1 {
-/*        if(list.stream().noneMatch(existing->ItemStack.isSameItemSameComponents(existing,stack))) list.add(stack);
+/*        return ItemStack.isSameItemSameComponents(existing, stack);
 *///?} else {
-        if(list.stream().noneMatch(existing->ItemStack.isSameItemSameTags(existing,stack))) list.add(stack);
+        return ItemStack.isSameItemSameTags(existing, stack);
 //?}
-
-
 
     }
 

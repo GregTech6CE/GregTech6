@@ -14,6 +14,7 @@ import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.StructurePartEnergy;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
 import com.gregtech.gregtech.api.addon.platform.MachineBehaviorContext;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/** Sample press, detector, tank-wall multiblock, irrigator, miner, void hopper, rotation buffer, hand crank, transformer, gas compressor, compressed drum and pipes. */
+/** Sample press, detector, tank-wall multiblock, irrigator, miner, void hopper, rotation buffer, hand crank, transformer, solid boiler, gas compressor, compressed drum and pipes. */
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
@@ -120,7 +121,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     @Override public List<FuelMapDeclaration> fuelMaps() {
         return List.of(new FuelMapDeclaration("addon_sample.fuel.gas", "Sample Gas",
                 "addon_sample:textures/gui/machines/press",
-                0, 0, 0, 1, 1, 1, 1, false, false, false, false));
+                0, 0, 0, 1, 1, 1, 1, false, false, false, false),
+                new FuelMapDeclaration("addon_sample.fuel.solid", "Sample Solid",
+                        "addon_sample:textures/gui/machines/press",
+                        1, 1, 1, 0, 0, 0, 1, true, false, false, false));
     }
 
     @Override public List<FuelGeneratorDeclaration> fuelGenerators() {
@@ -134,12 +138,12 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     }
 
     @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, COMPRESSOR);
+        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, SOLID_BOILER, COMPRESSOR);
     }
 
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
-                "sample_transformer", "samplecompressor");
+                "sample_transformer", "sampleboiler", "samplecompressor");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -150,6 +154,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
             case "sample_transformer" -> new Transformer();
+            case "sampleboiler" -> new SolidBoiler();
             case "samplecompressor" -> new Compressor();
             default -> throw new IllegalArgumentException(machineType);
         };
@@ -220,6 +225,20 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             .energyCapacity(32)
             .energyOutputs(BehaviorMachineDeclaration.Face.FRONT)
             .energyOut("RU").energyOutMax(32, 1)
+            .build();
+
+    /** Coal in, charcoal out. Produced EU leaves through the top. */
+    private static final BehaviorMachineDeclaration SOLID_BOILER = BehaviorMachineDeclaration.builder("sample_boiler", "Steel")
+            .machineType("sampleboiler").energy("EU", 32).tier(1)
+            .gui("addon_sample:textures/gui/machine.png")
+            .item(44, 26, BehaviorMachineDeclaration.SlotRole.INPUT)
+            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM, BehaviorMachineDeclaration.Face.LEFT,
+                    BehaviorMachineDeclaration.Face.RIGHT, BehaviorMachineDeclaration.Face.BACK))
+            .energyCapacity(10_000)
+            .energyOutputs(BehaviorMachineDeclaration.Face.TOP)
+            .energyOut("EU").energyOutMax(32, 1)
+            .recipeMaps("addon_sample.fuel.solid")
             .build();
 
     /** KU on the bottom, gas in the tank, compressed drum on the back. */
@@ -406,6 +425,90 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             }
             context.consume(ku);
             context.working(storedAmount > 0);
+        }
+    }
+
+    /**
+     * Looks up {@code addon_sample.fuel.solid}, spends the coal, stores the charcoal,
+     * then generates the row's produced EU and emits it from the top.
+     * {@code Line.euPerTick} on a fuel row is negative.
+     */
+    private static final class SolidBoiler implements MachineBehavior {
+        private static final String MAP = "addon_sample.fuel.solid";
+        private static final long PACKET = 32;
+
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) {
+            return stack != null && !stack.isEmpty();
+        }
+
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            var state = context.state();
+            int left = state.getInt("left");
+            long eu = state.getLong("eu");
+            if (left <= 0 || eu <= 0) {
+                if (!start(context)) {
+                    context.progress(0);
+                    context.working(false);
+                    return;
+                }
+                left = state.getInt("left");
+                eu = state.getLong("eu");
+            }
+            context.working(true);
+            context.generate(eu);
+            context.emit(eu, 1);
+            left--;
+            state.setInt("left", left);
+            int burn = state.getInt("burn");
+            context.progress(burn <= 0 ? 0.0F : (burn - left) / (float) burn);
+        }
+
+        private static boolean start(MachineBehaviorContext context) {
+            AddonRecipes.Line line = AddonRecipes.map(MAP).find(List.of(context.item(0)), List.of(), false, 1, 0);
+            if (line == null) return false;
+            long produced = -line.euPerTick();
+            if (produced <= 0 || produced > PACKET) return false;
+            if (!outputsFit(context.item(1), line)) return false;
+            ItemStack input = context.item(0).copy();
+            for (ItemStack required : line.itemInputs()) {
+                if (required == null || required.isEmpty()) continue;
+                if (input.getItem() != required.getItem() || input.getCount() < required.getCount()) return false;
+                input.shrink(required.getCount());
+            }
+            context.setItem(0, input);
+            context.setItem(1, withOutputs(context.item(1), line));
+            int ticks = line.duration() > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) line.duration();
+            context.state().setInt("burn", ticks);
+            context.state().setInt("left", ticks);
+            context.state().setLong("eu", produced);
+            return true;
+        }
+
+        private static boolean outputsFit(ItemStack slot, AddonRecipes.Line line) {
+            ItemStack cursor = slot == null ? ItemStack.EMPTY : slot.copy();
+            for (ItemStack output : line.itemOutputs()) {
+                if (output == null || output.isEmpty()) continue;
+                if (cursor.isEmpty()) {
+                    cursor = output.copy();
+                    continue;
+                }
+                if (cursor.getItem() != output.getItem() || cursor.getCount() > cursor.getMaxStackSize() - output.getCount())
+                    return false;
+                cursor.grow(output.getCount());
+            }
+            return true;
+        }
+
+        private static ItemStack withOutputs(ItemStack slot, AddonRecipes.Line line) {
+            ItemStack cursor = slot == null ? ItemStack.EMPTY : slot.copy();
+            for (ItemStack output : line.itemOutputs()) {
+                if (output == null || output.isEmpty()) continue;
+                if (cursor.isEmpty()) cursor = output.copy();
+                else cursor.grow(output.getCount());
+            }
+            return cursor;
         }
     }
 }
