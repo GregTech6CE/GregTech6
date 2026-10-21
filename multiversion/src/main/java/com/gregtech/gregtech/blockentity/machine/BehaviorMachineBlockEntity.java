@@ -754,6 +754,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
                 structureBindings.clear(this::releaseStructure);
                 return false;
             }
+            if (cell.plainBlock()) {
+                if (!cell.matches(level, level.getBlockState(cellPos))) {
+                    structureBindings.clear(this::releaseStructure);
+                    return false;
+                }
+                continue;
+            }
             if (level.getBlockState(cellPos).getBlock() != cell.block()
                     || !(level.getBlockEntity(cellPos) instanceof MultiblockPortBlockEntity)) {
                 structureBindings.clear(this::releaseStructure);
