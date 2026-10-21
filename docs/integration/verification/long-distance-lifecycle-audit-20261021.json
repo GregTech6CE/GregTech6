@@ -1,0 +1,853 @@
+{
+  "date": "2026-10-21",
+  "batch": 88,
+  "baseline": "5ad5fdc4838073ea44262c4853e85e7b6d2ae10d",
+  "scope": "Long-distance wire/pipe native entry, cached links, burn side effects, activity display and original control tools. Source-only follow-up, not full transport/runtime acceptance.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/transformers/MultiTileEntityLongDistanceTransformer.java",
+      "sha256": "68bff798f2d06d109cd5f5902671fea99617319555ed874d2971f49a14f8d6e2",
+      "copyright": [
+        "Copyright (c) 2021 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityLongDistancePipelineItem.java",
+      "sha256": "befd9158a68c0a581e8e3e44f7f632b7287b349ce6f56ba580c2c0911b69a218",
+      "copyright": [
+        "Copyright (c) 2021 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityLongDistancePipelineFluid.java",
+      "sha256": "e54bb7180e6bc534d0ddf0cb8b004b99e79580f76e25c0bffb8e74f2d63654d2",
+      "copyright": [
+        "Copyright (c) 2021 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/tool/BlockLongDistWire.java",
+      "sha256": "6582cf7e867482c9b162c16a1527b21f542b6ed1254168bc65e193e8d7e5b854",
+      "copyright": [
+        "Copyright (c) 2023 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/tool/BlockLongDistPipe.java",
+      "sha256": "c2c20883e798025e670b75b1946190c9520f9de7eed9a47dc679f3a508952135",
+      "copyright": [
+        "Copyright (c) 2023 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "copyright": [
+        "Copyright (c) 2026 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceCatalog.java",
+      "sha256": "41549d8d9acd833f63c3d2f5b2b455a04556fc1f6faa04fe1d90c809718ab3ba",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceNetwork.java",
+      "sha256": "acc6984fff8258a5139264baf91033ef4bb8a28e3f059e6a6ddc5bd22271c2a9",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceLink.java",
+      "sha256": "849cc7eedc12b00c49d992138d324c05df643c7c9925d09b4de10d7d97c583ac",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/LongDistanceRules.java",
+      "sha256": "f48bf0e6747be8c6cc669982f7e5090a1184cfd39c6a3fdb18b9e2d03c26d30f",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java",
+      "sha256": "1675c67bc278648d669be632f083fa5f732651b55ab9100d8caa2034cc436423",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "525c99296f0d1f07e77f0825d7fa960660c4ad498318bda8aacad3fb67ec0335",
+          "tokens": 1658
+        },
+        "neoforge": {
+          "sha256": "3ac44efbcc41e7f3197af17120d5ebd3578d862fbdf4dd13c030a37b672f93a6",
+          "tokens": 1686
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java",
+      "sha256": "87991bb9d1703c10d65007bc7d94e0935208fd32b4d956c8a80d0d2cd0dfa610",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "84bf7ef04b1c646befc6cabb7ea3c01696a402fa8a253198b9da50c2a09e13e1",
+          "tokens": 2476
+        },
+        "neoforge": {
+          "sha256": "833c3121955753d1bd4a8cf0de7be6683612965b8bc13d381877e65fabde803c",
+          "tokens": 2502
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlock.java",
+      "sha256": "04403c5567479c1de1f84a0723aafd5f415ba4c7c8f14a569b0cbfdb3625b187",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "ddb5f57ffd0193d31ebb0ba079af0b29598616c9b224c9069ecb35c969d9ea00",
+          "tokens": 1280
+        },
+        "neoforge": {
+          "sha256": "a11290fe0d143eaab0935327ecef418550717416569a74beba7bbed1e525e303",
+          "tokens": 1439
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlock.java",
+      "sha256": "e1db36f1a839e606ee88e36404fb4a11cb9ba6568d03713a48107ebf19391c0b",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "a08098a2b6f046e9b2b9cabed8b63ea531d6f48ff991f232908d6fb0fdf49546",
+          "tokens": 1426
+        },
+        "neoforge": {
+          "sha256": "6bfeb68c000ec372bf78b4778eaf3a2a504652ee00cc6e17021a847be2451043",
+          "tokens": 1585
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistPipeBlock.java",
+      "sha256": "fe03e29328269ef1bb41885c9dcd60d74377ac9df84bf5b7630736f10b72cb0a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "fe03e29328269ef1bb41885c9dcd60d74377ac9df84bf5b7630736f10b72cb0a",
+          "tokens": 532
+        },
+        "neoforge": {
+          "sha256": "fe03e29328269ef1bb41885c9dcd60d74377ac9df84bf5b7630736f10b72cb0a",
+          "tokens": 532
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTopology.java",
+      "sha256": "9657ee73bab8fe7725bff626158d2da20a469d695b656ff47e110c1abcceb52e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "7ab967b70f508202fb2409f8ce73d0934231f9a206462d2ca24cf612c03ecd40",
+          "tokens": 108
+        },
+        "neoforge": {
+          "sha256": "7ab967b70f508202fb2409f8ce73d0934231f9a206462d2ca24cf612c03ecd40",
+          "tokens": 108
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b1078af28147c59ecec2a33a895eb1a6c76f833365ff0ea8c6e8be5fb69cb905",
+          "tokens": 1552
+        },
+        "neoforge": {
+          "sha256": "f4a54e134ad48189cf46c573def50a121b85a7aa8681713dade9cdd665025da6",
+          "tokens": 1453
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+          "tokens": 876
+        },
+        "neoforge": {
+          "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+          "tokens": 917
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+          "tokens": 104
+        },
+        "neoforge": {
+          "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+          "tokens": 104
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+          "tokens": 602
+        },
+        "neoforge": {
+          "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+          "tokens": 602
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyCompat.java",
+      "sha256": "a8cdf995e95129e193624be094ba1226cc1aadce5ba9ca29384a865fcbb1d975",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "1b4cdf3d57f1c6a53b09682a45e12962cbfb2e6f4d68b9577c13af786771f2d9",
+          "tokens": 433
+        },
+        "neoforge": {
+          "sha256": "73b7dbdfcf2d9f9f361a369edbf5fe9576455078fc0e338c4521b566dd97b75c",
+          "tokens": 452
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/MachineOverload.java",
+      "sha256": "d4fa9a25ad0208905a8c8de8c2a87620c1047301fb5604eb9b6694598d74ab47",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "559ae55470195c4027bf480426a199adc548883c1d6bf001460cf8dcfe9f102c",
+          "tokens": 506
+        },
+        "neoforge": {
+          "sha256": "5ecf08ca94d6d4e5c237bb20e110b12d6bb09e409e1210bb656f92b6e351ef8c",
+          "tokens": 514
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLongDistance.java",
+      "sha256": "76ffc5b441e69cabee291a0a297351ec3efb5c2d20e2ce6da2a7219033909db8",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "76ffc5b441e69cabee291a0a297351ec3efb5c2d20e2ce6da2a7219033909db8",
+          "tokens": 449
+        },
+        "neoforge": {
+          "sha256": "76ffc5b441e69cabee291a0a297351ec3efb5c2d20e2ce6da2a7219033909db8",
+          "tokens": 449
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "sha256": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+          "tokens": 466
+        },
+        "neoforge": {
+          "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+          "tokens": 466
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/LongDistanceClientColors.java",
+      "sha256": "5420f6a96d9c845eee0fdc5d82cecbc7ba4232d89f7a558d238657adc00638e2",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3517bbee349e8aa13351c0a390e4e9d93516706de1de60388e853ef87e8579d3",
+          "tokens": 324
+        },
+        "neoforge": {
+          "sha256": "e01d457f79352d4bdc4a3a0df7a776a00fc3af38530ca4a144cb88ebfb44ed70",
+          "tokens": 326
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LongDistanceCapabilities.java",
+      "sha256": "1b83724ab7d25d9e92d84dbb09ff1be9b9c23127715c8980a9208cfae9c9937d",
+      "shared_platform_views": {}
+    }
+  ],
+  "resources": [
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/long_dist_transformer_ulv.json",
+      "sha256": "6b8e4e2691cd4272d801708247c96291714e7416ea0308349183e51b56f2c583"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_ulv.json",
+      "sha256": "24f511ff277b2b05a050cd9de328cf6f9f42069c338800ab2fa7a3397b551c2b"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_ulv_1.json",
+      "sha256": "4182956c3a720c33cd2350c4ac58dd8c49f4e3c42dc3b094f157b2c82295fa9d"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_ulv_2.json",
+      "sha256": "f1e5e73e72127b58cc133ebd6294c55572cebde79f864f7fc6d674af5264ac64"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_ulv_3.json",
+      "sha256": "5f5129674500d98e6d5c510e5de5fa1eb48aa61aa9a46ec6fdfbf4fabc54b43d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/long_dist_transformer_lv.json",
+      "sha256": "4352574c97d4f9c9fb237b21866784520eb8dd82ef8d78644aa168dec37a3dc1"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_lv.json",
+      "sha256": "24f511ff277b2b05a050cd9de328cf6f9f42069c338800ab2fa7a3397b551c2b"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_lv_1.json",
+      "sha256": "4182956c3a720c33cd2350c4ac58dd8c49f4e3c42dc3b094f157b2c82295fa9d"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_lv_2.json",
+      "sha256": "f1e5e73e72127b58cc133ebd6294c55572cebde79f864f7fc6d674af5264ac64"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_lv_3.json",
+      "sha256": "5f5129674500d98e6d5c510e5de5fa1eb48aa61aa9a46ec6fdfbf4fabc54b43d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/long_dist_transformer_mv.json",
+      "sha256": "1fc7c2da90ed734429ba59cc3cc04c697951d8cbc942169b801dd9926ff029a2"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_mv.json",
+      "sha256": "24f511ff277b2b05a050cd9de328cf6f9f42069c338800ab2fa7a3397b551c2b"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_mv_1.json",
+      "sha256": "4182956c3a720c33cd2350c4ac58dd8c49f4e3c42dc3b094f157b2c82295fa9d"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_mv_2.json",
+      "sha256": "f1e5e73e72127b58cc133ebd6294c55572cebde79f864f7fc6d674af5264ac64"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_mv_3.json",
+      "sha256": "5f5129674500d98e6d5c510e5de5fa1eb48aa61aa9a46ec6fdfbf4fabc54b43d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/long_dist_transformer_zpm.json",
+      "sha256": "3344963ddd4bec4a5fe165a783464e19541f74e3cba6a2c200221289076f80e8"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_zpm.json",
+      "sha256": "24f511ff277b2b05a050cd9de328cf6f9f42069c338800ab2fa7a3397b551c2b"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_zpm_1.json",
+      "sha256": "4182956c3a720c33cd2350c4ac58dd8c49f4e3c42dc3b094f157b2c82295fa9d"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_zpm_2.json",
+      "sha256": "f1e5e73e72127b58cc133ebd6294c55572cebde79f864f7fc6d674af5264ac64"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_zpm_3.json",
+      "sha256": "5f5129674500d98e6d5c510e5de5fa1eb48aa61aa9a46ec6fdfbf4fabc54b43d"
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/long_dist_transformer_uv.json",
+      "sha256": "3281e4dbe6c3f3b60f3d8461f8c2a49c33608151d2fdc7df621cad71e9da630e"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_uv.json",
+      "sha256": "24f511ff277b2b05a050cd9de328cf6f9f42069c338800ab2fa7a3397b551c2b"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_uv_1.json",
+      "sha256": "4182956c3a720c33cd2350c4ac58dd8c49f4e3c42dc3b094f157b2c82295fa9d"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_uv_2.json",
+      "sha256": "f1e5e73e72127b58cc133ebd6294c55572cebde79f864f7fc6d674af5264ac64"
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/misc/long_dist_transformer_uv_3.json",
+      "sha256": "5f5129674500d98e6d5c510e5de5fa1eb48aa61aa9a46ec6fdfbf4fabc54b43d"
+    }
+  ],
+  "source_equivalence": {
+    "baseline": "5ad5fdc4838073ea44262c4853e85e7b6d2ae10d",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlockEntity.java": {
+        "before_raw_sha256": "c48bb228e9df6937c5f0ffbf1a4285509fafbe751164d16f11e03d9b5e9a950e",
+        "after_raw_sha256": "1675c67bc278648d669be632f083fa5f732651b55ab9100d8caa2034cc436423",
+        "scoped_local_names": {
+          "method": "changed",
+          "mapping": {
+            "e": "observedEntry",
+            "current": "currentState",
+            "previous": "previousState"
+          }
+        },
+        "new_class_comment": "/** Resolves a cached remote item/fluid endpoint; the base class forwards its sided capabilities. */\n",
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1658,
+            "normalized_execution_sha256": "3f7173e19b4d3ddde9a11f19ea649f3b72ba1663b69447f12c4a7a99c018486e",
+            "literal_positions_sha256": "7c3cfd40e498081fe59b7683f8bd272ec9ffa21c1201964103c24a67a1945e31",
+            "literal_count": 16,
+            "before_lines": 116,
+            "after_lines": 222,
+            "before_max_line": 303,
+            "after_max_line": 180
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1686,
+            "normalized_execution_sha256": "32d5f736c3ac0b908658646a56fd1439315a6ed4e453a640b738f477a2e0272d",
+            "literal_positions_sha256": "e5465c8e419b312abc63971f77e9bd8e2e20f516503ac06948d11665fb985f16",
+            "literal_count": 16,
+            "before_lines": 116,
+            "after_lines": 222,
+            "before_max_line": 343,
+            "after_max_line": 180
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlockEntity.java": {
+        "before_raw_sha256": "10d206f23a6e6e3d0b46961eab00801789a103051fede566944618168422f367",
+        "after_raw_sha256": "87991bb9d1703c10d65007bc7d94e0935208fd32b4d956c8a80d0d2cd0dfa610",
+        "scoped_local_names": {
+          "method": "changed",
+          "mapping": {
+            "e": "observedEntry",
+            "current": "currentState",
+            "previous": "previousState"
+          }
+        },
+        "new_class_comment": "/** Resolves a remote transformer and applies packet limits, line loss and native overload effects. */\n",
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2476,
+            "normalized_execution_sha256": "d0959a8f044299e76cc5aba69c75037ff999f68a76837959679ae3902f2ce810",
+            "literal_positions_sha256": "1177a06e642648e1f51d7f269179a509dd82ac954d2c9db0608df59bdb9c9788",
+            "literal_count": 43,
+            "before_lines": 155,
+            "after_lines": 313,
+            "before_max_line": 406,
+            "after_max_line": 180
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2502,
+            "normalized_execution_sha256": "6701d9c5cf525c14b82bce8847f682aac98dab8fa46b90946cc346647fdcf1e9",
+            "literal_positions_sha256": "31b110618cfa95906a593ccd9a25026d263453e562bc407acd8ee3eab9c827f4",
+            "literal_count": 43,
+            "before_lines": 155,
+            "after_lines": 313,
+            "before_max_line": 461,
+            "after_max_line": 180
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistEndpointBlock.java": {
+        "before_raw_sha256": "c3ec60784f22fce1713c8b8d6866c4f9d83eaab5dd906bef79d2566a46005789",
+        "after_raw_sha256": "04403c5567479c1de1f84a0723aafd5f415ba4c7c8f14a569b0cbfdb3625b187",
+        "scoped_local_names": {},
+        "new_class_comment": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1280,
+            "normalized_execution_sha256": "7c64161919c5c0bdd60dd282017ab49ed9112bd4a47f8cae8205eabf46f0e09f",
+            "literal_positions_sha256": "bbe93279b0e40d1c13ec37b12564884532fcfcfef160300a1c7045c0664e5784",
+            "literal_count": 7,
+            "before_lines": 85,
+            "after_lines": 128,
+            "before_max_line": 315,
+            "after_max_line": 152
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1439,
+            "normalized_execution_sha256": "22129dc99954789cf95d037fd9c0d0a1c76bf9d633a37eabc117c256dac5e58b",
+            "literal_positions_sha256": "bbe93279b0e40d1c13ec37b12564884532fcfcfef160300a1c7045c0664e5784",
+            "literal_count": 7,
+            "before_lines": 87,
+            "after_lines": 142,
+            "before_max_line": 564,
+            "after_max_line": 152
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistPipeBlock.java": {
+        "before_raw_sha256": "7785ae13a611fe30167cde868aa350625fb558250f9e6510d77a5f2f21589260",
+        "after_raw_sha256": "fe03e29328269ef1bb41885c9dcd60d74377ac9df84bf5b7630736f10b72cb0a",
+        "scoped_local_names": {},
+        "new_class_comment": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 532,
+            "normalized_execution_sha256": "537f6aeaf90618c225188faefaa8c17eb7b9d2628a600b9111a10b03accdec8f",
+            "literal_positions_sha256": "fcfd77bac67886243e12b899ba3e53d700ec99dd70389c274c64446021f058f6",
+            "literal_count": 4,
+            "before_lines": 63,
+            "after_lines": 93,
+            "before_max_line": 233,
+            "after_max_line": 126
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 532,
+            "normalized_execution_sha256": "537f6aeaf90618c225188faefaa8c17eb7b9d2628a600b9111a10b03accdec8f",
+            "literal_positions_sha256": "fcfd77bac67886243e12b899ba3e53d700ec99dd70389c274c64446021f058f6",
+            "literal_count": 4,
+            "before_lines": 63,
+            "after_lines": 93,
+            "before_max_line": 233,
+            "after_max_line": 126
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/LongDistanceTransformerBlock.java": {
+        "before_raw_sha256": "834a6418b09f9c6a7548b20643ac34076c591c683a30a2f1644ac20306cb6c86",
+        "after_raw_sha256": "e1db36f1a839e606ee88e36404fb4a11cb9ba6568d03713a48107ebf19391c0b",
+        "scoped_local_names": {},
+        "new_class_comment": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1426,
+            "normalized_execution_sha256": "3f39834c8f5e0aa90c1941f0525cec25a99b9a7ce65cd24e1089c97104269990",
+            "literal_positions_sha256": "5141d1ca7abc1f229e010c923cf55ae04e2b2f3a310224e056e2c94afedb71ec",
+            "literal_count": 9,
+            "before_lines": 85,
+            "after_lines": 138,
+            "before_max_line": 359,
+            "after_max_line": 152
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1585,
+            "normalized_execution_sha256": "c0febe2709b35286970f045bcaad5aff39cc94e7e00e19540e9a24460eeba826",
+            "literal_positions_sha256": "5141d1ca7abc1f229e010c923cf55ae04e2b2f3a310224e056e2c94afedb71ec",
+            "literal_count": 9,
+            "before_lines": 87,
+            "after_lines": 152,
+            "before_max_line": 564,
+            "after_max_line": 152
+          }
+        ]
+      }
+    }
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "new_alignment_findings": [
+    {
+      "id": "ALIGN-287",
+      "contract": "Wire-overvoltage burn omits original neighbor ignition attempts.",
+      "evidence": "Original scanWires(true) calls WD.burn(center,true,false) plus explicit center fire. Current executes rescan and direct fire for visited wire positions only.",
+      "limits": "Both scans can stop at a receiver. No claim of complete branched-network burning or persistent fire; no hazardous behavior restored."
+    },
+    {
+      "id": "ALIGN-288",
+      "contract": "Unavailable activity display replaces the original reference/ownership predicate with remembered-position plus absent live owner.",
+      "evidence": "After fresh load with remembered target but no bound object, original reference guard is false; current unavailable is true even before resolving a loaded target.",
+      "limits": "Activity/history predicate difference only; not proof of broken transport or actual restart execution."
+    }
+  ],
+  "burn_source_witness": {
+    "source_rated_eu": 8192,
+    "source_minimum": 4096,
+    "source_maximum": 16384,
+    "wire_maximum": 4096,
+    "input_packet": 5000,
+    "amount": 1,
+    "execute": true,
+    "requires_valid_loaded_route": true,
+    "original_burn_helper_attempt_offsets": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        -1
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0
+      ]
+    ],
+    "original_additional_center_fire_offsets": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "current_explicit_attempt_offsets_per_visited_wire": [
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "kind": "Source-derived branch and call-coordinate projection, not Java/world fire execution."
+  },
+  "activity_source_projection": {
+    "scenario_columns": [
+      "label",
+      "remembered_position",
+      "target_reference",
+      "target_alive",
+      "target_chunk_loaded",
+      "target_sender_unavailable",
+      "self_target"
+    ],
+    "scenarios": [
+      [
+        "never_scanned",
+        false,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      [
+        "restored_unbound_loaded",
+        true,
+        false,
+        false,
+        true,
+        true,
+        false
+      ],
+      [
+        "restored_unbound_unloaded",
+        true,
+        false,
+        false,
+        false,
+        true,
+        false
+      ],
+      [
+        "bound_live_loaded",
+        true,
+        true,
+        true,
+        true,
+        true,
+        false
+      ],
+      [
+        "bound_live_unloaded_free",
+        true,
+        true,
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        "bound_live_unloaded_busy",
+        true,
+        true,
+        true,
+        false,
+        false,
+        false
+      ],
+      [
+        "bound_dead_free",
+        true,
+        true,
+        false,
+        true,
+        true,
+        false
+      ],
+      [
+        "failed_scan_self",
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    ],
+    "conditions": 128,
+    "differences": 24,
+    "trace_sha256": "c3b14c99a2c03afd179f0e1d82cd4b3e2a1416d251f688ac8bfc4407c40ca3ae",
+    "projection_sha256": "75849a9ec656745f5bd1e59d13be9a25a22e772471eb5f7c03662a94372b4522",
+    "representative": {
+      "scenario": "restored_unbound_loaded",
+      "history": 0,
+      "active": false,
+      "stopped": false,
+      "old_next": 0,
+      "current_next": 0,
+      "old_state": 0,
+      "current_state": 3
+    },
+    "kind": "Finite source predicate/history projection. No target, native world, packets or saved-world restart executed."
+  },
+  "resource_declaration_projection": {
+    "variants": 120,
+    "entries_sha256": "6ced3258471779cf51e1e537a2f161b0dfb20f48645ec2b4df54f605bc8a052c",
+    "limits": "Five state files and twenty model documents only; not baking, texture pixels, Neo loader translation or actual client rendering."
+  },
+  "revalidated_existing_status": {
+    "ALIGN-070": "Known watched restoration gap remains; no extra issue number.",
+    "ALIGN-071": "Public addon EnergyBlock path is present; FE-only target path remains absent.",
+    "ALIGN-072": "Unconditional endpoint deletion stays fixed via two MachineOverload calls.",
+    "ALIGN-073": "Item extraction permission difference remains. Fluid drain rejection remains present."
+  },
+  "limits": [
+    "No Java compilation, target initialization, Gradle, tests, game, build or push.",
+    "No real world scan performance, third-party provider, fire spread, lifecycle/restart or full source catalog acceptance.",
+    "New records and existing statuses are not a count of open defects or a completion percentage."
+  ],
+  "previous_goal_turn": "Progress: d298f5a63 added verified storage findings/readability; 5ad5fdc48 merged upstream PR63 while preserving user materials and audited sources.",
+  "root_revalidation": {
+    "original_sources": 10,
+    "current_sources": 23,
+    "shared_platform_views": 32,
+    "readability_files": 5,
+    "readability_execution_views": 10,
+    "resources": 25,
+    "source_activity_conditions": 128,
+    "source_activity_differences": 24,
+    "ledger_contiguous": [
+      1,
+      288
+    ],
+    "new_or_added_local_links": 15,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false,
+    "kind": "Actual source hashes and selected platform views, full ordered code/literal/comment proofs, original exact activity guard and saved history, old early return and current extraction consumer, finite source traces and added document links."
+  }
+}

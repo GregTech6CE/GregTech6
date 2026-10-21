@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十七批核直接物流存储，新增285物流桶覆盖板客户端更新、286专用实体渲染器漏注册；保存／最终掉落及已修137分开。行为记录至ALIGN-286，共286条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是286个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十八批核长距离端点，新增287烧线邻格尝试、288活动不可用门槛；071保持部分修复、072保持已修。行为记录至ALIGN-288，共288条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是288个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -313,6 +313,8 @@
 | ALIGN-284 | 确认物流核心秒节拍从全局服务端计数改为世界存档时间相位。 | 原启动清SERVER_TIME、START递增前求SYNC_SECOND，核心注册预回调。 | 当前普通ticker按gameTime%20，原生先增世界时间且Time持久保存；20有限余数中19相位不同，频率仍20刻一次。不是吞吐或实际重启验收，见[调度专题](LOGISTICS_SCHEDULING_AUDIT.md)。 |
 | ALIGN-285 | 确认物流桶覆盖板缺有效客户端更新消费者。 | 原继承覆盖板完整ID／meta与视觉包，安装调用updateClientData。 | 当前世界保存已有；父getUpdateTag漏物流板、默认getUpdatePacket为null，原生getCover覆盖又排除fallback跟踪。不是掉落／存档丢失，见[直接存储](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。 |
 | ALIGN-286 | 确认独立物流桶实体漏注册覆盖板渲染器。 | 原覆盖板父类最终渲染pass消费表面／支架／附件。 | 两端TankCoverRenderer仅注册普通TANK，实际是LOGISTICS_TANK；原生按getType精确查map，fallback也不接受该宿主。不是外壳资源缺失或CPU自亮问题，见[客户端入口](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。 |
+| ALIGN-287 | 确认长距离导线过压烧毁缺原邻格点火尝试。 | 原scanWires(true)调用WD.burn(T,F)尝试中心／六邻，再显式设中心火。 | 当前重扫后只设已收集线位置为火；5000EU有效端点／4096耐压源分支成立。两边可提前终止，未报全网燃烧或持续火焰，见[危险分支](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-288 | 确认长距离活动不可用指示简化原目标对象／归属门槛。 | 原状态3要求mTarget对象及发送者条件，恢复坐标但未绑定时走普通历史。 | 当前known且live owner空即3并保持history，目标已加载但尚未解析亦会进入；128条件24状态／历史差异为源投影，非传输失效或实际重启验收，见[活动状态](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
