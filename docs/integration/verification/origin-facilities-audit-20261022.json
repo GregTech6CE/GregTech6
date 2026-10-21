@@ -1,0 +1,1868 @@
+{
+  "date": "2026-10-22",
+  "batch": 108,
+  "baseline": "efc334959cd56f2c423f914f06ec5bb2416729ed",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "efc334959"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenNexus.java",
+      "raw_sha256": "b4f7841c84d193dda38b7caa940cde249465a739b04992e5052cb9ab79fe22f0",
+      "source_sha256": "b4f7841c84d193dda38b7caa940cde249465a739b04992e5052cb9ab79fe22f0",
+      "lines": 339,
+      "notice": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenTesting.java",
+      "raw_sha256": "f498f70d0c2ac9c62e5a7f40a3d15ff6c56e5457f23ef4378877e77064034e50",
+      "source_sha256": "f498f70d0c2ac9c62e5a7f40a3d15ff6c56e5457f23ef4378877e77064034e50",
+      "lines": 377,
+      "notice": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+      "authors": [
+        "Gregorius Techneticies"
+      ]
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+      "raw_sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+      "source_sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+      "lines": 322,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "1bf484c5ef1ff4c56e74ae266419015115cb0931824251e75c299a38de9b4570"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+      "raw_sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+      "source_sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+      "lines": 180,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "11e1aaf58ebe6c1c265339496dfbaae960b5c41cd2ef60142aca8f0af4bf6d77"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java",
+      "raw_sha256": "47110ad135b5e32e5dc0d85d105fed875f2c935e2ab0f025a9813ca689077eac",
+      "source_sha256": "47110ad135b5e32e5dc0d85d105fed875f2c935e2ab0f025a9813ca689077eac",
+      "lines": 173,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "2f25d1a17f209a78ff9421a1fdc95292e8a65095aa7ad7cdbe11a46143deef9b"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "raw_sha256": "71c099bf20b2b049e5bdaafa748d1fef4fcb045483be482fb1dd3cb0e15cc26f",
+      "source_sha256": "71c099bf20b2b049e5bdaafa748d1fef4fcb045483be482fb1dd3cb0e15cc26f",
+      "lines": 102,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "5e27b074f4829859ba25760c165af09c8453e0dbe4bc9baa02bca3efd29cef70"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "6b6bc5f01148319dc0ff01c62f83128e94e070f3cd8e29eba66da853c905cb56"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "raw_sha256": "4846777fc95ca9777c8c37100ee8ffb4f6cdfa863eb44479ec2359283b4719c7",
+      "source_sha256": "4846777fc95ca9777c8c37100ee8ffb4f6cdfa863eb44479ec2359283b4719c7",
+      "lines": 137,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "fa9a5f73ba854a6f89f72374ad44de043ddbe5462db3ce659a79144c29dabad1"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "7368af9804411ab9a1e85ab33d03ee6ac96523847a6c452930f7053273405916"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "source_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+      "lines": 58,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "85ae88d56a64dd5902876079b1ab7d5a4ebcbb8209e0eb9b9b4c9c3bdffe14e7"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "source_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+      "lines": 125,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "485952a3eb686f545c949384c64b981fd5af24a26a3379799dc7826f75d7b073"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java",
+      "raw_sha256": "fac83ebd2b5d098a556f526f23cabc14a60d649e89cfd2f6773cc167bf6c89e0",
+      "source_sha256": "fac83ebd2b5d098a556f526f23cabc14a60d649e89cfd2f6773cc167bf6c89e0",
+      "lines": 67,
+      "repository_path": "core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java",
+      "source_views": [
+        {
+          "platform": "core",
+          "ordered_code_sha256": "a8b8994cb1ed74e1203f9a038c8d2ef1abec5a72b3bc6384b18075e4828ee605"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "raw_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "source_sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+      "lines": 288,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "1e55a876e4effbac88180b7888e9c2d820650fe1331bd256bc863869bd6f489a"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "9f736b8de291aef0b52d1df1e4ed77af9be9ade419b660b581eede11d7f870f2"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "raw_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "source_sha256": "c1cd5d4b76fb1d062021e369149be9803a1a3d785b13fa87eb69e3a3a2e68b49",
+      "lines": 61,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "5fdbdc3886be92bc62463155bbfb9a64fb7236aae491cca3040834117b41553d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "raw_sha256": "b57ae8f2f6b7e82b680e60941d7824394b9b3c7c479101b4fb7ccd8d73089adc",
+      "source_sha256": "1af82080e4162c9b11db6e88faf5a9a06fa16e3321f0df74ab7ff277e6c12ef0",
+      "lines": 167,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "b616865ccca9dc07fff6cc359d2b1c68bbcdac347727917aa277d411ab58709e"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "b345f7ea221d4b26089da51818d141a9f79eae60f824fab871ba356180945e1b"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "raw_sha256": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8",
+      "source_sha256": "21f838ed389ea7f3c27b37e5d6ceced55925297addbc5a35ce00604363d5ad6d",
+      "lines": 1263,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "01158d03059bd7a3b5a9abaf3917c6f9747b0436f17598569478063293183c16"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "31a6fb8024aa150837d3cd98ab14af6a9bf2848ae2ad1dd86546d1e13d292d0e"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "raw_sha256": "c426e99397dbfdfea4b03d2785a091d9f05a3a64a83aae6357bddf69c7bceed1",
+      "source_sha256": "c426e99397dbfdfea4b03d2785a091d9f05a3a64a83aae6357bddf69c7bceed1",
+      "lines": 219,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "904bb8d354831617953851205f5e86ed18eb68045eb7ef92b2eb8e438eec3d55"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "42f237f13ff70a3db031f7df17e942972d593299a7f885edb0ce7c77d84fec8d"
+        }
+      ]
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "raw_sha256": "7cece89f08f3cd60bf861896a93b2e99b3f3c920bbeebcb89a51752509096b94",
+      "source_sha256": "fbd0171e8c5bc812726b6365266b6dffdf2b25e2628b547f7b6629c404f2a6c5",
+      "lines": 21,
+      "repository_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "source_views": [
+        {
+          "platform": "forge",
+          "ordered_code_sha256": "9f5a0bd5b9b22ae4ca9b6a1d87436f916735b9743f131a731ea0ed6aee131faf"
+        },
+        {
+          "platform": "neoforge",
+          "ordered_code_sha256": "56b2a313c7106dac03624df809dbdf760031bff04d5d44c90eb21cfca6b980ca"
+        }
+      ]
+    }
+  ],
+  "reference_only_scripts_and_tests": [
+    {
+      "path": "C:/Dev/GregTech6/tools/import_origin_worldgen.py",
+      "raw_sha256": "782359d5cee41270dbfcc28338c90526a1242701d589201de81157e4fb5e514c",
+      "source_sha256": "782359d5cee41270dbfcc28338c90526a1242701d589201de81157e4fb5e514c",
+      "lines": 110
+    },
+    {
+      "path": "C:/Dev/GregTech6/tools/import_origin_modules.py",
+      "raw_sha256": "4dae266a972be5b1394520239cb26cf15c45b5b8e13a406ed07298d431acac47",
+      "source_sha256": "4dae266a972be5b1394520239cb26cf15c45b5b8e13a406ed07298d431acac47",
+      "lines": 87
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/test/java/com/gregtech/gregtech/core/OriginWorldgenSamples.java",
+      "raw_sha256": "67e6f36404d0640c1f5c7b0b4fccf350ad20373da733e599c4dea3c55af961cb",
+      "source_sha256": "8780f0f8431f999c30d43004e03de6a3c978102bd923caab53c84021050447b8",
+      "lines": 102
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/bootstrapGameTest/java/com/gregtech/gregtech/integration/client/OriginFeedbackChecks.java",
+      "raw_sha256": "dec1b204e63c780e231a77f865f38dad1a4e3c7e5f6350790ce4f8327defa239",
+      "source_sha256": "dec1b204e63c780e231a77f865f38dad1a4e3c7e5f6350790ce4f8327defa239",
+      "lines": 282
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenNexus.java",
+      "start_line": 56,
+      "end_line": 65,
+      "text": "\tpublic boolean generate(World aWorld, Chunk aChunk, int aDimType, int aMinX, int aMinZ, int aMaxX, int aMaxZ, Random aRandom, BiomeGenBase[][] aBiomes, Set<String> aBiomeNames) {\n\t\tif (aMinX != 16 || aMinZ != -48) return F;\n\t\tfinal boolean[] fWindow = {F,T,T,T,T,F,T,T,T,T,F,T,T,T,T,F};\n\t\tif (GENERATE_STREETS) {\n\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\tfor (int k = 2; k < 64; k++) WD.set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\tfor (int k = 1; k < mHeight; k++) WD.set(aChunk, i, k, j, BlocksGT.Concrete, DYE_INDEX_Gray);\n\t\t\t\tWD.set(aChunk, i, mHeight+ 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);\n\t\t\t\tif (i == 0 || i == 15 || j == 0 || j == 15) {\n\t\t\t\tWD.set(aChunk, i, mHeight+ 0, j, BlocksGT.Concrete, DYE_INDEX_Gray);",
+      "excerpt_sha256": "7209d77385528dbe293e63dbd295e8999f79eb2888726350dc7c71cb889ff3a6"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenNexus.java",
+      "start_line": 88,
+      "end_line": 93,
+      "text": "\t\t} else {\n\t\t\tint tRockType = RNGSUS.nextInt(BlocksGT.stones.length);\n\t\t\t\n\t\t\tfor (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {\n\t\t\t\tfor (int k = 2; k < 64; k++) WD.set(aChunk, i, mHeight+k, j, NB, 0);\n\t\t\t\tfor (int k = 1; k < mHeight; k++) WD.set(aChunk, i, k, j, BlocksGT.stones[tRockType], 0);",
+      "excerpt_sha256": "c79262bd37b38f7fec675ceeb257de35bd3f272618d1dc8af9a7484cd3a95ce5"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenTesting.java",
+      "start_line": 132,
+      "end_line": 141,
+      "text": "\t\t\t\n\t\t\tMultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry(\"gt.multitileentity\");\n\t\t\t\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+2, -20, SIDE_UNKNOWN, (short) 7133, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+2, -21, SIDE_UNKNOWN, (short) 7133, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+2, -22, SIDE_UNKNOWN, (short) 7133, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+3, -20, SIDE_UNKNOWN, (short) 4033, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+3, -21, SIDE_UNKNOWN, (short) 4033, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+3, -22, SIDE_UNKNOWN, (short) 4033, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 33, mHeight+4, -20, SIDE_UNKNOWN, (short) 6033, UT.NBT.make(NBT_FACING, SIDE_X_POS), T, T);",
+      "excerpt_sha256": "c363fed89ac9456d9045e7c6a370e5da18ab86fc11bec3b9038452b644bebae0"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenTesting.java",
+      "start_line": 161,
+      "end_line": 171,
+      "text": "\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight+3, -18, SIDE_UNKNOWN, (short)32719, null, T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight+2, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight+1, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight  , -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight-1, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight-2, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight-3, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight-4, -18, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_S)), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 36, mHeight-4, -17, SIDE_UNKNOWN, (short)26304, UT.NBT.make(NBT_CONNECTION, SBIT_N), T, T);\n\t\t\tTileEntity tTileEntity = WD.te(aWorld, 36, mHeight-4, -17, T);\n\t\t\tif (tTileEntity instanceof TileEntityBase06Covers) ((TileEntityBase06Covers)tTileEntity).setCoverItem(SIDE_Z_POS, IL.Cover_Drain.get(1), null, T, F);",
+      "excerpt_sha256": "bce366ce10315d7d5e062f2ee1c5ed22cac2377994f9e083619c261638672756"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenTesting.java",
+      "start_line": 186,
+      "end_line": 192,
+      "text": "\t\t\t// Lots of Items I want to have ready whenever I generate a new Test World.\n\t\t\tItemStack[] tInventory = {\n\t\t\t  ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SWORD                 , MT.NetherizedDiamond, MT.LightBlue)\n\t\t\t, ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PICKAXE               , MT.NetherizedDiamond, MT.LightBlue)\n\t\t\t, ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SHOVEL                , MT.NetherizedDiamond, MT.LightBlue)\n\t\t\t, ToolsGT.sMetaTool.getToolWithStats(ToolsGT.AXE                   , MT.NetherizedDiamond, MT.LightBlue)\n\t\t\t, ToolsGT.sMetaTool.getToolWithStats(ToolsGT.HOE                   , MT.NetherizedDiamond, MT.LightBlue)",
+      "excerpt_sha256": "8c17c6cd3006ec1efa7d95c78e2298ebb392b402dd02191329ddc8a25f059f09"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/center/WorldgenTesting.java",
+      "start_line": 352,
+      "end_line": 356,
+      "text": "\t\t\ttRegistry.mBlock.placeBlock(aWorld, 41, mHeight+2, -18, SIDE_UNKNOWN, (short) 5033, UT.NBT.make(NBT_FACING, SIDE_Z_NEG), T, T);\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 41, mHeight+4, -18, SIDE_UNKNOWN, (short)32764, UT.NBT.make(NBT_FACING, SIDE_Z_NEG, \"display\", UT.NBT.makeString(\"Name\", \"Bear989Sr\")), T, T);\n\t\t\t\n\t\t\t\n\t\t\ttRegistry.mBlock.placeBlock(aWorld, 42, mHeight+2, -18, SIDE_UNKNOWN, (short)32703, UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_STATE, 4), T, T);",
+      "excerpt_sha256": "05fe9d6a40cf95253842215bcd9fd173406521687ec1d335e920502b50b87aae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "start_line": 56,
+      "end_line": 68,
+      "text": "        var state = BuiltInRegistries.BLOCK.get(key).defaultBlockState();\n        var side = java.util.regex.Pattern.compile(\"NBT_FACING, SIDE_([XYZ])_(NEG|POS)\").matcher(data);\n        if (side.find()) {\n            Direction direction = switch (side.group(1)) {\n                case \"X\" -> side.group(2).equals(\"POS\") ? Direction.EAST : Direction.WEST;\n                case \"Y\" -> side.group(2).equals(\"POS\") ? Direction.UP : Direction.DOWN;\n                default -> side.group(2).equals(\"POS\") ? Direction.SOUTH : Direction.NORTH;\n            };\n            for (var property : state.getProperties()) if (property instanceof DirectionProperty facing && property.getName().equals(\"facing\")\n                    && facing.getPossibleValues().contains(direction))\n                state = state.setValue(facing, direction);\n        }\n        if (legacy == 26304) {",
+      "excerpt_sha256": "a6e13c829c7eac9b061d83d0aed2099f86530796edffab3bec6f1a9826cb5103"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "start_line": 68,
+      "end_line": 81,
+      "text": "        if (legacy == 26304) {\n            int mask = 0;\n            String[] sourceBits = {\n                \"SBIT_D\", \"SBIT_U\", \"SBIT_N\", \"SBIT_S\", \"SBIT_W\", \"SBIT_E\"\n            };\n            for (int sideIndex = 0; sideIndex < 6; sideIndex++) if (data.contains(sourceBits[sideIndex])) mask |= 1 << sideIndex;\n            for (var property : state.getProperties()) if (property instanceof BooleanProperty connected) {\n                for (var direction : Direction.values()) if (property.getName().equals(direction.getName()))\n                    state = state.setValue(connected, (mask & (1 << direction.get3DDataValue())) != 0);\n            }\n        }\n        if (legacy == 32703 && state.hasProperty(com.gregtech.gregtech.block.tool.ManualToolBlock.STONE))\n            state = state.setValue(com.gregtech.gregtech.block.tool.ManualToolBlock.STONE, true);\n        var pos = new BlockPos(x, y, z);",
+      "excerpt_sha256": "872034c64735ae00c5301784014610fc37a8ee3594c1b587d5c86222484b2650"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "start_line": 84,
+      "end_line": 95,
+      "text": "        if (entity instanceof ZpmModuleBlockEntity zpm) zpm.initializeDungeonEnergy(data.contains(\"NBT_ACTIVE_ENERGY, T\"));\n        if (entity instanceof DrawerQuadBlockEntity drawer && data.contains(\"NBT_INV_LIST\")) {\n            for (int slot = 0; slot < Math.min(drawer.items().getSlots(), OriginTestInventory.ROWS.size()); slot++) {\n                var stack = NativeOriginItems.stack(OriginTestInventory.ROWS.get(slot));\n//? if >=1.21.1 {\n                /*com.gregtech.gregtech.api.tool.GTToolEnchantments.apply(stack, level.registryAccess());\n*///?}\n                drawer.items().setStackInSlot(slot, stack);\n            }\n        }\n        if (entity instanceof com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity station && legacy == 32703)\n            station.setDungeonGrindstoneUses(4);",
+      "excerpt_sha256": "008447262ca07c3aad674a817b5fa094b015fd06b1fe5942883245736a1e1368"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java",
+      "start_line": 94,
+      "end_line": 102,
+      "text": "        if (entity instanceof com.gregtech.gregtech.blockentity.tool.ManualToolBlockEntity station && legacy == 32703)\n            station.setDungeonGrindstoneUses(4);\n        if (entity instanceof com.gregtech.gregtech.blockentity.tool.AdvancedButtonBlockEntity button && data.contains(\"NBT_MODE, T\")) {\n            var config = button.saveItemConfig();\n            config.putBoolean(\"Inverted\", true);\n            button.loadItemConfig(config);\n        }\n    }\n}",
+      "excerpt_sha256": "53e17889e4003bd05e57949736d88a35803dc4e88210dcddfce3210213228a70"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "start_line": 27,
+      "end_line": 35,
+      "text": "    private static String material(String name) {\n        return switch (name) {\n            case \"Al\" -> \"Aluminium\";\n            case \"WOODS.Spruce\" -> \"Spruce\";\n            case \"WOODS.Scorched\" -> \"WoodScorched\";\n            default -> name;\n        };\n    }\n",
+      "excerpt_sha256": "f39adc7db5f8692ac775779a910ee2d098d11d0d0102473300a2e6dbf9f7432e"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "start_line": 57,
+      "end_line": 73,
+      "text": "            if (electric != null && tier > 1) electric += \"_\" + (tier == 2 ? \"mv\" : \"hv\");\n            if (electric != null && BuiltInRegistries.ITEM.get(id(\"gt6ce:\" + electric)) instanceof ElectricToolItem item) {\n                long capacity = (8L << (2 * tier)) * 1000;\n                var stack = item.assembled(head, capacity);\n//? if >=1.21.1 {\n                /*com.gregtech.gregtech.api.tool.GTToolHelper.write(stack, head, handle);\n                stack.remove(net.minecraft.core.component.DataComponents.MAX_DAMAGE);\n                stack.remove(net.minecraft.core.component.DataComponents.DAMAGE);\n                com.gregtech.gregtech.platform.neoforge.StackCustomData.update(stack, tag -> tag.putLong(\"gt.charge\", capacity));\n*///?} else {\n                com.gregtech.gregtech.api.tool.GTToolHelper.write(stack, head, handle);\n                stack.getOrCreateTag().putLong(\"gt.charge\", capacity);\n//?}\n                return stack;\n            }\n            return ItemStack.EMPTY;\n        }",
+      "excerpt_sha256": "2831cd78a2c492a89ab5dbdaa08a2db5e6d3344df763d7b105985663a422dde3"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "start_line": 82,
+      "end_line": 101,
+      "text": "        var form = FORM.matcher(row);\n        if (form.find()) {\n            var selected = GTMaterialRegistry.get(material(form.group(2)));\n            int count = Integer.parseInt(form.group(3));\n            if (selected == null || !selected.isValid()) return ItemStack.EMPTY;\n            if (form.group(1).equals(\"wireGt01\") || form.group(1).equals(\"cableGt01\")) {\n                boolean insulated = form.group(1).equals(\"cableGt01\");\n                for (var family : com.gregtech.gregtech.content.energy.SignalWireCatalog.families())\n                    if (family.material() == selected) return new ItemStack(BuiltInRegistries.ITEM.get(id(\"gt6ce:\" + (insulated ? \"cable_01_\" : \"wire_01_\") + family.name())), count);\n                for (var entry : com.gregtech.gregtech.registry.GTWires.all()) {\n                    var spec = entry.get().spec();\n                    if (spec.material() == selected && spec.size() == 1 && spec.insulated() == insulated) return new ItemStack(entry.get(), count);\n                }\n                return ItemStack.EMPTY;\n            }\n            var type = PrefixRegistry.byName(form.group(1));\n            return type == null ? ItemStack.EMPTY : GTItems.getStack(type, selected, count);\n        }\n        var battery = Pattern.compile(\"Battery_Lead_Acid_(LV|MV|HV)\").matcher(row);\n        if (battery.find()) {",
+      "excerpt_sha256": "8caa71daedcf3b07aed7d541b994462cbf213e1bef72da92cc54d59398b9d7ae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java",
+      "start_line": 100,
+      "end_line": 116,
+      "text": "        var battery = Pattern.compile(\"Battery_Lead_Acid_(LV|MV|HV)\").matcher(row);\n        if (battery.find()) {\n            var spec = com.gregtech.gregtech.content.energy.ChemicalBatterySpec.all().stream()\n                    .filter(s -> s.chemistry() == com.gregtech.gregtech.content.energy.ChemicalBatterySpec.Chemistry.LEAD_ACID\n                            && s.tier() == switch (battery.group(1)) {\n                                case \"LV\" -> 1;\n                                case \"MV\" -> 2;\n                                default -> 3;\n                            }).findFirst();\n            if (spec.isPresent()) {\n                var item = com.gregtech.gregtech.registry.GTChemicalBatteries.item(spec.get().chemistry(), spec.get().tier());\n                var stack = new ItemStack(item);\n                item.setCharge(stack, spec.get().capacity());\n                return stack;\n            }\n        }\n        var motor = Pattern.compile(\"MOTORS\\\\[(\\\\d+)\\\\]\").matcher(row);",
+      "excerpt_sha256": "665f34751b48d8d1a36650fcf60fe0bc4cff81967e6b02c1853b1003d9e54fae"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java",
+      "start_line": 31,
+      "end_line": 40,
+      "text": "    public static final int COMPARTMENTS = com.gregtech.gregtech.content.storage.ContainerStorageRules.COMPARTMENTS, PAGE_SIZE = com.gregtech.gregtech.content.storage.ContainerStorageRules.PAGE_SIZE, SLOT_COUNT = com.gregtech.gregtech.content.storage.ContainerStorageRules.DRAWER_SLOTS;\n    private boolean sidedAccess, loading, refilling, capsValid = true;\n    // Only used to retain over-capacity contents from the earlier, incorrect bulk implementation.\n    private final List<ItemStack> overflow = new ArrayList<>();\n//? if >=1.21.1 {\n//?} else {\n    private final Map<Integer, LazyOptional<IItemHandler>> capabilities = new HashMap<>();\n//?}\n    private final ItemStackHandler inventory = new ItemStackHandler(SLOT_COUNT) {\n        @Override protected void onContentsChanged(int slot) {",
+      "excerpt_sha256": "2a1a89755d306f1df9520d35fc7a254faebe08d4b9cc19354014f56ab73f8923"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "start_line": 871,
+      "end_line": 876,
+      "text": "    private boolean connected(Direction side) {\n        return !isRemoved() && getBlockState().getValue(FluidPipeBlock.propFor(side));\n    }\n\n//? if >=1.21.1 {\n    /*private IFluidHandler faceHandler(Direction side){",
+      "excerpt_sha256": "7b08275ef1f047fa2fc2a809afc402bfa8c646475d963dc769d71346ee75decb"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ZpmModuleBlockEntity.java",
+      "start_line": 12,
+      "end_line": 16,
+      "text": "    public void initializeDungeonEnergy(boolean active){energy=com.gregtech.gregtech.content.energy.ZpmWorkRules.dungeonCharge(active);setChanged();}\n    public void updateLight(){int light=com.gregtech.gregtech.content.energy.ZpmWorkRules.light(energy);if(level!=null&&getBlockState().getValue(ZpmModuleBlock.CHARGE)!=light)level.setBlockAndUpdate(worldPosition,getBlockState().setValue(ZpmModuleBlock.CHARGE,light));}\n//? if >=1.21.1 {\n    /*@Override protected void saveAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.saveAdditional(t,lookup);t.putLong(ZpmEnergy.KEY,energy);}\n    @Override protected void loadAdditional(CompoundTag t,net.minecraft.core.HolderLookup.Provider lookup){super.loadAdditional(t,lookup);energy=com.gregtech.gregtech.content.energy.ZpmWorkRules.charge(t.getLong(ZpmEnergy.KEY));}",
+      "excerpt_sha256": "3f9886420b775461279479b2f5910e3eb31a715fb40b4130e6b65fafa22de208"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTOriginFeature.java",
+      "start_line": 56,
+      "end_line": 60,
+      "text": "        if (nexus) placed |= new SourceNexus(height, true).generate(world, new OriginWorld.Chunk(world, minX, minZ),\n                minX, minZ, new Random(level.getSeed() ^ chunk.toLong()));\n        if (testing) placed |= new SourceTesting(height).generate(world, planChunk, minX, minZ);\n        return placed;\n    }",
+      "excerpt_sha256": "f47f78dc68371306aa4a1e925ef36428dc9bf45ee11c639c595eaf4c19410ec9"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java",
+      "start_line": 7,
+      "end_line": 13,
+      "text": "public final class ContainerStorageRules {\n    private ContainerStorageRules() {}\n\n    public static final int COMPARTMENTS = 4, PAGE_SIZE = 36, DRAWER_SLOTS = 144, BOTTLE_SLOTS = 9;\n    public static final List<String> ARMOR_ORDER = List.of(\"HEAD\", \"CHEST\", \"LEGS\", \"FEET\");\n    private static final int[][] ROTATIONS = {\n            {0, 1, 2, 3, 4, 5},",
+      "excerpt_sha256": "3a208df377af5aeb9eac8d54516ff3381ace76416e3f9791a0303431ebcb5af1"
+    }
+  ],
+  "complete_method_body_comparison": {
+    "nexus": {
+      "ordered_tokens": 4883,
+      "ordered_code_sha256": "6a9664e2f7637fd9cec2023ec82a43505942bf898825b9f7cd92c1422e26622e"
+    },
+    "adaptations": {
+      "nexus": [
+        "WD.set to OriginSupport.set",
+        "RNGSUS to passed per-chunk Random",
+        "Two foundation fill starts to world.minY()+1"
+      ],
+      "testing": [
+        "WD.set to OriginSupport.set",
+        "Foundation minY and clearing maxY boundaries",
+        "Old slab arrays to current side-specific arrays",
+        "49 legacy tile calls to 48 native commands, excluding user-removed certificate 32764",
+        "144 inventory expressions to an identical immutable string table",
+        "One legacy drain-cover install to native drain request"
+      ]
+    },
+    "inventory": {
+      "slots": 144,
+      "all_source_rows_exact": true,
+      "rows_sha256": "4dd5416980af31c8a830d55c4c67b94d6e0c71e22c440217e658344717720629",
+      "rows": [
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SWORD                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PICKAXE               , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SHOVEL                , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.AXE                   , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.HOE                   , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SAW                   , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.HARDHAMMER            , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SOFTHAMMER            , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.WRENCH                , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MONKEY_WRENCH         , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.FILE                  , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CROWBAR               , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SCREWDRIVER           , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CLUB                  , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.WIRECUTTER            , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SCOOP                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BRANCHCUTTER          , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.UNIVERSALSPADE        , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.KNIFE                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BUTCHERYKNIFE         , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PLOW                  , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.ROLLING_PIN           , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CHISEL                , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.FLINT_AND_TINDER      , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BENDING_CYLINDER      , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BENDING_CYLINDER_SMALL, MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.DOUBLE_AXE            , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CONSTRUCTION_PICK     , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SCISSORS              , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PINCERS               , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SPADE                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.HAND_DRILL            , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SENSE                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "NI",
+        "NI",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BUILDERWAND           , MT.Vibramantium, MT.WOODS.Scorched)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.POCKET_MULTITOOL      , MT.Vibramantium, MT.Vibramantium)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PLUNGER               , MT.Greatwood, MT.Greatwood)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MAGNIFYING_GLASS      , MT.DiamondPink, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.GEM_PICK              , MT.DiamondPink, MT.LightBlue)",
+        "ST.make(Items.wooden_pickaxe , 1, 0)",
+        "ST.make(Items.stone_pickaxe  , 1, 0)",
+        "ST.make(Items.golden_pickaxe , 1, 0)",
+        "ST.make(Items.iron_pickaxe   , 1, 0)",
+        "ST.make(Items.diamond_pickaxe, 1, 0)",
+        "IL.Tool_Chunk_Remover.get(1)",
+        "IL.Tool_Worldgen_Debugger.get(1)",
+        "IL.Tool_Cheat.get(1)",
+        "IL.IC2_Debug.get(1)",
+        "IL.Pill_Cure_All.get(64)",
+        "IL.Thermometer_Quicksilver.get(1)",
+        "IL.Circuit_Selector.getWithDamage(1, 0)",
+        "IL.Circuit_Selector.getWithDamage(1, 1)",
+        "IL.Circuit_Selector.getWithDamage(1, 2)",
+        "IL.TC_Thaumometer.get(1)",
+        "IL.TC_Crimson_Rites.get(1)",
+        "IL.TC_Thaumonomicon.get(1)",
+        "ST.make(MD.TC, \"ItemThaumonomicon\", 1, 42)",
+        "ST.make(Items.item_frame, 1, 0)",
+        "ST.make(Items.bucket, 1, 0)",
+        "ST.make(Items.water_bucket, 1, 0)",
+        "ST.make(Items.lava_bucket, 1, 0)",
+        "ST.make(Items.milk_bucket, 1, 0)",
+        "ST.make(Blocks.stone_button, 1, 0)",
+        "ST.make(Blocks.lever, 1, 0)",
+        "ST.make(Items.redstone, 1, 0)",
+        "ST.make(Blocks.redstone_torch, 1, 0)",
+        "ST.make(Items.repeater, 1, 0)",
+        "ST.make(Items.comparator, 1, 0)",
+        "ST.make(Blocks.redstone_lamp, 1, 0)",
+        "OP.cableGt01.mat(MT.Signalum, 1)",
+        "OP.wireGt01.mat(MT.Lumium, 1)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.WRENCH_LV     , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MININGDRILL_LV, 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CHAINSAW_LV   , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "NI",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MIXER_LV      , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.SCREWDRIVER_LV, 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.BUZZSAW_LV    , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.TRIMMER_LV    , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.DRILL_LV      , 1, MT.NetherizedDiamond, MT.Magenta, V[1] * 1000, V[1], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.WRENCH_MV     , 1, MT.NetherizedDiamond, MT.Magenta, V[2] * 1000, V[2], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MININGDRILL_MV, 1, MT.NetherizedDiamond, MT.Magenta, V[2] * 1000, V[2], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CHAINSAW_MV   , 1, MT.NetherizedDiamond, MT.Magenta, V[2] * 1000, V[2], Long.MAX_VALUE)",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "IL.Brain_Tape.get(64)",
+        "IL.Dynamite_Strong.get(64)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.WRENCH_HV     , 1, MT.NetherizedDiamond, MT.Magenta, V[3] * 1000, V[3], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.MININGDRILL_HV, 1, MT.NetherizedDiamond, MT.Magenta, V[3] * 1000, V[3], Long.MAX_VALUE)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CHAINSAW_HV   , 1, MT.NetherizedDiamond, MT.Magenta, V[3] * 1000, V[3], Long.MAX_VALUE)",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "IL.Tool_Remote_Activator.get(1)",
+        "IL.Battery_Lead_Acid_LV.getWithCharge(1, Long.MAX_VALUE)",
+        "IL.Battery_Lead_Acid_MV.getWithCharge(1, Long.MAX_VALUE)",
+        "IL.Battery_Lead_Acid_HV.getWithCharge(1, Long.MAX_VALUE)",
+        "OP.plateCurved.mat(MT.SteelGalvanized, 64)",
+        "OP.plateCurved.mat(MT.Al, 64)",
+        "OP.plateCurved.mat(MT.StainlessSteel, 64)",
+        "IL.MOTORS[1].get(64)",
+        "IL.MOTORS[2].get(64)",
+        "IL.MOTORS[3].get(64)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PISTOL                , MT.Steel            , MT.WOODS.Spruce)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PISTOL                , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.PISTOL                , MT.Thaumium         , MT.Magenta)",
+        "OP.bulletGtSmall.mat(MT.Steel, 64)",
+        "OP.bulletGtSmall.mat(MT.Netherite, 64)",
+        "OP.bulletGtSmall.mat(MT.Thaumium, 64)",
+        "OP.bulletGtSmall.mat(MT.SterlingSilver, 64)",
+        "OP.bulletGtSmall.mat(MT.RoseGold, 64)",
+        "OP.bulletGtSmall.mat(MT.Rubber, 64)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CARBINE               , MT.Steel            , MT.WOODS.Spruce)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CARBINE               , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.CARBINE               , MT.Thaumium         , MT.Magenta)",
+        "OP.bulletGtMedium.mat(MT.Steel, 64)",
+        "OP.bulletGtMedium.mat(MT.Netherite, 64)",
+        "OP.bulletGtMedium.mat(MT.Thaumium, 64)",
+        "OP.bulletGtMedium.mat(MT.SterlingSilver, 64)",
+        "OP.bulletGtMedium.mat(MT.RoseGold, 64)",
+        "OP.bulletGtMedium.mat(MT.Rubber, 64)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.RIFLE                 , MT.Steel            , MT.WOODS.Spruce)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.RIFLE                 , MT.NetherizedDiamond, MT.LightBlue)",
+        "ToolsGT.sMetaTool.getToolWithStats(ToolsGT.RIFLE                 , MT.Thaumium         , MT.Magenta)",
+        "OP.bulletGtLarge.mat(MT.Steel, 64)",
+        "OP.bulletGtLarge.mat(MT.Netherite, 64)",
+        "OP.bulletGtLarge.mat(MT.Thaumium, 64)",
+        "OP.bulletGtLarge.mat(MT.SterlingSilver, 64)",
+        "OP.bulletGtLarge.mat(MT.RoseGold, 64)",
+        "OP.bulletGtLarge.mat(MT.Rubber, 64)",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI",
+        "NI"
+      ]
+    },
+    "testing": {
+      "ordered_tokens": 2193,
+      "ordered_code_sha256": "9036c473aa852baab3eaff65484a2321fb98abbb4913a96d320917d5e16771ca"
+    },
+    "original_tile_calls": [
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-20",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-21",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-22",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-20",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-21",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-22",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-20",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-21",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-22",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-20",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-21",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-22",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-23",
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, T)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-24",
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, F)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-19",
+        "legacy_id": 32057,
+        "data": "null"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32737,
+        "data": "null"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32727,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32739,
+        "data": "null"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32062,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32719,
+        "data": "null"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+1",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-1",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-2",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-3",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-4",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_S))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-4",
+        "z": "-17",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, SBIT_N)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32705,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32750,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+3",
+        "z": "-19",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "37",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32707,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": "37",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": "38",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32744,
+        "data": "null"
+      },
+      {
+        "x": "39",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_INV_LIST, UT.NBT.makeInv(tInventory))"
+      },
+      {
+        "x": "39",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32722,
+        "data": "null"
+      },
+      {
+        "x": "40",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "40",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32735,
+        "data": "null"
+      },
+      {
+        "x": "41",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "41",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32764,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, \"display\", UT.NBT.makeString(\"Name\", \"Bear989Sr\"))"
+      },
+      {
+        "x": "42",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32703,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_STATE, 4)"
+      },
+      {
+        "x": "43",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32048,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+1",
+        "z": "-20",
+        "legacy_id": 32709,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+1",
+        "z": "-19",
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-20",
+        "legacy_id": 32711,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Y_POS, NBT_MODE, T)"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-19",
+        "legacy_id": 32702,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      }
+    ],
+    "current_tile_calls": [
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-20",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-21",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-22",
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-20",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-21",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-22",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-20",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-21",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-22",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-20",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-21",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-22",
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-23",
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, T)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+5",
+        "z": "-24",
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, F)"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+2",
+        "z": "-19",
+        "legacy_id": 32057,
+        "data": "null"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32737,
+        "data": "null"
+      },
+      {
+        "x": "33",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32727,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32739,
+        "data": "null"
+      },
+      {
+        "x": "34",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32062,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32719,
+        "data": "null"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+1",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-1",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-2",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-3",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-4",
+        "z": "-18",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_S))"
+      },
+      {
+        "x": "36",
+        "y": "mHeight-4",
+        "z": "-17",
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, SBIT_N)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32705,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": "35",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32750,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "36",
+        "y": "mHeight+3",
+        "z": "-19",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": "37",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32707,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": "37",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": "38",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32744,
+        "data": "null"
+      },
+      {
+        "x": "39",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_INV_LIST, UT.NBT.makeInv(tInventory))"
+      },
+      {
+        "x": "39",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32722,
+        "data": "null"
+      },
+      {
+        "x": "40",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "40",
+        "y": "mHeight+3",
+        "z": "-18",
+        "legacy_id": 32735,
+        "data": "null"
+      },
+      {
+        "x": "41",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "42",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32703,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_STATE, 4)"
+      },
+      {
+        "x": "43",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 32048,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+1",
+        "z": "-20",
+        "legacy_id": 32709,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+1",
+        "z": "-19",
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-20",
+        "legacy_id": 32711,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Y_POS, NBT_MODE, T)"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-19",
+        "legacy_id": 32702,
+        "data": "null"
+      },
+      {
+        "x": "44",
+        "y": "mHeight+2",
+        "z": "-18",
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      }
+    ],
+    "removed_certificate": [
+      {
+        "x": "41",
+        "y": "mHeight+4",
+        "z": "-18",
+        "legacy_id": 32764,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, \"display\", UT.NBT.makeString(\"Name\", \"Bear989Sr\"))"
+      }
+    ],
+    "native_facility_mapping": {
+      "7133": "bookshelf_metal_adamantium",
+      "4033": "drawer_quad_adamantium",
+      "6033": "mass_storage_adamantium",
+      "5033": "advanced_crafting_table_adamantium",
+      "8033": "hopper_adamantium",
+      "14999": "zpm",
+      "26304": "pipe_huge_adamantium",
+      "32048": "anvil_adamantium",
+      "32057": "fluid_barometer_gas_cylinder_tungsten",
+      "32062": "cap_nozzle_adamantium",
+      "32702": "sifting_table",
+      "32703": "grindstone_block",
+      "32705": "mixing_bowl_table",
+      "32707": "bathing_pot_table",
+      "32709": "ender_garbage_bin",
+      "32711": "advanced_button",
+      "32719": "drum_adamantium",
+      "32722": "juicer",
+      "32727": "fluid_funnel_adamantium",
+      "32732": "tap_adamantium",
+      "32735": "mortar_block",
+      "32737": "fluid_thermos",
+      "32739": "fluid_cup",
+      "32744": "fluid_measuring_pot_tungsten",
+      "32750": "nozzle_adamantium"
+    },
+    "limits": [
+      "Comparison proves source planner bodies after listed adaptations, not native state, item construction, UI, world writes or saved-world behavior.",
+      "The old global Random and new passed Random are not claimed to yield identical output with streets disabled."
+    ]
+  },
+  "core_probe": {
+    "method": "Compile and execute five actual core source files plus the recording adapter; no Minecraft/native effects.",
+    "elapsed_seconds": 0.771,
+    "summary": [
+      "NEXUS 50510 -63 129 0,71,0",
+      "TESTING 4 394867 -63 319",
+      "DRAIN 36,62,-17,3",
+      "INVENTORY 144"
+    ],
+    "tile_requests": [
+      {
+        "x": 33,
+        "y": 68,
+        "z": -20,
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 68,
+        "z": -21,
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 68,
+        "z": -22,
+        "legacy_id": 7133,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 69,
+        "z": -20,
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 69,
+        "z": -21,
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 69,
+        "z": -22,
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 70,
+        "z": -20,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 70,
+        "z": -21,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 70,
+        "z": -22,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 71,
+        "z": -20,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 71,
+        "z": -21,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 71,
+        "z": -22,
+        "legacy_id": 6033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 33,
+        "y": 71,
+        "z": -23,
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, T)"
+      },
+      {
+        "x": 33,
+        "y": 71,
+        "z": -24,
+        "legacy_id": 14999,
+        "data": "UT.NBT.make(NBT_ACTIVE_ENERGY, F)"
+      },
+      {
+        "x": 33,
+        "y": 68,
+        "z": -19,
+        "legacy_id": 32057,
+        "data": "null"
+      },
+      {
+        "x": 33,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32737,
+        "data": "null"
+      },
+      {
+        "x": 33,
+        "y": 70,
+        "z": -18,
+        "legacy_id": 32727,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": 34,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": 34,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32739,
+        "data": "null"
+      },
+      {
+        "x": 34,
+        "y": 70,
+        "z": -18,
+        "legacy_id": 32062,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": 36,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32719,
+        "data": "null"
+      },
+      {
+        "x": 36,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 67,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 66,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 65,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 64,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 63,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_D))"
+      },
+      {
+        "x": 36,
+        "y": 62,
+        "z": -18,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, (byte)(SBIT_U | SBIT_S))"
+      },
+      {
+        "x": 36,
+        "y": 62,
+        "z": -17,
+        "legacy_id": 26304,
+        "data": "UT.NBT.make(NBT_CONNECTION, SBIT_N)"
+      },
+      {
+        "x": 35,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 32705,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 35,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_POS)"
+      },
+      {
+        "x": 35,
+        "y": 70,
+        "z": -18,
+        "legacy_id": 32750,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": 36,
+        "y": 69,
+        "z": -19,
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_POS)"
+      },
+      {
+        "x": 37,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 32707,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": 37,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32732,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_X_NEG)"
+      },
+      {
+        "x": 38,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32744,
+        "data": "null"
+      },
+      {
+        "x": 39,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_INV_LIST, UT.NBT.makeInv(tInventory))"
+      },
+      {
+        "x": 39,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32722,
+        "data": "null"
+      },
+      {
+        "x": 40,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 4033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": 40,
+        "y": 69,
+        "z": -18,
+        "legacy_id": 32735,
+        "data": "null"
+      },
+      {
+        "x": 41,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 5033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": 42,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 32703,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG, NBT_STATE, 4)"
+      },
+      {
+        "x": 43,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 32048,
+        "data": "null"
+      },
+      {
+        "x": 44,
+        "y": 67,
+        "z": -20,
+        "legacy_id": 32709,
+        "data": "null"
+      },
+      {
+        "x": 44,
+        "y": 67,
+        "z": -19,
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      },
+      {
+        "x": 44,
+        "y": 68,
+        "z": -20,
+        "legacy_id": 32711,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Y_POS, NBT_MODE, T)"
+      },
+      {
+        "x": 44,
+        "y": 68,
+        "z": -19,
+        "legacy_id": 32702,
+        "data": "null"
+      },
+      {
+        "x": 44,
+        "y": 68,
+        "z": -18,
+        "legacy_id": 8033,
+        "data": "UT.NBT.make(NBT_FACING, SIDE_Z_NEG)"
+      }
+    ],
+    "all_48_commands_match_original_after_certificate_removal": true,
+    "source_files": [
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java",
+      "work/origin-facilities-audit-20261022/OriginProbe.java"
+    ],
+    "source_code": "import com.gregtech.gregtech.worldgen.center.*;\nimport java.nio.charset.StandardCharsets;\nimport java.util.*;\n\n/** Records actual shared planner requests. This is not a Minecraft world implementation. */\npublic final class OriginProbe {\n    private record Tile(int x, int y, int z, int legacy, String data) {}\n    private static final List<Tile> tiles = new ArrayList<>();\n    private static final List<String> drains = new ArrayList<>();\n    private static final class Recorder implements OriginWorld {\n        private final int minX, minZ;\n        private long writes;\n        private int lowest = Integer.MAX_VALUE, highest = Integer.MIN_VALUE;\n        private String spawn;\n        Recorder(int x, int z) { minX=x; minZ=z; }\n        public int minY() { return -64; }\n        public int maxY() { return 320; }\n        public boolean canWrite(int x, int y, int z) {\n            return x>=minX && x<minX+16 && z>=minZ && z<minZ+16 && y>=minY() && y<maxY();\n        }\n        public Block getBlock(int x, int y, int z) { return OriginSupport.NB; }\n        public boolean setBlock(int x, int y, int z, Block block, int metadata, int flags) {\n            if (!canWrite(x,y,z)) return false;\n            writes++; lowest=Math.min(lowest,y); highest=Math.max(highest,y);\n            return true;\n        }\n        public Biome getBiomeGenForCoords(int x, int z) { return new Biome(\"plains\",\"Plains\"); }\n        public boolean isInfiniteWaterBiome(String name) { return false; }\n        public void setSpawnLocation(int x, int y, int z) { spawn=x+\",\"+y+\",\"+z; }\n        public void sign(int x,int y,int z,int side,int flags,String... lines) { throw new AssertionError(\"Unexpected sign\"); }\n        public void beacon(int x,int y,int z,String primary,String secondary) { throw new AssertionError(\"Unexpected beacon\"); }\n        public void clearNonPlayerEntities(int x,int y,int z,int xx,int yy,int zz) { throw new AssertionError(\"Unexpected entity mutation\"); }\n        public void tile(int x,int y,int z,int legacy,String data) {\n            if (canWrite(x,y,z)) tiles.add(new Tile(x,y,z,legacy,data));\n        }\n        public void drain(int x,int y,int z,int side) {\n            if (canWrite(x,y,z)) drains.add(x+\",\"+y+\",\"+z+\",\"+side);\n        }\n    }\n    public static void main(String[] args) {\n        var nexus=new Recorder(16,-48);\n        var layout=new SourceNexus(66,true);\n        if (layout.generate(nexus,new OriginWorld.Chunk(nexus,16,-48),0,0,new Random(0))) throw new AssertionError(\"Wrong Nexus anchor accepted\");\n        if (!layout.generate(nexus,new OriginWorld.Chunk(nexus,16,-48),16,-48,new Random(0))) throw new AssertionError(\"Nexus declined\");\n        System.out.println(\"NEXUS \"+nexus.writes+\" \"+nexus.lowest+\" \"+nexus.highest+\" \"+nexus.spawn);\n        var testing=new SourceTesting(66);\n        long writes=0;\n        int count=0, lowest=Integer.MAX_VALUE, highest=Integer.MIN_VALUE;\n        for (int x:new int[]{32,48}) for (int z:new int[]{-48,-32}) {\n            var world=new Recorder(x,z);\n            if (!testing.generate(world,new OriginWorld.Chunk(world,x,z),x,z)) throw new AssertionError(\"Testing chunk declined\");\n            if (!\"0,71,0\".equals(world.spawn)) throw new AssertionError(\"Spawn mismatch\");\n            writes+=world.writes; lowest=Math.min(lowest,world.lowest); highest=Math.max(highest,world.highest); count++;\n        }\n        System.out.println(\"TESTING \"+count+\" \"+writes+\" \"+lowest+\" \"+highest);\n        for (Tile tile:tiles) System.out.println(\"TILE \"+tile.x+\" \"+tile.y+\" \"+tile.z+\" \"+tile.legacy+\" \"+\n            Base64.getEncoder().encodeToString(tile.data.getBytes(StandardCharsets.UTF_8)));\n        for (String drain:drains) System.out.println(\"DRAIN \"+drain);\n        System.out.println(\"INVENTORY \"+OriginTestInventory.ROWS.size());\n    }\n}\n",
+    "probe_source_sha256": "9ae2c990def180c55f04fbeb3f4ada96809f9e78af6907fbdce5f71f203e0d33",
+    "output": "NEXUS 50510 -63 129 0,71,0\nTESTING 4 394867 -63 319\nTILE 33 68 -20 7133 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 68 -21 7133 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 68 -22 7133 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 69 -20 4033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 69 -21 4033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 69 -22 4033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 70 -20 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 70 -21 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 70 -22 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 71 -20 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 71 -21 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 71 -22 6033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 33 71 -23 14999 VVQuTkJULm1ha2UoTkJUX0FDVElWRV9FTkVSR1ksIFQp\nTILE 33 71 -24 14999 VVQuTkJULm1ha2UoTkJUX0FDVElWRV9FTkVSR1ksIEYp\nTILE 33 68 -19 32057 bnVsbA==\nTILE 33 69 -18 32737 bnVsbA==\nTILE 33 70 -18 32727 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX1BPUyk=\nTILE 34 68 -18 5033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRyk=\nTILE 34 69 -18 32739 bnVsbA==\nTILE 34 70 -18 32062 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX1BPUyk=\nTILE 36 69 -18 32719 bnVsbA==\nTILE 36 68 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 67 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 66 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 65 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 64 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 63 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX0QpKQ==\nTILE 36 62 -18 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIChieXRlKShTQklUX1UgfCBTQklUX1MpKQ==\nTILE 36 62 -17 26304 VVQuTkJULm1ha2UoTkJUX0NPTk5FQ1RJT04sIFNCSVRfTik=\nTILE 35 68 -18 32705 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 35 69 -18 32732 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX1BPUyk=\nTILE 35 70 -18 32750 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX1BPUyk=\nTILE 36 69 -19 32732 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX1BPUyk=\nTILE 37 68 -18 32707 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX05FRyk=\nTILE 37 69 -18 32732 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9YX05FRyk=\nTILE 38 69 -18 32744 bnVsbA==\nTILE 39 68 -18 4033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRywgTkJUX0lOVl9MSVNULCBVVC5OQlQubWFrZUludih0SW52ZW50b3J5KSk=\nTILE 39 69 -18 32722 bnVsbA==\nTILE 40 68 -18 4033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRyk=\nTILE 40 69 -18 32735 bnVsbA==\nTILE 41 68 -18 5033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRyk=\nTILE 42 68 -18 32703 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRywgTkJUX1NUQVRFLCA0KQ==\nTILE 43 68 -18 32048 bnVsbA==\nTILE 44 67 -20 32709 bnVsbA==\nTILE 44 67 -19 8033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRyk=\nTILE 44 68 -20 32711 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9ZX1BPUywgTkJUX01PREUsIFQp\nTILE 44 68 -19 32702 bnVsbA==\nTILE 44 68 -18 8033 VVQuTkJULm1ha2UoTkJUX0ZBQ0lORywgU0lERV9aX05FRyk=\nDRAIN 36,62,-17,3\nINVENTORY 144\n",
+    "output_sha256": "e9411ad79d276b365977c15e8ce783fbb4cbd235f89942823cb930b006c6d3cc",
+    "compiled_sources": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+        "raw_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+        "source_sha256": "b3e28f5a15734b9419310f713634924c1e89ce87efef370fa80553acf31feb3d",
+        "lines": 58
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+        "raw_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+        "source_sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+        "lines": 125
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+        "raw_sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+        "source_sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+        "lines": 322
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+        "raw_sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+        "source_sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+        "lines": 180
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java",
+        "raw_sha256": "47110ad135b5e32e5dc0d85d105fed875f2c935e2ab0f025a9813ca689077eac",
+        "source_sha256": "47110ad135b5e32e5dc0d85d105fed875f2c935e2ab0f025a9813ca689077eac",
+        "lines": 173
+      },
+      {
+        "path": "C:/Dev/GregTech6/work/origin-facilities-audit-20261022/OriginProbe.java",
+        "raw_sha256": "9ae2c990def180c55f04fbeb3f4ada96809f9e78af6907fbdce5f71f203e0d33",
+        "source_sha256": "9ae2c990def180c55f04fbeb3f4ada96809f9e78af6907fbdce5f71f203e0d33",
+        "lines": 61
+      }
+    ],
+    "compile_command": [
+      "C:/Program Files/Java/jdk-17/bin/javac.exe",
+      "-encoding",
+      "UTF-8",
+      "-d",
+      "work\\origin-facilities-audit-20261022\\classes",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginWorld.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java",
+      "work/origin-facilities-audit-20261022/OriginProbe.java"
+    ],
+    "run_command": [
+      "C:/Program Files/Java/jdk-17/bin/java.exe",
+      "-cp",
+      "work\\origin-facilities-audit-20261022\\classes",
+      "OriginProbe"
+    ],
+    "runtime_executables": [
+      {
+        "path": "C:/Program Files/Java/jdk-17/bin/javac.exe",
+        "sha256": "86bd029657aee6408ec3ec6d72f371725912df5e68bc95e871dcdfb53ec01464"
+      },
+      {
+        "path": "C:/Program Files/Java/jdk-17/bin/java.exe",
+        "sha256": "7af63d805ff76068b8c347eb7d9a0b59f514459ac3feec4c2460be2d74b6c600"
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "efc334959cd56f2c423f914f06ec5bb2416729ed",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java": {
+        "before_raw_sha256": "4a676869f30549c07fee1906dbfcea2c64c881ceb21dd52e3f1895326ad27da2",
+        "after_raw_sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+        "before_lines": 315,
+        "after_lines": 322,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 4972,
+            "execution_sha256": "1bf484c5ef1ff4c56e74ae266419015115cb0931824251e75c299a38de9b4570",
+            "literal_positions_sha256": "01a471fc36db8e8d89ed1d1c137a3b7a7462b350f439812e6c2d9eb090b6912d",
+            "literal_count": 799
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java": {
+        "before_raw_sha256": "e8b0c1b7dc00fa2ca9c30108bffc40840a881151118aab0e2827831e3e734003",
+        "after_raw_sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+        "before_lines": 177,
+        "after_lines": 180,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 2263,
+            "execution_sha256": "11e1aaf58ebe6c1c265339496dfbaae960b5c41cd2ef60142aca8f0af4bf6d77",
+            "literal_positions_sha256": "bd97eaa5bae1a96ff2303f307409aa354163e2d96666550302dc80bf72adcfc6",
+            "literal_count": 436
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginTestInventory.java": {
+        "before_raw_sha256": "8173cc7e77f372a69bb153e6d8ce005f9dd81fa576a401abdb8970556e487675",
+        "after_raw_sha256": "47110ad135b5e32e5dc0d85d105fed875f2c935e2ab0f025a9813ca689077eac",
+        "before_lines": 169,
+        "after_lines": 173,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 333,
+            "execution_sha256": "2f25d1a17f209a78ff9421a1fdc95292e8a65095aa7ad7cdbe11a46143deef9b",
+            "literal_positions_sha256": "9d9f5c689aef34742247cb59e9c427bf121aeb5b1bb89fc63878e6458945c295",
+            "literal_count": 144
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginFacilities.java": {
+        "before_raw_sha256": "7cafb8a5c15927e69e7f55e1e3c6f8bcb1b326469779cc4f76b503261a42c245",
+        "after_raw_sha256": "71c099bf20b2b049e5bdaafa748d1fef4fcb045483be482fb1dd3cb0e15cc26f",
+        "before_lines": 73,
+        "after_lines": 102,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 960,
+            "execution_sha256": "5e27b074f4829859ba25760c165af09c8453e0dbe4bc9baa02bca3efd29cef70",
+            "literal_positions_sha256": "fdd707bbfeab6360e428f623cd23e79933e031c3d1f49eeb465471ccf153b387",
+            "literal_count": 86
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 983,
+            "execution_sha256": "6b6bc5f01148319dc0ff01c62f83128e94e070f3cd8e29eba66da853c905cb56",
+            "literal_positions_sha256": "880a786371ae1ef5bc93b5322c5fc84a1ddc884801281d76142098c934749bd8",
+            "literal_count": 86
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginItems.java": {
+        "before_raw_sha256": "a352b684877041f2b8bf37c796817826aafe917db3e34729aa6f64fcda1c541e",
+        "after_raw_sha256": "4846777fc95ca9777c8c37100ee8ffb4f6cdfa863eb44479ec2359283b4719c7",
+        "before_lines": 97,
+        "after_lines": 137,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1387,
+            "execution_sha256": "fa9a5f73ba854a6f89f72374ad44de043ddbe5462db3ce659a79144c29dabad1",
+            "literal_positions_sha256": "4bbb92a3fc01b743d428a0542db6b754514a00d151f6777d6683cbf20855adb3",
+            "literal_count": 106
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1436,
+            "execution_sha256": "7368af9804411ab9a1e85ab33d03ee6ac96523847a6c452930f7053273405916",
+            "literal_positions_sha256": "13a69614f141b5ff5011bb7ba783f643b2ef98c40c1ed4ce8075c652a58ffccf",
+            "literal_count": 106
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [],
+  "formal_ledger_count": 360,
+  "positive_scope": [
+    "Two complete layout method bodies match after explicitly enumerated platform/boundary/certificate adaptations.",
+    "All 144 inventory expression strings exactly match their original slot order.",
+    "Actual current core execution emits the same 48 facility requests and one drain request.",
+    "Every remaining original facility ID has a native mapping; this is map coverage, not native registry execution.",
+    "All five changed files retain complete ordered code, literal positions, comments and version directives."
+  ],
+  "limits": [
+    "Original generate constructors/enabled/config hooks and native side effects are outside the two body-equivalence claims.",
+    "The streets-disabled global Random to per-chunk Random adaptation is explicitly different, not claimed output-equivalent.",
+    "Probe recorder rejects writes outside its chunk/height and returns air on reads; it is not a real Minecraft world.",
+    "Existing bootstrap inventory expectations invoke the same resolver; their source is not independent proof of full material, charge or enchantment semantics.",
+    "No Gradle/full-mod Java compile, GameTest, game, render, world restart, jar build, push or GitHub message."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "original_body_comparison": true,
+    "source_inventory_rows": true,
+    "actual_core_request_probe": true,
+    "full_platform_token_comparison": true,
+    "comments_and_directives": true,
+    "material_hashes": true,
+    "baseline_files": true,
+    "native_gameplay_acceptance": false,
+    "goal_complete": false,
+    "current_archived_raw_hashes": true,
+    "formal_ids_contiguous": true,
+    "diff_check": true
+  }
+}
