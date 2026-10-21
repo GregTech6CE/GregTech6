@@ -34,13 +34,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * GT6 multiblock fluid tank (3x3x3 or 5x5x5). The wall blocks define the
- * boundary and the controller provides fluid I/O with multiplied capacity.
+ * Shared 3x3x3 and 5x5x5 vessel state. The placed valve selects its specification;
+ * valid shell parts delegate fluid I/O to this controller.
  */
 public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity implements com.gregtech.gregtech.api.multiblock.MultiblockPortOwner {
-    private final com.gregtech.gregtech.api.multiblock.PartBindings<BlockPos,com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role> bindings = new com.gregtech.gregtech.api.multiblock.PartBindings<>();
+    private final com.gregtech.gregtech.api.multiblock.PartBindings<BlockPos,
+            com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role> bindings = new com.gregtech.gregtech.api.multiblock.PartBindings<>();
 
-    int size = 3; // set by block after construction
+    int size = 3;
+    // Selected from the placed valve block during construction.
     @Nullable private final TankValveSpec valveSpec;
     FluidTankGT tank = new FluidTankGT(320_000).setOnChanged(this::setChanged);
 
@@ -60,51 +62,71 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         if (size != 3 && size != 5) throw new IllegalArgumentException("Tank size: " + size);
         if (valveSpec != null && valveSpec.size() != size) throw new IllegalArgumentException("Tank valve size: " + size);
         this.size = size;
-        com.gregtech.gregtech.api.fluid.MultiblockTankData.setCapacity(tank, valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
+        com.gregtech.gregtech.api.fluid.MultiblockTankData.setCapacity(tank,
+                valveSpec == null ? (size == 5 ? 1_024_000 : 320_000) : valveSpec.capacity());
         if (valveSpec != null) tank.setGasProof(valveSpec.gasProof()).setAcidProof(valveSpec.acidProof())
                 .setPlasmaProof(valveSpec.plasmaProof()).setMagicProof(valveSpec.magicProof())
                 .setMaxTemperature(valveSpec.meltingPoint());
     }
 
-    @Nullable public TankValveSpec valveSpec() { return valveSpec; }
-    public IFluidHandler fluidHandler() { return tankHandler; }
+    @Nullable public TankValveSpec valveSpec() {
+        return valveSpec;
+    }
 
-    private Direction facing() { return getBlockState().getValue(DirectionalBlock.FACING); }
+    public IFluidHandler fluidHandler() {
+        return tankHandler;
+    }
+
+    private Direction facing() {
+        return getBlockState().getValue(DirectionalBlock.FACING);
+    }
+
     private void release(BlockPos pos) {
-        if (level!=null && level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port)
+        if (level != null && level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port)
             port.release(worldPosition);
     }
-    @Override public void setRemoved() { bindings.clear(this::release); super.setRemoved(); }
+
+    @Override
+    public void setRemoved() {
+        bindings.clear(this::release);
+        super.setRemoved();
+    }
+
     public boolean isStructureOk() {
-        if (level==null || isRemoved()) return false;
-        var wall=valveSpec == null ? (size==5?GTMultiblocks.TANK_WALL_DENSE.get():GTMultiblocks.TANK_WALL.get())
+        if (level == null || isRemoved()) return false;
+        var wall = valveSpec == null ? (size == 5 ? GTMultiblocks.TANK_WALL_DENSE.get() : GTMultiblocks.TANK_WALL.get())
                 : LargeMachineParts.block(valveSpec.wallId());
-        var candidates=new java.util.LinkedHashMap<BlockPos,com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role>();
-        boolean valid=com.gregtech.gregtech.api.multiblock.HollowTankStructure.validate(worldPosition,facing(),size,
-                level::hasChunkAt,pos -> {
+        var candidates = new java.util.LinkedHashMap<BlockPos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role>();
+        boolean valid = com.gregtech.gregtech.api.multiblock.HollowTankStructure.validate(worldPosition, facing(), size,
+                level::hasChunkAt, pos -> {
                     if (!(level.getBlockState(pos).getBlock() == wall)) return false;
-                    candidates.put(pos,com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO);
+                    candidates.put(pos, com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO);
                     return true;
-                },pos -> level.getBlockState(pos).isAir());
-        if (!valid) { bindings.clear(this::release); return false; }
+                }, pos -> level.getBlockState(pos).isAir());
+        if (!valid) {
+            bindings.clear(this::release);
+            return false;
+        }
         return bindings.update(candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity port && port.canBind(worldPosition),
-                (pos,role) -> ((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+                (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role), this::release);
     }
-    @Override public IFluidHandler portFluids(com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role role) {
-        return role==com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO? tankHandler : null;
+
+    @Override
+    public IFluidHandler portFluids(com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role role) {
+        return role == com.gregtech.gregtech.api.multiblock.MultiblockLayout.Role.FLUID_IO ? tankHandler : null;
     }
 
     // ── Tick ─────────────────────────────────────────────────────────────────
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
-                                   MultiblockTankControllerBlockEntity be) {
-        if (!be.isStructureOk() || be.tank.isEmpty()) return;
-        if (be.valveSpec != null && be.processHazard(be.tank.getFluid())) return;
-        be.pushFluid();
+            MultiblockTankControllerBlockEntity controller) {
+        if (!controller.isStructureOk() || controller.tank.isEmpty()) return;
+        if (controller.valveSpec != null && controller.processHazard(controller.tank.getFluid())) return;
+        controller.pushFluid();
     }
 
-    /** GT6 checks a filled, formed vessel once per tick, after allowing fluid into its walls. */
+    /** Checks existing contents once per formed server tick before automatic output. */
     private boolean processHazard(FluidStack fluid) {
         var entry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
         if (temperature(fluid, entry) >= valveSpec.meltingPoint()) {
@@ -149,7 +171,7 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
                 SoundSource.BLOCKS, 0.5F, 1.0F);
     }
 
-    /** Acid removes random cells; magic uses the same radius but lacks a 1.20 Flux block. */
+    /** Replace random cube cells and the valve with the selected hazard replacement. */
     private void damageShell(BlockState replacement) {
         if (level == null) return;
         Level world = level;
@@ -157,11 +179,12 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         BlockPos centre = worldPosition.relative(facing().getOpposite(), radius);
         tank.setEmpty();
         fizz();
-        for (int x = -radius; x <= radius; x++) for (int y = -radius; y <= radius; y++)
-            for (int z = -radius; z <= radius; z++) {
-                if (world.random.nextInt(3) == 0)
-                    world.setBlock(centre.offset(x, y, z), replacement, 3);
-            }
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
+                for (int z = -radius; z <= radius; z++) {
+                    if (world.random.nextInt(3) == 0)
+                        world.setBlock(centre.offset(x, y, z), replacement, 3);
+                }
         // The original always removes/replaces the valve even when its random roll misses.
         world.setBlock(worldPosition, replacement, 3);
     }
@@ -174,20 +197,21 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         BlockPos centre = worldPosition.relative(facing().getOpposite(), radius);
         boolean vanillaLava = fluid.getFluid() == Fluids.LAVA || fluid.getFluid() == Fluids.FLOWING_LAVA;
         boolean enoughLava = tank.getAmount() >= 1_000;
-        for (int x = -radius; x <= radius; x++) for (int y = -radius; y <= radius; y++)
-            for (int z = -radius; z <= radius; z++) {
-                BlockPos cell = centre.offset(x, y, z);
-                for (Direction side : Direction.values()) {
-                    BlockPos neighbour = cell.relative(side);
-                    if (!world.hasChunkAt(neighbour)) continue;
-                    BlockState neighbourState = world.getBlockState(neighbour);
-                    if (!neighbourState.is(Blocks.FIRE) && neighbourState.getFluidState().isEmpty()
-                            && neighbourState.getCollisionShape(world, neighbour).isEmpty())
-                        world.setBlock(neighbour, Blocks.FIRE.defaultBlockState(), 3);
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
+                for (int z = -radius; z <= radius; z++) {
+                    BlockPos cell = centre.offset(x, y, z);
+                    for (Direction side : Direction.values()) {
+                        BlockPos neighbour = cell.relative(side);
+                        if (!world.hasChunkAt(neighbour)) continue;
+                        BlockState neighbourState = world.getBlockState(neighbour);
+                        if (!neighbourState.is(Blocks.FIRE) && neighbourState.getFluidState().isEmpty()
+                                && neighbourState.getCollisionShape(world, neighbour).isEmpty())
+                            world.setBlock(neighbour, Blocks.FIRE.defaultBlockState(), 3);
+                    }
+                    if (world.random.nextInt(4) == 0)
+                        world.setBlock(cell, Blocks.FIRE.defaultBlockState(), 3);
                 }
-                if (world.random.nextInt(4) == 0)
-                    world.setBlock(cell, Blocks.FIRE.defaultBlockState(), 3);
-            }
         // GT6's lava-pool special case exists only on the 3x3x3 tank.
         if (size == 3 && vanillaLava && enoughLava)
             world.setBlock(centre, Blocks.LAVA.defaultBlockState(), 3);
@@ -196,25 +220,25 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
     }
 
     private void pushFluid() {
-        if (tank.isEmpty() || level==null) return;
-        var fluid=tank.getFluid();
-        var face=facing();
-        var type=fluid.getFluid().getFluidType();
+        if (tank.isEmpty() || level == null) return;
+        var fluid = tank.getFluid();
+        var face = facing();
+        var type = fluid.getFluid().getFluidType();
         if (!com.gregtech.gregtech.content.multiblock.TankFlowRules.canAutoOutput(face,
-                com.gregtech.gregtech.registry.GTFluids.isGas(fluid),type.getDensity(fluid))) return;
-        var next=worldPosition.relative(face);
+                com.gregtech.gregtech.registry.GTFluids.isGas(fluid), type.getDensity(fluid))) return;
+        var next = worldPosition.relative(face);
         if (!level.hasChunkAt(next)) return;
-        var target=level.getBlockEntity(next);
-        if (target==null) return;
+        var target = level.getBlockEntity(next);
+        if (target == null) return;
 //? if >=1.21.1 {
-        /*var handler=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,next,face.getOpposite());
-        if(handler!=null){
+        /*var handler = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, next, face.getOpposite());
+        if (handler != null) {
 *///?} else {
-        target.getCapability(ForgeCapabilities.FLUID_HANDLER,face.getOpposite()).ifPresent(handler -> {
+        target.getCapability(ForgeCapabilities.FLUID_HANDLER, face.getOpposite()).ifPresent(handler -> {
 //?}
-            var offered=tank.drain(Integer.MAX_VALUE,IFluidHandler.FluidAction.SIMULATE);
-            int moved=handler.fill(offered,IFluidHandler.FluidAction.EXECUTE);
-            if (moved>0) tank.drain(moved,IFluidHandler.FluidAction.EXECUTE);
+            var offered = tank.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            int moved = handler.fill(offered, IFluidHandler.FluidAction.EXECUTE);
+            if (moved > 0) tank.drain(moved, IFluidHandler.FluidAction.EXECUTE);
 //? if >=1.21.1 {
         /*}
 *///?} else {
@@ -224,32 +248,105 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     // ── Energy (tank uses none) ──────────────────────────────────────────────
 
-    @Override public boolean isEnergyType(GregTechTags.Tag e, @Nullable Direction side, boolean emitting) { return false; }
-    @Override public java.util.Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) { return List.of(); }
-    @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag e, @Nullable Direction side, boolean th) { return false; }
-    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag e, @Nullable Direction side, boolean th) { return false; }
-    @Override public long getEnergySizeInputRecommended(GregTechTags.Tag e, @Nullable Direction s) { return 0; }
-    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag e, @Nullable Direction s) { return 0; }
-    @Override public long getEnergyOffered(GregTechTags.Tag e, @Nullable Direction s, long size) { return 0; }
-    @Override public long getEnergyDemanded(GregTechTags.Tag e, @Nullable Direction s, long size) { return 0; }
-    @Override public long doInject(GregTechTags.Tag e, @Nullable Direction s, long size, long amount, boolean doInject) { return 0; }
-    @Override public long getEnergyStored(GregTechTags.Tag e, @Nullable Direction s) { return 0; }
-    @Override public long getEnergyCapacity(GregTechTags.Tag e, @Nullable Direction s) { return 0; }
+    @Override
+    public boolean isEnergyType(GregTechTags.Tag e, @Nullable Direction side, boolean emitting) {
+        return false;
+    }
+
+    @Override
+    public java.util.Collection<GregTechTags.Tag> getEnergyTypes(@Nullable Direction side) {
+        return List.of();
+    }
+
+    @Override
+    public boolean isEnergyAcceptingFrom(GregTechTags.Tag e, @Nullable Direction side, boolean th) {
+        return false;
+    }
+
+    @Override
+    public boolean isEnergyEmittingTo(GregTechTags.Tag e, @Nullable Direction side, boolean th) {
+        return false;
+    }
+
+    @Override
+    public long getEnergySizeInputRecommended(GregTechTags.Tag e, @Nullable Direction s) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergySizeOutputRecommended(GregTechTags.Tag e, @Nullable Direction s) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergyOffered(GregTechTags.Tag e, @Nullable Direction s, long size) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergyDemanded(GregTechTags.Tag e, @Nullable Direction s, long size) {
+        return 0;
+    }
+
+    @Override
+    public long doInject(GregTechTags.Tag e, @Nullable Direction s, long size, long amount, boolean doInject) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergyStored(GregTechTags.Tag e, @Nullable Direction s) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergyCapacity(GregTechTags.Tag e, @Nullable Direction s) {
+        return 0;
+    }
 
     // ── Fluid I/O ────────────────────────────────────────────────────────────
 
     private final IFluidHandler tankHandler = new IFluidHandler() {
-        @Override public int getTanks() { return 1; }
-        @Override public FluidStack getFluidInTank(int tankIdx) { return tankIdx==0?tank.getFluid().copy():FluidStack.EMPTY; }
-        @Override public int getTankCapacity(int tankIdx) { return tankIdx==0?tank.getCapacity():0; }
-        @Override public boolean isFluidValid(int tankIdx, FluidStack stack) { return tankIdx==0 && !stack.isEmpty(); }
-        @Override public int fill(FluidStack resource, FluidAction action) { return isStructureOk() ? tank.fill(resource, action) : 0; }
-        @Override public FluidStack drain(FluidStack resource, FluidAction action) { return isStructureOk() ? tank.drain(resource, action) : FluidStack.EMPTY; }
-        @Override public FluidStack drain(int maxDrain, FluidAction action) { return isStructureOk() ? tank.drain(maxDrain, action) : FluidStack.EMPTY; }
+
+        @Override
+        public int getTanks() {
+            return 1;
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tankIdx) {
+            return tankIdx == 0 ? tank.getFluid().copy() : FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tankIdx) {
+            return tankIdx == 0 ? tank.getCapacity() : 0;
+        }
+
+        @Override
+        public boolean isFluidValid(int tankIdx, FluidStack stack) {
+            return tankIdx == 0 && !stack.isEmpty();
+        }
+
+        @Override
+        public int fill(FluidStack resource, FluidAction action) {
+            return isStructureOk() ? tank.fill(resource, action) : 0;
+        }
+
+        @Override
+        public FluidStack drain(FluidStack resource, FluidAction action) {
+            return isStructureOk() ? tank.drain(resource, action) : FluidStack.EMPTY;
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, FluidAction action) {
+            return isStructureOk() ? tank.drain(maxDrain, action) : FluidStack.EMPTY;
+        }
     };
 
 //? if >=1.21.1 {
-    /*public IFluidHandler fluidCapability(Direction side){return isRemoved()?null:tankHandler;}
+    /*public IFluidHandler fluidCapability(Direction side) {
+        return isRemoved() ? null : tankHandler;
+    }
 *///?} else {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
@@ -261,9 +358,13 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
         return super.getCapability(cap, side);
     }
 
-    @Override public void invalidateCaps() {
+    @Override
+    public void invalidateCaps() {
         super.invalidateCaps();
-        if (fluidCap != null) { fluidCap.invalidate(); fluidCap = null; }
+        if (fluidCap != null) {
+            fluidCap.invalidate();
+            fluidCap = null;
+        }
     }
 //?}
 
@@ -271,35 +372,36 @@ public class MultiblockTankControllerBlockEntity extends GTEnergyBlockEntity imp
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
-        CompoundTag f = new CompoundTag();
+        CompoundTag storedFluidTag = new CompoundTag();
 //? if >=1.21.1 {
-        /*tank.writeToNBT(f,lookup);
+        /*tank.writeToNBT(storedFluidTag, lookup);
 *///?} else {
-        tank.writeToNBT(f);
+        tank.writeToNBT(storedFluidTag);
 //?}
-        tag.put("gt.tank", f);
+        tag.put("gt.tank", storedFluidTag);
         tag.putInt("gt.size", size);
     }
 
     @Override
 //? if >=1.21.1 {
-    /*public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*public void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
-        setSize(size); // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
+        setSize(size);
+        // The placed valve owns size/capacity/proof flags; contents keep their source long amount.
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.api.fluid.MultiblockTankData.readContents(tank,tag,tank.baseCapacity(),lookup);
+        /*com.gregtech.gregtech.api.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity(), lookup);
 *///?} else {
-        com.gregtech.gregtech.api.fluid.MultiblockTankData.readContents(tank,tag,tank.baseCapacity());
+        com.gregtech.gregtech.api.fluid.MultiblockTankData.readContents(tank, tag, tank.baseCapacity());
 //?}
         tank.setOnChanged(this::setChanged);
     }

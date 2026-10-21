@@ -13,14 +13,34 @@ import java.util.Map;
  * design and fluid limits rather than a generic tank tier.
  */
 public record TankValveSpec(int originalId, int size, int wallId, long capacity,
-                            String material, boolean gasProof, boolean acidProof,
-                            boolean plasmaProof, boolean magicProof, boolean simpleOnly,
-                            float hardness) {
+        String material, boolean gasProof, boolean acidProof,
+        boolean plasmaProof, boolean magicProof, boolean simpleOnly,
+        float hardness) {
     private static final Map<Integer, TankValveSpec> BY_ID = definitions();
 
-    private static Map<Integer,TankValveSpec> definitions(){var all=new LinkedHashMap<Integer,TankValveSpec>();for(var p:TankValveParameters.all())all.put(p.originalId(),new TankValveSpec(p.originalId(),p.size(),p.wallId(),p.capacity(),p.material(),p.gasProof(),p.acidProof(),p.plasmaProof(),p.magicProof(),p.simpleOnly(),p.hardness()));return Map.copyOf(all);}
-    public static TankValveSpec find(int originalId) { return BY_ID.get(originalId); }
-    public static List<TankValveSpec> all() { return List.copyOf(BY_ID.values()); }
-    public Block wall() { return LargeMachineParts.block(wallId); }
-    public int meltingPoint() { return GTMaterialRegistry.get(material).getMeltingPoint(); }
+    private static Map<Integer, TankValveSpec> definitions() {
+        var specifications = new LinkedHashMap<Integer, TankValveSpec>();
+        for (var parameters : TankValveParameters.all())
+            specifications.put(parameters.originalId(), new TankValveSpec(
+                    parameters.originalId(), parameters.size(), parameters.wallId(), parameters.capacity(),
+                    parameters.material(), parameters.gasProof(), parameters.acidProof(),
+                    parameters.plasmaProof(), parameters.magicProof(), parameters.simpleOnly(), parameters.hardness()));
+        return Map.copyOf(specifications);
+    }
+
+    public static TankValveSpec find(int originalId) {
+        return BY_ID.get(originalId);
+    }
+
+    public static List<TankValveSpec> all() {
+        return List.copyOf(BY_ID.values());
+    }
+
+    public Block wall() {
+        return LargeMachineParts.block(wallId);
+    }
+
+    public int meltingPoint() {
+        return GTMaterialRegistry.get(material).getMeltingPoint();
+    }
 }
