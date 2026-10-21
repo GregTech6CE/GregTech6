@@ -2,6 +2,8 @@ package com.gregtech.gregtech.platform.neoforge.logistics;
 
 import com.gregtech.gregtech.block.inventory.MassStorageBlock;
 import com.gregtech.gregtech.blockentity.inventory.MassStorageBlockEntity;
+import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity;
 import com.gregtech.gregtech.registry.GTStorageMetals;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.BlockItem;
@@ -15,29 +17,57 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Complete original metalset mass-storage variants; connected network variants follow separately. */
+/** Registers ordinary and logistics mass-storage blocks from the shared metal catalog. */
 public final class StorageRegistries {
-    public static final DeferredRegister<Block> BLOCKS=DeferredRegister.create(BuiltInRegistries.BLOCK,"gt6ce");
-    public static final DeferredRegister<Item> ITEMS=DeferredRegister.create(BuiltInRegistries.ITEM,"gt6ce");
-    public static final DeferredRegister<BlockEntityType<?>> TYPES=DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE,"gt6ce");
-    private static final List<java.util.function.Supplier<? extends Block>> STORAGES=new ArrayList<>();
-    private static final List<java.util.function.Supplier<? extends Block>> LOGISTICS_STORAGES=new ArrayList<>();
-    public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE=TYPES.register("mass_storage",()->BlockEntityType.Builder.of(MassStorageBlockEntity::new,STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
-    public static final java.util.function.Supplier<BlockEntityType<com.gregtech.gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity>> LOGISTICS_MASS_STORAGE=TYPES.register("logistics_mass_storage",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity::new,LOGISTICS_STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
-    private StorageRegistries() {}
-    public static List<java.util.function.Supplier<? extends Block>> all() { return java.util.stream.Stream.concat(STORAGES.stream(),LOGISTICS_STORAGES.stream()).toList(); }
-    public static void register(IEventBus bus) {
-        // The old material-less ID is a registry alias to stainless steel.
-        for(var spec:GTStorageMetals.ALL)bind("mass_storage_"+spec.suffix(),spec.material(),spec.hardness(),spec.resistance());
-        for(var spec:GTStorageMetals.ALL)bindLogistics("logistics_mass_storage_"+spec.suffix(),spec.material(),spec.hardness(),spec.resistance());
-        BLOCKS.register(bus);ITEMS.register(bus);TYPES.register(bus);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, "gt6ce");
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, "gt6ce");
+    public static final DeferredRegister<BlockEntityType<?>> TYPES =
+            DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, "gt6ce");
+    private static final List<java.util.function.Supplier<? extends Block>> STORAGES = new ArrayList<>();
+    private static final List<java.util.function.Supplier<? extends Block>> LOGISTICS_STORAGES = new ArrayList<>();
+    public static final java.util.function.Supplier<BlockEntityType<MassStorageBlockEntity>> MASS_STORAGE =
+            TYPES.register("mass_storage",
+            () -> BlockEntityType.Builder.of(MassStorageBlockEntity::new,
+                    STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
+    public static final java.util.function.Supplier<BlockEntityType<LogisticsMassStorageBlockEntity>> LOGISTICS_MASS_STORAGE =
+            TYPES.register("logistics_mass_storage",
+            () -> BlockEntityType.Builder.of(LogisticsMassStorageBlockEntity::new,
+                    LOGISTICS_STORAGES.stream().map(java.util.function.Supplier::get).toArray(Block[]::new)).build(null));
+
+    private StorageRegistries() {
     }
-    private static void bindLogistics(String id, com.gregtech.gregtech.api.material.GTMaterial material,float hardness,float resistance) {
-        var block=BLOCKS.register(id,()->new com.gregtech.gregtech.block.inventory.LogisticsMassStorageBlock(material,BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(hardness,resistance).requiresCorrectToolForDrops()));
-        LOGISTICS_STORAGES.add(block);ITEMS.register(id,()->new BlockItem(block.get(),new Item.Properties().stacksTo(16)));
+
+    public static List<java.util.function.Supplier<? extends Block>> all() {
+        return java.util.stream.Stream.concat(STORAGES.stream(), LOGISTICS_STORAGES.stream()).toList();
     }
-    private static void bind(String id, com.gregtech.gregtech.api.material.GTMaterial material,float hardness,float resistance) {
-        var block=BLOCKS.register(id,()->new MassStorageBlock(material,BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(hardness,resistance).requiresCorrectToolForDrops()));
-        STORAGES.add(block);ITEMS.register(id,()->new BlockItem(block.get(),new Item.Properties().stacksTo(16)));
+
+    public static void register(IEventBus eventBus) {
+        // Register both block families before attaching their deferred registers.
+        for (var materialSpec : GTStorageMetals.ALL)
+            bind("mass_storage_" + materialSpec.suffix(), materialSpec.material(),
+                    materialSpec.hardness(), materialSpec.resistance());
+        for (var materialSpec : GTStorageMetals.ALL)
+            bindLogistics("logistics_mass_storage_" + materialSpec.suffix(), materialSpec.material(),
+                    materialSpec.hardness(), materialSpec.resistance());
+        BLOCKS.register(eventBus);
+        ITEMS.register(eventBus);
+        TYPES.register(eventBus);
+    }
+
+    private static void bindLogistics(String registryId, GTMaterial material, float hardness, float resistance) {
+        var registeredBlock = BLOCKS.register(registryId, () ->
+                new com.gregtech.gregtech.block.inventory.LogisticsMassStorageBlock(material,
+                        BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
+                                .strength(hardness, resistance).requiresCorrectToolForDrops()));
+        LOGISTICS_STORAGES.add(registeredBlock);
+        ITEMS.register(registryId, () -> new BlockItem(registeredBlock.get(), new Item.Properties().stacksTo(16)));
+    }
+
+    private static void bind(String registryId, GTMaterial material, float hardness, float resistance) {
+        var registeredBlock = BLOCKS.register(registryId, () -> new MassStorageBlock(material,
+                BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
+                        .strength(hardness, resistance).requiresCorrectToolForDrops()));
+        STORAGES.add(registeredBlock);
+        ITEMS.register(registryId, () -> new BlockItem(registeredBlock.get(), new Item.Properties().stacksTo(16)));
     }
 }

@@ -1,0 +1,187 @@
+{
+  "baseline": "3a87174a500e3d9a87904bb849479833b8406c08",
+  "files": {
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/LogisticsMassStorageBlockEntity.java": {
+      "before_raw_sha256": "3809c1bfbbb2644025e6f24451ea45c9a7a711229f72cf27a19a44d09ca9c702",
+      "after_raw_sha256": "14ad57dd176d42b118fb55cdcd9bf858e66bd6985f559985d45fbba5777dc0c4",
+      "scoped_local_names": [],
+      "import_shortening": {},
+      "comment_corrections": [],
+      "views": [
+        {
+          "platform": "forge",
+          "tokens": 344,
+          "execution_sha256": "f116d09fb58d723887fbf06d99c1305673fa536e60290d488fc9307ad79c6311",
+          "before_lines": 34,
+          "after_lines": 69,
+          "before_max_line": 175,
+          "after_max_line": 114
+        },
+        {
+          "platform": "neoforge",
+          "tokens": 378,
+          "execution_sha256": "15bb75cb6ca9b90bd1f313b0db3adfad687f4c3f7db8c01d246dfe3952ca1f55",
+          "before_lines": 34,
+          "after_lines": 71,
+          "before_max_line": 207,
+          "after_max_line": 114
+        }
+      ]
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsTankBlock.java": {
+      "before_raw_sha256": "1fb05f7d61c91d71abd6aa71f87589c3ab8c47b93d12e0d9dea0a8b35ce7eb85",
+      "after_raw_sha256": "8da5ea2d4903e9329cb8a2cd7835ad57f0bb2fe518bcc9f124c72180db8f3d7c",
+      "scoped_local_names": [
+        [
+          "public <T extends BlockEntity>",
+          null,
+          {
+            "world": "tickLevel",
+            "pos": "tickPosition",
+            "blockState": "tickState",
+            "tank": "blockEntity"
+          }
+        ]
+      ],
+      "import_shortening": {},
+      "comment_corrections": [],
+      "views": [
+        {
+          "platform": "forge",
+          "tokens": 291,
+          "execution_sha256": "2a3c9cbc6d46a01e6fb12e22645101967502674378d413b8e7e116c71dfbef40",
+          "before_lines": 31,
+          "after_lines": 36,
+          "before_max_line": 107,
+          "after_max_line": 137
+        },
+        {
+          "platform": "neoforge",
+          "tokens": 291,
+          "execution_sha256": "2a3c9cbc6d46a01e6fb12e22645101967502674378d413b8e7e116c71dfbef40",
+          "before_lines": 31,
+          "after_lines": 36,
+          "before_max_line": 107,
+          "after_max_line": 137
+        }
+      ]
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LogisticsMassStorageBlock.java": {
+      "before_raw_sha256": "8ada6c823fa6940fe68272e9ad9df640b448f4c11138412f23c514344be84bcd",
+      "after_raw_sha256": "d5a42e485031530b74e7ec2404004a39d959dd643db5c7745e1e35c3b118f06d",
+      "scoped_local_names": [],
+      "import_shortening": {},
+      "comment_corrections": [],
+      "views": [
+        {
+          "platform": "forge",
+          "tokens": 170,
+          "execution_sha256": "a46075cc0f40b88b03d0f8ff7ba8c8ba30970ecae07b6832cafa49809c3fc946",
+          "before_lines": 28,
+          "after_lines": 30,
+          "before_max_line": 100,
+          "after_max_line": 100
+        },
+        {
+          "platform": "neoforge",
+          "tokens": 170,
+          "execution_sha256": "a46075cc0f40b88b03d0f8ff7ba8c8ba30970ecae07b6832cafa49809c3fc946",
+          "before_lines": 28,
+          "after_lines": 30,
+          "before_max_line": 100,
+          "after_max_line": 100
+        }
+      ]
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java": {
+      "before_raw_sha256": "b0484b5cce64003f3223b0edaa660e21b227b162fccbc55d14960d95409ef6a4",
+      "after_raw_sha256": "8e4d0cc3b205520ff2aa7760d4c44dd19d251eaa74be2cf7c4662445bac396e8",
+      "scoped_local_names": [],
+      "import_shortening": {},
+      "comment_corrections": [
+        [
+          "Bulk-storage front interaction and harvest at the Neo boundary; tool gaps: ALIGN-136–137.",
+          "Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136."
+        ]
+      ],
+      "views": [
+        {
+          "platform": "forge",
+          "tokens": 2053,
+          "execution_sha256": "7f52287395d13650d865933a1d1ee4b5e88d4ce5ed004ad32fb32399d554e4ca",
+          "before_lines": 253,
+          "after_lines": 253,
+          "before_max_line": 151,
+          "after_max_line": 151
+        },
+        {
+          "platform": "neoforge",
+          "tokens": 2128,
+          "execution_sha256": "6816bef6b23b6ef76066133076897c364a0ab0b02b12861c8f0aa20371cb2a22",
+          "before_lines": 184,
+          "after_lines": 184,
+          "before_max_line": 314,
+          "after_max_line": 314
+        }
+      ]
+    },
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageRegistries.java": {
+      "before_raw_sha256": "8544bb33946efba8b58988bcfc3ffaf33df29fb43e9427a34a69ebe5cb2e8951",
+      "after_raw_sha256": "2250b51083e3bf6bd40c4dd5b7a7415228f2e84597388905450ee9175cc91d06",
+      "scoped_local_names": [
+        [
+          null,
+          null,
+          {
+            "bus": "eventBus",
+            "spec": "materialSpec",
+            "id": "registryId",
+            "block": "registeredBlock"
+          }
+        ]
+      ],
+      "import_shortening": {
+        "GTMaterial": "com.gregtech.gregtech.api.material.GTMaterial",
+        "LogisticsMassStorageBlockEntity": "com.gregtech.gregtech.blockentity.inventory.LogisticsMassStorageBlockEntity"
+      },
+      "comment_corrections": [
+        [
+          "/** Complete original metalset mass-storage variants; connected network variants follow separately. */",
+          "/** Registers ordinary and logistics mass-storage blocks from the shared metal catalog. */"
+        ],
+        [
+          "// The old material-less ID is a registry alias to stainless steel.",
+          "// Register both block families before attaching their deferred registers."
+        ]
+      ],
+      "views": [
+        {
+          "platform": "neoforge",
+          "tokens": 855,
+          "execution_sha256": "6fb74dc1cfade9fba70c6c5521d7e28c688f5d058cc5b7aaf04b0932cdd5a20d",
+          "before_lines": 43,
+          "after_lines": 73,
+          "before_max_line": 423,
+          "after_max_line": 126
+        }
+      ]
+    }
+  },
+  "date": "2026-10-21",
+  "scope": "Readability checkpoint before syncing origin/main. Direct logistics-storage audit remains in progress; no new gameplay alignment record.",
+  "counts": {
+    "production_sources": 5,
+    "complete_execution_views": 9,
+    "comment_corrections": 3,
+    "shortened_imports": 2
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "limits": [
+    "Formatting, scoped local names, two explicit type imports, three source-backed comment corrections only. Native registration/capability/recipe behavior unchanged.",
+    "Raw literal values are unchanged; their token positions are compared after restoring only the two explicitly shortened type spellings and removing their new imports.",
+    "No compilation/target initialization, Gradle, tests, game, actual storage/flow/restart or build. Broader audit goal remains active."
+  ]
+}

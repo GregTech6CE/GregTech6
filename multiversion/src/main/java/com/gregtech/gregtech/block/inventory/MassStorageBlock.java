@@ -72,7 +72,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 //? if >=1.21.1 {
-/*/^* Bulk-storage front interaction and harvest at the Neo boundary; tool gaps: ALIGN-136–137. ^/
+/*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
 public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
