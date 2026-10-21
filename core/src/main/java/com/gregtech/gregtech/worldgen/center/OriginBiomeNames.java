@@ -1,7 +1,10 @@
 package com.gregtech.gregtech.worldgen.center;
+
 /** Original CS.BIOMES_INFINITE_WATER names. Modern native biome tags are checked separately. */
 public final class OriginBiomeNames {
-    private OriginBiomeNames() {}
+
+    private OriginBiomeNames() {
+    }
     private static final java.util.Set<String> WATER = java.util.Set.of(
             "beach",
             "coldbeach",
@@ -57,6 +60,7 @@ public final class OriginBiomeNames {
             "wetriver",
             "woodlandlake",
             "woodlandlakeedge");
+
     public static boolean water(String path) {
         return WATER.contains(path.toLowerCase(java.util.Locale.ROOT).replaceAll("[^a-z0-9]", ""));
     }
