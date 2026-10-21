@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第九十八批：SharpeningRecipes／MortarGrindingRecipes／core PulverizationRules／GTElectricItems四源294→331行，保留已有配方表分组，展开短方法、工厂赋值与参数缩进；七完整代码995／994、871／870、126、311／333及字面量位置80／80、45／45、3、6／6、全部注释／指令保持。未改304–308或其它玩法，用户材料不动，见[专题](MANUAL_GRINDING_AUDIT.md)和[回执](verification/manual-grinding-audit-20261022.json)。
+
 2026-10-22 第九十七批：ManualWorkRules／ManualToolBlockEntity／ManualToolBlock／Neo GTManualStations四源494→682行，展开公式、交互、保存／版本回调与注册循环；六完整代码175、2586／2674、1207／1429、1673，字面量位置26、70／69、24／24、58及注释／指令保持。未改301–303或其它玩法，用户材料不动，见[专题](SIFTING_TABLE_AUDIT.md)和[回执](verification/sifting-table-audit-20261022.json)。
 
 2026-10-22 第九十六批：AdvancedCraftingTableBlock／ChargingCraftingTableBlock／BlockContents／BlockLootPack四源257→343行，展开交互、拆除、版本回调与战利品生成；八完整代码1088／1348、210／206、247／249、1094／1153及字面量位置／注释／指令保持。纯排版，危险与172通知只记审计，用户材料不动，见[专题](WORKTABLE_LIFECYCLE_AUDIT.md)和[回执](verification/worktable-lifecycle-audit-20261022.json)。

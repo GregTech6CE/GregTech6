@@ -38,8 +38,10 @@ import java.util.List;
  * its size is not a count of all mortar-grindable materials in the original (ALIGN-010).
  */
 public final class MortarGrindingRecipes {
+
     /** One registered grinding route, for tests and reports. */
-    public record Entry(String input, RecipeMap map, Recipe recipe) {}
+    public record Entry(String input, RecipeMap map, Recipe recipe) {
+    }
 
     private static final List<Entry> ENTRIES = new ArrayList<>();
     private static final List<String> SKIPPED = List.of(
@@ -68,17 +70,23 @@ public final class MortarGrindingRecipes {
 
     private static boolean registered;
 
-    private MortarGrindingRecipes() {}
+    private MortarGrindingRecipes() {
+    }
 
-    public static List<Entry> entries() { return Collections.unmodifiableList(ENTRIES); }
+    public static List<Entry> entries() {
+        return Collections.unmodifiableList(ENTRIES);
+    }
 
-    public static List<String> skipped() { return SKIPPED; }
+    public static List<String> skipped() {
+        return SKIPPED;
+    }
 
     public static int register() {
         if (registered) throw new IllegalStateException("Mortar grinding recipes registered twice");
         registered = true;
         for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
-            if (material.has(MaterialProperty.ANTIMATTER)) continue;   // GT6: ANTIMATTER.NOT on every row
+            if (material.has(MaterialProperty.ANTIMATTER)) continue;
+            // GT6: ANTIMATTER.NOT on every row
             if (!MaterialWorkability.isMortarGrindable(material)) continue;
             for (String row : PLAIN_ROWS) grind(material, row);
             boolean brittleOrFood = MaterialWorkability.isBrittle(material) || MaterialWorkability.isFood(material);

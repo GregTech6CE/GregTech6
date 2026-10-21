@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-22 续核：第九十七批核手工筛选台，新增301整组插入、302被动库存入口、303操作者集合／瞄准条件差异；正常门槛和保存已有。行为记录至ALIGN-303，共303条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是303个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-22 续核：第九十八批核磨石／研钵，新增304–308磨料物品保存、余粉概率、电动工具去魔排除、点击重置政策和疲劳消耗，013补磨削条件；普通XP与不扣去魔磨料已有。行为记录至ALIGN-308，共308条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是308个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -36,7 +36,7 @@
 | ALIGN-010 | 确认工作属性表遗漏工厂继承，并混用字段名与材料名。影响部分材料的配方过滤和耗时。 | `MT:62,78,168–177,439,472,1056,1129`：食物工厂、低熔点金属工厂及显式属性。 | core 实际观察肉／奶酪／巧克力 FOOD、MORTAR 缺失，锡铅 FURNACE、MORTAR 缺失，盐／二氧化硅的显式属性未匹配。其他材料和最终配方全集未验证，见 [具体样本和调用路径](MATERIAL_PROCESSING_AUDIT.md)。 |
 | ALIGN-011 | 确认通用挤压注册未应用原版材料条件／锻造目标，输入前缀矩阵也较窄。 | `Loader_Recipes_Handlers:741–838` 的前缀矩阵、EXTRUDER／EXTRUDER_SIMPLE／fullforge；`RecipeMapHandlerPrefixForging` 的输出目标。 | `PartRecipeLoader` 只遍历四个输入前缀，对有效形态同时注册普通和低温路径，保留原材料输出。Rubber／Plastic 有专用路径，不包含在此判断中；未枚举最终 Minecraft 配方。 |
 | ALIGN-012 | 确认材料手册的处理目标遗漏复制继承。 | `OreDictMaterial.setAllToTheOutputOf:749–777`；`MT:1245–1246,1279–1280,1732`。 | 处理木／抛光木的目标、砖的禁用目标、烧结钨的压缩目标在侧表缺失。core 八次查询已记录；不能将展示错误直接推为所有对应机器错误。 |
-| ALIGN-013 | 确认通用配方部分条件不同。 | `Loader_Recipes_Handlers:79` 的 rockGt 研钵行不要求 MORTAR；`:217–233` 的压缩行排除 COATED，部分还排除 LAYERED。 | `MortarGrindingRecipes` 把 rockGt 也放进 MORTAR 过滤；`MaterialFormConversionRecipes` 缺少上述涂层／层状条件。材料实际形态和最终可见配方仍待枚举。 |
+| ALIGN-013 | 确认通用配方部分条件不同。 | `Loader_Recipes_Handlers:79` 的 rockGt 研钵行不要求 MORTAR；`:217–233` 的压缩行排除 COATED，部分还排除 LAYERED。 | `MortarGrindingRecipes` 把 rockGt 也放进 MORTAR 过滤；`MaterialFormConversionRecipes` 缺少上述涂层／层状条件。磨削七行同样缺COATED排除，rockGt额外STONE门控也未消费；材料实际形态和最终可见配方仍待枚举，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
 | ALIGN-014 | 确认部分通用加工固定耗时替代了原版材料工作性分支，也遗漏部分过滤条件。 | `Loader_Recipes_Handlers:262–319,371–393`；`RecipeMapHandlerPrefix.getCosts`。 | `PartRecipeLoader` 的轧制、杆拉细丝、卷弯、箔／轨道与车床方法使用固定时长。困难材料品质 3、1U 锭→板，原版参数算得 1024 tick，当前传 16；具体范围不包含已有独立工作性计算的 Welder 和物理导线入口。 |
 | ALIGN-015 | 确认车床／切割的部分材料余料未返回。 | 原版车床／切割行启用 pulverized remains，`RecipeMapHandlerPrefix:213–218` 按差额和粉碎目标返回。 | `PartRecipeLoader.roll`、`cut` 只输出主产物，如板→透镜、透镜→环、小板切割。锭／宝石→杆有专用余料但未按粉碎目标转换；不能扩大成所有加工都无副产物。 |
 | ALIGN-016 | 确认通用材料切割的冷却液矩阵、时长和品质用量倍率不同。 | `Loader_Recipes_Handlers:628–652` 实际循环前四种冷却液；`RecipeMapHandlerPrefix:218` 按品质+1缩放。 | 当前 `cut` 只注册水、基础时长与 `max(16,duration)` 水量；品质 3 的长杆水路线，原版参数为 64 tick／256 mB，当前 16 tick／16 mB。其他显式切割配方未全部核查。 |
@@ -330,6 +330,11 @@
 | ALIGN-301 | 确认筛选台原单件工作格变为整组插入。 | 原getInventoryStackLimit为1，顶部ST.move实际按目标上限收取。 | 当前work复制全部手持、生存手持归零；保留取回／保存不报物品丢失，四数量条件为源码推导，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
 | ALIGN-302 | 确认筛选台缺少原被动物品进出入口。 | 原经06父类ISidedInventory开放13格，0匹配输入、1～12提取，六面可见。 | 当前实体仅work／outputs，无原生容器／handler／Forge能力，项目Neo注册也无对应；不是断言第三方永不能扩展或原能无人自动加工，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
 | ALIGN-303 | 确认筛选台操作者集合和继续操作条件不同。 | 原每5刻遍历按玩家最近点击的坐标表，普通6格／创造绕距离，无本处持续瞄准顶面检查。 | 当前仅最后UUID，附8格检查及5格顶面射线；不从人数推定实际倍产，普通药水公式另核相同，见[筛选台](SIFTING_TABLE_AUDIT.md)。 |
+| ALIGN-304 | 确认磨石普通掉落缺少剩余磨料携带。 | 原writeItemNBT2经06实际写入、04 getDrops交给注册物品，读取同一NBT_STATE。 | 当前世界gt.stone_uses存在，但Neo新物品／Forge默认loot及盖板白名单不复制它；限普通掉落，未收获／重启实测，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-305 | 确认磨削非空余粉的75%概率变默认必得。 | 原七磨削行chances(10000,7500)经Prefix生成和磨石getOutputs实际逐件抽取。 | 当前有余粉路线用无概率addRecipe1，真实rollOutputCount缺省10000；不扩至无第二产物行，最终配方表待验，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-306 | 确认GT电动工具漏过去附魔类型排除。 | 原ST.isGT_查IItemGT，实际电动工具经MultiItemTool／ItemBase属于该接口。 | 当前只排除GTToolItem，ElectricToolItem另继承TieredItem且有真实注册／赋魔入口；限带有效非诅咒附魔并进入交互，未施魔实测，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-307 | 确认磨石按手持身份重置点击的政策不同。 | 原非空物品共享块内mClickCount，没有上次物品比较。 | 当前lastHeld物品／标签或组件不同便归零；九次A换B时只算B第1次，保留现代重置不借排版恢复旧预累计，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-308 | 确认研钵／磨石／筛选台缺少原疲劳饥饿消耗倍率。 | 原三基础除数／去魔0.5再经UT.Entities.exhaust乘pot1Fatique，普通1及疲劳I–III的2／3／4。 | 当前直接causeFoodExhaustion，两版本机Player／FoodData不补倍率；限普通未封顶，非实际饥饿格或创造扣除结论，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

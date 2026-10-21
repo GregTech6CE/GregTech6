@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-22 / 磨削概率要追真实抽取，保存与类型排除不能只看同名字段
+
+原磨料经06的writeItemNBT2到04实际掉落；当前世界保存不能代替物品保存。Sharpening余粉须追7500概率到getOutputs／rollOutputCount，GT电动工具另属TieredItem而非GTToolItem。登记304–308，保留当前点击重置、holder绑定和大整数防溢出；原75%或疲劳倍率只记差异不随排版修改，见[专题](MANUAL_GRINDING_AUDIT.md)。
+
 ## 2026-10-22 / 筛选台字段数量与可被访问的库存分别判断
 
 原13格要追06父类ISidedInventory与实际ST.move目标上限；当前work／outputs字段不能替代原生能力。原按玩家最近点击表逐人处理，不能把当前UUID加瞄准门控归为完全等价适配，登记301–303。既有取回／保存保护和正常药水公式保留，排版不顺带修玩法，见[专题](SIFTING_TABLE_AUDIT.md)。
