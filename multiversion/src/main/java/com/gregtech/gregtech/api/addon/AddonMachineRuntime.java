@@ -78,7 +78,11 @@ public final class AddonMachineRuntime {
                 .structureKeys(definition.structureKeys())
                 .minimumLightAbove(parameters.minimumLightAbove())
                 .searchOutputTanks(parameters.searchOutputTanks())
-                .exclusiveOutputs(parameters.exclusiveOutputs());
+                .exclusiveOutputs(parameters.exclusiveOutputs())
+                .itemOutputTarget(parameters.itemOutputTarget())
+                .fluidOutputTarget(parameters.fluidOutputTarget())
+                .itemInputSource(parameters.itemInputSource())
+                .fluidInputSource(parameters.fluidInputSource());
         if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC
                 || parameters.cheapOverclockingSpecified())
             spec.cheapOverclocking(parameters.cheapOverclocking());

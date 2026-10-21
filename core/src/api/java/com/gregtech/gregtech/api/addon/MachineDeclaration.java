@@ -18,7 +18,9 @@ import java.util.Objects;
  * {@code minimumLightAbove} of 0 does not check the block above.
  * {@code searchOutputTanks} tries the output tanks only after the input tanks miss, and that job
  * drains the tanks that matched. {@code exclusiveOutputs} rolls the first item chance once and
- * requires every static row to have exactly two item outputs.
+ * requires every static row to have exactly two item outputs. A large recipe machine may name one
+ * cell for item output, fluid output, item input and fluid input. The origin is rejected. Each
+ * component is from -16 to 16. Naming a cell leaves that channel's automatic face unset; setting both fails.
  */
 public record MachineDeclaration(
         String id,
@@ -47,7 +49,11 @@ public record MachineDeclaration(
         boolean cheapOverclockingSpecified,
         int minimumLightAbove,
         boolean searchOutputTanks,
-        boolean exclusiveOutputs
+        boolean exclusiveOutputs,
+        Target itemOutputTarget,
+        Target fluidOutputTarget,
+        Target itemInputSource,
+        Target fluidInputSource
 ) {
     public MachineDeclaration {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -77,6 +83,18 @@ public record MachineDeclaration(
         fluidInputs = copyFaces(id, fluidInputs);
         fluidOutputs = copyFaces(id, fluidOutputs);
         energyInputs = copyFaces(id, energyInputs);
+        if (kind != Kind.LARGE_RECIPE && (itemOutputTarget != null || fluidOutputTarget != null
+                || itemInputSource != null || fluidInputSource != null))
+            throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
+        rejectAutomaticFace(id, "item output", itemOutputTarget, itemAutoOutput);
+        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, fluidAutoOutput);
+        rejectAutomaticFace(id, "item input", itemInputSource, itemAutoInput);
+        rejectAutomaticFace(id, "fluid input", fluidInputSource, fluidAutoInput);
+    }
+
+    private static void rejectAutomaticFace(String id, String channel, Target target, BehaviorMachineDeclaration.Face automatic) {
+        if (target != null && automatic != null)
+            throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
 
     private static List<BehaviorMachineDeclaration.Face> copyFaces(String id, List<BehaviorMachineDeclaration.Face> faces) {
@@ -91,6 +109,17 @@ public record MachineDeclaration(
     }
 
     public enum Kind { BASIC, LARGE_RECIPE }
+
+    /** One cell, in the same coordinates as {@link MachineLayout.Cell}, plus the face that receives the transfer. */
+    public record Target(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+        public Target {
+            if (receiver == null) throw new IllegalArgumentException("Missing receiver");
+            if (right == 0 && up == 0 && back == 0)
+                throw new IllegalArgumentException("IO target cannot be the origin");
+            if (right < -16 || right > 16 || up < -16 || up > 16 || back < -16 || back > 16)
+                throw new IllegalArgumentException("IO target is out of range: " + right + "," + up + "," + back);
+        }
+    }
 
     public static Builder builder(String id, String material) { return new Builder(id, material); }
 
@@ -122,6 +151,10 @@ public record MachineDeclaration(
         private int minimumLightAbove;
         private boolean searchOutputTanks;
         private boolean exclusiveOutputs;
+        private Target itemOutputTarget;
+        private Target fluidOutputTarget;
+        private Target itemInputSource;
+        private Target fluidInputSource;
 
         private Builder(String id, String material) {
             this.id = id;
@@ -153,6 +186,18 @@ public record MachineDeclaration(
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
+        public Builder itemOutputTarget(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            itemOutputTarget = new Target(right, up, back, receiver); return this;
+        }
+        public Builder fluidOutputTarget(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            fluidOutputTarget = new Target(right, up, back, receiver); return this;
+        }
+        public Builder itemInputSource(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            itemInputSource = new Target(right, up, back, receiver); return this;
+        }
+        public Builder fluidInputSource(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            fluidInputSource = new Target(right, up, back, receiver); return this;
+        }
 
         public MachineDeclaration build() {
             return new MachineDeclaration(id, material, machineType, energy, energyPerTick, tier, parallel,
@@ -160,7 +205,8 @@ public record MachineDeclaration(
                     itemInputs, itemOutputs, fluidInputs, fluidOutputs, energyInputs,
                     itemAutoInput, itemAutoOutput, fluidAutoInput, fluidAutoOutput,
                     cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
-                    searchOutputTanks, exclusiveOutputs);
+                    searchOutputTanks, exclusiveOutputs,
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
         }
     }
 }
