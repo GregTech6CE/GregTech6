@@ -5,6 +5,7 @@ package com.gregtech.gregtech.content.tool;
 import com.gregtech.gregtech.block.GTGrassBlock;
 //?}
 import com.gregtech.gregtech.block.RockOreBlock;
+import com.gregtech.gregtech.block.OreBlock;
 //? if >=1.21.1 {
 //?} else {
 import com.gregtech.gregtech.block.misc.DiggableBlock;
@@ -27,6 +28,10 @@ public final class DynamiteSubstrates {
     public static boolean canDrill(BlockGetter level, BlockPos pos) {
         var state = level.getBlockState(pos);
         var block = state.getBlock();
+        // Normal and small ores share their ID with an unbreakable bedrock-host state.
+        // Test that state before any whole-block whitelist can admit it.
+        if (block instanceof OreBlock)
+            return !OreBlock.isBedrockOre(state) && state.getDestroySpeed(level, pos) >= 0;
 //? if >=1.21.1 {
         /*boolean explicit = state.is(DRILLABLE) || block instanceof RockOreBlock;
 *///?} else {
