@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-22 续核：第九十三批响应筛粉漏斗玩家反馈，新增并修复293钳子未直接取内部余粉；保留原9:4及单材料余量机制，补Jade模式／余粉。行为记录至ALIGN-293，共293条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是293个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-22 续核：第九十四批核高级工作台，新增294–297电路铺格、相邻库存／补液和工具头材料限制；本地槽序与事务保护已有。行为记录至ALIGN-297，共297条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是297个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -320,6 +320,10 @@
 | ALIGN-291 | 确认比较器／中继器画布图像映射未保留原powered目标。 | 原物品映射至powered_comparator／powered_repeater，方块身份写入USB／画布并供复制纹理读取。 | 当前mapped取两种现代方块默认状态，两版原生默认POWERED=false；属性经扫描／打印／渲染消费者保持，未像素／红石实测，见[可视文档](VISUAL_DOCUMENT_AUDIT.md)。 |
 | ALIGN-292 | 确认自动合成对无标签蓝图需求强制精确匹配附加数据。 | 原Recipe对无NBT需求忽略可用同种原料的额外NBT；普通输入GUI允许放入，统一物品保留NBT。 | 当前构造mExactItemInputs=true，经RecipeMap／RecipeInputs实际消费要求两版标签／组件完全相等；普通原料仅加名称的有限条件被拒绝，非自动插入或储液容器结论，未实际加工，见[蓝图与自动合成](BLUEPRINT_AUTOCRAFTING_AUDIT.md)。 |
 | ALIGN-293 | 已修复筛粉漏斗钳子取出目标与原内部余粉不同。 | 原钳子直接取mContent，普通输入／成品格保留；不足输出大小的余量本就锁定材料。 | 此前retrieve先取两格再取余粉；现独立retrieveFraction并立即重试，Jade显示模式／余量。双版编译通过、未实际加工或客户端画面验收，见[筛粉漏斗](DUST_FUNNEL_AUDIT.md)。 |
+| ALIGN-294 | 确认高级／充能工作台缺少集成电路铺格入口。 | 原30槽允许2～9号selector，并按编号铺零数量样品供制作。 | 当前电路物品已注册，但实体／菜单只许两种蓝图，pattern无编号分支；八源形状已提取，未实际点击，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-295 | 确认工作台制作计划没有相邻可连接库存。 | 原计入ITileEntityConnectedInventory，并先于本地格扣料、尝试返还容器。 | 当前plan只复制台内71格、source和put只查本地数组；被动自动输入不替代制作取料，未实际加工，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-296 | 确认工作台制作时没有从相邻储罐补充容器。 | 原consumeSlot验证完整回填，整份从ITileEntityConnectedTank扣液后保留装液样品。 | 当前使用原生余物并放回本地，制作链没有邻接补液；适用有效配方／可回填容器／足量未锁储罐，不泛称所有桶配方失败，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
+| ALIGN-297 | 确认工作台同类工具比较额外要求头材料相同。 | 原equalTools对IItemGTContainerTool忽略NBT，源主材在GT.ToolStats。 | 当前同类物品按getHead相等及可用性匹配，改变储物工具替换／过滤；限定均可用且配方接受两材，普通物品严格比较不在此列，未工具实测，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

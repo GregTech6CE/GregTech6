@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第九十四批：AdvancedCraftingRules／AdvancedCraftingTableBlockEntity／AdvancedCraftingMenu／Neo CraftingTableCapabilities四源415→817行，分开缓存、计划、提交、余物和能力事件；六完整代码441、3788／3786、1588／1590、216及字面量位置／其余注释／指令保持。三条说明不再过强归因原版，未改玩法或用户材料，见[专题](ADVANCED_WORKTABLE_AUDIT.md)和[回执](verification/advanced-worktable-audit-20261022.json)。
+
 2026-10-22 第九十三批：筛粉漏斗分开“内部余粉”和“普通两格”的取出职责，上方吸入复用`accepts`；新增独立Jade提供者，避免展示逻辑挤入方块实体。这是用户授权的功能修复293，不能当作完整代码等价排版；原换算／存档等保留路径另核，见[专题](DUST_FUNNEL_AUDIT.md)。
 
 2026-10-22 第九十二批：AutocraftingRules／CraftingBlueprintData／BlueprintRecipes／AutocraftingRecipes四源513→569行，分开格数据、配方参数与原生选择分支。七完整有序代码1074、553／575、1268／1309、1845／1881及字面量位置／其余注释／条件保持；仅修正两条说明范围，292另记实际差异。用户材料不动，见[专题](BLUEPRINT_AUTOCRAFTING_AUDIT.md)和[回执](verification/blueprint-autocrafting-audit-20261021.json)。
