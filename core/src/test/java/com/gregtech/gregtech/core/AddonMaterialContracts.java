@@ -3,6 +3,7 @@ package com.gregtech.gregtech.core;
 import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
 import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.addon.GregTechMaterialContributor;
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
 import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
@@ -12,6 +13,7 @@ import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.api.material.MaterialBlockDefinitions;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
@@ -79,6 +81,7 @@ public final class AddonMaterialContracts {
             case "prefixcase" -> prefixCase();
             case "prefixmiss" -> prefixMissing();
             case "prefixcond" -> prefixCondition();
+            case "byproducts" -> byproducts();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -565,6 +568,50 @@ public final class AddonMaterialContracts {
         for (var definition : MaterialItemDefinitions.all()) if (definition.prefix() == prefix) items++;
         check(items > 0 && items < 2000, "the condition does not cover every material: " + items);
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
+    }
+
+    private static void byproducts() throws Exception {
+        prepare();
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        var missing = GregTechMaterials.find("NotRegisteredYet");
+        check(!missing.valid() && missing.byproducts().isEmpty(), "an unknown name has no byproducts and does not throw");
+        var beforeLink = GregTechMaterials.find("Copper").byproducts();
+        System.out.println("byproduct-scan before-link copper=" + beforeLink);
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").displayName("Ore Metal").color(0x336699).metal().ores()
+                        .oreByproducts("Iron", "Copper").build(),
+                MaterialDeclaration.builder("PlainDust").displayName("Plain Dust").color(0x888888).dust().build()),
+                List.of());
+        GTMaterialRegistry.init();
+        var expectedCopper = List.of("Cobaltite", "Gold", "Nickel", "Malachite", "Arsenic");
+        GTMaterial copper = GTMaterialRegistry.get("Copper").resolve();
+        var copperNames = copper.getByProducts().stream().map(item -> item.resolve().getName()).toList();
+        check(copperNames.equals(expectedCopper), "copper byproducts stay Cobaltite, Gold, Nickel, Malachite, Arsenic: " + copperNames);
+        check(GregTechMaterials.find("Copper").byproducts().equals(copperNames), "the API follows getByProducts");
+        check(GregTechMaterials.find("OreMetal").byproducts().equals(List.of("Iron", "Copper")), "addon oreByproducts are readable");
+        check(GregTechMaterials.find("PlainDust").byproducts().isEmpty(), "a material without byproducts reads empty");
+        check(GregTechMaterials.invalid().byproducts().isEmpty(), "the invalid material reads empty");
+        var dust = PrefixRegistry.byName("dust");
+        for (String name : expectedCopper) check(dust.isValidFor(GTMaterialRegistry.get(name)), "dust is valid for " + name);
+        var hidden = new TreeSet<String>();
+        var alias = new TreeSet<String>();
+        for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
+            if (material.resolve() != material) continue;
+            var expected = material.getByProducts().stream().map(item -> item.resolve().getName()).toList();
+            var actual = GregTechMaterials.find(material.getName()).byproducts();
+            check(actual.equals(expected), "byproducts match " + material.getName() + ": " + actual + " vs " + expected);
+            for (GTMaterial byproduct : material.getByProducts()) {
+                GTMaterial resolved = byproduct.resolve();
+                if (resolved.has(MaterialProperty.HIDDEN)) hidden.add(material.getName() + "->" + resolved.getName());
+                if (!byproduct.getName().equals(resolved.getName()))
+                    alias.add(material.getName() + "->" + byproduct.getName() + "=" + resolved.getName());
+            }
+        }
+        System.out.println("byproduct-scan hidden=" + hidden.size() + " alias=" + alias.size());
+        if (!hidden.isEmpty()) System.out.println("byproduct-scan hidden-names " + hidden);
+        if (!alias.isEmpty()) System.out.println("byproduct-scan alias-names " + alias);
+        GTMaterialRegistry.get("PlainDust").addOreByProducts(GTMaterialRegistry.get("Tin"));
+        check(GregTechMaterials.find("PlainDust").byproducts().equals(List.of("Tin")), "a byproduct added after link is visible");
     }
 
     private static void prepare() {

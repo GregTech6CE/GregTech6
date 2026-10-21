@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.machine;
 
+import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
@@ -46,7 +47,11 @@ public record BasicMachineSpec(
         /** After the input tanks miss, search the output tanks and drain the tanks that matched. */
         boolean searchOutputTanks,
         /** Roll the first item chance once. The row must have exactly two item outputs. */
-        boolean exclusiveOutputs
+        boolean exclusiveOutputs,
+        MachineDeclaration.Target itemOutputTarget,
+        MachineDeclaration.Target fluidOutputTarget,
+        MachineDeclaration.Target itemInputSource,
+        MachineDeclaration.Target fluidInputSource
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -72,6 +77,18 @@ public record BasicMachineSpec(
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
         structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
+        if ((itemOutputTarget != null || fluidOutputTarget != null || itemInputSource != null || fluidInputSource != null)
+                && controllerKind != MachineControllerKind.LARGE_RECIPE)
+            throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
+        rejectAutomaticFace(id, "item output", itemOutputTarget, faceConfig.itemAutoOutput());
+        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, faceConfig.fluidAutoOutput());
+        rejectAutomaticFace(id, "item input", itemInputSource, faceConfig.itemAutoInput());
+        rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
+    }
+
+    private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
+        if (target != null && automatic >= 0)
+            throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
 
     /** Built-in machines stay in {@code gregtech} and keep the historical name-based rules. */
@@ -85,7 +102,8 @@ public record BasicMachineSpec(
                 LargeMachineProcessingRules.efficiency(machineName),
                 LargeMachineProcessingRules.constantEnergy(false, machineName),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
-                false, false, 0, false, false);
+                false, false, 0, false, false,
+                null, null, null, null);
     }
 
     /**
@@ -159,6 +177,10 @@ public record BasicMachineSpec(
         private int minimumLightAbove;
         private boolean searchOutputTanks;
         private boolean exclusiveOutputs;
+        private MachineDeclaration.Target itemOutputTarget;
+        private MachineDeclaration.Target fluidOutputTarget;
+        private MachineDeclaration.Target itemInputSource;
+        private MachineDeclaration.Target fluidInputSource;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -184,6 +206,10 @@ public record BasicMachineSpec(
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
+        public Builder itemOutputTarget(MachineDeclaration.Target value) { itemOutputTarget = value; return this; }
+        public Builder fluidOutputTarget(MachineDeclaration.Target value) { fluidOutputTarget = value; return this; }
+        public Builder itemInputSource(MachineDeclaration.Target value) { itemInputSource = value; return this; }
+        public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineSpec(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
@@ -196,7 +222,8 @@ public record BasicMachineSpec(
                     constantEnergySet ? constantEnergy : LargeMachineProcessingRules.constantEnergy(false, machineType),
                     structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
                     cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove,
-                    searchOutputTanks, exclusiveOutputs);
+                    searchOutputTanks, exclusiveOutputs,
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
         }
     }
     public String textureFolder() { return machineName; }
