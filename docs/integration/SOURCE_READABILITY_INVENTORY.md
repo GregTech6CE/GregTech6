@@ -94,3 +94,5 @@
 2026-10-21 第七十五批：储罐BE、主阀Block、TankValveSpec、HollowTankStructure、MultiblockTankData共五源展开；限定be／f／ctx／ticker参数／all／p／容量临时量改具名，真实TankValveParameters.all()成员调用保持。十份完整执行及原始字面量位置、来源注释／指令另核，五处职责说明纠正，用户材料排版不动，见[储罐专题](MULTIBLOCK_TANK_AUDIT.md)及[回执](verification/multiblock-tank-audit-20261021.json)。完整可读性与原版核查继续。
 
 2026-10-21 第七十六批：MultiblockPortBlock展开Neo交互／火回调／渲染／基础掉落，两处id改registryId；TankFlowRules展开委托。FluidHazards缩短总说明，明确注册依赖与外部气体近似。三源六完整执行保持，三处说明纠正／未归一字面量位置／其余注释指令另核，用户材料不动，见[危害专题](TANK_HAZARDS_AUDIT.md)。全面可读性目标继续。
+
+2026-10-21 第七十七批：展开FluidAttachmentBlock的构造旋转／访问包装／Neo交互和注入分支、MultiblockTankTooltips的内容／防护拼接、MultiblockJadeProvider的状态／流体序列化；core OriginalTankTooltipData循环i改digitIndex，构造两个b绑定改bounds。四源七完整执行及原始字面量位置保持，一处接口职责说明纠正，用户材料表不动，见[工具与制作专题](TANK_TOOLS_RECIPES_AUDIT.md)和[回执](verification/tank-tools-audit-20261021.json)。全面可读性与原版核查继续。

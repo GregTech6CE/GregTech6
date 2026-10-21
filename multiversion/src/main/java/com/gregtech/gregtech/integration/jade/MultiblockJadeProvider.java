@@ -25,13 +25,15 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         var data = new CompoundTag();
         if (!(entity instanceof StructureController controller)) return data;
         data.putBoolean("formed", controller.isStructureOk());
-        if(entity instanceof com.gregtech.gregtech.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
-            data.putLong("fusionCharge",fusion.chargeRemaining());
-            data.putLong("fusionOutput",fusion.isRunning()?fusion.outputEU():0);
+        if (entity instanceof com.gregtech.gregtech.blockentity.machine.FusionReactorControllerBlockEntity fusion) {
+            data.putLong("fusionCharge", fusion.chargeRemaining());
+            data.putLong("fusionOutput", fusion.isRunning() ? fusion.outputEU() : 0);
         }
-        if(entity instanceof com.gregtech.gregtech.blockentity.machine.AxialGeneratorBlockEntity axial) {
-            data.putString("axialState",axial.isOverloaded()?"overloaded":axial.isStopped()?"stopped":"enabled");
-            data.putBoolean("axialSteam",axial.grade().steam());data.putInt("axialInput",axial.grade().input());data.putInt("axialOutput",axial.grade().output());
+        if (entity instanceof com.gregtech.gregtech.blockentity.machine.AxialGeneratorBlockEntity axial) {
+            data.putString("axialState", axial.isOverloaded() ? "overloaded" : axial.isStopped() ? "stopped" : "enabled");
+            data.putBoolean("axialSteam", axial.grade().steam());
+            data.putInt("axialInput", axial.grade().input());
+            data.putInt("axialOutput", axial.grade().output());
         }
         if (entity instanceof BasicMachineBlockEntity machine) {
             data.putInt("progress", machine.getProgressPercent());
@@ -54,9 +56,9 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
             data.put("energy", energies);
             var fluids = new ListTag();
 //? if >=1.21.1 {
-            /*var level=entity.getLevel();
-            var handler=level==null?null:level.getCapability(Capabilities.FluidHandler.BLOCK,entity.getBlockPos(),null);
-            if(handler!=null) {
+            /*var level = entity.getLevel();
+            var handler = level == null ? null : level.getCapability(Capabilities.FluidHandler.BLOCK, entity.getBlockPos(), null);
+            if (handler != null) {
 *///?} else {
             entity.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(handler -> {
 //?}
@@ -82,33 +84,37 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         return data;
     }
 
-    @Override public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+    @Override
+    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
         var entity = accessor.getBlockEntity();
         if (entity instanceof StructureController) tag.put("gt_structure", inspect(entity));
     }
 
-    @Override public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
         if (!accessor.getServerData().contains("gt_structure")) return;
         var data = accessor.getServerData().getCompound("gt_structure");
         tooltip.add(Component.translatable("jade.gt6ce.multiblock." + (data.getBoolean("formed") ? "formed" : "incomplete"))
                 .withStyle(data.getBoolean("formed") ? net.minecraft.ChatFormatting.GREEN : net.minecraft.ChatFormatting.RED));
         if (data.contains("progress")) tooltip.add(Component.translatable("jade.gt6ce.multiblock.progress", data.getInt("progress")));
-        if(data.contains("fusionCharge")) {
-            tooltip.add(Component.translatable("gt6ce.fusion.startup",data.getLong("fusionCharge")));
-            tooltip.add(Component.translatable("gt6ce.fusion.output",data.getLong("fusionOutput")));
+        if (data.contains("fusionCharge")) {
+            tooltip.add(Component.translatable("gt6ce.fusion.startup", data.getLong("fusionCharge")));
+            tooltip.add(Component.translatable("gt6ce.fusion.output", data.getLong("fusionOutput")));
         }
-        if(data.contains("axialState")) {
-            tooltip.add(Component.translatable("gt.axial.state."+data.getString("axialState")));
-            tooltip.add(Component.translatable(data.getBoolean("axialSteam")?"gt.tooltip.axial.steam":"gt.tooltip.axial.dynamo",data.getInt("axialInput"),data.getInt("axialOutput")));
+        if (data.contains("axialState")) {
+            tooltip.add(Component.translatable("gt.axial.state." + data.getString("axialState")));
+            tooltip.add(Component.translatable(data.getBoolean("axialSteam") ? "gt.tooltip.axial.steam" : "gt.tooltip.axial.dynamo",
+                    data.getInt("axialInput"), data.getInt("axialOutput")));
         }
         for (var value : data.getList("energy", 10)) {
             var row = (CompoundTag) value;
-            tooltip.add(Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"), row.getString("unit")));
+            tooltip.add(Component.translatable("jade.gt6ce.multiblock.energy", row.getLong("stored"), row.getLong("capacity"),
+                    row.getString("unit")));
         }
         for (var value : data.getList("fluids", 10)) {
             var row = (CompoundTag) value;
 //? if >=1.21.1 {
-            /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(),row.getCompound("fluid"));
+            /*var fluid = net.neoforged.neoforge.fluids.FluidStack.parseOptional(accessor.getLevel().registryAccess(), row.getCompound("fluid"));
 *///?} else {
             var fluid = net.minecraftforge.fluids.FluidStack.loadFluidStackFromNBT(row.getCompound("fluid"));
 //?}
@@ -117,5 +123,8 @@ public enum MultiblockJadeProvider implements IBlockComponentProvider, IServerDa
         tooltip.add(Component.translatable("jade.gt6ce.multiblock.jei"));
     }
 
-    @Override public ResourceLocation getUid() { return ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock"); }
+    @Override
+    public ResourceLocation getUid() {
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "multiblock");
+    }
 }

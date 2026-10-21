@@ -1,0 +1,1996 @@
+{
+  "batch": 77,
+  "date": "2026-10-21",
+  "baseline": "18ee675d19a42f134e83fdd8da8804c05afc4a64",
+  "new_records": [
+    266,
+    267
+  ],
+  "extended_records": [
+    126,
+    232,
+    251,
+    262
+  ],
+  "scope": "25 declared valve recipes, actual thermometer/plunger/funnel/tap routes, six bilingual structure keys and item/Jade consumer entry points.",
+  "counts": {
+    "original_sources": 22,
+    "current_sources": 52,
+    "shared_platform_views": 64,
+    "readability_files": 4,
+    "readability_execution_views": 7
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "relative": "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_Plunger.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_Plunger.java",
+      "sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "relative": "gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Plunger_Fluid.java",
+      "relative": "gregtech/items/behaviors/Behavior_Plunger_Fluid.java",
+      "sha256": "023ca531f154987cbedaa94a0e7ecede5a46e9d23bf15d5be0c8b0568c3995c8",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "relative": "gregtech/items/MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "relative": "gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/ANY.java",
+      "relative": "gregapi/data/ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/CR.java",
+      "relative": "gregapi/util/CR.java",
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "relative": "gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "relative": "gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictManager.java",
+      "relative": "gregapi/oredict/OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/IBlockToolable.java",
+      "relative": "gregapi/block/IBlockToolable.java",
+      "sha256": "80b8529019e3f3ccab0bc1a567771cb6f0ddcd0bbe5529cafb5f1035bd058206",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/LH.java",
+      "relative": "gregapi/data/LH.java",
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalTankTooltipData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalTankTooltipData.java",
+      "sha256": "bcdfa1fdb786814e7676b58ff9b3748f2b073b4a7bb5064d933604f0880193dc",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "sha256": "32bd2ca495a1baea144f28e5f8b2246a6c6a923ea3526650ba2e708e61779fb8",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "sha256": "186f4b144bf5a0d2a9812e585524b55754a02a56216291176e43e09db0fbadf5",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MultiblockCraftingRecipes.java",
+      "sha256": "9892ddbb14b26cba85c787c281e5efd916fde92fabab993a3a629dc3a83d429b",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialGroups.java",
+      "sha256": "df9fffcc012f709d3e48620030c57a541fdc89d0638ff3b93fff09140ae96136",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "sha256": "c7d57dd245d55fb32acb17f4fd0bdda7ca04b68a0a65887cddbf4304e8616d4e",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialTagAliases.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialTagAliases.java",
+      "sha256": "c0acd6f8f875628f4c2156c9c80bccd3d0bd70c3de4f605c38e3347c389cce46",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/UtilityCraftingRows.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/UtilityCraftingRows.java",
+      "sha256": "7ec13a01219677ccea9f941e63a6eea50c4182dde914f5553348189e45029ec3",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/machine/ITileEntityCrucible.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/machine/ITileEntityCrucible.java",
+      "sha256": "14a577955428f064caf7e97752c36ce42bd087cdf32f136764466bd08340487c",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "sha256": "f794ff8e4d497f224b907acdd0d67adc9ded6b9a9276f5285174c1f6ec834b25",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "sha256": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "8e468914162ddccb0f55b467c1670c0cb6076c79fb89f002dcaa2bedb7b50c9d",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "sha256": "4ca1ed1c365436bb51003ab26480849485d4b798e8213b02568ec641fd96b3cf",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java",
+      "sha256": "3d729db3a67c2559e2486f77fca4440ded142aabbc4e5299745dcf4033b81671",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "sha256": "814f4c96789f6088b1b2f8f4093f87008c3d00530ce78cab72ec220db6ed238c",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "sha256": "0236337aa36866ef8a4f619db0d074a2cf7ac8f736865bf66af82ae05a97ab10",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/StorageBlockTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/StorageBlockTooltips.java",
+      "sha256": "06718484bf5a771e5326225b2d1ddf36e59f6531d69fe177d21db9fe5be0b111",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "sha256": "c6ddc3970960a210507638e51f40f6f7fe060e40f2deedc2cf3f0d514be26bed",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "sha256": "cf949ba828cb0ceb5343d3e99946f3f668412fce8a3094fe47df2d0ad39b2512",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "sha256": "ba8912db5d12e52d956529ca60a9292eb5ffdd9df30d5882f9bbd7b74bf6b050",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "sha256": "7ce3161c68a0504dde23baaf4747f0b5cb12a4c2f7bec8893713b6737f41f799",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "sha256": "adbd3c0a681d3dfe6a2123ca5db6129c3b2d6ea7bd12c38e2275487e5e215de4",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sha256": "1e5d9a04d9c2b608171b735f46f506839d8f5bd23b71c5962d3d2471d6e9cce8",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "sha256": "15250cb214193886839ace219dad62f93ca18b891bde60ab7331f108be0c79a9",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "sha256": "090335d671e4733c31e19d4154037ee5877db9e9328a6ef8779a12448ce90867",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingMaterialForms.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingMaterialForms.java",
+      "sha256": "8b1b6c7f835c331975623d1a1a6e5392233296364052feabb4cb8a40a4bc92e8",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "sha256": "e4b709453076802dd28f9848558700fe45a354da446de03f272f95f461b13f64",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "sha256": "3cbced618e3fd21dc1f7e1ff4b1359b4d444e8f1803762cf4bd479b1e2687dc5",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "relative": "gradle/platform-neoforge.gradle",
+      "sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "scope": "Named tank tool dispatch/ancestry, recipe keys/tag consumers and item/Jade inspection only. Not whole-file, live registry or whole-client acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "c748ea5f61f4d48c1ca325d50126dd4745ef790115ee0ebfb5300f719431a11c",
+      "tokens": 2865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "9dff02e5b759e297416a553b79c31dc9e1dec9ddcfba118308c155f79c4c905c",
+      "tokens": 2759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "forge",
+      "sha256": "d2471a24f9e0dfe11cf97d79c73032c65eaa116d4c3884ce58832cdbfa53109b",
+      "tokens": 2699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8f0f169e68ed10ea3e0541bd2d9eec2c7f5e3af9a9f86df0d7e75eb296745d6e",
+      "tokens": 2583
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "forge",
+      "sha256": "252f22b6bc3e26531dd8a3c1a184e10933c747b08c6670b65e8ddeb477a41ddb",
+      "tokens": 1218
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "fb46017f71c3e952477bacf28b5e441a72ca20394451cfcf76b7b16df8a54fdf",
+      "tokens": 1586
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "platform": "forge",
+      "sha256": "5b31e421587bb2e804bf4597df2044365900fff6621f1d6db718e188907f6d65",
+      "tokens": 2368
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+      "platform": "neoforge",
+      "sha256": "63eff92035662fd6d3c764c0d0527001a8383ab40fd74ae7f33d10ffa2e74b97",
+      "tokens": 2614
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java",
+      "platform": "forge",
+      "sha256": "3406aa4dc9a2e004ba1966ee520eef297f8dfdf99b01dac08073ea95d462b592",
+      "tokens": 333
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidToolTarget.java",
+      "platform": "neoforge",
+      "sha256": "3cd3e543506b6c38cd1f672023e4efb735c4f547d8472c678c0456887110bc8c",
+      "tokens": 337
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "forge",
+      "sha256": "7e2845689b3649198a83686a41a276fca769c09a398c434387e2cf4dcfb86acd",
+      "tokens": 335
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "neoforge",
+      "sha256": "dfe256632e7d85d09ee4dd18a6430538d97f96297a8c01824ce5f78be75ed586",
+      "tokens": 339
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "platform": "forge",
+      "sha256": "3e40023cd9470b790c965c52b563f60e56a55599f81781d38faa0df360411100",
+      "tokens": 591
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "platform": "neoforge",
+      "sha256": "deb4932479bf80a340f1f4b8c3e9d172c521f4ac211fe7603188f7e207f4ca72",
+      "tokens": 631
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/StorageBlockTooltips.java",
+      "platform": "forge",
+      "sha256": "3f555010bbac28b90951ce6fa423767ef5548ce0d441aa39da4c555de1fac2a6",
+      "tokens": 849
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/StorageBlockTooltips.java",
+      "platform": "neoforge",
+      "sha256": "a4ecd088373d4610072703fb0757c5077d77d68af95d744aee12425803b2dc5f",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "platform": "forge",
+      "sha256": "fa6e4af027d31e5318c1d7edd87fa9e2cbfa3dc7726590f25c9ee016931e8706",
+      "tokens": 1365
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "platform": "neoforge",
+      "sha256": "33ed4f56ed9eff1fa043e3aa67d125624789dddd3eb9a869b67569f705164023",
+      "tokens": 1396
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "platform": "forge",
+      "sha256": "8fd56a43234615b969fe1c6eeb849b7b467e73275d5551722f0d996b57ff07a0",
+      "tokens": 1103
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "platform": "neoforge",
+      "sha256": "0c0c75b682bef1d4e60984d359472fefbdfd176e22e95613c11809f624555d7d",
+      "tokens": 1144
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "forge",
+      "sha256": "1e56643d56f1b97298e921ad0208a383f5d71a912e13bf561a39e12c98136542",
+      "tokens": 854
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "neoforge",
+      "sha256": "3ca8f35fe63fb6c3aa5d6aebbe1fc8001d4400a8daa9358c8174b890ce6c4432",
+      "tokens": 856
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "platform": "forge",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "tokens": 462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "platform": "neoforge",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "tokens": 462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "forge",
+      "sha256": "0fa7cc2dc4d14b55437cc03470258ce244c4e4f1b71bc83701ae81ac9a96dd38",
+      "tokens": 3106
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "neoforge",
+      "sha256": "c0c984600dcb0f1c21b815a4380dbf0ae611a09d07abc90f6517bf95271cc0a4",
+      "tokens": 2793
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "forge",
+      "sha256": "2bb4f27bd51fc1d2b2bbc3bea19dec63f54f9919cd3828373a38ce354c719249",
+      "tokens": 360
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorPlungerFluid.java",
+      "platform": "neoforge",
+      "sha256": "c44b2be441c5e1dee11d8bddf347168365cfe8f348435b5c9f8b403b3884b7b3",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "forge",
+      "sha256": "8ad7a5ae4577833e37929f86f4a118d4601b1b989c1ff69b3963d93fa6e7d913",
+      "tokens": 1699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "neoforge",
+      "sha256": "7ed36804a194579cf48e62db341b75c16f07ef0c842faca627043db39a61def6",
+      "tokens": 1148
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "platform": "forge",
+      "sha256": "1481e226e7157933aab05cb646e33143472a55de15a02b3b6ebc2a99267ed9da",
+      "tokens": 1983
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MultiblockRecipePack.java",
+      "platform": "neoforge",
+      "sha256": "d5f0aec6229070183a184a013b3c80948882bd5a5a2987be803823161eb1a2a4",
+      "tokens": 2140
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "platform": "forge",
+      "sha256": "31d21a0afc5d0ee992fe66c96ecbdb79d13e66353e9868c5b775eda979039a8a",
+      "tokens": 4412
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeIngredients.java",
+      "platform": "neoforge",
+      "sha256": "8dbc7d40daed7fd351d4eb21069270d1ad261e46910849f83ecd9eeb4a3f098e",
+      "tokens": 4321
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "platform": "forge",
+      "sha256": "73651d86f78bd1bd922fb766d3468e3c7887dc1e5454ca4e37408e560d088bff",
+      "tokens": 4156
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "platform": "neoforge",
+      "sha256": "8025388a5f973c8943228de00ed6cc43f1e7208a3ca38cd5c3a09e796bb73dcb",
+      "tokens": 4573
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "platform": "forge",
+      "sha256": "ff4b55eaa93cd0709698c8258ee8f536411a00e3ae844a491361450b2df8d54a",
+      "tokens": 706
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "platform": "neoforge",
+      "sha256": "d9b58870f018559281f83125a0651892c7b2d155b545e8c6ef4911cf861c6c39",
+      "tokens": 756
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "platform": "forge",
+      "sha256": "944a1df655f50d8519c5cfc91945e03fb717724939eab44b8fa96d9979c97984",
+      "tokens": 745
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingTools.java",
+      "platform": "neoforge",
+      "sha256": "37159b5c6a8c6b68e0b43f900224dd53406f4d8635dbf0719a0dcfdb5b2e21f6",
+      "tokens": 764
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "platform": "forge",
+      "sha256": "1261b3386c1d0052f3d31d86c327ac54676bf8d3957874c5d9af5fc540bb95b6",
+      "tokens": 2040
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "platform": "neoforge",
+      "sha256": "ba6ef2706bf26810dc7544d97efa9a40791a2609449dd536e8cd749938c6fff2",
+      "tokens": 2101
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingMaterialForms.java",
+      "platform": "forge",
+      "sha256": "114c36d96dad01c381b87c654dc101efea3b1fd4b3e08968ab20344c54e17f3f",
+      "tokens": 2642
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/recipe/CraftingMaterialForms.java",
+      "platform": "neoforge",
+      "sha256": "c302430f2241dab63252b4b460dac86d3aa9404e75935ec48d0bf050c5627786",
+      "tokens": 2663
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "forge",
+      "sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+      "tokens": 1598
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "neoforge",
+      "sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+      "tokens": 988
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "forge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "neoforge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "platform": "forge",
+      "sha256": "8e94ccf36e873c166969b4a63dc21762a9583331fc7dd6003b075c419308bfad",
+      "tokens": 177
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "platform": "neoforge",
+      "sha256": "9dd73377fc81f8cb3507bfdf4fb08a0010a4ea4ada3ba6d0acabba588e6d8c8b",
+      "tokens": 190
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "forge",
+      "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+      "tokens": 1504
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "neoforge",
+      "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+      "tokens": 1527
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlockEntity.class",
+        "sha256": "d44150d4c0a5ef2925e96c1fc4f26d86fbec42aaa5e64d024bd776078fc4350f",
+        "bytes": 5340
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/CapabilityProvider.class",
+        "sha256": "91d7ff7fd801cbbd2f2db9da73b522660a9f449aca0a5c6ff7b90155116d483b",
+        "bytes": 7480
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilitySerializable.class",
+        "sha256": "0215d540d077e620685c04df41d1df8b68d0fcf34c1356a683da22394fcb3aad",
+        "bytes": 470
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProvider.class",
+        "sha256": "b14d3946e0166f56834b57dce27d349be75df89da57f2270613d0c41daaf585b",
+        "bytes": 1386
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProviderImpl.class",
+        "sha256": "5447d66c0b1b85f0f1717c0fce3abde948cce9a83b412a203ada6f45b74f3cdc",
+        "bytes": 1069
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/util/INBTSerializable.class",
+        "sha256": "9733c3c98b59df9f9cf780adc0edccd4cf11921061fdba03e2b4e7f479605766",
+        "bytes": 351
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "bytes": 14908,
+        "extracted": "work/tank-tools-audit-20261021/neo-BlockEntity.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java",
+        "sha256": "611205fdc0afec68787b55c499800eabf87c44a260667989c3a61b02454b9c1a",
+        "bytes": 4674,
+        "extracted": "work/tank-tools-audit-20261021/neo-IBlockEntityExtension.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "output": "work/tank-tools-audit-20261021/forge-BlockEntity.javap.txt",
+        "sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.extensions.IForgeBlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlockEntity.class",
+        "output": "work/tank-tools-audit-20261021/forge-IForgeBlockEntity.javap.txt",
+        "sha256": "fc3335021429e8ef5450d96d82875aea19d44fdff01a71d409af76546f0507c0",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.CapabilityProvider",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/CapabilityProvider.class",
+        "output": "work/tank-tools-audit-20261021/forge-CapabilityProvider.javap.txt",
+        "sha256": "bbc91403687e84cd1265ae0d2f451b326c630ecff35a002cc9ae314d91711689",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilitySerializable",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilitySerializable.class",
+        "output": "work/tank-tools-audit-20261021/forge-ICapabilitySerializable.javap.txt",
+        "sha256": "09936f3a7e237f811047a2673cedbd06b3e905d2360dae2dd3395fddf1938457",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilityProvider",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProvider.class",
+        "output": "work/tank-tools-audit-20261021/forge-ICapabilityProvider.javap.txt",
+        "sha256": "83c687b9d569cee0b13991715b844de4ca0da49c494b4f895d9e88ad329371f4",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.capabilities.ICapabilityProviderImpl",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/capabilities/ICapabilityProviderImpl.class",
+        "output": "work/tank-tools-audit-20261021/forge-ICapabilityProviderImpl.javap.txt",
+        "sha256": "4531f19b7fa36db2fde60e5ef21cc172d04dd98c9860f4cd25bcb9ce1353058c",
+        "kind": "Read-only javap, no target initialization/compilation."
+      },
+      {
+        "class": "net.minecraftforge.common.util.INBTSerializable",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/util/INBTSerializable.class",
+        "output": "work/tank-tools-audit-20261021/forge-INBTSerializable.javap.txt",
+        "sha256": "d569c6f102318d765782bffa0d0f1269f9a72f01fa6f828d12bda3d00f8bc9d1",
+        "kind": "Read-only javap, no target initialization/compilation."
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "18ee675d19a42f134e83fdd8da8804c05afc4a64",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalTankTooltipData.java": {
+        "before_raw_sha256": "8364eba8c0769998d44dec8421b47030a5ab801d72de11d0d552173cb51f5d28",
+        "after_raw_sha256": "bcdfa1fdb786814e7676b58ff9b3748f2b073b4a7bb5064d933604f0880193dc",
+        "local_renames": {
+          "i": "digitIndex"
+        },
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 214,
+            "execution_sha256": "93a1338bc5d261dcfd2f6a237e416cc64743fdeaacbe8cf6fce4c22b30baa22a",
+            "before_lines": 30,
+            "after_lines": 34,
+            "before_max_line": 103,
+            "after_max_line": 103
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java": {
+        "before_raw_sha256": "a23c3cc9c22797eb7c53d19a94078c9399d78cdde647e9670b127ec2c2944f4d",
+        "after_raw_sha256": "0236337aa36866ef8a4f619db0d074a2cf7ac8f736865bf66af82ae05a97ab10",
+        "local_renames": {},
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 591,
+            "execution_sha256": "774f7b69dbe4ad4dbb434db1d32f11020132fd8f59b4bf733b1711d6637f70d2",
+            "before_lines": 55,
+            "after_lines": 60,
+            "before_max_line": 123,
+            "after_max_line": 125
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 631,
+            "execution_sha256": "164e11269baf5a369ccf6f26312fa858bc2fdb556509a6f352b9aa87585d27ca",
+            "before_lines": 55,
+            "after_lines": 63,
+            "before_max_line": 204,
+            "after_max_line": 125
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java": {
+        "before_raw_sha256": "c7fa70dc599accfd12f3c8f50383d968ba004b252e0f628f781b7605e7a7ac04",
+        "after_raw_sha256": "c6ddc3970960a210507638e51f40f6f7fe060e40f2deedc2cf3f0d514be26bed",
+        "local_renames": {},
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1103,
+            "execution_sha256": "bd74f387a7d9b68516d8431fb31138dd29195ac4468a2860fb907280aa1a6a30",
+            "before_lines": 109,
+            "after_lines": 118,
+            "before_max_line": 183,
+            "after_max_line": 146
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1144,
+            "execution_sha256": "8388be9679e3ab4ea6918a62dbb5c4b9d9367d12ed48672144b8dda22d62e04e",
+            "before_lines": 111,
+            "after_lines": 120,
+            "before_max_line": 183,
+            "after_max_line": 146
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java": {
+        "before_raw_sha256": "2d916f6a83faa5984a82c47b75a11aa6b124c5c349315bc1c0d61508076754e6",
+        "after_raw_sha256": "4ca1ed1c365436bb51003ab26480849485d4b798e8213b02568ec641fd96b3cf",
+        "local_renames": {
+          "b": "bounds"
+        },
+        "comment_corrections": [
+          [
+            "/** A material-defined face attachment: funnel only fills; tap/nozzle only drain their phase. */",
+            "/** Material-defined attachment; explicit source tool access precedes ordinary fluid capabilities. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2368,
+            "execution_sha256": "9ff75529dc07e138bc9a8c0d60982f3b0a3a70c77648168f17de92676fedd0e6",
+            "before_lines": 135,
+            "after_lines": 224,
+            "before_max_line": 222,
+            "after_max_line": 150
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2614,
+            "execution_sha256": "d147d900708acc360ba5444b1b5419d04211c4d2a8f39d078652d8aedf058781",
+            "before_lines": 139,
+            "after_lines": 247,
+            "before_max_line": 487,
+            "after_max_line": 150
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, digitIndex and bounds local bindings, one attachment-role comment; no gameplay change."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "recipes": {
+    "count": 25,
+    "rows": [
+      {
+        "id": 17001,
+        "path": "wood_tank_main_valve",
+        "pattern": " R |rMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:wood_wall",
+          "R": "mat:ring@Lead",
+          "r": "item:gt6ce:tool_soft_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:wood_wall",
+          "R": "mat:ring@Lead",
+          "r": "item:gt6ce:tool_soft_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.WoodTreated",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "3064dc6d28c50ebf52c651364e48b3f109d08d23ffe7d93bac6aeba42ea11fe4"
+      },
+      {
+        "id": 17002,
+        "path": "small_stainless_steel_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:tank_wall",
+          "R": "mat:ring@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:tank_wall",
+          "R": "mat:ring@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.StainlessSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "51c6f9ee9d4864d623b0dfe76755e3c1a0c7320bedb9ed1e0eb1cb835ec8032e"
+      },
+      {
+        "id": 17003,
+        "path": "small_tungstensteel_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:tungstensteel_wall",
+          "R": "mat:ring@TungstenSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:tungstensteel_wall",
+          "R": "mat:ring@Tungstensteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.TungstenSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "e4a6ee87c517cbe9a68362cf76ce972732263a2c6b415eb9e45187932be1d6e5"
+      },
+      {
+        "id": 17004,
+        "path": "small_tungsten_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:tungsten_wall",
+          "R": "mat:ring@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:tungsten_wall",
+          "R": "mat:ring@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "ANY.W",
+        "any_w_group_not_preserved": true,
+        "group_symbol": "R",
+        "original_row_sha256": "3b476ab04750b5428e9857293e63422f8d82618fee4d8452b61e88c0ea6d1529"
+      },
+      {
+        "id": 17005,
+        "path": "small_adamantium_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:adamantium_wall",
+          "R": "mat:ring@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:adamantium_wall",
+          "R": "mat:ring@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ad",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "bcf697500ca10f300d49318f25a1f2422c007fdd9c3b04ed81c6055cd01fe1d7"
+      },
+      {
+        "id": 17006,
+        "path": "small_titanium_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:titanium_wall",
+          "R": "mat:ring@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:titanium_wall",
+          "R": "mat:ring@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ti",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "e30a757d1f9089b6794c6790adefceb03b92cab9d6e7355d16f107bb6da0191e"
+      },
+      {
+        "id": 17007,
+        "path": "small_invar_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:invar_wall",
+          "R": "mat:ring@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:invar_wall",
+          "R": "mat:ring@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Invar",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "ef573ef707164731c2d86cf16eee47d8051bef62ddf9eab21c7f1cac7e1ea16b"
+      },
+      {
+        "id": 17022,
+        "path": "small_dense_stainless_steel_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:tank_wall_dense",
+          "R": "mat:ring@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:tank_wall_dense",
+          "R": "mat:ring@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.StainlessSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "94d5bd03410fb992ff1891591977479d4db7dbec9fc4bd04c1f4e5123a8c0b5f"
+      },
+      {
+        "id": 17023,
+        "path": "small_dense_tungstensteel_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:implosion_compressor_wall",
+          "R": "mat:ring@TungstenSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:implosion_compressor_wall",
+          "R": "mat:ring@Tungstensteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.TungstenSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "deaaddd9cae6bbb497fd47ecd53bca018a831286f5bbc56550175ceb1b8555de"
+      },
+      {
+        "id": 17024,
+        "path": "small_dense_tungsten_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:dense_tungsten_wall",
+          "R": "mat:ring@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:dense_tungsten_wall",
+          "R": "mat:ring@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "ANY.W",
+        "any_w_group_not_preserved": true,
+        "group_symbol": "R",
+        "original_row_sha256": "e74117f4a0cd9f5ab770ab587db49f725a9a1d57b9dc2f9b44bfff60e3335bff"
+      },
+      {
+        "id": 17025,
+        "path": "small_dense_adamantium_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:dense_adamantium_wall",
+          "R": "mat:ring@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:dense_adamantium_wall",
+          "R": "mat:ring@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ad",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "fa2b9882c9e3852086e7dc39e77da236488753599003429fca8a7b65e100293d"
+      },
+      {
+        "id": 17026,
+        "path": "small_dense_titanium_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:dense_titanium_wall",
+          "R": "mat:ring@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:dense_titanium_wall",
+          "R": "mat:ring@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ti",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "58129d1d4b2bdf297f75c02313b27c002bd24fa3418633466e6cf2eac8c8f3f0"
+      },
+      {
+        "id": 17027,
+        "path": "small_dense_invar_tank_main_valve",
+        "pattern": " R |hMs| R ",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:dense_invar_wall",
+          "R": "mat:ring@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:dense_invar_wall",
+          "R": "mat:ring@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Invar",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "09c77681fb129a64c803519e5b447741c6f28efe751d77e2bb7a189c9b2c6e32"
+      },
+      {
+        "id": 17042,
+        "path": "large_stainless_steel_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_stainless_steel_tank_main_valve",
+          "P": "mat:plate@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_stainless_steel_tank_main_valve",
+          "P": "mat:plate@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.StainlessSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "06864908669b3713f1d765feaf5d1e9ea1168b00d362250b025694649ac5577d"
+      },
+      {
+        "id": 17043,
+        "path": "large_tungstensteel_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_tungstensteel_tank_main_valve",
+          "P": "mat:plate@TungstenSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_tungstensteel_tank_main_valve",
+          "P": "mat:plate@Tungstensteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.TungstenSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "12d94a7dff2016763a732a3c2254edd1b3d9b86180c48c2061f140487373aa78"
+      },
+      {
+        "id": 17044,
+        "path": "large_tungsten_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_tungsten_tank_main_valve",
+          "P": "mat:plate@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_tungsten_tank_main_valve",
+          "P": "mat:plate@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "ANY.W",
+        "any_w_group_not_preserved": true,
+        "group_symbol": "P",
+        "original_row_sha256": "59c8f06cf5c76d7bc58d8a362f9a43eb05d10bcd8135d7a7e70dea04b518ef54"
+      },
+      {
+        "id": 17045,
+        "path": "large_adamantium_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_adamantium_tank_main_valve",
+          "P": "mat:plate@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_adamantium_tank_main_valve",
+          "P": "mat:plate@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ad",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "93f8eee8ae4beffd7f1c7a2792c24a68ccb79ed53abb770e453a1e62e3feaa5b"
+      },
+      {
+        "id": 17046,
+        "path": "large_titanium_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_titanium_tank_main_valve",
+          "P": "mat:plate@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_titanium_tank_main_valve",
+          "P": "mat:plate@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ti",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "7ff0a2b40e42b9df6c4f269a23bebe2338aa741cc2ead59118915ca489a3c6ce"
+      },
+      {
+        "id": 17047,
+        "path": "large_invar_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_invar_tank_main_valve",
+          "P": "mat:plate@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_invar_tank_main_valve",
+          "P": "mat:plate@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Invar",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "5c7e6331634327521ef3a6711fc1971c723c65cc7b696c909ecf63a6be16e2f2"
+      },
+      {
+        "id": 17062,
+        "path": "large_dense_stainless_steel_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_stainless_steel_tank_main_valve",
+          "P": "mat:plateDense@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_stainless_steel_tank_main_valve",
+          "P": "mat:plateDense@StainlessSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.StainlessSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "6d3bdae8069600d16197673600b5eda56af4c535b6b7d183e211b6ccfcfd2d5a"
+      },
+      {
+        "id": 17063,
+        "path": "large_dense_tungstensteel_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_tungstensteel_tank_main_valve",
+          "P": "mat:plateDense@TungstenSteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_tungstensteel_tank_main_valve",
+          "P": "mat:plateDense@Tungstensteel",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.TungstenSteel",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "fbe5d25c13b38c884a6e73ec71f70a5a123261ccfcd2ec483e93c13bc3eb6a6e"
+      },
+      {
+        "id": 17064,
+        "path": "large_dense_tungsten_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_tungsten_tank_main_valve",
+          "P": "mat:plateDense@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_tungsten_tank_main_valve",
+          "P": "mat:plateDense@Tungsten",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "ANY.W",
+        "any_w_group_not_preserved": true,
+        "group_symbol": "P",
+        "original_row_sha256": "b2ba242f3e34ae2cd085fc9f3575847b56506fe1494e41bb7f9e02e92e67748b"
+      },
+      {
+        "id": 17065,
+        "path": "large_dense_adamantium_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_adamantium_tank_main_valve",
+          "P": "mat:plateDense@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_adamantium_tank_main_valve",
+          "P": "mat:plateDense@Adamantium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ad",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "67663cc4f1d1d129bf4eca9b58eda73efda5c612e883297937c429cffa8d4b43"
+      },
+      {
+        "id": 17066,
+        "path": "large_dense_titanium_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_titanium_tank_main_valve",
+          "P": "mat:plateDense@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_titanium_tank_main_valve",
+          "P": "mat:plateDense@Titanium",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Ti",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "bb5b4d4d0c3eda4b3d6c085c6e8d4119a6ef7fbfb93a9db8867ac5f2ee3d7552"
+      },
+      {
+        "id": 17067,
+        "path": "large_dense_invar_tank_main_valve",
+        "pattern": "PPP|hMs|PPP",
+        "original_keys_after_representative_name_mapping": {
+          "M": "item:gt6ce:small_dense_invar_tank_main_valve",
+          "P": "mat:plateDense@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "current_declared_keys": {
+          "M": "item:gt6ce:small_dense_invar_tank_main_valve",
+          "P": "mat:plateDense@Invar",
+          "h": "item:gt6ce:tool_hammer",
+          "s": "item:gt6ce:tool_saw"
+        },
+        "pattern_and_mapped_keys_equal": true,
+        "original_material_token": "MT.Invar",
+        "any_w_group_not_preserved": false,
+        "group_symbol": null,
+        "original_row_sha256": "60e875aa6559429529f4b233e15ac10516ae657388271813049095e2b69734a5"
+      }
+    ],
+    "any_w_rows": [
+      17004,
+      17024,
+      17044,
+      17064
+    ],
+    "scope": "Declared patterns and keys after representative/case name mapping only. ANY.W is deliberately recorded as a group gap, not accepted as equal. No final recipe pack, tag membership, tool durability or survival crafting execution."
+  },
+  "language_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/lang/en_us.json",
+      "sha256": "58c764c33ef8703696c821c66de96a714b0b53edc6b955bae06bb4587548c671",
+      "scope": "Six tank structure keys only, not full-language acceptance."
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/lang/zh_cn.json",
+      "sha256": "2e364ae51cf9ea5dab82b0bece1d2600e1490e3bf83e7e38d889fd8953105b12",
+      "scope": "Six tank structure keys only, not full-language acceptance."
+    },
+    {
+      "path": "C:/Dev/GregTech_zh_cn.lang",
+      "sha256": "0e5b3906712020b71c9c5718319bbf3fd90b002d79d25614f1bfcaf3c8e887c0",
+      "scope": "User-specified original Chinese reference, six tank structure keys."
+    }
+  ],
+  "localized_structure_keys": [
+    {
+      "key": "gt.tooltip.multiblock.tank3x3x3.1",
+      "english_equal": true,
+      "chinese_equal": true
+    },
+    {
+      "key": "gt.tooltip.multiblock.tank3x3x3.2",
+      "english_equal": true,
+      "chinese_equal": true
+    },
+    {
+      "key": "gt.tooltip.multiblock.tank3x3x3.3",
+      "english_equal": true,
+      "chinese_equal": true
+    },
+    {
+      "key": "gt.tooltip.multiblock.tank5x5x5.1",
+      "english_equal": true,
+      "chinese_equal": true
+    },
+    {
+      "key": "gt.tooltip.multiblock.tank5x5x5.2",
+      "english_equal": true,
+      "chinese_equal": true
+    },
+    {
+      "key": "gt.tooltip.multiblock.tank5x5x5.3",
+      "english_equal": true,
+      "chinese_equal": true
+    }
+  ],
+  "finite_source_witnesses": {
+    "kind": "Source branches and declared recipe/translation comparison, no target initialization or world interaction.",
+    "thermometer": {
+      "case": "Formed17007 Invar tank, stored declared373K steam; click its bound FLUID_IO wall.",
+      "original_kelvin": 373,
+      "current_wall_kelvin": 0,
+      "current_main_kelvin": 373,
+      "chain": "Original part forwards to owner thermometer; current item dispatch sees ITileEntityCrucible before tank type and the noncrucible port getter returns0.",
+      "limits": "No displayed screenshot or real packet/gameplay acceptance. Quicksilver thermometer remains reusable; no invented100-damage cost."
+    },
+    "plunger": {
+      "case": "Formed tank with2000L water, ordinary successful noncreative tool request.",
+      "original_drained": 1000,
+      "forge_drained": 0,
+      "neo_drained": 1000,
+      "original_raw_tool_return": 1000,
+      "original_cost_factor": 100,
+      "original_requested_damage": 10,
+      "neo_requested_damage": 100,
+      "limits": "Quantity extension to251 is up to1000, not the drill full-tank contract. Requested costs precede material/creative/unbreaking effects."
+    },
+    "manual_attachment_extension": {
+      "case": "Unformed main valve with room, offer1000L water via funnel or request existing1000L via tap.",
+      "original_funnel_fill": 1000,
+      "current_funnel_fill": 0,
+      "original_tap_drain": 1000,
+      "current_tap_drain": 0,
+      "limits": "Main valve only; original parts already have formation checks. Preserve modern stale-handle/loaded/structure protections."
+    },
+    "positive_inspection": [
+      "Actual block appendHoverText invokes shared long-capacity tooltip reader.",
+      "Original contentcap itself has the trailing L) form; do not invent a port-only unmatched-parenthesis regression.",
+      "Jade plugin registers server BlockEntity and client Block consumers; controller implements StructureController through port-owner interface.",
+      "Item data getter and ordinary fluid-capability row exist; no claim all Jade amounts/visuals or all original tooltip layers accepted."
+    ],
+    "remaining": [
+      "Full final recipe pack/tag enumeration, actual survival crafting, ANY ingredient additions from other data packs, model/tint/cover visuals, all attachment phase/acid policies, disk restart and full project audit."
+    ]
+  },
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, build or push.",
+    "Read-only native javap and finite source evidence do not prove gameplay/client or complete recipe acceptance.",
+    "The full original-feature audit and source readability objective remain active."
+  ],
+  "previous_goal_turn": "Progress: committed18ee675d1 with fire/hazard/flow evidence and three source readability improvements.",
+  "root_revalidation": {
+    "kind": "Current input/native/language hashes, actual ancestry and consumer branches, complete selected execution streams and unnormalized literal positions, declared recipe rows and added document links.",
+    "original_sources": 22,
+    "current_sources": 52,
+    "shared_platform_views": 64,
+    "readability_files": 4,
+    "readability_execution_views": 7,
+    "native_artifacts": 2,
+    "native_entries": 9,
+    "readonly_javap_views": 7,
+    "declared_recipe_rows": 25,
+    "localized_structure_keys": 6,
+    "ledger_contiguous": [
+      1,
+      267
+    ],
+    "new_or_added_local_links": 36,
+    "protected_materials_unchanged": true,
+    "raw_literal_positions": [
+      {
+        "source": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalTankTooltipData.java",
+        "platform": "core",
+        "count": 18,
+        "ordered_position_sha256": "f29c194e7c972fd29ab7a4aff889c38d08b65bfeac94c4bdd260144b12de7e6d"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+        "platform": "forge",
+        "count": 25,
+        "ordered_position_sha256": "a245d8b979f07d4592fdeb5f4621688d3c2a20262d9e2e16a3cb5d77063d0373"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+        "platform": "neoforge",
+        "count": 25,
+        "ordered_position_sha256": "94817f2a62c892f5d845aeed1f9aa823adf124816711a70f62d4cc687756ceab"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+        "platform": "forge",
+        "count": 61,
+        "ordered_position_sha256": "4543744715a3039cafcfd37979aa700a8abf61d2f17f16b1a7056f99ccebecee"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+        "platform": "neoforge",
+        "count": 61,
+        "ordered_position_sha256": "d2121efc46219345758cc362e1f24e178934f477bf4da9617f9bb07b3e7b91cc"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+        "platform": "forge",
+        "count": 52,
+        "ordered_position_sha256": "0d2b006add33b77c8d3b93d77fb816b2399b1f082b4985a4420da92ece93e5b1"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/FluidAttachmentBlock.java",
+        "platform": "neoforge",
+        "count": 52,
+        "ordered_position_sha256": "3936f5d72f181a4f544eb0312e8efe1b2bd28dce365c1785dafbf761cd42d1ad"
+      }
+    ],
+    "member_names_excluded_from_normalization": true,
+    "target_execution_build_or_tests": false
+  }
+}

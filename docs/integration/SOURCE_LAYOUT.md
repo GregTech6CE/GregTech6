@@ -12,6 +12,8 @@
 
 储罐火属性需分别追`TankControllerBlock`主阀与`MultiblockPortBlock`壁板；`OriginalMultiblockPartData`只给结构件的火数值。`FluidHazards`是依赖注册表的原生查询，`TankFlowRules`仅委托core方向公式，不能用它证明所有实际流体物性相同，见[危害与输出专题](TANK_HAZARDS_AUDIT.md)。
 
+储罐制作：core `MultiblockCraftingRecipes`声明，原生 `MultiblockRecipePack`／`MachineRecipeIngredients`解析，`MaterialTagPack`／`MaterialEquivalence`给实际普通材料标签。工具看`FluidAttachmentBlock.attachedHandler`、`BehaviorThermometer`和`BehaviorPlungerFluid`，壁板的坩埚接口优先次序必须一起查。说明在`MultiblockTankTooltips`／`OriginalTankTooltipData`，Jade在`MultiblockJadeProvider`及其注册插件，见[工具／制作／说明专题](TANK_TOOLS_RECIPES_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

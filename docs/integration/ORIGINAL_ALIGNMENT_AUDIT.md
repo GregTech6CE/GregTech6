@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第七十六批核储罐危害／输出，新增木主阀火属性264与熔毁邻格政策265。行为记录至ALIGN-265，共265条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是265个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第七十七批核主阀工具／制作／说明，新增钨组制作266与壁板温度计267，并扩126／232／251／262。行为记录至ALIGN-267，共267条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是267个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -152,7 +152,7 @@
 | ALIGN-123 | 确认扫描仪缺少逐段异常隔离。 | 原版各段独立捕获后继续诊断。 | 当前本地调用链没有恢复；异常可中断扫描，未故障注入或复现崩溃，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
 | ALIGN-124 | 确认扫描缺少方块调试与可修改事件合同。 | 原版自身多方块接口提供 debug，末尾事件可改文本／费用并取消结果。 | 当前直接返回固定诊断，没有提供者／事件调用；现代扩展桥接待设计，见 [报告](SCANNER_BEHAVIOR_AUDIT.md)。 |
 | ALIGN-125 | 确认通用放大镜吞掉过滤器专属诊断。 | 原版报告物品／元数据／通配或实际流体及空名单。 | 当前只报正常／反向和强／弱即取消事件；机械臂和物流有独立路径，不算全部失效，见 [报告](CROP_MAGNIFIER_AUDIT.md)。 |
-| ALIGN-126 | 确认部分面板／库存工具损耗未遵循返回成本。 | 原版按目标返回 ×100/10000 向上取整，操作成本各异。 | 当前放大镜不扣、配置固定 1；大容量存储三种模式工具已在 2026-10-20 按原返回 10000 换算修复，单块换热器cold0／hot1000的可达专用入口请求10／1已扩围，通用冷罐拦截另列221；见[换热器](HEAT_EXCHANGER_AUDIT.md)。其余入口仍待接齐，不应全局乘 100；见[面板报告](CROP_MAGNIFIER_AUDIT.md)和[库存报告](MASS_STORAGE_CONTROL_AUDIT.md)。物流覆盖板螺丝刀／剪线钳／软锤固定1、放大镜0也已扩围，原普通GT工具请求100／10／100／1，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。物流线成功连接／断开同样原返回10000、普通剪线钳请求100，而两端当前请求1，见[客户端](LOGISTICS_CLIENT_AUDIT.md)。 |
+| ALIGN-126 | 确认部分面板／库存工具损耗未遵循返回成本。 | 原版按目标返回 ×100/10000 向上取整，操作成本各异。 | 当前放大镜不扣、配置固定 1；大容量存储三种模式工具已在 2026-10-20 按原返回 10000 换算修复，单块换热器cold0／hot1000的可达专用入口请求10／1已扩围，通用冷罐拦截另列221；见[换热器](HEAT_EXCHANGER_AUDIT.md)。其余入口仍待接齐，不应全局乘 100；见[面板报告](CROP_MAGNIFIER_AUDIT.md)和[库存报告](MASS_STORAGE_CONTROL_AUDIT.md)。物流覆盖板螺丝刀／剪线钳／软锤固定1、放大镜0也已扩围，原普通GT工具请求100／10／100／1，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。物流线成功连接／断开同样原返回10000、普通剪线钳请求100，而两端当前请求1，见[客户端](LOGISTICS_CLIENT_AUDIT.md)。储罐专用排液返回至多1000，普通排液器因子100时请求10，当前Neo通用回退请求100；Forge本实例无成功动作，不套100，见[储罐工具](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-127 | 确认易燃起火器少一次普通概率判定。 | 原版增强判定失败后仍试基础概率；默认组合 75.5%。 | 当前只抽一次 65%；普通 30%／低耐久 100% 已对应，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-128 | 确认一次性点火物创造消耗未豁免。 | 原版失败或有效目标处理后均检查无限物品资格。 | 当前 singleUse 直接 usedUp；多次打火机已有豁免，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
@@ -258,7 +258,7 @@
 | ALIGN-229 | 确认大型燃气涡轮可变即时输出被最大包整批与下一刻队列替代。 | 燃料不足最大批次仍可按HU/RU比达到半额门槛，当刻转换。 | 最低档256L氢=4096HU，原可当刻尝试2730RU，当前<12288不转换；凑满后仍延后发送，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-230 | 确认大型燃气涡轮拒收后的能量／燃烧政策不同。 | 原storage≥max特例在尝试后无条件回写tEnergy-max，即使NBT waste=false。 | 当前保留ruStored并停烧后续燃料；768L氢、持续拒收两刻后原HU=0／现存8192RU。保护政策不自动回退，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
 | ALIGN-231 | 确认部分大型转换器过载变为持久锁停。 | 原前100次保护清storage但不置mStopped，启动头两刻另有处理，后续破坏受配置。 | 当前首次output超限置overloaded／stopped并清pending，远程开关不能复位；满合法罐98304L可达。该分支无爆炸，不自动恢复危险行为，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。四Dynamo输入8193RU等超限也首次持久锁停，原Base11只先计数清缓存；不恢复危险效果，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。 |
-| ALIGN-232 | 确认部分能源主控的能力查询反复全扫结构。 | 原未变更checkStructure(false)用缓存，部件查询不重跑35格循环。 | 当前每次target→isStructureOk建立Map／扫35格／bind35次，稳定20查询至少700次；非TPS测量，缓存需保留现代失效保护，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针44支撑／柱也有逐tick和查询重扫，但没有涡轮的bind，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo共享35格重扫／绑定父类，同样扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器部件查询及tick重扫17格并重绑有效件，完整20次可达340次；原缓存不重跑，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996每tick与有效部件查询重建63格／认领，20次完整查询1260格，同属源次数推导，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。17999完整20查询另有880支撑与180地面检查，并重建矿物候选；仍为源次数，见[钻机](BEDROCK_DRILL_AUDIT.md)。17997完整20查询至少2480格状态读取，再建候选／绑定，逐秒路径另重复验证，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。主阀fill／drain每次重扫储罐，完整3³／5³至少26／124状态读取，20次为520／2480；内容／容量只读查询不套此结论，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。 |
+| ALIGN-232 | 确认部分能源主控的能力查询反复全扫结构。 | 原未变更checkStructure(false)用缓存，部件查询不重跑35格循环。 | 当前每次target→isStructureOk建立Map／扫35格／bind35次，稳定20查询至少700次；非TPS测量，缓存需保留现代失效保护，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针44支撑／柱也有逐tick和查询重扫，但没有涡轮的bind，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo共享35格重扫／绑定父类，同样扩围，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。大型换热器部件查询及tick重扫17格并重绑有效件，完整20次可达340次；原缓存不重跑，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996每tick与有效部件查询重建63格／认领，20次完整查询1260格，同属源次数推导，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。17999完整20查询另有880支撑与180地面检查，并重建矿物候选；仍为源次数，见[钻机](BEDROCK_DRILL_AUDIT.md)。17997完整20查询至少2480格状态读取，再建候选／绑定，逐秒路径另重复验证，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。主阀fill／drain每次重扫储罐，完整3³／5³至少26／124状态读取，20次为520／2480；内容／容量只读查询不套此结论，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。Jade主阀inspect先调用isStructureOk，也是该重扫的实际消费者，不把界面源码存在当性能验收，见[储罐说明](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-233 | 确认部分多方块未接专用结构建造与形成诊断入口。 | 原Base10把建造棒坐标／库存传到两类checkStructure2，Util可放墙认领并报告形成。 | 当前主控不是MultiblockToolTarget，普通建造棒仍复制平面；部件转发也缺目标接口。预览不替代功能，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。避雷针专用建造／形成诊断入口同样未接，预览地图没有工具消费者，见[避雷针](LIGHTNING_ROD_AUDIT.md)。四Dynamo也无专用目标接口，部件有owner仍无法转到专用建造／形成诊断，见[大型发电机](LARGE_DYNAMO_AUDIT.md)。17996也缺专用目标接口，原建造／形成诊断与Square Radius详情未接；现有预览不能替代，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。17999的建造／形成诊断与润滑油放大镜详情也缺专用目标；排液器另列251，见[钻机](BEDROCK_DRILL_AUDIT.md)。17997虽有六向扳手ToolInteractionTarget，BE仍非专用结构目标；覆盖板配置也不补Base10建造／放大镜，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。25种储罐主阀也无MultiblockToolTarget；已有结构预览和温度计分支不补专用建造／形成诊断，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。 |
 | ALIGN-234 | 确认避雷针结构只有方块身份检查，缺原认领与争用。 | 原44件支撑／每段柱都checkAndSetTarget，NOTHING仍认主并拒绝别台有效占用。 | 当前只验block／数长度，无bind；X差2的两个底座可共享15件同时通过，部件无可解析owner。未搭世界，见[避雷针](LIGHTNING_ROD_AUDIT.md)。 |
 | ALIGN-235 | 确认避雷针顶端整列空气换成天空亮度准入。 | 原逐格WD.air直到世界高度，不把透明块当空气。 | 当前canSeeSky是SKY亮度≥max；亮度15的玻璃顶条件原拒／现可过，非高度偏移，未光照实测，见[避雷针](LIGHTNING_ROD_AUDIT.md)。 |
@@ -277,7 +277,7 @@
 | ALIGN-248 | 确认17999新增未形成时主控拒电／停止主动送出门控。 | 原主控进电无结构条件，slotHas→ST.move早于工作结构检查。 | 当前doInject及tick都先要求形成；合法2048包原存／现拒，已有产物原尝试向上送／现不尝试，外部手动提取仍有。不自动撤保护，见[钻机](BEDROCK_DRILL_AUDIT.md)。 |
 | ALIGN-249 | 确认17999润滑输入缺原公开集合范围。 | 原FluidsGT.LUBRICANT名称集合可扩，FL把两种既知名称放入，填充按contains。 | 当前只接受本模组Lubricant单Fluid对象，两端实际Tank.fill消费validator；默认正常，外部附加流体为条件源例，见[钻机](BEDROCK_DRILL_AUDIT.md)。 |
 | ALIGN-250 | 确认17999运行中的石种重选池扩大。 | 原17种实注册GT石材＋原版圆石／可选深板岩。 | 当前27种实注册StoneType＋两项，共29；共同索引17原圆石／现白垩，矿物背景也受影响。现代与产品选择分开，未验初放／旧索引迁移，见[钻机](BEDROCK_DRILL_AUDIT.md)。 |
-| ALIGN-251 | 确认17999专用整罐排液缺失，通用回退两端不同。 | 原plunger→GarbageGT.trash(mTank)清整罐；2000L全清。 | 当前无专用分派，Forge自身非IFluidHandler而回退清0，Neo能力回退清1000；实际原生祖先／罐消费已追，未派发玩家点击，见[钻机](BEDROCK_DRILL_AUDIT.md)。 |
+| ALIGN-251 | 确认部分设备专用排液未接，通用回退两端不同。 | 原17999 plunger→GarbageGT.trash(mTank)清整罐；2000L全清。 | 当前无专用分派，Forge自身非IFluidHandler而回退清0，Neo能力回退清1000；实际原生祖先／罐消费已追，未派发玩家点击，见[钻机](BEDROCK_DRILL_AUDIT.md)。储罐另一个有界子情况原只清至多1000，形成且存2000L水时原1000／Forge0／Neo1000，不套钻机整罐合同，见[储罐工具](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-252 | 确认物流CPU显示未遵守宿主覆盖板停止状态。 | 原显示更新位于!mStopped条件内，停止则保持旧value／visual。 | 当前总线收集已跳过停止宿主，但独立updateDisplays／setDisplay未检查；给定8／27写value5、visual3，原旧0不变。未实际贴板，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
 | ALIGN-253 | 确认物流结构失效清CPU改变名义容量与待机成本。 | 原完整扫描虽返回失败，仍保留正确CPU计数；27通用CPU给容量186752、固定128。 | 当前失败unbind清processors，回退容量128／固定20；100000缓存的一刻99872对99980，保护政策不自动撤销，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
 | ALIGN-254 | 确认物流核心右键与过滤覆盖板检查信息缺项。 | 原核心报告电量／范围／变动成本，过滤板报告所选样本或未设置，数量0有Variable说明。 | 当前核心仅四CPU与固定EU/t，板describe仅数字优先级／数量；底层值与样本仍有，不泛化为Jade无读数，见[核心状态](LOGISTICS_CORE_STATE_AUDIT.md)及[搬运](LOGISTICS_TRANSFER_AUDIT.md)。 |
@@ -288,10 +288,12 @@
 | ALIGN-259 | 确认物流扫描缺少原万能代理节点解析。 | 原相邻默认允许ITileEntityDelegating，万能扩展器／桥返回目标实体和侧面，连接器也使用同一解析。 | 当前扫描和连线只认物理LogisticsHost，万能扩展器实际继承链无该接口；普通物品／流体能力转发已有，非整机缺失，见[物流网络](LOGISTICS_NETWORK_AUDIT.md)。 |
 | ALIGN-260 | 确认物流核心回调异常缺原局部停用边界。 | 原SERVER_TICK_PRE逐项捕获Throwable，移除回调并记错，继续其它项；不保证自动恢复。 | 当前源能力异常沿Router／核心ticker进入原生ReportedException路径，默认removeErroringBlockEntities=false；true移除方块实体，条件合同未故障注入，见[物流网络](LOGISTICS_NETWORK_AUDIT.md)。 |
 | ALIGN-261 | 确认物流CPU显示前景缺原自亮属性。 | 原四类0–10帧get(path,T)沿Glow构造链使用自身亮度240，underlay普通环境光。 | 当前共享renderer把邻块light传前景及底图，两版cutout启用LIGHTMAP；帧和图集入口实际都有，不是全部缺贴图，未暗室／光影实测，见[客户端](LOGISTICS_CLIENT_AUDIT.md)。 |
-| ALIGN-262 | 确认多方块主阀普通灌入角色与形成门控不同。 | 原普通主阀fillable=null、drainable=mTank，无形成门控；漏斗／龙头另有直达入口。 | 当前主阀和FLUID_IO共用handler，fill／drain先验结构；形成空罐1000L灌入原0现1000，失效已有1000L抽取原1000现0。保留现代失效保护，本批未改，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。 |
+| ALIGN-262 | 确认多方块主阀普通灌入角色与形成门控不同。 | 原普通主阀fillable=null、drainable=mTank，无形成门控；漏斗／龙头另有直达入口。 | 当前主阀和FLUID_IO共用handler，fill／drain先验结构；形成空罐1000L灌入原0现1000，失效已有1000L抽取原1000现0。保留现代失效保护，本批未改，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。主阀未接已有FluidToolTarget，附件漏斗／龙头回退普通能力同受形成门控；原主阀工具直达，原壁板另有形成检查，见[附件入口](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-263 | 确认多方块主阀物品携带流体，与原拆卸合同不同。 | 原物品writeItemNBT继承链不写mTank，breakBlock另trash内容；世界保存与物品保存分开。 | 当前getDrops／clone保存gt.tank，最终CoverDrops明确排除主阀而不清除，setPlacedBy读回；1000L随主阀恢复。未扩成便携桶罐都应清空，未生存／重启实测，见[储罐](MULTIBLOCK_TANK_AUDIT.md)。 |
 | ALIGN-264 | 确认木储罐主阀未接原可燃性属性。 | 17001与18001均配置150，Base07经实际Block火接口返回。 | 当前18001壁板已有150，主阀走metal工厂与原生默认表，无原显式属性；不是木壁板全缺，未实际点火，见[危害](TANK_HAZARDS_AUDIT.md)。 |
 | ALIGN-265 | 确认储罐熔毁邻格点火条件与保护政策不同。 | WD.burn(F,F)调用fire，除lava／fire后允许carpet或无碰撞格，另有GT／节点排除。 | 当前还要求已加载、空流体、空碰撞；有碰撞地毯与非空流体例子不进入放火分支。保留现代保护，不直接扩大破坏；只是放置尝试，不证明持续火焰，见[危害](TANK_HAZARDS_AUDIT.md)。 |
+| ALIGN-266 | 确认四钨主阀制作定义未保留ANY.W范围。 | 17004／24／44／64使用ANY.W的环／板／致密板，组含普通与烧结钨。 | 当前固定mat形态@Tungsten，普通标签与拼写别名未改成W组；25条图案／代表键相符不等于组范围相符，未最终注册／制作，见[制作](TANK_TOOLS_RECIPES_AUDIT.md)。 |
+| ALIGN-267 | 确认储罐壁板温度计被坩埚接口截获为0。 | 原部件将非扳手／撬棍工具转主控，储罐报告实际流体温度。 | 当前壁板先匹配ITileEntityCrucible，非坩埚getter返回0；形成殷钢储罐蒸汽例原373K、现壁板0K，主阀仍373K。源推导未游戏截图，见[工具](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
@@ -364,6 +366,8 @@
 第八批展开大型锅炉参数／布局与共用 StructureGrid，坐标缩写改成 front／controller／center 对应的明确变量名。归一化声明的形参／局部变量改名后代码及字面量一致；两类独立编译通过，未调整坐标公式和玩法。
 
 ## 下一批工作
+
+第七十七批完成25主阀制作声明／工具／说明入口核对，新增266–267，扩126／232／251／262，四源码七执行保持。继续最终标签／制作、附件物性筛选与完整模型／着色／覆盖板，再推进全部系统队列，不把六双语键或Jade入口当全客户端验收，见[专题](TANK_TOOLS_RECIPES_AUDIT.md)。
 
 第七十六批记录264–265，确认已有危害／36输入方向公式及无1000L节流；未改玩法。继续储罐真实物性／魔法材料可达性、完整工具／配方／客户端与其它系统，不把有限源分支当全面验收，见[危害专题](TANK_HAZARDS_AUDIT.md)。
 

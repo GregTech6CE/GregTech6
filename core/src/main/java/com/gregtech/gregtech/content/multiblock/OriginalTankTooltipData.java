@@ -5,9 +5,12 @@ package com.gregtech.gregtech.content.multiblock;
 import java.util.List;
 
 public final class OriginalTankTooltipData {
-    private OriginalTankTooltipData() {}
+
+    private OriginalTankTooltipData() {
+    }
+
     public static List<String> structureKeys(int size) {
-        return switch(size) {
+        return switch (size) {
             case 3 -> List.of("gt.tooltip.multiblock.tank3x3x3.1", "gt.tooltip.multiblock.tank3x3x3.2",
                     "gt.tooltip.multiblock.tank3x3x3.3");
             case 5 -> List.of("gt.tooltip.multiblock.tank5x5x5.1", "gt.tooltip.multiblock.tank5x5x5.2",
@@ -15,15 +18,16 @@ public final class OriginalTankTooltipData {
             default -> throw new IllegalArgumentException("Original tank size: " + size);
         };
     }
+
     /** Original decimal groups use underscores only when the number has at least five digits. */
     public static String formatNumber(long value) {
-        if(value > -10000 && value < 10000) return Long.toString(value);
-        String digits=Long.toString(value);
-        int first=value < 0 ? 1 : 0;
-        var result=new StringBuilder();
-        for(int i=0; i<digits.length(); i++) {
-            if(i > first && (digits.length()-i)%3==0) result.append('_');
-            result.append(digits.charAt(i));
+        if (value > -10000 && value < 10000) return Long.toString(value);
+        String digits = Long.toString(value);
+        int first = value < 0 ? 1 : 0;
+        var result = new StringBuilder();
+        for (int digitIndex = 0; digitIndex < digits.length(); digitIndex++) {
+            if (digitIndex > first && (digits.length() - digitIndex) % 3 == 0) result.append('_');
+            result.append(digits.charAt(digitIndex));
         }
         return result.toString();
     }
