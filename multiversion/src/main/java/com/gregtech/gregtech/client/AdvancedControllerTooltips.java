@@ -12,6 +12,6 @@ public final class AdvancedControllerTooltips {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.recipes"))return;
         lines.add(Component.translatable("gt.lang.structure").withStyle(ChatFormatting.AQUA).append(":"));
         for(var key:OriginalAdvancedControllerData.structureKeys(spec.machineName()))lines.add(Component.translatable(key).withStyle(ChatFormatting.WHITE));
-        BasicMachineSourceTooltips.appendDefaults(spec,lines,OriginalAdvancedControllerData.cheapOverclocking(spec.machineName()),10000,true,OriginalAdvancedControllerData.chargedEnergy(spec.machineName()));
+        BasicMachineSourceTooltips.appendDefaults(spec,lines,spec.cheapOverclocking(),spec.processingEfficiency(),true,OriginalAdvancedControllerData.chargedEnergy(spec.machineName()));
     }
 }

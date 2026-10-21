@@ -35,10 +35,6 @@ public class ImplosionCompressorControllerBlockEntity extends BasicMachineBlockE
     public static void serverTick(Level level,BlockPos pos,BlockState state,ImplosionCompressorControllerBlockEntity machine) {
         if(machine.isStructureOk()) BasicMachineBlockEntity.serverTick(level,pos,state,machine);
     }
-    @Override protected boolean usesTimeEnergy() { return true; }
-    @Override protected long inputMinimum() { return 1; }
-    @Override protected long inputMaximum() { return 16; }
-    @Override protected boolean parallelScalesDuration() { return false; }
     @Override protected boolean structureComplete() { return isStructureOk(); }
     @Override public boolean isStructureOk() {
         if(level==null || isRemoved()) return false;

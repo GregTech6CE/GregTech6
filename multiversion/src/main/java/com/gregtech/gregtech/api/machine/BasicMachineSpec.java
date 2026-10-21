@@ -1,12 +1,16 @@
 package com.gregtech.gregtech.api.machine;
 
+import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
 import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
 import com.gregtech.gregtech.api.recipe.RecipeMap;
+import com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules;
+import com.gregtech.gregtech.content.machine.OriginalBasicMachineRules;
 import com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules;
 import com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData;
+import com.gregtech.gregtech.data.BasicMachineOriginalParams;
 import com.gregtech.gregtech.data.GregTechTags;
 import com.gregtech.gregtech.data.MachineRecipeMaps;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +39,7 @@ public record BasicMachineSpec(
         long energyInMax,
         String namespace,
         MachineControllerKind controllerKind,
-        /** Parts per 10000. Built-in values come from {@link LargeMachineProcessingRules#efficiency}. */
+        /** Parts per 10000. Built-in values come from {@link #builtInProcessingEfficiency}. */
         int processingEfficiency,
         /** Constant draw while the machine is not using TU. */
         boolean constantEnergy,
@@ -53,7 +57,19 @@ public record BasicMachineSpec(
         MachineDeclaration.Target itemInputSource,
         MachineDeclaration.Target fluidInputSource,
         /** An addon called {@code energyRange}. Built-in specs stay false and keep their own limits. */
-        boolean energyRangeDeclared
+        boolean energyRangeDeclared,
+        /** Live parallel-duration rule. Not a declaration field. */
+        boolean parallelScalesDuration,
+        /** Neighbors this controller toggles. Empty leaves the six adjacent faces alone. */
+        List<EnergySource> energySources,
+        /** Skips six-face item and fluid auto-input. Not inferred from an output cell. */
+        boolean suppressSideAutoInput,
+        /**
+         * Output tanks have no finite capacity. This matches {@code sourceUnlimitedOutputs}:
+         * the thirteen original controllers and the fusion reactor. Distillation towers stay false
+         * and keep their own tank cap.
+         */
+        boolean unlimitedOutputTanks
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -79,13 +95,18 @@ public record BasicMachineSpec(
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
         structureKeys = List.copyOf(structureKeys == null ? List.of() : structureKeys);
+        energySources = List.copyOf(energySources == null ? List.of() : energySources);
         if ((itemOutputTarget != null || fluidOutputTarget != null || itemInputSource != null || fluidInputSource != null)
-                && controllerKind != MachineControllerKind.LARGE_RECIPE)
+                && controllerKind != MachineControllerKind.LARGE_RECIPE
+                && controllerKind != MachineControllerKind.MATTER)
             throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
-        rejectAutomaticFace(id, "item output", itemOutputTarget, faceConfig.itemAutoOutput());
-        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, faceConfig.fluidAutoOutput());
-        rejectAutomaticFace(id, "item input", itemInputSource, faceConfig.itemAutoInput());
-        rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
+        // Built-in large machines keep the automatic face for the tooltip and also name a cell.
+        if (!"gt6ce".equals(namespace)) {
+            rejectAutomaticFace(id, "item output", itemOutputTarget, faceConfig.itemAutoOutput());
+            rejectAutomaticFace(id, "fluid output", fluidOutputTarget, faceConfig.fluidAutoOutput());
+            rejectAutomaticFace(id, "item input", itemInputSource, faceConfig.itemAutoInput());
+            rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
+        }
     }
 
     private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
@@ -101,11 +122,16 @@ public record BasicMachineSpec(
         this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
                 faceConfig, constructionMaterials, recipeMap, parallelLimit, energyInMin, energyInMax,
                 "gt6ce", MachineControllerKind.builtIn(machineName),
-                LargeMachineProcessingRules.efficiency(machineName),
-                LargeMachineProcessingRules.constantEnergy(false, machineName),
+                builtInProcessingEfficiency(machineName, tier),
+                builtInConstantEnergy(machineName, tier),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
-                false, false, 0, false, false,
-                null, null, null, null, false);
+                builtInCheapOverclocking(machineName, tier, energyType), false, 0, false, false,
+                builtInOutputTarget(machineName, true), builtInOutputTarget(machineName, false),
+                null, null, false,
+                builtInParallelScalesDuration(machineName, tier, energyType),
+                builtInEnergySources(machineName),
+                builtInSuppressSideAutoInput(machineName),
+                builtInUnlimitedOutputTanks(machineName));
     }
 
     /**
@@ -130,6 +156,113 @@ public record BasicMachineSpec(
                 faceConfig, constructionMaterials, MachineRecipeMaps.byMachineName(machineName),
                 legacyParallelLimit(machineName),
                 defaultEnergyInMin(energyType, energyIn), defaultEnergyInMax(energyType, energyIn));
+    }
+
+    /**
+     * Efficiency written onto a built-in spec. Single blocks and the compact matter fabricator
+     * use the original name table. Large controllers keep {@link LargeMachineProcessingRules}.
+     */
+    public static int builtInProcessingEfficiency(String machineName, int tier) {
+        var kind = MachineControllerKind.builtIn(machineName);
+        if (kind == MachineControllerKind.BASIC || kind == MachineControllerKind.COMPACT_MATTER)
+            return OriginalBasicMachineRules.efficiency(machineName, tier);
+        return LargeMachineProcessingRules.efficiency(machineName);
+    }
+
+    /** Constant while the machine is not using TU. The TU exclusion stays in the block entity. */
+    public static boolean builtInConstantEnergy(String machineName, int tier) {
+        var kind = MachineControllerKind.builtIn(machineName);
+        if (kind == MachineControllerKind.MATTER) return false;
+        if (kind == MachineControllerKind.BASIC || kind == MachineControllerKind.COMPACT_MATTER)
+            return !OriginalBasicMachineRules.noConstantPower(machineName, tier);
+        return LargeMachineProcessingRules.constantEnergy(false, machineName);
+    }
+
+    /** Cheap overclocking without marking the value as an addon declaration. */
+    public static boolean builtInCheapOverclocking(String machineName, int tier, String energyType) {
+        var kind = MachineControllerKind.builtIn(machineName);
+        if (kind == MachineControllerKind.COMPACT_MATTER) return true;
+        if (usesLargeBuiltinProcessing(machineName, kind)) return !"TU".equals(energyType);
+        return OriginalBasicMachineRules.cheapOverclocking(machineName, tier);
+    }
+
+    /**
+     * Parallel-duration flag the block entity uses today. Large controllers, including the cryo
+     * tower, follow “not TU”. A single block uses its original row, or true when it has none.
+     */
+    public static boolean builtInParallelScalesDuration(String machineName, int tier, String energyType) {
+        var kind = MachineControllerKind.builtIn(machineName);
+        if (usesLargeBuiltinProcessing(machineName, kind)) return !"TU".equals(energyType);
+        var row = BasicMachineOriginalParams.find(machineName, tier);
+        return row == null || row.parallelDuration();
+    }
+
+    /**
+     * Controllers whose processing is the large-machine rule, including the ones whose kind is
+     * still {@link MachineControllerKind#BASIC} because they do not share a layout table.
+     */
+    private static boolean usesLargeBuiltinProcessing(String machineName, MachineControllerKind kind) {
+        return kind == MachineControllerKind.LARGE_RECIPE
+                || kind == MachineControllerKind.DISTILLATION
+                || kind == MachineControllerKind.MATTER
+                || "cryodistillationtower".equals(machineName)
+                || "cokeoven".equals(machineName)
+                || "fusionreactor".equals(machineName);
+    }
+
+    private static long[] builtInImplicitEnergyRange(String machineName, String energyType) {
+        return switch (machineName) {
+            case "distillationtower", "cryodistillationtower" -> new long[] {1, 1024};
+            case "largemassfab" -> new long[] {1, LargeMachineProcessingRules.MATTER_INPUT_MAX};
+            default -> {
+                boolean timed = "TU".equals(energyType);
+                yield new long[] {
+                        LargeMachineProcessingRules.inputMinimum(timed, "HU".equals(energyType)),
+                        LargeMachineProcessingRules.inputMaximum(timed)
+                };
+            }
+        };
+    }
+
+    private static boolean originalProcessingName(String machineName) {
+        return OriginalLargeRecipeMachineData.handles(machineName) || "largemassfab".equals(machineName);
+    }
+
+    private static MachineDeclaration.Target builtInOutputTarget(String machineName, boolean items) {
+        if (!originalProcessingName(machineName)) return null;
+        var output = OriginalLargeRecipeMachineData.output(machineName, items);
+        return new MachineDeclaration.Target(output.right(), output.up(), output.back(), receiver(output.receiverFace()));
+    }
+
+    private static BehaviorMachineDeclaration.Face receiver(OriginalLargeRecipeMachineData.Face face) {
+        return switch (face) {
+            case UP -> BehaviorMachineDeclaration.Face.TOP;
+            case DOWN -> BehaviorMachineDeclaration.Face.BOTTOM;
+            case LEFT -> BehaviorMachineDeclaration.Face.LEFT;
+            case RIGHT -> BehaviorMachineDeclaration.Face.RIGHT;
+            case FRONT -> BehaviorMachineDeclaration.Face.FRONT;
+        };
+    }
+
+    private static List<EnergySource> builtInEnergySources(String machineName) {
+        var sources = new java.util.ArrayList<EnergySource>();
+        if (originalProcessingName(machineName)) {
+            for (var source : OriginalLargeRecipeMachineData.sources(machineName))
+                sources.add(new EnergySource(source.right(), source.up(), source.back(), source.outputFace().name()));
+        }
+        if ("distillationtower".equals(machineName) || "cryodistillationtower".equals(machineName)) {
+            for (var source : OriginalAdjacentEnergyRules.TOWER_SOURCES)
+                sources.add(new EnergySource(source.right(), source.up(), source.back(), "UP"));
+        }
+        return List.copyOf(sources);
+    }
+
+    private static boolean builtInSuppressSideAutoInput(String machineName) {
+        return originalProcessingName(machineName);
+    }
+
+    private static boolean builtInUnlimitedOutputTanks(String machineName) {
+        return originalProcessingName(machineName) || "fusionreactor".equals(machineName);
     }
 
     public static int legacyParallelLimit(String machineName) {
@@ -197,7 +330,7 @@ public record BasicMachineSpec(
         public Builder energyRange(long inputMin, long inputMax) {
             energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = inputMin > 0 || inputMax > 0; return this;
         }
-        /** Display numbers for a large machine that did not declare a range. Runtime still uses the rules. */
+        /** Accepted range for a machine that did not declare one. Processing reads these numbers; the declared flag stays false. */
         public Builder implicitEnergyRange(long inputMin, long inputMax) {
             energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = false; return this;
         }
@@ -221,19 +354,63 @@ public record BasicMachineSpec(
         public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
-            return new BasicMachineSpec(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
+            var resolvedKind = kind != null ? kind : MachineControllerKind.builtIn(machineType);
+            boolean gt6ce = "gt6ce".equals(namespace);
+            String energyName = energy.getShortName();
+            long resolvedMin;
+            long resolvedMax;
+            if (energyInMin > 0) {
+                resolvedMin = energyInMin;
+                resolvedMax = energyInMax;
+            } else if (gt6ce && usesLargeBuiltinProcessing(machineType, resolvedKind)) {
+                long[] range = builtInImplicitEnergyRange(machineType, energyName);
+                resolvedMin = range[0];
+                resolvedMax = range[1];
+            } else {
+                resolvedMin = defaultEnergyInMin(energyName, energyIn);
+                resolvedMax = defaultEnergyInMax(energyName, energyIn);
+            }
+            boolean resolvedCheap = cheapOverclockingDeclared ? cheapOverclocking
+                    : gt6ce ? builtInCheapOverclocking(machineType, tier, energyName)
+                    : resolvedKind == MachineControllerKind.LARGE_RECIPE && !"TU".equals(energyName);
+            boolean resolvedConstant = constantEnergySet ? constantEnergy
+                    : gt6ce ? builtInConstantEnergy(machineType, tier)
+                    : LargeMachineProcessingRules.constantEnergy(false, machineType);
+            boolean resolvedParallel = gt6ce
+                    ? builtInParallelScalesDuration(machineType, tier, energyName)
+                    : resolvedKind == MachineControllerKind.LARGE_RECIPE ? !"TU".equals(energyName) : true;
+            var resolvedItemOut = itemOutputTarget;
+            var resolvedFluidOut = fluidOutputTarget;
+            if (gt6ce && resolvedItemOut == null && resolvedFluidOut == null
+                    && itemInputSource == null && fluidInputSource == null) {
+                resolvedItemOut = builtInOutputTarget(machineType, true);
+                resolvedFluidOut = builtInOutputTarget(machineType, false);
+            }
+            return new BasicMachineSpec(id, material, machineType, energyName, tier, energyIn, energyOut,
                     hardness, resistance, faces, construction, recipes, parallel,
-                    energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
-                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
-                    namespace,
-                    kind != null ? kind : MachineControllerKind.builtIn(machineType),
-                    efficiencySet ? efficiency : LargeMachineProcessingRules.efficiency(machineType),
-                    constantEnergySet ? constantEnergy : LargeMachineProcessingRules.constantEnergy(false, machineType),
+                    resolvedMin, resolvedMax,
+                    namespace, resolvedKind,
+                    efficiencySet ? efficiency : builtInProcessingEfficiency(machineType, tier),
+                    resolvedConstant,
                     structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
-                    cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove,
+                    resolvedCheap, cheapOverclockingDeclared, minimumLightAbove,
                     searchOutputTanks, exclusiveOutputs,
-                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource,
-                    energyRangeDeclared);
+                    resolvedItemOut, resolvedFluidOut, itemInputSource, fluidInputSource,
+                    energyRangeDeclared, resolvedParallel,
+                    gt6ce ? builtInEnergySources(machineType) : List.of(),
+                    gt6ce && builtInSuppressSideAutoInput(machineType),
+                    gt6ce && builtInUnlimitedOutputTanks(machineType));
+        }
+    }
+
+    /** One neighbor toggled with the controller. The face token matches the original source table. */
+    public record EnergySource(int right, int up, int back, String face) {
+        public EnergySource {
+            if (face == null) throw new IllegalArgumentException("Missing energy source face");
+            switch (face) {
+                case "UP", "DOWN", "LEFT", "RIGHT", "FRONT" -> {}
+                default -> throw new IllegalArgumentException("Unknown energy source face: " + face);
+            }
         }
     }
     public String textureFolder() { return machineName; }

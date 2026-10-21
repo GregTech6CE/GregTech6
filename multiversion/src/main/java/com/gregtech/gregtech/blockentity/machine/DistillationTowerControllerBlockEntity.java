@@ -21,20 +21,8 @@ public class DistillationTowerControllerBlockEntity extends LargeRecipeMachineBl
         super.setSpec(spec);
         for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
-    @Override protected long inputMaximum() { return 1024; }
     @Override protected List<LargeMachineLayouts.Cell> structureCells() {
         return Layout.CELLS;
-    }
-
-    @Override protected void updateAdjacentToggleableEnergySources() {
-        if (level == null || level.isClientSide || spec() == null || isRemoved()) return;
-        var front = getBlockState().getValue(net.minecraft.world.level.block.HorizontalDirectionalBlock.FACING);
-        for (var source : com.gregtech.gregtech.content.energy.OriginalAdjacentEnergyRules.TOWER_SOURCES) {
-            var pos = worldPosition.relative(front.getClockWise(), source.right()).above(source.up())
-                    .relative(front.getOpposite(), source.back());
-            if (level.hasChunkAt(pos)) com.gregtech.gregtech.api.machine.AdjacentEnergyControl.update(
-                    level.getBlockEntity(pos), spec().energyTag(), net.minecraft.core.Direction.UP, machineControl(null).enabled());
-        }
     }
     protected boolean cryogenic() {return false;}
     @Override protected void beforeMachineTick() {
