@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.block.machine;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
-import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.addon.FuelGenerator;
 import com.gregtech.gregtech.api.machine.MachineSpec;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 import com.gregtech.gregtech.blockentity.machine.FuelGeneratorBlockEntity;
@@ -36,24 +36,24 @@ public class FuelGeneratorBlock extends GTFacingMachineBlock implements EntityBl
     }
 
     private static MachineSpec spec(AddonMachines.AcceptedFuel accepted) {
-        FuelGeneratorDeclaration declaration = accepted.declaration();
-        var material = GTMaterialRegistry.get(declaration.material());
-        return new MachineSpec(declaration.id(), material.getLocalName(), material.getColor(),
-                0, 0, declaration.machineType(), 5.0F, 5.0F);
+        FuelGenerator declaration = accepted.declaration();
+        var material = GTMaterialRegistry.get(declaration.casing().material());
+        return new MachineSpec(declaration.casing().id(), material.getLocalName(), material.getColor(),
+                0, 0, declaration.casing().machineType(), 5.0F, 5.0F);
     }
 
     public AddonMachines.AcceptedFuel accepted() { return accepted; }
-    public FuelGeneratorDeclaration declaration() { return accepted.declaration(); }
+    public FuelGenerator declaration() { return accepted.declaration(); }
 
     public ResourceLocation modelId(String suffix) {
         return ResourceLocation.fromNamespaceAndPath(accepted.addonId(),
-                "block/machine/basic/" + accepted.declaration().machineType() + suffix);
+                "block/machine/basic/" + accepted.declaration().casing().machineType() + suffix);
     }
 
     public void setBeType(Supplier<BlockEntityType<?>> supplier) { this.beType = supplier; }
 
     public BlockEntity create(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        return declaration().kind() == FuelGeneratorDeclaration.Kind.MULTI
+        return declaration().multi()
                 ? new FuelTurbineBlockEntity(type, pos, state)
                 : new FuelGeneratorBlockEntity(type, pos, state);
     }

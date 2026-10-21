@@ -1,7 +1,8 @@
 package com.gregtech.gregtech.blockentity.machine;
 
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
-import com.gregtech.gregtech.api.addon.StructurePartEnergy;
+import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
+import com.gregtech.gregtech.api.addon.EnergyOutput;
+import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.energy.EnergyTransfer;
 import com.gregtech.gregtech.api.multiblock.MultiblockLayout;
 import com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
@@ -38,7 +39,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
 
     public long stored() { return stored; }
 
-    public long capacity() { return spec().capacity(); }
+    public long capacity() { return block().capacity(); }
 
     public String path() {
         var id = BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock());
@@ -47,7 +48,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
 
     /** Adds up to the free space. The caller decides whether this part is bound. */
     public long charge(long amount) {
-        long accepted = spec().accept(stored, amount);
+        long accepted = accept(stored, amount);
         if (accepted <= 0) return 0;
         stored += accepted;
         setChanged();
@@ -55,7 +56,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
     }
 
     public void setOutput(long size, long amount) {
-        spec().requireOutput(size, amount);
+        BehaviorEnergyRules.requireEmit(size, amount, energy().maxSize(), energy().maxAmount());
         if (boundRole() != MultiblockLayout.Role.ENERGY_OUTPUT)
             throw new IllegalStateException("Energy part is not an ENERGY_OUTPUT cell");
         outputSize = size;
@@ -96,7 +97,7 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
         if (outputSize < 1 || outputAmount < 1 || stored < outputSize) return;
         long left = Math.min(outputAmount, stored / outputSize);
         long sent = 0;
-        for (BehaviorMachineDeclaration.Face face : spec().outputFaces()) {
+        for (MachineFace face : energy().faces()) {
             if (left <= 0) break;
             long used = EnergyTransfer.emitEnergyToSide(energyTag(), world(face), outputSize, left, this);
             sent += used;
@@ -115,13 +116,23 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
                 && !machine.isRemoved() && machine.structureFormed();
     }
 
-    private StructurePartEnergy spec() {
-        return ((AddonEnergyPartBlock) getBlockState().getBlock()).energy();
+    private AddonEnergyPartBlock block() {
+        return (AddonEnergyPartBlock) getBlockState().getBlock();
+    }
+
+    private EnergyOutput energy() { return block().energy(); }
+
+    /** How much of {@code amount} fits in the remaining capacity. Does not change {@code stored}. */
+    private long accept(long stored, long amount) {
+        if (amount < 0) throw new IllegalArgumentException("negative charge");
+        long cap = capacity();
+        long held = Math.max(0, Math.min(stored, cap));
+        return Math.min(amount, cap - held);
     }
 
     private GregTechTags.Tag energyTag() {
         if (energyTag != null) return energyTag;
-        String name = spec().type();
+        String name = energy().type();
         energyTag = GregTechTags.Energy.ALL.stream().filter(tag -> tag.getShortName().equalsIgnoreCase(name))
                 .findFirst().orElseThrow(() -> new IllegalStateException("Unknown energy type: " + name));
         return energyTag;
@@ -129,12 +140,12 @@ public class AddonEnergyPartBlockEntity extends MultiblockPortBlockEntity {
 
     private boolean outputSide(Direction side) {
         if (side == null) return false;
-        for (BehaviorMachineDeclaration.Face face : spec().outputFaces())
+        for (MachineFace face : energy().faces())
             if (world(face) == side) return true;
         return false;
     }
 
-    private Direction world(BehaviorMachineDeclaration.Face face) {
+    private Direction world(MachineFace face) {
         Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
                 ? getBlockState().getValue(HorizontalDirectionalBlock.FACING) : Direction.NORTH;
         return switch (face) {
