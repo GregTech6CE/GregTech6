@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第七十八批核储罐客户端／喷漆／放置和最后通用覆盖板同步，新增268–270。行为记录至ALIGN-270，共270条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是270个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第七十九批追喷漆材料初始色和实际物品alpha，新增271–272。行为记录至ALIGN-272，共272条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是272个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -297,6 +297,8 @@
 | ALIGN-268 | 确认竖直木主阀的正面选图不同。 | 原Base10按世界面FACES_TBS选front的top／bottom。 | 当前整模型转动使17001上／下正面仍取front/side，现存木图八变换不等价；不泛称25台都可见错图，见[客户端](TANK_CLIENT_AUDIT.md)。 |
 | ALIGN-269 | 确认主阀初次放置的竖直阈值不同。 | 原默认六面放置在pitch正／负65度才选上／下。 | 当前原生nearest视线取反，yaw0／pitch正负50度已选上下，原仍north；仅源样本，见[客户端](TANK_CLIENT_AUDIT.md)。 |
 | ALIGN-270 | 确认最后一个通用覆盖板的空快照未清客户端旧槽。 | 原receiveDataCovers有null清除及零ID替换路径。 | 当前服务端最后拆下后发送空tag，两版实际read因无字段提前返回，旧槽继续参与fallback渲染；需区分完整快照与部分NBT，见[客户端](TANK_CLIENT_AUDIT.md)。 |
+| ALIGN-271 | 确认普通未喷漆材料方块的首次白漆被拒绝。 | 原class-container按材料填NBT_COLOR，殷钢17007实际DCDC96，白色paint成功。 | 当前PaintState初始／clear为FFFFFF，首次白色被相等判断拒绝；未喷漆显示仍回退材质色，不报全部变白，见[喷漆](PAINT_STATE_AUDIT.md)。 |
+| ALIGN-272 | 确认Neo喷漆物品主染色面最终alpha为0。 | 原普通BlockTextureDefault禁alpha，实际顶点提交255；Forge1.20.1相应ItemRenderer固定1。 | 正常红漆主阀保留BE数据，后置ItemPaintColorMixin清高八位，Neo实际ARGB解码及顶点乘法得到0；不泛称overlay／整物品全消失，未GPU实测，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

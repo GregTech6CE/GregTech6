@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第七十九批喷漆初始状态与物品alpha
+
+271追原class-container补材料RGB再初始化实体，对比当前PaintState固定FFFFFF，普通殷钢主阀首次白漆拒绝；272追正常红漆主阀保存／最终掉落到Neo ItemRenderer／VertexConsumer的alpha0，Forge该处固定1。16色和256混色公式相符，见[专题](PAINT_STATE_AUDIT.md)与[回执](verification/paint-state-audit-20261021.json)。17原／29当前、36视图、2工件15entry归档，六源九执行保持，用户材料不动；未编译／初始化／测试／游戏／构建／推送，全面队列继续。
+
 ## 2026-10-21 / 第七十八批储罐客户端与最后覆盖板同步
 
 新增268–270分别记录竖直木主阀选图、原65度与原生视线放置、最后覆盖板空快照提前返回，喷漆候选沿已配置BlockEntityPaintMixin排除。基础材质色／静态物品parent／JSON加载器转换和两版网络注册已有，不报整族缺图或缺同步。14原／44当前、54视图、75JSON＋24PNG和2工件8entry见[专题](TANK_CLIENT_AUDIT.md)与[回执](verification/tank-client-audit-20261021.json)。四源六执行保持，用户材料排版保留；未编译／初始化／测试／游戏／构建／推送，全面队列继续。

@@ -98,3 +98,5 @@
 2026-10-21 第七十七批：展开FluidAttachmentBlock的构造旋转／访问包装／Neo交互和注入分支、MultiblockTankTooltips的内容／防护拼接、MultiblockJadeProvider的状态／流体序列化；core OriginalTankTooltipData循环i改digitIndex，构造两个b绑定改bounds。四源七完整执行及原始字面量位置保持，一处接口职责说明纠正，用户材料表不动，见[工具与制作专题](TANK_TOOLS_RECIPES_AUDIT.md)和[回执](verification/tank-tools-audit-20261021.json)。全面可读性与原版核查继续。
 
 2026-10-21 第七十八批：PaintSprayItem展开喷漆lambda／实体判断，两端17→98行，c／p仅在onItemUseFirst内改context／targetPos，保留已有Neo提示context。ComponentCoverFallbackRenderer展开事件和逐面绘制，Neo MultiblockClientSetup拆开渲染／颜色注册，core OriginalMultiblockTintPolicy展开switch；三处职责说明纠正，四源六完整执行76、940／942、526／532、547及未归一字面量位置保持。用户570条CompoundMaterials对齐和WoodMaterials修改保留，见[客户端专题](TANK_CLIENT_AUDIT.md)及[回执](verification/tank-client-audit-20261021.json)；全面可读性目标继续。
+
+2026-10-21 第七十九批：PaintState9→42行、PaintingRules11→73行、Paintable3→10行，16色逐行列出，mix的a／b改firstRgb／secondRgb，restore的flag改paintedFlag；三共享颜色Mixin展开保存／更新／回调，两个cir改callback。六源九完整执行170、544、45、832／865、210／210、202／230及原始字面量位置保持，两处职责说明纠正／用户材料不动，见[喷漆专题](PAINT_STATE_AUDIT.md)及[回执](verification/paint-state-audit-20261021.json)。其余宿主与全面源码核查继续。

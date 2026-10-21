@@ -16,6 +16,8 @@
 
 储罐模型：core保存blockstate／物品parent，共享原生资源保存composite模型和家族贴图；颜色由GTMultiblocks.tintOf与两版客户端注册读取。玩家喷漆另走PaintSprayItem→PaintTargets→由BlockEntityPaintMixin提供的Paintable，不能混为基础RGB。通用覆盖板的服务端tick／读写在ComponentCoverFallback，槽在ComponentCoverStorage，经PacketSyncComponentCovers到客户端同一read，绘制在ComponentCoverFallbackRenderer／PanelCoverRenderer，见[客户端与同步](TANK_CLIENT_AUDIT.md)。
 
+喷漆纯状态在core的`PaintState`，16色／混色／目标规则在`PaintingRules`，`Paintable`是原生适配接口。共享`BlockEntityPaintMixin`负责GT命名空间资格、NBT和更新，`BlockPaintColorMixin`／`ItemPaintColorMixin`接世界与物品查询；Neo物品原生要求ARGB，后置Mixin结果还必须单独核对，见[喷漆专题](PAINT_STATE_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
