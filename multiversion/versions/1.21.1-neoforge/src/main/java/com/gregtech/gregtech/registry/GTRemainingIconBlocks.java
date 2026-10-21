@@ -22,8 +22,9 @@ private static void add(String id,java.util.function.Supplier<Block> factory){va
         // The original sprites below are used by the real gearbox and lantern
         // renderers. They are textures, not separate placeable blocks.
         skip.addAll(Set.of("gearbox_axle", "greg_o_lantern"));
-        // GTMiscBlocks owns this
+        // GTLongDistance owns the whole catalog. The old single wire id is not in that catalog.
         skip.add("long_dist_wire");
+        for (var spec : com.gregtech.gregtech.content.logistics.LongDistanceCatalog.ALL) skip.add(spec.id());
         // GTWoods species — skip log/planks/leaves/beam/sapling for each
         for (String species : Set.of("rubber", "maple", "rainbowood", "willow",
                 "pine", "blue_mahoe", "ebony", "white_mahoe",

@@ -1,0 +1,287 @@
+package com.gregtech.gregtech.api.addon;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+
+/** SPDX-License-Identifier: LGPL-3.0-or-later */
+
+/**
+ * One addon behavior machine. GregTech builds the block, inventory, tanks, menu and screen.
+ * The machine type replaces {@code /} in the id with {@code _}. Tier is 1 to 255.
+ * Energy input defaults to every face except the front. Capacity 0 keeps the rated-input drain.
+ * An accepted range cannot be declared.
+ */
+public final class BehaviorMachine implements AddonMachine {
+    public static final int SLOT = 18;
+    public static final int TANK_WIDTH = 18;
+    public static final int TANK_HEIGHT = 54;
+    public static final int ENERGY_WIDTH = 10;
+    public static final int ENERGY_HEIGHT = 54;
+    public static final int PROGRESS_WIDTH = 24;
+    public static final int PROGRESS_HEIGHT = 17;
+    /** Player inventory starts this far above the bottom of the gui height. */
+    public static final int PLAYER_INVENTORY_GAP = 82;
+    public static final int UV_SLOT_U = 176;
+    public static final int UV_SLOT_V = 0;
+    public static final int UV_ENERGY_U = 194;
+    public static final int UV_ENERGY_V = 0;
+    public static final int UV_ENERGY_FULL_U = 204;
+    public static final int UV_TANK_U = 214;
+    public static final int UV_TANK_V = 0;
+    public static final int UV_TANK_MARKS_U = 232;
+    public static final int UV_ARROW_U = 176;
+    public static final int UV_ARROW_V = 54;
+    public static final int UV_ARROW_FULL_V = 71;
+    public static final int UV_TOGGLE_OFF_U = 176;
+    public static final int UV_TOGGLE_ON_U = 194;
+    public static final int UV_TOGGLE_V = 88;
+
+    private final MachineCasing casing;
+    private final EnergyInput energy;
+    private final EnergyOutput output;
+    private final String blockEntityId;
+    private final int guiWidth;
+    private final int guiHeight;
+    private final String gui;
+    private final int energyX;
+    private final int energyY;
+    private final List<ItemSlot> items;
+    private final List<FluidSlot> fluids;
+    private final List<Toggle> toggles;
+    private final Progress progress;
+    private final int maxRange;
+    private final List<String> recipeMaps;
+
+    private BehaviorMachine(MachineCasing casing, EnergyInput energy, EnergyOutput output, String blockEntityId,
+                            int guiWidth, int guiHeight, String gui, int energyX, int energyY,
+                            List<ItemSlot> items, List<FluidSlot> fluids, List<Toggle> toggles, Progress progress,
+                            int maxRange, List<String> recipeMaps) {
+        this.casing = casing;
+        this.energy = energy;
+        this.output = output;
+        this.blockEntityId = blockEntityId;
+        this.guiWidth = guiWidth;
+        this.guiHeight = guiHeight;
+        this.gui = gui;
+        this.energyX = energyX;
+        this.energyY = energyY;
+        this.items = items;
+        this.fluids = fluids;
+        this.toggles = toggles;
+        this.progress = progress;
+        this.maxRange = maxRange;
+        this.recipeMaps = recipeMaps;
+    }
+
+    @Override public MachineCasing casing() { return casing; }
+    public EnergyInput energy() { return energy; }
+    /** Null when the machine does not emit energy. */
+    public EnergyOutput output() { return output; }
+    public String blockEntityId() { return blockEntityId; }
+    public int guiWidth() { return guiWidth; }
+    public int guiHeight() { return guiHeight; }
+    public String gui() { return gui; }
+    public int energyX() { return energyX; }
+    public int energyY() { return energyY; }
+    public List<ItemSlot> items() { return List.copyOf(items); }
+    public List<FluidSlot> fluids() { return List.copyOf(fluids); }
+    public List<Toggle> toggles() { return List.copyOf(toggles); }
+    public Progress progress() { return progress; }
+    public int maxRange() { return maxRange; }
+    public List<String> recipeMaps() { return List.copyOf(recipeMaps); }
+
+    /** Registry path. An empty block entity id becomes {@code be_<id>}. */
+    public String blockEntityPath() {
+        return blockEntityId.isEmpty() ? "be_" + casing.id().replace('/', '_') : blockEntityId;
+    }
+
+    public int playerInventoryY() { return guiHeight - PLAYER_INVENTORY_GAP; }
+
+    public int energyMask() {
+        int mask = 0;
+        for (MachineFace face : energy.faces()) mask |= face.bit();
+        return mask;
+    }
+
+    public boolean emitsEnergy() { return output != null; }
+
+    public int energyOutMask() {
+        int mask = 0;
+        if (output != null) for (MachineFace face : output.faces()) mask |= face.bit();
+        return mask;
+    }
+
+    public int initialToggles() {
+        int bits = 0;
+        for (int i = 0; i < toggles.size(); i++) if (toggles.get(i).initiallyOn()) bits |= 1 << i;
+        return bits;
+    }
+
+    public enum SlotRole { INPUT, OUTPUT, ANY }
+
+    public record ItemSlot(int x, int y, SlotRole role) {}
+    public record FluidSlot(int capacity, int x, int y, SlotRole role) {}
+    public record Toggle(String translationKey, int x, int y, boolean initiallyOn) {}
+    public record Progress(int x, int y) {}
+
+    @Override public boolean equals(Object other) {
+        if (this == other) return true;
+        if (!(other instanceof BehaviorMachine that)) return false;
+        return guiWidth == that.guiWidth && guiHeight == that.guiHeight && energyX == that.energyX
+                && energyY == that.energyY && maxRange == that.maxRange && casing.equals(that.casing)
+                && energy.equals(that.energy) && Objects.equals(output, that.output)
+                && blockEntityId.equals(that.blockEntityId) && gui.equals(that.gui)
+                && items.equals(that.items) && fluids.equals(that.fluids) && toggles.equals(that.toggles)
+                && progress.equals(that.progress) && recipeMaps.equals(that.recipeMaps);
+    }
+
+    @Override public int hashCode() {
+        return Objects.hash(casing, energy, output, blockEntityId, guiWidth, guiHeight, gui, energyX, energyY,
+                items, fluids, toggles, progress, maxRange, recipeMaps);
+    }
+
+    public static Builder builder(MachineCasing casing) { return new Builder(casing); }
+
+    public static final class Builder {
+        private final MachineCasing casing;
+        private EnergyInput energy;
+        private EnergyOutput output;
+        private FuelOutput fuelOutput;
+        private MachineIo io;
+        private String blockEntityId = "";
+        private int guiWidth = 176;
+        private int guiHeight = 166;
+        private String gui;
+        private int energyX = 8;
+        private int energyY = 8;
+        private final List<ItemSlot> items = new ArrayList<>();
+        private final List<FluidSlot> fluids = new ArrayList<>();
+        private final List<Toggle> toggles = new ArrayList<>();
+        private Progress progress = new Progress(80, 35);
+        private int maxRange;
+        private final List<String> recipeMaps = new ArrayList<>();
+
+        private Builder(MachineCasing casing) { this.casing = casing; }
+
+        public Builder energy(EnergyInput value) { energy = value; return this; }
+        public Builder energyOutput(EnergyOutput value) { output = value; return this; }
+        public Builder output(FuelOutput value) { fuelOutput = value; return this; }
+        public Builder io(MachineIo value) { io = value; return this; }
+        public Builder blockEntityId(String value) { blockEntityId = value; return this; }
+        public Builder gui(String texture) { gui = texture; return this; }
+        public Builder guiSize(int width, int height) { guiWidth = width; guiHeight = height; return this; }
+        public Builder energyGauge(int x, int y) { energyX = x; energyY = y; return this; }
+        public Builder item(int x, int y, SlotRole role) { items.add(new ItemSlot(x, y, role)); return this; }
+        public Builder fluid(int capacity, int x, int y, SlotRole role) {
+            fluids.add(new FluidSlot(capacity, x, y, role));
+            return this;
+        }
+        public Builder toggle(String translationKey, int x, int y, boolean initiallyOn) {
+            toggles.add(new Toggle(translationKey, x, y, initiallyOn));
+            return this;
+        }
+        public Builder progress(int x, int y) { progress = new Progress(x, y); return this; }
+        public Builder maxRange(int value) { maxRange = value; return this; }
+        public Builder recipeMaps(String... names) {
+            if (names != null) for (String name : names) recipeMaps.add(name);
+            return this;
+        }
+
+        public BehaviorMachine build() {
+            if (casing == null) throw new IllegalArgumentException("Missing casing");
+            if (io != null)
+                throw new IllegalArgumentException("Behavior machines cannot declare item and fluid faces");
+            if (fuelOutput != null)
+                throw new IllegalArgumentException("Behavior machines cannot declare fuel output");
+            String id = casing.id();
+            String machineType = casing.machineType() == null ? id.replace('/', '_') : casing.machineType();
+            if (!machineType.matches("[a-z0-9_]+"))
+                throw new IllegalArgumentException("Invalid machine type for " + id + ": " + machineType);
+            int tier = casing.tierSpecified() ? casing.tier() : 1;
+            if (tier < 1 || tier > 255)
+                throw new IllegalArgumentException("Invalid tier for " + id + ": " + tier);
+            if (energy == null) throw new IllegalArgumentException("Missing energy type for " + id);
+            if (energy.rangeSpecified())
+                throw new IllegalArgumentException("Behavior machine '" + id + "' cannot declare an energy range");
+            if (energy.perTick() < 1 || energy.perTick() > 1_000_000_000_000L)
+                throw new IllegalArgumentException("Invalid energy per tick for " + id + ": " + energy.perTick());
+            var faces = energy.facesSpecified() ? energy.faces() : MachineFace.exceptFront();
+            if (faces.isEmpty())
+                throw new IllegalArgumentException("Behavior machine '" + id + "' accepts energy on no face");
+            var storedEnergy = energy.withFaces(faces).collapseDefaultCapacity();
+            var blockEntity = blockEntityId == null ? "" : blockEntityId;
+            if (!blockEntity.isEmpty() && !blockEntity.matches("[a-z0-9_./-]{1,64}"))
+                throw new IllegalArgumentException("Invalid block entity id for " + id + ": " + blockEntity);
+            if (guiWidth < 176 || guiWidth > 256 || guiHeight < 166 || guiHeight > 512)
+                throw new IllegalArgumentException("Invalid gui size for " + id);
+            if (gui == null || !gui.matches("[a-z0-9_.-]+:[a-z0-9_./-]+\\.png"))
+                throw new IllegalArgumentException("Invalid gui texture for " + id + ": " + gui);
+            Objects.requireNonNull(progress, "progress");
+            if (maxRange < 0 || maxRange > BehaviorRangeRules.LIMIT)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' range must be 0.."
+                        + BehaviorRangeRules.LIMIT);
+            var seenMaps = new HashSet<String>();
+            var mapNames = new ArrayList<String>();
+            for (String name : recipeMaps) {
+                if (name == null || !name.matches("[a-z0-9_.]+"))
+                    throw new IllegalArgumentException("Invalid recipe map for " + id + ": " + name);
+                if (!seenMaps.add(name))
+                    throw new IllegalArgumentException("Behavior machine '" + id + "' repeats recipe map '" + name + "'");
+                mapNames.add(name);
+            }
+            if (items.size() > 54 || fluids.size() > 8 || toggles.size() > 16)
+                throw new IllegalArgumentException("Behavior machine '" + id + "' has too many slots");
+            for (FluidSlot fluid : fluids) {
+                if (fluid.capacity() < 1 || fluid.capacity() > 1_024_000_000)
+                    throw new IllegalArgumentException("Invalid tank capacity for " + id);
+            }
+            for (Toggle toggle : toggles) {
+                if (toggle.translationKey() == null || !toggle.translationKey().matches("[a-z0-9_.]+"))
+                    throw new IllegalArgumentException("Invalid toggle key for " + id + ": " + toggle.translationKey());
+            }
+            var widgets = new ArrayList<Widget>();
+            widgets.add(new Widget("energy", energyX, energyY, ENERGY_WIDTH, ENERGY_HEIGHT));
+            widgets.add(new Widget("progress", progress.x(), progress.y(), PROGRESS_WIDTH, PROGRESS_HEIGHT));
+            for (int i = 0; i < items.size(); i++) {
+                ItemSlot slot = items.get(i);
+                Objects.requireNonNull(slot.role(), "item role");
+                widgets.add(new Widget("item " + i, slot.x() - 1, slot.y() - 1, SLOT, SLOT));
+            }
+            for (int i = 0; i < fluids.size(); i++) {
+                FluidSlot slot = fluids.get(i);
+                Objects.requireNonNull(slot.role(), "fluid role");
+                widgets.add(new Widget("fluid " + i, slot.x(), slot.y(), TANK_WIDTH, TANK_HEIGHT));
+            }
+            for (int i = 0; i < toggles.size(); i++) {
+                Toggle toggle = toggles.get(i);
+                widgets.add(new Widget("toggle " + i, toggle.x(), toggle.y(), SLOT, SLOT));
+            }
+            int limitY = guiHeight - PLAYER_INVENTORY_GAP;
+            for (Widget widget : widgets) {
+                if (widget.x() < 0 || widget.y() < 0 || widget.x() + widget.width() > guiWidth
+                        || widget.y() + widget.height() > limitY)
+                    throw new IllegalArgumentException("Behavior machine '" + id + "' places " + widget.name()
+                            + " outside the gui");
+            }
+            for (int i = 0; i < widgets.size(); i++) {
+                for (int j = i + 1; j < widgets.size(); j++) {
+                    if (widgets.get(i).overlaps(widgets.get(j)))
+                        throw new IllegalArgumentException("Behavior machine '" + id + "' overlaps "
+                                + widgets.get(i).name() + " and " + widgets.get(j).name());
+                }
+            }
+            return new BehaviorMachine(casing.resolve(machineType, true, tier), storedEnergy, output, blockEntity,
+                    guiWidth, guiHeight, gui, energyX, energyY, List.copyOf(items), List.copyOf(fluids),
+                    List.copyOf(toggles), progress, maxRange, List.copyOf(mapNames));
+        }
+    }
+
+    private record Widget(String name, int x, int y, int width, int height) {
+        boolean overlaps(Widget other) {
+            return x < other.x + other.width && other.x < x + width
+                    && y < other.y + other.height && other.y < y + height;
+        }
+    }
+}

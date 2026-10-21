@@ -88,6 +88,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
 // four more JVMs. A changed input, missing marker or --rerun-tasks executes again.
 [
     coreBehaviorContracts: 'CoreBehaviorContracts',
+    addonDeclarationTypeContracts: 'AddonDeclarationTypeContracts',
     materialBehaviorContracts: 'MaterialBehaviorContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
     machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts',

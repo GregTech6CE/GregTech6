@@ -116,6 +116,9 @@ public class FusionReactorControllerBlockEntity extends LargeRecipeMachineBlockE
     @Override public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role){return role==MultiblockLayout.Role.ENERGY_INPUT?List.of(GregTechTags.Energy.LU):role==MultiblockLayout.Role.ENERGY_OUTPUT?List.of(GregTechTags.Energy.EU):List.of();}
     @Override public boolean emitsPortEnergy(MultiblockLayout.Role role,GregTechTags.Tag type){return role==MultiblockLayout.Role.ENERGY_OUTPUT&&type==GregTechTags.Energy.EU;}
     @Override public long portEnergyOutputSize(MultiblockLayout.Role role,GregTechTags.Tag type){return emitsPortEnergy(role,type)?8192:0;}
+    /** Recipe acceptance stays on the TU rule. The spec maximum is the port and tooltip cap. */
+    @Override protected long inputMinimum() { return 1; }
+    @Override protected long inputMaximum() { return 16; }
     @Override public long portEnergyInputRecommended(MultiblockLayout.Role role,GregTechTags.Tag type){return 8192;}
     @Override public long portEnergyInputMin(MultiblockLayout.Role role,GregTechTags.Tag type){return 1;}
     @Override public long portEnergyInputMax(MultiblockLayout.Role role,GregTechTags.Tag type){return 16384;}
