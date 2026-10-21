@@ -1,0 +1,4183 @@
+{
+  "date": "2026-10-22",
+  "batch": 103,
+  "baseline": "704feee5c5c68a7b3fb7855a294c51386cabceae",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "evidence_commit": "704feee5c",
+    "scope": "Sap collection audit and six-source readability cleanup."
+  },
+  "scope": "Advanced button, hand crank, remote dispatch, numeric helpers, native tick scheduling and active model/color consumers.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "sha256": "c225a3f969c00d00d4920cdc82900f78eaacf52a0e37d55cf8dc229becc6630c",
+      "lines": 325,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityCrank.java",
+      "sha256": "03d4c7a3be5709c5ae49726db44dabf715f8e2fa1f144ad025a6b1553b8a679a",
+      "lines": 206,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Remote.java",
+      "sha256": "f7b3d56ecde1116d1de5ab2971df138b61891660720f625c1850ec74d8f7842b",
+      "lines": 146,
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityRemoteActivateable.java",
+      "sha256": "f8129be5351ed9f9eb20627c994b7d058499a05b237ca317fc54f7ccdb7122cc",
+      "lines": 29,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "lines": 283,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "lines": 496,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "lines": 117,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "lines": 62,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "lines": 98,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10Attachment.java",
+      "sha256": "1f4b0a65f5e6650bcfa79c3f50fef3eb5cb42b659ab377c49d8347f114ab0e10",
+      "lines": 52,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase11AttachmentSmall.java",
+      "sha256": "c8609b9656bc53510b44bd14bb6e8eef63580b9ff6ec94203892a7c034da7c9a",
+      "lines": 31,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "lines": 55,
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_inputs": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/AdvancedButtonBlock.java",
+      "sha256": "decd3c430681f69ffa93f0857e7135a187ef532e06618bd99cc243b2cd9cc6cc",
+      "lines": 238
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "sha256": "c426e99397dbfdfea4b03d2785a091d9f05a3a64a83aae6357bddf69c7bceed1",
+      "lines": 219
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java",
+      "sha256": "fd4d276438e0de2c6d1fe8859f4ded9a90a09ed32b65c99b14407a7a8b34d542",
+      "lines": 291
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/AutomaticToolClientColors.java",
+      "sha256": "378262799fba138b98a1aa52ee69288cc18be27cfe8e3b54339238a17eeefc2d",
+      "lines": 61
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CrankClientColors.java",
+      "sha256": "2a8e2c00de2adf8d2ec8ccde129a84828d0dfb273052e813db10e9afdc1f66a5",
+      "lines": 24
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/RemoteActivatable.java",
+      "sha256": "5176bf7157eb87413c34a9f949232cd4275ae42170b1197ec4e53fe91e0f3185",
+      "lines": 21
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "sha256": "6e553ef4bd54c7197910b858df853e792d082f2c70cf6650a4d16bf5422b6476",
+      "lines": 48
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "sha256": "802ffa3c9b59bb123167097f7014cfb627a935561f3c0edd2cb85002f6e93f8b",
+      "lines": 390
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "lines": 16
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "lines": 73
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "lines": 81
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "dad59a320f31f9821754a8d20124c6f72f719fb3b5fd40edc7f3fc7affd11990",
+      "lines": 366
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "lines": 121
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "sha256": "b1cc1bd2676299e724f1bde25cf379ca875908cbd3287e87ddbda4f61d33bdbe",
+      "lines": 179
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+      "lines": 80
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "lines": 309
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "lines": 111
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "lines": 611
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionTarget.java",
+      "sha256": "2944dfba01fc6d45286ad5654084662e23de125eb00f5ca65353cd40f4e42fab",
+      "lines": 17
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "lines": 336
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "lines": 78
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "lines": 22
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "lines": 824
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrankTests.java",
+      "sha256": "ec3787cbe0a7a7c81ef69533f95f15f431b884c49f95dbae9d4636b333766b8a",
+      "lines": 285
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/advanced_button.json",
+      "sha256": "1f29e939a26bf7ae50f11774eddfeffdf62ebb41d1123f3187bf1a1f1003f181",
+      "lines": 124
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/advanced_button.json",
+      "sha256": "15517aeb00f57cf6a5683b33dc5d61aef12eb104d9d13124294849ad4d613077",
+      "lines": 3
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/crank.json",
+      "sha256": "99c557f1cb6266e3efe2be6e7aa37921b912fdba085b51fd761177737f0b116e",
+      "lines": 50
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/crank.json",
+      "sha256": "4aba2c7e332238750f167f69513772d416af82e8dbef219488b0c7192d49e944",
+      "lines": 3
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/tool/advanced_button_off.json",
+      "sha256": "b88a937c73363654ea4eadf051be34cd7dacdf87a059f9375dca637f778c3618",
+      "lines": 181
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/tool/advanced_button_on.json",
+      "sha256": "0583ae1da2145ab4b42f04b156286e6b69754622e8e8cfcdb9e34bdcfc48e7d4",
+      "lines": 181
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/machine/tool/crank.json",
+      "sha256": "78b9271b3647fda5adc3d215940654864ea31c84a494a3bf2047717232f5fb7e",
+      "lines": 137
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/resources/assets/gt6ce/models/block/machine/tool/crank_active.json",
+      "sha256": "8cf9dffb2507e258a3f3ad5f0eaa1532a153e2f8907cef565586a75d51328556",
+      "lines": 137
+    }
+  ],
+  "current_source_views": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/AdvancedButtonBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "1482bc9f86b6dbd8e5f08de3fd9154b17692b727c829ac23f3299ab2f702b6ba",
+      "execution_sha256": "47abdb95f16314884486c5daf7153e540d5e5e304de2242d3c0f96fd74292ebe"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/AdvancedButtonBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "fb3d8f0de4b8781dfe04d338d5545058c906b6ab5a320c6f2d23b0e64588031d",
+      "execution_sha256": "5bc220dac152b46571374ebb0eeedbb510dc7df257828bfb4d8487ff95b0be9b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "platform": "forge",
+      "source_view_sha256": "e229b6b31e4f4f849b62265381abc5c5f63fed2d86cea155bc0e813948eb6981",
+      "execution_sha256": "904bb8d354831617953851205f5e86ed18eb68045eb7ef92b2eb8e438eec3d55"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "platform": "neoforge",
+      "source_view_sha256": "748e5234c6539bb6a169875df9d462eb97ec4e6b8ddb64d8689a795a813f5031",
+      "execution_sha256": "42f237f13ff70a3db031f7df17e942972d593299a7f885edb0ce7c77d84fec8d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "6ba89365a65cbb5c7778a0e6809edfce171e382c0bdd1b8c11c615574049db02",
+      "execution_sha256": "f0a476de684a33eec3a14295559df57f8ab06bebe5d9b859bd837b1f192a374a"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "5a50bd8bc1b228825c4b8d21537f45bbc156c5dbe354a6e90b9a8e4ba39be60a",
+      "execution_sha256": "227b2545bef5b8607e9bb51af0007002740094ba5632256747381f8260ce7edf"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/AutomaticToolClientColors.java",
+      "platform": "forge",
+      "source_view_sha256": "347e85919b67b2096b37ede93c41ca8c6f879769409c9d5036ec10513d4bfe76",
+      "execution_sha256": "461e48b7476280a3a1e2ed2104482f958d526c36660aec2f5eff87378c85c542"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/AutomaticToolClientColors.java",
+      "platform": "neoforge",
+      "source_view_sha256": "accdb8cab2d3c3fc91f4f038c5b96fa5fbf01d6207651ba22704a0078bad0f17",
+      "execution_sha256": "37fcc2e28380d40964dc3479531445a1f67078bcacf10b782a837974db740273"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CrankClientColors.java",
+      "platform": "neoforge",
+      "source_view_sha256": "2a8e2c00de2adf8d2ec8ccde129a84828d0dfb273052e813db10e9afdc1f66a5",
+      "execution_sha256": "7651a2a055e458081ab491b91d7829a02bebb4dc3f8358e6261cb9d469a021ff"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/RemoteActivatable.java",
+      "platform": "forge",
+      "source_view_sha256": "5176bf7157eb87413c34a9f949232cd4275ae42170b1197ec4e53fe91e0f3185",
+      "execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/RemoteActivatable.java",
+      "platform": "neoforge",
+      "source_view_sha256": "5176bf7157eb87413c34a9f949232cd4275ae42170b1197ec4e53fe91e0f3185",
+      "execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "platform": "core",
+      "source_view_sha256": "6e553ef4bd54c7197910b858df853e792d082f2c70cf6650a4d16bf5422b6476",
+      "execution_sha256": "49a8e5b753f2177fd28cac03aae2c57a9b9d03b26aa65c590e97ee4aab7fc118"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "platform": "forge",
+      "source_view_sha256": "f4e75855b54c2054a57f1dd93cc5f54fb7ad7603929cadde418464abf7b929ec",
+      "execution_sha256": "2d19227abd196f832f4b9ceeb48ba18b43cdf2dd6c665e006ec77e23667c283b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "platform": "neoforge",
+      "source_view_sha256": "8c3d3523b9a25891e2143fc75a1ed9f1a23cb0c14cf84cec05b396e431d6e99f",
+      "execution_sha256": "c964faf13656becb5f9e11984c2b2610c2608b69a37d9e8217457db5f4f39f4c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "forge",
+      "source_view_sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "execution_sha256": "b8e5d27c551df9b40fa139b853a3c6c5ef8309e141b12582d0e74bd18d2e1b96"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "neoforge",
+      "source_view_sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "execution_sha256": "b8e5d27c551df9b40fa139b853a3c6c5ef8309e141b12582d0e74bd18d2e1b96"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "forge",
+      "source_view_sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "execution_sha256": "ccb7f00f4fc72df60df0e8c7d20f28a149830f4ceb01d06827b2e414975c4163"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "neoforge",
+      "source_view_sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "execution_sha256": "ccb7f00f4fc72df60df0e8c7d20f28a149830f4ceb01d06827b2e414975c4163"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "source_view_sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "execution_sha256": "514abb233b643c147a2c0d62bfa5c0db85a8b426d2bb3ae22f7a5d5ad7dfab27"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "source_view_sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "execution_sha256": "514abb233b643c147a2c0d62bfa5c0db85a8b426d2bb3ae22f7a5d5ad7dfab27"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "platform": "forge",
+      "source_view_sha256": "0293060ca001b1675a4b7aa8023eaa39e30d90cffaef084e75fc0f1edca353b7",
+      "execution_sha256": "f66618d95c147f6556c59789bc5e5fa6270322ee868f8692891522b344b5069e"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "platform": "neoforge",
+      "source_view_sha256": "b7b0bdf3131f5e23458a63ff523bc2479d72969666ec5dcb896083f56280cebb",
+      "execution_sha256": "94589e1b75f6a7bac4893d3b4fa81731ba69457215f0030a7360eca68dfb009f"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "source_view_sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+      "execution_sha256": "824338cb3c41523ff9f4816f0068e606780dba5e59860951ffe2bd792ab8be0b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "source_view_sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+      "execution_sha256": "21b9ab5226365d8bc28304f547860d7539e233db605b7e35487353871cd4717e"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "platform": "neoforge",
+      "source_view_sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "execution_sha256": "e5a6757949d91de4ce1249da4c57ac4bf53d406ea686153407a1ceac8b1a901b"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "platform": "forge",
+      "source_view_sha256": "56fba9f11e500dea2f2af96944d5d769c4a37efe6053a072fe20335da5e483b8",
+      "execution_sha256": "98b1add04d8b68d02334eee3d95229340b61c459f61ca8189709455b63945821"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "platform": "neoforge",
+      "source_view_sha256": "f16e7be8df20bb6f4ced7b40002a839805d29a31071c9902b5fbf8a6e1b0cd43",
+      "execution_sha256": "f88a3dd8a097f8451126dfbef15a70d7e1b8eca7fc6649dc6e7df249cf21c962"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "source_view_sha256": "efd9ec9b7989a677380bbd11086d1d71ca07f98819e0547b0bc3521d2208f453",
+      "execution_sha256": "b3228fe53f70e7fd6dc14f802ae7fcde3be5c6430d2d7ed56942e4d081e57a53"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "source_view_sha256": "14f00b7223b53c45b273fffe0959887109877e89fccd4d5df7a9c1545978eb1a",
+      "execution_sha256": "5b0e0eccfe2e88766c7a08cf4619edadb0942ffc95fa563bbac320dc67b50dc0"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "forge",
+      "source_view_sha256": "9e73e419cecd24f30556edf6e16ef13718ad429c82aed912b2420f8d9ab6142a",
+      "execution_sha256": "4fc8d91b0ee15db61825ea7c1ed7e3ebbea2118094b13a2a4c203b0c18fe0655"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "neoforge",
+      "source_view_sha256": "1efc71aae740679853c3d2531b96c41ed707031c836e9b8c1e955b5514b97ef6",
+      "execution_sha256": "a40db2614876af824223d605dc7fcceba339fce103bce10b78e7a4d8a4f68e65"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "source_view_sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "execution_sha256": "d6dee75d83ca152f75000777e026b15f8a65a056bbc8bf42842fb65eb0d848cd"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "source_view_sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "execution_sha256": "3fd4ed3cbd9550ec97603ade80d0f0b2fc18f4ba3ee895905d4d7f0fc92f813d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "source_view_sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "execution_sha256": "e0bd57c7f517e4a2f70b9f6c76273e832440faf2bb1d88c950bdb8bede463192"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "source_view_sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "execution_sha256": "78c667a4afb1a89cac50a3649ae186aab430fddac8d78424911806a8c7dab202"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "forge",
+      "source_view_sha256": "6e15bb8594ec00c9b83c68a7c4d529f324afa1429efa580673c3ecea383f30af",
+      "execution_sha256": "63bcaf4bf1bba2a91755b79ae250a310f7f00be4cd3b956622bc022b1358a5e5"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "neoforge",
+      "source_view_sha256": "c70d0ffd0ede2fc6dc7eaf164cb1e55a6c5ceccb13c7e4d2b7c1a86d45e40ee7",
+      "execution_sha256": "a6963c071d9b24a9a39c36109db866fcfa5b914c3a030933c7c50d3724e01230"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "source_view_sha256": "0fd1f86e16e3ef80042f578e50b1543c9eb8d36b6c539c843afd11fab3d494ce",
+      "execution_sha256": "88f60beff4bc8a5daab0821562a6f61ce3324bc84129d3ede79504e7952b1773"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "source_view_sha256": "e7d2e2be99fe3c7cbc2493c2f098246d336cd980ac0917de903e50db08914062",
+      "execution_sha256": "bdfee889f799a4fa4bc3c44513adf054c9d3dbcafb666e4215b8419ae43e5673"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionTarget.java",
+      "platform": "forge",
+      "source_view_sha256": "8cb7f4a8410db90045e7d2c18e6e96c4c041776d54d80a24da556e69a2fbb83b",
+      "execution_sha256": "d025c5b1fae23f2bca8da885d2ed17e17852ba9437d314bb81d2c9ff2628703d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionTarget.java",
+      "platform": "neoforge",
+      "source_view_sha256": "8cb7f4a8410db90045e7d2c18e6e96c4c041776d54d80a24da556e69a2fbb83b",
+      "execution_sha256": "d025c5b1fae23f2bca8da885d2ed17e17852ba9437d314bb81d2c9ff2628703d"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "source_view_sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "execution_sha256": "9783227cf6a0ad58f072fd607ceb19e035eb9816204436719213841e439f57f8"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "source_view_sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "execution_sha256": "7b187bb04085d7ce92543333e324f70e72f4b99a453b9eaad2c716be9b5d8d09"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "forge",
+      "source_view_sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "execution_sha256": "644302e8ff05e3029e2e8f06c66fdad622424d2dc3fc04dac64d5bbf1bde2ac6"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "neoforge",
+      "source_view_sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "execution_sha256": "644302e8ff05e3029e2e8f06c66fdad622424d2dc3fc04dac64d5bbf1bde2ac6"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "forge",
+      "source_view_sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "execution_sha256": "8090ef57650360b2fd16e06c200cde059a73b0f939ba3cc0c6049ab994e6def2"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "neoforge",
+      "source_view_sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "execution_sha256": "8090ef57650360b2fd16e06c200cde059a73b0f939ba3cc0c6049ab994e6def2"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "platform": "forge",
+      "source_view_sha256": "122732356a01a0771384a2e90174c15dca93a28013449e59776055273e0c66c7",
+      "execution_sha256": "2df2139f40b7c1fc3efc1331d7e48fa0c8ee76fedd6c4cd482a8b7cd3e183541"
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/CrankTests.java",
+      "platform": "forge",
+      "source_view_sha256": "91200a578dde75f05244a7e1c97c38ce8b637d9b60933aec30f77c1207a61b42",
+      "execution_sha256": "993b9d0c9dcf05703e2b1ee28d888a95721bf32030c9eb92c51ca78887652351"
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 115,
+      "line_end": 127,
+      "sha256": "ec977000d8499aabd6eb6373ab966851b2068764690583c3c5a99caf444e7956",
+      "text": "\t\tif (aTool.equals(TOOL_chisel)) {\n\t\t\tif (aSneaking) {\n\t\t\t\tmType = (byte)((mType + 1) % sTextures.length);\n\t\t\t\tmIndex = 0;\n\t\t\t} else {\n\t\t\t\tmIndex = (byte)((mIndex + 1) % sTextures[mType].length);\n\t\t\t}\n\t\t\tupdateClientData();\n\t\t\treturn 100;\n\t\t}\n\t\tif (aTool.equals(TOOL_screwdriver)) {\n\t\t\tif (aSneaking) mMaxLength+=20; else mMaxLength++;\n\t\t\tif (aChatReturn != null) aChatReturn.add(\"Signal Length = \" + Math.abs(mMaxLength));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 168,
+      "line_end": 178,
+      "sha256": "cf4be118103d6b452381190efce9e5dc010849931732d7889aac26f0911c5db7",
+      "text": "\t\tif (aTool.equals(TOOL_magnifyingglass)) {\n\t\t\tif (aChatReturn != null) {\n\t\t\t\taChatReturn.add(\"Signal Strength = \" + mStrength);\n\t\t\t\tif (mMaxLength > 0) aChatReturn.add(\"Signal Length = \" + Math.abs(mMaxLength));\n\t\t\t\taChatReturn.add(mLampMode ? \"Lamp Mode\" : mMaxLength > 0 ? \"Button Mode\" : \"Switch Mode\");\n\t\t\t\taChatReturn.add(mInverted ? \"Emits when unpressed!\" : \"Emits when pressed!\");\n\t\t\t\taChatReturn.add(mGlowInverted ? \"Glows when unpressed!\" : \"Glows when pressed!\");\n\t\t\t}\n\t\t\treturn 1;\n\t\t}\n\t\treturn super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 182,
+      "line_end": 196,
+      "sha256": "b12ba37b6b8adcc8d207c737e5d3778722b27f854fc7421660c7bee2c5f36779",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide() && !mLampMode) {\n\t\t\tif (mMaxLength > 0) {\n\t\t\t\tmLength = mMaxLength;\n\t\t\t\tmActive = !mInverted;\n\t\t\t} else {\n\t\t\t\tmActive = !mActive;\n\t\t\t}\n\t\t\tcauseBlockUpdate();\n\t\t\tUT.Sounds.send(SFX.MC_CLICK, 1.0F, mActive?1.5F:1.3F, this, F);\n\t\t\tmDoUnclickSound = T;\n\t\t}\n\t\treturn !mLampMode;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 198,
+      "line_end": 211,
+      "sha256": "153915f468f2e7c28684418ce60a6f8947a70cd7516876177be19b844f092ecc",
+      "text": "\tpublic boolean remoteActivate() {\n\t\tif (isServerSide() && !mLampMode) {\n\t\t\tif (mMaxLength > 0) {\n\t\t\t\tmLength = mMaxLength;\n\t\t\t\tmActive = !mInverted;\n\t\t\t} else {\n\t\t\t\tmActive = !mActive;\n\t\t\t}\n\t\t\tcauseBlockUpdate();\n\t\t\tmDoUnclickSound = F;\n\t\t}\n\t\treturn T;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 213,
+      "line_end": 226,
+      "sha256": "1c677578c2b9a157341202b778052be795372c11e6d13df8020a7a9cdae74811",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tif (aIsServerSide) {\n\t\t\tif (mLampMode) {\n\t\t\t\tif (mBlockUpdated) mActive = hasRedstoneIncoming();\n\t\t\t} else if (mActive != mInverted && mMaxLength > 0 && --mLength<0) {\n\t\t\t\tmActive = mInverted;\n\t\t\t\tcauseBlockUpdate();\n\t\t\t\tif (mDoUnclickSound) UT.Sounds.send(SFX.MC_CLICK, 1.0F, mActive?1.5F:1.3F, this, F);\n\t\t\t}\n\t\t}\n\t}\n\t\n\t@Override\n\tpublic boolean onTickCheck(long aTimer) {"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 88,
+      "line_end": 99,
+      "sha256": "429af5cb50a6868739189ee8222303d1039a8dee41ebee860ceb876dc2b53039",
+      "text": "\tpublic NBTTagCompound writeItemNBT2(NBTTagCompound aNBT) {\n\t\tUT.NBT.setBoolean(aNBT, NBT_MODE, mInverted);\n\t\tUT.NBT.setBoolean(aNBT, NBT_MODE+\".lamp\", mLampMode);\n\t\tUT.NBT.setBoolean(aNBT, NBT_VISUAL, mGlowInverted);\n\t\tif (mMaxLength != 20) aNBT.setLong(NBT_MAXPROGRESS, mMaxLength);\n\t\tif (mStrength  != 15) aNBT.setByte(NBT_REDSTONE, mStrength);\n\t\tif (mType      !=  0) aNBT.setByte(NBT_TEXTURE+\".0\", mType);\n\t\tif (mIndex     !=  0) aNBT.setByte(NBT_TEXTURE+\".1\", mIndex);\n\t\treturn aNBT;\n\t}\n\t\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 299,
+      "line_end": 308,
+      "sha256": "75f6a67fc52862e131f46c177826f84fb847c287acb4b5a9cf3098f0fe0e63dd",
+      "text": "\tpublic static final IIconContainer[][][] sTextures = new IIconContainer[][][] {\n\t\t  new IIconContainer[ 1][8]\n\t\t, new IIconContainer[10][8]\n\t\t, new IIconContainer[26][8]\n\t\t, new IIconContainer[11][8]\n\t\t, new IIconContainer[ 8][8]\n\t\t, new IIconContainer[16][8]\n\t\t, new IIconContainer[22][8]\n\t};\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 237,
+      "line_end": 245,
+      "sha256": "2c5aa7cb99aa67ed276e4ccecbba4be14297958182d190fdc7322452c4b1bc76",
+      "text": "\tpublic byte isProvidingWeakPower2(byte aSide) {\n\t\treturn mActive && !mLampMode ? mStrength : 0;\n\t}\n\t\n\t@Override\n\tpublic byte isProvidingStrongPower2(byte aSide) {\n\t\treturn aSide == mFacing && mActive && !mLampMode ? mStrength : 0;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "line_start": 287,
+      "line_end": 294,
+      "sha256": "6b7e4fae5d419b2dca27e6b21574fbdea70318b45a36d12bca21cc1ad1f680f4",
+      "text": "\t@Override public boolean allowCovers            (byte aSide) {return F;}\n\t@Override public boolean isObstructingBlockAt   (byte aSide) {return F;}\n\t@Override public boolean useSidePlacementRotation       () {return T;}\n\t@Override public boolean useInversePlacementRotation    () {return F;}\n\t@Override public boolean checkObstruction(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {return F;}\n\t@Override public byte getDefaultSide() {return SIDE_FRONT;}\n\t@Override public boolean canDrop(int aInventorySlot) {return F;}\n\t@Override public boolean ignorePlayerCollisionWhenPlacing() {return T;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityCrank.java",
+      "line_start": 72,
+      "line_end": 105,
+      "sha256": "853bf669579583b697d94cfeccdc39cf33280806cab95f09ac419e0b251068e5",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tif (aIsServerSide) {\n\t\t\tboolean oActive = mActive;\n\t\t\tmActive = F;\n\t\t\tif (oActive) for (EntityPlayer tPlayer : UT.Entities.getPlayersWithLastTarget(this)) {\n\t\t\t\tmActive = T;\n\t\t\t\tif (ITileEntityEnergy.Util.emitEnergyToSide(TD.Energy.RU, mFacing, -UT.Code.divup(8L*UT.Entities.pot2Strength(tPlayer), UT.Entities.pot1Weakness(tPlayer)), UT.Entities.pot1Haste(tPlayer), this) > 0) UT.Entities.exhaust(tPlayer, 0.025);\n\t\t\t\ttPlayer.swingItem();\n\t\t\t}\n\t\t\t// Don't check for Villagers while Players operate the Crank.\n\t\t\tif (!mActive) {\n\t\t\t\tList<EntityVillager> tList = new ArrayListNoNulls<>();\n\t\t\t\tworldObj.getChunkFromBlockCoords(xCoord, zCoord).getEntitiesOfTypeWithinAAAB(EntityVillager.class, box(), tList, null);\n\t\t\t\tfor (EntityVillager tVillager : tList) if (UT.Code.roundDown(tVillager.posY+tVillager.getEyeHeight()) == yCoord && UT.Code.roundDown(tVillager.posX) == xCoord && UT.Code.roundDown(tVillager.posZ) == zCoord) {\n\t\t\t\t\tmActive = T;\n\t\t\t\t\tITileEntityEnergy.Util.emitEnergyToSide(TD.Energy.RU, mFacing, -UT.Code.divup(8L*UT.Entities.pot2Strength(tVillager), UT.Entities.pot1Weakness(tVillager)), UT.Entities.pot1Haste(tVillager), this);\n\t\t\t\t\t// Multiple Players can use one Crank but multiple Villagers cannot (Collision Lag prevention)\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t\t// Update Client State and Redstone State.\n\t\t\tif (mActive != oActive) {\n\t\t\t\tupdateClientData();\n\t\t\t\tcauseBlockUpdate();\n\t\t\t}\n\t\t} else {\n\t\t\tif (mActive && WD.random(this, 20, CLIENT_TIME)) UT.Sounds.play(SFX.MC_MINECART, 1, 0.1F, getCoords());\n\t\t}\n\t}\n\t\n\t@Override\n\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide()) {\n\t\t\tmActive = T;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityCrank.java",
+      "line_start": 103,
+      "line_end": 113,
+      "sha256": "0eabcbcc8a9e59e7276f71adb5845f6c66f583a3ef25f4c970cfb0b455443465",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isServerSide()) {\n\t\t\tmActive = T;\n\t\t\tupdateClientData();\n\t\t\tcauseBlockUpdate();\n\t\t\tUT.Sounds.send(SFX.MC_MINECART, 0.5F, this, F);\n\t\t}\n\t\t// TODO Might do something if attached to a Pipe to open/close it or something.\n\t\treturn T;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityCrank.java",
+      "line_start": 115,
+      "line_end": 122,
+      "sha256": "d3ba5f03f686b4efc1ffc459d72f4e9abb29b56f3f690ab7ca1ba9ab14a104a6",
+      "text": "\tpublic byte isProvidingWeakPower2(byte aSide) {\n\t\treturn (byte)(aSide == OPOS[mFacing] && mActive ? 15 : 0);\n\t}\n\t\n\t@Override\n\tpublic byte isProvidingStrongPower2(byte aSide) {\n\t\treturn (byte)(aSide == OPOS[mFacing] && mActive ? 15 : 0);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityCrank.java",
+      "line_start": 192,
+      "line_end": 199,
+      "sha256": "24067d06e516ef787df385da2635685f7f2d76328c3b9f432d2ccea88a492f67",
+      "text": "\t@Override public boolean isEnergyType(TagData aEnergyType, byte aSide, boolean aEmitting) {return aEmitting && aEnergyType == TD.Energy.RU;}\n\t@Override public boolean isEnergyEmittingTo(TagData aEnergyType, byte aSide, boolean aTheoretical) {return aSide == mFacing && aEnergyType == TD.Energy.RU;}\n\t@Override public long getEnergyOffered(TagData aEnergyType, byte aSide, long aSize) {return mActive ? 16 : 0;}\n\t@Override public long getEnergySizeOutputRecommended(TagData aEnergyType, byte aSide) {return 16;}\n\t@Override public long getEnergySizeOutputMin(TagData aEnergyType, byte aSide) {return 16;}\n\t@Override public long getEnergySizeOutputMax(TagData aEnergyType, byte aSide) {return 16;}\n\t@Override public Collection<TagData> getEnergyTypes(byte aSide) {return TD.Energy.RU.AS_LIST;}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "line_start": 3079,
+      "line_end": 3089,
+      "sha256": "9b87eaa66e55d2426862ebc0b872212d173aed3f2f34485a7f5854e8ec6cc53f",
+      "text": "\t\tpublic static byte pot (Object aEntity, Potion aPotion) {\n\t\t\tif (aPotion != null && aEntity instanceof EntityLivingBase) {\n\t\t\t\tPotionEffect tEffect = ((EntityLivingBase)aEntity).getActivePotionEffect(aPotion);\n\t\t\t\t// Limit the output value to six bit, which should be more than enough for Potions, and prevent Byte Math Issues.\n\t\t\t\treturn tEffect == null ? -1 : UT.Code.bind6(tEffect.getAmplifier());\n\t\t\t}\n\t\t\treturn -1;\n\t\t}\n\t\tpublic static byte pot0(Object aEntity, Potion aPotion) {return (byte)(pot(aEntity, aPotion)+1);}\n\t\tpublic static byte pot1(Object aEntity, Potion aPotion) {return (byte)(pot(aEntity, aPotion)+2);}\n\t\tpublic static byte pot2(Object aEntity, Potion aPotion) {return (byte)(pot(aEntity, aPotion)+3);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "line_start": 1697,
+      "line_end": 1699,
+      "sha256": "03a94198207f98d1a86a7173262ee648fb1f6fb4f0b3849d29d2e1c3ac4744c0",
+      "text": "\t\tpublic static long divup(long aNumber, long aDivider) {\n\t\t\treturn aNumber / aDivider + (aNumber % aDivider == 0 ? 0 : 1);\n\t\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "line_start": 1982,
+      "line_end": 1989,
+      "sha256": "bdeb30996e6607730ede2f760546138629469fa57c7e088811fabbb532c9f43d",
+      "text": "\t\tpublic static NBTTagCompound setBoolean(NBTTagCompound aNBT, Object aTag, boolean aValue) {\n\t\t\tif (aValue) {\n\t\t\t\taNBT.setBoolean(aTag.toString(), aValue);\n\t\t\t} else {\n\t\t\t\taNBT.removeTag(aTag.toString());\n\t\t\t}\n\t\t\treturn aNBT;\n\t\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "line_start": 3147,
+      "line_end": 3159,
+      "sha256": "72183c470636820a28f78ac31ab425bedb170508c3523dea55f704236c34971d",
+      "text": "\t\tpublic static Collection<EntityPlayer> getPlayersWithLastTarget(long aRange, World aWorld, ChunkCoordinates aCoords) {\n\t\t\tArrayListNoNulls<EntityPlayer> rList = new ArrayListNoNulls<>();\n\t\t\tfor (Entry<EntityPlayer, ChunkCoordinates> tEntry : PLAYER_LAST_CLICKED.entrySet()) {\n\t\t\t\tif (!tEntry.getKey().isDead && aWorld == tEntry.getKey().worldObj && aCoords.equals(tEntry.getValue())) {\n\t\t\t\t\tif (isCreative(tEntry.getKey()) || tEntry.getKey().getDistanceSq(aCoords.posX+0.5, aCoords.posY+0.5, aCoords.posZ+0.5) <= aRange * aRange) {\n\t\t\t\t\t\trList.add(tEntry.getKey());\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn rList;\n\t\t}\n\t\t\n\t\tpublic static boolean canEdit(Object aPlayer, int aX, int aY, int aZ) {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "line_start": 50,
+      "line_end": 60,
+      "sha256": "616c08adbe42d77f22a789c672f8d8a19731f2f2a450f66c150b1a8d22083bc5",
+      "text": "    public boolean press() {\n        if (lampMode) return false;\n        if (maxLength > 0) {\n            length = maxLength;\n            active = !inverted;\n        } else active = !active;\n        refresh(true);\n        return true;\n    }\n\n    public void serverTick() {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "line_start": 60,
+      "line_end": 70,
+      "sha256": "dbabe24e9e1f21c1e50f25bb5c20519bccaff3abddbc9434470262a7b31c16b8",
+      "text": "    public void serverTick() {\n        if (level == null || level.isClientSide) return;\n        if (lampMode) {\n            updateLampInput();\n        } else if (active != inverted && maxLength > 0 && --length < 0) {\n            active = inverted;\n            refresh(true);\n        }\n    }\n\n    public void updateLampInput() {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "line_start": 108,
+      "line_end": 118,
+      "sha256": "ea69e6874f0d12934ab71fc7f4fb0905c1b4671dd1d3c5df0e3ea8768d923002",
+      "text": "    public Component status() {\n        Component mode = Component.translatable(\"message.gt6ce.advanced_button.mode.\"\n                + (lampMode ? \"lamp\" : maxLength > 0 ? \"button\" : \"switch\"));\n        Component polarity = Component.translatable(\"message.gt6ce.advanced_button.polarity.\"\n                + (inverted ? \"inverted\" : \"normal\"));\n        return maxLength > 0\n        ? Component.translatable(\"message.gt6ce.advanced_button.status_timed\",\n                mode, strength, maxLength, polarity)\n        : Component.translatable(\"message.gt6ce.advanced_button.status\", mode, strength, polarity);\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "line_start": 135,
+      "line_end": 143,
+      "sha256": "3c86f7dae9ade71104be771beb2ea4d371ca9ecb714e06933518c61188bc0cf8",
+      "text": "    public CompoundTag saveItemConfig() {\n        CompoundTag config = new CompoundTag();\n        config.putBoolean(\"Inverted\", inverted);\n        config.putBoolean(\"GlowInverted\", glowInverted);\n        config.putBoolean(\"LampMode\", lampMode);\n        config.putInt(\"Strength\", strength);\n        config.putLong(\"MaxLength\", maxLength);\n        return config;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java",
+      "line_start": 145,
+      "line_end": 154,
+      "sha256": "295e977971a8702fdc4b39b582a4f2e1c9da3c0322d2a45a9c242f8980ccaf5d",
+      "text": "    public void loadItemConfig(CompoundTag config) {\n        inverted = config.getBoolean(\"Inverted\");\n        glowInverted = config.getBoolean(\"GlowInverted\");\n        lampMode = config.getBoolean(\"LampMode\");\n        strength = config.contains(\"Strength\") ? Math.max(1, Math.min(15, config.getInt(\"Strength\"))) : 15;\n        maxLength = config.contains(\"MaxLength\") ? Math.max(0, config.getLong(\"MaxLength\")) : 20;\n        // GT6 item NBT deliberately omits the live active/remaining-tick fields.\n        active = false;\n        refresh(true);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorRemote.java",
+      "line_start": 260,
+      "line_end": 264,
+      "sha256": "287f8e67b060afe0a4ce7009d1d5d240d6cdbd4b1479c7f4db601f5c37e951af",
+      "text": "    private static RemoteActivatable target(Level level, BlockPos pos) {\n        if (!level.hasChunkAt(pos)) return null;\n        if (level.getBlockEntity(pos) instanceof RemoteActivatable entity) return entity;\n        return level.getBlockState(pos).getBlock() instanceof RemoteActivatable block ? block : null;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java",
+      "line_start": 238,
+      "line_end": 259,
+      "sha256": "f555cc72839197e43bcd8979fde1e825524e76e659355d626c38d39766994151",
+      "text": "            long packetSize = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize((int)(strength - 2), (int)(weakness - 1));\n\n            // GT6 MultiTileEntityCrank:78/193: the packet goes into the block the crank is mounted on,\n            // i.e. the machine on the side opposite the handle. There is no machine on most cranks, and\n            // GT6 does not care - the crank turns either way.\n            long accepted = 0;\n            var target = level.getBlockEntity(pos.relative(mounting));\n            if (EnergyBlockViews.view(target) != null) {\n                accepted = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, handle, packetSize,\n                        1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);\n            }\n            if (accepted > 0) player.causeFoodExhaustion(0.025F);\n\n            // GT6 MultiTileEntityCrank:103-112 and :93-96: every right click turns the crank, updates\n            // the clients and causes a block update - with or without a machine behind it. The neighbour\n            // update is vanilla's LeverBlock.updateNeighbours (LeverBlock:107): redstone dust and lamps\n            // only recompute their state when an update reaches them, and a second click on an already\n            // turning crank has no state change of its own to notify them.\n            if (!state.getValue(ACTIVE)) {\n                level.setBlock(pos, state.setValue(ACTIVE, true), Block.UPDATE_ALL);\n            }\n            updateMountNeighbors(state, level, pos);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java",
+      "line_start": 197,
+      "line_end": 199,
+      "sha256": "348cd3124bbf50dbfbd875b65abda696c7264f7436abfa07c565f669f068bf5e",
+      "text": "    private static boolean isProvidingPower(BlockState state, Direction side) {\n        return state.getValue(ACTIVE) && side == state.getValue(FACING);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "line_start": 11,
+      "line_end": 15,
+      "sha256": "4af620a83bd06f8fe93903bf8c6e0de84bb942e39a8b980ee557878617e5278c",
+      "text": "    public static IEnergyBlock view(BlockEntity entity) {\n        if (entity instanceof IEnergyBlock block) return block;\n        if (entity instanceof EnergyBlock addon) return AddonEnergyAdapter.of(addon);\n        return null;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/AutomaticToolClientColors.java",
+      "line_start": 30,
+      "line_end": 31,
+      "sha256": "4c4f3f8a353ca85e1d0f75f47177727c88c07c1d54087b1cd0ea1a65d4b5d9e4",
+      "text": "        if (id.equals(\"advanced_button\")) return Materials.TinAlloy.getColor();\n        if (id.equals(\"dust_funnel\")) return Materials.Steel.getColor();"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "line_start": 83,
+      "line_end": 86,
+      "sha256": "14ef867cd970cc8e5b13d0dd374028533db5eabaf797831d1e7063b93b6bce70",
+      "text": "\t@Override public boolean unpaint() {if (mIsPainted) {mIsPainted=F; mRGBa=UT.Code.getRGBInt(mMaterial.fRGBaSolid); updateClientData(); return T;} return F;}\n\t@Override public boolean isPainted() {return mIsPainted || (worldObj != null && isClientSide() && UT.Code.getRGBInt(mMaterial.fRGBaSolid) != mRGBa);}\n\t@Override public boolean paint(int aRGB) {if (aRGB!=mRGBa) {mRGBa=aRGB; mIsPainted=T; return T;} return F;}\n\t@Override public int getPaint() {return mRGBa;}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "line_start": 56,
+      "line_end": 69,
+      "sha256": "ca8e4a33436ae30a6174be8efb5cb7404b3a105a3d72e08b1059c9d27bb46c58",
+      "text": "    public static long color(Level level, BlockPos pos, int index) {\n        var state = level.getBlockState(pos);\n        if (GTConstructionVariants.family(state.getBlock()) != null) {\n            var dye = DyeColor.byId(PaintingRules.vanillaDyeId(index));\n            return FixedConstructionColor.recolor(level, pos, dye) ? PaintingRules.BLOCK_COST : 0;\n        }\n        if (level.getBlockEntity(pos) instanceof Paintable target) {\n            boolean changed = target.isPainted() ? target.mixPaint(PaintingRules.DYES.get(index).rgb())\n                    : target.paint(PaintingRules.DYES.get(index).rgb());\n            return changed ? PaintingRules.BLOCK_COST : 0;\n        }\n        Block target = colorTarget(state.getBlock(), index);\n        return target != null && level.setBlock(pos, target.defaultBlockState(), 3) ? PaintingRules.BLOCK_COST : 0;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+      "line_start": 169,
+      "line_end": 169,
+      "sha256": "9ae9aa0ee67c18b6b95aff5d79c266e6d80f5cfa9ce7ca4b88945aa5aacd518a",
+      "text": "            else page.add(new ItemStack(item));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "line_start": 82,
+      "line_end": 93,
+      "sha256": "5136f5b5a3d222fabdac4a12dd7d55eb6f484189f7cd29ba82258c564349fce9",
+      "text": "\t@Override public String getFacingTool() {return TOOL_wrench;}\n\t@Override public short getFacing() {return mFacing;}\n\t@Override public void setFacing(short aFacing) {setPrimaryFacing(UT.Code.side(aFacing));}\n\t@Override public boolean wrenchCanSetFacing(EntityPlayer aPlayer, int aSide) {return TOOL_wrench.equals(getFacingTool()) && getValidSides()[aSide] && (aPlayer == null || aPlayer.getHeldItem() == null || !ItemsGT.SPECIAL_CASE_TOOLS.contains(aPlayer.getHeldItem(), T));}\n\t@Override public boolean isConnectedWrenchingOverlay(ItemStack aStack, byte aSide) {return aSide == mFacing;}\n\t\n\tpublic void setPrimaryFacing(byte aFacing) {if (isClientSide() || aFacing == mFacing) return; byte oFacing = mFacing; mFacing = aFacing; updateClientData(); causeBlockUpdate(); onFacingChange(oFacing); checkCoverValidity(); doEnetUpdate(); if (hasMultiBlockMachineRelevantData()) ITileEntityMachineBlockUpdateable.Util.causeMachineUpdate(this, F);}\n\t\n\t// Stuff to Override\n\tpublic byte getDefaultSide() {return SIDE_UP;}\n\tpublic boolean[] getValidSides() {return SIDES_VALID;}\n\tpublic void onFacingChange(byte aPreviousFacing) {/**/}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "line_start": 27,
+      "line_end": 29,
+      "sha256": "e81ddc20ddb7f3e5cca2eef56d2836f6a3816d54a1381825455acfb4784dab66",
+      "text": "    public static ToolInteractionSpec describe(BlockState state, ItemStack tool) {\n        return state.getBlock() instanceof ToolInteractionTarget target ? target.toolInteraction(state, tool) : null;\n    }"
+    }
+  ],
+  "readability": {
+    "baseline": "704feee5c5c68a7b3fb7855a294c51386cabceae",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/AdvancedButtonBlock.java": {
+        "before_raw_sha256": "f37d9b146059f00c7a31027881c9268390a015b1d564fc4e3c537875785f2e4b",
+        "after_raw_sha256": "decd3c430681f69ffa93f0857e7135a187ef532e06618bd99cc243b2cd9cc6cc",
+        "before_lines": 212,
+        "after_lines": 238,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1748,
+            "execution_sha256": "47abdb95f16314884486c5daf7153e540d5e5e304de2242d3c0f96fd74292ebe",
+            "literal_positions_sha256": "940731c857cd0fd6aa31a74245193f0c27a811b3f1eef1a9e9edce015252117f",
+            "literal_count": 57,
+            "after_actual_execution_sha256": "47abdb95f16314884486c5daf7153e540d5e5e304de2242d3c0f96fd74292ebe",
+            "normalized_execution_equal": true
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2015,
+            "execution_sha256": "5bc220dac152b46571374ebb0eeedbb510dc7df257828bfb4d8487ff95b0be9b",
+            "literal_positions_sha256": "9155d9b7286c699e8f0879de778a6cf2c2ed83045fa4231edd31e0f3a68cb010",
+            "literal_count": 57,
+            "after_actual_execution_sha256": "5bc220dac152b46571374ebb0eeedbb510dc7df257828bfb4d8487ff95b0be9b",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {},
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/AdvancedButtonBlockEntity.java": {
+        "before_raw_sha256": "62cbd5e41acd7ad61c0acd0cd7e5f10f118d3929b2f0b33698f4e09cab8626f3",
+        "after_raw_sha256": "c426e99397dbfdfea4b03d2785a091d9f05a3a64a83aae6357bddf69c7bceed1",
+        "before_lines": 192,
+        "after_lines": 219,
+        "comment_corrections": [
+          [
+            "/** GT6 remoteActivate uses the same state transition without a click sound. */",
+            "/** Local press transition; the original remote-activation adapter is not connected. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1222,
+            "execution_sha256": "904bb8d354831617953851205f5e86ed18eb68045eb7ef92b2eb8e438eec3d55",
+            "literal_positions_sha256": "96ffe37f70711f97cad662c2458b37fba5990fdef76263d59c003825f046fd81",
+            "literal_count": 56,
+            "after_actual_execution_sha256": "904bb8d354831617953851205f5e86ed18eb68045eb7ef92b2eb8e438eec3d55",
+            "normalized_execution_equal": true
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1301,
+            "execution_sha256": "42f237f13ff70a3db031f7df17e942972d593299a7f885edb0ce7c77d84fec8d",
+            "literal_positions_sha256": "e6d4ae4ba05779927b133db6ef0e5ebf6b9976dd2887703cdff3947e194ad806",
+            "literal_count": 56,
+            "after_actual_execution_sha256": "42f237f13ff70a3db031f7df17e942972d593299a7f885edb0ce7c77d84fec8d",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {},
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/CrankBlock.java": {
+        "before_raw_sha256": "03af5e9ad460033f774d048311469ff2470a0fabaa98c94e178f2bbedc2560e3",
+        "after_raw_sha256": "fd4d276438e0de2c6d1fe8859f4ded9a90a09ed32b65c99b14407a7a8b34d542",
+        "before_lines": 269,
+        "after_lines": 291,
+        "comment_corrections": [
+          [
+            "// both hands fire use(); handling the off hand double-triggers\n        // (insert+extract in one click, double withdrawals, armor swap-backs)",
+            "// Only the main hand drives the crank; processing the off hand would send a second packet."
+          ],
+          [
+            " *       the block state {@link #ACTIVE} here, and a click arms a pulse of {@link #ACTIVE_TICKS} ticks:\n *       the same \"the crank turns for a moment, then stops\" behaviour without a block entity.",
+            " *       the block state {@link #ACTIVE} here. A click queues a pulse-ending tick after\n *       {@link #ACTIVE_TICKS}; that deadline is not tied to the current player target."
+          ],
+          [
+            "     * Port model of GT6's {@code mActive}: how long one turn keeps the crank active. GT6 keeps it set\n     * for as long as a player keeps targeting the crank ({@code :76-96}); half a second is the port's\n     * stand-in for \"the player let go\".",
+            "     * Delay requested for a queued stop tick. Native tick de-duplication keeps an existing\n     * deadline when the same crank is clicked again; this is not a player-target timer."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1536,
+            "execution_sha256": "5b2f1bca8cd4bf3a063b120918970814dd36c00921140de5e7c05644ef416137",
+            "literal_positions_sha256": "72d171369529e1ef99d19ff3164759bf25a86db286f663fb48e8f3c61d81e762",
+            "literal_count": 54,
+            "after_actual_execution_sha256": "f0a476de684a33eec3a14295559df57f8ab06bebe5d9b859bd837b1f192a374a",
+            "normalized_execution_equal": true
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1786,
+            "execution_sha256": "5812b31f5e9f863294ac6a9a733f929f909337359753378df7e250718261f8db",
+            "literal_positions_sha256": "3e971838f1f349363bfe842c907b7084c81d56cf10a71ddd26ebb0a279b1b217",
+            "literal_count": 54,
+            "after_actual_execution_sha256": "227b2545bef5b8607e9bb51af0007002740094ba5632256747381f8260ce7edf",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {
+          "packetSize": "speed"
+        },
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/AutomaticToolClientColors.java": {
+        "before_raw_sha256": "d8380ab9e4bbf450717a35286b1fc300e51e47cff9e2698e6263462e5036f9b8",
+        "after_raw_sha256": "378262799fba138b98a1aa52ee69288cc18be27cfe8e3b54339238a17eeefc2d",
+        "before_lines": 54,
+        "after_lines": 61,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 511,
+            "execution_sha256": "461e48b7476280a3a1e2ed2104482f958d526c36660aec2f5eff87378c85c542",
+            "literal_positions_sha256": "07f3a847f26d795ad5dcd4b0e282395fef5b71ea809caa5c109173216e12b8ca",
+            "literal_count": 9,
+            "after_actual_execution_sha256": "461e48b7476280a3a1e2ed2104482f958d526c36660aec2f5eff87378c85c542",
+            "normalized_execution_equal": true
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 517,
+            "execution_sha256": "37fcc2e28380d40964dc3479531445a1f67078bcacf10b782a837974db740273",
+            "literal_positions_sha256": "59672ef109de19305142984301ad4ccb1c41340dd3ee0bba2864c6a19e0b869e",
+            "literal_count": 9,
+            "after_actual_execution_sha256": "37fcc2e28380d40964dc3479531445a1f67078bcacf10b782a837974db740273",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {},
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CrankClientColors.java": {
+        "before_raw_sha256": "ec113ce31f2202c7091d1cdf8912d7508adff01a1a2e1bf1f77efd0491c330f8",
+        "after_raw_sha256": "2a8e2c00de2adf8d2ec8ccde129a84828d0dfb273052e813db10e9afdc1f66a5",
+        "before_lines": 22,
+        "after_lines": 24,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 258,
+            "execution_sha256": "7651a2a055e458081ab491b91d7829a02bebb4dc3f8358e6261cb9d469a021ff",
+            "literal_positions_sha256": "e38decca89cc1073c1f0470204ec9ced7c47c94ad04f53500d397be92106c6e9",
+            "literal_count": 8,
+            "after_actual_execution_sha256": "7651a2a055e458081ab491b91d7829a02bebb4dc3f8358e6261cb9d469a021ff",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {},
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/RemoteActivatable.java": {
+        "before_raw_sha256": "3edb610958b93fd0622826d4f8d19ba2f545a0ed9f5888fa4cb2679feccfd23c",
+        "after_raw_sha256": "5176bf7157eb87413c34a9f949232cd4275ae42170b1197ec4e53fe91e0f3185",
+        "before_lines": 106,
+        "after_lines": 21,
+        "comment_corrections": [
+          [
+            "/**\n * GT6 {@code ITileEntityRemoteActivateable}\n * ({@code gregapi/tileentity/ITileEntityRemoteActivateable.java:26-29}) — the block half of the\n * Remote Activator: one method that fires the block and reports whether the remote may keep it.\n *\n * <h2>GT6's contract: the return value is \"keep me bound\", not \"it worked\"</h2>\n *\n * <p>The interface's own javadoc states it ({@code :27}): \"if it should stay inside the List of\n * activate-able things. False for things like Dynamite, that will vanish after use, for example.\"\n * The single caller is the remote itself, {@code Behavior_Remote.onItemRightClick}\n * ({@code Behavior_Remote.java:79-86}): it walks the coordinates bound to the held item, fires every\n * one of them that lies within {@code 128} blocks ({@code :80-82}) and collects the survivors into\n * {@code tToBeKept}. A coordinate is only added back when the block there is a\n * {@code ITileEntityRemoteActivateable} <em>and</em> {@code remoteActivate()} returned {@code T}\n * ({@code :82}); everything else — including a block that just fired and answered {@code F} — is\n * dropped from the item's NBT by the {@code setCoords} that follows ({@code :87}), so the next remote\n * click no longer knows about that coordinate. That is why the return value of a successful firing can\n * legitimately be {@code false}.</p>\n *\n * <h2>GT6's two implementers, and why they disagree</h2>\n *\n * <ul>\n *   <li>{@code MultiTileEntityButtonAdvanced} ({@code :54}) — the advanced button/lever. Its\n *       {@code remoteActivate()} ({@code :197-210}) toggles the block on the server side and returns\n *       {@code T} ({@code :209}), because the switch is still standing afterwards and should stay\n *       bound;</li>\n *   <li>{@code MultiTileEntityDynamite} ({@code :61}) — a placed charge. Its {@code remoteActivate()}\n *       ({@code :193}) returns {@code F} <em>deliberately</em>, while still arming the fuse\n *       ({@code mCountDown = 20}) and refreshing the client: firing a charge removes it from the\n *       remote, because the block is about to vanish. The same method is what the\n *       redstone/burning check calls at {@code :109}, where the arming is what matters and the return\n *       value is discarded.</li>\n * </ul>\n *\n * <h2>Why the port hands the position in</h2>\n *\n * <p>GT6's method takes no arguments because the block entity it is called on already knows its own\n * {@code xCoord}/{@code yCoord}/{@code zCoord}. The port's behaviours are {@code static} and take the\n * position as a parameter (see the class javadoc of {@link ItemBehaviors}), and an implementer may be\n * a plain block with no block entity at all, so {@link BehaviorRemote} passes in the coordinate it\n * resolved — always the coordinate the remote has bound, never a neighbour.</p>\n *\n * <p>Implementers in the port: the dynamite\n * ({@code com.gregtech.gregtech.block.tool.DynamiteBlock}, GT6 {@code MultiTileEntityDynamite:61})\n * detonates and returns {@code false}, GT6's own answer, so a fired charge leaves the remote's list;\n * nothing else implements it yet. {@link BehaviorRemote#useOn} refuses to bind a position whose block\n * does not implement this interface.</p>\n */\n\n/**\n * GT6 {@code ITileEntityRemoteActivateable}\n * ({@code gregapi/tileentity/ITileEntityRemoteActivateable.java:26-29}) — the block half of the\n * Remote Activator: one method that fires the block and reports whether the remote may keep it.\n *\n * <h2>GT6's contract: the return value is \"keep me bound\", not \"it worked\"</h2>\n *\n * <p>The interface's own javadoc states it ({@code :27}): \"if it should stay inside the List of\n * activate-able things. False for things like Dynamite, that will vanish after use, for example.\"\n * The single caller is the remote itself, {@code Behavior_Remote.onItemRightClick}\n * ({@code Behavior_Remote.java:79-86}): it walks the coordinates bound to the held item, fires every\n * one of them that lies within {@code 128} blocks ({@code :80-82}) and collects the survivors into\n * {@code tToBeKept}. A coordinate is only added back when the block there is a\n * {@code ITileEntityRemoteActivateable} <em>and</em> {@code remoteActivate()} returned {@code T}\n * ({@code :82}); everything else — including a block that just fired and answered {@code F} — is\n * dropped from the item's NBT by the {@code setCoords} that follows ({@code :87}), so the next remote\n * click no longer knows about that coordinate. That is why the return value of a successful firing can\n * legitimately be {@code false}.</p>\n *\n * <h2>GT6's two implementers, and why they disagree</h2>\n *\n * <ul>\n *   <li>{@code MultiTileEntityButtonAdvanced} ({@code :54}) — the advanced button/lever. Its\n *       {@code remoteActivate()} ({@code :197-210}) toggles the block on the server side and returns\n *       {@code T} ({@code :209}), because the switch is still standing afterwards and should stay\n *       bound;</li>\n *   <li>{@code MultiTileEntityDynamite} ({@code :61}) — a placed charge. Its {@code remoteActivate()}\n *       ({@code :193}) returns {@code F} <em>deliberately</em>, while still arming the fuse\n *       ({@code mCountDown = 20}) and refreshing the client: firing a charge removes it from the\n *       remote, because the block is about to vanish. The same method is what the\n *       redstone/burning check calls at {@code :109}, where the arming is what matters and the return\n *       value is discarded.</li>\n * </ul>\n *\n * <h2>Why the port hands the position in</h2>\n *\n * <p>GT6's method takes no arguments because the block entity it is called on already knows its own\n * {@code xCoord}/{@code yCoord}/{@code zCoord}. The port's behaviours are {@code static} and take the\n * position as a parameter (see the class javadoc of {@link ManualToolBehaviorAccess}), and an implementer may be\n * a plain block with no block entity at all, so {@link BehaviorRemote} passes in the coordinate it\n * resolved — always the coordinate the remote has bound, never a neighbour.</p>\n *\n * <p>Implementers in the port: the dynamite\n * ({@code com.gregtech.gregtech.block.tool.DynamiteBlock}, GT6 {@code MultiTileEntityDynamite:61})\n * detonates and returns {@code false}, GT6's own answer, so a fired charge leaves the remote's list;\n * nothing else implements it yet. {@link BehaviorRemote#useOn} refuses to bind a position whose block\n * does not implement this interface.</p>\n */",
+            "/**\n * Target contract for the remote activator, implemented by a block or block entity.\n *\n * <p>Return {@code true} to keep the coordinate bound after activation, or {@code false} to remove\n * it. A false return does not by itself mean activation failed: a dynamite charge deliberately\n * leaves the remote's list after its fuse is armed.\n *\n * <p>{@link BehaviorRemote} queries loaded coordinates, checking the block entity before the block.\n * The original advanced button also implements this contract; the port's local button press has\n * not yet been connected to that remote path.\n */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 46,
+            "execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0,
+            "after_actual_execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c",
+            "normalized_execution_equal": true
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 46,
+            "execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c",
+            "literal_positions_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "literal_count": 0,
+            "after_actual_execution_sha256": "107fe44cd8f3afb231eb30d2435b860b54cd029b7843c6d980840b0f649e2a0c",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {},
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java": {
+        "before_raw_sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+        "after_raw_sha256": "6e553ef4bd54c7197910b858df853e792d082f2c70cf6650a4d16bf5422b6476",
+        "before_lines": 48,
+        "after_lines": 48,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 312,
+            "execution_sha256": "a94078ec1a8913fa1813d9cf4ee08b28731b73912f16611ce7f86dceef73d353",
+            "literal_positions_sha256": "7c6f94318400439acca90e54e6ef794a78e36066b9624cbb4a5aa2574d520401",
+            "literal_count": 34,
+            "after_actual_execution_sha256": "49a8e5b753f2177fd28cac03aae2c57a9b9d03b26aa65c590e97ee4aab7fc118",
+            "normalized_execution_equal": true
+          }
+        ],
+        "local_identifier_renames": {
+          "adjustedStrength": "s",
+          "weaknessDivisor": "w"
+        },
+        "normalization": "Named local variables normalized to their original unique identifiers; comments and literals are never renamed."
+      }
+    }
+  },
+  "numeric_core_probe": {
+    "scope": "Actual core numeric helper plus original arithmetic fragments only; no block entities, player, native world or game.",
+    "result": {
+      "strength_cases": 30,
+      "ordinary_packet_cases": 4225,
+      "duration_cases": 12,
+      "duration_differences": [
+        {
+          "input": 9223372036854775806,
+          "step": 20,
+          "original": -9223372036854775790,
+          "current": 20
+        },
+        {
+          "input": 9223372036854775807,
+          "step": 1,
+          "original": -9223372036854775808,
+          "current": 20
+        },
+        {
+          "input": 9223372036854775807,
+          "step": 20,
+          "original": -9223372036854775789,
+          "current": 20
+        }
+      ],
+      "amplifier_200_strength_only": {
+        "original": -528,
+        "current": -1624
+      }
+    },
+    "original_fragments": {
+      "length": "if (aSneaking) mMaxLength+=20; else mMaxLength++;",
+      "strength": "if (aSneaking) {\n\t\t\t\tif (--mStrength <= 0) mStrength = 15;\n\t\t\t} else {\n\t\t\t\tmStrength%=15; mStrength++;\n\t\t\t}",
+      "divup": "return aNumber / aDivider + (aNumber % aDivider == 0 ? 0 : 1);",
+      "bind6": "return (byte) Math.max(0, Math.min(        63, aBoundValue));",
+      "packet": "-UT.Code.divup(8L*UT.Entities.pot2Strength(tPlayer), UT.Entities.pot1Weakness(tPlayer))"
+    },
+    "source_sha256": "6e553ef4bd54c7197910b858df853e792d082f2c70cf6650a4d16bf5422b6476",
+    "probe_sha256": "dd8347f95f002bce99fa57c5a609d05c9b2fd7c48621ddf60b1b922ca42615ab",
+    "compiler_output": "",
+    "jdk": "java version \"17.0.10\" 2024-01-16 LTS\nJava(TM) SE Runtime Environment (build 17.0.10+11-LTS-240)\nJava HotSpot(TM) 64-Bit Server VM (build 17.0.10+11-LTS-240, mixed mode, sharing)\n",
+    "game_or_gradle_run": false
+  },
+  "native_scheduler_evidence": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/ticks/LevelChunkTicks.class",
+      "entry_sha256": "780c74134211950c86f3bfe6f60b1caa561c417a74352856bbed84c1f2ffd011",
+      "output": "work/button-crank-audit-20261022/LevelChunkTicks-forge.javap.txt",
+      "output_sha256": "3b87401b2c42be7aea338b796dad031f54b0aa732b8a9d04342518d0cbe55820",
+      "evidence": "Compiled from \"LevelChunkTicks.java\"\npublic class net.minecraft.world.ticks.LevelChunkTicks<T> implements net.minecraft.world.ticks.SerializableTickContainer<T>, net.minecraft.world.ticks.TickContainerAccess<T> {\n  private final java.util.Queue<net.minecraft.world.ticks.ScheduledTick<T>> tickQueue;\n\n  private java.util.List<net.minecraft.world.ticks.SavedTick<T>> pendingTicks;\n\n  private final java.util.Set<net.minecraft.world.ticks.ScheduledTick<?>> ticksPerPosition;\n\n  private java.util.function.BiConsumer<net.minecraft.world.ticks.LevelChunkTicks<T>, net.minecraft.world.ticks.ScheduledTick<T>> onTickAdded;\n\n  public net.minecraft.world.ticks.LevelChunkTicks();\n    Code:\n         0: aload_0\n         1: invokespecial #42                 // Method java/lang/Object.\"<init>\":()V\n         4: aload_0\n         5: new           #44                 // class java/util/PriorityQueue\n         8: dup\n         9: getstatic     #50                 // Field net/minecraft/world/ticks/ScheduledTick.DRAIN_ORDER:Ljava/util/Comparator;\n        12: invokespecial #53                 // Method java/util/PriorityQueue.\"<init>\":(Ljava/util/Comparator;)V\n        15: putfield      #55                 // Field tickQueue:Ljava/util/Queue;\n        18: aload_0\n        19: new           #57                 // class it/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet\n        22: dup\n        23: getstatic     #61                 // Field net/minecraft/world/ticks/ScheduledTick.UNIQUE_TICK_HASH:Lit/unimi/dsi/fastutil/Hash$Strategy;\n        26: invokespecial #64                 // Method it/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet.\"<init>\":(Lit/unimi/dsi/fastutil/Hash$Strategy;)V\n        29: putfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n        32: return\n\n  public net.minecraft.world.ticks.LevelChunkTicks(java.util.List<net.minecraft.world.ticks.SavedTick<T>>);\n    Code:\n         0: aload_0\n         1: invokespecial #42                 // Method java/lang/Object.\"<init>\":()V\n         4: aload_0\n         5: new           #44                 // class java/util/PriorityQueue\n         8: dup\n         9: getstatic     #50                 // Field net/minecraft/world/ticks/ScheduledTick.DRAIN_ORDER:Ljava/util/Comparator;\n        12: invokespecial #53                 // Method java/util/PriorityQueue.\"<init>\":(Ljava/util/Comparator;)V\n        15: putfield      #55                 // Field tickQueue:Ljava/util/Queue;\n        18: aload_0\n        19: new           #57                 // class it/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet\n        22: dup\n        23: getstatic     #61                 // Field net/minecraft/world/ticks/ScheduledTick.UNIQUE_TICK_HASH:Lit/unimi/dsi/fastutil/Hash$Strategy;\n        26: invokespecial #64                 // Method it/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet.\"<init>\":(Lit/unimi/dsi/fastutil/Hash$Strategy;)V\n        29: putfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n        32: aload_0\n        33: aload_1\n        34: putfield      #73                 // Field pendingTicks:Ljava/util/List;\n        37: aload_1\n        38: invokeinterface #79,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;\n        43: astore_2\n        44: aload_2\n        45: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z\n        50: ifeq          87\n        53: aload_2\n        54: invokeinterface #89,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;\n        59: checkcast     #91                 // class net/minecraft/world/ticks/SavedTick\n        62: astore_3\n        63: aload_0\n        64: getfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n        67: aload_3\n        68: invokevirtual #94                 // Method net/minecraft/world/ticks/SavedTick.type:()Ljava/lang/Object;\n        71: aload_3\n        72: invokevirtual #98                 // Method net/minecraft/world/ticks/SavedTick.pos:()Lnet/minecraft/core/BlockPos;\n        75: invokestatic  #102                // Method net/minecraft/world/ticks/ScheduledTick.probe:(Ljava/lang/Object;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/ticks/ScheduledTick;\n        78: invokeinterface #108,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z\n        83: pop\n        84: goto          44\n        87: return\n\n  public void setOnTickAdded(java.util.function.BiConsumer<net.minecraft.world.ticks.LevelChunkTicks<T>, net.minecraft.world.ticks.ScheduledTick<T>>);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: putfield      #117                // Field onTickAdded:Ljava/util/function/BiConsumer;\n         5: return\n\n  public net.minecraft.world.ticks.ScheduledTick<T> peek();\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: invokeinterface #125,  1          // InterfaceMethod java/util/Queue.peek:()Ljava/lang/Object;\n         9: checkcast     #46                 // class net/minecraft/world/ticks/ScheduledTick\n        12: areturn\n\n  public net.minecraft.world.ticks.ScheduledTick<T> poll();\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: invokeinterface #128,  1          // InterfaceMethod java/util/Queue.poll:()Ljava/lang/Object;\n         9: checkcast     #46                 // class net/minecraft/world/ticks/ScheduledTick\n        12: astore_1\n        13: aload_1\n        14: ifnull        28\n        17: aload_0\n        18: getfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n        21: aload_1\n        22: invokeinterface #131,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z\n        27: pop\n        28: aload_1\n        29: areturn\n\n  public void schedule(net.minecraft.world.ticks.ScheduledTick<T>);\n    Code:\n         0: aload_0\n         1: getfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n         4: aload_1\n         5: invokeinterface #108,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z\n        10: ifeq          18\n        13: aload_0\n        14: aload_1\n        15: invokevirtual #140                // Method scheduleUnchecked:(Lnet/minecraft/world/ticks/ScheduledTick;)V\n        18: return\n\n  private void scheduleUnchecked(net.minecraft.world.ticks.ScheduledTick<T>);\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: aload_1\n         5: invokeinterface #142,  2          // InterfaceMethod java/util/Queue.add:(Ljava/lang/Object;)Z\n        10: pop\n        11: aload_0\n        12: getfield      #117                // Field onTickAdded:Ljava/util/function/BiConsumer;\n        15: ifnull        29\n        18: aload_0\n        19: getfield      #117                // Field onTickAdded:Ljava/util/function/BiConsumer;\n        22: aload_0\n        23: aload_1\n        24: invokeinterface #148,  3          // InterfaceMethod java/util/function/BiConsumer.accept:(Ljava/lang/Object;Ljava/lang/Object;)V\n        29: return\n\n  public boolean hasScheduledTick(net.minecraft.core.BlockPos, T);\n    Code:\n         0: aload_0\n         1: getfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n         4: aload_2\n         5: aload_1\n         6: invokestatic  #102                // Method net/minecraft/world/ticks/ScheduledTick.probe:(Ljava/lang/Object;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/ticks/ScheduledTick;\n         9: invokeinterface #155,  2          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z\n        14: ireturn\n\n  public void removeIf(java.util.function.Predicate<net.minecraft.world.ticks.ScheduledTick<T>>);\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: invokeinterface #164,  1          // InterfaceMethod java/util/Queue.iterator:()Ljava/util/Iterator;\n         9: astore_2\n        10: aload_2\n        11: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z\n        16: ifeq          59\n        19: aload_2\n        20: invokeinterface #89,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;\n        25: checkcast     #46                 // class net/minecraft/world/ticks/ScheduledTick\n        28: astore_3\n        29: aload_1\n        30: aload_3\n        31: invokeinterface #169,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z\n        36: ifeq          56\n        39: aload_2\n        40: invokeinterface #171,  1          // InterfaceMethod java/util/Iterator.remove:()V\n        45: aload_0\n        46: getfield      #66                 // Field ticksPerPosition:Ljava/util/Set;\n        49: aload_3\n        50: invokeinterface #131,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z\n        55: pop\n        56: goto          10\n        59: return\n\n  public java.util.stream.Stream<net.minecraft.world.ticks.ScheduledTick<T>> getAll();\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: invokeinterface #183,  1          // InterfaceMethod java/util/Queue.stream:()Ljava/util/stream/Stream;\n         9: areturn\n\n  public int count();\n    Code:\n         0: aload_0\n         1: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n         4: invokeinterface #188,  1          // InterfaceMethod java/util/Queue.size:()I\n         9: aload_0\n        10: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        13: ifnull        28\n        16: aload_0\n        17: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        20: invokeinterface #189,  1          // InterfaceMethod java/util/List.size:()I\n        25: goto          29\n        28: iconst_0\n        29: iadd\n        30: ireturn\n\n  public net.minecraft.nbt.ListTag save(long, java.util.function.Function<T, java.lang.String>);\n    Code:\n         0: new           #194                // class net/minecraft/nbt/ListTag\n         3: dup\n         4: invokespecial #195                // Method net/minecraft/nbt/ListTag.\"<init>\":()V\n         7: astore        4\n         9: aload_0\n        10: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        13: ifnull        64\n        16: aload_0\n        17: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        20: invokeinterface #79,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;\n        25: astore        5\n        27: aload         5\n        29: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z\n        34: ifeq          64\n        37: aload         5\n        39: invokeinterface #89,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;\n        44: checkcast     #91                 // class net/minecraft/world/ticks/SavedTick\n        47: astore        6\n        49: aload         4\n        51: aload         6\n        53: aload_3\n        54: invokevirtual #198                // Method net/minecraft/world/ticks/SavedTick.save:(Ljava/util/function/Function;)Lnet/minecraft/nbt/CompoundTag;\n        57: invokevirtual #199                // Method net/minecraft/nbt/ListTag.add:(Ljava/lang/Object;)Z\n        60: pop\n        61: goto          27\n        64: aload_0\n        65: getfield      #55                 // Field tickQueue:Ljava/util/Queue;\n        68: invokeinterface #164,  1          // InterfaceMethod java/util/Queue.iterator:()Ljava/util/Iterator;\n        73: astore        5\n        75: aload         5\n        77: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z\n        82: ifeq          113\n        85: aload         5\n        87: invokeinterface #89,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;\n        92: checkcast     #46                 // class net/minecraft/world/ticks/ScheduledTick\n        95: astore        6\n        97: aload         4\n        99: aload         6\n       101: aload_3\n       102: lload_1\n       103: invokestatic  #205                // Method net/minecraft/world/ticks/SavedTick.saveTick:(Lnet/minecraft/world/ticks/ScheduledTick;Ljava/util/function/Function;J)Lnet/minecraft/nbt/CompoundTag;\n       106: invokevirtual #199                // Method net/minecraft/nbt/ListTag.add:(Ljava/lang/Object;)Z\n       109: pop\n       110: goto          75\n       113: aload         4\n       115: areturn\n\n  public void unpack(long);\n    Code:\n         0: aload_0\n         1: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n         4: ifnull        69\n         7: aload_0\n         8: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        11: invokeinterface #189,  1          // InterfaceMethod java/util/List.size:()I\n        16: ineg\n        17: istore_3\n        18: aload_0\n        19: getfield      #73                 // Field pendingTicks:Ljava/util/List;\n        22: invokeinterface #79,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;\n        27: astore        4\n        29: aload         4\n        31: invokeinterface #85,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z\n        36: ifeq          69\n        39: aload         4\n        41: invokeinterface #89,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;\n        46: checkcast     #91                 // class net/minecraft/world/ticks/SavedTick\n        49: astore        5\n        51: aload_0\n        52: aload         5\n        54: lload_1\n        55: iload_3\n        56: iinc          3, 1\n        59: i2l\n        60: invokevirtual #218                // Method net/minecraft/world/ticks/SavedTick.unpack:(JJ)Lnet/minecraft/world/ticks/ScheduledTick;\n        63: invokevirtual #140                // Method scheduleUnchecked:(Lnet/minecraft/world/ticks/ScheduledTick;)V\n        66: goto          29\n        69: aload_0\n        70: aconst_null\n        71: putfield      #73                 // Field pendingTicks:Ljava/util/List;\n        74: return\n\n  public static <T> net.minecraft.world.ticks.LevelChunkTicks<T> load(net.minecraft.nbt.ListTag, java.util.function.Function<java.lang.String, java.util.Optional<T>>, net.minecraft.world.level.ChunkPos);\n    Code:\n         0: invokestatic  #227                // Method com/google/common/collect/ImmutableList.builder:()Lcom/google/common/collect/ImmutableList$Builder;\n         3: astore_3\n         4: aload_0\n         5: aload_1\n         6: aload_2\n         7: aload_3\n         8: dup\n         9: invokestatic  #233                // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;\n        12: pop\n        13: invokedynamic #251,  0            // InvokeDynamic #0:accept:(Lcom/google/common/collect/ImmutableList$Builder;)Ljava/util/function/Consumer;\n        18: invokestatic  #255                // Method net/minecraft/world/ticks/SavedTick.loadTickList:(Lnet/minecraft/nbt/ListTag;Ljava/util/function/Function;Lnet/minecraft/world/level/ChunkPos;Ljava/util/function/Consumer;)V\n        21: new           #2                  // class net/minecraft/world/ticks/LevelChunkTicks\n        24: dup\n        25: aload_3\n        26: invokevirtual #259                // Method com/google/common/collect/ImmutableList$Builder.build:()Lcom/google/common/collect/ImmutableList;\n        29: invokespecial #261                // Method \"<init>\":(Ljava/util/List;)V\n        32: areturn\n\n  public net.minecraft.nbt.Tag save(long, java.util.function.Function);\n    Code:\n         0: aload_0\n         1: lload_1\n         2: aload_3\n         3: invokevirtual #271                // Method save:(JLjava/util/function/Function;)Lnet/minecraft/nbt/ListTag;\n         6: areturn\n}\n"
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/ticks/ScheduledTick$1.class",
+      "entry_sha256": "75cd1966999bc8527d72b94e03a3ee5aa1a53186f6617494407499272a4810f0",
+      "output": "work/button-crank-audit-20261022/ScheduledTickStrategy-forge.javap.txt",
+      "output_sha256": "090c2897304b39c488d9f71f294b2363a6ffa28392fc8fc9d8e826a2e09d06e7",
+      "evidence": "Compiled from \"ScheduledTick.java\"\nclass net.minecraft.world.ticks.ScheduledTick$1 implements it.unimi.dsi.fastutil.Hash$Strategy<net.minecraft.world.ticks.ScheduledTick<?>> {\n  net.minecraft.world.ticks.ScheduledTick$1();\n    Code:\n         0: aload_0\n         1: invokespecial #17                 // Method java/lang/Object.\"<init>\":()V\n         4: return\n\n  public int hashCode(net.minecraft.world.ticks.ScheduledTick<?>);\n    Code:\n         0: bipush        31\n         2: aload_1\n         3: invokevirtual #26                 // Method net/minecraft/world/ticks/ScheduledTick.pos:()Lnet/minecraft/core/BlockPos;\n         6: invokevirtual #31                 // Method net/minecraft/core/BlockPos.hashCode:()I\n         9: imul\n        10: aload_1\n        11: invokevirtual #35                 // Method net/minecraft/world/ticks/ScheduledTick.type:()Ljava/lang/Object;\n        14: invokevirtual #36                 // Method java/lang/Object.hashCode:()I\n        17: iadd\n        18: ireturn\n\n  public boolean equals(net.minecraft.world.ticks.ScheduledTick<?>, net.minecraft.world.ticks.ScheduledTick<?>);\n    Code:\n         0: aload_1\n         1: aload_2\n         2: if_acmpne     7\n         5: iconst_1\n         6: ireturn\n         7: aload_1\n         8: ifnull        15\n        11: aload_2\n        12: ifnonnull     17\n        15: iconst_0\n        16: ireturn\n        17: aload_1\n        18: invokevirtual #35                 // Method net/minecraft/world/ticks/ScheduledTick.type:()Ljava/lang/Object;\n        21: aload_2\n        22: invokevirtual #35                 // Method net/minecraft/world/ticks/ScheduledTick.type:()Ljava/lang/Object;\n        25: if_acmpne     46\n        28: aload_1\n        29: invokevirtual #26                 // Method net/minecraft/world/ticks/ScheduledTick.pos:()Lnet/minecraft/core/BlockPos;\n        32: aload_2\n        33: invokevirtual #26                 // Method net/minecraft/world/ticks/ScheduledTick.pos:()Lnet/minecraft/core/BlockPos;\n        36: invokevirtual #46                 // Method net/minecraft/core/BlockPos.equals:(Ljava/lang/Object;)Z\n        39: ifeq          46\n        42: iconst_1\n        43: goto          47\n        46: iconst_0\n        47: ireturn\n\n  public boolean equals(java.lang.Object, java.lang.Object);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: checkcast     #10                 // class net/minecraft/world/ticks/ScheduledTick\n         5: aload_2\n         6: checkcast     #10                 // class net/minecraft/world/ticks/ScheduledTick\n         9: invokevirtual #51                 // Method equals:(Lnet/minecraft/world/ticks/ScheduledTick;Lnet/minecraft/world/ticks/ScheduledTick;)Z\n        12: ireturn\n\n  public int hashCode(java.lang.Object);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: checkcast     #10                 // class net/minecraft/world/ticks/ScheduledTick\n         5: invokevirtual #54                 // Method hashCode:(Lnet/minecraft/world/ticks/ScheduledTick;)I\n         8: ireturn\n}\n"
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/ticks/LevelChunkTicks.java",
+      "entry_sha256": "7fd5627c5669ccdd069bb4a517f89bf46649fdee18811f77ecbb76e1fe50732a",
+      "output": "work/button-crank-audit-20261022/LevelChunkTicks.java",
+      "output_sha256": "5dfd6346d91e0d9554c2e0e13733450f9c110bac31606b791f17bd1c3c77e804",
+      "evidence": "package net.minecraft.world.ticks;\n\nimport com.google.common.collect.ImmutableList;\nimport com.google.common.collect.ImmutableList.Builder;\nimport it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;\nimport java.util.Iterator;\nimport java.util.List;\nimport java.util.Optional;\nimport java.util.PriorityQueue;\nimport java.util.Queue;\nimport java.util.Set;\nimport java.util.function.BiConsumer;\nimport java.util.function.Function;\nimport java.util.function.Predicate;\nimport java.util.stream.Stream;\nimport javax.annotation.Nullable;\nimport net.minecraft.core.BlockPos;\nimport net.minecraft.nbt.ListTag;\nimport net.minecraft.world.level.ChunkPos;\n\npublic class LevelChunkTicks<T> implements SerializableTickContainer<T>, TickContainerAccess<T> {\n    private final Queue<ScheduledTick<T>> tickQueue = new PriorityQueue<>(ScheduledTick.DRAIN_ORDER);\n    @Nullable\n    private List<SavedTick<T>> pendingTicks;\n    private final Set<ScheduledTick<?>> ticksPerPosition = new ObjectOpenCustomHashSet<>(ScheduledTick.UNIQUE_TICK_HASH);\n    @Nullable\n    private BiConsumer<LevelChunkTicks<T>, ScheduledTick<T>> onTickAdded;\n\n    public LevelChunkTicks() {\n    }\n\n    public LevelChunkTicks(List<SavedTick<T>> p_193169_) {\n        this.pendingTicks = p_193169_;\n\n        for (SavedTick<T> savedtick : p_193169_) {\n            this.ticksPerPosition.add(ScheduledTick.probe(savedtick.type(), savedtick.pos()));\n        }\n    }\n\n    public void setOnTickAdded(@Nullable BiConsumer<LevelChunkTicks<T>, ScheduledTick<T>> p_193182_) {\n        this.onTickAdded = p_193182_;\n    }\n\n    @Nullable\n    public ScheduledTick<T> peek() {\n        return this.tickQueue.peek();\n    }\n\n    @Nullable\n    public ScheduledTick<T> poll() {\n        ScheduledTick<T> scheduledtick = this.tickQueue.poll();\n        if (scheduledtick != null) {\n            this.ticksPerPosition.remove(scheduledtick);\n        }\n\n        return scheduledtick;\n    }\n\n    @Override\n    public void schedule(ScheduledTick<T> p_193177_) {\n        if (this.ticksPerPosition.add(p_193177_)) {\n            this.scheduleUnchecked(p_193177_);\n        }\n    }\n\n    private void scheduleUnchecked(ScheduledTick<T> p_193194_) {\n        this.tickQueue.add(p_193194_);\n        if (this.onTickAdded != null) {\n            this.onTickAdded.accept(this, p_193194_);\n        }\n    }\n\n    @Override\n    public boolean hasScheduledTick(BlockPos p_193179_, T p_193180_) {\n        return this.ticksPerPosition.contains(ScheduledTick.probe(p_193180_, p_193179_));\n    }\n\n    public void removeIf(Predicate<ScheduledTick<T>> p_193184_) {\n        Iterator<ScheduledTick<T>> iterator = this.tickQueue.iterator();\n\n        while (iterator.hasNext()) {\n            ScheduledTick<T> scheduledtick = iterator.next();\n            if (p_193184_.test(scheduledtick)) {\n                iterator.remove();\n                this.ticksPerPosition.remove(scheduledtick);\n            }\n        }\n    }\n\n    public Stream<ScheduledTick<T>> getAll() {\n        return this.tickQueue.stream();\n    }\n\n    @Override\n    public int count() {\n        return this.tickQueue.size() + (this.pendingTicks != null ? this.pendingTicks.size() : 0);\n    }\n\n    public ListTag save(long p_193174_, Function<T, String> p_193175_) {\n        ListTag listtag = new ListTag();\n        if (this.pendingTicks != null) {\n            for (SavedTick<T> savedtick : this.pendingTicks) {\n                listtag.add(savedtick.save(p_193175_));\n            }\n        }\n\n        for (ScheduledTick<T> scheduledtick : this.tickQueue) {\n            listtag.add(SavedTick.saveTick(scheduledtick, p_193175_, p_193174_));\n        }\n\n        return listtag;\n    }\n\n    public void unpack(long p_193172_) {\n        if (this.pendingTicks != null) {\n            int i = -this.pendingTicks.size();\n\n            for (SavedTick<T> savedtick : this.pendingTicks) {\n                this.scheduleUnchecked(savedtick.unpack(p_193172_, (long)(i++)));\n            }\n        }\n\n        this.pendingTicks = null;\n    }\n\n    public static <T> LevelChunkTicks<T> load(ListTag p_193186_, Function<String, Optional<T>> p_193187_, ChunkPos p_193188_) {\n        Builder<SavedTick<T>> builder = ImmutableList.builder();\n        SavedTick.loadTickList(p_193186_, p_193187_, p_193188_, builder::add);\n        return new LevelChunkTicks<>(builder.build());\n    }\n}\n"
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/ticks/ScheduledTick.java",
+      "entry_sha256": "289dd6e77aa2f84cd3a7cdd0d9f149136e41e7db40868b6c5ed05b088d6fd35c",
+      "output": "work/button-crank-audit-20261022/ScheduledTick.java",
+      "output_sha256": "c15224896716b2769068982b102884a4adfbb10ba68aa966c947aa589e8dd11a",
+      "evidence": "package net.minecraft.world.ticks;\n\nimport it.unimi.dsi.fastutil.Hash.Strategy;\nimport java.util.Comparator;\nimport javax.annotation.Nullable;\nimport net.minecraft.core.BlockPos;\n\npublic record ScheduledTick<T>(T type, BlockPos pos, long triggerTick, TickPriority priority, long subTickOrder) {\n    public static final Comparator<ScheduledTick<?>> DRAIN_ORDER = (p_193406_, p_193407_) -> {\n        int i = Long.compare(p_193406_.triggerTick, p_193407_.triggerTick);\n        if (i != 0) {\n            return i;\n        } else {\n            i = p_193406_.priority.compareTo(p_193407_.priority);\n            return i != 0 ? i : Long.compare(p_193406_.subTickOrder, p_193407_.subTickOrder);\n        }\n    };\n    public static final Comparator<ScheduledTick<?>> INTRA_TICK_DRAIN_ORDER = (p_193395_, p_193396_) -> {\n        int i = p_193395_.priority.compareTo(p_193396_.priority);\n        return i != 0 ? i : Long.compare(p_193395_.subTickOrder, p_193396_.subTickOrder);\n    };\n    public static final Strategy<ScheduledTick<?>> UNIQUE_TICK_HASH = new Strategy<ScheduledTick<?>>() {\n        public int hashCode(ScheduledTick<?> p_193417_) {\n            return 31 * p_193417_.pos().hashCode() + p_193417_.type().hashCode();\n        }\n\n        public boolean equals(@Nullable ScheduledTick<?> p_193419_, @Nullable ScheduledTick<?> p_193420_) {\n            if (p_193419_ == p_193420_) {\n                return true;\n            } else {\n                return p_193419_ != null && p_193420_ != null ? p_193419_.type() == p_193420_.type() && p_193419_.pos().equals(p_193420_.pos()) : false;\n            }\n        }\n    };\n\n    public ScheduledTick(T p_193383_, BlockPos p_193384_, long p_193385_, long p_193386_) {\n        this(p_193383_, p_193384_, p_193385_, TickPriority.NORMAL, p_193386_);\n    }\n\n    public ScheduledTick(T type, BlockPos pos, long triggerTick, TickPriority priority, long subTickOrder) {\n        pos = pos.immutable();\n        this.type = type;\n        this.pos = pos;\n        this.triggerTick = triggerTick;\n        this.priority = priority;\n        this.subTickOrder = subTickOrder;\n    }\n\n    public static <T> ScheduledTick<T> probe(T p_193398_, BlockPos p_193399_) {\n        return new ScheduledTick<>(p_193398_, p_193399_, 0L, TickPriority.NORMAL, 0L);\n    }\n}\n"
+    }
+  ],
+  "source_geometry_projection": {
+    "button_original": {
+      "down": [
+        4,
+        14,
+        4,
+        12,
+        16,
+        12
+      ],
+      "up": [
+        4,
+        0,
+        4,
+        12,
+        2,
+        12
+      ],
+      "north": [
+        4,
+        4,
+        14,
+        12,
+        12,
+        16
+      ],
+      "south": [
+        4,
+        4,
+        0,
+        12,
+        12,
+        2
+      ],
+      "west": [
+        14,
+        4,
+        4,
+        16,
+        12,
+        12
+      ],
+      "east": [
+        0,
+        4,
+        4,
+        2,
+        12,
+        12
+      ]
+    },
+    "button_current": {
+      "north": [
+        4,
+        4,
+        14,
+        12,
+        12,
+        16
+      ],
+      "east": [
+        0,
+        4,
+        4,
+        2,
+        12,
+        12
+      ],
+      "south": [
+        4,
+        4,
+        0,
+        12,
+        12,
+        2
+      ],
+      "west": [
+        14,
+        4,
+        4,
+        16,
+        12,
+        12
+      ],
+      "up": [
+        4,
+        0,
+        4,
+        12,
+        2,
+        12
+      ],
+      "down": [
+        4,
+        14,
+        4,
+        12,
+        16,
+        12
+      ]
+    },
+    "crank_original_mapped_to_handle": {
+      "down": [
+        2,
+        13,
+        2,
+        14,
+        16,
+        14
+      ],
+      "up": [
+        2,
+        0,
+        2,
+        14,
+        3,
+        14
+      ],
+      "north": [
+        2,
+        2,
+        13,
+        14,
+        14,
+        16
+      ],
+      "south": [
+        2,
+        2,
+        0,
+        14,
+        14,
+        3
+      ],
+      "west": [
+        13,
+        2,
+        2,
+        16,
+        14,
+        14
+      ],
+      "east": [
+        0,
+        2,
+        2,
+        3,
+        14,
+        14
+      ]
+    },
+    "crank_current": {
+      "down": [
+        2,
+        13,
+        2,
+        14,
+        16,
+        14
+      ],
+      "up": [
+        2,
+        0,
+        2,
+        14,
+        3,
+        14
+      ],
+      "north": [
+        2,
+        2,
+        13,
+        14,
+        14,
+        16
+      ],
+      "south": [
+        2,
+        2,
+        0,
+        14,
+        14,
+        3
+      ],
+      "west": [
+        13,
+        2,
+        2,
+        16,
+        14,
+        14
+      ],
+      "east": [
+        0,
+        2,
+        2,
+        3,
+        14,
+        14
+      ]
+    },
+    "mesh_contexts": [
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=south,lit=false",
+        "bounds": [
+          4,
+          4,
+          0,
+          12,
+          12,
+          2
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=south,lit=true",
+        "bounds": [
+          4,
+          4,
+          0,
+          12,
+          12,
+          2
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=south,lit=false",
+        "bounds": [
+          4,
+          4,
+          0,
+          12,
+          12,
+          2
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=south,lit=true",
+        "bounds": [
+          4,
+          4,
+          0,
+          12,
+          12,
+          2
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=north,lit=false",
+        "bounds": [
+          4,
+          4,
+          14,
+          12,
+          12,
+          16
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=north,lit=true",
+        "bounds": [
+          4,
+          4,
+          14,
+          12,
+          12,
+          16
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=north,lit=false",
+        "bounds": [
+          4,
+          4,
+          14,
+          12,
+          12,
+          16
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=north,lit=true",
+        "bounds": [
+          4,
+          4,
+          14,
+          12,
+          12,
+          16
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=east,lit=false",
+        "bounds": [
+          0,
+          4,
+          4,
+          2,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=east,lit=true",
+        "bounds": [
+          0,
+          4,
+          4,
+          2,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=east,lit=false",
+        "bounds": [
+          0,
+          4,
+          4,
+          2,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=east,lit=true",
+        "bounds": [
+          0,
+          4,
+          4,
+          2,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=west,lit=false",
+        "bounds": [
+          14,
+          4,
+          4,
+          16,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=west,lit=true",
+        "bounds": [
+          14,
+          4,
+          4,
+          16,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=west,lit=false",
+        "bounds": [
+          14,
+          4,
+          4,
+          16,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=west,lit=true",
+        "bounds": [
+          14,
+          4,
+          4,
+          16,
+          12,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=up,lit=false",
+        "bounds": [
+          4,
+          0,
+          4,
+          12,
+          2,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=up,lit=true",
+        "bounds": [
+          4,
+          0,
+          4,
+          12,
+          2,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=up,lit=false",
+        "bounds": [
+          4,
+          0,
+          4,
+          12,
+          2,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=up,lit=true",
+        "bounds": [
+          4,
+          0,
+          4,
+          12,
+          2,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=down,lit=false",
+        "bounds": [
+          4,
+          14,
+          4,
+          12,
+          16,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=false,facing=down,lit=true",
+        "bounds": [
+          4,
+          14,
+          4,
+          12,
+          16,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=down,lit=false",
+        "bounds": [
+          4,
+          14,
+          4,
+          12,
+          16,
+          12
+        ]
+      },
+      {
+        "kind": "advanced_button",
+        "state": "active=true,facing=down,lit=true",
+        "bounds": [
+          4,
+          14,
+          4,
+          12,
+          16,
+          12
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=north",
+        "bounds": [
+          2,
+          2,
+          13,
+          14,
+          14,
+          16
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=east",
+        "bounds": [
+          0,
+          2,
+          2,
+          3,
+          14,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=south",
+        "bounds": [
+          2,
+          2,
+          0,
+          14,
+          14,
+          3
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=west",
+        "bounds": [
+          13,
+          2,
+          2,
+          16,
+          14,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=up",
+        "bounds": [
+          2,
+          0,
+          2,
+          14,
+          3,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=false,facing=down",
+        "bounds": [
+          2,
+          13,
+          2,
+          14,
+          16,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=north",
+        "bounds": [
+          2,
+          2,
+          13,
+          14,
+          14,
+          16
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=east",
+        "bounds": [
+          0,
+          2,
+          2,
+          3,
+          14,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=south",
+        "bounds": [
+          2,
+          2,
+          0,
+          14,
+          14,
+          3
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=west",
+        "bounds": [
+          13,
+          2,
+          2,
+          16,
+          14,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=up",
+        "bounds": [
+          2,
+          0,
+          2,
+          14,
+          3,
+          14
+        ]
+      },
+      {
+        "kind": "crank",
+        "state": "active=true,facing=down",
+        "bounds": [
+          2,
+          13,
+          2,
+          14,
+          16,
+          14
+        ]
+      }
+    ],
+    "native_shape_or_baking_api_executed": false
+  },
+  "no_cover_default_strength_signal_source_projection": [
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "down",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "up",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "north",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "south",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "west",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "down",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "down",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "down",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "down",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "up",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "up",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "up",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "up",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "north",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "north",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "north",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "north",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "south",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "south",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "south",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "south",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "west",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "west",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "west",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "west",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "east",
+      "active": false,
+      "lamp": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "east",
+      "active": false,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "east",
+      "active": true,
+      "lamp": false,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "button",
+      "facing": "east",
+      "query": "east",
+      "active": true,
+      "lamp": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "down",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "up",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "north",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "south",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "west",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "down",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "down",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "up",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "up",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "north",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "north",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "south",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "south",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "west",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "west",
+      "active": true,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "east",
+      "active": false,
+      "weak_strong": [
+        0,
+        0
+      ]
+    },
+    {
+      "kind": "crank",
+      "handle": "east",
+      "query": "east",
+      "active": true,
+      "weak_strong": [
+        15,
+        15
+      ]
+    }
+  ],
+  "design_assets": {
+    "original_group_counts": [
+      1,
+      10,
+      26,
+      11,
+      8,
+      16,
+      22
+    ],
+    "original_designs": 94,
+    "current_pngs": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/colored_off.png",
+        "sha256": "46caa13a6eb325f5335844a1de82060a333d3cfeb5d74408f95ad595abbe8e7b",
+        "bytes": 563
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/colored_on.png",
+        "sha256": "1fe7c633ad7e1c6cbe379c026342779f1785f07cbf6a5278cbcb555c70aeb2fb",
+        "bytes": 565
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/glowing_off.png",
+        "sha256": "0b80f0263ebae8c655898de6533aa0140962051205f655dfdef0ef023792b201",
+        "bytes": 141
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/glowing_on.png",
+        "sha256": "1fe7c633ad7e1c6cbe379c026342779f1785f07cbf6a5278cbcb555c70aeb2fb",
+        "bytes": 565
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/glowverlay_off.png",
+        "sha256": "f61cfa6e2a83dcaeb53603501c5fce8d7165724802e023f9475e4099ffd44b90",
+        "bytes": 141
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/glowverlay_on.png",
+        "sha256": "f61cfa6e2a83dcaeb53603501c5fce8d7165724802e023f9475e4099ffd44b90",
+        "bytes": 141
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/overlay_off.png",
+        "sha256": "2fb1bba81efdbad81dcb7795ebd39f856c0ff94d0995f004349f39ccba8a58c7",
+        "bytes": 362
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/machines/redstone/buttons/advanced/0/0/overlay_on.png",
+        "sha256": "2fb1bba81efdbad81dcb7795ebd39f856c0ff94d0995f004349f39ccba8a58c7",
+        "bytes": 362
+      }
+    ],
+    "current_designs": [
+      "0/0"
+    ]
+  },
+  "formal_findings_added": [
+    329,
+    330,
+    331,
+    332,
+    333,
+    334,
+    335,
+    336,
+    337,
+    338
+  ],
+  "formal_findings_extended": [
+    132,
+    139
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "positive_scope": [
+    "Button pulse/switch/lamp states and ordinary tool mode changes exist.",
+    "Button six directions, no-collision, default TinAlloy color, 6/6 physical parameters and stack64 exist.",
+    "World live-state and item configuration serialization have separate paths.",
+    "Crank powers its mount with signal15 and sends negative RU packets in the mapped original direction.",
+    "Crank active model, clockwise/counterclockwise sprites, animation metadata and Iron color handlers exist."
+  ],
+  "limits": [
+    "Readability keeps complete code/literal positions after explicitly normalizing three unique local variable names; other code is unchanged.",
+    "Five comment groups corrected, including collapsing duplicate/outdated remote documentation; no gameplay fixes.",
+    "Pure numeric Java probe executes actual core helper plus exact old arithmetic fragments with explicit potion boundary adapters; it is not player/world execution.",
+    "216 signal and 36 mesh cases are source projections, not native shape/render/redstone/game tests.",
+    "Native scheduler inspected as bytecode/source, not invoked; repeated-click scenario is derived, not game-reproduced.",
+    "No Gradle, full native compilation, GameTest, game, packaging or push. User material files and source snapshots remain unchanged.",
+    "Full glow rendering, interactions under protection/other mods, saved-world restart and all attachment lifecycle cases remain unverified."
+  ]
+}

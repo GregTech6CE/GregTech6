@@ -49,15 +49,32 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     public static final BooleanProperty LIT = BooleanProperty.create("lit");
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
     public AdvancedButtonBlock(Properties properties) {
         super(properties.noOcclusion().noCollission());
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.SOUTH)
-                .setValue(ACTIVE, false).setValue(LIT, false));
+        .setValue(ACTIVE, false).setValue(LIT, false));
     }
 
     @Override
@@ -72,11 +89,12 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
-                            ItemStack stack) {
+            ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button) {
 //? if >=1.21.1 {
-            /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6Button");
+            /*CompoundTag config = stack.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                    net.minecraft.world.item.component.CustomData.EMPTY).copyTag().getCompound("GT6Button");
 *///?} else {
             CompoundTag config = stack.getTagElement("GT6Button");
 //?}
@@ -119,15 +137,15 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-                                                                   BlockEntityType<T> type) {
+            BlockEntityType<T> type) {
         return !level.isClientSide && type == GTBlockEntities.ADVANCED_BUTTON.get()
-                ? (world, pos, blockState, entity) -> ((AdvancedButtonBlockEntity) entity).serverTick() : null;
+        ? (world, pos, blockState, entity) -> ((AdvancedButtonBlockEntity) entity).serverTick() : null;
     }
 
     @Override
     public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isMachineWrench(tool) && !GTToolHelper.isMonkeyWrench(tool)
-                ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
+        ? ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
 //? if >=1.21.1 {
     /*public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
@@ -136,7 +154,7 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         ItemStack held = player.getItemInHand(hand);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);
         boolean cutter = GTToolHelper.isWireCutter(held);
@@ -157,7 +175,7 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (ToolInteractions.use(state, level, pos, player, hand, hit))
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
         if (!level.isClientSide && button.press()) {
             level.playSound(null, pos, SoundEvents.STONE_BUTTON_CLICK_ON, SoundSource.BLOCKS, 1.0F, 1.5F);
         }
@@ -166,19 +184,21 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighbor,
-                                BlockPos fromPos, boolean movedByPiston) {
+            BlockPos fromPos, boolean movedByPiston) {
         super.neighborChanged(state, level, pos, neighbor, fromPos, movedByPiston);
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button)
-            button.updateLampInput();
+        button.updateLampInput();
     }
 
     @Override
-    public boolean isSignalSource(BlockState state) { return true; }
+    public boolean isSignalSource(BlockState state) {
+        return true;
+    }
 
     @Override
     public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
         return level.getBlockEntity(pos) instanceof AdvancedButtonBlockEntity button && !button.isLampMode()
-                && state.getValue(ACTIVE) ? button.strength() : 0;
+        && state.getValue(ACTIVE) ? button.strength() : 0;
     }
 
     @Override
@@ -191,22 +211,28 @@ public final class AdvancedButtonBlock extends DirectionalBlock implements Entit
         ItemStack item = new ItemStack(this);
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof AdvancedButtonBlockEntity button)
 //? if >=1.21.1 {
-            /*{var data=new CompoundTag();data.put("GT6Button",button.saveItemConfig());item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,net.minecraft.world.item.component.CustomData.of(data));}
+        /*{
+            var data = new CompoundTag();
+            data.put("GT6Button", button.saveItemConfig());
+            item.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(data));
+        }
 *///?} else {
-            item.addTagElement("GT6Button", button.saveItemConfig());
+        item.addTagElement("GT6Button", button.saveItemConfig());
 //?}
         return List.of(item);
     }
 
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip,
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
 //?}
-                                TooltipFlag flag) {
-        for (String operation : new String[]{"screwdriver", "cutter", "monkey_wrench",
-                "soft_hammer", "magnifying_glass", "sneak"})
-            tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation));
+            TooltipFlag flag) {
+        for (String operation : new String[]{
+            "screwdriver", "cutter", "monkey_wrench",
+            "soft_hammer", "magnifying_glass", "sneak"
+        })
+        tooltip.add(Component.translatable("tooltip.gt6ce.advanced_button." + operation));
     }
 }

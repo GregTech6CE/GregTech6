@@ -22,8 +22,8 @@ public final class UtilityToolRules {
             new Rope("rope_steel", "Steel"));
 
     public static long crankSize(int strength, int weakness) {
-        long s = 2L + strength, w = 1L + weakness;
-        return -(8 * s + w - 1) / w;
+        long adjustedStrength = 2L + strength, weaknessDivisor = 1L + weakness;
+        return -(8 * adjustedStrength + weaknessDivisor - 1) / weaknessDivisor;
     }
 
     public static int scaffoldDesign(boolean vertical, boolean above, boolean below) {
