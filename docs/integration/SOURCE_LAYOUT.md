@@ -2,6 +2,8 @@
 
 此文描述 `main` 的 Stonecutter 结构。原版行为差异见 [原版对齐审计](ORIGINAL_ALIGNMENT_AUDIT.md)；目录整理不代表全部功能已经对齐。
 
+工作台边界续：`ChargingCraftingTableBlockEntity`负责五格逐包注入与FE入口，`AdvancedCraftingScreen`只画背景／蓝图／提示，`AdvancedCraftingRecipeReload`提供generation。流体附件先问`FluidToolTarget`再问能力，不能从物品能力推断五格灌液已有；无限尖端保留在实体计划，结果合并门控在菜单，见[注液与点击](WORKTABLE_IO_AUDIT.md)。
+
 高级／充能工作台：core `AdvancedCraftingRules`只给本地布局和搜索次序；共享实体负责蓝图、原生配方、余物计划与提交，`AdvancedCraftingMenu`处理真实／虚拟格地址及玩家点击。Neo `CraftingTableCapabilities`独立注册物品／充能能力，`AdvancedCraftingRecipeReload`给重载generation。四源已展开，本地数组与相邻资源是不同合同，见[专题](ADVANCED_WORKTABLE_AUDIT.md)。
 
 筛粉漏斗：共享`DustFunnelBlockEntity`分别保存输入／输出格与单材料内部余量，`retrieveFraction`专供钳子清余粉，通用`retrieve`保留空手／拆除取物顺序。`DustFunnelJadeProvider`通过服务端数据展示实际模式与余量，`GTJadePlugin`同时接两端注册，见[专题](DUST_FUNNEL_AUDIT.md)。
