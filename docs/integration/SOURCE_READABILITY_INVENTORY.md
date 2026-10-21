@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-21 第九十一批：VisualDocumentData／VisualDocumentRecipes／CanvasRecipes／CanvasData四源397→564行，分开输入／配方、图像状态及Neo组件转换，保留数组参数分组；八完整代码及字面量／其余注释／条件保持。只修正过强映射说明，291另记实际差异，未改玩法与用户材料，见[专题](VISUAL_DOCUMENT_AUDIT.md)和[回执](verification/visual-document-audit-20261021.json)。
+
 2026-10-21 第九十批：MaterialDataRules／GTMaterialDataRecipes／MaterialDataViewerRecipes／Neo MachineContextRecipes四源677→768行；保留已清楚的数组排版，展开紧凑参数、循环与注册。六完整代码308、3762／3859、738／738、315及字面量／其余注释／版本指令保持，修正覆盖计数、复制回退说明与不存在的mUSBTier引用。实际选择顺序差异另记290，未改玩法或用户材料，见[专题](MATERIAL_DATA_CHAIN_AUDIT.md)和[回执](verification/material-data-chain-audit-20261021.json)。
 
 2026-10-20，基线 `36833296c`，读取当时含本轮排版的工作区。共 2253 个追踪且存在的 Java 文件，其中 1790 个活动生产／API 输入；其他 463 个属于测试、示例等，不能把数量差直接当重复或缺失。
