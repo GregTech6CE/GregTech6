@@ -1,6 +1,7 @@
 package com.gregtech.gregtech.api.addon;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +37,8 @@ public record BehaviorMachineDeclaration(
         String energyOut,
         long energyOutSize,
         long energyOutAmount,
-        int maxRange
+        int maxRange,
+        List<String> recipeMaps
 ) {
     public static final int SLOT = 18;
     public static final int TANK_WIDTH = 18;
@@ -95,6 +97,16 @@ public record BehaviorMachineDeclaration(
             throw new IllegalArgumentException("Behavior machine '" + id + "' has a negative energy capacity");
         if (maxRange < 0 || maxRange > BehaviorRangeRules.LIMIT)
             throw new IllegalArgumentException("Behavior machine '" + id + "' range must be 0.." + BehaviorRangeRules.LIMIT);
+        var seenMaps = new HashSet<String>();
+        var mapNames = new ArrayList<String>();
+        for (String name : recipeMaps == null ? List.<String>of() : recipeMaps) {
+            if (name == null || !name.matches("[a-z0-9_.]+"))
+                throw new IllegalArgumentException("Invalid recipe map for " + id + ": " + name);
+            if (!seenMaps.add(name))
+                throw new IllegalArgumentException("Behavior machine '" + id + "' repeats recipe map '" + name + "'");
+            mapNames.add(name);
+        }
+        recipeMaps = List.copyOf(mapNames);
         boolean outputs = !energyOutputFaces.isEmpty() || !energyOut.isBlank() || energyOutSize != 0 || energyOutAmount != 0;
         if (outputs) {
             if (energyOutputFaces.isEmpty() || energyOut.isBlank() || energyOutSize < 1 || energyOutAmount < 1)
@@ -216,6 +228,7 @@ public record BehaviorMachineDeclaration(
         private long energyOutSize;
         private long energyOutAmount;
         private int maxRange;
+        private final List<String> recipeMaps = new ArrayList<>();
         private final List<ItemSlot> items = new ArrayList<>();
         private final List<FluidSlot> fluids = new ArrayList<>();
         private final List<Toggle> toggles = new ArrayList<>();
@@ -250,6 +263,14 @@ public record BehaviorMachineDeclaration(
         }
         /** Cube half-extent for {@code breakBlock} and {@code collectItems}. Zero closes both. */
         public Builder maxRange(int value) { maxRange = value; return this; }
+        /**
+         * Machine maps or fuel maps this block shows as a JEI and EMI catalyst.
+         * Empty leaves the catalyst list unchanged. Processing stays in the behavior.
+         */
+        public Builder recipeMaps(String... names) {
+            if (names != null) for (String name : names) recipeMaps.add(name);
+            return this;
+        }
         public Builder item(int x, int y, SlotRole role) { items.add(new ItemSlot(x, y, role)); return this; }
         public Builder fluid(int capacity, int x, int y, SlotRole role) { fluids.add(new FluidSlot(capacity, x, y, role)); return this; }
         public Builder toggle(String translationKey, int x, int y, boolean initiallyOn) {
@@ -261,7 +282,7 @@ public record BehaviorMachineDeclaration(
         public BehaviorMachineDeclaration build() {
             return new BehaviorMachineDeclaration(id, material, machineType, energy, energyPerTick, tier, blockEntityId,
                     guiWidth, guiHeight, gui, energyX, energyY, energyFaces, items, fluids, toggles, progress,
-                    energyCapacity, energyOutputFaces, energyOut, energyOutSize, energyOutAmount, maxRange);
+                    energyCapacity, energyOutputFaces, energyOut, energyOutSize, energyOutAmount, maxRange, recipeMaps);
         }
     }
 }

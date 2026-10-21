@@ -443,11 +443,44 @@ An empty `blockEntityId` becomes `be_<id>`, with `/` replaced by `_`. An explici
 
 The block id is `<addon>:<id>`. Models resolve to `<addon>:block/machine/basic/<machineType>` plus `_running` and `_active`. The addon ships the blockstate, models and GUI texture. The display name is `block.<addon>.<id>`. Toggle labels are the translation keys on the declaration. GregTech's behavior GUI strings are `gui.gregtech.behavior.energy`, `progress`, `tank`, `on` and `off`.
 
-A behavior machine is not a recipe machine. It does not create a `RecipeMap` and it is not a JEI or EMI catalyst. Recipe machines stay on `gt6ce:basic_machine`.
+A behavior machine is not a recipe machine. It does not create a `RecipeMap`, and GregTech does not look up a row, spend inputs, or write outputs for it. Recipe machines stay on `gt6ce:basic_machine`.
+
+`recipeMaps(String... names)` lists machine maps or fuel maps. The block becomes a JEI and EMI catalyst for each name. A name is a map this addon declared, or a built-in map such as `gt.recipe.compressor` or `gt.recipe.fuels.engine`. Another addon's map is unknown. An unknown name fails startup and names the addon and the machine. A repeated name, or a name outside `[a-z0-9_.]+`, fails at the declaration. Leaving this unset adds no catalyst, so the lists already built from recipe machines and fuel generators stay as they are.
+
+`AddonRecipes.map` returns a fuel map the same way it returns a machine map. `find` returns a fuel row when the inputs match. `Line.euPerTick` is the stored value. A datapack row on a fuel map writes a positive `eu_per_tick`, and that number is stored negative: it is the energy produced per tick. `generate` takes a positive amount, so the behavior uses the negation. `AddonRecipes.add` stores the number as written, so a fuel row added that way is already negative. A non-negative value is not energy to produce.
+
+The recipe page draws the slots the map declared. A fuel map with one or more item inputs draws those item slots. A built-in fuel map that declares no item slots does not add a slot for an item that happens to be on a row.
+
+The sample solid boiler lists `addon_sample.fuel.solid`. That map has one item input and one item output. Coal becomes charcoal, 16 EU per tick for 20 ticks. The behavior finds the row, spends the coal, puts the charcoal in the output slot, then each burn tick calls `generate` and `emit` from the top. The counters `left`, `eu` and `burn` live in `BehaviorState`. There is no new shell field.
+
+```java
+BehaviorMachineDeclaration.builder("sample_boiler", "Steel")
+        .machineType("sampleboiler").energy("EU", 32).tier(1)
+        .gui("my_addon:textures/gui/machine.png")
+        .item(44, 26, BehaviorMachineDeclaration.SlotRole.INPUT)
+        .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+        .energyOutputs(BehaviorMachineDeclaration.Face.TOP)
+        .energyOut("EU").energyOutMax(32, 1)
+        .energyCapacity(10_000)
+        .recipeMaps("my_addon.fuel.solid")
+        .build();
+```
+
+```java
+AddonRecipes.Line line = AddonRecipes.map("my_addon.fuel.solid")
+        .find(List.of(context.item(0)), List.of(), false, 1, 0);
+if (line != null && line.euPerTick() < 0) {
+    ItemStack fuel = context.item(0).copy();
+    fuel.shrink(line.itemInputs()[0].getCount());
+    context.setItem(0, fuel);
+    context.generate(-line.euPerTick());
+    context.emit(-line.euPerTick(), 1);
+}
+```
 
 ## Fuel generators
 
-`fuelMaps()` returns `FuelMapDeclaration`. `fuelGenerators()` returns `FuelGeneratorDeclaration`. A fuel map is not a machine map. The name uses `[a-z0-9_.]+`, and the slot counts match a built-in fuel map. GregTech creates it before the datapack baseline, so it joins JEI, EMI and `gt6ce:machine`. A positive `eu_per_tick` on a fuel map is energy produced per tick and is stored negative. The row still needs an output. A generator may name an addon fuel map or a built-in map such as `gt.recipe.fuels.engine` or `gt.recipe.fuels.gas`. A recipe machine that names a fuel map fails as an unknown recipe map. A fuel map that reuses a machine-map or fuel-map name fails startup and names the addon.
+`fuelMaps()` returns `FuelMapDeclaration`. `fuelGenerators()` returns `FuelGeneratorDeclaration`. A fuel map is not a machine map. The name uses `[a-z0-9_.]+`, and the slot counts match a built-in fuel map. GregTech creates it before the datapack baseline, so it joins JEI, EMI and `gt6ce:machine`. A positive `eu_per_tick` on a fuel map is energy produced per tick and is stored negative. `AddonRecipes.map` returns that map, `find` returns a matching row, and `Line.euPerTick` is the stored negative number. `AddonRecipes.add` stores the value as written, so a fuel row added there is already negative. The row still needs an output. A generator may name an addon fuel map or a built-in map such as `gt.recipe.fuels.engine` or `gt.recipe.fuels.gas`. A recipe machine that names a fuel map fails as an unknown recipe map. A fuel map that reuses a machine-map or fuel-map name fails startup and names the addon.
 
 `efficiency` is parts per 10000, from 1 to 100000. `energy` is a short name such as `RU`. `outputPerTick` is one packet, from 1 to 1,000,000,000,000. The buffer spends that packet only after a receiver accepts it. Tank capacity is 1 to 1,024,000,000 mB on the fuel tank and on each exhaust tank. The exhaust count is the fuel map's fluid output count. The fuel map needs at least one fluid input. `outputFront()` and `outputBack()` emit to the adjacent face. `outputBehind(distance)` injects into the block that many steps past the front. Distance is 1 to 8. A gas turbine's four blocks uses this form. There is no arbitrary offset.
 
@@ -471,7 +504,7 @@ A behavior machine is not a recipe machine. It does not create a `RecipeMap` and
 }
 ```
 
-This entry does not convert one energy type into another, does not burn solid fuel, and leaves the built-in diesel engine and gas turbine on their own block entities.
+This entry does not convert one energy type into another, does not burn solid fuel, and leaves the built-in diesel engine and gas turbine on their own block entities. A behavior can burn a fuel row itself, including a row with an item input. That burn belongs to the behavior, not to this template.
 
 ## Compressed gas tanks
 
@@ -505,7 +538,7 @@ Declare a required loader dependency on **`gt6ce`** with `versionRange="[0.0.0,)
 - `AddonItems.stack(prefix, material, count)`, `AddonItems.selectorTag(n)` for programmed circuit 0..24, and `AddonFluids` for a GregTech fluid field name (`DistW`, not a material name). Still and flowing are separate. `AddonFluids.gas` reports whether that fluid is a gas.
 - `AddonRecipes` on a map that already exists: add, display, collision, item-input check, dynamic provider and find. A null add means the map rejected the row. `keptInputs` names item inputs that stay in the machine; a count of 0 is still rejected.
 - `AddonMachineContributor` recipe machines and large recipe machines, including `searchOutputTanks`, `exclusiveOutputs`, `energyRange(min, max)`, and one optional cell each for item output, fluid output, item input and fluid input on a large recipe machine. An undeclared large machine is not half to double its nominal input. Energy is a short name such as `EU`. A multiblock names a GregTech part, a casing, or an energy part from `parts()`. GregTech registers the machine and the part in the addon's namespace. Layout roles are `StructureRole`. `fluidPipes()` and `itemPipes()` add one material row each; GregTech expands them into the built-in sizes in the addon's namespace.
-- `BehaviorMachineDeclaration` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the shell. The addon does not subclass it and does not touch NBT. `energyCapacity`, `emit`, `generate`, `setCapacity`, `onUse`, `maxRange`, `breakBlock` and `collectItems` are part of that shell. A layout with the same machine name makes `structureFormed()` and `energyParts()` available. `charge`, `setOutput` and `stop` write the energy part. GregTech stores a changed capacity as `gt.capacity`. The part stores its own buffer.
+- `BehaviorMachineDeclaration` plus the loader's `BehaviorMachineContributor`, `MachineBehavior`, `MachineBehaviorContext` and `BehaviorState`. GregTech owns the shell. The addon does not subclass it and does not touch NBT. `recipeMaps` names machine or fuel maps and makes the block a JEI and EMI catalyst; the behavior still does the work. A fuel row read by `find` stores produced energy as a negative `euPerTick`. `energyCapacity`, `emit`, `generate`, `setCapacity`, `onUse`, `maxRange`, `breakBlock` and `collectItems` are part of that shell. A layout with the same machine name makes `structureFormed()` and `energyParts()` available. `charge`, `setOutput` and `stop` write the energy part. GregTech stores a changed capacity as `gt.capacity`. The part stores its own buffer.
 - `FuelMapDeclaration` and `FuelGeneratorDeclaration`. A fuel map joins JEI, EMI and the datapack overlay. A generator burns fluid and emits one packet per tick from the front, the back, or 1 to 8 blocks behind. A multiblock layout may name a GregTech part or a casing from `parts()`.
 - `compressedGasTanks()`. Ordinary insertion is closed. `pushCompressedGas` fills only an adjacent compressed drum, and a fuel generator pulls at most 1000 mB per tick from one.
 - `GTValues`, `GTVoltageTiers`, `BasicMachineEnergy` and `MachineWorkCost`.

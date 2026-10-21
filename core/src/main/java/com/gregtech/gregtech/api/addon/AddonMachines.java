@@ -478,7 +478,8 @@ public final class AddonMachines {
         }
         var generatorNames = new HashSet<String>();
         for (AcceptedFuel generator : acceptedGenerators) generatorNames.add(generator.declaration().machineType());
-        var acceptedBehavior = behavior(machineOwner, machineSignature, idOwner, reservedMachineNames, generatorNames);
+        var acceptedBehavior = behavior(machineOwner, machineSignature, idOwner, reservedMachineNames, generatorNames,
+                mapOwner, fuelOwner);
         for (PreparedLayout layout : preparedLayouts)
             SharedLargeMachineLayouts.add(layout.machineName, layout.cells);
         SharedLargeMachineLayouts.freeze();
@@ -600,7 +601,9 @@ public final class AddonMachines {
                                                    java.util.Map<String, Signature> machineSignature,
                                                    java.util.Map<String, String> idOwner,
                                                    Set<String> reservedMachineNames,
-                                                   Set<String> generatorNames) {
+                                                   Set<String> generatorNames,
+                                                   java.util.Map<String, String> mapOwner,
+                                                   java.util.Map<String, String> fuelOwner) {
         var signatures = new LinkedHashMap<String, BehaviorSignature>();
         var accepted = new ArrayList<AcceptedBehavior>();
         var byPath = new LinkedHashMap<String, AcceptedBehavior>();
@@ -623,6 +626,15 @@ public final class AddonMachines {
                         throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
                                 + declaration.id() + "' uses unknown energy output '" + declaration.energyOut() + "'", failure);
                     }
+                }
+                for (String name : declaration.recipeMaps()) {
+                    String recipeOwner = mapOwner.get(name);
+                    String fuel = fuelOwner.get(name);
+                    boolean ownRecipe = recipeOwner != null && (recipeOwner.isEmpty() || recipeOwner.equals(submission.addonId));
+                    boolean ownFuel = fuel != null && (fuel.isEmpty() || fuel.equals(submission.addonId));
+                    if (!ownRecipe && !ownFuel)
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' machine '"
+                                + declaration.id() + "' uses unknown recipe map '" + name + "'");
                 }
                 String machineName = declaration.machineType();
                 String previousId = idOwner.putIfAbsent(submission.addonId + ":" + declaration.id(), submission.addonId);
