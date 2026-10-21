@@ -296,7 +296,7 @@
 | ALIGN-267 | 确认储罐壁板温度计被坩埚接口截获为0。 | 原部件将非扳手／撬棍工具转主控，储罐报告实际流体温度。 | 当前壁板先匹配ITileEntityCrucible，非坩埚getter返回0；形成殷钢储罐蒸汽例原373K、现壁板0K，主阀仍373K。源推导未游戏截图，见[工具](TANK_TOOLS_RECIPES_AUDIT.md)。 |
 | ALIGN-268 | 确认竖直木主阀的正面选图不同。 | 原Base10按世界面FACES_TBS选front的top／bottom。 | 当前整模型转动使17001上／下正面仍取front/side，现存木图八变换不等价；不泛称25台都可见错图，见[客户端](TANK_CLIENT_AUDIT.md)。 |
 | ALIGN-269 | 确认主阀初次放置的竖直阈值不同。 | 原默认六面放置在pitch正／负65度才选上／下。 | 当前原生nearest视线取反，yaw0／pitch正负50度已选上下，原仍north；仅源样本，见[客户端](TANK_CLIENT_AUDIT.md)。 |
-| ALIGN-270 | 确认最后一个通用覆盖板的空快照未清客户端旧槽。 | 原receiveDataCovers有null清除及零ID替换路径。 | 当前服务端最后拆下后发送空tag，两版实际read因无字段提前返回，旧槽继续参与fallback渲染；需区分完整快照与部分NBT，见[客户端](TANK_CLIENT_AUDIT.md)。 |
+| ALIGN-270 | 最后一个通用覆盖板空快照：2026-10-22源码已修，游戏待验。 | 原receiveDataCovers有null清除及零ID替换路径。 | 原服务端最后拆下后发送空tag，两版read无字段提前返回；本轮完整快照保留gt.component_covers标记，空槽可清除，部分NBT仍忽略。见[客户端历史核对](TANK_CLIENT_AUDIT.md)及[修复](ISSUES_64_81_REVIEW_20261022.md)。 |
 | ALIGN-271 | 确认普通未喷漆材料方块的首次白漆被拒绝。 | 原class-container按材料填NBT_COLOR，殷钢17007实际DCDC96，白色paint成功。 | 当前PaintState初始／clear为FFFFFF，首次白色被相等判断拒绝；未喷漆显示仍回退材质色，不报全部变白，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-272 | 确认Neo喷漆物品主染色面最终alpha为0。 | 原普通BlockTextureDefault禁alpha，实际顶点提交255；Forge1.20.1相应ItemRenderer固定1。 | 正常红漆主阀保留BE数据，后置ItemPaintColorMixin清高八位，Neo实际ARGB解码及顶点乘法得到0；不泛称overlay／整物品全消失，未GPU实测，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-273 | 确认清漆剂未沿万能代理操作委托目标。 | 原WD.te识别ITileEntityDelegating，30255／30755的ALL模式返回出口邻格，再对目标removePaint。 | 当前PaintTargets.unpaint仅查本地；未喷漆代理后有红漆目标时，十二面向源样本原清目标、现无操作，未游戏实测，见[清漆](PAINT_TARGETS_AUDIT.md)。 |

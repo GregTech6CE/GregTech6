@@ -1,0 +1,118 @@
+{
+  "scope": "JSON/native feature-name and texture checks; generator in isolated scratch; no game launched",
+  "checks": [
+    {
+      "check": "native overworld ore feature names",
+      "version": "1.20.1-forge",
+      "count": 18,
+      "all_variants_covered": true
+    },
+    {
+      "check": "native overworld ore feature names",
+      "version": "1.21.1-neoforge",
+      "count": 19,
+      "all_variants_covered": true
+    },
+    {
+      "check": "all 12 sapling models use cutout and existing GT/Minecraft textures",
+      "count": 12
+    },
+    {
+      "check": "deepslate ore end matches vanilla column model",
+      "texture": "minecraft:block/deepslate_top"
+    },
+    {
+      "check": "generator reproduces all 12 patched sapling block models",
+      "count": 12
+    },
+    {
+      "check": "protected user material unchanged",
+      "file": "WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    },
+    {
+      "check": "protected user material unchanged",
+      "file": "CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    }
+  ],
+  "date": "2026-10-22",
+  "issues_snapshot_sha256": "eebcd60fdd40d02ac5e6aaa1868ce40580948e3d78611a89748a8bc9a4c56f34",
+  "fixed_original_13": [
+    64,
+    66,
+    75,
+    76,
+    77
+  ],
+  "fixed_new_4": [
+    79,
+    80,
+    81
+  ],
+  "user_requested_skip": [
+    71,
+    72,
+    73,
+    74
+  ],
+  "no_change_after_source_review": [
+    67,
+    78
+  ],
+  "pending": [
+    65,
+    68,
+    69
+  ],
+  "cfg_deferred": 66,
+  "compile": {
+    "result": "success",
+    "duration": "1m 14s",
+    "tasks": [
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "log_sha256": "e510cf26dc87ac45a976b1101c5a46f087b7f9426c2d595e9a4fb168013b543f",
+    "first_attempt": "Sandbox native-platform.dll initialization failed; offline compilation retried outside sandbox and passed.",
+    "reason": "Final incremental compilation after restricting old-cover recovery to a pile with an existing cover."
+  },
+  "gameplay": "not_run",
+  "packaging": "not_run",
+  "push": "not_run",
+  "github_comments_or_closure": "none",
+  "changed_production_sha256": {
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_blue_mahoe.json": "120c3dc354723a842da75028500d71159a1f2a43be5c88e17f9d45cf269836fa",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_bluespruce.json": "e6fdcc89b2117180a5757a78ef9c8c2939d3f66c5ffc9bf01f0fa0592797c30e",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_cinnamon.json": "51cd0a2809d808e80de3111d00d487322aaee4136ea564eebc8f2d3c08f0611b",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_coconut.json": "1571fee860743c19afb0f26306fef225fd9a7d5b451767c7f35da123f2a60930",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_ebony.json": "c00c1e5958714e725fa64a55e0aba4da5538d1e64061ff7a6eda73dc4cf764ab",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_hazel.json": "27c2b18a4cdab15c7d7318d1ce8fd4c6501e8e71c98bed260dec93f4a6cced33",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_maple.json": "775a70ec17fd55d80f924ddcde4c87b7bf481fd5523de73e7124d00e85dcdf5a",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_pine.json": "e9956c13906195122a05877662ff4fb886b821fc69ff5c3c95d84e7db899808b",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_rainbowood.json": "91e901b826196b272fa8101d4422fe34e12ad70cf8676c4355c1dd799c4fc847",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_rubber.json": "8f853bf81ee2baf827f5b55798ffcca1317073101c36728a75da87ed9200e9d1",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_white_mahoe.json": "ea30c7992452309fba9d8396b7077805c6aa06e2263c20ef958c23a7941f2b03",
+    "core/src/main/resources/assets/gt6ce/models/block/wood/sapling_willow.json": "ea82da23fe68d950618c701469ec43d7bf0c91064e5b91b86b8204cdca4dbb2e",
+    "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java": "b1cc1bd2676299e724f1bde25cf379ca875908cbd3287e87ddbda4f61d33bdbe",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/OreBakedModel.java": "5272dd18e9bc41b1853ce9e343e1d49ef8093314cc1851068ed422e869a3e8be",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/tool/DynamiteSubstrates.java": "99edabddac65e9a5604da87761c451660ead2a9248f9a75e7b2458ebedf47599",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomFarmMobs.java": "3d0bfeda97e36894d8d166f92412c125bcdb0b8444bda19bba55a204aba5414e",
+    "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonData.java": "c75692f87635a007812f876c292e378364a60d93c3095309c350e086a6e0a5f9",
+    "multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/remove_vanilla_overworld_ores.json": "860e43f4a3e6b921b73a762fc750bdb590713720d29f0f7ff2df2df311b06d10",
+    "multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/remove_vanilla_overworld_ores.json": "3b6e29c987e97e207b62a451f53eb4450b3943edc2ecd2604bd994cc934e7a5e",
+    "tools/generate_gt6_tree_assets.py": "876e09b7bdaf37bde9b446d016f68d1b209b60327b34699317943665d2552edd"
+  },
+  "initial_compile": {
+    "result": "success",
+    "duration": "2m 8s",
+    "tasks": [
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "log_sha256": "a19971dd3caf0f0961f37fdb29038449d99538d976ee822a83dc5342bc45df78",
+    "first_attempt": "Sandbox native-platform.dll initialization failed; offline compilation retried outside sandbox and passed."
+  }
+}

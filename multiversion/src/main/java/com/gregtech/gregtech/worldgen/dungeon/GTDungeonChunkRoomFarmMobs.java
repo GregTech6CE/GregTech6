@@ -450,7 +450,7 @@ public class GTDungeonChunkRoomFarmMobs extends GTDungeonChunkRoomEmpty {
         data.mossycobble(aX + 13, 9, aZ + 12);
         data.mossycobble(aX + 14, 9, aZ + 11);
 
-        // GT6's :198-201 - one water source per corner; GT6 passes flag 3, the port's set() uses flag 2.
+        // GT6's :198-201 - one water source per corner; set() defers flow until generation finishes.
         data.set(aX + 1, 10, aZ + 1, Blocks.WATER.defaultBlockState());
         data.set(aX + 1, 10, aZ + 14, Blocks.WATER.defaultBlockState());
         data.set(aX + 14, 10, aZ + 1, Blocks.WATER.defaultBlockState());
