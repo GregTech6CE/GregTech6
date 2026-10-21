@@ -22,6 +22,8 @@
 
 代理基类：`CapabilityRelayBlockEntity`负责按面缓存包装和每次实时解析目标，`EnergyRelayBlockEntity`追加GT能源及FE；子类负责具体路由。Neo注册边界在`StorageContainerCapabilities`。原生宿主的覆盖板处理器查询须保留选中面，当前null方向先阻止安装；恢复gt_cover_n另须核是否消费`ComponentCoverAccess`及`ComponentCoverRuntime.tick`。后备资格排除自带getCover的宿主，见[能力与更新专题](EXTENDER_CAPABILITIES_AUDIT.md)。
 
+原生红石消费者：SourceExtenderBlock的直接返回值还会进入SignalGetter强信号合并；内部ExtenderBlockEntity.comparator(面)与原生ComparatorBlock→getAnalogOutputSignal→comparator(null)是不同入口。共享CoverSignalMixin在BlockState返回值后包装输出；Jade与客户端覆盖板渲染分别在ExtenderJadeProvider／ExtenderCoverRenderer，见[信号专题](EXTENDER_SIGNALS_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

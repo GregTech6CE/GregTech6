@@ -1,0 +1,49 @@
+# 扩展器／桥红石、比较器和采样时序核查
+
+2026-10-21，第八十二批，基线 `3de8dc096`。新增ALIGN-277–279，沿前批剩余的原生红石入口继续。279条是包含已修、部分修复、政策差异的正式记录数，不是待修数或完成百分比。详细来源和有限分支见[回执](verification/extender-signals-audit-20261021.json)。完整目标继续。
+
+## 实际身份与底层消费者
+
+原Loader_MultiTileEntities给30000–30002、30500–30502分别配置INV／TANK，不带REDSTONE；30255／30755使用ALL=31，包含REDSTONE=4。当前ExtenderSpec保留这八个身份，两版实际注册SourceExtenderBlock，EXTENDER实体类型及服务端ticker也已接入。
+
+原MultiTileEntityBlock将弱／强信号及比较器调用交给对应实体接口，shouldCheckWeakPower亦调用实体；Extender继承Base10→09→08→07→06→05→04→03→02→01，Bridge继承Base07以下，Base06实现所需IMTE_ShouldCheckWeakPower，Base01实现返回false。不能只看到现代getSignal存在就验收方块在原生SignalGetter里的最终结果。
+
+当前SourceExtenderBlock.getSignal转发relay.signal；getDirectSignal只取coverStrongSignal；getAnalogOutputSignal调用comparator(null)。CoverSignalMixin在BlockState返回值处覆盖选中的输出面板／检测器，排除基础机和信号线。无覆盖板样本不会触发这项改写。CoverCollisionMixin／CoverWorldInteraction在原有碰撞上加覆盖板形状，无覆盖板不修改完整立方体。
+
+两版原生上下文均核到实际使用版本：Forge47.4.20的映射工件和扩展源码，Neo21.1.243的sources工件。3工件、10条目、11份只读javap输出留痕；verbose输出的系统头按GB18030解码。javap未运行目标类初始化。下列1.7.10侧以本地GT源码合同为证据，没有冒充已运行旧MC引擎。
+
+## ALIGN-277：实心方块传导绕过扩展器自己的路由
+
+原实体shouldCheckWeakPower显式false，原非REDSTONE六身份的弱输出为0，强输出默认为0。当前两版注册只给普通完整方块属性，SourceExtenderBlock没有shouldCheckWeakPower覆盖；其DirectionalBlock／Block／BlockBehaviour继承完整碰撞。两版默认导体谓词据完整碰撞返回true，扩展的shouldCheckWeakPower又返回isRedstoneConductor。
+
+实际SignalGetter.getSignal先读BlockState.getSignal，再在shouldCheckWeakPower=true时与getDirectSignalTo取最大值。后者收集六邻居对该坐标的直接强信号。这条路径可以在relay.signal自己返回0时返回15；不能把它误认为GT方块自身getDirectSignal输出了15，更不是RU／KU能源问题。
+
+有限条件是无覆盖板完整扩展器、朝向正确且开启的原版拉杆向其输入15强信号、从另一个面查询。六非红石身份×六输入面×五其它查询面×两平台，共360项源合同分支，旧显式关闭传导合同为0，当前原生合并为15。拉杆getDirectSignal的方向／开关门槛也已核；没有实际摆放、红石粉或世界测量。万能身份亦继承同一默认导体，具体与其路由叠加的所有输入组合仍未逐一核完。
+
+## ALIGN-278：原生比较器入口把万能桥按面合同折叠为六面最大
+
+原Bridge.getComparatorInputOverride(aSide)在REDSTONE模式下读取getComparatorIncoming(OPOS[aSide])；MultiTileEntityBlock保留该aSide参数。当前GT代理之间的incoming先识别ExtenderBlockEntity，并调用relay.comparator(direction.getOpposite())，仍有按面路径；无覆盖板共享弱信号公式也与原Bridge一致。
+
+问题在现代原生消费者：两版ComparatorBlock.getInputSignal对有analog output的相邻块调用无方向getAnalogOutputSignal。SourceExtenderBlock转到comparator(null)，万能桥分支遍历六方向取最大值。另一个面有15时，按原GT指定查询面合同本应读0的条件也会变成15。它没有因内部GT调用支持按面就自动覆盖原生比较器入口。
+
+576个单面非零输入布局／查询分支中，内部桥的弱信号与比较器公式分别保持一致。把查询限为四水平面，384项现代原生投影中300项不同于原GT按面合同。计数基于0–15与六输入面，不代表300个独立漏洞；同侧／所有面相同等条件也可相同。这里没有1.7.10原生比较器端到端复现，旧参数的物理朝向与完整引擎连线仍保留验收边界。
+
+后续应明确如何在现代比较器消费者处保留查询方向；不能通过删除循环保护，或把“最大值是现代API限制”当成原版功能已移植来结案。
+
+## ALIGN-279：万能扩展器输出从采样值改成查询时实时重算
+
+原非桥30255在自己的onTick2读取mRedstoneIn、mRedstoneOut、mComparator，输出方法读取这些字段。前面输入改变后，直到自己的下一次采样前，查询继续返回上次值。当前signal／comparator每次直接incoming；previousSignals／previousComparator仅用于tickSignals判断通知变化，并非输出值。
+
+限定已完成一次采样、随后前面输入0→15或15→0、尚未到下次自身采样的72项分支：六朝向×两转换×六查询。原弱输出在前面对应查询取其它面最大0，其余面取旧前输入；当前对应取新值，60项弱查询不同；比较器均从旧采样变实时，72项不同。样本调用的是无覆盖板原始路由合同，不混入277的导体合并。没有测量实际延迟tick数，也没有据此认定全部环路不稳定。
+
+正常稳定输入或下一次原采样完成后，前面／其它面聚合公式本身相符。原causeBlockUpdate会在正在更新的实体上标记mDoesBlockUpdate，再由Base01.updateEntity处理；不能把该延期通知概括成精确一tick延迟。现有ThreadLocal访问保护和finally清理须继续保留，不能为恢复旧采样而退回循环递归风险。
+
+## 已有通知与本批源码整理
+
+当前实际服务端ticker每tick调用tickSignals，先panels.beforeTick／afterTick，再比六弱信号和无面比较器；有变化时调用updateNeighborsAt及updateNeighbourForOutputSignal。不是“所有邻居都没通知”。后者的Neo原生实现通知邻格，并检查隔着实心方块的weak changes；完整通知顺序、同刻反馈、强覆盖板输出和库存邻接通知仍需继续。
+
+整理CoverSignalMixin三项注入及宿主选择，cir→callback，说明改为实际的输出覆盖及排除范围。ExtenderJadeProvider展开服务端数据与tooltip，局部block／data→sourceBlock／controlData；只说明调用路径存在，不据此验收控制可用性／成功状态（沿用110）。ExtenderCoverRenderer展开渲染，be／partial→blockEntity／partialTick，调用及光照参数不变。
+
+三源六完整平台执行流515／515、535／535、139／139在限定局部名称归一后保持；原始字符串／数值位置、唯一说明纠正、其它注释和指令另核。16原版／24当前源码、28共享平台视图归档；用户CompoundMaterials与WoodMaterials原始摘要不动。
+
+未Java编译／目标初始化、Gradle、测试、游戏、世界fixture、实际包投递、重启、构建或推送。上述玩法差异仅记录；其它宿主、原生引擎完整连线、覆盖板组合、通知时序及全面项目队列继续，goal保持active。

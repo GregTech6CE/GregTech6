@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十一批核扩展器覆盖板无面安装失败与恢复状态消费者，新增275–276。行为记录至ALIGN-276，共276条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是276个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十二批核扩展器的原生红石传导、桥比较器方向和输出采样时序，新增277–279。行为记录至ALIGN-279，共279条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是279个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -303,6 +303,9 @@
 | ALIGN-274 | 确认八扩展器漆色漏入客户端更新tag。 | 原updateClientData全量标记由Base03发送，Base07／08包带RGB。 | 当前getUpdateTag仅saveCovers并绕过祖先Mixin，空覆盖板例Forge包为null、Neo空tag，客户端收不到服务端新红漆；世界save仍调用super，不报完全不保存，见[同步](PAINT_TARGETS_AUDIT.md)。 |
 | ALIGN-275 | 确认扩展器原生覆盖板处理器查询丢失方向，阻止过滤器／主动组件安装。 | 原普通30000／30001具库存／流体及canTick接口，满足原过滤器、传送带和泵安装门槛。 | 默认及Mixin原生分支以null查询，而转发器exposes拒绝null；48有限安装分支。根复核否定初稿可正常装上的假设，见[入口](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 | ALIGN-276 | 确认恢复后的原生覆盖板缺过滤／方向权限和主动组件tick。 | 原Base06最终库存权限及Extender流体入口问intercept；final onTick分派CoverData.tickPre。 | 限现有load恢复gt_cover_n：现谓词只看闸板，Mixin／fallback排除own getCover，ticker只panel链。不是普通安装成功，也不是实际搬运量测，见[恢复消费者](EXTENDER_CAPABILITIES_AUDIT.md)。 |
+| ALIGN-277 | 确认扩展器继承完整方块强信号传导，绕过自身路由。 | 原MTE方块将shouldCheckWeakPower交实体，继承Base01返回false；六普通身份弱／强输出0。 | 当前默认导体为true，SignalGetter合并六邻直接强信号，360有限分支旧合同0／现15；不是自身强输出，未游戏实测，见[原生入口](EXTENDER_SIGNALS_AUDIT.md)。 |
+| ALIGN-278 | 确认万能桥原生比较器入口丢失原GT按面合同。 | 原Bridge按aSide读取反面incoming，MTE块保留方向参数。 | 内部GT有面查询仍在；原生比较器调用无面block入口，comparator(null)六面取最大，384水平投影300不同；不是旧MC引擎复现，见[比较器](EXTENDER_SIGNALS_AUDIT.md)。 |
+| ALIGN-279 | 确认万能扩展器采样输出改成查询时实时重算。 | 原30255的onTick2保存In／Out／Comparator，输出读取字段。 | 当前previous字段仅通知判断，raw查询每次incoming；72有限转换中60弱／72比较器不同。保留循环保护，不泛称所有环路坏掉，见[采样](EXTENDER_SIGNALS_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

@@ -104,3 +104,5 @@
 2026-10-21 第八十批：ExtenderBlockEntity展开覆盖板／保存更新／路由／控制／信号，SourceExtenderBlock展开两版工具交互和ticker，c／be分别限定方法内改control／blockEntity。清漆陈旧大说明改为实际目标和委托边界；PaintTargets／FixedConstructionColor缩进、WolfCollarAccessor和六项GrassSoilCatalog也已整理。七源十三完整执行557／557、770／770、412／412、81／81、2515／2587、1305／1575、133与未归一字面量位置保持，六说明纠正／用户材料不动，见[专题](PAINT_TARGETS_AUDIT.md)及[回执](verification/paint-targets-audit-20261021.json)。其它源码与全面原版核查继续。
 
 2026-10-21 第八十一批：CapabilityRelayBlockEntity展开缓存／失效／内层包装，active与h限定区域改visited／targetHandler；EnergyRelayBlockEntity展开FE及19项GT转发，e／s改recipient／recipientSide，保留target方法及所有成员名。Neo StorageContainerCapabilities拆注册，e／be改event／blockEntity，注册表达式顺序不变。三源五完整执行1552／1453、1610／1511、902与字面量位置保持，唯一说明限定子类目标职责，材料未动，见[专题](EXTENDER_CAPABILITIES_AUDIT.md)和[回执](verification/extender-capabilities-audit-20261021.json)；全面队列继续。
+
+2026-10-21 第八十二批：CoverSignalMixin展开宿主选择及三注入，cir改callback并纠正覆盖范围说明；ExtenderJadeProvider展开服务器数据／tooltip，block／data改sourceBlock／controlData；ExtenderCoverRenderer展开render，be／partial改blockEntity／partialTick。三源六完整执行515／515、535／535、139／139与字面量位置保持，成员／注册／调用／光照不变，材料未动，见[信号](EXTENDER_SIGNALS_AUDIT.md)和[回执](verification/extender-signals-audit-20261021.json)。全面可读性与原版核查继续。
