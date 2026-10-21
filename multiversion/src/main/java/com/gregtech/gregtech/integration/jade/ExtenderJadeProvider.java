@@ -7,28 +7,47 @@ import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 
-public enum ExtenderJadeProvider implements IBlockComponentProvider,IServerDataProvider<BlockAccessor> {
+public enum ExtenderJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     INSTANCE;
-    @Override public ResourceLocation getUid(){return ResourceLocation.fromNamespaceAndPath("gt6ce","extender");}
-    @Override public void appendServerData(CompoundTag tag,BlockAccessor accessor){
-        if(!(accessor.getBlockEntity() instanceof ExtenderBlockEntity relay)||!relay.universal())return;
-        var block=(SourceExtenderBlock)relay.getBlockState().getBlock();
-        var control=relay.machineControl(block.spec().bridge?accessor.getHitResult().getDirection():null);
-        var data=new CompoundTag();data.putBoolean("available",control!=null&&control.available());
-        if(control!=null&&control.available()){
-            data.putBoolean("enabled",control.enabled());data.putBoolean("running",control.running());data.putBoolean("active",control.active());
-            if(control.supportsMode())data.putInt("mode",control.mode());
-            if(control.supportsProgress()){data.putLong("progress",control.progress());data.putLong("maximum",control.progressMax());}
-        }
-        tag.put("gt.extender.control",data);
+
+    @Override
+    public ResourceLocation getUid() {
+        return ResourceLocation.fromNamespaceAndPath("gt6ce", "extender");
     }
-    @Override public void appendTooltip(ITooltip tooltip,BlockAccessor accessor,IPluginConfig config){
-        if(!accessor.getServerData().contains("gt.extender.control"))return;
-        var data=accessor.getServerData().getCompound("gt.extender.control");
-        if(!data.getBoolean("available")){tooltip.add(Component.translatable("message.gt6ce.extender.unavailable"));return;}
-        tooltip.add(Component.translatable("message.gt6ce.extender."+(data.getBoolean("enabled")?"enabled":"disabled")));
-        tooltip.add(Component.translatable("jade.gt6ce.extender."+(data.getBoolean("active")?"active":data.getBoolean("running")?"running":"idle")));
-        if(data.contains("mode"))tooltip.add(Component.translatable("message.gt6ce.extender.mode",data.getInt("mode")));
-        if(data.contains("maximum")&&data.getLong("maximum")>0)tooltip.add(Component.translatable("jade.gt6ce.extender.progress",data.getLong("progress"),data.getLong("maximum")));
+
+    @Override
+    public void appendServerData(CompoundTag tag, BlockAccessor accessor) {
+        if (!(accessor.getBlockEntity() instanceof ExtenderBlockEntity relay) || !relay.universal()) return;
+        var sourceBlock = (SourceExtenderBlock) relay.getBlockState().getBlock();
+        var control = relay.machineControl(sourceBlock.spec().bridge ? accessor.getHitResult().getDirection() : null);
+        var controlData = new CompoundTag();
+        controlData.putBoolean("available", control != null && control.available());
+        if (control != null && control.available()) {
+            controlData.putBoolean("enabled", control.enabled());
+            controlData.putBoolean("running", control.running());
+            controlData.putBoolean("active", control.active());
+            if (control.supportsMode()) controlData.putInt("mode", control.mode());
+            if (control.supportsProgress()) {
+                controlData.putLong("progress", control.progress());
+                controlData.putLong("maximum", control.progressMax());
+            }
+        }
+        tag.put("gt.extender.control", controlData);
+    }
+
+    @Override
+    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
+        if (!accessor.getServerData().contains("gt.extender.control")) return;
+        var controlData = accessor.getServerData().getCompound("gt.extender.control");
+        if (!controlData.getBoolean("available")) {
+            tooltip.add(Component.translatable("message.gt6ce.extender.unavailable"));
+            return;
+        }
+        tooltip.add(Component.translatable("message.gt6ce.extender." + (controlData.getBoolean("enabled") ? "enabled" : "disabled")));
+        tooltip.add(Component.translatable("jade.gt6ce.extender." + (controlData.getBoolean("active") ? "active"
+                : controlData.getBoolean("running") ? "running" : "idle")));
+        if (controlData.contains("mode")) tooltip.add(Component.translatable("message.gt6ce.extender.mode", controlData.getInt("mode")));
+        if (controlData.contains("maximum") && controlData.getLong("maximum") > 0)
+            tooltip.add(Component.translatable("jade.gt6ce.extender.progress", controlData.getLong("progress"), controlData.getLong("maximum")));
     }
 }
