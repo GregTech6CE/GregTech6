@@ -112,3 +112,5 @@
 2026-10-21 第八十四批：FluidDisplayBinding展开两版序列化／查找，id／item／out／tag改fluidId／carrierItem／displayStack／payloadData；两版FluidItem／FluidDisplayItem展开handler等方法，f改resolvedFluid；ManualToolRules只展开方法。四源五执行421／697、1297、1510、129及字面量位置保持；五说明准确限定饮用载体和无玩家检查的source handler，成员／数值／序列化／玩法不变，用户材料不动，见[专题](FILTER_FLUID_TOOLS_AUDIT.md)及[回执](verification/filter-fluid-tools-audit-20261021.json)。全面标准化／对齐继续。
 
 2026-10-21 第八十五批：core ContainerShapeLike／PipeFormLike展开接口；共享FilterRules展开短条件及映射，限定方法中参数／模式变量／循环局部名改为具体用途。LogisticsItemFilter展开条件并纠正两处说明。四源六执行21、21、514／505、235／235和字面量位置／其它注释／指令保持，材料表未动，见[专题](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)及[回执](verification/filter-prefix-membership-audit-20261021.json)。全面标准化／原版核查继续。
+
+2026-10-21 第八十六批：core LogisticsRoutingRules展开短条件、明确处理器／轮次／结果／等级／数量局部名，DisplayRules展开判断并明确参数；共享LogisticsItemRouter展开记录／条件，宿主／目标及转换／槽位循环使用描述性名称。核心BE仅纠正公开单轮方法与普通ticker门槛说明。四源六完整执行716、234、2240／2241、3094／3135及字面量位置／其它注释／指令保持，材料未动，见[专题](LOGISTICS_SCHEDULING_AUDIT.md)和[回执](verification/logistics-scheduling-audit-20261021.json)。全面标准化／原版核查继续。

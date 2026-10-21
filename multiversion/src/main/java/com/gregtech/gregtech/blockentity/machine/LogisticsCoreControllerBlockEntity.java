@@ -154,7 +154,7 @@ implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
         return network;
     }
 
-    /** Fluid and item routes share the same logic-CPU passes and one-second gate. */
+    /** Runs one shared fluid/item pass; the normal server ticker supplies the one-second cadence. */
     public LogisticsRoutingPass.Result routeNetworkOnce() {
         return routeNetworkOnce(false);
     }

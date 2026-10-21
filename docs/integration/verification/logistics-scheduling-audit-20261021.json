@@ -1,0 +1,2287 @@
+{
+  "batch": 86,
+  "date": "2026-10-21",
+  "baseline": "4b5dcb44cf21cf0f2324d0eed3348e8abdfd2882",
+  "new_records": [
+    284
+  ],
+  "extended_records": [],
+  "scope": "Global pre-server cadence versus persisted world game time, complete rank/channel dispatch order, bounded charge/CPU display and readability. No change to scheduling or transfers.",
+  "counts": {
+    "original_sources": 8,
+    "current_sources": 17,
+    "shared_platform_views": 26,
+    "readability_files": 4,
+    "readability_execution_views": 6
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Proxy.java",
+      "relative": "gregapi/GT_API_Proxy.java",
+      "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityServerTickPre.java",
+      "relative": "gregapi/tileentity/ITileEntityServerTickPre.java",
+      "sha256": "e5e6dabb62b25d5321681a5d79cf0309803bbbbd9ccd54954e6dedee0e739ad4",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingRules.java",
+      "sha256": "585e35341a934aa304116d2af21b0823f0b5ec1eebf48c33e2d4922cf24a5e2d",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsDisplayRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsDisplayRules.java",
+      "sha256": "e4d2487a6a9920f25cc23361f88055d35c1cc58d0c009c9486ee84d623cb2252",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreLayout.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreLayout.java",
+      "sha256": "baa2896c226e487a8c28a1c4243db3e06f1584a14291a6dc9ff5de757e21a32a",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java",
+      "sha256": "898721fe05c4fff8deeb87bc939e5c3f4f0d5470516c7faa9424dd59e799b000",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "sha256": "781ef0c7bccdc4f8d81612268f783f2ca205884958931084f305d3c1c1106391",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "sha256": "c5bd4a05a6d36201af59ec380ef5619f08dfbcc5a84aa74f1c26ec3a6932b2d4",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "sha256": "cd65ece2f245aa7e044fbadcd1c1ec38e223966b28e87e65a128d2ecb2e64ef7",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "sha256": "9ed7e14ab97d949f6b9a78905c8ad4a49c44c45784dffdc38596de12726ae64f",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "sha256": "9b40ed36b415c92d9d666e0851c659e27525ca03cdc8637fcdba8405b6110f51",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "sha256": "9524960f4a2e9088071ef04d6b93c1beb75bc37a103c820bce8216bb9f72b552",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "sha256": "ccc07281346b8f0d14c70c4f42f3ddaf8d0ee6c70e10c86915b06c0eb5c491a3",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "sha256": "239a415d2d9f5150482f2ea1e70feddc01cbca65a882f71d3144e4575dce9fc5",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTLasers.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLasers.java",
+      "sha256": "6a42b626ce0df7d752ad33a32d8d256341f6e9afe3cb427aa41f19d9e115e7fa",
+      "scope": "Logistics tick source/cadence, ordered dispatch and CPU/charge projections; not full-file/system gameplay acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "71721131c5234f618bebf92b40ed9e6f958e29dfaa1113389560c271951b66c7",
+      "tokens": 3094
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f4116020b3075c4f99d65b7110a4e73eaa0e736fe811b664f41e95270836e52c",
+      "tokens": 3135
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "forge",
+      "sha256": "e977764dd636d2631c27565046ffb87c279fb11919450d0f87b3782f870d4aa2",
+      "tokens": 2240
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "neoforge",
+      "sha256": "c2c7668013a54ea122456b280f4620e77ddd23127f664e5d98943591c08690fa",
+      "tokens": 2241
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "platform": "forge",
+      "sha256": "d28cb843b1423a7a792c0fc2e73480a6dd690ad5215483ef50210d27efcecc2b",
+      "tokens": 1518
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "platform": "neoforge",
+      "sha256": "edc0c5a8d52dd30add07d13705e4ec4dc6d07d15099ddac4fbfdb5d2d174206d",
+      "tokens": 1521
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "platform": "forge",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "platform": "neoforge",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "platform": "forge",
+      "sha256": "17204e46b20053d74c420eabc1dca0807f78d491819d993f811558694b6624ef",
+      "tokens": 146
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "platform": "neoforge",
+      "sha256": "17204e46b20053d74c420eabc1dca0807f78d491819d993f811558694b6624ef",
+      "tokens": 146
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "platform": "forge",
+      "sha256": "90589edeb8a4aeaf05869a1d7f5b08b4fd61fb809e2814b819cb506fb29c19e0",
+      "tokens": 897
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoreStructure.java",
+      "platform": "neoforge",
+      "sha256": "90589edeb8a4aeaf05869a1d7f5b08b4fd61fb809e2814b819cb506fb29c19e0",
+      "tokens": 897
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "forge",
+      "sha256": "dc490ac45e02d179d0b7aeb9b84218125468a7a54d06cb351e39e5b0bc63ef92",
+      "tokens": 1112
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "ecdbf4b5bb99024c9eb5872fec9762576367af7286523660c32e4356f861bfd7",
+      "tokens": 1287
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "platform": "forge",
+      "sha256": "e2efac102a4bde2c6ceb14a5052dc92a9b347b2cf0f257eeb8edc5dca34dc453",
+      "tokens": 574
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "platform": "neoforge",
+      "sha256": "780bfa0bf64bcf0b9dab3a65cb8540ae3e23ef2c4daf234af2ff3e441343e8bd",
+      "tokens": 574
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "forge",
+      "sha256": "c39b9c725ae60efb7cfa8812b4a0d9cb81c93acc649fe00c524eaaa1da48c9e5",
+      "tokens": 1382
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "neoforge",
+      "sha256": "9807cebf9e3d13239ba5e225e3497ad43499c8cb715199e54392c15339dbf988",
+      "tokens": 1420
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "platform": "forge",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "tokens": 370
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "platform": "neoforge",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "tokens": 370
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLasers.java",
+      "platform": "forge",
+      "sha256": "34ad059467905250d2092ccf2a6ca27746ba6220766952890bfbdf75b2de3862",
+      "tokens": 1925
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTLasers.java",
+      "platform": "neoforge",
+      "sha256": "f8f466f825715d29423e9a00e90b56ce0ad61d0ccfb32729fce2b25d159854a6",
+      "tokens": 1776
+    }
+  ],
+  "readability": {
+    "baseline": "4b5dcb44cf21cf0f2324d0eed3348e8abdfd2882",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingRules.java": {
+        "before_raw_sha256": "66265dfbff6702499a12d9794b12a4771e76b7047bde85cb275d288d92ecca8d",
+        "after_raw_sha256": "585e35341a934aa304116d2af21b0823f0b5ec1eebf48c33e2d4922cf24a5e2d",
+        "scoped_local_names": [
+          [
+            null,
+            null,
+            {
+              "logic": "logicProcessors",
+              "conversion": "conversionProcessors"
+            }
+          ],
+          [
+            "public static Result route(",
+            "private static Result empty(",
+            {
+              "cycle": "passIndex",
+              "moved": "passResult",
+              "destination": "destinationIndex",
+              "role": "destinationRole",
+              "rank": "priorityRank",
+              "dumped": "dumpedItems"
+            }
+          ],
+          [
+            "private static Result tryPair(",
+            null,
+            {
+              "fluid": "fluidAmount",
+              "count": "itemCount"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 716,
+            "execution_sha256": "d38f7a1b6818e93dbfd66ad66fb1e817c8345455d8c823707df993b1b13bb7f5",
+            "before_lines": 77,
+            "after_lines": 87,
+            "before_max_line": 122,
+            "after_max_line": 118
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsDisplayRules.java": {
+        "before_raw_sha256": "ed363fec418fc0ca82a80d6364970e05409956bcc7263e4a1be5b05dd5a29805",
+        "after_raw_sha256": "e4d2487a6a9920f25cc23361f88055d35c1cc58d0c009c9486ee84d623cb2252",
+        "scoped_local_names": [
+          [
+            null,
+            null,
+            {
+              "used": "usedProcessors",
+              "total": "totalProcessors"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 234,
+            "execution_sha256": "9fe141850157bd749ec8bbc318bbb0268019a5aa660e1815379ee0cc5bb36491",
+            "before_lines": 34,
+            "after_lines": 39,
+            "before_max_line": 97,
+            "after_max_line": 114
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java": {
+        "before_raw_sha256": "487369b7825ad5bea525f1a16d48648f7ab0125806bdc575c9a80a292c1506cd",
+        "after_raw_sha256": "c5bd4a05a6d36201af59ec380ef5619f08dfbcc5a84aa74f1c26ec3a6932b2d4",
+        "scoped_local_names": [
+          [
+            "public static Session collect(",
+            "public static final class Session",
+            {
+              "hostPos": "hostPosition",
+              "hostEntity": "hostBlockEntity",
+              "targetPos": "targetPosition",
+              "target": "targetBlockEntity",
+              "panels": "panelHost"
+            }
+          ],
+          [
+            "private static Transfer movePair(",
+            "private static int moveOne(",
+            {
+              "i": "conversionIndex"
+            }
+          ],
+          [
+            "private static int moveOne(",
+            null,
+            {
+              "from": "sourceSlot",
+              "to": "destinationSlot"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2240,
+            "execution_sha256": "ebf5398148a34b7924050a3e398b7a4125d71c1eabecf8168889179375571ccf",
+            "before_lines": 249,
+            "after_lines": 283,
+            "before_max_line": 136,
+            "after_max_line": 117
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2241,
+            "execution_sha256": "285cc9bfdbab4f620c5cc260777f8cb986bb0784c2f7728746877048b1577e95",
+            "before_lines": 247,
+            "after_lines": 284,
+            "before_max_line": 138,
+            "after_max_line": 117
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java": {
+        "before_raw_sha256": "6166dba10593ca2f9ca144674fe8db678b4966b58781850759ef9187150a586d",
+        "after_raw_sha256": "781ef0c7bccdc4f8d81612268f783f2ca205884958931084f305d3c1c1106391",
+        "scoped_local_names": [],
+        "comment_corrections": [
+          [
+            "/** Fluid and item routes share the same logic-CPU passes and one-second gate. */",
+            "/** Runs one shared fluid/item pass; the normal server ticker supplies the one-second cadence. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 3094,
+            "execution_sha256": "a32d81381023712efe6475840b1e77fa14ac29fdd514a23a149e1c47fe823fb7",
+            "before_lines": 447,
+            "after_lines": 447,
+            "before_max_line": 139,
+            "after_max_line": 139
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 3135,
+            "execution_sha256": "8eac4a25fcc44635c61faebc79b7552c49c9e87534b2309e5660ff4dbbc93a37",
+            "before_lines": 447,
+            "after_lines": 447,
+            "before_max_line": 139,
+            "after_max_line": 139
+          }
+        ]
+      }
+    }
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "reused_receipt": {
+      "path": "docs/integration/verification/logistics-network-audit-20261021.json",
+      "sha256": "a19067980dfa9371d41371be8701eb09da149d734937c4598dedfcc66cc6ea88"
+    },
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "reused_entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/Level.class",
+        "sha256": "7c9e12d688e4f41c34c54489b5a7bb9893cbd2396cdac6cc3e42a6e607003d5f",
+        "bytes": 56437
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/level/ServerLevel.class",
+        "sha256": "0210ec59000410d4284eeec225699b49b592ba659c8a16b49ac76916192585d1",
+        "bytes": 94666
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/MinecraftServer.class",
+        "sha256": "c8746828ef5885a6e0088d09431f154f11744580ac25927a67221689f649b356",
+        "bytes": 94782
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/Level.java",
+        "sha256": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+        "bytes": 47720,
+        "extracted": "work/logistics-network-audit-20261021/neo-Level.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/server/level/ServerLevel.java",
+        "sha256": "8d1086b8e63b11d340853e7595a63f2f27edc0d690311c9a0d46d5098eb21925",
+        "bytes": 77451,
+        "extracted": "work/logistics-network-audit-20261021/neo-ServerLevel.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/server/MinecraftServer.java",
+        "sha256": "b906c6597095e206ade6a9db34f76993f667bdf2bfacaeca793ba9ce14e568ed",
+        "bytes": 83629,
+        "extracted": "work/logistics-network-audit-20261021/neo-MinecraftServer.java"
+      }
+    ],
+    "reused_readonly_views": [
+      {
+        "class": "net.minecraft.world.level.Level",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/Level.class",
+        "output": "work/logistics-network-audit-20261021/forge-Level.javap.txt",
+        "sha256": "99304f0da6337fd3e21605c221d4e9d1cb8ab902366e9eb17e0906501d8679a4",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.server.level.ServerLevel",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/level/ServerLevel.class",
+        "output": "work/logistics-network-audit-20261021/forge-ServerLevel.javap.txt",
+        "sha256": "14021de7caabc340ecbc2d38a903e21b97ca99cc7e3328fdb32dcba72f168604",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.server.MinecraftServer",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/MinecraftServer.class",
+        "output": "work/logistics-network-audit-20261021/forge-MinecraftServer.javap.txt",
+        "sha256": "34adc4a13df260c1f6657798904b68de777f5b7add3011726a452f6678c11bbc",
+        "kind": "Read-only javap; no compilation or target initialization."
+      }
+    ],
+    "additional_entries": [
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/storage/PrimaryLevelData.java",
+        "sha256": "4253ea014ac5f54761cdad3e6f93e38fef9b1eb5b4a742c1cdb111f374bf80c7",
+        "extracted": "work/logistics-scheduling-audit-20261021/neo-PrimaryLevelData.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/storage/PrimaryLevelData.class",
+        "sha256": "71556a0b81ddc7f3307e152e7a2e12b863ba4284ba8377c6235cd6e05a2ec0db",
+        "extracted": "work/logistics-scheduling-audit-20261021/forge-PrimaryLevelData.class"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/storage/DerivedLevelData.java",
+        "sha256": "e2ccf4ad920e413192ba58901895e7909fb1d862fe0afa3b8eefb4bb0159beae",
+        "extracted": "work/logistics-scheduling-audit-20261021/neo-DerivedLevelData.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/storage/DerivedLevelData.class",
+        "sha256": "a3ca3378eebb869c73ffeb46e38a0ea33fb14947d67ed312b65ffde326586990",
+        "extracted": "work/logistics-scheduling-audit-20261021/forge-DerivedLevelData.class"
+      }
+    ],
+    "additional_readonly_views": [
+      {
+        "class": "net.minecraft.world.level.storage.PrimaryLevelData",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "output": "work/logistics-scheduling-audit-20261021/forge-PrimaryLevelData.javap.txt",
+        "sha256": "aaf340099cf608240f2aae2e79d40d41cac1ba5aef026629bc2e5bdb3ba686c1",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "encoding": "gb18030",
+        "limit": "Reads bytecode; no target class initialization."
+      },
+      {
+        "class": "net.minecraft.world.level.storage.DerivedLevelData",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "output": "work/logistics-scheduling-audit-20261021/forge-DerivedLevelData.javap.txt",
+        "sha256": "22c7d9ce6d291a66145f3d19619b41e0a8524e8adc5fc309848827f6fb82b82f",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "encoding": "gb18030",
+        "limit": "Reads bytecode; no target class initialization."
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source-derived schedules, order lists and arithmetic projections. No Java target calls or world fixtures.",
+    "ordered_attempts": [
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "STORAGE",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "STORAGE",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "STORAGE",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "STORAGE",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "STORAGE",
+        2
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "STORAGE",
+        2
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "STORAGE",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "STORAGE",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "STORAGE",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "STORAGE",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "STORAGE",
+        1
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "STORAGE",
+        1
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        0,
+        "STORAGE",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        0,
+        "STORAGE",
+        0
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        1,
+        "STORAGE",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        1,
+        "STORAGE",
+        0
+      ],
+      [
+        "fluid",
+        "IMPORT",
+        2,
+        "STORAGE",
+        0
+      ],
+      [
+        "item",
+        "IMPORT",
+        2,
+        "STORAGE",
+        0
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        0,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        1,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "STORAGE",
+        1,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        2,
+        "EXPORT",
+        2
+      ],
+      [
+        "item",
+        "STORAGE",
+        2,
+        "EXPORT",
+        2
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        0,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        1,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "STORAGE",
+        1,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        2,
+        "EXPORT",
+        1
+      ],
+      [
+        "item",
+        "STORAGE",
+        2,
+        "EXPORT",
+        1
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        0,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        1,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "STORAGE",
+        1,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        2,
+        "EXPORT",
+        0
+      ],
+      [
+        "item",
+        "STORAGE",
+        2,
+        "EXPORT",
+        0
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        0,
+        "STORAGE",
+        2
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "STORAGE",
+        2
+      ],
+      [
+        "fluid",
+        "STORAGE",
+        0,
+        "STORAGE",
+        1
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "STORAGE",
+        1
+      ],
+      [
+        "item",
+        "STORAGE",
+        0,
+        "DUMP",
+        0
+      ]
+    ],
+    "first_success_conditions": [
+      {
+        "first_success_index": 0,
+        "attempts_before_success": 1,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 1,
+        "attempts_before_success": 2,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 2,
+        "attempts_before_success": 3,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 3,
+        "attempts_before_success": 4,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 4,
+        "attempts_before_success": 5,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 5,
+        "attempts_before_success": 6,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 6,
+        "attempts_before_success": 7,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 7,
+        "attempts_before_success": 8,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 8,
+        "attempts_before_success": 9,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 9,
+        "attempts_before_success": 10,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 10,
+        "attempts_before_success": 11,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 11,
+        "attempts_before_success": 12,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 12,
+        "attempts_before_success": 13,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 13,
+        "attempts_before_success": 14,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 14,
+        "attempts_before_success": 15,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 15,
+        "attempts_before_success": 16,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 16,
+        "attempts_before_success": 17,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 17,
+        "attempts_before_success": 18,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 18,
+        "attempts_before_success": 19,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 19,
+        "attempts_before_success": 20,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 20,
+        "attempts_before_success": 21,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 21,
+        "attempts_before_success": 22,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 22,
+        "attempts_before_success": 23,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 23,
+        "attempts_before_success": 24,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 24,
+        "attempts_before_success": 25,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 25,
+        "attempts_before_success": 26,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 26,
+        "attempts_before_success": 27,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 27,
+        "attempts_before_success": 28,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 28,
+        "attempts_before_success": 29,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 29,
+        "attempts_before_success": 30,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 30,
+        "attempts_before_success": 31,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          0,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 31,
+        "attempts_before_success": 32,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          0,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 32,
+        "attempts_before_success": 33,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          1,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 33,
+        "attempts_before_success": 34,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          1,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 34,
+        "attempts_before_success": 35,
+        "stopped_at": [
+          "fluid",
+          "IMPORT",
+          2,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 35,
+        "attempts_before_success": 36,
+        "stopped_at": [
+          "item",
+          "IMPORT",
+          2,
+          "STORAGE",
+          0
+        ]
+      },
+      {
+        "first_success_index": 36,
+        "attempts_before_success": 37,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          0,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 37,
+        "attempts_before_success": 38,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 38,
+        "attempts_before_success": 39,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          1,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 39,
+        "attempts_before_success": 40,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          1,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 40,
+        "attempts_before_success": 41,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          2,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 41,
+        "attempts_before_success": 42,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          2,
+          "EXPORT",
+          2
+        ]
+      },
+      {
+        "first_success_index": 42,
+        "attempts_before_success": 43,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          0,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 43,
+        "attempts_before_success": 44,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 44,
+        "attempts_before_success": 45,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          1,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 45,
+        "attempts_before_success": 46,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          1,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 46,
+        "attempts_before_success": 47,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          2,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 47,
+        "attempts_before_success": 48,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          2,
+          "EXPORT",
+          1
+        ]
+      },
+      {
+        "first_success_index": 48,
+        "attempts_before_success": 49,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          0,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 49,
+        "attempts_before_success": 50,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 50,
+        "attempts_before_success": 51,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          1,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 51,
+        "attempts_before_success": 52,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          1,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 52,
+        "attempts_before_success": 53,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          2,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 53,
+        "attempts_before_success": 54,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          2,
+          "EXPORT",
+          0
+        ]
+      },
+      {
+        "first_success_index": 54,
+        "attempts_before_success": 55,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          0,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 55,
+        "attempts_before_success": 56,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "STORAGE",
+          2
+        ]
+      },
+      {
+        "first_success_index": 56,
+        "attempts_before_success": 57,
+        "stopped_at": [
+          "fluid",
+          "STORAGE",
+          0,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 57,
+        "attempts_before_success": 58,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "STORAGE",
+          1
+        ]
+      },
+      {
+        "first_success_index": 58,
+        "attempts_before_success": 59,
+        "stopped_at": [
+          "item",
+          "STORAGE",
+          0,
+          "DUMP",
+          0
+        ]
+      }
+    ],
+    "clock_phase_conditions": [
+      {
+        "saved_game_time_mod20": 0,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          40,
+          60
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 1,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          39,
+          59
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 2,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          38,
+          58
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 3,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          37,
+          57
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 4,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          36,
+          56
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 5,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          35,
+          55
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 6,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          34,
+          54
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 7,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          33,
+          53
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 8,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          32,
+          52
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 9,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          31,
+          51
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 10,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          30,
+          50
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 11,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          29,
+          49
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 12,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          28,
+          48
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 13,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          27,
+          47
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 14,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          26,
+          46
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 15,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          25,
+          45
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 16,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          24,
+          44
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 17,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          23,
+          43
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 18,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          22,
+          42
+        ],
+        "same_phase": false
+      },
+      {
+        "saved_game_time_mod20": 19,
+        "original_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "current_eligible_gate_steps": [
+          21,
+          41
+        ],
+        "same_phase": true
+      }
+    ],
+    "clock_assumptions": "Both cores registered/eligible and fully loaded from the first ordinary world tick, stable formed/powered network, world game time advances once per server step. Compare only steps21..60 to exclude original first-tick callback registration. Step j starts global old counter j-1; persisted modern game-time residue r is read after increment r+j. No first-frame, frozen-server, skipped-world or actual-restart claim.",
+    "logic_usage_projection": {
+      "conditions": 5994,
+      "ordered_sha256": "a358b74e2554063e20af9a38bdb009aeefe8a89a8e331a8ecb889cbd95e75326",
+      "raw_different_when_all_successes": 108,
+      "signal_and_visual_equal": true,
+      "limit": "Full success leaves original while preincrement counter at total+1, current counts successful operations. Only the two clamped display projections are accepted, not equality of raw saved counters/API values."
+    },
+    "fluid_charge_boundary_conditions": [
+      {
+        "conversion": 1,
+        "fluid_litres": 1,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 1,
+        "fluid_litres": 249,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 1,
+        "fluid_litres": 250,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 1,
+        "fluid_litres": 251,
+        "original_eu": 2,
+        "current_eu": 2,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 1,
+        "fluid_litres": 15999,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 1,
+        "fluid_litres": 16000,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 1,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 249,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 250,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 251,
+        "original_eu": 2,
+        "current_eu": 2,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 15999,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 16000,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 16001,
+        "original_eu": 65,
+        "current_eu": 65,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 2,
+        "fluid_litres": 32000,
+        "original_eu": 128,
+        "current_eu": 128,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 1,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 249,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 250,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 251,
+        "original_eu": 2,
+        "current_eu": 2,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 15999,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 16000,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 16001,
+        "original_eu": 65,
+        "current_eu": 65,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 32000,
+        "original_eu": 128,
+        "current_eu": 128,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 27,
+        "fluid_litres": 432000,
+        "original_eu": 1728,
+        "current_eu": 1728,
+        "conversion_used": 27
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 1,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 249,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 250,
+        "original_eu": 1,
+        "current_eu": 1,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 251,
+        "original_eu": 2,
+        "current_eu": 2,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 15999,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 16000,
+        "original_eu": 64,
+        "current_eu": 64,
+        "conversion_used": 1
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 16001,
+        "original_eu": 65,
+        "current_eu": 65,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 32000,
+        "original_eu": 128,
+        "current_eu": 128,
+        "conversion_used": 2
+      },
+      {
+        "conversion": 108,
+        "fluid_litres": 1728000,
+        "original_eu": 6912,
+        "current_eu": 6912,
+        "conversion_used": 108
+      }
+    ],
+    "limits": [
+      "No same-tick real energy/endpoint visibility, provider mutation, inter-core scheduling, throughput/TPS, client redstone or restart acceptance.59 positions are rank/channel dispatch, not59 real endpoints.",
+      "128EU reserve sufficiency is not generalized to foreign overstacked items or arbitrary handlers; prior quantity/return-policy findings remain."
+    ]
+  },
+  "policy_boundaries": [
+    "Cadence is still every20 advancing ticks; altered phase is a scheduling contract difference, not evidence of reduced steady throughput or vanilla dimension desynchronization.",
+    "Do not restore the original full-success preincrement counter bug; current real-operation count has the same clamped CPU display at saturation.",
+    "The public routeNetworkOnce helper itself does not enforce a one-second gate. Current ordinary production calls it only through the normal server ticker; the comment now states that boundary accurately."
+  ],
+  "remaining": [
+    "Actual boot/registration/load/energy ordering, same-tick visibility, all CPU assignments and providers, world clock/freeze/optional-dimension behavior, complete routing/error/save-restart/client acceptance and comprehensive project/readability queue."
+  ],
+  "limits": [
+    "Whitespace and scoped local identifiers in three sources, plus one accurate BE method comment; complete six execution streams and original literals preserved.",
+    "No Java compilation/target initialization, Gradle, tests, game, actual routing/registry/UI/restart, build or push. Read-only javap uses saved native classes.",
+    "284 formal records include fixes and policy differences and are not an unresolved-bug total or completion percentage."
+  ],
+  "previous_goal_turn": "Progress: local commit4b5dcb44c recorded concrete prefix membership/selection gap283 and standardized four related sources while preserving user material files.",
+  "root_validation": {
+    "named_source_hashes": 25,
+    "shared_platform_views": 26,
+    "readability_files": 4,
+    "complete_execution_views": 6,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 1,
+    "protected_material_hashes": 2,
+    "native_artifact_hashes": 2,
+    "reused_native_entries": 6,
+    "reused_readonly_views": 3,
+    "additional_native_entries": 4,
+    "additional_readonly_views": 2,
+    "ordered_attempt_positions": 59,
+    "first_success_conditions": 59,
+    "clock_residue_conditions": 20,
+    "different_clock_phases": 19,
+    "same_period": 20,
+    "cpu_display_conditions": 5994,
+    "raw_counter_equality_not_claimed": true,
+    "ordinary_production_call_inventory_checked": true,
+    "contiguous_ledger_records": 284,
+    "documents_checked": 10,
+    "added_local_links_checked": 20,
+    "limit": "Source/file analysis only; no target compilation/initialization, Gradle, tests, game, actual routing/clock/restart/UI, build or push."
+  }
+}

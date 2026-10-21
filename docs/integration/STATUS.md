@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第八十六批物流调度与执行顺序
+
+新增284全局START时钟改持久化gameTime相位，未误报频率降低或维度必然失步；优先级／流体先行及两类扣费公式已有。8原／17当前、26平台视图，四源六执行保持，59顺序／20相位／5994显示投影见[专题](LOGISTICS_SCHEDULING_AUDIT.md)和[回执](verification/logistics-scheduling-audit-20261021.json)。用户材料不动，未编译／初始化／测试／游戏／构建／推送，全面队列继续。
+
 ## 2026-10-21 / 第八十五批前缀成员与原生物品
 
 新增283普通木板plank／原版铁块blockIngot成员识别和选择缺口；原主关联／备用扫描分开，已有组成／plate标签保留。14原／28当前、34视图与四原生条目／四只读javap见[专题](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)和[回执](verification/filter-prefix-membership-audit-20261021.json)。四源六执行保持，用户材料不动；未编译／初始化／测试／游戏／构建／推送，全面队列继续。

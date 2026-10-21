@@ -30,6 +30,8 @@
 
 前缀过滤入口在共享FilterRules，core ContainerShapeLike／PipeFormLike只给形状元数据；FilterMenu选择、FilterBlockEntity筛选和LogisticsItemFilter预留共用它。材料组成的ItemMaterialRegistry及MaterialTagPack生成标签是另一层，不能推定过滤器已消费所有成员；原生物品的具体缺口见[前缀成员](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)。
 
+物流普通秒门槛在共享LogisticsCoreControllerBlockEntity.serverTick，LogisticsRoutingPass接原生端点，core LogisticsRoutingRules只给单次调度的优先级／CPU轮次与计费；公开routeNetworkOnce辅助方法本身不检查世界秒门槛。LogisticsItemRouter负责物品收集／转换／槽位和返还，DisplayRules只给刻度投影，见[调度与源码](LOGISTICS_SCHEDULING_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
