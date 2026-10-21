@@ -1,0 +1,1165 @@
+{
+  "date": "2026-10-21",
+  "batch": 89,
+  "baseline": "0eda620fb9b3d9720d484c8600e5c0f7d3ffbe77",
+  "scope": "USB/HDD switch media identity/normal tiers, selection, cover removal, mode notifications, held copy, menus and persistence source entry. Not full printer/scanner/replicator or saved-world acceptance.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/computer/MultiTileEntityUSBSwitch.java",
+      "sha256": "67b4976126119b054bef60ea80d9c06b83588b545058b2be18450624a9dad03a",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/computer/MultiTileEntityHDDSwitch.java",
+      "sha256": "77a4f10452455070a76f72f4ba7c763910118ba4de45f467514081bc967a324a",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/computer/TileEntityBase08DataSwitch.java",
+      "sha256": "8d8023886b231059173a56c87e39936bd270260581336db7fa38f752b8298311",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2022 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2023 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverRedstoneEmitter.java",
+      "sha256": "b07546ad5ba6072307f9e6a882a466b45b11c01b536a160c08333174418c797b",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachment.java",
+      "sha256": "80de1877f10359939f03f7da221bc23fe0927a1368f206062b36df2efe957bf7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverDefault.java",
+      "sha256": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentSelector.java",
+      "sha256": "3abc746f02483c3311c32cefd11f1761a8e18aef8e61e992657328ea7612fbf9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverSelectorManual.java",
+      "sha256": "444d71e3cc5c42949c3d31b734c6471ba00e6ab359a0a890ad123db7783593d1",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2019 Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/load/LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2026 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemTechnological.java",
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "authors": [],
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/data/UsbDataRules.java",
+      "sha256": "a98ab1d0b41f0c09242e15f8d3f78adcaaf06b0f6809f3c2461ef4af8c4ce4a6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataMedia.java",
+      "sha256": "3c06c5e9f2a573ab299fe996c2425e12621efe4a72efcb2ba42be45ca4f7cbae",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "aa2ad2af06c60eae5232262bc3c24b3d384b0f06990bec7156ad03e9706a362b",
+          "tokens": 886
+        },
+        "neoforge": {
+          "sha256": "b7c4e566f3544c4fbcfa85b73d736dbd5be77c9ea9a6a1565fdc739e1bc6b198",
+          "tokens": 1038
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataCable.java",
+      "sha256": "aec7939b98cea4e6e325cf237a1351021324341995493037f19f99fc985f0010",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cce3e9eaf0b26e7752531f2d30a364c4a2d1786e0c40f1ecdcc0527bd97fb55b",
+          "tokens": 432
+        },
+        "neoforge": {
+          "sha256": "98b95ce2d65538588fe02037bb67942745f7e22d62be03c2a3f7915c980d6ee4",
+          "tokens": 433
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/data/UsbDataPort.java",
+      "sha256": "6844e0b743319bbdcc047a96a581cbe36e838e62fa382fae2a937eb31b208b92",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "55179fa4ccf764db84b86426198c19044d6aad68332d7009ecfd3237497f63b9",
+          "tokens": 70
+        },
+        "neoforge": {
+          "sha256": "55179fa4ccf764db84b86426198c19044d6aad68332d7009ecfd3237497f63b9",
+          "tokens": 70
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/UsbSwitchBlockEntity.java",
+      "sha256": "7ee546730fb42cce1049b66a87362c854ddbf212ec18ef191aacb6e1697f7e95",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3f274385f2c257b4ea240be598d6d115f1ac2977927dfe69c8567169dc019aa2",
+          "tokens": 2034
+        },
+        "neoforge": {
+          "sha256": "90e8ae78f1aa145598109d3806ff1b8ebc0e9df479fe7af31dd105c42c175688",
+          "tokens": 1888
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/UsbSwitchBlock.java",
+      "sha256": "cd460b6990775139a8925c6add8d177e5fa5810116c4065994f4262fb7e613ed",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "abfd34a1dda7dbd8ea1835dbdba4b5a027fbbdcc8a59e3567a410fcbb71ed7c2",
+          "tokens": 991
+        },
+        "neoforge": {
+          "sha256": "42a1ca975c171c79357b3335cdb308de796561219b1e91bf719fc8b90afb50b9",
+          "tokens": 1181
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/DataSwitchMenu.java",
+      "sha256": "56682b7ccdf594f2752505b103b8027446bb111ffeae9c48bdb68ef17dd3fe2e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "174f9cd3b20c1327f6392ad793b0cbba259590e09b2653efbdffb52ecd8c0292",
+          "tokens": 924
+        },
+        "neoforge": {
+          "sha256": "d83505201f82950c1f89933037e074317049672b9ac79dfd5f3320866d04a536",
+          "tokens": 930
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "sha256": "bdb09e176d08f1b23ba0b420ebf9cb36c832bfe2d0dc5002092269db5727a2c3",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "88dd113ca6bacd5eede627a4cfd41d67e30ec3340f4b6bece92a86ea2391e87a",
+          "tokens": 298
+        },
+        "neoforge": {
+          "sha256": "ca3c419b2f329dcd42a6c3c22a6b58649250d45f003bdedbc0400c49b1eb7792",
+          "tokens": 297
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+          "tokens": 3948
+        },
+        "neoforge": {
+          "sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+          "tokens": 3957
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "120bd77dadf304d5418db0b64328a700195858511a156b7d99b1d008052b136c",
+          "tokens": 873
+        },
+        "neoforge": {
+          "sha256": "2561f6ee2466ed57c8405a9ca32d92e6323b95b54612293d4fa604e3231f4a90",
+          "tokens": 895
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+          "tokens": 453
+        },
+        "neoforge": {
+          "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+          "tokens": 453
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java",
+      "sha256": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e9e14b42415d326cd818a75213b260ef248cf294b6462f94f488cb1c6da6b5eb",
+          "tokens": 907
+        },
+        "neoforge": {
+          "sha256": "18c1d3e4a78facc0d055104af13f36e62e53ad0e75470919d99d696633568de4",
+          "tokens": 896
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/MachineCoverSpec.java",
+      "sha256": "568d8a2e452105e319b253d0cd768ba564e5f66106f905cd6d71385725f46615",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "54b7cdcafa2d86d8a877acfae2694e9de59edd9675d5f96ed3769fe939d6140b",
+          "tokens": 567
+        },
+        "neoforge": {
+          "sha256": "e2c8e3c3f597e3b11c2fe39edd3f64c6b0a3d159b32d3777741115f662c23e45",
+          "tokens": 570
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "90aaf1d96a26123ab3b9d894aa19ca3c65d57cfc01da0af0703e6c62e1f2eb21",
+          "tokens": 1506
+        },
+        "neoforge": {
+          "sha256": "20be436cbf15cedb04085c445516c390201896499ca58f4c65e90045d3778718",
+          "tokens": 1526
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "2de5217044c176e3e4b0407901cfcdaa97bb9ead74d861f202a5f4c564255bec",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "704bcb2738bc7f44a58e29e0c3b89fe6deb435711ec157d2c60715975194067d",
+          "tokens": 15170
+        },
+        "neoforge": {
+          "sha256": "b431a46375033f12b4e4d2190d23960837691d45de91acd6e871366a2fd9bdeb",
+          "tokens": 14851
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/BasicMachineBlock.java",
+      "sha256": "3ef74cad4c41ba871140ae13e9123da31ae4be90627f4f15538e084652c28bc9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "af90b2e84b40a2bc01edb2359409cc538d30d0ac2b90e9643db1c03b5c897137",
+          "tokens": 2271
+        },
+        "neoforge": {
+          "sha256": "e15ec7d5cb7b882640355804ed2324d6d5747b65e034835993a3947b11912c1b",
+          "tokens": 2489
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+      "sha256": "afc4780e1ecc3f992fcfc8a3cae0eb461fb979bae656fa5eda1c64561266dd87",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3dda2dd4df583a846e64abcb752fbba8a527689dbef3a7beff73f711258ae1fa",
+          "tokens": 3762
+        },
+        "neoforge": {
+          "sha256": "3054d44ac9fc1b3cab626acb5cb5b6d6458c0f5ddb2cfe720cce7af13e3ad27c",
+          "tokens": 3859
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "sha256": "a587a6138eaee75e03dc20ba09b54a99e14cbbfbc85eebac29903f1bc2b992b9",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineContextRecipes.java",
+      "sha256": "40fcad32efa394e90dc059710bf1e779f09dcfd7e79f35dd56b87a05cdfc0f0f",
+      "shared_platform_views": {}
+    }
+  ],
+  "source_equivalence": {
+    "baseline": "0eda620fb9b3d9720d484c8600e5c0f7d3ffbe77",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/data/UsbDataRules.java": {
+        "before_raw_sha256": "6a6a194dda366f7fe93be0f3a8bd265ae41e13583d6ccfb8211944681ff991bf",
+        "after_raw_sha256": "a98ab1d0b41f0c09242e15f8d3f78adcaaf06b0f6809f3c2461ef4af8c4ce4a6",
+        "scoped_local_names": {
+          "tier": {
+            "id": "registryPath",
+            "n": "tierDigit"
+          }
+        },
+        "comment_corrections": [
+          [
+            "Original GT6 media identity, selection, file keys and tier gates, without platform stack/NBT types.",
+            "Shared file keys, built-in media ID parsing and slot/tier guards, without platform stack/NBT types."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 277,
+            "execution_sha256": "a3a610f0e091ec643f980a3d9911f287458c77301e927be577b057728c3e945f",
+            "literal_positions_sha256": "9ddb8039429e66c01f31fd70ddaf47634fb062712773b368a6a7f0bde9678740",
+            "literal_count": 21,
+            "before_lines": 12,
+            "after_lines": 42
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataMedia.java": {
+        "before_raw_sha256": "f60a75459b7119c9ad771d5251917ab1a49f8e5deaf82c45d71530b7ee2723ed",
+        "after_raw_sha256": "3c06c5e9f2a573ab299fe996c2425e12621efe4a72efcb2ba42be45ca4f7cbae",
+        "scoped_local_names": {},
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 886,
+            "execution_sha256": "4185663f707e4d96097e818f8c0bd23618fbc15ad2538e4994d4cdc515b56147",
+            "literal_positions_sha256": "c97ceb1fae1073ac77bca5c0d3f067791ef3b61722cebfc6d469d8d06425e266",
+            "literal_count": 12,
+            "before_lines": 111,
+            "after_lines": 128
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1038,
+            "execution_sha256": "1ca94d479c259bab8d82b6530dc38739e463f903cbc44a705940ee1957e98cd3",
+            "literal_positions_sha256": "60db3b36f61036bcacb174b692a032c274bc7042b49c389389a68717e981b2ff",
+            "literal_count": 12,
+            "before_lines": 116,
+            "after_lines": 145
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/UsbSwitchBlockEntity.java": {
+        "before_raw_sha256": "21a362eb6a034d606ef7ed3c2faab624dc28e023e76bc657a96b998b81a7ea71",
+        "after_raw_sha256": "7ee546730fb42cce1049b66a87362c854ddbf212ec18ef191aacb6e1697f7e95",
+        "scoped_local_names": {},
+        "comment_corrections": [
+          [
+            "GT6's selector attachment resets the shared mode when it is removed.",
+            "Currently every recognized panel resets the shared mode, beyond selectors (ALIGN-289)."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2034,
+            "execution_sha256": "642900bab627e8f113dc56765e35d5982abe839a958b2bcbcc5c25da47cba592",
+            "literal_positions_sha256": "dd9c16d852321c2d85d2815d5c03cc4409f0e4f5a5e84e7ed19a31c9814a88dc",
+            "literal_count": 19,
+            "before_lines": 219,
+            "after_lines": 331
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1888,
+            "execution_sha256": "538afc5354326bdde5373ded490c46c3a3feaf3090da1844ba37b0d6a2a1e91a",
+            "literal_positions_sha256": "6ed0a01fe0ae094f4b10182241baa786c0917bb08845d7c119248bc69086b002",
+            "literal_count": 19,
+            "before_lines": 209,
+            "after_lines": 312
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java": {
+        "before_raw_sha256": "a61c0d7f8b233935ff480e68a97ad1d9d115caeb4ee30621f06010480144bfe2",
+        "after_raw_sha256": "afc4780e1ecc3f992fcfc8a3cae0eb461fb979bae656fa5eda1c64561266dd87",
+        "scoped_local_names": {},
+        "comment_corrections": [
+          [
+            "An idle\n * machine re-runs the lookup every tick.",
+            "Idle\n * lookup timing is controlled by the native machine."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 3762,
+            "execution_sha256": "9a80eb94c28e860d0136fa9ef80b0c806353f9281a9aa9b68b164105abe56d80",
+            "literal_positions_sha256": "015b7776eaeb8aea1774e866c251dffdfc36f226b4d55272d027638baaceb6b1",
+            "literal_count": 59,
+            "before_lines": 570,
+            "after_lines": 570
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 3859,
+            "execution_sha256": "cd7c0be77bd380284d140bf0ec007afd52ae8b3eed23cc07f0a043ad1c7ac271",
+            "literal_positions_sha256": "910fe2864d64b7dabdf6481ea01c0089fc746912ddd5e7b2c1ad73015a3f240e",
+            "literal_count": 59,
+            "before_lines": 572,
+            "after_lines": 572
+          }
+        ]
+      }
+    }
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "new_alignment_findings": [
+    {
+      "id": "ALIGN-289",
+      "contract": "Removing a non-selector recognized panel also resets the USB/HDD selected slot.",
+      "evidence": "Emitter inherits empty original onCoverRemove; original selector alone resets. Native switch resets every PanelCover before its otherwise-correct panels.removed selector gate.",
+      "limits": "Settled manual selector scenario. Redstone/timer/external mode writers may subsequently choose another mode; no world run performed."
+    }
+  ],
+  "extended_existing_findings": {
+    "ALIGN-132": "Held-stick copying/clearing lacks the original playClick call; menu/cover actions are separate.",
+    "ALIGN-172": "Mode change uses ordinary neighborChanged; base machine consumer sets only energy-source flag, not original adjacent inventory-change marker. Existing recipe searches/polling remain and prevent a permanent-stall claim."
+  },
+  "source_witnesses": {
+    "cover_removal_conditions": 64,
+    "cover_removal_differences": 30,
+    "cover_removal_rows": [
+      {
+        "kind": "USB",
+        "old_mode": 0,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 0,
+        "removed": "EMITTER",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 1,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 1,
+        "removed": "EMITTER",
+        "original_result": 1,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 2,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 2,
+        "removed": "EMITTER",
+        "original_result": 2,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 3,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 3,
+        "removed": "EMITTER",
+        "original_result": 3,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 4,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 4,
+        "removed": "EMITTER",
+        "original_result": 4,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 5,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 5,
+        "removed": "EMITTER",
+        "original_result": 5,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 6,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 6,
+        "removed": "EMITTER",
+        "original_result": 6,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 7,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 7,
+        "removed": "EMITTER",
+        "original_result": 7,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 8,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 8,
+        "removed": "EMITTER",
+        "original_result": 8,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 9,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 9,
+        "removed": "EMITTER",
+        "original_result": 9,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 10,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 10,
+        "removed": "EMITTER",
+        "original_result": 10,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 11,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 11,
+        "removed": "EMITTER",
+        "original_result": 11,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 12,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 12,
+        "removed": "EMITTER",
+        "original_result": 12,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 13,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 13,
+        "removed": "EMITTER",
+        "original_result": 13,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 14,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 14,
+        "removed": "EMITTER",
+        "original_result": 14,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 15,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "USB",
+        "old_mode": 15,
+        "removed": "EMITTER",
+        "original_result": 15,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 0,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 0,
+        "removed": "EMITTER",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 1,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 1,
+        "removed": "EMITTER",
+        "original_result": 1,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 2,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 2,
+        "removed": "EMITTER",
+        "original_result": 2,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 3,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 3,
+        "removed": "EMITTER",
+        "original_result": 3,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 4,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 4,
+        "removed": "EMITTER",
+        "original_result": 4,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 5,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 5,
+        "removed": "EMITTER",
+        "original_result": 5,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 6,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 6,
+        "removed": "EMITTER",
+        "original_result": 6,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 7,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 7,
+        "removed": "EMITTER",
+        "original_result": 7,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 8,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 8,
+        "removed": "EMITTER",
+        "original_result": 8,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 9,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 9,
+        "removed": "EMITTER",
+        "original_result": 9,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 10,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 10,
+        "removed": "EMITTER",
+        "original_result": 10,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 11,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 11,
+        "removed": "EMITTER",
+        "original_result": 11,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 12,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 12,
+        "removed": "EMITTER",
+        "original_result": 12,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 13,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 13,
+        "removed": "EMITTER",
+        "original_result": 13,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 14,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 14,
+        "removed": "EMITTER",
+        "original_result": 14,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 15,
+        "removed": "MANUAL",
+        "original_result": 0,
+        "current_result": 0
+      },
+      {
+        "kind": "HDD",
+        "old_mode": 15,
+        "removed": "EMITTER",
+        "original_result": 15,
+        "current_result": 0
+      }
+    ],
+    "tier_alias_edges": [
+      [
+        "STICKS",
+        "1",
+        "0"
+      ],
+      [
+        "STICKS",
+        "2",
+        "1"
+      ],
+      [
+        "STICKS",
+        "3",
+        "2"
+      ],
+      [
+        "STICKS",
+        "4",
+        "3"
+      ],
+      [
+        "STICKS",
+        "5",
+        "4"
+      ],
+      [
+        "STICKS",
+        "6",
+        "5"
+      ],
+      [
+        "STICKS",
+        "7",
+        "6"
+      ],
+      [
+        "STICKS",
+        "8",
+        "7"
+      ],
+      [
+        "STICKS",
+        "9",
+        "8"
+      ],
+      [
+        "CABLES",
+        "1",
+        "0"
+      ],
+      [
+        "CABLES",
+        "2",
+        "1"
+      ],
+      [
+        "CABLES",
+        "3",
+        "2"
+      ],
+      [
+        "CABLES",
+        "4",
+        "3"
+      ],
+      [
+        "CABLES",
+        "5",
+        "4"
+      ],
+      [
+        "CABLES",
+        "6",
+        "5"
+      ],
+      [
+        "CABLES",
+        "7",
+        "6"
+      ],
+      [
+        "CABLES",
+        "8",
+        "7"
+      ],
+      [
+        "CABLES",
+        "9",
+        "8"
+      ],
+      [
+        "DRIVES",
+        "1",
+        "0"
+      ],
+      [
+        "DRIVES",
+        "2",
+        "1"
+      ],
+      [
+        "DRIVES",
+        "3",
+        "2"
+      ],
+      [
+        "DRIVES",
+        "4",
+        "3"
+      ],
+      [
+        "DRIVES",
+        "5",
+        "4"
+      ],
+      [
+        "DRIVES",
+        "6",
+        "5"
+      ],
+      [
+        "DRIVES",
+        "7",
+        "6"
+      ],
+      [
+        "DRIVES",
+        "8",
+        "7"
+      ],
+      [
+        "DRIVES",
+        "9",
+        "8"
+      ]
+    ],
+    "normal_read_conditions": 100,
+    "normal_write_conditions": 20,
+    "read_matrix_sha256": "10534494ed088a9054eb36d9bdb13abc02a61bcdf4204148238c38fc013beb25",
+    "write_matrix_sha256": "e664fd4bcca1951b82b7d30921023418c05545d6e7fc4749d29ee9409d897fab",
+    "kind": "Finite source condition/declaration projection. No target code, active OreDict/tags, NBT, native callbacks or gameplay executed."
+  },
+  "preserved_boundaries": [
+    "Mode clamps malformed saved values; no attempt to reintroduce out-of-range array access.",
+    "Read paths copy opaque file data; Neo CUSTOM_DATA write paths explicitly store detached tags.",
+    "Signed legacy file-tier bytes, external media/tag extension and empty-compound versus null semantics remain separate from the normal 0..4 tier projection.",
+    "Mode notification loss does not prove fixed 12-tick recipe latency: sufficiently powered idle machines can call checkRecipe each tick; work-possible/energy polling have their own gates.",
+    "Permission guard exists in delegated PanelCoverInteraction, not only in the immediate block body."
+  ],
+  "limits": [
+    "No Java compilation, target initialization, Gradle, tests, game, build or push.",
+    "No full USB data-provider, GUI transfer, third-party media, world/client packet, harvest/replacement or independent restart acceptance.",
+    "Only readability/comments changed. Missing mode/sound/notification behavior is recorded, not fixed."
+  ],
+  "previous_goal_turn": "Progress: 0eda620fb committed verified long-distance findings and five-source readability while preserving user materials.",
+  "root_revalidation": {
+    "original_sources": 12,
+    "current_sources": 22,
+    "shared_platform_views": 34,
+    "readability_files": 4,
+    "readability_execution_views": 7,
+    "finite_cover_conditions": 64,
+    "finite_cover_differences": 30,
+    "ledger_contiguous": [
+      1,
+      289
+    ],
+    "new_or_added_local_links": 20,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false,
+    "method": "Rehash named current/original sources and selected views; complete code/literal/comment proof; inspect host reset before shared selector gate, valid emitter/manual attachment, absent mode rewrite in afterTick, inventory flag consumer and existing update methods; validate ledger and added links."
+  }
+}

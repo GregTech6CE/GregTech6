@@ -120,3 +120,5 @@
 2026-10-21 第八十七批：MassStorageBlockEntity展开模板／模式getter、提取后更新、匿名物品能力方法与失效清理，维护源374→475行；纯空白调整，无名称／import归一。Forge2577／Neo2354全部有序执行词法、各60个字面量原始位置、注释及Stonecutter条件不变。同步前五源九视图另复核，未计作本批新修改；材料摘要保持，见[直接存储专题](LOGISTICS_DIRECT_STORAGE_AUDIT.md)和[回执](verification/logistics-direct-storage-audit-20261021.json)。未修玩法／编译／游戏／构建，全面目标继续。
 
 2026-10-21 第八十八批：展开LongDistEndpointBlockEntity、LongDistanceTransformerBlockEntity、两类端点方块与LongDistPipeBlock，共520→980维护行；两实体changed中e／current／previous改observedEntry／currentState／previousState，补两职责注释。十完整执行1658／1686、2476／2502、1280／1439、532／532、1426／1585及原始字面量位置／其它注释／条件／版权头保持，未改import、调用或玩法，见[长距离专题](LONG_DISTANCE_LIFECYCLE_AUDIT.md)及[回执](verification/long-distance-lifecycle-audit-20261021.json)。用户材料保持，全面标准化与原版核查继续。
+
+2026-10-21 第八十九批：UsbDataRules／UsbDataMedia／UsbSwitchBlockEntity三源395→579行，展开级别／组件／控制／保存；tier方法id／n改registryPath／tierDigit。另只改GTMaterialDataRecipes空闲查找职责说明，实体注释准确标明过宽重置。四源七执行277、886／1038、2034／1888、3762／3859在限定名称归一后保持，字面量位置／其它注释／条件另核，未改玩法或用户材料，见[USB专题](USB_SWITCH_AUDIT.md)与[回执](verification/usb-switch-audit-20261021.json)。全面目标继续。

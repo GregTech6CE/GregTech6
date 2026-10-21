@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十八批核长距离端点，新增287烧线邻格尝试、288活动不可用门槛；071保持部分修复、072保持已修。行为记录至ALIGN-288，共288条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是288个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十九批核USB／HDD交换器，新增289非选择面板移除错误重置，132／172补复制声与模式通知；基本读写／保存已有。行为记录至ALIGN-289，共289条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是289个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -158,7 +158,7 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
@@ -198,7 +198,7 @@
 | ALIGN-169 | 确认自然蜂巢遗漏普通火焰消费／传播参数。 | 原实体两个接口均返回 300，GT 方块和 Forge 火焰调用有实际转发。 | 当前继承默认 FireBlock 映射且没有登记该方块；ignitedByLava 是另一入口，不能替代，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-170 | 确认自然蜂巢遗漏末影龙破坏保护。 | 原 canEntityDestroy 拒绝 EntityDragon，旧 Forge 龙破坏链实际查询。 | 当前无覆写、immune／transparent 标签或专用事件补偿；限默认数据、允许生物破坏且无外部取消，未游戏复现，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-171 | 确认养蜂寿命／配对倒计时存在条件性保存回退。 | 原养蜂箱继承 NeedsSaving 标记，全局每 20 tick 调 WD.mark 将区块标脏。 | 当前纯 tick 改字段无对应补偿，两版保存跳过干净区块；库存／开箱等变化仍可保存，正常 brood 切换不算全丢，见[报告](BUMBLE_PERSISTENCE_AUDIT.md)。 |
-| ALIGN-172 | 确认箱子专用邻库通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。 |
+| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。 |
 | ALIGN-173 | 确认共用菜单部分 shift 转出绕过自身库存回调，扩展至六类宿主。 | 原容器和槽明确设置库存变化标志。 | 槽许可通过、背包仅接纳部分且源堆非空时只通知 SlotItemHandler 的空容器；全部转空正常 setter。箱子、保险箱、抽屉、两种漏斗及垃圾桶同源；Queue 限合法末格／多件模式，工作台储物页、电池盒、垃圾场另有补偿或限制。Neo 合并已有堆另有入口，Forge 有例外，见[共用菜单核查](SHARED_MENU_AUDIT.md)。 |
 | ALIGN-174 | 确认灌木雨天加速额外受现代群系降雨判定限制。 | 原 Bush 在见天空时查询全局雨与高度 helper，没有降雪／干燥群系门控。 | 当前 Level.isRainingAt 还要求群系降水为 RAIN；合法手动种在降雪／干燥群系时可能少一次增长，普通降雨群系已有对应，见[报告](BERRY_BUSH_AUDIT.md)。 |
 | ALIGN-175 | 确认灌木屋下光照 helper 实际行为不同，原版截断可能属于历史缺陷，需明确取舍。 | 原 getLightLevel 在乘15前先把亮度转 long；普通原生亮度表0–14均小于1，实际满亮度才通过。 | 当前直接接受原始光照>9，10–14亦可生长。不在排版中盲目恢复原截断，第三方亮度表另有边界，见[报告](BERRY_BUSH_AUDIT.md)。 |
@@ -315,6 +315,7 @@
 | ALIGN-286 | 确认独立物流桶实体漏注册覆盖板渲染器。 | 原覆盖板父类最终渲染pass消费表面／支架／附件。 | 两端TankCoverRenderer仅注册普通TANK，实际是LOGISTICS_TANK；原生按getType精确查map，fallback也不接受该宿主。不是外壳资源缺失或CPU自亮问题，见[客户端入口](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。 |
 | ALIGN-287 | 确认长距离导线过压烧毁缺原邻格点火尝试。 | 原scanWires(true)调用WD.burn(T,F)尝试中心／六邻，再显式设中心火。 | 当前重扫后只设已收集线位置为火；5000EU有效端点／4096耐压源分支成立。两边可提前终止，未报全网燃烧或持续火焰，见[危险分支](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-288 | 确认长距离活动不可用指示简化原目标对象／归属门槛。 | 原状态3要求mTarget对象及发送者条件，恢复坐标但未绑定时走普通历史。 | 当前known且live owner空即3并保持history，目标已加载但尚未解析亦会进入；128条件24状态／历史差异为源投影，非传输失效或实际重启验收，见[活动状态](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-289 | 确认USB／HDD移除非选择面板错误重置文件模式。 | 原selector移除设0，红石发射面板沿父类空移除保留mode。 | 当前宿主对全部PanelCover先setMode(0)，共享removed正确门控不能撤销；稳定手动选择＋发射面板64条件30不同，未游戏交互，见[交换器](USB_SWITCH_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
