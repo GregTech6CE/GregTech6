@@ -46,19 +46,23 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class GTOreBlockResolver {
     private static final Map<String, Block> CACHE = new ConcurrentHashMap<>();
     private static final Set<String> MISSING_LOGGED = ConcurrentHashMap.newKeySet();
+
     /** Sentinel for negative cache entries (ConcurrentHashMap cannot store null). */
     private static final Block NO_BLOCK = Blocks.AIR;
 
-    private GTOreBlockResolver() {}
+    private GTOreBlockResolver() {
+    }
 
     /** A resolved ore placement: the block state (host stone included) plus the host rock. */
-    public record OrePlacement(BlockState state, OreHostStone stone) {}
+    public record OrePlacement(BlockState state, OreHostStone stone) {
+    }
 
     /**
      * Places the ore for {@code material} at {@code pos}, replacing the host stone there and
      * carrying the host stone into the ore block's state. Returns false when the host is
      * not ore-replaceable or no ore block is registered for the material.
      */
+
     public static boolean placeOre(WorldGenLevel level, BlockPos pos, GTMaterial material, boolean small) {
         return placeOre(level, pos, level.getBlockState(pos), material, small);
     }
@@ -81,6 +85,7 @@ public final class GTOreBlockResolver {
      * {@code WD.setOre(aWorld, x, y, z, aMaterial, aBlock)} picks the stone variant itself — the
      * deep-ocean pylons sprinkle GT6's normal-stone ore into prismarine, see §58).
      */
+
     public static boolean placeOre(WorldGenLevel level, BlockPos pos, OreHostStone stone, GTMaterial material, boolean small) {
         OrePlacement placement = resolve(stone, material, small);
         if (placement == null) return false;
@@ -94,6 +99,7 @@ public final class GTOreBlockResolver {
      * @return the placement, or null if the host is not replaceable or no ore block is registered
      */
     @Nullable
+
     public static OrePlacement resolve(BlockState host, GTMaterial material, boolean small) {
         OreHostStone stone = stoneOf(host);
         // Small ores additionally generate in loose sediments (GT6 sand/gravel small ores).
@@ -103,7 +109,7 @@ public final class GTOreBlockResolver {
         if (placement == null) return null;
         OreHostStone resolvedStone = stone;
         return OreHostStateAdapter.adapt(placement.state(), host)
-                .map(state -> new OrePlacement(state, stoneOfState(state, resolvedStone))).orElse(null);
+        .map(state -> new OrePlacement(state, stoneOfState(state, resolvedStone))).orElse(null);
     }
 
     private static OreHostStone stoneOfState(BlockState state, OreHostStone fallback) {
@@ -120,6 +126,7 @@ public final class GTOreBlockResolver {
      * @return the placement, or null if the host is not replaceable or no ore block is registered
      */
     @Nullable
+
     public static OrePlacement resolve(@Nullable OreHostStone stone, GTMaterial material, boolean small) {
         if (stone == null || material == null) return null;
 
@@ -148,6 +155,7 @@ public final class GTOreBlockResolver {
     }
 
     @Nullable
+
     private static Block lookup(String path) {
 //? if >=1.21.1 {
         /*ResourceLocation id = ResourceLocation.fromNamespaceAndPath("gt6ce", path);
@@ -163,6 +171,7 @@ public final class GTOreBlockResolver {
      * (GT6 {@code BlocksGT.stoneToNormalOres} / {@code oreGenReplaceable}).
      */
     @Nullable
+
     public static OreHostStone stoneOf(BlockState host) {
         if (host.is(Blocks.STONE)) return OreHostStone.STONE;
         if (host.is(Blocks.GRANITE)) return OreHostStone.GRANITE;
@@ -193,6 +202,7 @@ public final class GTOreBlockResolver {
 
     /** Loose-sediment backgrounds — valid hosts for SMALL ores only. */
     @Nullable
+
     public static OreHostStone sedimentOf(BlockState host) {
         if (host.is(Blocks.SAND)) return OreHostStone.SAND;
         if (host.is(Blocks.RED_SAND)) return OreHostStone.RED_SAND;
@@ -205,6 +215,7 @@ public final class GTOreBlockResolver {
      * (GT6 bedrock deposits). Only the bedrock-ore feature calls this — the
      * generic {@link #stoneOf} intentionally never matches bedrock.
      */
+
     public static boolean placeBedrockOre(WorldGenLevel level, BlockPos pos, GTMaterial material) {
         if (!level.getBlockState(pos).is(Blocks.BEDROCK) || material == null) return false;
         String materialName = material.getName().toLowerCase();

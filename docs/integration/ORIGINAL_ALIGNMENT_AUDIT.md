@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百零六批：生成调度新增353–358七泉选择、泉／矿互斥、床岩网格选择、共享目录／维度成员、小型基岩矿标志及指示分布差异，004补配置消费者。10原／15当前Java、10资源、24视图，五源502→581行并删两无直接调用私有包装；六完整／两受控删除后视图保持，实际core探针和四原生条目见[专题](SPRING_BEDROCK_DISPATCH_AUDIT.md)。正式358条不是待修数量，特殊区域／地质及全面队列继续。
+
 2026-10-22 第一百零五批：液体泉新增345–352物性、启动、世界出液、外部方块查找、流体层亮度、喷漆范围、指示草调用与原生下界入口差异，139补泉眼后备宿主。14原／23当前Java（含1测试源）、24资源、44视图；七源742→908行、13完整代码流保持，见[专题](FLUID_SPRING_AUDIT.md)。正式352条含已修／政策，不是待修数量；生成概率／互斥及全面队列继续。
 
 2026-10-22 第一百零四批：新增339–344花盆碰撞／遮光、两种日用方块喷漆、灯笼扳手／固定亮度及花盆配方家族差异，139补灯笼原允许而当前无宿主。五源174→254行、另改一来源注释，六源11完整视图保持，见[专题](PLANT_LANTERN_AUDIT.md)。重新清点1229原版／1825当前Java并建立[引用筛查](verification/source-reference-screen-20261022.json)；引用数量不是覆盖率。正式记录至344条，含已修与保留政策，不是344个未修问题，全面目标继续。
@@ -31,7 +33,7 @@
 | ALIGN-001 | 确认缺少小坩埚碰撞致死后的材料回收。现有烫伤不等于原版完整碰撞处理。 | `gregtech/tileentity/tools/MultiTileEntitySmeltery.java:622`：温度伤害致死后按实体种类加入肉、骨、铁、雪、火药等，带相应初始温度。 | 共享 `block/machine/SmeltingCrucibleBlock.entityInside` 两版本分支均只调用温度伤害；需另核查大坩埚对应规则，不能直接复用所有小坩埚数量。 |
 | ALIGN-002 | 材料箭仅保留了部分行为，命中过程未对齐。 | `gregtech/entities/projectiles/EntityArrow_Material.java:171–241`：读取箭的材料及附魔，处理魔法伤害、火焰、击退、抢夺、特殊生物与命中回调。 | 共享 `entity/MaterialArrowEntity` 目前只接材料基础伤害、塑料速度、寿命、拾取和保存，命中沿用现代 `AbstractArrow`；`MaterialArrowRules` 无原版命中规则。现代弓自身附魔不能证明箭材料附魔等价，需逐条查物品赋魔和事件路径。 |
 | ALIGN-003 | 确认存在未进入语言系统的提示。 | 原版提示／扫描来源需按具体行继续比对汉化补丁。 | `item/FuelRodItem:183–211` 直接拼接 Remaining、Self、Fuel、Tier、Durability 等；`item/behavior/BehaviorScanner:170–183` 拼接 Input、Output、Stored。单块热交换器放大镜也直接拼Input／Output，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。语言文件格式自检不证明这些提示已汉化。大型换热器专用放大镜Input／Output／Empty与流体句子也直接拼接，见[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17997右键Structure Incomplete／Logic等也直接拼接，字段缺项另列254，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
-| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。 |
+| ALIGN-004 | 配置覆盖仍不完整；cfg收尾安排保留。当前三个声明中两个过载选项有效，日志选项无消费者。 | 原Config真实load/save与代表链包括石层／维度、生物掉落、材料工具／处理倍率；不是仅静态常量。 | 两版COMMON注册及原生加载／保存／缓存刷新已接通，MachineOverload实际读取两个默认false选项；logMaterials未读。代表族缺配置入口，133概率沿旧项，Nexus全开是用户政策；见[配置核查](CONFIGURATION_CONTRACT_AUDIT.md)，完整矩阵／磁盘／多人仍待核。  泉／床岩生成的Enabled、Probability、逐维度、Ore／指示物、无限油气开关也缺完整消费者，见[生成调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
 | ALIGN-005 | **结构问题已修复**，原先不是游戏缺标签。 | 前轮恢复的起火器配方集合应能被两版本消费。 | `EquipmentCraftingCatalog.TAGS` 已纳入起火器标签，NeoForge 由已有适配器读取共享内容，删除逐字节相同的版本资源副本。98 项目录由生成器重建并核对，源策略检查通过。 |
 | ALIGN-006 | 确认缺少 BURNING 材料属性对应的点火加成。 | `Behavior_FlintAndTinder:51,88` 判断 `FLAMMABLE` 或 `BURNING`；`MT:1275` 的 Blaze 带 `BURNING`。 | `BehaviorFlintAndTinder.useOn` 只读取 `FLAMMABLE`；当前材料属性没有 BURNING 路径。范围是材料点火概率，不是所有打火机失效。 |
 | ALIGN-007 | 确认工具的材料自动收集分支缺失。 | `MultiItemTool.canCollectDropsDirectly:217` 同时考虑工具种类、主材料和副材料 `AUTO_COLLECTING`；`MT:1272` 的 Basalz 有该属性。 | `GTToolHelper.canCollectMachineDrop` 只检查 `type.canCollect()` 和耐久；材料表未携带该属性。现有扳手直接收集能力仍然存在，不能判整类收集缺失。 |
@@ -383,6 +385,12 @@
 | ALIGN-350 | 确认泉眼喷漆范围被后备机制扩大。 | 原Base04paint／unpaint固定false。 | 当前实体Mixin接受GT颜色，主层取色被覆盖；未改政策，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
 | ALIGN-351 | 确认自然液体泉未调用指示草分支。 | 原雕刻后六组地表草斑。 | 当前place返回carve，indicators没有生产调用；不泛化外部脚本，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
 | ALIGN-352 | 确认缺少原生下界熔岩泉生成入口。 | 原GEN_NETHER概率100／间隔500。 | 当前两端只挂主世界且feature拒绝其它维度，目录lava间隔1000；可选外部维度另查，见[液体泉](FLUID_SPRING_AUDIT.md)。 |
+| ALIGN-353 | 确认七泉调度概率改变。 | 原依序尝试、首成功关闭后续资格。 | 当前先选种类再roll；合格独立理想模型任一泉2.964%→0.429%，非世界实测，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-354 | 确认泉与基岩矿缺原互斥协调。 | 原共同读取两标志、分别取消另一方资格。 | 当前两个阶段均可进入；真实core拟写入探针424位置相交，不当作实际覆盖数，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-355 | 确认基岩矿改为稀疏网格单选。 | 原逐区块逐注册项roll，可后续再尝试。 | 当前每16×16区块一候选、整数逆权重单选，非原概率模型，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-356 | 确认基岩矿目录／维度成员未完整保留。 | 原共享33进入主世界及下界，后者另7专属。 | 当前28／7；考虑别名后仍漏七共享材质，另有替换／概率变化，不否认其它矿生成，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-357 | 确认小型基岩矿标志在sink丢失。 | 原roll1／2写oreSmallBedrock。 | core发small=true，但平台只查普通ore_；上方小矿标志仍传，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
+| ALIGN-358 | 确认基岩指示物多尺度分布被简化。 | 原4／8／16层共28候选、花石共同取舍。 | 当前6花3石、候选在本区块，次数非成功数量，见[调度](SPRING_BEDROCK_DISPATCH_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
