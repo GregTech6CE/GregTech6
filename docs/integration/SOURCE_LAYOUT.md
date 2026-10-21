@@ -2,6 +2,8 @@
 
 此文描述 `main` 的 Stonecutter 结构。原版行为差异见 [原版对齐审计](ORIGINAL_ALIGNMENT_AUDIT.md)；目录整理不代表全部功能已经对齐。
 
+筛粉漏斗：共享`DustFunnelBlockEntity`分别保存输入／输出格与单材料内部余量，`retrieveFraction`专供钳子清余粉，通用`retrieve`保留空手／拆除取物顺序。`DustFunnelJadeProvider`通过服务端数据展示实际模式与余量，`GTJadePlugin`同时接两端注册，见[专题](DUST_FUNNEL_AUDIT.md)。
+
 蓝图／自动合成：core的`AutocraftingRules`负责九格分组、抵消和约分；共享`CraftingBlueprintData`处理键式／先前列表布局与原生序列化，`BlueprintRecipes`接扫描／打印。`AutocraftingRecipes`选原生合成配方并构造机器Recipe，最终还由`RecipeInputs`验证实际库存；高级工作台负责写入，机器实体负责独立程序槽。四源已展开，工具／NBT、程序与库存不得混为同一匹配阶段，见[专题](BLUEPRINT_AUTOCRAFTING_AUDIT.md)。
 
 禁刷怪塔17996的纯数值／唯一布局在core的`VonDaGraaggRules`；共享原生BE负责验证与供能，`VonDaGraaggSpawnInhibitor`负责刷怪事件，`ControllerStructureLayouts`的本机预览委托core而不再重复63格。实际消费者及可读性边界见[专题](VON_DA_GRAAGG_AUDIT.md)。
