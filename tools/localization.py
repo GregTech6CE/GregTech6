@@ -3,6 +3,9 @@
 
 Unknown port keys use en_us verbatim. Adding a Chinese alias requires an explicit
 original key in tools/localization/aliases.json, never a guessed translation.
+tools/localization/adopted.json may copy a CrucibleCraft sentence only when the
+English matches exactly. Placeholder indexes may be aligned; no other character
+is rewritten, and unmatched port text stays English.
 """
 import argparse
 import gzip
@@ -16,6 +19,8 @@ LANG_PATH = Path('core/src/main/resources/assets/gt6ce/lang')
 CONFIG_PATH = Path('tools/localization')
 FORMAT = re.compile(r'%(?:(\d+)\$)?([A-Za-z%]|$)')
 NUMERIC_FORMAT = re.compile(r'%(\d+\$)?[\d.]*[df]')
+PLACEHOLDER = re.compile(r'%(?:\d+\$)?s')
+HAN = re.compile(r'[\u3400-\u9fff\uf900-\ufaff]')
 
 
 def format_arguments(value):
@@ -52,11 +57,67 @@ def format_arguments(value):
     return used
 
 
+def canonical_sentence(value):
+    """Compare sentences after placeholder spelling is ignored."""
+    return PLACEHOLDER.sub('%s', value)
+
+
+def align_placeholders(english, copied):
+    """Use the English argument markers without changing any translated word."""
+    markers = PLACEHOLDER.findall(english)
+    found = PLACEHOLDER.findall(copied)
+    if len(markers) != len(found):
+        raise ValueError('Copied translation has a different placeholder count')
+    marker = iter(markers)
+    return PLACEHOLDER.sub(lambda _match: next(marker), copied)
+
+
+def cruciblecraft_language(repo):
+    lang = (repo.parent.parent / 'cruciblecraft-template-1.21.1'
+            / 'src/generated/resources/assets/cruciblecraft/lang')
+    english, chinese = lang / 'en_us.json', lang / 'zh_cn.json'
+    if english.is_file() and chinese.is_file():
+        return read_json(english), read_json(chinese)
+    return None
+
+
+def load_adopted(repo):
+    """Verbatim CrucibleCraft copies. Absent file means this repo has none."""
+    path = repo / CONFIG_PATH / 'adopted.json'
+    if not path.is_file():
+        return {}
+    entries = read_json(path)['entries']
+    sibling = cruciblecraft_language(repo)
+    resolved = {}
+    for key, row in entries.items():
+        if not isinstance(row, dict) or any(not isinstance(row.get(field), str) for field in
+                                            ('english', 'source_key', 'source_english', 'source_value')):
+            raise ValueError('Adopted entry is incomplete: ' + key)
+        if canonical_sentence(row['english']) != canonical_sentence(row['source_english']):
+            raise ValueError('Adopted English is not the CrucibleCraft sentence: ' + key)
+        if not HAN.search(row['source_value']):
+            raise ValueError('Adopted copy has no Chinese text: ' + key)
+        value = align_placeholders(row['english'], row['source_value'])
+        if canonical_sentence(value) != canonical_sentence(row['source_value']):
+            raise ValueError('Placeholder alignment changed translated text: ' + key)
+        if sibling is not None:
+            source_english, source_chinese = sibling
+            if (source_english.get(row['source_key']) != row['source_english']
+                    or source_chinese.get(row['source_key']) != row['source_value']):
+                raise ValueError('Adopted copy drifted from CrucibleCraft: ' + key)
+        resolved[key] = {**row, 'value': value}
+    return resolved
+
+
 def check_english(repo, english, chinese, aliases, source, *, pinned=None):
     # Importers validate their proposed declarations before touching any file.
     # Normal checks still read the accepted declarations from disk.
     if pinned is None:
         pinned = read_json(repo / CONFIG_PATH / 'english_source.json')['values']
+    adopted = load_adopted(repo)
+    for key, row in adopted.items():
+        if key in english and english[key] != row['english']:
+            raise ValueError('Adopted English drifted: ' + key)
     changed = [key for key, row in pinned.items() if english.get(key) != row['value']]
     if changed:
         raise ValueError('English differs from original source declarations: ' + ', '.join(changed[:12]))
@@ -64,7 +125,11 @@ def check_english(repo, english, chinese, aliases, source, *, pinned=None):
     english_only = 0
     for key, row in pinned.items():
         if row.get('chinese_source_missing'):
-            if (row['chinese_source_missing'] is not True or key in aliases or key in source
+            copied = adopted[key]['value'] if key in adopted and adopted[key]['english'] == english.get(key) else None
+            if copied is not None:
+                if chinese.get(key) != copied:
+                    changed_bindings.append(key)
+            elif (row['chinese_source_missing'] is not True or key in aliases or key in source
                     or row['source_key'] in source or chinese.get(key) != english.get(key)):
                 changed_bindings.append(key)
             english_only += 1
@@ -179,6 +244,14 @@ def expected_chinese(english, source, aliases, *, repo=ROOT):
             raise ValueError(f'Alias must not override an original key: {native}')
         result[native] = source[original]
     result.update(stone_rock_heading(english, source))
+    for key, row in load_adopted(repo).items():
+        if key not in english:
+            continue
+        if english[key] != row['english']:
+            raise ValueError('Adopted English drifted: ' + key)
+        if key in aliases or key in source:
+            raise ValueError('Adopted copy overrides an original binding: ' + key)
+        result[key] = row['value']
     if any(k.startswith('emi.group.gt6ce.') for k in english):
         from integration.remi_group_titles import headings
         result.update(headings(repo, result))
@@ -218,11 +291,16 @@ def synchronize(repo=ROOT, *, write=False, external=None):
             raise ValueError('Chinese differs from exact source/aliases/English fallback: ' +
                              json.dumps({k: {'count': len(v), 'examples': v[:8]} for k, v in delta.items()}))
         target.write_text(json_text(expected), encoding='utf-8', newline='\n')
+    adopted = load_adopted(repo)
+    missing_adopted = sorted(key for key in adopted if key not in english)
+    if missing_adopted:
+        raise ValueError('Adopted key is not in English: ' + ', '.join(missing_adopted[:8]))
     rock_heading = stone_rock_heading(english, source)
-    fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys() - rock_heading.keys())
+    fallback = sorted(english.keys() - source.keys() - aliases.keys() - derived_titles.keys()
+                      - rock_heading.keys() - adopted.keys())
     return {'source_sha256': meta['sha256'], 'source_keys': len(source), 'english': english_report,
             'native_aliases': len(aliases), 'chinese_keys': len(expected), 'derived_emi_headings': len(derived_titles),
-            'derived_stone_rock_templates': len(rock_heading),
+            'derived_stone_rock_templates': len(rock_heading), 'adopted_cruciblecraft_copies': len(adopted),
             'english_fallback_count': len(fallback), 'english_fallback_keys': fallback,
             'changes': {k: len(v) for k, v in delta.items()}}
 

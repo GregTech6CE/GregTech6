@@ -7,7 +7,8 @@ import json
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from localization import ROOT, LANG_PATH, CONFIG_PATH, read_json, synchronize, check_english
+from localization import (ROOT, LANG_PATH, CONFIG_PATH, read_json, synchronize, check_english,
+                          canonical_sentence, load_adopted)
 
 
 class StandardChineseTests(unittest.TestCase):
@@ -65,6 +66,25 @@ class StandardChineseTests(unittest.TestCase):
         key = 'item.gt6ce.compact_electric_conveyor_xv'
         self.assertNotIn(key, aliases)
         self.assertEqual(chinese[key], english[key])
+
+    def test_cruciblecraft_copies_are_verbatim_and_do_not_fill_unmatched_text(self):
+        adopted = load_adopted(ROOT)
+        english = read_json(ROOT / LANG_PATH / 'en_us.json')
+        chinese = read_json(ROOT / LANG_PATH / 'zh_cn.json')
+        aliases = read_json(ROOT / CONFIG_PATH / 'aliases.json')
+        self.assertGreater(len(adopted), 100)
+        for key, row in adopted.items():
+            self.assertNotIn(key, aliases)
+            self.assertEqual(canonical_sentence(row['english']), canonical_sentence(row['source_english']))
+            self.assertEqual(chinese[key], row['value'])
+            self.assertNotEqual(chinese[key], english[key])
+        # No CrucibleCraft sentence exists for these, so they stay English.
+        for key in ('item.gt6ce.compact_electric_motor_xv',
+                    'block.gt6ce.stone_chalk_bricks',
+                    'block.gt6ce.burning_box_gas_ultimet',
+                    'tooltip.gt6ce.wire.harvest_cutter'):
+            self.assertNotIn(key, adopted)
+            self.assertEqual(chinese[key], english[key])
 
     def test_bumble_species_and_scanned_states_keep_original_numeric_identity(self):
         aliases = read_json(ROOT / CONFIG_PATH / 'aliases.json')
