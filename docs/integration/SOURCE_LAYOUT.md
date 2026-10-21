@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+工具形状边界：共享`ShapedToolBlock`负责静态轮廓、旋转与扳手入口，`ScaffoldBlock`另覆写动态碰撞／轮廓；`CoverCollisionMixin`的选中和移动碰撞注入已经展开。原生挂接另走getBlockSupportShape／SupportType，绳子的可燃性和抗性则来自实际注册属性，不能用这些轮廓替代，见[物性与承托](UTILITY_PHYSICS_AUDIT.md)。
+
 绳子／脚手架：core `UtilityToolRules`保存六绳材料行、支撑搜索上限与设计公式；共享`RopeBlock`接水平放置、延伸／支撑、梯子，`ScaffoldBlock`接四设计、碰撞和计划更新。Forge `GTToolBlocks`、Neo `GTManualStations`实际注册；碰撞要另查Properties，覆盖板还需PanelCoverHost，见[核查](ROPE_SCAFFOLD_AUDIT.md)。
 
 开放手作容器：core `OpenVesselRules`列七身份与容量／气候／准入；共享`ProcessingToolBlockEntity`负责物品与产物／输入液、预检、手工及电动处理和保存，`ProcessingToolBlock`接原生调用，`ProcessingToolRenderer`绘制内容。自动排液和手持取液角色不能混同，实际两端能力／渲染入口见[核查](OPEN_VESSEL_AUDIT.md)。

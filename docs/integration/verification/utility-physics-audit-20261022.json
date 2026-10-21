@@ -1,0 +1,2245 @@
+{
+  "date": "2026-10-22",
+  "batch": 101,
+  "baseline": "7556da56a259f50295cea59c17a3b198ff4e70ca",
+  "previous_goal_turn": "Progress: 7556da56a recorded six physical rope/scaffold contracts and preserved seven complete code views. No live process or blocker.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityRope.java",
+      "sha256": "dd0654c88cf26d3d68056ebfc721f2d67e240f8fcc76f0f0f15a8854dbf68e1e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityScaffold.java",
+      "sha256": "7ab23ba87480eb72976d9774f574344935dfa6178517b3ff470bfc9b53a8c9ba",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java",
+      "sha256": "a7ffce4a52bba3166f5d01a0c2e311168e070a07715f264609cbaa57142e02fc",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "beba4847e3c22891940996532d2a01f1d2a6e63cb68354806d5cc73d11776b7f",
+          "tokens": 906
+        },
+        "neoforge": {
+          "sha256": "32213e20749d6792954ee41ae94a1a6af72b5c948fcdba9ab30afd8ccfb324b4",
+          "tokens": 1110
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "d5fa7bd7ad4f2ad12ee7a5d960d50620bba41d9c85f01162b3464ad8d09b1b46",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "d5fa7bd7ad4f2ad12ee7a5d960d50620bba41d9c85f01162b3464ad8d09b1b46",
+          "tokens": 378
+        },
+        "neoforge": {
+          "sha256": "d5fa7bd7ad4f2ad12ee7a5d960d50620bba41d9c85f01162b3464ad8d09b1b46",
+          "tokens": 378
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/UtilityToolRules.java",
+      "sha256": "2f3869af3dade4578fe1fb6687a0fa281251225438425313a945a97a12346acd",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java",
+      "sha256": "5bbc6eba4d0f0448b3816aa48eca79ac56a64dfa027430b24da9f8049bdb5470",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OriginalToolShapes.java",
+      "sha256": "12b33c6bf1c32b524672248511ad5e26b546c5b2f110a32e4debc6c21d867eb3",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/RopeBlock.java",
+      "sha256": "5514bf114532fc1314c8ae0a6f59ea0330c40281f4621b59e2e7d05c37e91f6e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "1851f44e56e2b2db379f116a236ae287c0c9d99f0d2a8aa5e5ceedcdd5f0c39a",
+          "tokens": 1112
+        },
+        "neoforge": {
+          "sha256": "174a5539b621b48c819d287dd0b83c8506cd4da2821bf47a6a686f601d98ca78",
+          "tokens": 1362
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ScaffoldBlock.java",
+      "sha256": "959652c0127b3d3567708ea9a0bad921182cf5cfe35dd8bbe7c37d0291fa7811",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b0ecfd3bc611928303b52f2dcccc50a4fdc4b83944c87bb9d84e2f31297fccc1",
+          "tokens": 1544
+        },
+        "neoforge": {
+          "sha256": "0ef260205738b32f0a6ba7b1be9f798ff6b6c2e79878917dccf4621cc1f8285b",
+          "tokens": 1546
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "dad59a320f31f9821754a8d20124c6f72f719fb3b5fd40edc7f3fc7affd11990",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "0293060ca001b1675a4b7aa8023eaa39e30d90cffaef084e75fc0f1edca353b7",
+          "tokens": 4005
+        },
+        "neoforge": {
+          "sha256": "b7b0bdf3131f5e23458a63ff523bc2479d72969666ec5dcb896083f56280cebb",
+          "tokens": 913
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+          "tokens": 513
+        },
+        "neoforge": {
+          "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+          "tokens": 513
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/CommonBlockTooltips.java",
+      "sha256": "660474c0bba3c3124c2bfb26d0efcac8b0c289a03c6be6d5425324cdfff88cbb",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "fa6e4af027d31e5318c1d7edd87fa9e2cbfa3dc7726590f25c9ee016931e8706",
+          "tokens": 1365
+        },
+        "neoforge": {
+          "sha256": "33ed4f56ed9eff1fa043e3aa67d125624789dddd3eb9a869b67569f705164023",
+          "tokens": 1396
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "shared_platform_views": {}
+    }
+  ],
+  "native_evidence": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour-forge.javap.txt",
+      "javap_sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "BlockBehaviour(net.minecraft.world.level.block.state.BlockBehaviour$Properties);\n    Code:\n         0: aload_0\n         1: invokespecial #68                 // Method java/lang/Object.\"<init>\":()V\n         4: aload_0\n         5: aload_1\n         6: getfield      #70                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.hasCollision:Z\n         9: putfield      #71                 // Field hasCollision:Z\n        12: aload_0\n        13: aload_1\n        14: getfield      #73                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.drops:Lnet/minecraft/resources/ResourceLocation;\n        17: putfield      #74                 // Field drops:Lnet/minecraft/resources/ResourceLocation;\n        20: aload_0\n        21: aload_1\n        22: getfield      #76                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.explosionResistance:F\n        25: putfield      #77                 // Field explosionResistance:F\n        28: aload_0\n        29: aload_1\n        30: getfield      #79                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.isRandomlyTicking:Z\n        33: putfield      #80                 // Field isRandomlyTicking:Z\n        36: aload_0\n        37: aload_1\n        38: getfield      #82                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.soundType:Lnet/minecraft/world/level/block/SoundType;\n        41: putfield      #83                 // Field soundType:Lnet/minecraft/world/level/block/SoundType;\n        44: aload_0\n        45: aload_1\n        46: getfield      #85                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.friction:F\n        49: putfield      #86                 // Field friction:F\n        52: aload_0\n        53: aload_1\n        54: getfield      #88                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.speedFactor:F\n        57: putfield      #89                 // Field speedFactor:F\n        60: aload_0\n        61: aload_1\n        62: getfield      #91                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.jumpFactor:F\n        65: putfield      #92                 // Field jumpFactor:F\n        68: aload_0\n        69: aload_1\n        70: getfield      #94                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.dynamicShape:Z\n        73: putfield      #95                 // Field dynamicShape:Z\n        76: aload_0\n        77: aload_1\n        78: getfield      #97                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.requiredFeatures:Lnet/minecraft/world/flag/FeatureFlagSet;\n        81: putfield      #98                 // Field requiredFeatures:Lnet/minecraft/world/flag/FeatureFlagSet;\n        84: aload_0\n        85: aload_1\n        86: putfield      #100                // Field properties:Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n        89: aload_1\n        90: getfield      #73                 // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.drops:Lnet/minecraft/resources/ResourceLocation;\n        93: astore_2\n        94: aload_2\n        95: ifnull        111\n        98: aload_0\n        99: aload_2\n       100: invokedynamic #120,  0            // InvokeDynamic #0:get:(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/function/Supplier;\n       105: putfield      #122                // Field lootTableSupplier:Ljava/util/function/Supplier;\n       108: goto          139\n       111: aload_1\n       112: getfield      #125                // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.lootTableSupplier:Ljava/util/function/Supplier;\n       115: ifnull        129\n       118: aload_0\n       119: aload_1\n       120: getfield      #125                // Field net/minecraft/world/level/block/state/BlockBehaviour$Properties.lootTableSupplier:Ljava/util/function/Supplier;\n       123: putfield      #122                // Field lootTableSupplier:Ljava/util/function/Supplier;\n       126: goto          139\n       129: aload_0\n       130: aload_0\n       131: invokedynamic #132,  0            // InvokeDynamic #1:get:(Lnet/minecraft/world/level/block/state/BlockBehaviour;)Ljava/util/function/Supplier;\n       136: putfield      #122                // Field lootTableSupplier:Ljava/util/function/Supplier;\n       139: return\n",
+        "public net.minecraft.world.phys.shapes.VoxelShape getBlockSupportShape(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: aload_2\n         3: aload_3\n         4: invokestatic  #449                // InterfaceMethod net/minecraft/world/phys/shapes/CollisionContext.empty:()Lnet/minecraft/world/phys/shapes/CollisionContext;\n         7: invokevirtual #453                // Method getCollisionShape:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n        10: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour$Properties-forge.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "strength(float, float);\n    Code:\n         0: aload_0\n         1: fload_1\n         2: invokevirtual #296                // Method destroyTime:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         5: fload_2\n         6: invokevirtual #298                // Method explosionResistance:(F)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;\n         9: areturn\n",
+        "explosionResistance(float);\n    Code:\n         0: aload_0\n         1: fconst_0\n         2: fload_1\n         3: invokestatic  #366                // Method java/lang/Math.max:(FF)F\n         6: putfield      #233                // Field explosionResistance:F\n         9: aload_0\n        10: areturn\n",
+        "dynamicShape();\n    Code:\n         0: aload_0\n         1: iconst_1\n         2: putfield      #237                // Field dynamicShape:Z\n         5: aload_0\n         6: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+      "entry_sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+      "javap_output": "work/rope-scaffold-audit-20261022/BlockBehaviour$BlockStateBase-forge.javap.txt",
+      "javap_sha256": "b15972268a1fc92e4027b40d65540ec687d77c9c3d41623cc8ee44c8aae4dc57",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "public void initCache();\n    Code:\n         0: aload_0\n         1: aload_0\n         2: getfield      #206                // Field owner:Ljava/lang/Object;\n         5: checkcast     #102                // class net/minecraft/world/level/block/Block\n         8: aload_0\n         9: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n        12: invokevirtual #247                // Method net/minecraft/world/level/block/Block.getFluidState:(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/material/FluidState;\n        15: putfield      #100                // Field fluidState:Lnet/minecraft/world/level/material/FluidState;\n        18: aload_0\n        19: aload_0\n        20: getfield      #206                // Field owner:Ljava/lang/Object;\n        23: checkcast     #102                // class net/minecraft/world/level/block/Block\n        26: aload_0\n        27: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n        30: invokevirtual #249                // Method net/minecraft/world/level/block/Block.isRandomlyTicking:(Lnet/minecraft/world/level/block/state/BlockState;)Z\n        33: putfield      #251                // Field isRandomlyTicking:Z\n        36: aload_0\n        37: invokevirtual #255                // Method getBlock:()Lnet/minecraft/world/level/block/Block;\n        40: invokevirtual #258                // Method net/minecraft/world/level/block/Block.hasDynamicShape:()Z\n        43: ifne          61\n        46: aload_0\n        47: new           #17                 // class net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache\n        50: dup\n        51: aload_0\n        52: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n        55: invokespecial #261                // Method net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.\"<init>\":(Lnet/minecraft/world/level/block/state/BlockState;)V\n        58: putfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n        61: aload_0\n        62: aload_0\n        63: invokevirtual #263                // Method calculateSolid:()Z\n        66: putfield      #265                // Field legacySolid:Z\n        69: return\n",
+        "getBlockSupportShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);\n    Code:\n         0: aload_0\n         1: invokevirtual #255                // Method getBlock:()Lnet/minecraft/world/level/block/Block;\n         4: aload_0\n         5: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n         8: aload_1\n         9: aload_2\n        10: invokevirtual #502                // Method net/minecraft/world/level/block/Block.getBlockSupportShape:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n        13: areturn\n",
+        "isFaceSturdy(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction, net.minecraft.world.level.block.SupportType);\n    Code:\n         0: aload_0\n         1: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n         4: ifnull        20\n         7: aload_0\n         8: getfield      #214                // Field cache:Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;\n        11: aload_3\n        12: aload         4\n        14: invokevirtual #874                // Method net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache.isFaceSturdy:(Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/SupportType;)Z\n        17: goto          32\n        20: aload         4\n        22: aload_0\n        23: invokevirtual #113                // Method asState:()Lnet/minecraft/world/level/block/state/BlockState;\n        26: aload_1\n        27: aload_2\n        28: aload_3\n        29: invokevirtual #878                // Method net/minecraft/world/level/block/SupportType.isSupporting:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z\n        32: ireturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+      "entry_sha256": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0",
+      "javap_output": "work/tank-hazards-audit-20261021/forge-IForgeBlock.javap.txt",
+      "javap_sha256": "61020cd4fe7386e91cb3c2cb57188e9df2f2d3e0862362b176107ad7598c7f93",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "getFlammability(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);\n    Code:\n         0: getstatic     #85                 // Field net/minecraft/world/level/block/Blocks.FIRE:Lnet/minecraft/world/level/block/Block;\n         3: checkcast     #367                // class net/minecraft/world/level/block/FireBlock\n         6: aload_1\n         7: invokevirtual #371                // Method net/minecraft/world/level/block/FireBlock.getBurnOdds:(Lnet/minecraft/world/level/block/state/BlockState;)I\n        10: ireturn\n",
+        "getFireSpreadSpeed(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);\n    Code:\n         0: getstatic     #85                 // Field net/minecraft/world/level/block/Blocks.FIRE:Lnet/minecraft/world/level/block/Block;\n         3: checkcast     #367                // class net/minecraft/world/level/block/FireBlock\n         6: aload_1\n         7: invokevirtual #383                // Method net/minecraft/world/level/block/FireBlock.getIgniteOdds:(Lnet/minecraft/world/level/block/state/BlockState;)I\n        10: ireturn\n",
+        "getExplosionResistance(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.Explosion);\n    Code:\n         0: aload_0\n         1: invokeinterface #26,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/Block;\n         6: invokevirtual #195                // Method net/minecraft/world/level/block/Block.getExplosionResistance:()F\n         9: freturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/FireBlock.class",
+      "entry_sha256": "7da6ad34163b77056f16c81db152d7a658f154cdf0d7ffbd83ebd6b70860a046",
+      "javap_output": "work/tank-hazards-audit-20261021/forge-FireBlock.javap.txt",
+      "javap_sha256": "2948465abae664ecb3e5f3d470ffd00069267f016e38048e4d05d400ac2e1ac2",
+      "reused_prior_batch_output": true,
+      "excerpts": [
+        "getBurnOdds(net.minecraft.world.level.block.state.BlockState);\n    Code:\n         0: aload_1\n         1: getstatic     #532                // Field net/minecraft/world/level/block/state/properties/BlockStateProperties.WATERLOGGED:Lnet/minecraft/world/level/block/state/properties/BooleanProperty;\n         4: invokevirtual #536                // Method net/minecraft/world/level/block/state/BlockState.hasProperty:(Lnet/minecraft/world/level/block/state/properties/Property;)Z\n         7: ifeq          30\n        10: aload_1\n        11: getstatic     #532                // Field net/minecraft/world/level/block/state/properties/BlockStateProperties.WATERLOGGED:Lnet/minecraft/world/level/block/state/properties/BooleanProperty;\n        14: invokevirtual #213                // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;\n        17: checkcast     #114                // class java/lang/Boolean\n        20: invokevirtual #217                // Method java/lang/Boolean.booleanValue:()Z\n        23: ifeq          30\n        26: iconst_0\n        27: goto          43\n        30: aload_0\n        31: getfield      #88                 // Field burnOdds:Lit/unimi/dsi/fastutil/objects/Object2IntMap;\n        34: aload_1\n        35: invokevirtual #540                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\n        38: invokeinterface #546,  2          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap.getInt:(Ljava/lang/Object;)I\n        43: ireturn\n",
+        "getIgniteOdds(net.minecraft.world.level.block.state.BlockState);\n    Code:\n         0: aload_1\n         1: getstatic     #532                // Field net/minecraft/world/level/block/state/properties/BlockStateProperties.WATERLOGGED:Lnet/minecraft/world/level/block/state/properties/BooleanProperty;\n         4: invokevirtual #536                // Method net/minecraft/world/level/block/state/BlockState.hasProperty:(Lnet/minecraft/world/level/block/state/properties/Property;)Z\n         7: ifeq          30\n        10: aload_1\n        11: getstatic     #532                // Field net/minecraft/world/level/block/state/properties/BlockStateProperties.WATERLOGGED:Lnet/minecraft/world/level/block/state/properties/BooleanProperty;\n        14: invokevirtual #213                // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;\n        17: checkcast     #114                // class java/lang/Boolean\n        20: invokevirtual #217                // Method java/lang/Boolean.booleanValue:()Z\n        23: ifeq          30\n        26: iconst_0\n        27: goto          43\n        30: aload_0\n        31: getfield      #86                 // Field igniteOdds:Lit/unimi/dsi/fastutil/objects/Object2IntMap;\n        34: aload_1\n        35: invokevirtual #540                // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\n        38: invokeinterface #546,  2          // InterfaceMethod it/unimi/dsi/fastutil/objects/Object2IntMap.getInt:(Ljava/lang/Object;)I\n        43: ireturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/Block.class",
+      "entry_sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+      "javap_output": "work/utility-physics-audit-20261022/Block-forge.javap.txt",
+      "javap_sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public float getExplosionResistance();\n    Code:\n         0: aload_0\n         1: getfield      #914                // Field explosionResistance:F\n         4: freturn\n",
+        "canSupportCenter(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos, net.minecraft.core.Direction);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: invokeinterface #586,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;\n         7: astore_3\n         8: aload_2\n         9: getstatic     #589                // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;\n        12: if_acmpne     29\n        15: aload_3\n        16: getstatic     #592                // Field net/minecraft/tags/BlockTags.UNSTABLE_BOTTOM_CENTER:Lnet/minecraft/tags/TagKey;\n        19: invokevirtual #483                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z\n        22: ifeq          29\n        25: iconst_0\n        26: goto          39\n        29: aload_3\n        30: aload_0\n        31: aload_1\n        32: aload_2\n        33: getstatic     #595                // Field net/minecraft/world/level/block/SupportType.CENTER:Lnet/minecraft/world/level/block/SupportType;\n        36: invokevirtual #579                // Method net/minecraft/world/level/block/state/BlockState.isFaceSturdy:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/SupportType;)Z\n        39: ireturn\n",
+        "isFaceFull(net.minecraft.world.phys.shapes.VoxelShape, net.minecraft.core.Direction);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: invokevirtual #605                // Method net/minecraft/world/phys/shapes/VoxelShape.getFaceShape:(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n         5: astore_2\n         6: aload_2\n         7: invokestatic  #609                // Method isShapeFullBlock:(Lnet/minecraft/world/phys/shapes/VoxelShape;)Z\n        10: ireturn\n",
+        "public boolean hasDynamicShape();\n    Code:\n         0: aload_0\n         1: getfield      #1188               // Field dynamicShape:Z\n         4: ireturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/SupportType$1.class",
+      "entry_sha256": "be4232f64b91250a866eb1e64bb21979354a788892a2d2ba3c79d313e983e519",
+      "javap_output": "work/utility-physics-audit-20261022/SupportType$1-forge.javap.txt",
+      "javap_sha256": "75c10494a1bf8e73eb574284301c712b6d01b2f20f2581c61ad3201e1018eee6",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public boolean isSupporting(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);\n    Code:\n         0: aload_1\n         1: aload_2\n         2: aload_3\n         3: invokevirtual #19                 // Method net/minecraft/world/level/block/state/BlockState.getBlockSupportShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n         6: aload         4\n         8: invokestatic  #25                 // Method net/minecraft/world/level/block/Block.isFaceFull:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/core/Direction;)Z\n        11: ireturn\n}\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/SupportType$2.class",
+      "entry_sha256": "c67d4488e3c4b3057b8e3fc5c15d26a4fe7eb665b9a0cf24ea4a9e4af372a3bf",
+      "javap_output": "work/utility-physics-audit-20261022/SupportType$2-forge.javap.txt",
+      "javap_sha256": "95fd2299ab416404d1121f593b82dc39707aa13b37fd96c58287b51523f5c250",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public boolean isSupporting(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);\n    Code:\n         0: aload_1\n         1: aload_2\n         2: aload_3\n         3: invokevirtual #40                 // Method net/minecraft/world/level/block/state/BlockState.getBlockSupportShape:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n         6: aload         4\n         8: invokevirtual #46                 // Method net/minecraft/world/phys/shapes/VoxelShape.getFaceShape:(Lnet/minecraft/core/Direction;)Lnet/minecraft/world/phys/shapes/VoxelShape;\n        11: aload_0\n        12: getfield      #30                 // Field CENTER_SUPPORT_SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;\n        15: getstatic     #52                 // Field net/minecraft/world/phys/shapes/BooleanOp.ONLY_SECOND:Lnet/minecraft/world/phys/shapes/BooleanOp;\n        18: invokestatic  #58                 // Method net/minecraft/world/phys/shapes/Shapes.joinIsNotEmpty:(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Z\n        21: ifne          28\n        24: iconst_1\n        25: goto          29\n        28: iconst_0\n        29: ireturn\n}\n",
+        "SupportType$2(java.lang.String, int);\n    Code:\n         0: aload_0\n         1: aload_1\n         2: iload_2\n         3: invokespecial #14                 // Method net/minecraft/world/level/block/SupportType.\"<init>\":(Ljava/lang/String;I)V\n         6: aload_0\n         7: iconst_1\n         8: putfield      #16                 // Field CENTER_SUPPORT_WIDTH:I\n        11: aload_0\n        12: ldc2_w        #17                 // double 7.0d\n        15: dconst_0\n        16: ldc2_w        #17                 // double 7.0d\n        19: ldc2_w        #19                 // double 9.0d\n        22: ldc2_w        #21                 // double 10.0d\n        25: ldc2_w        #19                 // double 9.0d\n        28: invokestatic  #28                 // Method net/minecraft/world/level/block/Block.box:(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;\n        31: putfield      #30                 // Field CENTER_SUPPORT_SHAPE:Lnet/minecraft/world/phys/shapes/VoxelShape;\n        34: return\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/TorchBlock.class",
+      "entry_sha256": "9b1e999307031e8c68f9a67bdf44465f1803afbc4bda208f379926d979c97712",
+      "javap_output": "work/utility-physics-audit-20261022/TorchBlock-forge.javap.txt",
+      "javap_sha256": "1dd9ceeef72d3d40907224da184c4dfc97b8291204ca6426e600fca8dbfdefcc",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public boolean canSurvive(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);\n    Code:\n         0: aload_2\n         1: aload_3\n         2: invokevirtual #78                 // Method net/minecraft/core/BlockPos.below:()Lnet/minecraft/core/BlockPos;\n         5: getstatic     #81                 // Field net/minecraft/core/Direction.UP:Lnet/minecraft/core/Direction;\n         8: invokestatic  #85                 // Method canSupportCenter:(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z\n        11: ireturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/WallTorchBlock.class",
+      "entry_sha256": "09bf7bcceedd2c939d6ed11c0f21f1889afb70c7d6a6c553a76da7eb809989df",
+      "javap_output": "work/utility-physics-audit-20261022/WallTorchBlock-forge.javap.txt",
+      "javap_sha256": "498ba2f462ef2a9e8e526e9d2eaedc01e903aa70c54c8fede534dc795d5eb05b",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public boolean canSurvive(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);\n    Code:\n         0: aload_1\n         1: getstatic     #44                 // Field FACING:Lnet/minecraft/world/level/block/state/properties/DirectionProperty;\n         4: invokevirtual #91                 // Method net/minecraft/world/level/block/state/BlockState.getValue:(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;\n         7: checkcast     #14                 // class net/minecraft/core/Direction\n        10: astore        4\n        12: aload_3\n        13: aload         4\n        15: invokevirtual #106                // Method net/minecraft/core/Direction.getOpposite:()Lnet/minecraft/core/Direction;\n        18: invokevirtual #112                // Method net/minecraft/core/BlockPos.relative:(Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos;\n        21: astore        5\n        23: aload_2\n        24: aload         5\n        26: invokeinterface #118,  2          // InterfaceMethod net/minecraft/world/level/LevelReader.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;\n        31: astore        6\n        33: aload         6\n        35: aload_2\n        36: aload         5\n        38: aload         4\n        40: invokevirtual #122                // Method net/minecraft/world/level/block/state/BlockState.isFaceSturdy:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z\n        43: ireturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/ExplosionDamageCalculator.class",
+      "entry_sha256": "2024f960717e6046305019253fcd1c7a6eba7ca85aecd41d4a3ac9cc796ba1a7",
+      "javap_output": "work/utility-physics-audit-20261022/ExplosionDamageCalculator-forge.javap.txt",
+      "javap_sha256": "27313e45226e6109aafe64dadddc2850270b530e89d31239b31d770985c07758",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "public java.util.Optional<java.lang.Float> getBlockExplosionResistance(net.minecraft.world.level.Explosion, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState);\n    Code:\n         0: aload         4\n         2: invokevirtual #20                 // Method net/minecraft/world/level/block/state/BlockState.isAir:()Z\n         5: ifeq          22\n         8: aload         5\n        10: invokevirtual #25                 // Method net/minecraft/world/level/material/FluidState.isEmpty:()Z\n        13: ifeq          22\n        16: invokestatic  #31                 // Method java/util/Optional.empty:()Ljava/util/Optional;\n        19: goto          47\n        22: aload         4\n        24: aload_2\n        25: aload_3\n        26: aload_1\n        27: invokevirtual #35                 // Method net/minecraft/world/level/block/state/BlockState.getExplosionResistance:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        30: aload         5\n        32: aload_2\n        33: aload_3\n        34: aload_1\n        35: invokevirtual #36                 // Method net/minecraft/world/level/material/FluidState.getExplosionResistance:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        38: invokestatic  #42                 // Method java/lang/Math.max:(FF)F\n        41: invokestatic  #48                 // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;\n        44: invokestatic  #52                 // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;\n        47: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraftforge/common/extensions/IForgeBlockState.class",
+      "entry_sha256": "4932dc7f069fe4c963a2ce0358fa68edc4d2e9e483e44d85f3de0584471e4b60",
+      "javap_output": "work/utility-physics-audit-20261022/IForgeBlockState-forge.javap.txt",
+      "javap_sha256": "b808fbe4d2a0ab2e2f9607bb6634d9650780ab5bfb19fd2b857630e65be64802",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "getExplosionResistance(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.Explosion);\n    Code:\n         0: aload_0\n         1: invokeinterface #21,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/state/BlockState;\n         6: invokevirtual #25                 // Method net/minecraft/world/level/block/state/BlockState.getBlock:()Lnet/minecraft/world/level/block/Block;\n         9: aload_0\n        10: invokeinterface #21,  1           // InterfaceMethod self:()Lnet/minecraft/world/level/block/state/BlockState;\n        15: aload_1\n        16: aload_2\n        17: aload_3\n        18: invokevirtual #106                // Method net/minecraft/world/level/block/Block.getExplosionResistance:(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Explosion;)F\n        21: freturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/phys/shapes/CollisionContext.class",
+      "entry_sha256": "f6c94769b9fa26c4a353b662224d768dd35aebba82984a9fceabb8c35c44411e",
+      "javap_output": "work/utility-physics-audit-20261022/CollisionContext-forge.javap.txt",
+      "javap_sha256": "9146413597925f4ede9a5fc08110f36b943eb6a4de5127d6090f46dbbe1a6459",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "static net.minecraft.world.phys.shapes.CollisionContext empty();\n    Code:\n         0: getstatic     #13                 // Field net/minecraft/world/phys/shapes/EntityCollisionContext.EMPTY:Lnet/minecraft/world/phys/shapes/CollisionContext;\n         3: areturn\n"
+      ]
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/phys/shapes/EntityCollisionContext.class",
+      "entry_sha256": "be398d3c2b7af3b4bf80234e0f3022f55c045651c0015a152183a97c8fbe0526",
+      "javap_output": "work/utility-physics-audit-20261022/EntityCollisionContext-forge.javap.txt",
+      "javap_sha256": "6e6a4a9b25417bd247745bf70be0b68580e2ffd3590b9625cfd955913c64b1ae",
+      "reused_prior_batch_output": false,
+      "excerpts": [
+        "static {};\n    Code:\n         0: new           #9                  // class net/minecraft/world/phys/shapes/EntityCollisionContext$1\n         3: dup\n         4: iconst_0\n         5: ldc2_w        #170                // double -1.7976931348623157E308d\n         8: getstatic     #78                 // Field net/minecraft/world/item/ItemStack.EMPTY:Lnet/minecraft/world/item/ItemStack;\n        11: invokedynamic #175,  0            // InvokeDynamic #2:test:()Ljava/util/function/Predicate;\n        16: aconst_null\n        17: invokespecial #176                // Method net/minecraft/world/phys/shapes/EntityCollisionContext$1.\"<init>\":(ZDLnet/minecraft/world/item/ItemStack;Ljava/util/function/Predicate;Lnet/minecraft/world/entity/Entity;)V\n        20: putstatic     #178                // Field EMPTY:Lnet/minecraft/world/phys/shapes/CollisionContext;\n        23: return\n}\n",
+        "getEntity();\n    Code:\n         0: aload_0\n         1: getfield      #49                 // Field entity:Lnet/minecraft/world/entity/Entity;\n         4: areturn\n"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "excerpts": [
+        "BlockBehaviour(BlockBehaviour.Properties p_60452_) {\n        this.hasCollision = p_60452_.hasCollision;\n        this.drops = p_60452_.drops;\n        this.explosionResistance = p_60452_.explosionResistance;\n        this.isRandomlyTicking = p_60452_.isRandomlyTicking;\n        this.soundType = p_60452_.soundType;\n        this.friction = p_60452_.friction;\n        this.speedFactor = p_60452_.speedFactor;\n        this.jumpFactor = p_60452_.jumpFactor;\n        this.dynamicShape = p_60452_.dynamicShape;\n        this.requiredFeatures = p_60452_.requiredFeatures;\n        this.properties = p_60452_;\n        final ResourceKey<LootTable> lootTableCache = p_60452_.drops;\n        if (lootTableCache != null) {\n            this.lootTableSupplier = () -> lootTableCache;\n        } else if (p_60452_.lootTableSupplier != null) {\n            this.lootTableSupplier = p_60452_.lootTableSupplier;\n        } else {\n            this.lootTableSupplier = () -> {\n                ResourceLocation resourcelocation = BuiltInRegistries.BLOCK.getKey(this.asBlock());\n                return ResourceKey.create(Registries.LOOT_TABLE, resourcelocation.withPrefix(\"blocks/\"));\n            };\n        }\n    }",
+        "protected VoxelShape getBlockSupportShape(BlockState p_60581_, BlockGetter p_60582_, BlockPos p_60583_) {\n        return this.getCollisionShape(p_60581_, p_60582_, p_60583_, CollisionContext.empty());\n    }",
+        "public VoxelShape getBlockSupportShape(BlockGetter p_60817_, BlockPos p_60818_) {\n            return this.getBlock().getBlockSupportShape(this.asState(), p_60817_, p_60818_);\n        }",
+        "public boolean isFaceSturdy(BlockGetter p_60784_, BlockPos p_60785_, Direction p_60786_) {\n            return this.isFaceSturdy(p_60784_, p_60785_, p_60786_, SupportType.FULL);\n        }",
+        "public boolean isFaceSturdy(BlockGetter p_60660_, BlockPos p_60661_, Direction p_60662_, SupportType p_60663_) {\n            return this.cache != null ? this.cache.isFaceSturdy(p_60662_, p_60663_) : p_60663_.isSupporting(this.asState(), p_60660_, p_60661_, p_60662_);\n        }",
+        "public BlockBehaviour.Properties strength(float p_60914_, float p_60915_) {\n            return this.destroyTime(p_60914_).explosionResistance(p_60915_);\n        }",
+        "public BlockBehaviour.Properties explosionResistance(float p_155957_) {\n            this.explosionResistance = Math.max(0.0F, p_155957_);\n            return this;\n        }",
+        "public BlockBehaviour.Properties dynamicShape() {\n            this.dynamicShape = true;\n            return this;\n        }",
+        "public void initCache() {\n            this.fluidState = this.owner.getFluidState(this.asState());\n            this.isRandomlyTicking = this.owner.isRandomlyTicking(this.asState());\n            if (!this.getBlock().hasDynamicShape()) {\n                this.cache = new BlockBehaviour.BlockStateBase.Cache(this.asState());\n            }\n\n            this.legacySolid = this.calculateSolid();\n        }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/Block.java",
+      "entry_sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+      "excerpts": [
+        "public float getExplosionResistance() {\n        return this.explosionResistance;\n    }",
+        "public static boolean canSupportCenter(LevelReader p_49864_, BlockPos p_49865_, Direction p_49866_) {\n        BlockState blockstate = p_49864_.getBlockState(p_49865_);\n        return p_49866_ == Direction.DOWN && blockstate.is(BlockTags.UNSTABLE_BOTTOM_CENTER)\n            ? false\n            : blockstate.isFaceSturdy(p_49864_, p_49865_, p_49866_, SupportType.CENTER);\n    }",
+        "public static boolean isFaceFull(VoxelShape p_49919_, Direction p_49920_) {\n        VoxelShape voxelshape = p_49919_.getFaceShape(p_49920_);\n        return isShapeFullBlock(voxelshape);\n    }",
+        "public boolean hasDynamicShape() {\n        return this.dynamicShape;\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/SupportType.java",
+      "entry_sha256": "3072fabf5cd5b75cac3107cacc280dc4d36360fed4752c0654a475b25e9e245b",
+      "excerpts": [
+        "package net.minecraft.world.level.block;\n\nimport net.minecraft.core.BlockPos;\nimport net.minecraft.core.Direction;\nimport net.minecraft.world.level.BlockGetter;\nimport net.minecraft.world.level.block.state.BlockState;\nimport net.minecraft.world.phys.shapes.BooleanOp;\nimport net.minecraft.world.phys.shapes.Shapes;\nimport net.minecraft.world.phys.shapes.VoxelShape;\n\npublic enum SupportType {\n    FULL {\n        @Override\n        public boolean isSupporting(BlockState p_57220_, BlockGetter p_57221_, BlockPos p_57222_, Direction p_57223_) {\n            return Block.isFaceFull(p_57220_.getBlockSupportShape(p_57221_, p_57222_), p_57223_);\n        }\n    },\n    CENTER {\n        private final int CENTER_SUPPORT_WIDTH = 1;\n        private final VoxelShape CENTER_SUPPORT_SHAPE = Block.box(7.0, 0.0, 7.0, 9.0, 10.0, 9.0);\n\n        @Override\n        public boolean isSupporting(BlockState p_57230_, BlockGetter p_57231_, BlockPos p_57232_, Direction p_57233_) {\n            return !Shapes.joinIsNotEmpty(\n                p_57230_.getBlockSupportShape(p_57231_, p_57232_).getFaceShape(p_57233_), this.CENTER_SUPPORT_SHAPE, BooleanOp.ONLY_SECOND\n            );\n        }\n    },\n    RIGID {\n        private final int RIGID_SUPPORT_WIDTH = 2;\n        private final VoxelShape RIGID_SUPPORT_SHAPE = Shapes.join(Shapes.block(), Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0), BooleanOp.ONLY_FIRST);\n\n        @Override\n        public boolean isSupporting(BlockState p_57240_, BlockGetter p_57241_, BlockPos p_57242_, Direction p_57243_) {\n            return !Shapes.joinIsNotEmpty(\n                p_57240_.getBlockSupportShape(p_57241_, p_57242_).getFaceShape(p_57243_), this.RIGID_SUPPORT_SHAPE, BooleanOp.ONLY_SECOND\n            );\n        }\n    };\n\n    public abstract boolean isSupporting(BlockState p_57209_, BlockGetter p_57210_, BlockPos p_57211_, Direction p_57212_);\n}\n"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/BaseTorchBlock.java",
+      "entry_sha256": "8bf9717d5586f1a8135a3dff4b7fc89065e238d2bbb86f045fa0dd648cb92170",
+      "excerpts": [
+        "protected boolean canSurvive(BlockState p_304413_, LevelReader p_304885_, BlockPos p_304808_) {\n        return canSupportCenter(p_304885_, p_304808_.below(), Direction.UP);\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/WallTorchBlock.java",
+      "entry_sha256": "83aeba23a25a5baafab5b2b47401f6622e0a8853e432c12423d78c758e2a413d",
+      "excerpts": [
+        "public static boolean canSurvive(LevelReader p_320074_, BlockPos p_320860_, Direction p_320326_) {\n        BlockPos blockpos = p_320860_.relative(p_320326_.getOpposite());\n        BlockState blockstate = p_320074_.getBlockState(blockpos);\n        return blockstate.isFaceSturdy(p_320074_, blockpos, p_320326_);\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockExtension.java",
+      "entry_sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+      "excerpts": [
+        "default int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {\n        return ((FireBlock) Blocks.FIRE).getBurnOdds(state);\n    }",
+        "default int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {\n        return ((FireBlock) Blocks.FIRE).getIgniteOdds(state);\n    }",
+        "default float getExplosionResistance(BlockState state, BlockGetter level, BlockPos pos, Explosion explosion) {\n        return self().getExplosionResistance();\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java",
+      "entry_sha256": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+      "excerpts": [
+        "default float getExplosionResistance(BlockGetter level, BlockPos pos, Explosion explosion) {\n        return self().getBlock().getExplosionResistance(self(), level, pos, explosion);\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/FireBlock.java",
+      "entry_sha256": "e432f52570d435099d36f5713dfea052065a6b5603d59c824109315fd31abf61",
+      "excerpts": [
+        "public int getBurnOdds(BlockState p_221165_) {\n        return p_221165_.hasProperty(BlockStateProperties.WATERLOGGED) && p_221165_.getValue(BlockStateProperties.WATERLOGGED)\n            ? 0\n            : this.burnOdds.getInt(p_221165_.getBlock());\n    }",
+        "public int getIgniteOdds(BlockState p_221167_) {\n        return p_221167_.hasProperty(BlockStateProperties.WATERLOGGED) && p_221167_.getValue(BlockStateProperties.WATERLOGGED)\n            ? 0\n            : this.igniteOdds.getInt(p_221167_.getBlock());\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/ExplosionDamageCalculator.java",
+      "entry_sha256": "55d578414477349fb222d753da3fe43ea7f7faade96690cf622e6428b5fece88",
+      "excerpts": [
+        "public Optional<Float> getBlockExplosionResistance(Explosion p_46099_, BlockGetter p_46100_, BlockPos p_46101_, BlockState p_46102_, FluidState p_46103_) {\n        return p_46102_.isAir() && p_46103_.isEmpty()\n            ? Optional.empty()\n            : Optional.of(Math.max(p_46102_.getExplosionResistance(p_46100_, p_46101_, p_46099_), p_46103_.getExplosionResistance(p_46100_, p_46101_, p_46099_)));\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/phys/shapes/CollisionContext.java",
+      "entry_sha256": "b02e3e5446a5e08ba1045b3e706e482807bc916d295d77860d42197262b273cd",
+      "excerpts": [
+        "static CollisionContext empty() {\n        return EntityCollisionContext.EMPTY;\n    }"
+      ]
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/phys/shapes/EntityCollisionContext.java",
+      "entry_sha256": "7e5f3381ce997e9bb1b013daa26cef0db17d90457cda6d5f888f817d667d23a0",
+      "excerpts": [
+        "package net.minecraft.world.phys.shapes;\n\nimport java.util.function.Predicate;\nimport javax.annotation.Nullable;\nimport net.minecraft.core.BlockPos;\nimport net.minecraft.core.Direction;\nimport net.minecraft.world.entity.Entity;\nimport net.minecraft.world.entity.LivingEntity;\nimport net.minecraft.world.item.Item;\nimport net.minecraft.world.item.ItemStack;\nimport net.minecraft.world.level.material.FluidState;\n\npublic class EntityCollisionContext implements CollisionContext {\n    protected static final CollisionContext EMPTY = new EntityCollisionContext(false, -Double.MAX_VALUE, ItemStack.EMPTY, p_205118_ -> false, null) {\n        @Override\n        public boolean isAbove(VoxelShape p_82898_, BlockPos p_82899_, boolean p_82900_) {\n            return p_82900_;\n        }\n    };\n    private final boolean descending;\n    private final double entityBottom;\n    private final ItemStack heldItem;\n    private final Predicate<FluidState> canStandOnFluid;\n    @Nullable\n    private final Entity entity;\n\n    protected EntityCollisionContext(boolean p_198916_, double p_198917_, ItemStack p_198918_, Predicate<FluidState> p_198919_, @Nullable Entity p_198920_) {\n        this.descending = p_198916_;\n        this.entityBottom = p_198917_;\n        this.heldItem = p_198918_;\n        this.canStandOnFluid = p_198919_;\n        this.entity = p_198920_;\n    }\n\n    @Deprecated\n    protected EntityCollisionContext(Entity p_82872_) {\n        this(\n            p_82872_.isDescending(),\n            p_82872_.getY(),\n            p_82872_ instanceof LivingEntity ? ((LivingEntity)p_82872_).getMainHandItem() : ItemStack.EMPTY,\n            p_82872_ instanceof LivingEntity ? ((LivingEntity)p_82872_)::canStandOnFluid : p_205113_ -> false,\n            p_82872_\n        );\n    }\n\n    @Override\n    public boolean isHoldingItem(Item p_82879_) {\n        return this.heldItem.is(p_82879_);\n    }\n\n    @Override\n    public boolean canStandOnFluid(FluidState p_205115_, FluidState p_205116_) {\n        return this.canStandOnFluid.test(p_205116_) && !p_205115_.getType().isSame(p_205116_.getType());\n    }\n\n    @Override\n    public boolean isDescending() {\n        return this.descending;\n    }\n\n    @Override\n    public boolean isAbove(VoxelShape p_82886_, BlockPos p_82887_, boolean p_82888_) {\n        return this.entityBottom > (double)p_82887_.getY() + p_82886_.max(Direction.Axis.Y) - 1.0E-5F;\n    }\n\n    @Nullable\n    public Entity getEntity() {\n        return this.entity;\n    }\n}\n"
+      ]
+    }
+  ],
+  "readability": {
+    "baseline": "7556da56a259f50295cea59c17a3b198ff4e70ca",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ShapedToolBlock.java": {
+        "before_raw_sha256": "460497b261e19ceb862dd35c563a7281d66e0add2f97f81778d9942b513ad620",
+        "after_raw_sha256": "a7ffce4a52bba3166f5d01a0c2e311168e070a07715f264609cbaa57142e02fc",
+        "before_lines": 83,
+        "after_lines": 129,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 906,
+            "execution_sha256": "05630b93c751a1aca7eeaec38d2f22f7e18122f207342344d499c064e2e5fa6d",
+            "literal_positions_sha256": "8b3e042941f4b0bc1a42e160efd5b135205bea661ac2a1ffc0b346e98543c7b7",
+            "literal_count": 25
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1110,
+            "execution_sha256": "cdd86242329ce03985f2b7ea66c221f804e1d849ee6fa2d52e4ba83c03625081",
+            "literal_positions_sha256": "4b4421a33e0bb7985499ee496816f269d24b75b42adfbda7cc816e3d83955c0b",
+            "literal_count": 25
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java": {
+        "before_raw_sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+        "after_raw_sha256": "d5fa7bd7ad4f2ad12ee7a5d960d50620bba41d9c85f01162b3464ad8d09b1b46",
+        "before_lines": 24,
+        "after_lines": 35,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 378,
+            "execution_sha256": "2f88ea1a00829d27dc03bc62e50e7c0cdb4f6bd544d21a46089c028d1ae1cf71",
+            "literal_positions_sha256": "18df2e063dadce149030a685f9e21ecb0cd7273d0d48e5d3764e6a59602be6b4",
+            "literal_count": 9
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 378,
+            "execution_sha256": "2f88ea1a00829d27dc03bc62e50e7c0cdb4f6bd544d21a46089c028d1ae1cf71",
+            "literal_positions_sha256": "18df2e063dadce149030a685f9e21ecb0cd7273d0d48e5d3764e6a59602be6b4",
+            "literal_count": 9
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-319",
+    "ALIGN-320",
+    "ALIGN-321"
+  ],
+  "source_rope_registrations": [
+    "aMat = MT.Brown;            aRegistry.add(\"Rope\"                                                , \"Ropes\"                               , 32011, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100),  \" S\",  \"SS\",  \"Sq\", 'S', \"cropHemp\");                   IL.Rope        .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.White;            aRegistry.add(\"Silk Rope\"                                           , \"Ropes\"                               , 32012, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" S\",  \"SS\",  \"Sq\", 'S', Items.string);                 IL.Rope_Silk   .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.Yellow;           aRegistry.add(\"Grass Rope\"                                          , \"Ropes\"                               , 32013, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100), \" GG\", \"GGG\", \"GGq\", 'G', OD.itemGrassDry);              IL.Rope_Grass  .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = MT.Green;            aRegistry.add(\"Vine Rope\"                                           , \"Ropes\"                               , 32108, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F, NBT_FLAMMABILITY,100),  \" V\",  \"VV\",  \"Vb\", 'V', Blocks.vine);                  IL.Rope_Vine   .set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = ANY.Plastic;         aRegistry.add(\"Plastic Rope\"                                        , \"Ropes\"                               , 32014, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" P\",  \"PP\",  \"Pq\", 'P', OP.wireFine.dat(ANY.Plastic)); IL.Rope_Plastic.set(aRegistry.getItem(), null, \"rope\");",
+    "aMat = ANY.Steel;           aRegistry.add(\"Steel Rope\"                                          , \"Ropes\"                               , 32112, 32011, MultiTileEntityRope.class                               ,                 0, 64, aUtilWool      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   0.5F, NBT_RESISTANCE,   1.0F                      ),  \" P\",  \"PP\",  \"Px\", 'P', OP.wireFine.dat(ANY.Steel));   IL.Rope_Steel  .set(aRegistry.getItem(), null, \"rope\");"
+  ],
+  "rope_nominal_and_public_properties": [
+    {
+      "id": "rope",
+      "material": "Brown",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 100,
+      "current_native_fire_table_fallback": 0
+    },
+    {
+      "id": "rope_silk",
+      "material": "White",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 0,
+      "current_native_fire_table_fallback": 0
+    },
+    {
+      "id": "rope_grass",
+      "material": "Yellow",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 100,
+      "current_native_fire_table_fallback": 0
+    },
+    {
+      "id": "rope_vine",
+      "material": "Green",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 100,
+      "current_native_fire_table_fallback": 0
+    },
+    {
+      "id": "rope_plastic",
+      "material": "Plastic",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 0,
+      "current_native_fire_table_fallback": 0
+    },
+    {
+      "id": "rope_steel",
+      "material": "Steel",
+      "source_hardness": 0.5,
+      "current_nominal_hardness": 0.5,
+      "source_public_resistance": 1.0,
+      "current_public_resistance": 0.5,
+      "source_flammability": 0,
+      "current_native_fire_table_fallback": 0
+    }
+  ],
+  "scaffold_nominal_property_rows": [
+    {
+      "source_material": "MT.Pb",
+      "source_aid": 0,
+      "current_suffix": "lead",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Lead",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Bi",
+      "source_aid": 16,
+      "current_suffix": "bismuth",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Bismuth",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Sb",
+      "source_aid": 47,
+      "current_suffix": "antimony",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Antimony",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Ni",
+      "source_aid": 22,
+      "current_suffix": "nickel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Nickel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Constantan",
+      "source_aid": 37,
+      "current_suffix": "constantan",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Constantan",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Bronze",
+      "source_aid": 9,
+      "current_suffix": "bronze",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Bronze",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 7.0,
+      "current_nominal_resistance": 7.0
+    },
+    {
+      "source_material": "MT.ArsenicCopper",
+      "source_aid": 57,
+      "current_suffix": "arsenic_copper",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.ArsenicCopper",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 7.5,
+      "current_nominal_resistance": 7.5
+    },
+    {
+      "source_material": "MT.Al",
+      "source_aid": 1,
+      "current_suffix": "aluminium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Aluminium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 2.0,
+      "current_nominal_resistance": 2.0
+    },
+    {
+      "source_material": "MT.Brass",
+      "source_aid": 8,
+      "current_suffix": "brass",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Brass",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 2.5,
+      "current_nominal_resistance": 2.5
+    },
+    {
+      "source_material": "MT.TinAlloy",
+      "source_aid": 5,
+      "current_suffix": "tin_alloy",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.TinAlloy",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 3.0,
+      "current_nominal_resistance": 3.0
+    },
+    {
+      "source_material": "MT.Co",
+      "source_aid": 21,
+      "current_suffix": "cobalt",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Cobalt",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Ardite",
+      "source_aid": 38,
+      "current_suffix": "ardite",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ardite",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 2.0,
+      "current_nominal_resistance": 2.0
+    },
+    {
+      "source_material": "MT.ArsenicBronze",
+      "source_aid": 58,
+      "current_suffix": "arsenic_bronze",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.ArsenicBronze",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.BismuthBronze",
+      "source_aid": 56,
+      "current_suffix": "bismuth_bronze",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.BismuthBronze",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.Ge",
+      "source_aid": 23,
+      "current_suffix": "germanium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Germanium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Invar",
+      "source_aid": 6,
+      "current_suffix": "invar",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Invar",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Steel",
+      "source_aid": 10,
+      "current_suffix": "steel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Steel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.HSLA",
+      "source_aid": 18,
+      "current_suffix": "hsla",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLASteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.Au",
+      "source_aid": 2,
+      "current_suffix": "gold",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Gold",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 3.0,
+      "current_nominal_resistance": 3.0
+    },
+    {
+      "source_material": "MT.Ag",
+      "source_aid": 3,
+      "current_suffix": "silver",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Silver",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 3.0,
+      "current_nominal_resistance": 3.0
+    },
+    {
+      "source_material": "MT.Mn",
+      "source_aid": 46,
+      "current_suffix": "manganese",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Manganese",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.Manyullyn",
+      "source_aid": 39,
+      "current_suffix": "manyullyn",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Manyullyn",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Lumium",
+      "source_aid": 54,
+      "current_suffix": "lumium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Lumium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 2.0,
+      "current_nominal_resistance": 2.0
+    },
+    {
+      "source_material": "MT.Knightmetal",
+      "source_aid": 25,
+      "current_suffix": "knightmetal",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Knightmetal",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 7.0,
+      "current_nominal_resistance": 7.0
+    },
+    {
+      "source_material": "MT.SteelGalvanized",
+      "source_aid": 19,
+      "current_suffix": "steel_galvanized",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.SteelGalvanized",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.Meteorite",
+      "source_aid": 43,
+      "current_suffix": "meteorite",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Meteorite",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 7.0,
+      "current_nominal_resistance": 7.0
+    },
+    {
+      "source_material": "MT.MeteoricSteel",
+      "source_aid": 24,
+      "current_suffix": "meteoric_steel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.MeteoricSteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.GildedIron",
+      "source_aid": 20,
+      "current_suffix": "gilded_iron",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.GildedIron",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.Mo",
+      "source_aid": 49,
+      "current_suffix": "molybdenum",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Molybdenum",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 6.0,
+      "current_nominal_resistance": 6.0
+    },
+    {
+      "source_material": "MT.Syrmorite",
+      "source_aid": 44,
+      "current_suffix": "syrmorite",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Syrmorite",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Electrum",
+      "source_aid": 7,
+      "current_suffix": "electrum",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Electrum",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 3.0,
+      "current_nominal_resistance": 3.0
+    },
+    {
+      "source_material": "MT.StainlessSteel",
+      "source_aid": 11,
+      "current_suffix": "stainless_steel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.StainlessSteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 5.0,
+      "current_nominal_resistance": 5.0
+    },
+    {
+      "source_material": "MT.Thaumium",
+      "source_aid": 27,
+      "current_suffix": "thaumium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Thaumium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 9.0,
+      "current_nominal_resistance": 9.0
+    },
+    {
+      "source_material": "MT.Manasteel",
+      "source_aid": 40,
+      "current_suffix": "manasteel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Manasteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 9.0,
+      "current_nominal_resistance": 9.0
+    },
+    {
+      "source_material": "MT.Efrine",
+      "source_aid": 53,
+      "current_suffix": "efrine",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Efrine",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.TungstenAlloy",
+      "source_aid": 52,
+      "current_suffix": "tungsten_alloy",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.HSLATungstenAlloy",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.Ti",
+      "source_aid": 12,
+      "current_suffix": "titanium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Titanium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 9.0,
+      "current_nominal_resistance": 9.0
+    },
+    {
+      "source_material": "MT.Netherite",
+      "source_aid": 51,
+      "current_suffix": "netherite",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Netherite",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 10.0,
+      "current_nominal_resistance": 10.0
+    },
+    {
+      "source_material": "MT.Cr",
+      "source_aid": 13,
+      "current_suffix": "chromium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Chromium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 4.0,
+      "current_nominal_resistance": 4.0
+    },
+    {
+      "source_material": "MT.Pt",
+      "source_aid": 4,
+      "current_suffix": "platinum",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Platinum",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 2.0,
+      "current_nominal_resistance": 2.0
+    },
+    {
+      "source_material": "MT.Octine",
+      "source_aid": 45,
+      "current_suffix": "octine",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Octine",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 8.0,
+      "current_nominal_resistance": 8.0
+    },
+    {
+      "source_material": "MT.Desh",
+      "source_aid": 30,
+      "current_suffix": "desh",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Desh",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 15.0,
+      "current_nominal_resistance": 15.0
+    },
+    {
+      "source_material": "MT.Terrasteel",
+      "source_aid": 42,
+      "current_suffix": "terrasteel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Terrasteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 15.0,
+      "current_nominal_resistance": 15.0
+    },
+    {
+      "source_material": "MT.TungstenSteel",
+      "source_aid": 14,
+      "current_suffix": "tungstensteel",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Tungstensteel",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 12.5,
+      "current_nominal_resistance": 12.5
+    },
+    {
+      "source_material": "MT.TungstenCarbide",
+      "source_aid": 17,
+      "current_suffix": "tungsten_carbide",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.TungstenCarbide",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 12.5,
+      "current_nominal_resistance": 12.5
+    },
+    {
+      "source_material": "MT.DuraniumAlloy",
+      "source_aid": 31,
+      "current_suffix": "duranium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Duranium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 20.0,
+      "current_nominal_resistance": 20.0
+    },
+    {
+      "source_material": "MT.Draconium",
+      "source_aid": 35,
+      "current_suffix": "draconium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Draconium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 50.0,
+      "current_nominal_resistance": 50.0
+    },
+    {
+      "source_material": "MT.Ultimet",
+      "source_aid": 48,
+      "current_suffix": "ultimet",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Ultimet",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 12.5,
+      "current_nominal_resistance": 12.5
+    },
+    {
+      "source_material": "MT.DeshAlloy",
+      "source_aid": 55,
+      "current_suffix": "desh_alloy",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.WorkersAlloy",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 15.0,
+      "current_nominal_resistance": 15.0
+    },
+    {
+      "source_material": "ANY.W",
+      "source_aid": 26,
+      "current_suffix": "tungsten",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Tungsten",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 10.0,
+      "current_nominal_resistance": 10.0
+    },
+    {
+      "source_material": "MT.Pd",
+      "source_aid": 59,
+      "current_suffix": "palladium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Palladium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 15.0,
+      "current_nominal_resistance": 15.0
+    },
+    {
+      "source_material": "MT.Ir",
+      "source_aid": 15,
+      "current_suffix": "iridium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Iridium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 15.0,
+      "current_nominal_resistance": 15.0
+    },
+    {
+      "source_material": "MT.Os",
+      "source_aid": 29,
+      "current_suffix": "osmium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.OsmiumElemental",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 9.0,
+      "current_nominal_resistance": 9.0
+    },
+    {
+      "source_material": "MT.VoidMetal",
+      "source_aid": 28,
+      "current_suffix": "void_metal",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.VoidMetal",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 30.0,
+      "current_nominal_resistance": 30.0
+    },
+    {
+      "source_material": "MT.ElvenElementium",
+      "source_aid": 41,
+      "current_suffix": "elven_elementium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.ElvenElementium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 30.0,
+      "current_nominal_resistance": 30.0
+    },
+    {
+      "source_material": "MT.TritaniumAlloy",
+      "source_aid": 32,
+      "current_suffix": "tritanium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Tritanium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 30.0,
+      "current_nominal_resistance": 30.0
+    },
+    {
+      "source_material": "MT.Ad",
+      "source_aid": 33,
+      "current_suffix": "adamantium",
+      "current_material": "com.gregtech.gregtech.content.material.generated.ElementMaterials.Adamantium",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 100.0,
+      "current_nominal_resistance": 100.0
+    },
+    {
+      "source_material": "MT.Bedrock_HSLA_Alloy",
+      "source_aid": 34,
+      "current_suffix": "bedrock_hsla",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.BedrockHSLAAlloy",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 100.0,
+      "current_nominal_resistance": 100.0
+    },
+    {
+      "source_material": "MT.DraconiumAwakened",
+      "source_aid": 36,
+      "current_suffix": "draconium_awakened",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.DraconiumAwakened",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 100.0,
+      "current_nominal_resistance": 100.0
+    },
+    {
+      "source_material": "MT.Infinity",
+      "source_aid": 50,
+      "current_suffix": "infinity",
+      "current_material": "com.gregtech.gregtech.content.material.generated.CompoundMaterials.Infinity",
+      "source_scaffold_hardness": 5,
+      "current_nominal_scaffold_hardness": 5,
+      "source_resistance": 100.0,
+      "current_nominal_resistance": 100.0
+    }
+  ],
+  "scaffold_native_support_source_projection": [
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "NORTH",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "SOUTH",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "WEST",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 0,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 1,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": false,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 2,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": false
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "DOWN",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "NORTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "SOUTH",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "WEST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "EAST",
+      "support_type": "FULL",
+      "source_without_covers": true,
+      "current_shape_result": true
+    },
+    {
+      "frame_wall": "EAST",
+      "design": 3,
+      "query_side": "UP",
+      "support_type": "CENTER",
+      "source_top_torch_fallback": true,
+      "current_shape_result": true
+    }
+  ],
+  "native_fire_table_setter_discovery": {
+    "production_roots": [
+      "core/src/main/java",
+      "multiversion/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java"
+    ],
+    "pattern": "\\b(setFlammable|setFireInfo|defaultReturnValue)\\s*\\(",
+    "matches": [],
+    "limit": "Named setter discovery only, not proof an arbitrary external mod cannot populate the native fire table."
+  },
+  "positive_scope": [
+    "Rope hardness declarations match at 0.5. Silk/plastic/steel ropes retain zero ordinary flammability; the missing 100 applies specifically to normal/grass/vine ropes.",
+    "All sixty declaration-order scaffold nominal hardness/resistance rows match. Material identity substitutions, tool speed, world overrides and absolute explosion effects are not accepted from that numeric comparison.",
+    "Scaffold dynamicShape is explicitly enabled; native support uses collision with empty context, not the full visual/selection shape. The project cover collision additions do not provide a scaffold entity host."
+  ],
+  "limits": [
+    "Six rope property rows, sixty scaffold nominal rows and 112 support cases are source/native derivations, not actual getters, VoxelShape queries, torches, fire spread, explosions or real worlds.",
+    "Native cached evidence: two artifacts, twenty-five entries, fourteen Forge raw javap views (five reused from prior batches, nine prepared read-only this batch). No target initialization, compiler, Gradle, game, tests, jar or push.",
+    "Ordinary original resistance assumes no pending self-explosion and no custom saved-NBT override; current map defaults assume no external fire-table registration. Actual blast radius/destruction probability is not inferred from a scalar change.",
+    "Current source and consumer methods remain unchanged except whitespace. All comments, literals and Stonecutter directives are preserved; user Wood and Compound material tables remain untouched.",
+    "Exact old/new opacity and world-loading support, permissions, crafting/model catalogues, fire/explosion gameplay, native attachments, cover lifecycle and saved-world restart remain incomplete."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "date": "2026-10-22",
+    "original_sources": 14,
+    "current_sources": 13,
+    "shared_platform_views": 14,
+    "readability_files": 2,
+    "complete_code_views": 4,
+    "rope_property_rows": 6,
+    "nominal_scaffold_rows": 60,
+    "source_support_cases": 112,
+    "source_support_differences": 16,
+    "native_artifacts": 2,
+    "native_entries": 25,
+    "reused_prior_readonly_javap_outputs": 5,
+    "current_batch_readonly_javap_outputs": 9,
+    "ledger_contiguous": [
+      1,
+      321
+    ],
+    "added_local_links": 15,
+    "protected_materials_unchanged": true,
+    "method": "Rehash original/current/platform views, raw native artifacts/entries and disassembly, verify source snapshots and complete tokens/literal positions/comments/directives, recheck default parameter consumers, native getters/fire table references, empty context/dynamic support and actual torch queries. No target initialization, geometry API, getter, fire, explosion, attachment or world execution."
+  }
+}
