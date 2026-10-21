@@ -15,54 +15,61 @@ import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.bus.api.SubscribeEvent;
-@net.neoforged.fml.common.EventBusSubscriber(modid=com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=net.neoforged.fml.common.EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@net.neoforged.fml.common.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,
+        bus = net.neoforged.fml.common.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 *///?} else {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid=com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD,value=Dist.CLIENT)
+@net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,
+        bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 //?}
 public final class FluidSpringClient {
-    private FluidSpringClient() {}
+
+    private FluidSpringClient() {
+    }
+
     public static Fluid fluid(ItemStack stack) {
-        if(stack.getItem() instanceof net.minecraft.world.item.BlockItem item
-                && item.getBlock() instanceof com.gregtech.gregtech.block.FluidSpringBlock block && block.spring()!=null)
-            return BuiltInRegistries.FLUID.get(ResourceLocation.parse(block.spring().fluidId()));
+        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof com.gregtech.gregtech.block.FluidSpringBlock block && block.spring() != null)
+        return BuiltInRegistries.FLUID.get(ResourceLocation.parse(block.spring().fluidId()));
 //? if >=1.21.1 {
-        /*var packed=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        var data=packed==null?null:packed.copyTag();
+        /*var packed = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        var data = packed == null ? null : packed.copyTag();
 *///?} else {
-        var data=stack.getTagElement("BlockEntityTag");
+        var data = stack.getTagElement("BlockEntityTag");
 //?}
-        var id=data==null?null:ResourceLocation.tryParse(data.getString("spring"));
-        return id!=null&&BuiltInRegistries.FLUID.containsKey(id)?BuiltInRegistries.FLUID.get(id):Fluids.WATER;
+        var id = data == null ? null : ResourceLocation.tryParse(data.getString("spring"));
+        return id != null && BuiltInRegistries.FLUID.containsKey(id) ? BuiltInRegistries.FLUID.get(id) : Fluids.WATER;
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
-        for(var block:GTFluidSprings.allBlocks()) {
-            var fluid=((com.gregtech.gregtech.block.FluidSpringBlock)block).spring();
-            var output=fluid==null?Fluids.WATER:BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid.fluidId()));
-            var id=BlockModelShaper.stateToModelLocation(block.defaultBlockState());
-            event.getModels().computeIfPresent(id,(key,model)->new FluidSpringBakedModel(model,output));
+        for (var block : GTFluidSprings.allBlocks()) {
+            var fluid = ((com.gregtech.gregtech.block.FluidSpringBlock) block).spring();
+            var output = fluid == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(fluid.fluidId()));
+            var id = BlockModelShaper.stateToModelLocation(block.defaultBlockState());
+            event.getModels().computeIfPresent(id, (key, model) -> new FluidSpringBakedModel(model, output));
 //? if >=1.21.1 {
-            /*var item=ModelResourceLocation.inventory(BuiltInRegistries.BLOCK.getKey(block));
+            /*var item = ModelResourceLocation.inventory(BuiltInRegistries.BLOCK.getKey(block));
 *///?} else {
-            var item=new ModelResourceLocation(BuiltInRegistries.BLOCK.getKey(block),"inventory");
+            var item = new ModelResourceLocation(BuiltInRegistries.BLOCK.getKey(block), "inventory");
 //?}
-            event.getModels().computeIfPresent(item,(key,model)->new FluidSpringBakedModel(model,output));
+            event.getModels().computeIfPresent(item, (key, model) -> new FluidSpringBakedModel(model, output));
         }
     }
     @SubscribeEvent public static void blocks(RegisterColorHandlersEvent.Block event) {
-        event.register((state,level,pos,layer)-> {
-            var definition=((com.gregtech.gregtech.block.FluidSpringBlock)state.getBlock()).spring();
-            Fluid output=definition==null?Fluids.WATER:BuiltInRegistries.FLUID.get(ResourceLocation.parse(definition.fluidId()));
-            if(definition==null && level!=null && pos!=null && level.getBlockEntity(pos) instanceof FluidSpringBlockEntity be && be.fluid()!=null)output=be.fluid();
-            return layer==0?IClientFluidTypeExtensions.of(output).getTintColor():0xFFFFFFFF;
-        },GTFluidSprings.allBlocks());
+        event.register((state, level, pos, layer) -> {
+            var definition = ((com.gregtech.gregtech.block.FluidSpringBlock) state.getBlock()).spring();
+            Fluid output = definition == null ? Fluids.WATER : BuiltInRegistries.FLUID.get(ResourceLocation.parse(definition.fluidId()));
+            if (definition == null && level != null && pos != null && level.getBlockEntity(pos) instanceof FluidSpringBlockEntity be
+                    && be.fluid() != null) output = be.fluid();
+            return layer == 0 ? IClientFluidTypeExtensions.of(output).getTintColor() : 0xFFFFFFFF;
+        }, GTFluidSprings.allBlocks());
     }
     @SubscribeEvent public static void items(RegisterColorHandlersEvent.Item event) {
-        event.register((stack,layer)->layer==0?IClientFluidTypeExtensions.of(fluid(stack)).getTintColor():0xFFFFFFFF,
-                java.util.Arrays.stream(GTFluidSprings.allBlocks()).map(net.minecraft.world.level.block.Block::asItem).toArray(net.minecraft.world.item.Item[]::new));
+        event.register((stack, layer) -> layer == 0 ? IClientFluidTypeExtensions.of(fluid(stack)).getTintColor() : 0xFFFFFFFF,
+                java.util.Arrays.stream(GTFluidSprings.allBlocks()).map(net.minecraft.world.level.block.Block::asItem).toArray(
+                        net.minecraft.world.item.Item[]::new));
     }
 }

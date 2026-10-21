@@ -35,12 +35,19 @@ import java.util.List;
  */
 public class FluidSpringBlock extends Block implements EntityBlock {
     private final com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring;
-    public FluidSpringBlock(Properties properties) { this(null,properties); }
-    public FluidSpringBlock(com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring,Properties properties) {
-        super(properties);this.spring=spring;
+
+    public FluidSpringBlock(Properties properties) {
+        this(null, properties);
     }
 
-    public com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring() { return spring; }
+    public FluidSpringBlock(com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring, Properties properties) {
+        super(properties);
+        this.spring = spring;
+    }
+
+    public com.gregtech.gregtech.worldgen.FluidSpringRules.Spring spring() {
+        return spring;
+    }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -49,18 +56,23 @@ public class FluidSpringBlock extends Block implements EntityBlock {
 
     /** A spring's output and rate are part of its registered block identity. */
     private ItemStack packed(@Nullable BlockEntity entity) {
-        if(spring==null && entity instanceof FluidSpringBlockEntity be) {
-            var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(be.fluidId());
-            if(variant!=null)return new ItemStack(variant);
-            if(!be.fluidId().isEmpty()) {
+        if (spring == null && entity instanceof FluidSpringBlockEntity be) {
+            var variant = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(be.fluidId());
+            if (variant != null) return new ItemStack(variant);
+            if (!be.fluidId().isEmpty()) {
                 // Preserve an unmapped legacy/external output rather than silently changing it.
-                var data=new CompoundTag();data.putString("spring",be.fluidId());
-                data.putInt("amount",be.amount());
+                var data = new CompoundTag();
+                data.putString("spring", be.fluidId());
+                data.putInt("amount", be.amount());
 //? if >=1.21.1 {
-                /*data.putString("id",net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
-                var stack=new ItemStack(this);stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(data));return stack;
+                /*data.putString("id", net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(be.getType()).toString());
+                var stack = new ItemStack(this);
+                stack.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA, net.minecraft.world.item.component.CustomData.of(data));
+                return stack;
 *///?} else {
-                var stack=new ItemStack(this);stack.addTagElement("BlockEntityTag",data);return stack;
+                var stack = new ItemStack(this);
+                stack.addTagElement("BlockEntityTag", data);
+                return stack;
 //?}
             }
         }
@@ -74,7 +86,8 @@ public class FluidSpringBlock extends Block implements EntityBlock {
 
     @Override
 //? if >=1.21.1 {
-    /*public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult hit,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
+    /*public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player) {
 *///?} else {
     public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
@@ -83,12 +96,12 @@ public class FluidSpringBlock extends Block implements EntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state,
-                            @Nullable LivingEntity placer, ItemStack stack) {
+            @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if(spring!=null)return;
+        if (spring != null) return;
 //? if >=1.21.1 {
-        /*var packedData=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        CompoundTag data=packedData==null?null:packedData.copyTag();
+        /*var packedData = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        CompoundTag data = packedData == null ? null : packedData.copyTag();
 *///?} else {
         CompoundTag data = stack.getTagElement("BlockEntityTag");
 //?}
@@ -102,7 +115,7 @@ public class FluidSpringBlock extends Block implements EntityBlock {
                 || !ForgeRegistries.FLUIDS.containsKey(fluidId)) return;
 //?}
         if (level.getBlockEntity(pos) instanceof FluidSpringBlockEntity spring)
-            spring.setSpring(fluidId.toString(), data.getInt("amount"));
+        spring.setSpring(fluidId.toString(), data.getInt("amount"));
     }
 
     @Override

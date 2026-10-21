@@ -1,0 +1,1521 @@
+{
+  "date": "2026-10-22",
+  "batch": 105,
+  "baseline": "3d94bfa20840c48da514538b45ab0e63fe6dbcd9",
+  "previous_goal_turn": "progress: commit 3d94bfa20 recorded source-backed findings and production readability changes; revalidated current worktree",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "sha256": "af5ab6571c4fe236fa1c9896247af5c2f0056e768374fa3a3d4c2997e64e871b",
+      "lines": 162,
+      "notices": [
+        "Copyright (c) 2024 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "sha256": "5720adf268be3ed5626212485ed6a179e2875918862d40efc417627e6b77befe",
+      "lines": 107,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "lines": 173,
+      "notices": [
+        "Copyright (c) 2021 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "lines": 166,
+      "notices": [
+        "Copyright (c) 2022 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notices": [
+        "Copyright (c) 2023 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "lines": 931,
+      "notices": [
+        "Copyright (c) 2026 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notices": [
+        "Copyright (c) 2026 GregTech-6 Team"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "lines": 1144,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/BlockTextureFluid.java",
+      "sha256": "8122b3393475d6d141d8e70ff498412e38744b4f337532d463807f17b7a19dbb",
+      "lines": 144,
+      "notices": [
+        "Copyright (c) 2019 Gregorius Techneticies",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/ITexture.java",
+      "sha256": "9ebdc62095f15a1631a06a207619b8695a01f8e60ea343bd2cd0458a68a8ee59",
+      "lines": 791,
+      "notices": [
+        "Copyright (c) 2021 GregTech-6 Team",
+        "@author Gregorius Techneticies"
+      ],
+      "license": "LGPL-3.0-or-later"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "sha256": "8185b432ec7e87f44541a41e8d196ea0ff94c4a182eddf8dffab0c531d5c4318",
+      "lines": 183,
+      "notices": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "license": "LGPL-3.0-or-later"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/FluidSpringRules.java",
+      "sha256": "e6b1ef09920722bcf0be7c1452c354dc04170792177bc7e3320b7e7dfc529ac2",
+      "lines": 65
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidSprings.java",
+      "sha256": "ba5a7e336e549b8ed4d93a5523ca6dfe4588d6399d977f347861c26bbce14dee",
+      "lines": 67
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/FluidSpringBlock.java",
+      "sha256": "5b68108743899e0a9aeadfdca9342ab5da5c6f1a0f6fb5024aa2cf09b0ddd224",
+      "lines": 127
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java",
+      "sha256": "c708eefa0759ffd1991c7ec558553a749b744d95489f1091a175048a6148aaab",
+      "lines": 245
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/FluidSpringClient.java",
+      "sha256": "a3b382da4c7d054012f82cc312823b6943a89e72adfae46809bff8bf576954af",
+      "lines": 75
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/FluidSpringBakedModel.java",
+      "sha256": "17ce664d0553431db2ba1eef6d79231ced1be3eb62ff1e51d137afc9d5c3c59d",
+      "lines": 125
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "sha256": "f86a8f280ec327d0b1e19be3b1cd1feb0fb6c1cbbec02b657932eb5055e040bc",
+      "lines": 204
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "lines": 350
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/GTWorldFluidBlock.java",
+      "sha256": "fbd4c9eed860b2907c0af1649f43b02fa270064d5df6e416372f0b130aefe873",
+      "lines": 255
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "lines": 130
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "lines": 22
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "lines": 122
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "lines": 78
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "5ff60819301303ea2893b671701741e1523501f0ef4c575c10ec932de04f5493",
+      "lines": 164
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java",
+      "sha256": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+      "lines": 116
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "lines": 309
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java",
+      "sha256": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+      "lines": 180
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+      "lines": 80
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PanelItem.java",
+      "sha256": "c7a45e47b5fbd9eedbe4e076a0bf813de7f7059b5da5e1470ec8b32767281c5f",
+      "lines": 43
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/FluidItemBakedModel.java",
+      "sha256": "8002bea923b63f46958874676af3636e7a47001d9ffe49c990d7f64152534265",
+      "lines": 101
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFeatures.java",
+      "sha256": "3933f9f08920aa729d65bb82b06da2fc9d1e84c1fe691aa8540a4e05859d144f",
+      "lines": 169
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/bootstrapGameTest/java/com/gregtech/gregtech/gametest/FluidSpringTests.java",
+      "sha256": "85606e6b2ce445f0714c19f795ac6feeb46eda2e441390fbd88ab8015860b1ae",
+      "lines": 181
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_liquid_extra_heavy_oil.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_liquid_heavy_oil.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_liquid_medium_oil.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_liquid_light_oil.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_gas_natural_gas.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_watergeothermal.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/blockstates/fluid_spring_lava.json",
+      "sha256": "3a81ef55ab3e181866c5e5ee7cad362b731504b3ac92b983ee98571348efbd6b",
+      "lines": 7
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring.json",
+      "sha256": "0598ae0ed2cd749a79918eee83e04d0f80f38f5da8b4374af65bf0f1400136fc",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_liquid_extra_heavy_oil.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_liquid_heavy_oil.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_liquid_medium_oil.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_liquid_light_oil.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_gas_natural_gas.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_watergeothermal.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/item/fluid_spring_lava.json",
+      "sha256": "15ddf0029961dc3f43b6d6ce52eddf10ba8278002789f7c33fe137b6e49bb22a",
+      "lines": 1
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/models/block/iconsets/fluid_spring.json",
+      "sha256": "0e89e6b1d78d9c3d2cfc06968b37b801739676870dc17c6209aba5b67a48b048",
+      "lines": 81
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/assets/gt6ce/textures/block/iconsets/fluid_spring.png",
+      "sha256": "fedf3d54241bd047bcd8e81a87d6271a92df2c7b7799c98c96e20431066458b2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/configured_feature/gt_fluid_springs.json",
+      "sha256": "e4e53232a1a56f09be364c6e9b131ab79001cc3fa961b35011d6e37c83481d6d",
+      "lines": 4
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/resources/data/gt6ce/worldgen/placed_feature/gt_fluid_springs.json",
+      "sha256": "c9272a336eb8e7625df4335f3cb62630caae0ff6bb0786589346bb0c4e351d97",
+      "lines": 4
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "lines": 47
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "lines": 42
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/data/gt6ce/forge/biome_modifier/gt_fluid_springs.json",
+      "sha256": "6e51d7b0ecaff0fa908e39294439d1297d71ae0e42367f90889e8a0a70a557d5",
+      "lines": 8
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/data/gt6ce/neoforge/biome_modifier/gt_fluid_springs.json",
+      "sha256": "4e83eb4c3b55095c168f3259e7f563515ba199b1490848ffeff4e79eb2240d32",
+      "lines": 8
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "start": 99,
+      "text": "\tpublic void onTick(long aTimer, boolean aIsServerSide) {\n\t\tsuper.onTick(aTimer, aIsServerSide);\n\t\tif (mFluid.amount <= 0) mFluid.amount = 600;\n\t\tif (aIsServerSide) {\n\t\t\tboolean tProduce = F;\n\t\t\tif (mActive) {\n\t\t\t\ttProduce = (rng(mFluid.amount) == 0);\n\t\t\t} else if (SERVER_TIME % 20 == 1 && !WD.liquid(getBlockAtSide(SIDE_UP))) {\n\t\t\t\ttProduce = mActive = T;\n\t\t\t}\n\t\t\tif (tProduce) {\n\t\t\t\tBlock tBlock = FL.BLOCKS.get(mFluid.getFluid().getName()), tAbove = getBlockAtSide(SIDE_UP);\n\t\t\t\tif (ST.invalid(tBlock)) tBlock = mFluid.getFluid().getBlock();\n\t\t\t\tif (ST.valid(tBlock)) {\n\t\t\t\t\tif (tBlock instanceof BlockFluidFinite) {\n\t\t\t\t\t\tif (tAbove == tBlock) {\n\t\t\t\t\t\t\tworldObj.setBlock(xCoord, yCoord+1, zCoord, tBlock, UT.Code.bind4(getMetaDataAtSide(SIDE_UP)+8), 3);\n\t\t\t\t\t\t\ttBlock.updateTick(worldObj, xCoord, yCoord+1, zCoord, RNGSUS);\n\t\t\t\t\t\t} else if (WD.liquid(tAbove) || tAbove.isAir(worldObj, xCoord, yCoord+1, zCoord)) {\n\t\t\t\t\t\t\tworldObj.setBlock(xCoord, yCoord+1, zCoord, tBlock, 7, 3);\n\t\t\t\t\t\t\ttBlock.updateTick(worldObj, xCoord, yCoord+1, zCoord, RNGSUS);\n\t\t\t\t\t\t}\n\t\t\t\t\t} else {\n\t\t\t\t\t\tif (tAbove == tBlock) {\n\t\t\t\t\t\t\tif (getMetaDataAtSide(SIDE_UP) == 0) {\n\t\t\t\t\t\t\t\tfor (byte tSide : ALL_SIDES_HORIZONTAL) {\n\t\t\t\t\t\t\t\t\ttAbove = getBlock(xCoord+OFFX[tSide], yCoord+1, zCoord+OFFZ[tSide]);\n\t\t\t\t\t\t\t\t\tif (tAbove == tBlock) {\n\t\t\t\t\t\t\t\t\t\tif (0 != getMetaData(xCoord+OFFX[tSide], yCoord+1, zCoord+OFFZ[tSide])) {\n\t\t\t\t\t\t\t\t\t\t\tworldObj.setBlock(xCoord+OFFX[tSide], yCoord+1, zCoord+OFFZ[tSide], tBlock, 0, 3);\n\t\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t} else if (tAbove.isAir(worldObj, xCoord+OFFX[tSide], yCoord+1, zCoord+OFFZ[tSide])) {\n\t\t\t\t\t\t\t\t\t\tworldObj.setBlock(xCoord+OFFX[tSide], yCoord+1, zCoord+OFFZ[tSide], tBlock, 0, 3);\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\tworldObj.setBlock(xCoord, yCoord+1, zCoord, tBlock, 0, 3);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t} else if (WD.liquid(tAbove) || tAbove.isAir(worldObj, xCoord, yCoord+1, zCoord)) {\n\t\t\t\t\t\t\tworldObj.setBlock(xCoord, yCoord+1, zCoord, tBlock, 0, 3);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\t\n\t@Override public boolean setBlockBounds(Block aBlock, int aRenderPass, boolean[] aShouldSideBeRendered) {return F;}\n\t@Override public int getRenderPasses(Block aBlock, boolean[] aShouldSideBeRendered) {return 1;}\n\t@Override public ITexture getTexture(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {return aShouldSideBeRendered[aSide] ? BlockTextureMulti.get(BlockTextureFluid.get(mFluid), BlockTextureDefault.get(Textures.BlockIcons.FLUID_SPRING)) : null;}\n\t\n\t@Override public int getLightOpacity() {return LIGHT_OPACITY_MAX;}\n\t\n\t@Override public float getExplosionResistance2() {return Blocks.bedrock.getExplosionResistance(null);}\n\t@Override public float getBlockHardness() {return -1;}\n\t\n\t@Override public boolean isSurfaceSolid         (byte aSide) {return T;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "start": 154,
+      "text": "\t@Override public float getExplosionResistance2() {return Blocks.bedrock.getExplosionResistance(null);}\n\t@Override public float getBlockHardness() {return -1;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "start": 50,
+      "text": "\tpublic FluidStack mFluid = FL.Water.make(1);\n\tpublic boolean mActive = F;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "start": 68,
+      "text": "\tpublic final NBTTagCompound writeItemNBT(NBTTagCompound aNBT) {\n\t\taNBT = super.writeItemNBT(aNBT);\n\t\tFL.save(aNBT, \"gt.spring\", mFluid);\n\t\treturn aNBT;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "start": 150,
+      "text": "\t@Override public ITexture getTexture(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {return aShouldSideBeRendered[aSide] ? BlockTextureMulti.get(BlockTextureFluid.get(mFluid), BlockTextureDefault.get(Textures.BlockIcons.FLUID_SPRING)) : null;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "start": 238,
+      "text": "\tpublic boolean onPainting(byte aSide, int aRGB) {\n\t\tif (paint(aRGB)) {updateClientData(); causeBlockUpdate(); return T;}\n\t\treturn F;\n\t}\n\t\n\tpublic boolean unpaint() {return F;}\n\tpublic boolean isPainted() {return F;}\n\tpublic boolean paint(int aRGB) {return F;}\n\tpublic int getPaint() {return UNCOLORED;}\n\t\n\tpublic boolean removePaint(byte aSide) {return unpaint();}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "start": 240,
+      "text": "\t@Override public final boolean recolourBlock(World aWorld, int aX, int aY, int aZ, ForgeDirection aSide, int aColor) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_RecolourBlock && ((IMTE_RecolourBlock)aTileEntity).recolourBlock(UT.Code.side(aSide), (byte)aColor);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "start": 166,
+      "text": "\t\treturn aBlock.recolourBlock(aWorld, aX, aY, aZ, FORGE_DIR[aSide], ~mColor & 15);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "start": 618,
+      "text": "\tpublic static boolean liquid(Block aBlock) {return aBlock instanceof BlockLiquid || aBlock instanceof IFluidBlock;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/BlockTextureFluid.java",
+      "start": 77,
+      "text": "\t\t\tmLuminosity = aFluid.getFluid().getLuminosity(aFluid) * 16;\n\t\t\tBlock tBlock = aFluid.getFluid().getBlock();\n\t\t\tif (tBlock != null && tBlock != NB) {\n\t\t\t\tmIcon = tBlock.getIcon(0, 0);\n\t\t\t\tmRGBa = UT.Code.getRGBaArray(tBlock.getRenderColor(0));\n\t\t\t} else {\n\t\t\t\tmIcon = aFluid.getFluid().getStillIcon();\n\t\t\t\tmRGBa = UT.Code.getRGBaArray(aFluid.getFluid().getColor(aFluid));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/BlockTextureFluid.java",
+      "start": 114,
+      "text": "\tpublic void renderXNeg(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ, int aBrightness, boolean aChangedBlockBounds) {\n\t\tITexture.Util.renderSide(SIDE_X_NEG, getIcon(4), mRGBa, mAllowAlpha, mLuminosity > aBrightness, T, aRenderer, aBlock, aX, aY, aZ, Math.max(mLuminosity, aBrightness), aChangedBlockBounds);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_Worldgen.java",
+      "start": 782,
+      "text": "\t\tnew WorldgenFluidSpring(   \"overworld.fluid.oil.extraheavy\", T, BlocksGT.OilExtraHeavy  , 15, 400, 2, tInfiniteOil ? FL.Oil_ExtraHeavy  .make( 6000) : NF, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.oil.heavy\"     , T, BlocksGT.OilHeavy       , 15, 400, 2, tInfiniteOil ? FL.Oil_Heavy       .make( 6000) : NF, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.oil.medium\"    , T, BlocksGT.OilMedium      , 15, 400, 2, tInfiniteOil ? FL.Oil_Medium      .make( 6000) : NF, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.oil.light\"     , T, BlocksGT.OilLight       , 15, 400, 2, tInfiniteOil ? FL.Oil_Light       .make( 6000) : NF, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.gas.natural\"   , T, BlocksGT.GasNatural     , 15, 200, 1, tInfiniteGas ? FL.Gas_Natural     .make( 3000) : NF, GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.water\"         , T, BlocksGT.WaterGeothermal, 15, 100, 3,                FL.Water_Geothermal.make(  500)     , GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_ENVM, GEN_TFC);\n\t\tnew WorldgenFluidSpring(   \"overworld.fluid.lava\"          , T, Blocks.lava             ,  0, 200, 1,                FL.Lava            .make( 1000)     , GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_ENVM);\n\t\tnew WorldgenFluidSpring(        \"atum.fluid.oil.extraheavy\", T, BlocksGT.OilExtraHeavy  , 15, 200, 2, tInfiniteOil ? FL.Oil_ExtraHeavy  .make( 2000) : NF, GEN_ATUM);\n\t\tnew WorldgenFluidSpring(        \"atum.fluid.oil.heavy\"     , T, BlocksGT.OilHeavy       , 15, 200, 2, tInfiniteOil ? FL.Oil_Heavy       .make( 2000) : NF, GEN_ATUM);\n\t\tnew WorldgenFluidSpring(        \"atum.fluid.oil.medium\"    , T, BlocksGT.OilMedium      , 15, 200, 2, tInfiniteOil ? FL.Oil_Medium      .make( 2000) : NF, GEN_ATUM);\n\t\tnew WorldgenFluidSpring(        \"atum.fluid.oil.light\"     , T, BlocksGT.OilLight       , 15, 200, 2, tInfiniteOil ? FL.Oil_Light       .make( 2000) : NF, GEN_ATUM);\n\t\tnew WorldgenFluidSpring(      \"erebus.fluid.gas.natural\"   , T, BlocksGT.GasNatural     , 15, 200, 1, tInfiniteGas ? FL.Gas_Natural     .make( 1000) : NF, GEN_EREBUS);\n\t\tnew WorldgenFluidSpring(\"betweenlands.fluid.gas.natural\"   , T, BlocksGT.GasNatural     , 15, 200, 1, tInfiniteGas ? FL.Gas_Natural     .make( 1000) : NF, GEN_BETWEENLANDS);\n\t\tnew WorldgenFluidSpring(    \"twilight.fluid.gas.natural\"   , T, BlocksGT.GasNatural     , 15, 200, 1, tInfiniteGas ? FL.Gas_Natural     .make( 1000) : NF, GEN_TWILIGHT);\n\t\tnew WorldgenFluidSpring(    \"twilight.fluid.water\"         , T, BlocksGT.WaterGeothermal, 15, 100, 3,                FL.Water_Geothermal.make(  250)     , GEN_TWILIGHT);\n\t\tnew WorldgenFluidSpring(      \"nether.fluid.lava\"          , T, Blocks.lava             ,  0, 100, 1,                FL.Lava            .make(  500)     , GEN_NETHER);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidSprings.java",
+      "start": 37,
+      "text": "        var block = GTBlocks.BLOCKS.register(path, () -> new FluidSpringBlock(spring, BlockBehaviour.Properties.of()\n                .mapColor(MapColor.WATER).strength(3, 3).requiresCorrectToolForDrops().sound(SoundType.STONE)));\n        VARIANTS.put(path, block);"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java",
+      "start": 110,
+      "text": "    public void tick() {\n        if (level == null || level.isClientSide) return;\n        if (definition() == null && !fluidId.isEmpty() && com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId) != null) {\n            setSpring(fluidId, amount);\n            return;\n        }\n        BlockState above = level.getBlockState(worldPosition.above());\n        Fluid fluid = fluid();\n        if (fluid == null) return;\n        boolean sameFluidAbove = !above.getFluidState().isEmpty() && above.getFluidState().getType() == fluid;\n        if (!active) {\n            // This port waits for air or replaceable headspace before setting active.\n            if (above.isAir() || above.canBeReplaced()) {\n                active = true;\n                setChanged();\n            }\n            else return;\n        }\n        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt, amount())) return;\n        emit();\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java",
+      "start": 140,
+      "text": "    public boolean emit() {\n        if (level == null) return false;\n        Fluid fluid = fluid();\n        if (fluid == null) return false;\n        Block fluidBlock = fluid.getFluidType() == null ? null : fluidBlockOf(fluid);\n        if (fluidBlock == null || fluidBlock == Blocks.AIR) return false;\n        BlockPos target = worldPosition.above();\n        if (level.isOutsideBuildHeight(target)) return false;\n        BlockState above = level.getBlockState(target);\n        if (!above.isAir() && !above.canBeReplaced() && above.getFluidState().isEmpty()) return false;\n        return level.setBlock(target, fluidBlock.defaultBlockState(), 3);\n    }\n\n    private static Block fluidBlockOf(Fluid fluid) {\n        FluidType type = fluid.getFluidType();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java",
+      "start": 153,
+      "text": "    private static Block fluidBlockOf(Fluid fluid) {\n        FluidType type = fluid.getFluidType();\n        if (type == null) return null;\n        // This lookup assumes matching fluid/block keys; it does not query a fluid-owned world block.\n//? if >=1.21.1 {\n        /*ResourceLocation id = BuiltInRegistries.FLUID.getKey(fluid);\n        return id == null ? null : BuiltInRegistries.BLOCK.get(id);\n*///?} else {\n        ResourceLocation id = ForgeRegistries.FLUIDS.getKey(fluid);\n        return id == null ? null : ForgeRegistries.BLOCKS.getValue(id);\n//?}\n    }\n\n    /** Nominal roll interval after positivity clamping; not the first-output delay. */"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java",
+      "start": 80,
+      "text": "    public void setSpring(String fluidId, int amount) {\n        var variant = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId);\n        if (variant == null) {\n            if (definition() == null) {\n                this.fluidId = fluidId == null ? \"\" : fluidId;\n                this.amount = Math.max(1, amount);\n                setChanged();\n            }\n            return;\n        }\n        if (level == null) {\n            setBlockState(variant.defaultBlockState());\n            this.fluidId = \"\";\n            return;\n        }\n        if (level.isClientSide) return;\n        boolean wasActive = active;\n        level.setBlock(worldPosition, variant.defaultBlockState(), 3);\n        if (level.getBlockEntity(worldPosition) instanceof FluidSpringBlockEntity next) {\n            next.fluidId = \"\";\n            next.active = wasActive;\n            next.setChanged();\n        }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/FluidSpringBakedModel.java",
+      "start": 64,
+      "text": "            int[] vertices = quad.getVertices().clone();\n            FluidItemBakedModel.remapUv(vertices, quad.getSprite(), sprite);\n//? if >=1.21.1 {\n            /*result.add(new BakedQuad(vertices, 0, quad.getDirection(), sprite, quad.isShade(), quad.hasAmbientOcclusion()));\n*///?} else {\n            result.add(new BakedQuad(vertices, 0, quad.getDirection(), sprite, quad.isShade()));\n//?}\n        }\n        return result;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/FluidItemBakedModel.java",
+      "start": 63,
+      "text": "    static void remapUv(int[] verts, TextureAtlasSprite from, TextureAtlasSprite to) {\n        float u0 = from.getU0(), u1 = from.getU1(), v0 = from.getV0(), v1 = from.getV1();\n        float du = u1 - u0, dv = v1 - v0;\n        float tu0 = to.getU0(), tu1 = to.getU1(), tv0 = to.getV0(), tv1 = to.getV1();\n        float tdu = tu1 - tu0, tdv = tv1 - tv0;\n\n        for (int i = 0; i < 4; i++) {\n            int base = i * 8;\n            float u = Float.intBitsToFloat(verts[base + 4]);\n            float v = Float.intBitsToFloat(verts[base + 5]);\n            float relU = du > 0 ? (u - u0) / du : 0;\n            float relV = dv > 0 ? (v - v0) / dv : 0;\n            verts[base + 4] = Float.floatToRawIntBits(tu0 + relU * tdu);\n            verts[base + 5] = Float.floatToRawIntBits(tv0 + relV * tdv);\n        }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "start": 51,
+      "text": "    public boolean paint(int rgb) {\n        if (!gregtech$own() || !gregtech$paint.paint(rgb)) return false;\n        gregtech$changed();\n        return true;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "start": 62,
+      "text": "        if (level.getBlockEntity(pos) instanceof Paintable target) {\n            boolean changed = target.isPainted() ? target.mixPaint(PaintingRules.DYES.get(index).rgb())\n                    : target.paint(PaintingRules.DYES.get(index).rgb());\n            return changed ? PaintingRules.BLOCK_COST : 0;\n        }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "start": 18,
+      "text": "        if (tint == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof Paintable paint\n                && paint.isPainted())\n            callback.setReturnValue(paint.getPaint());"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "start": 61,
+      "text": "    public static boolean eligible(BlockEntity owner){\n        if(!ownClass(owner)||owner.getLevel()==null||owner.isRemoved())return false;\n        // Loose material piles use plates as contents, not as machine covers.\n        if(owner instanceof com.gregtech.gregtech.blockentity.misc.PileBlockEntity)return false;\n        // The active fallback service provides cover ticks even for otherwise passive GT storage.\n        return owner.getBlockState().getBlock() instanceof net.minecraft.world.level.block.EntityBlock;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "start": 60,
+      "text": "        var panel=PanelCover.of(stack);if(panel==null)return CoverItems.isCover(stack);\n        var c=control(side);\n        if(panel.selector())return c!=null&&c.supportsMode();\n        if(panel==PanelCover.PROGRESS)return c!=null&&c.supportsProgress();\n        if(panel==PanelCover.STATUS)return c!=null&&c.supportsSwitch();\n        if(panel.energy())return energy(side)!=null;\n        return true;\n    }\n    public void attached(Direction side){"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "start": 93,
+      "text": "    @Override public boolean attachCover(Direction side,ItemStack stack){\n        if(!componentTicks())return false;\n        boolean attached=gregtechComponentStorage(true).attach(side,stack);\n        if(attached)ComponentCoverFallback.track((BlockEntity)(Object)this);\n        return attached;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "start": 68,
+      "text": "        if (level.getLevel().dimension() != Level.OVERWORLD) return false;\n        Spring spring = SPRINGS.get(random.nextInt(SPRINGS.size()));\n        // GT6: `aRandom.nextInt(mProbability) != 0` → return.\n        if (random.nextInt(spring.probability()) != 0) return false;\n        int minX = context.origin().getX() & ~15;\n        int minZ = context.origin().getZ() & ~15;\n        if (!hasBedrock(level, minX + 8, minZ + 8)) return false;\n        return carve(level, minX, minZ, spring, random);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java",
+      "start": 139,
+      "text": "    public static boolean indicators(WorldGenLevel level, int minX, int minZ, Spring spring, RandomSource random) {\n        Block indicator = indicatorBlock(spring.indicatorType());\n        if (indicator == null) return false;\n        boolean placed = false;\n        for (int patch = 0; patch < INDICATOR_PATCHES; patch++) {\n            int x = minX + 4 + random.nextInt(8);\n            int z = minZ + 4 + random.nextInt(8);\n            BlockPos surface = GTSurfaceFloraFeature.surface(level, x, z);\n            if (surface == null) continue;\n            for (int dx = -1; dx <= 1; dx++) {\n                for (int dz = -1; dz <= 1; dz++) {\n                    if (!random.nextBoolean()) continue;\n                    BlockPos pos = surface.offset(dx, 0, dz);\n                    if (level.getBlockState(pos).is(BlockTags.DIRT)) {\n                        placed |= level.setBlock(pos, indicator.defaultBlockState(), 2);\n                    }\n                }\n            }\n        }\n        return placed;\n    }\n"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/worldgen/WorldgenFluidSpring.java",
+      "start": 82,
+      "text": "\t\tswitch (mIndicatorType) {\n\t\t// Yellow or Brown Grass.\n\t\tcase  1: case  2: case  3:\n\t\t\tint tMinHeight = Math.min(aWorld.getHeight()-2, WD.waterLevel(aWorld)-1)\n\t\t\t,   tMaxHeight = Math.min(aWorld.getHeight()-1, tMinHeight * 2 + 16);\n\t\t\tfor (int i = 0; i < 6; i++) {\n\t\t\t\tint tX = aMinX+4+aRandom.nextInt(8), tZ = aMinZ+4+aRandom.nextInt(8);\n\t\t\t\tfor (int tY = tMaxHeight; tY > tMinHeight; tY--) {\n\t\t\t\t\tBlock tContact = aWorld.getBlock(tX, tY, tZ);\n\t\t\t\t\tif (tContact.getMaterial().isLiquid() || tContact == Blocks.farmland) break;\n\t\t\t\t\tif (!tContact.isOpaqueCube() || tContact.isWood(aWorld, tX, tY, tZ) || tContact.isLeaves(aWorld, tX, tY, tZ)) continue;\n\t\t\t\t\tif (!BlocksGT.plantableGrass.contains(tContact)) break;\n\t\t\t\t\tfor (int a = -1; a <= 1; a++) for (int b = -1; b <= 1; b++) if (aRandom.nextBoolean()) if (BlocksGT.plantableGrass.contains(aWorld.getBlock(tX+a, tY, tZ+b))) {\n\t\t\t\t\t\tWD.set(aWorld, tX+a, tY, tZ+b, BlocksGT.Grass, mIndicatorType == 3 ? 0 : 3+mIndicatorType, 0);\n\t\t\t\t\t}\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t\t}\n\t\t"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/neoforged/neoforge/fluids/BaseFlowingFluid.java",
+      "entry_sha256": "bc337bf16d3b68d440ad378063e1622e908f9c7c3b3fa7f19d0476c84ba196dc",
+      "excerpt": "    protected BlockState createLegacyBlock(FluidState state) {\n        if (block != null)\n            return block.get().defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));\n        return Blocks.AIR.defaultBlockState();\n    }\n\n    @Override"
+    }
+  ],
+  "readability": {
+    "baseline": "3d94bfa20840c48da514538b45ab0e63fe6dbcd9",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/worldgen/FluidSpringRules.java": {
+        "before_raw_sha256": "33b15b27161dc776c49e4041e82590f37c0d6bc66809b8db6f21b184ef58f9c2",
+        "after_raw_sha256": "e6b1ef09920722bcf0be7c1452c354dc04170792177bc7e3320b7e7dfc529ac2",
+        "before_lines": 26,
+        "after_lines": 65,
+        "comment_corrections": [
+          [
+            "Original spring identities and complete crater executor shared by both loaders.",
+            "Spring catalog and crater write order shared by the platform features.\n * The source amount is a per-tick roll bound, not a drainable tank capacity."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 525,
+            "execution_sha256": "44e43bf08f69bc27d333e5bab932f1f0ea188eb2a7bb849df7a7b36961fc3630",
+            "literal_positions_sha256": "17833eda2457921ad7044fe10d055f225b59e9133f8fcd90e22548a5a2ab6bdc",
+            "literal_count": 56
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidSprings.java": {
+        "before_raw_sha256": "75ba37dec067533906e903bd47f9d940ee2caeea76fe5968c46afecb28c67083",
+        "after_raw_sha256": "ba5a7e336e549b8ed4d93a5523ca6dfe4588d6399d977f347861c26bbce14dee",
+        "before_lines": 57,
+        "after_lines": 67,
+        "comment_corrections": [
+          [
+            "Seven source fluid identities. The old empty ID only decodes pre-flattening saves/stacks.",
+            "Seven fixed output/rate variants plus a legacy metadata carrier."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 510,
+            "execution_sha256": "4f00ca8555e8c377ae037c928228cbd1af3da3b0c9eb2bdd0f6c66a9ecaf75ef",
+            "literal_positions_sha256": "39c2149021afe8ca1668890a3fe77df8493d11b00ca6ded534079f66b4d84d26",
+            "literal_count": 8
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 520,
+            "execution_sha256": "3117b9ce994d2e68727301160028533431671e52947b67411c3e1326c01af7bd",
+            "literal_positions_sha256": "c7659b8661841cf556f430a6eb696fff32953a1f19eed0d1fc13a6451be4489e",
+            "literal_count": 8
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/FluidSpringBlock.java": {
+        "before_raw_sha256": "8e52f24dac900f7a321605f946527f1e3c35f51bc70cf60556d5545a80a4a964",
+        "after_raw_sha256": "5b68108743899e0a9aeadfdca9342ab5da5c6f1a0f6fb5024aa2cf09b0ddd224",
+        "before_lines": 114,
+        "after_lines": 127,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 781,
+            "execution_sha256": "7710032240e4011dbf59071da25a410306599674c873b4eb7479fea6e250aa14",
+            "literal_positions_sha256": "c8f8013d0b675da8175fc6a715b7dd90ca9519aa21a7946da65647e8de949198",
+            "literal_count": 10
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 897,
+            "execution_sha256": "64cafffdcc609a4e7d09db2465808e58dd3a60a0ab68e698b266f90e29de319c",
+            "literal_positions_sha256": "51e4a328b370ebc3b866f087ae2d9c83fd59695373f67ea7af5d0d6ce6dac5c7",
+            "literal_count": 9
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/FluidSpringBlockEntity.java": {
+        "before_raw_sha256": "ff9095290e689821fafbcdc3b673e752a4ad6baff163a62767b21c234a190fe0",
+        "after_raw_sha256": "c708eefa0759ffd1991c7ec558553a749b744d95489f1091a175048a6148aaab",
+        "before_lines": 207,
+        "after_lines": 245,
+        "comment_corrections": [
+          [
+            "GT6's fluids per spring kind: oil 6000, gas 3000, geothermal water 500, lava 1000.",
+            "Default legacy roll bound; fixed variants use the interval in their catalog definition."
+          ],
+          [
+            "GT6 {@code mFluid} — the fluid this spring pushes up, as a stack of its stored amount.",
+            "Metadata view for tools: output fluid and nominal roll bound, not a drainable inventory."
+          ],
+          [
+            "/**\n * GT6's fluid spring ({@code MultiTileEntityFluidSpring}).\n *\n * <p>GT6's spring sits at bedrock carrying one fluid and 6000 mB of it (oil), 3000 (gas) or 500\n * (geothermal water). It activates as soon as the block above it is free and then — with a\n * {@code 1/amount} chance per tick — pushes that fluid up: if the block above already holds the same\n * fluid it raises its level, otherwise it places a fresh source block. The port keeps that: the spring\n * is a {@link com.gregtech.gregtech.block.FluidSpringBlock} with this block entity, and the fluid it\n * emits is the world block the port registers for the spring fluids.\n */",
+            "/**\n * Fixed spring variants take their fluid and roll interval from the registry definition.\n * Legacy carriers keep an explicit output and interval. Server ticks activate on replaceable\n * headspace, then roll before overwriting the block directly above; the original global\n * startup cadence, finite accumulation and horizontal source growth are separate contracts.\n */"
+          ],
+          [
+            "GT6's {@code onTick2}: activate when the space above frees up, then emit at {@code 1/amount}.",
+            "Server activation and randomized output for this port's fixed and legacy springs."
+          ],
+          [
+            "GT6 waits for a free spot above and activates then.",
+            "This port waits for air or replaceable headspace before setting active."
+          ],
+          [
+            "One GT6 production step ({@code if (tProduce)}): the block above is filled with the spring's\n     * fluid. GT6 raises the level when the same fluid is already there and places a source otherwise.",
+            "Replaces only the block directly above with the output block's default state.\n     * Rewriting an existing source does not implement the original horizontal source growth\n     * or finite-fluid accumulation."
+          ],
+          [
+            "The world block shares the fluid's registry path (registered by Loader_Fluids).",
+            "This lookup assumes matching fluid/block keys; it does not query a fluid-owned world block."
+          ],
+          [
+            "Test/tools helper: how many ticks GT6's roll needs on average for this spring.",
+            "Nominal roll interval after positivity clamping; not the first-output delay."
+          ],
+          [
+            "A deterministic roll for tests: GT6 uses {@code rng(amount) == 0}.",
+            "Uses the supplied RNG and the port's clamped roll interval."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1385,
+            "execution_sha256": "eaf470c80fa97b46129d999562b1ae1fdf1c49c50bc53bd7ed2522bf6cf1330c",
+            "literal_positions_sha256": "7d2ba9c3c72938c55d55f1492a982b1bc2323c11126fb05268e191e7a34e8514",
+            "literal_count": 17
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1436,
+            "execution_sha256": "09a3c28a5a088a67780a38454e002b96c8e52f91f5013579a028e4998b29aea6",
+            "literal_positions_sha256": "92a2730a0ddc82b3b3e1d23c87868990eaf42f2c357c474c4983bb4dd2ce7941",
+            "literal_count": 17
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/FluidSpringClient.java": {
+        "before_raw_sha256": "444e337926aa8fa483cf08ffbc7a530e4199cf0ba8c58f6ae74f68535a6e7e36",
+        "after_raw_sha256": "a3b382da4c7d054012f82cc312823b6943a89e72adfae46809bff8bf576954af",
+        "before_lines": 68,
+        "after_lines": 75,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 776,
+            "execution_sha256": "916900504bd6ad6d7b71e4180504acc3d43d1d5b4080fbc4ce78cf9ec53a128d",
+            "literal_positions_sha256": "71f69ca4962c33d10d3ba52c1f401e6065d8cea9a925f1b9a262ff78452fe83f",
+            "literal_count": 7
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 802,
+            "execution_sha256": "796e65768e95499a637009f7808442dd4ca098b41b1cfefba712a1bcbfa80a24",
+            "literal_positions_sha256": "1b873bfd59c3ed98548c1634329f7996a70049075cfc4213e876c3325b598c11",
+            "literal_count": 5
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/FluidSpringBakedModel.java": {
+        "before_raw_sha256": "d78cb4ca14d3ad1fe342dae6692973f99e7845473108a20bac35c02563d0ab10",
+        "after_raw_sha256": "17ce664d0553431db2ba1eef6d79231ced1be3eb62ff1e51d137afc9d5c3c59d",
+        "before_lines": 78,
+        "after_lines": 125,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 770,
+            "execution_sha256": "ac3929b4fd8fa8cf7769521ab1ae3abe1606296b7f3f3cee396880b474306836",
+            "literal_positions_sha256": "6232ccb01b4ac2fa825fd1deecd6101bfd9607fe3922f77e7f27c46c904d97c6",
+            "literal_count": 2
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 782,
+            "execution_sha256": "c746836a2fad3cbc7900e1b29964c6187850f4a79be4b5269660058f16443c08",
+            "literal_positions_sha256": "bd28f2f3860d01b40ab474ae6c5ee90c1348385e1a4ab069b450f8ff100b634e",
+            "literal_count": 2
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/worldgen/GTFluidSpringsFeature.java": {
+        "before_raw_sha256": "c776d6d0756c9118f6aee6bb90f3397d2da5bd625282b6344e76ec269095a7f7",
+        "after_raw_sha256": "f86a8f280ec327d0b1e19be3b1cd1feb0fb6c1cbbec02b657932eb5055e040bc",
+        "before_lines": 192,
+        "after_lines": 204,
+        "comment_corrections": [
+          [
+            "/**\n * Port of GT6's {@code WorldgenFluidSpring} ({@code Loader_Worldgen:782-797}): the oil, gas,\n * geothermal water and lava springs at bedrock.\n *\n * <p>GT6 rolls one spring kind per chunk ({@code 1/probability}: oil 1/400, gas 1/200, geothermal\n * water 1/100, lava 1/200), refuses to run in chunks that carry bedrock ore, and then carves its\n * crater: the bottom seven layers become a shrinking square of the spring's block (oil, gas, water or\n * lava) with a stone/deepslate/deepslate-ish filler above it, and one spring tile entity is placed per\n * bedrock column with a 1/16 chance. Finally it plants up to six patches of indicator grass on the\n * surface so a player can prospect for the field.\n *\n * <p>The port keeps the whole algorithm; the dedicated grass-soil blocks stand in for GT6's grass\n * variants (yellow for gas and lava, brown for oil, plain green for geothermal water — GT6's\n * {@code mIndicatorType} 1/2/3).\n */",
+            "/**\n * Modern overworld feature using the shared seven-kind spring catalog and crater writer.\n * One kind is selected before its probability roll. The separate indicator helper is not\n * invoked by placement; original dispatch, mutual exclusion and indicator contracts need\n * independent verification rather than a claim that the whole algorithm is preserved.\n */"
+          ],
+          [
+            "GT6 checks the chunk centre column for bedrock (and skips chunks with bedrock ore).",
+            "Checks the modern bottom-centre block; original field mutual exclusion is not handled here."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1336,
+            "execution_sha256": "cf16f0ff774eb6c305d166d6bdd11b7270886806df56f1afdb29e1189c673c93",
+            "literal_positions_sha256": "2f5bcd4926bc1ad8a7e7d19bc476991697af1d4217f894248987bdebb78103c3",
+            "literal_count": 31
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1338,
+            "execution_sha256": "7510166e0125cd79596397e3dbcae8b1845035e36a20ea690f113232eaf1d8ea",
+            "literal_positions_sha256": "b41c1a642e82d8e78aafb90aa38a8371f0fcdcf0f1e047bcafc1a97f6ca863db",
+            "literal_count": 31
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    345,
+    346,
+    347,
+    348,
+    349,
+    350,
+    351,
+    352
+  ],
+  "formal_findings_extended": [
+    139
+  ],
+  "startup_gate_source_projection": [
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 0,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 0,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 1,
+      "current_roll_input": 0,
+      "original_active_after": true,
+      "current_active_after": true,
+      "original_output_attempt": true,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 1,
+      "current_roll_input": 1,
+      "original_active_after": true,
+      "current_active_after": true,
+      "original_output_attempt": true,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 2,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 2,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 3,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 3,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 4,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 4,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 5,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 5,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 6,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 6,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 7,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 7,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 8,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 8,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 9,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 9,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 10,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 10,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 11,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 11,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 12,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 12,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 13,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 13,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 14,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 14,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 15,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 15,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 16,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 16,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 17,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 17,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 18,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 18,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 19,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": true
+    },
+    {
+      "headspace": "air",
+      "global_tick_mod_20": 19,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": true,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 0,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 0,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 1,
+      "current_roll_input": 0,
+      "original_active_after": true,
+      "current_active_after": false,
+      "original_output_attempt": true,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 1,
+      "current_roll_input": 1,
+      "original_active_after": true,
+      "current_active_after": false,
+      "original_output_attempt": true,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 2,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 2,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 3,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 3,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 4,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 4,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 5,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 5,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 6,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 6,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 7,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 7,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 8,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 8,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 9,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 9,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 10,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 10,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 11,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 11,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 12,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 12,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 13,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 13,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 14,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 14,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 15,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 15,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 16,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 16,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 17,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 17,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 18,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 18,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 19,
+      "current_roll_input": 0,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    },
+    {
+      "headspace": "solid",
+      "global_tick_mod_20": 19,
+      "current_roll_input": 1,
+      "original_active_after": false,
+      "current_active_after": false,
+      "original_output_attempt": false,
+      "current_output_attempt": false
+    }
+  ],
+  "legacy_policy_notes": [
+    "Recognized legacy fluid IDs normalize to the fixed registry rate, e.g. lava 500 becomes the 1000 variant.",
+    "Original nonpositive amount resets to 600; current positivity helper returns 1.",
+    "Original unconfigured spring defaults to vanilla water/1; current legacy carrier has empty fluid and no output until configured."
+  ],
+  "worldgen_followup": [
+    "Dispatch order and per-kind probability versus one-of-seven selection.",
+    "Original ore-field mutual exclusion versus current bottom-centre test.",
+    "Indicator helper not called and no native Nether feature: recorded as ALIGN-351/352; remaining dispatch/ore-exclusion audit continues.",
+    "Modern min-height adaptation is intentional; do not blindly restore Y=0."
+  ],
+  "positive_scope": [
+    "Seven fixed variants share both platform registrations and a block entity type.",
+    "Eight blockstate/item model paths resolve to the actual layered spring model, not the unused decoration prototype.",
+    "Primary fluid texture, tint, model data and active save state exist.",
+    "No fluid tank capability was found in the original spring; world emission is the source contract."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "No Gradle, Java compilation, GameTest, native Minecraft API execution, game, render capture, build or push.",
+    "The 80 startup rows are a finite source-condition projection, not gameplay or RNG statistics.",
+    "Existing test source exercises direct emit, not the actual startup tick contract.",
+    "External fluid/block key mismatch is an API-contract witness, not a tested installed mod.",
+    "Worldgen dispatch, complete save restart and external integrations remain in the full audit queue."
+  ],
+  "root_revalidation": {
+    "original_and_current_input_hashes": "all match",
+    "protected_materials": "both unchanged",
+    "eight_item_model_parents": "all use active layered iconset model",
+    "ledger": "352 contiguous unique numbered rows, not unresolved count",
+    "code_proof": "13 full views with raw literal positions and directives retained; no code tokens changed",
+    "topic_links": "all resolve",
+    "indicator_search": "Production name discovery found only the spring helper declaration; unrelated geology record field/comments are not calls. This does not rule out external reflection.",
+    "runtime": "not run"
+  }
+}

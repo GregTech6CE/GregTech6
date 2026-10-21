@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百零五批：FluidSpringRules、GTFluidSprings、FluidSpringBlock／Entity、FluidSpringClient／BakedModel及GTFluidSpringsFeature七源742→908行；展开循环、变体工厂、旧状态、服务器门控与模型分派，保留原已清楚的数组排版。13完整代码流、字面量位置／其余注释／条件保持，明确amount是roll边界及未移植的原分支，未改玩法，见[液体泉](FLUID_SPRING_AUDIT.md)。下文引用筛查为第一百零四批快照，不能当新增本批后的完整覆盖率；大职责、重复方法和全系统队列继续。
+
 2026-10-22 第一百零四批：花盆、灯笼、共享装饰工厂、RegisteredBlock及Neo装饰入口五源174→254行，私有reg和局部v／b明确命名；另纠正GTToolBlocks采集袋来源ID。六源11完整代码／字面量／其余注释／指令证明保持，未改玩法，见[专题](PLANT_LANTERN_AUDIT.md)。
 
 本批重建当前维护输入：core API 62、core主代码498、共享API 14、共享主代码1048、Forge专有73、Neo专有130，共1825份Java，活动路径无loader／loaders／a／b／c目录。下文2026-10-20的1790份及密度数据保留历史边界。新增[回执引用筛查](../../tools/integration/inventory_audit_references.py)及[结果](verification/source-reference-screen-20261022.json)：98份audit回执匹配292原文件摘要，另123注册class无匹配引用；不表示已核全文件或未移植123项，不能换算完成率。支持嵌套路径键／历史摘要，避免误列已引用过的反应堆等入口。
