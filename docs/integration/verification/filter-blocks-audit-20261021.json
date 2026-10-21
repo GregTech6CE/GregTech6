@@ -1,0 +1,1218 @@
+{
+  "batch": 83,
+  "date": "2026-10-21",
+  "baseline": "d711cb22069c69a14254278155bdfa64bffc0f8a",
+  "new_records": [
+    280,
+    281
+  ],
+  "extended_records": [
+    277
+  ],
+  "scope": "Four actual filter blocks, ghost editing gestures and prefix representative display, existing routes/modes/persistence and inherited no-cover strong conduction.",
+  "counts": {
+    "original_sources": 24,
+    "current_sources": 31,
+    "shared_platform_views": 42,
+    "readability_files": 4,
+    "readability_execution_views": 8
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityFilter.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityFilter.java",
+      "sha256": "e99dc157de0d39fc0ed58fdc9e6acf4bc2abd65cf75e50d0c8e60346cbc4d490",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "sha256": "4595bd7187cdcd907d37058658df7bd33f86aef21f9dfbcdd5ecd0578a4a7797",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "relative": "gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "relative": "gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/OM.java",
+      "relative": "gregapi/util/OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/IMultiTileEntity.java",
+      "relative": "gregapi/block/multitileentity/IMultiTileEntity.java",
+      "sha256": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "relative": "gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/Slot_Holo.java",
+      "relative": "gregapi/gui/Slot_Holo.java",
+      "sha256": "a77c2354c9cb8aad24b63941eb4b8c835edb2e2460b24d72e96730aeff2ad0b5",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/gui/Slot_Base.java",
+      "relative": "gregapi/gui/Slot_Base.java",
+      "sha256": "6b9aef5b84287570587518a7383de81d8ed1ed543a9e49c700755beb8d0f426f",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java",
+      "sha256": "000ac0a3252d71f22ae943466e48f26fc43888e32303ebeccdcbc6557500a8bf",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "sha256": "0345bfd215de4a25f110dd877689038169df0147de64f37a71972fa8c52de6eb",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "sha256": "e974a33bfcbdeb69d61dbb677d8c8311830703fa5e2bfea1555b1472854e3195",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "sha256": "94b750d34ff68cba0449511c1cf3e39cbcc4a6b3c52de448db44e507e26c03d7",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "sha256": "3a73244389cfe3ddef9a93eca96d72c0cf185d87cd681543f53c1e2c5ce3be40",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "sha256": "5a110a43cd87ebabb067a40942d9be6e02a86064b7a2a337cca0a14b2c0c3cdc",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "sha256": "300a0adb2b58e7b7ea6baf70ba24ded8b8d1248afbd2c2120ac48abc828c74f1",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "sha256": "e2dc6e089945bf77cb443f3409b8125f0b483e3e6f3674f82d5ae96ec9c09738",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "sha256": "d3bd4846420e9142b3f5f80d6ee4c3565bf8abd46b15bced3507bcb6bb3e482e",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "sha256": "2c7b01554d0900783cf90ae5610c1bca0e8a9d24385ba99f1f5a420491b9d2b1",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "sha256": "4ac2cbe64ceaf7ca8011899f170aa6de5c05e248f673f06f6226dcc27d393cc9",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "sha256": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Filter block ghost UI, ordinary/prefix matching and routing, save/drop boundaries and inherited conductor default; not whole-file/system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "forge",
+      "sha256": "fd7db0f814de72cd76a8da2cb499ccd41dd5edaa98128a5d732113ade2483bc9",
+      "tokens": 1355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f39df06ea5518dd9011ef015b62ee87c4574259c27b0e6c13a51bd672d6f364c",
+      "tokens": 1399
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "platform": "forge",
+      "sha256": "1c93f9f630c1c9f62db57391f70a7ccfc62a6bef589bf7074b2a2fe08452a820",
+      "tokens": 1242
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "platform": "neoforge",
+      "sha256": "cec54eaf20a9c0cdaadef495be23e3ab63e398d52126fd584400d13e0e348dd6",
+      "tokens": 1536
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "forge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "neoforge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "platform": "forge",
+      "sha256": "c8ab45fe0eda0b07e0e78a686510b1963ae598cd212ddadb80f32ffbc773705a",
+      "tokens": 454
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "platform": "neoforge",
+      "sha256": "7bad03e9ebceb7951aef394a07b3423212d8d98a41932c3ab7b3e479b6851104",
+      "tokens": 449
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "b1078af28147c59ecec2a33a895eb1a6c76f833365ff0ea8c6e8be5fb69cb905",
+      "tokens": 1552
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f4a54e134ad48189cf46c573def50a121b85a7aa8681713dade9cdd665025da6",
+      "tokens": 1453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "forge",
+      "sha256": "326534cdfab1174396de3eaf3ea87bff99056bec7cb0f845f8a3e16a23cabb28",
+      "tokens": 514
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "neoforge",
+      "sha256": "034b71db9c89617cb6bfa8203d806279ddf9916e53c15d9e5b23c80298680e6f",
+      "tokens": 505
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "forge",
+      "sha256": "1dbb6f015976b98c415b03e8ac082c287d1de24ece54fe4d955b7c4fdbffb8b8",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "neoforge",
+      "sha256": "1dbb6f015976b98c415b03e8ac082c287d1de24ece54fe4d955b7c4fdbffb8b8",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "forge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "neoforge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "forge",
+      "sha256": "c91934f98f9c9332870824dfabc7d169a4619dce4e8aa3ea6888006dd2f5d528",
+      "tokens": 943
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "platform": "neoforge",
+      "sha256": "55809219070bdab26eb73abc53e456642f8912e9badbfa24ba00c27ac8082bc4",
+      "tokens": 343
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "platform": "forge",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "tokens": 515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "platform": "neoforge",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "tokens": 515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "forge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "neoforge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "forge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "neoforge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "platform": "forge",
+      "sha256": "1167669815579ae22ef4bd06f3ae5ad905dec04d536dfcebb175867debefa19c",
+      "tokens": 421
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "platform": "neoforge",
+      "sha256": "9690dd5f4aa89b7070a801a74b114ec4b300d4cac51ebb41a711879552e1d40b",
+      "tokens": 697
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "platform": "forge",
+      "sha256": "38867aad6780955726681a00d823b380c043b52c4f81700701bed51191ee0add",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "platform": "neoforge",
+      "sha256": "5ec3ab33dc152397eaada3987769e2e0c7d377514c3f63b568ac92f60631e1cc",
+      "tokens": 758
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "forge",
+      "sha256": "4d233443744f2752349fae053ce58e2eb038814b77f5341a2d50054a53e53a05",
+      "tokens": 922
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "neoforge",
+      "sha256": "a8ea0fc21de2d553bb829cebe2bd51f12915b9efb387e584e65938c6ff3cb4ba",
+      "tokens": 1298
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    }
+  ],
+  "readability": {
+    "baseline": "d711cb22069c69a14254278155bdfa64bffc0f8a",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java": {
+        "before_raw_sha256": "139999518780ca091b0c57093507c0f0d1ea53480f747ce216e80631969f2704",
+        "after_raw_sha256": "e974a33bfcbdeb69d61dbb677d8c8311830703fa5e2bfea1555b1472854e3195",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "i": "templateSlot"
+            }
+          ],
+          [
+            "tag.getList(",
+            null,
+            {
+              "data": "entryData",
+              "stack": "templateStack"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Filter templates are ghosts, never stored cargo. Both insertion and extraction obey the same rule. */",
+            "/** Ghost templates select cargo; front-side capability operations bypass template selection. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1355,
+            "execution_sha256": "b02b8c51ddcb5d2e4bd72ca52fe6316c80c7d6b335a05c36f162ae97f28ff721",
+            "before_lines": 101,
+            "after_lines": 182,
+            "before_max_line": 224,
+            "after_max_line": 150
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1399,
+            "execution_sha256": "d4f54051ef9f5d862bfdd0f1e86d3f729400d2660897ddbbefc5ea8df91accfc",
+            "before_lines": 101,
+            "after_lines": 182,
+            "before_max_line": 226,
+            "after_max_line": 150
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java": {
+        "before_raw_sha256": "f06bbf3000c63d431a8762c17c56e4823133d426849da6e583acb44f0739a5a0",
+        "after_raw_sha256": "94b750d34ff68cba0449511c1cf3e39cbcc4a6b3c52de448db44e507e26c03d7",
+        "rename_scopes": [
+          [
+            "createBlockStateDefinition(",
+            "newBlockEntity(",
+            {
+              "b": "builder",
+              "ctx": "context"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1242,
+            "execution_sha256": "4f1d51e96325f1d8bee179a13903566581c71b8f01581ab57ed01d17cb0fe9fc",
+            "before_lines": 75,
+            "after_lines": 114,
+            "before_max_line": 266,
+            "after_max_line": 149
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1536,
+            "execution_sha256": "ea77e2766659fdf279fc1bee2e237544e6144d94f24718b60809f08bb9aa8188",
+            "before_lines": 79,
+            "after_lines": 136,
+            "before_max_line": 662,
+            "after_max_line": 149
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java": {
+        "before_raw_sha256": "96f59bf7d9f39d929aeaa6691965d7c8305c6db27e874dc85fbf9f3e8d559273",
+        "after_raw_sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+        "rename_scopes": [
+          [
+            "private FilterMenu(",
+            "public boolean prefixMode(",
+            {
+              "col": "column"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 820,
+            "execution_sha256": "cd1b7a5b85597f82941a02918424b32e992875b00a14925d429859b9c536fe1e",
+            "before_lines": 51,
+            "after_lines": 110,
+            "before_max_line": 310,
+            "after_max_line": 149
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 820,
+            "execution_sha256": "cd1b7a5b85597f82941a02918424b32e992875b00a14925d429859b9c536fe1e",
+            "before_lines": 51,
+            "after_lines": 110,
+            "before_max_line": 310,
+            "after_max_line": 149
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java": {
+        "before_raw_sha256": "237ec7bc62f1aae8b159247a6e28b264f9bfd6740e17b9c758659fcf7fc2aefc",
+        "after_raw_sha256": "3a73244389cfe3ddef9a93eca96d72c0cf185d87cd681543f53c1e2c5ce3be40",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "partial": "partialTick"
+            }
+          ],
+          [
+            "protected void init(",
+            "private Component modeText(",
+            {
+              "button": "clickedButton"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 454,
+            "execution_sha256": "e3aff1ddaabdcb5b229b06ef48ec29640c3471b0242b2144b433ceef68e39aac",
+            "before_lines": 29,
+            "after_lines": 52,
+            "before_max_line": 233,
+            "after_max_line": 142
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 449,
+            "execution_sha256": "7284ff7353a56f7e2bcc082843066cc525119d93c90da8a03386b875a2e53aad",
+            "before_lines": 29,
+            "after_lines": 51,
+            "before_max_line": 206,
+            "after_max_line": 142
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace and listed scoped local/parameter names, plus one source-backed explanation; no behavioral change."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "reused_receipt": {
+      "path": "docs/integration/verification/extender-signals-audit-20261021.json",
+      "sha256": "c092ee570567eb15acf642e1c7ebf415965844067831334c31880414227e5d6b",
+      "scope": "Actual Forge47.4.20/Neo21.1.243 default conductor and native signal merging from batch82; recheck saved input hashes."
+    },
+    "entries": [
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/inventory/AbstractContainerMenu.java",
+        "sha256": "1ecb13a9c33aba83666b229558278871ff28c76c477cfe96c13124ae55de232d",
+        "extracted": "work/filter-blocks-audit-20261021/neo-AbstractContainerMenu.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/EntityBlock.java",
+        "sha256": "d52913aac2d675e3b00e0204aec591d124c973cc137b480143e53a87e04633ab",
+        "extracted": "work/filter-blocks-audit-20261021/neo-EntityBlock.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.inventory.AbstractContainerMenu",
+        "output": "work/filter-blocks-audit-20261021/forge-AbstractContainerMenu.javap.txt",
+        "sha256": "6d770c1f7884196e317242d3f239ee6649d32906d10c2176150a1de5b4bf4cdc"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.EntityBlock",
+        "output": "work/filter-blocks-audit-20261021/forge-EntityBlock.javap.txt",
+        "sha256": "b94a61bf75ec4c6a75aeff447699f4942cfcfe476c565d34582f378d79a15e0a"
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source-contract analysis, no native target or world execution.",
+    "routing": {
+      "cases": 144,
+      "ordered_sha256": "cca175f6242ec124592ad85f7f7836ece7ab47fc6768ab8393efae9a740efaa3",
+      "limit": "Four filter profiles, opposite front/secondary settings, six queries; not all wrench/secondary combinations."
+    },
+    "blacklist_found": [
+      [
+        false,
+        false,
+        false
+      ],
+      [
+        false,
+        true,
+        true
+      ],
+      [
+        true,
+        false,
+        true
+      ],
+      [
+        true,
+        true,
+        false
+      ]
+    ],
+    "quick_copy": [
+      {
+        "platform": "forge",
+        "kind": "items",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "forge",
+        "kind": "items",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "forge",
+        "kind": "fluids",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "forge",
+        "kind": "fluids",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "forge",
+        "kind": "items_fluids",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "forge",
+        "kind": "items_fluids",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "fluids",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "fluids",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items_fluids",
+        "blacklist": false,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items_fluids",
+        "blacklist": true,
+        "old_copies_template": true,
+        "current_copies_template": false,
+        "source_stack_consumed": false
+      }
+    ],
+    "right_click": [
+      {
+        "condition": "Empty cursor, tagged ordinary item ghost, right click",
+        "original": "Retain item and clear NBT",
+        "current": "Clear ghost"
+      },
+      {
+        "condition": "Empty cursor, untagged ordinary item ghost, right click",
+        "original": "Retain item and set metadata wildcard",
+        "current": "Clear ghost"
+      },
+      {
+        "condition": "Nonempty cursor, valid ordinary item, right click",
+        "original": "Copy one item into ghost",
+        "current": "Clear ghost"
+      },
+      {
+        "condition": "Empty cursor, fluid display ghost, right click",
+        "original": "Keep fluid display",
+        "current": "Clear ghost"
+      }
+    ],
+    "prefix_display_cycle": {
+      "phases": [
+        [
+          1,
+          true,
+          false
+        ],
+        [
+          2,
+          false,
+          false
+        ],
+        [
+          11,
+          true,
+          false
+        ],
+        [
+          12,
+          false,
+          false
+        ]
+      ],
+      "condition": "Selected prefix has registered entries; original tick phase1 schedules a random family representative, current no template cycle ticker. Random selection may repeat the same item.",
+      "limit": "Callback/display consumer evidence only; no measured screen animation or prefix-registry initialization."
+    },
+    "conduction_extension": {
+      "cases": 240,
+      "ordered_sha256": "0c64db961b9d5aed7bce6f79e504edab0c1854187e7711d1be8101372e1a0405",
+      "example": [
+        "forge",
+        30256,
+        0,
+        1,
+        0,
+        15
+      ],
+      "limit": "Four no-cover full filter cubes with one oriented powered lever and another output face. Extends277 using batch82 native artifacts; original side is the explicit weak-power opt-out contract."
+    },
+    "rejected_material_fluid_shortcut": "Original OreDictMaterial.fluid(U,true) dispatches at DEF_ENV_TEMP; it is not synonymous with liquid/molten. Do not claim a copper ingot necessarily selects molten copper or restore FL.Error fallback as a correct feature."
+  },
+  "positive_routes": [
+    "Four registered types have shared native capability entry and real menu/screen registration on both platforms.",
+    "54 ghost templates or one prefix selector, matching ordinary empty whitelist/blacklist, front bypass, and unconditionally allowed valid fluid in prefix mode agree with source paths.",
+    "Current soft hammer clears templates and resets whitelist; screwdriver/button toggles mode. Ghost slots are protected from pickup/drag/swap extraction and should remain protected.",
+    "Native save/load and getDrops capture templates/mode; CoverDrops machine-removal branch excludes FilterBlockEntity. No actual re-placement/restart is accepted by that source path.",
+    "Filter has no own getCover, so actual fallback uses the selected side and wraps native operations; do not copy extender275/276 onto this host."
+  ],
+  "remaining": [
+    "Actual old metadata wildcard and modern flattened identities/components mapping, alternate prefix selection/membership, material-to-fluid fallback at ambient temperature, tool fee/magnifier feedback, full secondary/wrench/placement matrix, third-party inventories, actual transfers/screens/drops/restart and full project queue."
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, screen render, save fixture, build or push; two javap views inspect saved mapped upstream classes only.",
+    "Readability changes preserve all eight platform execution and literal streams; template/action gameplay differences are recorded and not fixed.",
+    "Full original-alignment and readability goal remains active."
+  ],
+  "previous_goal_turn": "Progress: local commit d711cb220 standardized three signal views and recorded277/278/279 with actual native signal consumers.",
+  "root_validation": {
+    "named_source_hashes": 55,
+    "shared_platform_views": 42,
+    "readability_files": 4,
+    "complete_execution_views": 8,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 1,
+    "protected_material_hashes": 2,
+    "reused_native_artifacts": 3,
+    "reused_entries": 10,
+    "reused_readonly_javap_outputs": 11,
+    "additional_source_entries": 2,
+    "additional_readonly_javap_outputs": 2,
+    "default_route_cases": 144,
+    "quick_copy_conditions": 12,
+    "right_click_examples": 4,
+    "cycle_phase_examples": 4,
+    "additional_conduction_conditions": 240,
+    "fallback_host_distinction_checked": true,
+    "material_fluid_shortcut_rejected": true,
+    "contiguous_ledger_records": 281,
+    "documents_checked": 8,
+    "added_local_links_checked": 15,
+    "limit": "Read-only files and finite source conditions; no target Java compilation/initialization, Gradle, tests, game, screen, transfer/drop/restart, build or push."
+  }
+}

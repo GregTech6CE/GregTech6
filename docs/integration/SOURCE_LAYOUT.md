@@ -24,6 +24,8 @@
 
 原生红石消费者：SourceExtenderBlock的直接返回值还会进入SignalGetter强信号合并；内部ExtenderBlockEntity.comparator(面)与原生ComparatorBlock→getAnalogOutputSignal→comparator(null)是不同入口。共享CoverSignalMixin在BlockState返回值后包装输出；Jade与客户端覆盖板渲染分别在ExtenderJadeProvider／ExtenderCoverRenderer，见[信号专题](EXTENDER_SIGNALS_AUDIT.md)。
 
+四过滤器入口在FilterBlock／FilterBlockEntity；FilterPolicy只给模板数量／真假策略，FilterRules适配原生物品与前缀，FilterMenu持有幽灵槽而FilterScreen仅绘制。该宿主没有getCover覆盖，fallback按面资格与Extender不同；GUI槽的复制／右键与模板实际匹配需分开核，见[过滤器方块](FILTER_BLOCKS_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
