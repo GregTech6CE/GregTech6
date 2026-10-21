@@ -8,6 +8,8 @@
 
 物流核心17997：core的`LogisticsCoreLayout`给结构／计数经济，`LogisticsCorePowerRules`委托共享软容量计划，`LogisticsRoutingRules`给路由顺序；共享BE负责世界验证、调度／显示／保存，`LogisticsRoutingPass`连接原生物品／流体端点。Forge实际注册在版本初始化的GTLasers，Neo在GTMultiblocks，入口差异不代表两套业务。见[结构与状态专题](LOGISTICS_CORE_STATE_AUDIT.md)；数量／过滤／返还已继续[实际搬运核查](LOGISTICS_TRANSFER_AUDIT.md)，调度和生命周期待续。
 
+多方块储罐25阀的数据在core `TankValveParameters`，共享 `TankValveSpec`只适配原生wall／材料查找，`TankControllerBlock`负责交互／物品保存，`MultiblockTankControllerBlockEntity`负责结构／内容／能力与tick；`StructureGrid.hollowTank`给纯遍历，`HollowTankStructure`接原生谓词。最终掉落还经过CoverDropMixin／CoverDrops，不能只看块类，见[专题](MULTIBLOCK_TANK_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

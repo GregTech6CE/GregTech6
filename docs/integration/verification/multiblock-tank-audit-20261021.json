@@ -1,0 +1,2097 @@
+{
+  "batch": 75,
+  "date": "2026-10-21",
+  "baseline": "64a3007c34ca9c41d9aff242e50a50e6419e2390",
+  "scope": "All 25 valve catalog literals, generic main-valve access, structure query and final item contents lifecycle; readability only in production.",
+  "new_records": [
+    262,
+    263
+  ],
+  "extended_records": [
+    36,
+    232,
+    233
+  ],
+  "counts": {
+    "original_sources": 26,
+    "current_sources": 46,
+    "shared_platform_views": 68,
+    "readability_files": 5,
+    "readability_execution_views": 10
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Wood.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Wood.java",
+      "sha256": "2ba5c052e8b4369a8fb9cb2fbde4b870d63f2890d24be25fce8d6129264c9a7e",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Metal.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Metal.java",
+      "sha256": "9197e6f5b33499c51172471e10d868a76a548e4fc1f8639caaf592b2c9bba269",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5Metal.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5Metal.java",
+      "sha256": "2e8c46fd5f00fb565f425514065fb2d20545542c686b173570cf02c3875ede21",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "relative": "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "relative": "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "relative": "gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/ANY.java",
+      "relative": "gregapi/data/ANY.java",
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityFunnelAccessible.java",
+      "relative": "gregapi/tileentity/ITileEntityFunnelAccessible.java",
+      "sha256": "eeea2367853c360f9dd64b5596a913696fc090a5b285a069412b3c3bbe647729",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/ITileEntityTapAccessible.java",
+      "relative": "gregapi/tileentity/ITileEntityTapAccessible.java",
+      "sha256": "1f7126dc4af0adfd7c122b3f2edbbe4614eb33bcc0badff55f48a92f88fbf850",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "sha256": "ba3156b9f33d5a3e8d4970b3668e6fc1a9cff7159baf09fc9976e706f59ee6ac",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/PartBindings.java",
+      "sha256": "e11743331fef31f59fc0b5063280d4cd45fc288b2c1f0153a3c4580ee935110e",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "sha256": "f5fd88157da470bc4852c83db2bd741b70380693622324cbff2919b04bf23522",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "sha256": "32bd2ca495a1baea144f28e5f8b2246a6c6a923ea3526650ba2e708e61779fb8",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "sha256": "186f4b144bf5a0d2a9812e585524b55754a02a56216291176e43e09db0fbadf5",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "sha256": "f794ff8e4d497f224b907acdd0d67adc9ded6b9a9276f5285174c1f6ec834b25",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "8e468914162ddccb0f55b467c1670c0cb6076c79fb89f002dcaa2bedb7b50c9d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "sha256": "e4b709453076802dd28f9848558700fe45a354da446de03f272f95f461b13f64",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+      "sha256": "fb5ce2327a58dabd22b41d7757e9a3b0f7ca943a44def670d23806fac8831024",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "sha256": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "sha256": "814f4c96789f6088b1b2f8f4093f87008c3d00530ce78cab72ec220db6ed238c",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockLayout.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockLayout.java",
+      "sha256": "b1d323c75160b9d9dbdccfcba932fd86f817642fd1b5e749522c1448c95a0979",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "sha256": "f8e82a4071663fc21f95b16685eb51662a32c0deffd38859773bfb728282b4ac",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "sha256": "5b50a6700e7e36c1a49526fa0abef59e9f689a43763326f72ce6f8e79f4dbe92",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "sha256": "0d4aa3fcb4813f7f0bfdc7adf115c872411dc771daa184f46458a4f5f717ffb6",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "sha256": "6edfc16394dd94bf904b46b8331bb7a20be8091728dfcfac7645979dc8c49df4",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "sha256": "764485a90f5ae072cd4974a304518cb7e34c22f6b5d9186735194968c79799c4",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "sha256": "a23c3cc9c22797eb7c53d19a94078c9399d78cdde647e9670b127ec2c2944f4d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "sha256": "c7fa70dc599accfd12f3c8f50383d968ba004b252e0f628f781b7605e7a7ac04",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "sha256": "cf949ba828cb0ceb5343d3e99946f3f668412fce8a3094fe47df2d0ad39b2512",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "sha256": "3506134a849473910e516e68f81c8113025ad14a3f0900763d8ebf3a3a57d7d1",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/machine/BasicMachineRegistries.java",
+      "sha256": "5167797ec525e5c2469af55970e3ae8828f0df344852ce8c091d9ac3c18abc1c",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "relative": "gradle/platform-neoforge.gradle",
+      "sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "scope": "Named valve catalog, structure/access, inherited item serialization and final native drop/placement/tool consumers. Not whole-file or hazard acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "c748ea5f61f4d48c1ca325d50126dd4745ef790115ee0ebfb5300f719431a11c",
+      "tokens": 2865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "9dff02e5b759e297416a553b79c31dc9e1dec9ddcfba118308c155f79c4c905c",
+      "tokens": 2759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "forge",
+      "sha256": "252f22b6bc3e26531dd8a3c1a184e10933c747b08c6670b65e8ddeb477a41ddb",
+      "tokens": 1218
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "fb46017f71c3e952477bacf28b5e441a72ca20394451cfcf76b7b16df8a54fdf",
+      "tokens": 1586
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "platform": "forge",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "tokens": 313
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "platform": "neoforge",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "tokens": 313
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "platform": "forge",
+      "sha256": "8e94ccf36e873c166969b4a63dc21762a9583331fc7dd6003b075c419308bfad",
+      "tokens": 177
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+      "platform": "neoforge",
+      "sha256": "9dd73377fc81f8cb3507bfdf4fb08a0010a4ea4ada3ba6d0acabba588e6d8c8b",
+      "tokens": 190
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+      "platform": "forge",
+      "sha256": "fb5ce2327a58dabd22b41d7757e9a3b0f7ca943a44def670d23806fac8831024",
+      "tokens": 206
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+      "platform": "neoforge",
+      "sha256": "fb5ce2327a58dabd22b41d7757e9a3b0f7ca943a44def670d23806fac8831024",
+      "tokens": 206
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "forge",
+      "sha256": "d2471a24f9e0dfe11cf97d79c73032c65eaa116d4c3884ce58832cdbfa53109b",
+      "tokens": 2699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8f0f169e68ed10ea3e0541bd2d9eec2c7f5e3af9a9f86df0d7e75eb296745d6e",
+      "tokens": 2583
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "forge",
+      "sha256": "7e2845689b3649198a83686a41a276fca769c09a398c434387e2cf4dcfb86acd",
+      "tokens": 335
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockPortOwner.java",
+      "platform": "neoforge",
+      "sha256": "dfe256632e7d85d09ee4dd18a6430538d97f96297a8c01824ce5f78be75ed586",
+      "tokens": 339
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockLayout.java",
+      "platform": "forge",
+      "sha256": "4b6204407fb2e62fdfdd1714240d412c3b308cb8b239884b4e89be54a95dca70",
+      "tokens": 400
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockLayout.java",
+      "platform": "neoforge",
+      "sha256": "4b6204407fb2e62fdfdd1714240d412c3b308cb8b239884b4e89be54a95dca70",
+      "tokens": 400
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "platform": "forge",
+      "sha256": "0a64c108fcc2db90eb551e86690a4612526e63c2b5eba862f16e943836d746e7",
+      "tokens": 74
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "platform": "neoforge",
+      "sha256": "0a64c108fcc2db90eb551e86690a4612526e63c2b5eba862f16e943836d746e7",
+      "tokens": 74
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "forge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "neoforge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "forge",
+      "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+      "tokens": 1504
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "neoforge",
+      "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+      "tokens": 1527
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "forge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "neoforge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "platform": "forge",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "tokens": 462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorThermometer.java",
+      "platform": "neoforge",
+      "sha256": "fe3232c9602cd2c1bc2ed4b8097ab74c52660b2b5fcf76bf971ba1253acbfdae",
+      "tokens": 462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "forge",
+      "sha256": "beaddd1655acb58f0fd38a23e7587bdb3ba88e713796b6ec1f989a3647a6ab58",
+      "tokens": 1522
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "neoforge",
+      "sha256": "353248cbb43f1c11a9fb1a3680e7dff9d693fdb8121f40e38fce72c14a652be4",
+      "tokens": 1529
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "forge",
+      "sha256": "cf7ea64d569c6ae4e18a277c220ca979b9c9aa6df0e981d6725e1574f6d62784",
+      "tokens": 3334
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "neoforge",
+      "sha256": "6adb2e1e3aa958e2859f09f68e809114564e32a93b48028e67e58cbb39f08870",
+      "tokens": 3330
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "forge",
+      "sha256": "bc3e26ff2a5ab0f97cbda4cc390db50a24965ed400da10415f2a32c2b813aea6",
+      "tokens": 1748
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "neoforge",
+      "sha256": "0e1fb06ebdc38f72433f072451a4a371b4e22be6273bba95601fac151ae9f917",
+      "tokens": 1730
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "platform": "forge",
+      "sha256": "05758696ea2b6dffe5f1d5913f8be1d42b6a7286e69aa630c966507698f7b189",
+      "tokens": 591
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockTankTooltips.java",
+      "platform": "neoforge",
+      "sha256": "15c8f67657d3ad14f4100cab6e61f305dbf3037a2f4f5f9980e1a8c368ba3f6a",
+      "tokens": 631
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "platform": "forge",
+      "sha256": "5794961542d629e472be472c736ba4095d00b67f524c2a0346a618c4c0d185ac",
+      "tokens": 1103
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/MultiblockJadeProvider.java",
+      "platform": "neoforge",
+      "sha256": "a5e4ba751e520078a5a15350c8424c54cb84288459cedba17b5ce18a95ebeb97",
+      "tokens": 1144
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "forge",
+      "sha256": "1e56643d56f1b97298e921ad0208a383f5d71a912e13bf561a39e12c98136542",
+      "tokens": 854
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "neoforge",
+      "sha256": "3ca8f35fe63fb6c3aa5d6aebbe1fc8001d4400a8daa9358c8174b890ce6c4432",
+      "tokens": 856
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "platform": "forge",
+      "sha256": "0a2b5d66f101c92a0f370ed25be2a79d100831338e7ce57dbb31f07ee0ed5488",
+      "tokens": 811
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "platform": "neoforge",
+      "sha256": "44773c44f1aac9256cc096dcdc98379757d5269cba51f3b2c690bd6579275821",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "forge",
+      "sha256": "c6518c4b280e8572a840c3a244a2e616a2b0cab78a50c17a65dc9a45694639c9",
+      "tokens": 948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "neoforge",
+      "sha256": "cfdf1a224d8701d6778b4e214609745dcb6670fd72a1bdb2c69902a7a07bb4d4",
+      "tokens": 973
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/Block.class",
+        "sha256": "02e5ba8d458ab32234a2d8d73de3554dc0ffbbd4ee9e3d0ad41ef45a69f6f8de",
+        "bytes": 47015
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/level/ServerPlayerGameMode.class",
+        "sha256": "d631e861cfb7c1ad9655ab70f4a08fcf1c8c167e52f10f5fa8d57e6dd4f6c0c9",
+        "bytes": 19221
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+        "sha256": "ec49ba5e67c5272060397ed4fccf512ab7e2cf965da8295db850321540ebaa70",
+        "bytes": 34695
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "sha256": "2b3e1defc87df357543458f44516b32b7519bb42746690fc24cee8ba6db4defc",
+        "bytes": 19126
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/Block.java",
+        "sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+        "bytes": 26236,
+        "extracted": "work/multiblock-tank-audit-20261021/neo-Block.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/server/level/ServerPlayerGameMode.java",
+        "sha256": "52b777c8d9cff08187b3681091fa500801c125dc4fc2a5876693afe38d2a514d",
+        "bytes": 20348,
+        "extracted": "work/multiblock-tank-audit-20261021/neo-ServerPlayerGameMode.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+        "sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+        "bytes": 57256,
+        "extracted": "work/multiblock-tank-audit-20261021/neo-BlockBehaviour.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/BlockItem.java",
+        "sha256": "f26f291ad73176d372d7916d05eb396358f41d08dbffcca02f1d425972b5c7ea",
+        "bytes": 10867,
+        "extracted": "work/multiblock-tank-audit-20261021/neo-BlockItem.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.level.block.Block",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/Block.class",
+        "output": "work/multiblock-tank-audit-20261021/forge-Block.javap.txt",
+        "sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.server.level.ServerPlayerGameMode",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/server/level/ServerPlayerGameMode.class",
+        "output": "work/multiblock-tank-audit-20261021/forge-ServerPlayerGameMode.javap.txt",
+        "sha256": "2228e3084caee4989f5a47bffec7db9cabb86ed1e70819fd2dbe3689f1b228cf",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase.class",
+        "output": "work/multiblock-tank-audit-20261021/forge-BlockBehaviour$BlockStateBase.javap.txt",
+        "sha256": "b15972268a1fc92e4027b40d65540ec687d77c9c3d41623cc8ee44c8aae4dc57",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.world.item.BlockItem",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "output": "work/multiblock-tank-audit-20261021/forge-BlockItem.javap.txt",
+        "sha256": "1560c6f16bac60a295c59f29b2f4b64ec6207fc62cae8816edf147e5fa464fec",
+        "kind": "Read-only javap; no compilation or target initialization."
+      }
+    ]
+  },
+  "catalog": {
+    "rows": [
+      {
+        "definition": {
+          "id": 17001,
+          "size": 3,
+          "wall": 18001,
+          "capacity": 432000,
+          "material": "WoodTreated",
+          "proof_flags": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "simple_only": true,
+          "hardness": 5.0
+        },
+        "runtime_registry_path": "wood_tank_main_valve",
+        "original_line": 1195,
+        "original_row_sha256": "3064dc6d28c50ebf52c651364e48b3f109d08d23ffe7d93bac6aeba42ea11fe4",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.WoodTreated",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17002,
+          "size": 3,
+          "wall": 18002,
+          "capacity": 1728000,
+          "material": "StainlessSteel",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "small_stainless_steel_tank_main_valve",
+        "original_line": 1196,
+        "original_row_sha256": "51c6f9ee9d4864d623b0dfe76755e3c1a0c7320bedb9ed1e0eb1cb835ec8032e",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.StainlessSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17003,
+          "size": 3,
+          "wall": 18003,
+          "capacity": 6912000,
+          "material": "TungstenSteel",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 12.5
+        },
+        "runtime_registry_path": "small_tungstensteel_tank_main_valve",
+        "original_line": 1199,
+        "original_row_sha256": "e4a6ee87c517cbe9a68362cf76ce972732263a2c6b415eb9e45187932be1d6e5",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.TungstenSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17004,
+          "size": 3,
+          "wall": 18004,
+          "capacity": 6912000,
+          "material": "Tungsten",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 10.0
+        },
+        "runtime_registry_path": "small_tungsten_tank_main_valve",
+        "original_line": 1200,
+        "original_row_sha256": "3b476ab04750b5428e9857293e63422f8d82618fee4d8452b61e88c0ea6d1529",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "ANY.W",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17005,
+          "size": 3,
+          "wall": 18005,
+          "capacity": 110592000,
+          "material": "Adamantium",
+          "proof_flags": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 100.0
+        },
+        "runtime_registry_path": "small_adamantium_tank_main_valve",
+        "original_line": 1201,
+        "original_row_sha256": "bcf697500ca10f300d49318f25a1f2422c007fdd9c3b04ed81c6055cd01fe1d7",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ad",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17006,
+          "size": 3,
+          "wall": 18006,
+          "capacity": 3456000,
+          "material": "Titanium",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 9.0
+        },
+        "runtime_registry_path": "small_titanium_tank_main_valve",
+        "original_line": 1198,
+        "original_row_sha256": "e30a757d1f9089b6794c6790adefceb03b92cab9d6e7355d16f107bb6da0191e",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ti",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17007,
+          "size": 3,
+          "wall": 18007,
+          "capacity": 1728000,
+          "material": "Invar",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "small_invar_tank_main_valve",
+        "original_line": 1197,
+        "original_row_sha256": "ef573ef707164731c2d86cf16eee47d8051bef62ddf9eab21c7f1cac7e1ea16b",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Invar",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17022,
+          "size": 3,
+          "wall": 18022,
+          "capacity": 6912000,
+          "material": "StainlessSteel",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "small_dense_stainless_steel_tank_main_valve",
+        "original_line": 1203,
+        "original_row_sha256": "94d5bd03410fb992ff1891591977479d4db7dbec9fc4bd04c1f4e5123a8c0b5f",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.StainlessSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17023,
+          "size": 3,
+          "wall": 18023,
+          "capacity": 27648000,
+          "material": "TungstenSteel",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 12.5
+        },
+        "runtime_registry_path": "small_dense_tungstensteel_tank_main_valve",
+        "original_line": 1206,
+        "original_row_sha256": "deaaddd9cae6bbb497fd47ecd53bca018a831286f5bbc56550175ceb1b8555de",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.TungstenSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17024,
+          "size": 3,
+          "wall": 18024,
+          "capacity": 27648000,
+          "material": "Tungsten",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 10.0
+        },
+        "runtime_registry_path": "small_dense_tungsten_tank_main_valve",
+        "original_line": 1207,
+        "original_row_sha256": "e74117f4a0cd9f5ab770ab587db49f725a9a1d57b9dc2f9b44bfff60e3335bff",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "ANY.W",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17025,
+          "size": 3,
+          "wall": 18025,
+          "capacity": 442368000,
+          "material": "Adamantium",
+          "proof_flags": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 100.0
+        },
+        "runtime_registry_path": "small_dense_adamantium_tank_main_valve",
+        "original_line": 1208,
+        "original_row_sha256": "fa2b9882c9e3852086e7dc39e77da236488753599003429fca8a7b65e100293d",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ad",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17026,
+          "size": 3,
+          "wall": 18026,
+          "capacity": 13824000,
+          "material": "Titanium",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 9.0
+        },
+        "runtime_registry_path": "small_dense_titanium_tank_main_valve",
+        "original_line": 1205,
+        "original_row_sha256": "58129d1d4b2bdf297f75c02313b27c002bd24fa3418633466e6cf2eac8c8f3f0",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ti",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17027,
+          "size": 3,
+          "wall": 18027,
+          "capacity": 6912000,
+          "material": "Invar",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "small_dense_invar_tank_main_valve",
+        "original_line": 1204,
+        "original_row_sha256": "09c77681fb129a64c803519e5b447741c6f28efe751d77e2bb7a189c9b2c6e32",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Invar",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17042,
+          "size": 5,
+          "wall": 18002,
+          "capacity": 8000000,
+          "material": "StainlessSteel",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "large_stainless_steel_tank_main_valve",
+        "original_line": 1210,
+        "original_row_sha256": "06864908669b3713f1d765feaf5d1e9ea1168b00d362250b025694649ac5577d",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.StainlessSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17043,
+          "size": 5,
+          "wall": 18003,
+          "capacity": 32000000,
+          "material": "TungstenSteel",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 12.5
+        },
+        "runtime_registry_path": "large_tungstensteel_tank_main_valve",
+        "original_line": 1213,
+        "original_row_sha256": "12d94a7dff2016763a732a3c2254edd1b3d9b86180c48c2061f140487373aa78",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.TungstenSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17044,
+          "size": 5,
+          "wall": 18004,
+          "capacity": 32000000,
+          "material": "Tungsten",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 10.0
+        },
+        "runtime_registry_path": "large_tungsten_tank_main_valve",
+        "original_line": 1214,
+        "original_row_sha256": "59c8f06cf5c76d7bc58d8a362f9a43eb05d10bcd8135d7a7e70dea04b518ef54",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "ANY.W",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17045,
+          "size": 5,
+          "wall": 18005,
+          "capacity": 512000000,
+          "material": "Adamantium",
+          "proof_flags": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 100.0
+        },
+        "runtime_registry_path": "large_adamantium_tank_main_valve",
+        "original_line": 1215,
+        "original_row_sha256": "93f8eee8ae4beffd7f1c7a2792c24a68ccb79ed53abb770e453a1e62e3feaa5b",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ad",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17046,
+          "size": 5,
+          "wall": 18006,
+          "capacity": 16000000,
+          "material": "Titanium",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 9.0
+        },
+        "runtime_registry_path": "large_titanium_tank_main_valve",
+        "original_line": 1212,
+        "original_row_sha256": "7ff0a2b40e42b9df6c4f269a23bebe2338aa741cc2ead59118915ca489a3c6ce",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ti",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17047,
+          "size": 5,
+          "wall": 18007,
+          "capacity": 8000000,
+          "material": "Invar",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "large_invar_tank_main_valve",
+        "original_line": 1211,
+        "original_row_sha256": "5c7e6331634327521ef3a6711fc1971c723c65cc7b696c909ecf63a6be16e2f2",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Invar",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17062,
+          "size": 5,
+          "wall": 18022,
+          "capacity": 32000000,
+          "material": "StainlessSteel",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "large_dense_stainless_steel_tank_main_valve",
+        "original_line": 1217,
+        "original_row_sha256": "6d3bdae8069600d16197673600b5eda56af4c535b6b7d183e211b6ccfcfd2d5a",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.StainlessSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17063,
+          "size": 5,
+          "wall": 18023,
+          "capacity": 128000000,
+          "material": "TungstenSteel",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 12.5
+        },
+        "runtime_registry_path": "large_dense_tungstensteel_tank_main_valve",
+        "original_line": 1220,
+        "original_row_sha256": "fbe5d25c13b38c884a6e73ec71f70a5a123261ccfcd2ec483e93c13bc3eb6a6e",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.TungstenSteel",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17064,
+          "size": 5,
+          "wall": 18024,
+          "capacity": 128000000,
+          "material": "Tungsten",
+          "proof_flags": [
+            true,
+            true,
+            false,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 10.0
+        },
+        "runtime_registry_path": "large_dense_tungsten_tank_main_valve",
+        "original_line": 1221,
+        "original_row_sha256": "b2ba242f3e34ae2cd085fc9f3575847b56506fe1494e41bb7f9e02e92e67748b",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "ANY.W",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17065,
+          "size": 5,
+          "wall": 18025,
+          "capacity": 2048000000,
+          "material": "Adamantium",
+          "proof_flags": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "simple_only": false,
+          "hardness": 100.0
+        },
+        "runtime_registry_path": "large_dense_adamantium_tank_main_valve",
+        "original_line": 1222,
+        "original_row_sha256": "67663cc4f1d1d129bf4eca9b58eda73efda5c612e883297937c429cffa8d4b43",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ad",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17066,
+          "size": 5,
+          "wall": 18026,
+          "capacity": 64000000,
+          "material": "Titanium",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 9.0
+        },
+        "runtime_registry_path": "large_dense_titanium_tank_main_valve",
+        "original_line": 1219,
+        "original_row_sha256": "bb5b4d4d0c3eda4b3d6c085c6e8d4119a6ef7fbfb93a9db8867ac5f2ee3d7552",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Ti",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      },
+      {
+        "definition": {
+          "id": 17067,
+          "size": 5,
+          "wall": 18027,
+          "capacity": 32000000,
+          "material": "Invar",
+          "proof_flags": [
+            true,
+            false,
+            false,
+            false
+          ],
+          "simple_only": false,
+          "hardness": 6.0
+        },
+        "runtime_registry_path": "large_dense_invar_tank_main_valve",
+        "original_line": 1218,
+        "original_row_sha256": "60e875aa6559429529f4b233e15ac10516ae657388271813049095e2b69734a5",
+        "fields_equal_after_declared_name_mapping": true,
+        "original_material_token": "MT.Invar",
+        "material_scope": "ANY.W is compared only to its named Tungsten representative; group identity, ingredient range and runtime material-stat equivalence are not accepted by this table check."
+      }
+    ],
+    "count": 25,
+    "scope": "IDs, size, wall, capacity, declared representative name mapping, four proof flags, simple-only and hardness/resistance literals; no gameplay initialization, ANY group/recipe acceptance or whole-spec acceptance.",
+    "structure_counts": {
+      "3": {
+        "cube": 27,
+        "shell_including_valve": 26,
+        "wall_supports": 25,
+        "interior": 1
+      },
+      "5": {
+        "cube": 125,
+        "shell_including_valve": 98,
+        "wall_supports": 97,
+        "interior": 27
+      }
+    }
+  },
+  "readability": {
+    "baseline": "64a3007c34ca9c41d9aff242e50a50e6419e2390",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java": {
+        "before_raw_sha256": "a294e09d169e3fa201d87aa58c3755f6ae00f6bfca4baa9093f137ea063219e4",
+        "after_raw_sha256": "f794ff8e4d497f224b907acdd0d67adc9ded6b9a9276f5285174c1f6ec834b25",
+        "scoped_regions": [
+          [
+            "public static void serverTick(",
+            "private boolean processHazard(",
+            {
+              "be": "controller"
+            }
+          ],
+          [
+            "protected void saveAdditional(",
+            "public void loadAdditional(",
+            {
+              "f": "storedFluidTag"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/**\n * GT6 multiblock fluid tank (3x3x3 or 5x5x5). The wall blocks define the\n * boundary and the controller provides fluid I/O with multiplied capacity.\n */",
+            "/**\n * Shared 3x3x3 and 5x5x5 vessel state. The placed valve selects its specification;\n * valid shell parts delegate fluid I/O to this controller.\n */"
+          ],
+          [
+            "// set by block after construction",
+            "// Selected from the placed valve block during construction."
+          ],
+          [
+            "/** GT6 checks a filled, formed vessel once per tick, after allowing fluid into its walls. */",
+            "/** Checks existing contents once per formed server tick before automatic output. */"
+          ],
+          [
+            "/** Acid removes random cells; magic uses the same radius but lacks a 1.20 Flux block. */",
+            "/** Replace random cube cells and the valve with the selected hazard replacement. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2865,
+            "execution_sha256": "8dc951af79869036dc335d080797fcd5b25daba3c382b69480e7e7d806362c7e",
+            "before_lines": 285,
+            "after_lines": 385,
+            "before_max_line": 206,
+            "after_max_line": 146
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2759,
+            "execution_sha256": "8391d18cd4095027543a7bd0aaddfcf4b893106da10030f7dc1239b851d5789d",
+            "before_lines": 269,
+            "after_lines": 367,
+            "before_max_line": 206,
+            "after_max_line": 146
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java": {
+        "before_raw_sha256": "980c1a9dfea4d79420bfb2679b286aa81d159999673fbc287d47546d50eec2c3",
+        "after_raw_sha256": "8e468914162ddccb0f55b467c1670c0cb6076c79fb89f002dcaa2bedb7b50c9d",
+        "scoped_regions": [
+          [
+            "public BlockState getStateForPlacement(",
+            "public BlockEntity newBlockEntity(",
+            {
+              "ctx": "placement"
+            }
+          ],
+          [
+            "public <T extends BlockEntity> BlockEntityTicker<T> getTicker(",
+            "public void appendHoverText(",
+            {
+              "lvl": "tickLevel",
+              "pos": "tickPos",
+              "st": "tickState",
+              "be": "blockEntity",
+              "t": "controller"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1218,
+            "execution_sha256": "f2a25d93c8008dbbc05c5e703070de4ac77b338b9dc27f566ca4f448a65932ed",
+            "before_lines": 150,
+            "after_lines": 161,
+            "before_max_line": 152,
+            "after_max_line": 149
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1586,
+            "execution_sha256": "bfa4108a9726f0f961bec711f79fe719ff2dd4abad443fa7186d7c408d3237bc",
+            "before_lines": 154,
+            "after_lines": 186,
+            "before_max_line": 540,
+            "after_max_line": 149
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java": {
+        "before_raw_sha256": "559cb7375da5c271ebef4d5882c2abe9bfe13d72556f6c6d70a38936c0406c97",
+        "after_raw_sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+        "scoped_regions": [
+          [
+            "private static Map<Integer, TankValveSpec> definitions(",
+            "public static TankValveSpec find(",
+            {
+              "all": "specifications",
+              "p": "parameters"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 313,
+            "execution_sha256": "0c84dcd61511771c7e4e7fb7ff69572c5eb37d018139b1749d15f756c7538d85",
+            "before_lines": 26,
+            "after_lines": 46,
+            "before_max_line": 361,
+            "after_max_line": 120
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 313,
+            "execution_sha256": "0c84dcd61511771c7e4e7fb7ff69572c5eb37d018139b1749d15f756c7538d85",
+            "before_lines": 26,
+            "after_lines": 46,
+            "before_max_line": 361,
+            "after_max_line": 120
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java": {
+        "before_raw_sha256": "2d5a300aac2bcec865366927ab1e159d490d11ba3b038f1c3c2b48b768d5f185",
+        "after_raw_sha256": "fb5ce2327a58dabd22b41d7757e9a3b0f7ca943a44def670d23806fac8831024",
+        "scoped_regions": [
+          [
+            "public static boolean validate(",
+            null,
+            {
+              "p": "position"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Exact original hollow-cube rules, with platform loaded/block predicates. */",
+            "/** Adapter for hollow-cube traversal; loading, wall and air policies belong to the caller. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 206,
+            "execution_sha256": "030165ea9a7ad2cdb183ddd2c21fa7814afb3fbf7a1e877a380ac521caeb551f",
+            "before_lines": 6,
+            "after_lines": 20,
+            "before_max_line": 441,
+            "after_max_line": 137
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 206,
+            "execution_sha256": "030165ea9a7ad2cdb183ddd2c21fa7814afb3fbf7a1e877a380ac521caeb551f",
+            "before_lines": 6,
+            "after_lines": 20,
+            "before_max_line": 441,
+            "after_max_line": 137
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java": {
+        "before_raw_sha256": "0cd17fb5ff14eb4702b084983a32ab8d3f0cce45e12f873e818bad7fbbdc60fb",
+        "after_raw_sha256": "e4b709453076802dd28f9848558700fe45a354da446de03f272f95f461b13f64",
+        "scoped_regions": [
+          [
+            "public static void setCapacity(",
+            "//? if >=1.21.1",
+            {
+              "amount": "storedAmount",
+              "fluid": "storedFluid"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 177,
+            "execution_sha256": "7e208ffe95a8f8a2503766db36c4afc8a754b1c7cca79b71d2227617fef98ba9",
+            "before_lines": 30,
+            "after_lines": 33,
+            "before_max_line": 100,
+            "after_max_line": 113
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 190,
+            "execution_sha256": "221ba5ba4f23931ee93b7d08be9e3dbe4144847cc809e78694773967fadef9ac",
+            "before_lines": 30,
+            "after_lines": 33,
+            "before_max_line": 137,
+            "after_max_line": 137
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, explicitly scoped local renames excluding member accesses, and five listed source-backed comments. No runtime behavior change."
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source-branch deductions, no initialized target classes or placed test world.",
+    "main_valve_generic_fluid_access": [
+      {
+        "case": "Formed, empty, uncovered main valve; offer 1000 L water via ordinary fluid handler.",
+        "original_filled": 0,
+        "current_filled": 1000
+      },
+      {
+        "case": "Unformed, uncovered main valve with 1000 L water; request 1000 L through ordinary fluid handler.",
+        "original_drained": 1000,
+        "current_drained": 0
+      }
+    ],
+    "access_limit": "Original funnelFill/tapDrain bypass ordinary fill selection; current contents/capacity read-only queries do not invoke structure validation. Do not remove modern invalid-structure extraction protection.",
+    "harvest_contents": {
+      "sample_liters": 1000,
+      "original_item_fluid": "Not serialized by the inherited writeItemNBT path; breakBlock trashes tank.",
+      "current_item_fluid": "gt.tank saved into BlockEntityTag/BLOCK_ENTITY_DATA, retained by final CoverDrops exception, explicitly restored by setPlacedBy and readContents.",
+      "limit": "Conditional normal native harvest path with captured controller BE; no survival/pick/reload game test. No claim all machines or ordinary portable tanks should discard contents."
+    },
+    "complete_query_counts": [
+      {
+        "size": 3,
+        "loaded_predicates": 27,
+        "wall_states": 25,
+        "interior_states": 1,
+        "minimum_blockstate_reads": 26,
+        "twenty_complete_probes_minimum_reads": 520
+      },
+      {
+        "size": 5,
+        "loaded_predicates": 125,
+        "wall_states": 97,
+        "interior_states": 27,
+        "minimum_blockstate_reads": 124,
+        "twenty_complete_probes_minimum_reads": 2480
+      }
+    ],
+    "structure_policy": "Original four XZ corner gate can retain old formed state and visits/binds valid subsets; current checks loaded cells then fails/clears, commits only complete candidates. Preserve modern loading/ownership protection.",
+    "tool_target": "Controller and parent/interfaces/configured mixin do not implement MultiblockToolTarget. Existing 25 preview layouts and thermometer consumer do not supply specialized builder/form diagnostics.",
+    "not_accepted": [
+      "Full hazard effect/order, wooden fire behavior, external fluid property integration, full client visuals, ANY.W recipe/group/stat equality and real saved-world restart."
+    ]
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "scope": "User material layout unchanged."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "scope": "User material layout unchanged."
+    }
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, build or push.",
+    "Native javap/source extraction is read-only evidence, not actual native harvest/placement execution.",
+    "The catalog compares declared literals and representative names only; ANY.W group ingredient/range equivalence is not proved.",
+    "The full audit/readability objective and remaining tank hazard/physical/tool/recipe/client work continue."
+  ],
+  "previous_goal_turn": "Progress: inspected material factories and the user-reformatted 570 declarations; clarified parameter versus setter texture syntax. Earlier logistics work is committed at 64a3007c3; tank readability changes were pending and are now being completed.",
+  "root_revalidation": {
+    "kind": "Current named input/entry hashes, actual native dispatch, complete ordered execution with member-sensitive local normalization, unnormalized literal positions, comments/directives and added documentation.",
+    "original_sources": 26,
+    "current_sources": 46,
+    "shared_platform_views": 68,
+    "readability_files": 5,
+    "readability_execution_views": 10,
+    "catalog_rows": 25,
+    "native_artifacts": 2,
+    "native_entries": 8,
+    "readonly_javap_views": 4,
+    "ledger_contiguous": [
+      1,
+      263
+    ],
+    "new_or_added_local_links": 39,
+    "protected_materials_unchanged": true,
+    "raw_literal_positions": [
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+        "platform": "forge",
+        "count": 42,
+        "ordered_position_sha256": "533c468aa493a51a4f519a48fbcff8b3e465289bcdbb06f0620c1a26daaca660"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+        "platform": "neoforge",
+        "count": 42,
+        "ordered_position_sha256": "aded1b7f277035bb2f134d6f97abadcfcd04827af1d68703287dbe4bb31513fe"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+        "platform": "forge",
+        "count": 5,
+        "ordered_position_sha256": "0a078f0761f972ce31809eaca3cfb14b657a0914db290aa133a792b3411fc800"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+        "platform": "neoforge",
+        "count": 2,
+        "ordered_position_sha256": "476a62c463d01cc1bc09664e8acbb6361d5691439a453f6d17fe4bf58aa9edbd"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+        "platform": "forge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+        "platform": "neoforge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+        "platform": "forge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/HollowTankStructure.java",
+        "platform": "neoforge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+        "platform": "forge",
+        "count": 4,
+        "ordered_position_sha256": "53ba417ffa7d387528cdc6b4ecfad42036ae47d3d82134e6714674399980d07a"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/MultiblockTankData.java",
+        "platform": "neoforge",
+        "count": 4,
+        "ordered_position_sha256": "154425a0fa0aeda3eeb3bdbfdf1da83327ea07f0533b1ec843de7036f56c76a1"
+      }
+    ],
+    "member_rename_concealment_rejected": true,
+    "target_execution_build_or_tests": false
+  }
+}
