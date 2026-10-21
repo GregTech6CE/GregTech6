@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.api.machine;
 
+import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
@@ -32,7 +33,11 @@ public record BasicMachineParameters(
         boolean cheapOverclockingSpecified,
         int minimumLightAbove,
         boolean searchOutputTanks,
-        boolean exclusiveOutputs
+        boolean exclusiveOutputs,
+        MachineDeclaration.Target itemOutputTarget,
+        MachineDeclaration.Target fluidOutputTarget,
+        MachineDeclaration.Target itemInputSource,
+        MachineDeclaration.Target fluidInputSource
 ) {
     public BasicMachineParameters {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -51,6 +56,15 @@ public record BasicMachineParameters(
         if (minimumLightAbove < 0 || minimumLightAbove > 15)
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
+        rejectAutomaticFace(id, "item output", itemOutputTarget, faceConfig.itemAutoOutput());
+        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, faceConfig.fluidAutoOutput());
+        rejectAutomaticFace(id, "item input", itemInputSource, faceConfig.itemAutoInput());
+        rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
+    }
+
+    private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
+        if (target != null && automatic >= 0)
+            throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
 
     /** Built-in and older callers keep cheap overclocking on the name table and do not require light. */
@@ -59,7 +73,8 @@ public record BasicMachineParameters(
                                   MachineFaceMasks faceConfig, List<WeightedMaterial> constructionMaterials,
                                   int parallelLimit, long energyInMin, long energyInMax) {
         this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
-                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0, false, false);
+                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0, false, false,
+                null, null, null, null);
     }
 
     /**
@@ -115,6 +130,10 @@ public record BasicMachineParameters(
         private int minimumLightAbove;
         private boolean searchOutputTanks;
         private boolean exclusiveOutputs;
+        private MachineDeclaration.Target itemOutputTarget;
+        private MachineDeclaration.Target fluidOutputTarget;
+        private MachineDeclaration.Target itemInputSource;
+        private MachineDeclaration.Target fluidInputSource;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -134,6 +153,10 @@ public record BasicMachineParameters(
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
+        public Builder itemOutputTarget(MachineDeclaration.Target value) { itemOutputTarget = value; return this; }
+        public Builder fluidOutputTarget(MachineDeclaration.Target value) { fluidOutputTarget = value; return this; }
+        public Builder itemInputSource(MachineDeclaration.Target value) { itemInputSource = value; return this; }
+        public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
         public BasicMachineParameters build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             return new BasicMachineParameters(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
@@ -141,7 +164,8 @@ public record BasicMachineParameters(
                     energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
                     energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
                     cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
-                    searchOutputTanks, exclusiveOutputs);
+                    searchOutputTanks, exclusiveOutputs,
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
         }
     }
     public String textureFolder() { return machineName; }

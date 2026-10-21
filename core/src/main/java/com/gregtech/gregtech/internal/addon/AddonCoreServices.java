@@ -71,6 +71,15 @@ public final class AddonCoreServices {
             return List.copyOf(components);
         }
 
+        @Override public List<String> byproducts() {
+            var names = new ArrayList<String>();
+            for (GTMaterial byproduct : material.getByProducts()) {
+                if (byproduct == null) continue;
+                names.add(byproduct.resolve().getName());
+            }
+            return List.copyOf(names);
+        }
+
         @Override public GregTechMaterials.Material resolve() {
             GTMaterial resolved = material.resolve();
             return resolved == material ? this : new Handle(resolved);
