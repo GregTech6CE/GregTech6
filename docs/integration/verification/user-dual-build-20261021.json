@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-21",
+  "base_commit": "420c690d14f6e19afe4b3293194bcd96aa613ce0",
+  "source": "Current main worktree; user WoodMaterials whitespace changes retained and included in compilation.",
+  "version": "0.0.0",
+  "api_version": 0,
+  "tasks": [
+    ":multiversion:1.20.1-forge:distributionJar",
+    ":multiversion:1.21.1-neoforge:jar"
+  ],
+  "result": "BUILD SUCCESSFUL in 6m 25s",
+  "log": "work/dual-user-build-cached-20261021-202049.log",
+  "dependency_source": "Existing work/emi-local.init.gradle and local EMI Maven cache, exact declared versions.",
+  "attempts_before_success": [
+    {
+      "log": "work/dual-user-build-20261021-195846.log",
+      "result": "Restricted wrapper cache lock access denied"
+    },
+    {
+      "log": "work/dual-user-build-20261021-195950.log",
+      "result": "Wrapper distribution download timeout"
+    },
+    {
+      "log": "work/dual-user-build-local-20261021-200715.log",
+      "result": "Offline obfuscated EMI dependency unresolved"
+    },
+    {
+      "log": "work/dual-user-build-online-20261021-201209.log",
+      "result": "External EMI repository connection timeout"
+    }
+  ],
+  "checks": [
+    "Distribution ZIP CRC",
+    "Mod ID/version and USB classes present",
+    "Copy SHA-256 equality"
+  ],
+  "protected_material": {
+    "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+    "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "not_run": [
+    "Full tests",
+    "Game startup",
+    "Gameplay acceptance"
+  ],
+  "stone_layers": "User withdrew chunk-generation report; no worldgen code changed.",
+  "files": [
+    {
+      "platform": "1.20.1-forge",
+      "path": "build/deliveries/20261021-420c690d1/gt6ce-1.20.1-forge-0.0.0.jar",
+      "bytes": 40925257,
+      "sha256": "6a374f49ffd3a074d6ba24c6b584cb336fe770a10354737534a64c317d2416a5",
+      "zip_crc": "passed"
+    },
+    {
+      "platform": "1.21.1-neoforge",
+      "path": "build/deliveries/20261021-420c690d1/gt6ce-neoforge-1.21.1-0.0.0.jar",
+      "bytes": 40776285,
+      "sha256": "b3924e577e748069d080c050b3709cd98ebd53e5ab49d70be36d0f6fab06088e",
+      "zip_crc": "passed"
+    }
+  ]
+}
