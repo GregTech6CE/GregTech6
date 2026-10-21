@@ -46,19 +46,24 @@ import java.util.List;
  * <p>A hole sits in a tree trunk, faces the side a player drilled, and slowly fills with resin/sap:
  * every 600 ticks the {@link TreeHoleBlockEntity} counts the leaves of the tree it belongs to and
  * rolls GT6's probability — so a chopped-down or sparse tree stops producing, exactly like GT6.
- * Right-clicking a filled hole hands out the resin item (rubber) or fills the held container with
- * the sap fluid (maple/rainbowood); breaking it drops the log it was cut into.
+ * This port's right-click branch selects the resin item (rubber) or sap fluid (maple/rainbowood);
+ * the original rubber hole can provide both. Breaking a hole drops its source log.
  */
 public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityBlock {
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<TreeHoleBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<TreeHoleBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
 *///?} else {
 //?}
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+
     /** GT6's {@code mHasResin} — the hole is full and ready to be tapped. */
     public static final BooleanProperty RESIN = BooleanProperty.create("resin");
 
     private final WoodSpecies species;
+
     /** {@code item:gt6ce:rubber_resin} for rubber, {@code fluid:<name>} for the sap holes. */
     private final String yield;
 
@@ -69,12 +74,18 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(RESIN, false));
     }
 
-    public WoodSpecies species() { return species; }
+    public WoodSpecies species() {
+        return species;
+    }
 
     /** GT6 {@code getResinItem}/{@code getResinFluid}: {@code item:<id>} or {@code fluid:<registry name>}. */
-    public String yield() { return yield; }
+    public String yield() {
+        return yield;
+    }
 
-    public boolean yieldsItem() { return yield.startsWith("item:"); }
+    public boolean yieldsItem() {
+        return yield.startsWith("item:");
+    }
 
     public ItemStack resinItem() {
 //? if >=1.21.1 {
@@ -123,11 +134,11 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
+            InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND || hit.getDirection() != state.getValue(FACING)
                 // Modern portable vessels are BlockItems too; retain their container interaction.
                 || player.getItemInHand(hand).getItem() instanceof net.minecraft.world.item.BlockItem
-                    && !FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()
+                && !FluidUtil.getFluidHandler(player.getItemInHand(hand)).isPresent()
                 || !state.getValue(RESIN)) return InteractionResult.PASS;
         if (level.isClientSide) return InteractionResult.SUCCESS;
         if (yieldsItem()) {
@@ -151,10 +162,21 @@ public class TreeHoleBlock extends HorizontalDirectionalBlock implements EntityB
     }
 //? if >=1.21.1 {
 
-    /*@Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){
-        return switch(originalUse(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};
+    /*@Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return switch (originalUse(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
     }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return originalUse(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return originalUse(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
 }
