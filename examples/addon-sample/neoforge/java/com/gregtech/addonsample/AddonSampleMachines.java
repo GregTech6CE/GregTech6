@@ -39,7 +39,9 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
     @Override public List<RecipeMapDeclaration> recipeMaps() {
         return List.of(
                 map("addon_sample.recipe.press", "Sample Press", "press", 2),
-                map("addon_sample.recipe.large_press", "Large Sample Press", "large_press"),
+                new RecipeMapDeclaration("addon_sample.recipe.large_press", "Large Sample Press",
+                        "addon_sample:textures/gui/machines/large_press",
+                        1, 6, 1, 0, 1, 0, 1, true, false, false, false),
                 new RecipeMapDeclaration("addon_sample.recipe.detector", "Sample Detector",
                         "addon_sample:textures/gui/machines/press",
                         1, 2, 1, 1, 1, 0, 1, true, false, false, false));
@@ -68,7 +70,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 MachineDeclaration.builder("large_sample_press", "Steel")
                         .machineType("largesamplepress").energy("EU", 512).tier(1)
                         .recipeMap("addon_sample.recipe.large_press").largeRecipe()
-                        .structureKeys(List.of("addon_sample.structure.press.1")).build());
+                        .structureKeys(List.of("addon_sample.structure.press.1"))
+                        .itemOutputTarget(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT)
+                        .fluidOutputTarget(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT)
+                        .build());
     }
 
     @Override public List<StructurePartDeclaration> parts() {

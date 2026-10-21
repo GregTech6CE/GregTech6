@@ -86,6 +86,7 @@ public final class AddonMachineContracts {
             case "gasok" -> gasOk();
             case "gasdup" -> gasDuplicate();
             case "gasmat" -> gasMaterial();
+            case "iotarget" -> ioTarget();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -97,6 +98,8 @@ public final class AddonMachineContracts {
         check(!plain.cheapOverclocking() && !plain.cheapOverclockingSpecified(), "default cheap overclock is off and unset");
         check(plain.minimumLightAbove() == 0, "default light gate is off");
         check(!plain.searchOutputTanks() && !plain.exclusiveOutputs(), "default output-tank search and exclusive outputs are off");
+        check(plain.itemOutputTarget() == null && plain.fluidOutputTarget() == null
+                && plain.itemInputSource() == null && plain.fluidInputSource() == null, "default IO targets are absent");
         check(!AddonOverclock.enabled(true, true, plain.cheapOverclocking(), true), "addon basic ignores a cheap built-in name");
         check(AddonOverclock.enabled(false, false, false, true), "built-in legacy cheap stays");
         check(!AddonOverclock.enabled(false, true, false, true), "an explicit off replaces a large machine's legacy cheap rule");
@@ -640,6 +643,120 @@ public final class AddonMachineContracts {
     private static FuelGeneratorDeclaration turbine(String fuelMap) {
         return FuelGeneratorDeclaration.builder("turbine", "Steel").machineType("sampleturbine")
                 .fuelMap(fuelMap).efficiency(5_000).energy("RU", 32).tank(8000).outputBehind(4).multi().build();
+    }
+
+    private static void ioTarget() {
+        var right = BehaviorMachineDeclaration.Face.RIGHT;
+        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, 0, 0, right), "origin");
+        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(17, 0, 0, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, -17, 0, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(0, 0, 17, right), "out of range");
+        expectThrows(IllegalArgumentException.class, () -> new MachineDeclaration.Target(1, 0, 0, null), "receiver");
+        var edge = new MachineDeclaration.Target(-16, 16, -16, BehaviorMachineDeclaration.Face.BACK);
+        check(edge.right() == -16 && edge.up() == 16 && edge.back() == -16, "±16 stays inside the limit");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").basic()
+                .itemOutputTarget(1, 0, 0, right).build(), "large recipe");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
+                .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+                .itemOutputTarget(1, 0, 0, right).build(), "conflicts");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
+                .fluidAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
+                .fluidOutputTarget(1, 0, 0, right).build(), "conflicts");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
+                .itemAutoInput(BehaviorMachineDeclaration.Face.TOP)
+                .itemInputSource(1, 0, 0, right).build(), "conflicts");
+        expectThrows(IllegalArgumentException.class, () -> MachineDeclaration.builder("press", "Steel")
+                .energy("EU", 32).recipeMap("aa.recipe.press").largeRecipe()
+                .fluidAutoInput(BehaviorMachineDeclaration.Face.TOP)
+                .fluidInputSource(1, 0, 0, right).build(), "conflicts");
+        var plain = MachineDeclaration.builder("plain", "Steel").energy("EU", 512).recipeMap("aa.recipe.press")
+                .largeRecipe().structureKeys(List.of("aa.structure.press")).build();
+        check(plain.itemOutputTarget() == null && plain.fluidOutputTarget() == null
+                && plain.itemInputSource() == null && plain.fluidInputSource() == null
+                && plain.itemAutoOutput() == null, "an undeclared machine keeps every target absent");
+        var aimed = MachineDeclaration.builder("aimed", "Steel").energy("EU", 512).recipeMap("aa.recipe.press")
+                .largeRecipe().structureKeys(List.of("aa.structure.press"))
+                .itemOutputTarget(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT)
+                .fluidOutputTarget(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT)
+                .itemInputSource(0, 2, 1, BehaviorMachineDeclaration.Face.BOTTOM)
+                .fluidInputSource(0, 1, 2, BehaviorMachineDeclaration.Face.FRONT)
+                .build();
+        check(aimed.itemAutoOutput() == null && aimed.fluidAutoOutput() == null
+                && aimed.itemAutoInput() == null && aimed.fluidAutoInput() == null,
+                "a target leaves the automatic face unset");
+        check(aimed.itemOutputTarget().right() == 2 && aimed.fluidOutputTarget().right() == -2
+                && aimed.itemInputSource().up() == 2 && aimed.fluidInputSource().back() == 2,
+                "the four cells are kept");
+        prepare();
+        GTMaterialRegistry.init();
+        var steel = GTMaterialRegistry.get("Steel");
+        expectThrows(IllegalArgumentException.class, () -> BasicMachineParameters.builder("press", steel)
+                .energy(GregTechTags.Energy.EU, 32)
+                .faces(MachineFaceMasks.builder().itemAutoOut(MachineFaceMasks.BOTTOM).build())
+                .itemOutputTarget(new MachineDeclaration.Target(1, 0, 0, right))
+                .build(), "conflicts");
+        var bare = BasicMachineParameters.builder("plain_press", steel).machineType("sampleplain")
+                .energy(GregTechTags.Energy.EU, 512).build();
+        check(bare.itemOutputTarget() == null && bare.fluidOutputTarget() == null
+                && bare.itemInputSource() == null && bare.fluidInputSource() == null
+                && bare.faceConfig().itemAutoOutput() == -1 && bare.faceConfig().fluidAutoOutput() == -1,
+                "no target leaves the previous face mask");
+        var item = new MachineDeclaration.Target(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT);
+        var fluid = new MachineDeclaration.Target(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT);
+        var itemIn = new MachineDeclaration.Target(0, 2, 1, BehaviorMachineDeclaration.Face.BOTTOM);
+        var fluidIn = new MachineDeclaration.Target(0, 1, 2, BehaviorMachineDeclaration.Face.FRONT);
+        var aimedParameters = BasicMachineParameters.builder("aimed_press", steel).machineType("sampletarget")
+                .energy(GregTechTags.Energy.EU, 512)
+                .itemOutputTarget(item).fluidOutputTarget(fluid)
+                .itemInputSource(itemIn).fluidInputSource(fluidIn).build();
+        check(aimedParameters.itemOutputTarget().equals(item) && aimedParameters.faceConfig().itemAutoOutput() == -1
+                && aimedParameters.faceConfig().fluidAutoInput() == -1, "parameters keep a target beside an unset automatic face");
+        var fermenterItems = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output("largefermenter", true);
+        var fermenterFluids = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output("largefermenter", false);
+        check(fermenterItems.right() == 0 && fermenterItems.up() == 1 && fermenterItems.back() == 5
+                && fermenterItems.receiverFace() == com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Face.FRONT,
+                "fermenter item target stays five blocks behind");
+        check(fermenterFluids.right() == 0 && fermenterFluids.up() == 0 && fermenterFluids.back() == 5
+                && fermenterFluids.receiverFace() == com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Face.FRONT,
+                "fermenter fluid target stays five blocks behind");
+        var usual = new com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Target(0, -1, 0,
+                com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Face.UP);
+        for (var name : List.of("largecentrifuge", "largeelectrolyzer", "largecoagulator", "largeautoclave", "largebath",
+                "largemixer", "largeoven", "largesluice", "largecrusher", "largeshredder", "largesqueezer")) {
+            check(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(name, true).equals(usual)
+                    && com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(name, false).equals(usual),
+                    "default output target " + name);
+        }
+        check(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.sources("largecentrifuge").size() == 2,
+                "centrifuge energy sources stay a pair");
+        AddonMachines.accept("aa_io", List.of(map("aa.recipe.press")), List.of(
+                new AddonMachineDefinition(bare, "aa.recipe.press", MachineControllerKind.LARGE_RECIPE, 10_000, true,
+                        List.of("aa.structure.press")),
+                new AddonMachineDefinition(aimedParameters, "aa.recipe.press", MachineControllerKind.LARGE_RECIPE, 10_000, true,
+                        List.of("aa.structure.press"))),
+                List.of(layout("sampleplain"), layout("sampletarget")));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        BasicMachineParameters installedPlain = null;
+        BasicMachineParameters installedAimed = null;
+        for (var machine : AddonMachines.machines()) {
+            if ("sampleplain".equals(machine.definition().parameters().machineName())) installedPlain = machine.definition().parameters();
+            if ("sampletarget".equals(machine.definition().parameters().machineName())) installedAimed = machine.definition().parameters();
+        }
+        check(installedPlain != null && installedPlain.itemOutputTarget() == null && installedPlain.fluidOutputTarget() == null
+                && installedPlain.itemInputSource() == null && installedPlain.fluidInputSource() == null,
+                "an undeclared installed machine still has no targets");
+        check(installedAimed != null && item.equals(installedAimed.itemOutputTarget()) && fluid.equals(installedAimed.fluidOutputTarget())
+                && itemIn.equals(installedAimed.itemInputSource()) && fluidIn.equals(installedAimed.fluidInputSource()),
+                "installed targets match the declaration");
+    }
+
+    private static AddonMachineLayout layout(String name) {
+        return new AddonMachineLayout(name, List.of(
+                new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING)));
     }
 
     private static void prepare() {

@@ -35,6 +35,116 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return switch(face) {case UP->Direction.UP;case DOWN->Direction.DOWN;case LEFT->front.getCounterClockWise();case RIGHT->front.getClockWise();case FRONT->front;};
     }
+    private Direction declaredFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+        return relativeToAbsolute(face.index());
+    }
+    private record Placed(BlockPos pos, Direction face) {}
+    private Placed place(int right, int up, int back, Direction face) { return new Placed(sourcePosition(right, up, back), face); }
+    private Placed declared(com.gregtech.gregtech.api.addon.MachineDeclaration.Target target) {
+        return target == null ? null : place(target.right(), target.up(), target.back(), declaredFace(target.receiver()));
+    }
+    private Placed itemOutput() {
+        if (spec() == null) return null;
+        var declared = declared(spec().itemOutputTarget());
+        if (declared != null) return declared;
+        if (!originalProcessingController()) return null;
+        var output = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(), true);
+        return place(output.right(), output.up(), output.back(), sourceFace(output.receiverFace()));
+    }
+    private Placed fluidOutput() {
+        if (spec() == null) return null;
+        var declared = declared(spec().fluidOutputTarget());
+        if (declared != null) return declared;
+        if (!originalProcessingController()) return null;
+        var output = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(), false);
+        return place(output.right(), output.up(), output.back(), sourceFace(output.receiverFace()));
+    }
+    private IItemHandler itemsAt(BlockPos pos, Direction face) {
+        if (level == null || !level.hasChunkAt(pos)) return null;
+        var be = level.getBlockEntity(pos);
+//? if >=1.21.1 {
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+        if (be == null) return null;
+        return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, pos, face);
+*///?} else {
+        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return null;
+        if (be == null) return null;
+        return be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER, face).resolve().orElse(null);
+//?}
+    }
+    private IFluidHandler fluidsAt(BlockPos pos, Direction face) {
+        if (level == null || !level.hasChunkAt(pos)) return null;
+        var be = level.getBlockEntity(pos);
+//? if >=1.21.1 {
+/*        if (be instanceof com.gregtech.gregtech.api.multiblock.BoundMachinePort part && part.isBoundTo(worldPosition)) return null;
+        if (be == null) return null;
+        return level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, pos, face);
+*///?} else {
+        if (be instanceof MultiblockPortBlockEntity part && part.isBoundTo(worldPosition)) return null;
+        if (be == null) return null;
+        return be.getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER, face).resolve().orElse(null);
+//?}
+    }
+    private void pushItems(BlockPos pos, Direction face) {
+        var target = itemsAt(pos, face);
+        if (target == null) return;
+        for (int slot = inputSlots(); slot < inventory().getSlots(); slot++) {
+            var offer = inventory().getStackInSlot(slot);
+            if (offer.isEmpty()) continue;
+            var result = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(offer.copy(), () -> target);
+            if (result.accepted() > 0) inventory().extractItem(slot, result.accepted(), false);
+        }
+    }
+    private void pushFluids(BlockPos pos, Direction face) {
+        var target = fluidsAt(pos, face);
+        var tanks = getTanksOutput();
+        if (target == null || tanks == null) return;
+        for (var tank : tanks) {
+            var offer = tank.getFluid();
+            if (offer.isEmpty()) continue;
+            int simulated = target.fill(offer.copy(), IFluidHandler.FluidAction.SIMULATE);
+            if (simulated <= 0) continue;
+            offer.setAmount(Math.min(simulated, offer.getAmount()));
+            int accepted = target.fill(offer.copy(), IFluidHandler.FluidAction.EXECUTE);
+            if (accepted < 0 || accepted > offer.getAmount())
+                throw new IllegalStateException("Invalid original controller fluid receiver amount: " + accepted);
+            if (accepted > 0) tank.remove(accepted);
+        }
+    }
+    private void pullItems(BlockPos pos, Direction face) {
+        var source = itemsAt(pos, face);
+        if (source == null) return;
+        int inputCount = inputSlots();
+        if (inputCount <= 0) return;
+        for (int srcSlot = 0; srcSlot < source.getSlots(); srcSlot++) {
+            ItemStack stack = source.getStackInSlot(srcSlot);
+            if (stack.isEmpty() || !acceptsAutomaticInput(stack)) continue;
+            for (int i = 0; i < inputCount; i++) {
+                ItemStack remaining = inventory().insertItem(i, stack.copy(), true);
+                int toTake = stack.getCount() - remaining.getCount();
+                if (toTake <= 0) continue;
+                ItemStack extracted = source.extractItem(srcSlot, toTake, false);
+                if (!extracted.isEmpty()) {
+                    ItemStack leftover = inventory().insertItem(i, extracted, false);
+                    returnOrDrop(leftover, source);
+                    if (source.getStackInSlot(srcSlot).isEmpty()) break;
+                    stack = source.getStackInSlot(srcSlot);
+                }
+            }
+        }
+    }
+    private void pullFluids(BlockPos pos, Direction face) {
+        var source = fluidsAt(pos, face);
+        if (source == null) return;
+        FluidStack drained = source.drain(1000, IFluidHandler.FluidAction.SIMULATE);
+        if (drained.isEmpty()) return;
+        int filled = fill(drained, IFluidHandler.FluidAction.SIMULATE);
+        if (filled <= 0) return;
+        FluidStack toDrain = drained.copy();
+        toDrain.setAmount(filled);
+        FluidStack actuallyDrained = source.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
+        if (!actuallyDrained.isEmpty()) fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
+    }
     // The source multiblock parent suppresses ordinary six-neighbor requests; only explicit layouts opt in.
     @Override protected void updateAdjacentToggleableEnergySources() {
         if(level==null || level.isClientSide || !originalProcessingController() || isRemoved())return;
@@ -49,56 +159,40 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected void autoInputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
-        if(!originalProcessingController())super.autoInputItems(level,pos,side); // Source getItemInputTarget returns null.
+        if (declared(spec() == null ? null : spec().itemInputSource()) != null || originalProcessingController()) return;
+        super.autoInputItems(level,pos,side); // Source getItemInputTarget returns null.
     }
     @Override protected void autoInputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
-        if(!originalProcessingController())super.autoInputFluids(level,pos,side); // Source getFluidInputTarget returns null.
+        if (declared(spec() == null ? null : spec().fluidInputSource()) != null || originalProcessingController()) return;
+        super.autoInputFluids(level,pos,side); // Source getFluidInputTarget returns null.
+    }
+    @Override protected void positionedItemInput() {
+        var source = declared(spec() == null ? null : spec().itemInputSource());
+        if (source != null) pullItems(source.pos(), source.face());
+    }
+    @Override protected void positionedFluidInput() {
+        var source = declared(spec() == null ? null : spec().fluidInputSource());
+        if (source != null) pullFluids(source.pos(), source.face());
+    }
+    @Override protected void positionedItemOutput() {
+        var output = itemOutput();
+        if (output != null) pushItems(output.pos(), output.face());
     }
     @Override protected void beforeMachineTick() {
         super.beforeMachineTick();
-        if(!originalProcessingController() || faceConfig().fluidAutoOutput()<0)return;
-        var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),false);
-        var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
-        if(!level.hasChunkAt(targetPos))return;
-
-//? if >=1.21.1 {
-/*        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,targetPos,face);
-*///?} else {
-        var target=level.getBlockEntity(targetPos)==null?null:level.getBlockEntity(targetPos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.FLUID_HANDLER,face).resolve().orElse(null);
-//?}
-
-        if(target==null)return;
-        for(var tank:getTanksOutput()) {
-            var offer=tank.getFluid();if(offer.isEmpty())continue;
-            int simulated=target.fill(offer.copy(),IFluidHandler.FluidAction.SIMULATE);
-            if(simulated<=0)continue;
-            offer.setAmount(Math.min(simulated,offer.getAmount()));
-            int accepted=target.fill(offer.copy(),IFluidHandler.FluidAction.EXECUTE);
-            if(accepted<0 || accepted>offer.getAmount())throw new IllegalStateException("Invalid original controller fluid receiver amount: "+accepted);
-            if(accepted>0)tank.remove(accepted);
-        }
+        var output = fluidOutput();
+        if (output == null) return;
+        if (spec().fluidOutputTarget() == null && faceConfig().fluidAutoOutput() < 0) return;
+        pushFluids(output.pos(), output.face());
     }
     @Override protected void autoOutputFluids(net.minecraft.world.level.Level level,BlockPos pos,int side) {
-        if(!originalProcessingController())super.autoOutputFluids(level,pos,side); // Already moved before work, including while stopped/unformed.
+        if (fluidOutput() != null) return; // Already moved before work, including while stopped/unformed.
+        super.autoOutputFluids(level,pos,side);
     }
     @Override protected void autoOutputItems(net.minecraft.world.level.Level level,BlockPos pos,int side) {
-        if(!originalProcessingController()) {super.autoOutputItems(level,pos,side);return;}
-        var output=com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(),true);
-        var targetPos=sourcePosition(output.right(),output.up(),output.back());var face=sourceFace(output.receiverFace());
-        if(!level.hasChunkAt(targetPos))return;
-
-//? if >=1.21.1 {
-/*        var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,targetPos,face);
-*///?} else {
-        var target=level.getBlockEntity(targetPos)==null?null:level.getBlockEntity(targetPos).getCapability(net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER,face).resolve().orElse(null);
-//?}
-
-        if(target==null)return;
-        for(int slot=inputSlots();slot<inventory().getSlots();slot++) {
-            var offer=inventory().getStackInSlot(slot);if(offer.isEmpty())continue;
-            var result=com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(offer.copy(),()->target);
-            if(result.accepted()>0)inventory().extractItem(slot,result.accepted(),false);
-        }
+        var output = itemOutput();
+        if (output == null) { super.autoOutputItems(level,pos,side); return; }
+        pushItems(output.pos(), output.face());
     }
 
 //? if >=1.21.1 {

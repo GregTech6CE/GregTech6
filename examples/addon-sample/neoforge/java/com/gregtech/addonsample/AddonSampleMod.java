@@ -63,7 +63,33 @@ public final class AddonSampleMod {
                         new FluidStack[]{new FluidStack(Fluids.WATER, 3)},
                         2, -16, 0));
                 if (fuel == null) throw new IllegalStateException("sample hydrogen fuel rejected");
+                addByproductRow("Copper");
+                addByproductRow("SampleAlloy");
+                var moved = AddonRecipes.map("addon_sample.recipe.large_press").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.IRON_INGOT)},
+                        new ItemStack[]{new ItemStack(Items.IRON_NUGGET)},
+                        null, new FluidStack[]{new FluidStack(Fluids.WATER, 250)},
+                        100, 128, 0));
+                if (moved == null) throw new IllegalStateException("sample large press output row rejected");
             }
         });
+    }
+
+    /** Crushed ore to one dust of each byproduct. The large press map holds six item outputs. */
+    private static void addByproductRow(String material) {
+        var names = GregTechMaterials.find(material).byproducts();
+        if (names.isEmpty() || names.size() > 6)
+            throw new IllegalStateException(material + " byproducts do not fit the large press: " + names);
+        var outputs = new ItemStack[names.size()];
+        for (int i = 0; i < names.size(); i++) {
+            ItemStack dust = AddonItems.stack("dust", names.get(i));
+            if (dust.isEmpty()) throw new IllegalStateException(material + " byproduct dust missing: " + names.get(i));
+            outputs[i] = dust;
+        }
+        ItemStack crushed = AddonItems.stack("crushed", material);
+        if (crushed.isEmpty()) throw new IllegalStateException(material + " crushed missing");
+        var added = AddonRecipes.map("addon_sample.recipe.large_press").add(new AddonRecipes.Line(
+                new ItemStack[]{crushed}, outputs, null, null, 100, 128, 0));
+        if (added == null) throw new IllegalStateException(material + " byproduct row rejected");
     }
 }

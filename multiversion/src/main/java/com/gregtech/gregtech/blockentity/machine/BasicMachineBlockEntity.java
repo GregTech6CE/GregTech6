@@ -902,7 +902,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
     }
 
     /** A changed source/target must not make an already extracted item disappear. */
-    private void returnOrDrop(ItemStack leftover, IItemHandler origin) {
+    protected void returnOrDrop(ItemStack leftover, IItemHandler origin) {
         if (leftover.isEmpty()) return;
         var returned = com.gregtech.gregtech.content.transport.ItemPipeTransferAdapter.transfer(
                 leftover.copy(), () -> origin);
@@ -912,22 +912,37 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Auto I/O ─────────────────────────────────────────────────────────
 
+    /** A declared item-output cell. Face auto-output stays on {@link #autoOutputItems}. */
+    protected void positionedItemOutput() {}
+
+    /** A declared item-input cell. Face auto-input stays on {@link #autoInputItems}. */
+    protected void positionedItemInput() {}
+
+    /** A declared fluid-input cell. Face auto-input stays on {@link #autoInputFluids}. */
+    protected void positionedFluidInput() {}
+
     private void autoIO(Level level, BlockPos pos) {
         if (faceConfig == null) return;
 
         int autoIn = faceConfig.itemAutoInput();
         if (FaceConfig.autoValid(autoIn) && itemHandler != null) {
             autoInputItems(level, pos, autoIn);
+        } else if (itemHandler != null) {
+            positionedItemInput();
         }
 
         int autoOut = faceConfig.itemAutoOutput();
         if (FaceConfig.autoValid(autoOut) && itemHandler != null) {
             autoOutputItems(level, pos, autoOut);
+        } else if (itemHandler != null) {
+            positionedItemOutput();
         }
 
         int fluidAutoIn = faceConfig.fluidAutoInput();
         if (FaceConfig.autoValid(fluidAutoIn) && tanksInput != null && tanksInput.length > 0) {
             autoInputFluids(level, pos, fluidAutoIn);
+        } else if (tanksInput != null && tanksInput.length > 0) {
+            positionedFluidInput();
         }
 
         int fluidAutoOut = faceConfig.fluidAutoOutput();
@@ -1132,7 +1147,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     /** Convert machine-relative direction index (TOP/BOTTOM/LEFT/RIGHT/FRONT/BACK)
      *  to the absolute world {@link Direction} based on the block's facing. */
-    private Direction relativeToAbsolute(int relDir) {
+    protected Direction relativeToAbsolute(int relDir) {
         if (relDir == FaceConfig.BOTTOM) return Direction.DOWN;
         if (relDir == FaceConfig.TOP)    return Direction.UP;
         Direction facing = getBlockState().hasProperty(HorizontalDirectionalBlock.FACING)
@@ -1749,7 +1764,7 @@ public class BasicMachineBlockEntity extends GTEnergyBlockEntity implements Menu
 
     // ── Machine item handler ──────────────────────────────────────────────
 
-    private boolean acceptsAutomaticInput(ItemStack stack) {
+    protected boolean acceptsAutomaticInput(ItemStack stack) {
         return recipeMap != MachineRecipeMaps.Autocrafter || level != null
                 && (recipeMap.containsInput(stack) || com.gregtech.gregtech.content.recipe.AutocraftingRecipes.containsInput(
                         level, this, autocraftingProgram.getStackInSlot(0), stack));
