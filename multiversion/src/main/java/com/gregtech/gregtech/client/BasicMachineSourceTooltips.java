@@ -10,7 +10,7 @@ import java.util.List;
 public final class BasicMachineSourceTooltips {
     private BasicMachineSourceTooltips() {}
     public static void append(BasicMachineSpec spec,List<Component> lines) {
-        appendDefaults(spec,lines,OriginalBasicMachineRules.cheapOverclocking(spec.machineName(),spec.tier()),OriginalBasicMachineRules.efficiency(spec.machineName(),spec.tier()),false,"TU");
+        appendDefaults(spec,lines,spec.cheapOverclocking(),spec.processingEfficiency(),false,"TU");
     }
     public static void appendDefaults(BasicMachineSpec spec,List<Component> lines,boolean cheap,int efficiency,boolean multiblock,String chargedEnergy) {
         if(CommonBlockTooltips.containsKey(lines,"gt.lang.recipes"))return;

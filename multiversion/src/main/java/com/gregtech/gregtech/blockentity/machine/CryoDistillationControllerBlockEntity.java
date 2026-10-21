@@ -12,7 +12,6 @@ public class CryoDistillationControllerBlockEntity extends DistillationTowerCont
         super(com.gregtech.gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),pos,state);
         setSpec(com.gregtech.gregtech.block.machine.CryoDistillationControllerBlock.makeSpec());
     }
-    @Override protected long inputMinimum() {return 1;}
     @Override protected boolean cryogenic() {return true;}
 //? if >=1.21.1 {
     /*@Override public void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
