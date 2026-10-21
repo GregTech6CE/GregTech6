@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-/** A GT6 semi-filter's dump reservation, compared by item and metadata rather than NBT. */
+/** A logistics dump reservation from template items or one inferred prefix. */
 public final class LogisticsItemFilter {
     private final List<ItemStack> items;
     private final String prefix;
@@ -23,16 +23,19 @@ public final class LogisticsItemFilter {
         return new LogisticsItemFilter(List.copyOf(copies), null);
     }
 
-    /** A prefix is resolved against the registered item forms when a candidate is checked. */
+    /** Uses the same single-prefix adapter as the prefix filter block. */
     public static LogisticsItemFilter prefix(String selectedPrefix) {
         return new LogisticsItemFilter(List.of(), selectedPrefix);
     }
 
     public boolean matches(ItemStack candidate) {
-        if (candidate.isEmpty()) return false;
-        if (prefix != null) return prefix.equals(FilterRules.prefix(candidate));
+        if (candidate.isEmpty())
+            return false;
+        if (prefix != null)
+            return prefix.equals(FilterRules.prefix(candidate));
         for (ItemStack template : items)
-            if (LogisticsCoverInteraction.matches(template, candidate)) return true;
+            if (LogisticsCoverInteraction.matches(template, candidate))
+                return true;
         return false;
     }
 }
