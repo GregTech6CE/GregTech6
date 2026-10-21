@@ -5,7 +5,11 @@ package com.gregtech.gregtech.api.addon;
  * One addon structure part. An empty {@code texture} uses the GregTech metal wall,
  * tinted with the material colour. A texture is a path in the addon's own namespace.
  * {@code energy} is null for a casing. A non-null value is an energy part.
+ *
+ * @deprecated Use {@link LayoutPart}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.StructurePartDeclaration", removeAt = "0.2")
 public record StructurePartDeclaration(String name, String material, String texture, float hardness,
                                        StructurePartEnergy energy) {
     /** A casing. It has no energy buffer and does not tick. */

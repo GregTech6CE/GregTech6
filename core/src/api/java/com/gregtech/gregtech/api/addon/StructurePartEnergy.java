@@ -6,7 +6,11 @@ import java.util.List;
 /**
  * SPDX-License-Identifier: LGPL-3.0-or-later.
  * Optional energy role on a structure part. EU and RU use the same record; only {@code type} changes.
+ *
+ * @deprecated Use {@link LayoutPart.Builder#energyOutput(EnergyOutput, long)}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.StructurePartEnergy", removeAt = "0.2")
 public record StructurePartEnergy(String type, long capacity, List<BehaviorMachineDeclaration.Face> outputFaces,
                                   long maxSize, long maxAmount) {
     public StructurePartEnergy {

@@ -4,7 +4,13 @@ import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
-/** One addon machine recipe map. Slot counts match the built-in recipe-map spec. */
+/**
+ * One addon machine recipe map. Slot counts match the built-in recipe-map spec.
+ *
+ * @deprecated Use {@link RecipeTable#machine(String)}. Removal is 0.2.
+ */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.RecipeMapDeclaration", removeAt = "0.2")
 public record RecipeMapDeclaration(
         String name,
         String title,
