@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.block.machine;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.api.machine.MachineSpec;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
 //? if >=1.21.1 {
@@ -66,18 +66,18 @@ public class BehaviorMachineBlock extends GTFacingMachineBlock implements Entity
     }
 
     private static MachineSpec spec(AddonMachines.AcceptedBehavior accepted) {
-        BehaviorMachineDeclaration declaration = accepted.declaration();
-        var material = GTMaterialRegistry.get(declaration.material());
-        return new MachineSpec(declaration.id(), material.getLocalName(), material.getColor(),
-                0, 0, declaration.machineType(), 5.0F, 5.0F);
+        BehaviorMachine declaration = accepted.declaration();
+        var material = GTMaterialRegistry.get(declaration.casing().material());
+        return new MachineSpec(declaration.casing().id(), material.getLocalName(), material.getColor(),
+                0, 0, declaration.casing().machineType(), 5.0F, 5.0F);
     }
 
     public AddonMachines.AcceptedBehavior accepted() { return accepted; }
-    public BehaviorMachineDeclaration declaration() { return accepted.declaration(); }
+    public BehaviorMachine declaration() { return accepted.declaration(); }
 
     public ResourceLocation modelId(String suffix) {
         return ResourceLocation.fromNamespaceAndPath(accepted.addonId(),
-                "block/machine/basic/" + accepted.declaration().machineType() + suffix);
+                "block/machine/basic/" + accepted.declaration().casing().machineType() + suffix);
     }
 
     public void setBeType(Supplier<BlockEntityType<?>> supplier) { this.beType = supplier; }

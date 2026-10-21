@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.client.gui;
 
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -32,14 +32,14 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
     @Override public FluidStack fluidAt(int mouseX, int mouseY) {
         for (int i = 0; i < declaration.fluids().size(); i++) {
             var tank = declaration.fluids().get(i);
-            if (mouseX >= leftPos + tank.x() && mouseX < leftPos + tank.x() + BehaviorMachineDeclaration.TANK_WIDTH
-                    && mouseY >= topPos + tank.y() && mouseY < topPos + tank.y() + BehaviorMachineDeclaration.TANK_HEIGHT)
+            if (mouseX >= leftPos + tank.x() && mouseX < leftPos + tank.x() + BehaviorMachine.TANK_WIDTH
+                    && mouseY >= topPos + tank.y() && mouseY < topPos + tank.y() + BehaviorMachine.TANK_HEIGHT)
                 return menu.tankFluid(i).copy();
         }
         return FluidStack.EMPTY;
     }
     private final ResourceLocation texture;
-    private final BehaviorMachineDeclaration declaration;
+    private final BehaviorMachine declaration;
     private final List<Hover> hovers = new ArrayList<>();
     private final List<ToggleButton> toggles = new ArrayList<>();
 
@@ -60,8 +60,8 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
         for (int i = 0; i < menu.machineSlotCount(); i++) {
             Slot slot = menu.slots.get(i);
             blit(graphics, leftPos + slot.x - 1, topPos + slot.y - 1,
-                    BehaviorMachineDeclaration.UV_SLOT_U, BehaviorMachineDeclaration.UV_SLOT_V,
-                    BehaviorMachineDeclaration.SLOT, BehaviorMachineDeclaration.SLOT);
+                    BehaviorMachine.UV_SLOT_U, BehaviorMachine.UV_SLOT_V,
+                    BehaviorMachine.SLOT, BehaviorMachine.SLOT);
         }
         drawEnergy(graphics);
         for (int tank = 0; tank < declaration.fluids().size(); tank++) drawTank(graphics, tank);
@@ -100,26 +100,26 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
     private void drawEnergy(GuiGraphics graphics) {
         int left = leftPos + declaration.energyX();
         int top = topPos + declaration.energyY();
-        blit(graphics, left, top, BehaviorMachineDeclaration.UV_ENERGY_U, BehaviorMachineDeclaration.UV_ENERGY_V,
-                BehaviorMachineDeclaration.ENERGY_WIDTH, BehaviorMachineDeclaration.ENERGY_HEIGHT);
+        blit(graphics, left, top, BehaviorMachine.UV_ENERGY_U, BehaviorMachine.UV_ENERGY_V,
+                BehaviorMachine.ENERGY_WIDTH, BehaviorMachine.ENERGY_HEIGHT);
         long max = menu.machine().energyBarMax();
-        int filled = scaled(menu.energy(), max, BehaviorMachineDeclaration.ENERGY_HEIGHT);
-        blit(graphics, left, top + BehaviorMachineDeclaration.ENERGY_HEIGHT - filled,
-                BehaviorMachineDeclaration.UV_ENERGY_FULL_U, BehaviorMachineDeclaration.ENERGY_HEIGHT - filled,
-                BehaviorMachineDeclaration.ENERGY_WIDTH, filled);
-        hovers.add(new Hover(left, top, BehaviorMachineDeclaration.ENERGY_WIDTH, BehaviorMachineDeclaration.ENERGY_HEIGHT,
-                List.of(Component.translatable("gui.gt6ce.behavior.energy", menu.energy(), max, declaration.energy()))));
+        int filled = scaled(menu.energy(), max, BehaviorMachine.ENERGY_HEIGHT);
+        blit(graphics, left, top + BehaviorMachine.ENERGY_HEIGHT - filled,
+                BehaviorMachine.UV_ENERGY_FULL_U, BehaviorMachine.ENERGY_HEIGHT - filled,
+                BehaviorMachine.ENERGY_WIDTH, filled);
+        hovers.add(new Hover(left, top, BehaviorMachine.ENERGY_WIDTH, BehaviorMachine.ENERGY_HEIGHT,
+                List.of(Component.translatable("gui.gt6ce.behavior.energy", menu.energy(), max, declaration.energy().type()))));
     }
 
     private void drawTank(GuiGraphics graphics, int tank) {
         var slot = declaration.fluids().get(tank);
         int left = leftPos + slot.x();
         int top = topPos + slot.y();
-        blit(graphics, left, top, BehaviorMachineDeclaration.UV_TANK_U, BehaviorMachineDeclaration.UV_TANK_V,
-                BehaviorMachineDeclaration.TANK_WIDTH, BehaviorMachineDeclaration.TANK_HEIGHT);
+        blit(graphics, left, top, BehaviorMachine.UV_TANK_U, BehaviorMachine.UV_TANK_V,
+                BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
         FluidStack fluid = menu.tankFluid(tank);
         int amount = menu.tankAmount(tank);
-        int filled = scaled(amount, slot.capacity(), BehaviorMachineDeclaration.TANK_HEIGHT - 2);
+        int filled = scaled(amount, slot.capacity(), BehaviorMachine.TANK_HEIGHT - 2);
         if (filled > 0 && !fluid.isEmpty()) {
             IClientFluidTypeExtensions extensions = IClientFluidTypeExtensions.of(fluid.getFluid());
 //? if >=1.21.1 {
@@ -134,14 +134,14 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
             int tint = extensions.getTintColor();
             graphics.setColor(((tint >> 16) & 0xFF) / 255.0F, ((tint >> 8) & 0xFF) / 255.0F, (tint & 0xFF) / 255.0F, 1.0F);
 //?}
-            int bottom = top + BehaviorMachineDeclaration.TANK_HEIGHT - 1;
+            int bottom = top + BehaviorMachine.TANK_HEIGHT - 1;
             for (int drawn = 0; drawn < filled; drawn += 16) {
                 int height = Math.min(16, filled - drawn);
 //? if >=1.21.1 {
-/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineDeclaration.TANK_WIDTH - 2, height,
+/*                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachine.TANK_WIDTH - 2, height,
                         sprite, red, green, blue, 1.0F);
 *///?} else {
-                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachineDeclaration.TANK_WIDTH - 2, height, sprite);
+                graphics.blit(left + 1, bottom - drawn - height, 0, BehaviorMachine.TANK_WIDTH - 2, height, sprite);
 //?}
             }
 //? if >=1.21.1 {
@@ -149,22 +149,22 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
             graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 //?}
         }
-        blit(graphics, left, top, BehaviorMachineDeclaration.UV_TANK_MARKS_U, BehaviorMachineDeclaration.UV_TANK_V,
-                BehaviorMachineDeclaration.TANK_WIDTH, BehaviorMachineDeclaration.TANK_HEIGHT);
+        blit(graphics, left, top, BehaviorMachine.UV_TANK_MARKS_U, BehaviorMachine.UV_TANK_V,
+                BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT);
         Component name = fluid.isEmpty() ? Component.translatable("gui.gt6ce.empty") : fluid.getDisplayName();
-        hovers.add(new Hover(left, top, BehaviorMachineDeclaration.TANK_WIDTH, BehaviorMachineDeclaration.TANK_HEIGHT,
+        hovers.add(new Hover(left, top, BehaviorMachine.TANK_WIDTH, BehaviorMachine.TANK_HEIGHT,
                 List.of(name, Component.translatable("gui.gt6ce.behavior.tank", amount, slot.capacity()))));
     }
 
     private void drawProgress(GuiGraphics graphics) {
         int left = leftPos + declaration.progress().x();
         int top = topPos + declaration.progress().y();
-        blit(graphics, left, top, BehaviorMachineDeclaration.UV_ARROW_U, BehaviorMachineDeclaration.UV_ARROW_V,
-                BehaviorMachineDeclaration.PROGRESS_WIDTH, BehaviorMachineDeclaration.PROGRESS_HEIGHT);
-        int filled = Math.round(menu.progress() * BehaviorMachineDeclaration.PROGRESS_WIDTH);
-        blit(graphics, left, top, BehaviorMachineDeclaration.UV_ARROW_U, BehaviorMachineDeclaration.UV_ARROW_FULL_V,
-                filled, BehaviorMachineDeclaration.PROGRESS_HEIGHT);
-        hovers.add(new Hover(left, top, BehaviorMachineDeclaration.PROGRESS_WIDTH, BehaviorMachineDeclaration.PROGRESS_HEIGHT,
+        blit(graphics, left, top, BehaviorMachine.UV_ARROW_U, BehaviorMachine.UV_ARROW_V,
+                BehaviorMachine.PROGRESS_WIDTH, BehaviorMachine.PROGRESS_HEIGHT);
+        int filled = Math.round(menu.progress() * BehaviorMachine.PROGRESS_WIDTH);
+        blit(graphics, left, top, BehaviorMachine.UV_ARROW_U, BehaviorMachine.UV_ARROW_FULL_V,
+                filled, BehaviorMachine.PROGRESS_HEIGHT);
+        hovers.add(new Hover(left, top, BehaviorMachine.PROGRESS_WIDTH, BehaviorMachine.PROGRESS_HEIGHT,
                 List.of(Component.translatable("gui.gt6ce.behavior.progress", Math.round(menu.progress() * 100)))));
     }
 
@@ -173,9 +173,9 @@ public class BehaviorMachineScreen extends AbstractContainerScreen<BehaviorMachi
         int left = leftPos + placed.x();
         int top = topPos + placed.y();
         boolean on = menu.isOn(toggle);
-        blit(graphics, left, top, on ? BehaviorMachineDeclaration.UV_TOGGLE_ON_U : BehaviorMachineDeclaration.UV_TOGGLE_OFF_U,
-                BehaviorMachineDeclaration.UV_TOGGLE_V, BehaviorMachineDeclaration.SLOT, BehaviorMachineDeclaration.SLOT);
-        Hover area = new Hover(left, top, BehaviorMachineDeclaration.SLOT, BehaviorMachineDeclaration.SLOT, List.of(
+        blit(graphics, left, top, on ? BehaviorMachine.UV_TOGGLE_ON_U : BehaviorMachine.UV_TOGGLE_OFF_U,
+                BehaviorMachine.UV_TOGGLE_V, BehaviorMachine.SLOT, BehaviorMachine.SLOT);
+        Hover area = new Hover(left, top, BehaviorMachine.SLOT, BehaviorMachine.SLOT, List.of(
                 Component.translatable(placed.translationKey()),
                 Component.translatable(on ? "gui.gt6ce.behavior.on" : "gui.gt6ce.behavior.off")));
         hovers.add(area);

@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.api.machine;
 
-import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.IoTarget;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
@@ -34,10 +34,10 @@ public record BasicMachineParameters(
         int minimumLightAbove,
         boolean searchOutputTanks,
         boolean exclusiveOutputs,
-        MachineDeclaration.Target itemOutputTarget,
-        MachineDeclaration.Target fluidOutputTarget,
-        MachineDeclaration.Target itemInputSource,
-        MachineDeclaration.Target fluidInputSource,
+        IoTarget itemOutputTarget,
+        IoTarget fluidOutputTarget,
+        IoTarget itemInputSource,
+        IoTarget fluidInputSource,
         /** True only when an addon called {@code energyRange}. Built-in rows stay false. */
         boolean energyRangeSpecified
 ) {
@@ -66,7 +66,7 @@ public record BasicMachineParameters(
         rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
     }
 
-    private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
+    private static void rejectAutomaticFace(String id, String channel, IoTarget target, int automatic) {
         if (target != null && automatic >= 0)
             throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
@@ -152,10 +152,10 @@ public record BasicMachineParameters(
         private int minimumLightAbove;
         private boolean searchOutputTanks;
         private boolean exclusiveOutputs;
-        private MachineDeclaration.Target itemOutputTarget;
-        private MachineDeclaration.Target fluidOutputTarget;
-        private MachineDeclaration.Target itemInputSource;
-        private MachineDeclaration.Target fluidInputSource;
+        private IoTarget itemOutputTarget;
+        private IoTarget fluidOutputTarget;
+        private IoTarget itemInputSource;
+        private IoTarget fluidInputSource;
         private boolean energyRangeSpecified;
         private boolean energyRangeOmitted;
 
@@ -181,10 +181,10 @@ public record BasicMachineParameters(
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
-        public Builder itemOutputTarget(MachineDeclaration.Target value) { itemOutputTarget = value; return this; }
-        public Builder fluidOutputTarget(MachineDeclaration.Target value) { fluidOutputTarget = value; return this; }
-        public Builder itemInputSource(MachineDeclaration.Target value) { itemInputSource = value; return this; }
-        public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
+        public Builder itemOutputTarget(IoTarget value) { itemOutputTarget = value; return this; }
+        public Builder fluidOutputTarget(IoTarget value) { fluidOutputTarget = value; return this; }
+        public Builder itemInputSource(IoTarget value) { itemInputSource = value; return this; }
+        public Builder fluidInputSource(IoTarget value) { fluidInputSource = value; return this; }
         public BasicMachineParameters build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             long min = energyRangeSpecified ? energyInMin
