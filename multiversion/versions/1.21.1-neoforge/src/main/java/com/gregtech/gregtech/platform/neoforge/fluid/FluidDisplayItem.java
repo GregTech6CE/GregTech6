@@ -1,4 +1,5 @@
 package com.gregtech.gregtech.platform.neoforge.fluid;
+
 import com.gregtech.gregtech.api.material.*;
 import com.gregtech.gregtech.data.RegisteredFluids;
 import com.gregtech.gregtech.registry.GTFluidType;
@@ -11,7 +12,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
-/** Native adapter for Source1 fluid proxies: actual payload metadata, drinks and creative source capability. */
+
+/** Native adapter for fluid display payloads, registered drinks and an inexhaustible source capability. */
 public final class FluidDisplayItem extends Item {
     private final RegisteredFluids.FluidEntry fluidEntry;
 
@@ -26,15 +28,15 @@ public final class FluidDisplayItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        if(com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
-            var fluid=com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
-            if(!fluid.isEmpty()) {
+        if (com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack)) {
+            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(stack);
+            if (!fluid.isEmpty()) {
                 // entryForFluid, not FluidStack#getDisplayName: the three world waters report vanilla
                 // water's FluidType (see GTWorldWaterFluid), so their type description is "Water" and
                 // the GT6 name of the fluid the payload actually carries would be lost. Resolve the
                 // GT6 entry of that fluid instead, exactly what the type description used to give.
-                var entry=com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
-                if(entry==null) return fluid.getDisplayName();
+                var entry = com.gregtech.gregtech.registry.GTFluids.entryForFluid(fluid.getFluid());
+                if (entry == null) return fluid.getDisplayName();
                 String path = com.gregtech.gregtech.registry.GTFluids.sanitizePath(entry.registryName());
                 return GTFluidType.describe(entry, path);
             }
@@ -44,17 +46,16 @@ public final class FluidDisplayItem extends Item {
     }
 
     /**
-     * Drinking, the port of GT6's bottles ({@code MultiItemBottles}, {@code EnumAction.drink}): GT6 gives every
-     * drinkable fluid a {@code FoodStatDrink} entry ({@code DrinksGT}), and a bottle is 250&nbsp;mB of it. The
-     * port's per-fluid item carries the same fluid, so right-clicking a drink drinks it; the bottle is consumed
-     * and an empty glass bottle is handed back, like GT6's bottle. Fluids without a drink entry do nothing.
+     * Uses the carrier's registered drink entry; this action does not resolve display payloads.
+     * For a noncreative player, consumes one carrier and attempts to add an empty bottle.
      */
+
     @Override
     public net.minecraft.world.InteractionResultHolder<ItemStack> use(net.minecraft.world.level.Level level,
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         net.minecraft.world.level.material.Fluid fluid =
-                com.gregtech.gregtech.content.food.GTDrinks.fluidOf(fluidEntry);
+        com.gregtech.gregtech.content.food.GTDrinks.fluidOf(fluidEntry);
         if (com.gregtech.gregtech.content.food.GTDrinks.rowFor(fluid) == null) {
             return net.minecraft.world.InteractionResultHolder.pass(stack);
         }
@@ -70,7 +71,7 @@ public final class FluidDisplayItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        var actual=com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolve(context.registries(),stack);
+        var actual = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolve(context.registries(), stack);
         long amount = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.hasPayload(stack) ? actual.getAmount() : 0;
         tooltip.addAll(GTFluidType.describeTooltip(actual, amount, flag.isAdvanced()));
     }
@@ -99,8 +100,11 @@ public final class FluidDisplayItem extends Item {
         return GTMaterialRegistry.get("NULL");
     }
 
-    public IFluidHandlerItem handler(ItemStack stack) { return new FluidHandler(stack); }
-    /** Per-stack IFluidHandlerItem — creative-only infinite fluid source. Never consumed. */
+    public IFluidHandlerItem handler(ItemStack stack) {
+        return new FluidHandler(stack);
+    }
+
+    /** Inexhaustible per-stack source; this handler does not check player permissions or consume its carrier. */
     private static class FluidHandler implements IFluidHandlerItem {
         private final ItemStack container;
 
@@ -109,13 +113,13 @@ public final class FluidDisplayItem extends Item {
         }
 
         private Fluid resolveFluid() {
-            var fluid=com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
-            return fluid.isEmpty()?null:fluid.getFluid();
+            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
+            return fluid.isEmpty() ? null : fluid.getFluid();
         }
 
         private FluidStack contents(int amount) {
-            var fluid=com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
-            if(!fluid.isEmpty()) fluid.setAmount(amount);
+            var fluid = com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container);
+            if (!fluid.isEmpty()) fluid.setAmount(amount);
             return fluid;
         }
 
@@ -125,23 +129,27 @@ public final class FluidDisplayItem extends Item {
         }
 
         @Override
-        public int getTanks() { return 1; }
+        public int getTanks() {
+            return 1;
+        }
 
         @NotNull
         @Override
         public FluidStack getFluidInTank(int tank) {
-            Fluid f = resolveFluid();
-            if (f == null) return FluidStack.EMPTY;
+            Fluid resolvedFluid = resolveFluid();
+            if (resolvedFluid == null) return FluidStack.EMPTY;
             return contents(Integer.MAX_VALUE);
         }
 
         @Override
-        public int getTankCapacity(int tank) { return Integer.MAX_VALUE; }
+        public int getTankCapacity(int tank) {
+            return Integer.MAX_VALUE;
+        }
 
         @Override
         public boolean isFluidValid(int tank, @NotNull FluidStack stack) {
-            Fluid f = resolveFluid();
-            return f != null && stack.getFluid() == f;
+            Fluid resolvedFluid = resolveFluid();
+            return resolvedFluid != null && stack.getFluid() == resolvedFluid;
         }
 
         @Override
@@ -152,8 +160,11 @@ public final class FluidDisplayItem extends Item {
         @NotNull
         @Override
         public FluidStack drain(FluidStack resource, FluidAction action) {
-            Fluid f = resolveFluid();
-            if (f == null || !FluidStack.isSameFluidSameComponents(com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container),resource)) return FluidStack.EMPTY;
+            Fluid resolvedFluid = resolveFluid();
+            if (resolvedFluid == null
+                    || !FluidStack.isSameFluidSameComponents(
+                            com.gregtech.gregtech.api.fluid.FluidDisplayBinding.resolveCurrent(container), resource))
+                return FluidStack.EMPTY;
             return drain(resource.getAmount(), action);
         }
 
@@ -161,8 +172,8 @@ public final class FluidDisplayItem extends Item {
         @Override
         public FluidStack drain(int maxDrain, FluidAction action) {
             if (maxDrain <= 0) return FluidStack.EMPTY;
-            Fluid f = resolveFluid();
-            if (f == null) return FluidStack.EMPTY;
+            Fluid resolvedFluid = resolveFluid();
+            if (resolvedFluid == null) return FluidStack.EMPTY;
             return contents(maxDrain);
         }
 
