@@ -256,6 +256,8 @@ public final class GTMaterialRegistry {
             com.gregtech.gregtech.content.material.MaterialDefinitions.link();
             stampBuiltinIdentity();
             AddonMaterials.linkAddons();
+            AddonMaterials.publishOreByproducts();
+            AddonMaterials.publishOreVeins();
             var resolved = new HashSet<GTMaterial>();
             for (GTMaterial material : ALL_MATERIALS) {
                 GTMaterial canonical = material.resolve();

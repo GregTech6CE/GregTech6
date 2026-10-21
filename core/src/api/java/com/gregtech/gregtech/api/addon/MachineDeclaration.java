@@ -16,6 +16,13 @@ import java.util.Objects;
  * {@code cheapOverclockingSpecified} is false until the builder sets it. A basic machine still
  * reads the boolean, whose default is off, and does not consult the built-in name table.
  * {@code minimumLightAbove} of 0 does not check the block above.
+ * {@code searchOutputTanks} tries the output tanks only after the input tanks miss, and that job
+ * drains the tanks that matched. {@code exclusiveOutputs} rolls the first item chance once and
+ * requires every static row to have exactly two item outputs. A large recipe machine may name one
+ * cell for item output, fluid output, item input and fluid input. The origin is rejected. Each
+ * component is from -16 to 16. Naming a cell leaves that channel's automatic face unset; setting both fails.
+ * {@code energyInMin} and {@code energyInMax} stay {@code 0} until {@code energyRange} is set.
+ * A TU machine cannot declare a range. The nominal input may sit outside the range.
  */
 public record MachineDeclaration(
         String id,
@@ -42,7 +49,15 @@ public record MachineDeclaration(
         BehaviorMachineDeclaration.Face fluidAutoOutput,
         boolean cheapOverclocking,
         boolean cheapOverclockingSpecified,
-        int minimumLightAbove
+        int minimumLightAbove,
+        boolean searchOutputTanks,
+        boolean exclusiveOutputs,
+        Target itemOutputTarget,
+        Target fluidOutputTarget,
+        Target itemInputSource,
+        Target fluidInputSource,
+        long energyInMin,
+        long energyInMax
 ) {
     public MachineDeclaration {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -72,6 +87,28 @@ public record MachineDeclaration(
         fluidInputs = copyFaces(id, fluidInputs);
         fluidOutputs = copyFaces(id, fluidOutputs);
         energyInputs = copyFaces(id, energyInputs);
+        if (kind != Kind.LARGE_RECIPE && (itemOutputTarget != null || fluidOutputTarget != null
+                || itemInputSource != null || fluidInputSource != null))
+            throw new IllegalArgumentException("IO targets require a large recipe machine: " + id);
+        rejectAutomaticFace(id, "item output", itemOutputTarget, itemAutoOutput);
+        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, fluidAutoOutput);
+        rejectAutomaticFace(id, "item input", itemInputSource, itemAutoInput);
+        rejectAutomaticFace(id, "fluid input", fluidInputSource, fluidAutoInput);
+        if (energyInMin != 0 || energyInMax != 0) {
+            if (energyInMin < 1 || energyInMax < energyInMin)
+                throw new IllegalArgumentException("Invalid energy range for " + id + ": "
+                        + energyInMin + ".." + energyInMax);
+            if ("TU".equalsIgnoreCase(energy))
+                throw new IllegalArgumentException("TU machines cannot declare an energy range: " + id);
+        }
+    }
+
+    /** {@code false} when both bounds are {@code 0}, which is the unset range. */
+    public boolean energyRangeSpecified() { return energyInMin != 0 || energyInMax != 0; }
+
+    private static void rejectAutomaticFace(String id, String channel, Target target, BehaviorMachineDeclaration.Face automatic) {
+        if (target != null && automatic != null)
+            throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
 
     private static List<BehaviorMachineDeclaration.Face> copyFaces(String id, List<BehaviorMachineDeclaration.Face> faces) {
@@ -86,6 +123,17 @@ public record MachineDeclaration(
     }
 
     public enum Kind { BASIC, LARGE_RECIPE }
+
+    /** One cell, in the same coordinates as {@link MachineLayout.Cell}, plus the face that receives the transfer. */
+    public record Target(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+        public Target {
+            if (receiver == null) throw new IllegalArgumentException("Missing receiver");
+            if (right == 0 && up == 0 && back == 0)
+                throw new IllegalArgumentException("IO target cannot be the origin");
+            if (right < -16 || right > 16 || up < -16 || up > 16 || back < -16 || back > 16)
+                throw new IllegalArgumentException("IO target is out of range: " + right + "," + up + "," + back);
+        }
+    }
 
     public static Builder builder(String id, String material) { return new Builder(id, material); }
 
@@ -115,6 +163,14 @@ public record MachineDeclaration(
         private boolean cheapOverclocking;
         private boolean cheapOverclockingSpecified;
         private int minimumLightAbove;
+        private boolean searchOutputTanks;
+        private boolean exclusiveOutputs;
+        private Target itemOutputTarget;
+        private Target fluidOutputTarget;
+        private Target itemInputSource;
+        private Target fluidInputSource;
+        private long energyInMin;
+        private long energyInMax;
 
         private Builder(String id, String material) {
             this.id = id;
@@ -144,13 +200,32 @@ public record MachineDeclaration(
         public Builder fluidAutoOutput(BehaviorMachineDeclaration.Face face) { facesSpecified = true; fluidAutoOutput = face; return this; }
         public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingSpecified = true; return this; }
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
+        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
+        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
+        public Builder itemOutputTarget(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            itemOutputTarget = new Target(right, up, back, receiver); return this;
+        }
+        public Builder fluidOutputTarget(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            fluidOutputTarget = new Target(right, up, back, receiver); return this;
+        }
+        public Builder itemInputSource(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            itemInputSource = new Target(right, up, back, receiver); return this;
+        }
+        public Builder fluidInputSource(int right, int up, int back, BehaviorMachineDeclaration.Face receiver) {
+            fluidInputSource = new Target(right, up, back, receiver); return this;
+        }
+        /** Accepted packet size. {@code 0, 0} leaves the range unset. {@code 1 <= min <= max}. */
+        public Builder energyRange(long min, long max) { energyInMin = min; energyInMax = max; return this; }
 
         public MachineDeclaration build() {
             return new MachineDeclaration(id, material, machineType, energy, energyPerTick, tier, parallel,
                     recipeMap, kind, efficiency, constantEnergy, structureKeys, facesSpecified,
                     itemInputs, itemOutputs, fluidInputs, fluidOutputs, energyInputs,
                     itemAutoInput, itemAutoOutput, fluidAutoInput, fluidAutoOutput,
-                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove);
+                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
+                    searchOutputTanks, exclusiveOutputs,
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource,
+                    energyInMin, energyInMax);
         }
     }
 }

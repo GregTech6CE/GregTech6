@@ -52,6 +52,7 @@ public final class BasicMachineRegistries {
   BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);MENUS.register(bus);
   BehaviorMachineRegistration.register(bus);
   FuelGeneratorRegistration.register(bus);
+  CompressedGasTankRegistration.register(bus);
   bus.addListener(BasicMachineRegistries::capabilities);
   bus.addListener(com.gregtech.gregtech.network.MachinePayloads::register);
  }
@@ -77,6 +78,8 @@ public final class BasicMachineRegistries {
   event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.CRYO_DISTILLATION.get(),com.gregtech.gregtech.blockentity.machine.CryoDistillationControllerBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::itemCapability);
   event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get(),com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity::fluidCapability);
+  event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::itemCapability);
+  event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.gregtech.gregtech.registry.GTBlockEntities.ADDON_ENERGY_PART.get(),com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity::fluidCapability);
   for(var type:TYPES){event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,type.get(),BasicMachineBlockEntity::itemCapability);event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,type.get(),BasicMachineBlockEntity::fluidCapability);}
  }
  public static void registerCompositions(){

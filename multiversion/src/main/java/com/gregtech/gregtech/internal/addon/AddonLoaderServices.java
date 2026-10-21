@@ -52,6 +52,10 @@ public final class AddonLoaderServices {
             RecipeMap map = RecipeMap.RECIPE_MAPS.get(name);
             return map == null ? null : new MapView(map);
         }
+
+        @Override public boolean gas(net.minecraft.world.level.material.Fluid fluid) {
+            return com.gregtech.gregtech.api.fluid.FluidHazards.isGas(fluid);
+        }
     }
 
     private static FluidStack flowing(String name, int millibuckets) {
@@ -77,11 +81,13 @@ public final class AddonLoaderServices {
         @Override public String name() { return map.mNameInternal; }
 
         @Override public AddonRecipes.Line add(AddonRecipes.Line line) {
+            com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addRecipe(recipe(line));
             return recipe == null ? null : line(recipe);
         }
 
         @Override public AddonRecipes.Line addDisplay(AddonRecipes.Line line) {
+            com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.requireRow(map, line.itemOutputs());
             Recipe recipe = map.addFakeRecipe(false, recipe(line));
             return recipe == null ? null : line(recipe);
         }

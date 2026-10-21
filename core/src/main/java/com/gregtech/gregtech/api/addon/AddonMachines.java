@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 /** Queued addon recipe maps, machines and layouts. GregTech installs this once, after materials exist. */
 public final class AddonMachines {
@@ -32,8 +33,12 @@ public final class AddonMachines {
     private static List<AcceptedMachine> machines = List.of();
     private static List<AcceptedBehavior> behaviorMachines = List.of();
     private static List<AcceptedFuel> fuelGenerators = List.of();
+    private static List<AcceptedCompressedGas> compressedGasTanks = List.of();
     private static List<StructurePart> structureParts = List.of();
     private static java.util.Map<String, StructurePart> partsByName = java.util.Map.of();
+    /** Block ids and tags named by layouts. Checked after the block registry exists. */
+    private static final List<PlainBlock> PLAIN_BLOCKS = new ArrayList<>();
+    public record PlainBlock(String addonId, String layout, String name) {}
 
     private AddonMachines() {}
 
@@ -46,16 +51,24 @@ public final class AddonMachines {
                                    long energyInMin, long energyInMax, String blockEntityPath) {}
     public record AcceptedFuel(String addonId, FuelGeneratorDeclaration declaration) {}
 
+    /** A compressed gas drum whose temperature ceiling is the material melting point. */
+    public record AcceptedCompressedGas(String addonId, CompressedGasTankDeclaration declaration, int meltingPoint) {}
+
     private record Submission(String addonId, List<RecipeMapSpec> recipeMaps,
                               List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
                               List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
                               List<FuelGeneratorDeclaration> generators, List<StructurePartDeclaration> parts,
-                              List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
+                              List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes,
+                              List<CompressedGasTankDeclaration> tanks) {}
     /** Pipe rows queued before install, in addon-id order. */
     public record QueuedPipes(String addonId, List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {}
     private record Signature(String recipeMapName, MachineControllerKind kind, int efficiency,
                              boolean constantEnergy, List<String> structureKeys, MachineFaceMasks faces,
-                             boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove) {}
+                             boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove,
+                             boolean searchOutputTanks, boolean exclusiveOutputs,
+                             MachineDeclaration.Target itemOutputTarget, MachineDeclaration.Target fluidOutputTarget,
+                             MachineDeclaration.Target itemInputSource, MachineDeclaration.Target fluidInputSource,
+                             boolean energyRangeSpecified, long energyInMin, long energyInMax) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelGeneratorDeclaration.Output output, FuelGeneratorDeclaration.Kind kind) {}
     private record BehaviorSignature(String energy, String energyOut, List<BehaviorMachineDeclaration.SlotRole> items,
@@ -85,7 +98,7 @@ public final class AddonMachines {
                 accept(contributor.addonId(), maps(contributor.recipeMaps()), machines(contributor.machines()),
                         layouts(contributor.layouts()), contributor.behaviorMachines(),
                         fuelSpecs(contributor.fuelMaps()), contributor.fuelGenerators(), contributor.parts(),
-                        contributor.fluidPipes(), contributor.itemPipes());
+                        contributor.fluidPipes(), contributor.itemPipes(), contributor.compressedGasTanks());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -126,7 +139,17 @@ public final class AddonMachines {
                     .tier(declaration.tier())
                     .parallel(declaration.parallel())
                     .faces(faces(declaration))
-                    .minimumLightAbove(declaration.minimumLightAbove());
+                    .minimumLightAbove(declaration.minimumLightAbove())
+                    .searchOutputTanks(declaration.searchOutputTanks())
+                    .exclusiveOutputs(declaration.exclusiveOutputs())
+                    .itemOutputTarget(declaration.itemOutputTarget())
+                    .fluidOutputTarget(declaration.fluidOutputTarget())
+                    .itemInputSource(declaration.itemInputSource())
+                    .fluidInputSource(declaration.fluidInputSource());
+            if (declaration.energyRangeSpecified())
+                parameters.energyRange(declaration.energyInMin(), declaration.energyInMax());
+            else if (declaration.kind() == MachineDeclaration.Kind.LARGE_RECIPE)
+                parameters.omitEnergyRange();
             if (declaration.cheapOverclockingSpecified()) parameters.cheapOverclocking(declaration.cheapOverclocking());
             var built = parameters.build();
             definitions.add(new AddonMachineDefinition(built, declaration.recipeMap(),
@@ -148,6 +171,11 @@ public final class AddonMachines {
             layouts.add(new AddonMachineLayout(layout.machineName(), cells));
         }
         return List.copyOf(layouts);
+    }
+
+    private static boolean hasIoTarget(BasicMachineParameters parameters) {
+        return parameters.itemOutputTarget() != null || parameters.fluidOutputTarget() != null
+                || parameters.itemInputSource() != null || parameters.fluidInputSource() != null;
     }
 
     private static MachineFaceMasks faces(MachineDeclaration declaration) {
@@ -220,6 +248,18 @@ public final class AddonMachines {
                                            List<FuelGeneratorDeclaration> generators,
                                            List<StructurePartDeclaration> parts,
                                            List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {
+        accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts,
+                fluidPipes, itemPipes, List.of());
+    }
+
+    /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
+    public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
+                                           List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
+                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGeneratorDeclaration> generators,
+                                           List<StructurePartDeclaration> parts,
+                                           List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes,
+                                           List<CompressedGasTankDeclaration> tanks) {
         if (installed) throw new IllegalStateException("Addon machine queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -236,7 +276,8 @@ public final class AddonMachines {
                 List.copyOf(Objects.requireNonNull(generators, "fuelGenerators")),
                 List.copyOf(Objects.requireNonNull(parts, "parts")),
                 List.copyOf(Objects.requireNonNull(fluidPipes, "fluidPipes")),
-                List.copyOf(Objects.requireNonNull(itemPipes, "itemPipes"))));
+                List.copyOf(Objects.requireNonNull(itemPipes, "itemPipes")),
+                List.copyOf(Objects.requireNonNull(tanks, "compressedGasTanks"))));
     }
 
     /** Queued pipe rows, in addon-id order. Empty until a contributor submits pipes. */
@@ -281,6 +322,7 @@ public final class AddonMachines {
      */
     public static synchronized void install(Set<String> reservedMachineNames, Set<String> knownRecipeMaps) {
         if (installed) return;
+        PLAIN_BLOCKS.clear();
         collectContributors();
         AddonPipes.validate();
         Objects.requireNonNull(reservedMachineNames, "reservedMachineNames");
@@ -337,6 +379,14 @@ public final class AddonMachines {
                 if (material == null || !material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
                             + "' uses unknown material '" + declaration.material() + "'");
+                if (declaration.energy() != null) {
+                    try {
+                        energy(declaration.energy().type());
+                    } catch (IllegalArgumentException failure) {
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' structure part '" + name
+                                + "' uses unknown energy type '" + declaration.energy().type() + "'", failure);
+                    }
+                }
                 if (nextPartId < 0)
                     throw new IllegalStateException("Addon structure part ids overflowed");
                 var part = new StructurePart(submission.addonId, nextPartId, declaration);
@@ -380,14 +430,25 @@ public final class AddonMachines {
                 if (reservedMachineNames.contains(machineName))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses a built-in machine name");
+                if (definition.kind() != MachineControllerKind.LARGE_RECIPE && hasIoTarget(parameters))
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' IO targets require a large recipe machine");
                 String previousOwner = machineOwner.putIfAbsent(machineName, submission.addonId);
                 if (previousOwner != null && !previousOwner.equals(submission.addonId))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses the same machine name as addon '" + previousOwner + "'");
+                if (parameters.energyTag() == GregTechTags.Energy.TU && parameters.energyRangeSpecified())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' cannot declare an energy range for TU");
                 var signature = new Signature(definition.recipeMapName(), definition.kind(), definition.efficiency(),
                         definition.constantEnergy(), definition.structureKeys(), parameters.faceConfig(),
                         parameters.cheapOverclocking(), parameters.cheapOverclockingSpecified(),
-                        parameters.minimumLightAbove());
+                        parameters.minimumLightAbove(), parameters.searchOutputTanks(), parameters.exclusiveOutputs(),
+                        parameters.itemOutputTarget(), parameters.fluidOutputTarget(),
+                        parameters.itemInputSource(), parameters.fluidInputSource(),
+                        parameters.energyRangeSpecified(),
+                        parameters.energyRangeSpecified() ? parameters.energyInMin() : 0,
+                        parameters.energyRangeSpecified() ? parameters.energyInMax() : 0);
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
@@ -401,8 +462,12 @@ public final class AddonMachines {
         }
         var acceptedGenerators = generators(machineOwner, machineSignature, idOwner, reservedMachineNames,
                 fuelOwner, acceptedFuelMaps, largeNames);
+        var behaviorNames = new HashSet<String>();
+        for (Submission submission : QUEUE.values())
+            for (BehaviorMachineDeclaration declaration : submission.behavior)
+                behaviorNames.add(declaration.machineType());
         for (PreparedLayout layout : preparedLayouts) {
-            if (!largeNames.contains(layout.machineName))
+            if (!largeNames.contains(layout.machineName) && !behaviorNames.contains(layout.machineName))
                 throw new IllegalStateException("Addon '" + layout.addonId + "' layout '"
                         + layout.machineName + "' has no controller");
         }
@@ -427,7 +492,20 @@ public final class AddonMachines {
         machines = List.copyOf(acceptedMachines);
         behaviorMachines = List.copyOf(acceptedBehavior);
         fuelGenerators = List.copyOf(acceptedGenerators);
+        compressedGasTanks = gasTanks();
         installed = true;
+    }
+
+    public static List<PlainBlock> plainBlocks() { return List.copyOf(PLAIN_BLOCKS); }
+
+    /** Unknown block ids fail here. Tags are left for the structure check, when their contents exist. */
+    public static void requireKnownBlocks(Predicate<String> known) {
+        for (PlainBlock block : PLAIN_BLOCKS) {
+            if (block.name().startsWith("#")) continue;
+            if (!known.test(block.name()))
+                throw new IllegalStateException("Addon '" + block.addonId() + "' layout '" + block.layout()
+                        + "' uses unknown block '" + block.name() + "'");
+        }
     }
 
     public static List<AcceptedRecipeMap> recipeMaps() { return recipeMaps; }
@@ -435,6 +513,7 @@ public final class AddonMachines {
     public static List<AcceptedMachine> machines() { return machines; }
     public static List<AcceptedBehavior> behaviorMachines() { return behaviorMachines; }
     public static List<AcceptedFuel> fuelGenerators() { return fuelGenerators; }
+    public static List<AcceptedCompressedGas> compressedGasTanks() { return compressedGasTanks; }
     public static List<StructurePart> structureParts() { return structureParts; }
 
     /** Runtime id of an addon structure part, or -1. */
@@ -444,6 +523,24 @@ public final class AddonMachines {
     }
 
     public static boolean installed() { return installed; }
+
+    private static List<AcceptedCompressedGas> gasTanks() {
+        var accepted = new ArrayList<AcceptedCompressedGas>();
+        for (Submission submission : QUEUE.values()) {
+            var seen = new HashSet<String>();
+            for (CompressedGasTankDeclaration declaration : submission.tanks) {
+                if (!seen.add(declaration.id()))
+                    throw new IllegalStateException("Addon '" + submission.addonId
+                            + "' uses compressed gas tank '" + declaration.id() + "' twice");
+                var material = GTMaterialRegistry.get(declaration.material());
+                if (material == null || !material.isValid())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' compressed gas tank '"
+                            + declaration.id() + "' uses unknown material '" + declaration.material() + "'");
+                accepted.add(new AcceptedCompressedGas(submission.addonId, declaration, material.getMeltingPoint()));
+            }
+        }
+        return List.copyOf(accepted);
+    }
 
     private static List<AcceptedFuel> generators(java.util.Map<String, String> machineOwner,
                                                   java.util.Map<String, Signature> machineSignature,
@@ -598,6 +695,21 @@ public final class AddonMachines {
             if (!occupied.add(position))
                 throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
                         + "' repeats position " + position);
+            if (MachineLayout.plainBlock(cell.part())) {
+                try {
+                    MachineLayout.checkPlainBlock(cell.part());
+                } catch (IllegalArgumentException failure) {
+                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
+                            + "' uses invalid block name '" + cell.part() + "'", failure);
+                }
+                if (cell.role() != StructureGrid.Role.CASING)
+                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
+                            + "' plain block '" + cell.part() + "' requires the casing role");
+                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.machineName(), cell.part()));
+                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
+                        cell.role(), cell.part()));
+                continue;
+            }
             int part = SharedLargeMachineParts.idForName(cell.part());
             if (part < 0)
                 throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()

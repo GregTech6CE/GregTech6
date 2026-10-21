@@ -1,9 +1,10 @@
 package com.gregtech.gregtech.api.machine;
 
+import com.gregtech.gregtech.api.addon.MachineDeclaration;
 import com.gregtech.gregtech.api.energy.MachineFaceMasks;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
-
+import com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules;
 import com.gregtech.gregtech.data.GregTechTags;
 
 
@@ -30,7 +31,15 @@ public record BasicMachineParameters(
         long energyInMax,
         boolean cheapOverclocking,
         boolean cheapOverclockingSpecified,
-        int minimumLightAbove
+        int minimumLightAbove,
+        boolean searchOutputTanks,
+        boolean exclusiveOutputs,
+        MachineDeclaration.Target itemOutputTarget,
+        MachineDeclaration.Target fluidOutputTarget,
+        MachineDeclaration.Target itemInputSource,
+        MachineDeclaration.Target fluidInputSource,
+        /** True only when an addon called {@code energyRange}. Built-in rows stay false. */
+        boolean energyRangeSpecified
 ) {
     public BasicMachineParameters {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -43,12 +52,23 @@ public record BasicMachineParameters(
         if (tier < 1 || parallelLimit < 1 || energyIn < 0 || energyOut < 0
                 || !Float.isFinite(hardness) || !Float.isFinite(blastResistance))
             throw new IllegalArgumentException("Invalid machine parameters for " + id);
-        if (energyInMin < 1 || energyInMax < energyInMin)
-            throw new IllegalArgumentException("Invalid energy range for " + id + ": "
-                    + energyInMin + ".." + energyInMax);
+        if (energyRangeSpecified || energyInMin != 0 || energyInMax != 0) {
+            if (energyInMin < 1 || energyInMax < energyInMin)
+                throw new IllegalArgumentException("Invalid energy range for " + id + ": "
+                        + energyInMin + ".." + energyInMax);
+        }
         if (minimumLightAbove < 0 || minimumLightAbove > 15)
             throw new IllegalArgumentException("Invalid light requirement for " + id + ": " + minimumLightAbove);
         constructionMaterials = List.copyOf(constructionMaterials);
+        rejectAutomaticFace(id, "item output", itemOutputTarget, faceConfig.itemAutoOutput());
+        rejectAutomaticFace(id, "fluid output", fluidOutputTarget, faceConfig.fluidAutoOutput());
+        rejectAutomaticFace(id, "item input", itemInputSource, faceConfig.itemAutoInput());
+        rejectAutomaticFace(id, "fluid input", fluidInputSource, faceConfig.fluidAutoInput());
+    }
+
+    private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
+        if (target != null && automatic >= 0)
+            throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
 
     /** Built-in and older callers keep cheap overclocking on the name table and do not require light. */
@@ -57,7 +77,8 @@ public record BasicMachineParameters(
                                   MachineFaceMasks faceConfig, List<WeightedMaterial> constructionMaterials,
                                   int parallelLimit, long energyInMin, long energyInMax) {
         this(id, material, machineName, energyType, tier, energyIn, energyOut, hardness, blastResistance,
-                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0);
+                faceConfig, constructionMaterials, parallelLimit, energyInMin, energyInMax, false, false, 0, false, false,
+                null, null, null, null, false);
     }
 
     /**
@@ -91,6 +112,24 @@ public record BasicMachineParameters(
 
     public GregTechTags.Tag energyTag() { return requireEnergy(energyType); }
 
+    /**
+     * The range a controller actually accepts. An explicit declaration wins. Otherwise a single
+     * block uses half to double, and a large recipe machine uses {@link LargeMachineProcessingRules}.
+     */
+    public long acceptedEnergyInMin(boolean largeRecipe) {
+        if (energyRangeSpecified) return energyInMin;
+        if (largeRecipe) return LargeMachineProcessingRules.inputMinimum(
+                energyTag() == GregTechTags.Energy.TU, energyTag() == GregTechTags.Energy.HU);
+        return energyInMin > 0 ? energyInMin : defaultEnergyInMin(energyType, energyIn);
+    }
+
+    /** @see #acceptedEnergyInMin(boolean) */
+    public long acceptedEnergyInMax(boolean largeRecipe) {
+        if (energyRangeSpecified) return energyInMax;
+        if (largeRecipe) return LargeMachineProcessingRules.inputMaximum(energyTag() == GregTechTags.Energy.TU);
+        return energyInMax > 0 ? energyInMax : defaultEnergyInMax(energyType, energyIn);
+    }
+
     public static Builder builder(String id, GTMaterial casing) { return new Builder(id, casing); }
 
     public static final class Builder {
@@ -111,6 +150,14 @@ public record BasicMachineParameters(
         private boolean cheapOverclocking;
         private boolean cheapOverclockingSpecified;
         private int minimumLightAbove;
+        private boolean searchOutputTanks;
+        private boolean exclusiveOutputs;
+        private MachineDeclaration.Target itemOutputTarget;
+        private MachineDeclaration.Target fluidOutputTarget;
+        private MachineDeclaration.Target itemInputSource;
+        private MachineDeclaration.Target fluidInputSource;
+        private boolean energyRangeSpecified;
+        private boolean energyRangeOmitted;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -120,7 +167,11 @@ public record BasicMachineParameters(
         public Builder energy(GregTechTags.Tag type, long inputPerTick) { energy = type; energyIn = inputPerTick; return this; }
         public Builder energyOutput(long outputPerTick) { energyOut = outputPerTick; return this; }
         /** GT6 {@code NBT_INPUT_MIN} / {@code NBT_INPUT_MAX}: the accepted input range. */
-        public Builder energyRange(long inputMin, long inputMax) { energyInMin = inputMin; energyInMax = inputMax; return this; }
+        public Builder energyRange(long inputMin, long inputMax) {
+            energyInMin = inputMin; energyInMax = inputMax; energyRangeSpecified = true; return this;
+        }
+        /** Keep both bounds at 0 so a large recipe machine is recorded as undeclared. */
+        public Builder omitEnergyRange() { energyRangeOmitted = true; return this; }
         public Builder tier(int value) { tier = value; return this; }
         public Builder parallel(int value) { parallel = value; return this; }
         public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
@@ -128,13 +179,24 @@ public record BasicMachineParameters(
         public Builder constructionMaterials(List<WeightedMaterial> value) { construction = List.copyOf(value); return this; }
         public Builder cheapOverclocking(boolean value) { cheapOverclocking = value; cheapOverclockingSpecified = true; return this; }
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
+        public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
+        public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
+        public Builder itemOutputTarget(MachineDeclaration.Target value) { itemOutputTarget = value; return this; }
+        public Builder fluidOutputTarget(MachineDeclaration.Target value) { fluidOutputTarget = value; return this; }
+        public Builder itemInputSource(MachineDeclaration.Target value) { itemInputSource = value; return this; }
+        public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
         public BasicMachineParameters build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
+            long min = energyRangeSpecified ? energyInMin
+                    : energyRangeOmitted ? 0 : defaultEnergyInMin(energy.getShortName(), energyIn);
+            long max = energyRangeSpecified ? energyInMax
+                    : energyRangeOmitted ? 0 : defaultEnergyInMax(energy.getShortName(), energyIn);
             return new BasicMachineParameters(id, material, machineType, energy.getShortName(), tier, energyIn, energyOut,
-                    hardness, resistance, faces, construction, parallel,
-                    energyInMin > 0 ? energyInMin : defaultEnergyInMin(energy.getShortName(), energyIn),
-                    energyInMax > 0 ? energyInMax : defaultEnergyInMax(energy.getShortName(), energyIn),
-                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove);
+                    hardness, resistance, faces, construction, parallel, min, max,
+                    cheapOverclocking, cheapOverclockingSpecified, minimumLightAbove,
+                    searchOutputTanks, exclusiveOutputs,
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource,
+                    energyRangeSpecified);
         }
     }
     public String textureFolder() { return machineName; }

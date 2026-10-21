@@ -86,6 +86,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         Map<ResourceLocation, byte[]> references = new HashMap<>();
         emitStructureParts(result);
         emitAddonPipes(result);
+        emitCompressedTanks(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -171,20 +172,44 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts()) {
             ResourceLocation id = part.block().getId();
             String texture = part.texture() == null ? "" : part.texture();
-            if (texture.isEmpty()) {
-                result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
-                        "{\"variants\":{\"\":{\"model\":\"gt6ce:block/machine/multiblock/steel_wall\"}}}".getBytes(StandardCharsets.UTF_8));
-                result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
-                        "{\"parent\":\"gt6ce:block/machine/multiblock/steel_wall\"}".getBytes(StandardCharsets.UTF_8));
-                continue;
+            boolean energy = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
+            String model = texture.isEmpty()
+                    ? "gt6ce:block/machine/multiblock/steel_wall"
+                    : id.getNamespace() + ":block/" + id.getPath();
+            if (!texture.isEmpty()) {
+                String cube = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\""
+                        + id.getNamespace() + ":" + texture + "\"}}";
+                result.put(named(id.getNamespace(), "models/block/" + id.getPath() + ".json"), cube.getBytes(StandardCharsets.UTF_8));
             }
-            String model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\""
-                    + id.getNamespace() + ":" + texture + "\"}}";
-            result.put(named(id.getNamespace(), "models/block/" + id.getPath() + ".json"), model.getBytes(StandardCharsets.UTF_8));
-            result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"),
-                    ("{\"variants\":{\"\":{\"model\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}}}").getBytes(StandardCharsets.UTF_8));
+            String blockstate = energy
+                    ? facingBlockstate(model)
+                    : "{\"variants\":{\"\":{\"model\":\"" + model + "\"}}}";
+            result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
-                    ("{\"parent\":\"" + id.getNamespace() + ":block/" + id.getPath() + "\"}").getBytes(StandardCharsets.UTF_8));
+                    ("{\"parent\":\"" + model + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    private static String facingBlockstate(String model) {
+        String variant = "{\"model\":\"" + model + "\"}";
+        return "{\"variants\":{\"facing=north\":" + variant + ",\"facing=south\":" + variant
+                + ",\"facing=west\":" + variant + ",\"facing=east\":" + variant + "}}";
+    }
+
+    /** Iron cube so a drum has a model before an addon ships its own. */
+    private static void emitCompressedTanks(Map<ResourceLocation, byte[]> result) {
+        byte[] model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"minecraft:block/iron_block\"}}"
+                .getBytes(StandardCharsets.UTF_8);
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock)) continue;
+            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(block);
+            String path = id.getPath();
+            result.put(named(id.getNamespace(), "models/block/" + path + ".json"), model);
+            result.put(named(id.getNamespace(), "blockstates/" + path + ".json"),
+                    ("{\"variants\":{\"\":{\"model\":\"" + id.getNamespace() + ":block/" + path + "\"}}}")
+                            .getBytes(StandardCharsets.UTF_8));
+            result.put(named(id.getNamespace(), "models/item/" + path + ".json"),
+                    ("{\"parent\":\"" + id.getNamespace() + ":block/" + path + "\"}").getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -256,6 +281,9 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             names.add(prefix.itemNamespace());
         for (var part : com.gregtech.gregtech.registry.GTMultiblocks.addonParts())
             names.add(part.block().getId().getNamespace());
+        for (var block : BuiltInRegistries.BLOCK)
+            if (block instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock)
+                names.add(BuiltInRegistries.BLOCK.getKey(block).getNamespace());
         names.addAll(com.gregtech.gregtech.registry.AddonPipeRegistration.namespaces());
         return Set.copyOf(names);
     }

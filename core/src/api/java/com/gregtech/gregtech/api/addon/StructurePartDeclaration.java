@@ -2,10 +2,17 @@ package com.gregtech.gregtech.api.addon;
 
 /**
  * SPDX-License-Identifier: LGPL-3.0-or-later.
- * One addon structure casing. An empty {@code texture} uses the GregTech metal wall,
+ * One addon structure part. An empty {@code texture} uses the GregTech metal wall,
  * tinted with the material colour. A texture is a path in the addon's own namespace.
+ * {@code energy} is null for a casing. A non-null value is an energy part.
  */
-public record StructurePartDeclaration(String name, String material, String texture, float hardness) {
+public record StructurePartDeclaration(String name, String material, String texture, float hardness,
+                                       StructurePartEnergy energy) {
+    /** A casing. It has no energy buffer and does not tick. */
+    public StructurePartDeclaration(String name, String material, String texture, float hardness) {
+        this(name, material, texture, hardness, null);
+    }
+
     public StructurePartDeclaration {
         if (name == null || !name.matches("[a-z][a-z0-9_]{0,63}"))
             throw new IllegalArgumentException(

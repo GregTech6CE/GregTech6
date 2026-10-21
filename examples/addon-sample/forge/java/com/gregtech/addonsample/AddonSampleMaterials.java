@@ -6,7 +6,9 @@ import com.gregtech.gregtech.api.addon.CrucibleReactionRemoval;
 import com.gregtech.gregtech.api.addon.MaterialComposition;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
+import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.addon.SmeltingTargetDeclaration;
 import com.gregtech.gregtech.api.material.GTValues;
 
@@ -27,7 +29,8 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
                 .meltingPointKelvin(443).boilingPointKelvin(483).density(1.72F).dust().build());
         materials.add(MaterialDeclaration.builder("SampleAlloy")
                 .displayName("Sample Alloy").color(0x8A9BB0).meltingPointKelvin(450)
-                .boilingPointKelvin(2000).density(7F).metal().build());
+                .boilingPointKelvin(2000).density(7F).metal().ores()
+                .oreByproducts("Copper", "Tin").build());
         materials.add(MaterialDeclaration.builder("SampleCrucibleAlloy")
                 .displayName("Sample Crucible Alloy").color(0xC4A574).meltingPointKelvin(1400)
                 .boilingPointKelvin(2500).density(8F).metal().build());
@@ -42,6 +45,15 @@ public final class AddonSampleMaterials implements AddonMaterialContributor {
 
     @Override public List<MaterialFormRequest> forms() {
         return List.of(new MaterialFormRequest("SampleRubber", "plate"), new MaterialFormRequest("SampleRubber", "foil"));
+    }
+
+    @Override public List<OreVeinDeclaration> oreVeins() {
+        return List.of(new OreVeinDeclaration("sample_alloy", OreVeinDeclaration.OVERWORLD, 10, 40, 40, 3, 16,
+                "SampleAlloy", "SampleAlloy", "Copper", "Tin"));
+    }
+
+    @Override public List<SmallOreDeclaration> smallOres() {
+        return List.of(new SmallOreDeclaration("sample_alloy", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "SampleAlloy"));
     }
 
     @Override public List<PrefixDeclaration> prefixes() {

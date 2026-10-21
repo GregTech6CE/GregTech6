@@ -50,6 +50,13 @@ public final class GregTechMaterials {
 
         List<Component> composition();
 
+        /**
+         * Ore-processing byproduct names after {@link #resolve()}, in wash order.
+         * Empty when this material has none. Read this from {@code onRecipesReady}.
+         * A call before materials link returns the names stored then and does not throw.
+         */
+        List<String> byproducts();
+
         Material resolve();
     }
 

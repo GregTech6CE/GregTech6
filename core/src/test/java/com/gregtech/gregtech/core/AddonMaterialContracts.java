@@ -3,20 +3,27 @@ package com.gregtech.gregtech.core;
 import com.gregtech.gregtech.api.addon.AddonMaterialContributor;
 import com.gregtech.gregtech.api.addon.AddonMaterials;
 import com.gregtech.gregtech.api.addon.GregTechMaterialContributor;
+import com.gregtech.gregtech.api.addon.GregTechMaterials;
 import com.gregtech.gregtech.api.addon.MaterialDeclaration;
 import com.gregtech.gregtech.api.addon.MaterialFormRequest;
+import com.gregtech.gregtech.api.addon.OreVeinDeclaration;
 import com.gregtech.gregtech.api.addon.PrefixCondition;
 import com.gregtech.gregtech.api.addon.PrefixDeclaration;
+import com.gregtech.gregtech.api.addon.SmallOreDeclaration;
 import com.gregtech.gregtech.api.machine.crucible.CrucibleInputRules;
 import com.gregtech.gregtech.api.material.GTValues;
 import com.gregtech.gregtech.api.material.GTMaterial;
+import com.gregtech.gregtech.api.material.MaterialProperty;
 import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.api.material.MaterialBlockDefinitions;
 import com.gregtech.gregtech.api.material.MaterialDefinition;
 import com.gregtech.gregtech.api.material.MaterialItemDefinitions;
+import com.gregtech.gregtech.data.generated.MaterialForms;
 import com.gregtech.gregtech.api.mod.ModData;
 import com.gregtech.gregtech.api.prefix.PrefixRegistry;
 import com.gregtech.gregtech.data.MaterialPrefix;
 import com.gregtech.gregtech.data.ModReferences;
+import com.gregtech.gregtech.worldgen.GTOreVeins;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,10 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 
 /** Addon material queue, in its own JVM so a submission cannot change the core fingerprint process. */
 public final class AddonMaterialContracts {
     private static final String ITEM_ID_SHA256 = "c3360a6cdc2ac4aa396b7a9bb778f11663171afb4e949709c65f3903f25a5fef";
+    /** Core block ids in definition order, taken before addon ore blocks were appended. */
+    private static final String BLOCK_ID_SHA256 = "2bf589f634a16f450fb0295757b342d7208793881c05d3315c36bde52c035735";
     private static int assertions;
     private static boolean linked;
 
@@ -57,11 +67,21 @@ public final class AddonMaterialContracts {
             case "scale" -> scale();
             case "softform" -> softPlate();
             case "oreraw" -> rawOreStillRejected();
+            case "ores" -> ores();
+            case "oremismatch" -> oreMismatch();
+            case "orelist" -> oreListMismatch();
+            case "oreunknown" -> oreUnknown();
+            case "vein" -> vein();
+            case "veinname" -> veinName();
+            case "veinore" -> veinOre();
+            case "veindup" -> veinDuplicate();
+            case "veinbad" -> veinBad();
             case "prefix" -> prefix();
             case "prefixname" -> prefixName();
             case "prefixcase" -> prefixCase();
             case "prefixmiss" -> prefixMissing();
             case "prefixcond" -> prefixCondition();
+            case "byproducts" -> byproducts();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -265,6 +285,181 @@ public final class AddonMaterialContracts {
         expectThrows("not valid", "oreRaw", "SoftOre");
     }
 
+    private static void ores() throws Exception {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").displayName("Ore Metal").color(0x336699).metal().ores()
+                        .oreByproducts("Iron", "Copper").build(),
+                MaterialDeclaration.builder("PlainDust").displayName("Plain Dust").color(0x888888).dust().build(),
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()),
+                List.of(new MaterialFormRequest("OreMetal", "oreRaw")));
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()), List.of());
+        GTMaterialRegistry.init();
+        GTMaterial ore = GTMaterialRegistry.get("OreMetal").resolve();
+        GTMaterial plain = GTMaterialRegistry.get("PlainDust").resolve();
+        GTMaterial shared = GTMaterialRegistry.get("SharedOre").resolve();
+        check(MaterialForms.has(ore, "ORES") && AddonMaterials.hasOreForm(ore), "ores() is the ORES form");
+        check(!MaterialForms.has(plain, "ORES") && !AddonMaterials.hasOreForm(plain),
+                "a material without ores() has no ORES form");
+        check(ore.getByProducts().stream().map(GTMaterial::getName).toList().equals(List.of("Iron", "Copper")),
+                "byproducts keep declaration order");
+        check(plain.getByProducts().isEmpty() && shared.getByProducts().isEmpty(),
+                "omitted byproducts stay empty");
+        check(AddonMaterials.owners(shared).equals(List.of("aa_ore", "zz_ore")),
+                "matching ore declarations merge");
+        var oreItems = new TreeSet<String>();
+        int raw = 0;
+        boolean plainRaw = false;
+        for (var definition : MaterialItemDefinitions.all()) {
+            if (definition.material() == ore) oreItems.add(definition.prefix().getName());
+            if (definition.material() == ore && "oreRaw".equals(definition.prefix().getName())) raw++;
+            if (definition.material() == plain && "oreRaw".equals(definition.prefix().getName())) plainRaw = true;
+        }
+        check(oreItems.containsAll(List.of("oreRaw", "crushed", "crushedTiny", "crushedPurified",
+                "crushedPurifiedTiny", "crushedCentrifuged", "crushedCentrifugedTiny", "rockGt", "dustImpure")),
+                "ores() generates raw ore, impure dust and the processing chain: " + oreItems);
+        check(!oreItems.contains("rawOreChunk") && !oreItems.contains("dirtyGravel")
+                        && !oreItems.contains("dustPure") && !oreItems.contains("dustRefined"),
+                "ores() does not register the external ore forms: " + oreItems);
+        check(raw == 1 && !plainRaw, "requesting oreRaw does not add a second item, and a plain dust has none");
+        int lastCore = -1;
+        int oreBlock = -1;
+        int smallBlock = -1;
+        boolean plainOre = false;
+        boolean rawStorage = false;
+        var blocks = MaterialBlockDefinitions.all();
+        for (int i = 0; i < blocks.size(); i++) {
+            var definition = blocks.get(i);
+            if (GTMaterialRegistry.isCoreMaterial(definition.material())) lastCore = i;
+            if (definition.material() == plain && ("ore".equals(definition.prefix().getName())
+                    || "oreSmall".equals(definition.prefix().getName()))) plainOre = true;
+            if (definition.material() != ore) continue;
+            String prefix = definition.prefix().getName();
+            if ("ore".equals(prefix)) oreBlock = i;
+            if ("oreSmall".equals(prefix)) smallBlock = i;
+            if ("blockRaw".equals(prefix) || "crateGtRaw".equals(prefix) || "crateGt64Raw".equals(prefix)) rawStorage = true;
+        }
+        check(oreBlock > lastCore && smallBlock == oreBlock + 1, "addon ore blocks follow every core block");
+        check(blocks.get(oreBlock).blockId().equals("ore_oremetal")
+                        && blocks.get(smallBlock).blockId().equals("ore_small_oremetal"),
+                "addon ore block ids use the material name");
+        check(!plainOre && !rawStorage, "no ores() means no ore block, and ores() adds no raw storage block");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "ores do not change built-in block ids");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "ores do not change built-in item ids");
+    }
+
+    private static void oreMismatch() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().build()), List.of());
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().build()), List.of());
+        expectThrows("field ores", "ores", "SharedOre", "aa_ore", "zz_ore");
+    }
+
+    private static void oreListMismatch() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().oreByproducts("Iron", "Copper").build()), List.of());
+        AddonMaterials.submitDeclared("zz_ore", List.of(
+                MaterialDeclaration.builder("SharedOre").metal().ores().oreByproducts("Copper", "Iron").build()), List.of());
+        expectThrows("field oreByproducts", "oreByproducts", "SharedOre");
+    }
+
+    private static void oreUnknown() {
+        prepare();
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().oreByproducts("NotAMaterial").build()), List.of());
+        expectThrows("unknown material", "NotAMaterial", "OreMetal");
+    }
+
+    private static void vein() throws Exception {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()),
+                List.of(new OreVeinDeclaration("ore_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "Copper", "Tin")),
+                List.of(new SmallOreDeclaration("ore_metal", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "OreMetal"),
+                        new SmallOreDeclaration("ore_metal_end", SmallOreDeclaration.END, 20, 60, 2, "OreMetal")));
+        AddonMaterials.submitWorldgen("zz_vein", List.of(),
+                List.of(new OreVeinDeclaration("late_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 5, 3, 16,
+                        "OreMetal", "Iron", "Copper", "Tin")),
+                List.of());
+        GTMaterialRegistry.init();
+        var active = GTOreVeins.activeOverworldVeins();
+        check(active.stream().map(GTOreVeins.OreVein::name).toList().equals(List.of("ore_metal", "late_metal")),
+                "stone layers keep built-in large veins out, and addon veins follow addon id: " + active);
+        check(active.get(0).between().getName().equals("Copper") && active.get(0).top().getName().equals("OreMetal"),
+                "vein materials resolve");
+        check(GTOreVeins.OVERWORLD_VEINS.size() == 31, "the built-in overworld vein table stays put");
+        var small = GTOreVeins.activeOverworldSmallOres();
+        check(small.size() == GTOreVeins.OVERWORLD_SMALL_ORES.size() + 1
+                        && small.subList(0, GTOreVeins.OVERWORLD_SMALL_ORES.size()).equals(GTOreVeins.OVERWORLD_SMALL_ORES)
+                        && small.get(small.size() - 1).name().equals("ore_metal"),
+                "small ores are appended after the built-in table");
+        var endSmall = GTOreVeins.activeEndSmallOres();
+        check(endSmall.size() == GTOreVeins.END_SMALL_ORES.size() + 1
+                        && endSmall.get(endSmall.size() - 1).name().equals("ore_metal_end"),
+                "an end small ore is appended to the end table");
+        check(GTOreVeins.activeEndVeins().equals(GTOreVeins.END_VEINS), "an overworld vein does not enter the end table");
+        check(GTOreVeins.activeNetherSmallOres().equals(GTOreVeins.NETHER_SMALL_ORES),
+                "an overworld small ore does not enter the nether table");
+        check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "veins do not change built-in item ids");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "veins do not change built-in block ids");
+    }
+
+    private static void veinName() {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()),
+                List.of(new OreVeinDeclaration("iron", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal")),
+                List.of());
+        expectThrows("built-in", "iron", "aa_vein", "minecraft:overworld");
+    }
+
+    private static void veinOre() {
+        prepare();
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("PlainDust").dust().build()),
+                List.of(),
+                List.of(new SmallOreDeclaration("plain", SmallOreDeclaration.OVERWORLD, 20, 60, 4, "PlainDust")));
+        expectThrows("has no ore", "PlainDust", "aa_vein");
+    }
+
+    private static void veinDuplicate() {
+        prepare();
+        var vein = new OreVeinDeclaration("ore_metal", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                "OreMetal", "OreMetal", "OreMetal", "OreMetal");
+        AddonMaterials.submitWorldgen("aa_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()), List.of(vein), List.of());
+        AddonMaterials.submitWorldgen("zz_vein", List.of(
+                MaterialDeclaration.builder("OreMetal").metal().ores().build()), List.of(vein), List.of());
+        expectThrows("already", "zz_vein", "aa_vein", "ore_metal");
+    }
+
+    private static void veinBad() {
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("Iron", OreVeinDeclaration.OVERWORLD, 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "lower-case");
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("sample", "minecraft:the_nether", 10, 40, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "the_nether");
+        expectThrows(IllegalArgumentException.class,
+                () -> new SmallOreDeclaration("sample", "twilight:forest", 10, 40, 4, "Copper"),
+                "dimension");
+        expectThrows(IllegalArgumentException.class,
+                () -> new OreVeinDeclaration("sample", OreVeinDeclaration.OVERWORLD, 40, 10, 20, 3, 16,
+                        "OreMetal", "OreMetal", "OreMetal", "OreMetal"),
+                "Y range");
+        expectThrows(IllegalArgumentException.class,
+                () -> new SmallOreDeclaration("sample", SmallOreDeclaration.OVERWORLD, 10, 40, 0, "Copper"),
+                "amount");
+    }
+
     private static void ungeneratedForm() {
         prepare();
         AddonMaterials.submit("aa_form", List.of(), List.of(new MaterialFormRequest("Diamond", "crystal")), null);
@@ -288,7 +483,17 @@ public final class AddonMaterialContracts {
                 "Material definitions are closed");
         check(oldBandEmpty(), "empty startup leaves the old addon band free");
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "an empty addon queue keeps the core item id sample");
+        check(BLOCK_ID_SHA256.equals(coreBlockFingerprint()), "an empty addon queue keeps the core block id sample");
         check(PrefixRegistry.addonPrefixes().isEmpty(), "an empty addon queue adds no prefix");
+        check(GTOreVeins.activeOverworldVeins().isEmpty(), "an empty addon queue adds no overworld vein");
+        check(GTOreVeins.activeOverworldSmallOres().equals(GTOreVeins.OVERWORLD_SMALL_ORES),
+                "an empty addon queue keeps the small ore table");
+        check(GTOreVeins.activeNetherSmallOres().equals(GTOreVeins.NETHER_SMALL_ORES),
+                "an empty addon queue keeps the nether small ore table");
+        check(GTOreVeins.activeEndSmallOres().equals(GTOreVeins.END_SMALL_ORES),
+                "an empty addon queue keeps the end small ore table");
+        check(GTOreVeins.activeEndVeins().equals(GTOreVeins.END_VEINS),
+                "an empty addon queue keeps the end vein table");
         check(MaterialPrefix.foil.getMaterialWeight() == GTValues.U4, "built-in foil weight stays on the switch");
     }
 
@@ -365,6 +570,50 @@ public final class AddonMaterialContracts {
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
     }
 
+    private static void byproducts() throws Exception {
+        prepare();
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        var missing = GregTechMaterials.find("NotRegisteredYet");
+        check(!missing.valid() && missing.byproducts().isEmpty(), "an unknown name has no byproducts and does not throw");
+        var beforeLink = GregTechMaterials.find("Copper").byproducts();
+        System.out.println("byproduct-scan before-link copper=" + beforeLink);
+        AddonMaterials.submitDeclared("aa_ore", List.of(
+                MaterialDeclaration.builder("OreMetal").displayName("Ore Metal").color(0x336699).metal().ores()
+                        .oreByproducts("Iron", "Copper").build(),
+                MaterialDeclaration.builder("PlainDust").displayName("Plain Dust").color(0x888888).dust().build()),
+                List.of());
+        GTMaterialRegistry.init();
+        var expectedCopper = List.of("Cobaltite", "Gold", "Nickel", "Malachite", "Arsenic");
+        GTMaterial copper = GTMaterialRegistry.get("Copper").resolve();
+        var copperNames = copper.getByProducts().stream().map(item -> item.resolve().getName()).toList();
+        check(copperNames.equals(expectedCopper), "copper byproducts stay Cobaltite, Gold, Nickel, Malachite, Arsenic: " + copperNames);
+        check(GregTechMaterials.find("Copper").byproducts().equals(copperNames), "the API follows getByProducts");
+        check(GregTechMaterials.find("OreMetal").byproducts().equals(List.of("Iron", "Copper")), "addon oreByproducts are readable");
+        check(GregTechMaterials.find("PlainDust").byproducts().isEmpty(), "a material without byproducts reads empty");
+        check(GregTechMaterials.invalid().byproducts().isEmpty(), "the invalid material reads empty");
+        var dust = PrefixRegistry.byName("dust");
+        for (String name : expectedCopper) check(dust.isValidFor(GTMaterialRegistry.get(name)), "dust is valid for " + name);
+        var hidden = new TreeSet<String>();
+        var alias = new TreeSet<String>();
+        for (GTMaterial material : GTMaterialRegistry.allMaterials()) {
+            if (material.resolve() != material) continue;
+            var expected = material.getByProducts().stream().map(item -> item.resolve().getName()).toList();
+            var actual = GregTechMaterials.find(material.getName()).byproducts();
+            check(actual.equals(expected), "byproducts match " + material.getName() + ": " + actual + " vs " + expected);
+            for (GTMaterial byproduct : material.getByProducts()) {
+                GTMaterial resolved = byproduct.resolve();
+                if (resolved.has(MaterialProperty.HIDDEN)) hidden.add(material.getName() + "->" + resolved.getName());
+                if (!byproduct.getName().equals(resolved.getName()))
+                    alias.add(material.getName() + "->" + byproduct.getName() + "=" + resolved.getName());
+            }
+        }
+        System.out.println("byproduct-scan hidden=" + hidden.size() + " alias=" + alias.size());
+        if (!hidden.isEmpty()) System.out.println("byproduct-scan hidden-names " + hidden);
+        if (!alias.isEmpty()) System.out.println("byproduct-scan alias-names " + alias);
+        GTMaterialRegistry.get("PlainDust").addOreByProducts(GTMaterialRegistry.get("Tin"));
+        check(GregTechMaterials.find("PlainDust").byproducts().equals(List.of("Tin")), "a byproduct added after link is visible");
+    }
+
     private static void prepare() {
         ModData.bindPresence(id -> true);
         GTMaterialRegistry.setLogSink((warning, message) -> {});
@@ -392,6 +641,20 @@ public final class AddonMaterialContracts {
             return;
         }
         throw new AssertionError(message);
+    }
+
+    private static String coreBlockFingerprint() throws Exception {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        for (MaterialBlockDefinitions.Definition definition : MaterialBlockDefinitions.all()) {
+            if (!GTMaterialRegistry.isCoreMaterial(definition.material())) continue;
+            String line = definition.blockId() + "\t" + definition.baseBlockId() + "\t"
+                    + definition.prefix().getName() + "\t" + definition.material().getName() + "\t"
+                    + definition.material().getId() + "\n";
+            digest.update(line.getBytes(StandardCharsets.UTF_8));
+        }
+        StringBuilder text = new StringBuilder();
+        for (byte value : digest.digest()) text.append(String.format("%02x", value));
+        return text.toString();
     }
 
     private static String coreAutomaticFingerprint() throws Exception {
