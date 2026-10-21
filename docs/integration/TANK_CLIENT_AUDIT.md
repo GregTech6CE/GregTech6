@@ -1,0 +1,51 @@
+# 多方块储罐客户端、喷漆与覆盖板同步核查
+
+2026-10-21，第七十八批，基线 `104737974`。续核25主阀的资源消费者、喷漆资格、实际放置朝向和通用覆盖板最后一槽的同步。新增ALIGN-268–270；本批只整理四份源码的可读性，没有修玩法或运行客户端。来源与有限比较见[回执](verification/tank-client-audit-20261021.json)。正式270条包含已修、部分修复及保留政策，不是270个未修复问题。
+
+## 资源入口已有
+
+25主阀各有core的blockstate／item JSON和共享原生资源的block模型，共75份JSON；两种tankwood／tankmetal家族共24份PNG。物品parent指向对应完整模型，子模型colored／overlay都有六面，colored用tintindex0、overlay不染色，均为cutout。1800个朝向／世界面／层的分配留在回执的索引表中。
+
+SharedInventoryModelPack遇到已存在的静态物品模型会跳过；不能仅凭动态模型分支没有主阀就说主阀缺模型。Stonecutter的JSON替换将forge:composite转换成对应加载器，processResources依赖生成，两版发行包也包含core输出。此处核的是维护源和打包任务声明，未生成资源、烘焙模型或检查最终包。
+
+24份PNG的chunk CRC、压缩数据和RGBA解码已核，并比较八种旋转／镜像的像素摘要。限定原版src/main/resources文件清单未找到这些家族的PNG，因而没有原版PNG逐像素一致结论。两个现存原生工件、八个entry和四次只读javap用于追模型旋转与放置方向，不执行目标类。
+
+## ALIGN-268：竖直木主阀选图不同
+
+原TileEntityBase10MultiBlockBase.getTexture2先按当前世界面取FACES_TBS，再决定使用普通或front贴图；世界顶部永远取top，底部永远取bottom。当前模型的north面固定取front/side，blockstate通过x=270或90转动整个模型实现上／下朝向。
+
+原生BlockModelRotation的负YXZ旋转与CompositeModel向子模型传同一modelState确认这是整个模型的旋转。对木主阀17001，朝上／下的正面应由原选择规则取overlay_front/top或bottom，当前却转来overlay_front/side；现存对应PNG即使允许全部八种旋转／镜像也不相同。差异限定到这个可证的选图样本，不把全部25主阀都说成可见错图。金属front图虽然部分原始文件摘要不同，但八变换可能等价；其完整UV和实际画面仍待核。
+
+原物品默认朝向还涉及原版物品渲染链，本批不凭SIDE_UP与当前默认NORTH就另立物品朝向缺陷。
+
+## 喷漆目标候选排除
+
+原喷漆经MultiTileEntityBlock.recolourBlock到主阀paintable状态。当前满罐／使用中喷漆已在两版共同的GTMultiItems循环注册，PaintSprayItem也调用PaintTargets.color。虽然TankControllerBlock及其BE源码声明未直接实现Paintable，两版配置启用的BlockEntityPaintMixin实际上向祖先BlockEntity补入该接口。因此不能根据声明就说主阀喷漆返回0。
+
+PaintTargets能够命中该接口，PaintState提供paint／mix／clear，Mixin写入gt.painted／gt.color并发出原生更新；BlockPaintColorMixin从已喷漆的BE读取表面色。这些真实入口排除了“缺喷漆目标”候选，不代表所有存档／重载／物品颜色或画面都已验收。
+
+基础材质色另有入口：GTMultiblocks.texturedBlocks包括25个NAMED主阀，tintOf通过LargeMachineParts读取材料色，Forge和Neo均有方块／物品颜色回调。Neo ItemColorARGB显式加上FF alpha的是注册的基础处理器；ItemPaintColorMixin另有返回路径，尚未由这项证明全部物品颜色alpha一致。
+
+## ALIGN-269：放置的竖直阈值不同
+
+原Base09FacingSingle默认允许六面、不反向、不按点击面放置，主阀链未覆盖这些设置；UT.Code.getSideForPlayerPlacing在pitch达到正／负65度才选上／下。当前TankControllerBlock使用BlockPlaceContext.getNearestLookingDirection().getOpposite()，原生Direction按视线分量排序。
+
+在稳定yaw=0的六个有限样本中，pitch正／负30度均朝north，正／负70度均与原版上／下一致；正50度原north、现up，负50度原north、现down。这里只重建源分支，没有实际放置。扳手六面旋转存在，不用它代替初次放置阈值。
+
+## ALIGN-270：最后一个通用覆盖板的空快照未清旧槽
+
+实际链路是ComponentCoverStorage.remove清服务端槽，ComponentCoverFallback.tick新建tag、调用write、比较SENT，发送变化后才移出活动集合。最后一块普通覆盖板拆除后，没有gt_cover_*字段或gt.component_covers标记；普通主阀也没有物流覆盖板字段，CoverDrops.saveRuntime在无覆盖板时不写stopped。因此发出的是空的覆盖板快照。
+
+Forge GTPackets和Neo MachinePayloads均注册该包；Forge派到客户端receive，Neo apply直接查同一位置／实体类型，再调用ComponentCoverFallback.read。read在两类字段都没有时提前返回，没有调用本可清理缺失槽的storage.load，也没有移出客户端活动集合。仍然存在的同一主阀实体会继续让ComponentCoverFallbackRenderer／PanelCoverRenderer读取旧槽。
+
+原Base06.receiveDataCovers有null清mCovers分支，CoverData.setIDs也替换整组ID并清零槽行为。当前Mixin的load／loadWithComponents只是委托同一read，没有额外补偿。有限合同是客户端原有最后一块通用覆盖板、服务端拆下、空快照已收到；未实测包传输或游戏画面。还有别的覆盖板、专用宿主、换了BE或后续非空完整快照是不同情况。
+
+修复时需要区分完整网络快照与有意省略覆盖板字段的部分／物品NBT。不能简单把所有缺字段读取都当作清空，从而引入另一种数据丢失。本批仅登记，没有改变读取行为。
+
+## 源码整理与后续
+
+展开PaintSprayItem的喷漆lambda、实体判断和提示，限定onItemUseFirst方法区域内的c／p改context／targetPos，保留Neo提示方法原有context参数。展开覆盖板render事件、Neo多方块渲染／颜色注册和core后备材料switch；三处说明改成实际职责，保留Brokestar及原作者版权说明。
+
+四源六份完整执行流保持：core76、喷漆940／942、后备覆盖板526／532、Neo注册547项。局部改名归一不包含成员访问；原始字面量及其位置、其余注释和Stonecutter指令另核。用户CompoundMaterials和WoodMaterials原始摘要保持；本轮复看CompoundMaterials的570条声明等号均第66列、RGB均第141列，没有Tab和行尾空格，未重排。
+
+未Java编译／目标初始化、Gradle、测试、游戏、最终资源烘焙、构建或推送。实际客户端UV／颜色／包生命周期、原版完整物品渲染、磁盘重启和其它原版系统仍在全面核查队列；goal继续active。

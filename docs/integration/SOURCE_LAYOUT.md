@@ -14,6 +14,8 @@
 
 储罐制作：core `MultiblockCraftingRecipes`声明，原生 `MultiblockRecipePack`／`MachineRecipeIngredients`解析，`MaterialTagPack`／`MaterialEquivalence`给实际普通材料标签。工具看`FluidAttachmentBlock.attachedHandler`、`BehaviorThermometer`和`BehaviorPlungerFluid`，壁板的坩埚接口优先次序必须一起查。说明在`MultiblockTankTooltips`／`OriginalTankTooltipData`，Jade在`MultiblockJadeProvider`及其注册插件，见[工具／制作／说明专题](TANK_TOOLS_RECIPES_AUDIT.md)。
 
+储罐模型：core保存blockstate／物品parent，共享原生资源保存composite模型和家族贴图；颜色由GTMultiblocks.tintOf与两版客户端注册读取。玩家喷漆另走PaintSprayItem→PaintTargets→由BlockEntityPaintMixin提供的Paintable，不能混为基础RGB。通用覆盖板的服务端tick／读写在ComponentCoverFallback，槽在ComponentCoverStorage，经PacketSyncComponentCovers到客户端同一read，绘制在ComponentCoverFallbackRenderer／PanelCoverRenderer，见[客户端与同步](TANK_CLIENT_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

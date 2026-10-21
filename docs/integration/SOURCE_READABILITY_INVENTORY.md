@@ -96,3 +96,5 @@
 2026-10-21 第七十六批：MultiblockPortBlock展开Neo交互／火回调／渲染／基础掉落，两处id改registryId；TankFlowRules展开委托。FluidHazards缩短总说明，明确注册依赖与外部气体近似。三源六完整执行保持，三处说明纠正／未归一字面量位置／其余注释指令另核，用户材料不动，见[危害专题](TANK_HAZARDS_AUDIT.md)。全面可读性目标继续。
 
 2026-10-21 第七十七批：展开FluidAttachmentBlock的构造旋转／访问包装／Neo交互和注入分支、MultiblockTankTooltips的内容／防护拼接、MultiblockJadeProvider的状态／流体序列化；core OriginalTankTooltipData循环i改digitIndex，构造两个b绑定改bounds。四源七完整执行及原始字面量位置保持，一处接口职责说明纠正，用户材料表不动，见[工具与制作专题](TANK_TOOLS_RECIPES_AUDIT.md)和[回执](verification/tank-tools-audit-20261021.json)。全面可读性与原版核查继续。
+
+2026-10-21 第七十八批：PaintSprayItem展开喷漆lambda／实体判断，两端17→98行，c／p仅在onItemUseFirst内改context／targetPos，保留已有Neo提示context。ComponentCoverFallbackRenderer展开事件和逐面绘制，Neo MultiblockClientSetup拆开渲染／颜色注册，core OriginalMultiblockTintPolicy展开switch；三处职责说明纠正，四源六完整执行76、940／942、526／532、547及未归一字面量位置保持。用户570条CompoundMaterials对齐和WoodMaterials修改保留，见[客户端专题](TANK_CLIENT_AUDIT.md)及[回执](verification/tank-client-audit-20261021.json)；全面可读性目标继续。
