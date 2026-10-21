@@ -1,0 +1,3592 @@
+{
+  "schema": 1,
+  "meaning": "Explicit hash references only, not proof of review completeness, implementation, alignment or a completion percentage.",
+  "receipt_scope": "docs/integration/verification/*audit*.json; other receipt names and prose are not scanned.",
+  "inventory_sha256": "167e7e35b2dc94631f794b259a1d37a7206dd14b4aa0d1c05c26bf1b26d78960",
+  "original_root": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java",
+  "original_files": 1229,
+  "port_files": 1825,
+  "original_inventory_rows_sha256": "be409a642be6006c95d7e7977bae486fcbea65fd1cc21f4d80fe3677140d358d",
+  "port_inventory_rows_sha256": "1ed2e2907bba9f05af487823cdb01c9d6e3d53bbda4d02922c2bf639deb35db7",
+  "port_groups": {
+    "GregTech.java": 1,
+    "GregTechConfig.java": 1,
+    "api": 313,
+    "block": 213,
+    "blockentity": 105,
+    "bootstrap": 14,
+    "client": 202,
+    "compat": 3,
+    "content": 490,
+    "core": 1,
+    "damage": 2,
+    "data": 65,
+    "emi": 15,
+    "entity": 1,
+    "event": 5,
+    "integration": 15,
+    "internal": 4,
+    "item": 64,
+    "jei": 17,
+    "mixin": 35,
+    "network": 4,
+    "platform": 35,
+    "recipe": 28,
+    "registry": 90,
+    "util": 6,
+    "world": 1,
+    "worldgen": 95
+  },
+  "opaque_paths": [],
+  "receipts": [
+    {
+      "path": "docs/integration/verification/adaptive-fluid-audit-20261019.json",
+      "sha256": "f91d4177427e08296b5e487a4531f83ba6cd3247bae56c0b22ee6ee716ba73c3",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/advanced-controller-audit-20261019.json",
+      "sha256": "e5538fb434117429e8e072fd6995f99ae323323e808e9f23b35edcf337c2bd08",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/advanced-worktable-audit-20261022.json",
+      "sha256": "40946393d45ba0ba137a8c42c5f4b9b0a5f7e3588e86bc8d868c1db6cb965599",
+      "accepted_original_paths": 13
+    },
+    {
+      "path": "docs/integration/verification/audit-pause-build-20261019.json",
+      "sha256": "b040936866b67a2de85150e2d14bb8f57f5e06e12ccb8539b7f3a1a87394bfcc",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/axle-gearbox-audit-20261019.json",
+      "sha256": "2d462b4844b5c09ff98edb237eeb00a693b1b6ab0eeefe44c39d89aafd1970cf",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/barrel-audit-20261019.json",
+      "sha256": "600164a323e4db9f5b6aeec82ad3dcb90a2fb63d9e0199ee585cc8604cd46018",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/basic-machine-execution-audit-20261019.json",
+      "sha256": "0d6e014b1b57a69cb6cfdf6d29c056162ef27d799b83a35cf236fdf6117f0a9a",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/basic-machine-interruption-audit-20261019.json",
+      "sha256": "aaa24e0f03fa8ae46b4ff7329253416f1ba56cdab859896db0dd61728a6fe498",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/battery-storage-audit-20261019.json",
+      "sha256": "ea49a84cb02ac572cb60edc23d2e18730238deeb9b4bd3d0fddece77f8e9bc95",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/bedrock-drill-audit-20261021.json",
+      "sha256": "476677728a64478f2f313934295c6bc2e080dcb45d76d7ac99b9976683ca890e",
+      "accepted_original_paths": 30
+    },
+    {
+      "path": "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+      "sha256": "b54d3cff7fd69ec6e080c52b50dfed992a9590b9a2e8f52d981fb4af50ca992e",
+      "accepted_original_paths": 26
+    },
+    {
+      "path": "docs/integration/verification/boiler-burning-box-audit-20261019.json",
+      "sha256": "c977c22afd1f74f4111e974e22d3d73b49d3618f9917ff9a4aa21f09f335afca",
+      "accepted_original_paths": 7
+    },
+    {
+      "path": "docs/integration/verification/bottle-bookshelf-audit-20261021.json",
+      "sha256": "80684630f6f2131c614697c2be37b42c28874887f558214400426265f9d78635",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/bush-menu-audit-20261021.json",
+      "sha256": "a21816aa32d590cc0dd3489c869a23414477079dde347ff22d90088050e6a3b9",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/bush-physical-worldgen-audit-20261021.json",
+      "sha256": "f6cf8451a40f2f06dba2f9e0640472ea4cb2a1a64814ef880bfd782464961c71",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/button-crank-audit-20261022.json",
+      "sha256": "b1dd5c800b09bed73155ac9d907f1fa7aa83bf0eed3955a17d7b3584d5026baf",
+      "accepted_original_paths": 15
+    },
+    {
+      "path": "docs/integration/verification/chest-loot-audit-20261021.json",
+      "sha256": "74655ce2dc9c74e1384a021bda138fde23387f144f7a757a15c1162f7952c99f",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/coke-oven-audit-20261019.json",
+      "sha256": "d84899ed9b93cacbe37b764aba0d4ec394ba50871064efd38eb92e9d1219de7c",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/component-cover-audit-20261019.json",
+      "sha256": "5b9db8e5a6ee1ae386dbe84dc0ef333c65322572813c53fee22171deaa579a8c",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/consumable-feedback-audit-20261020.json",
+      "sha256": "07f7fcacc1f2d62c09be987432de2b0bcb94050f12296cc1fd21839e1d75e8e8",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/controller-detector-audit-20261019.json",
+      "sha256": "d5029c5ca43791ca8686c73c7877a5614fcdba593c80d69b38fb300e0437ac19",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/cover-capability-audit-20261019.json",
+      "sha256": "8e6f8cfaf5a4a75b7841ec26590d0b02d46d9d2742f13e39e6f22460c936551a",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/crop-magnifier-audit-20261019.json",
+      "sha256": "cbed9617172c29d3cda277d9e296e41656ee181c86e7738071e03a5100c36852",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/display-meter-audit-20261019.json",
+      "sha256": "d1e523c2a4d08278d7e22a4df368ade28776002da92a8b69d7d6bd78c8a66c25",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/dynamic-recipe-audit-20261019.json",
+      "sha256": "7b136db59beb56feb7c1d0712d41a3d8400e5e01646d4d8afa2bba07fce27c04",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/electric-transformer-audit-20261019.json",
+      "sha256": "074e1c8937cb9b80182778029fa47deba1001e276fea6e3c9754354dbf9e5be6",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/energy-converter-audit-20261019.json",
+      "sha256": "3a3f146f98a1bad3f3811014006d1e53f20f4b75bad4d76f884fe199f22a9ebf",
+      "accepted_original_paths": 12
+    },
+    {
+      "path": "docs/integration/verification/extender-capabilities-audit-20261021.json",
+      "sha256": "c85a0d1fc3ff05e8eb2cb0fa1eac12beb4e172605beb7cdc5193ad1223a63f9c",
+      "accepted_original_paths": 25
+    },
+    {
+      "path": "docs/integration/verification/extender-signals-audit-20261021.json",
+      "sha256": "c092ee570567eb15acf642e1c7ebf415965844067831334c31880414227e5d6b",
+      "accepted_original_paths": 16
+    },
+    {
+      "path": "docs/integration/verification/filter-blocks-audit-20261021.json",
+      "sha256": "57db313f52d6bc36ccadb8e7df8f15e1bd4a61afc21a017a966eb1c014d1b197",
+      "accepted_original_paths": 24
+    },
+    {
+      "path": "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+      "sha256": "8aa7ac2864a06b6ee20a959e570df1a70c607cd1fec4723352c8e46fd638efd7",
+      "accepted_original_paths": 24
+    },
+    {
+      "path": "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+      "sha256": "5e59a8babd19cc578becd9dc90215156b031190a6ed4aa623bfd06fcace60f62",
+      "accepted_original_paths": 14
+    },
+    {
+      "path": "docs/integration/verification/filter-retriever-audit-20261019.json",
+      "sha256": "151c9f3fecc1ad5a74bc1ca8ba7d456ad2ba776017f799664ff9d7302062ca74",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/fluid-pipe-audit-20261019.json",
+      "sha256": "d7b5011a6f8b96d1b7840b0b3aa97dd06286b5c477a79ac987fe25667a40d90d",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/ignition-extinguisher-audit-20261020.json",
+      "sha256": "abd1002ff152ce4326d3473b1362aa6d3890eeaf187e23757450b8dac60e0a5c",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/inventory-bumble-audit-20261021.json",
+      "sha256": "91e5003d6ccfc1e778eb09b4979d1289c0b93306fac1837bac07df9b3ca2214f",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/inventory-persistence-audit-20261021.json",
+      "sha256": "1716bea6e43f52c691bdaacdd0c9fab4576ddd66184f11f2bad0081725f3ba3d",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/item-pipe-audit-20261019.json",
+      "sha256": "80ffde6eb33a6c6fc267dcc8e47a103e35b4ef3674d2c4f3189bb1981ce1d621",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/large-boiler-audit-20261019.json",
+      "sha256": "145420adc3adefc86a9aadb9454c5082521f0efe643de7ef242e1d8b4145f345",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/large-dynamo-audit-20261021.json",
+      "sha256": "5898da1c53e21b0f9aadfde7e69b667857200fb90a278b1bd176bfa7a74bad95",
+      "accepted_original_paths": 24
+    },
+    {
+      "path": "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+      "sha256": "ba699dd479d236c84561c6b784cd5dd1e23701c3b95867b75bc68cc5287d6646",
+      "accepted_original_paths": 38
+    },
+    {
+      "path": "docs/integration/verification/large-turbine-audit-20261021.json",
+      "sha256": "7a4dd0622034f3373d4d0376f0ffbfeb0518019a0582f6abc8ee7d31753e2060",
+      "accepted_original_paths": 26
+    },
+    {
+      "path": "docs/integration/verification/lightning-rod-audit-20261021.json",
+      "sha256": "8237189551003c658258b89b8d2ffb25fe1064a7853055c03985267db66f6dd1",
+      "accepted_original_paths": 18
+    },
+    {
+      "path": "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+      "sha256": "b7b409caff7a044c0296bb25813fa83a59160586bc09b663c9947497eabdf1e5",
+      "accepted_original_paths": 8
+    },
+    {
+      "path": "docs/integration/verification/logistics-client-audit-20261021.json",
+      "sha256": "93e4496c08d7ebeb49d5d9c351eae49cad909da1af6be1676167cc4d3ca5c5a5",
+      "accepted_original_paths": 18
+    },
+    {
+      "path": "docs/integration/verification/logistics-core-state-audit-20261021.json",
+      "sha256": "bce6989083f9c0c075383a174f71c37cc6520dd6c21e21824e65715a00d1c32c",
+      "accepted_original_paths": 37
+    },
+    {
+      "path": "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+      "sha256": "4e85f72c1b8ca141420b99081f69a9ea4632699bb3f18ea21818bf73584f8219",
+      "accepted_original_paths": 12
+    },
+    {
+      "path": "docs/integration/verification/logistics-network-audit-20261021.json",
+      "sha256": "a19067980dfa9371d41371be8701eb09da149d734937c4598dedfcc66cc6ea88",
+      "accepted_original_paths": 24
+    },
+    {
+      "path": "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+      "sha256": "6dacd34cdc4897ef93f3a512d4175d7f9c1b7e76c92632676f57d45e7c74a60e",
+      "accepted_original_paths": 8
+    },
+    {
+      "path": "docs/integration/verification/logistics-tank-audit-20261019.json",
+      "sha256": "97880f1f558203d78b983ee717a3dbaf535cc12f459fc497d75281f6183fb607",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/logistics-transfer-audit-20261021.json",
+      "sha256": "4d2c61592c3315ba8682ed578fec0de0205d412c5414b7f5ed0e01dcaf278506",
+      "accepted_original_paths": 23
+    },
+    {
+      "path": "docs/integration/verification/long-distance-audit-20261019.json",
+      "sha256": "b7253b8bb8c86a428ab87276efdbdf56820fde3cc3fe0ec65f4c861e8d2ee15e",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+      "sha256": "f5a6fca45bbbc9b58c76fa3a599bff79894a7980032b34b8ad6064ccb8f135cb",
+      "accepted_original_paths": 10
+    },
+    {
+      "path": "docs/integration/verification/manual-grinding-audit-20261022.json",
+      "sha256": "bc03a63a2071fa282fbbad3ac03bda08f42b764a3d7cb8bc827e4d845640dd40",
+      "accepted_original_paths": 20
+    },
+    {
+      "path": "docs/integration/verification/mass-storage-control-audit-20261020.json",
+      "sha256": "dae0aa24a3b1543733fb1eb852ea388b932c5e23a7a257bad94e531b6d637247",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/material-data-chain-audit-20261021.json",
+      "sha256": "b46570f1e73954a0e277268ab82fbfe77569a225bd6dcf723718cfc6ee7c37b4",
+      "accepted_original_paths": 10
+    },
+    {
+      "path": "docs/integration/verification/material-decomposition-audit-20261021.json",
+      "sha256": "3f492648924cd44d3a731cccd58bfcb7ddd8e78f2fec24cd3a13cc522fa4a9e9",
+      "accepted_original_paths": 18
+    },
+    {
+      "path": "docs/integration/verification/material-processing-audit-20261019.json",
+      "sha256": "176199f77af6ca1a5d019f047051fa800c68e441fc9e262cd92510bd615260cd",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/material-regeneration-audit-20261019.json",
+      "sha256": "a7f3e57a848527fd2694efc3cb55083cdb0aba995d48c7827ace3d8538c57fe5",
+      "accepted_original_paths": 1
+    },
+    {
+      "path": "docs/integration/verification/matter-controller-audit-20261019.json",
+      "sha256": "c0a4018f16146f8a85c6ce1eda38818c779b11e2c3aba1b425db766583fea155",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/matter-fluid-audit-20261019.json",
+      "sha256": "763ffe8c45dcb0a541f75423491ea5b2f53d8834b25bb7a8cf35566e5169a434",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/multiblock-tank-audit-20261021.json",
+      "sha256": "a552c313ba66578bfcdb3dbcad18721920307ca0106d6ff2929ef554368b033f",
+      "accepted_original_paths": 26
+    },
+    {
+      "path": "docs/integration/verification/native-body-sharing-audit-20261021.json",
+      "sha256": "01624b30b746507920a4d96e9ae697b431e136f196002c0bc0643c916ab4cbff",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/nuclear-contract-audit-20261021.json",
+      "sha256": "6c21d264aea334d3951a3e2dbdb62b97f4e33f433e4b011dc21b216e44561ee1",
+      "accepted_original_paths": 35
+    },
+    {
+      "path": "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+      "sha256": "90f15fecd1f0ed91c2a7f78a12b6ccc7cb0b78600ca8e644a8980d60551d302f",
+      "accepted_original_paths": 44
+    },
+    {
+      "path": "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+      "sha256": "4c51ab93c479d17c86732168dc378e6d73a4adc7af00cca364636be20b78714b",
+      "accepted_original_paths": 35
+    },
+    {
+      "path": "docs/integration/verification/open-vessel-audit-20261022.json",
+      "sha256": "301ac322b717b40cadacc7c46ba6f7ebbcacd3248a48a8c0269674b207e2a773",
+      "accepted_original_paths": 20
+    },
+    {
+      "path": "docs/integration/verification/paint-state-audit-20261021.json",
+      "sha256": "da6aabefba09dd738564b69e379152ede9ee57478d01a22c79bd326e5cb5eeab",
+      "accepted_original_paths": 17
+    },
+    {
+      "path": "docs/integration/verification/paint-targets-audit-20261021.json",
+      "sha256": "6fa843b93d043eed4f0f4b578e171c5438e8dbe202a3a821cda0c681d9b421da",
+      "accepted_original_paths": 26
+    },
+    {
+      "path": "docs/integration/verification/pipeline-relay-audit-20261019.json",
+      "sha256": "7bc68ada9084ad6024c49c52bd6f16c6dda4339980b879c2e55502a2b967c6d8",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/plant-lantern-audit-20261022.json",
+      "sha256": "5201f7d208e2806a8202210a1d2fcc222359c4a136cd32bca4ac8aeef8d43e3a",
+      "accepted_original_paths": 21
+    },
+    {
+      "path": "docs/integration/verification/prefix-handler-audit-20261019.json",
+      "sha256": "9ef18c67983ec0f7f3f01b0f20d6d91c4fa6cf3634ebca61c4a3229d81afc584",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/pressure-valve-audit-20261019.json",
+      "sha256": "5122f3351dbe3f42466fadb2b0be7bee991ce5e6931e6e16fe11f7962289092a",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/rope-scaffold-audit-20261022.json",
+      "sha256": "e144fcf0634ebbc73c3b171952249134f8bb74cb8d096c5e0ad7c6a78da46f0a",
+      "accepted_original_paths": 15
+    },
+    {
+      "path": "docs/integration/verification/rotation-transformer-audit-20261019.json",
+      "sha256": "a5bf2d7cd3c062e9102f0b3c647597151b71017872e8f44be780a2a6f8fcc25b",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/rotational-pump-audit-20261021.json",
+      "sha256": "18e605bc96b2c5519053e9bbe109e0f5f02b49da5445db43be524715f6343f59",
+      "accepted_original_paths": 17
+    },
+    {
+      "path": "docs/integration/verification/safe-locker-audit-20261020.json",
+      "sha256": "209819501ccdf1d3269b9ce9dc4c7cf2345d51a3d1189bbbd5860ae8b10362d3",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/sap-bag-audit-20261022.json",
+      "sha256": "4b01ed4a83df0891a56b4f97ce29979fd04a1dbf29f9e9abeec6ebca92d0d232",
+      "accepted_original_paths": 17
+    },
+    {
+      "path": "docs/integration/verification/scanner-behavior-audit-20261019.json",
+      "sha256": "90d74cf8f9cb5b51fcf7e2c4c7c6ffe7d42c015dd895753b4ed2f85002cdbaef",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/selector-panel-audit-20261019.json",
+      "sha256": "6588724561fda51788bd4e7fd50e2625a1cfc4a04900778e95d15e36f0f72bbe",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/sensor-execution-audit-20261019.json",
+      "sha256": "efcd55afed8de1a0ded96c7a138e6a0dce6fe33f987ba27b3363bb5eb4f7a714",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/sensor-source-audit-20261019.json",
+      "sha256": "32f18f145f4c398abcc56cfa08430c6471c08ba73a4bbb08528194415da805fb",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/sifting-table-audit-20261022.json",
+      "sha256": "d2a6d2b58d66b79b394053ec7429b4fe49307eef7399887d74ca0ac94686c67e",
+      "accepted_original_paths": 12
+    },
+    {
+      "path": "docs/integration/verification/single-item-runtime-audit-20261019.json",
+      "sha256": "f8976eb3f0eafcadcc0fe8d0d5f560ac2ccee4f95b3e4d443e1e468a1ceb6317",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/solid-fluidbed-audit-20261019.json",
+      "sha256": "336e009e6ba17c1824011ef660d5b6125e19226d78424c3aca1d5988d1485282",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/special-storage-audit-20261019.json",
+      "sha256": "4c2c5d43a3d73802522e58aea68d3afedcd45d23243c34a9203188d5ceff28c3",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/storage-cover-boundary-audit-20261020.json",
+      "sha256": "31c4ed72baf0657dde684a8089f247311640c57dee229076f39c8fde5f4188c5",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/surface-plant-audit-20261021.json",
+      "sha256": "e0b6d0452c80ff6908bdbacf65ab425221fca9e869c51cb820790e3ad9a6772e",
+      "accepted_original_paths": 34
+    },
+    {
+      "path": "docs/integration/verification/tank-client-audit-20261021.json",
+      "sha256": "88fca6beb84443d37d0e0aef35d431ba90fe8fcf47e3036a373d4e6bc8e8426e",
+      "accepted_original_paths": 14
+    },
+    {
+      "path": "docs/integration/verification/tank-hazards-audit-20261021.json",
+      "sha256": "5d1e04ed4f64af9b4201b15106eef03d531cc69c57e293f53a4b96066edb5797",
+      "accepted_original_paths": 14
+    },
+    {
+      "path": "docs/integration/verification/tank-tools-audit-20261021.json",
+      "sha256": "79989b16082b3367cbb8331e430e3bee02848a6cc12080690cb6a44008fe5d5a",
+      "accepted_original_paths": 22
+    },
+    {
+      "path": "docs/integration/verification/usb-switch-audit-20261021.json",
+      "sha256": "183cd72793e2f55bfa4d5235aeeef9e3a8ad383e53ead968dc1312c81f11e468",
+      "accepted_original_paths": 12
+    },
+    {
+      "path": "docs/integration/verification/utility-physics-audit-20261022.json",
+      "sha256": "a18c7a7f1e6ff1f8e6932249dcddc26df1d3f6c3f6cc75bab51b8a3dfd0788bc",
+      "accepted_original_paths": 14
+    },
+    {
+      "path": "docs/integration/verification/visual-document-audit-20261021.json",
+      "sha256": "d9c9a04044ef61106b95cf0faf95fe598547a2b3fa16994d1ce02d6f6441f8b6",
+      "accepted_original_paths": 7
+    },
+    {
+      "path": "docs/integration/verification/von-da-graagg-audit-20261021.json",
+      "sha256": "09ccceb40c610a3964528e71f81c97d6fd9f4c81af219a19f367366234515825",
+      "accepted_original_paths": 27
+    },
+    {
+      "path": "docs/integration/verification/wire-audit-20261019.json",
+      "sha256": "3b66aa386e1dde1715b41b57aa789c96f5293c21a11cad6f756d18f202ce5e43",
+      "accepted_original_paths": 0
+    },
+    {
+      "path": "docs/integration/verification/worktable-io-audit-20261022.json",
+      "sha256": "3b0932c85dbb04a2ed5ab1b6f0c69d7469bdaa2bc273169081f0ab7907d9d5d1",
+      "accepted_original_paths": 12
+    },
+    {
+      "path": "docs/integration/verification/worktable-lifecycle-audit-20261022.json",
+      "sha256": "b3176a2039fb2b1105d7602a7449302d39da9410d699cc451290fdae5533ef7d",
+      "accepted_original_paths": 12
+    }
+  ],
+  "exact_original_references": {
+    "gregapi/GT_API.java": {
+      "sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/GT_API_Post.java": {
+      "sha256": "9e752f4b51da7d70b45c56517cb6dc0117bfd28f6676f248bcda4ad5396b3b16",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json"
+      ]
+    },
+    "gregapi/GT_API_Proxy.java": {
+      "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+      "receipts": [
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/api/Abstract_Mod.java": {
+      "sha256": "995e35d0529cea8bd010abe244dc9f807964ecb57b16a7de7acb89d00566d855",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/BlockBase.java": {
+      "sha256": "9a5d3e32274fe807c910ccb7722e43226d90b434d18fd20d4fa40bcd5145f237",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/BlockBaseMeta.java": {
+      "sha256": "342c9ec05b253c0da024e5a18bdf21f9ac613b79fa4c0c39291ebfaaf79b0da4",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/BlockBaseSealable.java": {
+      "sha256": "6c608095009b42351ccc207b82f4d24c91f15d59fb65b1d232609dfc01e914fc",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/IBlockToolable.java": {
+      "sha256": "80b8529019e3f3ccab0bc1a567771cb6f0ddcd0bbe5529cafb5f1035bd058206",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/ItemBlockBase.java": {
+      "sha256": "e870c4c7c84d57656a7406948ba28c12d9d62bc8bcdd522659fb3453f64184a3",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/metatype/BlockColored.java": {
+      "sha256": "1445d711ec079bcd32f93b87045b2d81963a4b99d02c504af231a2ab9a80db6e",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/metatype/BlockMetaType.java": {
+      "sha256": "af99a9e50607e5bd4675c1c7ae7b41510a5f2405bfdd781bc68bf06bfb56aa65",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/metatype/BlockStones.java": {
+      "sha256": "aafdf56ce4b3720b314cf62fa031712b697df2bd0b7666bedc479dfe5cb9216f",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/misc/BlockBaseLilyPad.java": {
+      "sha256": "790ba4358a00ba06d247aa8bdc682a423912967b895eed41a3d7d2e1ea31c9f7",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/multitileentity/IMultiTileEntity.java": {
+      "sha256": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+      "receipts": [
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/multitileentity/MultiTileEntityBlock.java": {
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json"
+      ]
+    },
+    "gregapi/block/multitileentity/MultiTileEntityClassContainer.java": {
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/multitileentity/MultiTileEntityItemInternal.java": {
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/block/multitileentity/MultiTileEntityRegistry.java": {
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json"
+      ]
+    },
+    "gregapi/code/ArrayListNoNulls.java": {
+      "sha256": "1c989d835c74f57a1d6c551fad99b505947994f0843c5e1f8efcfaafb3c9d21b",
+      "receipts": [
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/code/HashSetNoNulls.java": {
+      "sha256": "fdb3cca8cfc683a25cfe30d919e6e129a6a813b45bbbd8c68f9b24572fe9e319",
+      "receipts": [
+        "docs/integration/verification/logistics-network-audit-20261021.json"
+      ]
+    },
+    "gregapi/code/ItemStackContainer.java": {
+      "sha256": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/code/ItemStackMap.java": {
+      "sha256": "837535ebdbe64212236cd29119858627f12c4f1ac27cc9af41630bb876d56d42",
+      "receipts": [
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/code/ItemStackSet.java": {
+      "sha256": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/code/TagData.java": {
+      "sha256": "afa72881ee6c421c094ce27e3cef2701374257cb1dd2f099293cceb3e91b4a64",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/config/Config.java": {
+      "sha256": "2a042710713454d905ab456a0ef3879e81d32670d4bd230445ea0d152e708eb7",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/config/ConfigCategories.java": {
+      "sha256": "32fa3151db3b7ffa1a640e64e96d15695bb86162a58aea9d3defc0b10df8c0ba",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/CoverData.java": {
+      "sha256": "e2069e2a2095a44e0ea1be7d38d9c4068cacb70f7850b2bc49a85e37d848da75",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverAttachment.java": {
+      "sha256": "80de1877f10359939f03f7da221bc23fe0927a1368f206062b36df2efe957bf7",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverAttachmentController.java": {
+      "sha256": "affba26902422135a44436651cdec84fbfa47e79d4ee974413a22baaa5e5ee97",
+      "receipts": [
+        "docs/integration/verification/rotational-pump-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverAttachmentLogistics.java": {
+      "sha256": "f741ba5dd8f6552651f51f27da58ebbb0f700b44c490755a13635c3dd096edfc",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverAttachmentLogisticsDisplay.java": {
+      "sha256": "e4d5de7ca0a61a3f06797520458fcf2f68e49964ab2858e55336be1935199382",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverAttachmentSelector.java": {
+      "sha256": "3abc746f02483c3311c32cefd11f1761a8e18aef8e61e992657328ea7612fbf9",
+      "receipts": [
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/AbstractCoverDefault.java": {
+      "sha256": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverControllerRedstone.java": {
+      "sha256": "d35efe4efb06d3a6d91dc2c6126990b087f5d80339bd4d0dc9fbcdedeedf9a9e",
+      "receipts": [
+        "docs/integration/verification/rotational-pump-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverConveyor.java": {
+      "sha256": "8b182ba4124f66e48b31b4f9863c00bfe6cf57f51fa7a5ef4b62dbe3a12bb8c4",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverDetectorRunningActively.java": {
+      "sha256": "d2a2ddf68773ab85ef8446254ff3e982ca890ad334ee2f70ff4260eb234b785f",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverDetectorRunningPassively.java": {
+      "sha256": "c85626d8b4829d95ebe3cd6465d7e40ebd88fe25dcd03f35dbb9c5613cff4d7a",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverDetectorRunningPossible.java": {
+      "sha256": "2a6c8b7e501ed125a31e7046e66107769b72d4c377e2d8c0b013177e6d4c9409",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverFilterFluid.java": {
+      "sha256": "a822ab9f0827c02679be8b97e226811d376abb30606a9883a80f8de1cc9e00b6",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverFilterItem.java": {
+      "sha256": "aef369a78515dcee7f1acc869597f503cb89429d9bbce373d9e537cac66086ae",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsDisplayCPUControl.java": {
+      "sha256": "febe90215b248dd49c9017b3603a8c8f5d6cbaf8e277d73d1dfd54f67074177c",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsDisplayCPUConversion.java": {
+      "sha256": "f7f5dc1de41a260720f763e7a42cd07110e6338800c8f78ac318ea5a89e597ef",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsDisplayCPULogic.java": {
+      "sha256": "0f5fe0d1c9226eed8714a0315134c3fb9698a74bbc7aceb178021589bcde8c43",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsDisplayCPUStorage.java": {
+      "sha256": "5f686c67872c05898ed799a3d3de1cb115423e9b82f3b262563376ec2c19781d",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsFluidExport.java": {
+      "sha256": "a1ce7b09cea5fec69c778b256479a8492e2bf81927b9468ac6e80470642089fe",
+      "receipts": [
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsFluidImport.java": {
+      "sha256": "3f5266b2b91e1ac4f9fa8b9da52f33db2e837246dc72468f1b4977979cf2e51c",
+      "receipts": [
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsFluidStorage.java": {
+      "sha256": "c24fe6bd8b968f4a324e05910d61e9c8c9c3a705189c0633a6c517d871ef3154",
+      "receipts": [
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsItemExport.java": {
+      "sha256": "9c6402303011e0cfd984e693021baa6bd1a9915079e7076b3ce981ed5902a859",
+      "receipts": [
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsItemImport.java": {
+      "sha256": "4f15f7d0ed4f814e184e2fc789e182cf5cc346081207c3e65b9a423b001761b5",
+      "receipts": [
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverLogisticsItemStorage.java": {
+      "sha256": "b44c666f89ab509bdf8318d3be08db0a9f695e195e9bac7ba69cf63d4a2f4f0c",
+      "receipts": [
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverPump.java": {
+      "sha256": "d7425ae66212cbf5ffb8ab2ffb51e3b257a0e491166d7a25533017db2d1a7bf6",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverRedstoneEmitter.java": {
+      "sha256": "b07546ad5ba6072307f9e6a882a466b45b11c01b536a160c08333174418c797b",
+      "receipts": [
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverRobotArm.java": {
+      "sha256": "e275a5c8d62660085040e53d68390462e1f22e3c7964ea003a3e8626bd9616fc",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverScaleProgress.java": {
+      "sha256": "0da39674abb1e9571b53491d079c7f11cd59096932023610b9de0b7ab89824cb",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverSelectorManual.java": {
+      "sha256": "444d71e3cc5c42949c3d31b734c6471ba00e6ab359a0a890ad123db7783593d1",
+      "receipts": [
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/cover/covers/CoverTextureCanvas.java": {
+      "sha256": "04fb696d649a00b9988fb6f996098afb3b47cb0875292e7dfcd9435f2a0ac634",
+      "receipts": [
+        "docs/integration/verification/visual-document-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/ANY.java": {
+      "sha256": "6a26fa2293c4a315d2594c5ac80eba689389f9b1922a33547bdd20d2df724f71",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/CS.java": {
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/FL.java": {
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/data/FM.java": {
+      "sha256": "374772472db8a786a8a0af2408ad71ae2500481e258ee1c6815fcd87f7cbec64",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/IL.java": {
+      "sha256": "2924d17cd74f1057b3ca9851bb5373e9652cf912175929040787cdceaab49c43",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/LH.java": {
+      "sha256": "2c23ddef3f7eb68bed39aad4a2d8189be8b99b53e04f198ade4c299500ebf1d8",
+      "receipts": [
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/MT.java": {
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/material-regeneration-audit-20261019.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/data/OD.java": {
+      "sha256": "6f271d85c5ff67f1f1d57f347006f2aa1bc89991c7c89c76680e7502a4621f05",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/OP.java": {
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregapi/data/RM.java": {
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "receipts": [
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/data/TD.java": {
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/fluid/FluidTankGT.java": {
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/gui/ContainerCommonBasicMachine.java": {
+      "sha256": "be68939d7c9696058b8ae030b4b3cbf7536da5d15038adc2ceaf860340fcf2a9",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregapi/gui/Slot_Base.java": {
+      "sha256": "6b9aef5b84287570587518a7383de81d8ed1ed543a9e49c700755beb8d0f426f",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json"
+      ]
+    },
+    "gregapi/gui/Slot_Holo.java": {
+      "sha256": "a77c2354c9cb8aad24b63941eb4b8c835edb2e2460b24d72e96730aeff2ad0b5",
+      "receipts": [
+        "docs/integration/verification/filter-blocks-audit-20261021.json"
+      ]
+    },
+    "gregapi/gui/Slot_Normal.java": {
+      "sha256": "bcf1b8dd35ae32d2d6f910fcf8ec554fa8540383ea1f7f4a94a37c926daedaf6",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregapi/item/IItemEnergy.java": {
+      "sha256": "16d33d1bf4477fcc45ce4a2cb798901bcbef642952b4014dc737bcc320dfe22d",
+      "receipts": [
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/item/IItemGTContainerTool.java": {
+      "sha256": "08dca67a1d19cfcba9c03842e31e387f5cce9040c140662d889cc19892f4fee4",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json"
+      ]
+    },
+    "gregapi/item/IItemReactorRod.java": {
+      "sha256": "c78abfcb1d04c58565bb4a367998b185e2675045c3c3abf2021d5e7ac018de6b",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/item/ItemBase.java": {
+      "sha256": "2102f104c10b9cd952924f0d071fe44c5fe71c41d3d70f05b269ca67ca3617f5",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregapi/item/ItemIntegratedCircuit.java": {
+      "sha256": "4eed20d19382a186e7e9d6ea33e705f50f9192468a16036f186512c006154678",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json"
+      ]
+    },
+    "gregapi/item/multiitem/MultiItem.java": {
+      "sha256": "eff4a22e1d6e3277e93a3d34519111f514d61954c2a5b3bfaf90aca88660901d",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/item/multiitem/MultiItemTool.java": {
+      "sha256": "d9f1417dc1e13538b89470445fd83d1bccd6a61e19aaacb9b03d0ee48b4cb0ac",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/item/multiitem/behaviors/Behavior_PrintedPages.java": {
+      "sha256": "53c2d788d695986b77ef09ec052ff4513daf8d80b6302c6f6d827527b92771f6",
+      "receipts": [
+        "docs/integration/verification/visual-document-audit-20261021.json"
+      ]
+    },
+    "gregapi/item/multiitem/behaviors/Behavior_Tool.java": {
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/load/LoaderItemList.java": {
+      "sha256": "d3bdea0d388c5ec510269e8ac3a6c234ad4df9e35fa39e8996f65cdd5bd410b0",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/load/LoaderOreDictReRegistrations.java": {
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/load/LoaderWoodDictionary.java": {
+      "sha256": "55a53e74c6fcddc4894a2e61acb8ea914496a53cc4f9f64e7f78d78eebd8d0e3",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json"
+      ]
+    },
+    "gregapi/network/packets/PacketConfig.java": {
+      "sha256": "cc5f56013eb807a5e5fba883df08f78b89d964b45516ed513ff1a26646abc164",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/old/Textures.java": {
+      "sha256": "2c89ed8e110dffe1c33c86c1e5707fa1f2b70ea3490d5d2d67a5305c8eca9d0c",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/OreDictItemData.java": {
+      "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/OreDictManager.java": {
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/OreDictMaterial.java": {
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "receipts": [
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/OreDictPrefix.java": {
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "receipts": [
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/configurations/IOreDictConfigurationComponent.java": {
+      "sha256": "b2f52aee79e85619a33966c4da55365630d1ab8caa868c649f54adcc75bfd516",
+      "receipts": [
+        "docs/integration/verification/material-decomposition-audit-20261021.json"
+      ]
+    },
+    "gregapi/oredict/configurations/OreDictConfigurationComponent.java": {
+      "sha256": "4107c41df6b00726d4d2b2751175408b59b883e538301065991b38f7d793e1d1",
+      "receipts": [
+        "docs/integration/verification/material-decomposition-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/AdvancedCraftingShaped.java": {
+      "sha256": "a39c084235ae893785d83b3a1b099e9e3aec89fdd2a462315ce036abc9859137",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/ICraftingRecipeGT.java": {
+      "sha256": "59e2725a0a832970fb6c82b2a25e9d31377a87fbadcf628a7619bd4eec79c519",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/Recipe.java": {
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregapi/recipes/handlers/RecipeMapHandlerPrefix.java": {
+      "sha256": "de005fa316ae3d9ebddf69456c47a4e1e0ec38b9983d9fa9d1809e2bd9e58156",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapAutocrafting.java": {
+      "sha256": "76c79b611b286bfbe331f516fed22ce7877b366ceb656a56749a9d8aab9a04e9",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapFuel.java": {
+      "sha256": "86d8ee81bd5842dc624bd031a66fe4c87ab6599225e596531462e9d7ab28cf27",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapPrinter.java": {
+      "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/visual-document-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapReplicator.java": {
+      "sha256": "27842d2b10e83052f10a0985b5a289600185df5092a8fe4bafa2c18eee8d6bd3",
+      "receipts": [
+        "docs/integration/verification/material-data-chain-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapScannerMolecular.java": {
+      "sha256": "1530afad7f0701d7bbb2b0061b97d3516a4ae995a44e30f92102e9b9a316c42a",
+      "receipts": [
+        "docs/integration/verification/material-data-chain-audit-20261021.json"
+      ]
+    },
+    "gregapi/recipes/maps/RecipeMapScannerVisuals.java": {
+      "sha256": "eb79301ab2ffd0c7320d94f414699aeadfead0972156ce02cdfff030a707a135",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/visual-document-audit-20261021.json"
+      ]
+    },
+    "gregapi/render/BlockTextureCopied.java": {
+      "sha256": "edbd03fd7b42ac69906ec9c525c0ac2b7334b9ad8af28fa0ae1edb85e14308eb",
+      "receipts": [
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/visual-document-audit-20261021.json"
+      ]
+    },
+    "gregapi/render/BlockTextureDefault.java": {
+      "sha256": "626f10a146021b90da190d9ac051771e8d07b9cd9c62d68955b2db5c31602c85",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregapi/render/ITexture.java": {
+      "sha256": "9ebdc62095f15a1631a06a207619b8695a01f8e60ea343bd2cd0458a68a8ee59",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregapi/render/TextureSet.java": {
+      "sha256": "3d00fa12ae674474795a2203ba196a593181ed1fcd6f67807234864415541166",
+      "receipts": [
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityConnectedInventory.java": {
+      "sha256": "28cfe1a084457715a687cfc57d8c37de46ecd87f0e62b02a4f4b4561cf22d396",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityConnectedTank.java": {
+      "sha256": "3e3408ae774cab8522a2aa84c6fbac11c0f430b7237d471e93d43324472b6c58",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityFunnelAccessible.java": {
+      "sha256": "eeea2367853c360f9dd64b5596a913696fc090a5b285a069412b3c3bbe647729",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityMobSpawnInhibitor.java": {
+      "sha256": "d94a0303a766a9881e92ae04edfa1b14c9b58cd2aaad60d9746405e4813319fe",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityRemoteActivateable.java": {
+      "sha256": "f8129be5351ed9f9eb20627c994b7d058499a05b237ca317fc54f7ccdb7122cc",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityServerTickPost.java": {
+      "sha256": "736e6a78f74add8bc1e49780a0eda6de57186c6bdbc29e0727f31597f1fed7f9",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityServerTickPre.java": {
+      "sha256": "e5e6dabb62b25d5321681a5d79cf0309803bbbbd9ccd54954e6dedee0e739ad4",
+      "receipts": [
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityTapAccessible.java": {
+      "sha256": "1f7126dc4af0adfd7c122b3f2edbbe4614eb33bcc0badff55f48a92f88fbf850",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/ITileEntityTreeHole.java": {
+      "sha256": "51c892d556be378bed06f21640de55966af49919bd14c6f58f45ceb65f9d3b79",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase01Root.java": {
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java": {
+      "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "receipts": [
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java": {
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java": {
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase05Inventories.java": {
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase06Covers.java": {
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase07Paintable.java": {
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase08Directional.java": {
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase09FacingSingle.java": {
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase10Attachment.java": {
+      "sha256": "1f4b0a65f5e6650bcfa79c3f50fef3eb5cb42b659ab377c49d8347f114ab0e10",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase10FacingDouble.java": {
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/base/TileEntityBase11AttachmentSmall.java": {
+      "sha256": "c8609b9656bc53510b44bd14bb6e8eef63580b9ff6ec94203892a7c034da7c9a",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/behavior/TE_Behavior.java": {
+      "sha256": "415156c403dfdcf30b47782335237cfe39b01f1b217a7c121163156de8eb9633",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/behavior/TE_Behavior_Active_Trinary.java": {
+      "sha256": "ba735871ca3e15360a39824c1c1eca4d4e79ada8ec08e1f90129dd8c5533af34",
+      "receipts": [
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Capacitor.java": {
+      "sha256": "4977ba698373a42ddadfbc5de00daf67d38a4daa2062103aa038ba84318f57c4",
+      "receipts": [
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Converter.java": {
+      "sha256": "db1e31ed18e62bc9d261e33edcf338ed9717fc1ee088eab8de2baff69c9e59d4",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/behavior/TE_Behavior_Energy_Stats.java": {
+      "sha256": "d66cd7885b7053510d40c054dd6b87ef7a2aab23ee6e554e33af726fc4dddbbf",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/computer/TileEntityBase08DataSwitch.java": {
+      "sha256": "8d8023886b231059173a56c87e39936bd270260581336db7fa38f752b8298311",
+      "receipts": [
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/connectors/MultiTileEntityWireLogistics.java": {
+      "sha256": "b70145cd90287236297bcfcc5d988c3f97346e2c056c54c3298b98e1f6f51c77",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/connectors/TileEntityBase09Connector.java": {
+      "sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java": {
+      "sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/data/ITileEntityGibbl.java": {
+      "sha256": "73eeddcbe3442a47d8c71f5ae955f9866f43f0aa63dc6b347f2b7d3a70901143",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/data/ITileEntityProgress.java": {
+      "sha256": "cb6dee3cb77b507adae51146beca44ef8e79100b3503d2c61f516c8c83c46774",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/delegate/DelegatorTileEntity.java": {
+      "sha256": "d7ad2ddc84ee02b304e7f6d6ff4e478458b8d9290d173974e0fd27e80de3d224",
+      "receipts": [
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/delegate/ITileEntityCanDelegate.java": {
+      "sha256": "f008b59c5365b7c24b31db9efe6a3bb9f611bee3ae28cc1adf1262ef8f20ac4d",
+      "receipts": [
+        "docs/integration/verification/logistics-network-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/delegate/ITileEntityDelegating.java": {
+      "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004",
+      "receipts": [
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/energy/ITileEntityEnergy.java": {
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/energy/ITileEntityEnergyElectricityAcceptor.java": {
+      "sha256": "0b084fcbf40ce1b3c0e850baaa7fff35f5dd04ea4e70a5f89d1c21c217d6a887",
+      "receipts": [
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/energy/ITileEntityEnergyFluxHandler.java": {
+      "sha256": "f5a680a58e3c547bca1b17fd77f2008b81ed0bbb51c9be1259949e836d670f57",
+      "receipts": [
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/energy/TileEntityBase10EnergyConverter.java": {
+      "sha256": "52cb409c7d35a8731338527301e09c8b779548e1851d5fe7fe91242fd25b9c44",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json"
+      ]
+    },
+    "gregapi/tileentity/energy/TileEntityBase11Motor.java": {
+      "sha256": "debce53cfd8ccea8a4ff5da9bade918c0ba0f1be3bc88786d5b2dd530e78b6d8",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json"
+      ]
+    },
+    "gregapi/tileentity/energy/TileEntityBase11Twotypes.java": {
+      "sha256": "eec57ddb5f9d74b84599bf5dcbee331f8a62e468c5e4acaa54b351bcbe70e711",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json"
+      ]
+    },
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": {
+      "sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/logistics/ITileEntityLogistics.java": {
+      "sha256": "1a0652344f20f926cbe91fbc6619e0e97258b12179a1d7879a61ead2aaeecbc6",
+      "receipts": [
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/logistics/ITileEntityLogisticsSemiFilteredItem.java": {
+      "sha256": "5e5e8278028eb9f44d4bbeafae8a31a3f49f86ee38b804fd5271cf9b6f9fbf54",
+      "receipts": [
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/logistics/ITileEntityLogisticsStorage.java": {
+      "sha256": "885cde622540d642c53fa3c1e554b846d7c83cf3d8e815c05b27cc0f0342fa77",
+      "receipts": [
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/machines/ITileEntityRunningActively.java": {
+      "sha256": "24f563a24576dca97988319156e388d556956d54ec065d330ddcc58477a904dd",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/machines/ITileEntityRunningPassively.java": {
+      "sha256": "5eb22739f6d54c8fe2ef6df071faaf1777f297caa1567d6ee3f33b16b71c9cec",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/machines/ITileEntityRunningPossible.java": {
+      "sha256": "da5405c24405a235f4571a2f77e1b6ced1ef5e7f0ce3fc1dae9803066bcb6c62",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/machines/MultiTileEntityBasicMachine.java": {
+      "sha256": "1798706545c33c801735ac5fb56b0ae37a8b6e3b7819f40f41183a2057b0c860",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/misc/MultiTileEntityTreeHole.java": {
+      "sha256": "08e8ab208fcfcee0eb360699e2bb830e079e2392777fca98ef6d12a8550238fb",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/IMultiBlockEnergy.java": {
+      "sha256": "5998de96a2473247f3527e2e82d3f66fd379f1b2d5986f994b8f3b59d414f5f3",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/IMultiBlockFluidHandler.java": {
+      "sha256": "f12c7bb7295911077fbf288f2d4a74996f9b846e81675a7d90e5566345885456",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java": {
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java": {
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java": {
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/multiblocks/TileEntityBase11MultiBlockConverter.java": {
+      "sha256": "38b9df583b72f6ab97ae23f8533b54a8d82fead147c026053230e2cc59533afc",
+      "receipts": [
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/notick/TileEntityBase03MultiTileEntities.java": {
+      "sha256": "679c001f2cf9c6122cff2074e8b45fc360f2463101eb88f3dd22c8d78954bd39",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/tank/TileEntityBase08Barrel.java": {
+      "sha256": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json"
+      ]
+    },
+    "gregapi/tileentity/tools/MultiTileEntityAdvancedCraftingTable.java": {
+      "sha256": "730747ed9b5c401c6128ec09a481c9b0bcbc68c186c46f231afb07b4bf8231d0",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/tileentity/tools/MultiTileEntityChargingCraftingTable.java": {
+      "sha256": "248d04d27b28d6fe67728a9008e28cd62eeb709033a66cb8cec999b08f8f8a54",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregapi/util/CR.java": {
+      "sha256": "952f94e0dfff66d27d2ac2b97ed47b6aa0c8250aa19babd5cc528c89616c0760",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregapi/util/OM.java": {
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/util/ST.java": {
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json",
+        "docs/integration/verification/worktable-lifecycle-audit-20261022.json"
+      ]
+    },
+    "gregapi/util/UT.java": {
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "receipts": [
+        "docs/integration/verification/advanced-worktable-audit-20261022.json",
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/visual-document-audit-20261021.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregapi/util/WD.java": {
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json"
+      ]
+    },
+    "gregapi/wooddict/PlankEntry.java": {
+      "sha256": "3bd5fbe235cafacd39717d62eeb8fc1604d6984f4a153e71c17a923531983d23",
+      "receipts": [
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json"
+      ]
+    },
+    "gregapi/worldgen/GT6WorldGenerator.java": {
+      "sha256": "d7be7c6edff03e702c9b9c0414b740a98ca1975847f8f857459e75691191377b",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/worldgen/WorldgenObject.java": {
+      "sha256": "8122967665f694cb38b7f4fe30292204958dabfb3cc19c040bf0305f4d80b197",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregapi/worldgen/WorldgenOnSurface.java": {
+      "sha256": "6b772c111e643d11086d9bec11366b05ffa85fb41bdacf18cfcf08b6b6b5f753",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/worldgen/WorldgenOresBedrock.java": {
+      "sha256": "cfd42311493c2e18283bcaf286df8bd0e3ae0924a07be178b0dee273c0d03a1a",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregapi/worldgen/WorldgenOresLarge.java": {
+      "sha256": "f8d81467df97431f15097acfb381a4db3dcbeb817335bb3181060da872da310c",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/GT6_Main.java": {
+      "sha256": "a7dca874bef8dd25c9f98d64ddd372f081faf17899d5053156d4f78f4b3499ed",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/GT_Proxy.java": {
+      "sha256": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/BlockConcrete.java": {
+      "sha256": "58649b4da03c17a9d73beb421fca61d11bac057f3e2c3e101e4e0f5a2a3676e6",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/BlockGrass.java": {
+      "sha256": "dfc34e552b169a88c05c666509d82e0f05010e119081069ab33bcedf94473016",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/fluids/BlockWaterlike.java": {
+      "sha256": "d4376c101292f1d831047a1af75b6e87a1a0efda0dd4350be67b12cb80c71f4c",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/plants/BlockGlowtus.java": {
+      "sha256": "94e4db28baae9208fb086002af0e7b2ac56192871ebd73a8cd93dc9d5a43656f",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/tool/BlockLongDistPipe.java": {
+      "sha256": "c2c20883e798025e670b75b1946190c9520f9de7eed9a47dc679f3a508952135",
+      "receipts": [
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json"
+      ]
+    },
+    "gregtech/blocks/tool/BlockLongDistWire.java": {
+      "sha256": "6582cf7e867482c9b162c16a1527b21f542b6ed1254168bc65e193e8d7e5b854",
+      "receipts": [
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json"
+      ]
+    },
+    "gregtech/compat/Compat_Recipes_IndustrialCraft.java": {
+      "sha256": "cb61352e4d5d5764b3e61c548038e5aefd3f7738a837320c0f091684abd5686e",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json"
+      ]
+    },
+    "gregtech/entities/Override_Drops.java": {
+      "sha256": "16ba0864619780495285aeb8a9eb692ed335d7272c5dbfbbc60daa2dbdc350fe",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/MultiItemRandomTools.java": {
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/visual-document-audit-20261021.json",
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregtech/items/MultiItemTechnological.java": {
+      "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/behaviors/Behavior_FlintAndTinder.java": {
+      "sha256": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/behaviors/Behavior_Plunger_Fluid.java": {
+      "sha256": "023ca531f154987cbedaa94a0e7ecede5a46e9d23bf15d5be0c8b0568c3995c8",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/behaviors/Behavior_Remote.java": {
+      "sha256": "f7b3d56ecde1116d1de5ab2971df138b61891660720f625c1850ec74d8f7842b",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregtech/items/behaviors/Behavior_Spray_Color.java": {
+      "sha256": "8185b432ec7e87f44541a41e8d196ea0ff94c4a182eddf8dffab0c531d5c4318",
+      "receipts": [
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/behaviors/Behavior_Spray_Color_Remover.java": {
+      "sha256": "bcfe19392ca9f494b731189220dc6aadcd0a74ddcf5f75667f1de3e88f7f9063",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/early/GT_Tool_Sense.java": {
+      "sha256": "ee99e7640a189daf0a7b453bdec00ef9f88cf4ac4c2f0ef92abc2d8969cadb73",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java": {
+      "sha256": "df3e7812331b86f9076dfe42afbc8135b73f6091fd53d47d25c3dd95ec89e00f",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/machine/GT_Tool_Plunger.java": {
+      "sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/machine/GT_Tool_Screwdriver.java": {
+      "sha256": "0cb7f909f6f9d4272ee6eb63ab9aafdc4b5889f093b2133f1531fbe703bcd56f",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/machine/GT_Tool_SoftHammer.java": {
+      "sha256": "48ce603efcb295072b9d742a555100710aceae8557a69b6f717e7b6152f35f6c",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregtech/items/tools/machine/GT_Tool_WireCutter.java": {
+      "sha256": "2140613e3c6af93fe2165608784081b30f1c7f4ee7cc61f65eaacb6ed9784ce7",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/a/Loader_Blocks.java": {
+      "sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb",
+      "receipts": [
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/a/Loader_Fluids.java": {
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/a/Loader_Rocks.java": {
+      "sha256": "858fb3115a143c2c5d88c0e79c6baa7bd9ac69fa2cf2aee2f000fc27487b92db",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/a/Loader_Tools.java": {
+      "sha256": "e791f2cd6972bfa10767663f78557d2722cac2b7c80f29595815b4a520577b6e",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregtech/loaders/b/Loader_Books.java": {
+      "sha256": "a4a79476ee1a757d478ad2ed100c862e8501b056dc87fae4b75413a7df622d79",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/b/Loader_Fuels.java": {
+      "sha256": "df4517a5c621527c62adee8245601a420b53f7e4d5e871283ac16fbcd4e68edc",
+      "receipts": [
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/b/Loader_MultiTileEntities.java": {
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json",
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json",
+        "docs/integration/verification/button-crank-audit-20261022.json",
+        "docs/integration/verification/energy-converter-audit-20261019.json",
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/large-dynamo-audit-20261021.json",
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/large-turbine-audit-20261021.json",
+        "docs/integration/verification/lightning-rod-audit-20261021.json",
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json",
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/open-vessel-audit-20261022.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json",
+        "docs/integration/verification/plant-lantern-audit-20261022.json",
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/rotational-pump-audit-20261021.json",
+        "docs/integration/verification/sap-bag-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json",
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/b/Loader_Worldgen.java": {
+      "sha256": "ebd09b9af84bf8e275ffbe856a706d0206a51fd8869a6b3a39ceddbb321c550a",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/c/Loader_Recipes_Decomp.java": {
+      "sha256": "46fb4d0f9f003aab7eac2eb2c83082c4941906897fca94b7f2f72d41bca71b49",
+      "receipts": [
+        "docs/integration/verification/liquid-acid-factory-audit-20261021.json",
+        "docs/integration/verification/material-decomposition-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/c/Loader_Recipes_Extruder.java": {
+      "sha256": "52f75bebf8ff40b80f5747a261794152a57620bddec9168dd1024bb2b91d207b",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/c/Loader_Recipes_Food.java": {
+      "sha256": "dc9162de4c889164383b30d4a665fabba052ad67dd7840a0241bf740665e6b82",
+      "receipts": [
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/loaders/c/Loader_Recipes_Handlers.java": {
+      "sha256": "b6e4973cd8fe16038868f6fafd28528234b8299c6da8f448aad18414055c382b",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregtech/loaders/c/Loader_Recipes_Ores.java": {
+      "sha256": "b94dc194c7557f341ebacd895cc18c2fada8c5e4cd33b45784c971f921db4aa3",
+      "receipts": [
+        "docs/integration/verification/sifting-table-audit-20261022.json"
+      ]
+    },
+    "gregtech/old/Loader_MachineRecipes.java": {
+      "sha256": "9bab549add3335925de65d1676f4dda45717da99e41d8b1222287dc2cc134241",
+      "receipts": [
+        "docs/integration/verification/blueprint-autocrafting-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/computer/MultiTileEntityHDDSwitch.java": {
+      "sha256": "77a4f10452455070a76f72f4ba7c763910118ba4de45f467514081bc967a324a",
+      "receipts": [
+        "docs/integration/verification/material-data-chain-audit-20261021.json",
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/computer/MultiTileEntityUSBSwitch.java": {
+      "sha256": "67b4976126119b054bef60ea80d9c06b83588b545058b2be18450624a9dad03a",
+      "receipts": [
+        "docs/integration/verification/usb-switch-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/converters/MultiTileEntityBoilerTank.java": {
+      "sha256": "3669a4447e3ef2fc2074470f3b272aa8796f3a0d785135bdcd151b07544553c3",
+      "receipts": [
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json"
+      ]
+    },
+    "gregtech/tileentity/energy/converters/MultiTileEntityTurbineSteam.java": {
+      "sha256": "04dd3fa44dea387bc8b293035b6c0e787a900b4e4c5f107d8f94c201fe1713cf",
+      "receipts": [
+        "docs/integration/verification/energy-converter-audit-20261019.json"
+      ]
+    },
+    "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorGas.java": {
+      "sha256": "a3ce51395334630298a106239c420f187e7465a6c56e4ed707e72c1340ff9e34",
+      "receipts": [
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json"
+      ]
+    },
+    "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorHotFluid.java": {
+      "sha256": "7d6c773afd8df1b012a8e36d55500fb12bc1fb65f60815fa02bdd2b8ca3598a4",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/generators/MultiTileEntityGeneratorLiquid.java": {
+      "sha256": "7fc93631602ac5110de425b6e3ae2db4bf0aee7ff56487fac103d80a817f0a0e",
+      "receipts": [
+        "docs/integration/verification/boiler-burning-box-audit-20261019.json"
+      ]
+    },
+    "gregtech/tileentity/energy/generators/MultiTileEntitySolarPanelElectric.java": {
+      "sha256": "d7846445443eb27ab50a211cf1d7fec1dee069c2fb0ae1826b9e046c9b7871d5",
+      "receipts": [
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore.java": {
+      "sha256": "bd32b8373bbfd40fb447cb4ccc14ac5e2f737ae6a31ffc6635610d2ad6acc545",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore1x1.java": {
+      "sha256": "06614619f47aef22f7eefda3a5851b55869c3cbc8462f45bf3165fa3dbdbc779",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorCore2x2.java": {
+      "sha256": "0ae845889da1b5aa793c23bd5171a864c2f8c56e82efdadb94af5f880e358182",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodAbsorber.java": {
+      "sha256": "36c8b5520bb98baab0d79295c592a471fa201625d43b0aea286e1929d60142d7",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBase.java": {
+      "sha256": "bd469c677dbe7fc064942100607b89ea1e879ea98497bb81d499dd95c92a7867",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodBreeder.java": {
+      "sha256": "1d6538b8c52dd6c3e675899c9efeb4ffbc623fe4ed685d7b208870493481948c",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodDepleted.java": {
+      "sha256": "eb66f0a8543e0c99f2a20b624e1e811c241ce6a715cec5437ecf2e752580d608",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodModerator.java": {
+      "sha256": "93bdc8428d6b51212614f6fb0a145dee4cff2bf7722ab80c02d04be9bca4c021",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodNuclear.java": {
+      "sha256": "f1eed07d9a1210b1c4e2f733f91619f42097d9c3b1175e5c5f2e55c81a2361fb",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodProduct.java": {
+      "sha256": "1ce4a3b76ed1f3350e26810461f0b1d734e5ada5ef2638c043891aa64dc98b2f",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/reactors/MultiTileEntityReactorRodReflector.java": {
+      "sha256": "8c8b1a795bb516ed49acfb3d6888f55044b9c65239ac9ab25e63fb0ba16b9ab6",
+      "receipts": [
+        "docs/integration/verification/nuclear-contract-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/energy/transformers/MultiTileEntityLongDistanceTransformer.java": {
+      "sha256": "68bff798f2d06d109cd5f5902671fea99617319555ed874d2971f49a14f8d6e2",
+      "receipts": [
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/extenders/MultiTileEntityBridge.java": {
+      "sha256": "5bdb146ffe635f31c83df595714ca9e7fda012c7e13485948b45a2c4228e6168",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/extenders/MultiTileEntityExtender.java": {
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/extender-signals-audit-20261021.json",
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json",
+        "docs/integration/verification/paint-targets-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/extenders/MultiTileEntityExtenderController.java": {
+      "sha256": "220238e5b50477ffbcb28bcc114dfc6e7a95570957525ef72fad307a17463688",
+      "receipts": [
+        "docs/integration/verification/extender-capabilities-audit-20261021.json",
+        "docs/integration/verification/nuclear-contract-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/extenders/MultiTileEntityFilter.java": {
+      "sha256": "e99dc157de0d39fc0ed58fdc9e6acf4bc2abd65cf75e50d0c8e60346cbc4d490",
+      "receipts": [
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java": {
+      "sha256": "4595bd7187cdcd907d37058658df7bd33f86aef21f9dfbcdd5ecd0578a4a7797",
+      "receipts": [
+        "docs/integration/verification/filter-blocks-audit-20261021.json",
+        "docs/integration/verification/filter-fluid-tools-audit-20261021.json",
+        "docs/integration/verification/filter-prefix-membership-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/inventories/MultiTileEntityLongDistancePipelineItem.java": {
+      "sha256": "befd9158a68c0a581e8e3e44f7f632b7287b349ce6f56ba580c2c0911b69a218",
+      "receipts": [
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/inventories/MultiTileEntityMassStorageLogistics.java": {
+      "sha256": "07efb64ed30f65ddff98cb47137d36d371945379316a460e91b9d2d5a5d728c3",
+      "receipts": [
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/misc/MultiTileEntityGregOLantern.java": {
+      "sha256": "fc076330c4e5dc991e8f51d8b1fe647acbec2b15c45bfd91089aa0ad39cbedb0",
+      "receipts": [
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/misc/MultiTileEntityRock.java": {
+      "sha256": "c6e56f2fdb2d0cf9f5786472a91ccf4a4c64cb3604a91cfa372499b6fbe89a4a",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityBedrockDrill.java": {
+      "sha256": "fd111e1e53ff208b425ad166419b1a381c8ef5b0e2d26d586bd1da8ac07abd08",
+      "receipts": [
+        "docs/integration/verification/bedrock-drill-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeDynamo.java": {
+      "sha256": "dc08705104ad7de394530a8d4cff857da35d90286d709e5ae4c34899ea476dd0",
+      "receipts": [
+        "docs/integration/verification/large-dynamo-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeHeatExchanger.java": {
+      "sha256": "17e76c7595c2a229efe93dcf728d9a32a3301789ee843fa2c9e9aecfca885bfb",
+      "receipts": [
+        "docs/integration/verification/large-heat-exchanger-audit-20261021.json",
+        "docs/integration/verification/nuclear-solar-heat-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeTurbine.java": {
+      "sha256": "7de79e0daf4eb4e6e3d3f272f3ac2f9230bbca9c51a8b6614935e8c54fb23019",
+      "receipts": [
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeTurbineGas.java": {
+      "sha256": "4cb779b6e63b3348cf4eec1cc6af36faac9748ebdcc953d8ef8c24c0f7edbbab",
+      "receipts": [
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLargeTurbineSteam.java": {
+      "sha256": "47d7aa9648009c7b72eb42121ca3a955d58d1c556075ce60483b4a7c096bf83c",
+      "receipts": [
+        "docs/integration/verification/large-turbine-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLightningRod.java": {
+      "sha256": "c6129225a4ed16acbb0b10661bf1e4dac0a3c5c4c7c62010c1e56308a276c83a",
+      "receipts": [
+        "docs/integration/verification/lightning-rod-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java": {
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3",
+      "receipts": [
+        "docs/integration/verification/logistics-client-audit-20261021.json",
+        "docs/integration/verification/logistics-core-state-audit-20261021.json",
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json",
+        "docs/integration/verification/logistics-network-audit-20261021.json",
+        "docs/integration/verification/logistics-scheduling-audit-20261021.json",
+        "docs/integration/verification/logistics-transfer-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank.java": {
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/paint-state-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java": {
+      "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Metal.java": {
+      "sha256": "9197e6f5b33499c51172471e10d868a76a548e4fc1f8639caaf592b2c9bba269",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Wood.java": {
+      "sha256": "2ba5c052e8b4369a8fb9cb2fbde4b870d63f2890d24be25fce8d6129264c9a7e",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java": {
+      "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json",
+        "docs/integration/verification/tank-client-audit-20261021.json",
+        "docs/integration/verification/tank-hazards-audit-20261021.json",
+        "docs/integration/verification/tank-tools-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5Metal.java": {
+      "sha256": "2e8c46fd5f00fb565f425514065fb2d20545542c686b173570cf02c3875ede21",
+      "receipts": [
+        "docs/integration/verification/multiblock-tank-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/multiblocks/MultiTileEntityVonDaGraagg.java": {
+      "sha256": "8c6e65cb6766a4c9173dc5ee476b575775b437f6fc6a4f2a0984d20daa78ce59",
+      "receipts": [
+        "docs/integration/verification/von-da-graagg-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/placeables/MultiTileEntityRock.java": {
+      "sha256": "34db5a8ef1711292b14b99595aa515b51448923508b56473dda13615a4e94368",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/placeables/MultiTileEntityRockPlaced.java": {
+      "sha256": "6c2a19a5c4c5573ca4569ea51ad1b6362ca16cba330a5eea7a00d7e72f34cfca",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/placeables/MultiTileEntityStick.java": {
+      "sha256": "5c1ab697b907de91617d7c6fce216f87223882f2cd87196e0d903be484ba2ab0",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/placeables/MultiTileEntityStickPlaced.java": {
+      "sha256": "f72e4bcb2b80775b16cd4e68180931c302f036e4e1ea6cddb6d990422a5ecdf1",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/plants/MultiTileEntityResinHoleRubber.java": {
+      "sha256": "3d8f9aba35fdda5ef25d1059f410360c3d7ef87c384b6336235935acf521ece6",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/plants/MultiTileEntitySapHoleMaple.java": {
+      "sha256": "a5682de7ac018f6fa2aba60c59219618b1fa8858dc7de6bcea74a05c2643092b",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/plants/MultiTileEntitySapHoleRainbowood.java": {
+      "sha256": "d54b899c4bdee7af1f0b0fc9a17daddfc53d311ab527fbcac66610abe89fd96c",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java": {
+      "sha256": "c225a3f969c00d00d4920cdc82900f78eaacf52a0e37d55cf8dc229becc6630c",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tanks/MultiTileEntityBarrelLogistics.java": {
+      "sha256": "1247122cf9a7d7d000da70dde1641dc9cb67b624ba71c840b3e11f9f28e538dc",
+      "receipts": [
+        "docs/integration/verification/logistics-direct-storage-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/tanks/MultiTileEntityLongDistancePipelineFluid.java": {
+      "sha256": "e54bb7180e6bc534d0ddf0cb8b004b99e79580f76e25c0bffb8e74f2d63654d2",
+      "receipts": [
+        "docs/integration/verification/long-distance-lifecycle-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/tanks/MultiTileEntityPump.java": {
+      "sha256": "57155753835fefabf1b7b6d4387885fbbed6a391280dad74b73f47f92fc23a01",
+      "receipts": [
+        "docs/integration/verification/rotational-pump-audit-20261021.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityBathingPot.java": {
+      "sha256": "fef4fb033b46670651307a6127c220f04d2a7fcfb11058345b32a0f43c8d7eab",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityBathingPotTable.java": {
+      "sha256": "7b01ff5ec63d87fa8416fff72db0b8dfcb991657bf99a0288f288c3762ee120f",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityBathingPotTableWood.java": {
+      "sha256": "b2a89718f05ccdd7aedec954c4e6654a4ab90ebb848153281af9024e883e32d1",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityBathingPotWood.java": {
+      "sha256": "b6e9cb0db00bb61cfa952e728701d64e74507c0e231ebdab771145b428070d49",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityCrank.java": {
+      "sha256": "03d4c7a3be5709c5ae49726db44dabf715f8e2fa1f144ad025a6b1553b8a679a",
+      "receipts": [
+        "docs/integration/verification/button-crank-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityFluidFunnel.java": {
+      "sha256": "17bdef3e48e49f10448ebb10231d115cf0a7aa19cbf96a60021251a0bde8ed28",
+      "receipts": [
+        "docs/integration/verification/worktable-io-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityGrindStone.java": {
+      "sha256": "e11ee2f62b895f81077bfdf612015122079ff9b88361d729c6794160b97f9528",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityJuicer.java": {
+      "sha256": "2c98bf960cc89cd5c5477f66c71ab9ba013265a6d651bb76225e0c099bba572c",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityMixingBowl.java": {
+      "sha256": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityMixingBowlTable.java": {
+      "sha256": "f8ec5640c025e9df10db5b4726528dadc8ebd43edb5f42bf64bdb8f0bcbc5d93",
+      "receipts": [
+        "docs/integration/verification/open-vessel-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityMortar.java": {
+      "sha256": "fc407a0bc979f88fc4209160005c53a32ff78c673dc352fc39244fbfe7ad5d2c",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityPlantPot.java": {
+      "sha256": "d316c89437108b29669e87933499ed953835178779b5bc6ed34c71de72c60100",
+      "receipts": [
+        "docs/integration/verification/plant-lantern-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityRope.java": {
+      "sha256": "dd0654c88cf26d3d68056ebfc721f2d67e240f8fcc76f0f0f15a8854dbf68e1e",
+      "receipts": [
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntitySapBag.java": {
+      "sha256": "a79bd506e6458ed3ce84c0b1b6962203a4608fc7ecf8bc0551e0c4b73a32a95d",
+      "receipts": [
+        "docs/integration/verification/sap-bag-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntityScaffold.java": {
+      "sha256": "7ab23ba87480eb72976d9774f574344935dfa6178517b3ff470bfc9b53a8c9ba",
+      "receipts": [
+        "docs/integration/verification/rope-scaffold-audit-20261022.json",
+        "docs/integration/verification/utility-physics-audit-20261022.json"
+      ]
+    },
+    "gregtech/tileentity/tools/MultiTileEntitySiftingTable.java": {
+      "sha256": "aa16e493f135dcc0722499d3cfc1970d05161b39e53241e11c65cab179081b3d",
+      "receipts": [
+        "docs/integration/verification/manual-grinding-audit-20261022.json",
+        "docs/integration/verification/sifting-table-audit-20261022.json"
+      ]
+    },
+    "gregtech/worldgen/NoiseGenerator.java": {
+      "sha256": "33cd02431ca1f7ca8c0dab7c1831082c942ec713e5b299cbcb9810338d4b87ac",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/WorldgenGlowtus.java": {
+      "sha256": "368b09d90bc82278540cad15a235ba221e706277b3bb9ae9f9d59e7399288af1",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/WorldgenRocks.java": {
+      "sha256": "3c4101e25ce8c12d3990f1f4afda751314cbe3e5633a499ad23aadb2be5716fc",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/WorldgenSticks.java": {
+      "sha256": "1d389b2a4d860781bcf3253209dc4403971e1537790787518e5b05056365032d",
+      "receipts": [
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/WorldgenStoneLayers.java": {
+      "sha256": "b39bd97d31d6aa7a386cc5c9579461337ef980ecf3e0a0294b35116ebaa5c57c",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json",
+        "docs/integration/verification/surface-plant-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/center/WorldgenNexus.java": {
+      "sha256": "b4f7841c84d193dda38b7caa940cde249465a739b04992e5052cb9ab79fe22f0",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    },
+    "gregtech/worldgen/center/WorldgenStreets.java": {
+      "sha256": "988f8650904cdd280ccbe022e5bdebd9a8a96fbe9cd891aa137bfe3bf148f42f",
+      "receipts": [
+        "docs/integration/verification/nuclear-transitions-config-audit-20261021.json"
+      ]
+    }
+  },
+  "registered_class_literal_count": 176,
+  "unreferenced_registered_candidates": [
+    {
+      "path": "gregapi/block/multitileentity/example/MultiTileEntityChest.java",
+      "sha256": "3ff277040006dc7a64d2a3a386b1395cf89e7fabb7ac1701dee18d3f6cddc4a8",
+      "lines": 418
+    },
+    {
+      "path": "gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "sha256": "4f93b8caf163e85f0560bfba5934bb42e76c39caf9a954c279cfcb10af49b8c2",
+      "lines": 191
+    },
+    {
+      "path": "gregapi/tileentity/inventories/MultiTileEntityBookShelf.java",
+      "sha256": "fd800dac1e09138cbbe97d7c2f4594cd9795385cb3759bf49f02427f75573313",
+      "lines": 372
+    },
+    {
+      "path": "gregtech/tileentity/batteries/eu/MultiTileEntityAneutronicFusion.java",
+      "sha256": "a46f9a1100231bd0eeb98aba55cfeeee7ebe2a8afed10d0ea8786c0ba1d2cf6a",
+      "lines": 55
+    },
+    {
+      "path": "gregtech/tileentity/batteries/eu/MultiTileEntityBatteryAdvEU2048.java",
+      "sha256": "7ec3dda91c17bb96aaa409d2e4c6ab35d8a192e125e187eef0c9f1850281cb9b",
+      "lines": 65
+    },
+    {
+      "path": "gregtech/tileentity/batteries/eu/MultiTileEntityBatteryEU2048.java",
+      "sha256": "39989181d539fbfdb6ff70666b9056808a2936b4b6da4aa018768a7989dea779",
+      "lines": 65
+    },
+    {
+      "path": "gregtech/tileentity/batteries/lu/MultiTileEntityBatteryLU2048.java",
+      "sha256": "e879e584dfd107dc9a17d02fc0322df1ff1f9cf5eb255c19b7238ec25850e3d0",
+      "lines": 58
+    },
+    {
+      "path": "gregtech/tileentity/batteries/lu/MultiTileEntityBatteryLU8192.java",
+      "sha256": "cc9c722178bb0692d476d1a175d7d06955066c534b1e308c0b5de54d3fd74b26",
+      "lines": 58
+    },
+    {
+      "path": "gregtech/tileentity/energy/converters/MultiTileEntityEngineRotation.java",
+      "sha256": "02c4b7e3ae905caf07c61f0eacf0677c9c58bde1b2e75d9e240856b42f5c7505",
+      "lines": 71
+    },
+    {
+      "path": "gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "sha256": "9082dbb0ec5cda4fbb847a45f4b47de1f1ed61704abbfac52909df2cc406641d",
+      "lines": 161
+    },
+    {
+      "path": "gregtech/tileentity/energy/storage/MultiTileEntityCrystalChargerLarge.java",
+      "sha256": "6e04d9df9e9bfef1a5c02245965587a7215a769bfbde6867e573fdb6381a19d0",
+      "lines": 52
+    },
+    {
+      "path": "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerEU.java",
+      "sha256": "a37613afe836530f7f91e9fc89fc4010a26a39bcb56615ec9bdd2c18da5dd194",
+      "lines": 66
+    },
+    {
+      "path": "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerQU.java",
+      "sha256": "656a06dbe11d8b84af15aeaff12ebbf6e3feb08655c412b7be05afa86217a171",
+      "lines": 66
+    },
+    {
+      "path": "gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java",
+      "sha256": "8196babc3f0682d441cfbbdd3461cb55a6a10629709acef6bf869dac83cee5a6",
+      "lines": 441
+    },
+    {
+      "path": "gregtech/tileentity/energy/transformers/MultiTileEntityTransformerRotation.java",
+      "sha256": "8d4afc56a27b87ae9f978d1cee0d1c624b9309a4b5ba346b57c517d021c18bda",
+      "lines": 67
+    },
+    {
+      "path": "gregtech/tileentity/food/MultiTileEntitySandwich.java",
+      "sha256": "576e938dfe6c7aca1f388d5885e864e3136a9e65cbe638c67730b126bbc725e9",
+      "lines": 390
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityBottleCrate.java",
+      "sha256": "bb6f17b3a1237539fedef6d3dd62c7ff4eb505ecc22647f5aa3b8b3cf5e17f90",
+      "lines": 243
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityDrawerQuad.java",
+      "sha256": "7f75cbc83af271a1c6d92fafe9e3bab90bd05e95249a1dbdba455a7b3cb9adde",
+      "lines": 146
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityEnderGarbageBin.java",
+      "sha256": "b6ae781187ca65def5cfbeec586fa52dffbfc8c355e720639145bf5aca587b24",
+      "lines": 149
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityEnderGarbageDump.java",
+      "sha256": "3de85a8940f78692d4c73c9aa66328f1147c0794f5b7dcc1423c0558292268d3",
+      "lines": 171
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityHopper.java",
+      "sha256": "70670f0cd2232a0e5cac49603b1014991c16819e9294d49968fc44b217b9c4a6",
+      "lines": 301
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityLocker.java",
+      "sha256": "7fc6b3ae5f6399f9cfd9d5101080c2ac2a2cb79b95f8e51ec8e34b10045d668f",
+      "lines": 114
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityLockerCharging.java",
+      "sha256": "3982cc23c6805dec4b6c0fb5adc09326cf27adbd905317c943050e681028a7ef",
+      "lines": 85
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityMassStorageBarrel.java",
+      "sha256": "4fe158322d575df221d3befdd3d786b81672dfc69b5faed9d7c48b3463cfba31",
+      "lines": 142
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityMassStorageBox.java",
+      "sha256": "553f42973a643d59f2af79e0e639eeae70e8c40fe4e10a2c7d44942b5cfe79e8",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityMassStorageStandard.java",
+      "sha256": "f6387c11221a4b35b070db6331c768d2ac5ac79aa014eaf0b4d7d524b566a1f9",
+      "lines": 158
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityQueueHopper.java",
+      "sha256": "324b8ffa681347a9d41acce42ff719345bfb79d60b30c6f67a4a8c699205eaa9",
+      "lines": 283
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntitySafeKeyLocked.java",
+      "sha256": "aa6c037968b88c8980ea69f8fec978ffd8ddc719076d30bdb3239dbc43e9852e",
+      "lines": 146
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntitySafeMechanical.java",
+      "sha256": "504a6ab85f00aaf65fc8db2f8031d81817dd56a9ecd25fc547dc77a314d63d27",
+      "lines": 115
+    },
+    {
+      "path": "gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "sha256": "16aa4e857f27b49d9e664651c097397ca5c53114f4a675875cc392fae440a367",
+      "lines": 120
+    },
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityBumbleHive.java",
+      "sha256": "e49c7ee115ecf0dc8d14e5a732d375f74a530038931078d2baf85d2bb687fd12",
+      "lines": 102
+    },
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityCFoam.java",
+      "sha256": "07c84d6e5743a3e55c4ce12d4689cbc92903f3ff4847fa7f65dd8f028d6c1cbe",
+      "lines": 155
+    },
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityCertificate.java",
+      "sha256": "64c2cc242b21513ce6a8073abce8fa24ec255fc78125dd3301ac732146b7b61b",
+      "lines": 202
+    },
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityFluidSpring.java",
+      "sha256": "af5ab6571c4fe236fa1c9896247af5c2f0056e768374fa3a3d4c2997e64e871b",
+      "lines": 162
+    },
+    {
+      "path": "gregtech/tileentity/misc/MultiTileEntityLootCrate.java",
+      "sha256": "915a6491fb0fed745c1312f1e8b6d1d516912219efadea1cf5439b4f831e38fb",
+      "lines": 65
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityAutoclave.java",
+      "sha256": "c8fad765d8e224f9a469a5f1836d1ea9a04ce6982b29c0b58c3d07fcc3fbafa2",
+      "lines": 96
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityBath.java",
+      "sha256": "fecee7c08a7da1ffbe920ad9b205fa3dc4de218ead332fcbc7c468b5abe75b82",
+      "lines": 142
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCentrifuge.java",
+      "sha256": "a9eeca6dc1887c35b669384418104c92bc916f5ecd283a099a43d4dc1dc1ec19",
+      "lines": 126
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCoagulator.java",
+      "sha256": "3162bff4b83c7e6da823294656a5ed5f7995a34bf060cb65935d7ccffc3a117d",
+      "lines": 142
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCokeOven.java",
+      "sha256": "26ba343b5b4d6a2b7e2c7dd2c6dfbc1b48b5b03345adcb3420e798f091d16066",
+      "lines": 103
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+      "sha256": "2b04eaab46ae4e48dbd4a7500ed1b5fac533933649cc8a0dbf4baab1b99fa96c",
+      "lines": 714
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCrusher.java",
+      "sha256": "b4a94c2f84d93d357d4cede81480bfea001ed18e845575843c4aef4d7b0185c1",
+      "lines": 201
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityCryoDistillationTower.java",
+      "sha256": "a172629cf5660aa99869d9d3e1ed48e5499fbaf2b121c7c50d2be8721aacb4f5",
+      "lines": 179
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityDistillationTower.java",
+      "sha256": "ec6dbfc721eaf72d8986556222059f5bfe06d0c9bde8e2776f8dd35c6261a3ce",
+      "lines": 179
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityElectrolyzer.java",
+      "sha256": "4b4e79f91b9f636fb933c2e80af905a2e99658d6216bb07e4d0510a6811a60ab",
+      "lines": 123
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityFermenter.java",
+      "sha256": "14cc122d3a4220a147cdc5dd8ad9ad6b7a301370a345db9c931ca1625578180c",
+      "lines": 173
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityFusionReactor.java",
+      "sha256": "5e5641a2cb69fc8402e5e8e6aec7694e9f956031e04af36f87c53835ecbdb5a4",
+      "lines": 244
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityImplosionCompressor.java",
+      "sha256": "3284ecf1b58f79a0421c3e2cfce470b1b2b3cef60ef3ea01c51f0645c66bd3cd",
+      "lines": 97
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityLargeBoiler.java",
+      "sha256": "38d82c11fc57094c9ba8db5c88325b65d847cff40726e084dce87c8b7935ffb6",
+      "lines": 393
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityMatterFabricator.java",
+      "sha256": "5e4289450f65c76c15065784b6d04a30c825f2c3b0db5d376f46c5af7dd19a17",
+      "lines": 271
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityMixer.java",
+      "sha256": "7d387c3eb158db463eca78e4397dc0d6c8c7ef10a96500fcab71f08982b125fd",
+      "lines": 126
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityOven.java",
+      "sha256": "9165cd20f7e7ecd9df1d4c961e00406c85a3bf708dec9845388d0a26c2b7d7cc",
+      "lines": 129
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntityShredder.java",
+      "sha256": "179f7ced95334bcc899fbaefe8984777c90668c84825543e35bfbdeccee17419",
+      "lines": 201
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntitySluice.java",
+      "sha256": "12a4affe160b5febe9f848988f455dd2effc9418a24ec4256f2941c5002f6b3b",
+      "lines": 144
+    },
+    {
+      "path": "gregtech/tileentity/multiblocks/MultiTileEntitySqueezer.java",
+      "sha256": "f2891a6e2ac77266ae676a1b2a8bcdee695236ca0d698970cdc0cd9e0512bfb6",
+      "lines": 187
+    },
+    {
+      "path": "gregtech/tileentity/panels/MultiTileEntityPanelAsphalt.java",
+      "sha256": "943eed60680e571a88a0e36a9ab4c650714f4eaef297d0a40fe1702c445792f1",
+      "lines": 49
+    },
+    {
+      "path": "gregtech/tileentity/panels/MultiTileEntityPanelCFoam.java",
+      "sha256": "064005ae27a92cb36164e30ccc232483bbec72aa24b23876b44d5f73a562e5f1",
+      "lines": 39
+    },
+    {
+      "path": "gregtech/tileentity/panels/MultiTileEntityPanelConcrete.java",
+      "sha256": "746d792b5a3a9b7cc9723d04b16957158aa30923f1c0d3a7e4634bdd83d2e9f7",
+      "lines": 39
+    },
+    {
+      "path": "gregtech/tileentity/panels/MultiTileEntityPanelWood.java",
+      "sha256": "e263989c030783ea4be7b688c621de4392bbe85c222bec6f7fdaddb998ce561f",
+      "lines": 60
+    },
+    {
+      "path": "gregtech/tileentity/placeables/MultiTileEntityCoin.java",
+      "sha256": "70352995f5692abf8f874041a18c1bd2c476bfb1bdd5d4dea7b8fbb92952a719",
+      "lines": 476
+    },
+    {
+      "path": "gregtech/tileentity/placeables/MultiTileEntityIngot.java",
+      "sha256": "6f16e72f818a6d8dfbf30ca71da955cfc6646d9c965ab809a69be036e0c4623f",
+      "lines": 137
+    },
+    {
+      "path": "gregtech/tileentity/placeables/MultiTileEntityPlate.java",
+      "sha256": "2d48a38e6b437821ab1644196b91d10c0be3b49af932443deb57748bd8a43411",
+      "lines": 70
+    },
+    {
+      "path": "gregtech/tileentity/placeables/MultiTileEntityPlateGem.java",
+      "sha256": "937cc0d8795bf0d4690c857a1d932621c3d07de5c74d9da0e5db554a68f5f6e9",
+      "lines": 70
+    },
+    {
+      "path": "gregtech/tileentity/placeables/MultiTileEntityScrap.java",
+      "sha256": "9fc3e10b6befa338e23b2a91157ede23f88c4f65bd40fc4e1e095ae9a8c3dfb7",
+      "lines": 59
+    },
+    {
+      "path": "gregtech/tileentity/plants/MultiTileEntityBush.java",
+      "sha256": "b56bed74378f647c66d98e4b241da47c838114165088ac020a952bf258bf890a",
+      "lines": 352
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalAether.java",
+      "sha256": "8866307b52b829be4b2b7a730f8a7823f1ed8e1a39179d9a55dd7b2f7dead090",
+      "lines": 137
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalAlfheim.java",
+      "sha256": "9c06f7a4f69a1b652ade5d7de9f5be36dbfad837f77e6992bdb35483e167d14d",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalAroma.java",
+      "sha256": "e4339086c01d02f81a5df93074137ce65fa86001fa534d67d3ed6d04e6ebde83",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalAtum.java",
+      "sha256": "430b5a44b5b31dabe9330705388a66dfc5418ceaedef8baf07ea2009b55ecdfd",
+      "lines": 137
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalBetweenlands.java",
+      "sha256": "9cb42a11f8b83c465fd9338589649ec8ddd844e04f1cb10a37d50438e05e57d3",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2AquaCavern.java",
+      "sha256": "01535ccb36520cdeedb471e7c09bd5342859a652feb8616c859cf3246c6a2adf",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Caveland.java",
+      "sha256": "0db754b346ddbbf1db4a89d80f8eeaaf7f9916bad0789393a32f8ac3bd8031a2",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Cavenia.java",
+      "sha256": "96939f6b017ef9a68d212a75b9e249bdba0a14d2371a6e5421a2c5c95e4b7195",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Cavern.java",
+      "sha256": "07128dedd1e922300264bfbc77f14648af1acf4f5229b30bcff228963088d954",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Caveworld.java",
+      "sha256": "9bcac7822dbeb38d7d71cc5cc13e840a6d79fad35cd4874b9472ebcad600c2a6",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalCandyCraft.java",
+      "sha256": "2dfbffd3e35ae186f5eedcdb3fc37a29521d0025e153c04f4b8777e25456ee26",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalDeepDark.java",
+      "sha256": "52d3138e4c3be5388d98c5b4109d3fb969346436068b15000c863a5919c370a7",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalEnd.java",
+      "sha256": "d37486d4aadb065f2f6784498324655ef73083d405d4427106fe35de4acc8cd9",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalEndOfTime.java",
+      "sha256": "8bf8dbfad11cfa19fd2aa59e920eb270e19e71dda62f5e365b8d8a779b1d4fa2",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalEnviromine.java",
+      "sha256": "12bdab8639e5b5b61a7de8018e8b6b73573fc80ea4c4e2d0561be1bda6ab84b0",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalErebus.java",
+      "sha256": "b749b5d07f376f079b9e162351702bac5a454f84e399a6033ce26f8df0d80550",
+      "lines": 136
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalNether.java",
+      "sha256": "92832b3470606ffad4ce153c1889c38d22818be3091b0cbec34475560faa94e4",
+      "lines": 138
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalTropics.java",
+      "sha256": "67bc94a3d67c3b68274d764a648afb733f1852ba5bb5c6041988714a08931b89",
+      "lines": 134
+    },
+    {
+      "path": "gregtech/tileentity/portals/MultiTileEntityMiniPortalTwilight.java",
+      "sha256": "4e958b1cbe6c6b4aa3738e840fc920791973ab3743bac5e4ce7a87301f9a5739",
+      "lines": 137
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityBucketometer.java",
+      "sha256": "64de1df253b4faf7db718c9dd59e0aed23ed9ebe5e78916a6726dcf38d3a2a19",
+      "lines": 97
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityChronometer.java",
+      "sha256": "b74c4b6f24dcd00b6b8eda0d30cc1711d5458fab32072e3ff075a3925f23b71c",
+      "lines": 67
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityElectrometer.java",
+      "sha256": "26056b15ed5f03a9a881eda905d4cce8688ab866a1d4fd2806b701eade62692d",
+      "lines": 98
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityFluidometer.java",
+      "sha256": "c0f490c610e74bc834eb2bda40fa3c8fa64a39d5e37fa7cf52fac873c16af235",
+      "lines": 97
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityGeigerCounter.java",
+      "sha256": "12199d6ca0c11d872472bc462dc60d391d92c9a07884a2f9b075af0e2cd406cb",
+      "lines": 86
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityGibblometer.java",
+      "sha256": "f2cfe639b77b1bed7af763d2349b2f0d93342394ba88a92855dcfcd1c36a71ab",
+      "lines": 61
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityItemometer.java",
+      "sha256": "74b527cf81330b9fd1e046ca816920247d1bcea30ef1dc1b8bdcea5c1c157347",
+      "lines": 93
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityKiloBucketometer.java",
+      "sha256": "14893480722ddb8b9de23c9e1cde30e6a71a8d55e72b4ad31e2a783676eec745",
+      "lines": 93
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityKiloGibblometer.java",
+      "sha256": "4b39a6267c6c83a32e2f56c3eb3b00d72248b97261ddf231881a51e13a004d61",
+      "lines": 61
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityLaserometer.java",
+      "sha256": "0ce0c9006d9173d213f5b92fe7dac44b0dcbb4a1f1e79f0851b5a1900bbd06ba",
+      "lines": 70
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityLuminometer.java",
+      "sha256": "d7bb0a8aff94008a82c6d8170cde548fb2717eb013407bf9c8b4807cc8f77559",
+      "lines": 68
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityPlayerCounter.java",
+      "sha256": "2732be6ca4d00d61fb091a1f0a39ce930879d8dd291f0831ffc1c50dfab1ab7f",
+      "lines": 68
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityProgressmeter.java",
+      "sha256": "abacf7a552e8ed6987a62011408cef029363c9f955c51e7da0e643572966c234",
+      "lines": 79
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityStackometer.java",
+      "sha256": "93d9e29ee45126f5510ed710a027f6f82fc60adf8ab501e8517649f670036899",
+      "lines": 93
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityTPSmeter.java",
+      "sha256": "fdb1b1e94aff56cf9a0f2b149d14d789831b80fc04e548f730d7a1e561814bfb",
+      "lines": 84
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityTachometer.java",
+      "sha256": "bc93e9a5516c1d8aa8803dc962527efc1771de5135f21a9c1f4b83963ac26d07",
+      "lines": 73
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityThermometer.java",
+      "sha256": "4fd1c78b969ce28a0c745d58b1303affc56ce980f563f16a3cf5130f37154e26",
+      "lines": 87
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityWeightometerHeavy.java",
+      "sha256": "e251c54a9b2304ab5d720b4c2eb5b27680ea425f41b2dce4ecff77324f61113c",
+      "lines": 88
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityWeightometerLight.java",
+      "sha256": "2b4426415dd6ea23982b2c1fb0da6a3b0e9de489a2a72d29a0c52eb1ec44e648",
+      "lines": 88
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityWeightometerMedium.java",
+      "sha256": "9dee7bac16a3b1cea17ca365f9c0f57cbba8ac522e0fc5e835fb3c3b875144d8",
+      "lines": 88
+    },
+    {
+      "path": "gregtech/tileentity/sensors/MultiTileEntityWeightometerSuperHeavy.java",
+      "sha256": "863c4f1e8338e8260fdea1355162816892c3290c7a1eeada2062869a17fe3ac2",
+      "lines": 88
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityBarometerGasCylinder.java",
+      "sha256": "64a4ac2d54d008ebe34de1fc6ab2e2a622119d1314127fa18c59194deefd5336",
+      "lines": 151
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityBarrelMetal.java",
+      "sha256": "99b1c0277cdccbc2d2017fc28d1fc4c353ab1a8b071994b78aa602fd30025e36",
+      "lines": 53
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityBarrelPlastic.java",
+      "sha256": "9f1697903764d9751342f8b30680cca0472bdd73dcfddf0dd7b4ef93546b468e",
+      "lines": 56
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityBarrelWood.java",
+      "sha256": "75c0f7bf36a3de668b7c53207f884df01b385200dd5479d2b7affabfdb9493b8",
+      "lines": 58
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityCell.java",
+      "sha256": "b04d737934d9b1655ee33be52867cf6f993c79fae02ec946d5a36fad53394cd1",
+      "lines": 81
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityCup.java",
+      "sha256": "bf4606bccdc779266051ca30166df05b8ca0d2536deb8de56cc7e06f3af28ea1",
+      "lines": 89
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityJug.java",
+      "sha256": "febf7260284110e2b834f0719972c0cb6ca38bd1e692be3c443560847e8321ff",
+      "lines": 93
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityMeasuringPot.java",
+      "sha256": "6afe841fd91cb557c75923a74fba5055ff003bba868bcacbf46ab10e8a1c07b0",
+      "lines": 148
+    },
+    {
+      "path": "gregtech/tileentity/tanks/MultiTileEntityThermos.java",
+      "sha256": "b68352dcce8a1b7ab5932affa98b6c8ba9503463f9e84db169e98b703c950d89",
+      "lines": 75
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityAnvil.java",
+      "sha256": "b3e829336ae782314373e9df3092db897f7096596f8bb77abdc8eb248ed5c868",
+      "lines": 430
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityBumbliary.java",
+      "sha256": "72bd7595c28b4859d82e6196e0e355655fac40de671171d8f71c6c009d452840",
+      "lines": 510
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityBumbliaryAdvanced.java",
+      "sha256": "4c519554584b81a6a871764e56eb10a426947c80b4cdacf5b2b932ec0551f9e9",
+      "lines": 479
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityDustFunnel.java",
+      "sha256": "62406bd934a0c67a0338b4c3afa17dda74fd5d4699b446604f9f4de91311372d",
+      "lines": 290
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityDynamite.java",
+      "sha256": "27b9b80c569d6f1090f9d70c13d8e5b25e939b02ac495ad084d32197b1e09dce",
+      "lines": 277
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityFluidCapNozzle.java",
+      "sha256": "61580b99c8d1a8bcaf4b2302221e89c0369d741aaec54222974b7fc319ab5ee0",
+      "lines": 158
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityFluidNozzle.java",
+      "sha256": "f081e3ca88a30f4ee4c8d0771ef07571c8f9853f1097441716d611758cfaf09e",
+      "lines": 194
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityFluidTap.java",
+      "sha256": "ff88e9dd2e8d8d98d8f8a919feee268769408250dfba454635b4bc0eff861b6f",
+      "lines": 248
+    },
+    {
+      "path": "gregtech/tileentity/tools/MultiTileEntityMoldCoinage.java",
+      "sha256": "9e8cce8493f692242870fe00f0d43d7c08d0eccab68e47ca41243bb166c90aa3",
+      "lines": 263
+    }
+  ],
+  "nonmatching_historical_records": {
+    "docs/integration/verification/button-crank-audit-20261022.json": [
+      "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/util/UT.java",
+      "gregtech/tileentity/redstone/MultiTileEntityButtonAdvanced.java",
+      "gregtech/tileentity/tools/MultiTileEntityCrank.java"
+    ],
+    "docs/integration/verification/sap-bag-audit-20261022.json": [
+      "gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "gregapi/tileentity/misc/MultiTileEntityTreeHole.java",
+      "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "gregtech/tileentity/plants/MultiTileEntityResinHoleRubber.java",
+      "gregtech/tileentity/plants/MultiTileEntitySapHoleMaple.java",
+      "gregtech/tileentity/plants/MultiTileEntitySapHoleRainbowood.java",
+      "gregtech/tileentity/tools/MultiTileEntitySapBag.java"
+    ]
+  },
+  "limits": [
+    "Candidates use class literals from the original registration loader, not a complete inheritance or conditional-registration graph.",
+    "Historical hash differences are not classified as source regressions."
+  ]
+}

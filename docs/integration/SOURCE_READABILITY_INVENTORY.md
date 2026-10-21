@@ -1,5 +1,11 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百零四批：花盆、灯笼、共享装饰工厂、RegisteredBlock及Neo装饰入口五源174→254行，私有reg和局部v／b明确命名；另纠正GTToolBlocks采集袋来源ID。六源11完整代码／字面量／其余注释／指令证明保持，未改玩法，见[专题](PLANT_LANTERN_AUDIT.md)。
+
+本批重建当前维护输入：core API 62、core主代码498、共享API 14、共享主代码1048、Forge专有73、Neo专有130，共1825份Java，活动路径无loader／loaders／a／b／c目录。下文2026-10-20的1790份及密度数据保留历史边界。新增[回执引用筛查](../../tools/integration/inventory_audit_references.py)及[结果](verification/source-reference-screen-20261022.json)：98份audit回执匹配292原文件摘要，另123注册class无匹配引用；不表示已核全文件或未移植123项，不能换算完成率。支持嵌套路径键／历史摘要，避免误列已引用过的反应堆等入口。
+
+第一百零三批按钮／曲柄七源903→902行、三局部名及五组说明更正，12完整代码视图保持，见[报告](BUTTON_CRANK_AUDIT.md)；第一百零二批采集袋／树洞六源748→824行、五处说明更正，11完整视图保持，见[报告](SAP_BAG_AUDIT.md)。两批均未将整理当作玩法修复。大职责拆分、其它压行、方法级平台业务重复和全系统消费者仍继续。
+
 2026-10-22 第一百零一批：共享ShapedToolBlock、CoverCollisionMixin两源107→164行，展开形状旋转、方向工具／两版交互和选择／碰撞注入。四完整代码token906／1110、378／378，字面量位置25／25、9／9、全部注释和Stonecutter指令保持；没有更改物性、碰撞、注入点或用户材料。见[专题](UTILITY_PHYSICS_AUDIT.md)和[回执](verification/utility-physics-audit-20261022.json)。
 
 2026-10-22 第一百批：UtilityToolRules、RopeBlock、ScaffoldBlock、GTToolBlocks四源606→769行，材料逐行、方法／放置／更新与注册展开；七完整代码token为312、1112／1362、1544／1546、4005／913，字面量位置34、29／29、69／69、159／37及指令保持。一条过时Neo注册说明有意修正，其余注释保持，未改玩法或用户材料。见[专题](ROPE_SCAFFOLD_AUDIT.md)与[回执](verification/rope-scaffold-audit-20261022.json)。

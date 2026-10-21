@@ -87,7 +87,7 @@ public final class GTToolBlocks {
     private static final List<RegistryObject<ManualToolBlock>> MANUAL = new ArrayList<>();
     private static final List<RegistryObject<net.minecraft.world.level.block.Block>> ALL_SIMPLE = new ArrayList<>();
 
-    /** GT6's sap bag (multiple-tile 32758) — a real tank block that drains an adjacent tree hole. */
+    /** GT6's sap bag (multi-tile 32736) — a real tank block that drains an adjacent tree hole. */
     public static RegistryObject<net.minecraft.world.level.block.Block> SAP_BAG;
     public static RegistryObject<CrankBlock> CRANK;
     public static final List<RegistryObject<com.gregtech.gregtech.block.tool.MaterialAnvilBlock>> ANVILS = new ArrayList<>();

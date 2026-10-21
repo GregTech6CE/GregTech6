@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百零四批：新增339–344花盆碰撞／遮光、两种日用方块喷漆、灯笼扳手／固定亮度及花盆配方家族差异，139补灯笼原允许而当前无宿主。五源174→254行、另改一来源注释，六源11完整视图保持，见[专题](PLANT_LANTERN_AUDIT.md)。重新清点1229原版／1825当前Java并建立[引用筛查](verification/source-reference-screen-20261022.json)；引用数量不是覆盖率。正式记录至344条，含已修与保留政策，不是344个未修问题，全面目标继续。
+
 2026-10-22 续核：第一百零三批核高级按钮／曲柄，新增329–338设计、遥控、诊断、配置、持续驱动、能源查询、药水、默认物品、喷漆和扳手差异；132／139补具体入口。行为记录至ALIGN-338，共338条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是338个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
@@ -165,7 +167,7 @@
 | ALIGN-136 | 确认大容量存储缺少钳子取物与软锤清空入口。 | 原版分别处理背包转移／分批正面掉落及余料。 | 两版方块／实体及工具入口未补齐，提示仍列出这些操作；按钮和外部抽取不是替代，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-137 | 2026-10-20 玩家反馈修复：自动下送／溢出执行已补齐。 | 位 1／4 切换、ticker、容量 +256、超额下送、底面输入门控及封装时模式切换已接入。 | NeoForge 定向运行验证真实活动扳手、下方箱子输出和溢出；其他存储工具／覆盖板问题另列，见[修复记录](verification/storage-direction-colors-20261020.md)。 |
 | ALIGN-138 | 确认大容量存储遗漏正面覆盖板门控。 | 原版任何正面覆盖板阻止普通取放，不透明板另隐藏显示。 | 普通装饰板的事件链仍 PASS 到按钮；渲染也缺可见性判断，未客户端验收，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)。 |
-| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 采集袋／树洞原全侧禁贴，当前后备host对普通板仍准入，见[采集袋](SAP_BAG_AUDIT.md)。 高级按钮原全侧禁贴，当前后备宿主仍准入普通板；无实体曲柄不在此缺口内，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-139 | 确认部分宿主的覆盖板范围不同。 | 抽屉／保险箱禁正面，书架禁正背，瓶框禁所有面、大型涡轮禁正面，普通箱原本无 Coverable。 | 当前通用安装或箱子本体允许原禁用范围；不能混同大容量存储的“允许贴板后阻挡”。见[抽屉](STORAGE_COVER_BOUNDARY_AUDIT.md)、[保险箱](SAFE_LOCKER_AUDIT.md)、[书架／瓶框](BOTTLE_BOOKSHELF_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。大型涡轮正面禁贴也未由后备host保留，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 采集袋／树洞原全侧禁贴，当前后备host对普通板仍准入，见[采集袋](SAP_BAG_AUDIT.md)。 高级按钮原全侧禁贴，当前后备宿主仍准入普通板；无实体曲柄不在此缺口内，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  灯笼原全侧允许、当前无实体而没有宿主，属于反向缺口；花盆原禁贴则已有对应，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
 | ALIGN-140 | 确认保险箱覆盖板操作遗漏宿主锁权限。 | 原版普通／工具覆盖板入口先调用 allowInteraction，检查认主或开锁。 | 当前事件提前消费，只有世界建造权限，没有 Safe 的锁门控；不等于世界保护失效或外部能力盗取内容，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-141 | 确认机械箱首次非正面普通右键不认主。 | 原版先 allowRightclick／allowInteraction 认主，随后限制 GUI 正面。 | 当前先非正面 PASS；现有背面不认主测试固定了不同合同，不作为对齐证据，见[报告](SAFE_LOCKER_AUDIT.md)。 |
 | ALIGN-142 | 确认保险箱和普通箱遗漏点击面邻块阻挡查询。 | 原版 Base04 普通入口查询 WD.obstructed；保险箱工具路径也查询。 | 当前锁／工具和普通箱顶面开盖条件不能补该查询；下半砖示例未运行，不推定所有方块缺失，见[保险箱](SAFE_LOCKER_AUDIT.md)和[箱子](CHEST_LOOT_AUDIT.md)。 |
@@ -365,6 +367,12 @@
 | ALIGN-336 | 确认默认按钮掉落写入完整默认配置。 | 原物品配置省略false、默认15／20／0。 | 当前掉落总封装GT6Button五字段，与默认创造物品数据不同；未实际库存堆叠，非默认配置不能乱清，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
 | ALIGN-337 | 确认普通曲柄方块缺少喷漆入口。 | 原继承07paint／unpaint及颜色状态。 | 当前无实体，非Paintable目标／建筑色族／原版替换族；Iron基础染色已有，不等于玩家可喷漆，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
 | ALIGN-338 | 确认曲柄未接GT扳手改朝向。 | 原继承09扳手选面、六合法面和朝向更新。 | 当前未实现ToolInteractionTarget，点击不调共用工具分派；六面放置不是放置后旋转，不泛化外部旋转工具，见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-339 | 确认花盆碰撞／选中框误用渲染边界。 | 原Covers→Root继承完整box及默认shrunkBox，MTE方块转发。 | 当前两段网格联合；四向单位格中心投影各3496／4096，非实际实体测试，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-340 | 确认花盆遮光不同。 | 原明确LIGHT_OPACITY_WATER=3。 | 当前无覆盖、非完整形状及空流体经两版原生源码推得0；未调用实际光照API，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-341 | 确认花盆／灯笼缺喷漆状态入口。 | 原继承Paintable且模型消费mRGBa。 | 当前无实体、非颜色族／替换族，PaintTargets拒绝；花盆陶瓷基础tint已有，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-342 | 确认灯笼未接GT扳手调整。 | 原FacingSingle扳手与水平面准入。 | 当前只有放置及原生rotate／mirror，没有ToolInteractionTarget／GT分派；不泛化外部工具，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-343 | 确认灯笼缺原固定表面亮度合同。 | 原两类纹理均选240恒定亮度，正面禁AO。 | 当前普通orientable模型；发光15、遮光0已有，实际像素未验，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
+| ALIGN-344 | 确认花盆制作材料家族缩窄。 | 原ANY.Stone／ANY.Clay包含工厂赋予的各石／黏土成员。 | 当前规范Stone／Clay粉标签没有默认家族展开；完整活标签未枚举，外部包可扩，见[花盆灯笼](PLANT_LANTERN_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
