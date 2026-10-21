@@ -78,7 +78,7 @@ public final class GTMultiblocks {
                     .requiresCorrectToolForDrops();
             var block = declaration.energy() == null
                     ? registerAddon(part.addonId(), declaration.name(), () -> new MultiblockPortBlock(properties))
-                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(properties, declaration.energy()));
+                    : registerAddon(part.addonId(), declaration.name(), () -> new AddonEnergyPartBlock(properties, declaration.energy(), declaration.energyCapacity()));
             if (NAMED.put(part.id(), block) != null)
                 throw new IllegalStateException("Addon structure part id already used: " + part.id());
             ADDON_PARTS.add(new AddonPart(block, declaration.material(), declaration.texture()));

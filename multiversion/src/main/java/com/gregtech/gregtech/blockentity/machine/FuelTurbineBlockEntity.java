@@ -39,7 +39,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             formed = false;
             return false;
         }
-        var layout = LargeMachineLayouts.cells(declaration().machineType());
+        var layout = LargeMachineLayouts.cells(declaration().casing().machineType());
         if (layout == null) {
             bindings.clear(this::release);
             formed = false;

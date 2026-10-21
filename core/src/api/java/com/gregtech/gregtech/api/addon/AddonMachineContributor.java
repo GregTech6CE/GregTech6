@@ -15,15 +15,31 @@ public interface AddonMachineContributor {
 
     default List<RecipeMapDeclaration> recipeMaps() { return List.of(); }
 
+    /** Machine recipe tables and fuel tables. A fuel table is not a machine table. */
+    default List<RecipeTable> recipeTables() { return List.of(); }
+
     default List<MachineDeclaration> machines() { return List.of(); }
 
+    /**
+     * Recipe machines, behavior machines and fuel generators.
+     * Names, ids and signatures are checked together with {@link #machines()},
+     * {@link #behaviorMachines()} and {@link #fuelGenerators()}.
+     */
+    default List<AddonMachine> addonMachines() { return List.of(); }
+
     default List<MachineLayout> layouts() { return List.of(); }
+
+    /** Layouts bound by the controller {@code machineType}. */
+    default List<StructureLayout> structureLayouts() { return List.of(); }
 
     /**
      * Structure casings and energy parts. Names are global and may be used from {@link MachineLayout}.
      * A part with no energy role is a casing. {@link StructurePartEnergy} makes it an energy part.
      */
     default List<StructurePartDeclaration> parts() { return List.of(); }
+
+    /** Casings and energy parts. Names are checked together with {@link #parts()}. */
+    default List<LayoutPart> layoutParts() { return List.of(); }
 
     /**
      * Fluid-pipe materials. Each row expands into the seven built-in sizes.

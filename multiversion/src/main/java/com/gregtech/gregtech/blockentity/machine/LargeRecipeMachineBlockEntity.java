@@ -31,12 +31,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return worldPosition.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back);
     }
-    private Direction declaredFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+    private Direction declaredFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return relativeToAbsolute(face.index());
     }
     private record Placed(BlockPos pos, Direction face) {}
     private Placed place(int right, int up, int back, Direction face) { return new Placed(sourcePosition(right, up, back), face); }
-    private Placed declared(com.gregtech.gregtech.api.addon.MachineDeclaration.Target target) {
+    private Placed declared(com.gregtech.gregtech.api.addon.IoTarget target) {
         return target == null ? null : place(target.right(), target.up(), target.back(), declaredFace(target.receiver()));
     }
     private record OutputCell(int right, int up, int back, Direction face, String label) {}
@@ -49,7 +49,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 declared.right() + "," + declared.up() + "," + declared.back() + "," + outputLabelFace(declared.receiver()));
     }
     /** The snapshot still prints the original UP and DOWN tokens. TOP and BOTTOM are those directions. */
-    private static String outputLabelFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+    private static String outputLabelFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return switch (face) {
             case TOP -> "UP";
             case BOTTOM -> "DOWN";

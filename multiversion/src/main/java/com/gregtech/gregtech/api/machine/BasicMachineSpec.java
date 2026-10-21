@@ -1,7 +1,7 @@
 package com.gregtech.gregtech.api.machine;
 
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
-import com.gregtech.gregtech.api.addon.MachineDeclaration;
+import com.gregtech.gregtech.api.addon.IoTarget;
+import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.energy.FaceConfig;
 import com.gregtech.gregtech.api.material.GTMaterial;
 import com.gregtech.gregtech.api.material.MaterialChemistry.WeightedMaterial;
@@ -52,10 +52,10 @@ public record BasicMachineSpec(
         boolean searchOutputTanks,
         /** Roll the first item chance once. The row must have exactly two item outputs. */
         boolean exclusiveOutputs,
-        MachineDeclaration.Target itemOutputTarget,
-        MachineDeclaration.Target fluidOutputTarget,
-        MachineDeclaration.Target itemInputSource,
-        MachineDeclaration.Target fluidInputSource,
+        IoTarget itemOutputTarget,
+        IoTarget fluidOutputTarget,
+        IoTarget itemInputSource,
+        IoTarget fluidInputSource,
         /** An addon called {@code energyRange}. Built-in specs stay false and keep their own limits. */
         boolean energyRangeDeclared,
         /** Live parallel-duration rule. Not a declaration field. */
@@ -109,7 +109,7 @@ public record BasicMachineSpec(
         }
     }
 
-    private static void rejectAutomaticFace(String id, String channel, MachineDeclaration.Target target, int automatic) {
+    private static void rejectAutomaticFace(String id, String channel, IoTarget target, int automatic) {
         if (target != null && automatic >= 0)
             throw new IllegalArgumentException(channel + " target conflicts with an automatic face: " + id);
     }
@@ -228,19 +228,19 @@ public record BasicMachineSpec(
         return OriginalLargeRecipeMachineData.handles(machineName) || "largemassfab".equals(machineName);
     }
 
-    private static MachineDeclaration.Target builtInOutputTarget(String machineName, boolean items) {
+    private static IoTarget builtInOutputTarget(String machineName, boolean items) {
         if (!originalProcessingName(machineName)) return null;
         var output = OriginalLargeRecipeMachineData.output(machineName, items);
-        return new MachineDeclaration.Target(output.right(), output.up(), output.back(), receiver(output.receiverFace()));
+        return IoTarget.at(output.right(), output.up(), output.back(), receiver(output.receiverFace()));
     }
 
-    private static BehaviorMachineDeclaration.Face receiver(OriginalLargeRecipeMachineData.Face face) {
+    private static MachineFace receiver(OriginalLargeRecipeMachineData.Face face) {
         return switch (face) {
-            case UP -> BehaviorMachineDeclaration.Face.TOP;
-            case DOWN -> BehaviorMachineDeclaration.Face.BOTTOM;
-            case LEFT -> BehaviorMachineDeclaration.Face.LEFT;
-            case RIGHT -> BehaviorMachineDeclaration.Face.RIGHT;
-            case FRONT -> BehaviorMachineDeclaration.Face.FRONT;
+            case UP -> MachineFace.TOP;
+            case DOWN -> MachineFace.BOTTOM;
+            case LEFT -> MachineFace.LEFT;
+            case RIGHT -> MachineFace.RIGHT;
+            case FRONT -> MachineFace.FRONT;
         };
     }
 
@@ -312,10 +312,10 @@ public record BasicMachineSpec(
         private int minimumLightAbove;
         private boolean searchOutputTanks;
         private boolean exclusiveOutputs;
-        private MachineDeclaration.Target itemOutputTarget;
-        private MachineDeclaration.Target fluidOutputTarget;
-        private MachineDeclaration.Target itemInputSource;
-        private MachineDeclaration.Target fluidInputSource;
+        private IoTarget itemOutputTarget;
+        private IoTarget fluidOutputTarget;
+        private IoTarget itemInputSource;
+        private IoTarget fluidInputSource;
         private boolean energyRangeDeclared;
 
         private Builder(String id, GTMaterial casing) {
@@ -348,10 +348,10 @@ public record BasicMachineSpec(
         public Builder minimumLightAbove(int value) { minimumLightAbove = value; return this; }
         public Builder searchOutputTanks(boolean value) { searchOutputTanks = value; return this; }
         public Builder exclusiveOutputs(boolean value) { exclusiveOutputs = value; return this; }
-        public Builder itemOutputTarget(MachineDeclaration.Target value) { itemOutputTarget = value; return this; }
-        public Builder fluidOutputTarget(MachineDeclaration.Target value) { fluidOutputTarget = value; return this; }
-        public Builder itemInputSource(MachineDeclaration.Target value) { itemInputSource = value; return this; }
-        public Builder fluidInputSource(MachineDeclaration.Target value) { fluidInputSource = value; return this; }
+        public Builder itemOutputTarget(IoTarget value) { itemOutputTarget = value; return this; }
+        public Builder fluidOutputTarget(IoTarget value) { fluidOutputTarget = value; return this; }
+        public Builder itemInputSource(IoTarget value) { itemInputSource = value; return this; }
+        public Builder fluidInputSource(IoTarget value) { fluidInputSource = value; return this; }
         public BasicMachineSpec build() {
             Objects.requireNonNull(energy, "Choose the machine energy type explicitly");
             var resolvedKind = kind != null ? kind : MachineControllerKind.builtIn(machineType);
