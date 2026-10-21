@@ -62,3 +62,5 @@
 原MultiTileEntityLogisticsCore头载GregTech-6 Team2025、Gregorius Techneticies、LGPL-3.0-or-later，其余来源各留头／摘要；未将原生／原作者方法复制进生产。用户CompoundMaterials／WoodMaterials摘要保持，未Java编译／目标初始化、Gradle、测试、游戏、实际路由／UI／覆盖板、pack生成、磁盘重启、构建或推送。正式254条包含已修复／部分修复、扩展合同和保留政策，不是254个待修故障；全面目标保持进行。
 
 第七十三批继续[网络与生命周期](LOGISTICS_NETWORK_AUDIT.md)：新增258–260的撬下样本、万能代理和回调异常，区块保护／平手／同步链也已补证。实际世界调度、外部节点、重启和客户端仍未整体接受；此前待续项不作为永久未核结论。
+
+第七十四批继续[客户端与线形状](LOGISTICS_CLIENT_AUDIT.md)：新增261前景自亮、126扩连接成本；图集／刻度／红石与两端renderer订阅已有。源码与资源核查不代实际客户端、磁盘重启或完整物流验收。

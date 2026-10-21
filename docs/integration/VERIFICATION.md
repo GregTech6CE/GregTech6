@@ -1,5 +1,11 @@
 # 验证账本
 
+## 2026-10-21 / 第七十四批物流渲染来源、资源与完整源码
+
+18原／39当前、54平台视图、55PNG＋14JSON与2工件4entry／2只读javap重核。PNG chunk CRC／压缩流有效，48帧及底图有目录图集入口；原图PNG未在限定来源查到，没有逐像素对齐结论。原Glow构造／亮度到当前实际顶点light，以及原生cutout LIGHTMAP已追；六个27总数刻度样本只是源码算术，见[回执](verification/logistics-client-audit-20261021.json)。
+
+四源六完整执行1462／1909、904／890、449、196在仅限定绑定归一后保持，两个Neo专有文件未虚构Forge视图；原始字面量位置、两说明纠正、其它注释／指令和材料摘要另核。未Java编译／初始化、Gradle、测试、资源烘焙、客户端／红石／重启、构建或推送，正式261条，全面goal active。
+
 ## 2026-10-21 / 第七十三批物流节点与原生异常、同步边界
 
 24原／32当前、46平台视图、本机2工件14entry／7只读javap重核。原撬棍→getCoverItem继承、万能代理及实际连接／注册、单项回调捕获对现代原生ticker错误分支、Neo默认loadWithComponents同步、原生fresh CompoundTag与最终掉落Mixin均沿消费者检查，见[回执](verification/logistics-network-audit-20261021.json)。有限坐标和抛错合同未摆世界／故障注入，不以source hash宣称全文件或完整物流验收。

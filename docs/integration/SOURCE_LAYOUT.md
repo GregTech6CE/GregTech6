@@ -363,3 +363,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 物流覆盖板定义在core的`LogisticsCoverDefinition`，原生`LogisticsCoverType`只映射ItemStack；`LogisticsCoverInteraction`负责样本／优先级／数量及工具交互，`LogisticsItemRouter`／`LogisticsFluidRouter`负责实际能力搬运。模板FilterRules与覆盖板matches是不同合同，勿混用；本轮整理四源码，没有引入两套业务，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。
 
 物流网络的物理扫描与坐标快照在`LogisticsNetwork`，安装物及显示数据在`LogisticsCovers`，线的持久化／原生同步在`LogisticsWireBlockEntity`；能力代理的目标选择在`ExtenderSpec`／`RelayRoutingRules`和原生`ExtenderBlockEntity`／`CapabilityRelayBlockEntity`，不等于物流节点委托。五源码已展开并保留执行，见[网络与生命周期核查](LOGISTICS_NETWORK_AUDIT.md)。
+
+物流线客户端：共享`LogisticsWireBlock`维护连接与形状，`LogisticsCoverRenderer`消费安装物和CPU刻度；Neo的`LogisticsRegistries`／`LogisticsClientSetup`分别处理原生注册和渲染订阅。图集目录源位于core资源assets/minecraft/atlases/blocks.json，模型loader改写在multiversion/build.gradle；局部class没有注册或原维护JSON仍写forge并不直接代表缺实现。四源已展开并保留执行，见[客户端核查](LOGISTICS_CLIENT_AUDIT.md)。
