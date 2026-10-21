@@ -1,0 +1,1216 @@
+{
+  "batch": 84,
+  "date": "2026-10-21",
+  "baseline": "49f8eda2e8ca5493e5a96588fdad41b135e103c5",
+  "new_records": [
+    282
+  ],
+  "extended_records": [
+    125,
+    126
+  ],
+  "scope": "Pure fluid-filter material template conversion at ambient temperature, existing display/carrier boundaries, and ordinary no-cover filter tool message/cost paths.",
+  "counts": {
+    "original_sources": 24,
+    "current_sources": 41,
+    "shared_platform_views": 44,
+    "readability_files": 4,
+    "readability_execution_views": 5
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityFilter.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityFilter.java",
+      "sha256": "e99dc157de0d39fc0ed58fdc9e6acf4bc2abd65cf75e50d0c8e60346cbc4d490",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "sha256": "4595bd7187cdcd907d37058658df7bd33f86aef21f9dfbcdd5ecd0578a4a7797",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "relative": "gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 2
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java",
+      "relative": "gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/TD.java",
+      "relative": "gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "relative": "gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "relative": "gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/OM.java",
+      "relative": "gregapi/util/OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "relative": "gregtech/loaders/a/Loader_Fluids.java",
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Food.java",
+      "relative": "gregtech/loaders/c/Loader_Recipes_Food.java",
+      "sha256": "dc9162de4c889164383b30d4a665fabba052ad67dd7840a0241bf740665e6b82",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "relative": "gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_Screwdriver.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_Screwdriver.java",
+      "sha256": "0cb7f909f6f9d4272ee6eb63ab9aafdc4b5889f093b2133f1531fbe703bcd56f",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_SoftHammer.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_SoftHammer.java",
+      "sha256": "48ce603efcb295072b9d742a555100710aceae8557a69b6f717e7b6152f35f6c",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java",
+      "sha256": "df3e7812331b86f9076dfe42afbc8135b73f6091fd53d47d25c3dd95ec89e00f",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/IBlockToolable.java",
+      "relative": "gregapi/block/IBlockToolable.java",
+      "sha256": "80b8529019e3f3ccab0bc1a567771cb6f0ddcd0bbe5529cafb5f1035bd058206",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "sha256": "b4fd742f5e59e419a2cdaed2bf51960954bbecc5c33380aae9abd91cc2aff818",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "sha256": "0345bfd215de4a25f110dd877689038169df0147de64f37a71972fa8c52de6eb",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java",
+      "sha256": "c3522f3d2fc4a1a2f8fe0c980db37aa953a7a32b62918decc14b2197468dd90b",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/tool/ToolDefinition.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/tool/ToolDefinition.java",
+      "sha256": "f9bcf97a169a2e1e8e98350a16198e590e82533e9c5580dc479430c58fa033dd",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "sha256": "ed1037e85e689e4741ebf2cd923f0d58954e7001012af3ef90726de154d16faa",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "sha256": "2c7b01554d0900783cf90ae5610c1bca0e8a9d24385ba99f1f5a420491b9d2b1",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "sha256": "e974a33bfcbdeb69d61dbb677d8c8311830703fa5e2bfea1555b1472854e3195",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "sha256": "94b750d34ff68cba0449511c1cf3e39cbcc4a6b3c52de448db44e507e26c03d7",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "sha256": "3a73244389cfe3ddef9a93eca96d72c0cf185d87cd681543f53c1e2c5ce3be40",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidItems.java",
+      "sha256": "6f7cdec3fb518ae67f5f9d5f39a1909d3b76a18e5b84eb8ff9156e19cc63a766",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "sha256": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "sha256": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/food/GTDrinks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/food/GTDrinks.java",
+      "sha256": "fb21cbd9a585340fcb93b5f4c0b6708edeb3896b37f5b1bbbce2541c9567177f",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "sha256": "4ac2cbe64ceaf7ca8011899f170aa6de5c05e248f673f06f6226dcc27d393cc9",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/item/FluidItem.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/item/FluidItem.java",
+      "sha256": "3442404044177318f250f1e870405c540daaa1b299791f4dc6dfa2ddedeff186",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidDisplayItem.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidDisplayItem.java",
+      "sha256": "b84de74c17e613379086fd02689c2ac3831980621e2f27ff472e203e65671903",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidCapabilities.java",
+      "sha256": "a2f5eb5fa0c1267133583859f8857f21768dc0b429a83eef4195481e45a7f1d1",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+      "sha256": "3fd5a1cab48767441ac5cbff550d7cdb808e0ba2a8f2f40e8ee15f6c54de3db3",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Milk dust/ambient liquid template conversion, actual plain-item/capability/display consumers, and no-cover filter tool dispatch/cost. Not whole-file/system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "platform": "forge",
+      "sha256": "75eb8355d58a2b51f7b76a3509bb120fc30e40329b1f17424a16c93e0200bca0",
+      "tokens": 421
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java",
+      "platform": "neoforge",
+      "sha256": "ad997615a22f6062ff630a521ed42cc87395231f3902fdb8d6637e7f1b023e86",
+      "tokens": 697
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "b1078af28147c59ecec2a33a895eb1a6c76f833365ff0ea8c6e8be5fb69cb905",
+      "tokens": 1552
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f4a54e134ad48189cf46c573def50a121b85a7aa8681713dade9cdd665025da6",
+      "tokens": 1453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "platform": "forge",
+      "sha256": "38867aad6780955726681a00d823b380c043b52c4f81700701bed51191ee0add",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/MaterialItem.java",
+      "platform": "neoforge",
+      "sha256": "5ec3ab33dc152397eaada3987769e2e0c7d377514c3f63b568ac92f60631e1cc",
+      "tokens": 758
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "forge",
+      "sha256": "fd7db0f814de72cd76a8da2cb499ccd41dd5edaa98128a5d732113ade2483bc9",
+      "tokens": 1355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f39df06ea5518dd9011ef015b62ee87c4574259c27b0e6c13a51bd672d6f364c",
+      "tokens": 1399
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "platform": "forge",
+      "sha256": "1c93f9f630c1c9f62db57391f70a7ccfc62a6bef589bf7074b2a2fe08452a820",
+      "tokens": 1242
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlock.java",
+      "platform": "neoforge",
+      "sha256": "cec54eaf20a9c0cdaadef495be23e3ab63e398d52126fd584400d13e0e348dd6",
+      "tokens": 1536
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "forge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "neoforge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "platform": "forge",
+      "sha256": "c8ab45fe0eda0b07e0e78a686510b1963ae598cd212ddadb80f32ffbc773705a",
+      "tokens": 454
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterScreen.java",
+      "platform": "neoforge",
+      "sha256": "7bad03e9ebceb7951aef394a07b3423212d8d98a41932c3ab7b3e479b6851104",
+      "tokens": 449
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "platform": "forge",
+      "sha256": "38e292eadf7a41464366232d978fe073b09c79830f1f8c3340e15b0a6251df2e",
+      "tokens": 773
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "platform": "neoforge",
+      "sha256": "3e22440ac645fef47e5675bf2a305f3f3779f6c1aee4714aaa557e9e86806c24",
+      "tokens": 1034
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "forge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "neoforge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "forge",
+      "sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+      "tokens": 1598
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "neoforge",
+      "sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+      "tokens": 988
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidItems.java",
+      "platform": "forge",
+      "sha256": "716546dafaa5e26dbe81aaef46250fd95184bc231781735c2ee56f7bff41994e",
+      "tokens": 445
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluidItems.java",
+      "platform": "neoforge",
+      "sha256": "e8f1e9edc697144152aeb936f8b44aa75f73bfbedf5ef9d01ec109123f7e39c6",
+      "tokens": 133
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "sha256": "0fd1f86e16e3ef80042f578e50b1543c9eb8d36b6c539c843afd11fab3d494ce",
+      "tokens": 3637
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "sha256": "e7d2e2be99fe3c7cbc2493c2f098246d336cd980ac0917de903e50db08914062",
+      "tokens": 3745
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "forge",
+      "sha256": "6e15bb8594ec00c9b83c68a7c4d529f324afa1429efa580673c3ecea383f30af",
+      "tokens": 1284
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "neoforge",
+      "sha256": "c70d0ffd0ede2fc6dc7eaf164cb1e55a6c5ceccb13c7e4d2b7c1a86d45e40ee7",
+      "tokens": 1295
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "forge",
+      "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "neoforge",
+      "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "9dda275fe97166aaabea7a8a71d9a5d4808a60d4c2fa182e3e316e734265d38e",
+      "tokens": 779
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "9dda275fe97166aaabea7a8a71d9a5d4808a60d4c2fa182e3e316e734265d38e",
+      "tokens": 779
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "7ed058acf80b6fa14a0bd011bc6b11614b78d87fc5d7e141f6d0b0718170f972",
+      "tokens": 1106
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "8600889d116537da0ff0dcc7d9158227145f6a2ff1091cef099a3f499241269a",
+      "tokens": 1104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "120bd77dadf304d5418db0b64328a700195858511a156b7d99b1d008052b136c",
+      "tokens": 873
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "2561f6ee2466ed57c8405a9ca32d92e6323b95b54612293d4fa604e3231f4a90",
+      "tokens": 895
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/food/GTDrinks.java",
+      "platform": "forge",
+      "sha256": "3398f961315a40609b29c8d23e5216651b941fb5876cba8ffe2fdc2a69acbe9f",
+      "tokens": 1184
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/food/GTDrinks.java",
+      "platform": "neoforge",
+      "sha256": "1dd4e88ae96f3a341408bfc3c2255fdbe3ed03bfd2656adb1034dc6b19c712d3",
+      "tokens": 1159
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "forge",
+      "sha256": "4d233443744f2752349fae053ce58e2eb038814b77f5341a2d50054a53e53a05",
+      "tokens": 922
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMenuTypes.java",
+      "platform": "neoforge",
+      "sha256": "a8ea0fc21de2d553bb829cebe2bd51f12915b9efb387e584e65938c6ff3cb4ba",
+      "tokens": 1298
+    }
+  ],
+  "readability": {
+    "baseline": "49f8eda2e8ca5493e5a96588fdad41b135e103c5",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidDisplayBinding.java": {
+        "before_raw_sha256": "d3bd4846420e9142b3f5f80d6ee4c3565bf8abd46b15bced3507bcb6bb3e482e",
+        "after_raw_sha256": "ed1037e85e689e4741ebf2cd923f0d58954e7001012af3ef90726de154d16faa",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "id": "fluidId",
+              "item": "carrierItem",
+              "out": "displayStack",
+              "tag": "payloadData"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 421,
+            "execution_sha256": "a2ce8d54e384602cd08e1a4bdbadb28b63881988bd5169a13f16a9a48956a398",
+            "before_lines": 42,
+            "after_lines": 50,
+            "before_max_line": 137,
+            "after_max_line": 149
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 697,
+            "execution_sha256": "ec191f979e9faa784d66c73a40b2f58a58205a2955cce4abb5ab2d952eea1efc",
+            "before_lines": 18,
+            "after_lines": 72,
+            "before_max_line": 784,
+            "after_max_line": 148
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidDisplayItem.java": {
+        "before_raw_sha256": "3496588c1cef0081ed523dcf5b8f9ca19f65667d0ca023a3832f1149a45602d9",
+        "after_raw_sha256": "b84de74c17e613379086fd02689c2ac3831980621e2f27ff472e203e65671903",
+        "rename_scopes": [
+          [
+            "private static class FluidHandler",
+            null,
+            {
+              "f": "resolvedFluid"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "    /**\n     * Drinking, the port of GT6's bottles ({@code MultiItemBottles}, {@code EnumAction.drink}): GT6 gives every\n     * drinkable fluid a {@code FoodStatDrink} entry ({@code DrinksGT}), and a bottle is 250&nbsp;mB of it. The\n     * port's per-fluid item carries the same fluid, so right-clicking a drink drinks it; the bottle is consumed\n     * and an empty glass bottle is handed back, like GT6's bottle. Fluids without a drink entry do nothing.\n     */",
+            "    /**\n     * Uses the carrier's registered drink entry; this action does not resolve display payloads.\n     * For a noncreative player, consumes one carrier and attempts to add an empty bottle.\n     */"
+          ],
+          [
+            "/** Per-stack IFluidHandlerItem — creative-only infinite fluid source. Never consumed. */",
+            "/** Inexhaustible per-stack source; this handler does not check player permissions or consume its carrier. */"
+          ],
+          [
+            "/** Native adapter for Source1 fluid proxies: actual payload metadata, drinks and creative source capability. */",
+            "/** Native adapter for fluid display payloads, registered drinks and an inexhaustible source capability. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 1297,
+            "execution_sha256": "21756300d5df708fd91630e06d61120bcf92455195aa3cbf5200f7c920698047",
+            "before_lines": 170,
+            "after_lines": 181,
+            "before_max_line": 180,
+            "after_max_line": 123
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java": {
+        "before_raw_sha256": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+        "after_raw_sha256": "c3522f3d2fc4a1a2f8fe0c980db37aa953a7a32b62918decc14b2197468dd90b",
+        "rename_scopes": [],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 129,
+            "execution_sha256": "ba3aaa77bf176f3f740613ca9811a1cd394a0feb391e3f3f4229a19e04f19195",
+            "before_lines": 15,
+            "after_lines": 21,
+            "before_max_line": 108,
+            "after_max_line": 82
+          }
+        ]
+      },
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/item/FluidItem.java": {
+        "before_raw_sha256": "6681e4828eaa7e1f3a164f0a791bad83dade4cee2317c2ccf2d79e473b465036",
+        "after_raw_sha256": "3442404044177318f250f1e870405c540daaa1b299791f4dc6dfa2ddedeff186",
+        "rename_scopes": [
+          [
+            "private static class FluidHandler",
+            null,
+            {
+              "f": "resolvedFluid"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "    /**\n     * Drinking, the port of GT6's bottles ({@code MultiItemBottles}, {@code EnumAction.drink}): GT6 gives every\n     * drinkable fluid a {@code FoodStatDrink} entry ({@code DrinksGT}), and a bottle is 250&nbsp;mB of it. The\n     * port's per-fluid item carries the same fluid, so right-clicking a drink drinks it; the bottle is consumed\n     * and an empty glass bottle is handed back, like GT6's bottle. Fluids without a drink entry do nothing.\n     */",
+            "    /**\n     * Uses the carrier's registered drink entry; this action does not resolve display payloads.\n     * For a noncreative player, consumes one carrier and attempts to add an empty bottle.\n     */"
+          ],
+          [
+            "/** Per-stack IFluidHandlerItem — creative-only infinite fluid source. Never consumed. */",
+            "/** Inexhaustible per-stack source; this handler does not check player permissions or consume its carrier. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1510,
+            "execution_sha256": "8aa6a6e6719fbd48821cfb82fd79bcfe1163dc4b46ddb24e02f71d6ec36d9f8d",
+            "before_lines": 195,
+            "after_lines": 199,
+            "before_max_line": 149,
+            "after_max_line": 129
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, scoped local names and five source-backed comment corrections. Serialization, identities, capability/food behavior and costs unchanged."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "reused_receipt": {
+      "path": "docs/integration/verification/extender-signals-audit-20261021.json",
+      "sha256": "c092ee570567eb15acf642e1c7ebf415965844067831334c31880414227e5d6b",
+      "scope": "Use the actual Forge47.4.20 and Neo21.1.243 upstream artifacts located in batch82; not a replay of old validation."
+    },
+    "entries": [
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/fluids/FluidUtil.java",
+        "sha256": "95a467946c80d71f57ac8caecc005d65b726ac3256c2763033d1bcd225d553b4",
+        "extracted": "work/filter-fluid-tools-audit-20261021/neo-FluidUtil.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "entry": "net/minecraftforge/fluids/FluidUtil.java",
+        "sha256": "6b5bfcff017fca36ce4644bd83acc07bb681241c62f604acce53a1b162647fd7",
+        "extracted": "work/filter-fluid-tools-audit-20261021/forge-FluidUtil.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeItem.java",
+        "sha256": "faef61b748a30d6267324157e034dfdd1341b298b51b51269eaf0eeaaef4d1dc",
+        "extracted": "work/filter-fluid-tools-audit-20261021/forge-IForgeItem.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "entry": "net/minecraftforge/items/wrapper/ShulkerItemStackInvWrapper.java",
+        "sha256": "4ba99e143e46d2ed224ab8d79dd9bf5c985735d6901fc81c182bf85151b6663f",
+        "extracted": "work/filter-fluid-tools-audit-20261021/forge-ShulkerItemStackInvWrapper.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraftforge.fluids.FluidUtil",
+        "output": "work/filter-fluid-tools-audit-20261021/forge-FluidUtil.javap.txt",
+        "sha256": "dfc9780a12b04ffab602889be2fa8a47133c9a7bf18bb8e3e874d5b797251a50"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraftforge.common.extensions.IForgeItem",
+        "output": "work/filter-fluid-tools-audit-20261021/forge-IForgeItem.javap.txt",
+        "sha256": "64da7cbdcdf869fe8881df6ae809c5334e8674b1536cc244f7cb9e5fd6da3964"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraftforge.items.wrapper.ShulkerItemStackInvWrapper",
+        "output": "work/filter-fluid-tools-audit-20261021/forge-ShulkerItemStackInvWrapper.javap.txt",
+        "sha256": "dd63a1ebbf4031170932dc767975990ce8c68df99c9bb446569c79fa9ccbe2c9"
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source contracts, not calls to native ItemStack/registry or a world fixture.",
+    "ambient_material": {
+      "material": "Milk",
+      "id": 9790,
+      "melting_point": 273,
+      "boiling_point": 373,
+      "original_default_environment": 293,
+      "phase": "liquid",
+      "original_fluid_registration": "milk",
+      "plain_form": "dust",
+      "condition": "Pure fluid filter30257, valid Milk dust template selected by normal left click; candidate is actual milk fluid, loaded willing target, no covers or third-party capability injection.",
+      "source_phase_inference": true,
+      "cases": 120,
+      "ordered_sha256": "d58e9ef88131ae4a4312acb7d88325221005f57e1cb129873c1d02e7e2f1889b",
+      "example": [
+        "forge",
+        false,
+        0,
+        1,
+        true,
+        false
+      ],
+      "limit": "Declared dust generation and fluid registration paths are inspected, not a fully initialized live registry. Amount/simulation/actual transferred litres are not measured."
+    },
+    "tool_costs": [
+      {
+        "platform": "forge",
+        "tool": "screwdriver",
+        "original_return": 2000,
+        "original_factor": 100,
+        "original_requested_units": 20,
+        "current_requested_units": 1
+      },
+      {
+        "platform": "forge",
+        "tool": "soft_hammer",
+        "original_return": 10000,
+        "original_factor": 100,
+        "original_requested_units": 100,
+        "current_requested_units": 1
+      },
+      {
+        "platform": "forge",
+        "tool": "magnifying_glass",
+        "original_return": 1,
+        "original_factor": 100,
+        "original_requested_units": 1,
+        "current_requested_units": 0
+      },
+      {
+        "platform": "neoforge",
+        "tool": "screwdriver",
+        "original_return": 2000,
+        "original_factor": 100,
+        "original_requested_units": 20,
+        "current_requested_units": 1
+      },
+      {
+        "platform": "neoforge",
+        "tool": "soft_hammer",
+        "original_return": 10000,
+        "original_factor": 100,
+        "original_requested_units": 100,
+        "current_requested_units": 1
+      },
+      {
+        "platform": "neoforge",
+        "tool": "magnifying_glass",
+        "original_return": 1,
+        "original_factor": 100,
+        "original_requested_units": 1,
+        "current_requested_units": 0
+      }
+    ],
+    "tool_mode_diagnostics": [
+      {
+        "platform": "forge",
+        "kind": "items",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "forge",
+        "kind": "fluids",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "forge",
+        "kind": "items_fluids",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "forge",
+        "kind": "oredict",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "neoforge",
+        "kind": "fluids",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "neoforge",
+        "kind": "items_fluids",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      },
+      {
+        "platform": "neoforge",
+        "kind": "oredict",
+        "old": "Mode message, tool return1",
+        "current": "Falls through to configuration menu, no block-specific mode tool message"
+      }
+    ],
+    "positive_display_path": "Both display-item class guards and native fluid-container capability queries remain; an existing display proxy is not the same as an ordinary material dust.",
+    "rejected_shortcut": "fluid(U,true) dispatches at ambient temperature. Copper1357K is below melt at293K and can resolveFL.Error; do not substitute arbitrary molten-state lookup or restore that error branch.",
+    "prefix_limit": "Current single-prefix dispatch and old multi-membership/selection differ structurally; no additional concrete alternate-prefix candidate is accepted this batch."
+  },
+  "positive_routes": [
+    "Display payloads preserve actual fluid identity/data through native serialization; only their own proxy classes are resolved. Plain MaterialItem is intentionally not parsed as a proxy.",
+    "Both platforms actually register material definition streams and milk fluid/display entries. Source generation is distinguished from initialized final-registry acceptance.",
+    "FluidUtil does query a genuine item fluid capability; that path is distinct from resolving a material ambient phase.",
+    "Ordinary filter mode buttons and soft-hammer state reset exist; missing tool costs/messages do not mean state configuration is entirely absent."
+  ],
+  "observed_display_boundary": [
+    "Current getName/tooltip/glint and source handler read actual display payload, but use/drink selects fluidEntry. Full consistency of this modern adaptation and actual acquisition policy remain unaccepted.",
+    "The per-stack source handler does not check a player and returns requested amounts without consuming its carrier. Corrected comments do not add a new exploit/world claim or change its behavior."
+  ],
+  "remaining": [
+    "Every material/ambient phase/container, invalid fluid policy, actual alternate-prefix membership and selector cycling, electric/foreign/creative tool costs and permissions, actual UI/registry/transfer/restart and the full project queue."
+  ],
+  "limits": [
+    "No Java compilation/target initialization, Gradle, tests, game, live registry, UI render, saved-world restart, build or push; three javap views read saved upstream classes only.",
+    "Four production sources change whitespace/local names and five source-backed comments only; all five execution views and unnormalized literals are preserved.",
+    "Original MT source has two pre-existing U+FFFD comment characters, retained read-only and recorded separately. The full audit/readability goal remains active."
+  ],
+  "previous_goal_turn": "Progress: local commit 49f8eda2e standardized four filter sources, recorded280/281 and extended277 after checking actual ghost/ticker consumers.",
+  "root_validation": {
+    "named_source_hashes": 65,
+    "shared_platform_views": 44,
+    "readability_files": 4,
+    "complete_execution_views": 5,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 5,
+    "protected_material_hashes": 2,
+    "reused_native_artifact_hashes": 3,
+    "additional_native_entries": 4,
+    "additional_readonly_javap_outputs": 3,
+    "milk_filtered_face_conditions": 120,
+    "tool_cost_conditions": 6,
+    "diagnostic_conditions": 8,
+    "forge_default_shulker_branch_checked": true,
+    "ambient_not_arbitrary_molten_distinguished": true,
+    "actual_material_registry_unverified": true,
+    "contiguous_ledger_records": 282,
+    "documents_checked": 8,
+    "added_local_links_checked": 20,
+    "limit": "Source/file analysis only; no target compilation/initialization, Gradle, tests, actual registry/UI/tool/flow/restart, build or push."
+  }
+}
