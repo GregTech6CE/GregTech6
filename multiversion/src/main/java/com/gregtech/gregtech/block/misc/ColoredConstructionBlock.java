@@ -17,10 +17,14 @@ public class ColoredConstructionBlock extends Block {
     public static final EnumProperty<DyeColor> COLOR = ConcreteBlock.COLOR;
     public ColoredConstructionBlock(Properties properties, DyeColor color) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(COLOR, color));
+        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
+                ? stateDefinition.any().setValue(COLOR, color) : stateDefinition.any());
     }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(COLOR); }
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        if (!(this instanceof FixedConstructionColor)) builder.add(COLOR);
+    }
     public static DyeColor itemColor(ItemStack stack) {
+        if (stack.getItem() instanceof BlockItem item && item.getBlock() instanceof FixedConstructionColor fixed) return fixed.color();
         DyeColor fallback = stack.getItem() instanceof BlockItem item && item.getBlock().defaultBlockState().hasProperty(COLOR)
                 ? item.getBlock().defaultBlockState().getValue(COLOR) : DyeColor.WHITE;
 //? if >=1.21.1 {
@@ -32,13 +36,13 @@ public class ColoredConstructionBlock extends Block {
 //?}
     }
     @Override public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-        return List.of(ConcreteBlock.coloredItem(this, state.getValue(COLOR)));
+        return List.of(ConcreteBlock.coloredItem(this, FixedConstructionColor.colorOf(state)));
     }
 //? if >=1.21.1 {
     /*@Override public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult hit, net.minecraft.world.level.LevelReader level, BlockPos pos, net.minecraft.world.entity.player.Player player) {
 *///?} else {
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
-        return ConcreteBlock.coloredItem(this, state.getValue(COLOR));
+        return ConcreteBlock.coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 }

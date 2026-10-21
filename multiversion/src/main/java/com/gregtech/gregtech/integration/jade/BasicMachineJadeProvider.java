@@ -33,6 +33,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
     private static final String NBT_ENERGY_IN = "gt_bm_energy_in";
     private static final String NBT_ENERGY_MIN = "gt_bm_energy_min";
     private static final String NBT_ENERGY_MAX = "gt_bm_energy_max";
+    private static final String NBT_ENERGY_AVERAGE = "gt_bm_energy_average";
     private static final String NBT_RUNNING = "gt_bm_running";
     private static final String NBT_ITEMS_IN = "gt_bm_items_in";
     private static final String NBT_ITEMS_TOTAL = "gt_bm_items_total";
@@ -54,6 +55,7 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
         tag.putLong(NBT_ENERGY_IN, spec.energyIn());
         tag.putLong(NBT_ENERGY_MIN, spec.energyInMin());
         tag.putLong(NBT_ENERGY_MAX, spec.energyInMax());
+        tag.putDouble(NBT_ENERGY_AVERAGE, be.averageEnergyInput());
         tag.putBoolean(NBT_RUNNING, be.isRunning());
 
         if (be.inventory() != null) {
@@ -110,16 +112,20 @@ public enum BasicMachineJadeProvider implements IBlockComponentProvider, IServer
             long energyIn = data.getLong(NBT_ENERGY_IN);
             long energyMin = data.getLong(NBT_ENERGY_MIN);
             long energyMax = data.getLong(NBT_ENERGY_MAX);
-            long current = data.getLong(NBT_STORED);
+            double average = data.getDouble(NBT_ENERGY_AVERAGE);
             boolean running = data.getBoolean(NBT_RUNNING);
             String unit = data.getString(NBT_UNIT);
             tooltip.add(Component.translatable("jade.gt6ce.energy.in",
                     format(energyIn), unit));
             tooltip.add(Component.translatable("jade.gt6ce.energy.range",
                     format(energyMin), format(energyMax), unit));
+            tooltip.add(Component.translatable("jade.gt6ce.energy.actual",
+                    String.format(Locale.US, "%.2f", average), unit));
+            if (energyIn > 0) tooltip.add(Component.translatable("jade.gt6ce.energy.multiplier",
+                    String.format(Locale.US, "%.2f", average / energyIn), format(energyIn), unit));
             if (running) {
                 tooltip.add(Component.translatable("jade.gt6ce.energy.active",
-                        format(current), unit));
+                        String.format(Locale.US, "%.2f", average), unit));
             } else {
                 tooltip.add(Component.translatable("jade.gt6ce.energy.idle"));
             }

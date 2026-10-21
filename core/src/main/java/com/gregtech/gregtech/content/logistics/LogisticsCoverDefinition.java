@@ -1,7 +1,6 @@
 package com.gregtech.gregtech.content.logistics;
 
-
-/** The GT6 1086-1099 cover family; display covers are reserved for W4. */
+/** Shared definitions for GT6 logistics displays and routing attachments, IDs 1086-1099. */
 public enum LogisticsCoverDefinition {
     CPU_LOGIC("logistics_display_cpu_logic", Role.DISPLAY, Channel.NONE, false, false),
     CPU_CONTROL("logistics_display_cpu_control", Role.DISPLAY, Channel.NONE, false, false),
@@ -18,8 +17,13 @@ public enum LogisticsCoverDefinition {
     GENERIC_STORAGE("generic_logistics_storage_bus", Role.STORAGE, Channel.BOTH, false, false),
     ITEM_DUMP("logistics_dump_bus_item", Role.DUMP, Channel.ITEM, false, false);
 
-    public enum Role { IMPORT, EXPORT, STORAGE, DUMP, DISPLAY }
-    public enum Channel { ITEM, FLUID, BOTH, NONE }
+    public enum Role {
+        IMPORT, EXPORT, STORAGE, DUMP, DISPLAY
+    }
+
+    public enum Channel {
+        ITEM, FLUID, BOTH, NONE
+    }
 
     private final String id;
     private final Role role;
@@ -35,18 +39,42 @@ public enum LogisticsCoverDefinition {
         this.targetStackSize = targetStackSize;
     }
 
-    public String id() { return id; }
-    public Role role() { return role; }
-    public Channel channel() { return channel; }
-    public boolean filtered() { return filtered; }
-    public boolean targetStackSize() { return targetStackSize; }
-    public boolean usesPriority() { return role != Role.DISPLAY && role != Role.DUMP; }
-    public boolean routesItems() { return channel == Channel.ITEM || channel == Channel.BOTH; }
-    public boolean routesFluids() { return channel == Channel.FLUID || channel == Channel.BOTH; }
+    public String id() {
+        return id;
+    }
+
+    public Role role() {
+        return role;
+    }
+
+    public Channel channel() {
+        return channel;
+    }
+
+    public boolean filtered() {
+        return filtered;
+    }
+
+    public boolean targetStackSize() {
+        return targetStackSize;
+    }
+
+    public boolean usesPriority() {
+        return role != Role.DISPLAY && role != Role.DUMP;
+    }
+
+    public boolean routesItems() {
+        return channel == Channel.ITEM || channel == Channel.BOTH;
+    }
+
+    public boolean routesFluids() {
+        return channel == Channel.FLUID || channel == Channel.BOTH;
+    }
 
     public static LogisticsCoverDefinition ofBehavior(String id) {
         if (id == null) return null;
-        for (var type : values()) if (type.id.equals(id)) return type;
+        for (var type : values())
+            if (type.id.equals(id)) return type;
         return null;
     }
 

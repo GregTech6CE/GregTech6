@@ -29,16 +29,33 @@ import javax.annotation.Nullable;
 //? if >=1.21.1 {
 /*public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.content.cover.PanelCoverHost {
 *///?} else {
-public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.content.cover.PanelCoverHost {    private final java.util.Map<Direction, LazyOptional<IItemHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
+public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, com.gregtech.gregtech.content.cover.PanelCoverHost {
+    private final java.util.Map<Direction, LazyOptional<IItemHandler>> componentFaceCaps = new java.util.EnumMap<>(Direction.class);
 
 //?}
     private final com.gregtech.gregtech.content.cover.ComponentCoverStorage componentCovers = new com.gregtech.gregtech.content.cover.ComponentCoverStorage(this);
-    @Override public net.minecraft.world.item.ItemStack getCover(Direction side) { return componentCovers.get(side); }
-    @Override public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) { return componentCovers.attach(side,stack); }
-    @Override public net.minecraft.world.item.ItemStack removeCover(Direction side) { return componentCovers.remove(side); }
-    @Override public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels() { return componentCovers.panels(); }
-    public void tickComponentCovers() { componentCovers.tick(); }
-    public void dropComponentCovers() { componentCovers.drop(); }
+    @Override
+    public net.minecraft.world.item.ItemStack getCover(Direction side) {
+        return componentCovers.get(side);
+    }
+    @Override
+    public boolean attachCover(Direction side, net.minecraft.world.item.ItemStack stack) {
+        return componentCovers.attach(side, stack);
+    }
+    @Override
+    public net.minecraft.world.item.ItemStack removeCover(Direction side) {
+        return componentCovers.remove(side);
+    }
+    @Override
+    public com.gregtech.gregtech.content.cover.PanelCoverRuntime panels() {
+        return componentCovers.panels();
+    }
+    public void tickComponentCovers() {
+        componentCovers.tick();
+    }
+    public void dropComponentCovers() {
+        componentCovers.drop();
+    }
 
 
     private final net.minecraft.world.level.block.entity.ChestLidController lid = new net.minecraft.world.level.block.entity.ChestLidController();
@@ -60,12 +77,18 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     public void recheckOpeners() {
         if (level != null && !isRemoved()) openers.recheckOpeners(level, worldPosition, getBlockState());
     }
-    public float openness(float partialTick) { return lid.getOpenness(partialTick); }
+    public float openness(float partialTick) {
+        return lid.getOpenness(partialTick);
+    }
     public static void clientTick(net.minecraft.world.level.Level level, BlockPos pos, BlockState state, MetalChestBlockEntity chest) {
         chest.lid.tickLid();
     }
-    @Override public boolean triggerEvent(int id, int value) {
-        if (id == 1) { lid.shouldBeOpen(value > 0); return true; }
+    @Override
+    public boolean triggerEvent(int id, int value) {
+        if (id == 1) {
+            lid.shouldBeOpen(value > 0);
+            return true;
+        }
         return super.triggerEvent(id, value);
     }
     @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -123,9 +146,8 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     }
 
     /**
-     * GT6 loot chest behaviour ({@code MultiTileEntityChest:262}): a chest that carries a
-     * {@code gt.dungeonloot} table fills itself from it when it is first opened, and spawns the same
-     * five experience orbs (5..14 each) the original does.
+     * First-open filling for a chest carrying {@code gt.dungeonloot}. Nonempty results emit five
+     * experience orbs (5..13 each); original Chest:262 also awarded them for successful empty results.
      *
      * @return how many stacks were placed
      */
@@ -167,15 +189,15 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     }
 
     private void spawnLootExperience() {
-            for (int i = 0; i < 5; i++) {
-                int value = 5 + level.random.nextInt(5) + level.random.nextInt(5);
-                net.minecraft.world.entity.ExperienceOrb orb =
-                        new net.minecraft.world.entity.ExperienceOrb(level,
-                                worldPosition.getX() + 0.4 + level.random.nextDouble() * 0.2,
-                                worldPosition.getY() + 1.25,
-                                worldPosition.getZ() + 0.4 + level.random.nextDouble() * 0.2, value);
-                level.addFreshEntity(orb);
-            }
+        for (int i = 0; i < 5; i++) {
+            int value = 5 + level.random.nextInt(5) + level.random.nextInt(5);
+            net.minecraft.world.entity.ExperienceOrb orb =
+                    new net.minecraft.world.entity.ExperienceOrb(level,
+                            worldPosition.getX() + 0.4 + level.random.nextDouble() * 0.2,
+                            worldPosition.getY() + 1.25,
+                            worldPosition.getZ() + 0.4 + level.random.nextDouble() * 0.2, value);
+            level.addFreshEntity(orb);
+        }
     }
 
     /** Loot state carried by a dropped chest; inventory contents drop separately. */
@@ -237,7 +259,10 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
 *///?} else {
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> capability, @Nullable Direction side) {
-        if (capability == ForgeCapabilities.ITEM_HANDLER) return side==null?itemCap.cast():componentFaceCaps.computeIfAbsent(side,face->LazyOptional.of(()->com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(this,face,inventory))).cast();
+        if (capability == ForgeCapabilities.ITEM_HANDLER)
+            return side == null ? itemCap.cast() : componentFaceCaps.computeIfAbsent(side,
+                    face -> LazyOptional.of(() -> com.gregtech.gregtech.content.cover.ComponentCoverAccess.items(
+                            this, face, inventory))).cast();
         return super.getCapability(capability, side);
     }
 
@@ -245,7 +270,8 @@ public class MetalChestBlockEntity extends BlockEntity implements MenuProvider, 
     public void invalidateCaps() {
         super.invalidateCaps();
         itemCap.invalidate();
-        componentFaceCaps.values().forEach(LazyOptional::invalidate);componentFaceCaps.clear();
+        componentFaceCaps.values().forEach(LazyOptional::invalidate);
+        componentFaceCaps.clear();
     }
 
     @Override

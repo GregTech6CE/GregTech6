@@ -13,13 +13,16 @@ def resources(root):
         yield "functional_wooden_bucket_" + content, {
             "type": "remi:group", "name": "emi.group.gt6ce.wooden_bucket_" + content,
             "contents": ["item:gt6ce:" + item for item in members], "priority": 125}
-    # Colours are stack components/NBT on these blocks, not suffixed registry IDs.
+    # Sixteen registered color identities; unsuffixed palette IDs are load compatibility only.
     for stem in ("asphalt", "cfoam_fresh", "cfoam", "cfoam_slab", "concrete",
                  "concrete_reinforced", "glass_clear", "glass_glow", "glass_glow_slab", "glass_clear_slab"):
         yield "decor_" + stem, {"type": "remi:group", "name": "block.gt6ce." + stem,
                 "contents": ["item:gt6ce:" + item for item in
                              {"cfoam": ("cfoam", "cfoam_hardened", "cfoam_hardened_owned"),
-                              "cfoam_fresh": ("cfoam_fresh", "cfoam_fresh_owned")}.get(stem, (stem,))],
+                              "cfoam_fresh": ("cfoam_fresh", "cfoam_fresh_owned")}.get(stem, (stem,))]
+                    + ["item:gt6ce:" + stem + "_" + color for color in
+                       ("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
+                        "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black")],
                 "priority": 120}
     for stem, name in (("extruder_shape", "item.gt6ce.extruder_shape_bottle"),
                        ("low_heat_extruder_shape", "item.gt6ce.low_heat_extruder_shape_bottle"),

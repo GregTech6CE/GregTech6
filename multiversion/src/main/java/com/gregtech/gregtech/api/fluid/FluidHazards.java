@@ -7,53 +7,13 @@ import com.gregtech.gregtech.registry.GTFluids;
 import net.minecraft.world.level.material.Fluid;
 
 /**
- * GT6 physical hazard classes - acid, gas and plasma - as pure functions, plus the proof-flag
- * truth table used by existing vessels. Magic is classified separately by isMagic for pipe ticks.
+ * Registry-backed fluid hazard queries shared by vessel and pipe callers.
+ * Acid comes from the resolved material; plasma and declared gas state come from fluid metadata.
+ * Magic also has a material fallback in {@link #isMagic}; individual callers may use narrower rules.
  *
- * <p><b>Where GT6 keeps the answer.</b> Not on the block and not on the pipe: every GT6 hazard test
- * is {@code FL.acid}/{@code FL.gas}/{@code FL.plasma} against a fluid <em>name</em> held in a global
- * set ({@code gregapi/data/CS.java:1508 FluidsGT}):
- * <ul>
- *   <li>{@code FL.java:756} {@code acid(Fluid)} = {@code FluidsGT.ACID.contains(name)},</li>
- *   <li>{@code FL.java:760} {@code plasma(Fluid)} = {@code FluidsGT.PLASMA.contains(name)},</li>
- *   <li>{@code FL.java:770} {@code gas(Fluid)} = {@code !FluidsGT.LIQUID.contains(name) &&
- *       (fluid.isGaseous() || FluidsGT.GAS.contains(name))}.</li>
- * </ul>
- * Those sets are filled at fluid-creation time, and the two rules behind them are different in kind:
- * <ul>
- *   <li><b>gas and plasma are the fluid's physical state</b> - {@code FL.java:1105} adds every fluid
- *       created with {@code STATE_GASEOUS} to {@code FluidsGT.GAS}, {@code FL.java:1106} every
- *       {@code STATE_PLASMA} fluid to {@code FluidsGT.PLASMA}, and {@code FL.java:1104} every
- *       {@code STATE_LIQUID} fluid to {@code FluidsGT.LIQUID} (which is what makes the {@code gas()}
- *       test subtract liquids);</li>
- *   <li><b>acid is a material property, not a state</b> - {@code FL.java:1118} adds the fluid to
- *       {@code FluidsGT.ACID} when its {@code OreDictMaterial} carries {@code TD.Properties.ACID}
- *       ({@code TD.java:386}), and {@code MT.java:121-126} is what puts it there for the
- *       {@code gasacid*}/{@code lqudacid*} factories. So an acid can be a gas and a liquid at once:
- *       hydrogen chloride is {@code gasaciddcmp} ({@code MT.java:1020}) and is in both sets.</li>
- * </ul>
- * That is why {@link #isAcid}, {@link #isGas} and {@link #isPlasma} are three <em>independent</em>
- * predicates and GT6 tests them one after another ({@code MultiTileEntityPipeFluid.java:296},
- * {@code :302}, {@code :308}) instead of switching on a single category. {@link #kindOf} exists for
- * callers that want one answer and documents its precedence.
- *
- * <p><b>How the port answers the same questions.</b> The port keeps the GT6 metadata on
- * {@link RegisteredFluids.FluidEntry} instead of in name sets: {@link RegisteredFluids.FluidEntry#gas()}
- * is the {@code STATE_GASEOUS} bit and {@link RegisteredFluids.FluidFlags#PLASMA} the
- * {@code STATE_PLASMA} bit, both resolved for a live {@link Fluid} through
- * {@link GTFluids#entryForFluid} - which also resolves the {@code _flowing} variant, so a flowing gas
- * is classified like its still fluid. The acid property survives on the material, so it is read back
- * with {@link FluidVisualPolicy#material} (the same {@code materialKey} / {@code boundMaterial}
- * resolution the renderer uses) and tested against {@link MaterialProperty#ACID}, which the port
- * already fills for GT6's acid materials ({@code MaterialFormCorrections.java:45-52}, the same list
- * {@code FL.java:1118} derives from {@code TD.Properties.ACID}).
- *
- * <p>This class is deliberately stateless and cache-free: every method is a registry lookup plus a
- * comparison, so the per-tick callers below can call it on the hot path. The acid branch is the only
- * one that has to resolve a material, and {@link #proofRejects(Fluid, boolean, boolean, boolean)}
- * short-circuits it away for any vessel that is already acid proof.
- *
- * @see #proofRejects(Fluid, boolean, boolean, boolean) the accept/reject decision the vessels use
+ * <p>Original predicates are FL.acid/gas/plasma/magic and the FluidsGT name sets.
+ * Unknown modern fluids use the native lighter-than-air approximation for gas; it does not
+ * reproduce the old independent isGaseous flag. These queries depend on the live registry.
  */
 public final class FluidHazards {
     public static final int PIPE_MAGIC_DESTROY_CHANCE = 100;
@@ -124,19 +84,9 @@ public final class FluidHazards {
     }
 
     /**
-     * GT6 {@code FL.java:770} {@code FL.gas}: the fluid's own state is {@code STATE_GASEOUS}
-     * ({@code FL.java:1105}).
-     *
-     * <p>For a fluid with no GT6 declaration the {@code FluidsGT.GAS} name set cannot answer, so the
-     * question falls to Forge's own lighter-than-air flag, which is the 1.20.1 equivalent of the
-     * {@code fluid.isGaseous()} half of GT6's test. GT6's {@code !FluidsGT.LIQUID.contains(name)} guard
-     * is already encoded in the port's metadata: {@code withGas()} clears
-     * {@link RegisteredFluids.FluidFlags#LIQUID}, so {@code entry.gas()} cannot be true for a declared
-     * liquid.
-     *
-     * <p>{@code Fluids.EMPTY} is never a gas: it has no GT6 declaration, and Forge's empty fluid type
-     * reports {@code isLighterThanAir()} — so the fallback has to exclude it explicitly, or "no fluid"
-     * would count as a breathable gas (the gate caught exactly that).
+     * Declared GT gas state takes precedence. Unknown nonempty fluids fall back to the native
+     * lighter-than-air flag, which is an approximation of the original independent gas predicate.
+     * Empty fluid is excluded because its native type can report lighter than air.
      */
     public static boolean isGas(Fluid fluid) {
         if (fluid == null || fluid == net.minecraft.world.level.material.Fluids.EMPTY) return false;

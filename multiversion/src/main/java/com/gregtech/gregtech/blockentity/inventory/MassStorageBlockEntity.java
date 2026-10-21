@@ -33,7 +33,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-/** GT6 standard bulk storage core. Item identity and long count share one transaction path. */
+/**
+ * Bulk item identity, long count and material fractions share one transaction path.
+ * Tape packing, template reset, downward output and the original overflow allowance
+ * retain their separate saved mode bits.
+ */
 //? if >=1.21.1 {
 /*public class MassStorageBlockEntity extends BlockEntity implements com.gregtech.gregtech.item.behavior.BehaviorDuctTape.Tapeable {
 *///?} else {
@@ -47,11 +51,13 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
             new com.gregtech.gregtech.api.inventory.BulkStorageState<>(CAPACITY, ItemStack::isSameItemSameTags, stack -> stack.copyWithCount(1));
 //?}
     private int mode;
+    private boolean inventoryChanged = true;
     /** Material below one stored template item; persisted so nugget insertion never loses matter. */
     private long partialUnits;
 //? if >=1.21.1 {
 //?} else {
     @Nullable private LazyOptional<IItemHandler> itemCap;
+    @Nullable private LazyOptional<IItemHandler> bottomCap;
 //?}
     public MassStorageBlockEntity(BlockPos pos, BlockState state) {
 //? if >=1.21.1 {
@@ -70,8 +76,22 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     public boolean isPacked() { return (mode & 8) != 0; }
     public int mode() { return mode; }
     public boolean resetsFilter() { return (mode & 2) != 0; }
+    public boolean autoOutput() { return (mode & 1) != 0; }
+    public boolean emitsOverflow() { return (mode & 4) != 0; }
+    public long maximumItems() { return CAPACITY + (emitsOverflow() ? 256 : 0); }
+
+    public void toggleAutoOutput() {
+        mode ^= 1;
+        markUpdated();
+    }
+
+    public void toggleOverflow() {
+        mode ^= 4;
+        storage.setCapacity(maximumItems());
+        markUpdated();
+    }
+
     public void toggleFilterReset() {
-        if (isPacked()) return;
         mode ^= 2;
         clearFilterIfEmpty();
         markUpdated();
@@ -148,7 +168,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         }
         long offeredUnits = exact ? templateUnits : MassStorageMaterialForms.compatibleUnits(key, stack);
         if (offeredUnits <= 0 || templateUnits <= 0) return 0;
-        long availableUnits = Math.max(0, CAPACITY - stored()) * templateUnits - partialUnits;
+        long availableUnits = Math.max(0, maximumItems() - stored()) * templateUnits - partialUnits;
         if (availableUnits < offeredUnits) return 0;
         long accepted = Math.min(stack.getCount(), availableUnits / offeredUnits);
         if (!simulate && accepted > 0) {
@@ -178,6 +198,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     }
     private static void checkSlot(int slot) { if (slot != 0) throw new IllegalArgumentException("Bulk storage slot: " + slot); }
     private void markUpdated() {
+        inventoryChanged = true;
         setChanged();
         if (level != null && !level.isClientSide) level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
     }
@@ -192,17 +213,69 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
             return stack.copyWithCount(stack.getCount() - accepted);
         }
         @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { checkSlot(slot); return extract(amount, simulate); }
-        @Override public int getSlotLimit(int slot) { checkSlot(slot); return (int) CAPACITY; }
+        @Override public int getSlotLimit(int slot) { checkSlot(slot); return (int) maximumItems(); }
         @Override public boolean isItemValid(int slot, ItemStack stack) { checkSlot(slot); return !isPacked() && matches(stack); }
     };
 
+    private final IItemHandler bottomHandler = new IItemHandler() {
+        public int getSlots() { return handler.getSlots(); }
+        public ItemStack getStackInSlot(int slot) { return handler.getStackInSlot(slot); }
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return autoOutput() ? stack : handler.insertItem(slot, stack, simulate);
+        }
+        public ItemStack extractItem(int slot, int amount, boolean simulate) { return handler.extractItem(slot, amount, simulate); }
+        public int getSlotLimit(int slot) { return handler.getSlotLimit(slot); }
+        public boolean isItemValid(int slot, ItemStack stack) { return !autoOutput() && handler.isItemValid(slot, stack); }
+    };
+
+    public void tickAutomaticOutput() {
+        if (level == null || level.isClientSide || isPacked()) return;
+        if (!inventoryChanged && level.getGameTime() % 100 != 0) return;
+        inventoryChanged = false;
+        if (!autoOutput() && (!emitsOverflow() || stored() <= CAPACITY)) return;
+        BlockPos below = worldPosition.below();
+        if (!level.hasChunkAt(below)) return;
+//? if >=1.21.1 {
+        /*IItemHandler target = level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, below, Direction.UP);
+*///?} else {
+        BlockEntity neighbor = level.getBlockEntity(below);
+        IItemHandler target = neighbor == null ? null : neighbor.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+//?}
+        if (target == null) return;
+        do {
+            int amount = (int) Math.min(64, autoOutput() ? stored() : stored() - CAPACITY);
+            ItemStack offered = extract(amount, true);
+            if (offered.isEmpty()) return;
+//? if >=1.21.1 {
+            /*ItemStack rest = net.neoforged.neoforge.items.ItemHandlerHelper.insertItem(target, offered.copy(), true);
+*///?} else {
+            ItemStack rest = net.minecraftforge.items.ItemHandlerHelper.insertItem(target, offered.copy(), true);
+//?}
+            int accepted = offered.getCount() - rest.getCount();
+            if (accepted <= 0) return;
+            ItemStack removed = extract(accepted, false);
+//? if >=1.21.1 {
+            /*ItemStack returned = net.neoforged.neoforge.items.ItemHandlerHelper.insertItem(target, removed, false);
+*///?} else {
+            ItemStack returned = net.minecraftforge.items.ItemHandlerHelper.insertItem(target, removed, false);
+//?}
+            if (!returned.isEmpty()) insert(returned, false);
+            if (returned.getCount() >= accepted || autoOutput()) return;
+        } while (stored() > CAPACITY);
+    }
+
 //? if >=1.21.1 {
     /*public IItemHandler itemHandler() { return handler; }
+    public IItemHandler itemHandler(@Nullable Direction side) { return side == Direction.DOWN ? bottomHandler : handler; }
 *///?} else {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
             @org.jetbrains.annotations.NotNull Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            if (side == Direction.DOWN) {
+                if (bottomCap == null || !bottomCap.isPresent()) bottomCap = LazyOptional.of(() -> bottomHandler);
+                return bottomCap.cast();
+            }
             if (itemCap == null || !itemCap.isPresent()) {
                 itemCap = LazyOptional.of(() -> handler);
             }
@@ -215,6 +288,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     public void invalidateCaps() {
         super.invalidateCaps();
         if (itemCap != null) { itemCap.invalidate(); itemCap = null; }
+        if (bottomCap != null) { bottomCap.invalidate(); bottomCap = null; }
     }
 //?}
 
@@ -247,6 +321,8 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         super.load(tag);
 //?}
         mode = tag.contains("gt.mode") ? tag.getInt("gt.mode") : (tag.contains("gt.stored") ? 2 : 0);
+        storage.setCapacity(maximumItems());
+        inventoryChanged = true;
         // BulkStorageState's automatic reset only sees whole items. Keep reset
         // under this class's control so it cannot erase fractional contents.
         storage.setResetWhenEmpty(false);

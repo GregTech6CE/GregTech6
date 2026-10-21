@@ -23,12 +23,10 @@ import net.minecraft.world.level.block.Blocks;
  *       {@link GTDungeonData#chest}. The port has a single chest block, which always faces north (GT6
  *       turned the multi-tile towards the room), so the roll is evaluated - it consumes GT6's
  *       {@code next1in2()} and {@code next(3)} from the cell's random - and its result is dropped.</li>
- *   <li>GT6's key-locked Safe multi-tile ({@code 3010}, {@code Loader_MultiTileEntities:135}) becomes a
- *       chest with the same loot table. This cell is the one place where GT6 <em>uses</em> a dungeon key
- *       instead of handing one out - the safe is opened with key #3 (or with key #1/#2/#4/#5 when key #3
- *       was never generated) - and it has no key-locked container in the port (its safe is owner based),
- *       so the lock is skipped; the key items themselves exist since the keys batch
- *       ({@code GTDungeonKeys}).</li>
+ *   <li>GT6's key-locked Safe multi-tile ({@code 3010}, {@code Loader_MultiTileEntities:135}) uses
+ *       {@link GTDungeonData#safe} with the selected dungeon key ID. The four dead ends select key #3
+ *       when generated, otherwise key #1/#2/#4/#5 respectively. The port has both mechanical and
+ *       key-locked safes; these calls request the key-locked variant.</li>
  *   <li>GT6 hands its cup one of twelve drinks ({@code :37}, all of them GT fluids). The drink is
  *       selected separately from the cell's random, as GT6's global {@code RNGSUS} did.</li>
  *   <li>GT6's {@code case 1} (the breakable wall) only builds something when dungeon key #3 exists
@@ -84,9 +82,7 @@ public class GTDungeonChunkCorridor3 extends GTDungeonChunkCorridor {
                     for (int y = 1; y <= 2; y++) for (int z = 7; z <= 8; z++) data.air(12, y, z);
 
                     data.coins(12, 1, 7);
-                    // GT6 :69 is its Key Locked Safe (3010), opened with key #3 (or #1 when that key was
-                    // never generated). The port has no key-locked container, so the loot becomes a chest
-                    // and the lock - GT6's only use of a key in this cell - is skipped.
+                    // GT6 :69 is its Key Locked Safe (3010), opened with key #3 or, when absent, key #1.
                     data.safe(12, 1, 8, LOOT, data.keyIds[data.generatedKeys[2] ? 2 : 0], true);
 
                     data.coins(12, 2, 8);

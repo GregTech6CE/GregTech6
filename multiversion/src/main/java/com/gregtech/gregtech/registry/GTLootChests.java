@@ -24,13 +24,13 @@ import java.util.List;
  * keeps a consumed-loot marker on dropped chest items to prevent rerolls after replacement.
  * The labels are GT6's own ({@code LH.java} {@code loot.*} entries).</p>
  *
- * <p>{@code gt.matdicts} is not offered: its rows are the material dictionary books, which the port
- * builds from material data at runtime and therefore does not register (see §21).</p>
+ * <p>{@code gt.matdicts} is included; GTLootTables builds its material dictionary entries from
+ * registered material data at runtime.</p>
  */
 public final class GTLootChests {
 
     /**
-     * {@code suffix|table} — GT6's {@code ST.LOOT_TABLES} order, minus {@code gt.matdicts}. The table is
+     * {@code suffix|table} — the shared configurable loot-chest catalogue. The table is
      * the key {@code GTLootTables} uses: GT's own tables by name, the vanilla categories as
      * {@code van.<ChestGenHooks constant>} (that is how the loot transpiler emits the rows GT6 added to
      * the vanilla chest tables, §21).

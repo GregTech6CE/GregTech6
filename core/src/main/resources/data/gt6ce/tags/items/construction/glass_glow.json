@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:glass_glow",
+    "gt6ce:glass_glow_white",
+    "gt6ce:glass_glow_orange",
+    "gt6ce:glass_glow_magenta",
+    "gt6ce:glass_glow_light_blue",
+    "gt6ce:glass_glow_yellow",
+    "gt6ce:glass_glow_lime",
+    "gt6ce:glass_glow_pink",
+    "gt6ce:glass_glow_gray",
+    "gt6ce:glass_glow_light_gray",
+    "gt6ce:glass_glow_cyan",
+    "gt6ce:glass_glow_purple",
+    "gt6ce:glass_glow_blue",
+    "gt6ce:glass_glow_brown",
+    "gt6ce:glass_glow_green",
+    "gt6ce:glass_glow_red",
+    "gt6ce:glass_glow_black"
+  ]
+}

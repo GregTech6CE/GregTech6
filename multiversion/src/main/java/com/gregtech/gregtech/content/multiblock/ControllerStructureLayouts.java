@@ -6,8 +6,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import java.util.*;
 
-/** Existing controller geometry shared by validation and JEI while their GT6 behavior is being completed.
- * Unspecified cells retain their existing unconstrained semantics, rather than pretending they require air. */
+/** Controller preview geometry; validation and tool building belong to each controller implementation. */
 public final class ControllerStructureLayouts {
     private ControllerStructureLayouts() {}
     private static final class Registered {
@@ -102,23 +101,8 @@ public final class ControllerStructureLayouts {
     /** GT6 17996: 41 base walls, a five-coil pole and the dense steel crown. */
     private static Map<BlockPos,Block> vonDaGraagg() {
         var cells = new LinkedHashMap<BlockPos,Block>();
-        for (int x = -2; x <= 2; x++) for (int z = -2; z <= 2; z++) {
-            if (Math.abs(x * z) >= 4) continue;
-            for (int y = 0; y <= 1; y++) {
-                if (x == 0 && y == 0 && z == 0) continue;
-                cells.put(new BlockPos(x, y, z), LargeMachineParts.block(18028));
-            }
-        }
-        for (int y = 2; y <= 6; y++) cells.put(new BlockPos(0, y, 0), LargeMachineParts.block(18040));
-        cells.put(new BlockPos(0, 7, 0), LargeMachineParts.block(18029));
-        for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) {
-            if (x == 0 && z == 0) continue;
-            cells.put(new BlockPos(x, 6, z), LargeMachineParts.block(18029));
-            if (x * z == 0) {
-                cells.put(new BlockPos(x, 5, z), LargeMachineParts.block(18029));
-                cells.put(new BlockPos(x, 7, z), LargeMachineParts.block(18029));
-            }
-        }
+        for (var cell : VonDaGraaggRules.layout())
+            cells.put(new BlockPos(cell.x(), cell.y(), cell.z()), LargeMachineParts.block(cell.partId()));
         return Map.copyOf(cells);
     }
 }

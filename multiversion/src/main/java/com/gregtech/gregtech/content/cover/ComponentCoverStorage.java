@@ -22,35 +22,68 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
-/** Cover state for native GT inventories/tanks which previously lacked cover slots. */
+/**
+ * Cover state for native GT inventories/tanks which previously lacked cover slots.
+ * Generic attachment does not yet reproduce each original host's forbidden faces
+ * (for example the drawer front, ALIGN-139).
+ */
 public final class ComponentCoverStorage {
     private final PanelCoverHost host;
     private ItemStack[] covers;
     private final PanelCoverRuntime panels;
-    public ComponentCoverStorage(PanelCoverHost host) { this.host=host;panels=new PanelCoverRuntime(host); }
-    public PanelCoverRuntime panels() { return panels; }
-    public boolean hasCovers() { if(covers!=null)for(var stack:covers)if(!stack.isEmpty())return true;return false; }
-    public ItemStack get(Direction side) { return covers==null?ItemStack.EMPTY:covers[side.ordinal()]; }
+    public ComponentCoverStorage(PanelCoverHost host) {
+        this.host = host;
+        panels = new PanelCoverRuntime(host);
+    }
+
+    public PanelCoverRuntime panels() {
+        return panels;
+    }
+
+    public boolean hasCovers() {
+        if (covers != null) for (var stack : covers) if (!stack.isEmpty()) return true;
+        return false;
+    }
+
+    public ItemStack get(Direction side) {
+        return covers == null ? ItemStack.EMPTY : covers[side.ordinal()];
+    }
+
     public boolean attach(Direction side, ItemStack stack) {
         if (stack.isEmpty() || !get(side).isEmpty() || !panels.canAttach(side,stack)
                 || !CoverItems.isCover(stack)) return false;
-        if(covers==null){covers=new ItemStack[6];java.util.Arrays.fill(covers,ItemStack.EMPTY);}
-        covers[side.ordinal()]=stack.copyWithCount(1);panels.attached(side);return true;
+        if (covers == null) {
+            covers = new ItemStack[6];
+            java.util.Arrays.fill(covers, ItemStack.EMPTY);
+        }
+        covers[side.ordinal()] = stack.copyWithCount(1);
+        panels.attached(side);
+        return true;
     }
+
     public ItemStack remove(Direction side) {
-        var stack=get(side);if(stack.isEmpty())return stack;
-        covers[side.ordinal()]=ItemStack.EMPTY;return panels.removed(side,stack);
+        var stack = get(side);
+        if (stack.isEmpty()) return stack;
+        covers[side.ordinal()] = ItemStack.EMPTY;
+        return panels.removed(side, stack);
     }
+
     public void tick() {
-        if(covers==null)return;
+        if (covers == null) return;
         panels.beforeTick();
-        for(var side:Direction.values())ComponentCoverRuntime.tick(host,side,host.coverOwner().getLevel().getGameTime());
+        for (var side : Direction.values())
+            ComponentCoverRuntime.tick(host, side, host.coverOwner().getLevel().getGameTime());
         panels.afterTick();
     }
+
     public void drop() {
-        if(covers==null)return;
-        if(CoverDrops.retained(host.coverOwner())){java.util.Arrays.fill(covers,ItemStack.EMPTY);return;}
-        for(var side:Direction.values())com.gregtech.gregtech.api.inventory.BlockContents.drop(host.coverOwner(),remove(side));
+        if (covers == null) return;
+        if (CoverDrops.retained(host.coverOwner())) {
+            java.util.Arrays.fill(covers, ItemStack.EMPTY);
+            return;
+        }
+        for (var side : Direction.values())
+            com.gregtech.gregtech.api.inventory.BlockContents.drop(host.coverOwner(), remove(side));
     }
 //? if >=1.21.1 {
     /*public void save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {

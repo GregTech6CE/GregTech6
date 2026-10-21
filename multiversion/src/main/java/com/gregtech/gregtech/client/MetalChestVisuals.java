@@ -14,11 +14,14 @@ import net.minecraft.resources.ResourceLocation;
 
 /** GT6 MultiTileEntityChest's legacy 64x64 layout, shared by the block and its inventory item. */
 final class MetalChestVisuals {
-    private static final java.util.Map<com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell, ResourceLocation[]> TEXTURES = new java.util.EnumMap<>(com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell.class);
+    private static final java.util.Map<com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell,
+            ResourceLocation[]> TEXTURES =
+            new java.util.EnumMap<>(com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell.class);
     static {
         for (var shell : com.gregtech.gregtech.block.inventory.MetalChestBlock.Shell.values()) {
             String path = "textures/block/machines/" + shell.texture() + "/";
-            TEXTURES.put(shell, new ResourceLocation[]{ResourceLocation.fromNamespaceAndPath("gt6ce", path + "colored.png"),
+            TEXTURES.put(shell, new ResourceLocation[]{
+                    ResourceLocation.fromNamespaceAndPath("gt6ce", path + "colored.png"),
                     ResourceLocation.fromNamespaceAndPath("gt6ce", path + "overlay.png")});
         }
     }
@@ -37,7 +40,8 @@ final class MetalChestVisuals {
         return LayerDefinition.create(mesh, 64, 64);
     }
 
-    void render(Direction facing, com.gregtech.gregtech.block.inventory.MetalChestBlock block, float open, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
+    void render(Direction facing, com.gregtech.gregtech.block.inventory.MetalChestBlock block,
+                float open, PoseStack pose, MultiBufferSource buffers, int light, int overlay) {
         int color = block.material().getColor();
         var textures = TEXTURES.get(block.shell());
         float angle = -(1 - (float) Math.pow(1 - open, 3)) * (float) Math.PI / 2;
@@ -51,11 +55,12 @@ final class MetalChestVisuals {
         pose.scale(1, -1, -1);
         root.render(pose, buffers.getBuffer(RenderType.entityCutout(textures[0])), light, overlay,
 //? if >=1.21.1 {
-                /*0xFF000000|color);
+                /*0xFF000000 | color);
         root.render(pose, buffers.getBuffer(RenderType.entityCutout(textures[1])), light, overlay, -1);
 *///?} else {
                 ((color >> 16) & 255) / 255F, ((color >> 8) & 255) / 255F, (color & 255) / 255F, 1F);
-        root.render(pose, buffers.getBuffer(RenderType.entityCutout(textures[1])), light, overlay, 1F, 1F, 1F, 1F);
+        root.render(pose, buffers.getBuffer(RenderType.entityCutout(textures[1])),
+                light, overlay, 1F, 1F, 1F, 1F);
 //?}
         pose.popPose();
     }

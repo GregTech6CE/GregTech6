@@ -1,4 +1,5 @@
 package com.gregtech.gregtech.registry;
+
 import com.gregtech.gregtech.block.plant.BushBlock;
 import com.gregtech.gregtech.content.plant.BerryBushCatalog;
 import net.minecraft.world.item.*;
@@ -16,28 +17,42 @@ import java.util.*;
 public final class GTBushes {
     private GTBushes() {}
 //? if >=1.21.1 {
-    /*private static final Map<String,DeferredHolder<Block,BushBlock>> VARIANTS=new LinkedHashMap<>();
-    public static final DeferredHolder<Block,BushBlock> BUSH=register("bush", "");
+    /*private static final Map<String, DeferredHolder<Block, BushBlock>> VARIANTS = new LinkedHashMap<>();
+    public static final DeferredHolder<Block, BushBlock> BUSH = register("bush", "");
 *///?} else {
-    private static final Map<String,RegistryObject<BushBlock>> VARIANTS=new LinkedHashMap<>();
-    public static final RegistryObject<BushBlock> BUSH=register("bush", "");
+    private static final Map<String, RegistryObject<BushBlock>> VARIANTS = new LinkedHashMap<>();
+    public static final RegistryObject<BushBlock> BUSH = register("bush", "");
 //?}
+
     static {
-        for(var type:BerryBushCatalog.worldgenTypes()) register(BerryBushCatalog.blockPath(type.id()),type.id());
-        for(var type:com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants()) register(type.blockPath(),type.berryItemId());
+        for (var type : BerryBushCatalog.worldgenTypes())
+            register(BerryBushCatalog.blockPath(type.id()), type.id());
+        for (var type : com.gregtech.gregtech.content.plant.MaterialBerryBushCatalog.variants())
+            register(type.blockPath(), type.berryItemId());
     }
+
 //? if >=1.21.1 {
-    /*private static DeferredHolder<Block,BushBlock> register(String path,String berry) {
+    /*private static DeferredHolder<Block, BushBlock> register(String path, String berry) {
 *///?} else {
-    private static RegistryObject<BushBlock> register(String path,String berry) {
+    private static RegistryObject<BushBlock> register(String path, String berry) {
 //?}
-        var block=GTBlocks.BLOCKS.register(path,()->new BushBlock(berry,BlockBehaviour.Properties.of()
+        var block = GTBlocks.BLOCKS.register(path, () -> new BushBlock(berry, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.PLANT).strength(.2f).sound(SoundType.GRASS).noOcclusion().instabreak()));
-        VARIANTS.put(path,block);return block;
+        VARIANTS.put(path, block);
+        return block;
     }
+
     public static BushBlock byBerry(String berry) {
-        var entry=VARIANTS.get(BerryBushCatalog.blockPath(berry));return entry==null?null:entry.get();
+        var entry = VARIANTS.get(BerryBushCatalog.blockPath(berry));
+        return entry == null ? null : entry.get();
     }
-    public static Block[] allBlocks() { return VARIANTS.values().stream().map(e->(Block)e.get()).toArray(Block[]::new); }
-    public static void registerAll() { VARIANTS.forEach((path,block)->GTBlocks.BLOCK_ITEMS.register(path,()->new com.gregtech.gregtech.item.BushBlockItem(block.get(),new Item.Properties()))); }
+
+    public static Block[] allBlocks() {
+        return VARIANTS.values().stream().map(e -> (Block) e.get()).toArray(Block[]::new);
+    }
+
+    public static void registerAll() {
+        VARIANTS.forEach((path, block) -> GTBlocks.BLOCK_ITEMS.register(path,
+                () -> new com.gregtech.gregtech.item.BushBlockItem(block.get(), new Item.Properties())));
+    }
 }

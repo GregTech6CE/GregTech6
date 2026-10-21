@@ -18,6 +18,7 @@
  */
 
 package com.gregtech.gregtech.client;
+
 import com.gregtech.gregtech.content.cover.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -34,33 +35,51 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.api.distmarker.Dist;
 //?}
 
-/** Source cover faces for ticking native GT hosts without a dedicated cover renderer. */
+/** Cover rendering for native GT hosts tracked by the fallback lifecycle. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid=com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.CLIENT)
+/*@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 *///?} else {
-@Mod.EventBusSubscriber(modid=com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,value=Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, value = Dist.CLIENT)
 //?}
 public final class ComponentCoverFallbackRenderer {
-    private ComponentCoverFallbackRenderer() {}
-    public static void receive(com.gregtech.gregtech.network.PacketSyncComponentCovers packet){
-        var level=Minecraft.getInstance().level;if(level==null||!level.hasChunkAt(packet.pos()))return;
-        var owner=level.getBlockEntity(packet.pos());
+
+    private ComponentCoverFallbackRenderer() {
+    }
+
+    public static void receive(com.gregtech.gregtech.network.PacketSyncComponentCovers packet) {
+        var level = Minecraft.getInstance().level;
+        if (level == null || !level.hasChunkAt(packet.pos())) return;
+        var owner = level.getBlockEntity(packet.pos());
 //? if >=1.21.1 {
-        /*if(owner!=null&&packet.entityType().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType())))ComponentCoverFallback.read(owner,packet.tag(),level.registryAccess());
+        /*if (owner != null && packet.entityType().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
+                owner.getType()))) ComponentCoverFallback.read(owner, packet.tag(), level.registryAccess());
 *///?} else {
-        if(owner!=null&&packet.type().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(owner.getType())))ComponentCoverFallback.read(owner,packet.tag());
+        if (owner != null && packet.type().equals(net.minecraft.core.registries.BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(
+                owner.getType()))) ComponentCoverFallback.read(owner, packet.tag());
 //?}
     }
-    @SubscribeEvent public static void render(RenderLevelStageEvent event){
-        if(event.getStage()!=RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES)return;
-        var minecraft=Minecraft.getInstance();var level=minecraft.level;if(level==null)return;
-        var camera=event.getCamera().getPosition();var pose=event.getPoseStack();var buffers=minecraft.renderBuffers().bufferSource();
-        for(var owner:ComponentCoverFallback.active()){
-            if(owner.getLevel()!=level||owner.isRemoved()||!event.getFrustum().isVisible(new net.minecraft.world.phys.AABB(owner.getBlockPos())))continue;
-            var pos=owner.getBlockPos();pose.pushPose();pose.translate(pos.getX()-camera.x,pos.getY()-camera.y,pos.getZ()-camera.z);
-            int light=LevelRenderer.getLightColor(level,pos);var host=(PanelCoverHost)owner;
-            for(var side:Direction.values())PanelCoverRenderer.renderFace(host,side,pose,buffers,light);
-            if(owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)LogisticsCoverRenderer.renderFaces(owner,logistics,pose,buffers,light);
+
+    @SubscribeEvent
+    public static void render(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) return;
+        var minecraft = Minecraft.getInstance();
+        var level = minecraft.level;
+        if (level == null) return;
+        var camera = event.getCamera().getPosition();
+        var pose = event.getPoseStack();
+        var buffers = minecraft.renderBuffers().bufferSource();
+        for (var owner : ComponentCoverFallback.active()) {
+            if (owner.getLevel() != level || owner.isRemoved()
+                    || !event.getFrustum().isVisible(new net.minecraft.world.phys.AABB(owner.getBlockPos()))) continue;
+            var pos = owner.getBlockPos();
+            pose.pushPose();
+            pose.translate(pos.getX() - camera.x, pos.getY() - camera.y, pos.getZ() - camera.z);
+            int light = LevelRenderer.getLightColor(level, pos);
+            var host = (PanelCoverHost) owner;
+            for (var side : Direction.values())
+                PanelCoverRenderer.renderFace(host, side, pose, buffers, light);
+            if (owner instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost logistics)
+                LogisticsCoverRenderer.renderFaces(owner, logistics, pose, buffers, light);
             pose.popPose();
         }
     }

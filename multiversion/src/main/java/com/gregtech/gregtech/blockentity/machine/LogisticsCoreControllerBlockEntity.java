@@ -11,7 +11,6 @@ import com.gregtech.gregtech.content.logistics.LogisticsHost;
 import com.gregtech.gregtech.content.logistics.LogisticsCoverHost;
 import com.gregtech.gregtech.content.logistics.LogisticsCovers;
 import com.gregtech.gregtech.content.logistics.LogisticsCoverType;
-import com.gregtech.gregtech.content.logistics.LogisticsCoverHost;
 import com.gregtech.gregtech.content.logistics.LogisticsCpuDisplay;
 import com.gregtech.gregtech.content.logistics.LogisticsNetwork;
 import com.gregtech.gregtech.content.logistics.LogisticsCoreStructure;
@@ -37,25 +36,30 @@ import java.util.List;
 
 /** GT6 Logistics Core structure, EU input, network discovery and private 108-slot buffers. */
 public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntity
-        implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
+implements MultiblockPortOwner, LogisticsCoverHost, BlockContents {
     public static final int BUFFER_SLOTS = LogisticsCoreStructure.MAX_STORAGE_CPU_COUNT;
     public static final int TANK_CAPACITY = 16_000;
     private final PartBindings<BlockPos, MultiblockLayout.Role> bindings = new PartBindings<>();
     private final ItemStackHandler items = new ItemStackHandler(BUFFER_SLOTS) {
-        @Override protected void onContentsChanged(int slot) { setChanged(); }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
     };
     private final FluidTankGT[] tanks = makeTanks();
     private final LogisticsCovers covers = new LogisticsCovers(this, this);
     private LogisticsCoreStructure.Counts processors;
     private LogisticsNetwork.Snapshot network = LogisticsNetwork.Snapshot.empty();
-    /** GT6 oCPU_*: usage from the most recent powered one-second pass. */
+
+    /** Usage at the latest one-second gate; an unpowered pass resets it. */
     private LogisticsCpuDisplay.Usage usedProcessors = LogisticsCpuDisplay.Usage.ZERO;
     private long energy;
 
     private FluidTankGT[] makeTanks() {
         var result = new FluidTankGT[BUFFER_SLOTS];
         for (int i = 0; i < result.length; i++)
-            result[i] = new FluidTankGT(TANK_CAPACITY).setOnChanged(this::setChanged);
+        result[i] = new FluidTankGT(TANK_CAPACITY).setOnChanged(this::setChanged);
         return result;
     }
 
@@ -63,7 +67,8 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         super(GTBlockEntities.LOGISTICS_CORE.get(), pos, state);
     }
 
-    @Override public boolean isStructureOk() {
+    @Override
+    public boolean isStructureOk() {
         if (level == null || isRemoved()) return false;
         Direction front = getBlockState().getValue(LogisticsCoreControllerBlock.FACING);
         LogisticsCoreStructure.Counts found = LogisticsCoreStructure.counts(level, worldPosition, front);
@@ -81,7 +86,7 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         }
         if (!level.isClientSide && !bindings.update(candidates,
                 pos -> level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part
-                        && part.canBind(worldPosition),
+                && part.canBind(worldPosition),
                 (pos, role) -> ((MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::releasePart)) return unbind();
         processors = found;
@@ -98,39 +103,41 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
     private void releasePart(BlockPos pos) {
         if (level != null && level.hasChunkAt(pos)
                 && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part)
-            part.release(worldPosition);
+        part.release(worldPosition);
     }
 
-    @Override public void setRemoved() {
+    @Override
+    public void setRemoved() {
         unbind();
         super.setRemoved();
     }
 
-    @Override public void onChunkUnloaded() {
+    @Override
+    public void onChunkUnloaded() {
         unbind();
         super.onChunkUnloaded();
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state,
-                                  LogisticsCoreControllerBlockEntity core) {
-        core.isStructureOk();
+            LogisticsCoreControllerBlockEntity controller) {
+        controller.isStructureOk();
         // GT6 routes once per second, but charges standby power on every server tick (:504).
         if (level.getGameTime() % 20 == 0) {
-        LogisticsCpuDisplay.Usage previous = core.usedProcessors;
-        core.usedProcessors = LogisticsCpuDisplay.Usage.ZERO;
-        if (core.processors != null && core.energy >= core.processors.routingThreshold()) {
-            core.scanNetwork();
-            core.updateDisplays(previous);
-            core.routeNetworkOnce(true);
+            LogisticsCpuDisplay.Usage previous = controller.usedProcessors;
+            controller.usedProcessors = LogisticsCpuDisplay.Usage.ZERO;
+            if (controller.processors != null && controller.energy >= controller.processors.routingThreshold()) {
+                controller.scanNetwork();
+                controller.updateDisplays(previous);
+                controller.routeNetworkOnce(true);
+            }
+            else controller.network = LogisticsNetwork.Snapshot.empty();
+            if (!previous.equals(controller.usedProcessors)) controller.setChanged();
         }
-        else core.network = LogisticsNetwork.Snapshot.empty();
-        if (!previous.equals(core.usedProcessors)) core.setChanged();
-        }
-        long cost = core.processors == null ? 20 : core.processors.fixedEnergyPerTick();
-        long next = Math.max(0, core.energy - cost);
-        if (next != core.energy) {
-            core.energy = next;
-            core.setChanged();
+        long cost = controller.processors == null ? 20 : controller.processors.fixedEnergyPerTick();
+        long next = Math.max(0, controller.energy - cost);
+        if (next != controller.energy) {
+            controller.energy = next;
+            controller.setChanged();
         }
     }
 
@@ -138,7 +145,7 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         return isStructureOk() ? processors : null;
     }
 
-    /** Explicit read-only discovery for W3 routing; the per-second tick also updates this snapshot. */
+    /** Refresh discovery after validating and binding the structure; also called by the per-second tick. */
     public LogisticsNetwork.Snapshot scanNetwork() {
         if (!isStructureOk()) return network;
         network = LogisticsNetwork.scan(level, worldPosition,
@@ -147,7 +154,7 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         return network;
     }
 
-    /** Fluid and item routes share the same logic-CPU passes and one-second gate. */
+    /** Runs one shared fluid/item pass; the normal server ticker supplies the one-second cadence. */
     public LogisticsRoutingPass.Result routeNetworkOnce() {
         return routeNetworkOnce(false);
     }
@@ -204,70 +211,167 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         }
     }
 
-    public LogisticsCpuDisplay.Usage usedProcessorCounts() { return usedProcessors; }
+    public LogisticsCpuDisplay.Usage usedProcessorCounts() {
+        return usedProcessors;
+    }
 
-    public LogisticsNetwork.Snapshot networkSnapshot() { return network; }
-    public ItemStackHandler bufferItems() { return items; }
-    public FluidTankGT bufferTank(int slot) { return tanks[slot]; }
-    public int bufferTankCount() { return tanks.length; }
-    @Override public boolean canLogistics(Direction side) { return !isRemoved(); }
-    @Override public LogisticsCovers logisticsCovers() { return covers; }
+    public LogisticsNetwork.Snapshot networkSnapshot() {
+        return network;
+    }
 
-    public long storedEU() { return energy; }
+    public ItemStackHandler bufferItems() {
+        return items;
+    }
+
+    public FluidTankGT bufferTank(int slot) {
+        return tanks[slot];
+    }
+
+    public int bufferTankCount() {
+        return tanks.length;
+    }
+
+    @Override
+    public boolean canLogistics(Direction side) {
+        return !isRemoved();
+    }
+
+    @Override
+    public LogisticsCovers logisticsCovers() {
+        return covers;
+    }
+
+    public long storedEU() {
+        return energy;
+    }
 
     /** Original doInject accepts EU on every controller face as well as the bound walls. */
-    @Override public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) { return List.of(GregTechTags.Energy.EU); }
-    @Override public boolean isEnergyType(GregTechTags.Tag type, Direction side, boolean emitting) { return !emitting && type == GregTechTags.Energy.EU; }
-    @Override public boolean isEnergyAcceptingFrom(GregTechTags.Tag type, Direction side, boolean theoretical) { return isEnergyType(type, side, false); }
-    @Override public boolean isEnergyEmittingTo(GregTechTags.Tag type, Direction side, boolean theoretical) { return false; }
-    @Override public long getEnergyDemanded(GregTechTags.Tag type, Direction side, long size) { return type == GregTechTags.Energy.EU ? 1024 : 0; }
-    @Override public long getEnergyOffered(GregTechTags.Tag type, Direction side, long size) { return 0; }
-    @Override public long getEnergySizeInputMin(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.EU ? 256 : 0; }
-    @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.EU ? 512 : 0; }
-    @Override public long getEnergySizeInputMax(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.EU ? 1024 : 0; }
-    @Override public long getEnergySizeOutputRecommended(GregTechTags.Tag type, Direction side) { return 0; }
-    @Override public long getEnergyStored(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.EU ? energy : 0; }
-    @Override public long getEnergyCapacity(GregTechTags.Tag type, Direction side) { return type == GregTechTags.Energy.EU ? energyCapacity() : 0; }
-    private long energyCapacity() { return processors == null ? 128 : processors.energyCapacity(); }
-    @Override public long doInject(GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
+    @Override
+    public Collection<GregTechTags.Tag> getEnergyTypes(Direction side) {
+        return List.of(GregTechTags.Energy.EU);
+    }
+
+    @Override
+    public boolean isEnergyType(GregTechTags.Tag type, Direction side, boolean emitting) {
+        return !emitting && type == GregTechTags.Energy.EU;
+    }
+
+    @Override
+    public boolean isEnergyAcceptingFrom(GregTechTags.Tag type, Direction side, boolean theoretical) {
+        return isEnergyType(type, side, false);
+    }
+
+    @Override
+    public boolean isEnergyEmittingTo(GregTechTags.Tag type, Direction side, boolean theoretical) {
+        return false;
+    }
+
+    @Override
+    public long getEnergyDemanded(GregTechTags.Tag type, Direction side, long size) {
+        return type == GregTechTags.Energy.EU ? 1024 : 0;
+    }
+
+    @Override
+    public long getEnergyOffered(GregTechTags.Tag type, Direction side, long size) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergySizeInputMin(GregTechTags.Tag type, Direction side) {
+        return type == GregTechTags.Energy.EU ? 256 : 0;
+    }
+
+    @Override
+    public long getEnergySizeInputRecommended(GregTechTags.Tag type, Direction side) {
+        return type == GregTechTags.Energy.EU ? 512 : 0;
+    }
+
+    @Override
+    public long getEnergySizeInputMax(GregTechTags.Tag type, Direction side) {
+        return type == GregTechTags.Energy.EU ? 1024 : 0;
+    }
+
+    @Override
+    public long getEnergySizeOutputRecommended(GregTechTags.Tag type, Direction side) {
+        return 0;
+    }
+
+    @Override
+    public long getEnergyStored(GregTechTags.Tag type, Direction side) {
+        return type == GregTechTags.Energy.EU ? energy : 0;
+    }
+
+    @Override
+    public long getEnergyCapacity(GregTechTags.Tag type, Direction side) {
+        return type == GregTechTags.Energy.EU ? energyCapacity() : 0;
+    }
+
+    private long energyCapacity() {
+        return processors == null ? 128 : processors.energyCapacity();
+    }
+
+    @Override
+    public long doInject(GregTechTags.Tag type, Direction side, long size, long amount, boolean execute) {
         if (type != GregTechTags.Energy.EU) return 0;
         isStructureOk();
         return injectEU(size, amount, execute);
     }
 
-    @Override public IFluidHandler portFluids(MultiblockLayout.Role role) { return null; }
-    @Override public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role) {
+    @Override
+    public IFluidHandler portFluids(MultiblockLayout.Role role) {
+        return null;
+    }
+
+    @Override
+    public Collection<GregTechTags.Tag> portEnergyTypes(MultiblockLayout.Role role) {
         return role == MultiblockLayout.Role.ENERGY_INPUT ? List.of(GregTechTags.Energy.EU) : List.of();
     }
-    @Override public long portEnergyInputMin(MultiblockLayout.Role role, GregTechTags.Tag type) {
+
+    @Override
+    public long portEnergyInputMin(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return acceptsEU(role, type) ? 256 : 0;
     }
-    @Override public long portEnergyInputRecommended(MultiblockLayout.Role role, GregTechTags.Tag type) {
+
+    @Override
+    public long portEnergyInputRecommended(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return acceptsEU(role, type) ? 512 : 0;
     }
-    @Override public long portEnergyInputMax(MultiblockLayout.Role role, GregTechTags.Tag type) {
+
+    @Override
+    public long portEnergyInputMax(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return acceptsEU(role, type) ? 1024 : 0;
     }
-    @Override public long portEnergyStored(MultiblockLayout.Role role, GregTechTags.Tag type) {
+
+    @Override
+    public long portEnergyStored(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return acceptsEU(role, type) ? energy : 0;
     }
-    @Override public long portEnergyCapacity(MultiblockLayout.Role role, GregTechTags.Tag type) {
+
+    @Override
+    public long portEnergyCapacity(MultiblockLayout.Role role, GregTechTags.Tag type) {
         return acceptsEU(role, type) && processors != null ? processors.energyCapacity() : 0;
     }
-    @Override public long portEnergyDemanded(MultiblockLayout.Role role, GregTechTags.Tag type, long size) {
-        // GT6 getEnergyDemanded returns a fixed 1024 packets, even near its nominal capacity.
+
+    @Override
+    public long portEnergyDemanded(MultiblockLayout.Role role, GregTechTags.Tag type, long size) {
+        // GT6 getEnergyDemanded returns the fixed value 1024, even near its nominal capacity.
         return acceptsEU(role, type) && size > 0 && processors != null ? 1024 : 0;
     }
-    @Override public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type,
-                                           long size, long amount, boolean execute) {
-        if(!acceptsEU(role,type)||!isStructureOk())return 0;
+
+    @Override
+    public long injectPortEnergy(MultiblockLayout.Role role, GregTechTags.Tag type,
+            long size, long amount, boolean execute) {
+        if (!acceptsEU(role, type) || !isStructureOk()) return 0;
         return injectEU(size, amount, execute);
     }
 
     private long injectEU(long size, long amount, boolean execute) {
-        var plan=com.gregtech.gregtech.content.logistics.LogisticsCorePowerRules.inject(energy,energyCapacity(),size,amount,execute);
-        if(plan.explode())com.gregtech.gregtech.api.energy.MachineOverload.explode(this,6);
-        else if(execute&&plan.accepted()>0){energy=plan.energy();setChanged();}
+        var plan = com.gregtech.gregtech.content.logistics.LogisticsCorePowerRules.inject(energy, energyCapacity(), size, amount, execute);
+        if (plan.explode()) com.gregtech.gregtech.api.energy.MachineOverload.explode(this, 6);
+        else if (execute && plan.accepted() > 0) {
+            energy = plan.energy();
+            setChanged();
+        }
         return plan.accepted();
     }
 
@@ -276,16 +380,18 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
     }
 
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) {
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
         tag.putLong("gt.energy", energy);
 //? if >=1.21.1 {
         /*tag.put("gt.items", items.serializeNBT(lookup));
-        covers.save(tag,lookup);
+        covers.save(tag, lookup);
 *///?} else {
         tag.put("gt.items", items.serializeNBT());
         covers.save(tag);
@@ -294,7 +400,7 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
             if (tanks[i].isEmpty()) continue;
             var saved = new CompoundTag();
 //? if >=1.21.1 {
-            /*tanks[i].writeToNBT(saved,lookup);
+            /*tanks[i].writeToNBT(saved, lookup);
 *///?} else {
             tanks[i].writeToNBT(saved);
 //?}
@@ -313,10 +419,12 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
     }
 
 //? if >=1.21.1 {
-    /*@Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*@Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
-    @Override public void load(CompoundTag tag) {
+    @Override
+    public void load(CompoundTag tag) {
         super.load(tag);
 //?}
         energy = Math.max(0, tag.getLong("gt.energy"));
@@ -326,20 +434,20 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
                 Math.max(0, tag.getInt("gt.cpu.storage.used")),
                 Math.max(0, tag.getInt("gt.cpu.conversion.used")));
 //? if >=1.21.1 {
-        /*covers.load(tag,lookup);
+        /*covers.load(tag, lookup);
 *///?} else {
         covers.load(tag);
 //?}
         if (tag.contains("gt.items") && tag.getCompound("gt.items").getInt("Size") == BUFFER_SLOTS)
 //? if >=1.21.1 {
-            /*items.deserializeNBT(lookup,tag.getCompound("gt.items"));
+        /*items.deserializeNBT(lookup, tag.getCompound("gt.items"));
 *///?} else {
-            items.deserializeNBT(tag.getCompound("gt.items"));
+        items.deserializeNBT(tag.getCompound("gt.items"));
 //?}
         for (int i = 0; i < tanks.length; i++) {
             String key = "gt.tank." + i;
 //? if >=1.21.1 {
-            /*if (tag.contains(key)) tanks[i].readFromNBT(tag.getCompound(key),lookup);
+            /*if (tag.contains(key)) tanks[i].readFromNBT(tag.getCompound(key), lookup);
 *///?} else {
             if (tag.contains(key)) tanks[i].readFromNBT(tag.getCompound(key));
 //?}
@@ -351,7 +459,8 @@ public final class LogisticsCoreControllerBlockEntity extends GTEnergyBlockEntit
         network = LogisticsNetwork.Snapshot.empty();
     }
 
-    @Override public void dropContents() {
+    @Override
+    public void dropContents() {
         if (level == null || level.isClientSide) return;
         BlockContents.drop(this, items);
         covers.dropAll();

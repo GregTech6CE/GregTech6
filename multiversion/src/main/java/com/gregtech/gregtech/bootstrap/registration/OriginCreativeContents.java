@@ -147,6 +147,7 @@ public final class OriginCreativeContents {
             return source==null?Integer.MAX_VALUE:source.order();
         }).thenComparingInt(item->item instanceof CanvasItem canvas?canvas.variant().originalId():Integer.MAX_VALUE).thenComparing(item->BuiltInRegistries.ITEM.getKey(item).getPath()));
         for(var item:items) {
+            if (item instanceof BlockItem construction && com.gregtech.gregtech.registry.GTConstructionVariants.legacy(construction.getBlock())) continue;
             if(item instanceof com.gregtech.gregtech.item.PanelItemView panel&&!panel.panelSpec().canonical())continue;
             var page=result.get(family(item));
             if(item instanceof GTToolItem tool) {
@@ -156,6 +157,8 @@ public final class OriginCreativeContents {
                 page.add(electric.assembled(com.gregtech.gregtech.content.material.Materials.Steel,electric.getEnergyCapacity(new ItemStack(item),com.gregtech.gregtech.data.GregTechTags.Energy.EU)));
             } else if(item instanceof ChemicalBatteryItem battery) {
                 page.add(new ItemStack(item));var charged=new ItemStack(item);battery.setCharge(charged,battery.spec().capacity());page.add(charged);
+            } else if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor) {
+                page.add(new ItemStack(item));
             } else if(item instanceof BlockItem b && (b.getBlock() instanceof com.gregtech.gregtech.block.misc.ConcreteBlock||b.getBlock() instanceof com.gregtech.gregtech.block.misc.ColoredConstructionBlock)) {
                 for(int meta=0;meta<16;meta++)page.add(com.gregtech.gregtech.block.misc.ConcreteBlock.coloredItem(b.getBlock(),DyeColor.byId(15-meta)));
             } else if(item instanceof BlockItem b && b.getBlock() instanceof com.gregtech.gregtech.block.misc.ColoredGlassBlock) {

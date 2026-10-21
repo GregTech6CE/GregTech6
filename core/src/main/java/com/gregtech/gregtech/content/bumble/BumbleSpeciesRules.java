@@ -1,7 +1,8 @@
 package com.gregtech.gregtech.content.bumble;
+
 /** Original20 species combinations, mutation and comb probabilities. */
 public final class BumbleSpeciesRules {
- private BumbleSpeciesRules(){}
+    private BumbleSpeciesRules() {}
     private static final int[][] COMBINATIONS = {
             // case 3: Cultivated Bumblebee
             {30, 130, 10100},    // Normal + Water = Sticky
@@ -34,9 +35,41 @@ public final class BumbleSpeciesRules {
             {10530, 730, 20100}  // Frosty + Military = Cryo (reverse)
     };
 
- public static int level(int id){return (id/10)%10;}
- public static int mutationChanceForLevel(int level){return switch(level){case 0,1->500;case 2->250;case 3->25;default->0;};}
- public static int productChance(int species){return switch(level(species)){case 0->2500;case 1->5000;case 2->7500;default->10000;};}
- public static int combine(int first,int second){for(int[] entry:COMBINATIONS)if(entry[0]==first&&entry[1]==second&&GTBumbleSpecies.byId(entry[2])!=null)return entry[2];return first;}
- public static int mutatedSpecies(int id,java.util.function.BooleanSupplier random){return switch(level(id)){case 0->id+10;case 1,2->id+(random.getAsBoolean()?10:-10);case 3->id-10;default->id;};}
+    public static int level(int id) {
+        return (id / 10) % 10;
+    }
+
+    public static int mutationChanceForLevel(int level) {
+        return switch (level) {
+            case 0, 1 -> 500;
+            case 2 -> 250;
+            case 3 -> 25;
+            default -> 0;
+        };
+    }
+
+    public static int productChance(int species) {
+        return switch (level(species)) {
+            case 0 -> 2500;
+            case 1 -> 5000;
+            case 2 -> 7500;
+            default -> 10000;
+        };
+    }
+
+    public static int combine(int first, int second) {
+        for (int[] entry : COMBINATIONS)
+            if (entry[0] == first && entry[1] == second && GTBumbleSpecies.byId(entry[2]) != null)
+                return entry[2];
+        return first;
+    }
+
+    public static int mutatedSpecies(int id, java.util.function.BooleanSupplier random) {
+        return switch (level(id)) {
+            case 0 -> id + 10;
+            case 1, 2 -> id + (random.getAsBoolean() ? 10 : -10);
+            case 3 -> id - 10;
+            default -> id;
+        };
+    }
 }

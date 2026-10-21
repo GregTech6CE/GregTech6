@@ -18,4 +18,3 @@
     "facing=west,lit=true,running=true": { "model": "addon_sample:block/machine/basic/sampledetector_active", "y": 270 }
   }
 }
-

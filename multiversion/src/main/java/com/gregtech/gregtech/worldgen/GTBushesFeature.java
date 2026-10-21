@@ -23,14 +23,12 @@ import java.util.Set;
 /**
  * Port of GT6's {@code WorldgenBushes} ({@code Loader_Worldgen:633}).
  *
- * <p>GT6 plants one bush per chunk with a {@code 1/4} roll in plains and woods (never in frozen
- * biomes), picks the berry type with its value noise at {@code (x/2, 300, z/2)} modulo the number of
- * berry types, and then spreads the same bush to up to four horizontal neighbours (and attached
- * branches on each core).
+ * <p>The current feature attempts one column per chunk with a {@code 1/4} roll, checks its biome
+ * allowlist and surface, then places a ripe core, optional horizontal cores and attached branches.
  *
- * <p>The port keeps GT6's noise: {@code gregtech.worldgen.GTCellNoise} is a port of GT6's
- * {@code NoiseGenerator} including its 256-cell offset table, so the same coordinates give the same
- * berry type.
+ * <p>{@code GTCellNoise} retains the original cell algorithm and offset table. This caller uses
+ * floating-point half-coordinates, while GT6 used integer division; identical world coordinates
+ * therefore do not guarantee the same selection. Biome and surface policies are audited separately.
  */
 public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
     /** GT6 {@code new WorldgenBushes("plant.bush", T, 1, 4, ...)}. */
@@ -71,16 +69,17 @@ public class GTBushesFeature extends Feature<NoneFeatureConfiguration> {
         return placed;
     }
 
-    /** GT6's biome gate: plains and woods, never frozen. */
+    /** Current candidate-column biome allowlist, distinct from GT6's chunk-name gate. */
     public static boolean bushBiome(ResourceLocation biome) {
         if (biome == null || FROZEN.contains(biome)) return false;
         return PLAINS.contains(biome) || WOODS.contains(biome);
     }
 
-    /** GT6's berry type selection: the world noise at {@code (x/2, 300, z/2)} into the berry list. */
+    /** Current lookup uses floating-point half-coordinates and the registered worldgen list. */
     public static int berryIndex(WorldGenLevel level, int x, int z) {
         var noise = new GTCellNoise(level.getSeed());
-        return Math.floorMod(noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.worldgenSize()), GTBerryBushes.worldgenSize());
+        return Math.floorMod(noise.get(x / 2.0F, NOISE_Y, z / 2.0F, GTBerryBushes.worldgenSize()),
+                GTBerryBushes.worldgenSize());
     }
 
     static boolean placeBush(WorldGenLevel level, int x, int z, RandomSource random) {

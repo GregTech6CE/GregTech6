@@ -221,7 +221,8 @@ public class FluidPipeBlock extends Block implements EntityBlock, SimpleWaterlog
 *///?} else {
         if (level.isClientSide || type != GTBlockEntities.FLUID_PIPE.get()) return null;
 //?}
-        return (BlockEntityTicker<T>) (BlockEntityTicker<FluidPipeBlockEntity>) FluidPipeBlockEntity::serverTick;
+        return (BlockEntityTicker<T>) (BlockEntityTicker<FluidPipeBlockEntity>)
+                com.gregtech.gregtech.content.transport.fluid.FluidPipeTickPhases::enqueue;
     }
 
 //? if >=1.21.1 {
