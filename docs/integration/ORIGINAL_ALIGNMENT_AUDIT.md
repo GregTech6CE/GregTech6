@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第七十九批追喷漆材料初始色和实际物品alpha，新增271–272。行为记录至ALIGN-272，共272条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是272个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十批追清漆代理和扩展器漆色更新，新增273–274并扩132／135。行为记录至ALIGN-274，共274条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是274个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -158,10 +158,10 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
-| ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
+| ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
 | ALIGN-136 | 确认大容量存储缺少钳子取物与软锤清空入口。 | 原版分别处理背包转移／分批正面掉落及余料。 | 两版方块／实体及工具入口未补齐，提示仍列出这些操作；按钮和外部抽取不是替代，见[报告](MASS_STORAGE_CONTROL_AUDIT.md)。 |
 | ALIGN-137 | 2026-10-20 玩家反馈修复：自动下送／溢出执行已补齐。 | 位 1／4 切换、ticker、容量 +256、超额下送、底面输入门控及封装时模式切换已接入。 | NeoForge 定向运行验证真实活动扳手、下方箱子输出和溢出；其他存储工具／覆盖板问题另列，见[修复记录](verification/storage-direction-colors-20261020.md)。 |
 | ALIGN-138 | 确认大容量存储遗漏正面覆盖板门控。 | 原版任何正面覆盖板阻止普通取放，不透明板另隐藏显示。 | 普通装饰板的事件链仍 PASS 到按钮；渲染也缺可见性判断，未客户端验收，见[报告](STORAGE_COVER_BOUNDARY_AUDIT.md)。 |
@@ -299,6 +299,8 @@
 | ALIGN-270 | 确认最后一个通用覆盖板的空快照未清客户端旧槽。 | 原receiveDataCovers有null清除及零ID替换路径。 | 当前服务端最后拆下后发送空tag，两版实际read因无字段提前返回，旧槽继续参与fallback渲染；需区分完整快照与部分NBT，见[客户端](TANK_CLIENT_AUDIT.md)。 |
 | ALIGN-271 | 确认普通未喷漆材料方块的首次白漆被拒绝。 | 原class-container按材料填NBT_COLOR，殷钢17007实际DCDC96，白色paint成功。 | 当前PaintState初始／clear为FFFFFF，首次白色被相等判断拒绝；未喷漆显示仍回退材质色，不报全部变白，见[喷漆](PAINT_STATE_AUDIT.md)。 |
 | ALIGN-272 | 确认Neo喷漆物品主染色面最终alpha为0。 | 原普通BlockTextureDefault禁alpha，实际顶点提交255；Forge1.20.1相应ItemRenderer固定1。 | 正常红漆主阀保留BE数据，后置ItemPaintColorMixin清高八位，Neo实际ARGB解码及顶点乘法得到0；不泛称overlay／整物品全消失，未GPU实测，见[喷漆](PAINT_STATE_AUDIT.md)。 |
+| ALIGN-273 | 确认清漆剂未沿万能代理操作委托目标。 | 原WD.te识别ITileEntityDelegating，30255／30755的ALL模式返回出口邻格，再对目标removePaint。 | 当前PaintTargets.unpaint仅查本地；未喷漆代理后有红漆目标时，十二面向源样本原清目标、现无操作，未游戏实测，见[清漆](PAINT_TARGETS_AUDIT.md)。 |
+| ALIGN-274 | 确认八扩展器漆色漏入客户端更新tag。 | 原updateClientData全量标记由Base03发送，Base07／08包带RGB。 | 当前getUpdateTag仅saveCovers并绕过祖先Mixin，空覆盖板例Forge包为null、Neo空tag，客户端收不到服务端新红漆；世界save仍调用super，不报完全不保存，见[同步](PAINT_TARGETS_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

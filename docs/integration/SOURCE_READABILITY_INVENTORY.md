@@ -100,3 +100,5 @@
 2026-10-21 第七十八批：PaintSprayItem展开喷漆lambda／实体判断，两端17→98行，c／p仅在onItemUseFirst内改context／targetPos，保留已有Neo提示context。ComponentCoverFallbackRenderer展开事件和逐面绘制，Neo MultiblockClientSetup拆开渲染／颜色注册，core OriginalMultiblockTintPolicy展开switch；三处职责说明纠正，四源六完整执行76、940／942、526／532、547及未归一字面量位置保持。用户570条CompoundMaterials对齐和WoodMaterials修改保留，见[客户端专题](TANK_CLIENT_AUDIT.md)及[回执](verification/tank-client-audit-20261021.json)；全面可读性目标继续。
 
 2026-10-21 第七十九批：PaintState9→42行、PaintingRules11→73行、Paintable3→10行，16色逐行列出，mix的a／b改firstRgb／secondRgb，restore的flag改paintedFlag；三共享颜色Mixin展开保存／更新／回调，两个cir改callback。六源九完整执行170、544、45、832／865、210／210、202／230及原始字面量位置保持，两处职责说明纠正／用户材料不动，见[喷漆专题](PAINT_STATE_AUDIT.md)及[回执](verification/paint-state-audit-20261021.json)。其余宿主与全面源码核查继续。
+
+2026-10-21 第八十批：ExtenderBlockEntity展开覆盖板／保存更新／路由／控制／信号，SourceExtenderBlock展开两版工具交互和ticker，c／be分别限定方法内改control／blockEntity。清漆陈旧大说明改为实际目标和委托边界；PaintTargets／FixedConstructionColor缩进、WolfCollarAccessor和六项GrassSoilCatalog也已整理。七源十三完整执行557／557、770／770、412／412、81／81、2515／2587、1305／1575、133与未归一字面量位置保持，六说明纠正／用户材料不动，见[专题](PAINT_TARGETS_AUDIT.md)及[回执](verification/paint-targets-audit-20261021.json)。其它源码与全面原版核查继续。

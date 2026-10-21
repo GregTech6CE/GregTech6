@@ -1,5 +1,9 @@
 # 整合状态
 
+## 2026-10-21 / 第八十批喷漆目标与扩展器漆色
+
+新增273清漆未沿30255／30755委托、274八扩展器getUpdateTag仅写covers；服务端／世界保存仍有paint。32颜色罐与两清漆身份、6草目标、常规10／50消耗已有；132修正颜色罐有占位反馈而清漆缺专用声，135区分零余量保护。26原／41当前、46视图、4JSON和2工件8entry见[专题](PAINT_TARGETS_AUDIT.md)与[回执](verification/paint-targets-audit-20261021.json)。七源十三执行保持，六处说明纠正，用户材料不动；未编译／初始化／测试／游戏／构建／推送，全面队列继续。
+
 ## 2026-10-21 / 第七十九批喷漆初始状态与物品alpha
 
 271追原class-container补材料RGB再初始化实体，对比当前PaintState固定FFFFFF，普通殷钢主阀首次白漆拒绝；272追正常红漆主阀保存／最终掉落到Neo ItemRenderer／VertexConsumer的alpha0，Forge该处固定1。16色和256混色公式相符，见[专题](PAINT_STATE_AUDIT.md)与[回执](verification/paint-state-audit-20261021.json)。17原／29当前、36视图、2工件15entry归档，六源九执行保持，用户材料不动；未编译／初始化／测试／游戏／构建／推送，全面队列继续。

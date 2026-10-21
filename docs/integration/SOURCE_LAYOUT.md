@@ -18,6 +18,8 @@
 
 喷漆纯状态在core的`PaintState`，16色／混色／目标规则在`PaintingRules`，`Paintable`是原生适配接口。共享`BlockEntityPaintMixin`负责GT命名空间资格、NBT和更新，`BlockPaintColorMixin`／`ItemPaintColorMixin`接世界与物品查询；Neo物品原生要求ARGB，后置Mixin结果还必须单独核对，见[喷漆专题](PAINT_STATE_AUDIT.md)。
 
+喷漆／清漆的本地目标在`PaintTargets`，`BehaviorSprayColorRemover`补原版陶瓦／玻璃／玻璃板回退；清漆的原WD.te委托不可由物品／流体能力转发替代。扩展器实际Block是`SourceExtenderBlock`，BE的`saveAdditional`与`getUpdateTag`是两条合同；代理路径在`ExtenderSpec`／`RelayRoutingRules`及BE中，六草身份在core `GrassSoilCatalog`并由两版专有注册消费，见[目标与扩展器](PAINT_TARGETS_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |

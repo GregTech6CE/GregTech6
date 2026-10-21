@@ -1,0 +1,1626 @@
+{
+  "batch": 80,
+  "date": "2026-10-21",
+  "baseline": "46750bf201b80d16bad1f1c88c6f97154584107e",
+  "new_records": [
+    273,
+    274
+  ],
+  "extended_records": [
+    132,
+    135
+  ],
+  "scope": "Declared vanilla/grass/entity spray targets and counters; universal relay remover delegation and eight relay variants paint-update snapshots.",
+  "counts": {
+    "original_sources": 26,
+    "current_sources": 41,
+    "shared_platform_views": 46,
+    "readability_files": 7,
+    "readability_execution_views": 13,
+    "resources": 4
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "relative": "gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "sha256": "8185b432ec7e87f44541a41e8d196ea0ff94c4a182eddf8dffab0c531d5c4318",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Color_Remover.java",
+      "relative": "gregtech/items/behaviors/Behavior_Spray_Color_Remover.java",
+      "sha256": "bcfe19392ca9f494b731189220dc6aadcd0a74ddcf5f75667f1de3e88f7f9063",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "relative": "gregtech/items/MultiItemRandomTools.java",
+      "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "relative": "gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "relative": "gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/DelegatorTileEntity.java",
+      "relative": "gregapi/tileentity/delegate/DelegatorTileEntity.java",
+      "sha256": "d7ad2ddc84ee02b304e7f6d6ff4e478458b8d9290d173974e0fd27e80de3d224",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "sha256": "5bdb146ffe635f31c83df595714ca9e7fda012c7e13485948b45a2c4228e6168",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/metatype/BlockColored.java",
+      "relative": "gregapi/block/metatype/BlockColored.java",
+      "sha256": "1445d711ec079bcd32f93b87045b2d81963a4b99d02c504af231a2ab9a80db6e",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/metatype/BlockMetaType.java",
+      "relative": "gregapi/block/metatype/BlockMetaType.java",
+      "sha256": "af99a9e50607e5bd4675c1c7ae7b41510a5f2405bfdd781bc68bf06bfb56aa65",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBaseMeta.java",
+      "relative": "gregapi/block/BlockBaseMeta.java",
+      "sha256": "342c9ec05b253c0da024e5a18bdf21f9ac613b79fa4c0c39291ebfaaf79b0da4",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBaseSealable.java",
+      "relative": "gregapi/block/BlockBaseSealable.java",
+      "sha256": "6c608095009b42351ccc207b82f4d24c91f15d59fb65b1d232609dfc01e914fc",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/BlockBase.java",
+      "relative": "gregapi/block/BlockBase.java",
+      "sha256": "9a5d3e32274fe807c910ccb7722e43226d90b434d18fd20d4fa40bcd5145f237",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/BlockConcrete.java",
+      "relative": "gregtech/blocks/BlockConcrete.java",
+      "sha256": "58649b4da03c17a9d73beb421fca61d11bac057f3e2c3e101e4e0f5a2a3676e6",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/blocks/BlockGrass.java",
+      "relative": "gregtech/blocks/BlockGrass.java",
+      "sha256": "dfc34e552b169a88c05c666509d82e0f05010e119081069ab33bcedf94473016",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Blocks.java",
+      "relative": "gregtech/loaders/a/Loader_Blocks.java",
+      "sha256": "4215d81610616b406af400c98ddaee3b0d266cb187c9335d2d6a5dd851284abb",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "sha256": "1de6b70dcd76dc2723b2c3922e04fb74ce7ee3b097997b2ed66ffcb13e4d65fd",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java",
+      "sha256": "35c61a41f22ca7e4c8a2814b74ddfe201a9b37bf2ba8791d1e6b82f6006219f3",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java",
+      "sha256": "bc4b2e443abf61387fcb1b74c7c39a4809e2b119f9e4bade3d3c8386deb44ace",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ConsumableRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/tool/ConsumableRules.java",
+      "sha256": "640e5cc5f81334d667227d4be02185adab18bcc05562615c0953564bc133740f",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/GrassSoilCatalog.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/block/GrassSoilCatalog.java",
+      "sha256": "4a877c6d9424dec4eb2da75b3c339a84cb1e816caac3939a2bded065734161a6",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "sha256": "e514a34f0793c0c2dfcd5d7a6b77a6b16c8419c6bb35d11ca4c20dd0386c51fa",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "sha256": "7d83c9905ac30cd22cc6d57960c440afde9e788a90c397352905e0b4ed4ca233",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "sha256": "7d9437729ef50eb29d9c51e0668fc27b41400fccc889c76de34f524873168c30",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "sha256": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "sha256": "8a3aa501844fca5af6e2f68570a7b2b29ecd68bd7de3efb67a0957ffe93a9938",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "sha256": "ebadd86f9c5e6a68f61a07f967b86a70f62855bb473a91a624b350b08aa134d0",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "sha256": "63fa87fcfa3f65d2233d19349f16ca361050ce7476faf5f7c859e9c9e2ed0977",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "sha256": "8ec2e4bb6019cb17711ce859ce065e2c2695fa623e614fcf70b3c7d7f3e2ac2b",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "sha256": "1fa31a356a1fd7bd3c7d6539ceb5b66fa0a8b9efd7543109860466e47a0f623b",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "sha256": "d950252aa67b5d4e3a18d17b9338c5b4b2e4685de1dac4ced457c080a8d00dec",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlock.java",
+      "sha256": "dcbc28ceedfdca56e152953054b495c524c9e9f879364834f69eb411b9c55fac",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "03bf62e4694673c88c3df2863f8cd4edda0918439cf8bcb9861b5584554e5a60",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "sha256": "92762cd956c5bdabe8f90c2a4bfd5966db5d50406cfbbefe4f9f66bfaabb77bf",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "sha256": "396c318419592150d28647238216af6354691f58ff85a0201fa1454ba70a589a",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "sha256": "bdb09e176d08f1b23ba0b420ebf9cb36c832bfe2d0dc5002092269db5727a2c3",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java",
+      "sha256": "0d51e41b7b7ac6bb4b22619785039675badeb4254d74fa4c85e0016c48d79e87",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "sha256": "5389ba014c90d6d6534054e7f30423002397254a4545e4a9998b0f89b75b7efb",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTGrassSoils.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTGrassSoils.java",
+      "sha256": "45c501aaf7d844e6ba6970bb017a4ad07e9074d19cffa896cea3adbcefd53eea",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MaterialShellColors.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MaterialShellColors.java",
+      "sha256": "0077a3e68f6b3c6ea0bb8a751a4785a3a7dcbd62d0bc33c3e37a9ec54361c8bc",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java",
+      "sha256": "3cbced618e3fd21dc1f7e1ff4b1359b4d444e8f1803762cf4bd479b1e2687dc5",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "relative": "gradle/platform-neoforge.gradle",
+      "sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "scope": "Named spray/remover targets/ledger, grass declarations, relay clear delegation and paint update-tag consumers; not whole-file or whole-system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "platform": "forge",
+      "sha256": "64b15273d953318b1b7536b187fe7a1610016dacaea6bfc16c4c9260b164b366",
+      "tokens": 940
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "platform": "neoforge",
+      "sha256": "dca91389b182e0b2d44c3742fc7a0a0ff158fda970f2ce430e72547755dd28a6",
+      "tokens": 942
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "platform": "forge",
+      "sha256": "806ffd9b2478cc6d4a2264817370523b409dad4bf2c660e74fa86f46e4c46c80",
+      "tokens": 359
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java",
+      "platform": "neoforge",
+      "sha256": "d87bdfe92bca6448ae642c11819a0f96a045cea3b19a9990ec753b08544fb821",
+      "tokens": 411
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "forge",
+      "sha256": "0fa7cc2dc4d14b55437cc03470258ce244c4e4f1b71bc83701ae81ac9a96dd38",
+      "tokens": 3106
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "neoforge",
+      "sha256": "c0c984600dcb0f1c21b815a4380dbf0ae611a09d07abc90f6517bf95271cc0a4",
+      "tokens": 2793
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "platform": "forge",
+      "sha256": "8a3aa501844fca5af6e2f68570a7b2b29ecd68bd7de3efb67a0957ffe93a9938",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java",
+      "platform": "neoforge",
+      "sha256": "8a3aa501844fca5af6e2f68570a7b2b29ecd68bd7de3efb67a0957ffe93a9938",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "forge",
+      "sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "tokens": 770
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "neoforge",
+      "sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+      "tokens": 770
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "platform": "forge",
+      "sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+      "tokens": 412
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+      "platform": "neoforge",
+      "sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+      "tokens": 412
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "platform": "forge",
+      "sha256": "4d89bb541b6d71e348f681a5a1f0bfdae8a28ec485750d7708d953ad22ec0f06",
+      "tokens": 480
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+      "platform": "neoforge",
+      "sha256": "4d89bb541b6d71e348f681a5a1f0bfdae8a28ec485750d7708d953ad22ec0f06",
+      "tokens": 480
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "platform": "forge",
+      "sha256": "e382f123ec9b0fae3d1878d9b5034888517c772f9d69f9b25d0d84a59e65c4f3",
+      "tokens": 868
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "platform": "neoforge",
+      "sha256": "5d249a0a164a7792ac8da0528ccb094ea37bb0bfcaf92e60f153dd8794eadff7",
+      "tokens": 868
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "platform": "forge",
+      "sha256": "8447255b603bfbe3da96e95f3330e79cb1c152939867f19ef30c839c00333ab6",
+      "tokens": 1012
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+      "platform": "neoforge",
+      "sha256": "8447255b603bfbe3da96e95f3330e79cb1c152939867f19ef30c839c00333ab6",
+      "tokens": 1012
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "forge",
+      "sha256": "8ad7a5ae4577833e37929f86f4a118d4601b1b989c1ff69b3963d93fa6e7d913",
+      "tokens": 1699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "neoforge",
+      "sha256": "7ed36804a194579cf48e62db341b75c16f07ef0c842faca627043db39a61def6",
+      "tokens": 1148
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "forge",
+      "sha256": "d0b244aef47f5e8ebc1318cf40419bfdcadbc939c39b46d2dc8bd91c5de9da39",
+      "tokens": 1305
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "neoforge",
+      "sha256": "4e737f33d8dd560ecce86ad5bf6129ed8cd00b2f775faacf15a6f7e4a633d8b3",
+      "tokens": 1575
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "forge",
+      "sha256": "bd11d82b9e9c3919d34f9f0e2a8f42ce6c589a619db67e3e2e5b41f3d1274021",
+      "tokens": 2515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "e0b1224543bb7da5cd2060efac30c22571e48ff7b2f25f8607d58991e603ed38",
+      "tokens": 2587
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlock.java",
+      "platform": "forge",
+      "sha256": "af83c4469c4c4e5ec1d6a7659855d5fa0604c782c3d2bf3252eaea18e32985d2",
+      "tokens": 239
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlock.java",
+      "platform": "neoforge",
+      "sha256": "7875ffe872e56381b0e7f80843c2faa47e022a2109f3e293a82cbad9ea1ff4d3",
+      "tokens": 273
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "8882d3995b323bdb9b88cfa069ba74f6689ff3f0fa14165da53af77c459dcb50",
+      "tokens": 1552
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "3cef37dd6b666d29a2f88b6427ec782b6d07e7308178d682b7920b124e2c205a",
+      "tokens": 1453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "6edbf5b9ba618a7cd1b17534d16b64d6f7526179260315892f3856e2cf3cea6d",
+      "tokens": 1610
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "b624ac76a2507bdf53ac515772d9df09cdd9152165402a9f0320fe591d901e77",
+      "tokens": 1511
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "platform": "forge",
+      "sha256": "b9c59a5ddeb5db1ff08cda82939b53131f5e26bd6ed62157a3ef8d31da66e39c",
+      "tokens": 832
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "platform": "neoforge",
+      "sha256": "50ce6ce52548580761bd545b36dc07cc5f7461110d0b79a559e845e9256e7a2b",
+      "tokens": 865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "forge",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "neoforge",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "platform": "forge",
+      "sha256": "396c318419592150d28647238216af6354691f58ff85a0201fa1454ba70a589a",
+      "tokens": 81
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java",
+      "platform": "neoforge",
+      "sha256": "396c318419592150d28647238216af6354691f58ff85a0201fa1454ba70a589a",
+      "tokens": 81
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "120bd77dadf304d5418db0b64328a700195858511a156b7d99b1d008052b136c",
+      "tokens": 873
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "2561f6ee2466ed57c8405a9ca32d92e6323b95b54612293d4fa604e3231f4a90",
+      "tokens": 895
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "platform": "forge",
+      "sha256": "88dd113ca6bacd5eede627a4cfd41d67e30ec3340f4b6bece92a86ea2391e87a",
+      "tokens": 298
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCover.java",
+      "platform": "neoforge",
+      "sha256": "ca3c419b2f329dcd42a6c3c22a6b58649250d45f003bdedbc0400c49b1eb7792",
+      "tokens": 297
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "forge",
+      "sha256": "6e15bb8594ec00c9b83c68a7c4d529f324afa1429efa580673c3ecea383f30af",
+      "tokens": 1284
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "neoforge",
+      "sha256": "c70d0ffd0ede2fc6dc7eaf164cb1e55a6c5ceccb13c7e4d2b7c1a86d45e40ee7",
+      "tokens": 1295
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java",
+      "platform": "forge",
+      "sha256": "47c5e5ff51518337d13a195e5055b2bc54e4c6e679f386cf15986fcb0e07a818",
+      "tokens": 383
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/GTGrassBlock.java",
+      "platform": "neoforge",
+      "sha256": "2692949dd722ecb37d09b42b07508e0c8055fb13b081a926c88497e48e175bb8",
+      "tokens": 440
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    }
+  ],
+  "resources": [
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/universal_extender.json",
+      "sha256": "0eecb7ce268e3ff9b3262d8aa813bcdf41357ec690c543e2be19b02a944a4d8c",
+      "scope": "Representative universal-relay blockstate and primary tinted world-model path, not all directions/GPU acceptance."
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/universal_bridge.json",
+      "sha256": "48897cfa06a4c1c5296071ce5053070d62a9cd3710465348879ea6661875401a",
+      "scope": "Representative universal-relay blockstate and primary tinted world-model path, not all directions/GPU acceptance."
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/logistics/universal_extender/north_south.json",
+      "sha256": "395cadd7755d60ab7e03ef0e51dbe71a91391aee0a0330e693477456ac275cb5",
+      "scope": "Representative universal-relay blockstate and primary tinted world-model path, not all directions/GPU acceptance."
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/logistics/universal_bridge.json",
+      "sha256": "96f0f74c0105bdaaf6ced53c01fb4177dd3acdd36dbef46b54238f90dc30d45e",
+      "scope": "Representative universal-relay blockstate and primary tinted world-model path, not all directions/GPU acceptance."
+    }
+  ],
+  "readability": {
+    "baseline": "46750bf201b80d16bad1f1c88c6f97154584107e",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayColorRemover.java": {
+        "before_raw_sha256": "1236e1d22322b6426cb3e6a6cf7a09c87efa125be9851777aa266f2a20fe11b9",
+        "after_raw_sha256": "8a3aa501844fca5af6e2f68570a7b2b29ecd68bd7de3efb67a0957ffe93a9938",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [
+          [
+            "/**\n * GT6 {@code Behavior_Spray_Color_Remover} ({@code Behavior_Spray_Color_Remover.java:46-123}) — the\n * Paint Removal Spray.\n *\n * <h2>The original</h2>\n *\n * <p>{@code decolorize(...)} ({@code :96-106}) has six routes, in this order:\n * {@code ITileEntityDecolorable} ({@code :98}), {@code IBlockDecolorable} ({@code :100}), then the\n * four vanilla-ish identities — stained hardened clay becomes hardened clay, stained glass pane\n * becomes glass pane, stained glass becomes glass ({@code :101-103}) and GT's own grass becomes\n * vanilla grass ({@code :104}). Exactly one is used per click and the operation costs\n * {@code 10} uses ({@code :77}).</p>\n *\n * <h2>The port's three routes</h2>\n *\n * <p>1.20.1 splits what the original could express with block identities:</p>\n *\n * <ul>\n *   <li>stained hardened clay is the sixteen {@code minecraft:*_terracotta} blocks. The original\n *       tested one block identity ({@code aBlock == Blocks.stained_hardened_clay}) because 1.7.10\n *       carried the colour in metadata; 1.20.1 has sixteen separate blocks, so {@link #STAINED_CLAY}\n *       is that same identity test spelled out. The replacement is the uncoloured\n *       {@code Blocks.TERRACOTTA} ({@code Blocks:593});</li>\n *   <li>stained glass is {@link StainedGlassBlock} ({@code Blocks:342-357}), so one class test\n *       covers all sixteen, and the replacement is {@code Blocks.GLASS} ({@code Blocks:141});</li>\n *   <li>stained glass panes are {@link StainedGlassPaneBlock} ({@code Blocks:538-553}), replaced by\n *       {@code Blocks.GLASS_PANE} ({@code Blocks:384}).</li>\n * </ul>\n *\n * <p>The original replaced the whole block with metadata {@code 0} ({@code DelegatorTileEntity\n * .setBlock(Block)} without a meta), which is what {@code defaultBlockState()} is here — the colour\n * is dropped, not carried over.</p>\n *\n * <h2>What is not ported</h2>\n *\n * <ul>\n *   <li>{@code ITileEntityDecolorable} and {@code IBlockDecolorable} ({@code :98,100}) have no port\n *       counterpart: the GT6 blocks that implemented them are the machine faces GT's own colour\n *       sprays painted.</li>\n *   <li>The GT grass branch ({@code :104}, {@code BlocksGT.Grass}). The port's coloured grasses are\n *       separate blocks ({@code gt6ce:grass}, {@code gt6ce:grass_<variant>},\n *       {@code gt6ce:grassblock_<colour>} — {@code GTIconSetBlocks:118-124}) rather than one\n *       block with six metadata values, and which of them is \"the spray-painted one\" is not\n *       decidable from the port's tables, so no mapping is invented here.</li>\n *   <li>The painting spray itself, {@code Behavior_Spray_Color} ({@code :45-183}), is not portable\n *       for the same reason plus a missing item: the port has no dye spray cans at all\n *       ({@code GTMultiItemsGen.ENTRIES:63-71} carries only the empty can, this remover, the\n *       hardening spray, the C-Foam remover and the extinguisher).</li>\n * </ul>\n */",
+            "/**\n * GT6 color-removal can, adapted to the port's existing consumable ledger.\n * PaintTargets first handles registered construction colors, Paintable entities and GT grass.\n * The remaining local fallbacks restore vanilla terracotta, stained glass panes and stained glass.\n * Original delegating-tile and external IBlockDecolorable routes are separate compatibility contracts.\n */"
+          ],
+          [
+            "where plain hardened clay was a different metadata value and was not decolorised.",
+            "where plain hardened clay was a separate block and was not decolorised."
+          ],
+          [
+            "// :104 is documented above",
+            "// GT paint, construction colors and grass are handled by PaintTargets above."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 557,
+            "execution_sha256": "2926ac74638c2eecc40ba8b4da292545a9ae76967d8bbe409e8395cdffa30889",
+            "before_lines": 130,
+            "after_lines": 92,
+            "before_max_line": 123,
+            "after_max_line": 123
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 557,
+            "execution_sha256": "2926ac74638c2eecc40ba8b4da292545a9ae76967d8bbe409e8395cdffa30889",
+            "before_lines": 130,
+            "after_lines": 92,
+            "before_max_line": 123,
+            "after_max_line": 123
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java": {
+        "before_raw_sha256": "2247701388f8374a4e187e4fbb3e5c9b205ccbb2a5ba1d3abbac9df6a559eb7e",
+        "after_raw_sha256": "159494292df5ded9a992666701340f648db0b689a4d6ab27012fb34c55475381",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 770,
+            "execution_sha256": "644302e8ff05e3029e2e8f06c66fdad622424d2dc3fc04dac64d5bbf1bde2ac6",
+            "before_lines": 76,
+            "after_lines": 78,
+            "before_max_line": 123,
+            "after_max_line": 123
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 770,
+            "execution_sha256": "644302e8ff05e3029e2e8f06c66fdad622424d2dc3fc04dac64d5bbf1bde2ac6",
+            "before_lines": 76,
+            "after_lines": 78,
+            "before_max_line": 123,
+            "after_max_line": 123
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java": {
+        "before_raw_sha256": "3132c91df2d19cc2f8c85c2e6223289c6e39596b324e9b79452e70389af53e39",
+        "after_raw_sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 412,
+            "execution_sha256": "03e55c2e628ec2ae238e6eb7591b95370683cda011f1b5634b6e955068b499ab",
+            "before_lines": 41,
+            "after_lines": 42,
+            "before_max_line": 126,
+            "after_max_line": 126
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 412,
+            "execution_sha256": "03e55c2e628ec2ae238e6eb7591b95370683cda011f1b5634b6e955068b499ab",
+            "before_lines": 41,
+            "after_lines": 42,
+            "before_max_line": 126,
+            "after_max_line": 126
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/WolfCollarAccessor.java": {
+        "before_raw_sha256": "3f4c9318ab1945db563474e75b069a583a2753b7dc47743288ef6e7fdce28540",
+        "after_raw_sha256": "396c318419592150d28647238216af6354691f58ff85a0201fa1454ba70a589a",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [
+          [
+            "/** Native collar setter is private; invoke the original method without reflective lookups. */",
+            "/** Shared mapped collar setter: private in Minecraft 1.21.1, public in 1.20.1. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 81,
+            "execution_sha256": "de341108674dd6ede71489562a9db7ef197aa657f81800c6509a1389e7539987",
+            "before_lines": 4,
+            "after_lines": 13,
+            "before_max_line": 175,
+            "after_max_line": 82
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 81,
+            "execution_sha256": "de341108674dd6ede71489562a9db7ef197aa657f81800c6509a1389e7539987",
+            "before_lines": 4,
+            "after_lines": 13,
+            "before_max_line": 175,
+            "after_max_line": 82
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java": {
+        "before_raw_sha256": "3314eac50bb1f110b51db37f62ab237d495678c223a2b18ca61336d0a7ac6e26",
+        "after_raw_sha256": "d950252aa67b5d4e3a18d17b9338c5b4b2e4685de1dac4ced457c080a8d00dec",
+        "local_renames": {
+          "c": "control"
+        },
+        "rename_region": [
+          "public com.gregtech.gregtech.api.machine.MachineControl machineControl(",
+          "private int incoming("
+        ],
+        "comment_corrections": [
+          [
+            "/** Opposing face bridge; each capability operation resolves the current adjacent inventory. */",
+            "/** Extender/bridge state for covers, routed capabilities, machine controls and signals. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2515,
+            "execution_sha256": "8126f7ce7c4ce13f322f10983ae4ab1b9f993dea04d02e3910a91fa6f6506f84",
+            "before_lines": 127,
+            "after_lines": 297,
+            "before_max_line": 310,
+            "after_max_line": 150
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2587,
+            "execution_sha256": "b9aeaa021e5f016c1ea3b4e446352fbfbe103dbb328d868e5443fc6fa71b6120",
+            "before_lines": 127,
+            "after_lines": 296,
+            "before_max_line": 333,
+            "after_max_line": 150
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java": {
+        "before_raw_sha256": "f3cc8096bda6f64d84e3d445a49e61d7afba75cbc043fef2981e480668863da7",
+        "after_raw_sha256": "1fa31a356a1fd7bd3c7d6539ceb5b66fa0a8b9efd7543109860466e47a0f623b",
+        "local_renames": {
+          "be": "blockEntity"
+        },
+        "rename_region": [
+          "public <T extends BlockEntity>",
+          "public boolean isSignalSource("
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1305,
+            "execution_sha256": "29fbe627aab93c12841b36b55020274db2ea8c940c30096ca783ececc48a6e0f",
+            "before_lines": 89,
+            "after_lines": 145,
+            "before_max_line": 210,
+            "after_max_line": 147
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1575,
+            "execution_sha256": "daef00ec53a3d7ca56ee379a9ac65d8715b6ec312978358f7e973ccf86701c16",
+            "before_lines": 93,
+            "after_lines": 167,
+            "before_max_line": 662,
+            "after_max_line": 146
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/block/GrassSoilCatalog.java": {
+        "before_raw_sha256": "65689267e60c0ef02a19f0733bae826a418677f9d3db5712c66802d64f009030",
+        "after_raw_sha256": "4a877c6d9424dec4eb2da75b3c339a84cb1e816caac3939a2bded065734161a6",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [
+          [
+            "/** Exact bottom/top grass-family identities and textures from original icon-set factory. */",
+            "/** Six colored grass identities with their side/top texture names and plant-soil flags. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 133,
+            "execution_sha256": "dd69a8acd6d87319789272da04e709bb32eec4316d7b5d9e202e8fd2ca7f6add",
+            "before_lines": 3,
+            "after_lines": 19,
+            "before_max_line": 696,
+            "after_max_line": 100
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, two method-local binding maps and six documentation corrections only; no gameplay changes."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/entity/animal/Wolf.class",
+        "sha256": "d2a1f1430ff518233a859f9d86b4aa8a4a8ca564e2a6d7756dae75cf3f977c83",
+        "bytes": 24999
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/entity/animal/Sheep.class",
+        "sha256": "47285ec70358f976755257bed1faa1c4d770bd18afad665aeb92b78a3a2721ab",
+        "bytes": 23780
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.class",
+        "sha256": "2a014da238d13865f3c0c978f7aa474facf737ef04e175afbf1d023e513315e1",
+        "bytes": 5092
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/entity/animal/Wolf.java",
+        "sha256": "a2d9a8d1508c4b75644562a9652aa0ba1891139e16b4c875e27e131d299a5613",
+        "bytes": 29838,
+        "extracted": "work/paint-targets-audit-20261021/neo-Wolf.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/entity/animal/Sheep.java",
+        "sha256": "dab42682450cbbfd457ad1c1611f31850dea9a2c2920957fd3954e3864b44b22",
+        "bytes": 15248,
+        "extracted": "work/paint-targets-audit-20261021/neo-Sheep.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "bytes": 14908,
+        "extracted": "work/paint-targets-audit-20261021/neo-BlockEntity.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.java",
+        "sha256": "280bd0a6b2c8534c17f7af52f08f8da6fb4577030754746e5af7da2e326bcbe5",
+        "bytes": 2510,
+        "extracted": "work/paint-targets-audit-20261021/neo-ClientboundBlockEntityDataPacket.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.entity.animal.Wolf",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/entity/animal/Wolf.class",
+        "output": "work/paint-targets-audit-20261021/forge-Wolf.javap.txt",
+        "sha256": "2b52e1cb8693c1b9e4281052e6a3a49ce1ae952af298a9d2040fa45b71f507f4",
+        "kind": "Read-only javap; no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.world.entity.animal.Sheep",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/entity/animal/Sheep.class",
+        "output": "work/paint-targets-audit-20261021/forge-Sheep.javap.txt",
+        "sha256": "eaadc284fc65b296fa718bedf38569f83644994a28904580fce1f8dc9f1c018b",
+        "kind": "Read-only javap; no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "output": "work/paint-targets-audit-20261021/forge-BlockEntity.javap.txt",
+        "sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+        "kind": "Read-only javap; no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.class",
+        "output": "work/paint-targets-audit-20261021/forge-ClientboundBlockEntityDataPacket.javap.txt",
+        "sha256": "ca32dced188f13a073ed784c5289e2a0cc4a0e92b21c9a982fc83336770fe696",
+        "kind": "Read-only javap; no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.class",
+        "output": "work/paint-targets-audit-20261021/forge-ClientboundBlockEntityDataPacket.verbose.txt",
+        "sha256": "481a725640eaf5476f8723c30288658985fa236118660a50ef2dcdbeb01c0686",
+        "kind": "Read-only javap -v to resolve the getUpdateTag virtual method reference; no target execution.",
+        "encoding": "gb18030",
+        "encoding_limit": "javap verbose local header is emitted in the host locale; raw bytes and hash are retained."
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite re-encoded source/identity analysis, no native registry initialization, entity interaction, packet delivery or gameplay.",
+    "vanilla_targets": {
+      "source_identities": 83,
+      "ordered_dye_cases": 1328,
+      "same_target_noops": 80,
+      "matrix_sha256": "ea91f80becb059e906c362ba6bdb9388a95ab58d7a6b5df955ed37bf5217df78",
+      "original_explicit_whitelist_subset_cases": 1072,
+      "limit": "Current target strings only; old wool BlockColored ancestry and external fallback callbacks remain separate evidence."
+    },
+    "vanilla_removal": {
+      "explicit_colored_terracotta_blocks": 16,
+      "glass_palette": 16,
+      "pane_palette": 16,
+      "plain_outputs": [
+        "minecraft:terracotta",
+        "minecraft:glass",
+        "minecraft:glass_pane"
+      ],
+      "limit": "Checks declared identity/class branches, not final world updates, waterlogging or resource-pack appearance."
+    },
+    "grass_mappings": [
+      {
+        "dye_index": 2,
+        "current_id": "grassblock_medium"
+      },
+      {
+        "dye_index": 10,
+        "current_id": "grassblock_light"
+      },
+      {
+        "dye_index": 0,
+        "current_id": "grassblock_dark"
+      },
+      {
+        "dye_index": 7,
+        "current_id": "grassblock_normal"
+      },
+      {
+        "dye_index": 11,
+        "current_id": "grassblock_yellow"
+      },
+      {
+        "dye_index": 3,
+        "current_id": "grassblock_brown"
+      }
+    ],
+    "normal_live_entity_matrix": {
+      "cases": 1024,
+      "changed": 480,
+      "ordered_sha256": "e140efb79567bee64ab415dd64cb49e35050809c31e18f45ac328e5dd7ee0eec",
+      "limit": "Positive budget, alive, normal sheep/wolf states. Entity engine dispatch, animal ownership mods and client prediction are not accepted."
+    },
+    "declared_consumption": {
+      "paint_full": 5120,
+      "paint_block_cost": 10,
+      "paint_entity_cost": 50,
+      "remover_full": 2560,
+      "remover_block_cost": 10
+    },
+    "zero_budget_entity_policy": [
+      {
+        "creative": false,
+        "initial_used_counter": 0,
+        "original_color_changed": true,
+        "current_color_changed": false,
+        "original_end_form": "empty",
+        "current_end_form": "empty",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": false,
+        "initial_used_counter": 1,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "empty",
+        "current_end_form": "empty",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": false,
+        "initial_used_counter": 49,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "empty",
+        "current_end_form": "empty",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": false,
+        "initial_used_counter": 50,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "empty",
+        "current_end_form": "empty",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": false,
+        "initial_used_counter": 5120,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "used",
+        "current_end_form": "used",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": true,
+        "initial_used_counter": 0,
+        "original_color_changed": true,
+        "current_color_changed": false,
+        "original_end_form": "empty",
+        "current_end_form": "empty",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": true,
+        "initial_used_counter": 1,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "used",
+        "current_end_form": "used",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": true,
+        "initial_used_counter": 49,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "used",
+        "current_end_form": "used",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": true,
+        "initial_used_counter": 50,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "used",
+        "current_end_form": "used",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      },
+      {
+        "creative": true,
+        "initial_used_counter": 5120,
+        "original_color_changed": true,
+        "current_color_changed": true,
+        "original_end_form": "used",
+        "current_end_form": "used",
+        "limit": "Qualified differently colored live animal and used can only; old mutates before checking counter, current checks positive counter first."
+      }
+    ],
+    "relay_remover": {
+      "cases": [
+        {
+          "original_id": 30255,
+          "query_side": 0,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30255,
+          "query_side": 1,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30255,
+          "query_side": 2,
+          "target_offset": [
+            0,
+            0,
+            1
+          ],
+          "target_face": 2,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30255,
+          "query_side": 3,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30255,
+          "query_side": 4,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30255,
+          "query_side": 5,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 0,
+          "target_offset": [
+            0,
+            1,
+            0
+          ],
+          "target_face": 0,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 1,
+          "target_offset": [
+            0,
+            -1,
+            0
+          ],
+          "target_face": 1,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 2,
+          "target_offset": [
+            0,
+            0,
+            1
+          ],
+          "target_face": 2,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 3,
+          "target_offset": [
+            0,
+            0,
+            -1
+          ],
+          "target_face": 3,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 4,
+          "target_offset": [
+            1,
+            0,
+            0
+          ],
+          "target_face": 4,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        },
+        {
+          "original_id": 30755,
+          "query_side": 5,
+          "target_offset": [
+            -1,
+            0,
+            0
+          ],
+          "target_face": 5,
+          "original_delegated_target_paint_removed": true,
+          "current_local_unpaint_changed": false
+        }
+      ],
+      "initial": "Loaded unpainted universal relay; red-painted target behind the configured exit; ordinary player, positive remover counter.",
+      "chain": "Original WD.te invokes ITileEntityDelegating; current PaintTargets.unpaint sees local mixin state and no use/cover/tool fallback delegates the can to the target.",
+      "limit": "Universal30255/30755, no chained/unloaded/cross-world path; preserve current loaded/cycle protection when designing an eventual adapter."
+    },
+    "relay_paint_sync": {
+      "original_ids": [
+        30000,
+        30001,
+        30002,
+        30500,
+        30501,
+        30502,
+        30255,
+        30755
+      ],
+      "initial": "Loaded fresh extender or bridge, no covers; successfully spray red on the local relay.",
+      "server_state": {
+        "gt.painted": true,
+        "gt.color": "FF0000"
+      },
+      "world_save_has_paint": true,
+      "current_update_tag": {},
+      "forge_empty_packet_tag": null,
+      "neo_empty_packet_tag": {},
+      "fresh_client_painted_after_packet": false,
+      "original": "recolourBlock calls updateClientData; tick sends full RGB via Base08 or Base07 packet path.",
+      "limit": "Source packet/tag trace only. Does not claim paint is absent from server state or disk save, or all entity subclasses share this defect."
+    },
+    "construction_unpaint_extension": "Current fixed construction family can reset to default color; original GT BlockColored ancestry has no IBlockDecolorable implementation. Recorded extension, not automatically removed."
+  },
+  "positive_routes": [
+    "32 dye can identities and both remover identities have actual item dispatch; the remover header denying their existence was stale.",
+    "Modern vanilla stained terracotta/glass/pane removal and six registered GT-grass target identities are present.",
+    "Live normal sheep/tamed-wolf rules with positive budget,5120/2560 internal counters and10/50 action costs follow the declared original branches.",
+    "Wolf setter is public in1.20.1 but private in1.21.1; both configured invokers reach native synched-data fields.",
+    "Relay world save/load still calls its parent; the update-tag override bypass is not a server-state or world-save absence."
+  ],
+  "policies": [
+    "Current positive-counter checks prevent original zero-used-can last actions. Creative budget/cleanup remains a separate135 boundary; do not restore free actions automatically.",
+    "Fixed construction families can be reset to a default color by the current remover; this extends the original ordinary GT concrete route and is not automatically deleted.",
+    "Retain modern loaded/cycle guards when designing future delegated paint access."
+  ],
+  "remaining": [
+    "External block color callbacks/old BlockColored ancestry, all block property/waterlogging cases, full animal event/client prediction, survival refill/recipes, actual relay use and paint packet/gameplay/restart, complete project audit."
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, GPU, disk restart, build or push.",
+    "Finite declared matrices and actual source consumers do not prove whole client or gameplay acceptance.",
+    "The complete original-feature audit and source-readability objective remains active."
+  ],
+  "previous_goal_turn": "Progress: committed46750bf20, recording initial-white/item-alpha differences and preserving six paint source execution streams.",
+  "root_validation": {
+    "named_source_hashes": 67,
+    "shared_platform_views": 46,
+    "readability_files": 7,
+    "complete_execution_views": 13,
+    "raw_literal_positions_comments_directives": true,
+    "documentation_corrections": 6,
+    "protected_material_hashes": 2,
+    "native_artifacts": 2,
+    "native_entries": 8,
+    "readonly_javap_outputs": 5,
+    "resources": 4,
+    "declared_vanilla_target_cases": 1328,
+    "explicit_original_subset_cases": 1072,
+    "normal_live_entity_cases": 1024,
+    "grass_mappings": 6,
+    "loaded_universal_remover_paths": 12,
+    "registered_extender_variants": 8,
+    "actual_update_tag_override_chain": true,
+    "forge_null_neo_empty_distinguished": true,
+    "contiguous_ledger_records": 274,
+    "documents_checked": 8,
+    "added_local_links_checked": 16,
+    "limit": "Source/file analysis only; no Java compilation/initialization, Gradle, tests, world interaction, packet delivery, GPU image, disk restart, build or push."
+  }
+}

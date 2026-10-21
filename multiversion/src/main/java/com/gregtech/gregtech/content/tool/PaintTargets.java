@@ -16,12 +16,14 @@ import java.util.Map;
 
 /** Spray target policy; color identities and actual block behavior remain owned by their registries. */
 public final class PaintTargets {
-    private PaintTargets() {}
+
+    private PaintTargets() {
+    }
     private static final Map<Block, String> FAMILY = new HashMap<>();
     static {
         for (var color : DyeColor.values())
-            for (String suffix : List.of("terracotta", "stained_glass", "stained_glass_pane", "wool", "carpet"))
-                FAMILY.put(vanilla(color.getName() + "_" + suffix), suffix);
+        for (String suffix : List.of("terracotta", "stained_glass", "stained_glass_pane", "wool", "carpet"))
+        FAMILY.put(vanilla(color.getName() + "_" + suffix), suffix);
         FAMILY.put(Blocks.GLASS, "stained_glass");
         FAMILY.put(Blocks.GLASS_PANE, "stained_glass_pane");
         FAMILY.put(Blocks.TERRACOTTA, "terracotta");
