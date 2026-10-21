@@ -1,7 +1,11 @@
 package com.gregtech.gregtech.content.multiblock;
 import com.gregtech.gregtech.api.multiblock.StructureGrid.Role;import java.util.*;
 /** Original GT6 large-machine coordinates and material-part IDs; no Minecraft registry. */
-public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}public record Cell(int right,int up,int back,int part,Role role){}
+public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(){}
+    /** {@code plain} is a block id or {@code #} tag. Null means {@code part} is a structure part. */
+    public record Cell(int right,int up,int back,int part,Role role,String plain){
+        public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null);}
+    }
     private static final Map<String,List<Cell>> DEFINITIONS=new LinkedHashMap<>(create());
     private static boolean frozen;
     public static List<Cell> cells(String machine) { return DEFINITIONS.get(machine); }
