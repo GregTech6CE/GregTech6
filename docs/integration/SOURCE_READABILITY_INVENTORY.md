@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第九十七批：ManualWorkRules／ManualToolBlockEntity／ManualToolBlock／Neo GTManualStations四源494→682行，展开公式、交互、保存／版本回调与注册循环；六完整代码175、2586／2674、1207／1429、1673，字面量位置26、70／69、24／24、58及注释／指令保持。未改301–303或其它玩法，用户材料不动，见[专题](SIFTING_TABLE_AUDIT.md)和[回执](verification/sifting-table-audit-20261022.json)。
+
 2026-10-22 第九十六批：AdvancedCraftingTableBlock／ChargingCraftingTableBlock／BlockContents／BlockLootPack四源257→343行，展开交互、拆除、版本回调与战利品生成；八完整代码1088／1348、210／206、247／249、1094／1153及字面量位置／注释／指令保持。纯排版，危险与172通知只记审计，用户材料不动，见[专题](WORKTABLE_LIFECYCLE_AUDIT.md)和[回执](verification/worktable-lifecycle-audit-20261022.json)。
 
 2026-10-22 第九十五批：ChargingCraftingTableBlockEntity／AdvancedCraftingScreen／AdvancedCraftingRecipeReload三源153→292行，展开充能、能力生命周期、绘制与重载；六完整代码1018／860、578／572、118／118，原始字面量位置／注释／版本指令保持。只排版，298／299另列真实合同，用户材料不动，见[专题](WORKTABLE_IO_AUDIT.md)和[回执](verification/worktable-io-audit-20261022.json)。

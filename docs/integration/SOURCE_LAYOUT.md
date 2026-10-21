@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+手工筛选台：core `ManualWorkRules`定义周期／正常药水门槛；共享`ManualToolBlockEntity`负责输入、十二产物、单操作者及保存，`ManualToolBlock`接原生交互／tick／拆除。Forge的`GTToolBlocks`和Neo的`GTManualStations`分别注册；不能从实体字段推定自动化能力，见[核查](SIFTING_TABLE_AUDIT.md)。
+
 此文描述 `main` 的 Stonecutter 结构。原版行为差异见 [原版对齐审计](ORIGINAL_ALIGNMENT_AUDIT.md)；目录整理不代表全部功能已经对齐。
 
 工作台生命周期：块类onRemove调用实体本地dropContents，`BlockContents`／`GTItemDrops`清槽并按真实堆叠输出；`BlockLootPack`只给默认块物品，`CoverDrops`另筛覆盖板数据。世界Inventory／Modes、物品数据与虚拟预览要分别追，四源已展开，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。
