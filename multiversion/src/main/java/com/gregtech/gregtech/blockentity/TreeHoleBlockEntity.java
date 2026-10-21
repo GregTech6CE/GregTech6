@@ -15,13 +15,14 @@ import net.minecraft.world.level.block.state.BlockState;
  * GT6's tree-hole refill logic ({@code MultiTileEntityResinHoleRubber.onTick2},
  * {@code MultiTileEntitySapHoleMaple.onTick2}, {@code MultiTileEntitySapHoleRainbowood.onTick2}).
  *
- * <p>Every 600 ticks (30 s) a still-empty hole walks up its own trunk, counts the leaves of the tree
- * at the exact positions GT6 lists for that species, and rolls
+ * <p>Every 600 ticks spent empty, the port walks up its native species trunk, counts its leaves
+ * at the species canopy positions, and rolls
  * {@code rng(divisor) < leaves - threshold} — so only a healthy tree refills the hole. GT6's ideal
  * canopies give 86 leaves for the rubber tree, 306 for the maple and 271 for the rainbowood, i.e. a
  * 10% / 10% / 5% chance per check for a perfect tree.
  */
 public class TreeHoleBlockEntity extends BlockEntity {
+
     /** GT6 checks every 600 ticks ({@code aTimer % 600 == 0}). */
     public static final int CHECK_INTERVAL = 600;
 
@@ -45,6 +46,7 @@ public class TreeHoleBlockEntity extends BlockEntity {
      * worldgen/automation hook could call it. Sets the block state's {@code resin} property when the
      * roll succeeds.
      */
+
     public boolean refresh(WoodSpecies species) {
         if (level == null) return false;
         int leaves = countTreeLeaves(level, worldPosition, species);
@@ -58,10 +60,14 @@ public class TreeHoleBlockEntity extends BlockEntity {
     }
 
     /** GT6 {@code tLeavesCount > …} gates: 60 rubber, 250 maple/rainbowood. */
-    public static int threshold(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.threshold(species);}
+    public static int threshold(WoodSpecies species) {
+        return com.gregtech.gregtech.worldgen.TreeSpeciesRules.threshold(species);
+    }
 
     /** GT6's roll divisors: {@code rng(260)} / {@code rng(560)} / {@code rng(420)}. */
-    public static int divisor(WoodSpecies species){return com.gregtech.gregtech.worldgen.TreeSpeciesRules.divisor(species);}
+    public static int divisor(WoodSpecies species) {
+        return com.gregtech.gregtech.worldgen.TreeSpeciesRules.divisor(species);
+    }
 
     /**
      * GT6's per-species leaf counting: the hole walks up its trunk to the tree top and then checks
@@ -71,6 +77,7 @@ public class TreeHoleBlockEntity extends BlockEntity {
      *
      * @return the number of leaves of that tree, as GT6 counts them
      */
+
     public static int countTreeLeaves(Level level, BlockPos pos, WoodSpecies species) {
         // A periodic tree scan must not synchronously load adjacent chunks at the canopy edge.
         int radius = species == WoodSpecies.RUBBER ? 2 : 3;
