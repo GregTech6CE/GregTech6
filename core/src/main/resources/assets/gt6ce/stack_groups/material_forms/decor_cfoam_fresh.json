@@ -3,7 +3,23 @@
   "name": "emi.group.gt6ce.decor_cfoam_fresh",
   "contents": [
     "item:gt6ce:cfoam_fresh",
-    "item:gt6ce:cfoam_fresh_owned"
+    "item:gt6ce:cfoam_fresh_owned",
+    "item:gt6ce:cfoam_fresh_white",
+    "item:gt6ce:cfoam_fresh_orange",
+    "item:gt6ce:cfoam_fresh_magenta",
+    "item:gt6ce:cfoam_fresh_light_blue",
+    "item:gt6ce:cfoam_fresh_yellow",
+    "item:gt6ce:cfoam_fresh_lime",
+    "item:gt6ce:cfoam_fresh_pink",
+    "item:gt6ce:cfoam_fresh_gray",
+    "item:gt6ce:cfoam_fresh_light_gray",
+    "item:gt6ce:cfoam_fresh_cyan",
+    "item:gt6ce:cfoam_fresh_purple",
+    "item:gt6ce:cfoam_fresh_blue",
+    "item:gt6ce:cfoam_fresh_brown",
+    "item:gt6ce:cfoam_fresh_green",
+    "item:gt6ce:cfoam_fresh_red",
+    "item:gt6ce:cfoam_fresh_black"
   ],
   "priority": 120
 }

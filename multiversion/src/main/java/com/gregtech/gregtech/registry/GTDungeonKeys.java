@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * GT6's ten dungeon keys as plain items ({@code gregtech/items/MultiItemRandomTools.java:589-598}:
+ * References to GT6's ten canonical dungeon key items ({@code gregtech/items/MultiItemRandomTools.java:589-598}:
  * Iron, Gold, Copper, Tin, Bronze, Brass, Silver, Platinum, Lead and Plastic key, multi-item ids
  * 30000..30009).
  *
@@ -24,7 +24,8 @@ import java.util.List;
  * plain item of the mod instead of extending the material form table - GT6's keys are ore-dictionary
  * entries built from a plate, not a material form either.</p>
  *
- * <p>Each key registered here stacks to 64, GT6's multi-item default
+ * <p>GTMultiItems owns the registrations; this class resolves them without registering aliases.
+ * Each key stacks to 64, GT6's multi-item default
  * ({@code MultiItem.getItemStackLimit:392-396}).</p>
  */
 public final class GTDungeonKeys {

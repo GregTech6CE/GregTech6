@@ -18,8 +18,8 @@ import net.minecraftforge.items.SlotItemHandler;
 //?}
 
 /**
- * GT6 hopper / queuehopper container ({@code ContainerCommonDefault}).
- * Dynamically lays out slots based on {@code slotCount} matching the original GT6 layouts.
+ * Shared hopper and queue menu using the current {@code InventorySlotLayout} coordinates.
+ * Original GT6 menu behavior is audited separately from this shared layout.
  */
 public class HopperContainerMenu extends AbstractContainerMenu {
     private final IItemHandler inventory;
@@ -27,7 +27,8 @@ public class HopperContainerMenu extends AbstractContainerMenu {
     private final int playerInvY;
 
     /** Server constructor: uses real BE inventory and the correct MenuType for this slot count. */
-    public HopperContainerMenu(MenuType<?> type, int containerId, Inventory playerInv, IItemHandler inventory) {
+    public HopperContainerMenu(MenuType<?> type, int containerId, Inventory playerInv,
+                               IItemHandler inventory) {
         super(type, containerId);
         this.inventory = inventory;
         this.slotCount = inventory.getSlots();
@@ -49,12 +50,19 @@ public class HopperContainerMenu extends AbstractContainerMenu {
         addPlayerInventory(playerInv, playerInvY);
     }
 
-    public int slotCount() { return slotCount; }
-    public int playerInvY() { return playerInvY; }
+    public int slotCount() {
+        return slotCount;
+    }
 
-    private int addHopperSlots(){
-        var layout=com.gregtech.gregtech.api.inventory.InventorySlotLayout.layout(slotCount);int index=0;
-        for(var position:layout.positions())addSlot(new SlotItemHandler(inventory,index++,position.x(),position.y()));
+    public int playerInvY() {
+        return playerInvY;
+    }
+
+    private int addHopperSlots() {
+        var layout = com.gregtech.gregtech.api.inventory.InventorySlotLayout.layout(slotCount);
+        int index = 0;
+        for (var position : layout.positions())
+            addSlot(new SlotItemHandler(inventory, index++, position.x(), position.y()));
         return layout.playerInventoryY();
     }
 
@@ -104,7 +112,7 @@ public class HopperContainerMenu extends AbstractContainerMenu {
         return inventory != null;
     }
 
-    /** Override in subclasses for queuehopper permissions. */
+    /** Subclass hooks; this base menu's slot factory does not consult them. */
     protected boolean canInsertIntoSlot(int slot) {
         return true;
     }

@@ -79,7 +79,38 @@ def align_calls(rows):
     return result
 
 
-def align_java_tables(source):
+def align_material_color_column(source):
+    """Share one RGB column across a material table's different factory shapes.
+
+    Start from the factory-local argument alignment, then move six-digit RGB
+    arguments to the next four-character boundary after the widest prefix.
+    Compute the column from the declarations so longer names remain readable.
+    """
+    lines = source.splitlines(keepends=True)
+    rows = []
+    for index, line in enumerate(lines):
+        field = FIELD.match(line.rstrip('\r\n'))
+        if not field:
+            continue
+        parsed = arguments(field[2])
+        if not parsed:
+            continue
+        colors = [arg for arg in parsed[1] if re.fullmatch(r'0x[\da-fA-F]{6}', arg)]
+        if len(colors) != 1:
+            continue
+        color_start = mask(line).index(colors[0])
+        prefix_end = len(line[:color_start].rstrip())
+        rows.append((index, prefix_end, color_start))
+    if not rows:
+        return source
+    column = ((max(prefix_end + 1 for _, prefix_end, _ in rows) + 3) // 4) * 4
+    for index, prefix_end, color_start in rows:
+        line = lines[index]
+        lines[index] = line[:prefix_end] + ' ' * (column - prefix_end) + line[color_start:]
+    return ''.join(lines)
+
+
+def align_java_tables(source, *, material_colors=False):
     lines = source.splitlines(keepends=True)
     views = mask(source).splitlines(keepends=True)
     index = 0
@@ -117,6 +148,8 @@ def align_java_tables(source):
                     heads[offset].ljust(width) + ' = ' + row if is_field else row) + newline
         index = end
     result = ''.join(lines)
+    if material_colors:
+        result = align_material_color_column(result)
     if content_signature(source) != content_signature(result):
         raise ValueError('Definition formatting changed source content')
     return result
@@ -155,8 +188,11 @@ def main():
     changed = []
     for path in args.paths or definition_paths():
         before = path.read_bytes().decode('utf-8')
-        after = align_java_tables(before)
-        if after != align_java_tables(after):
+        # The compound catalogue uses one RGB column across dust, metal, gem,
+        # and other factory signatures. Other tables keep their existing style.
+        material_colors = path.resolve() == (JAVA / 'content/material/generated/CompoundMaterials.java').resolve()
+        after = align_java_tables(before, material_colors=material_colors)
+        if after != align_java_tables(after, material_colors=material_colors):
             raise ValueError(f'Formatting is not idempotent: {path}')
         if before != after:
             changed.append(str(path.relative_to(ROOT) if path.is_relative_to(ROOT) else path))

@@ -1,0 +1,2197 @@
+{
+  "batch": 74,
+  "date": "2026-10-21",
+  "baseline": "015d87c81c7232fbe4361b326215fc3239c16f55",
+  "scope": "Logistics wire/client registration, CPU foreground brightness, source arithmetic and actual cover collision/selection/resource consumers.",
+  "new_records": [
+    261
+  ],
+  "extended_records": [
+    126
+  ],
+  "counts": {
+    "original_sources": 18,
+    "current_sources": 39,
+    "shared_platform_views": 54,
+    "readability_files": 4,
+    "readability_execution_views": 6
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsDisplayCPULogic.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsDisplayCPULogic.java",
+      "sha256": "0f5fe0d1c9226eed8714a0315134c3fb9698a74bbc7aceb178021589bcde8c43",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsDisplayCPUControl.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsDisplayCPUControl.java",
+      "sha256": "febe90215b248dd49c9017b3603a8c8f5d6cbaf8e277d73d1dfd54f67074177c",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsDisplayCPUStorage.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsDisplayCPUStorage.java",
+      "sha256": "5f686c67872c05898ed799a3d3de1cb115423e9b82f3b262563376ec2c19781d",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsDisplayCPUConversion.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsDisplayCPUConversion.java",
+      "sha256": "f7f5dc1de41a260720f763e7a42cd07110e6338800c8f78ac318ea5a89e597ef",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentLogisticsDisplay.java",
+      "relative": "gregapi/cover/covers/AbstractCoverAttachmentLogisticsDisplay.java",
+      "sha256": "e4d5de7ca0a61a3f06797520458fcf2f68e49964ab2858e55336be1935199382",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentLogistics.java",
+      "relative": "gregapi/cover/covers/AbstractCoverAttachmentLogistics.java",
+      "sha256": "f741ba5dd8f6552651f51f27da58ebbb0f700b44c490755a13635c3dd096edfc",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachment.java",
+      "relative": "gregapi/cover/covers/AbstractCoverAttachment.java",
+      "sha256": "80de1877f10359939f03f7da221bc23fe0927a1368f206062b36df2efe957bf7",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverDefault.java",
+      "relative": "gregapi/cover/covers/AbstractCoverDefault.java",
+      "sha256": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "relative": "gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java",
+      "relative": "gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java",
+      "sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireLogistics.java",
+      "relative": "gregapi/tileentity/connectors/MultiTileEntityWireLogistics.java",
+      "sha256": "b70145cd90287236297bcfcc5d988c3f97346e2c056c54c3298b98e1f6f51c77",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/BlockTextureDefault.java",
+      "relative": "gregapi/render/BlockTextureDefault.java",
+      "sha256": "626f10a146021b90da190d9ac051771e8d07b9cd9c62d68955b2db5c31602c85",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/ITexture.java",
+      "relative": "gregapi/render/ITexture.java",
+      "sha256": "9ebdc62095f15a1631a06a207619b8695a01f8e60ea343bd2cd0458a68a8ee59",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "relative": "gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_WireCutter.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_WireCutter.java",
+      "sha256": "2140613e3c6af93fe2165608784081b30f1c7f4ee7cc61f65eaacb6ed9784ce7",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsDisplayRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsDisplayRules.java",
+      "sha256": "ed363fec418fc0ca82a80d6364970e05409956bcc7263e4a1be5b05dd5a29805",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/cover/CoverPlateGeometry.java",
+      "sha256": "72a550692cde6a330c027c438b4973b868541b2363817d236bd7ecd8e1f212c5",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "sha256": "0bceee14576d7739168219403b783c2567fc114c931b2a9d82156fdd4ab71956",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "sha256": "efb4523a171850c48c588c6305fbe4474ab390979ec2f9f7c85a8b16eb7647bb",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java",
+      "sha256": "16e4772103aa0410484feccd7871e1bb4512ea40f1f96ae840ceee630d1473fb",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "sha256": "93becfca61c7c452071cb05cd7ada45b55deadab5bc812ee96d83b0ca9d50383",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/ComponentCoverFallbackRenderer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/ComponentCoverFallbackRenderer.java",
+      "sha256": "c5ac95628b8654fdfaf08e3b2e1be0bcc7c5a02492f29de7aca13f9cd8fda1ae",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/TankCoverRenderer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/TankCoverRenderer.java",
+      "sha256": "37ef661200515f9df5a45150813ee4314461a74976ec054f56ce5b5e1971a40e",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "sha256": "9ed7e14ab97d949f6b9a78905c8ad4a49c44c45784dffdc38596de12726ae64f",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverSignals.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverSignals.java",
+      "sha256": "4ba0292ca7e480709fa8eeec46bb1930d1985431e9b7fb5197f14140cf974a1f",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "sha256": "239a415d2d9f5150482f2ea1e70feddc01cbca65a882f71d3144e4575dce9fc5",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "sha256": "fe1aec11d2c5a9e4585bcae938748133610cfaa87a47ab22a461ee0d64265ce4",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "sha256": "a617246e9ccb45104a08ad12482c5e2fd5d9795c105dd4c1aa5d7dd866c33fd2",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "sha256": "6166dba10593ca2f9ca144674fe8db678b4966b58781850759ef9187150a586d",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "sha256": "0793967eee2ce284e6c5bd1497755e409a46f98494992fe1f94fad6f6b1042df",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "sha256": "9524960f4a2e9088071ef04d6b93c1beb75bc37a103c820bce8216bb9f72b552",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "sha256": "7bcdaf6a00f27a0c63bf255ff2fa931293a0ac0df773f6fc2d85dd61bd96b36c",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java",
+      "sha256": "93ba17ff129cff2360f06f190ce418b8dc8bad4a90e26f75c9d780ac3b3d34c7",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverPlacement.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverPlacement.java",
+      "sha256": "bf1ace46e49dce282be4e8e89cf5bd68dbfcc99f8a6d7dbea4a85e32f3ce1d94",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "sha256": "98301fff608998c7bdc18b18308e5f836543a49971fb5838ce29c6f31e22cd99",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionSpec.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionSpec.java",
+      "sha256": "d94589efc39b2a6a02e0bf84dd07fefc6e42c2479a5f2f95f4b4914d7c0d0a2f",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+      "sha256": "5389ba014c90d6d6534054e7f30423002397254a4545e4a9998b0f89b75b7efb",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+      "sha256": "33d2153ced01a710b2baa446656aba7185787425482312566b2adc38d1ea31ff",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LogisticsRegistries.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LogisticsRegistries.java",
+      "sha256": "8be0ac76ac2b05edc596340a0466fcce39bfca52fc26ec1d754607827f33e515",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java",
+      "sha256": "e6bb4b8774bd7e103fe1c0f5275bd41dcd85e9f3946023e907618324bbdd4d2d",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/build.gradle",
+      "relative": "multiversion/build.gradle",
+      "sha256": "59958be8c7402d9d93758b00329c486c900ed4510b5e5000e513a240d7c751b4",
+      "scope": "Named display texture/brightness, redstone and physical/selection/registration consumers only; not whole-file acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "platform": "forge",
+      "sha256": "acc6cef27e0aa1fc4f65a70b19630ee1bd011938dff0e352fc22debe11d02a64",
+      "tokens": 1462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "platform": "neoforge",
+      "sha256": "409fcdb4ade4e7747e400e3991f3f9ef292ff0662a239d69c00b6052da818e16",
+      "tokens": 1909
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "platform": "forge",
+      "sha256": "699a8c195881a64326226739b8975d4d6f54956f1ced054cec6dd1e334d0ab2a",
+      "tokens": 904
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "platform": "neoforge",
+      "sha256": "108d0368be97cee29e1eba01d12ccac82483d506de1e97fbb22b417617896eef",
+      "tokens": 890
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java",
+      "platform": "forge",
+      "sha256": "1bad82324ab7640d40a221da88df0d7ec8e98e8b44252525ee73aa6b07525754",
+      "tokens": 960
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/CoverSurfaceRenderer.java",
+      "platform": "neoforge",
+      "sha256": "6d888283350d7d3750b16910ea8c557795893ea54ef84fa4d176b28ac866382e",
+      "tokens": 954
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "platform": "forge",
+      "sha256": "9308c437079a1d45cc69594f507620e20c40b8cdc94d52f33447804b05398cff",
+      "tokens": 2039
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ArmRenderHelper.java",
+      "platform": "neoforge",
+      "sha256": "aa51063e87e2de9cd4bb4e711fc29520e5c8b36b01adb6ede7fdf5923e03829b",
+      "tokens": 2035
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ComponentCoverFallbackRenderer.java",
+      "platform": "forge",
+      "sha256": "a43687e3b4f915583d0654ed3ca4aea5dd08bf91f121ee095593cbca0382ab69",
+      "tokens": 526
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ComponentCoverFallbackRenderer.java",
+      "platform": "neoforge",
+      "sha256": "b43aafd600e8c0d6b03ed6d37094d75051006414ccbc509aac3b744ceb65a88a",
+      "tokens": 532
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/TankCoverRenderer.java",
+      "platform": "forge",
+      "sha256": "ef56930a89075c6294aa29eac7452b788320edb1e548650606c9e784b6fee7c1",
+      "tokens": 181
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/TankCoverRenderer.java",
+      "platform": "neoforge",
+      "sha256": "ef56930a89075c6294aa29eac7452b788320edb1e548650606c9e784b6fee7c1",
+      "tokens": 181
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "platform": "forge",
+      "sha256": "17204e46b20053d74c420eabc1dca0807f78d491819d993f811558694b6624ef",
+      "tokens": 146
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCpuDisplay.java",
+      "platform": "neoforge",
+      "sha256": "17204e46b20053d74c420eabc1dca0807f78d491819d993f811558694b6624ef",
+      "tokens": 146
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverSignals.java",
+      "platform": "forge",
+      "sha256": "317eb164a3c654bcfc649c459aae46067b10a65b4eed491745bd5cccc77eda6f",
+      "tokens": 92
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverSignals.java",
+      "platform": "neoforge",
+      "sha256": "317eb164a3c654bcfc649c459aae46067b10a65b4eed491745bd5cccc77eda6f",
+      "tokens": 92
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "forge",
+      "sha256": "c39b9c725ae60efb7cfa8812b4a0d9cb81c93acc649fe00c524eaaa1da48c9e5",
+      "tokens": 1382
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "neoforge",
+      "sha256": "9807cebf9e3d13239ba5e225e3497ad43499c8cb715199e54392c15339dbf988",
+      "tokens": 1420
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "platform": "forge",
+      "sha256": "413951c6812471684b0e88925fab4f20eb6d762fb0690e198711ae190b8530a2",
+      "tokens": 23
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "413951c6812471684b0e88925fab4f20eb6d762fb0690e198711ae190b8530a2",
+      "tokens": 23
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "a23008d23524e9e4048e45fb23202ace95993d4f7ea4b3e383598040b0cf7afd",
+      "tokens": 1720
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "6c5db37b979b6ee637e603ebf51c20f89d4efac21b296ea56a537572d0ad85d7",
+      "tokens": 1729
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "8f75c854016b37893f65134d4dd9832e772ab32aa220d15fd56d021b272bb1a2",
+      "tokens": 3094
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8d2c4585751f4788a97a5a3ff7d8fd663b99fab990666c51f1b379a30383f3db",
+      "tokens": 3135
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "platform": "forge",
+      "sha256": "a8fb9c1dd50d1e005619743f76da062f2e0ffeb5c25dda677ca33ce5b49fa274",
+      "tokens": 381
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsWireBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "4fc2a5d3874ee0d37091c3b867cfd44acd275184532f734ec93d6f56a71efc8a",
+      "tokens": 377
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "forge",
+      "sha256": "dc490ac45e02d179d0b7aeb9b84218125468a7a54d06cb351e39e5b0bc63ef92",
+      "tokens": 1112
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "ecdbf4b5bb99024c9eb5872fec9762576367af7286523660c32e4356f861bfd7",
+      "tokens": 1287
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "forge",
+      "sha256": "ae502da511a56f0c07da3805b05e08cf2741e441120d9f1768d9e30c2e371187",
+      "tokens": 1230
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "neoforge",
+      "sha256": "81eee9afe81d7cb3ae02aee0f41534df761984bb4fff274e5597a23156718abc",
+      "tokens": 1469
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java",
+      "platform": "forge",
+      "sha256": "0284296062b8cde9a961d5fbd5fafb3e53ed4ae198e0d98ca48c21c26cc4574c",
+      "tokens": 477
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverFaceCoordinates.java",
+      "platform": "neoforge",
+      "sha256": "0284296062b8cde9a961d5fbd5fafb3e53ed4ae198e0d98ca48c21c26cc4574c",
+      "tokens": 477
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverPlacement.java",
+      "platform": "forge",
+      "sha256": "ceba84bd0502b8e2bc30661d6aec71757202f01c2eb07ac0b1f6abfac9604bc7",
+      "tokens": 275
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverPlacement.java",
+      "platform": "neoforge",
+      "sha256": "ceba84bd0502b8e2bc30661d6aec71757202f01c2eb07ac0b1f6abfac9604bc7",
+      "tokens": 275
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "forge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "neoforge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "forge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "neoforge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "forge",
+      "sha256": "6e15bb8594ec00c9b83c68a7c4d529f324afa1429efa580673c3ecea383f30af",
+      "tokens": 1284
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractions.java",
+      "platform": "neoforge",
+      "sha256": "c70d0ffd0ede2fc6dc7eaf164cb1e55a6c5ceccb13c7e4d2b7c1a86d45e40ee7",
+      "tokens": 1295
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionSpec.java",
+      "platform": "forge",
+      "sha256": "a4b72945d9cccbc7c375067505943b061b43bb23a0fc094cb97bb1f9c77d9f85",
+      "tokens": 423
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/ToolInteractionSpec.java",
+      "platform": "neoforge",
+      "sha256": "3bc371a981ea48ef7ada219ccc72e9ce3fbe1aafd13ec4d1447ad5cf2bbd6b9a",
+      "tokens": 441
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "sha256": "0fd1f86e16e3ef80042f578e50b1543c9eb8d36b6c539c843afd11fab3d494ce",
+      "tokens": 3637
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "sha256": "e7d2e2be99fe3c7cbc2493c2f098246d336cd980ac0917de903e50db08914062",
+      "tokens": 3745
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "forge",
+      "sha256": "c6518c4b280e8572a840c3a244a2e616a2b0cab78a50c17a65dc9a45694639c9",
+      "tokens": 948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "neoforge",
+      "sha256": "cfdf1a224d8701d6778b4e214609745dcb6670fd72a1bdb2c69902a7a07bb4d4",
+      "tokens": 973
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/texture/atlas/sources/DirectoryLister.class",
+        "sha256": "5aa0afdede9d3f0e9e2236ea73b03d56581ca12c45792a3d44d74b1bc96d27d9",
+        "bytes": 5989
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/RenderType.class",
+        "sha256": "792ee1761ca6d4592df719fce19454630397abd9645a5b90a8a51104bcaa1f68",
+        "bytes": 33713
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/client/renderer/texture/atlas/sources/DirectoryLister.java",
+        "sha256": "963f73bc9adae756267564aa6f1f48e047c09f4a55b12a6c836b975c72e398de",
+        "bytes": 2045,
+        "extracted": "work/logistics-client-audit-20261021/neo-DirectoryLister.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/client/renderer/RenderType.java",
+        "sha256": "b551315da826aa2ce986c9a8915b1330230e10c8b58d6630113cde2f459b73da",
+        "bytes": 62098,
+        "extracted": "work/logistics-client-audit-20261021/neo-RenderType.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.client.renderer.texture.atlas.sources.DirectoryLister",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/texture/atlas/sources/DirectoryLister.class",
+        "output": "work/logistics-client-audit-20261021/forge-DirectoryLister.javap.txt",
+        "sha256": "02973e6f1b4ee5b71497f98b2e63e92f7b9ec6abd1ecdf7c11e86d728dea9421",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.client.renderer.RenderType",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/RenderType.class",
+        "output": "work/logistics-client-audit-20261021/forge-RenderType.javap.txt",
+        "sha256": "9880b2a5739418b921983602b490b677274cabab4df68eea07bedba4ffce4623",
+        "kind": "Read-only javap; no compilation or target initialization."
+      }
+    ]
+  },
+  "assets": {
+    "assets": [
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/underlay.png",
+        "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+        "bytes": 238,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/0.png",
+        "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+        "bytes": 141,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/1.png",
+        "sha256": "ddb073e9fc3eb1187b55574ed0d798990df17f0bde324bf9b550a3b6f76786f0",
+        "bytes": 174,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/2.png",
+        "sha256": "91aaf8e599dc2a0091c89fa92f84ebb3b44e61c60e48ae9a886a6c2843e53199",
+        "bytes": 198,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/3.png",
+        "sha256": "55924eb8dd146e2c0958ada15ed6e9559a2e2033817646dc3112147e4b479eda",
+        "bytes": 200,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/4.png",
+        "sha256": "0bf9902173b54301bd4b87f953c5550c6820ff3f4d0e77bb8a432aaf8e080c8c",
+        "bytes": 201,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/5.png",
+        "sha256": "ee7aefbef416b1561409f91b75cede54d5d76e13834a610d304d4a0ad0bddb90",
+        "bytes": 199,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/6.png",
+        "sha256": "9cdb025ac69fa2cb14fdc93787d7b94a111f54716b384fbcd42c98734326b541",
+        "bytes": 199,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/7.png",
+        "sha256": "9c88f18f9e89fab118d97e80b4344d51034c25d84cdbfb0492bbb1d920947ccd",
+        "bytes": 200,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/8.png",
+        "sha256": "79657b308dd56b1859c7f913c684c7943658d6bbc52fe394993145ae123dc3bf",
+        "bytes": 201,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/9.png",
+        "sha256": "2708353ec8c9b4abee3636069c7168caa2c042afd04c27d6f61f0ba71f78e6e9",
+        "bytes": 199,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_logic/10.png",
+        "sha256": "c9d63d47b83695d02d7f91de3d3c8f84615e9e4a602583569bb6136251163f6e",
+        "bytes": 199,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/item/technological/logistics_display_cpu_logic.png",
+        "sha256": "665360aca97d5a003b20dfae32ef495862fee6e0c317932ec68ba5313304477e",
+        "bytes": 305,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/underlay.png",
+        "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+        "bytes": 238,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/0.png",
+        "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+        "bytes": 141,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/1.png",
+        "sha256": "a16713d81a6b87067bad526d481a9273fcb7e7c9d20fabbdbe6e458aae3535f6",
+        "bytes": 166,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/2.png",
+        "sha256": "f964a3af0d7620aada03a039a436d3fc3cce0541c7caffb0e8d95b0cb0239d2c",
+        "bytes": 185,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/3.png",
+        "sha256": "fde08d917ef22126bb082e07ccb2c9c1b4b62ed20d55bf6bf590a00b4292272b",
+        "bytes": 187,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/4.png",
+        "sha256": "dee429be98d910706b2cdb506eec7ef53c1c80df0706a62fd4b729ea58a32d9a",
+        "bytes": 187,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/5.png",
+        "sha256": "4eb0dd5606a00ff10b10e010f1a7a0cd40ec08584921eabe03b15da8d8a8c7b2",
+        "bytes": 186,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/6.png",
+        "sha256": "bfd8714dafcde800775e008b3942e7002d7d89b88b15802230d00263f4c3ba92",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/7.png",
+        "sha256": "7353fdf2492d6ff817f39c5c24fa7e7233b70d90270d31100b0a34b9da6f1524",
+        "bytes": 187,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/8.png",
+        "sha256": "0f58f3c49801e7bed53d7c037bcd7fb463444abed5d01c49942f67dccf52cfd9",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/9.png",
+        "sha256": "9064d7fe93be93d8729c9930fc978afa85f318417dc6af421f551287208d0b39",
+        "bytes": 186,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_control/10.png",
+        "sha256": "ea7afd6c88024b50aff91cebe472d6ca711da3bbc187935ff678a3b5b13929b3",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/item/technological/logistics_display_cpu_control.png",
+        "sha256": "7d5ba87aa6882cffcd130db26a8936fe64dd0a1274293c60f17ebb6f38719240",
+        "bytes": 292,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/underlay.png",
+        "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+        "bytes": 238,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/0.png",
+        "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+        "bytes": 141,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/1.png",
+        "sha256": "67b14e87c6cbb928aafff7edcda0f23e3fb5f002ce1c54455b5781e5a2516d14",
+        "bytes": 162,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/2.png",
+        "sha256": "8496effa784666ec2cbb8854771bdbda475156b77722c36024421c44bfae44c0",
+        "bytes": 169,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/3.png",
+        "sha256": "488518fc181723fa04f7e507d1d1f5dfc6c6dc522292346521e8fe31b1e68127",
+        "bytes": 186,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/4.png",
+        "sha256": "7e3d493b8b26647a75f5a7d4d52f2fa7b616bce0786dd14e675458bd9e31627c",
+        "bytes": 181,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/5.png",
+        "sha256": "68b389d44e92e69e46eb30a90ce16c584e63f54890eda6e0e4f43203eb16d06f",
+        "bytes": 184,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/6.png",
+        "sha256": "e6365e2eab53d79ba5ea95d54aad02190fffaebe4ac85e9928c76aea39345318",
+        "bytes": 179,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/7.png",
+        "sha256": "db35b0ecb881f8d31ad272ae90ae773f66ca1422fb118542c989dc4b879e411a",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/8.png",
+        "sha256": "f4e080484df4705d7416c1318fa580e05118791efbc3971c20d44915d35756f3",
+        "bytes": 182,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/9.png",
+        "sha256": "984cf20743b5c7d97f815ffd989bcc30cf207dae4756ef85a540e92891586c03",
+        "bytes": 186,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_storage/10.png",
+        "sha256": "eff5b1834d08cc13ad75475a3cdef41fe9dd2df6dce7c464be7f3d58c6662575",
+        "bytes": 179,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/item/technological/logistics_display_cpu_storage.png",
+        "sha256": "b8a007d0f4398dde65e037597ddb962af613f8b6b661d2317909f9f68207b3b0",
+        "bytes": 287,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/underlay.png",
+        "sha256": "e70cbf443b105ededbe4b8432bd62d406254298a4bf398b35c44f54cf4850a5d",
+        "bytes": 238,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/0.png",
+        "sha256": "5101f19546ee1f4f844881329954759fdf947e204698e8c2eb96df27cdaea91c",
+        "bytes": 141,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/1.png",
+        "sha256": "58c2f2fef225d31855f5c7b8f8c66fea5021205d0787850ff56590c72b989191",
+        "bytes": 168,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/2.png",
+        "sha256": "81135e7b3f91074d37ffe97fe1505732ff40fa84809cfb0f1aa0c1e38dadc618",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/3.png",
+        "sha256": "1d9209188cfc2c2a878e66e1212ce4ec0cef728e044c21aaafe6d28f432934c6",
+        "bytes": 192,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/4.png",
+        "sha256": "488dbf9236a9b5cd6546c3caca288e88d5d4ca40d8ffbb19ed8558e4c8df4237",
+        "bytes": 190,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/5.png",
+        "sha256": "de69d9b505ae7b4106f23a5ab52923371af29b8162661d47411e5d3fc7eb1c60",
+        "bytes": 191,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/6.png",
+        "sha256": "efab177363dfc2f7db8bcf44ccb3a8cd2ed9c7917ed377430bd0bb83e4d6a1d5",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/7.png",
+        "sha256": "4f8697cdbc8df107da84eb0da031895c8277ed108960f0d523a64cb0ed17551d",
+        "bytes": 193,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/8.png",
+        "sha256": "0d5e7d8fbbb275f389db419c701cc6c6933e7b9dbcd68960086d25482f6630d5",
+        "bytes": 190,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/9.png",
+        "sha256": "f222a4f7fc0b8c3e38fd8aed7a17fcd40c5e5e5e1e86441fdd084a54c4118a15",
+        "bytes": 191,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/display/cpu_conversion/10.png",
+        "sha256": "d4f8e1ac7775e3f3f3d3f5ab7c2710b49551999a8c34f6b19e0e079fffd56b7b",
+        "bytes": 188,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/item/technological/logistics_display_cpu_conversion.png",
+        "sha256": "d36662e023b9811943d89d5a8058bba558090c81c23ebe42c49a7e4a3e10091a",
+        "bytes": 293,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/machines/covers/logistics/base.png",
+        "sha256": "4aaeb23df101d2b097687ad1b9bf63ac943ad2d488a83748a2e7e7c379af9c06",
+        "bytes": 319,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/logistics_wire.png",
+        "sha256": "1b383e640e9882b2cf927dde24cc0a1563c23e025224bb2846946f6a958e731e",
+        "bytes": 548,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/textures/block/iconsets/logistics_wire_overlay.png",
+        "sha256": "6a67c828c68a9fc9be55ff7ef53dc837d66413432d5c5a1cc129ffcd3c1ad046",
+        "bytes": 578,
+        "png": {
+          "width": 16,
+          "height": 16,
+          "chunk_crc_and_deflate_valid": true,
+          "limit": "Storage validation only; no pixel equivalence, atlas baking or client appearance acceptance."
+        }
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_center.json",
+        "sha256": "f75b2c96f1fd8034e47317b67c7f8d81201e6888008dc4a71fb8b0f0a9ad5767",
+        "bytes": 2440,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  5
+                ],
+                "to": [
+                  11,
+                  11,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  5
+                ],
+                "to": [
+                  11,
+                  11,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_down.json",
+        "sha256": "b9c39cb679a36718c1badac1706180d328d23134237d87b693e8d212d0fce816",
+        "bytes": 2438,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  0,
+                  5
+                ],
+                "to": [
+                  11,
+                  5,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  0,
+                  5
+                ],
+                "to": [
+                  11,
+                  5,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_up.json",
+        "sha256": "aeb8655faec2984b35d20e8c1cfbc4782f192f2a225c731effc1de5dd4b26d53",
+        "bytes": 2442,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  11,
+                  5
+                ],
+                "to": [
+                  11,
+                  16,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  11,
+                  5
+                ],
+                "to": [
+                  11,
+                  16,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_north.json",
+        "sha256": "05385e234bd0f03f115fcc181837dd24bbbe071fa659ed339b58d685c3a50873",
+        "bytes": 2438,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  0
+                ],
+                "to": [
+                  11,
+                  11,
+                  5
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  0
+                ],
+                "to": [
+                  11,
+                  11,
+                  5
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_south.json",
+        "sha256": "2d447ad1ce1f6033e9563e1b15d15cf6adb4acecce6435a7c734a7ee04e7b489",
+        "bytes": 2442,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  11
+                ],
+                "to": [
+                  11,
+                  11,
+                  16
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  5,
+                  5,
+                  11
+                ],
+                "to": [
+                  11,
+                  11,
+                  16
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_west.json",
+        "sha256": "44e2d4064dd7b30b85fba27923b6f82f5b156487908919c933a4388b0a3960d2",
+        "bytes": 2438,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  0,
+                  5,
+                  5
+                ],
+                "to": [
+                  5,
+                  11,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  0,
+                  5,
+                  5
+                ],
+                "to": [
+                  5,
+                  11,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/logistics/logistics_wire_east.json",
+        "sha256": "57050f2970d87a1eb4b2e52c393f594b9da012a2056c9d27c722c423e432b79e",
+        "bytes": 2442,
+        "kind": "JSON parsed; named paths only, not native model baking.",
+        "source_loader": "forge:composite",
+        "layers": [
+          {
+            "name": "0",
+            "boxes": [
+              {
+                "from": [
+                  11,
+                  5,
+                  5
+                ],
+                "to": [
+                  16,
+                  11,
+                  11
+                ]
+              }
+            ]
+          },
+          {
+            "name": "1",
+            "boxes": [
+              {
+                "from": [
+                  11,
+                  5,
+                  5
+                ],
+                "to": [
+                  16,
+                  11,
+                  11
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": "core/src/main/resources/assets/gt6ce/blockstates/logistics_wire.json",
+        "sha256": "40d3046fbcc0765467e6e0b4e7478f3fcfc8f9d7f0fe8e8e6aaa965bdc7e73e5",
+        "bytes": 1063,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/item/logistics_wire.json",
+        "sha256": "69ab99ba6c466ba6dcf9c5314787382fa5ca91abf4afa9002e74ecfa184cd3a4",
+        "bytes": 4952,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "core/src/main/resources/assets/minecraft/atlases/blocks.json",
+        "sha256": "4530a6168ff623de4c37d56d7b43c590304d1bbfe37bbb61c4af5738d787ca20",
+        "bytes": 3017,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/item/logistics_display_cpu_logic.json",
+        "sha256": "f1f3877093127157d139de9316c2325e1ee7a585a5600dcb78399b783ab7ec86",
+        "bytes": 133,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/item/logistics_display_cpu_control.json",
+        "sha256": "91011d2c2275dd142f78bae282a51c49c9b72633dc2a9b2b6c367546f5af1630",
+        "bytes": 135,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/item/logistics_display_cpu_storage.json",
+        "sha256": "348a9a7964606abb16f8608036a4d951c97c33e8032b7e2e3020f1adbf3b2b48",
+        "bytes": 135,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      },
+      {
+        "path": "multiversion/src/main/resources/assets/gt6ce/models/item/logistics_display_cpu_conversion.json",
+        "sha256": "03496536c76aef28d41e17d8ef9d4d2f81cb0661b30baf613d4e361311aefa75",
+        "bytes": 138,
+        "kind": "JSON parsed; named paths only, not native model baking."
+      }
+    ],
+    "png_count": 55,
+    "json_count": 14,
+    "cpu_frame_and_underlay_png_count": 48,
+    "atlas_directory_present": true,
+    "wire_multipart_models": 7,
+    "original_pixel_comparison": "Not performed: the preserved original source tree has texture references but no matching original PNG inputs were found in this bounded lookup.",
+    "limits": [
+      "No atlas baking, texture upload, render output, visual inspection, resource reload or game/build executed.",
+      "The current source loader is rewritten by the declared Stonecutter JSON rule for Neo; reading that rule does not execute the Gradle task."
+    ]
+  },
+  "readability": {
+    "baseline": "015d87c81c7232fbe4361b326215fc3239c16f55",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java": {
+        "before_raw_sha256": "ba7c5d703a09fdb39650de5fda53a621d304bc5333bae9723f777ebefec836d7",
+        "after_raw_sha256": "0bceee14576d7739168219403b783c2567fc114c931b2a9d82156fdd4ab71956",
+        "scoped_regions": [
+          [
+            "protected InteractionResult interact(",
+            "public void onRemove(",
+            {
+              "next": "neighborPos"
+            }
+          ],
+          [
+            "public void onPlace(",
+            "public VoxelShape getShape(",
+            {
+              "next": "updatedState",
+              "adjacent": "neighborPos",
+              "ours": "connectedHere",
+              "theirs": "connectedThere",
+              "blocked": "coverBlocksConnection"
+            }
+          ],
+          [
+            "public VoxelShape getShape(",
+            "public VoxelShape getCollisionShape(",
+            {
+              "e": "entityContext"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1462,
+            "execution_sha256": "840a21d9977eb0623a32304f00b579e893072c860d057798e09db918d83a34c2",
+            "before_lines": 164,
+            "after_lines": 186,
+            "before_max_line": 206,
+            "after_max_line": 161
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1909,
+            "execution_sha256": "e7ca3d7f1e7e9067989dd5e3111cf609b776f0f5cc0278d39d16e912c4d01f7e",
+            "before_lines": 188,
+            "after_lines": 222,
+            "before_max_line": 275,
+            "after_max_line": 161
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java": {
+        "before_raw_sha256": "fdb6d27181b67f7454b68e785f7f0560c02f4a716dfa91f5125dd6b7791e8579",
+        "after_raw_sha256": "efb4523a171850c48c588c6305fbe4474ab390979ec2f9f7c85a8b16eb7647bb",
+        "scoped_regions": [
+          [
+            "public final class LogisticsCoverRenderer",
+            null,
+            {
+              "be": "blockEntity",
+              "vc": "vertices",
+              "out": "surfaceOffset"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 904,
+            "execution_sha256": "6faff73461e201aecfd3318174581504b83968fa1b107fd65078d02d60832b57",
+            "before_lines": 87,
+            "after_lines": 93,
+            "before_max_line": 137,
+            "after_max_line": 123
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 890,
+            "execution_sha256": "8d1c5668bb9c4a1b3922c4bf4fe296d904e4f3fd655e82e5a43e09c7a7c75251",
+            "before_lines": 87,
+            "after_lines": 93,
+            "before_max_line": 137,
+            "after_max_line": 123
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LogisticsRegistries.java": {
+        "before_raw_sha256": "3df95409d2786787f8168575c1fafc9bd004db18e69ea078e1dd74a07adf54ca",
+        "after_raw_sha256": "8be0ac76ac2b05edc596340a0466fcce39bfca52fc26ec1d754607827f33e515",
+        "scoped_regions": [
+          [
+            "public static java.util.Set<String> queuedBlockIds(",
+            "private LogisticsRegistries(",
+            {
+              "h": "holder"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Actual original connector and all fourteen logistics covers in the existing GT namespace. */",
+            "/** NeoForge registration boundary for the logistics wire block, item and block entity. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 449,
+            "execution_sha256": "7755c6898286dbe55fa52f03ec16f073a3fd6b94d6339725abf3ca678f8d5343",
+            "before_lines": 25,
+            "after_lines": 42,
+            "before_max_line": 307,
+            "after_max_line": 123
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java": {
+        "before_raw_sha256": "c86cb371186cc9f3531496cc0710b4f5c940d5ec01a8ddd72fba2a045a23c10b",
+        "after_raw_sha256": "33d2153ced01a710b2baa446656aba7185787425482312566b2adc38d1ea31ff",
+        "scoped_regions": [],
+        "comment_corrections": [
+          [
+            "/** Real face-cover renderer on the actual six-way connector. */",
+            "/** Registers shared logistics face rendering for the core, bound ports and wire. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 196,
+            "execution_sha256": "bf4a6ad02acdcce2ae4c4219655a28acc59eea3d0428f1cf89f759c0faddd576",
+            "before_lines": 16,
+            "after_lines": 25,
+            "before_max_line": 140,
+            "after_max_line": 116
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, explicit local renames and listed evidence-backed comment corrections only. No gameplay changes."
+  },
+  "finite_source_witnesses": {
+    "kind": "Named source facts and six finite arithmetic samples; no target classes, client, world or model baking executed.",
+    "display_families": [
+      {
+        "name": "cpu_logic",
+        "original_glowing_frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "original_underlay_glowing": false
+      },
+      {
+        "name": "cpu_control",
+        "original_glowing_frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "original_underlay_glowing": false
+      },
+      {
+        "name": "cpu_storage",
+        "original_glowing_frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "original_underlay_glowing": false
+      },
+      {
+        "name": "cpu_conversion",
+        "original_glowing_frames": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "original_underlay_glowing": false
+      }
+    ],
+    "display_samples": [
+      {
+        "used": 0,
+        "total": 27,
+        "signal": 0,
+        "visual": 0
+      },
+      {
+        "used": 1,
+        "total": 27,
+        "signal": 1,
+        "visual": 1
+      },
+      {
+        "used": 8,
+        "total": 27,
+        "signal": 5,
+        "visual": 3
+      },
+      {
+        "used": 26,
+        "total": 27,
+        "signal": 14,
+        "visual": 9
+      },
+      {
+        "used": 27,
+        "total": 27,
+        "signal": 15,
+        "visual": 10
+      },
+      {
+        "used": 28,
+        "total": 27,
+        "signal": 15,
+        "visual": 10
+      }
+    ],
+    "brightness": {
+      "original_foreground_own_brightness": 240,
+      "original_foreground_ambient_independent": true,
+      "current_foreground": "Same ambient/neighbor packed light as the underlay, passed to a lightmapped cutout vertex.",
+      "limit": "Placed display foreground only. Numeric brightness encodings differ between versions; not a world light-source claim or shader-pack screenshot comparison."
+    },
+    "ordinary_wire": {
+      "original_id": 24901,
+      "diameter_pixels": 6,
+      "hardness": 1,
+      "resistance": 2,
+      "current_both_platforms_match_named_parameters": true,
+      "selection_and_collision": "Raw connector shape is supplemented by configured CoverCollisionMixin and CoverPlacement/CoverWorldInteraction; no missing-cover-collision finding.",
+      "node_registration": "Neo queuedBlockIds is consumed by remaining-icon skip inventory; its fallback factory is not evidence of a second live registration."
+    },
+    "tool_cost_extension": {
+      "raw_success_return": 10000,
+      "ordinary_wire_cutter_factor": 100,
+      "original_requested_damage": 100,
+      "current_requested_damage_forge": 1,
+      "current_requested_damage_neoforge": 1,
+      "limit": "Ordinary successful connection/disconnection; requests precede creative/unbreaking/material effects; no claim electric tools bypass charge checks."
+    },
+    "client_chain": "Previous CPU usage -> setDisplay signal/visual -> save/update tag or component sync -> registered shared renderer -> directory atlas sprites -> current lit cutout vertices.",
+    "excluded_false_positives": [
+      "Four display families and 48 current frame/underlay PNGs exist, with a directory atlas source.",
+      "Both native paths register renderer callbacks for core, wire and multiblock port.",
+      "Wire blockstate references seven actual composite models; Stonecutter declares loader rewriting for Neo JSON.",
+      "Configured mixins provide full tool/cover selection and attachment collision beyond the raw wire block shape.",
+      "getDamageValue/charge checks in matchesTool prevent claiming every electric cutter works empty just because the Neo block has a direct branch."
+    ]
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "scope": "User-owned material layout unchanged."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "scope": "User-owned material layout unchanged."
+    }
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, build or push.",
+    "Native javap and source extraction are read-only evidence, not running the renderer.",
+    "Source/resource existence and formula samples do not verify visual appearance, original PNG equivalence, actual redstone or saved-world/client acceptance.",
+    "The full project audit, remaining scheduling, runtime lifecycle and all other original feature comparisons continue."
+  ],
+  "previous_goal_turn": "Progress: committed 015d87c81 with network/delegation/lifecycle evidence, five readable sources and durable ongoing project state.",
+  "root_revalidation": {
+    "kind": "Named source/entry identities; complete selected execution streams after only declared local renames; raw literal positions, comments/directives, protected user files and added documentation.",
+    "original_sources": 18,
+    "current_sources": 39,
+    "shared_platform_views": 54,
+    "readability_files": 4,
+    "readability_execution_views": 6,
+    "native_artifacts": 2,
+    "native_entries": 4,
+    "readonly_javap_views": 2,
+    "ledger_contiguous": [
+      1,
+      261
+    ],
+    "resource_pngs": 55,
+    "resource_jsons": 14,
+    "new_or_added_local_links": 20,
+    "protected_materials_unchanged": true,
+    "raw_literal_positions": [
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+        "platform": "forge",
+        "count": 18,
+        "ordered_position_sha256": "ecbed90ed46deecd63d3cfd9b2de1e1f203cd5b2c3393685f709dd39604f8d0d"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+        "platform": "neoforge",
+        "count": 19,
+        "ordered_position_sha256": "31cf2d004ab30993779659a6f167f615ffb91263b8114ac37ed75164c9822004"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+        "platform": "forge",
+        "count": 34,
+        "ordered_position_sha256": "6e2bf99cd57fedee98f4ac5ed4b704cd6ee00d1f982bcec27332a95be47b9adf"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+        "platform": "neoforge",
+        "count": 32,
+        "ordered_position_sha256": "7b4664be7c14cf0be9b728bf8b6e209b4d80064950414308c6b1a269e33a9c26"
+      },
+      {
+        "source": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/LogisticsRegistries.java",
+        "platform": "neoforge",
+        "count": 8,
+        "ordered_position_sha256": "21cfb2805003853294cb571aa5c1dee9ae516189fa44a34c5bba55ce490dfe17"
+      },
+      {
+        "source": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+        "platform": "neoforge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      }
+    ],
+    "target_execution_build_or_tests": false
+  }
+}

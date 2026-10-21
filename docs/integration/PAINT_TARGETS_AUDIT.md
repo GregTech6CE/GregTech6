@@ -1,0 +1,49 @@
+# 喷漆／清漆目标、动物消耗与扩展器同步核查
+
+2026-10-21，第八十批，基线 `46750bf20`。本批追实际原版喷罐行为、当前目标选择、满／用过／空容器、草方块与动物入口，并由清漆路径扩到万能代理和八种扩展器的更新数据。新增ALIGN-273–274，扩132／135；正式274条含已修与政策，不是274个待修问题。来源、源分支矩阵和源码保持证据见[回执](verification/paint-targets-audit-20261021.json)。
+
+## 已有目标与消耗
+
+32种颜色喷罐身份由GTMultiItems共同循环注册；清漆的两种身份来自GTMultiItemsGen。Forge多物品和Neo MultiBehaviorItem的onItemUseFirst都通向ItemBehaviors.useOn，清漆前缀再进BehaviorSprayColorRemover；颜色罐由PaintSprayItem专门处理。旧清漆注释关于没有颜色罐、没有Paintable和无法确定染色草的说法已不符合当前代码，本批予以纠正。
+
+当前PaintTargets把五种现代原版染色族展开为80个身份，再加入三种未染色入口，共83个声明目标；16种请求共1328个有限目标字符串样本，其中80个同色无操作。原版显式列出的陶瓦、玻璃、玻璃板和地毯分支覆盖其中1072个样本。原版另有net.minecraft.block.BlockColored及外部回调，不能把这部分仅凭名称就当完整兼容已对齐；旧版羊毛原生继承和外部模组具体实现尚待独立来源。
+
+清漆的16色陶瓦以及染色玻璃／玻璃板分别返回未染色身份，与原版三条反向分支相符；普通陶瓦是另一个方块，不是“同一个方块的另一meta”。六个草染料索引2／10／0／7／11／3分别映射medium／light／dark／normal／yellow／brown，目标都来自GrassSoilCatalog。Forge GTIconSetBlocks和Neo GTGrassSoils实际注册这些身份，清漆也能回到原版草方块。这里接受目标映射和声明入口，不接受完整生态、同色更新或全部原生属性保存。
+
+原512次颜色罐在构造器乘10，现5120内部单位；清漆256次乘10，现2560。正常方块10、动物50单位已有对应。1024个限定为存活、正余量、普通绵羊／狼状态的源条件样本中，480个需要换色，剪毛羊、未驯服狼及同色拒绝条件相符。原版没有要求必须是狼主人，当前也没有；不把这一点误报遗漏。
+
+WolfCollarAccessor已在两版配置。实际本机1.20.1映射类的setter是public，1.21.1源是private；两者均通过原生同步实体数据字段更新颜色，统一Invoker不是反射。注释纠正为两个版本的实际可见性，不声称已做联机实体染色。
+
+## ALIGN-273：清漆剂没有沿万能代理转发
+
+原Behavior_Spray_Color_Remover先调用WD.te(...,side,T)。WD发现ITileEntityDelegating就获取委托目标；万能扩展器30255与万能桥30755配置EXTENDER_ALL，返回其出口邻格。之后removePaint操作的是委托方块实体，或委托位置的外部方块。此行为属于清漆，不能套到原颜色喷罐本身：原颜色喷罐直接调用本地Block.recolourBlock。
+
+当前PaintTargets.unpaint只有本地level／pos，没有输入面或委托步骤。万能代理继承到的Paintable只保存本地漆色；若代理未喷漆而出口处目标已喷红，unpaint返回false，后方目标保持红色。ItemBehaviors分派、SourceExtenderBlock.use／interact、覆盖板和工具回退也没有把这罐重新用于出口位置。物品／流体／机器控制可以转发，不等于漆色接口也会转发。
+
+有限样本在同一世界、已加载邻格、正清漆余量下，按两设备×六输入面列12条源路径。30255前north、次面south；从前面输入到south，其余面到north；30755各面到对面。例：从万能桥north使用清漆，原清除south邻格目标的漆，现只检查未喷漆的桥而无操作。没有世界点击、跨区块或链式代理验收；将来适配仍应保留当前已加载／防循环保护。
+
+## ALIGN-274：扩展器漆色未进入客户端更新标签
+
+两版分别由GTMiscBlocks和GTRelaysFilters遍历同一八项ExtenderSpec创建SourceExtenderBlock与ExtenderBlockEntity。Mixin赋予本地喷漆能力，红色首次喷涂能修改服务端PaintState；saveAdditional和load／loadAdditional显式调用父类，世界保存仍会写gt.painted／gt.color。
+
+但是ExtenderBlockEntity.getUpdateTag两端均新建tag，只调用saveCovers，未调用super或保存漆色。BlockEntityPaintMixin只注入祖先BlockEntity的getUpdateTag；Java虚调用在这里选择子类覆盖方法，祖先注入不会自动执行。Mixin改变颜色后主动创建的ClientboundBlockEntityDataPacket，以及扩展器自身getUpdatePacket，同样通过实际getUpdateTag取数据。
+
+无覆盖板的新扩展器成功喷红后，服务端painted=true／FF0000，更新tag却为空。Forge原生包构造器将空tag存为null，当前onDataPacket因此跳过load；Neo保留空CompoundTag并进入自身load，Mixin读不到漆色时回退false／FFFFFF。对原本未喷漆的客户端实体，两者最终都不能收到该次红色状态。有覆盖板时标签只含覆盖板，仍不包含漆色。不能因此说服务端或世界存档完全没有保存喷漆。
+
+原Base04.recolourBlock触发updateClientData；Base03置全量发送标记并在tick传给sendClientData，扩展器通过Base08、桥通过Base07的全量包携带RGB，客户端相应读取。当前两个代表模型的主层有六面tint0，BlockPaintColorMixin实际依赖客户端isPainted。这是更新数据合同差异，不是全族缺贴图；实际GPU显示、数据包投递和世界重启未验收。
+
+## 消耗政策和已有记录
+
+原版方块／动物喷漆和清漆，存在先执行颜色动作、再清零余量容器的分支；当前颜色／清漆行为有正余量准入。零余量实体样本中，原可先换色再变空罐，当前先变空罐并返回未处理；本批记录这种防免费动作的差异，不恢复旧行为。创造玩家的整罐预算、方块入口和实体入口的清理位置并不完全相同，仍按135分别核查，不能笼统接受全部创造行为相同。
+
+132补充：颜色喷罐已有明确FIRE_EXTINGUISH占位反馈；清漆成功后仍只经过无统一声音调用的useSpray／目标路径，没有原IC_SPRAY物品层调用。不报所有喷罐完全无声，也未擅自指定新的音效或作听音验收。
+
+当前FixedConstructionColor还允许把扁平化建筑族恢复默认色，并在换身份时复制共同状态、保留湿泡沫计时。原普通GT混凝土的BlockColored→BlockMetaType→BlockBaseMeta／Sealable／Base链没有IBlockDecolorable，因此这个恢复默认色是当前扩展。本批不自动删除它，也不把未核实的水含量／半砖全部属性宣称已对齐；该范围需随建筑系统续核。
+
+## 源码整理与边界
+
+展开ExtenderBlockEntity的覆盖板保存／更新、路径选择、控制lambda与信号方法，SourceExtenderBlock的两版交互／工具／ticker；c仅在machineControl的lambda内改control，be仅在ticker内改blockEntity。清漆说明改为实际目标／兼容边界；PaintTargets和FixedConstructionColor展开条件缩进；狼Invoker拆行，GrassSoilCatalog六项按行列出并明确side／top职责。
+
+七源十三份完整执行流：清漆557／557、目标770／770、建筑色412／412、Invoker81／81、扩展器2515／2587、方块1305／1575、core草目录133。在限定局部绑定归一后保持；原始字符串／数值位置、六处说明纠正、其余注释和Stonecutter指令另核。用户CompoundMaterials及WoodMaterials原始摘要保持。
+
+26份原版／41份当前、46共享平台视图、四JSON及两个原生工件8entry／5次只读javap留痕，其中一次verbose只为核实Forge包的REF_invokeVirtual getUpdateTag引用。未编译／目标初始化、Gradle、测试、游戏、GPU、真实存档重启、构建或推送。外部颜色接口、全部属性与动物事件、喷罐生存补充配方、代理实际交互及其它原版系统继续，goal保持active。

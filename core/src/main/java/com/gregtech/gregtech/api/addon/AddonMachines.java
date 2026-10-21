@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 /** Queued addon recipe maps, machines and layouts. GregTech installs this once, after materials exist. */
 public final class AddonMachines {
@@ -35,6 +36,9 @@ public final class AddonMachines {
     private static List<AcceptedCompressedGas> compressedGasTanks = List.of();
     private static List<StructurePart> structureParts = List.of();
     private static java.util.Map<String, StructurePart> partsByName = java.util.Map.of();
+    /** Block ids and tags named by layouts. Checked after the block registry exists. */
+    private static final List<PlainBlock> PLAIN_BLOCKS = new ArrayList<>();
+    public record PlainBlock(String addonId, String layout, String name) {}
 
     private AddonMachines() {}
 
@@ -318,6 +322,7 @@ public final class AddonMachines {
      */
     public static synchronized void install(Set<String> reservedMachineNames, Set<String> knownRecipeMaps) {
         if (installed) return;
+        PLAIN_BLOCKS.clear();
         collectContributors();
         AddonPipes.validate();
         Objects.requireNonNull(reservedMachineNames, "reservedMachineNames");
@@ -490,6 +495,18 @@ public final class AddonMachines {
         fuelGenerators = List.copyOf(acceptedGenerators);
         compressedGasTanks = gasTanks();
         installed = true;
+    }
+
+    public static List<PlainBlock> plainBlocks() { return List.copyOf(PLAIN_BLOCKS); }
+
+    /** Unknown block ids fail here. Tags are left for the structure check, when their contents exist. */
+    public static void requireKnownBlocks(Predicate<String> known) {
+        for (PlainBlock block : PLAIN_BLOCKS) {
+            if (block.name().startsWith("#")) continue;
+            if (!known.test(block.name()))
+                throw new IllegalStateException("Addon '" + block.addonId() + "' layout '" + block.layout()
+                        + "' uses unknown block '" + block.name() + "'");
+        }
     }
 
     public static List<AcceptedRecipeMap> recipeMaps() { return recipeMaps; }
@@ -690,6 +707,21 @@ public final class AddonMachines {
             if (!occupied.add(position))
                 throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
                         + "' repeats position " + position);
+            if (MachineLayout.plainBlock(cell.part())) {
+                try {
+                    MachineLayout.checkPlainBlock(cell.part());
+                } catch (IllegalArgumentException failure) {
+                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
+                            + "' uses invalid block name '" + cell.part() + "'", failure);
+                }
+                if (cell.role() != StructureGrid.Role.CASING)
+                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
+                            + "' plain block '" + cell.part() + "' requires the casing role");
+                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.machineName(), cell.part()));
+                cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
+                        cell.role(), cell.part()));
+                continue;
+            }
             int part = SharedLargeMachineParts.idForName(cell.part());
             if (part < 0)
                 throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()

@@ -21,9 +21,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** State is held by the six block-state connections; no inventory or server ticker is needed. */
+/** Connections live in block state; installed covers are persisted and synchronized separately. */
 public final class LogisticsWireBlockEntity extends BlockEntity implements LogisticsCoverHost {
     private final LogisticsCovers covers = new LogisticsCovers(this, this);
+
     public LogisticsWireBlockEntity(BlockPos pos, BlockState state) {
 //? if >=1.21.1 {
         /*super(LogisticsRegistries.LOGISTICS_WIRE.get(), pos, state);
@@ -32,7 +33,8 @@ public final class LogisticsWireBlockEntity extends BlockEntity implements Logis
 //?}
     }
 
-    @Override public boolean canLogistics(Direction side) {
+    @Override
+    public boolean canLogistics(Direction side) {
 //? if >=1.21.1 {
         /*return !isRemoved() && (side == null || getBlockState().getValue(PipeConnections.propFor(side)));
 *///?} else {
@@ -40,27 +42,58 @@ public final class LogisticsWireBlockEntity extends BlockEntity implements Logis
 //?}
     }
 
-    @Override public LogisticsCovers logisticsCovers() { return covers; }
+    @Override
+    public LogisticsCovers logisticsCovers() {
+        return covers;
+    }
 //? if >=1.21.1 {
-    /*@Override protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup); covers.save(tag,lookup);
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
+        covers.save(tag, lookup);
     }
-    @Override protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup); covers.load(tag,lookup);
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
+        covers.load(tag, lookup);
     }
-    @Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
+
+    @Override
+    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        return saveWithoutMetadata(lookup);
+    }
 *///?} else {
-    @Override protected void saveAdditional(CompoundTag tag) { super.saveAdditional(tag); covers.save(tag); }
-    @Override public void load(CompoundTag tag) { super.load(tag); covers.load(tag); }
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
-    @Override public void handleUpdateTag(CompoundTag tag) { load(tag); }
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        covers.save(tag);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        covers.load(tag);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        load(tag);
+    }
 //?}
-    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 //? if >=1.21.1 {
 //?} else {
-    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+    @Override
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
         if (packet.getTag() != null) handleUpdateTag(packet.getTag());
     }
 //?}

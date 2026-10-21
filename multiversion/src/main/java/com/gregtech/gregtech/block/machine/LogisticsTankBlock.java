@@ -14,18 +14,23 @@ import org.jetbrains.annotations.Nullable;
 
 /** The GT6 logistics tank has its own network-capable block entity, separate from ordinary drums. */
 public final class LogisticsTankBlock extends TankBlock {
-    public LogisticsTankBlock(TankSpec spec, Properties properties) { super(spec, properties); }
 
-    @Override public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public LogisticsTankBlock(TankSpec spec, Properties properties) {
+        super(spec, properties);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LogisticsTankBlockEntity(pos, state);
     }
 
     @Override
     @SuppressWarnings("unchecked")
+
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(
             Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide || type != GTBlockEntities.LOGISTICS_TANK.get()) return null;
         return (BlockEntityTicker<T>) (BlockEntityTicker<LogisticsTankBlockEntity>)
-                (world, pos, blockState, tank) -> TankBlockEntity.serverTick(world, pos, blockState, tank);
+        (tickLevel, tickPosition, tickState, blockEntity) -> TankBlockEntity.serverTick(tickLevel, tickPosition, tickState, blockEntity);
     }
 }

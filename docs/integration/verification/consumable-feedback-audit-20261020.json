@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-20",
+  "batch": 43,
+  "baseline": "8775232fc",
+  "merged_origin": "894f90ce0",
+  "provenance": "Read-only Gregorius Techneticies / GregTech-6 Team original LGPL-3.0-or-later sources; existing notices retained",
+  "original_sources": {
+    "gregtech/items/behaviors/Behavior_FlintAndTinder.java": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+    "gregtech/items/behaviors/Behavior_Lighter.java": "f7d5168f203e52f7c4886abe542a91c08ebbd1115043c4857e7e7c1f2d077a72",
+    "gregtech/items/behaviors/Behavior_Duct_Tape.java": "cca99b4fc11f1ce47245286bf94717e8535c8e6f0ecb9ffd8428207ed25e7262",
+    "gregtech/items/behaviors/Behavior_Spray_Extinguisher.java": "0b3b043c05c076b918e974c6c9e944f9f1215b2beda14d68eee3ce30efef01e4",
+    "gregtech/items/MultiItemRandomTools.java": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+    "gregtech/GT6_Main.java": "a7dca874bef8dd25c9f98d64ddd372f081faf17899d5053156d4f78f4b3499ed",
+    "gregtech/GT_Proxy.java": "c18681468cfff643c77fa0371fe142599c7063b42f57ae74db653a19b9fdda3c",
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd"
+  },
+  "current_sources": {
+    "multiversion/src/main/java/com/gregtech/gregtech/GregTechConfig.java": "9030ec33cfb2c5858d1b57e12d459073dc9fd19a21703082fdec168e3dc01346",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorFlintAndTinder.java": "f9e2986f68574f8a6b034c31e91c214fb081766783a4900da0fb999d85cb7361",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorLighter.java": "bd2b6c676fbaae89c4d4d32d7e53b7655d8b104e825876a28b44d2e286b7e463",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorDuctTape.java": "ae8459b3082c46e12bc7b2d30a82182236eee8a7e3b316b9a07f57e3549fc71c",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayExtinguisher.java": "36181da00dc26f43d5e65adae0bafdf0ba38cca508feec64947ad2707c86bada",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/TechItem.java": "16d7936a79b171cc6abefe40851d269d2c1d84b4ee397671eda069f684914f59",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+    "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/MultiBehaviorItem.java": "3cbced618e3fd21dc1f7e1ff4b1359b4d444e8f1803762cf4bd479b1e2687dc5",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java": "229d3578a2ad9483d72555f04daf2a1c02b710867e4c5cd922b575e7f65fcca1",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/DynamiteBlockEntity.java": "02dce391f37135e23652cdd0b65bcc9397453e182db365783d31159684b63ab8",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/misc/AutoIgniterBlockEntity.java": "28955de579a4a053e762e3839c1beba039af9123a0320f34bc45b6b6a7e39f7d"
+  },
+  "source_equivalence": {
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorDuctTape.java": {
+      "before_sha256": "1ff6f193b7666453987a58d91ede001c8ec4eaee6ea98b0f6097c914c0d89844",
+      "after_sha256": "ae8459b3082c46e12bc7b2d30a82182236eee8a7e3b316b9a07f57e3549fc71c",
+      "projections": {
+        "forge": {
+          "java_tokens": true,
+          "literals": true
+        },
+        "neoforge": {
+          "java_tokens": true,
+          "literals": true
+        }
+      },
+      "change": "Documentation comments only; correct overstatements of original parity",
+      "projection_method": "check_relay_sharing.project: expose maintained Neo bodies before clean_java"
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": {
+      "before_sha256": "f0b447d02bfc3a7a439ad5d33468e98f7147790e265d847f43aa9f2ae3a42072",
+      "after_sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "projections": {
+        "forge": {
+          "java_tokens": true,
+          "literals": true
+        },
+        "neoforge": {
+          "java_tokens": true,
+          "literals": true
+        }
+      },
+      "change": "Documentation comments only; correct overstatements of original parity",
+      "projection_method": "check_relay_sharing.project: expose maintained Neo bodies before clean_java"
+    }
+  },
+  "findings": {
+    "ALIGN-132": "Ignition, extinguisher and tape entry points omit original item-layer feedback sounds; host and auto-igniter sounds are distinct",
+    "ALIGN-133": "Default flint chance matches, but original configurable chance is hard-coded at the GT tool caller",
+    "ALIGN-134": "Tape passes stored rather than full creative budget and deducts uses in creative mode",
+    "ALIGN-135": "Exhausted used creative spray and refused exhausted tape do not finish original empty-item cleanup"
+  },
+  "evidence_kind": "Source call chains and dataflow; no new simulation or gameplay result",
+  "not_run_for_audit": [
+    "full test suite",
+    "GameTests",
+    "client",
+    "dedicated server",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "merge_verification": "Tracked separately in merge-pipes-casings-20261020.md",
+  "limitations": [
+    "Does not assert the entire world is silent: host reactions may emit their own sounds",
+    "Automatic null/fake-player obstruction exemption lacks a traced active caller and is not a reproduced gameplay defect",
+    "The creative tape example is source-derived, not game-reproduced",
+    "Full audit remains incomplete"
+  ]
+}

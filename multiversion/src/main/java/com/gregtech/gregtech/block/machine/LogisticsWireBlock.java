@@ -41,9 +41,10 @@ import java.util.List;
 /** GT6 24901: six-way cuttable logistics connector, 6/16 block diameter. */
 public final class LogisticsWireBlock extends Block implements EntityBlock, ToolInteractionTarget {
 //? if >=1.21.1 {
-    /*@Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    /*@Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+        ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
     }
 
 *///?} else {
@@ -59,7 +60,8 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
         registerDefaultState(initial);
     }
 
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 //? if >=1.21.1 {
         /*builder.add(PipeConnections.CONNECTIONS);
 *///?} else {
@@ -67,7 +69,8 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
 //?}
     }
 
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
 //? if >=1.21.1 {
         /*return defaultBlockState().setValue(PipeConnections.propFor(context.getClickedFace().getOpposite()), true);
 *///?} else {
@@ -75,19 +78,22 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
 //?}
     }
 
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LogisticsWireBlockEntity(pos, state);
     }
 
 //? if >=1.21.1 {
     /*protected InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player,
 *///?} else {
-    @Override public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    @Override
+    public ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return GTToolHelper.isWireCutter(tool)
-                ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
+        ? ToolInteractionSpec.connections(ToolInteractionSpec.ConnectionKind.LOGISTICS) : null;
     }
 
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
                                            InteractionHand hand, BlockHitResult hit) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
@@ -97,94 +103,118 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
             if (coverResult != InteractionResult.PASS) return coverResult;
         }
 //? if >=1.21.1 {
-        /*if(!NeoToolBindings.isWireCutter(player.getItemInHand(hand)))return InteractionResult.PASS;
-        if(!level.isClientSide) {
-            Direction side=ToolInteractions.selectedFace(hit);var property=PipeConnections.propFor(side);
-            boolean open=!state.getValue(property);BlockPos next=pos.relative(side);
-            if(open&&(level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host&&!host.logisticsCovers().get(side).isEmpty()
-                    ||level.getBlockEntity(next) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost otherHost&&!otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()))return InteractionResult.FAIL;
-            if(open&&level.hasChunkAt(next)) {
-                var neighbor=level.getBlockState(next);
-                boolean allowed=level.getBlockEntity(next) instanceof LogisticsHost host?host.canLogistics(side.getOpposite()):neighbor.isAir()||!neighbor.getFluidState().isEmpty();
-                if(!allowed)return InteractionResult.FAIL;
+        /*if (!NeoToolBindings.isWireCutter(player.getItemInHand(hand))) return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            Direction side = ToolInteractions.selectedFace(hit);
+            var property = PipeConnections.propFor(side);
+            boolean open = !state.getValue(property);
+            BlockPos neighborPos = pos.relative(side);
+            if (open && (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host
+                    && !host.logisticsCovers().get(side).isEmpty()
+                    || level.getBlockEntity(neighborPos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost otherHost
+                            && !otherHost.logisticsCovers().get(side.getOpposite()).isEmpty())) return InteractionResult.FAIL;
+            if (open && level.hasChunkAt(neighborPos)) {
+                var neighbor = level.getBlockState(neighborPos);
+                boolean allowed = level.getBlockEntity(neighborPos) instanceof LogisticsHost host
+                        ? host.canLogistics(side.getOpposite())
+                        : neighbor.isAir() || !neighbor.getFluidState().isEmpty();
+                if (!allowed) return InteractionResult.FAIL;
             }
-            level.setBlockAndUpdate(pos,state.setValue(property,open));
-            if(level.hasChunkAt(next)&&level.getBlockState(next).getBlock() instanceof LogisticsWireBlock)
-                level.setBlockAndUpdate(next,level.getBlockState(next).setValue(PipeConnections.propFor(side.getOpposite()),open));
-            NeoToolBindings.damageForUse(player.getItemInHand(hand),1,player);
+            level.setBlockAndUpdate(pos, state.setValue(property, open));
+            if (level.hasChunkAt(neighborPos) && level.getBlockState(neighborPos).getBlock() instanceof LogisticsWireBlock)
+                level.setBlockAndUpdate(neighborPos,
+                        level.getBlockState(neighborPos).setValue(PipeConnections.propFor(side.getOpposite()), open));
+            NeoToolBindings.damageForUse(player.getItemInHand(hand), 1, player);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit) {
-        var result=interact(state,level,pos,player,hand,hit);
-        return result==InteractionResult.PASS?net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION:result==InteractionResult.FAIL?net.minecraft.world.ItemInteractionResult.FAIL:net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+                                           InteractionHand hand, BlockHitResult hit) {
+        var result = interact(state, level, pos, player, hand, hit);
+        return result == InteractionResult.PASS ? net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+                : result == InteractionResult.FAIL ? net.minecraft.world.ItemInteractionResult.FAIL
+                : net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
-    @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit) {
-        return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
 *///?} else {
         return ToolInteractions.use(state, level, pos, player, hand, hit)
                 ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
 //?}
     }
 
-    @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
         if (!state.is(next.getBlock()) && !level.isClientSide
                 && level.getBlockEntity(pos) instanceof LogisticsWireBlockEntity wire)
-            wire.logisticsCovers().dropAll();
+        wire.logisticsCovers().dropAll();
         super.onRemove(state, level, pos, next, moving);
     }
 
-    @Override public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moving) {
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState old, boolean moving) {
         super.onPlace(state, level, pos, old, moving);
         if (level.isClientSide || old.is(this)) return;
-        BlockState next = state;
+        BlockState updatedState = state;
         for (Direction side : Direction.values()) {
-            BlockPos adjacent = pos.relative(side);
-            if (!level.hasChunkAt(adjacent)) continue;
-            BlockState neighbor = level.getBlockState(adjacent);
+            BlockPos neighborPos = pos.relative(side);
+            if (!level.hasChunkAt(neighborPos)) continue;
+            BlockState neighbor = level.getBlockState(neighborPos);
 //? if >=1.21.1 {
-            /*boolean ours = next.getValue(PipeConnections.propFor(side));
+            /*boolean connectedHere = updatedState.getValue(PipeConnections.propFor(side));
 *///?} else {
-            boolean ours = next.getValue(ElectricWireBlock.propFor(side));
+            boolean connectedHere = updatedState.getValue(ElectricWireBlock.propFor(side));
 //?}
             if (neighbor.getBlock() instanceof LogisticsWireBlock) {
-                boolean blocked=level.getBlockEntity(adjacent) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost otherHost&&!otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()
-                        ||level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host&&!host.logisticsCovers().get(side).isEmpty();
+                boolean coverBlocksConnection = level.getBlockEntity(neighborPos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost otherHost
+                        && !otherHost.logisticsCovers().get(side.getOpposite()).isEmpty()
+                            || level.getBlockEntity(pos) instanceof com.gregtech.gregtech.content.logistics.LogisticsCoverHost host
+                        && !host.logisticsCovers().get(side).isEmpty();
 //? if >=1.21.1 {
-                /*if(blocked){next=next.setValue(PipeConnections.propFor(side),false);continue;}
-                boolean theirs = neighbor.getValue(PipeConnections.propFor(side.getOpposite()));
+                /*if (coverBlocksConnection) {
+                    updatedState = updatedState.setValue(PipeConnections.propFor(side), false);
+                    continue;
+                }
+                boolean connectedThere = neighbor.getValue(PipeConnections.propFor(side.getOpposite()));
 *///?} else {
-                if(blocked){next=next.setValue(ElectricWireBlock.propFor(side),false);continue;}
-                boolean theirs = neighbor.getValue(ElectricWireBlock.propFor(side.getOpposite()));
+                if (coverBlocksConnection) {
+                    updatedState = updatedState.setValue(ElectricWireBlock.propFor(side), false);
+                    continue;
+                }
+                boolean connectedThere = neighbor.getValue(ElectricWireBlock.propFor(side.getOpposite()));
 //?}
-                if (ours && !theirs)
-                    level.setBlockAndUpdate(adjacent,
+                if (connectedHere && !connectedThere)
+                    level.setBlockAndUpdate(neighborPos,
 //? if >=1.21.1 {
-                            /*neighbor.setValue(PipeConnections.propFor(side.getOpposite()), true));
-                if (theirs && !ours) next = next.setValue(PipeConnections.propFor(side), true);
+                        /*neighbor.setValue(PipeConnections.propFor(side.getOpposite()), true));
+                if (connectedThere && !connectedHere) updatedState = updatedState.setValue(PipeConnections.propFor(side), true);
 *///?} else {
-                            neighbor.setValue(ElectricWireBlock.propFor(side.getOpposite()), true));
-                if (theirs && !ours) next = next.setValue(ElectricWireBlock.propFor(side), true);
+                        neighbor.setValue(ElectricWireBlock.propFor(side.getOpposite()), true));
+                if (connectedThere && !connectedHere) updatedState = updatedState.setValue(ElectricWireBlock.propFor(side), true);
 //?}
-            } else if (ours) {
+            } else if (connectedHere) {
                 // GT6 permits a free end in air or fluid, but refuses a solid that
                 // does not offer a logistics face (TileEntityBase09Connector.connect).
-                boolean permitted = level.getBlockEntity(adjacent) instanceof LogisticsHost host
+                boolean permitted = level.getBlockEntity(neighborPos) instanceof LogisticsHost host
                         ? host.canLogistics(side.getOpposite())
                         : neighbor.isAir() || !neighbor.getFluidState().isEmpty();
 //? if >=1.21.1 {
-                /*if (!permitted) next = next.setValue(PipeConnections.propFor(side), false);
+                /*if (!permitted) updatedState = updatedState.setValue(PipeConnections.propFor(side), false);
 *///?} else {
-                if (!permitted) next = next.setValue(ElectricWireBlock.propFor(side), false);
+                if (!permitted) updatedState = updatedState.setValue(ElectricWireBlock.propFor(side), false);
 //?}
             }
         }
-        if (next != state) level.setBlockAndUpdate(pos, next);
+        if (updatedState != state) level.setBlockAndUpdate(pos, updatedState);
     }
 
-    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (context instanceof EntityCollisionContext e && e.getEntity() instanceof Player player
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext entityContext && entityContext.getEntity() instanceof Player player
 //? if >=1.21.1 {
                 /*&& NeoToolBindings.isWireCutter(player.getMainHandItem())) return Shapes.block();
 *///?} else {
@@ -203,21 +233,30 @@ public final class LogisticsWireBlock extends Block implements EntityBlock, Tool
         return shape;
     }
 
-    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos,
-                                                   CollisionContext context) {
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos,
+            CollisionContext context) {
         return getShape(state, level, pos, CollisionContext.empty());
     }
 
-    @Override public List<ItemStack> getDrops(BlockState state,
-                                              net.minecraft.world.level.storage.loot.LootParams.Builder context) {
+    @Override
+    public List<ItemStack> getDrops(BlockState state,
+            net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         return List.of(new ItemStack(this));
     }
 
-    @Override public boolean isSignalSource(BlockState state) { return true; }
-    @Override public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+    @Override
+    public boolean isSignalSource(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         return com.gregtech.gregtech.content.logistics.LogisticsCoverSignals.at(level, pos, side.getOpposite());
     }
-    @Override public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
+
+    @Override
+    public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction side) {
         return getSignal(state, level, pos, side);
     }
 }

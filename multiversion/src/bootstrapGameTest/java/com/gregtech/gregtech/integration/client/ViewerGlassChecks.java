@@ -18,10 +18,10 @@ final class ViewerGlassChecks {
     static boolean capture(Minecraft mc,JsonObject receipt) {
         if(failure!=null)throw new IllegalStateException("Actual glass scene failed",failure);
         if(phase==3)return true;
-        var slab=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glass_glow_slab"));
+        var slab=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glass_glow_slab_white"));
         if(phase==0) {
             if(!(slab instanceof ColoredGlassSlabBlock))throw new IllegalStateException("Glass half uses opaque foam class");
-            var glass=(ColoredGlassSlabBlock)slab;var white=slab.defaultBlockState().setValue(CFoamSlabBlock.COLOR,DyeColor.WHITE);
+            var glass=(ColoredGlassSlabBlock)slab;var white=slab.defaultBlockState();
             int models=0;
             for(var facing:Direction.values()) {
                 var state=white.setValue(CFoamSlabBlock.FACING,facing);
@@ -35,7 +35,7 @@ final class ViewerGlassChecks {
             }
             var down=white.setValue(CFoamSlabBlock.FACING,Direction.DOWN);var up=white.setValue(CFoamSlabBlock.FACING,Direction.UP);
             if(!glass.skipRendering(down,down,Direction.EAST)||glass.skipRendering(down,up,Direction.EAST)
-                ||glass.skipRendering(down,down.setValue(CFoamSlabBlock.COLOR,DyeColor.RED),Direction.EAST)
+                ||glass.skipRendering(down,FixedConstructionColor.recolor(down,DyeColor.RED),Direction.EAST)
                 ||!glass.skipRendering(down,white.setValue(CFoamSlabBlock.FACING,Direction.WEST),Direction.EAST)
                 ||glass.skipRendering(down,white.setValue(CFoamSlabBlock.FACING,Direction.EAST),Direction.EAST)
                 ||glass.skipRendering(down,up,Direction.UP))throw new IllegalStateException("Glass half touching-face culling mismatch");
@@ -45,7 +45,7 @@ final class ViewerGlassChecks {
                 for(int x=-10;x<=10;x++)for(int y=-1;y<=5;y++)for(int z=-7;z<=11;z++)level.setBlock(origin.offset(x,y,z),Blocks.AIR.defaultBlockState(),3);
                 for(int x=-9;x<=9;x++)for(int y=0;y<=4;y++)level.setBlock(origin.offset(x,y,-6),((x+y)%2==0?Blocks.BLUE_WOOL:Blocks.YELLOW_WOOL).defaultBlockState(),3);
                 var full=BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("gt6ce","glass_glow")).defaultBlockState();
-                if(!full.hasProperty(ColoredGlassBlock.COLOR))throw new IllegalStateException("Source full glass unavailable");full=full.setValue(ColoredGlassBlock.COLOR,DyeColor.WHITE);
+                full=FixedConstructionColor.recolor(full,DyeColor.WHITE);
                 for(int lane=0;lane<3;lane++)for(int row=0;row<3;row++)for(int x=0;x<3;x++)for(int y=1;y<=3;y++) {
                     var state=lane==0?full:lane==1?down:white.setValue(CFoamSlabBlock.FACING,Direction.WEST);
                     level.setBlock(origin.offset(-8+lane*6+x,y,-row*2),state,3);

@@ -33,7 +33,8 @@ public final class LogisticsCoverInteraction {
     private static final String ITEM_FILTER = "gt.filter.item";
     private static final String FLUID_FILTER = "gt.filter.fluid";
 
-    private LogisticsCoverInteraction() {}
+    private LogisticsCoverInteraction() {
+    }
 
     public static int value(ItemStack cover) {
 //? if >=1.21.1 {
@@ -48,9 +49,10 @@ public final class LogisticsCoverInteraction {
     }
 
 //? if >=1.21.1 {
-    /*public static ItemStack itemFilter(ItemStack cover,HolderLookup.Provider lookup) {
-        var tag=StackCustomData.read(cover);
-        return tag.contains(ITEM_FILTER)?ItemStack.parseOptional(lookup,tag.getCompound(ITEM_FILTER)):ItemStack.EMPTY;
+    /*public static ItemStack itemFilter(ItemStack cover, HolderLookup.Provider lookup) {
+        var tag = StackCustomData.read(cover);
+        return tag.contains(ITEM_FILTER)
+                ? ItemStack.parseOptional(lookup, tag.getCompound(ITEM_FILTER)) : ItemStack.EMPTY;
 *///?} else {
     public static ItemStack itemFilter(ItemStack cover) {
         return cover.hasTag() && cover.getTag().contains(ITEM_FILTER)
@@ -60,9 +62,10 @@ public final class LogisticsCoverInteraction {
 
     /** GT6 fluid logistics covers store a sample fluid under {@code gt.filter.fluid}. */
 //? if >=1.21.1 {
-    /*public static FluidStack fluidFilter(ItemStack cover,HolderLookup.Provider lookup) {
-        var tag=StackCustomData.read(cover);
-        return tag.contains(FLUID_FILTER)?FluidStack.parseOptional(lookup,tag.getCompound(FLUID_FILTER)):FluidStack.EMPTY;
+    /*public static FluidStack fluidFilter(ItemStack cover, HolderLookup.Provider lookup) {
+        var tag = StackCustomData.read(cover);
+        return tag.contains(FLUID_FILTER)
+                ? FluidStack.parseOptional(lookup, tag.getCompound(FLUID_FILTER)) : FluidStack.EMPTY;
 *///?} else {
     public static FluidStack fluidFilter(ItemStack cover) {
         if (cover == null || !cover.hasTag() || !cover.getTag().contains(FLUID_FILTER)) return FluidStack.EMPTY;
@@ -71,7 +74,7 @@ public final class LogisticsCoverInteraction {
 //?}
     }
 
-    /** Original filtered item covers ignore NBT but still distinguish item and damage value. */
+    /** Matches current item and damage only; legacy metadata variants may now live in stack data. */
     public static boolean matches(ItemStack filter, ItemStack candidate) {
         return filter.isEmpty() || (!candidate.isEmpty() && filter.is(candidate.getItem())
                 && filter.getDamageValue() == candidate.getDamageValue());
@@ -82,10 +85,13 @@ public final class LogisticsCoverInteraction {
         var type = LogisticsCoverType.of(cover);
         if (template.isEmpty() || type == null || !type.filtered()
 //? if >=1.21.1 {
-                /*|| type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover,covers.registries()).isEmpty()) return false;
-        StackCustomData.update(cover,tag->tag.put(ITEM_FILTER,template.copyWithCount(1).save(covers.registries())));
+                /*|| type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover, covers.registries()).isEmpty())
+            return false;
+        StackCustomData.update(cover,
+                tag -> tag.put(ITEM_FILTER, template.copyWithCount(1).save(covers.registries())));
 *///?} else {
-                || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover).isEmpty()) return false;
+                || type.channel() != LogisticsCoverType.Channel.ITEM || !itemFilter(cover).isEmpty())
+            return false;
         cover.getOrCreateTag().put(ITEM_FILTER, template.copyWithCount(1).save(new CompoundTag()));
 //?}
         covers.changed();
@@ -95,9 +101,10 @@ public final class LogisticsCoverInteraction {
     public static boolean clearItemFilter(LogisticsCovers covers, Direction face) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.ITEM) return false;
+        if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.ITEM)
+            return false;
 //? if >=1.21.1 {
-        /*StackCustomData.update(cover,tag->tag.remove(ITEM_FILTER));
+        /*StackCustomData.update(cover, tag -> tag.remove(ITEM_FILTER));
 *///?} else {
         if (cover.hasTag()) cover.getTag().remove(ITEM_FILTER);
 //?}
@@ -112,10 +119,13 @@ public final class LogisticsCoverInteraction {
         if (sample == null || sample.isEmpty() || type == null || !type.filtered()
                 || type.channel() != LogisticsCoverType.Channel.FLUID
 //? if >=1.21.1 {
-                /*|| StackCustomData.read(cover).contains(FLUID_FILTER)) return false;
-        StackCustomData.update(cover,tag->tag.put(FLUID_FILTER,sample.copy().save(covers.registries())));
+                /*|| StackCustomData.read(cover).contains(FLUID_FILTER))
+            return false;
+        StackCustomData.update(cover,
+                tag -> tag.put(FLUID_FILTER, sample.copy().save(covers.registries())));
 *///?} else {
-                || cover.getOrCreateTag().contains(FLUID_FILTER)) return false;
+                || cover.getOrCreateTag().contains(FLUID_FILTER))
+            return false;
         cover.getOrCreateTag().put(FLUID_FILTER, sample.copy().writeToNBT(new CompoundTag()));
 //?}
         covers.changed();
@@ -125,9 +135,10 @@ public final class LogisticsCoverInteraction {
     public static boolean clearFluidFilter(LogisticsCovers covers, Direction face) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.FLUID) return false;
+        if (type == null || !type.filtered() || type.channel() != LogisticsCoverType.Channel.FLUID)
+            return false;
 //? if >=1.21.1 {
-        /*StackCustomData.update(cover,tag->tag.remove(FLUID_FILTER));
+        /*StackCustomData.update(cover, tag -> tag.remove(FLUID_FILTER));
 *///?} else {
         if (cover.hasTag()) cover.getTag().remove(FLUID_FILTER);
 //?}
@@ -138,12 +149,14 @@ public final class LogisticsCoverInteraction {
     public static boolean cyclePriority(LogisticsCovers covers, Direction face) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (type == null || !type.usesPriority()) return false;
-        int old = value(cover);
+        if (type == null || !type.usesPriority())
+            return false;
+        int previousValue = value(cover);
 //? if >=1.21.1 {
-        /*StackCustomData.update(cover,tag->tag.putInt(VALUE,(old & ~3) | ((old + 1) & 3)));
+        /*StackCustomData.update(cover,
+                tag -> tag.putInt(VALUE, (previousValue & ~3) | ((previousValue + 1) & 3)));
 *///?} else {
-        cover.getOrCreateTag().putInt(VALUE, (old & ~3) | ((old + 1) & 3));
+        cover.getOrCreateTag().putInt(VALUE, (previousValue & ~3) | ((previousValue + 1) & 3));
 //?}
         covers.changed();
         return true;
@@ -152,22 +165,27 @@ public final class LogisticsCoverInteraction {
     public static boolean cycleTargetStackSize(LogisticsCovers covers, Direction face) {
         ItemStack cover = covers.get(face);
         var type = LogisticsCoverType.of(cover);
-        if (type == null || !type.targetStackSize()) return false;
-        int old = value(cover);
-        int next = (targetStackSize(cover) + 1) % 65;
+        if (type == null || !type.targetStackSize())
+            return false;
+        int previousValue = value(cover);
+        int nextTargetSize = (targetStackSize(cover) + 1) % 65;
 //? if >=1.21.1 {
-        /*StackCustomData.update(cover,tag->tag.putInt(VALUE,(old & 3) | (next << 2)));
+        /*StackCustomData.update(cover, tag -> tag.putInt(VALUE, (previousValue & 3) | (nextTargetSize << 2)));
 *///?} else {
-        cover.getOrCreateTag().putInt(VALUE, (old & 3) | (next << 2));
+        cover.getOrCreateTag().putInt(VALUE, (previousValue & 3) | (nextTargetSize << 2));
 //?}
         covers.changed();
         return true;
     }
 
-    private static void describe(Player player,ItemStack cover) {
-        var type=LogisticsCoverType.of(cover);
-        if(type!=null&&type.usesPriority())player.displayClientMessage(net.minecraft.network.chat.Component.literal("Priority: "+type.effectivePriority(value(cover))),false);
-        if(type!=null&&type.targetStackSize())player.displayClientMessage(net.minecraft.network.chat.Component.literal("Target Stacksize: "+targetStackSize(cover)),false);
+    private static void describe(Player player, ItemStack cover) {
+        var type = LogisticsCoverType.of(cover);
+        if (type != null && type.usesPriority())
+            player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+                    "Priority: " + type.effectivePriority(value(cover))), false);
+        if (type != null && type.targetStackSize())
+            player.displayClientMessage(net.minecraft.network.chat.Component.literal(
+                    "Target Stacksize: " + targetStackSize(cover)), false);
     }
 
     public static InteractionResult use(LogisticsCoverHost host, Level level, Player player,
@@ -196,10 +214,10 @@ public final class LogisticsCoverInteraction {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 //? if >=1.21.1 {
-        /*boolean crowbar = NeoToolBindings.matches(held,"crowbar");
+        /*boolean crowbar = NeoToolBindings.matches(held, "crowbar");
         boolean screwdriver = NeoToolBindings.isScrewdriver(held);
         boolean cutter = NeoToolBindings.isWireCutter(held);
-        boolean softHammer = NeoToolBindings.matches(held,"soft_hammer");
+        boolean softHammer = NeoToolBindings.matches(held, "soft_hammer");
 *///?} else {
         boolean crowbar = GTToolHelper.matchesTool(held, GTToolType.CROWBAR);
         boolean screwdriver = GTToolHelper.isScrewdriver(held);

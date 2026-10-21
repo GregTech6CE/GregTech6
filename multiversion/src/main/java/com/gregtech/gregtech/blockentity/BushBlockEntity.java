@@ -20,12 +20,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * GT6's berry bush logic ({@code MultiTileEntityBush}).
  *
- * <p>GT6 grows a bush every 128 ticks by {@code mSpeed} increments, where {@code mSpeed} is 1 on
- * plantable ground, plus the same amount again when it is raining, or — under a roof — when the light
- * level is above 9. A stage advances whenever GT6's byte-sized growth counter overflows, i.e. every
- * 256 increments ({@code if (++mGrowth == 0) mStage++}), which its own comment calls out as a
- * deliberate quirk. The port keeps all of it: 128-tick cycles, one stage per 256 increments, the
- * rain and light bonuses.
+ * <p>The shared rules retain the 128-tick growth cycle and byte-sized counter rollover: one stage
+ * advances per 256 growth increments. Rain and light inputs currently come from modern Level
+ * queries; their environment contracts differ from the original GT6 helpers and are audited
+ * separately. This entity also maintains the current fixed-species identity and legacy migration.
  */
 public class BushBlockEntity extends BlockEntity {
     /** GT6 checks {@code SERVER_TIME % 128} — the growth cycle length. */
@@ -44,22 +42,28 @@ public class BushBlockEntity extends BlockEntity {
     }
 
     public String berryId() {
-        var block=(BushBlock)getBlockState().getBlock();
-        return block.berryId().isEmpty()?legacyBerry:block.berryId();
+        var block = (BushBlock) getBlockState().getBlock();
+        return block.berryId().isEmpty() ? legacyBerry : block.berryId();
     }
 
     /** Change the registered species; only the old untyped ID reads a legacy berry key. */
     public void setBerry(String id) {
-        var variant=com.gregtech.gregtech.registry.GTBushes.byBerry(id);
-        if(variant==null)return;
-        var state=variant.defaultBlockState().setValue(BushBlock.STAGE,stage())
-                .setValue(BushBlock.SUPPORT,getBlockState().getValue(BushBlock.SUPPORT));
-        if(level==null) { setBlockState(state);legacyBerry="";return; }
-        if(level.isClientSide)return;
-        int savedGrowth=growth;
-        level.setBlock(worldPosition,state,3);
-        if(level.getBlockEntity(worldPosition) instanceof BushBlockEntity next) {
-            next.legacyBerry="";next.growth=savedGrowth;next.setChanged();
+        var variant = com.gregtech.gregtech.registry.GTBushes.byBerry(id);
+        if (variant == null) return;
+        var state = variant.defaultBlockState().setValue(BushBlock.STAGE, stage())
+                .setValue(BushBlock.SUPPORT, getBlockState().getValue(BushBlock.SUPPORT));
+        if (level == null) {
+            setBlockState(state);
+            legacyBerry = "";
+            return;
+        }
+        if (level.isClientSide) return;
+        int savedGrowth = growth;
+        level.setBlock(worldPosition, state, 3);
+        if (level.getBlockEntity(worldPosition) instanceof BushBlockEntity next) {
+            next.legacyBerry = "";
+            next.growth = savedGrowth;
+            next.setChanged();
         }
     }
 
@@ -75,7 +79,9 @@ public class BushBlockEntity extends BlockEntity {
         return item == null ? ItemStack.EMPTY : new ItemStack(item, count);
     }
 
-    public int growth() { return growth; }
+    public int growth() {
+        return growth;
+    }
 
     public int stage() {
         return getBlockState().getValue(BushBlock.STAGE);
@@ -83,8 +89,11 @@ public class BushBlockEntity extends BlockEntity {
 
     public void tick() {
         if (level == null || level.isClientSide) return;
-        if(!legacyBerry.isEmpty() && ((BushBlock)getBlockState().getBlock()).berryId().isEmpty()
-                && com.gregtech.gregtech.registry.GTBushes.byBerry(legacyBerry)!=null) {setBerry(legacyBerry);return;}
+        if (!legacyBerry.isEmpty() && ((BushBlock) getBlockState().getBlock()).berryId().isEmpty()
+                && com.gregtech.gregtech.registry.GTBushes.byBerry(legacyBerry) != null) {
+            setBerry(legacyBerry);
+            return;
+        }
         if (!supportChecked || level.getGameTime() % CYCLE_TICKS == 64) {
             supportChecked = true;
             if (!refreshSupport()) return;
@@ -104,7 +113,7 @@ public class BushBlockEntity extends BlockEntity {
         BlockState state = getBlockState();
         if (!(state.getBlock() instanceof BushBlock)) return 0;
         if (!refreshSupport() || berryId().isEmpty()) return 0;
-        state=getBlockState();
+        state = getBlockState();
         int speed = speed();
         if (speed <= 0) return 0;
         if (state.getValue(BushBlock.STAGE) >= 3) return 0;
@@ -121,8 +130,9 @@ public class BushBlockEntity extends BlockEntity {
             return 0;
         }
         int stage = state.getValue(BushBlock.STAGE);
-        var result=com.gregtech.gregtech.content.plant.BushGrowthRules.advance(growth,stage,increments);
-        growth=result.counter();stage=result.stage();
+        var result = com.gregtech.gregtech.content.plant.BushGrowthRules.advance(growth, stage, increments);
+        growth = result.counter();
+        stage = result.stage();
         if (stage != state.getValue(BushBlock.STAGE)) {
             level.setBlock(worldPosition, state.setValue(BushBlock.STAGE, stage), 3);
         }
@@ -154,7 +164,10 @@ public class BushBlockEntity extends BlockEntity {
         if (BushBlock.isCore(state)) return true;
         BlockPos parentPos = worldPosition.relative(net.minecraft.core.Direction.from3DDataValue(state.getValue(BushBlock.SUPPORT)));
         if (level.getBlockEntity(parentPos) instanceof BushBlockEntity parent) {
-            if (!berryId().equals(parent.berryId())) {setBerry(parent.berryId());return false;}
+            if (!berryId().equals(parent.berryId())) {
+                setBerry(parent.berryId());
+                return false;
+            }
             return true;
         }
         if (!(level.getBlockState(parentPos).getBlock() instanceof BushBlock)) {
@@ -166,25 +179,26 @@ public class BushBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
-        legacyBerry = ((BushBlock)getBlockState().getBlock()).berryId().isEmpty()?tag.getString("berry"):"";
+        legacyBerry = ((BushBlock) getBlockState().getBlock()).berryId().isEmpty() ? tag.getString("berry") : "";
         growth = tag.getInt("growth");
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
-        if (((BushBlock)getBlockState().getBlock()).berryId().isEmpty() && !legacyBerry.isEmpty()) tag.putString("berry", legacyBerry);
+        if (((BushBlock) getBlockState().getBlock()).berryId().isEmpty() && !legacyBerry.isEmpty())
+            tag.putString("berry", legacyBerry);
         tag.putInt("growth", growth);
     }
 

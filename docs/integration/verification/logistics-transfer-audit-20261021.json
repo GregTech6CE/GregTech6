@@ -1,0 +1,1356 @@
+{
+  "batch": 72,
+  "date": "2026-10-21",
+  "baseline": "948871986b2fe94f4e90298c3e9dfc3924a05366",
+  "scope": "Logistics actual transfer, quantity eligibility, potion identity, failed fluid refunds, tools and inspection feedback.",
+  "new_records": [
+    255,
+    256,
+    257
+  ],
+  "extended_records": [
+    3,
+    126,
+    254
+  ],
+  "counts": {
+    "original_sources": 23,
+    "current_sources": 25,
+    "shared_platform_views": 40,
+    "readability_files": 4,
+    "readability_execution_views": 7
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "relative": "gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ItemStackContainer.java",
+      "relative": "gregapi/code/ItemStackContainer.java",
+      "sha256": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ItemStackMap.java",
+      "relative": "gregapi/code/ItemStackMap.java",
+      "sha256": "837535ebdbe64212236cd29119858627f12c4f1ac27cc9af41630bb876d56d42",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ItemStackSet.java",
+      "relative": "gregapi/code/ItemStackSet.java",
+      "sha256": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/AbstractCoverAttachmentLogistics.java",
+      "relative": "gregapi/cover/covers/AbstractCoverAttachmentLogistics.java",
+      "sha256": "f741ba5dd8f6552651f51f27da58ebbb0f700b44c490755a13635c3dd096edfc",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsItemImport.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsItemImport.java",
+      "sha256": "4f15f7d0ed4f814e184e2fc789e182cf5cc346081207c3e65b9a423b001761b5",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsItemExport.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsItemExport.java",
+      "sha256": "9c6402303011e0cfd984e693021baa6bd1a9915079e7076b3ce981ed5902a859",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsItemStorage.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsItemStorage.java",
+      "sha256": "b44c666f89ab509bdf8318d3be08db0a9f695e195e9bac7ba69cf63d4a2f4f0c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsFluidImport.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsFluidImport.java",
+      "sha256": "3f5266b2b91e1ac4f9fa8b9da52f33db2e837246dc72468f1b4977979cf2e51c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsFluidExport.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsFluidExport.java",
+      "sha256": "a1ce7b09cea5fec69c778b256479a8492e2bf81927b9468ac6e80470642089fe",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/covers/CoverLogisticsFluidStorage.java",
+      "relative": "gregapi/cover/covers/CoverLogisticsFluidStorage.java",
+      "sha256": "c24fe6bd8b968f4a324e05910d61e9c8c9c3a705189c0633a6c517d871ef3154",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "relative": "gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "sha256": "f41879dadcb2b4cf8b55c1156b903fc6e00e5dbb9644b1158869849be4b48daf",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_Screwdriver.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_Screwdriver.java",
+      "sha256": "0cb7f909f6f9d4272ee6eb63ab9aafdc4b5889f093b2133f1531fbe703bcd56f",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_SoftHammer.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_SoftHammer.java",
+      "sha256": "48ce603efcb295072b9d742a555100710aceae8557a69b6f717e7b6152f35f6c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_WireCutter.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_WireCutter.java",
+      "sha256": "2140613e3c6af93fe2165608784081b30f1c7f4ee7cc61f65eaacb6ed9784ce7",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java",
+      "relative": "gregtech/items/tools/machine/GT_Tool_MagnifyingGlass.java",
+      "sha256": "df3e7812331b86f9076dfe42afbc8135b73f6091fd53d47d25c3dd95ec89e00f",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "relative": "gregtech/loaders/a/Loader_Fluids.java",
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": []
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/cover/CoverData.java",
+      "relative": "gregapi/cover/CoverData.java",
+      "sha256": "e2069e2a2095a44e0ea1be7d38d9c4068cacb70f7850b2bc49a85e37d848da75",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/IBlockToolable.java",
+      "relative": "gregapi/block/IBlockToolable.java",
+      "sha256": "80b8529019e3f3ccab0bc1a567771cb6f0ddcd0bbe5529cafb5f1035bd058206",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java",
+      "sha256": "898721fe05c4fff8deeb87bc939e5c3f4f0d5470516c7faa9424dd59e799b000",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingRules.java",
+      "sha256": "66265dfbff6702499a12d9794b12a4771e76b7047bde85cb275d288d92ecca8d",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/FilterPolicy.java",
+      "sha256": "000ac0a3252d71f22ae943466e48f26fc43888e32303ebeccdcbc6557500a8bf",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/machine/ManualToolRules.java",
+      "sha256": "cbbfad7f164ecb04fd3c91f5cc4b95c2185ba28fefed97738df080bc107e58aa",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "sha256": "487369b7825ad5bea525f1a16d48648f7ab0125806bdc575c9a80a292c1506cd",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "sha256": "cd65ece2f245aa7e044fbadcd1c1ec38e223966b28e87e65a128d2ecb2e64ef7",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "sha256": "a617246e9ccb45104a08ad12482c5e2fd5d9795c105dd4c1aa5d7dd866c33fd2",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "sha256": "88ca8b90e1b021a340d2d21f993897c9904f76fe851d95ace383335c77742571",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "sha256": "ed2f20bb0db363d33fd24bd535781abc031b6c620951be62119384c7200a9f9c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "sha256": "300a0adb2b58e7b7ea6baf70ba24ded8b8d1248afbd2c2120ac48abc828c74f1",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "sha256": "5a110a43cd87ebabb067a40942d9be6e02a86064b7a2a337cca0a14b2c0c3cdc",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "sha256": "0acb902e14184c01d57a818830a29c491ff26141c4f1a42fcb71b61bad73a6e8",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "sha256": "fe1aec11d2c5a9e4585bcae938748133610cfaa87a47ab22a461ee0d64265ce4",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "sha256": "5a14d12cb99687b2d2dbffcef2988fbf027e698e79e9c8dfa08c5d9661534198",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "sha256": "e2dc6e089945bf77cb443f3409b8125f0b483e3e6f3674f82d5ae96ec9c09738",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "sha256": "597867a457c5e291bb1179bbb31b90737f807d95adb65670fc01c8be17c8daff",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "sha256": "9524960f4a2e9088071ef04d6b93c1beb75bc37a103c820bce8216bb9f72b552",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "sha256": "ba7c5d703a09fdb39650de5fda53a621d304bc5333bae9723f777ebefec836d7",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "sha256": "7bcdaf6a00f27a0c63bf255ff2fa931293a0ac0df773f6fc2d85dd61bd96b36c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "sha256": "6166dba10593ca2f9ca144674fe8db678b4966b58781850759ef9187150a586d",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/NeoToolBindings.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/NeoToolBindings.java",
+      "sha256": "b81e6457e2c4b232027f749fdbc783dee0bbde11fa82bb57bb5285c4cf78854c",
+      "scope": "Named transfer, filter, quota, tool-return and feedback paths only; hashes are not whole-file gameplay acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "forge",
+      "sha256": "4a8be15abed08fe6f23d5fcac5d01673a1b387e8b8c1796b096cd3049baf258c",
+      "tokens": 2240
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "neoforge",
+      "sha256": "bb54cfd0e321f261a151f180d67e45cee7584bdc51e7c595f9a6db0c3448e951",
+      "tokens": 2241
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "platform": "forge",
+      "sha256": "d28cb843b1423a7a792c0fc2e73480a6dd690ad5215483ef50210d27efcecc2b",
+      "tokens": 1518
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "platform": "neoforge",
+      "sha256": "edc0c5a8d52dd30add07d13705e4ec4dc6d07d15099ddac4fbfdb5d2d174206d",
+      "tokens": 1521
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "platform": "forge",
+      "sha256": "a23008d23524e9e4048e45fb23202ace95993d4f7ea4b3e383598040b0cf7afd",
+      "tokens": 1720
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "platform": "neoforge",
+      "sha256": "6c5db37b979b6ee637e603ebf51c20f89d4efac21b296ea56a537572d0ad85d7",
+      "tokens": 1729
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "platform": "forge",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "tokens": 370
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+      "platform": "neoforge",
+      "sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+      "tokens": 370
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "platform": "forge",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsRoutingPass.java",
+      "platform": "neoforge",
+      "sha256": "9399c4ec772b08c52c2db19842cdc59aac7c1b38bcf73e72a0de1308eb06c6e0",
+      "tokens": 394
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "platform": "forge",
+      "sha256": "a771318eeed67a68a05858f1a4e3a91118581941e163e10b5386ea883a8798ce",
+      "tokens": 574
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsNetwork.java",
+      "platform": "neoforge",
+      "sha256": "10375ccfd380884f1bb68a41b25ddb47fd3086ae066b6b587d81c3df79a58888",
+      "tokens": 574
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "forge",
+      "sha256": "17370ab8da11533e270c151cf796d3c920a6747bedc7fafc249311f1b7f392a0",
+      "tokens": 1382
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "platform": "neoforge",
+      "sha256": "19eed35f0fd14c8403b4bd7be522f1b3700ec53e243ce8a53091493631654d4b",
+      "tokens": 1420
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "forge",
+      "sha256": "1dbb6f015976b98c415b03e8ac082c287d1de24ece54fe4d955b7c4fdbffb8b8",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "neoforge",
+      "sha256": "1dbb6f015976b98c415b03e8ac082c287d1de24ece54fe4d955b7c4fdbffb8b8",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "forge",
+      "sha256": "326534cdfab1174396de3eaf3ea87bff99056bec7cb0f845f8a3e16a23cabb28",
+      "tokens": 514
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "neoforge",
+      "sha256": "034b71db9c89617cb6bfa8203d806279ddf9916e53c15d9e5b23c80298680e6f",
+      "tokens": 505
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "platform": "forge",
+      "sha256": "8045c313a35083f583e4e27f1bbec4731e15f70136a96b709154f8bf27028c3d",
+      "tokens": 43
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "platform": "neoforge",
+      "sha256": "8045c313a35083f583e4e27f1bbec4731e15f70136a96b709154f8bf27028c3d",
+      "tokens": 43
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "platform": "forge",
+      "sha256": "413951c6812471684b0e88925fab4f20eb6d762fb0690e198711ae190b8530a2",
+      "tokens": 23
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "413951c6812471684b0e88925fab4f20eb6d762fb0690e198711ae190b8530a2",
+      "tokens": 23
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "platform": "forge",
+      "sha256": "4c8e0cd2898f81d409fef45dc8422633a2a1095b9f344d53cbb365476d16e6f2",
+      "tokens": 75
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "platform": "neoforge",
+      "sha256": "4c8e0cd2898f81d409fef45dc8422633a2a1095b9f344d53cbb365476d16e6f2",
+      "tokens": 75
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "forge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "neoforge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "forge",
+      "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "platform": "neoforge",
+      "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+      "tokens": 453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "forge",
+      "sha256": "0fd1f86e16e3ef80042f578e50b1543c9eb8d36b6c539c843afd11fab3d494ce",
+      "tokens": 3637
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "platform": "neoforge",
+      "sha256": "e7d2e2be99fe3c7cbc2493c2f098246d336cd980ac0917de903e50db08914062",
+      "tokens": 3745
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "forge",
+      "sha256": "dc490ac45e02d179d0b7aeb9b84218125468a7a54d06cb351e39e5b0bc63ef92",
+      "tokens": 1112
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsCoreControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "ecdbf4b5bb99024c9eb5872fec9762576367af7286523660c32e4356f861bfd7",
+      "tokens": 1287
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "platform": "forge",
+      "sha256": "4e7cb21e2cff3ecfc3cb00b095bc4a5842975d9f6d5d6e544f2bd9f3b235c078",
+      "tokens": 1462
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsWireBlock.java",
+      "platform": "neoforge",
+      "sha256": "3f720c11e30bb2eceb16e133c4c1a8c9a9799d1d8c7bccf4b0780e8ae83e2705",
+      "tokens": 1909
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "forge",
+      "sha256": "ae502da511a56f0c07da3805b05e08cf2741e441120d9f1768d9e30c2e371187",
+      "tokens": 1230
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "neoforge",
+      "sha256": "81eee9afe81d7cb3ae02aee0f41534df761984bb4fff274e5597a23156718abc",
+      "tokens": 1469
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "8f75c854016b37893f65134d4dd9832e772ab32aa220d15fd56d021b272bb1a2",
+      "tokens": 3094
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsCoreControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8d2c4585751f4788a97a5a3ff7d8fd663b99fab990666c51f1b379a30383f3db",
+      "tokens": 3135
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "sha256": "152f7ece5f721ca26d54e4e5d4f93f0d821003ac3ebd4e86e56568a341e6bcd4",
+        "bytes": 53646
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/alchemy/PotionUtils.class",
+        "sha256": "e8e91549ed5d99679ec5d41cd0d0905ce857767e812d8baa5a5765db1ec3a194",
+        "bytes": 12890
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/items/ItemStackHandler.class",
+        "sha256": "6706adae3f06eee55319aa95cfe50f760d76016a6c71dee24037d6af59763c9f",
+        "bytes": 6788
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/fluids/capability/templates/FluidTank.class",
+        "sha256": "b96b641137eca1c9fa63b1b0a91f10a44195311017dad9be689792389d5e02bc",
+        "bytes": 5940
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/Item.class",
+        "sha256": "b0e69c533ce7ea00deeeb5d369bcc71ca345fcaf380e3c136e178bd67d8b87a6",
+        "bytes": 22118
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/PotionItem.class",
+        "sha256": "62f474dc49f4db1106f6f3ad1794ca473beb71f68f9510610a986e926c8fa907",
+        "bytes": 10389
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeItem.class",
+        "sha256": "f0e5e18bedc2c30059cf5d28dbb6eaef6efd1ecec57dc8d5cacf5de68ad30f2a",
+        "bytes": 18878
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/ItemStack.java",
+        "sha256": "b35770a757f0c62a88276a38c36763d26e204d1a6210ea3fcac71a53526bc389",
+        "bytes": 45497,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-ItemStack.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/alchemy/PotionContents.java",
+        "sha256": "634f3c8b077d83bcaa0758d99501d3d7c7d69a98190aca72c3465b8cadcdd1e1",
+        "bytes": 10120,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-PotionContents.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/items/ItemStackHandler.java",
+        "sha256": "2c73babcc9449b12f8b75dbb61d019aea043e647b8604edcfea7796ec19ba029",
+        "bytes": 5215,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-ItemStackHandler.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/fluids/capability/IFluidHandler.java",
+        "sha256": "ba0ef7b91a52a5051b3232d99f320b9deb0ba399d83e363bf934565eea312161",
+        "bytes": 3740,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-IFluidHandler.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/fluids/capability/templates/FluidTank.java",
+        "sha256": "e624731b737f5be737f211f5e94483ece29eddb8ea82270ea55d108b3e93c082",
+        "bytes": 4498,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-FluidTank.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/Item.java",
+        "sha256": "d176c58aee3e1698000514bf00f01ddf495f7dcd8c89fb2acd832391aae1be48",
+        "bytes": 20380,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-Item.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/PotionItem.java",
+        "sha256": "790ee75665baa9a69dee25d6e680b6b41ff7c91ffb5d000976bd0ecd620eff07",
+        "bytes": 6090,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-PotionItem.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IItemExtension.java",
+        "sha256": "f81d0c27ee3fc80db52d43f87bdd09bcbed4a02a126b09ec2cdc59a7ea340214",
+        "bytes": 33661,
+        "extracted": "work/logistics-transfer-audit-20261021/neo-IItemExtension.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.item.ItemStack",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/ItemStack.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-ItemStack.javap.txt",
+        "sha256": "336759a20c4e81abb9cd9d55089288b3c6403da0701ed53a492472840acf0eb6",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.world.item.alchemy.PotionUtils",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/alchemy/PotionUtils.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-PotionUtils.javap.txt",
+        "sha256": "f75a2fdc65bf4297363d7370664525b626c7cf1adca23c7e14b8441f302bb769",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraftforge.items.ItemStackHandler",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/items/ItemStackHandler.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-ItemStackHandler.javap.txt",
+        "sha256": "089f7ff65de15b4cb3dfd63263f8b753ff8509a18e431d2cb7833ea401cd5b5c",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraftforge.fluids.capability.templates.FluidTank",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/fluids/capability/templates/FluidTank.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-FluidTank.javap.txt",
+        "sha256": "45ee069fea779ca77efc6ee9860834af0a29efc441094a51f1c57bb77b0a7448",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.world.item.Item",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/Item.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-Item.javap.txt",
+        "sha256": "0e8ba02b8a197e0cd81d40b9b7c583dbef5b6ae34cf333b9b5d973c83914f479",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.world.item.PotionItem",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/PotionItem.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-PotionItem.javap.txt",
+        "sha256": "576538cb60f66c8c98071a2cbe908f4d7f04215f08220028c293035f52130308",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraftforge.common.extensions.IForgeItem",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeItem.class",
+        "output": "work/logistics-transfer-audit-20261021/forge-IForgeItem.javap.txt",
+        "sha256": "64da7cbdcdf869fe8881df6ae809c5334e8674b1536cc244f7cb9e5fd6da3964",
+        "kind": "Read-only javap; no compilation or target initialization."
+      }
+    ]
+  },
+  "named_source_anchors": [
+    {
+      "kind": "original",
+      "path": "gregapi/util/ST.java",
+      "needle": "int tMovable = Math.min(aMaxMove, canPut(",
+      "matching_lines": [
+        [
+          470,
+          "int tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));"
+        ],
+        [
+          498,
+          "int tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));"
+        ],
+        [
+          526,
+          "int tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));"
+        ],
+        [
+          550,
+          "int tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));"
+        ],
+        [
+          572,
+          "int tMovable = Math.min(aMaxMove, canPut((IInventory)aTo.mTileEntity, aIgnoreSideTo ? SIDE_ANY : aTo.mSideOfTileEntity, aTo.mSideOfTileEntity, aSlotTo, aStackFrom, aStackTo, Math.min(aMaxSize, aStackFrom.getMaxStackSize())));"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/util/ST.java",
+      "needle": "aCount = Math.min(aCount, aStackFrom.stackSize);",
+      "matching_lines": [
+        [
+          595,
+          "aCount = Math.min(aCount, aStackFrom.stackSize);"
+        ],
+        [
+          618,
+          "aCount = Math.min(aCount, aStackFrom.stackSize);"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/util/ST.java",
+      "needle": "public static short     meta_(ItemStack aStack)",
+      "matching_lines": [
+        [
+          164,
+          "public static short     meta_(ItemStack aStack) {return (short)Items.feather.getDamage(aStack);}"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/data/FL.java",
+      "needle": "FluidStack tDrained = ((IFluidHandler)aFrom.mTileEntity).drain(",
+      "matching_lines": [
+        [
+          840,
+          "public static long move_(@SuppressWarnings(\"rawtypes\") DelegatorTileEntity aFrom, @SuppressWarnings(\"rawtypes\") DelegatorTileEntity aTo, long aMaxMoved) {if (aMaxMoved <= 0) return 0; FluidStack tDrained = ((IFluidHandler)aFrom.mTileEntity).drain(aFrom.getForgeSideOfTileEntity(), UT.Code.bindInt(aMaxMoved), F); if (tDrained == null || tDrained.amount <= 0) return 0; tDrained.amount = Code.bindInt(fill_(aTo, tDrained.copy(), T)); if (tDrained.amount <= 0) return 0; ((IFluidHandler)aFrom.mTileEntity).drain(aFrom.getForgeSideOfTileEntity(), tDrained, T); return tDrained.amount;}"
+        ],
+        [
+          842,
+          "public static long move_(@SuppressWarnings(\"rawtypes\") DelegatorTileEntity aFrom, @SuppressWarnings(\"rawtypes\") DelegatorTileEntity aTo, FluidStack aMoved) {if (aMoved == null || aMoved.amount <= 0) return 0; FluidStack tDrained = ((IFluidHandler)aFrom.mTileEntity).drain(aFrom.getForgeSideOfTileEntity(), aMoved, F); if (tDrained == null || tDrained.amount <= 0) return 0; tDrained.amount = Code.bindInt(fill_(aTo, tDrained.copy(), T)); if (tDrained.amount <= 0) return 0; ((IFluidHandler)aFrom.mTileEntity).drain(aFrom.getForgeSideOfTileEntity(), tDrained, T); return tDrained.amount;}"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregtech/loaders/a/Loader_Fluids.java",
+      "needle": "ST.make(Items.potionitem, 1,  8197)",
+      "matching_lines": [
+        [
+          239,
+          "new FoodStatDrink(FL.create(\"potion.health\"                              , tIconPotion, \"Healing Brew\"                            , null, UT.Code.getRGBaArray(Potion.heal             .getLiquidColor()), 1, 1000, 300, ST.make(Items.potionitem, 1,  8197), IL.Bottle_Empty.get(1), 250)                     , LH.Chat.PINK  + \"Instant Health I\"        ,  0, 0.0F  ,   0, C+37,  0.00F, EnumAction.drink, T, F, F, Potion.heal             .id,   1, 0, 100);"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregtech/loaders/a/Loader_Fluids.java",
+      "needle": "ST.make(Items.potionitem, 1,  8194)",
+      "matching_lines": [
+        [
+          247,
+          "new FoodStatDrink(FL.create(\"potion.speed\"                               , tIconPotion, \"Swiftness Brew\"                          , null, UT.Code.getRGBaArray(Potion.moveSpeed        .getLiquidColor()), 1, 1000, 300, ST.make(Items.potionitem, 1,  8194), IL.Bottle_Empty.get(1), 250)                     , LH.Chat.GREEN + \"Speed I (3:00)\"          ,  0, 0.0F  ,   0, C+37,  0.00F, EnumAction.drink, T, F, F, Potion.moveSpeed        .id,3600, 0, 100);"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/item/multiitem/behaviors/Behavior_Tool.java",
+      "needle": "UT.Code.units(tDamage, 10000, mDamage, T)",
+      "matching_lines": [
+        [
+          63,
+          "if (mDamage > 0) ((MultiItemTool)aItem).doDamage(aStack, UT.Code.units(tDamage, 10000, mDamage, T), aPlayer, F);"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/cover/covers/AbstractCoverAttachmentLogistics.java",
+      "needle": "return 10000;",
+      "matching_lines": [
+        [
+          69,
+          "return 10000;"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/cover/covers/CoverLogisticsItemImport.java",
+      "needle": "No Filter Set!",
+      "matching_lines": [
+        [
+          64,
+          "aChatReturn.add(\"No Filter Set! (Priority: \" + aData.mValues[aCoverSide] + \")\");"
+        ],
+        [
+          69,
+          "aChatReturn.add(\"No Filter Set! (Priority: \" + aData.mValues[aCoverSide] + \")\");"
+        ]
+      ]
+    },
+    {
+      "kind": "original",
+      "path": "gregapi/cover/covers/CoverLogisticsFluidImport.java",
+      "needle": "tFluid.getFluid().getName()",
+      "matching_lines": [
+        [
+          76,
+          "aChatReturn.add(\"Imports: \" + LH.Chat.CYAN + tFluid.getFluid().getName() + \" (Priority: \" + aData.mValues[aCoverSide] + \")\");"
+        ],
+        [
+          101,
+          "UT.Entities.sendchat(aPlayer, \"Imports: \" + LH.Chat.CYAN + tFluid.getFluid().getName());"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "needle": "int offered = Math.min(available.getCount(), capacity);",
+      "matching_lines": [
+        [
+          242,
+          "int offered = Math.min(available.getCount(), capacity);"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "needle": "if (!returned.isEmpty()) Block.popResource(",
+      "matching_lines": [
+        [
+          253,
+          "if (!returned.isEmpty()) Block.popResource(level, source.targetPos, returned);"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "needle": "filter.getDamageValue() == candidate.getDamageValue()",
+      "matching_lines": [
+        [
+          80,
+          "&& filter.getDamageValue() == candidate.getDamageValue());"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "needle": "if (!level.isClientSide) describe(player, installed);",
+      "matching_lines": [
+        [
+          213,
+          "if (!level.isClientSide) describe(player, installed);"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "needle": "source.handler.fill(remainder, IFluidHandler.FluidAction.EXECUTE);",
+      "matching_lines": [
+        [
+          181,
+          "source.handler.fill(remainder, IFluidHandler.FluidAction.EXECUTE);"
+        ]
+      ]
+    },
+    {
+      "kind": "current",
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/tool/GTToolHelper.java",
+      "needle": "electric.consumeInteractionEnergy(stack, Math.max(0L, amount) * 100L, user);",
+      "matching_lines": [
+        [
+          191,
+          "electric.consumeInteractionEnergy(stack, Math.max(0L, amount) * 100L, user);"
+        ]
+      ]
+    }
+  ],
+  "readability": {
+    "baseline": "948871986b2fe94f4e90298c3e9dfc3924a05366",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java": {
+        "before_raw_sha256": "526e4c9f997bba86016f294e3b7b6a110b62503f24e46852509b856075cb530d",
+        "after_raw_sha256": "898721fe05c4fff8deeb87bc939e5c3f4f0d5470516c7faa9424dd59e799b000",
+        "scoped_regions": [],
+        "comment_corrections": [
+          [
+            "/** The GT6 1086-1099 cover family; display covers are reserved for W4. */",
+            "/** Shared definitions for GT6 logistics displays and routing attachments, IDs 1086-1099. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 540,
+            "execution_sha256": "2578a4b27ea671a5c1af16535555e6252a040cb20f4b06835131503f696456b9",
+            "before_lines": 58,
+            "after_lines": 86,
+            "before_max_line": 112,
+            "after_max_line": 112
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java": {
+        "before_raw_sha256": "97604446779bae23d89c9d037ef20556e8223fae7153745c7bb37bfc8129c910",
+        "after_raw_sha256": "9d6570256f720fbbe59b2077d31697fc6286f4b6982fce3ce12067af46a6a28b",
+        "scoped_regions": [],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 370,
+            "execution_sha256": "c81098d88901e831b314df6a6dbc929a9aeb70638cc69d1492d9a9a9610f2db3",
+            "before_lines": 37,
+            "after_lines": 77,
+            "before_max_line": 91,
+            "after_max_line": 89
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 370,
+            "execution_sha256": "c81098d88901e831b314df6a6dbc929a9aeb70638cc69d1492d9a9a9610f2db3",
+            "before_lines": 37,
+            "after_lines": 77,
+            "before_max_line": 91,
+            "after_max_line": 89
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java": {
+        "before_raw_sha256": "a414993a6212d73dd7672b283f6dcfac7458696e92b96d81a09984714b2525aa",
+        "after_raw_sha256": "a617246e9ccb45104a08ad12482c5e2fd5d9795c105dd4c1aa5d7dd866c33fd2",
+        "scoped_regions": [
+          [
+            "public static boolean cyclePriority(",
+            "public static boolean cycleTargetStackSize(",
+            {
+              "old": "previousValue"
+            }
+          ],
+          [
+            "public static boolean cycleTargetStackSize(",
+            "private static void describe(",
+            {
+              "old": "previousValue",
+              "next": "nextTargetSize"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Original filtered item covers ignore NBT but still distinguish item and damage value. */",
+            "/** Matches current item and damage only; legacy metadata variants may now live in stack data. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1720,
+            "execution_sha256": "81cde81416687e179185b5b695a8bc9e8391c155d846796c112ecb6072fb4600",
+            "before_lines": 206,
+            "after_lines": 217,
+            "before_max_line": 174,
+            "after_max_line": 119
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1729,
+            "execution_sha256": "8b86c2254e75af221621fb5d110a5726684c4e36cd17975b2c8d7104ef76ecc0",
+            "before_lines": 207,
+            "after_lines": 223,
+            "before_max_line": 174,
+            "after_max_line": 122
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java": {
+        "before_raw_sha256": "77b6ab76e8b102ce9056180026e3dcde2b10226aa23831a1fbdd4003decd13a6",
+        "after_raw_sha256": "cd65ece2f245aa7e044fbadcd1c1ec38e223966b28e87e65a128d2ecb2e64ef7",
+        "scoped_regions": [],
+        "comment_corrections": [
+          [
+            "// Recheck after the real drain: a handler is allowed to change between simulation and\n            // execution. A reduced fill is returned to the source rather than silently discarded.",
+            "// Recheck after the real drain in case the destination changed since simulation.\n            // Try to return any remainder; a rejected return is not buffered here."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1518,
+            "execution_sha256": "1e9c01946c74f85fbac119632902703dfbfaa29619ee8cbaedab0e4ad5f77722",
+            "before_lines": 177,
+            "after_lines": 180,
+            "before_max_line": 136,
+            "after_max_line": 118
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1521,
+            "execution_sha256": "bb835b0aa77bdf9a3ecac7a3906c7eb8d420d8f45c04e83db9b27933932396de",
+            "before_lines": 175,
+            "after_lines": 179,
+            "before_max_line": 141,
+            "after_max_line": 124
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, explicit local renames and three evidence-backed comment corrections only. No gameplay changes."
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source-derived traces and arithmetic. No compiled classes, target initialization, handlers, worlds or tests executed.",
+    "quota": {
+      "source": 10,
+      "destination": 32,
+      "source_target": 0,
+      "destination_target": 64,
+      "conversion": 1,
+      "old_planned_before_source_clamp": 32,
+      "old_moved": 10,
+      "old_destination_after": 42,
+      "current_offered": 10,
+      "current_moved": 0,
+      "current_destination_after": 32,
+      "policy": "Keep strict quota semantics; do not restore the original underfill bug for lexical parity."
+    },
+    "potion_filter": {
+      "old_item": "minecraft:potionitem",
+      "old_healing_metadata": 8197,
+      "old_swiftness_metadata": 8194,
+      "old_match": false,
+      "current_item": "minecraft:potion",
+      "current_ordinary_damage_both": 0,
+      "current_match": true,
+      "forge_effect_storage": "Potion tag via PotionUtils.setPotion; damage getter delegates to IForgeItem Damage tag.",
+      "neoforge_effect_storage": "POTION_CONTENTS via PotionContents.createItemStack; damage getter delegates to IItemExtension DAMAGE component.",
+      "limit": "Ordinary distinct vanilla potion variants; no claim all component items fail. Do not require all stack data to match."
+    },
+    "rejected_fluid_return": {
+      "initial_source": 1000,
+      "destination_simulation_accepts": 1000,
+      "destination_execute_accepts": 0,
+      "source_execute_drains": 1000,
+      "source_return_accepts": 0,
+      "old_destination_execute_first": true,
+      "current_source_after": 0,
+      "current_destination_after": 0,
+      "current_reported_moved": 0,
+      "current_unbuffered": 1000,
+      "condition": "Destination initially accepts and has room. Executed source drain disables subsequent destination filling without deleting stored destination fluid; simulated drain does not. Source endpoint refuses filling. Old fills destination first, then drains and disables further filling; current drains/disables first and loses refused refund.",
+      "limit": "Conditional mutable-capability contract; no installed addon or ordinary stable-tank failure reproduced.",
+      "policy": "Do not restore fill-before-drain blindly: the original also ignores actual drain failure and can duplicate.",
+      "old_source_after_destination_rejects_in_separate_branch": 1000,
+      "same_initial_callback_witness_old_source_after": 0,
+      "same_initial_callback_witness_old_destination_after": 1000,
+      "same_initial_callback_witness_old_reported_moved": 1000
+    },
+    "tool_requested_damage": {
+      "ordinary_gt_tool_factor": 100,
+      "raw_returns": {
+        "screwdriver": 10000,
+        "cutter": 1000,
+        "soft_hammer": 10000,
+        "magnifier": 1
+      },
+      "old_requests": {
+        "screwdriver": 100,
+        "cutter": 10,
+        "soft_hammer": 100,
+        "magnifier": 1
+      },
+      "current_requests": {
+        "screwdriver": 1,
+        "cutter": 1,
+        "soft_hammer": 1,
+        "magnifier": 0
+      },
+      "limit": "Requested durability before creative/unbreaking/material rules, not guaranteed actual wear per interaction; electric tools excluded from this witness."
+    },
+    "ordinary_primitives": {
+      "fluid_pair_limit_per_conversion": 16000,
+      "fluid_energy_for_250": 1,
+      "fluid_energy_for_251": 2,
+      "item_energy_for_10": 10,
+      "variable_quota_repeats_up_to_conversion": true,
+      "fixed_quota_stops_after_one_success": true,
+      "items_rejected_on_execute": "Already attempts reinsertion and drops any unreturned remainder at source; not the fluid path.",
+      "multi_tank_selection": "Current can try a later candidate when first fluid fails; original unfiltered max-drain branch stops at first offered fluid. Filtered original branch is already fluid-sensitive."
+    }
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "scope": "User-owned material layout unchanged."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "scope": "User-owned material layout unchanged."
+    }
+  ],
+  "limitations": [
+    "No Gradle, Java compilation, target initialization, tests, game, build or push.",
+    "No whole-logistics acceptance: actual scheduler phases, loading/delegation, equal-priority tie order, lifecycle, external providers and client rendering remain open.",
+    "Source-only audit records contractual differences and retained improvements, not a count of unfixed defects.",
+    "Native javap is read-only bytecode inspection; extracted source is from the configured installed Neo artifact."
+  ],
+  "previous_goal_turn": "The material-table response inspected actual factory signatures and preserved user layout; this continuation resumes the pending full-audit transport work.",
+  "root_revalidation": {
+    "kind": "Named source/entry identities; complete selected execution streams after only declared local renames; raw literal positions, comments/directives, protected user files and added documentation.",
+    "original_sources": 23,
+    "current_sources": 25,
+    "shared_platform_views": 40,
+    "readability_files": 4,
+    "readability_execution_views": 7,
+    "native_artifacts": 2,
+    "native_entries": 15,
+    "readonly_javap_views": 7,
+    "ledger_contiguous": [
+      1,
+      257
+    ],
+    "new_or_added_local_links": 25,
+    "protected_materials_unchanged": true,
+    "raw_literal_positions": [
+      {
+        "source": "core/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverDefinition.java",
+        "platform": "core",
+        "count": 18,
+        "ordered_position_sha256": "10f1c917533840aa5b7d0e2031a985fc93da7ea9d7b9b2181c22c915ab2ac85e"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+        "platform": "forge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverType.java",
+        "platform": "neoforge",
+        "count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+        "platform": "forge",
+        "count": 18,
+        "ordered_position_sha256": "3f67ec3e6c112bb4dd63541fcd297c8b207b5b865d7010f86683ab0c12fe16b7"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+        "platform": "neoforge",
+        "count": 19,
+        "ordered_position_sha256": "ea104434f47b1a19fe926a2c5127f6069695a753732912208f6c44405c0ef585"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+        "platform": "forge",
+        "count": 22,
+        "ordered_position_sha256": "b8c2dc5491e75e27b7a10615070771ddb1e8ea579fd2782decf36dc0e5f5b3c2"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+        "platform": "neoforge",
+        "count": 22,
+        "ordered_position_sha256": "c5b0fb04e0fb6b3373695b966dbfe2730bb58cfe3193db107aaff5892ca933dd"
+      }
+    ],
+    "target_execution_build_or_tests": false
+  }
+}

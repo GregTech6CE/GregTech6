@@ -21,10 +21,10 @@ import javax.annotation.Nullable;
  *   <li>a full roll turns into its used roll and starts at {@code mUses}
  *       ({@code :63-67}) — and that conversion sticks even when the click itself does nothing,
  *       because the counter is written back unconditionally at {@code :76-78};</li>
- *   <li>the used roll calls {@code tape(...)} ({@code :68-75}) and subtracts what it reports;
+ *   <li>the used roll calls {@code tape(...)} ({@code :68-75}); only a finite-item player spends its uses;
  *       at zero uses the stack either turns into the empty item or is consumed
  *       ({@code :80-87});</li>
- *   <li>{@code tape(...)} ({@code :91-99}) does nothing at all when the clicked face is obstructed
+ *   <li>{@code tape(...)} ({@code :91-99}) refuses an ordinary player's obstructed face
  *       — {@code WD.obstructed}, i.e. the player cannot reach through the block behind it — and
  *       otherwise forwards to {@code IBlockToolable.Util.onToolClick(TOOL_ducttape, aUses, mQuality,
  *       ...)}, which is how a GT6 mass storage gets sealed
@@ -46,6 +46,10 @@ import javax.annotation.Nullable;
  * <p>{@code TOOL_ducttape} has exactly one implementor in GT6: Mass Storage.
  * The port's {@code MassStorageBlockEntity} implements {@link Tapeable} and
  * keeps contents inside the harvested item only while taped.</p>
+ *
+ * <p>Current bookkeeping still spends creative tape uses and passes the stored counter
+ * instead of the full creative budget (ALIGN-134). A refused operation also skips
+ * the original exhausted-roll cleanup (ALIGN-135).</p>
  */
 public final class BehaviorDuctTape {
 
@@ -119,14 +123,12 @@ public final class BehaviorDuctTape {
     /**
      * GT6 {@code Behavior_Duct_Tape:54-89} for one click: the tape roll plus the block it targets.
      *
-     * <p>The order is the original's: the stack-size and edit gates first ({@code :55}), then the
-     * full → used conversion ({@code :63-67}), then the target lookup and {@link #tape}, then the
-     * counter write-back and the empty/consume step ({@code :76-87}). Note that a refused click
-     * still returns the converted stack, exactly like the original, which writes the new counter
-     * outside the {@code if (tUsed > 0)} block.</p>
+     * <p>The full-to-used conversion remains visible after a refused operation.
+     * The current early return, however, leaves an already exhausted used roll
+     * unchanged; the original also performs its empty/consume step after a miss
+     * (ALIGN-135).</p>
      *
-     * @param player the clicking player; a {@code null} player is GT6's auto-tool case and never
-     *               consumes tape ({@code :92} short-circuits the same way)
+     * @param player the clicking player, or {@code null} for a direct automated call
      * @return whether the click did something, plus the stack to store back
      */
     public static Outcome useOn(Level level, BlockPos pos, Direction side, @Nullable Player player,
@@ -159,12 +161,9 @@ public final class BehaviorDuctTape {
      * GT6 {@code Behavior_Duct_Tape.tape(...)} ({@code :91-99}): hand the click to the block, but
      * only when the clicked face is not obstructed.
      *
-     * <p>{@code aPlayer == null}, an invalid side and {@code FakePlayer} all take the original's
-     * "go ahead" branch; the port has no {@code FakePlayer} for an item click and {@link Direction}
-     * cannot be invalid, so only the obstructed test and the {@code null} player remain. A
-     * {@code null} player still reaches {@code onTape} (GT6's {@code onToolClick} tolerates
-     * {@code null} and every machine-side caller passes it), it is only the per-item bookkeeping in
-     * {@link #useOn} that refuses.</p>
+     * <p>The original bypasses the obstruction gate for a null player, an invalid
+     * side or a fake player. This helper currently applies that gate to every
+     * caller. A native {@link Direction} cannot express the invalid-side case.</p>
      *
      * <p>The target is a parameter rather than a lookup, which is the same shape GT6 has: its
      * {@code tape} receives the already-resolved {@code aPlayer} and hands the coordinates to

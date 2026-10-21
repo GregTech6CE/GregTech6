@@ -4,6 +4,8 @@
   "package": "com.gregtech.gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ConstructionRecipeMixin",
+    "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "CraftingFormPositionMixin",
     "AbstractMinecartSpeedCapMixin",

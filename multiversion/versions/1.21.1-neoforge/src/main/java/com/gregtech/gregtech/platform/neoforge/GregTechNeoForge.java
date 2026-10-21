@@ -157,6 +157,7 @@ public final class GregTechNeoForge {
         com.gregtech.gregtech.api.addon.GregTechAddons.dispatchRecipesReady(
                 new com.gregtech.gregtech.api.addon.GregTechAddon.Context("neoforge", "1.21.1"));
         com.gregtech.gregtech.api.addon.ExclusiveOutputMaps.audit();
+        com.gregtech.gregtech.content.multiblock.PlainStructureBlocks.resolve();
         LOGGER.info("GT addon API {} ready: {}", com.gregtech.gregtech.api.addon.GregTechAddons.API_VERSION,
                 com.gregtech.gregtech.api.addon.GregTechAddons.registeredIds());
         MachineWorkCost.Cost cost = MachineWorkCost.calculate(

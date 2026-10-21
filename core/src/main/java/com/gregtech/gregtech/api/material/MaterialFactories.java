@@ -1,16 +1,22 @@
 package com.gregtech.gregtech.api.material;
+
 import com.gregtech.gregtech.data.GregTechConstants;
 
 import com.gregtech.gregtech.content.material.Materials;
-/** GT6 material family defaults. These factories do not initialize a global alias table. */
+
+/** Material factory defaults used by the port; these do not initialize a global alias table. */
 public class MaterialFactories {
     private static final java.util.List<GTMaterial> NORMAL_WOODS = new java.util.ArrayList<>();
+
     protected MaterialFactories() {}
-    public static GTMaterial create(int id, String name, String localName, int color, MaterialProperty... props) {
+
+    public static GTMaterial create(int id, String name, String localName, int color,
+                                    MaterialProperty... props) {
         return GTMaterialRegistry.createMaterial(id, name, localName, color).put(props);
     }
 
-    public static GTMaterial element(int id, String name, String symbol, int protons, int neutrons, int melt, int boil, float density, int color, MaterialProperty... props) {
+    public static GTMaterial element(int id, String name, String symbol, int protons, int neutrons,
+                                     int melt, int boil, float density, int color, MaterialProperty... props) {
         return create(id, name, name, color, props)
                 .setAtomicProperties(new AtomicProperties(protons, protons, neutrons, 0))
                 .put(MaterialProperty.ELEMENT, MaterialProperty.GENERATE_DUST, MaterialProperty.MELTING)
@@ -18,9 +24,11 @@ public class MaterialFactories {
                 .setStats(melt, boil, density);
     }
 
-    public static GTMaterial metal(int id, String name, String symbol, int protons, int neutrons, int melt, int boil, float density, int color, MaterialProperty... props) {
+    public static GTMaterial metal(int id, String name, String symbol, int protons, int neutrons,
+                                   int melt, int boil, float density, int color, MaterialProperty... props) {
         return element(id, name, symbol, protons, neutrons, melt, boil, density, color, props)
-                .put(MaterialProperty.MELTING, MaterialProperty.METAL, MaterialProperty.INGOT, MaterialProperty.GENERATE_INGOT,
+                .put(MaterialProperty.MELTING, MaterialProperty.METAL,
+                        MaterialProperty.INGOT, MaterialProperty.GENERATE_INGOT,
                         MaterialProperty.GENERATE_NUGGET, MaterialProperty.GENERATE_PLATE,
                         MaterialProperty.GENERATE_PARTS, MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.GENERATE_FOIL, MaterialProperty.GENERATE_WIRE,
@@ -36,7 +44,8 @@ public class MaterialFactories {
                 .setTextureSet(MaterialTextureSet.FINE);
     }
 
-    public static GTMaterial gem(int id, String name, int color, MaterialTextureSet textureSet, MaterialProperty... props) {
+    public static GTMaterial gem(int id, String name, int color, MaterialTextureSet textureSet,
+                                 MaterialProperty... props) {
         return create(id, name, name, color, props)
                 .put(MaterialProperty.GEM, MaterialProperty.GENERATE_PLATE, MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.GENERATE_LENS, MaterialProperty.GENERATE_PARTS, MaterialProperty.TOOL_HEAD,
@@ -67,7 +76,8 @@ public class MaterialFactories {
                         MaterialProperty.INGOT, MaterialProperty.GENERATE_INGOT,
                         MaterialProperty.GENERATE_PLATE, MaterialProperty.GENERATE_PARTS, MaterialProperty.GENERATE_STICKS,
                         MaterialProperty.GENERATE_FOIL, MaterialProperty.GENERATE_WIRE, MaterialProperty.GENERATE_MULTIINGOT,
-                        MaterialProperty.GENERATE_MULTIPLATE, MaterialProperty.GENERATE_DENSEPLATE, MaterialProperty.GENERATE_PROJECTILE,
+                        MaterialProperty.GENERATE_MULTIPLATE, MaterialProperty.GENERATE_DENSEPLATE,
+                        MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.GENERATE_RAIL, MaterialProperty.SMITHABLE, MaterialProperty.TOOL_HEAD)
                 .setTextureSet(MaterialTextureSet.METALLIC);
     }
@@ -76,7 +86,8 @@ public class MaterialFactories {
         return create(id, name, localName, color, props)
                 .put(MaterialProperty.WOOD, MaterialProperty.DUST, MaterialProperty.GENERATE_DUST,
                         MaterialProperty.GENERATE_PLATE, MaterialProperty.GENERATE_STICKS,
-                        MaterialProperty.GENERATE_FOIL, MaterialProperty.GENERATE_PLANT, MaterialProperty.GENERATE_PROJECTILE,
+                        MaterialProperty.GENERATE_FOIL, MaterialProperty.GENERATE_PLANT,
+                        MaterialProperty.GENERATE_PROJECTILE,
                         MaterialProperty.FLAMMABLE)
                 .setTextureSet(MaterialTextureSet.WOOD)
                 .setFurnaceBurnTime(GregTechConstants.TICKS_PER_SMELT / 2L)
@@ -100,7 +111,9 @@ public class MaterialFactories {
         return material;
     }
 
-    public static java.util.List<GTMaterial> normalWoods() { return java.util.List.copyOf(NORMAL_WOODS); }
+    public static java.util.List<GTMaterial> normalWoods() {
+        return java.util.List.copyOf(NORMAL_WOODS);
+    }
 
     public static GTMaterial stone(int id, String name, String localName, int color, MaterialProperty... props) {
         return create(id, name, localName, color, props)
@@ -110,8 +123,9 @@ public class MaterialFactories {
                 .setTextureSet(MaterialTextureSet.STONE);
     }
 
-    /** GT6 {@code elec}  - electrolysis-separated gem-like material. */
-    public static GTMaterial elec(int id, String name, int color, MaterialTextureSet textureSet, MaterialProperty... props) {
+    /** Current electrolysis-family defaults; inherited gem and MAGICAL flags are audited separately. */
+    public static GTMaterial elec(int id, String name, int color, MaterialTextureSet textureSet,
+                                  MaterialProperty... props) {
         return gem(id, name, color, textureSet, props).put(MaterialProperty.MAGICAL);
     }
 
@@ -119,8 +133,9 @@ public class MaterialFactories {
         return elec(id, name, color, MaterialTextureSet.SHINY, props);
     }
 
-    /** GT6 {@code cent}  - centrifuge-separated material. */
-    public static GTMaterial cent(int id, String name, int color, MaterialTextureSet textureSet, MaterialProperty... props) {
+    /** Current centrifuge-family defaults; this implementation inherits gem forms. */
+    public static GTMaterial cent(int id, String name, int color, MaterialTextureSet textureSet,
+                                  MaterialProperty... props) {
         return gem(id, name, color, textureSet, props);
     }
 

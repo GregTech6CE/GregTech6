@@ -576,10 +576,12 @@ public final class ItemBehaviors {
      * into the used one and start its counter; run the operation with the counter the creative flag
      * allows; subtract what it reports; and finally empty the can when the counter reaches zero.
      *
-     * <p>That last step is outside the "did anything happen" test in every copy
-     * ({@code Behavior_Spray_Foam_Remover:84-91}), which is why it is outside the {@code spent > 0}
-     * test here too: a can whose counter is already zero is emptied by the next click even when the
-     * operation did nothing.</p>
+     * <p>The original's empty-can cleanup is outside both the successful-operation
+     * and finite-item branches. Here it is outside {@code spent > 0}, but still
+     * inside {@code !creative}: an already empty used can remains used in creative
+     * mode (ALIGN-135). Noncreative cleanup and normal full-can preparation are
+     * preserved. The wrapper itself also omits the original spray feedback sounds
+     * (ALIGN-132).</p>
      *
      * @return whether the operation did something, plus the can to store back
      */

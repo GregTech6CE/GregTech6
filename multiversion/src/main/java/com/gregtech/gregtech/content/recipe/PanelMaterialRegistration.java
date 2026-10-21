@@ -39,6 +39,11 @@ public final class PanelMaterialRegistration {
                 MaterialComponent.of(GTMaterialRegistry.get("Concrete"), GTValues.U),
                 MaterialComponent.of(GTMaterialRegistry.get("Iron"), MaterialPrefix.stick.getMaterialWeight())),
                 "GT6 BlockConcreteReinforced", true));
+        for (var variant : com.gregtech.gregtech.registry.GTConstructionVariants.all()) {
+            var block = (com.gregtech.gregtech.block.misc.FixedConstructionColor) variant.get();
+            var composition = ItemMaterialRegistry.base(item("gt6ce:" + block.family())).orElse(null);
+            if (composition != null) known(variant.get().asItem(), composition);
+        }
         for (var spec : PanelCatalog.ALL) {
             var input = item(spec.input());
             if (spec.kind().equals("wood") && spec.input().startsWith("gt6ce:"))

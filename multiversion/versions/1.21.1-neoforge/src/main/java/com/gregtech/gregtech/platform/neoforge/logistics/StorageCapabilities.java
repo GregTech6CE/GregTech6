@@ -9,7 +9,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 public final class StorageCapabilities {
     private StorageCapabilities() {}
     @SubscribeEvent public static void register(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,StorageRegistries.MASS_STORAGE.get(),(storage,side)->storage.itemHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,StorageRegistries.LOGISTICS_MASS_STORAGE.get(),(storage,side)->storage.itemHandler());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,StorageRegistries.MASS_STORAGE.get(),(storage,side)->storage.itemHandler(side));
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,StorageRegistries.LOGISTICS_MASS_STORAGE.get(),(storage,side)->storage.itemHandler(side));
     }
 }

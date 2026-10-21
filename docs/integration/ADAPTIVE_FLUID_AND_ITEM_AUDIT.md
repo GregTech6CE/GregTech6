@@ -45,3 +45,7 @@ PortableFluidContainerItem（量杯、胶囊等）的 handler 已存在并注册
 Java 17 只编译当前 LongFluidStorage 和 AdaptiveFluidCapacityAudit，记录七项查询／构造参数观察。使用同一纯类输入两套参数，仅用于检验对应公式，不能冒充运行原版类或原生机器。框架源码版本来自本地缓存，标识行为不是联网检查，也不声称覆盖所有 Forge／NeoForge 版本。
 
 未原生编译、全量测试、游戏、存档重启、构建或推送。来源哈希、源码等价、框架证据与观察值见 [回执](verification/adaptive-fluid-audit-20261019.json)。后续仍需检查标签／components 的比较、库存和物品容器交互、覆盖板、完整物流网络与其余系统。
+
+## 第五十九批：ALIGN-095 的反应堆热罐实例
+
+核反应堆虽覆写`capacity(FluidStack)`为Steam提供10240000容量，实际`fill`的空罐和非空分支仍走无参`capacity()`，未消费这项覆写。空热罐、401单位蒸馏水及32080HU可生成64160单位Steam，当前模拟只允许64000而失败；历史超量因已有量下限仍保留，不报全旧罐截断。该实例扩展本项填充入口合同，不另凑容量编号，与满普通热液罐先冷却后排出另属独立次序问题，见[核心专题](NUCLEAR_CORE_AUDIT.md)及[本批回执](verification/nuclear-contract-audit-20261021.json)。没有在本补证中修正生产行为。

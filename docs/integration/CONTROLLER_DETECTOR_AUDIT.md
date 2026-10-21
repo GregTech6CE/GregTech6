@@ -57,3 +57,7 @@ MultiItemTechnological 的五个重启周期为 1200／6000／12000／24000／36
 三份共享文件分别投影 Forge／Neo，六份代码与字面量比较一致。仅做必要源码核对与差异空白检查，未新增模拟测试、编译、GameTest、游戏、保存重启、构建或推送。见 [来源与验证回执](verification/controller-detector-audit-20261019.json)。
 
 下一步继续面板显示／传感器的状态与量化、状态同步、特殊控制器及全面核查队列。
+
+## 第六十八批只读大型换热器安装资格
+
+[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)已提供running／active且supportsSwitch=false，原仅要求Running接口的运行检测器仍被PanelCoverRuntime统一MachineCoverSpec门控拒绝。沿110的状态能力／安装条件问题扩宿主；不要把它与单块219缺Provider混同，也不要为了能贴检测器给原本无开关的设备编造开关功能。未实际安装验收。

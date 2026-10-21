@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-21",
+  "batch": 62,
+  "baseline": "c4a95c5c4",
+  "scope": "Tool-shaped and tool-shapeless recipe readability and one masked-block closing-brace boundary; complete native execution preserved.",
+  "method": "Select each real Forge/Neo view, restore masked nested comments, expand Unicode, retain all executable tokens and literals in order, compare full streams and real comments; no parameter/identifier normalization.",
+  "files": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapedRecipe.java",
+      "before_raw_sha256": "dbee56f0de86a112518784ae60b3fd9caa5dc48aa7edd4c4e8061b1aee1db36b",
+      "baseline_git_sha256": "0013ae979870ac3a3204438ac644a9cd1b777acb26f479349c2d5eee874f7da5",
+      "final_raw_sha256": "090335d671e4733c31e19d4154037ee5877db9e9328a6ef8779a12448ce90867",
+      "maintained_lines_before": 254,
+      "maintained_lines_after": 456,
+      "directive_count": 18,
+      "directive_text_and_order_equal": true,
+      "conditional_boundary_note": "ToolShapedRecipe moves one Neo loop closing brace from the next masked body start to the previous masked body end. The common closing brace now closes a method in both versions. Both selected full token streams remain exact.",
+      "platforms": {
+        "forge": {
+          "execution_tokens": 2040,
+          "full_execution_and_literal_positions_equal": true,
+          "normalized_execution_sha256": "f28801559ac989ff3bfcf272f678793d667c05181ca054667fb4147d335548cf",
+          "native_comments_equal": true,
+          "native_comment_count": 6,
+          "observed_view_sha256": "6d0ec270a56b7fcb9b650c6eb471ed63d929f6812f25109bff2516715c903a83",
+          "final_view_sha256": "3a097cf4d5f1f9aeb18eebb1d08380b7382efb0ffcbb4585dc38d6d322d5ba73",
+          "lines_before": 148,
+          "lines_after": 233,
+          "maximum_line_before": 499,
+          "maximum_line_after": 150
+        },
+        "neoforge": {
+          "execution_tokens": 2101,
+          "full_execution_and_literal_positions_equal": true,
+          "normalized_execution_sha256": "eae6009ca2195c8ebd937f764da0cd89eb7c6a12476b284eb42942ff5eba3424",
+          "native_comments_equal": true,
+          "native_comment_count": 4,
+          "observed_view_sha256": "1c9c594e971baf47f59ce478965df185d2c39f21178a3181f54b1d28c4e45a43",
+          "final_view_sha256": "b6c962765376d859125039060fda58c86e6f9a7d13040cad8e384e4307d2f7db",
+          "lines_before": 127,
+          "lines_after": 247,
+          "maximum_line_before": 588,
+          "maximum_line_after": 150
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/recipe/ToolShapelessRecipe.java",
+      "before_raw_sha256": "aa3c54e93dde3b44c60ebca9d139bd02f77b70d25e92abf802b070c4cfcbb06a",
+      "baseline_git_sha256": "0d9b1b0bbd9bf86f6e8f17a69f5032f42def23b85becb645cd657b2716e5fdcb",
+      "final_raw_sha256": "127994eb57da4dd42126cfd8d0f885fbc8ee41e58cb945e086b9bc04836fe785",
+      "maintained_lines_before": 168,
+      "maintained_lines_after": 247,
+      "directive_count": 36,
+      "directive_text_and_order_equal": true,
+      "conditional_boundary_note": "Only whitespace and line wrapping.",
+      "platforms": {
+        "forge": {
+          "execution_tokens": 1157,
+          "full_execution_and_literal_positions_equal": true,
+          "normalized_execution_sha256": "34141b15907de8430395cd3e9e944f4a93466e2088b7fb49180b7b61044257ed",
+          "native_comments_equal": true,
+          "native_comment_count": 1,
+          "observed_view_sha256": "3f9301adc3ab928f2686af7d314fe31b6eafece6713b62c3c03efd2f4c3605b2",
+          "final_view_sha256": "8578f50aca242dde2b874616fe6995c156a1e2d9e000afdfe35af8543b15cceb",
+          "lines_before": 118,
+          "lines_after": 152,
+          "maximum_line_before": 238,
+          "maximum_line_after": 148
+        },
+        "neoforge": {
+          "execution_tokens": 1251,
+          "full_execution_and_literal_positions_equal": true,
+          "normalized_execution_sha256": "781ef84f92646668da28ba031a673936e3b202aafa7e227d4979c6623ff26cba",
+          "native_comments_equal": true,
+          "native_comment_count": 1,
+          "observed_view_sha256": "8a45fcc28674389e432458a56906cf0d481897f787474686f7874cf3edc60016",
+          "final_view_sha256": "718ad505f0244e19ab02c58115bc7e118eb410e0c0b7a2f45562c9e18c77c4e8",
+          "lines_before": 113,
+          "lines_after": 171,
+          "maximum_line_before": 242,
+          "maximum_line_after": 149
+        }
+      }
+    }
+  ],
+  "protected_user_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256_at_verification": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "policy": "User formatting preserved; not edited or staged in this batch."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256_at_verification": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "policy": "User formatting preserved; not edited or staged in this batch."
+    }
+  ],
+  "limits": [
+    "No API/name/field/default/constant/operator/branch/callback/order/wear/codec/network wire order or recipe behavior changed.",
+    "Real native execution equivalence is not a claim of original gameplay parity.",
+    "No generator, Gradle, Java compilation/initialization, new tests, game, actual recipe reload/transfer, saved-world restart, build or push."
+  ]
+}

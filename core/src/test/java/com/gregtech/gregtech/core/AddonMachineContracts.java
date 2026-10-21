@@ -95,6 +95,8 @@ public final class AddonMachineContracts {
             case "erange" -> energyRange();
             case "erangedisagree" -> energyRangeDisagree();
             case "erangetu" -> energyRangeTu();
+            case "plainblock" -> plainBlock();
+            case "plainrole" -> plainRole();
             case "bcatalyst" -> behaviorCatalyst();
             case "bunknown" -> unknownBehaviorMap();
             case "bforeign" -> foreignBehaviorMap();
@@ -874,6 +876,49 @@ public final class AddonMachineContracts {
                 new AddonMachineDefinition(timed, "aa.recipe.press", MachineControllerKind.BASIC, 10_000, true, List.of())),
                 List.of());
         expectInstall("sampletime", "TU", "energy range");
+    }
+
+    private static void plainBlock() {
+        expectThrows(IllegalArgumentException.class,
+                () -> new MachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureRole.ENERGY_INPUT),
+                "casing");
+        for (String bad : new String[] {"Minecraft:Glass", "minecraft:", "#", "#c:", "mine craft:stone"}) {
+            expectThrows(IllegalArgumentException.class,
+                    () -> new MachineLayout.Cell(1, 0, 0, bad, StructureRole.CASING),
+                    "Invalid block name");
+        }
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
+                List.of(large("large_press", "largesamplepress", "aa.recipe.press")),
+                List.of(new AddonMachineLayout("largesamplepress", List.of(
+                        new AddonMachineLayout.Cell(1, 0, 0, "tank_wall", StructureGrid.Role.CASING),
+                        new AddonMachineLayout.Cell(2, 0, 0, "minecraft:glass", StructureGrid.Role.CASING),
+                        new AddonMachineLayout.Cell(3, 0, 0, "#c:glass_blocks", StructureGrid.Role.CASING),
+                        new AddonMachineLayout.Cell(4, 0, 0, "minecraft:not_a_block", StructureGrid.Role.CASING)))));
+        AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
+        var cells = SharedLargeMachineLayouts.cells("largesamplepress");
+        check(cells != null && cells.size() == 4, "layout kept every cell");
+        var wall = cells.get(0);
+        var glass = cells.get(1);
+        var tag = cells.get(2);
+        check(wall.part() == 18002 && wall.plain() == null, "a part cell keeps its numeric id");
+        check(glass.part() == 0 && "minecraft:glass".equals(glass.plain())
+                && glass.role() == StructureGrid.Role.CASING, "a block id is stored without a part id");
+        check(tag.part() == 0 && "#c:glass_blocks".equals(tag.plain()), "a tag is stored without a part id");
+        expectThrows(IllegalStateException.class,
+                () -> AddonMachines.requireKnownBlocks(name -> name.equals("minecraft:glass")),
+                "aa_sample", "largesamplepress", "minecraft:not_a_block");
+    }
+
+    private static void plainRole() {
+        prepare();
+        GTMaterialRegistry.init();
+        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
+                List.of(large("large_press", "largesamplepress", "aa.recipe.press")),
+                List.of(new AddonMachineLayout("largesamplepress", List.of(
+                        new AddonMachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureGrid.Role.ENERGY_INPUT)))));
+        expectInstall("aa_sample", "largesamplepress", "casing");
     }
 
     private static MachineLayout wall(String name) {

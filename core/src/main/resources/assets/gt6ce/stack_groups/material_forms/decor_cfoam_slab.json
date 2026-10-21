@@ -2,7 +2,23 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.decor_cfoam_slab",
   "contents": [
-    "item:gt6ce:cfoam_slab"
+    "item:gt6ce:cfoam_slab",
+    "item:gt6ce:cfoam_slab_white",
+    "item:gt6ce:cfoam_slab_orange",
+    "item:gt6ce:cfoam_slab_magenta",
+    "item:gt6ce:cfoam_slab_light_blue",
+    "item:gt6ce:cfoam_slab_yellow",
+    "item:gt6ce:cfoam_slab_lime",
+    "item:gt6ce:cfoam_slab_pink",
+    "item:gt6ce:cfoam_slab_gray",
+    "item:gt6ce:cfoam_slab_light_gray",
+    "item:gt6ce:cfoam_slab_cyan",
+    "item:gt6ce:cfoam_slab_purple",
+    "item:gt6ce:cfoam_slab_blue",
+    "item:gt6ce:cfoam_slab_brown",
+    "item:gt6ce:cfoam_slab_green",
+    "item:gt6ce:cfoam_slab_red",
+    "item:gt6ce:cfoam_slab_black"
   ],
   "priority": 120
 }

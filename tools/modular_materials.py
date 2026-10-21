@@ -77,7 +77,8 @@ def write_catalog(source, java_root=JAVA, save_intermediate=True):
         lines.extend(['}', ''])
         dest = java_root / f'content/material/generated/{cls}.java'
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(align_java_tables('\n'.join(lines)), encoding='utf-8')
+        dest.write_text(align_java_tables('\n'.join(lines), material_colors=cls == 'CompoundMaterials'),
+                        encoding='utf-8')
         facade += f'    public static final class {group} {{\n'
         leading = {row[0]: row for row in rows if group == 'Woods' and row[0] in WOOD_FACADE_FIELDS}
         for name in WOOD_FACADE_FIELDS:

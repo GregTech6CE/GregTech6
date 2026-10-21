@@ -2,7 +2,23 @@
   "type": "remi:group",
   "name": "emi.group.gt6ce.decor_glass_clear",
   "contents": [
-    "item:gt6ce:glass_clear"
+    "item:gt6ce:glass_clear",
+    "item:gt6ce:glass_clear_white",
+    "item:gt6ce:glass_clear_orange",
+    "item:gt6ce:glass_clear_magenta",
+    "item:gt6ce:glass_clear_light_blue",
+    "item:gt6ce:glass_clear_yellow",
+    "item:gt6ce:glass_clear_lime",
+    "item:gt6ce:glass_clear_pink",
+    "item:gt6ce:glass_clear_gray",
+    "item:gt6ce:glass_clear_light_gray",
+    "item:gt6ce:glass_clear_cyan",
+    "item:gt6ce:glass_clear_purple",
+    "item:gt6ce:glass_clear_blue",
+    "item:gt6ce:glass_clear_brown",
+    "item:gt6ce:glass_clear_green",
+    "item:gt6ce:glass_clear_red",
+    "item:gt6ce:glass_clear_black"
   ],
   "priority": 120
 }

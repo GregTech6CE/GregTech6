@@ -1,0 +1,1103 @@
+{
+  "date": "2026-10-21",
+  "batch": 66,
+  "baseline": "9bdea43aef39ff3d252c80511b372754e730d1c0",
+  "scope": "Canonical registered lightning controller17998, support/pillar ownership, sky admission, packet interfaces, native strike callback and creative pick; two readability edits.",
+  "formal_records": [
+    234,
+    235,
+    236,
+    237,
+    238
+  ],
+  "extends_existing": [
+    218,
+    232,
+    233
+  ],
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLightningRod.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityLightningRod.java",
+      "sha256": "c6129225a4ed16acbb0b10661bf1e4dac0a3c5c4c7c62010c1e56308a276c83a",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "relative": "gregapi/tileentity/multiblocks/ITileEntityMultiBlockController.java",
+      "sha256": "66203e93bd5b309b442e37d89f707de71c2cf967fc33c217c577dd8c2f7ed5d9",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "relative": "gregapi/tileentity/multiblocks/MultiTileEntityMultiBlockPart.java",
+      "sha256": "b00725df4301983e6fd51aea6519ab3304e85315ec01f338cc27b6a448a6bfda",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "relative": "gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "relative": "gregapi/tileentity/energy/ITileEntityEnergy.java",
+      "sha256": "cea0d5624209029f4d8b77d52be7b5fbff7a2d6ed73e9632a89d98e13b86a904",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java",
+      "sha256": "aec5e3ac0a8ce3d00e6bf509f0b0e611760708463e121fb000c26695381c1d47",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalUtilityControllerData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalUtilityControllerData.java",
+      "sha256": "53537f0889df1954e1a7609eca7a65944742d1c7c815e8c2ede4b569259f8f6b",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureController.java",
+      "sha256": "f5fd88157da470bc4852c83db2bd741b70380693622324cbff2919b04bf23522",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "sha256": "6c8cd108b140fdb05aa6070813645881885a22c755a5013b1c3756450ddea86e",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "sha256": "51fb5dd1fb27b0daa12f11c53989732d80924b205279c4140793672c80f5b989",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/LightningRodControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LightningRodControllerBlock.java",
+      "sha256": "9140ad717da6a2b7c9449f13dbaa01c35bdd93a90382bb2d784ff301184be891",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "sha256": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "sha256": "20f601600a7379a431ffe3e4be3e5031ee7a4862e4b7ef351c86ac03586d237b",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "sha256": "e7f2791ff28d25494423726c0ddf921762ceca974f8576f89ef9757452babe0f",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "f45c36105d8a14d5f86e8fad3fe77208b245c925fee1ec43176e3dfd73aa9311",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "sha256": "e270b89dae5bfd07b59e9f0c3fd7513a55c77cc5a9a03eb37efa93bccbdd37ec",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "sha256": "5b50a6700e7e36c1a49526fa0abef59e9f689a43763326f72ce6f8e79f4dbe92",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "sha256": "3506134a849473910e516e68f81c8113025ad14a3f0900763d8ebf3a3a57d7d1",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "sha256": "254524b21a4f3220d7a6716369254fd3b4788d4f3e94a411e9cc70fbb212447c",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "sha256": "c1970cb665023d8ae7e3da7069c248d63c9494c1e745311599e6be8564a395cc",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "sha256": "cc6ffcf1a4a3092639d4f033cbea86a76e32daf9b392203927256e5f2725199e",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "sha256": "6edfc16394dd94bf904b46b8331bb7a20be8091728dfcfac7645979dc8c49df4",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "sha256": "764485a90f5ae072cd4974a304518cb7e34c22f6b5d9186735194968c79799c4",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "sha256": "938745a345577e6f5d32f2fe6f2fb85910a7686fbaaf3aec537eed7b6111cba1",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Specific source declarations and consumer anchors; not whole-file or whole-system gameplay acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "1ab7b55fcc4fcef6495d1504389e80101e3ca4009cafd82c76213e1744c865c6",
+      "tokens": 1505
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f8b14bd3e5817c1ae4cef4e9b507ac7aca569d4557e38e49459a7b12bb738b06",
+      "tokens": 1558
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "platform": "forge",
+      "sha256": "fc713cc359e075ffe33f4aa1df474f0daa0fd7e813f3022849265a039b6911b9",
+      "tokens": 618
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/OriginalLightningRodControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "c50d8ec0e36b75861c2aeafe06592d2e048b7509edfbffd6705a50f3c199701c",
+      "tokens": 780
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LightningRodControllerBlock.java",
+      "platform": "forge",
+      "sha256": "e42ca9fae583943ff670ab313fe004eaf2fbab8c691051b31d9a98236700957e",
+      "tokens": 473
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LightningRodControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "a5681f27ab3e14a9552a709c40065b7d9cdbce42f7e007b9c6ab48edcfb4fee3",
+      "tokens": 507
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "forge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "neoforge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "forge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "neoforge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "forge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockDefaults.java",
+      "platform": "neoforge",
+      "sha256": "0183d5d65e1c8b7e98c049376eff1d5ecf4e9cce92b5505b36097d972a0e552f",
+      "tokens": 602
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "forge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/IEnergyBlock.java",
+      "platform": "neoforge",
+      "sha256": "fd2dbce4bdb43db0134c941660b85b4973586ec8f2079d7a3659150adda5cb64",
+      "tokens": 557
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "forge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyBlockViews.java",
+      "platform": "neoforge",
+      "sha256": "3d7d8d4400bf02fbcd335b3e377cd9cefaade7f2f19a184a7cbab02f143a0968",
+      "tokens": 104
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "forge",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "tokens": 506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/energy/EnergyTransfer.java",
+      "platform": "neoforge",
+      "sha256": "938880cd9d4daf771c59eceb89ea4ce7b8c316a8fbd26288ab8829b71ac54b19",
+      "tokens": 506
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "forge",
+      "sha256": "1cdcefcd46efddcb0ae85bf7e2c9b30c8db05af5d707a240857d5696225efac2",
+      "tokens": 14806
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "a27092e43aa4cf43098fb0470532d7fef0a13fb32c71018e6fb29065152ac9c7",
+      "tokens": 14489
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "forge",
+      "sha256": "d2471a24f9e0dfe11cf97d79c73032c65eaa116d4c3884ce58832cdbfa53109b",
+      "tokens": 2699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockPortBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "8f0f169e68ed10ea3e0541bd2d9eec2c7f5e3af9a9f86df0d7e75eb296745d6e",
+      "tokens": 2583
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "forge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "platform": "neoforge",
+      "sha256": "3b43c4f686959bb45062df2a38f157f769f0b040aee45f61e3792776d37f4fcc",
+      "tokens": 1021
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "forge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockToolTarget.java",
+      "platform": "neoforge",
+      "sha256": "ddb79f626c1b8724a4a0187856f02ca91a3764a2ba23bd798c901cb41f118de7",
+      "tokens": 76
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "forge",
+      "sha256": "0646215fca4af99eb82127a971d3d312b3ffdc9542977419bcb498cdda28d775",
+      "tokens": 2017
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "platform": "neoforge",
+      "sha256": "25665f0b0e4dc9dc6a821d07044fc0fbf95cb702f0e69da4b391d74af2d6de4e",
+      "tokens": 1964
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "platform": "forge",
+      "sha256": "0a2b5d66f101c92a0f370ed25be2a79d100831338e7ce57dbb31f07ee0ed5488",
+      "tokens": 811
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorBuilderWand.java",
+      "platform": "neoforge",
+      "sha256": "44773c44f1aac9256cc096dcdc98379757d5269cba51f3b2c690bd6579275821",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "forge",
+      "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+      "tokens": 812
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "platform": "neoforge",
+      "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+      "tokens": 905
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "forge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/FallbackCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "1029dfe19a08c20acf6f19566200d0f3b35adc70a4242ff3d3221262806d0f39",
+      "tokens": 25
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "forge",
+      "sha256": "25dcfbd8f61611cc0fe96466faf48004140a2b5788724d80584767822603c143",
+      "tokens": 1752
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/ControllerStructureLayouts.java",
+      "platform": "neoforge",
+      "sha256": "2c65729303f1a7b576cfc5f4e27a020b019ea7f6bd00bdaaee9d6e406941c010",
+      "tokens": 1759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "platform": "forge",
+      "sha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "tokens": 355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalHighTechControllerLayouts.java",
+      "platform": "neoforge",
+      "sha256": "cb15c6c0075824685be3f4bf4744c3150254984f1b167f34253c92806e82834c",
+      "tokens": 355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "forge",
+      "sha256": "cf7ea64d569c6ae4e18a277c220ca979b9c9aa6df0e981d6725e1574f6d62784",
+      "tokens": 3334
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/jei/MultiblockInfoData.java",
+      "platform": "neoforge",
+      "sha256": "6adb2e1e3aa958e2859f09f68e809114564e32a93b48028e67e58cbb39f08870",
+      "tokens": 3330
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "forge",
+      "sha256": "bc3e26ff2a5ab0f97cbda4cc390db50a24965ed400da10415f2a32c2b813aea6",
+      "tokens": 1748
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/MultiblockPreviewPanel.java",
+      "platform": "neoforge",
+      "sha256": "0e1fb06ebdc38f72433f072451a4a371b4e22be6273bba95601fac151ae9f917",
+      "tokens": 1730
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "platform": "forge",
+      "sha256": "aff29c33f98e48049ea1662bd34ea4d362bc336844bc61375fbc36426a5e5530",
+      "tokens": 1308
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/UtilityControllerTooltips.java",
+      "platform": "neoforge",
+      "sha256": "aff29c33f98e48049ea1662bd34ea4d362bc336844bc61375fbc36426a5e5530",
+      "tokens": 1308
+    }
+  ],
+  "finite_witness": {
+    "kind": "Source parsing, set geometry and arithmetic only; no target class, world, RNG stream or native algorithm executed.",
+    "default_registration": {
+      "original_id": 17998,
+      "packet_eu": 32768,
+      "packets_per_strike": 18000,
+      "capacity_eu": 589824000,
+      "maximum_push_packets_per_tick": 16,
+      "original_stack_limit": 16,
+      "current_plain_BlockItem_default_limit": 64,
+      "ordinary_base_parts": 44,
+      "tungsten_walls_excluding_main": 26,
+      "coils": 18
+    },
+    "overlapping_bases": {
+      "controller_offsets": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ]
+      ],
+      "shared_support_parts": 15,
+      "condition": "Both controllers and rod pillars are otherwise valid; cells contain correctly registered parts, no extra third-party binding routine.",
+      "old_second_owner": "checkAndSetTarget rejects live first owner inside its structure",
+      "current": "block identity checks alone permit both"
+    },
+    "sky_predicates": {
+      "controller_y": 100,
+      "rod_length": 1,
+      "tip_y": 105,
+      "first_test_y": 106,
+      "condition": "Transparent non-air glass above the tip, valid completed skylight at queried point equals 15, no extra obstruction or interceptor.",
+      "old_WD_air": "false at glass",
+      "current_canSeeSky": "true at sky brightness 15",
+      "runtime_world": "not constructed"
+    },
+    "height_tooltip_boundary_preserved": {
+      "controller_y": 95,
+      "rod_length": 1,
+      "actual_tip_y": 100,
+      "old_and_current_actual_gate_reference_y": 96,
+      "ordinary_capture_allowed_by_height": false,
+      "limit": "Existing original tooltip/code discrepancy, not a newly introduced port difference."
+    },
+    "energy_metadata": {
+      "original_min_rec_max": [
+        1024,
+        2048,
+        4096
+      ],
+      "current_min_rec_max": [
+        16384,
+        32768,
+        65536
+      ],
+      "old_tick_packet_eu": 32768,
+      "current_tick_packet_eu": 32768,
+      "original_emitting_query": "false due to isEnergyType(...,false)",
+      "current_emitting_query": "EU downward when formed, or theoretical",
+      "original_pull_packets": 0,
+      "current_valid_downward_pull_up_to": 16,
+      "limit": "Actual tick size already matches source. Do not blindly restore inconsistent original getter bug."
+    },
+    "output_budget_example": {
+      "initial_available_packets": 64,
+      "current_push_packets": 16,
+      "later_valid_same_tick_pull_packets": 16,
+      "current_energy_packets_consumed": 32,
+      "original_regular_push_maximum": 16,
+      "condition": "An API consumer invokes a valid pull with sufficient demand after the push; not a measured built-in plant. Energy remains conserved."
+    },
+    "old_overoffer_excluded": {
+      "packets_per_strike": 18000,
+      "receiver_acceptance_limit_per_call": 13,
+      "final_positive_buffer_packets": 8,
+      "old_unconditional_offer_packets": 16,
+      "current_bounded_offer_packets": 8,
+      "policy": "Keep the current bound; do not reintroduce source overdraw when final receiver accepts 13 of an offer16 despite only 8 stored."
+    },
+    "ordinary_clone": {
+      "condition": "No Ctrl key, creative player, valid client BE snapshot (energy may be nonzero after initial synchronization); no external pick cancellation.",
+      "old_pick": "writeItemNBT has name/paint/kept inventory/covers, no lightning energy writer",
+      "current_clone": "saves full BE gt.energy plus inherited data before normal inventory pick",
+      "ordinary_drop": "CoverDropMixin still clears full machine state; this is a separate pick path."
+    }
+  },
+  "readability": {
+    "baseline": "9bdea43aef39ff3d252c80511b372754e730d1c0",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/multiblock/AdvancedControllerRules.java": {
+        "before_raw_sha256": "5bccebaf263d5f508e8de24ba9d06930bb98586593886397d1bdb35a99b7eee6",
+        "after_raw_sha256": "aec5e3ac0a8ce3d00e6bf509f0b0e611760708463e121fb000c26695381c1d47",
+        "scoped_bindings": {
+          "sentPackets": "sent"
+        },
+        "comment_correction": {
+          "before": "/** Original bedrock drilling and lightning packet rules shared by both platform executors. */",
+          "after": "/** Shared parameters for bedrock drills and lightning rod output. */"
+        },
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 166,
+            "normalized_execution_sha256": "d1b100f704078eaded2aabc04fce3343dd12d0c54b0d52f2ee29bb3f6439a430",
+            "execution_and_literal_positions_equal": true,
+            "before_lines": 7,
+            "after_lines": 24,
+            "before_max_line": 250,
+            "after_max_line": 91
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LightningRodControllerBlockEntity.java": {
+        "before_raw_sha256": "7d560b5f2e6c8a3d2f5584c4b00709657f872989e7ce276fd7c718d65eec94d3",
+        "after_raw_sha256": "6c8cd108b140fdb05aa6070813645881885a22c755a5013b1c3756450ddea86e",
+        "scoped_bindings": {
+          "partPos": "pos",
+          "requiredBlock": "required",
+          "rodBlock": "pillar"
+        },
+        "comment_correction": null,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1505,
+            "normalized_execution_sha256": "c57e569b851584ded02cde7242307480aace16d7beeca387e8fc15aa7581bbc0",
+            "execution_and_literal_positions_equal": true,
+            "before_lines": 85,
+            "after_lines": 188,
+            "before_max_line": 219,
+            "after_max_line": 148
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1558,
+            "normalized_execution_sha256": "d79b611ee252ea42df9f6e3883e6c36463d0d3558cf5b0ea0bacea7e7ead145e",
+            "execution_and_literal_positions_equal": true,
+            "before_lines": 86,
+            "after_lines": 192,
+            "before_max_line": 219,
+            "after_max_line": 148
+          }
+        ]
+      }
+    },
+    "limits": "Formatting, three method-local variables and one parameter binding only; source comparison, not target execution."
+  },
+  "native_artifacts": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+    },
+    {
+      "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+    }
+  ],
+  "native_entries": [
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/BlockAndTintGetter.java",
+      "sha256": "9acdb7e9590ed2f9ecae02b0780d6127001fb0c6fcc199cf1d0644872e28f5c8",
+      "bytes": 954
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/entity/LightningBolt.java",
+      "sha256": "d183d7b404dd3ad9ac8e366d43a752b0fa3bee9356ee2e639ed9d4f994b761ac",
+      "bytes": 10775
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/TransparentBlock.java",
+      "sha256": "7ef0c07bb01920f270ffaca0e8077e4f7b13d782a145f2f0e937ca49f1dfe9f7",
+      "bytes": 1291
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/Blocks.java",
+      "sha256": "c38a694404ba0e0317f744f368ae9a3a44a8bd95f03f3ac65ec9bc78d5d96a58",
+      "bytes": 327285
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "bytes": 57256
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/lighting/LightEngine.java",
+      "sha256": "0b3dd5649f4866dd20c747a38b23ed3c8380eedc119a63b53c272da632545ab4",
+      "bytes": 12988
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/lighting/ChunkSkyLightSources.java",
+      "sha256": "3742faf496082aa2681d3bde0ad1aeb0ca10b33c969bb2d643bffe88b1776021",
+      "bytes": 7766
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/lighting/SkyLightSectionStorage.java",
+      "sha256": "2f06539b79309b9e0a4d32fb90c823e594c855884ebf770aa1b222e172e39744",
+      "bytes": 6300
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/world/level/block/entity/BlockEntityType.java",
+      "sha256": "4883305676756df769f5df5c6e5a3c5f1daa80b33df349b4c636240cdce60f7f",
+      "bytes": 16922
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "entry": "net/minecraft/client/Minecraft.java",
+      "sha256": "30e779eb9476de64b63a7cd929b1af921c21bcdfe0396d3e61effacad34f2586",
+      "bytes": 132058
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/BlockAndTintGetter.class",
+      "sha256": "c70324267eaa818f24d18dd293b359310cba2f3f5d55b0f759989ed0733d25d1",
+      "bytes": 1656
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/entity/LightningBolt.class",
+      "sha256": "7e7cc12ddb097a8a3eee0793020cae269c05185554249167f821000968b2dc1c",
+      "bytes": 14121
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/GlassBlock.class",
+      "sha256": "e1810e01bb96c08c39aaeadb1824e695672a20dd6b0d7f91669c6c933d75b21f",
+      "bytes": 683
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/AbstractGlassBlock.class",
+      "sha256": "106a3177f2033daf46e54c255697944ae970916e90c1f958c3a394d95f42d193",
+      "bytes": 1914
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/HalfTransparentBlock.class",
+      "sha256": "a4e0ae6a33fdbccb87b8c79343d32bbe12bde2fc6567fa9fbbf97a449cc97b9b",
+      "bytes": 1232
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/client/Minecraft.class",
+      "sha256": "ce73df71b0c8abc63702af276e448a3be149d3f5c1684478ccf542765d1a671e",
+      "bytes": 144558
+    }
+  ],
+  "native_readonly_views": [
+    {
+      "class": "net.minecraft.world.level.BlockAndTintGetter",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/BlockAndTintGetter.class",
+      "output": "work/lightning-rod-audit-20261021/forge-BlockAndTintGetter.javap.txt",
+      "output_sha256": "ea8e7fda7441b7a5953494fa0b7d49e00a452e6763074a3eaa003432a60842ea",
+      "kind": "javap -c -p, read-only, no target class initialization"
+    },
+    {
+      "class": "net.minecraft.world.entity.LightningBolt",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/entity/LightningBolt.class",
+      "output": "work/lightning-rod-audit-20261021/forge-LightningBolt.javap.txt",
+      "output_sha256": "befd5193052a134875749dcb6d48bcb0b25e186764c369df65a89bafcf5dd3b9",
+      "kind": "javap -c -p, read-only, no target class initialization"
+    },
+    {
+      "class": "net.minecraft.world.level.block.GlassBlock",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/GlassBlock.class",
+      "output": "work/lightning-rod-audit-20261021/forge-GlassBlock.javap.txt",
+      "output_sha256": "353e37ece7e461cf0cae1964818ef79fad94f47177cc8eee3e115da22d859d30",
+      "kind": "javap -c -p, read-only, no target class initialization"
+    },
+    {
+      "class": "net.minecraft.world.level.block.AbstractGlassBlock",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/AbstractGlassBlock.class",
+      "output": "work/lightning-rod-audit-20261021/forge-AbstractGlassBlock.javap.txt",
+      "output_sha256": "62b59005afc089810d82dd2414dd4f6269710a7daf5f88908359a9fee3994e39",
+      "kind": "javap -c -p, read-only, no target class initialization"
+    },
+    {
+      "class": "net.minecraft.world.level.block.HalfTransparentBlock",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/world/level/block/HalfTransparentBlock.class",
+      "output": "work/lightning-rod-audit-20261021/forge-HalfTransparentBlock.javap.txt",
+      "output_sha256": "a9f09798850720eb63e47dcbf6ab88e638f2e4ae6a4f013a13775e2d93b8da20",
+      "kind": "javap -c -p, read-only, no target class initialization"
+    },
+    {
+      "class": "net.minecraft.client.Minecraft",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "entry": "net/minecraft/client/Minecraft.class",
+      "output": "work/lightning-rod-audit-20261021/forge-Minecraft.javap.txt",
+      "output_sha256": "1c387dc9ebcc89fe32bc94e4158398aac29bb9a243f2acadbad2883f16144c93",
+      "kind": "javap -c -p, read-only, no target initialization"
+    }
+  ],
+  "external_primary_evidence": {
+    "url": "https://raw.githubusercontent.com/MinecraftForge/MinecraftForge/1.7.10/patches/minecraft/net/minecraft/entity/effect/EntityLightningBolt.java.patch",
+    "authority": "Official MinecraftForge repository, 1.7.10 branch; read through web open on 2026-10-21.",
+    "observed_patch_lines": 12,
+    "normalized_returned_lines_sha256": "5a4682d926fc7693f320b2f6515cf1de361d9a057a51046469ac207680943529",
+    "hash_limit": "Hash of the normalized returned patch lines, not an asserted raw HTTP artifact digest.",
+    "claim": "The normal old lightning hit-list path invokes the entity strike callback unless the Forge event cancels it. The local original spawns that normal entity; modern visualOnly skips its hit list.",
+    "limit": "Only this callback contrast is claimed; no complete old-native fire implementation, all entity conversions or modern copper side effects are accepted."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "policy": "User formatting unchanged; not staged."
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+      "policy": "User formatting unchanged; not staged."
+    }
+  ],
+  "excluded_candidates": [
+    "Ordinary harvested machine energy state is cleared by configured CoverDropMixin; clone/pick is separate.",
+    "A repeated block in BlockEntityType.Builder.of is not a second registered controller ID; the native builder constructs an ImmutableSet. The old generic LightningRodControllerBlock is not the registered17998 implementation.",
+    "Source height gate uses controllerY+length, despite tooltip tip wording; both versions share that offset discrepancy.",
+    "Modern int rodLength and actual build-height loop avoid original signed-byte overflow; do not restore 1.7.10 overflow or fixed height limits.",
+    "visualOnly suppresses hit-list callbacks but is not a guarantee of no world side effects; modern initial tick still calls powerLightningRod, copper handling and gameEvent.",
+    "Original multiblock Base10 overrides default environmental checks as no-op; do not add new rain/fire failures just because emitted energy is EU."
+  ],
+  "provenance": "Original lightning file GregTech-6 Team2025 / Gregorius Techneticies, LGPL-3.0-or-later; other sources keep their own headers. Official Forge patch is reference evidence. No original/native method bodies or assets newly copied into production.",
+  "limitations": [
+    "No target class initialization or Java compilation, Gradle, tests, world construction, actual strike/RNG/play effects, energy API execution, pick/placement, save restart, build or push.",
+    "Finite cases are source arithmetic/geometry and conditional consumer traces, not TPS, a game reproduction, addon breakage or complete old-native lightning implementation.",
+    "Energy-query and strike-effect policy differences are recorded, not automatically reverted to old interface bugs or damaging effects."
+  ],
+  "root_revalidation": {
+    "kind": "Source hashes, full selected execution streams and literal positions, exact native entries and documentation checks only.",
+    "source_files": 53,
+    "platform_views": 58,
+    "native_artifacts": 2,
+    "native_entries": 16,
+    "readonly_disassemblies": 6,
+    "readability_files": 2,
+    "ledger_contiguous": [
+      1,
+      238
+    ],
+    "new_or_added_local_links": 29,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false
+  }
+}

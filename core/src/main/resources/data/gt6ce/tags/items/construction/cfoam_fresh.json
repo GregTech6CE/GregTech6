@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "gt6ce:cfoam_fresh",
+    "gt6ce:cfoam_fresh_white",
+    "gt6ce:cfoam_fresh_orange",
+    "gt6ce:cfoam_fresh_magenta",
+    "gt6ce:cfoam_fresh_light_blue",
+    "gt6ce:cfoam_fresh_yellow",
+    "gt6ce:cfoam_fresh_lime",
+    "gt6ce:cfoam_fresh_pink",
+    "gt6ce:cfoam_fresh_gray",
+    "gt6ce:cfoam_fresh_light_gray",
+    "gt6ce:cfoam_fresh_cyan",
+    "gt6ce:cfoam_fresh_purple",
+    "gt6ce:cfoam_fresh_blue",
+    "gt6ce:cfoam_fresh_brown",
+    "gt6ce:cfoam_fresh_green",
+    "gt6ce:cfoam_fresh_red",
+    "gt6ce:cfoam_fresh_black"
+  ]
+}

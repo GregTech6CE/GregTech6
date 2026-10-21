@@ -68,6 +68,8 @@ public final class RecipeInputs {
     }
     public static boolean matches(ItemStack required, ItemStack available) {
         if(available.isEmpty())return false;
+        var colors = com.gregtech.gregtech.block.misc.LegacyConstructionBlockItem.ingredientAlternatives(required);
+        if (!colors.isEmpty()) return colors.stream().anyMatch(color -> matches(color, available));
         if(!required.is(available.getItem())) return com.gregtech.gregtech.api.material.MaterialEquivalence.matches(required,available);
         // An unfilled vessel in a recipe denotes its empty shell. Never silently
         // destroy stored fluid in recycling/crafting by treating absent NBT as a wildcard.

@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-21",
+  "batch": 58,
+  "source_equivalence": {
+    "date": "2026-10-21",
+    "baseline": "67dff604d",
+    "scope": "One-file whitespace only: statement/method/annotation boundaries and both native save/load paths. No names, imports, tokens, comments, literals, directives, scopes or behavior changed.",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCoreBlockEntity.java": {
+        "before_git_blob_sha256": "06bd7b53a2f9c453f8ecc91f23d07389266d21a0816a96ce6925e8c24bd44e04",
+        "initial_observed_raw_sha256": "7e8963ad5bda51505373466307e8d293d0563a8351c25d7e62bb4d8be03949ce",
+        "observed_raw_sha256": "d38d4fdc351ca43fdef3cffa98af78a75ffe6129efc6f172be842c13000734ec",
+        "after_raw_sha256": "ef616196f083d493deca21f66563494540f49dba01e98fceeb9c72f094b0c44b",
+        "lines_before": 236,
+        "lines_after": 560,
+        "max_line_before": 305,
+        "max_line_after": 152,
+        "directive_count": 30,
+        "projections": {
+          "forge": {
+            "tokens": 3703,
+            "literal_count": 31,
+            "signature_sha256": "f4dc8345db389242660bb65a0c7052e23b2b4ac25e67c8dc1cf4a07a7464bc8b",
+            "original_view_sha256": "ca335b3ef2feffd07d3fc4aea0258362ce358d9ca879de49e98645e7101ba542",
+            "formatted_view_sha256": "1625d401fdfed78fb03e17cd357237be287e7105f95e3519ebcbafa87ec04596",
+            "comments_exactly_equal": true,
+            "comments": 5,
+            "exact_tokens_and_literal_positions_equal": true
+          },
+          "neoforge": {
+            "tokens": 3657,
+            "literal_count": 31,
+            "signature_sha256": "318885f2e691b07dde3509457692a2f08b7170bdc79226a1338bcdff323bd3e0",
+            "original_view_sha256": "dac0ec817d281496a48377e0fc01391331275009518150839a1d2fd07a9c9235",
+            "formatted_view_sha256": "c85ec987ae6d883b5c2e331fbd4a94d00a4a669c5664720a0149dd0555124b1d",
+            "comments_exactly_equal": true,
+            "comments": 5,
+            "exact_tokens_and_literal_positions_equal": true
+          }
+        }
+      }
+    },
+    "limits": "No generator, Gradle, compilation, Java initialization, tests, game, build, push or gameplay fix. Preview is a one-off formatter, not a new production/build dependency."
+  },
+  "navigation_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRodCatalog.java": "86f964557a1f98e72dc43a621a79bb9d9e179f4efc197d7843cd1c0190c5c87a",
+    "core/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolantRules.java": "c889a5753d68f4305b89679a830e9b3188a5d2cd8556f5e2751177c7a5e4ad09",
+    "core/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysicsMath.java": "d4f94274de5eb88a4cc3617b927b1b897a997e7ec448c1a8565e70f5f8f62165",
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFuelRods.java": "227c17b61310611e591877dacfc467047adb66f8593682ca01ca6a3865e94f27",
+    "multiversion/src/main/java/com/gregtech/gregtech/item/FuelRodItem.java": "fd6aee486d49e6477a7142e2903a4d246b3d0319d6818eb9acdf6533a0def384",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/RodPhysics.java": "c2a65ea005e67dd2a18d181c9313f4c6e867f2c837d985528ed6c76682514769",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorNetwork.java": "e499717732deeb56710a35cde27baf9c71d98e7ac885da0bd216bf7ad6745708",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorCoolants.java": "f533cbac8278b25436287acdfd42843ac317ad3fb99b0b4e9333fdb72781e660",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/ReactorCore2x2BlockEntity.java": "b7e8e91cff9b67672b1c2db4343ac252d3a6ee6b0c2e84cf9257f9d068f62f62",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorPorts.java": "b0a7abf0ff80ef5c198e19192dc5d989436ddd488c89f0c6433d409a9839879a",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorInteraction.java": "e062a87ddbd1eee9fc4936403b4a819582a2b58809d47de2feee51adf8383c90",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorHazards.java": "fa197c772aec502e2857e246246a5b3ae30d4515ad6cbb474d5b73befb806d5e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/nuclear/ReactorRadiation.java": "01b32f56792e44ad88d0e6368be69168755a177d99368e25f358017851db28d5"
+  },
+  "scratch_proof_sha256": "dac3c6d777310112aa783d0969895270cd7904d93f2d52833784a455f0bf5b26",
+  "new_alignment_findings": [],
+  "scope_limits": [
+    "Whitespace only; source navigation does not prove parameter or runtime parity.",
+    "Original rod/core/network audit drafts remain in progress. No production gameplay fixes in this batch.",
+    "No generator, Gradle, Java initialization/compilation, tests, game, build or push."
+  ]
+}

@@ -1,0 +1,1269 @@
+{
+  "batch": 79,
+  "date": "2026-10-21",
+  "baseline": "6841699df0cbfbfbe793c6db666ccda48ce4dcaf",
+  "new_records": [
+    271,
+    272
+  ],
+  "scope": "Configured paint mixins,16 palette entries/256 finite pair formulas, fresh Invar white-paint state and painted item primary alpha; main-valve persistence routes only.",
+  "counts": {
+    "original_sources": 17,
+    "current_sources": 29,
+    "shared_platform_views": 36,
+    "readability_files": 6,
+    "readability_execution_views": 9,
+    "resources": 2
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "relative": "gregapi/tileentity/multiblocks/TileEntityBase10MultiBlockBase.java",
+      "sha256": "42ec92430ff6af7fb8d192aebfa424cc1af519d40ba2ff53a8e8c6afe8f9e738",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "relative": "gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "sha256": "8185b432ec7e87f44541a41e8d196ea0ff94c4a182eddf8dffab0c531d5c4318",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityClassContainer.java",
+      "sha256": "ea006ef8b03ffd30044da0bb044dfcc8227f37712becd555f7bc5a9747f3af8a",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityRegistry.java",
+      "sha256": "70fb3ce00e7036e343e253e0f9fd8401b05c3f4f4e16b88f1b3fb94c3b111e83",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityItemInternal.java",
+      "sha256": "7e103a13f02097dcfd1c91334cb3da238b9f509ee4cbb584dfd7267bf26f8bb1",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "relative": "gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 2
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "relative": "gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/BlockTextureDefault.java",
+      "relative": "gregapi/render/BlockTextureDefault.java",
+      "sha256": "626f10a146021b90da190d9ac051771e8d07b9cd9c62d68955b2db5c31602c85",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/ITexture.java",
+      "relative": "gregapi/render/ITexture.java",
+      "sha256": "9ebdc62095f15a1631a06a207619b8695a01f8e60ea343bd2cd0458a68a8ee59",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java",
+      "sha256": "35c61a41f22ca7e4c8a2814b74ddfe201a9b37bf2ba8791d1e6b82f6006219f3",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "sha256": "1de6b70dcd76dc2723b2c3922e04fb74ce7ee3b097997b2ed66ffcb13e4d65fd",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java",
+      "sha256": "bc4b2e443abf61387fcb1b74c7c39a4809e2b119f9e4bade3d3c8386deb44ace",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/SharedLargeMachineParts.java",
+      "sha256": "ee8e3a0eee6391090e0f8d9ac25de150f8f396e41fef5f5914410858b1c56ab4",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "sha256": "1f4ad5466b9ba341ab4f22fe0ac3d9e2638a47e07afd08954b47953489253697",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "sha256": "7d9437729ef50eb29d9c51e0668fc27b41400fccc889c76de34f524873168c30",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "sha256": "2247701388f8374a4e187e4fbb3e5c9b205ccbb2a5ba1d3abbac9df6a559eb7e",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "sha256": "63fa87fcfa3f65d2233d19349f16ca361050ce7476faf5f7c859e9c9e2ed0977",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "sha256": "8a448daa2a7be4b32c2dbec8d6029477b6b1914c5370fbce42e09f3dc0cf3fd4",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "sha256": "4ba0ba828b1d5296b2cc22ff851077116ff4732925ce71099ddbf06bdae541af",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "8e468914162ddccb0f55b467c1670c0cb6076c79fb89f002dcaa2bedb7b50c9d",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "sha256": "f794ff8e4d497f224b907acdd0d67adc9ded6b9a9276f5285174c1f6ec834b25",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+      "sha256": "d96762bf2d9a78706c81c394b2d77e8fea8c3ad1a8cc9328556785054bbdebcc",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/ItemColorARGB.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/ItemColorARGB.java",
+      "sha256": "99129d931dc02d85b3d6c4b82701e0f2951eb66129235d75bedb9a11e9acfd0a",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "relative": "gradle/platform-neoforge.gradle",
+      "sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "scope": "Named paint defaults/mix/persistence/native item-alpha or main-valve item-data consumers only; no whole-file or whole-client acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "platform": "forge",
+      "sha256": "b9c59a5ddeb5db1ff08cda82939b53131f5e26bd6ed62157a3ef8d31da66e39c",
+      "tokens": 832
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "platform": "neoforge",
+      "sha256": "50ce6ce52548580761bd545b36dc07cc5f7461110d0b79a559e845e9256e7a2b",
+      "tokens": 865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "forge",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "platform": "neoforge",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "tokens": 210
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "platform": "forge",
+      "sha256": "78d88809ac29a541bd1ccf4c9ddde793b9fc4707ec239975a7079b3dce4628f4",
+      "tokens": 202
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "platform": "neoforge",
+      "sha256": "449a4d0b10c739f2dfd1b93045933b7ece18026f892e44d4dce2a8cc15909adc",
+      "tokens": 230
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "platform": "forge",
+      "sha256": "64b15273d953318b1b7536b187fe7a1610016dacaea6bfc16c4c9260b164b366",
+      "tokens": 940
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "platform": "neoforge",
+      "sha256": "dca91389b182e0b2d44c3742fc7a0a0ff158fda970f2ce430e72547755dd28a6",
+      "tokens": 942
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "forge",
+      "sha256": "1ecd6bee8e9d497fcef54424ed14f7e751746e7d76a2b8261dc8a2e62e7d3b40",
+      "tokens": 770
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/tool/PaintTargets.java",
+      "platform": "neoforge",
+      "sha256": "1ecd6bee8e9d497fcef54424ed14f7e751746e7d76a2b8261dc8a2e62e7d3b40",
+      "tokens": 770
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "forge",
+      "sha256": "0fa7cc2dc4d14b55437cc03470258ce244c4e4f1b71bc83701ae81ac9a96dd38",
+      "tokens": 3106
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "platform": "neoforge",
+      "sha256": "c0c984600dcb0f1c21b815a4380dbf0ae611a09d07abc90f6517bf95271cc0a4",
+      "tokens": 2793
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "forge",
+      "sha256": "8ad7a5ae4577833e37929f86f4a118d4601b1b989c1ff69b3963d93fa6e7d913",
+      "tokens": 1699
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "platform": "neoforge",
+      "sha256": "7ed36804a194579cf48e62db341b75c16f07ef0c842faca627043db39a61def6",
+      "tokens": 1148
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "platform": "forge",
+      "sha256": "e382f123ec9b0fae3d1878d9b5034888517c772f9d69f9b25d0d84a59e65c4f3",
+      "tokens": 868
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+      "platform": "neoforge",
+      "sha256": "5d249a0a164a7792ac8da0528ccb094ea37bb0bfcaf92e60f153dd8794eadff7",
+      "tokens": 868
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "forge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/RegisteredBlock.java",
+      "platform": "neoforge",
+      "sha256": "4d1801e32dea3596427419e42796d01e40a94e16cc249dff23cd179e68d888b9",
+      "tokens": 466
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "platform": "forge",
+      "sha256": "aa45611b2511532dea0b27834e4de4fed53ebe1c1b6f75e3d1ee5ebc852ef245",
+      "tokens": 2618
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/SharedInventoryModelPack.java",
+      "platform": "neoforge",
+      "sha256": "b312a41b32d9ae66c087a1e7973f1af8e81f8b6ef370581fd9815ad55c838b4e",
+      "tokens": 2708
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "forge",
+      "sha256": "252f22b6bc3e26531dd8a3c1a184e10933c747b08c6670b65e8ddeb477a41ddb",
+      "tokens": 1218
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "fb46017f71c3e952477bacf28b5e441a72ca20394451cfcf76b7b16df8a54fdf",
+      "tokens": 1586
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "c748ea5f61f4d48c1ca325d50126dd4745ef790115ee0ebfb5300f719431a11c",
+      "tokens": 2865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "9dff02e5b759e297416a553b79c31dc9e1dec9ddcfba118308c155f79c4c905c",
+      "tokens": 2759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    }
+  ],
+  "resources": [
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/small_invar_tank_main_valve.json",
+      "sha256": "de66040e3a9790d5289c3b97745fb16fff20be0fb8f7e6ac6fb6d90cb0f431ee",
+      "scope": "Reachable static item parent and primary tinted-quads for the17007 witness."
+    },
+    {
+      "path": "multiversion/src/main/resources/assets/gt6ce/models/block/machine/multiblock/small_invar_tank_main_valve.json",
+      "sha256": "e116a110a5f875a638711a08316f0ede09a8406adc92819554a47cf9bb2285c9",
+      "scope": "Reachable static item parent and primary tinted-quads for the17007 witness."
+    }
+  ],
+  "readability": {
+    "baseline": "6841699df0cbfbfbe793c6db666ccda48ce4dcaf",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/PaintState.java": {
+        "before_raw_sha256": "be131eec9738f6cfa23dd711e3090e8911234100187d987d7228e0de5f7c9317",
+        "after_raw_sha256": "35c61a41f22ca7e4c8a2814b74ddfe201a9b37bf2ba8791d1e6b82f6006219f3",
+        "local_renames": {
+          "flag": "paintedFlag"
+        },
+        "rename_region": [
+          "public boolean restore(",
+          null
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 170,
+            "execution_sha256": "2b0be184c1c63379f6ba2486205230075784a21b2fd6e2eb319121e36916d7e6",
+            "before_lines": 9,
+            "after_lines": 42,
+            "before_max_line": 144,
+            "after_max_line": 106
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java": {
+        "before_raw_sha256": "8f04eef92f3d9a63f6c140ab679e94ae991bf5ed8e2cd0c01c6c8e808757d6a0",
+        "after_raw_sha256": "1de6b70dcd76dc2723b2c3922e04fb74ce7ee3b097997b2ed66ffcb13e4d65fd",
+        "local_renames": {
+          "a": "firstRgb",
+          "b": "secondRgb"
+        },
+        "rename_region": [
+          "public static int mix(",
+          "public record EntityFacts("
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 544,
+            "execution_sha256": "51b07089d1088c1f1684818e64186aad762f6ebffd7c4562d01f735d8482cd1d",
+            "before_lines": 11,
+            "after_lines": 73,
+            "before_max_line": 526,
+            "after_max_line": 147
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/tool/Paintable.java": {
+        "before_raw_sha256": "9f299097923717497e741bae3301b32138eaa0bbac01ca40a3a9fd572a7693b9",
+        "after_raw_sha256": "bc4b2e443abf61387fcb1b74c7c39a4809e2b119f9e4bade3d3c8386deb44ace",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 45,
+            "execution_sha256": "ccc747a7122758321087522549aab4ec657898f9a2227bddb6fe161b4507a56b",
+            "before_lines": 3,
+            "after_lines": 10,
+            "before_max_line": 131,
+            "after_max_line": 98
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java": {
+        "before_raw_sha256": "650f4b5dd215d3572623fab689d928824ea99acba8dc89efec50073b300d3670",
+        "after_raw_sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+        "local_renames": {},
+        "rename_region": null,
+        "comment_corrections": [
+          [
+            "/** Brokestar paint layer attached to original GT entities without a second machine hierarchy. */",
+            "/** Brokestar paint state supplied through BlockEntity, restricted to GT blocks by namespace. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 832,
+            "execution_sha256": "da55cce455ff9834997b14abcc55d328e1d8e5de8da2f41a6a474ab79e19c69d",
+            "before_lines": 24,
+            "after_lines": 114,
+            "before_max_line": 535,
+            "after_max_line": 141
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 865,
+            "execution_sha256": "31b0f408f61fa175879e7ebd9e0bef243b51acd59e662a47eb47894e4240879f",
+            "before_lines": 24,
+            "after_lines": 117,
+            "before_max_line": 535,
+            "after_max_line": 141
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java": {
+        "before_raw_sha256": "9630f7d69f092c9ce75e040860550ff5041b73644c79c7efb987b24f05759729",
+        "after_raw_sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+        "local_renames": {
+          "cir": "callback"
+        },
+        "rename_region": [
+          "private void gregtech$paint(",
+          null
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 210,
+            "execution_sha256": "92843cbbd40827477ed76fd06f470bddb8af827bb7c01a409e5700b7bfcfa212",
+            "before_lines": 7,
+            "after_lines": 22,
+            "before_max_line": 408,
+            "after_max_line": 161
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 210,
+            "execution_sha256": "92843cbbd40827477ed76fd06f470bddb8af827bb7c01a409e5700b7bfcfa212",
+            "before_lines": 7,
+            "after_lines": 22,
+            "before_max_line": 408,
+            "after_max_line": 161
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java": {
+        "before_raw_sha256": "592e473ce11f0976bd3d44119216195037253760e7dcf99340b3bbd7ef3a706f",
+        "after_raw_sha256": "1f4ad5466b9ba341ab4f22fe0ac3d9e2638a47e07afd08954b47953489253697",
+        "local_renames": {
+          "cir": "callback"
+        },
+        "rename_region": [
+          "private void gregtech$paint(",
+          null
+        ],
+        "comment_corrections": [
+          [
+            "/** Packed original block entity items use the same persisted primary paint tint. */",
+            "/** Reads packed block entity paint; native item alpha remains a separate rendering contract. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 202,
+            "execution_sha256": "d522c312ff6ea1d13c578e48062946e816c323559bb22a4bbb30387b6044a38a",
+            "before_lines": 9,
+            "after_lines": 22,
+            "before_max_line": 336,
+            "after_max_line": 119
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 230,
+            "execution_sha256": "d2e75603655451dacc6843afd5f89c6831bbd8628d7b8b3a6a5c92016dfab3c9",
+            "before_lines": 9,
+            "after_lines": 23,
+            "before_max_line": 409,
+            "after_max_line": 119
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, listed method-local parameter names and two documentation corrections; no gameplay edits."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/entity/ItemRenderer.class",
+        "sha256": "6ec941151ef0105699b77d82d373246e4747e28edc0f6a9493bd3b40fd75b7de",
+        "bytes": 16839
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/color/item/ItemColors.class",
+        "sha256": "78fb9931709d532d5671a1b119515badd9301a4c5078b7e815b3cd89d404cfec",
+        "bytes": 8150
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "com/mojang/blaze3d/vertex/VertexConsumer.class",
+        "sha256": "420dbf6175d0d9100a87dd89b6f3368a47ea0fd4516de77e2a55241e1b4688e1",
+        "bytes": 7213
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.class",
+        "sha256": "2a014da238d13865f3c0c978f7aa474facf737ef04e175afbf1d023e513315e1",
+        "bytes": 5092
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "sha256": "2b3e1defc87df357543458f44516b32b7519bb42746690fc24cee8ba6db4defc",
+        "bytes": 19126
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/client/renderer/entity/ItemRenderer.java",
+        "sha256": "01b89d638c8c4ec1177987496f28b550553783f3ced60aaa0de12434868258c3",
+        "bytes": 13187,
+        "extracted": "work/paint-state-audit-20261021/neo-ItemRenderer.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/client/color/item/ItemColors.java",
+        "sha256": "db397d96941d4b1e73c74dee3e2969cbb2f1f11a66e3d7b3b6c00677a54733a6",
+        "bytes": 5544,
+        "extracted": "work/paint-state-audit-20261021/neo-ItemColors.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "com/mojang/blaze3d/vertex/VertexConsumer.java",
+        "sha256": "60bf8b37199f6d02e6de3b43c749a7fe91676bea1c3703941488e600199f71f9",
+        "bytes": 6911,
+        "extracted": "work/paint-state-audit-20261021/neo-VertexConsumer.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "bytes": 14908,
+        "extracted": "work/paint-state-audit-20261021/neo-BlockEntity.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.java",
+        "sha256": "280bd0a6b2c8534c17f7af52f08f8da6fb4577030754746e5af7da2e326bcbe5",
+        "bytes": 2510,
+        "extracted": "work/paint-state-audit-20261021/neo-ClientboundBlockEntityDataPacket.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/BlockItem.java",
+        "sha256": "f26f291ad73176d372d7916d05eb396358f41d08dbffcca02f1d425972b5c7ea",
+        "bytes": 10867,
+        "extracted": "work/paint-state-audit-20261021/neo-BlockItem.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/client/extensions/IVertexConsumerExtension.java",
+        "sha256": "0609e1956e5ac9b2bb9bc48aa562fa0a6311127e4e96ba5561c010cf7b7804b4",
+        "bytes": 2346,
+        "extracted": "work/paint-state-audit-20261021/neo-IVertexConsumerExtension.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/util/FastColor.java",
+        "sha256": "d76cd0baf389e4381bee7fb5cf60f60bd0072ee0e5cb7c69d0d1118c616c131b",
+        "bytes": 3745,
+        "extracted": "work/paint-state-audit-20261021/neo-FastColor.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/client/model/CompositeModel.java",
+        "sha256": "b66ba0b4953909660de29295474ec07ec7c8469c1a15bca6b906f173efd2220e",
+        "bytes": 16054,
+        "extracted": "work/paint-state-audit-20261021/neo-CompositeModel.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.client.renderer.entity.ItemRenderer",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/entity/ItemRenderer.class",
+        "output": "work/paint-state-audit-20261021/forge-ItemRenderer.javap.txt",
+        "sha256": "5d5aa3a1a35753c4ea5573aab4a3e9c30a110087ec3eeb681aa220e20adb3f6f",
+        "kind": "Read-only javap, no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.client.color.item.ItemColors",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/color/item/ItemColors.class",
+        "output": "work/paint-state-audit-20261021/forge-ItemColors.javap.txt",
+        "sha256": "39b69fbcfd8968107a92acc41614c8f2c9c855abf320aea59d357afafe4efdb7",
+        "kind": "Read-only javap, no target compilation or initialization."
+      },
+      {
+        "class": "com.mojang.blaze3d.vertex.VertexConsumer",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "com/mojang/blaze3d/vertex/VertexConsumer.class",
+        "output": "work/paint-state-audit-20261021/forge-VertexConsumer.javap.txt",
+        "sha256": "3578e07fa2d1e8fe35ca48b21d1f06bb760f52cb98bf3e2dbe9e293866f953b1",
+        "kind": "Read-only javap, no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "output": "work/paint-state-audit-20261021/forge-BlockEntity.javap.txt",
+        "sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+        "kind": "Read-only javap, no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket.class",
+        "output": "work/paint-state-audit-20261021/forge-ClientboundBlockEntityDataPacket.javap.txt",
+        "sha256": "ca32dced188f13a073ed784c5289e2a0cc4a0e92b21c9a982fc83336770fe696",
+        "kind": "Read-only javap, no target compilation or initialization."
+      },
+      {
+        "class": "net.minecraft.world.item.BlockItem",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/item/BlockItem.class",
+        "output": "work/paint-state-audit-20261021/forge-BlockItem.javap.txt",
+        "sha256": "1560c6f16bac60a295c59f29b2f4b64ec6207fc62cae8816edf147e5fa464fec",
+        "kind": "Read-only javap, no target compilation or initialization."
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Declared values and finite re-encoded source formulas, no target execution or recipe/client acceptance.",
+    "palette": [
+      {
+        "index": 0,
+        "original_name": "Black",
+        "current_id": "black",
+        "rgb": "202020",
+        "vanilla_dye_id": 15
+      },
+      {
+        "index": 1,
+        "original_name": "Red",
+        "current_id": "red",
+        "rgb": "FF0000",
+        "vanilla_dye_id": 14
+      },
+      {
+        "index": 2,
+        "original_name": "Green",
+        "current_id": "green",
+        "rgb": "00FF00",
+        "vanilla_dye_id": 13
+      },
+      {
+        "index": 3,
+        "original_name": "Brown",
+        "current_id": "brown",
+        "rgb": "604000",
+        "vanilla_dye_id": 12
+      },
+      {
+        "index": 4,
+        "original_name": "Blue",
+        "current_id": "blue",
+        "rgb": "0000FF",
+        "vanilla_dye_id": 11
+      },
+      {
+        "index": 5,
+        "original_name": "Purple",
+        "current_id": "purple",
+        "rgb": "800080",
+        "vanilla_dye_id": 10
+      },
+      {
+        "index": 6,
+        "original_name": "Cyan",
+        "current_id": "cyan",
+        "rgb": "00FFFF",
+        "vanilla_dye_id": 9
+      },
+      {
+        "index": 7,
+        "original_name": "LightGray",
+        "current_id": "light_gray",
+        "rgb": "C0C0C0",
+        "vanilla_dye_id": 8
+      },
+      {
+        "index": 8,
+        "original_name": "Gray",
+        "current_id": "gray",
+        "rgb": "808080",
+        "vanilla_dye_id": 7
+      },
+      {
+        "index": 9,
+        "original_name": "Pink",
+        "current_id": "pink",
+        "rgb": "FFC0C0",
+        "vanilla_dye_id": 6
+      },
+      {
+        "index": 10,
+        "original_name": "Lime",
+        "current_id": "lime",
+        "rgb": "80FF80",
+        "vanilla_dye_id": 5
+      },
+      {
+        "index": 11,
+        "original_name": "Yellow",
+        "current_id": "yellow",
+        "rgb": "FFFF00",
+        "vanilla_dye_id": 4
+      },
+      {
+        "index": 12,
+        "original_name": "LightBlue",
+        "current_id": "light_blue",
+        "rgb": "8080FF",
+        "vanilla_dye_id": 3
+      },
+      {
+        "index": 13,
+        "original_name": "Magenta",
+        "current_id": "magenta",
+        "rgb": "FF00FF",
+        "vanilla_dye_id": 2
+      },
+      {
+        "index": 14,
+        "original_name": "Orange",
+        "current_id": "orange",
+        "rgb": "FF8000",
+        "vanilla_dye_id": 1
+      },
+      {
+        "index": 15,
+        "original_name": "White",
+        "current_id": "white",
+        "rgb": "FFFFFF",
+        "vanilla_dye_id": 0
+      }
+    ],
+    "mix_pairs": 256,
+    "mix_result_ordered_sha256": "1d119771f1991ae23dce108c32ecefcd63e6f129dab590305814ca29e3b57e55",
+    "first_paint_invar": [
+      {
+        "dye_index": 0,
+        "id": "black",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 1,
+        "id": "red",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 2,
+        "id": "green",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 3,
+        "id": "brown",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 4,
+        "id": "blue",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 5,
+        "id": "purple",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 6,
+        "id": "cyan",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 7,
+        "id": "light_gray",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 8,
+        "id": "gray",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 9,
+        "id": "pink",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 10,
+        "id": "lime",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 11,
+        "id": "yellow",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 12,
+        "id": "light_blue",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 13,
+        "id": "magenta",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 14,
+        "id": "orange",
+        "original_changed": true,
+        "current_changed": true
+      },
+      {
+        "dye_index": 15,
+        "id": "white",
+        "original_changed": true,
+        "current_changed": false
+      }
+    ],
+    "white_after_unpaint": {
+      "original_base_rgb": "DCDC96",
+      "current_private_rgb": "FFFFFF",
+      "original_changed": true,
+      "current_changed": false,
+      "limit": "Block-color fallback still restores the base material visually when unpainted; this does not claim every unpainted block turns white."
+    },
+    "item_alpha": {
+      "case": "Successfully paint17007 red, pick or harvest it with its saved painted state; inspect a tintindex0 quad in the ordinary item model.",
+      "paint_rgb": "FF0000",
+      "registered_opaque_handler_argb": "FFFF0000",
+      "mixin_final_return": "00FF0000",
+      "neo_native_tint_alpha": 0.0,
+      "forge_native_tint_alpha": 1.0,
+      "limit": "Neo ordinary tinted-quad path only. No final GPU image, shader-pack/addon behavior or claim that overlay/untinted quads disappear."
+    }
+  },
+  "positive_routes": [
+    "Both nodes configure BlockEntityPaintMixin and client BlockPaintColorMixin/ItemPaintColorMixin.",
+    "17007 original material initialization addsDCDC96 before the paintable tile reads it; this is not inferred from the material name.",
+    "Main valve save/load explicitly calls its ancestor; mixin writesgt.painted/gt.color, native saveWithoutMetadata/saveWithId routes throughsaveAdditional.",
+    "Current main-valve getDrops/clone stores that data; CoverDrops.capture explicitly excludes it from machine data removal.",
+    "Unpainted block-color lookup falls back to the registered material handler. The white refusal does not mean every unpainted block is visually white."
+  ],
+  "remaining": [
+    "All other entity override/save/drop chains and dedicated renderers, actual paint/unpaint/restart, native item alpha image/third-party shaders, complete painting entity/grass/vanilla target policy and remaining original systems."
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, GPU output, disk restart, build or push.",
+    "Source formulas and native entry hashes do not prove complete gameplay or actual packet delivery.",
+    "OriginalMT.java contains two preexisting replacement characters in a Monazite comment; read-only source retained and recorded.",
+    "The complete original alignment and source-readability goal remains active."
+  ],
+  "previous_goal_turn": "Progress: committed6841699df, completing tank client source evidence and four readability changes; preserved user material formatting.",
+  "root_validation": {
+    "named_source_hashes": 46,
+    "shared_platform_views": 36,
+    "readability_files": 6,
+    "complete_execution_views": 9,
+    "raw_literal_positions_comments_directives": true,
+    "protected_material_hashes": 2,
+    "native_artifacts": 2,
+    "native_entries": 15,
+    "readonly_javap_outputs": 6,
+    "resources": 2,
+    "palette_entries": 16,
+    "ordered_mix_pairs": 256,
+    "first_white_source_difference": true,
+    "neo_alpha_zero_forge_one_source_chain": true,
+    "configured_mixin_routes": true,
+    "contiguous_ledger_records": 272,
+    "documents_checked": 8,
+    "added_local_links_checked": 11,
+    "limit": "Source/file analysis only. No Java compilation/initialization, Gradle, tests, game, GPU image, disk restart, build or push."
+  }
+}

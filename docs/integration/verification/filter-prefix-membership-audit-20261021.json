@@ -1,0 +1,2688 @@
+{
+  "batch": 85,
+  "date": "2026-10-21",
+  "baseline": "53362820448687acacaea715ec3e4c45847f5e09",
+  "new_records": [
+    283
+  ],
+  "extended_records": [],
+  "scope": "Original registered prefix membership and native vanilla item selection; current material composition/tag paths are distinguished from FilterRules consumption.",
+  "counts": {
+    "original_sources": 14,
+    "current_sources": 28,
+    "shared_platform_views": 34,
+    "readability_files": 4,
+    "readability_execution_views": 6,
+    "additional_mixin_inventory_files": 31
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityFilterPrefix.java",
+      "sha256": "4595bd7187cdcd907d37058658df7bd33f86aef21f9dfbcdd5ecd0578a4a7797",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictPrefix.java",
+      "relative": "gregapi/oredict/OreDictPrefix.java",
+      "sha256": "89c94fd1149297496e2904a7897b3ab33c02991009b232df0d70febabb8888f5",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictManager.java",
+      "relative": "gregapi/oredict/OreDictManager.java",
+      "sha256": "41376372c077030142a6e95385a74f9dde79c3b15d9a4de95cff99f371b44801",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictItemData.java",
+      "relative": "gregapi/oredict/OreDictItemData.java",
+      "sha256": "d44471d8e7d2d732891e79a0f234045a693290e29f3d463dbc79633283d8517f",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java",
+      "relative": "gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OD.java",
+      "relative": "gregapi/data/OD.java",
+      "sha256": "6f271d85c5ff67f1f1d57f347006f2aa1bc89991c7c89c76680e7502a4621f05",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/TD.java",
+      "relative": "gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/OM.java",
+      "relative": "gregapi/util/OM.java",
+      "sha256": "3c2cc710d62373460d1854f60a7383ec0a5b7969877dbbcb3f5c9b5a0b4c5cbb",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/wooddict/PlankEntry.java",
+      "relative": "gregapi/wooddict/PlankEntry.java",
+      "sha256": "3bd5fbe235cafacd39717d62eeb8fc1604d6984f4a153e71c17a923531983d23",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/load/LoaderWoodDictionary.java",
+      "relative": "gregapi/load/LoaderWoodDictionary.java",
+      "sha256": "55a53e74c6fcddc4894a2e61acb8ea914496a53cc4f9f64e7f78d78eebd8d0e3",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API.java",
+      "relative": "gregapi/GT_API.java",
+      "sha256": "e6413cff3c97bbe73d5aa202b1c6a750d9bdce2df97cbf26a5a77acb79d225ce",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/GT_API_Post.java",
+      "relative": "gregapi/GT_API_Post.java",
+      "sha256": "9e752f4b51da7d70b45c56517cb6dc0117bfd28f6676f248bcda4ad5396b3b16",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ItemStackSet.java",
+      "relative": "gregapi/code/ItemStackSet.java",
+      "sha256": "a0e1823031096a9a6887d6fcc26d0485bcd3d3ed73b727cfc3f0855f760ff70b",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/code/ItemStackContainer.java",
+      "relative": "gregapi/code/ItemStackContainer.java",
+      "sha256": "8cbd4d2af37f82cd3839e2aec4591517656fa673e022e7e74ae5c31b7c1e6ee1",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/inventory/ContainerShapeLike.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/inventory/ContainerShapeLike.java",
+      "sha256": "c8864f43c686affc875bf8a9ab6858f0e6b3ccd73ed9a95160974e9c5ccaca3f",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/inventory/PipeFormLike.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/inventory/PipeFormLike.java",
+      "sha256": "6a5b24c962d8ce7ace05f57d8f50d903df5d89684b24f26c9d6431a503360c95",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFormItem.java",
+      "sha256": "0345bfd215de4a25f110dd877689038169df0147de64f37a71972fa8c52de6eb",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/ItemComposition.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/material/ItemComposition.java",
+      "sha256": "9636446f7955e560396906947db44a0ecb837335fb080185ccbd8bb3064fce78",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/MaterialBlockLike.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/block/MaterialBlockLike.java",
+      "sha256": "3a5e78407b947e4650d92aacf69181ed3a996bdc3883c957231976c5e7c2df82",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefixes.java",
+      "sha256": "55486aa67fcc3cbe037a3c14ce356b0b0eebfd3aba157cfe2bb80efb6ab538c7",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "sha256": "cc0c0fa2ec884259c185ac94f34955af37e1fecf92d6b72bba9aebc7f4dcaac3",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "sha256": "a0ea4fcbd7ee9be44d52a5cf1ba034d569ebf9ce327f6a8f17ab0219e50d1188",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "sha256": "487369b7825ad5bea525f1a16d48648f7ab0125806bdc575c9a80a292c1506cd",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "sha256": "e2dc6e089945bf77cb443f3409b8125f0b483e3e6f3674f82d5ae96ec9c09738",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "sha256": "e974a33bfcbdeb69d61dbb677d8c8311830703fa5e2bfea1555b1472854e3195",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "sha256": "8186963f98f8582ca4edd250dd7198667c03c1b6fb503df30ef79f69305270a2",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "sha256": "c1ec23674ea096d736a46d6073ec33189453cc2f1d2cb5a1fd17b9a5b4525b06",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "sha256": "c2899194998a462d5dbe2fb7998997a5c2392c58348a6cb0f2ea8483eb0cb2af",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java",
+      "sha256": "740781a01f2e1eb0219f2bcd5c0e6be4b8465085eb571828eff06c647b7ff20c",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "sha256": "76bf63409ea64698bb4a743e2ac2f77fa57d7e1af21b664c7e6da7228a19b38a",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+      "sha256": "b1df17a16b6bac123280a6fe18eb3c605ec6435110ba9a9168e7d61a4f70fb38",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "sha256": "863ea4b895ac28ac45f3dcb551f5ea6abedf239208c5d5050fa256b33d158707",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "sha256": "1e5d9a04d9c2b608171b735f46f506839d8f5bd23b71c5962d3d2471d6e9cce8",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "sha256": "87da95fececc675b03318135b93588fb070ccac890933fb8fd162daf570cd49a",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaCompositionLoader.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaCompositionLoader.java",
+      "sha256": "bc7e479d29cde9677e52c29b2669e037992c9eddbfd89fdbd48387a9f6da96b3",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "sha256": "07d9f2ae7a1ffec7a346198dce60b21aeb44f98f9586155e8021ebde14130c39",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Concrete native plank/iron-block prefix membership, selector and candidate consumers; not whole-file/system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "forge",
+      "sha256": "f3be77d72b2607cc112e4ad5ecb62c358b8c8504d9c3ae7ebd721309e6e8fabb",
+      "tokens": 514
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java",
+      "platform": "neoforge",
+      "sha256": "c076c677c7f50c71084112165ad7ec985feca26cb953e94badd6b1c09cdf7c34",
+      "tokens": 505
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "forge",
+      "sha256": "a0ea4fcbd7ee9be44d52a5cf1ba034d569ebf9ce327f6a8f17ab0219e50d1188",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java",
+      "platform": "neoforge",
+      "sha256": "a0ea4fcbd7ee9be44d52a5cf1ba034d569ebf9ce327f6a8f17ab0219e50d1188",
+      "tokens": 235
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "forge",
+      "sha256": "4a8be15abed08fe6f23d5fcac5d01673a1b387e8b8c1796b096cd3049baf258c",
+      "tokens": 2240
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "platform": "neoforge",
+      "sha256": "bb54cfd0e321f261a151f180d67e45cee7584bdc51e7c595f9a6db0c3448e951",
+      "tokens": 2241
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "forge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsSemiFilteredItem.java",
+      "platform": "neoforge",
+      "sha256": "5ff70eae235b929b587a3cd493360805b83bef5771e80be4c6d40b35d37ce36f",
+      "tokens": 32
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "forge",
+      "sha256": "fd7db0f814de72cd76a8da2cb499ccd41dd5edaa98128a5d732113ade2483bc9",
+      "tokens": 1355
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/FilterBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f39df06ea5518dd9011ef015b62ee87c4574259c27b0e6c13a51bd672d6f364c",
+      "tokens": 1399
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "forge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/FilterMenu.java",
+      "platform": "neoforge",
+      "sha256": "eb2700d724b9c9458ddf9c2d24efb6bb1a4b4fc63bc70a602a29ddef32b82f36",
+      "tokens": 820
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "platform": "forge",
+      "sha256": "e6492e9a087ab9aef79dcb084fe3276e20ece290820ac0db10149d69dff0c32c",
+      "tokens": 1724
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlock.java",
+      "platform": "neoforge",
+      "sha256": "df6947430945e878055ed4fe35fae93135375201e601b89376f92c6cd8a664bc",
+      "tokens": 1726
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "platform": "forge",
+      "sha256": "cd263d33dd05f2e8f534ed0d6a4d81409c050a57d9844b6c01dc185c4767400d",
+      "tokens": 659
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/MaterialBlockItem.java",
+      "platform": "neoforge",
+      "sha256": "2613fc8b1da40d953dc6ad194aaa57dadd4950e1a36b6ee4acaeb53319579fc4",
+      "tokens": 585
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "platform": "forge",
+      "sha256": "9e52643897700c47f66e0706faf36f2cea222104a4d3886ccba9ae23bbeed481",
+      "tokens": 939
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "platform": "neoforge",
+      "sha256": "c29dbbc41b4215191f05d495b3d7f7323ddabbffcd5608d1446388571cf56568",
+      "tokens": 942
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java",
+      "platform": "forge",
+      "sha256": "ad7ff92f5aa3cd7f44db8ded234dcb7ff0f9212cc37d5a31b94a0e547c5901d5",
+      "tokens": 2999
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/FluidPipeBlock.java",
+      "platform": "neoforge",
+      "sha256": "9a93ded99d9309117bd80024eee5797c231538883297cedcccc58d99d7d6b854",
+      "tokens": 3089
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "platform": "forge",
+      "sha256": "f759213610e723d2e89cf591e1eecae78768ceb1a5659cf70618dfc9f930e2bd",
+      "tokens": 2832
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/ItemPipeBlock.java",
+      "platform": "neoforge",
+      "sha256": "9fe9e04793dfb8cc7cfed8668389147a01ef0dc756aca3a21f97ab5228f572d6",
+      "tokens": 3047
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+      "platform": "forge",
+      "sha256": "248fc43660e0091727f01e74425512fc3c2482ca3d91b606a0e23c116ddab354",
+      "tokens": 759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/ItemMaterialRegistry.java",
+      "platform": "neoforge",
+      "sha256": "732ad73925d268b8578c303d8a5c6838f02831a472752bb41f5d4a970ee63333",
+      "tokens": 931
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "platform": "forge",
+      "sha256": "ff4b55eaa93cd0709698c8258ee8f536411a00e3ae844a491361450b2df8d54a",
+      "tokens": 706
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialEquivalence.java",
+      "platform": "neoforge",
+      "sha256": "d9b58870f018559281f83125a0651892c7b2d155b545e8c6ef4911cf861c6c39",
+      "tokens": 756
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "platform": "forge",
+      "sha256": "73651d86f78bd1bd922fb766d3468e3c7887dc1e5454ca4e37408e560d088bff",
+      "tokens": 4156
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/MaterialTagPack.java",
+      "platform": "neoforge",
+      "sha256": "8025388a5f973c8943228de00ed6cc43f1e7208a3ca38cd5c3a09e796bb73dcb",
+      "tokens": 4573
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "platform": "forge",
+      "sha256": "222fcd69c02b2e6b2bd7c450d4325e662ce652f8114e3d530d281751807d0def",
+      "tokens": 1091
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/VanillaWoodProcessingRecipes.java",
+      "platform": "neoforge",
+      "sha256": "222fcd69c02b2e6b2bd7c450d4325e662ce652f8114e3d530d281751807d0def",
+      "tokens": 1091
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaCompositionLoader.java",
+      "platform": "forge",
+      "sha256": "a1eab2f53492849a348bd0e96bc93e10dec665aa3ce0d35c2e1565c30cbfdb58",
+      "tokens": 457
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/material/VanillaCompositionLoader.java",
+      "platform": "neoforge",
+      "sha256": "10ca831ad50575e5fae68e1ebe83953e96e7931831ff2fb9bc6c73bb3d9fa70c",
+      "tokens": 459
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "forge",
+      "sha256": "864fd9121329c40ab59c6e2b4093d2eb8ca8c9a4d9c753b874ef9cf3b25e8076",
+      "tokens": 1254
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlocks.java",
+      "platform": "neoforge",
+      "sha256": "4e5b3ec29cbcac09befbb4a2d45b37f2754016f568f544a8868d822b2c4de4eb",
+      "tokens": 1326
+    }
+  ],
+  "readability": {
+    "baseline": "53362820448687acacaea715ec3e4c45847f5e09",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/api/inventory/ContainerShapeLike.java": {
+        "before_raw_sha256": "8a244b031963a9cf869b0552d65213027c2e995404a7437eb5eabb35334452ee",
+        "after_raw_sha256": "c8864f43c686affc875bf8a9ab6858f0e6b3ccd73ed9a95160974e9c5ccaca3f",
+        "scoped_local_names": [],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 21,
+            "execution_sha256": "d077f12428d3ac160d51e810974318e28d09bedc0cc8013e58ddeeba66a6efc0",
+            "before_lines": 3,
+            "after_lines": 6,
+            "before_max_line": 92,
+            "after_max_line": 92
+          }
+        ]
+      },
+      "core/src/main/java/com/gregtech/gregtech/api/inventory/PipeFormLike.java": {
+        "before_raw_sha256": "11b3d7f69bebdb93195ff89919b138a5784a60016dc7f4c5d68e50b46d6df4b6",
+        "after_raw_sha256": "6a5b24c962d8ce7ace05f57d8f50d903df5d89684b24f26c9d6431a503360c95",
+        "scoped_local_names": [],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 21,
+            "execution_sha256": "83b70baaeace82502c580f364449a420f09c27b90d976e89711254409cb4c921",
+            "before_lines": 3,
+            "after_lines": 6,
+            "before_max_line": 92,
+            "after_max_line": 92
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/FilterRules.java": {
+        "before_raw_sha256": "5a110a43cd87ebabb067a40942d9be6e02a86064b7a2a337cca0a14b2c0c3cdc",
+        "after_raw_sha256": "cc0c0fa2ec884259c185ac94f34955af37e1fecf92d6b72bba9aebc7f4dcaac3",
+        "scoped_local_names": [
+          [
+            "public static boolean itemMatches(",
+            "public static String prefix(",
+            {
+              "template": "templateStack",
+              "candidate": "candidateStack"
+            }
+          ],
+          [
+            "public static String prefix(",
+            "private static String pipePrefix(",
+            {
+              "stack": "candidateStack",
+              "item": "formItem",
+              "pipe": "pipeForm",
+              "block": "materialBlock",
+              "entry": "tagMapping"
+            }
+          ],
+          [
+            "private static String pipePrefix(",
+            null,
+            {
+              "size": "sizeName",
+              "result": "prefixName",
+              "word": "sizeWord"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 514,
+            "execution_sha256": "60fc21550f3ab4312ca2a991e0b1f968b73413e83350026d5eee09f8a16e1959",
+            "before_lines": 56,
+            "after_lines": 64,
+            "before_max_line": 120,
+            "after_max_line": 113
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 505,
+            "execution_sha256": "c4683fc6e947bb63bdbb0c92f1e9341ceb4bac8b6109e2be2ece8dffc9446167",
+            "before_lines": 55,
+            "after_lines": 63,
+            "before_max_line": 116,
+            "after_max_line": 120
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemFilter.java": {
+        "before_raw_sha256": "300a0adb2b58e7b7ea6baf70ba24ded8b8d1248afbd2c2120ac48abc828c74f1",
+        "after_raw_sha256": "a0ea4fcbd7ee9be44d52a5cf1ba034d569ebf9ce327f6a8f17ab0219e50d1188",
+        "scoped_local_names": [],
+        "comment_corrections": [
+          [
+            "/** A GT6 semi-filter's dump reservation, compared by item and metadata rather than NBT. */",
+            "/** A logistics dump reservation from template items or one inferred prefix. */"
+          ],
+          [
+            "/** A prefix is resolved against the registered item forms when a candidate is checked. */",
+            "/** Uses the same single-prefix adapter as the prefix filter block. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 235,
+            "execution_sha256": "ac4ca6ba92f81bee89fe07ad2d5d524e8828f90ed0316bfb57616c4da941fbb4",
+            "before_lines": 38,
+            "after_lines": 41,
+            "before_max_line": 94,
+            "after_max_line": 91
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 235,
+            "execution_sha256": "ac4ca6ba92f81bee89fe07ad2d5d524e8828f90ed0316bfb57616c4da941fbb4",
+            "before_lines": 38,
+            "after_lines": 41,
+            "before_max_line": 94,
+            "after_max_line": 91
+          }
+        ]
+      }
+    }
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "reused_location_receipt": {
+      "path": "docs/integration/verification/extender-signals-audit-20261021.json",
+      "sha256": "c092ee570567eb15acf642e1c7ebf415965844067831334c31880414227e5d6b"
+    },
+    "artifacts": [
+      {
+        "platform": "neo",
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      },
+      {
+        "platform": "forge",
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/Items.java",
+        "sha256": "06842ee1e1ac94d3698d174020a98f592a926ed645397d6bfd38cb4b5f652ef2",
+        "extracted": "work/filter-prefix-membership-audit-20261021/neo-Items.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/item/BlockItem.java",
+        "sha256": "f26f291ad73176d372d7916d05eb396358f41d08dbffcca02f1d425972b5c7ea",
+        "extracted": "work/filter-prefix-membership-audit-20261021/neo-BlockItem.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/Blocks.java",
+        "sha256": "c38a694404ba0e0317f744f368ae9a3a44a8bd95f03f3ac65ec9bc78d5d96a58",
+        "extracted": "work/filter-prefix-membership-audit-20261021/neo-Blocks.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/Block.java",
+        "sha256": "fe57fd48e078ed5a72a3309ac63ac615aa4aed4d7e6cf0d52754b2c06fe27533",
+        "extracted": "work/filter-prefix-membership-audit-20261021/neo-Block.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.item.Items",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "sha256": "94d38ee07638b9f53a074c78d452085c5ad1f4f062fb60fd5efd7103ea1c60aa",
+        "output": "work/filter-prefix-membership-audit-20261021/forge-Items.javap.txt",
+        "encoding": "gb18030",
+        "execution": "javap reads saved bytecode only; target classes not initialized."
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.item.BlockItem",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "sha256": "1560c6f16bac60a295c59f29b2f4b64ec6207fc62cae8816edf147e5fa464fec",
+        "output": "work/filter-prefix-membership-audit-20261021/forge-BlockItem.javap.txt",
+        "encoding": "gb18030",
+        "execution": "javap reads saved bytecode only; target classes not initialized."
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.Blocks",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "sha256": "b15f280ed48719485324e74099807fa33ef97f9dd3c427c78a8c150540bfdb62",
+        "output": "work/filter-prefix-membership-audit-20261021/forge-Blocks.javap.txt",
+        "encoding": "gb18030",
+        "execution": "javap reads saved bytecode only; target classes not initialized."
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.Block",
+        "options": [
+          "-c",
+          "-p"
+        ],
+        "sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f",
+        "output": "work/filter-prefix-membership-audit-20261021/forge-Block.javap.txt",
+        "encoding": "gb18030",
+        "execution": "javap reads saved bytecode only; target classes not initialized."
+      }
+    ]
+  },
+  "mixin_interface_inventory": [
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/AbstractMinecartSpeedCapMixin.java",
+      "sha256": "41f3d805540612b1e542e388ed0c0728df7dbf5c27ffc28f35d70cf812ceab56",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockEntityPaintMixin.java",
+      "sha256": "9478638ce61d66b55c8a08bcbc225078d364b51e2983b2bebe11c292d6e22467",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/BlockPaintColorMixin.java",
+      "sha256": "7a3a13f288f0a3ba228bf8afeae49f1e5b6d58f704f1bf83e74e36114ca3e7a8",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ColoredBookLecternMixin.java",
+      "sha256": "acd00a3ccfccad811192fade2aae30221fbfa761a24591ec7ef9a451dbc5e28d",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ColoredBookUseMixin.java",
+      "sha256": "0d7db9e2740359c50a2fd0afa3c6c742ae4c4609df70da07056d440ccf2746de",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java",
+      "sha256": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverRemovalMixin.java",
+      "sha256": "1c2653c067d578010094c39cae7921ae1509406347a7193d2894cf058dde965b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ConstructionRecipeMixin.java",
+      "sha256": "6c9ee745330c3a3f598f107990c4f5a877d20ce81d8f17f77f87f34e71fd02e3",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverHarvestMixin.java",
+      "sha256": "72460988818d795b4f96bc1d4cea41b0b578bd197c72aa7fe4014166ee26e828",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverWalkMixin.java",
+      "sha256": "2a38075810d6ac3067a632cd30dbf5fbe8dcc0724b4304d99e92cd51436c0e2b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/EntityFallingOreDropMixin.java",
+      "sha256": "236284b51eec4f8a1a17a1e689e66afdb0bede63c51f5b30d322d7eb3f5dccc1",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ItemPaintColorMixin.java",
+      "sha256": "1f4ad5466b9ba341ab4f22fe0ac3d9e2638a47e07afd08954b47953489253697",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/LegacyConstructionStackMixin.java",
+      "sha256": "c5ee19362ff1cf869ab0451625f0f9092c6c1f031cb9a7e46b90d40218fc7386",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ReliableEmiNamespaceMixin.java",
+      "sha256": "fef8535a01320cb3025083e23f271789da9f51a3938499c971447403172ce824",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterCandleMixin.java",
+      "sha256": "bbddebb9aed76510d74e663d0207d3e5d781dd0fb4e1ae07004dd448c025b6e7",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterContainerMixin.java",
+      "sha256": "bf910e8d847050824b2ccad708c1b6ff219002b8f83c007df088236f00dd358b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterFluidMixin.java",
+      "sha256": "9715c14d02fd2dd6dbde7955fcbef915b0d69c11bc3f68e62894ae6f5e5f4faf",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterFrogspawnMixin.java",
+      "sha256": "60d26f76bed9f99b04934fb0f91ac51888869797dd95ae3829f4cff74b6ea339",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterPlacementMixin.java",
+      "sha256": "b1fdf08d0fe7adcacb4fc48667df84ef5a5380587f168b91bfeb53280dae4356",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/WaterSurfaceMixin.java",
+      "sha256": "9c489ed33350a9ac7d2bdc730acda6b1af58b246c8d2a5f20eab484dc428ac0c",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/ColoredBookLecternScreenMixin.java",
+      "sha256": "48e98d7bea0ef70fef16b770a2cc1d822ff2628e0cffe7ed4ef4722b2392cff6",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/ColoredBookOpenPacketMixin.java",
+      "sha256": "be3983d1ebc080fa1df7eaefcbc0274bd0eacd96fadfe98a0ef93a20d6e257f7",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/CustomPayloadLimitMixin.java",
+      "sha256": "8399ed5780248a0583c6f5531f89dddff945835bbceb89aa7a572e1668adae99",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/LoginQueryPayloadMixin.java",
+      "sha256": "d5ea51a978b8454d0718c60b9d83a25f12c95935cf8859539a5fe8956ce51e7b",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameDecoderMixin.java",
+      "sha256": "3e7aaab5567aaca37d35a02d9f15ac77998913b0126479efaee162a314403ac2",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/mixin/PacketFrameEncoderMixin.java",
+      "sha256": "e377acec4c64ea3bec63e843ca9a374e7b83bf94a135ab3a4b2f2e9bc40e86f8",
+      "matching_interface_declarations": []
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/mixin/CraftingFormPositionMixin.java",
+      "sha256": "799cd20bdd86bc4121e7a7f2a443f601aaf1703b6154da5fcf4658924654f8a9",
+      "matching_interface_declarations": []
+    }
+  ],
+  "finite_source_witnesses": {
+    "kind": "Finite file/source analysis only, not Java calls, live tag enumeration or an in-game transfer.",
+    "concrete_identity_conditions": [
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 0,
+        "modern_item": "minecraft:oak_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 1,
+        "modern_item": "minecraft:spruce_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 2,
+        "modern_item": "minecraft:birch_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 3,
+        "modern_item": "minecraft:jungle_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 4,
+        "modern_item": "minecraft:acacia_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:planks",
+        "original_meta": 5,
+        "modern_item": "minecraft:dark_oak_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "forge",
+        "original_item": "minecraft:iron_block",
+        "original_meta": 0,
+        "modern_item": "minecraft:iron_block",
+        "original_registered_family": "blockIngot",
+        "source_result": "Original explicit primary association is selectable; current native type falls through to six tags, none yielding blockIngot."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 0,
+        "modern_item": "minecraft:oak_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 1,
+        "modern_item": "minecraft:spruce_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 2,
+        "modern_item": "minecraft:birch_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 3,
+        "modern_item": "minecraft:jungle_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 4,
+        "modern_item": "minecraft:acacia_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:planks",
+        "original_meta": 5,
+        "modern_item": "minecraft:dark_oak_planks",
+        "original_registered_family": "plank",
+        "current_native_family": "BlockItem of plain Block",
+        "source_result": "No generic-tag combination yields plank. Existing wood composition can generate plate tags, which is a different family."
+      },
+      {
+        "platform": "neoforge",
+        "original_item": "minecraft:iron_block",
+        "original_meta": 0,
+        "modern_item": "minecraft:iron_block",
+        "original_registered_family": "blockIngot",
+        "source_result": "Original explicit primary association is selectable; current native type falls through to six tags, none yielding blockIngot."
+      }
+    ],
+    "generic_tag_conditions": [
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": ""
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "gem"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "stick"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "stick"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "forge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": ""
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "gem"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "stick"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "stick"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "plate"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "dust"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "nugget"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          false,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          false,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "current_prefix_result": "ingot"
+      },
+      {
+        "platform": "neoforge",
+        "generic_tag_membership": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "current_prefix_result": "ingot"
+      }
+    ],
+    "counts": {
+      "native_identity_conditions": 14,
+      "six_group_boolean_conditions": 128
+    },
+    "selectors": "Old primary association and eligible alternate-membership scan are separate branches. The scan exclusion does not apply to direct primary selection; no full click-order or all-membership enumeration is claimed.",
+    "limits": "Third-party type injection and loaded datapacks are not executed. We do not infer all actual current tags are absent; the supported output set itself cannot express plank or blockIngot for these native classes."
+  },
+  "positive_routes": [
+    "Owned material forms, cells, size-specific pipes, MaterialBlockLike blocks and six standard tag families are implemented; arbitrary tags are not all original prefixes.",
+    "Vanilla wood material compositions and generated common plate tags already exist. This audit does not falsely call them absent.",
+    "Old primary selection is not gated by the alternate-scan UNIFICATABLE/NO_PREFIX_FILTERING exclusion.",
+    "Current ordinary template matching and prefix logistics reservation both remain, with the latter calling the same single-prefix adapter. Full routing/transfer is not accepted."
+  ],
+  "remaining": [
+    "All actual prefix memberships, re-registration/alias/modern data policy, alternate selector click order, final datapack/registry values, ordinary filter tags and actual UI/routing/transfer/restart, other subsystems and full readability goal."
+  ],
+  "limits": [
+    "Four production sources change whitespace, scoped local identifiers and two accurate comments only. No gameplay fix is claimed.",
+    "Native evidence uses Neo21.1.243 sources and mapped Forge1.20.1-47.4.20 bytecode. Four javap views read saved classes; no target class initialization.",
+    "No Java compilation/target initialization, Gradle, tests, game, live registry/tag/UI/transfer/restart, build or push.283 is a ledger record count, not unresolved bugs or a completion percentage."
+  ],
+  "previous_goal_turn": "Progress: concrete material method and formatting inspection informed preservation of all570 CompoundMaterials definitions; committed84 remains the authoritative audit baseline. Last user question made no source changes.",
+  "root_validation": {
+    "named_source_hashes": 42,
+    "shared_platform_views": 34,
+    "readability_files": 4,
+    "complete_execution_views": 6,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 2,
+    "protected_material_hashes": 2,
+    "compound_aligned_declarations": 570,
+    "mixin_inventory_hashes": 31,
+    "native_artifact_hashes": 2,
+    "additional_native_source_entries": 4,
+    "readonly_javap_outputs": 4,
+    "concrete_native_identity_conditions": 14,
+    "six_group_tag_conditions": 128,
+    "primary_vs_alternate_exclusions_distinguished": true,
+    "actual_registry_and_all_memberships_unverified": true,
+    "contiguous_ledger_records": 283,
+    "documents_checked": 8,
+    "added_local_links_checked": 16,
+    "limit": "Source/file analysis only; no target compilation/initialization, Gradle, tests, actual registry/datapack/UI/flow/restart, build or push."
+  }
+}

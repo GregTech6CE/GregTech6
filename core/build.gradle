@@ -90,7 +90,8 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     coreBehaviorContracts: 'CoreBehaviorContracts',
     materialBehaviorContracts: 'MaterialBehaviorContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
-    machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts'
+    machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts',
+    machineInputContracts: 'MachineInputContracts'
 ].each { taskName, entryPoint ->
     def contract = tasks.register(taskName, JavaExec) {
         description = "Runs ${entryPoint} without Minecraft; reuses unchanged successful inputs."
@@ -130,7 +131,7 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     tasks.named('check').configure { dependsOn contract }
 }
 
-['kind', 'duplicate', 'part', 'partok', 'partname', 'partmat', 'partdup', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore', 'brange', 'epart', 'emax', 'eunknown', 'gasok', 'gasdup', 'gasmat', 'iotarget', 'erange', 'erangedisagree', 'erangetu', 'bcatalyst', 'bunknown', 'bforeign'].each { scenario ->
+['kind', 'duplicate', 'part', 'partok', 'partname', 'partmat', 'partdup', 'map', 'energy', 'controller', 'service', 'overlap', 'bounds', 'benergy', 'factory', 'share', 'bconflict', 'bslots', 'blayout', 'fuelok', 'fuelmap', 'fuelenergy', 'fuelstruct', 'fuelname', 'fuelmachine', 'fuelbounds', 'knobs', 'face', 'bstore', 'brange', 'epart', 'emax', 'eunknown', 'gasok', 'gasdup', 'gasmat', 'iotarget', 'erange', 'erangedisagree', 'erangetu', 'plainblock', 'plainrole', 'bcatalyst', 'bunknown', 'bforeign'].each { scenario ->
     def contract = tasks.register("addonMachineContracts_${scenario}", JavaExec) {
         description = "Runs addon machine scenario ${scenario} in its own JVM."
         group = 'verification'

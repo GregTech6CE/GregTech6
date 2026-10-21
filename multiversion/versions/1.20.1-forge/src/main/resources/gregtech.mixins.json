@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_16",
   "refmap": "gregtech.refmap.json",
   "mixins": [
+    "ConstructionRecipeMixin",
+    "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
     "WaterFluidMixin",
     "AbstractMinecartSpeedCapMixin",

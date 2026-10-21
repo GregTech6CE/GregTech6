@@ -1,0 +1,1358 @@
+{
+  "date": "2026-10-21",
+  "batch": 52,
+  "baseline": "21f68f1b1874e0d99a95e11de5d3bdfe68c9e1fb",
+  "source_provenance": {
+    "author_notice": "GregTech-6 Team; original MT/TD/OP/FL source from preserved GregTech snapshot",
+    "license_notice": "LGPL-3.0-or-later",
+    "publication_authorization": "Not determined by this read-only audit"
+  },
+  "source_roots": {
+    "current_root": "C:/Dev/GregTech6",
+    "original_root": "C:/Dev/gregtech6-master/gregtech6-master",
+    "instruction": "Resolve each root_relative_path against the corresponding tree root; absolute paths are observations only."
+  },
+  "sources": [
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/data/MT.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/data/TD.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/TD.java",
+      "sha256": "c77f9a0691e59b9c720627a49fe0088d31d8ffe3c79c4e59a6c61ced91b9c9ea"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/data/OP.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/data/FL.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/render/TextureSet.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/render/TextureSet.java",
+      "sha256": "3d00fa12ae674474795a2203ba196a593181ed1fcd6f67807234864415541166"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/a/Loader_Fluids.java",
+      "sha256": "fdc9a697adc7822159cb8ea82389cc83e6494fc9723551f2983607ed46505fcb"
+    },
+    {
+      "tree": "original",
+      "root_relative_path": "src/main/java/gregtech/loaders/c/Loader_Recipes_Decomp.java",
+      "observed_absolute_path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/c/Loader_Recipes_Decomp.java",
+      "sha256": "46fb4d0f9f003aab7eac2eb2c83082c4941906897fca94b7f2f72d41bca71b49"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/transpile_gt6_materials.py",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/transpile_gt6_materials.py",
+      "sha256": "d99022a00123c31d7b269f002af039eddab25248f32f973c45ceb859e63abd8a"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/modular_materials.py",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/modular_materials.py",
+      "sha256": "4d4fb7cdd613f016432206c766847eef0b65c62dd8069507ce94eb514ccf20e1"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/generated/materials-source.java.txt",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/generated/materials-source.java.txt",
+      "sha256": "82f965d343bc07e98701e1a4b84ddae58f45a4257251e75250b167fe2ce27244"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+      "sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java",
+      "sha256": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/GTMaterialRegistry.java",
+      "sha256": "c7d57dd245d55fb32acb17f4fd0bdda7ca04b68a0a65887cddbf4304e8616d4e"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialProperty.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialProperty.java",
+      "sha256": "d9fc7cb4cdaf7588597faab8efd2f7c7f721011cccc2d6b9d7f2ded831765783"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialItemDefinitions.java",
+      "sha256": "b4fd742f5e59e419a2cdaed2bf51960954bbecc5c33380aae9abd91cc2aff818"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialRoleFlags.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialRoleFlags.java",
+      "sha256": "6c734c8d8ee55e10f697e7c84bf47dbbbbb04a56f48e9e5412ef5df69e3bf8eb"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialIconDefinitions.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialIconDefinitions.java",
+      "sha256": "0e8a07390744da7248edddc7b40ee0fa5f437fefa6df1848f20e47c03695ca38"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialTextureSet.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialTextureSet.java",
+      "sha256": "41b4af2df6883dbbecf2bd7c9251a64046cfeae7441f6f234579b21efd33f275"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialChemistry.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/MaterialChemistry.java",
+      "sha256": "27cebea9c41f7d804af7220e871bcd3df3ec96c93cce8d3b313e98b351059725"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "sha256": "7165fd9d5dde4ea713d8b55783ea9179c0cd35260497b0c7226665e0ec8fba88"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/MaterialFormCorrections.java",
+      "sha256": "39f2d2df1801a8d74b899ec39cf8eb5be3984539df62b6d4296dde2503e6564f"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+      "sha256": "d73635bac396ecc1a4ba5ee2253de90b6733c048d02d0f0fc51fa9bf41afacdf"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+      "sha256": "e319f98ceaf4d213630c824d8e19ec4c962cb0b044e1c6be1c3043d36c232ab1"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java",
+      "sha256": "0ef835c2b7fa1b57f0b0f7a1c5090df0bacc843bb1ad92006b7ca63d726eb5a3"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+      "sha256": "ef0fd403d4aadc2c7c6ff4b4426ae7d2a912a5e040e0d7c1310b224d2410b3d5"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialCompositionData.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialCompositionData.java",
+      "sha256": "b399b9ab43c6e8811b600137014f4c2385d7778cd27192b081423f8c188c9eac"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialDataFacts.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialDataFacts.java",
+      "sha256": "c9c3119a2e46a67e40e3a1e1b0bafbe223173573e5db6dc104f42c7d033acc05"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+      "sha256": "5f5ef7ae19ccbe9a66af4f56319f6a447f38ca0b882fa6e22ea2112cf8f5f4ce"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/MaterialPrefix.java",
+      "sha256": "484d31381d4291b85341ab3604f1c98829eecc834ec04e36d54d7912e911afdd"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+      "sha256": "4586190b0b7a8e03e683efb4797349f112b2d8f47b6c5374b86a5f96537b019a"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTChemGen.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTChemGen.java",
+      "sha256": "f9e541855f9773c596fcd7c1150f733379b64a0492c605a5308b82b231ce7c25"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/material/MaterialStackItemHelper.java",
+      "sha256": "bc7fb087141eea3b0679def9eb9c937218d2fa3382dd54305fd023fe02c9a0a8"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "sha256": "73ab74e4119edcf1c05c6637fdaf07690758e9cdc77a423592a539f707bbf935"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "sha256": "4e83b2a7db99ee07b75606e688b0aab0bd236a522bbcc28c31428c81983183fd"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/FluidPipeBlockEntity.java",
+      "sha256": "65e2f5a9b84d7cb684e7bb13bd451dfa8acd828cd293662f728d96c38bb17cb8"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PortableFluidContainerItem.java",
+      "sha256": "c2899194998a462d5dbe2fb7998997a5c2392c58348a6cb0f2ea8483eb0cb2af"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+      "sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DecompositionRecipeLoader.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DecompositionRecipeLoader.java",
+      "sha256": "2ae7371843bc64ecde4563e57a5c931170f6f213a518145b038a56059c4aead5"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java",
+      "sha256": "891e5f6d9b731857076e3bc12de8904d37d864b377931c33fe7263df8b5c4224"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/ItemBootstrap.java",
+      "sha256": "6ea7d0c95c79f12a8640baf65d16e3bbb68dadd675ea1ca83bf70d6ee6c15fff"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/FluidBootstrap.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/content/FluidBootstrap.java",
+      "sha256": "0b7c58a344b8535104f318fc411d8d4e51d64ad057a5957992bb752ed1ada4b6"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MaterialLinkBootstrap.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MaterialLinkBootstrap.java",
+      "sha256": "e0f5605383bb5c9af60dcfa5f4c0e07529882662600685feb04acfde1d25c457"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+      "observed_absolute_path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/fluid/FluidRegistries.java",
+      "sha256": "3fd5a1cab48767441ac5cbff550d7cdb808e0ba2a8f2f40e8ee15f6c54de3db3"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/integration/check_relay_sharing.py",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/integration/check_relay_sharing.py",
+      "sha256": "e5be4a476dd2e15e7f5521b4eaf8a2d52947de6404ef157ef67e434888374a8a"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/native_layout.py",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/native_layout.py",
+      "sha256": "479fb9f4d226d3ce4ea96e5c87046bca9bf2c8e2b2ad1db25646d71f46d4ae3a"
+    },
+    {
+      "tree": "current",
+      "root_relative_path": "tools/integration/check_stonecutter_emi.py",
+      "observed_absolute_path": "C:/Dev/GregTech6/tools/integration/check_stonecutter_emi.py",
+      "sha256": "38de46e35126e47816d542151caab4f8792fc6334a0a58a756112898b9b7adf3"
+    }
+  ],
+  "material_rows": [
+    {
+      "id": 9825,
+      "source_symbol": "HNO3",
+      "display_name": "Nitric Acid",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1031,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "NitricAcid",
+      "generated_factory": "dust",
+      "generated_line": 49,
+      "generated_texture": "FINE",
+      "intermediate_line": 255,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 76,
+      "composition_divider": 5,
+      "composition_parts": [
+        {
+          "material_field": "H",
+          "units": 1
+        },
+        {
+          "material_field": "N",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 3
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 9824,
+      "source_symbol": "H2SO4",
+      "display_name": "Sulfuric Acid",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1047,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "SulfuricAcid",
+      "generated_factory": "dust",
+      "generated_line": 59,
+      "generated_texture": "FINE",
+      "intermediate_line": 265,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 118,
+      "composition_divider": 7,
+      "composition_parts": [
+        {
+          "material_field": "H",
+          "units": 2
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 9844,
+      "source_symbol": "H2S2O7",
+      "display_name": "Disulfuric Acid",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1048,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "DisulfuricAcid",
+      "generated_factory": "dust",
+      "generated_line": 60,
+      "generated_texture": "FINE",
+      "intermediate_line": 266,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 122,
+      "composition_divider": 11,
+      "composition_parts": [
+        {
+          "material_field": "H",
+          "units": 2
+        },
+        {
+          "material_field": "S",
+          "units": 2
+        },
+        {
+          "material_field": "O",
+          "units": 7
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8011,
+      "source_symbol": "H2SiF6",
+      "display_name": "Hexafluorosilicic Acid",
+      "original_factory": "lqudacidelec",
+      "original_line": 1054,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "HexafluorosilicicAcid",
+      "generated_factory": "elec",
+      "generated_line": 61,
+      "generated_texture": "SHINY",
+      "intermediate_line": 267,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "GEM",
+        "GENERATE_PLATE",
+        "GENERATE_STICKS",
+        "GENERATE_LENS",
+        "GENERATE_PARTS",
+        "TOOL_HEAD",
+        "MAGICAL"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 129,
+      "composition_divider": 9,
+      "composition_parts": [
+        {
+          "material_field": "H",
+          "units": 2
+        },
+        {
+          "material_field": "Si",
+          "units": 1
+        },
+        {
+          "material_field": "F",
+          "units": 6
+        }
+      ],
+      "original_explicit_generic_map": "Electrolyzer",
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8413,
+      "source_symbol": "TiCl4",
+      "display_name": "Titanium Tetrachloride",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1087,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "TitaniumTetrachloride",
+      "generated_factory": "dust",
+      "generated_line": 68,
+      "generated_texture": "FINE",
+      "intermediate_line": 274,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 185,
+      "composition_divider": 5,
+      "composition_parts": [
+        {
+          "material_field": "Ti",
+          "units": 1
+        },
+        {
+          "material_field": "Cl",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8400,
+      "source_symbol": "ChloroauricAcid",
+      "display_name": "Chloroauric Acid",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1163,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "ChloroauricAcid",
+      "generated_factory": "dust",
+      "generated_line": 110,
+      "generated_texture": "FINE",
+      "intermediate_line": 316,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 364,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Au",
+          "units": 1
+        },
+        {
+          "material_field": "Cl",
+          "units": 4
+        },
+        {
+          "material_field": "H",
+          "units": 1
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8401,
+      "source_symbol": "ChloroplatinicAcid",
+      "display_name": "Chloroplatinic Acid",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1164,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "ChloroplatinicAcid",
+      "generated_factory": "dust",
+      "generated_line": 111,
+      "generated_texture": "FINE",
+      "intermediate_line": 317,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 368,
+      "composition_divider": 9,
+      "composition_parts": [
+        {
+          "material_field": "Pt",
+          "units": 1
+        },
+        {
+          "material_field": "Cl",
+          "units": 6
+        },
+        {
+          "material_field": "H",
+          "units": 2
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8402,
+      "source_symbol": "StannicChloride",
+      "display_name": "Stannic Chloride",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1165,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "StannicChloride",
+      "generated_factory": "dust",
+      "generated_line": 112,
+      "generated_texture": "FINE",
+      "intermediate_line": 318,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 372,
+      "composition_divider": 5,
+      "composition_parts": [
+        {
+          "material_field": "Sn",
+          "units": 1
+        },
+        {
+          "material_field": "Cl",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8403,
+      "source_symbol": "BlackVitriol",
+      "display_name": "Black Vitriol",
+      "original_factory": "lqudacidelec",
+      "original_line": 1168,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "BlackVitriol",
+      "generated_factory": "elec",
+      "generated_line": 113,
+      "generated_texture": "SHINY",
+      "intermediate_line": 319,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "GEM",
+        "GENERATE_PLATE",
+        "GENERATE_STICKS",
+        "GENERATE_LENS",
+        "GENERATE_PARTS",
+        "TOOL_HEAD",
+        "MAGICAL"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": false,
+      "composition_line": 375,
+      "composition_divider": 2,
+      "composition_parts": [
+        {
+          "material_field": "Fe",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        }
+      ],
+      "original_explicit_generic_map": "Electrolyzer",
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8404,
+      "source_symbol": "BlueVitriol",
+      "display_name": "Blue Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1169,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "BlueVitriol",
+      "generated_factory": "dust",
+      "generated_line": 114,
+      "generated_texture": "FINE",
+      "intermediate_line": 320,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 378,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Cu",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8405,
+      "source_symbol": "GreenVitriol",
+      "display_name": "Green Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1170,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "GreenVitriol",
+      "generated_factory": "dust",
+      "generated_line": 115,
+      "generated_texture": "FINE",
+      "intermediate_line": 321,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 382,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Fe",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8406,
+      "source_symbol": "RedVitriol",
+      "display_name": "Red Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1171,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "RedVitriol",
+      "generated_factory": "dust",
+      "generated_line": 116,
+      "generated_texture": "FINE",
+      "intermediate_line": 322,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 386,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Co",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8407,
+      "source_symbol": "PinkVitriol",
+      "display_name": "Pink Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1172,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "PinkVitriol",
+      "generated_factory": "dust",
+      "generated_line": 117,
+      "generated_texture": "FINE",
+      "intermediate_line": 323,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 390,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Mg",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8408,
+      "source_symbol": "CyanVitriol",
+      "display_name": "Cyan Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1173,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "CyanVitriol",
+      "generated_factory": "dust",
+      "generated_line": 118,
+      "generated_texture": "FINE",
+      "intermediate_line": 324,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 394,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Ni",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8409,
+      "source_symbol": "WhiteVitriol",
+      "display_name": "White Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1174,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "WhiteVitriol",
+      "generated_factory": "dust",
+      "generated_line": 119,
+      "generated_texture": "FINE",
+      "intermediate_line": 325,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 398,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Zn",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8410,
+      "source_symbol": "GrayVitriol",
+      "display_name": "Gray Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1175,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "GrayVitriol",
+      "generated_factory": "dust",
+      "generated_line": 120,
+      "generated_texture": "FINE",
+      "intermediate_line": 326,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 402,
+      "composition_divider": 6,
+      "composition_parts": [
+        {
+          "material_field": "Mn",
+          "units": 1
+        },
+        {
+          "material_field": "S",
+          "units": 1
+        },
+        {
+          "material_field": "O",
+          "units": 4
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8411,
+      "source_symbol": "MartianVitriol",
+      "display_name": "Martian Vitriol",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1176,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "MartianVitriol",
+      "generated_factory": "dust",
+      "generated_line": 121,
+      "generated_texture": "FINE",
+      "intermediate_line": 327,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 406,
+      "composition_divider": 18,
+      "composition_parts": [
+        {
+          "material_field": "Fe",
+          "units": 2
+        },
+        {
+          "material_field": "S",
+          "units": 3
+        },
+        {
+          "material_field": "O",
+          "units": 12
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Electrolyzer",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 8412,
+      "source_symbol": "VitriolOfClay",
+      "display_name": "Vitriol Of Clay",
+      "original_factory": "lqudaciddcmp",
+      "original_line": 1177,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "VitriolOfClay",
+      "generated_factory": "dust",
+      "generated_line": 122,
+      "generated_texture": "FINE",
+      "intermediate_line": 328,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "UNIT"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 410,
+      "composition_divider": 17,
+      "composition_parts": [
+        {
+          "material_field": "Al2O3",
+          "units": 5
+        },
+        {
+          "material_field": "S",
+          "units": 3
+        },
+        {
+          "material_field": "O",
+          "units": 9
+        }
+      ],
+      "original_explicit_generic_map": null,
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Centrifuge",
+      "candidate_only_not_runtime_registration_result": true
+    },
+    {
+      "id": 9827,
+      "source_symbol": "AquaRegia",
+      "display_name": "Aqua Regia",
+      "original_factory": "lqudacidcent",
+      "original_line": 1188,
+      "original_texture_inherited": "SET_FLUID",
+      "original_forms": [
+        "CONTAINERS",
+        "CONTAINERS_FLUID",
+        "LIQUID",
+        "PLANTS"
+      ],
+      "generated_field": "AquaRegia",
+      "generated_factory": "cent",
+      "generated_line": 129,
+      "generated_texture": "RUBY",
+      "intermediate_line": 335,
+      "factory_properties": [
+        "DUST",
+        "GENERATE_DUST",
+        "GEM",
+        "GENERATE_PLATE",
+        "GENERATE_STICKS",
+        "GENERATE_LENS",
+        "GENERATE_PARTS",
+        "TOOL_HEAD"
+      ],
+      "acid_restored_during_link": true,
+      "acid_reapplied_post_init": true,
+      "liquid_restored_before_fluid_registration": true,
+      "composition_line": 432,
+      "composition_divider": 13,
+      "composition_parts": [
+        {
+          "material_field": "HNO3",
+          "units": 5
+        },
+        {
+          "material_field": "HCl",
+          "units": 8
+        }
+      ],
+      "original_explicit_generic_map": "Centrifuge",
+      "current_generic_input": "dust",
+      "current_generic_map_candidate": "Centrifuge",
+      "candidate_only_not_runtime_registration_result": true
+    }
+  ],
+  "platform_views": {
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DecompositionRecipeLoader.java": {
+      "forge": {
+        "utf8_sha256": "a742cdc7c438860e0feff467309791a4ba5969434794fdd95c8ef3d8ce7a0b24",
+        "line_count": 113
+      },
+      "neoforge": {
+        "utf8_sha256": "2a8218809b555b79137b3e995fee65b87ea879f1ada1c3a0b3df600bfed79554",
+        "line_count": 224
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java": {
+      "forge": {
+        "utf8_sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+        "line_count": 296
+      },
+      "neoforge": {
+        "utf8_sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+        "line_count": 78
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java": {
+      "forge": {
+        "utf8_sha256": "38e292eadf7a41464366232d978fe073b09c79830f1f8c3340e15b0a6251df2e",
+        "line_count": 113
+      },
+      "neoforge": {
+        "utf8_sha256": "3e22440ac645fef47e5675bf2a305f3f3779f6c1aee4714aaa557e9e86806c24",
+        "line_count": 135
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java": {
+      "forge": {
+        "utf8_sha256": "ba23dbc9e4191ca03f3facd41000f9f4c9e1d7e6ae93f8c1263511e220a0bab1",
+        "line_count": 252
+      },
+      "neoforge": {
+        "utf8_sha256": "ba23dbc9e4191ca03f3facd41000f9f4c9e1d7e6ae93f8c1263511e220a0bab1",
+        "line_count": 252
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java": {
+      "forge": {
+        "utf8_sha256": "a6e30f6ddf88cd42d898f60c7d723889457c894c0f2305173cac6c7d80f7b6ce",
+        "line_count": 78
+      },
+      "neoforge": {
+        "utf8_sha256": "cacb4b73a1715ef6988a2b5a63a665e5c4313ca1238644abde39efdde08e2123",
+        "line_count": 77
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/generated/GeneratedRecipeResolver.java": {
+      "forge": {
+        "utf8_sha256": "5b1d028dab7a142278f8b4d84aa718423f01f96e16cc4c4fcf08d613a93ab83a",
+        "line_count": 399
+      },
+      "neoforge": {
+        "utf8_sha256": "b9fc99e3f7f5b609d5165846e65480868170bd53c16b903ad5e8ecb9c72ed54a",
+        "line_count": 782
+      }
+    }
+  },
+  "source_equivalence": {
+    "date": "2026-10-21",
+    "baseline": "21f68f1b1",
+    "scope": "Core MaterialFactories formatting and three current-contract comment clarifications only; no changes to public names, method signatures, inherited flags, values or execution order. No Gradle, compilation, tests or build.",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java": {
+        "before_sha256": "18acb726e3c367bd14d02fd0b01ed71bdd6cd629f73da6be09e1022c29fd4576",
+        "after_sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+        "lines_before": 132,
+        "lines_after": 147,
+        "stonecutter_directives_equal": true,
+        "projections": {
+          "core": {
+            "tokens_and_literal_positions_equal": true,
+            "tokens": 1304,
+            "signature_sha256": "1cd550a2dd2025f765cf639dea7bd7380e4ab0c3a205621d47a7e103d04562a9",
+            "comment_changes": [
+              {
+                "before": "/** GT6 material family defaults. These factories do not initialize a global alias table. */",
+                "after": "/** Material factory defaults used by the port; these do not initialize a global alias table. */"
+              },
+              {
+                "before": "/** GT6 {@code elec}  - electrolysis-separated gem-like material. */",
+                "after": "/** Current electrolysis-family defaults; inherited gem and MAGICAL flags are audited separately. */"
+              },
+              {
+                "before": "/** GT6 {@code cent}  - centrifuge-separated material. */",
+                "after": "/** Current centrifuge-family defaults; this implementation inherits gem forms. */"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "observed_parallel_formatting": {
+    "path": "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java",
+    "baseline": "21f68f1b1",
+    "baseline_git_raw_sha256": "18acb726e3c367bd14d02fd0b01ed71bdd6cd629f73da6be09e1022c29fd4576",
+    "observed_worktree_raw_sha256": "9ff5ee13a6d47053f481cf821af1fcc7e7f341001b3a875367cc3da13506922d",
+    "note": "Root may concurrently format this file and clarify comments; no implementation change authorized for this batch. Root owns exact lexical equivalence proof."
+  },
+  "draft_receipt_sha256": "8e0c0960683591970efbaef87503cf2f1ec7d9a26539c79ee2b4d969f112a2a0",
+  "draft_readme_sha256": "502c98e4bd9f4400abb4965cb2c527223bdf36324e8d8a7f67c5f6673fb750a9",
+  "new_findings": [
+    "ALIGN-180",
+    "ALIGN-181",
+    "ALIGN-182"
+  ],
+  "scope_limits": [
+    "Nineteen concrete original liquid-acid declarations were traced; other generic elec/cent families are not exhaustively covered.",
+    "All nineteen acid flags and compositions have existing restoration; eighteen real fluid registrations exist. Do not report all acid chemistry as absent.",
+    "Extra solid and gem forms follow the actual candidate-prefix and loader registration source chain, not a live registry enumeration.",
+    "Erroneous H2SiF6 magic reaches actual non-magic-proof pipe safety logic; a live pipe incident has not been reproduced.",
+    "BlackVitriol has no built-in LIQUID/GAS restoration or standalone fluid entry found in production; arbitrary external addon registration is not excluded.",
+    "Original SET_FLUID versus current item icon selection and decomposition fluid/map contracts remain distinct follow-up boundaries; existing explicit chemistry rows must be retained.",
+    "Only MaterialFactories whitespace and three comments changed; public APIs, flags, method order and literals are unchanged. User generated material tables were not edited.",
+    "No generators, Gradle, Java compilation, new tests, game, build, save/restart, push or gameplay fix in this batch."
+  ]
+}

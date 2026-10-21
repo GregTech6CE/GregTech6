@@ -1,0 +1,43 @@
+# 喷漆状态、持久化与物品透明度核查
+
+2026-10-21，第七十九批，基线 `6841699df`。承接前轮已排除的“主阀没有Paintable”候选，追实际启用的Mixin、材料初始色、16染料／混色、普通主阀保存与物品渲染。新增ALIGN-271–272，保留六份源码的玩法，只改善排版与局部参数名。来源见[回执](verification/paint-state-audit-20261021.json)；正式272条包含已修与政策，不是272个待修问题，全面核查仍在进行。
+
+## 实际喷漆入口与原版色值
+
+两版配置的BlockEntityPaintMixin向BlockEntity补入Paintable，方法内部按GT命名空间限制写入；BlockPaintColorMixin和ItemPaintColorMixin在各自客户端列表中。GTMultiItems注册完整／使用中的喷漆，PaintSprayItem经ItemBehaviors.useSpray调用PaintTargets.color。该目标先处理建筑颜色族，再处理Paintable，不能只看主阀自身implements声明就报没有喷漆能力。
+
+原CS.DYES的16种RGB与当前PaintingRules.DYES按索引逐一相符，现代原版染料反序映射也保留。原UT.Code.mixRGBInt与当前mix均按RGB每通道相加后右移一位；256个有序染料对的有限公式重建相符。此项不等于全部生物／草方块／原版方块／外部模组的喷漆策略验收。
+
+## ALIGN-271：未喷漆状态固定白色会拒绝首次白漆
+
+原Loader_MultiTileEntities的17007指定MT.Invar，原材料RGB为220／220／150，即DCDC96。MultiTileEntityClassContainer不是仅保存材料名：它在有NBT_MATERIAL而没有NBT_COLOR时写入该材料的fRGBaSolid。MultiTileEntityRegistry创建实体时传入这些默认参数，Base04.initFromNBT／readFromNBT最终进入Base07.readFromNBT2读取颜色。因此原普通未喷漆主阀的mRGBa确实是DCDC96。
+
+原白色喷漆经recolourBlock得到FFFFFF，与该mRGBa不同，paint成功。当前PaintState初始rgb固定FFFFFF；BlockEntityPaintMixin第一次paint没有传入材料色，PaintState.paint先因相等返回false，PaintTargets返回0。16个首次喷漆源样本中，只有白色出现这项差异；其它15色在该殷钢样本均返回有变化。
+
+当前clear又将内部rgb设FFFFFF，所以清漆后首次白漆也进入同一拒绝分支。BlockPaintColorMixin在isPainted为false时仍回退材料处理器，不能说清漆后所有方块视觉上变白。本项限定普通新放／正常无gt.color的未喷漆状态，不套用人为构造的其它历史字段组合；未实际点击游戏。
+
+## ALIGN-272：Neo喷漆物品主染色面得到零透明度
+
+有限可达样本：17007先成功喷红色，再正常pick或采掘。主阀saveAdditional显式调用父类；Mixin写gt.painted／gt.color，getDrops／clone保存其BLOCK_ENTITY_DATA，最终CoverDrops.capture将多方块主阀明确排除在机器数据清理之外。因而这个样本的物品中存在真实的喷漆数据，不依赖手工注入NBT。
+
+Neo的基础材料处理器经ItemColorARGB.opaque返回FF开头的不透明ARGB。但是ItemPaintColorMixin在ItemColors.getColor返回处覆盖结果，用gt.color & FFFFFF，红色例最终是00FF0000。主阀通过RegisteredBlock默认注册原生BlockItem，SharedInventoryModelPack跳过现有静态模型；其parent指向composite，原生CompositeModel.Baked.isCustomRenderer为false。其colored子模型的六面tintindex均为0，能到达这条覆盖路径；overlay没有染色索引，属于另一条路径。
+
+本机Neo21.1.243源的ItemRenderer.renderQuadList用FastColor.ARGB32.alpha读取最高八位，故上述值传出的alpha为0。IVertexConsumerExtension把这个alpha原样传入VertexConsumer；后者即使readExistingColor=true，也把它乘入原顶点透明度，仍是0。Forge1.20.1实际映射类的只读javap显示，相同方法只取RGB，调用putBulkData时传fconst_1，所以没有同样的零alpha。
+
+原Base10把mRGBa传给BlockTextureDefault，所选普通构造器aAllowAlpha=false；ITexture.Util实际提交时强制255透明度。不能将原24位RGB直接搬进Neo要求ARGB的位置。确认范围是普通染色quad得到零alpha；未运行GPU画面、外部着色器或资源重载，也不宣称未染色overlay或整件物品都消失。
+
+## 保存、同步与尚未验收的边界
+
+主阀世界save／load显式调用祖先，两版Mixin分别接saveAdditional和load／loadAdditional，painted与颜色键有持久化入口。主阀的GTEnergyBlockEntity.getUpdateTag调用super及saveAdditional，喷漆改变后也发ClientboundBlockEntityDataPacket；原生create读取getUpdateTag，当前数据包处理再走handleUpdateTag／load。这些是实际可达的源路径，不能把“已写方法”扩大成完整客户端或磁盘重启验收。
+
+原Base04.writeItemNBT明确保存喷漆状态，与世界保存分开。当前普通机器清理整份BE数据、箱子专用模型等另有宿主合同；箱子已记录ALIGN-156，本批不把主阀保留路径泛化成全部机器都正确保色，也不擅自改变玩家要求的机器清空数据政策。
+
+## 六份源码整理
+
+PaintState从9→42行展开paint／mix／clear／restore，restore的flag改paintedFlag；PaintingRules从11→73行拆16色列表、混色表达式和实体／草方块方法，mix的a／b改firstRgb／secondRgb。Paintable接口逐行展开，三个Mixin拆开原生导入、方法、更新／保存／读取与客户端回调；两个颜色回调的cir改callback，两处说明改为实际边界并保留Brokestar署名。
+
+九份完整执行流170、544、45、832／865、210／210、202／230在限定方法局部命名归一后保持，原始字符串／数值位置、其余注释和Stonecutter条件另核。用户CompoundMaterials／WoodMaterials原始摘要不变。
+
+17份原版／29份当前来源、36份共享平台视图、两个主阀资源和两个原生工件15entry／6次只读javap留痕。原MT.java的Monazite注释中已有两个替换字符，只读保留并记录，不当本次编辑引入。
+
+未Java编译／目标初始化、Gradle、测试、游戏、最终GPU显示、真实保存重启、构建或推送。其余宿主的override／专用renderer／保存掉落、全部喷漆目标以及其它原版系统继续，goal保持active。

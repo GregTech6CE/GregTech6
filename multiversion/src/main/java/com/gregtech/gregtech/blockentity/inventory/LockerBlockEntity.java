@@ -15,7 +15,10 @@ import net.minecraft.world.level.block.state.BlockState;
 /** GT6 Locker block entity: stores one armor set (head/chest/legs/feet). */
 public class LockerBlockEntity extends BlockEntity {
 
-    private static final EquipmentSlot[] SLOTS = com.gregtech.gregtech.content.storage.ContainerStorageRules.ARMOR_ORDER.stream().map(EquipmentSlot::valueOf).toArray(EquipmentSlot[]::new);
+    private static final EquipmentSlot[] SLOTS =
+            com.gregtech.gregtech.content.storage.ContainerStorageRules.ARMOR_ORDER.stream()
+                    .map(EquipmentSlot::valueOf)
+                    .toArray(EquipmentSlot[]::new);
 
     private final ItemStack[] armor = {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
 
@@ -23,7 +26,7 @@ public class LockerBlockEntity extends BlockEntity {
         super(com.gregtech.gregtech.registry.GTBlockEntities.LOCKER.get(), pos, state);
     }
 
-    /** Swap the player's worn armor with the stored set (GT6 locker behavior). */
+    /** Swap the four native equipment slots; face and armor validation are not performed here. */
     public void swapArmor(Player player) {
         for (int i = 0; i < SLOTS.length; i++) {
             ItemStack worn = player.getItemBySlot(SLOTS[i]);
@@ -54,8 +57,8 @@ public class LockerBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -73,8 +76,8 @@ public class LockerBlockEntity extends BlockEntity {
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -83,7 +86,7 @@ public class LockerBlockEntity extends BlockEntity {
             ListTag list = tag.getList("gt.armor", 10);
             for (int i = 0; i < armor.length && i < list.size(); i++) {
 //? if >=1.21.1 {
-                /*armor[i] = ItemStack.parseOptional(lookup,list.getCompound(i));
+                /*armor[i] = ItemStack.parseOptional(lookup, list.getCompound(i));
 *///?} else {
                 armor[i] = ItemStack.of(list.getCompound(i));
 //?}

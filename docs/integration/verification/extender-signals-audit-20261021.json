@@ -1,0 +1,927 @@
+{
+  "batch": 82,
+  "date": "2026-10-21",
+  "baseline": "3de8dc09629af3cb28771bdfbd8d2ec91fa3ffd8",
+  "new_records": [
+    277,
+    278,
+    279
+  ],
+  "scope": "Registered eight relay variants, full-block indirect strong conduction, universal bridge sided comparator contract versus modern native entry, and universal extender sampled versus live outputs.",
+  "counts": {
+    "original_sources": 16,
+    "current_sources": 24,
+    "shared_platform_views": 28,
+    "readability_files": 3,
+    "readability_execution_views": 6
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase08Directional.java",
+      "sha256": "4470fc88dede52de55ba387e963d95243ec33ef287ae4f917ce73d874bcede2b",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase09FacingSingle.java",
+      "sha256": "b172aadf76d09c37ee4c7793cb784dcc97a19d999ad1737bafc60cc064bece7f",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase10FacingDouble.java",
+      "sha256": "e2720a010f4d1e0e4c492686c6499b4fdc8fe27e8b3cb8ad08c9f13e7bdb2b73",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/IMultiTileEntity.java",
+      "relative": "gregapi/block/multitileentity/IMultiTileEntity.java",
+      "sha256": "2fe844ae5e55bd906a2e74bda458b92f97d2ba057d4d5820da9fbc11faafcd09",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "relative": "gregapi/tileentity/delegate/ITileEntityDelegating.java",
+      "sha256": "dc042adafa3ca5871a83bee83e7560031c8c1973e03ed2b39439d8b228616004",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityExtender.java",
+      "sha256": "592d520e965d762c3954d3b406126efdc01c4a0efc4d277c01074ab905864712",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "relative": "gregtech/tileentity/extenders/MultiTileEntityBridge.java",
+      "sha256": "5bdb146ffe635f31c83df595714ca9e7fda012c7e13485948b45a2c4228e6168",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/ExtenderSpec.java",
+      "sha256": "e514a34f0793c0c2dfcd5d7a6b77a6b16c8419c6bb35d11ca4c20dd0386c51fa",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayRoutingRules.java",
+      "sha256": "7d83c9905ac30cd22cc6d57960c440afde9e788a90c397352905e0b4ed4ca233",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/logistics/RelayVisitSet.java",
+      "sha256": "45befd9c8e4007673a93dcb70aec0c304a0857612b7c15b2d4661fb13e65ed83",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "sha256": "d950252aa67b5d4e3a18d17b9338c5b4b2e4685de1dac4ced457c080a8d00dec",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "sha256": "1fa31a356a1fd7bd3c7d6539ceb5b66fa0a8b9efd7543109860466e47a0f623b",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "sha256": "cf0e2c90e37aea17437863ba1b150a9fec8c31802e48b3c7231dd4b4c9953a00",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "sha256": "d5bc7783fb288eabc8bc067cf88ffc5e9b7f18366a1803c7b3efdf41e38b52ed",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "sha256": "ffed5c2ef5a850d584b5224ec06e8c8142c70565353b97c98bc1b86ab493df56",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "sha256": "5d929adfc96f42c71d26c040e6609b9333ffc1ef762d088045a55af3a5327aca",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "sha256": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "sha256": "c3d92ed4a1bbda0f8863ca4d54af585fdd6d8cd4ca38f5c4bf3f41abc8451ea9",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "6697099488826b8fc0798ad341f01929fd76004d6ca5741a88df7680c6b35824",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "sha256": "cf949ba828cb0ceb5343d3e99946f3f668412fce8a3094fe47df2d0ad39b2512",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/client/ExtenderCoverRenderer.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/client/ExtenderCoverRenderer.java",
+      "sha256": "7bd9d1d4e158ff652bb5ea403b0965ec78a064e107747ac9ff879d120b621305",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+      "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRelaysFilters.java",
+      "sha256": "6009f28543b499ad4b6a1801c6afb6a642d504e58a50a0177bea764d492931f3",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "sha256": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Registered extender signal/comparator, native solid-conductor defaults, sampling and notification consumers; not complete-file or system acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "forge",
+      "sha256": "bd11d82b9e9c3919d34f9f0e2a8f42ce6c589a619db67e3e2e5b41f3d1274021",
+      "tokens": 2515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/ExtenderBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "e0b1224543bb7da5cd2060efac30c22571e48ff7b2f25f8607d58991e603ed38",
+      "tokens": 2587
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "forge",
+      "sha256": "d0b244aef47f5e8ebc1318cf40419bfdcadbc939c39b46d2dc8bd91c5de9da39",
+      "tokens": 1305
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/SourceExtenderBlock.java",
+      "platform": "neoforge",
+      "sha256": "4e737f33d8dd560ecce86ad5bf6129ed8cd00b2f775faacf15a6f7e4a633d8b3",
+      "tokens": 1575
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "0b84c76fe5f76320c545904cd8dcf87c22bececa3e6e431735ecbd5a8de1a22d",
+      "tokens": 1610
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "a0cc44b95ccc1219d39e8c2ca8c6875f7d50bea6b2825a2746e093e1bdcf78eb",
+      "tokens": 1511
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "forge",
+      "sha256": "b1078af28147c59ecec2a33a895eb1a6c76f833365ff0ea8c6e8be5fb69cb905",
+      "tokens": 1552
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "f4a54e134ad48189cf46c573def50a121b85a7aa8681713dade9cdd665025da6",
+      "tokens": 1453
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "platform": "forge",
+      "sha256": "d5bc7783fb288eabc8bc067cf88ffc5e9b7f18366a1803c7b3efdf41e38b52ed",
+      "tokens": 535
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java",
+      "platform": "neoforge",
+      "sha256": "d5bc7783fb288eabc8bc067cf88ffc5e9b7f18366a1803c7b3efdf41e38b52ed",
+      "tokens": 535
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "platform": "forge",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "tokens": 515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java",
+      "platform": "neoforge",
+      "sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+      "tokens": 515
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "forge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverCollisionMixin.java",
+      "platform": "neoforge",
+      "sha256": "a7ca8decc4551f6c913ab87e8732d4fd6cbfaf4b117f01bc09444f0c9500006a",
+      "tokens": 378
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "forge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverWorldInteraction.java",
+      "platform": "neoforge",
+      "sha256": "c7b3e52cbc60734ab86b18e857dbc95572cf3fafe839fc6a0dc29285e0b810ba",
+      "tokens": 513
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "forge",
+      "sha256": "3627059c88f254672fd0a10de3316e0f16842b35131e0c44a66c0c3e796ac6c2",
+      "tokens": 3948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java",
+      "platform": "neoforge",
+      "sha256": "f3572a20b53f60baf1b07dd006a8bbe2443b743d854902403725642e9cdd159c",
+      "tokens": 3957
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "forge",
+      "sha256": "f580808aae2da38fbd7bafaa71e8ee25c913160f6efe92e2d2a1a15eef090b7b",
+      "tokens": 452
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverHost.java",
+      "platform": "neoforge",
+      "sha256": "93c75c95bebbe7225f2587e2a250d881c7f7aa70e3d8b907b5c7c1990e5a8424",
+      "tokens": 474
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "forge",
+      "sha256": "696a8135cdd8ad9130a99fd78a7ba657bf0af3ca459fb81dc3333ad5ea053be8",
+      "tokens": 7970
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "platform": "neoforge",
+      "sha256": "10e92737ee530d2cd124515cb5ef7f010d8242dea0f421dea6772c6e0d6109f3",
+      "tokens": 6231
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "forge",
+      "sha256": "1e56643d56f1b97298e921ad0208a383f5d71a912e13bf561a39e12c98136542",
+      "tokens": 854
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/GTJadePlugin.java",
+      "platform": "neoforge",
+      "sha256": "3ca8f35fe63fb6c3aa5d6aebbe1fc8001d4400a8daa9358c8174b890ce6c4432",
+      "tokens": 856
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ExtenderCoverRenderer.java",
+      "platform": "forge",
+      "sha256": "7bd9d1d4e158ff652bb5ea403b0965ec78a064e107747ac9ff879d120b621305",
+      "tokens": 139
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/client/ExtenderCoverRenderer.java",
+      "platform": "neoforge",
+      "sha256": "7bd9d1d4e158ff652bb5ea403b0965ec78a064e107747ac9ff879d120b621305",
+      "tokens": 139
+    }
+  ],
+  "readability": {
+    "baseline": "3de8dc09629af3cb28771bdfbd8d2ec91fa3ffd8",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverSignalMixin.java": {
+        "before_raw_sha256": "1dd5eb2d07ec7387eb0fc8daa5b22d33b541ba4c3ec17ed648f4a90ba7ee3538",
+        "after_raw_sha256": "44087e16c12a05366bbd1c3497586a73b84a3accfacb095705b31e84cf00df75",
+        "rename_scopes": [
+          [
+            "private void gregtech$signalSource(",
+            null,
+            {
+              "cir": "callback"
+            }
+          ]
+        ],
+        "comment_corrections": [
+          [
+            "/** Expose panel/detector outputs on native GT hosts without their own cover signal dispatch. */",
+            "/** Exposes emitting cover outputs through BlockState; basic machines and signal wires keep their own paths. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 515,
+            "execution_sha256": "777acdbb0872e5d4dd03c4a13bf94f095d5172d138144fcaa607b1318d7a4b0b",
+            "before_lines": 37,
+            "after_lines": 44,
+            "before_max_line": 162,
+            "after_max_line": 132
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 515,
+            "execution_sha256": "777acdbb0872e5d4dd03c4a13bf94f095d5172d138144fcaa607b1318d7a4b0b",
+            "before_lines": 37,
+            "after_lines": 44,
+            "before_max_line": 162,
+            "after_max_line": 132
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/integration/jade/ExtenderJadeProvider.java": {
+        "before_raw_sha256": "fb8cc2fa5857b5300ed44e0c0c2267ea7bd740681d9089ba5513e5e74277d704",
+        "after_raw_sha256": "d5bc7783fb288eabc8bc067cf88ffc5e9b7f18366a1803c7b3efdf41e38b52ed",
+        "rename_scopes": [
+          [
+            null,
+            null,
+            {
+              "block": "sourceBlock",
+              "data": "controlData"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 535,
+            "execution_sha256": "d4c35830ae3a1899ce5fd5af4102d5ed3b4f21d656b237be3c37c150f163d1e6",
+            "before_lines": 34,
+            "after_lines": 53,
+            "before_max_line": 180,
+            "after_max_line": 145
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 535,
+            "execution_sha256": "d4c35830ae3a1899ce5fd5af4102d5ed3b4f21d656b237be3c37c150f163d1e6",
+            "before_lines": 34,
+            "after_lines": 53,
+            "before_max_line": 180,
+            "after_max_line": 145
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/ExtenderCoverRenderer.java": {
+        "before_raw_sha256": "50cae5eee816f10689f63b160bae92ccf0893c604d5fae28b7d45be6abfd4a7a",
+        "after_raw_sha256": "7bd9d1d4e158ff652bb5ea403b0965ec78a064e107747ac9ff879d120b621305",
+        "rename_scopes": [
+          [
+            "public void render(",
+            null,
+            {
+              "be": "blockEntity",
+              "partial": "partialTick"
+            }
+          ]
+        ],
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 139,
+            "execution_sha256": "eaa33a48a501a67698a48f47fc0a73f5d46972afaa12114ffd108256f696aacc",
+            "before_lines": 14,
+            "after_lines": 16,
+            "before_max_line": 134,
+            "after_max_line": 143
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 139,
+            "execution_sha256": "eaa33a48a501a67698a48f47fc0a73f5d46972afaa12114ffd108256f696aacc",
+            "before_lines": 14,
+            "after_lines": 16,
+            "before_max_line": 134,
+            "after_max_line": 143
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, listed local/parameter renames and one source-backed comment correction; gameplay and literal values unchanged."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "platform": "neo",
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      },
+      {
+        "platform": "forge",
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "sha256": "de56d18d759d17d780416e47fb01b72c38633bdd2e2d071cdedfe486eab35d7b"
+      },
+      {
+        "platform": "forge",
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/SignalGetter.java",
+        "sha256": "3bf9219c9527658996916af077da784cda9ad6c7933f880a4ea57639d9d72743",
+        "extracted": "work/extender-signals-audit-20261021/neo-SignalGetter.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/ComparatorBlock.java",
+        "sha256": "0259b98d1e80758e26c0fa1988688b855583e3d0011a16e851beae506e647dd9",
+        "extracted": "work/extender-signals-audit-20261021/neo-ComparatorBlock.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+        "sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+        "extracted": "work/extender-signals-audit-20261021/neo-BlockBehaviour.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/DirectionalBlock.java",
+        "sha256": "e6b9e2c6cc2424b806a8a9fcd5664e73e21aae841aad726f9cca65318dc4184d",
+        "extracted": "work/extender-signals-audit-20261021/neo-DirectionalBlock.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/Level.java",
+        "sha256": "47ff78754901fad8a193669d28b260e836b1ac32ff06c7614c9900f0a5f8da7c",
+        "extracted": "work/extender-signals-audit-20261021/neo-Level.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IBlockExtension.java",
+        "sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+        "extracted": "work/extender-signals-audit-20261021/neo-IBlockExtension.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/LeverBlock.java",
+        "sha256": "0b0546c1b2a677c240ec14ef62fea203f7a9c1376a8992b7cb20190c718cb96a",
+        "extracted": "work/extender-signals-audit-20261021/neo-LeverBlock.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlock.java",
+        "sha256": "a65330ebe8ac2935ed0bdce7eaa0ba7aa0e0ac5c57677d2774565f71bb949502",
+        "extracted": "work/extender-signals-audit-20261021/forge-IForgeBlock.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IBlockStateExtension.java",
+        "sha256": "0ca55c4ed6929e848270097a6c8932a5dd9626ef93b80e6c51ff5f3dd23548f1",
+        "extracted": "work/extender-signals-audit-20261021/neo-IBlockStateExtension.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/maven_downloader/net/minecraftforge/forge/1.20.1-47.4.20/forge-1.20.1-47.4.20-sources.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlockState.java",
+        "sha256": "b85e021bf08067a83d8181f423470652db1cd1de53d6963edf3b97b970fca743",
+        "extracted": "work/extender-signals-audit-20261021/forge-IForgeBlockState.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.SignalGetter",
+        "output": "work/extender-signals-audit-20261021/forge-SignalGetter.javap.txt",
+        "sha256": "3765bb38da7567fc9f4dbaf01290b1bebd9baac485d44cb135eac49f6a2dc1ba"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.ComparatorBlock",
+        "output": "work/extender-signals-audit-20261021/forge-ComparatorBlock.javap.txt",
+        "sha256": "6aaff253898e1aa8e1dbf861f829641d4875d9ed0343026fff070fdfc0460744"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.state.BlockBehaviour$Properties",
+        "output": "work/extender-signals-audit-20261021/forge-BlockBehaviour$Properties.javap.txt",
+        "sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.DirectionalBlock",
+        "output": "work/extender-signals-audit-20261021/forge-DirectionalBlock.javap.txt",
+        "sha256": "29afc0649efec397613fe8c35f707fbba555274c9363fcb15403a3f146fe284a"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.Block",
+        "output": "work/extender-signals-audit-20261021/forge-Block.javap.txt",
+        "sha256": "551d56f69cbe811695f738f06267efcca5e4933f5f66539bd802d0fcee48928f"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.LeverBlock",
+        "output": "work/extender-signals-audit-20261021/forge-LeverBlock.javap.txt",
+        "sha256": "1e1c15be8ff4c829a4d056f39091bfddb119efd1fe3b00918e738fa25661385a"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.state.BlockBehaviour",
+        "flags": [
+          "-c",
+          "-p"
+        ],
+        "output": "work/extender-signals-audit-20261021/forge-BlockBehaviour.javap.txt",
+        "sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase",
+        "flags": [
+          "-c",
+          "-p"
+        ],
+        "output": "work/extender-signals-audit-20261021/forge-BlockStateBase.javap.txt",
+        "sha256": "b15972268a1fc92e4027b40d65540ec687d77c9c3d41623cc8ee44c8aae4dc57"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraft.world.level.block.state.BlockBehaviour$Properties",
+        "flags": [
+          "-v",
+          "-p"
+        ],
+        "output": "work/extender-signals-audit-20261021/forge-Properties.verbose.javap.txt",
+        "sha256": "9ed9e669327f438b55e6cf1e1f6197f7bf34230b46602c32f48b87258c750bbe"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraftforge.common.extensions.IForgeBlock",
+        "output": "work/extender-signals-audit-20261021/forge-IForgeBlock.javap.txt",
+        "sha256": "61020cd4fe7386e91cb3c2cb57188e9df2f2d3e0862362b176107ad7598c7f93"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "class": "net.minecraftforge.common.extensions.IForgeBlockState",
+        "output": "work/extender-signals-audit-20261021/forge-IForgeBlockState.javap.txt",
+        "sha256": "b808fbe4d2a0ab2e2f9607bb6634d9650780ab5bfb19fd2b857630e65be64802"
+      }
+    ]
+  },
+  "finite_source_witnesses": {
+    "kind": "Finite source-contract branches only, no target Java calls or world fixture.",
+    "conduction": {
+      "cases": 360,
+      "ordered_sha256": "f63c2bfce41aad41e88f52b9b80a6876f46ba0c81943f683a12faf9bf6b1ae8e",
+      "example": [
+        "forge",
+        30000,
+        0,
+        1,
+        0,
+        15
+      ],
+      "condition": "No covers, one correctly oriented powered lever gives15 direct signal into a full relay cube; query another face. Six non-redstone variants, six input faces, five other output faces, two platforms.",
+      "limit": "Original comparison is the explicit MTE weak-power opt-out plus own0 output contract, not a run of Minecraft1.7.10."
+    },
+    "bridge_sided": {
+      "cases": 576,
+      "ordered_sha256": "5b82c68f10146ff583bf77d7b6893e27a9fec24980e77b892b94c4ef8ce9ea48",
+      "weak_and_comparator_formula_equal": true,
+      "limit": "576 shared one-hot source layouts and query-side cases; no native conductor or cover overlays."
+    },
+    "bridge_native_projection": {
+      "cases": 384,
+      "ordered_sha256": "68ab5aed6c252ca0c753c2551bf5318b92c700d17478b2cb4d502301c31b52c8",
+      "different_from_original_sided_contract": 300,
+      "example": [
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "limit": "Horizontal modern native comparator callers all take unsided max. Original side is a declared GT block/BE query contract; no1.7.10 native comparator runtime is claimed."
+    },
+    "snapshot_transitions": {
+      "cases": 72,
+      "ordered_sha256": "16daffc9e255f12939f48df841bebe99fa7422d86efa2ad52e791bb120c4e56c",
+      "weak_differences": 60,
+      "comparator_differences": 72,
+      "example": [
+        0,
+        0,
+        15,
+        0,
+        0,
+        15,
+        0,
+        15
+      ],
+      "condition": "30255 has already sampled0 or15; only its front input changes before its next onTick2/tickSignals. Query raw route methods without covers or conductor merge.",
+      "limit": "Not a measured tick latency or global feedback/stability result. Existing thread-local cycle guard is retained."
+    }
+  },
+  "positive_routes": [
+    "The shared weak-output opposite-side formula agrees for bridge raw reads; internal relays preserve a sided comparator call.",
+    "Nonbridge primary front/back aggregation agrees after a fresh sample and without another change; pending difference is cached versus live timing.",
+    "Actual server ticker checksEXTENDER type and calls tickSignals; changed outputs call both updateNeighborsAt and updateNeighbourForOutputSignal. Do not report all notifications missing.",
+    "Source getDirectSignal supplies only coverStrongSignal; current indirect conduction comes from native SignalGetter merging neighboring strong input, not direct GT RU/KU energy conversion.",
+    "Existing loaded guards and per-thread signal visits/finally cleanup are retained. CoverSignalMixin has explicit output-cover selection and excludes basic machines/signal wires."
+  ],
+  "remaining": [
+    "Minecraft1.7.10 engine end-to-end comparison, real six-face wires/comparators/strong sources, all cover overlays and notification order, chunk loading/restarts, feedback timing policy and the full project queue."
+  ],
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, world fixture, build or push. javap only disassembles saved upstream artifacts.",
+    "Three readability sources change whitespace, scoped names and one comment; all six full execution/literal views remain unchanged.",
+    "Source findings are recorded, not gameplay fixes. The complete original-alignment/readability goal remains active."
+  ],
+  "previous_goal_turn": "Progress: local commit3de8dc096 standardized three relay boundaries and recorded275/276 after root review rejected normal-installation reachability.",
+  "root_validation": {
+    "named_source_hashes": 40,
+    "shared_platform_views": 28,
+    "readability_files": 3,
+    "complete_execution_views": 6,
+    "raw_literal_positions_comments_directives": true,
+    "comment_corrections": 1,
+    "protected_material_hashes": 2,
+    "native_artifacts": 3,
+    "native_entries": 10,
+    "readonly_javap_outputs": 11,
+    "strong_conduction_branches": 360,
+    "sided_bridge_cases": 576,
+    "native_horizontal_projection_cases": 384,
+    "native_projection_differences": 300,
+    "sample_transition_cases": 72,
+    "existing_notifications_checked": true,
+    "old_native_engine_runtime_unverified": true,
+    "contiguous_ledger_records": 279,
+    "documents_checked": 8,
+    "added_local_links_checked": 12,
+    "limit": "Source/file analysis only; no Java compilation/initialization, Gradle, tests, game or old engine fixture, real tick timing, build or push."
+  }
+}

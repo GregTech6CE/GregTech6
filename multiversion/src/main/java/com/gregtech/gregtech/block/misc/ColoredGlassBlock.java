@@ -23,10 +23,10 @@ import java.util.List;
 
 /** GT6's {@code BlockGlassClear}/{@code BlockGlassGlow} coloured metadata family. */
 //? if >=1.21.1 {
-/*public final class ColoredGlassBlock extends TransparentBlock {
+/*public class ColoredGlassBlock extends TransparentBlock {
     @Override protected com.mojang.serialization.MapCodec<? extends TransparentBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
 *///?} else {
-public final class ColoredGlassBlock extends GlassBlock {
+public class ColoredGlassBlock extends GlassBlock {
 //?}
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     private final boolean glow;
@@ -34,21 +34,25 @@ public final class ColoredGlassBlock extends GlassBlock {
     public ColoredGlassBlock(boolean glow, Properties properties) {
         super(properties);
         this.glow = glow;
-        registerDefaultState(stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY));
+        registerDefaultState(stateDefinition.any().hasProperty(COLOR)
+                ? stateDefinition.any().setValue(COLOR, DyeColor.LIGHT_GRAY) : stateDefinition.any());
     }
 
     public boolean glow() { return glow; }
 
     @Override public boolean skipRendering(BlockState state, BlockState adjacent, net.minecraft.core.Direction side) {
-        if (adjacent.is(this)) return state.getValue(COLOR) == adjacent.getValue(COLOR);
+        if (adjacent.getBlock() instanceof ColoredGlassBlock glass && glass.glow() == glow())
+            return FixedConstructionColor.colorOf(state) == FixedConstructionColor.colorOf(adjacent);
         return super.skipRendering(state, adjacent, side);
     }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(COLOR);
+        if (!(this instanceof FixedConstructionColor)) builder.add(COLOR);
     }
 
     public static ItemStack coloredItem(Block block, DyeColor color) {
+        Block variant = com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(block, color);
+        if (variant != null) return new ItemStack(variant);
         ItemStack stack = new ItemStack(block);
 //? if >=1.21.1 {
         /*stack.set(net.minecraft.core.component.DataComponents.BLOCK_STATE,new net.minecraft.world.item.component.BlockItemStateProperties(java.util.Map.of("color",color.getName())));
@@ -61,6 +65,8 @@ public final class ColoredGlassBlock extends GlassBlock {
     }
 
     public static DyeColor itemColor(ItemStack stack) {
+        if (stack.getItem() instanceof net.minecraft.world.item.BlockItem item
+                && item.getBlock() instanceof FixedConstructionColor fixed) return fixed.color();
 //? if >=1.21.1 {
         /*var data=stack.get(net.minecraft.core.component.DataComponents.BLOCK_STATE);
         return data==null?DyeColor.LIGHT_GRAY:DyeColor.byName(data.properties().getOrDefault("color","light_gray"),DyeColor.LIGHT_GRAY);
@@ -75,7 +81,7 @@ public final class ColoredGlassBlock extends GlassBlock {
 *///?} else {
     @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
-        return coloredItem(this, state.getValue(COLOR));
+        return coloredItem(this, FixedConstructionColor.colorOf(state));
     }
 
     /** GT6: breaking either full glass block returns 80 glass scraps, not the pane itself. */

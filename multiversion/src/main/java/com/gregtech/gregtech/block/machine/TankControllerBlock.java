@@ -48,21 +48,25 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    @Override public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
+    @Override
+    public com.gregtech.gregtech.api.tool.ToolInteractionSpec toolInteraction(BlockState state, ItemStack tool) {
         return com.gregtech.gregtech.api.tool.GTToolHelper.isMachineWrench(tool)
-                ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING,MachineRotationType.ALL) : null;
+                ? com.gregtech.gregtech.api.tool.ToolInteractionSpec.facing(FACING, MachineRotationType.ALL) : null;
     }
-    @Override public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
+
+    @Override
+    public void toolStateChanged(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank) tank.isStructureOk();
     }
 //? if >=1.21.1 {
     /*private net.minecraft.world.InteractionResult interact(BlockState state, Level level, BlockPos pos,
 *///?} else {
-    @Override public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
+    @Override
+    public net.minecraft.world.InteractionResult use(BlockState state, Level level, BlockPos pos,
 //?}
             net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand,
             net.minecraft.world.phys.BlockHitResult hit) {
-        if (com.gregtech.gregtech.api.tool.ToolInteractions.use(state,level,pos,player,hand,hit))
+        if (com.gregtech.gregtech.api.tool.ToolInteractions.use(state, level, pos, player, hand, hit))
             return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && tank.isStructureOk()) {
             if (level.isClientSide) return net.minecraft.world.InteractionResult.SUCCESS;
@@ -76,13 +80,34 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
         return net.minecraft.world.InteractionResult.PASS;
     }
 
-    public int size() { return size; }
-    @Nullable public TankValveSpec valveSpec() { return valveSpec; }
+    public int size() {
+        return size;
+    }
+    @Nullable public TankValveSpec valveSpec() {
+        return valveSpec;
+    }
 
 //? if >=1.21.1 {
-    /*@Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME->net.minecraft.world.ItemInteractionResult.CONSUME;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){return interact(state,level,pos,player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    protected net.minecraft.world.ItemInteractionResult useItemOn(ItemStack held, BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            net.minecraft.world.entity.player.Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        return interact(state, level, pos, player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
     @Override
@@ -92,8 +117,8 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState().setValue(FACING, ctx.getNearestLookingDirection().getOpposite());
+    public BlockState getStateForPlacement(BlockPlaceContext placement) {
+        return defaultBlockState().setValue(FACING, placement.getNearestLookingDirection().getOpposite());
     }
 
     @Nullable
@@ -107,9 +132,9 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
         if (level.isClientSide) return null;
-        return (lvl, pos, st, be) -> {
-            if (be instanceof MultiblockTankControllerBlockEntity t)
-                MultiblockTankControllerBlockEntity.serverTick(lvl, pos, st, t);
+        return (tickLevel, tickPos, tickState, blockEntity) -> {
+            if (blockEntity instanceof MultiblockTankControllerBlockEntity controller)
+                MultiblockTankControllerBlockEntity.serverTick(tickLevel, tickPos, tickState, controller);
         };
     }
 
@@ -119,55 +144,64 @@ public class TankControllerBlock extends DirectionalBlock implements EntityBlock
 *///?} else {
     public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level,
 //?}
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
+            @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
 //? if >=1.21.1 {
-        /*com.gregtech.gregtech.client.MultiblockTankTooltips.append(size,valveSpec,stack,context.registries(),tooltip);
+        /*com.gregtech.gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, context.registries(), tooltip);
 *///?} else {
-        com.gregtech.gregtech.client.MultiblockTankTooltips.append(size,valveSpec,stack,tooltip);
+        com.gregtech.gregtech.client.MultiblockTankTooltips.append(size, valveSpec, stack, tooltip);
 //?}
     }
 
-    @Override public java.util.List<ItemStack> getDrops(BlockState state,
+    @Override
+    public java.util.List<ItemStack> getDrops(BlockState state,
             net.minecraft.world.level.storage.loot.LootParams.Builder context) {
         ItemStack result = new ItemStack(this);
         if (context.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY)
                 instanceof MultiblockTankControllerBlockEntity tank)
 //? if >=1.21.1 {
-            /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithId(tank.getLevel().registryAccess()))));
+        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
+                net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,
+                tank.saveWithId(tank.getLevel().registryAccess()))));
 *///?} else {
-            result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithoutMetadata()));
+        result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
 //?}
         return java.util.List.of(result);
     }
 
 //? if >=1.21.1 {
-    /*@Override public ItemStack getCloneItemStack(BlockState state,net.minecraft.world.phys.HitResult target,net.minecraft.world.level.LevelReader level,BlockPos pos,net.minecraft.world.entity.player.Player player) {
+    /*@Override
+    public ItemStack getCloneItemStack(BlockState state, net.minecraft.world.phys.HitResult target, net.minecraft.world.level.LevelReader level,
+            BlockPos pos, net.minecraft.world.entity.player.Player player) {
 *///?} else {
-    @Override public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
 //?}
         ItemStack result = new ItemStack(this);
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank)
 //? if >=1.21.1 {
-            /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithId(tank.getLevel().registryAccess()))));
+        /*result.set(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA,
+                net.minecraft.world.item.component.CustomData.of(com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,
+                tank.saveWithId(tank.getLevel().registryAccess()))));
 *///?} else {
-            result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank,tank.saveWithoutMetadata()));
+        result.addTagElement("BlockEntityTag", com.gregtech.gregtech.content.cover.ComponentCoverFallback.forItem(tank, tank.saveWithoutMetadata()));
 //?}
         return result;
     }
 
-    @Override public void setPlacedBy(Level level, BlockPos pos, BlockState state,
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state,
             @Nullable net.minecraft.world.entity.LivingEntity placer, ItemStack stack) {
 //? if >=1.21.1 {
-        /*var component=stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
-        net.minecraft.nbt.CompoundTag saved=component==null?null:component.copyTag();
+        /*var component = stack.get(net.minecraft.core.component.DataComponents.BLOCK_ENTITY_DATA);
+        net.minecraft.nbt.CompoundTag saved = component == null ? null : component.copyTag();
 *///?} else {
         net.minecraft.nbt.CompoundTag saved = stack.getTagElement("BlockEntityTag");
 //?}
         if (level.getBlockEntity(pos) instanceof MultiblockTankControllerBlockEntity tank && saved != null)
 //? if >=1.21.1 {
-            /*tank.loadAdditional(saved,level.registryAccess());
+        /*tank.loadAdditional(saved, level.registryAccess());
 *///?} else {
-            tank.load(saved);
+        tank.load(saved);
 //?}
     }
 }

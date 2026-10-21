@@ -72,14 +72,14 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 //? if >=1.21.1 {
-/*/^* Original bulk-storage controls and harvest rules at the Neo block/components boundary. ^/
+/*/^* Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. ^/
 public class MassStorageBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private final GTMaterial material;
     public MassStorageBlock(GTMaterial material, Properties properties) {
         super(properties); this.material = material;
 *///?} else {
-/** GT6 Mass Storage front controls, tape packing and harvest behavior. */
+/** Bulk-storage front interaction, mode tools, tape packing and harvest; remaining tool gap: ALIGN-136. */
 public class MassStorageBlock extends HorizontalDirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     @Nullable
@@ -131,16 +131,8 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
         if (store.isPacked() && (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,"scissors") || com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,"knife"))) {
             if (!level.isClientSide && store.unseal()) com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player); return true;
         }
+        if (useStorageModeTool(store, player, held)) return true;
         if (store.isPacked()) return false;
-        if (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.isScrewdriver(held)) {
-            if (!level.isClientSide) {
-                store.toggleFilterReset();
-                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(store.resetsFilter()
-                        ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep"), true);
-                com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
-            }
-            return true;
-        }
         if (hit.getDirection() != state.getValue(FACING)) return false;
         double x = MassStorageFace.x(state.getValue(FACING), hit.getLocation().x-pos.getX(), hit.getLocation().z-pos.getZ());
         double y = 16*(1-(hit.getLocation().y-pos.getY()));
@@ -276,15 +268,8 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
                 com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
+        if (useStorageModeTool(store, player, held)) return InteractionResult.sidedSuccess(level.isClientSide);
         if (store.isPacked()) return InteractionResult.PASS;
-        if (com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held, com.gregtech.gregtech.api.tool.GTToolType.SCREWDRIVER)) {
-            if (!level.isClientSide) {
-                store.toggleFilterReset();
-                player.displayClientMessage(Component.translatable(store.resetsFilter() ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep"), true);
-                com.gregtech.gregtech.api.tool.GTToolHelper.damageForUse(held, 1, player);
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
         if (hit.getDirection() != state.getValue(FACING)) return InteractionResult.PASS;
         double x = com.gregtech.gregtech.api.inventory.MassStorageFace.x(state.getValue(FACING),
                 hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());
@@ -337,5 +322,37 @@ public class MassStorageBlock extends HorizontalDirectionalBlock implements Enti
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
         com.gregtech.gregtech.client.StorageBlockTooltips.massStorage(stack, tooltip);
 //?}
+    }
+
+    private static boolean useStorageModeTool(MassStorageBlockEntity store, Player player, ItemStack held) {
+        boolean monkey = com.gregtech.gregtech.api.tool.GTToolHelper.isMonkeyWrench(held);
+        boolean cutter = com.gregtech.gregtech.api.tool.GTToolHelper.isWireCutter(held);
+        boolean screw = com.gregtech.gregtech.api.tool.GTToolHelper.isScrewdriver(held);
+        if (!monkey && !cutter && !screw) return false;
+        if (!player.level().isClientSide) {
+            String key;
+            if (monkey) {
+                store.toggleAutoOutput();
+                key = store.autoOutput() ? "message.gt6ce.storage.auto_output_on" : "message.gt6ce.storage.auto_output_off";
+            } else if (cutter) {
+                store.toggleOverflow();
+                key = store.emitsOverflow() ? "message.gt6ce.storage.overflow_on" : "message.gt6ce.storage.overflow_off";
+            } else {
+                store.toggleFilterReset();
+                key = store.resetsFilter() ? "message.gt6ce.storage.filter_reset" : "message.gt6ce.storage.filter_keep";
+            }
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable(key), true);
+            com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 10000, player);
+        }
+        return true;
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+            Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
+        if (level.isClientSide) return null;
+        return (world, pos, block, entity) -> {
+            if (entity instanceof MassStorageBlockEntity storage) storage.tickAutomaticOutput();
+        };
     }
 }

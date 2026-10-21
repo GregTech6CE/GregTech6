@@ -83,7 +83,8 @@ public final class NativeOriginWorld implements OriginWorld {
         if (!BuiltInRegistries.BLOCK.containsKey(location)) throw new IllegalStateException("Missing original origin block: " + blockId);
         BlockState state = BuiltInRegistries.BLOCK.get(location).defaultBlockState();
         if(state.is(net.minecraft.world.level.block.Blocks.SNOW))state=state.setValue(net.minecraft.world.level.block.SnowLayerBlock.LAYERS,key.metadata+1);
-        if (state.hasProperty(ConcreteBlock.COLOR)) state = state.setValue(ConcreteBlock.COLOR,DyeColor.byId(15-key.metadata));
+        if (state.hasProperty(ConcreteBlock.COLOR) || state.getBlock() instanceof com.gregtech.gregtech.block.misc.FixedConstructionColor)
+            state = com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(state,DyeColor.byId(15-key.metadata));
         if (key.side >= 0) state = state.setValue(CFoamSlabBlock.FACING,Direction.from3DDataValue(key.side));
         if (state.getBlock() instanceof RoadStripeRailBlock) state = state
                 .setValue(RoadStripeRailBlock.SHAPE,(key.metadata & 1) == 0 ? RailShape.NORTH_SOUTH : RailShape.EAST_WEST)

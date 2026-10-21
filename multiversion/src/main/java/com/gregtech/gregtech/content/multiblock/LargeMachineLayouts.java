@@ -8,9 +8,13 @@ import java.util.*;
 
 /** Coordinates and port roles translated from the corresponding GT6 MultiTileEntity classes. */
 public final class LargeMachineLayouts {
-    public record Cell(int right,int up,int back,int part,Role role) {
+    public record Cell(int right,int up,int back,int part,Role role,String plain) {
+        public Cell(int right,int up,int back,int part,Role role) { this(right, up, back, part, role, null); }
         public BlockPos at(BlockPos origin,Direction front) { return origin.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back); }
-        public Block block() { return switch(part) {
+        public boolean plainBlock() { return plain != null; }
+        public Block block() {
+            if (plain != null) return PlainStructureBlocks.preview(plain);
+            return switch(part) {
             case 18002 -> GTMultiblocks.TANK_WALL.get();
             case 18022 -> GTMultiblocks.TANK_WALL_DENSE.get();
             case 18100 -> GTMultiblocks.CENTRIFUGE_PART.get();
@@ -19,9 +23,13 @@ public final class LargeMachineLayouts {
             case 18105 -> GTMultiblocks.ELECTROLYZER_PART.get();
             case 0 -> net.minecraft.world.level.block.Blocks.AIR;
             default -> LargeMachineParts.block(part);
-        }; }
+            };
+        }
+        public boolean matches(net.minecraft.world.level.Level level, net.minecraft.world.level.block.state.BlockState state) {
+            return plain != null && PlainStructureBlocks.matches(level, plain, state);
+        }
     }
-    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()))).toList();}
+    public static List<Cell> fromShared(List<SharedLargeMachineLayouts.Cell> cells){return cells==null?null:cells.stream().map(cell->new Cell(cell.right(),cell.up(),cell.back(),cell.part(),Role.valueOf(cell.role().name()),cell.plain())).toList();}
     private static final Map<String,List<Cell>> CACHE=new LinkedHashMap<>();
     static { for (String machine : SharedLargeMachineLayouts.machines()) CACHE.put(machine, fromShared(SharedLargeMachineLayouts.cells(machine))); }
     public static List<Cell> cells(String machine) {

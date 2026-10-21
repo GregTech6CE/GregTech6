@@ -104,6 +104,10 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             for (int right = -1; right <= 1; right++) {
                 for (int back = 0; back <= 2; back++) {
                     if (right == 0 && up == 0 && back == 0) continue;
+                    if (right == -1 && up == 1 && back == 2) {
+                        cells.add(new MachineLayout.Cell(right, up, back, "minecraft:glass", StructureRole.CASING));
+                        continue;
+                    }
                     var role = back == 1 && right == 0
                             ? StructureRole.ENERGY_INPUT : StructureRole.ITEM_FLUID_IO;
                     String part = right == 1 && up == 0 && back == 0 ? "sample_wall" : "tank_wall";

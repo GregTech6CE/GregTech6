@@ -19,7 +19,9 @@ public final class LogisticsMassStorageBlock extends MassStorageBlock {
     }
 
     /** GT6 uses black visual casing but keeps the recipe metal's wrench tier. */
-    public GTMaterial constructionMaterial() { return constructionMaterial; }
+    public GTMaterial constructionMaterial() {
+        return constructionMaterial;
+    }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

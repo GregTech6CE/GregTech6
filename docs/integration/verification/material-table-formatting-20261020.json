@@ -1,0 +1,76 @@
+{
+  "user_file_sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+  "user_material_rows": 570,
+  "assignment_columns": [
+    66
+  ],
+  "color_columns": [
+    141
+  ],
+  "user_code_literals_comments_unchanged_from_head": true,
+  "original_source_to_intermediate_text_unchanged": true,
+  "real_regeneration_text_and_content_equal": [
+    {
+      "path": "content/material/Materials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "data/generated/GT6Materials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "content/material/generated/ElementMaterials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "content/material/generated/CompoundMaterials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "content/material/generated/OreMaterials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "content/material/generated/StoneMaterials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    },
+    {
+      "path": "content/material/generated/WoodMaterials.java",
+      "text_equal": true,
+      "content_signature_equal": true
+    }
+  ],
+  "compound_formatter_keeps_current_text_and_is_idempotent": true,
+  "asset_reader_rows": 570,
+  "asset_reader_classification_equal": true,
+  "metadata_reader_rows": 570,
+  "metadata_reader_equal": true,
+  "bookshelf_texture_reader_rows": 441,
+  "bookshelf_texture_reader_equal": true,
+  "no_gradle_no_production_table_writes": true,
+  "date": "2026-10-20",
+  "baseline": "36833296ce3e4ce84c35511f4d576bb53f167d7d",
+  "production_table_edit_author": "User; retained exactly. Tool adaptation by Codex.",
+  "verification_scope": "Isolated generation and exact text/content comparisons; no Gradle or gameplay.",
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/api/material/MaterialFactories.java": "18acb726e3c367bd14d02fd0b01ed71bdd6cd629f73da6be09e1022c29fd4576",
+    "core/src/main/java/com/gregtech/gregtech/api/material/GTMaterial.java": "007ab5ae9d6bee7987522f1602b97255bcfe440a55fb0045d676019684b91f88",
+    "tools/transpile_gt6_materials.py": "d99022a00123c31d7b269f002af039eddab25248f32f973c45ceb859e63abd8a",
+    "tools/modular_materials.py": "4d4fb7cdd613f016432206c766847eef0b65c62dd8069507ce94eb514ccf20e1",
+    "tools/format_definition_tables.py": "74d78446332e8bd4be3f7be24e51c0b410160bb413d5bb8b9b1eb5fd58edd549",
+    "tools/generated/materials-source.java.txt": "82f965d343bc07e98701e1a4b84ddae58f45a4257251e75250b167fe2ce27244"
+  },
+  "original_source": {
+    "path": "C:\\Dev\\gregtech6-master\\gregtech6-master\\src\\main\\java\\gregapi\\data\\MT.java",
+    "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+    "author": "Gregorius Techneticies / GregTech-6 Team",
+    "license": "LGPL-3.0-or-later; original notices retained"
+  }
+}

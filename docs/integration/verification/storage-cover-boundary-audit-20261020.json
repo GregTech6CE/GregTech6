@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-20",
+  "batch": 45,
+  "baseline": "b639b9b93",
+  "provenance": "Read-only Gregorius Techneticies / GregTech-6 Team original LGPL-3.0-or-later sources; existing notices retained",
+  "original_sources": {
+    "gregapi/tileentity/inventories/MultiTileEntityMassStorage.java": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+    "gregtech/tileentity/inventories/MultiTileEntityDrawerQuad.java": "7f75cbc83af271a1c6d92fafe9e3bab90bd05e95249a1dbdba455a7b3cb9adde",
+    "gregapi/cover/covers/AbstractCoverDefault.java": "9a8913fdd2cd2358790d4aef90d11d5aac0087c6eb5eb9f13615656d9151e7fd",
+    "gregapi/cover/covers/CoverTextureSimple.java": "a2426dae0e02cafb06f8b6b92a7466f883bad6f20f0689aec2d283bb4e87b3df",
+    "gregapi/data/CS.java": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+    "gregapi/util/UT.java": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709"
+  },
+  "current_sources": {
+    "core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java": "fac83ebd2b5d098a556f526f23cabc14a60d649e89cfd2f6773cc167bf6c89e0",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": "02f2cf2b0b84f3ed9eb16c266ad85e8d7d6be98b0b4e3909751878e34ef24046",
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MassStorageRenderer.java": "0e7a77edc2ef664fb442b922dc68b2fdaa85f2ddba722799c492aee8a4d89a7e",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java": "a1fae4525a057e267ef1ee95cebc7befe1af57dab997df696d1d6d3b601aea9f",
+    "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/DrawerQuadBlock.java": "2f43df2fa7baa5caa5bf74f18165bf3cc6fdd168c4139cd977a3731888235f0b",
+    "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/DrawerQuadBlockEntity.java": "b57ae8f2f6b7e82b680e60941d7824394b9b3c7c479101b4fb7ccd8d73089adc",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverInteraction.java": "ee2bd64411bebbfd4de4078cd45c71590c18c2667282ed60441d5dd37f56e48b",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/UtilityCoverInteraction.java": "f1673e12160972691487af02e597f27fbdc5422d32994b4cf862aa379f200a49",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverRuntime.java": "036d8a5039506f9a7678fe76e07362f9a8a81a09a47fed0824dae5e13a375403",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverRuntime.java": "3ed9aeba571247804027cd2877d084b809890070104b49619465199a425a925f",
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverItems.java": "323c9dc95c44fff89498bf3d1718aa0a94dfbcdbb5466326ed3cb8bdbddbedbd",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+    "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverCapabilitiesMixin.java": "1f21144ede811a73d790e61bb82b27a18cea1cd5adf632ad5f036a62c703894b"
+  },
+  "source_equivalence": {
+    "core/src/main/java/com/gregtech/gregtech/content/storage/ContainerStorageRules.java": {
+      "core": {
+        "java_tokens": true,
+        "literals": true,
+        "token_count": 696
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverStorage.java": {
+      "forge": {
+        "java_tokens": true,
+        "literals": true,
+        "token_count": 648
+      },
+      "neoforge": {
+        "java_tokens": true,
+        "literals": true,
+        "token_count": 669
+      }
+    },
+    "multiversion/src/main/java/com/gregtech/gregtech/client/MassStorageRenderer.java": {
+      "forge": {
+        "java_tokens": true,
+        "literals": true,
+        "token_count": 502
+      },
+      "neoforge": {
+        "java_tokens": true,
+        "literals": true,
+        "token_count": 502
+      }
+    }
+  },
+  "projection_method": "Expose maintained Neo bodies with check_relay_sharing.project before token comparison",
+  "source_table_comparison": {
+    "six_valid_direction_rotations_match": true,
+    "original_invalid_sentinels_excluded": true
+  },
+  "findings": {
+    "ALIGN-138": "Mass-storage front covered-face interaction and opaque-cover renderer gates are absent",
+    "ALIGN-139": "Generic attachment permits quad-drawer front covers forbidden by the original host"
+  },
+  "positive_evidence": [
+    "Permission checks already precede native callbacks via unified event",
+    "Four drawer pages and sided capability invalidation exist",
+    "Six-direction rotation table matches original valid directions"
+  ],
+  "not_run": [
+    "new tests",
+    "Gradle",
+    "native compilation",
+    "GameTests",
+    "client",
+    "dedicated server",
+    "saved-world restart",
+    "build",
+    "push"
+  ],
+  "limitations": [
+    "No claim that every renderer submission visibly penetrates every opaque cover",
+    "Native callback/Mixin runtime acceptance and read-only GUI permissions remain unverified",
+    "Other host forbidden faces need individual audit",
+    "Full audit remains incomplete"
+  ]
+}

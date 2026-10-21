@@ -2,6 +2,36 @@
 
 此文描述 `main` 的 Stonecutter 结构。原版行为差异见 [原版对齐审计](ORIGINAL_ALIGNMENT_AUDIT.md)；目录整理不代表全部功能已经对齐。
 
+禁刷怪塔17996的纯数值／唯一布局在core的`VonDaGraaggRules`；共享原生BE负责验证与供能，`VonDaGraaggSpawnInhibitor`负责刷怪事件，`ControllerStructureLayouts`的本机预览委托core而不再重复63格。实际消费者及可读性边界见[专题](VON_DA_GRAAGG_AUDIT.md)。
+
+基岩钻机17999真实方块是`OriginalBedrockDrillControllerBlock`，运行在共享`BedrockDrillControllerBlockEntity`，core的`AdvancedControllerRules`与`DirectMachinePowerRules`分别给出角色／常数和软容量注入计划。Neo能力监听在`BasicMachineRegistries`，原生罐恢复在版本专有`NativeMachineTankData`。同目录另一HorizontalDirectional类不能代替实际注册判断，见[钻机专题](BEDROCK_DRILL_AUDIT.md)。
+
+物流核心17997：core的`LogisticsCoreLayout`给结构／计数经济，`LogisticsCorePowerRules`委托共享软容量计划，`LogisticsRoutingRules`给路由顺序；共享BE负责世界验证、调度／显示／保存，`LogisticsRoutingPass`连接原生物品／流体端点。Forge实际注册在版本初始化的GTLasers，Neo在GTMultiblocks，入口差异不代表两套业务。见[结构与状态专题](LOGISTICS_CORE_STATE_AUDIT.md)；数量／过滤／返还已继续[实际搬运核查](LOGISTICS_TRANSFER_AUDIT.md)，调度和生命周期待续。
+
+多方块储罐25阀的数据在core `TankValveParameters`，共享 `TankValveSpec`只适配原生wall／材料查找，`TankControllerBlock`负责交互／物品保存，`MultiblockTankControllerBlockEntity`负责结构／内容／能力与tick；`StructureGrid.hollowTank`给纯遍历，`HollowTankStructure`接原生谓词。最终掉落还经过CoverDropMixin／CoverDrops，不能只看块类，见[专题](MULTIBLOCK_TANK_AUDIT.md)。
+
+储罐火属性需分别追`TankControllerBlock`主阀与`MultiblockPortBlock`壁板；`OriginalMultiblockPartData`只给结构件的火数值。`FluidHazards`是依赖注册表的原生查询，`TankFlowRules`仅委托core方向公式，不能用它证明所有实际流体物性相同，见[危害与输出专题](TANK_HAZARDS_AUDIT.md)。
+
+储罐制作：core `MultiblockCraftingRecipes`声明，原生 `MultiblockRecipePack`／`MachineRecipeIngredients`解析，`MaterialTagPack`／`MaterialEquivalence`给实际普通材料标签。工具看`FluidAttachmentBlock.attachedHandler`、`BehaviorThermometer`和`BehaviorPlungerFluid`，壁板的坩埚接口优先次序必须一起查。说明在`MultiblockTankTooltips`／`OriginalTankTooltipData`，Jade在`MultiblockJadeProvider`及其注册插件，见[工具／制作／说明专题](TANK_TOOLS_RECIPES_AUDIT.md)。
+
+储罐模型：core保存blockstate／物品parent，共享原生资源保存composite模型和家族贴图；颜色由GTMultiblocks.tintOf与两版客户端注册读取。玩家喷漆另走PaintSprayItem→PaintTargets→由BlockEntityPaintMixin提供的Paintable，不能混为基础RGB。通用覆盖板的服务端tick／读写在ComponentCoverFallback，槽在ComponentCoverStorage，经PacketSyncComponentCovers到客户端同一read，绘制在ComponentCoverFallbackRenderer／PanelCoverRenderer，见[客户端与同步](TANK_CLIENT_AUDIT.md)。
+
+喷漆纯状态在core的`PaintState`，16色／混色／目标规则在`PaintingRules`，`Paintable`是原生适配接口。共享`BlockEntityPaintMixin`负责GT命名空间资格、NBT和更新，`BlockPaintColorMixin`／`ItemPaintColorMixin`接世界与物品查询；Neo物品原生要求ARGB，后置Mixin结果还必须单独核对，见[喷漆专题](PAINT_STATE_AUDIT.md)。
+
+喷漆／清漆的本地目标在`PaintTargets`，`BehaviorSprayColorRemover`补原版陶瓦／玻璃／玻璃板回退；清漆的原WD.te委托不可由物品／流体能力转发替代。扩展器实际Block是`SourceExtenderBlock`，BE的`saveAdditional`与`getUpdateTag`是两条合同；代理路径在`ExtenderSpec`／`RelayRoutingRules`及BE中，六草身份在core `GrassSoilCatalog`并由两版专有注册消费，见[目标与扩展器](PAINT_TARGETS_AUDIT.md)。
+
+代理基类：`CapabilityRelayBlockEntity`负责按面缓存包装和每次实时解析目标，`EnergyRelayBlockEntity`追加GT能源及FE；子类负责具体路由。Neo注册边界在`StorageContainerCapabilities`。原生宿主的覆盖板处理器查询须保留选中面，当前null方向先阻止安装；恢复gt_cover_n另须核是否消费`ComponentCoverAccess`及`ComponentCoverRuntime.tick`。后备资格排除自带getCover的宿主，见[能力与更新专题](EXTENDER_CAPABILITIES_AUDIT.md)。
+
+原生红石消费者：SourceExtenderBlock的直接返回值还会进入SignalGetter强信号合并；内部ExtenderBlockEntity.comparator(面)与原生ComparatorBlock→getAnalogOutputSignal→comparator(null)是不同入口。共享CoverSignalMixin在BlockState返回值后包装输出；Jade与客户端覆盖板渲染分别在ExtenderJadeProvider／ExtenderCoverRenderer，见[信号专题](EXTENDER_SIGNALS_AUDIT.md)。
+
+四过滤器入口在FilterBlock／FilterBlockEntity；FilterPolicy只给模板数量／真假策略，FilterRules适配原生物品与前缀，FilterMenu持有幽灵槽而FilterScreen仅绘制。该宿主没有getCover覆盖，fallback按面资格与Extender不同；GUI槽的复制／右键与模板实际匹配需分开核，见[过滤器方块](FILTER_BLOCKS_AUDIT.md)。
+
+流体模板边界：FluidDisplayBinding仅处理真实流体展示载体，FluidUtil查询容器能力；材料默认相态需另外消费MaterialFormItem／材料关联，不能把三者合成一个猜测。两版展示物品在各自FluidItem／FluidDisplayItem；工具返回费用的纯公式在core ManualToolRules，实际收费入口还需追GTToolHelper，见[材料与工具](FILTER_FLUID_TOOLS_AUDIT.md)。
+
+前缀过滤入口在共享FilterRules，core ContainerShapeLike／PipeFormLike只给形状元数据；FilterMenu选择、FilterBlockEntity筛选和LogisticsItemFilter预留共用它。材料组成的ItemMaterialRegistry及MaterialTagPack生成标签是另一层，不能推定过滤器已消费所有成员；原生物品的具体缺口见[前缀成员](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)。
+
+物流普通秒门槛在共享LogisticsCoreControllerBlockEntity.serverTick，LogisticsRoutingPass接原生端点，core LogisticsRoutingRules只给单次调度的优先级／CPU轮次与计费；公开routeNetworkOnce辅助方法本身不检查世界秒门槛。LogisticsItemRouter负责物品收集／转换／槽位和返还，DisplayRules只给刻度投影，见[调度与源码](LOGISTICS_SCHEDULING_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
@@ -37,6 +67,8 @@
 
 这些材料数据属于共享 core，两版本共同读取。生成文件的持久修改需要同步对应生成器（`tools/transpile_gt6_materials.py` 与 `tools/modular_materials.py`），否则重新生成会覆盖。工厂继承／加工属性的已知缺口仍见审计主表，不能根据一个定义行推断所有后续加工行为。
 
+CompoundMaterials 现保留用户统一颜色列；生成端和独立排版入口使用同一计算规则。`dust(...).setTextureSet(...)` 与 `elec(..., texture)` 来自不同工厂签名，不能互换工厂统一外观写法，见[说明与七表重现](MATERIAL_TABLE_FORMATTING_20261020.md)。
+
 ## 初始化和配方从哪里看
 
 ### 定义表的空格与列对齐
@@ -59,7 +91,11 @@
 - Forge 的工作台配方随 RecipeManager 重载注入，见 `recipe/RuntimeRecipeLifecycle.java`。`*RecipeInjector` 表示这些注入器，不与初始化机器配方混用。
 - 导入配方表位于 core 的 `content/recipe/generated`；原生 `GeneratedRecipeResolver` 负责物品／流体解析，`GeneratedRecipeSink` 负责向当前解析上下文输出纯数据。`GTTechnologyRecipes` 是手写的原版嵌入配方目录，不是机器控制器。
 
+DecompositionRecipeLoader、VanillaProcessingRecipes、AlloyRecipeLoader、ChemicalRecipeLoader、GeneratedRecipeResolver目前各共用一份业务。前四者仅原生导入／holder查询留条件；解析器另保留combs／technology真实顺序、注册表查找与命名空间表达式差异，见[结构盘点](NATIVE_BODY_SHARING_AUDIT.md)及[后两项共享](RECIPE_RESOLVER_SHARING_AUDIT.md)。这不代表其它741份条件输入都需要删除分支，也不表示其余方法职责已经核完。
+
 配方表本身的名称、物品槽／储罐数和构造标志在 core 的 `data/MachineRecipeMapDefinitions.java`，数据结构是 `api/recipe/RecipeMapSpec.java`；原生 `data/MachineRecipeMaps.java` 将它们转成 RecipeMap。`dynamicRecipes`／`contextualRecipes` 安装动态查询入口，fake 展示行不参与机器加工。当前表标志和动态入口仍有确认缺口，见 [动态配方核查](DYNAMIC_RECIPE_AUDIT.md)。只读工具 `tools/integration/inventory_recipe_map_flags.py` 使用 `--source <原版RM.java> --current <当前定义文件> --output <报告>` 比对四个尾部标志，报告未解析行；它不会替代配方执行验收。
+
+核反应堆的棒目录／冷却参数／纯算术位于core `content/nuclear`；实际棒ItemStack数据、流体身份、网络tick与实体状态位于共享原生同名内容包及`blockentity/energy`。核心压行已展开，三组原版行为专题继续，见[核反应堆职责导航](NUCLEAR_SOURCE_LAYOUT.md)。
 
 ## 机器参数与运行行为从哪里看
 
@@ -255,3 +291,101 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 - `api/tool/GTToolHelper.java` 与 core `ManualToolRules.clickDamage`：直接损耗和原版返回成本的转换边界。
 
 已核作物条件和诊断／损耗缺口见 [本轮报告](CROP_MAGNIFIER_AUDIT.md)。
+
+## 保险箱、钥匙与衣柜
+
+- core `content/storage/SafeLockRules.java`：十种钥匙材料、所有者门控与绑定／复制／开关纯规则。
+- 共享 `block/inventory/SafeBlock.java`、`blockentity/inventory/SafeBlockEntity.java`：真实交互入口、15 槽、锁状态和世界保存；钥匙物品是 `item/GTDungeonKeyItem.java`。
+- `registry/GTDungeonKeys.java` 只解析规范物品引用，实际注册由 GTMultiItems 持有，不能再加一套别名物品。
+- 共享 `block/inventory/LockerBlock.java`、`blockentity/inventory/LockerBlockEntity.java`：普通衣柜四装备槽与更衣；充电家族仍缺失。
+- core `registry/GTStorageMetals.java`：60 材料规格；`data/UtilityCraftingRows.java` 与共享 `data/OriginalHandCraftingRows.java` 都要核查，后者的旧配方不会因前者存在而自动失效。
+- core `content/storage/OriginalStorageTooltipData.java`：存储提示的行选择；不是玩法实现清单。
+
+各宿主锁权限、正面限制、自动化和拆除不同，见[核查](SAFE_LOCKER_AUDIT.md)。全量路径／命名和剩余压行候选见[布局盘点](SOURCE_READABILITY_INVENTORY.md)。
+
+## 瓶框、书架与原生配方桥接
+
+- `block/inventory/BottleCrateBlock.java`：世界 X/Z 格子与整组取放；`blockentity/inventory/BottleCrateBlockEntity.java`：handler、同步、packedStack 和拆除快照。
+- core `content/storage/ContainerStorageRules.java` 与共享 `content/tool/BottleCrateGeometry.java`：瓶身／液体／瓶颈坐标；不随框朝向旋转格子。
+- `block/BookShelfBlock.java`、`blockentity/inventory/BookShelfBlockEntity.java`：书面交互、附魔、控制、loot 和保存；core `content/book/BookShelfRules.java` 与共享 `content/book/GTBookList.java`：当前允许集和书点，完整原版陈列登记仍缺部分。
+- `registry/GTEngines.java`：Forge 走现有 MachineRegistry，Neo 走各类型实体构造分支，维护两版本体均已展开。
+- `recipe/FiniteBottleFillingRecipe.java`：装瓶配方的消耗／余料版本边界；core `content/recipe/generated/GeneratedRecipeSink.java`：唯一配方表的线程内 consumer 与 finally 恢复，属于运行桥接，不是普通数据行。
+
+缺项与十一份投影等价边界见[本批报告](BOTTLE_BOOKSHELF_AUDIT.md)。
+
+## 金属箱、战利品与专用模型
+
+- `block/inventory/MetalChestBlock.java`、`blockentity/inventory/MetalChestBlockEntity.java`：GUI 箱、物品掉落、能力、盖子与 pending／消费状态；`LootChestBlock` 保存专用目录的表身份。
+- `client/MetalChestVisuals.java`：世界／物品共用的专用 RGB 参数与模型；普通 block tint Mixin 不会自动覆盖它。
+- `block/LootCrateBlock.java`：一次性撬棍板条箱；与 GUI 箱经验生命周期不同。
+- core `content/loot/LootRollRules.java`、共享 `content/loot/GTLootTables.java`：权重、计数与表填充；当前 inclusive count 不等于原版两种计数合同均已对齐。
+- 书架 `BookShelfRules` 集合／坐标公式与 `GTBookList` 说明已展开；仍是当前子集，不是完整 BOOK_REGISTER。
+
+源码范围和十四份等价投影见[箱子报告](CHEST_LOOT_AUDIT.md)。
+
+## 养蜂规则与原生库存爆炸
+
+- core `content/bumble/BumbleGenomeRules.java`：鲜基因范围、天气阈值及逐基因遗传；`BumbleSpeciesRules.java`：二十条组合、突变和产物概率。两份已展开排版，不意味着已修复所有边界。
+- 共享 `content/bumble/BumbleBeeGenes.java`：Forge NBT／Neo components 边界和默认基因回退；`BumbleBreeding.java`：后代构造和配对成本。
+- 共享 `block/tool/BumbliaryBlock.java`、`blockentity/tool/BumbliaryBlockEntity.java`：普通／高级养蜂箱服务端周期、库存、工作与寿终晋升。自然蜂巢另在 `block/misc/BumbleHiveBlock.java`／`FixedBumbleHiveBlock.java`，新生成使用扁平 ID。
+- 共享 `content/bumble/BumbleSting.java` 先经过 `damage/GTHazmat.java`；不能孤立看攻击分支判断铁傀儡保护。
+- 库存外部爆炸应从实际原生 `state.getDrops`／`onBlockExploded`／`onRemove` 追踪；`CoverDropMixin` 的静态助手不是该入口。方块物品与散落库存的掉落合同分开，见[核查](INVENTORY_EXPLOSION_AUDIT.md)。
+
+养蜂来源与未核完边界见[周期报告](BUMBLE_LIFECYCLE_AUDIT.md)，战利品首空槽／原随机覆盖见[填槽报告](LOOT_SLOT_AUDIT.md)。没有将原生反编译源码纳入项目生产目录。
+
+## 保存时机、库存通知与共用菜单
+
+- `BumbliaryBlockEntity` 的寿命／配对计时写读与 `setChanged` 时机分开；实际区块保存有 isUnsaved 门控，见[持久化核查](BUMBLE_PERSISTENCE_AUDIT.md)。
+- `MetalChestBlockEntity` 的普通 handler 回调、`HopperContainerMenu.quickMoveStack` 的原位变化与原生 SlotItemHandler 适配分别核对；菜单使用相同基类不保证每个宿主补偿方式相同。
+- `api/machine/ITileEntityAdjacentInventoryUpdatable` 是专用通知合同；`setChanged`／`sendBlockUpdated`／普通邻居事件不会按名称自动转换为它。接收方与轮询范围见[库存报告](INVENTORY_NOTIFICATION_AUDIT.md)。
+- BumbleBeeGenes 和 GTBumbleBlocks 已展开两版边界；BumbleHiveBlock 的旧 COLOR 只是历史兼容，新变种身份仍是 FixedBumbleHiveBlock。火焰及末影龙保护的实际原生来源见[自然巢报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。
+
+## 灌木环境与手动库存菜单
+
+- core `content/plant/BushGrowthRules.java`：四阶段／byte计数的纯计算；共享 `blockentity/BushBlockEntity.java` 负责支撑、现代雨／光查询和保存，不能把 helper 差异藏在核心规则相同的结论里。
+- 共享 `block/plant/BushBlock.java` 是实际放置、采收和枝条几何入口；`registry/GTBushes.java` 与两版注册目录决定扁平物种，旧berry键仅作兼容。已实现与差异见[灌木报告](BERRY_BUSH_AUDIT.md)。
+- core `api/inventory/InventorySlotLayout.java` 保存当前菜单坐标；共享 `client/gui/HopperContainerMenu.java` 负责普通槽和shift。两个许可扩展方法当前未被槽工厂消费，不等于底层handler没有验证。
+- Queue的自动化handler、手动GUI许可和原生doClick入口要一起核对；九类真实菜单宿主的六类同源回调、三类补偿／约束见[共用菜单报告](SHARED_MENU_AUDIT.md)。
+
+## 液态材料工厂与补偿
+
+- core `api/material/MaterialFactories.java`：当前工厂默认属性和纹理入口，长参数／方法已展开；不是所有默认值都与原版同名helper等价。
+- `tools/transpile_gt6_materials.py`先识别源工厂族，`tools/modular_materials.py`再拆分声明；用户整理的CompoundMaterials保持独立颜色列。不要直接运行旧脚本覆盖采用后的数据。
+- core `content/material/MaterialDefinitions.java`的link加载组成／事实／形态补偿；`content/fluid/FluidDefinitions.prepare`在实际流体注册前补状态。`data/generated/MaterialForms.java`只是前缀准入侧表，不能替代GTMaterial.GAS/LIQUID。
+- `api/fluid/FluidHazards.isMagic`读取生成流体关联材料，`FluidPipeBlockEntity.checkSafety`真正消费危险标志。三项差异与已有补偿见[液态酸核查](LIQUID_ACID_FACTORY_AUDIT.md)。
+
+## 灌木物理与世界生成入口
+
+- 共享`registry/GTBushes.java`的注册工厂设置实际BlockBehaviour属性；`strength(.2f)`后还有`instabreak()`，最终值必须沿原生实现读取。`BushBlock`的选框、碰撞、光遮挡与墙内谓词各有消费者，见[物理核查](BERRY_BUSH_PHYSICAL_AUDIT.md)。
+- 共享`worldgen/GTBushesFeature.java`选择候选列、群系、噪声索引和枝条；core`worldgen/GTCellNoise.java`只供噪声算法／偏移表。调用者半坐标并非原整数除法，不再在类说明中保证同坐标同莓种。
+- 共享`worldgen/GTSurfaceFloraFeature.surface`负责实际向下扫描；两版`GTFeatures`、configured/placed feature及biome_modifier共同决定可达性。九种自然成员与未核完的中心／高度／替换规则见[生成核查](BERRY_BUSH_WORLDGEN_AUDIT.md)。
+
+## 通用材料分解与流体组件解析
+
+- 共享`content/recipe/DecompositionRecipeLoader.java`现为一份业务流程，只有原生FluidStack／holder类型及查询分支；`MachineRecipeBootstrap`在实际setup链中调用，随后显式化学／生成行仍可追加。
+- 组成来自core `data/generated/MaterialCompositionData.java`，原处理地图标志并不等于组成；目前加载器按ELEMENT启发式选图，不能从注释或标签名字存在推断已接线。
+- 原生水、具名流体、材料绑定和温度相态是不同入口；`namedFluid`没有复用`GTFluids.stack`／`GeneratedRecipeResolver.named`的原生水处理。样本、公式和显式补偿见[分解核查](MATERIAL_DECOMPOSITION_AUDIT.md)。
+
+第六十批核辅助类已展开：core `content/nuclear/RodPhysicsMath.java` 的数量／向上取整与热／寿命运算，以及 `ReactorCoolantRules.java` 的11项冷却表／棒参数修饰改用明确参数名。原生Fluid解析仍看 `ReactorCoolants`，不能把表键当成已验证的实际注册流体；本次只做可读性保持，见[核导航](NUCLEAR_SOURCE_LAYOUT.md)。
+
+第六十一批补充[配置入口与真实消费](CONFIGURATION_CONTRACT_AUDIT.md)：共享`GregTechConfig.java`定义三个键，两版入口注册COMMON spec，默认文件由加载器命名为`gt6ce-common.toml`。两个过载getter由`MachineOverload`等消费；日志键当前未被读取。原版材料／掉落／世界生成配置只核了代表矩阵，Nexus全开与配置收尾仍按用户安排。核状态和异常边界分别见[状态](NUCLEAR_TRANSITION_AUDIT.md)、[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。
+
+第六十二批补充[工具参与工作台配方导航](TOOL_CRAFTING_SOURCE_LAYOUT.md)：ToolShapedRecipe／ToolShapelessRecipe处理工具返还、镜像／形态与空容器限制；工具本身的头柄／整体制作另看GTToolRecipes及相应配方类。两版包装serializer注册分别在Forge ToolBootstrap和NeoRecipeSerializers，不能与GTToolRecipeSerializers的tool-kind／pattern编码混为一层。
+
+第六十三批能源导航补充：[太阳能板](SOLAR_PANEL_AUDIT.md)从core SolarPanelEnergy／EnergyNodeDefinitions追到GTEnergyNodes与EnergyNodeBlockEntity.tickSolar；[单块换热器](HEAT_EXCHANGER_AUDIT.md)从HeatExchangerCatalog／GTHeatExchangers追到HeatExchangerBlockEntity、HotFluidFuelCycle和共用HeatExchangerRules。大型主控另有结构与出口，HeatExchangerData不能作为单块保存补偿。核棒参数扩展／支持SDK／耗尽出口区别见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。
+
+第六十四批[旋转泵导航](ROTATIONAL_PUMP_AUDIT.md)：core PumpCatalog／PumpSpec负责四档定义，PumpWorkRules只给当前阈值与包预算；真实世界搜索／删块、保存和推液均在原生PumpBlockEntity，PumpBlock给ticker、GTPumps与两端入口完成注册。ComponentCoverHostMixin可补上后备覆盖板宿主，机器停启／运行状态仍需独立Provider；EngineCapabilities只是Neo流体能力桥。三处all局部变量与压行展开，不改抽液算法。
+
+第六十五批[大型涡轮源码导航](LARGE_TURBINE_AUDIT.md)：core OriginalGeneratorParameters给四档与派生额定，SharedTurbineStructure／StructureGrid给无加载器几何；原生Definitions／Factory注册具体墙与主控。AxialGeneratorBlockEntity管共同结构／轴输出／故障／控制，LargeTurbine管蒸汽两半和凝水，LargeGas独立管燃料／三排气／RU队列；capability的role包装在FluidPort／MultiblockPortBlockEntity。最终掉落必须再追CoverDropMixin→CoverDrops；父类共享不代表大型发电机已全面核完。
+
+第六十六批[避雷针导航](LIGHTNING_ROD_AUDIT.md)：实际17998由MultiblockBlockFactory创建OriginalLightningRodControllerBlock，执行在LightningRodControllerBlockEntity；AdvancedControllerRules／OriginalUtilityControllerData给包与容量，旧通用LightningRodControllerBlock并非第二个注册主控。认领、天气轮询与普通pick要分别追，最终drop还经CoverDropMixin。ControllerStructureLayouts用于有限预览，不能据其地图推定运行已绑定或有建造工具；两个源码展开和四绑定改名没有改玩法。
+
+第六十七批[大型发电机导航](LARGE_DYNAMO_AUDIT.md)：SharedLargeMachineParts原ID17221–17224→MultiblockBlockFactory→LargeDynamoControllerBlock及GTBlockEntities.LARGE_DYNAMO；BE只负责RU准入／旧键兼容，结构与75%转换在AxialGeneratorBlockEntity，档位由OriginalGeneratorParameters→AxialGeneratorDefinitions映射。SharedTurbineStructure／StructureGrid为纯坐标，AxialStructureTransform是原生坐标边界；后端部件查询与真正后4格输出须分别追。五源码展开与八局部命名仅提高可读性。
+
+第六十八批[大型换热器导航](LARGE_HEAT_EXCHANGER_AUDIT.md)：GTMultiblocks→LargeHeatExchangerControllerBlock／GTBlockEntities，BE负责世界17格认领、八出口与冷热能力／持久化；SharedHeatExchangerStructure给纯布局，HeatExchangerRules给纯数值计划，HotFluidFuelCycle处理原生流体／配方，HeatExchangerData处理版本设置／NBT。Neo流体入口在BasicMachineRegistries，而非单块用的SmelteryRegistries；制作由MultiblockCraftingRecipes→MultiblockRecipePack→MachineRecipeIngredients。六源展开只改善阅读，不增平台业务副本。
+
+物流覆盖板定义在core的`LogisticsCoverDefinition`，原生`LogisticsCoverType`只映射ItemStack；`LogisticsCoverInteraction`负责样本／优先级／数量及工具交互，`LogisticsItemRouter`／`LogisticsFluidRouter`负责实际能力搬运。模板FilterRules与覆盖板matches是不同合同，勿混用；本轮整理四源码，没有引入两套业务，见[物流搬运](LOGISTICS_TRANSFER_AUDIT.md)。
+
+物流网络的物理扫描与坐标快照在`LogisticsNetwork`，安装物及显示数据在`LogisticsCovers`，线的持久化／原生同步在`LogisticsWireBlockEntity`；能力代理的目标选择在`ExtenderSpec`／`RelayRoutingRules`和原生`ExtenderBlockEntity`／`CapabilityRelayBlockEntity`，不等于物流节点委托。五源码已展开并保留执行，见[网络与生命周期核查](LOGISTICS_NETWORK_AUDIT.md)。
+
+物流线客户端：共享`LogisticsWireBlock`维护连接与形状，`LogisticsCoverRenderer`消费安装物和CPU刻度；Neo的`LogisticsRegistries`／`LogisticsClientSetup`分别处理原生注册和渲染订阅。图集目录源位于core资源assets/minecraft/atlases/blocks.json，模型loader改写在multiversion/build.gradle；局部class没有注册或原维护JSON仍写forge并不直接代表缺实现。四源已展开并保留执行，见[客户端核查](LOGISTICS_CLIENT_AUDIT.md)。

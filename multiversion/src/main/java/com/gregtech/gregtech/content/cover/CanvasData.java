@@ -70,9 +70,9 @@ public final class CanvasData {
                 if (property != null) state = set(state, property, properties.getString(key));
             }
             if (item.getBlock() instanceof com.gregtech.gregtech.block.misc.ColoredConstructionBlock)
-                state = state.setValue(com.gregtech.gregtech.block.misc.ColoredConstructionBlock.COLOR, com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(stack));
+                state = com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(state, com.gregtech.gregtech.block.misc.ColoredConstructionBlock.itemColor(stack));
             if (item.getBlock() instanceof com.gregtech.gregtech.block.misc.ColoredGlassBlock)
-                state = state.setValue(com.gregtech.gregtech.block.misc.ColoredGlassBlock.COLOR, com.gregtech.gregtech.block.misc.ColoredGlassBlock.itemColor(stack));
+                state = com.gregtech.gregtech.block.misc.FixedConstructionColor.recolor(state, com.gregtech.gregtech.block.misc.ColoredGlassBlock.itemColor(stack));
         }
         return state == null ? null : fromState(state);
     }
