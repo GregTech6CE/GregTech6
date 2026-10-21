@@ -1,0 +1,1139 @@
+{
+  "batch": 76,
+  "date": "2026-10-21",
+  "baseline": "a9da9ba851def6f0ba090f298ea0a8d58ac123d1",
+  "new_records": [
+    264,
+    265
+  ],
+  "scope": "Tank fire metadata, meltdown neighbour policy, existing hazard/flow branches and readable source boundaries.",
+  "counts": {
+    "original_sources": 14,
+    "current_sources": 28,
+    "shared_platform_views": 36,
+    "readability_files": 3,
+    "readability_execution_views": 6
+  },
+  "sources": [
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank.java",
+      "sha256": "ecf0694699f793359d0787d2169c98774428825acf098527fc19dc6fee06a1e4",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3.java",
+      "sha256": "84114f5a8e4828b324c67a6dfb5528140e0d263bf389b13f0970e9cf4ff4eacb",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank5x5x5.java",
+      "sha256": "1336944ac940ac7f0f4dee911cd4ae5f108a10d7bf8e221c87126f2ddf797d39",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Wood.java",
+      "relative": "gregtech/tileentity/multiblocks/MultiTileEntityTank3x3x3Wood.java",
+      "sha256": "2ba5c052e8b4369a8fb9cb2fbde4b870d63f2890d24be25fce8d6129264c9a7e",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "relative": "gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "relative": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "relative": "gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "relative": "gregapi/util/WD.java",
+      "sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "relative": "gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "relative": "gregapi/data/CS.java",
+      "sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "relative": "gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 2
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "relative": "gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "original",
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/IL.java",
+      "relative": "gregapi/data/IL.java",
+      "sha256": "2924d17cd74f1057b3ca9851bb5373e9652cf912175929040787cdceaab49c43",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance.",
+      "head_evidence": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */\n\n",
+      "author_declarations": [
+        "@author Gregorius Techneticies"
+      ],
+      "preexisting_replacement_characters": 0
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/api/multiblock/StructureGrid.java",
+      "sha256": "ba3156b9f33d5a3e8d4970b3668e6fc1a9cff7159baf09fc9976e706f59ee6ac",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/OriginalMultiblockPartData.java",
+      "sha256": "186f4b144bf5a0d2a9812e585524b55754a02a56216291176e43e09db0fbadf5",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveParameters.java",
+      "sha256": "32bd2ca495a1baea144f28e5f8b2246a6c6a923ea3526650ba2e708e61779fb8",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+      "relative": "core/src/main/java/com/gregtech/gregtech/content/fluid/FluidDefinitions.java",
+      "sha256": "4586190b0b7a8e03e683efb4797349f112b2d8f47b6c5374b86a5f96537b019a",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "sha256": "efabe7ee29c42b2c7e9e1bd22d821958bd827207a804ebbe3d177c9cd8d0c807",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "sha256": "8e468914162ddccb0f55b467c1670c0cb6076c79fb89f002dcaa2bedb7b50c9d",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "sha256": "f794ff8e4d497f224b907acdd0d67adc9ded6b9a9276f5285174c1f6ec834b25",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "sha256": "1f9f652a9c39e8008f17507dbe8fb4740b83ebe259cb2ad19e0351b031b007cf",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "sha256": "1b351c87f166cdf1e78063b67702613c808d2e5e641bf244cc6e90057b56a831",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "sha256": "73ab74e4119edcf1c05c6637fdaf07690758e9cdc77a423592a539f707bbf935",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "sha256": "da63aa130e2cf43af65660260d0cb43ba2a60aacf6e4d9f7aae0267748bb5af9",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "sha256": "3d9730b3600a02d8d12be6cb039fc5b514ad7d9911a347e39ee6317f691a7348",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "sha256": "e955781fbcef8c1585bb8253d1efbad85c1acbec994635746f21a0696b152ecd",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "sha256": "628646643f7936df0930be6fa9cca4e053368a89f560da7b6b7939b0c1ea6d0d",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "relative": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "sha256": "4add08fe6d5d03091aead994a379f1dff7719b9bb18122f110853a7276915f61",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/GregTech.java",
+      "sha256": "a27ba34324c5a91b3830f9ea6925f98006631a0c36c14da823e05778ef2d122c",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "87db697de4ae6df6da2e3df0cbed4d56a2aefb03c4c001b699517025c4d67020",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "relative": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "relative": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    },
+    {
+      "kind": "current",
+      "path": "C:/Dev/GregTech6/gradle/platform-neoforge.gradle",
+      "relative": "gradle/platform-neoforge.gradle",
+      "sha256": "c4eb8699a475b272e1eb3e19b827e11bcf33842084156041008182697b1475ff",
+      "scope": "Named fire metadata/bridge, tank hazard branches, fluid metadata/property consumers and automatic flow. Not whole-file acceptance."
+    }
+  ],
+  "platform_views": [
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "forge",
+      "sha256": "91fc9635a0da67d46f757afc66df19bf8f9936faabcabdffec1c91d7c0593980",
+      "tokens": 1230
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+      "platform": "neoforge",
+      "sha256": "b59ab23bd49ad36aaebd13dfe989672489a281a59d36776dd4e402bfdcf2b0a7",
+      "tokens": 1469
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "forge",
+      "sha256": "252f22b6bc3e26531dd8a3c1a184e10933c747b08c6670b65e8ddeb477a41ddb",
+      "tokens": 1218
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/TankControllerBlock.java",
+      "platform": "neoforge",
+      "sha256": "fb46017f71c3e952477bacf28b5e441a72ca20394451cfcf76b7b16df8a54fdf",
+      "tokens": 1586
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "forge",
+      "sha256": "c748ea5f61f4d48c1ca325d50126dd4745ef790115ee0ebfb5300f719431a11c",
+      "tokens": 2865
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/MultiblockTankControllerBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "9dff02e5b759e297416a553b79c31dc9e1dec9ddcfba118308c155f79c4c905c",
+      "tokens": 2759
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "forge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/MultiblockBlockFactory.java",
+      "platform": "neoforge",
+      "sha256": "2a5c9a965d91dbfbaccebaa5d0533758276f876d8980e55efbcefbb643794df8",
+      "tokens": 547
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "platform": "forge",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "tokens": 313
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankValveSpec.java",
+      "platform": "neoforge",
+      "sha256": "43703916cb9a5470339290db804116474e25ecc3f06667bcf92852c7068b468a",
+      "tokens": 313
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "platform": "forge",
+      "sha256": "1f9f652a9c39e8008f17507dbe8fb4740b83ebe259cb2ad19e0351b031b007cf",
+      "tokens": 74
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+      "platform": "neoforge",
+      "sha256": "1f9f652a9c39e8008f17507dbe8fb4740b83ebe259cb2ad19e0351b031b007cf",
+      "tokens": 74
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "platform": "forge",
+      "sha256": "1b351c87f166cdf1e78063b67702613c808d2e5e641bf244cc6e90057b56a831",
+      "tokens": 771
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+      "platform": "neoforge",
+      "sha256": "1b351c87f166cdf1e78063b67702613c808d2e5e641bf244cc6e90057b56a831",
+      "tokens": 771
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "platform": "forge",
+      "sha256": "a6e30f6ddf88cd42d898f60c7d723889457c894c0f2305173cac6c7d80f7b6ce",
+      "tokens": 769
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+      "platform": "neoforge",
+      "sha256": "cacb4b73a1715ef6988a2b5a63a665e5c4313ca1238644abde39efdde08e2123",
+      "tokens": 762
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "forge",
+      "sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+      "tokens": 1598
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "platform": "neoforge",
+      "sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+      "tokens": 988
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "forge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/data/RegisteredFluids.java",
+      "platform": "neoforge",
+      "sha256": "c2d56d8cd0b700e8cabedd9c56df54441202fd66b4c3178c238cca153c217670",
+      "tokens": 56
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "forge",
+      "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+      "tokens": 1504
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "platform": "neoforge",
+      "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+      "tokens": 1527
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "forge",
+      "sha256": "13ec1581cd159dde65e0aa317fc56076d7cf3d8376096839167a9b634a9ccdfc",
+      "tokens": 1798
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiblocks.java",
+      "platform": "neoforge",
+      "sha256": "62fdac0b9d873d3784336e3949a055884eb652366f40dc1d635b16b1cec35651",
+      "tokens": 1589
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "forge",
+      "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+      "tokens": 862
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "platform": "neoforge",
+      "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+      "tokens": 944
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "forge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "platform": "neoforge",
+      "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+      "tokens": 316
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "forge",
+      "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+      "tokens": 1338
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "platform": "neoforge",
+      "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+      "tokens": 1384
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "forge",
+      "sha256": "3253fb623767e0e8ba3c6b5d7038d045992833e0eff1c49c64fe06b023fa7c89",
+      "tokens": 876
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/GTEnergyBlockEntity.java",
+      "platform": "neoforge",
+      "sha256": "05d1102e6efbdb698d2acea88e1f50ea9068b6d77aaff96770f88932f8590da3",
+      "tokens": 917
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "forge",
+      "sha256": "c6518c4b280e8572a840c3a244a2e616a2b0cab78a50c17a65dc9a45694639c9",
+      "tokens": 948
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/bootstrap/content/BlockBootstrap.java",
+      "platform": "neoforge",
+      "sha256": "cfdf1a224d8701d6778b4e214609745dcb6670fd72a1bdb2c69902a7a07bb4d4",
+      "tokens": 973
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "forge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    },
+    {
+      "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/LargeMachineParts.java",
+      "platform": "neoforge",
+      "sha256": "7a02fd52064cc28e75235064039217d9811d7cb018eaacf6734459defcf27406",
+      "tokens": 281
+    }
+  ],
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+        "sha256": "0ba102d7d6e4ee7d45950c91b20fdf9c6319c5e0cb75b75133b4caa065c788f0",
+        "bytes": 28674
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/FireBlock.class",
+        "sha256": "7da6ad34163b77056f16c81db152d7a658f154cdf0d7ffbd83ebd6b70860a046",
+        "bytes": 25632
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/CarpetBlock.class",
+        "sha256": "7ad84ddd0a5637f8e87f0cd1633ced0d51c86711990aa1b2e79aa360e9bfd8f9",
+        "bytes": 2943
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IBlockExtension.java",
+        "sha256": "2dea052b03b569b82ca728073ab4299282eb4bb9116637b9ee19ade36975e5a5",
+        "bytes": 51004,
+        "extracted": "work/tank-hazards-audit-20261021/neo-IBlockExtension.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/FireBlock.java",
+        "sha256": "e432f52570d435099d36f5713dfea052065a6b5603d59c824109315fd31abf61",
+        "bytes": 26372,
+        "extracted": "work/tank-hazards-audit-20261021/neo-FireBlock.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/CarpetBlock.java",
+        "sha256": "e81c6a4e531f7aa59fde46337a76d5a9bfd87ffc9c6ace7804615066f02bde74",
+        "bytes": 1691,
+        "extracted": "work/tank-hazards-audit-20261021/neo-CarpetBlock.java"
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraftforge.common.extensions.IForgeBlock",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraftforge/common/extensions/IForgeBlock.class",
+        "output": "work/tank-hazards-audit-20261021/forge-IForgeBlock.javap.txt",
+        "sha256": "61020cd4fe7386e91cb3c2cb57188e9df2f2d3e0862362b176107ad7598c7f93",
+        "kind": "Read-only javap; no target initialization or compilation."
+      },
+      {
+        "class": "net.minecraft.world.level.block.FireBlock",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/FireBlock.class",
+        "output": "work/tank-hazards-audit-20261021/forge-FireBlock.javap.txt",
+        "sha256": "2948465abae664ecb3e5f3d470ffd00069267f016e38048e4d05d400ac2e1ac2",
+        "kind": "Read-only javap; no target initialization or compilation."
+      },
+      {
+        "class": "net.minecraft.world.level.block.CarpetBlock",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/CarpetBlock.class",
+        "output": "work/tank-hazards-audit-20261021/forge-CarpetBlock.javap.txt",
+        "sha256": "af30e6dc91f70d5850ef072b3a45b3cf9540664f182daac35b59c4b9efb10d35",
+        "kind": "Read-only javap; no target initialization or compilation."
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "a9da9ba851def6f0ba090f298ea0a8d58ac123d1",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java": {
+        "before_raw_sha256": "7bcdaf6a00f27a0c63bf255ff2fa931293a0ac0df773f6fc2d85dd61bd96b36c",
+        "after_raw_sha256": "efabe7ee29c42b2c7e9e1bd22d821958bd827207a804ebbe3d177c9cd8d0c807",
+        "local_renames": {
+          "id": "registryId"
+        },
+        "comment_corrections": [
+          [
+            "/** Structural bindings are transient; breaking a part returns only the part itself. */",
+            "/** Base structural-part drop; the final drop mixin handles attached cover data separately. */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1230,
+            "execution_sha256": "65956b35e7c2f40ca51a7012f5fba791bf8347ab7e6e11266913d5ca7a8d32f1",
+            "before_lines": 97,
+            "after_lines": 128,
+            "before_max_line": 160,
+            "after_max_line": 150
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1469,
+            "execution_sha256": "08fdeb9a1a98b50cb7eddf040d0b03bd7505009e0c39f39e0bbb77ea361e8f29",
+            "before_lines": 100,
+            "after_lines": 147,
+            "before_max_line": 592,
+            "after_max_line": 150
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java": {
+        "before_raw_sha256": "f8e82a4071663fc21f95b16685eb51662a32c0deffd38859773bfb728282b4ac",
+        "after_raw_sha256": "1f9f652a9c39e8008f17507dbe8fb4740b83ebe259cb2ad19e0351b031b007cf",
+        "local_renames": {},
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 74,
+            "execution_sha256": "0e7c8f88125f0c87fd8487358c51bc241028d445d77e76209873625acfb1456a",
+            "before_lines": 11,
+            "after_lines": 14,
+            "before_max_line": 109,
+            "after_max_line": 111
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 74,
+            "execution_sha256": "0e7c8f88125f0c87fd8487358c51bc241028d445d77e76209873625acfb1456a",
+            "before_lines": 11,
+            "after_lines": 14,
+            "before_max_line": 109,
+            "after_max_line": 111
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java": {
+        "before_raw_sha256": "4e83b2a7db99ee07b75606e688b0aab0bd236a522bbcc28c31428c81983183fd",
+        "after_raw_sha256": "1b351c87f166cdf1e78063b67702613c808d2e5e641bf244cc6e90057b56a831",
+        "local_renames": {},
+        "comment_corrections": [
+          [
+            "/**\n * GT6 physical hazard classes - acid, gas and plasma - as pure functions, plus the proof-flag\n * truth table used by existing vessels. Magic is classified separately by isMagic for pipe ticks.\n *\n * <p><b>Where GT6 keeps the answer.</b> Not on the block and not on the pipe: every GT6 hazard test\n * is {@code FL.acid}/{@code FL.gas}/{@code FL.plasma} against a fluid <em>name</em> held in a global\n * set ({@code gregapi/data/CS.java:1508 FluidsGT}):\n * <ul>\n *   <li>{@code FL.java:756} {@code acid(Fluid)} = {@code FluidsGT.ACID.contains(name)},</li>\n *   <li>{@code FL.java:760} {@code plasma(Fluid)} = {@code FluidsGT.PLASMA.contains(name)},</li>\n *   <li>{@code FL.java:770} {@code gas(Fluid)} = {@code !FluidsGT.LIQUID.contains(name) &&\n *       (fluid.isGaseous() || FluidsGT.GAS.contains(name))}.</li>\n * </ul>\n * Those sets are filled at fluid-creation time, and the two rules behind them are different in kind:\n * <ul>\n *   <li><b>gas and plasma are the fluid's physical state</b> - {@code FL.java:1105} adds every fluid\n *       created with {@code STATE_GASEOUS} to {@code FluidsGT.GAS}, {@code FL.java:1106} every\n *       {@code STATE_PLASMA} fluid to {@code FluidsGT.PLASMA}, and {@code FL.java:1104} every\n *       {@code STATE_LIQUID} fluid to {@code FluidsGT.LIQUID} (which is what makes the {@code gas()}\n *       test subtract liquids);</li>\n *   <li><b>acid is a material property, not a state</b> - {@code FL.java:1118} adds the fluid to\n *       {@code FluidsGT.ACID} when its {@code OreDictMaterial} carries {@code TD.Properties.ACID}\n *       ({@code TD.java:386}), and {@code MT.java:121-126} is what puts it there for the\n *       {@code gasacid*}/{@code lqudacid*} factories. So an acid can be a gas and a liquid at once:\n *       hydrogen chloride is {@code gasaciddcmp} ({@code MT.java:1020}) and is in both sets.</li>\n * </ul>\n * That is why {@link #isAcid}, {@link #isGas} and {@link #isPlasma} are three <em>independent</em>\n * predicates and GT6 tests them one after another ({@code MultiTileEntityPipeFluid.java:296},\n * {@code :302}, {@code :308}) instead of switching on a single category. {@link #kindOf} exists for\n * callers that want one answer and documents its precedence.\n *\n * <p><b>How the port answers the same questions.</b> The port keeps the GT6 metadata on\n * {@link RegisteredFluids.FluidEntry} instead of in name sets: {@link RegisteredFluids.FluidEntry#gas()}\n * is the {@code STATE_GASEOUS} bit and {@link RegisteredFluids.FluidFlags#PLASMA} the\n * {@code STATE_PLASMA} bit, both resolved for a live {@link Fluid} through\n * {@link GTFluids#entryForFluid} - which also resolves the {@code _flowing} variant, so a flowing gas\n * is classified like its still fluid. The acid property survives on the material, so it is read back\n * with {@link FluidVisualPolicy#material} (the same {@code materialKey} / {@code boundMaterial}\n * resolution the renderer uses) and tested against {@link MaterialProperty#ACID}, which the port\n * already fills for GT6's acid materials ({@code MaterialFormCorrections.java:45-52}, the same list\n * {@code FL.java:1118} derives from {@code TD.Properties.ACID}).\n *\n * <p>This class is deliberately stateless and cache-free: every method is a registry lookup plus a\n * comparison, so the per-tick callers below can call it on the hot path. The acid branch is the only\n * one that has to resolve a material, and {@link #proofRejects(Fluid, boolean, boolean, boolean)}\n * short-circuits it away for any vessel that is already acid proof.\n *\n * @see #proofRejects(Fluid, boolean, boolean, boolean) the accept/reject decision the vessels use\n */",
+            "/**\n * Registry-backed fluid hazard queries shared by vessel and pipe callers.\n * Acid comes from the resolved material; plasma and declared gas state come from fluid metadata.\n * Magic also has a material fallback in {@link #isMagic}; individual callers may use narrower rules.\n *\n * <p>Original predicates are FL.acid/gas/plasma/magic and the FluidsGT name sets.\n * Unknown modern fluids use the native lighter-than-air approximation for gas; it does not\n * reproduce the old independent isGaseous flag. These queries depend on the live registry.\n */"
+          ],
+          [
+            "/**\n     * GT6 {@code FL.java:770} {@code FL.gas}: the fluid's own state is {@code STATE_GASEOUS}\n     * ({@code FL.java:1105}).\n     *\n     * <p>For a fluid with no GT6 declaration the {@code FluidsGT.GAS} name set cannot answer, so the\n     * question falls to Forge's own lighter-than-air flag, which is the 1.20.1 equivalent of the\n     * {@code fluid.isGaseous()} half of GT6's test. GT6's {@code !FluidsGT.LIQUID.contains(name)} guard\n     * is already encoded in the port's metadata: {@code withGas()} clears\n     * {@link RegisteredFluids.FluidFlags#LIQUID}, so {@code entry.gas()} cannot be true for a declared\n     * liquid.\n     *\n     * <p>{@code Fluids.EMPTY} is never a gas: it has no GT6 declaration, and Forge's empty fluid type\n     * reports {@code isLighterThanAir()} — so the fallback has to exclude it explicitly, or \"no fluid\"\n     * would count as a breathable gas (the gate caught exactly that).\n     */",
+            "/**\n     * Declared GT gas state takes precedence. Unknown nonempty fluids fall back to the native\n     * lighter-than-air flag, which is an approximation of the original independent gas predicate.\n     * Empty fluid is excluded because its native type can report lighter than air.\n     */"
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 771,
+            "execution_sha256": "738c53f96e8fafa0baace767812a58bb5f9d265c4a08303549dda4fe2c64521e",
+            "before_lines": 252,
+            "after_lines": 202,
+            "before_max_line": 113,
+            "after_max_line": 113
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 771,
+            "execution_sha256": "738c53f96e8fafa0baace767812a58bb5f9d265c4a08303549dda4fe2c64521e",
+            "before_lines": 252,
+            "after_lines": 202,
+            "before_max_line": 113,
+            "after_max_line": 113
+          }
+        ]
+      }
+    },
+    "limit": "Whitespace, two local id bindings renamed registryId, and three source-backed documentation corrections only. No gameplay changes."
+  },
+  "protected_materials": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+      "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+      "sha256": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+    }
+  ],
+  "finite_source_witnesses": {
+    "kind": "Finite source predicates/counts, not execution of target classes or world behavior.",
+    "wood_valve": {
+      "id": 17001,
+      "original_flammability": 150,
+      "original_fire_spread": 150,
+      "current": "TankControllerBlock has no override; registered through metal factory properties, native fire-table fallback has no GT valve registration in the examined production tree.",
+      "wood_wall": "18001 is already explicitly 150 through Part.flammability -> MultiblockPortBlock; not missing."
+    },
+    "meltdown_neighbour": {
+      "original": "WD.burn(F,F) -> WD.fire: excludes lava/fire, accepts carpet or no collision; honors old IItemGT/Thaumcraft node checks before unconditional branch.",
+      "current": "Requires loaded, not FIRE, empty fluid state and empty collision shape before setting fire.",
+      "finite_cases": [
+        {
+          "neighbour": "loaded ordinary solid-collision carpet",
+          "original_attempts_fire": true,
+          "current_attempts_fire": false
+        },
+        {
+          "neighbour": "loaded nonlava fluid with no collision, no GT/node exclusion",
+          "original_attempts_fire": true,
+          "current_attempts_fire": false
+        }
+      ],
+      "policy": "Keep modern loaded/fluid protection; do not silently expand destructive effects. A setBlock attempt does not prove sustained fire in a world."
+    },
+    "existing_hazard_sequence": [
+      "formed and nonempty",
+      "temperature/meltdown",
+      "magic",
+      "acid",
+      "plasma",
+      "gas",
+      "power conducting / wooden simple-only",
+      "automatic output"
+    ],
+    "random_cube_counts": [
+      {
+        "size": 3,
+        "cube": 27,
+        "neighbour_visits_before_exclusions": 162,
+        "meltdown_cell_roll_denominator": 4,
+        "acid_magic_roll_denominator": 3
+      },
+      {
+        "size": 5,
+        "cube": 125,
+        "neighbour_visits_before_exclusions": 750,
+        "meltdown_cell_roll_denominator": 4,
+        "acid_magic_roll_denominator": 3
+      }
+    ],
+    "lava": "Only size3, vanilla lava/flowing lava and at least1000; size5 has no lava-pool branch. No extra fluid acceptance or explosion proved.",
+    "flow_truth_table": [
+      {
+        "facing": "DOWN",
+        "gas": false,
+        "density": -100,
+        "allowed": false
+      },
+      {
+        "facing": "DOWN",
+        "gas": false,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "DOWN",
+        "gas": false,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "DOWN",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "DOWN",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "DOWN",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "UP",
+        "gas": false,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "UP",
+        "gas": false,
+        "density": 0,
+        "allowed": false
+      },
+      {
+        "facing": "UP",
+        "gas": false,
+        "density": 1000,
+        "allowed": false
+      },
+      {
+        "facing": "UP",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "UP",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "UP",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": false,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": false,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": false,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "NORTH",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": false,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": false,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": false,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "SOUTH",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": false,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": false,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": false,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "WEST",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": false,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": false,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": false,
+        "density": 1000,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": true,
+        "density": -100,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": true,
+        "density": 0,
+        "allowed": true
+      },
+      {
+        "facing": "EAST",
+        "gas": true,
+        "density": 1000,
+        "allowed": true
+      }
+    ],
+    "ordinary_transfer": {
+      "offered_liters": 2000,
+      "destination_accepts": 2000,
+      "original_moved": 2000,
+      "current_moved": 2000,
+      "limit": "No 1000 throttle in either source branch; adversarial callback atomicity and native side integration not runtime-tested."
+    },
+    "unaccepted_property_edges": [
+      "Tank magic branch reads explicit MAGIC while helper isMagic also resolves MAGICAL; material import flags and real surviving low-temperature examples need separate acceptance.",
+      "Unknown add-on gas uses native lighter-than-air approximation rather than legacy independent isGaseous; no concrete add-on integration accepted.",
+      "Original optional Flux block replacement differs when that integration is present; default unavailable Flux cannot be treated as mandatory pollution in the modern baseline."
+    ],
+    "excluded_false_positives": [
+      "Wooden wall already has fire metadata.",
+      "Meltdown/magic/acid/plasma/gas/simple restrictions already have tick branches.",
+      "Generated molten entries use material melting temperature; do not label them all ambient from the declaration helper default.",
+      "Steam explicitly uses373K in both sources.",
+      "Auto-output formula matches all36 selected direction/gas/density inputs; no1000 throttle exists."
+    ]
+  },
+  "limits": [
+    "No Java compilation/initialization, Gradle, tests, game, build or push.",
+    "Native javap and extraction are read-only evidence; no actual fire/flow or restart run.",
+    "This is not whole-tank/client/recipe/material/add-on acceptance. Full original audit/readability objective remains active."
+  ],
+  "previous_goal_turn": "Progress: committed a9da9ba85 with25-valve/access/final-drop evidence and five source readability improvements.",
+  "root_revalidation": {
+    "kind": "Current source/native identities, complete selected execution/literal/comment/directive comparisons, actual fire callback consumers and finite source predicates only.",
+    "original_sources": 14,
+    "current_sources": 28,
+    "shared_platform_views": 36,
+    "readability_files": 3,
+    "readability_execution_views": 6,
+    "native_artifacts": 2,
+    "native_entries": 6,
+    "readonly_javap_views": 3,
+    "ledger_contiguous": [
+      1,
+      265
+    ],
+    "new_or_added_local_links": 16,
+    "protected_materials_unchanged": true,
+    "raw_literal_positions": [
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+        "platform": "forge",
+        "raw_literal_count": 3,
+        "ordered_position_sha256": "f988a1908e06a38e9a8b613a318a3abea74118383388a2d2e52c77b156b7cb79"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/MultiblockPortBlock.java",
+        "platform": "neoforge",
+        "raw_literal_count": 3,
+        "ordered_position_sha256": "9c87dda774c115f4b4fddd750cc1205b9c949f4807d7054d20190643a3847469"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+        "platform": "forge",
+        "raw_literal_count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/content/multiblock/TankFlowRules.java",
+        "platform": "neoforge",
+        "raw_literal_count": 0,
+        "ordered_position_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+        "platform": "forge",
+        "raw_literal_count": 11,
+        "ordered_position_sha256": "4cab891cca9dbc90ef54431b19ed00c81ad1aa1a985c85a7e9e5b048e3da444a"
+      },
+      {
+        "source": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidHazards.java",
+        "platform": "neoforge",
+        "raw_literal_count": 11,
+        "ordered_position_sha256": "4cab891cca9dbc90ef54431b19ed00c81ad1aa1a985c85a7e9e5b048e3da444a"
+      }
+    ],
+    "target_execution_build_or_tests": false
+  }
+}

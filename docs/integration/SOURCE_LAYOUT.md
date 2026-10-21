@@ -10,6 +10,8 @@
 
 多方块储罐25阀的数据在core `TankValveParameters`，共享 `TankValveSpec`只适配原生wall／材料查找，`TankControllerBlock`负责交互／物品保存，`MultiblockTankControllerBlockEntity`负责结构／内容／能力与tick；`StructureGrid.hollowTank`给纯遍历，`HollowTankStructure`接原生谓词。最终掉落还经过CoverDropMixin／CoverDrops，不能只看块类，见[专题](MULTIBLOCK_TANK_AUDIT.md)。
 
+储罐火属性需分别追`TankControllerBlock`主阀与`MultiblockPortBlock`壁板；`OriginalMultiblockPartData`只给结构件的火数值。`FluidHazards`是依赖注册表的原生查询，`TankFlowRules`仅委托core方向公式，不能用它证明所有实际流体物性相同，见[危害与输出专题](TANK_HAZARDS_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
