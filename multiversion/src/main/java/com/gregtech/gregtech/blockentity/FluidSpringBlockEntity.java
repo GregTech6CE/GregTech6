@@ -22,17 +22,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 //?}
 
 /**
- * GT6's fluid spring ({@code MultiTileEntityFluidSpring}).
- *
- * <p>GT6's spring sits at bedrock carrying one fluid and 6000 mB of it (oil), 3000 (gas) or 500
- * (geothermal water). It activates as soon as the block above it is free and then — with a
- * {@code 1/amount} chance per tick — pushes that fluid up: if the block above already holds the same
- * fluid it raises its level, otherwise it places a fresh source block. The port keeps that: the spring
- * is a {@link com.gregtech.gregtech.block.FluidSpringBlock} with this block entity, and the fluid it
- * emits is the world block the port registers for the spring fluids.
+ * Fixed spring variants take their fluid and roll interval from the registry definition.
+ * Legacy carriers keep an explicit output and interval. Server ticks activate on replaceable
+ * headspace, then roll before overwriting the block directly above; the original global
+ * startup cadence, finite accumulation and horizontal source growth are separate contracts.
  */
 public class FluidSpringBlockEntity extends BlockEntity {
-    /** GT6's fluids per spring kind: oil 6000, gas 3000, geothermal water 500, lava 1000. */
+
+    /** Default legacy roll bound; fixed variants use the interval in their catalog definition. */
     public static final int DEFAULT_AMOUNT = 1000;
 
 //? if >=1.21.1 {
@@ -50,15 +47,22 @@ public class FluidSpringBlockEntity extends BlockEntity {
     }
 
     private com.gregtech.gregtech.worldgen.FluidSpringRules.Spring definition() {
-        return ((com.gregtech.gregtech.block.FluidSpringBlock)getBlockState().getBlock()).spring();
+        return ((com.gregtech.gregtech.block.FluidSpringBlock) getBlockState().getBlock()).spring();
     }
-    public String fluidId() { return definition()==null?fluidId:definition().fluidId(); }
 
-    public int amount() { return definition()==null?amount:definition().amount(); }
+    public String fluidId() {
+        return definition() == null ? fluidId : definition().fluidId();
+    }
 
-    public boolean active() { return active; }
+    public int amount() {
+        return definition() == null ? amount : definition().amount();
+    }
 
-    /** GT6 {@code mFluid} — the fluid this spring pushes up, as a stack of its stored amount. */
+    public boolean active() {
+        return active;
+    }
+
+    /** Metadata view for tools: output fluid and nominal roll bound, not a drainable inventory. */
     public FluidStack springFluid() {
         Fluid fluid = fluid();
         return fluid == null ? FluidStack.EMPTY : new FluidStack(fluid, amount());
@@ -74,17 +78,27 @@ public class FluidSpringBlockEntity extends BlockEntity {
 
     /** Upgrade recognized legacy spring metadata to the fixed source variant/rate. */
     public void setSpring(String fluidId, int amount) {
-        var variant=com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId);
-        if(variant==null) {
-            if(definition()==null){this.fluidId=fluidId==null?"":fluidId;this.amount=Math.max(1,amount);setChanged();}
+        var variant = com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId);
+        if (variant == null) {
+            if (definition() == null) {
+                this.fluidId = fluidId == null ? "" : fluidId;
+                this.amount = Math.max(1, amount);
+                setChanged();
+            }
             return;
         }
-        if(level==null){setBlockState(variant.defaultBlockState());this.fluidId="";return;}
-        if(level.isClientSide)return;
-        boolean wasActive=active;
-        level.setBlock(worldPosition,variant.defaultBlockState(),3);
-        if(level.getBlockEntity(worldPosition) instanceof FluidSpringBlockEntity next) {
-            next.fluidId="";next.active=wasActive;next.setChanged();
+        if (level == null) {
+            setBlockState(variant.defaultBlockState());
+            this.fluidId = "";
+            return;
+        }
+        if (level.isClientSide) return;
+        boolean wasActive = active;
+        level.setBlock(worldPosition, variant.defaultBlockState(), 3);
+        if (level.getBlockEntity(worldPosition) instanceof FluidSpringBlockEntity next) {
+            next.fluidId = "";
+            next.active = wasActive;
+            next.setChanged();
         }
     }
 
@@ -92,29 +106,37 @@ public class FluidSpringBlockEntity extends BlockEntity {
         be.tick();
     }
 
-    /** GT6's {@code onTick2}: activate when the space above frees up, then emit at {@code 1/amount}. */
+    /** Server activation and randomized output for this port's fixed and legacy springs. */
     public void tick() {
         if (level == null || level.isClientSide) return;
-        if(definition()==null && !fluidId.isEmpty() && com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId)!=null){setSpring(fluidId,amount);return;}
+        if (definition() == null && !fluidId.isEmpty() && com.gregtech.gregtech.registry.GTFluidSprings.byFluid(fluidId) != null) {
+            setSpring(fluidId, amount);
+            return;
+        }
         BlockState above = level.getBlockState(worldPosition.above());
         Fluid fluid = fluid();
         if (fluid == null) return;
         boolean sameFluidAbove = !above.getFluidState().isEmpty() && above.getFluidState().getType() == fluid;
         if (!active) {
-            // GT6 waits for a free spot above and activates then.
-            if (above.isAir() || above.canBeReplaced()) { active = true; setChanged(); }
+            // This port waits for air or replaceable headspace before setting active.
+            if (above.isAir() || above.canBeReplaced()) {
+                active = true;
+                setChanged();
+            }
             else return;
         }
-        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt,amount())) return;
+        if (!com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(level.random::nextInt, amount())) return;
         emit();
     }
 
     /**
-     * One GT6 production step ({@code if (tProduce)}): the block above is filled with the spring's
-     * fluid. GT6 raises the level when the same fluid is already there and places a source otherwise.
+     * Replaces only the block directly above with the output block's default state.
+     * Rewriting an existing source does not implement the original horizontal source growth
+     * or finite-fluid accumulation.
      *
      * @return true when the world changed
      */
+
     public boolean emit() {
         if (level == null) return false;
         Fluid fluid = fluid();
@@ -131,7 +153,7 @@ public class FluidSpringBlockEntity extends BlockEntity {
     private static Block fluidBlockOf(Fluid fluid) {
         FluidType type = fluid.getFluidType();
         if (type == null) return null;
-        // The world block shares the fluid's registry path (registered by Loader_Fluids).
+        // This lookup assumes matching fluid/block keys; it does not query a fluid-owned world block.
 //? if >=1.21.1 {
         /*ResourceLocation id = BuiltInRegistries.FLUID.getKey(fluid);
         return id == null ? null : BuiltInRegistries.BLOCK.get(id);
@@ -141,39 +163,42 @@ public class FluidSpringBlockEntity extends BlockEntity {
 //?}
     }
 
-    /** Test/tools helper: how many ticks GT6's roll needs on average for this spring. */
+    /** Nominal roll interval after positivity clamping; not the first-output delay. */
     public static int expectedTicks(int amount) {
         return com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(amount);
     }
 
-    /** A deterministic roll for tests: GT6 uses {@code rng(amount) == 0}. */
+    /** Uses the supplied RNG and the port's clamped roll interval. */
     public static boolean rollsThisTick(RandomSource random, int amount) {
-        return com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(random::nextInt,amount);
+        return com.gregtech.gregtech.worldgen.FluidSpringRules.rolls(random::nextInt, amount);
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void loadAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.loadAdditional(tag,lookup);
+    /*protected void loadAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.loadAdditional(tag, lookup);
 *///?} else {
     public void load(CompoundTag tag) {
         super.load(tag);
 //?}
-        fluidId = definition()==null?tag.getString("spring"):"";
+        fluidId = definition() == null ? tag.getString("spring") : "";
         amount = com.gregtech.gregtech.worldgen.FluidSpringRules.positiveAmount(tag.contains("amount") ? tag.getInt("amount") : DEFAULT_AMOUNT);
         active = tag.getBoolean("active");
-        if(level!=null&&level.isClientSide) { requestModelDataUpdate(); level.sendBlockUpdated(worldPosition,getBlockState(),getBlockState(),3); }
+        if (level != null && level.isClientSide) {
+            requestModelDataUpdate();
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
     }
 
     @Override
 //? if >=1.21.1 {
-    /*protected void saveAdditional(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
-        super.saveAdditional(tag,lookup);
+    /*protected void saveAdditional(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
+        super.saveAdditional(tag, lookup);
 *///?} else {
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
 //?}
-        if(definition()==null) {
+        if (definition() == null) {
             if (!fluidId.isEmpty()) tag.putString("spring", fluidId);
             tag.putInt("amount", amount);
         }
@@ -181,27 +206,40 @@ public class FluidSpringBlockEntity extends BlockEntity {
     }
 
 //? if >=1.21.1 {
-    /*@Override public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
+    /*@Override
+    public net.neoforged.neoforge.client.model.data.ModelData getModelData() {
 *///?} else {
-    @Override public net.minecraftforge.client.model.data.ModelData getModelData() {
+    @Override
+    public net.minecraftforge.client.model.data.ModelData getModelData() {
 //?}
-        Fluid current=fluid();
+        Fluid current = fluid();
 //? if >=1.21.1 {
-        /*return net.neoforged.neoforge.client.model.data.ModelData.builder().with(MODEL_FLUID,current==null?net.minecraft.world.level.material.Fluids.WATER:current).build();
+        /*return net.neoforged.neoforge.client.model.data.ModelData.builder().with(MODEL_FLUID,
+                current == null ? net.minecraft.world.level.material.Fluids.WATER : current).build();
 *///?} else {
-        return net.minecraftforge.client.model.data.ModelData.builder().with(MODEL_FLUID,current==null?net.minecraft.world.level.material.Fluids.WATER:current).build();
+        return net.minecraftforge.client.model.data.ModelData.builder().with(MODEL_FLUID,
+                current == null ? net.minecraft.world.level.material.Fluids.WATER : current).build();
 //?}
     }
-    @Override public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+
+    @Override
+    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
         return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
 //? if >=1.21.1 {
-    /*@Override public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) { return saveWithoutMetadata(lookup); }
+    /*@Override
+    public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {
+        return saveWithoutMetadata(lookup);
+    }
 *///?} else {
-    @Override public CompoundTag getUpdateTag() { return saveWithoutMetadata(); }
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
 //?}
-    @Override public void onLoad() {
+    @Override
+    public void onLoad() {
         super.onLoad();
-        if(level!=null&&level.isClientSide) requestModelDataUpdate();
+        if (level != null && level.isClientSide) requestModelDataUpdate();
     }
 }
