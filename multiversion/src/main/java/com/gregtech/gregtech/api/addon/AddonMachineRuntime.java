@@ -65,7 +65,6 @@ public final class AddonMachineRuntime {
                 .recipes(recipes)
                 .energy(parameters.energyTag(), parameters.energyIn())
                 .energyOutput(parameters.energyOut())
-                .energyRange(parameters.energyInMin(), parameters.energyInMax())
                 .tier(parameters.tier())
                 .parallel(parameters.parallelLimit())
                 .strength(parameters.hardness(), parameters.blastResistance())
@@ -76,7 +75,19 @@ public final class AddonMachineRuntime {
                 .processingEfficiency(definition.efficiency())
                 .constantEnergy(definition.constantEnergy())
                 .structureKeys(definition.structureKeys())
-                .minimumLightAbove(parameters.minimumLightAbove());
+                .minimumLightAbove(parameters.minimumLightAbove())
+                .searchOutputTanks(parameters.searchOutputTanks())
+                .exclusiveOutputs(parameters.exclusiveOutputs())
+                .itemOutputTarget(parameters.itemOutputTarget())
+                .fluidOutputTarget(parameters.fluidOutputTarget())
+                .itemInputSource(parameters.itemInputSource())
+                .fluidInputSource(parameters.fluidInputSource());
+        if (parameters.energyRangeSpecified())
+            spec.energyRange(parameters.energyInMin(), parameters.energyInMax());
+        else if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.LARGE_RECIPE)
+            spec.implicitEnergyRange(parameters.acceptedEnergyInMin(true), parameters.acceptedEnergyInMax(true));
+        else if (parameters.energyInMin() > 0)
+            spec.implicitEnergyRange(parameters.energyInMin(), parameters.energyInMax());
         if (definition.kind() == com.gregtech.gregtech.api.machine.MachineControllerKind.BASIC
                 || parameters.cheapOverclockingSpecified())
             spec.cheapOverclocking(parameters.cheapOverclocking());

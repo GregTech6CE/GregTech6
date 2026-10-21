@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-21",
+  "repository": "https://github.com/SaltNya/GregTech6.git",
+  "branch": "main",
+  "local_before_merge": "4e013830b696e5f708e9615c4defb9fd6aa3d4a4",
+  "remote_before_merge": "3624ca37c6dead6a79b6274ad182da4c37c962c0",
+  "local_commits_before_checkpoint": 49,
+  "checkpoint_commit": "4e013830b696e5f708e9615c4defb9fd6aa3d4a4",
+  "remote_commits_integrated": 20,
+  "conflicts_resolved": [
+    {
+      "path": "docs/integration/DECISIONS.md",
+      "resolution": "Keep all sections and headings from both parents."
+    }
+  ],
+  "upstream_example_json_blank_lines_removed": [
+    "examples/addon-sample/forge/resources/assets/addon_sample/blockstates/sample_detector.json",
+    "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/sampledetector.json",
+    "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/sampledetector_active.json",
+    "examples/addon-sample/forge/resources/assets/addon_sample/models/block/machine/basic/sampledetector_running.json",
+    "examples/addon-sample/forge/resources/assets/addon_sample/models/item/sample_detector.json",
+    "examples/addon-sample/neoforge/resources/assets/addon_sample/blockstates/sample_detector.json",
+    "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/sampledetector.json",
+    "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/sampledetector_active.json",
+    "examples/addon-sample/neoforge/resources/assets/addon_sample/models/block/machine/basic/sampledetector_running.json",
+    "examples/addon-sample/neoforge/resources/assets/addon_sample/models/item/sample_detector.json"
+  ],
+  "verification": {
+    "source_policy_and_standard_chinese": {
+      "tests": 28,
+      "result": "passed",
+      "log_sha256": "b068c2a0eb318ded4986ea84acc5fa1800f34330bf7e762fb4b40fb56598bd90"
+    },
+    "staged_diff_check": "passed",
+    "readability_checkpoint": "logistics-storage-readability-20261021.json"
+  },
+  "user_wood_edit": {
+    "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java",
+    "sha256_before": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "handling": "Stashed separately during merge; restore byte-identically after the merge commit, exclude from push."
+  },
+  "limits": [
+    "No full build, game, runtime or saved-world restart acceptance.",
+    "The complete original-alignment/readability goal remains active; direct logistics-storage audit continues after this synchronization."
+  ]
+}

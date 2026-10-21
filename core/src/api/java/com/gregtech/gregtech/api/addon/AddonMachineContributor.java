@@ -19,7 +19,10 @@ public interface AddonMachineContributor {
 
     default List<MachineLayout> layouts() { return List.of(); }
 
-    /** Structure casings. Names are global and may be used from {@link MachineLayout}. */
+    /**
+     * Structure casings and energy parts. Names are global and may be used from {@link MachineLayout}.
+     * A part with no energy role is a casing. {@link StructurePartEnergy} makes it an energy part.
+     */
     default List<StructurePartDeclaration> parts() { return List.of(); }
 
     /**
@@ -42,4 +45,11 @@ public interface AddonMachineContributor {
 
     /** Fuel generators. A multiblock names its layout through {@code machineType}. */
     default List<FuelGeneratorDeclaration> fuelGenerators() { return List.of(); }
+
+    /**
+     * Compressed gas drums. Ordinary fluid insertion is closed.
+     * A behavior fills one through {@code MachineBehaviorContext#pushCompressedGas}.
+     * Fuel machines and pipes drain it.
+     */
+    default List<CompressedGasTankDeclaration> compressedGasTanks() { return List.of(); }
 }

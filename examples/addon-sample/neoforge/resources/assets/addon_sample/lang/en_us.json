@@ -1,13 +1,19 @@
 {
   "block.addon_sample.irrigator": "Sample Irrigator",
   "addon_sample.irrigator.water": "Water farmland",
+  "block.addon_sample.sample_miner": "Sample Miner",
+  "block.addon_sample.sample_hopper": "Sample Void Hopper",
+  "addon_sample.hopper.void": "Void items",
   "block.addon_sample.ru_buffer": "Sample Rotation Buffer",
   "addon_sample.ru_buffer.release": "Release rotation",
   "block.addon_sample.hand_crank": "Sample Hand Crank",
   "block.addon_sample.sample_press": "Sample Press",
+  "block.addon_sample.sample_detector": "Sample Detector",
   "block.addon_sample.large_sample_press": "Large Sample Press",
   "addon_sample.structure.press.1": "3 wide, 2 high and 3 deep. One cell is a Sample Wall; the rest are Tank Walls. The controller is the front center.",
   "block.addon_sample.sample_wall": "Sample Wall",
+  "block.addon_sample.sample_emitter": "Sample Emitter",
+  "block.addon_sample.sample_transformer": "Sample Transformer",
   "block.addon_sample.sample_engine": "Sample Engine",
   "block.addon_sample.sample_turbine": "Sample Turbine",
   "item.addon_sample.sample_blank": "%s Sample Blank",
@@ -23,5 +29,7 @@
   "block.addon_sample.item_pipe_huge_pvc": "Huge PVC Item Pipe",
   "block.addon_sample.item_pipe_restrictive_medium_pvc": "Restrictive Medium PVC Item Pipe",
   "block.addon_sample.item_pipe_restrictive_large_pvc": "Restrictive Large PVC Item Pipe",
-  "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe"
+  "block.addon_sample.item_pipe_restrictive_huge_pvc": "Restrictive Huge PVC Item Pipe",
+  "block.addon_sample.sample_drum": "Sample Compressed Gas Drum",
+  "block.addon_sample.sample_compressor": "Sample Gas Compressor"
 }

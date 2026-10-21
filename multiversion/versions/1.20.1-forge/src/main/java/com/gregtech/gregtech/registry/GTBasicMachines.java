@@ -17,6 +17,7 @@ public final class GTBasicMachines {
         }
         BehaviorMachineRegistration.register(bus);
         FuelGeneratorRegistration.register(bus);
+        CompressedGasTankRegistration.register(bus);
     }
     public static List<RegistryObject<BasicMachineBlock>> all() {
         return MachineRegistry.basicMachines();

@@ -34,11 +34,11 @@ public class GTSmallOreFeature extends Feature<NoneFeatureConfiguration> {
         java.util.List<SmallOre> ores;
         net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();
         if (dim == net.minecraft.world.level.Level.NETHER) {
-            ores = GTOreVeins.NETHER_SMALL_ORES;
+            ores = GTOreVeins.activeNetherSmallOres();
         } else if (dim == net.minecraft.world.level.Level.END) {
-            ores = GTOreVeins.END_SMALL_ORES;
+            ores = GTOreVeins.activeEndSmallOres();
         } else {
-            ores = GTOreVeins.OVERWORLD_SMALL_ORES;
+            ores = GTOreVeins.activeOverworldSmallOres();
         }
 
         boolean placedAny = false;

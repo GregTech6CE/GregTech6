@@ -18,7 +18,7 @@ import java.util.Random;
  *
  * <p>Vein origins lie on a 3x3 chunk grid (chunks where {@code floorMod(chunkX,3)==1 &&
  * floorMod(chunkZ,3)==1}). For every origin a single vein type is selected from
- * {@link GTOreVeins#OVERWORLD_VEINS} by weighted random, deterministically seeded from the world
+ * {@link GTOreVeins#activeOverworldVeins()} by weighted random, deterministically seeded from the world
  * seed and the origin chunk coordinates, so all chunks the (up to 80-block wide) vein touches
  * agree on the vein type and its base Y level.
  *
@@ -46,8 +46,8 @@ public class GTOreVeinFeature extends Feature<NoneFeatureConfiguration> {
         int totalWeight;
         net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim = level.getLevel().dimension();
         if (dim == net.minecraft.world.level.Level.END) {
-            veins = GTOreVeins.END_VEINS;
-            totalWeight = GTOreVeins.TOTAL_END_VEIN_WEIGHT;
+            veins = GTOreVeins.activeEndVeins();
+            totalWeight = veins.stream().mapToInt(OreVein::weight).sum();
         } else if (dim == net.minecraft.world.level.Level.NETHER) {
             return false;
         } else {

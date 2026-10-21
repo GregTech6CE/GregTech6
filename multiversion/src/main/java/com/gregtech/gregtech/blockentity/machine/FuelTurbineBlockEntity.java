@@ -60,6 +60,14 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 formed = false;
                 return false;
             }
+            if (cell.plainBlock()) {
+                if (!cell.matches(level, level.getBlockState(pos))) {
+                    bindings.clear(this::release);
+                    formed = false;
+                    return false;
+                }
+                continue;
+            }
             if (level.getBlockState(pos).getBlock() != cell.block()
                     || !(level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity)) {
                 bindings.clear(this::release);

@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north,lit=false,running=false": { "model": "addon_sample:block/machine/basic/samplehopper" },
+    "facing=north,lit=false,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_running" },
+    "facing=north,lit=true,running=false": { "model": "addon_sample:block/machine/basic/samplehopper_active" },
+    "facing=north,lit=true,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_active" },
+    "facing=east,lit=false,running=false": { "model": "addon_sample:block/machine/basic/samplehopper", "y": 90 },
+    "facing=east,lit=false,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_running", "y": 90 },
+    "facing=east,lit=true,running=false": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 90 },
+    "facing=east,lit=true,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 90 },
+    "facing=south,lit=false,running=false": { "model": "addon_sample:block/machine/basic/samplehopper", "y": 180 },
+    "facing=south,lit=false,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_running", "y": 180 },
+    "facing=south,lit=true,running=false": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 180 },
+    "facing=south,lit=true,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 180 },
+    "facing=west,lit=false,running=false": { "model": "addon_sample:block/machine/basic/samplehopper", "y": 270 },
+    "facing=west,lit=false,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_running", "y": 270 },
+    "facing=west,lit=true,running=false": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 270 },
+    "facing=west,lit=true,running=true": { "model": "addon_sample:block/machine/basic/samplehopper_active", "y": 270 }
+  }
+}
