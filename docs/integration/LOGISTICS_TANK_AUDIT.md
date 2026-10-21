@@ -1,5 +1,7 @@
 # 物流桶与共享储液规则核查
 
+2026-10-21 后续：直接路由／空仓身份、原生流体数据比较、世界保存及最终附件掉落已继续核查；新确认客户端更新和专用渲染器缺口ALIGN-285／286。092–094保持各自范围，原报告的运行证据保留原日期，见[续核](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。
+
 日期：2026-10-19；基线 `6bf967c93`。原版根目录 `C:/Dev/gregtech6-master/gregtech6-master/src/main/java`。主要来源为 `MultiTileEntityBarrelLogistics`、`TileEntityBase08Barrel`、`FluidTankGT` 和 `Loader_MultiTileEntities` 的 32072 注册行；原作者 GregTech-6 Team / Gregorius Techneticies，原始 LGPL 文件只读，哈希见回执。
 
 本轮核对物流桶规格、过滤记忆、软锤操作及储液底层的容量／溢出合同。不是物流核心全部路由、所有覆盖板、所有容器或存档兼容性的完整验收。

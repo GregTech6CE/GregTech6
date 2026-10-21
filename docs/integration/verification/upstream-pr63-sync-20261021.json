@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-21",
+  "local_parent": "d298f5a630c45b10ad45707ab10edd2673115173",
+  "incoming_parent": "dde39d33589134ce063b1d4e3646aaf1c4d5259f",
+  "incoming_pr": 63,
+  "scope": "Synchronize upstream behavior recipe catalyst support after local audit; not a gameplay/compilation acceptance of that feature.",
+  "conflicts": [
+    "docs/integration/DECISIONS.md"
+  ],
+  "resolution": "Both complete parent documents remain ordered subsequences of the resolved document (ignoring blank lines).",
+  "audit_current_source_hashes_revalidated": 44,
+  "shared_view_sources_unchanged": 54,
+  "incoming_json_documents_parsed": 14,
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "target_tests_build_game_or_push": false
+}

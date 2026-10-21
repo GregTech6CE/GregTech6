@@ -47,8 +47,8 @@ import java.util.List;
  * </ul>
  *
  * <p>The port installs the three providers through {@link RecipeMap#dynamicRecipes}, so the
- * table-driven lookup is untouched and these rows are computed only when nothing else matched. An idle
- * machine re-runs the lookup every tick. Scanner, Printer and Replicator rows close over the current
+ * table-driven lookup is untouched and these rows are computed only when nothing else matched. Idle
+ * lookup timing is controlled by the native machine. Scanner, Printer and Replicator rows close over the current
  * medium, so each row is built from that stack's exact item and NBT.</p>
  *
  * <p>Original UUM and SCANNABLE facts gate the native providers. Viewer rows group real

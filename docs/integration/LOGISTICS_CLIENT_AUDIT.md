@@ -1,5 +1,7 @@
 # 物流线与CPU显示的客户端、形状和资源核查
 
+2026-10-21 第八十七批补充：下文“其它宿主可从fallback／tank renderer转入”不覆盖所有专用实体。物流桶虽有可绘制分支，但独立LOGISTICS_TANK未注册renderer，且不具fallback跟踪资格；更新数据也漏物流板，新增285／286，见[直接存储客户端入口](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。物流线／核心／已注册部件的原有结论不由此撤销。
+
 第七十四批，2026-10-21，基线`015d87c81`。继续[核心状态](LOGISTICS_CORE_STATE_AUDIT.md)、[搬运](LOGISTICS_TRANSFER_AUDIT.md)与[网络生命周期](LOGISTICS_NETWORK_AUDIT.md)，新增ALIGN-261，扩126的物流线连接工具成本。18份原版、39份当前输入、54个平台视图、69项当前资源，以及本机两个原生工件4个entry／2份只读javap视图见[回执](verification/logistics-client-audit-20261021.json)。没有把客户端源码或资源存在当作实际画面验收。
 
 原只读根为`C:/Dev/gregtech6-master/gregtech6-master/src/main/java`，作者和许可证头随来源留存，原目录未动。CompoundMaterials与WoodMaterials保留本轮开始时的字节摘要。
