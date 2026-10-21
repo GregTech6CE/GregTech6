@@ -26,100 +26,132 @@ import java.util.*;
 
 /** Registry-driven built-in datapack: avoids thousands of tiny processResources files. */
 //? if >=1.21.1 {
-/*@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=EventBusSubscriber.Bus.MOD)
+/*@EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 *///?} else {
-@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID,bus=Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 //?}
 public final class BlockLootPack extends AbstractPackResources {
-    private Map<ResourceLocation,byte[]> resources;
+    private Map<ResourceLocation, byte[]> resources;
 //? if >=1.21.1 {
-    /*public BlockLootPack(PackLocationInfo info) { super(info); }
+    /*public BlockLootPack(PackLocationInfo info) {
+        super(info);
+    }
 *///?} else {
-    public BlockLootPack(String id) { super(id,true); }
+    public BlockLootPack(String id) {
+        super(id, true);
+    }
 //?}
-    @SubscribeEvent public static void packs(AddPackFindersEvent event) {
-        if(event.getPackType()!=PackType.SERVER_DATA) return;
-        event.addRepositorySource(output->{
+    @SubscribeEvent
+    public static void packs(AddPackFindersEvent event) {
+        if (event.getPackType() != PackType.SERVER_DATA) return;
+        event.addRepositorySource(output -> {
 //? if >=1.21.1 {
-            /*var location=new PackLocationInfo("gt6ce:block_loot",Component.literal("GregTech block loot and harvest tags"),PackSource.BUILT_IN,Optional.empty());
-            var pack=Pack.readMetaAndCreate(location,new Pack.ResourcesSupplier(){public PackResources openPrimary(PackLocationInfo info){return new BlockLootPack(info);}public PackResources openFull(PackLocationInfo info,Pack.Metadata metadata){return new BlockLootPack(info);}},PackType.SERVER_DATA,new PackSelectionConfig(true,Pack.Position.BOTTOM,true));
+            /*var location = new PackLocationInfo("gt6ce:block_loot", Component.literal("GregTech block loot and harvest tags"), PackSource.BUILT_IN,
+                    Optional.empty());
+            var pack = Pack.readMetaAndCreate(location, new Pack.ResourcesSupplier() {
+
+                public PackResources openPrimary(PackLocationInfo info) {
+                    return new BlockLootPack(info);
+                }
+
+                public PackResources openFull(PackLocationInfo info, Pack.Metadata metadata) {
+                    return new BlockLootPack(info);
+                }
+            }, PackType.SERVER_DATA, new PackSelectionConfig(true, Pack.Position.BOTTOM, true));
 *///?} else {
-            var pack=Pack.readMetaAndCreate("gt6ce:block_loot",Component.literal("GregTech block loot and harvest tags"),true,
-                    BlockLootPack::new,PackType.SERVER_DATA,Pack.Position.BOTTOM,PackSource.BUILT_IN);
+            var pack = Pack.readMetaAndCreate("gt6ce:block_loot", Component.literal("GregTech block loot and harvest tags"), true,
+                    BlockLootPack::new, PackType.SERVER_DATA, Pack.Position.BOTTOM, PackSource.BUILT_IN);
 //?}
-            if(pack!=null) output.accept(pack);
+            if (pack != null) output.accept(pack);
         });
     }
-    private synchronized Map<ResourceLocation,byte[]> data() {
-        if(resources!=null) return resources;
-        var gson=new com.google.gson.Gson();
-        var result=new HashMap<ResourceLocation,byte[]>();
-        var tags=new TreeMap<String,Set<String>>();
+
+    private synchronized Map<ResourceLocation, byte[]> data() {
+        if (resources != null) return resources;
+        var gson = new com.google.gson.Gson();
+        var result = new HashMap<ResourceLocation, byte[]>();
+        var tags = new TreeMap<String, Set<String>>();
 //? if >=1.21.1 {
-        /*for(var block:BuiltInRegistries.BLOCK) {
-            var id=BuiltInRegistries.BLOCK.getKey(block);
+        /*for (var block : BuiltInRegistries.BLOCK) {
+            var id = BuiltInRegistries.BLOCK.getKey(block);
 *///?} else {
-        for(var block:ForgeRegistries.BLOCKS.getValues()) {
-            var id=ForgeRegistries.BLOCKS.getKey(block);
+        for (var block : ForgeRegistries.BLOCKS.getValues()) {
+            var id = ForgeRegistries.BLOCKS.getKey(block);
 //?}
-            if(id==null || !id.getNamespace().equals("gt6ce") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
-            String tag=BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));
-            tags.computeIfAbsent(tag,k->new TreeSet<>()).add(id.toString());
-            int level=BlockHarvestPolicy.level(block);
-            if(level>0) tags.computeIfAbsent("minecraft:needs_"+(level>=3?"diamond":level==2?"iron":"stone")+"_tool",k->new TreeSet<>()).add(id.toString());
-            if(block.asItem()==Items.AIR)continue;
+            if (id == null || !id.getNamespace().equals("gt6ce") || block instanceof net.minecraft.world.level.block.LiquidBlock) continue;
+            String tag = BlockHarvestPolicy.tag(BlockHarvestPolicy.tool(block));
+            tags.computeIfAbsent(tag, k -> new TreeSet<>()).add(id.toString());
+            int level = BlockHarvestPolicy.level(block);
+            if (level > 0) tags.computeIfAbsent("minecraft:needs_" + (level >= 3 ? "diamond" : level == 2 ? "iron" : "stone") + "_tool",
+                    k -> new TreeSet<>()).add(id.toString());
+            if (block.asItem() == Items.AIR) continue;
             // Supply vanilla loot only. Blocks overriding getDrops retain their specialized NBT/drop behavior.
             // GT6 spike metadata distinguished the two materials and wall/omni/falling mode. Copy
             // those properties into BlockStateTag so mining a configured spike does not erase them.
-            Map<String,Object> entry=block instanceof com.gregtech.gregtech.api.block.StatefulBlockLoot stateful
+            Map<String, Object> entry = block instanceof com.gregtech.gregtech.api.block.StatefulBlockLoot stateful
 //? if >=1.21.1 {
-/*// Version-specific branch.
-                    ? Map.of("type","minecraft:item", "name",BuiltInRegistries.ITEM.getKey(block.asItem()).toString(),
+            /*// Version-specific branch.
+                    ? Map.of("type", "minecraft:item", "name", BuiltInRegistries.ITEM.getKey(block.asItem()).toString(),
 *///?} else {
-// Version-specific branch.
-                    ? Map.of("type","minecraft:item", "name",ForgeRegistries.ITEMS.getKey(block.asItem()).toString(),
+            // Version-specific branch.
+                    ? Map.of("type", "minecraft:item", "name", ForgeRegistries.ITEMS.getKey(block.asItem()).toString(),
 //?}
-                            "functions",List.of(Map.of("function","minecraft:copy_state", "block",id.toString(),
-                                    "properties",stateful.lootStateProperties())))
+                    "functions", List.of(Map.of("function", "minecraft:copy_state", "block", id.toString(),
+                    "properties", stateful.lootStateProperties())))
 //? if >=1.21.1 {
-                    /*: Map.of("type","minecraft:item","name",BuiltInRegistries.ITEM.getKey(block.asItem()).toString());
+                    /*: Map.of("type", "minecraft:item", "name", BuiltInRegistries.ITEM.getKey(block.asItem()).toString());
 *///?} else {
-                    : Map.of("type","minecraft:item","name",ForgeRegistries.ITEMS.getKey(block.asItem()).toString());
+                    : Map.of("type", "minecraft:item", "name", ForgeRegistries.ITEMS.getKey(block.asItem()).toString());
 //?}
-            var pool=Map.of("rolls",1,"entries",List.of(entry),"conditions",List.of(Map.of("condition","minecraft:survives_explosion")));
+            var pool = Map.of("rolls", 1, "entries", List.of(entry), "conditions", List.of(Map.of("condition", "minecraft:survives_explosion")));
 //? if >=1.21.1 {
-            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"loot_table/blocks/"+id.getPath()+".json"),
+            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "loot_table/blocks/" + id.getPath() + ".json"),
 *///?} else {
-            result.put(new ResourceLocation(id.getNamespace(),"loot_tables/blocks/"+id.getPath()+".json"),
+            result.put(new ResourceLocation(id.getNamespace(), "loot_tables/blocks/" + id.getPath() + ".json"),
 //?}
-                    gson.toJson(Map.of("type","minecraft:block","pools",List.of(pool))).getBytes(StandardCharsets.UTF_8));
+                    gson.toJson(Map.of("type", "minecraft:block", "pools", List.of(pool))).getBytes(StandardCharsets.UTF_8));
         }
-        tags.forEach((tag,values)->{
-            var id=ResourceLocation.parse(tag);
+        tags.forEach((tag, values) -> {
+            var id = ResourceLocation.parse(tag);
 //? if >=1.21.1 {
-            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(),"tags/block/"+id.getPath()+".json"),
+            /*result.put(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "tags/block/" + id.getPath() + ".json"),
 *///?} else {
-            result.put(new ResourceLocation(id.getNamespace(),"tags/blocks/"+id.getPath()+".json"),
+            result.put(new ResourceLocation(id.getNamespace(), "tags/blocks/" + id.getPath() + ".json"),
 //?}
-                    gson.toJson(Map.of("replace",false,"values",values)).getBytes(StandardCharsets.UTF_8));
+                    gson.toJson(Map.of("replace", false, "values", values)).getBytes(StandardCharsets.UTF_8));
         });
-        resources=Collections.unmodifiableMap(result); return resources;
+        resources = Collections.unmodifiableMap(result);
+        return resources;
     }
+
     public IoSupplier<InputStream> getRootResource(String... path) {
-        if(path.length!=1||!path[0].equals("pack.mcmeta"))return null;
+        if (path.length != 1 || !path[0].equals("pack.mcmeta")) return null;
 //? if >=1.21.1 {
-        /*return ()->new ByteArrayInputStream("{\"pack\":{\"pack_format\":48,\"description\":\"GregTech block loot and harvest tags\"}}".getBytes(StandardCharsets.UTF_8));
+        /*return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":48,\"description\":\"GregTech block loot and harvest tags\"}}".getBytes(
+                StandardCharsets.UTF_8));
 *///?} else {
-        return ()->new ByteArrayInputStream("{\"pack\":{\"pack_format\":15,\"description\":\"GregTech block loot and harvest tags\"}}".getBytes(StandardCharsets.UTF_8));
+        return () -> new ByteArrayInputStream("{\"pack\":{\"pack_format\":15,\"description\":\"GregTech block loot and harvest tags\"}}".getBytes(
+                StandardCharsets.UTF_8));
 //?}
     }
-    public IoSupplier<InputStream> getResource(PackType type,ResourceLocation id) {
-        if(type!=PackType.SERVER_DATA)return null; var bytes=data().get(id);
-        return bytes==null?null:()->new ByteArrayInputStream(bytes);
+
+    public IoSupplier<InputStream> getResource(PackType type, ResourceLocation id) {
+        if (type != PackType.SERVER_DATA) return null;
+        var bytes = data().get(id);
+        return bytes == null ? null : () -> new ByteArrayInputStream(bytes);
     }
-    public void listResources(PackType type,String ns,String path,ResourceOutput out) {
-        if(type==PackType.SERVER_DATA)data().forEach((id,bytes)->{if(id.getNamespace().equals(ns)&&id.getPath().startsWith(path+"/"))out.accept(id,()->new ByteArrayInputStream(bytes));});
+
+    public void listResources(PackType type, String ns, String path, ResourceOutput out) {
+        if (type == PackType.SERVER_DATA) data().forEach((id, bytes) -> {
+            if (id.getNamespace().equals(ns) && id.getPath().startsWith(path+"/")) out.accept(id, () -> new ByteArrayInputStream(bytes));
+        });
     }
-    public Set<String> getNamespaces(PackType type) { return type==PackType.SERVER_DATA?Set.of("minecraft","gt6ce"):Set.of(); }
-    public void close() { resources=null; }
+
+    public Set<String> getNamespaces(PackType type) {
+        return type == PackType.SERVER_DATA ? Set.of("minecraft", "gt6ce") : Set.of();
+    }
+
+    public void close() {
+        resources = null;
+    }
 }

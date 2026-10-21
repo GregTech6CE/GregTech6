@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-22 续核：第九十五批核工作台直接流体／点击，新增298五工具格灌液、299无限尖端参与时的结果合并门控；基本充能和RF接线已有。行为记录至ALIGN-299，共299条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是299个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-22 续核：第九十六批核工作台危险／保存，新增300危险输出预览动作缺口，172补工作台发送方；普通掉落和世界保存已有。行为记录至ALIGN-300，共300条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是300个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -198,7 +198,7 @@
 | ALIGN-169 | 确认自然蜂巢遗漏普通火焰消费／传播参数。 | 原实体两个接口均返回 300，GT 方块和 Forge 火焰调用有实际转发。 | 当前继承默认 FireBlock 映射且没有登记该方块；ignitedByLava 是另一入口，不能替代，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-170 | 确认自然蜂巢遗漏末影龙破坏保护。 | 原 canEntityDestroy 拒绝 EntityDragon，旧 Forge 龙破坏链实际查询。 | 当前无覆写、immune／transparent 标签或专用事件补偿；限默认数据、允许生物破坏且无外部取消，未游戏复现，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-171 | 确认养蜂寿命／配对倒计时存在条件性保存回退。 | 原养蜂箱继承 NeedsSaving 标记，全局每 20 tick 调 WD.mark 将区块标脏。 | 当前纯 tick 改字段无对应补偿，两版保存跳过干净区块；库存／开箱等变化仍可保存，正常 brood 切换不算全丢，见[报告](BUMBLE_PERSISTENCE_AUDIT.md)。 |
-| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。 |
+| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费；工作台onTick亦有明确广播。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。工作台回调仅revision／标脏／输出信号，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-173 | 确认共用菜单部分 shift 转出绕过自身库存回调，扩展至六类宿主。 | 原容器和槽明确设置库存变化标志。 | 槽许可通过、背包仅接纳部分且源堆非空时只通知 SlotItemHandler 的空容器；全部转空正常 setter。箱子、保险箱、抽屉、两种漏斗及垃圾桶同源；Queue 限合法末格／多件模式，工作台储物页、电池盒、垃圾场另有补偿或限制。Neo 合并已有堆另有入口，Forge 有例外，见[共用菜单核查](SHARED_MENU_AUDIT.md)。 |
 | ALIGN-174 | 确认灌木雨天加速额外受现代群系降雨判定限制。 | 原 Bush 在见天空时查询全局雨与高度 helper，没有降雪／干燥群系门控。 | 当前 Level.isRainingAt 还要求群系降水为 RAIN；合法手动种在降雪／干燥群系时可能少一次增长，普通降雨群系已有对应，见[报告](BERRY_BUSH_AUDIT.md)。 |
 | ALIGN-175 | 确认灌木屋下光照 helper 实际行为不同，原版截断可能属于历史缺陷，需明确取舍。 | 原 getLightLevel 在乘15前先把亮度转 long；普通原生亮度表0–14均小于1，实际满亮度才通过。 | 当前直接接受原始光照>9，10–14亦可生长。不在排版中盲目恢复原截断，第三方亮度表另有边界，见[报告](BERRY_BUSH_AUDIT.md)。 |
@@ -326,6 +326,7 @@
 | ALIGN-297 | 确认工作台同类工具比较额外要求头材料相同。 | 原equalTools对IItemGTContainerTool忽略NBT，源主材在GT.ToolStats。 | 当前同类物品按getHead相等及可用性匹配，改变储物工具替换／过滤；限定均可用且配方接受两材，普通物品严格比较不在此列，未工具实测，见[工作台](ADVANCED_WORKTABLE_AUDIT.md)。 |
 | ALIGN-298 | 确认工作台缺少五工具格的直接灌液路径。 | 原IFluidHandler／funnelFill模拟或替换16～20格容器，原流体漏斗实际调用。 | 当前父实体／充能子类无FluidToolTarget或五格填充实现，原生注册未补该流程；与296制作邻罐补液不同，不断言外部永不能增能力，见[工作台IO](WORKTABLE_IO_AUDIT.md)。 |
 | ALIGN-299 | 确认无限工具尖端参与时结果合并门控不同。 | 原持有堆非空且九格有gt:autocrafterinfinite时不再消耗／合并，十尖端有实际注册。 | 当前计划保留尖端，但菜单只检查身份／容量；限定有效配方和充足原料的八源码条件一项不同，未GUI实测，保留为政策差异，见[工作台IO](WORKTABLE_IO_AUDIT.md)。 |
+| ALIGN-300 | 确认工作台危险产物的原预览动作没有对应，危险政策待决。 | 原getCraftingOutput检查EXPLODES_IN_NONVANILLA_CRAFTING_GRID后调用explode(4)，Unstable实际声明该属性。 | 当前材料身份／形态与标签常量存在，但MaterialProperty及工作台无该消费；未验收实际Unstable配方或爆炸时序，不恢复危险，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 
