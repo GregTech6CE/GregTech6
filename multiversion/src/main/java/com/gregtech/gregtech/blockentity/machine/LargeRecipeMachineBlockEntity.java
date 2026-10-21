@@ -241,6 +241,10 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
             var pos=cell.at(worldPosition,front);
             if(!level.hasChunkAt(pos)) {bindings.clear(this::release);return false;}
             if(cell.role()==MultiblockLayout.Role.AIR) {if(level.isEmptyBlock(pos))continue;bindings.clear(this::release);return false;}
+            if(cell.plainBlock()) {
+                if(!cell.matches(level, level.getBlockState(pos))) {bindings.clear(this::release);return false;}
+                continue;
+            }
             var expected=cell.block();
             if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
                 if(ovenCoil==null) {
