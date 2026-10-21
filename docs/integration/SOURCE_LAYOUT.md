@@ -36,6 +36,8 @@
 
 USB／HDD：core `UsbDataRules`给键名、内置ID／级别和模式范围；共享`UsbDataMedia`只读写物品文件，Neo副本必须显式store。`UsbSwitchBlockEntity`管理槽位／mode／覆盖板／保存，`UsbDataCable`按相邻面读`UsbDataPort`；菜单不替代实体，`BasicMachineBlock`普通邻居更新也不等于配方库存标志。实际消费者与缺口见[数据交换专题](USB_SWITCH_AUDIT.md)。
 
+材料数据配方：core `MaterialDataRules`保留功率／时长与形态数量，`MaterialDataFacts`给来源准入／优先表；共享`GTMaterialDataRecipes`生成实际输入的数据配方，`MaterialDataViewerRecipes`另登记fake展示行。`BasicMachineBlockEntity`先直接查表／提供者再查端口，Neo后者在`MachineContextRecipes`，不是同一槽位循环。四源已展开，当前选择次序差异及既有功能见[材料数据链](MATERIAL_DATA_CHAIN_AUDIT.md)。
+
 长距离传输：core的`LongDistanceLink`管理记住位置／对象与认领，`LongDistanceNetwork`给扫描和历史投影；原生适配仍在`block/misc/LongDistEndpointBlockEntity`与`LongDistanceTransformerBlockEntity`，负责世界观察、载入／工具及发火消费者。注册统一走`GTLongDistance`，管道端点能力在Neo `LongDistanceCapabilities`和共享转发基类。过压策略与独立烧线分支、保存位置与运行对象须分开看，见[长距离续核](LONG_DISTANCE_LIFECYCLE_AUDIT.md)。
 
 直接物流存储：`BulkStorageState`只管理身份与长计数，`MassStorageBlockEntity`负责原生能力、余料、模式和保存；两个Logistics子类只接直接端点／附着数据。制作金属与黑色外观在`LogisticsMassStorageBlock`分开，真正的工具等级在`BlockHarvestPolicy`消费。Neo注册／能力在`platform/neoforge/logistics`，物流桶另走`GTLogisticsTank`／`EngineCapabilities`；保存、更新tag、备用跟踪和专用renderer注册是四条不同入口，见[直接存储核查](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。

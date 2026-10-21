@@ -1,0 +1,819 @@
+{
+  "date": "2026-10-21",
+  "batch": 90,
+  "baseline": "7290f78f7e1fa2b38a2fd50625e2d64ac3801b7a",
+  "previous_goal_turn": "Progress: requested current-main dual distributions built and delivered; receipt committed as 7290f78f7.",
+  "kind": "Source and finite branch/declaration analysis; no target Java execution or runtime acceptance.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapScannerMolecular.java",
+      "sha256": "1530afad7f0701d7bbb2b0061b97d3516a4ae995a44e30f92102e9b9a316c42a",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapPrinter.java",
+      "sha256": "84a1536f4865fa03c9670c529078fdbfaf273a531be331d1919e8f856d67508c",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/maps/RecipeMapReplicator.java",
+      "sha256": "27842d2b10e83052f10a0985b5a289600185df5092a8fe4bafa2c18eee8d6bd3",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/MT.java",
+      "sha256": "12936831b1b5f419dc783c5f32f3cc07a329734ca6c5c11757d52e1be27904b2",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/OP.java",
+      "sha256": "4d93260aeec5ce2440b9e2577aa75af04155b4426f934ef51c0b861dfada290e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/load/LoaderOreDictReRegistrations.java",
+      "sha256": "d34719309a5ddf5bd7fc01c0462b57af52b4cf980a69fae4d4042c2ab78b07ef",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/computer/MultiTileEntityHDDSwitch.java",
+      "sha256": "77a4f10452455070a76f72f4ba7c763910118ba4de45f467514081bc967a324a",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/data/MaterialDataRules.java",
+      "sha256": "cd0876e06dd5f5d9be6419812182a2e2ded0b578260a0869439329bee87b5cc1",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java",
+      "sha256": "d0fb1757ce57c20d106c9e76a7c51a233635c4209d671cdbbf067815f297f07d",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cb26db93221e0d9a750be6756c4d26bf21728f305ef14f480b7fafb219279fe9",
+          "tokens": 3762
+        },
+        "neoforge": {
+          "sha256": "0a8ae311e5427b9a8ea6f51032b576c94205e0c6011999926ee710817d17e82b",
+          "tokens": 3859
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MaterialDataViewerRecipes.java",
+      "sha256": "295d9094eac4a276e84353764ce4e4df5feda810197c353a3f00d56284e3aa45",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "295d9094eac4a276e84353764ce4e4df5feda810197c353a3f00d56284e3aa45",
+          "tokens": 738
+        },
+        "neoforge": {
+          "sha256": "295d9094eac4a276e84353764ce4e4df5feda810197c353a3f00d56284e3aa45",
+          "tokens": 738
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineContextRecipes.java",
+      "sha256": "28514c339048ae04a008cdd05bee318dd18175414b82f6e2115032d3a159b3a5",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/generated/MaterialDataFacts.java",
+      "sha256": "c9c3119a2e46a67e40e3a1e1b0bafbe223173573e5db6dc104f42c7d033acc05",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/MaterialDefinitions.java",
+      "sha256": "7165fd9d5dde4ea713d8b55783ea9179c0cd35260497b0c7226665e0ec8fba88",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/material/generated/ElementMaterials.java",
+      "sha256": "af266c5d80c6e3541d57d9ca3d188f168e312ca8c6bd1adf06ee4fb2aa9a17f2",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/machine/BasicMachineCatalog.java",
+      "sha256": "7c2f2cd1527b41dcce7fa4b675ed4622a737eae552468982d1f7131d40c87beb",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java",
+      "sha256": "107ffcf13019a3cc7a1bc7ea40776b7d528446121787b3b7e465fb8f6fa369d6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+      "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/data/VisualDocumentRules.java",
+      "sha256": "f2596d05f248a09dda618e60f3d9427ab81097740b553671596770ad9c732f55",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+          "tokens": 1049
+        },
+        "neoforge": {
+          "sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+          "tokens": 1051
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "f4fd32a3b489b5beda3864598a621d639a91abdbb7ed6a35db1913d7c71ea0b5",
+          "tokens": 791
+        },
+        "neoforge": {
+          "sha256": "472839942cd79850e0e8c0d8702a63b63ac2a041dfa61f43e62d1b1281e92255",
+          "tokens": 804
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+          "tokens": 9306
+        },
+        "neoforge": {
+          "sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+          "tokens": 9312
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java",
+      "sha256": "88ea4001ad21f6c8892d346f20cfb8a0f86ad6844c9e72aecb33e8af46b12f7e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "7f7d0cbe040892fe1e187d55a7afb04b5086256cb46dc9b4aa7beb12057e8b05",
+          "tokens": 4242
+        },
+        "neoforge": {
+          "sha256": "424319e8c378ab2380ad8ddb30d8a13f0a3c4b0c5650a0712ecd8a5f7b7d5a96",
+          "tokens": 3731
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/BasicMachineBlockEntity.java",
+      "sha256": "2de5217044c176e3e4b0407901cfcdaa97bb9ead74d861f202a5f4c564255bec",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "704bcb2738bc7f44a58e29e0c3b89fe6deb435711ec157d2c60715975194067d",
+          "tokens": 15170
+        },
+        "neoforge": {
+          "sha256": "b431a46375033f12b4e4d2190d23960837691d45de91acd6e871366a2fd9bdeb",
+          "tokens": 14851
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/BasicMachineContainerMenu.java",
+      "sha256": "da75d07a59631f4cc19047c7bf235766269018f4c82b23cc4027757b0de4c925",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "05cb4dbe25a9da1f0273237e5137ad3554ab40cc20c8225b9261b6eb3d198a84",
+          "tokens": 1909
+        },
+        "neoforge": {
+          "sha256": "2dbc4514d9a1b319fd7e3d8145750048c8bdb2a0b22d0ab840d85676e01a9f78",
+          "tokens": 1945
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/gui/SlotInput.java",
+      "sha256": "37501958e25c0216486de238581d632f8f33d61363679369f912088b6a0db731",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "13432778f4dcf03859b07add8ca398a0961fca586596d11a777e0793dc07bcfe",
+          "tokens": 89
+        },
+        "neoforge": {
+          "sha256": "3f39d0d532fe687b956e26fcd30cabea431a0b09f8cf585202b6b73f651be589",
+          "tokens": 93
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataCable.java",
+      "sha256": "aec7939b98cea4e6e325cf237a1351021324341995493037f19f99fc985f0010",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cce3e9eaf0b26e7752531f2d30a364c4a2d1786e0c40f1ecdcc0527bd97fb55b",
+          "tokens": 432
+        },
+        "neoforge": {
+          "sha256": "98b95ce2d65538588fe02037bb67942745f7e22d62be03c2a3f7915c980d6ee4",
+          "tokens": 433
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/UsbDataMedia.java",
+      "sha256": "3c06c5e9f2a573ab299fe996c2425e12621efe4a72efcb2ba42be45ca4f7cbae",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "aa2ad2af06c60eae5232262bc3c24b3d384b0f06990bec7156ad03e9706a362b",
+          "tokens": 886
+        },
+        "neoforge": {
+          "sha256": "b7c4e566f3544c4fbcfa85b73d736dbd5be77c9ea9a6a1565fdc739e1bc6b198",
+          "tokens": 1038
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/data/UsbDataPort.java",
+      "sha256": "6844e0b743319bbdcc047a96a581cbe36e838e62fa382fae2a937eb31b208b92",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "55179fa4ccf764db84b86426198c19044d6aad68332d7009ecfd3237497f63b9",
+          "tokens": 70
+        },
+        "neoforge": {
+          "sha256": "55179fa4ccf764db84b86426198c19044d6aad68332d7009ecfd3237497f63b9",
+          "tokens": 70
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/data/VisualDocumentData.java",
+      "sha256": "283906791b36d88e0d093bdb28c4a0b7f3b8ab7e93e153c0840c67bf1f3c79c6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "dc7c2bc72da1ee1d3c70a214f6773bd33743c8f6f47a8bbbd91495ae01dcfea7",
+          "tokens": 1095
+        },
+        "neoforge": {
+          "sha256": "9ef89861c1a9dcf658f652b4bd45fb2268fea201d1b303275d5fd2cbd4183f95",
+          "tokens": 1879
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/book/GTMaterialDictionary.java",
+      "sha256": "3a08a5d40f5c78c233fd160464344b74c9338dc6f07e2763757548390cb8b279",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "4915203c69f5666e9ea5740fcea91e7df0ad8589a0c00f78fbbec7e5773f91c1",
+          "tokens": 1136
+        },
+        "neoforge": {
+          "sha256": "a4c8384621b7558fa70f236ec9770ac1a2e408704784927650dc12b7d000e484",
+          "tokens": 1220
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MachineRecipeBootstrap.java",
+      "sha256": "c3ca865515b30b0a21636f09220fba16d2bc7655764e6f3814e4c028bd48c502",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e05cfe5f52429dc3b989c420f3ca6b378e2466fcc9113265aaecb7b4c4a57516",
+          "tokens": 742
+        },
+        "neoforge": {
+          "sha256": "8fbc7b7fa64402127fe78e8dbdcfb368666abd2d20499a191aece5f881038040",
+          "tokens": 742
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTItems.java",
+      "sha256": "b069563fc4cc86720652ffcef0ed5d0996b56e9c5c91d0cc85c0329ea0871ed8",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "38e292eadf7a41464366232d978fe073b09c79830f1f8c3340e15b0a6251df2e",
+          "tokens": 773
+        },
+        "neoforge": {
+          "sha256": "3e22440ac645fef47e5675bf2a305f3f3779f6c1aee4714aaa557e9e86806c24",
+          "tokens": 1034
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTFluids.java",
+      "sha256": "b4fda5afd9b60c63fff6c540084858b2c8c3adc6039e74180d3d86ce92b481f2",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "6a5bd0ec4eb2e490fa7a98d88b5b33fa02ad81e42dc59a888068da6b0918b0d9",
+          "tokens": 1598
+        },
+        "neoforge": {
+          "sha256": "aea8164deba3beae1e5735f05829f860701f02c8e37b9b63c8e7f150428e1047",
+          "tokens": 988
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "shared_platform_views": {}
+    }
+  ],
+  "native_source_lookup": {
+    "path": "multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+    "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+    "entries": [
+      {
+        "entry": "net/neoforged/neoforge/items/ItemStackHandler.java",
+        "sha256": "2c73babcc9449b12f8b75dbb61d019aea043e647b8604edcfea7796ec19ba029"
+      },
+      {
+        "entry": "net/neoforged/neoforge/items/SlotItemHandler.java",
+        "sha256": "872fe32c96263fcda22c36922255d07f678a29677920869353f3a05358201f10"
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "7290f78f7e1fa2b38a2fd50625e2d64ac3801b7a",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/data/MaterialDataRules.java": {
+        "before_raw_sha256": "b09d2330a96a3ee996cb108fbea2e8c356162446cde592d01b4c1253962c042b",
+        "after_raw_sha256": "cd0876e06dd5f5d9be6419812182a2e2ded0b578260a0869439329bee87b5cc1",
+        "before_lines": 23,
+        "after_lines": 49,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 308,
+            "execution_sha256": "07e8273bd738984a2a2ac864e8afb29d00ac81f0da57893e7154861b98a155e2",
+            "literal_positions_sha256": "443d9451dde7b2cd1b7251c7ed9c96c5252f85de855f8a58e69c5c1346462c3b",
+            "literal_count": 14
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/GTMaterialDataRecipes.java": {
+        "before_raw_sha256": "afc4780e1ecc3f992fcfc8a3cae0eb461fb979bae656fa5eda1c64561266dd87",
+        "after_raw_sha256": "d0fb1757ce57c20d106c9e76a7c51a233635c4209d671cdbbf067815f297f07d",
+        "before_lines": 588,
+        "after_lines": 602,
+        "comment_corrections": [
+          [
+            "How many rows each provider can produce, for the start-up report and the tests:",
+            "Material-level coverage estimates for diagnostics, not counts of all runtime or viewer rows:"
+          ],
+          [
+            "GT6 carries the tier in the tile entity ({@code MultiTileEntityHDDSwitch.mUSBTier}); an item has\n     * no tile entity, and the port registers exactly one item per drive tier, so the id <em>is</em> the\n     * tier. Documented rather than hidden: a renamed item would silently stop being a drive.",
+            "This helper parses the registry path; selected-file readers apply separate file-tier gates.\n     * The native USB switch instead recognizes built-in media through {@code UsbDataMedia}."
+          ],
+          [
+            "rebuilds the material: gem → gem plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny\n *       dust (9) → small dust (4) → stick (2), and its fluid when it has no such form.",
+            "rebuilds the material, preferring its ambient fluid, then its priority prefix, then gem → gem\n *       plate → ingot → plate → nugget (9) → chunk (4) → dust → tiny dust (9) → small dust (4)\n *       → stick (2), with liquid/gas/plasma fallback when no item form is available."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 3762,
+            "execution_sha256": "9a80eb94c28e860d0136fa9ef80b0c806353f9281a9aa9b68b164105abe56d80",
+            "literal_positions_sha256": "015b7776eaeb8aea1774e866c251dffdfc36f226b4d55272d027638baaceb6b1",
+            "literal_count": 59
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 3859,
+            "execution_sha256": "cd7c0be77bd380284d140bf0ec007afd52ae8b3eed23cc07f0a043ad1c7ac271",
+            "literal_positions_sha256": "910fe2864d64b7dabdf6481ea01c0089fc746912ddd5e7b2c1ad73015a3f240e",
+            "literal_count": 59
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/content/recipe/MaterialDataViewerRecipes.java": {
+        "before_raw_sha256": "8372a422bc34ac0626730cc75785654bc8acc4ff394ceb25e7e23301907cece7",
+        "after_raw_sha256": "295d9094eac4a276e84353764ce4e4df5feda810197c353a3f00d56284e3aa45",
+        "before_lines": 58,
+        "after_lines": 76,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 738,
+            "execution_sha256": "c17edc0ffe37141739be74dddcb340011dc7b685eb54b24bcaaf8ba4b01ab1b9",
+            "literal_positions_sha256": "d356bd95e7a5f822e498ec985cbca0a9214a164a246878f014f99975e0e3e119",
+            "literal_count": 9
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 738,
+            "execution_sha256": "c17edc0ffe37141739be74dddcb340011dc7b685eb54b24bcaaf8ba4b01ab1b9",
+            "literal_positions_sha256": "d356bd95e7a5f822e498ec985cbca0a9214a164a246878f014f99975e0e3e119",
+            "literal_count": 9
+          }
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/content/recipe/MachineContextRecipes.java": {
+        "before_raw_sha256": "40fcad32efa394e90dc059710bf1e779f09dcfd7e79f35dd56b87a05cdfc0f0f",
+        "after_raw_sha256": "28514c339048ae04a008cdd05bee318dd18175414b82f6e2115032d3a159b3a5",
+        "before_lines": 8,
+        "after_lines": 41,
+        "comment_corrections": [
+          [
+            "Complete source1 adjacent selected-file cable lookup; platform recipes retain exact catalyst components.",
+            "Adjacent selected-file lookup for printer and replicator cable recipes; keeps exact catalyst components."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 315,
+            "execution_sha256": "4decc3d4aa8a1ee7137f13cf6ffb726e9da7ba7154d5952b0972f7557ce3cbb9",
+            "literal_positions_sha256": "932480ecf598743a37cc8cacf1727dea391cd257c4928610c1bc53ea27850c57",
+            "literal_count": 1
+          }
+        ]
+      }
+    }
+  },
+  "declarations": {
+    "source_scannable_prefixes": [
+      "dust",
+      "ingotQuintuple",
+      "ingotQuadruple",
+      "ingotTriple",
+      "ingotDouble",
+      "ingot",
+      "gem",
+      "gemFlawless",
+      "gemExquisite",
+      "gemLegendary",
+      "bouleGt",
+      "plateDense",
+      "plateQuintuple",
+      "plateQuadruple",
+      "plateTriple",
+      "plateDouble",
+      "plate",
+      "plateGem",
+      "plateCurved",
+      "compressed",
+      "sheetGt",
+      "stickLong",
+      "chain",
+      "spring",
+      "minecartWheels",
+      "gearGt",
+      "gearGtSmall",
+      "casingMachine",
+      "casingMachineDouble",
+      "casingMachineQuadruple",
+      "casingMachineDense",
+      "rotor",
+      "chemtube",
+      "toolHeadSaw",
+      "toolHeadFile",
+      "toolHeadChisel",
+      "toolHeadBuzzSaw",
+      "toolHeadChainsaw",
+      "toolHeadWrench",
+      "toolHeadDrill",
+      "toolHeadSword",
+      "toolHeadPickaxe",
+      "toolHeadShovel",
+      "toolHeadSpade",
+      "toolHeadAxe",
+      "toolHeadHoe",
+      "toolHeadSense",
+      "toolHeadPlow",
+      "toolHeadHammer",
+      "toolHeadScrewdriver",
+      "toolHeadBuilderwand",
+      "toolHeadConstructionPickaxe",
+      "toolHeadPickaxeGem",
+      "toolHeadAxeDouble",
+      "toolHeadUniversalSpade",
+      "toolHeadArrow",
+      "toolHeadRawSaw",
+      "toolHeadRawChisel",
+      "toolHeadRawSword",
+      "toolHeadRawPickaxe",
+      "toolHeadRawShovel",
+      "toolHeadRawSpade",
+      "toolHeadRawUniversalSpade",
+      "toolHeadRawAxe",
+      "toolHeadRawAxeDouble",
+      "toolHeadRawHoe",
+      "toolHeadRawSense",
+      "toolHeadRawPlow",
+      "frameGt",
+      "pipeSmall",
+      "pipeMedium",
+      "pipeLarge",
+      "pipeHuge",
+      "pipeQuadruple",
+      "pipeNonuple",
+      "wireGt15",
+      "wireGt14",
+      "wireGt13",
+      "wireGt12",
+      "wireGt11",
+      "wireGt10",
+      "wireGt09",
+      "wireGt08",
+      "wireGt07",
+      "wireGt06",
+      "wireGt05",
+      "wireGt04",
+      "wireGt03",
+      "wireGt02",
+      "wireGt01",
+      "blockGem",
+      "blockDust",
+      "blockIngot",
+      "blockPlate",
+      "blockPlateGem",
+      "blockSolid"
+    ],
+    "scannable_count": 96,
+    "prior_receipt": "docs/integration/verification/material-data-facts-20261006.json",
+    "prior_receipt_sha256": "a8f41a91c0a073448ec283199af3a65185886803d9e5586af4387031630605ba",
+    "prior_material_rows": 1349,
+    "current_uum_ids": 584,
+    "current_priority_ids": 277,
+    "fallback_forms_and_counts": [
+      [
+        "gem",
+        "1"
+      ],
+      [
+        "plateGem",
+        "1"
+      ],
+      [
+        "ingot",
+        "1"
+      ],
+      [
+        "plate",
+        "1"
+      ],
+      [
+        "nugget",
+        "9"
+      ],
+      [
+        "chunkGt",
+        "4"
+      ],
+      [
+        "dust",
+        "1"
+      ],
+      [
+        "dustTiny",
+        "9"
+      ],
+      [
+        "dustSmall",
+        "4"
+      ],
+      [
+        "stick",
+        "2"
+      ]
+    ],
+    "scope": "SCANNABLE independently reparsed from OP. UUM/priority compare to the existing 1349-row extraction receipt whose three original source hashes are revalidated; factories are not re-executed."
+  },
+  "mixed_media_projection": {
+    "conditions": [
+      {
+        "layout": [
+          "cable",
+          "stick",
+          "empty"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "cable",
+          "empty",
+          "stick"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "stick",
+          "cable",
+          "empty"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Copper",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "stick",
+          "empty",
+          "cable"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Copper",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "empty",
+          "cable",
+          "stick"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "empty",
+          "stick",
+          "cable"
+        ],
+        "stick_file": "Copper",
+        "cable_file": "Iron",
+        "original": "Copper",
+        "current": "Copper"
+      },
+      {
+        "layout": [
+          "cable",
+          "stick",
+          "empty"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Iron"
+      },
+      {
+        "layout": [
+          "cable",
+          "empty",
+          "stick"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Iron"
+      },
+      {
+        "layout": [
+          "stick",
+          "cable",
+          "empty"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": null,
+        "current": "Iron"
+      },
+      {
+        "layout": [
+          "stick",
+          "empty",
+          "cable"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": null,
+        "current": "Iron"
+      },
+      {
+        "layout": [
+          "empty",
+          "cable",
+          "stick"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": "Iron",
+        "current": "Iron"
+      },
+      {
+        "layout": [
+          "empty",
+          "stick",
+          "cable"
+        ],
+        "stick_file": null,
+        "cable_file": "Iron",
+        "original": null,
+        "current": "Iron"
+      }
+    ],
+    "differences": 6,
+    "preconditions": [
+      "No earlier matching static recipe",
+      "Three ordinary input slots, valid built-in tier-3 media",
+      "Loaded adjacent USB port with selected tier-3 Iron data",
+      "29 chargedmatter and 34 neutralmatter mB available: sufficient for either Iron or Copper",
+      "Idle powered machine, output space available"
+    ],
+    "limits": "Finite source-branch projection, not initialized registries, live inventory/NBT or machine operation."
+  },
+  "finding": {
+    "id": "ALIGN-290",
+    "scope": "Replicator mixed stick/cable selection precedence and blank-stick stop",
+    "fixed": false
+  },
+  "limits": [
+    "No Java compilation, Gradle, tests, game, new build or push in this audit batch.",
+    "Earlier user build covers baseline 420c690d1 plus user whitespace, not the newly formatted worktree.",
+    "No complete material dictionary content, optional-mod document types, external media registration, all fluid quantities or saved-world restart acceptance.",
+    "Protective clamps, name-based material storage, explicit component writes and missing-fluid rejection preserved; no gameplay changes."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "original_sources": 10,
+    "current_sources": 27,
+    "shared_platform_views": 34,
+    "readability_files": 4,
+    "complete_code_views": 6,
+    "mixed_media_conditions": 12,
+    "different_conditions": 6,
+    "ledger_contiguous": [
+      1,
+      290
+    ],
+    "added_local_links": 13,
+    "protected_materials_unchanged": true,
+    "method": "Rehash actual sources/views, compare full tokens/raw literal positions/comments/directives and baseline snapshots; inspect native GUI input consumer, old first-medium stop, both actual direct-before-cable paths and fake-row runtime exclusion. No target code executed."
+  }
+}
