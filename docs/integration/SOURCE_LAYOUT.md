@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+绳子／脚手架：core `UtilityToolRules`保存六绳材料行、支撑搜索上限与设计公式；共享`RopeBlock`接水平放置、延伸／支撑、梯子，`ScaffoldBlock`接四设计、碰撞和计划更新。Forge `GTToolBlocks`、Neo `GTManualStations`实际注册；碰撞要另查Properties，覆盖板还需PanelCoverHost，见[核查](ROPE_SCAFFOLD_AUDIT.md)。
+
 开放手作容器：core `OpenVesselRules`列七身份与容量／气候／准入；共享`ProcessingToolBlockEntity`负责物品与产物／输入液、预检、手工及电动处理和保存，`ProcessingToolBlock`接原生调用，`ProcessingToolRenderer`绘制内容。自动排液和手持取液角色不能混同，实际两端能力／渲染入口见[核查](OPEN_VESSEL_AUDIT.md)。
 
 磨削制作：共享`SharpeningRecipes`／`MortarGrindingRecipes`声明路线与粉碎余量，core `PulverizationRules`做防溢出的单位换算；`ManualToolBlockEntity`实际扣料、抽取和给予产物。`GTElectricItems`创建独立ElectricToolItem身份，去魔时不能用GTToolItem代替全部GT工具判定；磨料世界／物品保存与原生消耗见[专题](MANUAL_GRINDING_AUDIT.md)。

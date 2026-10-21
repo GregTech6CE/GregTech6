@@ -1,5 +1,7 @@
 # 活动源码结构与可读性盘点
 
+2026-10-22 第一百批：UtilityToolRules、RopeBlock、ScaffoldBlock、GTToolBlocks四源606→769行，材料逐行、方法／放置／更新与注册展开；七完整代码token为312、1112／1362、1544／1546、4005／913，字面量位置34、29／29、69／69、159／37及指令保持。一条过时Neo注册说明有意修正，其余注释保持，未改玩法或用户材料。见[专题](ROPE_SCAFFOLD_AUDIT.md)与[回执](verification/rope-scaffold-audit-20261022.json)。
+
 2026-10-22 第九十九批：OpenVesselRules／ProcessingToolBlockEntity／ProcessingToolBlock／ProcessingToolRenderer四源450→706行，七配置逐行，分开加工、交互、流体、保存和绘制；七完整代码478、4133／4030、794／804、681／683及字面量位置39、58／58、7／7、41／41、全部注释／指令保持。未改309–312或其它玩法，用户材料不动，见[专题](OPEN_VESSEL_AUDIT.md)和[回执](verification/open-vessel-audit-20261022.json)。
 
 2026-10-22 第九十八批：SharpeningRecipes／MortarGrindingRecipes／core PulverizationRules／GTElectricItems四源294→331行，保留已有配方表分组，展开短方法、工厂赋值与参数缩进；七完整代码995／994、871／870、126、311／333及字面量位置80／80、45／45、3、6／6、全部注释／指令保持。未改304–308或其它玩法，用户材料不动，见[专题](MANUAL_GRINDING_AUDIT.md)和[回执](verification/manual-grinding-audit-20261022.json)。

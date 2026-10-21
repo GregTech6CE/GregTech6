@@ -1,8 +1,16 @@
 package com.gregtech.gregtech.registry;
 //? if >=1.21.1 {
-/*import com.gregtech.gregtech.block.tool.DynamiteBlock;import com.gregtech.gregtech.content.material.Materials;import com.gregtech.gregtech.api.material.GTMaterial;
-import net.minecraft.world.level.block.*;import net.minecraft.world.level.block.state.BlockBehaviour;import net.minecraft.world.level.material.MapColor;import net.minecraft.world.item.*;import net.neoforged.neoforge.registries.*;import net.neoforged.bus.api.IEventBus;
-/^* Original three mining charges; remaining tool-block families are separate pending ports. ^/
+/*import com.gregtech.gregtech.block.tool.DynamiteBlock;
+import com.gregtech.gregtech.content.material.Materials;
+import com.gregtech.gregtech.api.material.GTMaterial;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.registries.*;
+import net.neoforged.bus.api.IEventBus;
+
+/^* Mining charges, portable containers and fluid attachments; manual stations register separately. ^/
 *///?} else {
 
 import com.gregtech.gregtech.block.tool.CrankBlock;
@@ -25,15 +33,56 @@ import java.util.List;
 //?}
 public final class GTToolBlocks {
 //? if >=1.21.1 {
- /*private GTToolBlocks(){}
- public static final java.util.List<DeferredBlock<com.gregtech.gregtech.block.tool.PortableContainerBlock>> PORTABLE=new java.util.ArrayList<>();
- public static final DeferredRegister.Blocks BLOCKS=DeferredRegister.createBlocks("gt6ce");
- public static final DeferredRegister.Items ITEMS=DeferredRegister.createItems("gt6ce");
- public static final DeferredBlock<DynamiteBlock> DYNAMITE=dynamite("dynamite",10,5,Materials.Red),BOOMSTICK=dynamite("boomstick",10,3,Materials.Orange),DYNAMITE_STRONG=dynamite("strong_dynamite",40,5,Materials.Purple);
- private static DeferredBlock<DynamiteBlock> dynamite(String id,float resistance,int fortune,GTMaterial material){var block=BLOCKS.register(id,()->new DynamiteBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(.2f,0).sound(SoundType.GRASS).noOcclusion().instabreak(),resistance,fortune,material.getColor()));ITEMS.register(id,()->new BlockItem(block.get(),new Item.Properties().stacksTo(64)));return block;}
- public static java.util.List<DeferredBlock<DynamiteBlock>> explosives(){return java.util.List.of(DYNAMITE,BOOMSTICK,DYNAMITE_STRONG);}
- private static BlockBehaviour.Properties attachmentProperties(String id){var p=BlockBehaviour.Properties.of().noOcclusion();if(java.util.Set.of("tap","nozzle","cap_nozzle").contains(id))return p.mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(1.5f,6).sound(SoundType.METAL);if(id.equals("fluid_funnel"))return p.mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(2,6).sound(SoundType.METAL).requiresCorrectToolForDrops();return p.strength(.5f,6);}
- public static void register(IEventBus bus){for(var spec:com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec.values()){var block=BLOCKS.register("fluid_"+spec.id(),()->new com.gregtech.gregtech.block.tool.PortableContainerBlock(spec,BlockBehaviour.Properties.of().strength(1f).noOcclusion()));PORTABLE.add(block);ITEMS.register("fluid_"+spec.id(),()->new com.gregtech.gregtech.item.PortableFluidContainerItem(block.get(),spec,new Item.Properties().stacksTo(spec.shapeId().equals("cell")?64:16)));}var attachments=new java.util.ArrayList<>(com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all());for(String id:java.util.List.of("tap","nozzle","fluid_funnel","cap_nozzle"))attachments.add(new com.gregtech.gregtech.content.tool.FluidAttachmentSpec(id,id,java.util.Set.of("cap_nozzle","nozzle").contains(id)?Materials.Steel:Materials.Ceramic,false));for(var spec:attachments){var block=BLOCKS.register(spec.id(),()->new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,attachmentProperties(spec.id())));ITEMS.register(spec.id(),()->new BlockItem(block.get(),new Item.Properties().stacksTo(64)));}GTFluidComponents.TYPES.register(bus);BLOCKS.register(bus);ITEMS.register(bus);}
+    /*private GTToolBlocks() {
+    }
+    public static final java.util.List<DeferredBlock<com.gregtech.gregtech.block.tool.PortableContainerBlock>> PORTABLE = new java.util.ArrayList<>();
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks("gt6ce");
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems("gt6ce");
+    public static final DeferredBlock<DynamiteBlock> DYNAMITE = dynamite("dynamite", 10, 5, Materials.Red), BOOMSTICK = dynamite("boomstick", 10, 3,
+            Materials.Orange), DYNAMITE_STRONG = dynamite("strong_dynamite", 40, 5, Materials.Purple);
+
+    private static DeferredBlock<DynamiteBlock> dynamite(String id, float resistance, int fortune, GTMaterial material) {
+        var block = BLOCKS.register(id, () -> new DynamiteBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED).strength(.2f,
+                0).sound(SoundType.GRASS).noOcclusion().instabreak(), resistance, fortune, material.getColor()));
+        ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+        return block;
+    }
+
+    public static java.util.List<DeferredBlock<DynamiteBlock>> explosives() {
+        return java.util.List.of(DYNAMITE, BOOMSTICK, DYNAMITE_STRONG);
+    }
+
+    private static BlockBehaviour.Properties attachmentProperties(String id) {
+        var p = BlockBehaviour.Properties.of().noOcclusion();
+        if (java.util.Set.of("tap", "nozzle",
+                "cap_nozzle").contains(id)) return p.mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(1.5f,
+                6).sound(SoundType.METAL);
+        if (id.equals("fluid_funnel")) return p.mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(2,
+                6).sound(SoundType.METAL).requiresCorrectToolForDrops();
+        return p.strength(.5f, 6);
+    }
+
+    public static void register(IEventBus bus) {
+        for (var spec : com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec.values()) {
+            var block = BLOCKS.register("fluid_" + spec.id(), () -> new com.gregtech.gregtech.block.tool.PortableContainerBlock(spec,
+                    BlockBehaviour.Properties.of().strength(1f).noOcclusion()));
+            PORTABLE.add(block);
+            ITEMS.register("fluid_" + spec.id(), () -> new com.gregtech.gregtech.item.PortableFluidContainerItem(block.get(), spec,
+                    new Item.Properties().stacksTo(spec.shapeId().equals("cell") ? 64 : 16)));
+        }
+        var attachments = new java.util.ArrayList<>(com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all());
+        for (String id : java.util.List.of("tap", "nozzle", "fluid_funnel",
+                "cap_nozzle")) attachments.add(new com.gregtech.gregtech.content.tool.FluidAttachmentSpec(id, id, java.util.Set.of("cap_nozzle",
+                "nozzle").contains(id) ? Materials.Steel : Materials.Ceramic, false));
+        for (var spec : attachments) {
+            var block = BLOCKS.register(spec.id(), () -> new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,
+                    attachmentProperties(spec.id())));
+            ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+        }
+        GTFluidComponents.TYPES.register(bus);
+        BLOCKS.register(bus);
+        ITEMS.register(bus);
+    }
 *///?} else {
     private static final List<RegistryObject<ManualToolBlock>> MANUAL = new ArrayList<>();
     private static final List<RegistryObject<net.minecraft.world.level.block.Block>> ALL_SIMPLE = new ArrayList<>();
@@ -54,20 +103,24 @@ public final class GTToolBlocks {
     public static RegistryObject<com.gregtech.gregtech.block.tool.TapBlock> TAP;
     public static RegistryObject<com.gregtech.gregtech.block.tool.TapBlock> NOZZLE;
     public static RegistryObject<com.gregtech.gregtech.block.tool.DustFunnelBlock> DUST_FUNNEL;
+
     /** GT6's bumbliary (id 32741): the bee breeding machine. */
     public static RegistryObject<com.gregtech.gregtech.block.tool.BumbliaryBlock> BUMBLIARY;
+
     /** GT6's advanced bumbliary (id 32007): 20 slots instead of 36. */
     public static RegistryObject<com.gregtech.gregtech.block.tool.BumbliaryBlock> ADVANCED_BUMBLIARY;
 
     public static final java.util.List<RegistryObject<com.gregtech.gregtech.block.tool.PortableContainerBlock>> PORTABLE = new java.util.ArrayList<>();
 
     public static final List<RegistryObject<com.gregtech.gregtech.block.tool.ScaffoldBlock>> SCAFFOLDS = new ArrayList<>();
+
     public static com.gregtech.gregtech.block.tool.ScaffoldBlock scaffold(com.gregtech.gregtech.api.material.GTMaterial material) {
         for (var entry : SCAFFOLDS) if (entry.get().material() == material) return entry.get();
         throw new IllegalArgumentException("No scaffold for " + material.getName());
     }
 
-    private GTToolBlocks() {}
+    private GTToolBlocks() {
+    }
 
     public static List<RegistryObject<ManualToolBlock>> manual() {
         return Collections.unmodifiableList(MANUAL);
@@ -78,7 +131,8 @@ public final class GTToolBlocks {
         return Collections.unmodifiableList(ALL_SIMPLE);
     }
 
-    private static void add(String id, ManualToolBlockEntity.Kind kind, BlockBehaviour.Properties props) {        RegistryObject<ManualToolBlock> block = GTBlocks.BLOCKS.register(id, () -> new ManualToolBlock(kind, props));
+    private static void add(String id, ManualToolBlockEntity.Kind kind, BlockBehaviour.Properties props) {
+        RegistryObject<ManualToolBlock> block = GTBlocks.BLOCKS.register(id, () -> new ManualToolBlock(kind, props));
         MANUAL.add(block);
         // GT6 Misc Tool Blocks (Mortar/Juicer/Grindstone/Sifting Table rows): 16 per stack
         GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
@@ -96,7 +150,9 @@ public final class GTToolBlocks {
         return block;
     }
 
-    private static RegistryObject<com.gregtech.gregtech.block.tool.RopeBlock> rope(com.gregtech.gregtech.content.tool.UtilityToolRules.Rope spec){return rope(spec.id(),com.gregtech.gregtech.api.material.GTMaterialRegistry.get(spec.material()));}
+    private static RegistryObject<com.gregtech.gregtech.block.tool.RopeBlock> rope(com.gregtech.gregtech.content.tool.UtilityToolRules.Rope spec) {
+        return rope(spec.id(), com.gregtech.gregtech.api.material.GTMaterialRegistry.get(spec.material()));
+    }
 
     /** One of GT6's three explosives: same model, tinted, with the original's blast quality. */
     private static RegistryObject<com.gregtech.gregtech.block.tool.DynamiteBlock> dynamite(
@@ -111,7 +167,8 @@ public final class GTToolBlocks {
     }
 
     /** GT6 default material tints: stone tools gray, the sifting table steel. */
-    public static int tintOf(ManualToolBlockEntity.Kind kind) {        return switch (kind) {
+    public static int tintOf(ManualToolBlockEntity.Kind kind) {
+        return switch (kind) {
             case MORTAR -> 0xCDCDCD;
             case GRINDSTONE -> 0xB5B5B5;
             case SIFTING -> com.gregtech.gregtech.content.material.Materials.Steel.getColor();
@@ -121,7 +178,9 @@ public final class GTToolBlocks {
     public static void registerAll() {
         add("mortar_block", ManualToolBlockEntity.Kind.MORTAR, BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE).strength(1.0f, 5.0f).requiresCorrectToolForDrops().noOcclusion());
-        for (String material : new String[]{"Netherite", "Sapphire", "Diamond", "Amethyst"}) {
+        for (String material : new String[]{
+                "Netherite", "Sapphire", "Diamond", "Amethyst"
+        }) {
             String id = "mortar_" + material.toLowerCase(java.util.Locale.ROOT);
             var block = GTBlocks.BLOCKS.register(id, () -> new ManualToolBlock(ManualToolBlockEntity.Kind.MORTAR, material,
                     BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1f, 5f).noOcclusion()));
@@ -134,40 +193,60 @@ public final class GTToolBlocks {
                 .mapColor(MapColor.METAL).strength(1.0f, 6.0f).sound(SoundType.METAL).noOcclusion());
         CRANK = GTBlocks.BLOCKS.register("crank", () -> new CrankBlock(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.METAL).strength(1.0f, 6.0f).sound(SoundType.METAL).noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register("crank", () -> new BlockItem(CRANK.get(), new Item.Properties().stacksTo(16)));   // GT6 Hand Crank: 16
+        GTBlocks.BLOCK_ITEMS.register("crank", () -> new BlockItem(CRANK.get(), new Item.Properties().stacksTo(16)));
+        // GT6 Hand Crank: 16
         ROPE = GTBlocks.BLOCKS.register("rope", () -> new com.gregtech.gregtech.block.tool.RopeBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.WOOL)
                         .strength(0.5f, 0.5f).sound(SoundType.WOOL).noOcclusion().noCollission(),
-                com.gregtech.gregtech.content.material.Materials.Brown.getColor()));   // GT6 Rope: MT.Brown
-        GTBlocks.BLOCK_ITEMS.register("rope", () -> new BlockItem(ROPE.get(), new Item.Properties().stacksTo(64)));   // GT6 Ropes: 64
+                com.gregtech.gregtech.content.material.Materials.Brown.getColor()));
+        // GT6 Rope: MT.Brown
+        GTBlocks.BLOCK_ITEMS.register("rope", () -> new BlockItem(ROPE.get(), new Item.Properties().stacksTo(64)));
+        // GT6 Ropes: 64
         // GT6's five other ropes (Loader_MultiTileEntities:2087-2091); the shared greyscale texture is
         // tinted by the rope's material, so no extra art is needed.
-        ROPE_SILK = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_silk")).findFirst().orElseThrow());      // :2087
-        ROPE_GRASS = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_grass")).findFirst().orElseThrow());   // :2088
-        ROPE_VINE = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_vine")).findFirst().orElseThrow());      // :2089
-        ROPE_PLASTIC = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_plastic")).findFirst().orElseThrow());  // :2090
-        ROPE_STEEL = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(v->v.id().equals("rope_steel")).findFirst().orElseThrow());    // :2091
+        ROPE_SILK = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
+                v -> v.id().equals("rope_silk")).findFirst().orElseThrow());
+        // :2087
+        ROPE_GRASS = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
+                v -> v.id().equals("rope_grass")).findFirst().orElseThrow());
+        // :2088
+        ROPE_VINE = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
+                v -> v.id().equals("rope_vine")).findFirst().orElseThrow());
+        // :2089
+        ROPE_PLASTIC = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
+                v -> v.id().equals("rope_plastic")).findFirst().orElseThrow());
+        // :2090
+        ROPE_STEEL = rope(com.gregtech.gregtech.content.tool.UtilityToolRules.ROPES.stream().filter(
+                v -> v.id().equals("rope_steel")).findFirst().orElseThrow());
+        // :2091
         DYNAMITE = GTBlocks.BLOCKS.register("dynamite", () -> new com.gregtech.gregtech.block.tool.DynamiteBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_RED)
                         .strength(0.2f, 0.0f).sound(SoundType.GRASS).noOcclusion().instabreak(),
-                10F, 5, com.gregtech.gregtech.content.material.Materials.Red.getColor()));   // GT6 Dynamite: MT.Red, quality 10
-        GTBlocks.BLOCK_ITEMS.register("dynamite", () -> new BlockItem(DYNAMITE.get(), new Item.Properties().stacksTo(64)));   // GT6 Dynamite: 64
+                10F, 5, com.gregtech.gregtech.content.material.Materials.Red.getColor()));
+        // GT6 Dynamite: MT.Red, quality 10
+        GTBlocks.BLOCK_ITEMS.register("dynamite", () -> new BlockItem(DYNAMITE.get(), new Item.Properties().stacksTo(64)));
+        // GT6 Dynamite: 64
         // GT6's other two explosives (Loader_MultiTileEntities:2235,2237): the boomstick's quality is
         // 10 like the dynamite's, the strong dynamite's is 40 - four times the resistance threshold, with the same 3x3x3 volume.
-        BOOMSTICK = dynamite("boomstick", 10F, 3, com.gregtech.gregtech.content.material.Materials.Orange);   // :2235
-        DYNAMITE_STRONG = dynamite("strong_dynamite", 40F, 5, com.gregtech.gregtech.content.material.Materials.Purple);  // :2237
+        BOOMSTICK = dynamite("boomstick", 10F, 3, com.gregtech.gregtech.content.material.Materials.Orange);
+        // :2235
+        DYNAMITE_STRONG = dynamite("strong_dynamite", 40F, 5, com.gregtech.gregtech.content.material.Materials.Purple);
+        // :2237
         TAP = GTBlocks.BLOCKS.register("tap", () -> new com.gregtech.gregtech.block.tool.TapBlock(false,
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                         .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register("tap", () -> new BlockItem(TAP.get(), new Item.Properties().stacksTo(64)));   // GT6 taps: 64
+        GTBlocks.BLOCK_ITEMS.register("tap", () -> new BlockItem(TAP.get(), new Item.Properties().stacksTo(64)));
+        // GT6 taps: 64
         NOZZLE = GTBlocks.BLOCKS.register("nozzle", () -> new com.gregtech.gregtech.block.tool.TapBlock(true,
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
                         .strength(1.5f, 6.0f).sound(SoundType.METAL).noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register("nozzle", () -> new BlockItem(NOZZLE.get(), new Item.Properties().stacksTo(64)));   // GT6 nozzles: 64
+        GTBlocks.BLOCK_ITEMS.register("nozzle", () -> new BlockItem(NOZZLE.get(), new Item.Properties().stacksTo(64)));
+        // GT6 nozzles: 64
         DUST_FUNNEL = GTBlocks.BLOCKS.register("dust_funnel", () -> new com.gregtech.gregtech.block.tool.DustFunnelBlock(
                 BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                         .strength(2.0f, 6.0f).requiresCorrectToolForDrops().noOcclusion()));
-        GTBlocks.BLOCK_ITEMS.register("dust_funnel", () -> new BlockItem(DUST_FUNNEL.get(), new Item.Properties().stacksTo(16)));   // GT6 Dust Funnel: 16
+        GTBlocks.BLOCK_ITEMS.register("dust_funnel", () -> new BlockItem(DUST_FUNNEL.get(), new Item.Properties().stacksTo(16)));
+        // GT6 Dust Funnel: 16
 
         // === Wave 43 / F10: Tool blocks batch 3 ===
         com.gregtech.gregtech.content.tool.AnvilDefinitions.registerAll();
@@ -193,16 +272,18 @@ public final class GTToolBlocks {
         // advanced one (:2222, stainless steel, 6.0/6.0). This used to be a placeholder block; the
         // ids stay, so the existing lang keys and the model keep working.
         GTBumbleBlocks.initializeApiaries();
-        BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("bumbliary"),net.minecraftforge.registries.ForgeRegistries.BLOCKS);
-        ADVANCED_BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("advanced_bumbliary"),net.minecraftforge.registries.ForgeRegistries.BLOCKS);
-        ALL_SIMPLE.add((RegistryObject)BUMBLIARY);ALL_SIMPLE.add((RegistryObject)ADVANCED_BUMBLIARY);
+        BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("bumbliary"), net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        ADVANCED_BUMBLIARY = RegistryObject.create(com.gregtech.gregtech.GregTech.id("advanced_bumbliary"),
+                net.minecraftforge.registries.ForgeRegistries.BLOCKS);
+        ALL_SIMPLE.add((RegistryObject) BUMBLIARY);
+        ALL_SIMPLE.add((RegistryObject) ADVANCED_BUMBLIARY);
         SAP_BAG = simple("sap_bag",
                 BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(0.5f, 0.5f).sound(SoundType.WOOL));
         for (var spec : GTStorageMetals.ALL) {
             String id = spec.suffix().equals("steel") ? "scaffold" : "scaffold_" + spec.suffix();
             var block = GTBlocks.BLOCKS.register(id, () -> new com.gregtech.gregtech.block.tool.ScaffoldBlock(
                     spec.material(), BlockBehaviour.Properties.of().mapColor(MapColor.METAL)
-                    .strength(5f, spec.resistance()).sound(SoundType.METAL).noOcclusion()));
+                            .strength(5f, spec.resistance()).sound(SoundType.METAL).noOcclusion()));
             SCAFFOLDS.add(block);
             ALL_SIMPLE.add((RegistryObject) block);
             GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
@@ -216,11 +297,12 @@ public final class GTToolBlocks {
         simple("advanced_button",
                 BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(6f, 6f).sound(SoundType.METAL).noOcclusion());
 
-        for(var spec:com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all()){
-            var block=GTBlocks.BLOCKS.register(spec.id(),()->new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,
-                    BlockBehaviour.Properties.of().strength(0.5f,6).noOcclusion()));
-            ALL_SIMPLE.add((RegistryObject)block);
-            GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new BlockItem(block.get(),new Item.Properties().stacksTo(64)));   // Original taps, funnels and gas nozzles: 64
+        for (var spec : com.gregtech.gregtech.content.tool.FluidAttachmentSpec.all()) {
+            var block = GTBlocks.BLOCKS.register(spec.id(), () -> new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(spec,
+                    BlockBehaviour.Properties.of().strength(0.5f, 6).noOcclusion()));
+            ALL_SIMPLE.add((RegistryObject) block);
+            GTBlocks.BLOCK_ITEMS.register(spec.id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(64)));
+            // Original taps, funnels and gas nozzles: 64
         }
         // Preserve existing IDs while replacing placeholder items with finite fluid handlers.
         for (var spec : com.gregtech.gregtech.api.fluid.PortableFluidContainerSpec.values()) {
@@ -228,13 +310,15 @@ public final class GTToolBlocks {
                     BlockBehaviour.Properties.of().strength(1.0f).noOcclusion()));
             PORTABLE.add(block);
             ITEMS.register("fluid_" + spec.id(), () -> new com.gregtech.gregtech.item.PortableFluidContainerItem(
-                    block.get(), spec, new Item.Properties().stacksTo(spec.shapeId().equals("cell")?64:16)));   // GT6 Fluid Containers: 16
+                    block.get(), spec, new Item.Properties().stacksTo(spec.shapeId().equals("cell") ? 64 : 16)));
+            // GT6 Fluid Containers: 16
         }
 
     }
 
     /** Registers a simple tool block with no associated block entity. */
     @SuppressWarnings("unchecked")
+
     public static void anvil(String id, String material, long durability) {
         var block = GTBlocks.BLOCKS.register(id, () -> new com.gregtech.gregtech.block.tool.MaterialAnvilBlock(
                 () -> com.gregtech.gregtech.api.material.GTMaterialRegistry.get(material), durability,
@@ -246,6 +330,7 @@ public final class GTToolBlocks {
     }
 
     @SuppressWarnings("unchecked")
+
     private static RegistryObject<net.minecraft.world.level.block.Block> simple(String id, BlockBehaviour.Properties props) {
         var restored = java.util.Set.of("anvil", "mixing_bowl", "bathing_pot", "juicer", "plant_pot",
                 "sap_bag", "fluid_funnel", "cap_nozzle");
@@ -260,9 +345,10 @@ public final class GTToolBlocks {
                 ? new com.gregtech.gregtech.block.tool.CoinMoldBlock(props)
                 : id.equals("advanced_button")
                 ? new com.gregtech.gregtech.block.tool.AdvancedButtonBlock(props)
-                : java.util.Set.of("fluid_funnel","cap_nozzle").contains(id)
-                ? new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(new com.gregtech.gregtech.content.tool.FluidAttachmentSpec(id,id,
-                    id.equals("fluid_funnel")?com.gregtech.gregtech.content.material.Materials.Ceramic:com.gregtech.gregtech.content.material.Materials.Steel,false),props)
+                : java.util.Set.of("fluid_funnel", "cap_nozzle").contains(id)
+                ? new com.gregtech.gregtech.block.tool.FluidAttachmentBlock(new com.gregtech.gregtech.content.tool.FluidAttachmentSpec(id, id,
+                        id.equals("fluid_funnel") ? com.gregtech.gregtech.content.material.Materials.Ceramic
+                                : com.gregtech.gregtech.content.material.Materials.Steel, false), props)
                 : id.equals("sap_bag")
                 ? new com.gregtech.gregtech.block.tool.SapBagBlock(id, props)
                 : restored.contains(id)
