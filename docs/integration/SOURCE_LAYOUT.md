@@ -34,6 +34,8 @@
 
 ## 先按层找代码
 
+直接物流存储：`BulkStorageState`只管理身份与长计数，`MassStorageBlockEntity`负责原生能力、余料、模式和保存；两个Logistics子类只接直接端点／附着数据。制作金属与黑色外观在`LogisticsMassStorageBlock`分开，真正的工具等级在`BlockHarvestPolicy`消费。Neo注册／能力在`platform/neoforge/logistics`，物流桶另走`GTLogisticsTank`／`EngineCapabilities`；保存、更新tag、备用跟踪和专用renderer注册是四条不同入口，见[直接存储核查](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。
+
 | 目录 | 职责 |
 | --- | --- |
 | `core/src/main/java/com/gregtech/gregtech` | 不依赖 Minecraft 的材料、数量、配方合同、能源计算、结构目录等领域代码 |

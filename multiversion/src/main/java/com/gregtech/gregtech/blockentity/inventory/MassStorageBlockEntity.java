@@ -18,9 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >=1.21.1 {
-
-
-
 /*import net.neoforged.neoforge.items.IItemHandler;
 *///?} else {
 import net.minecraftforge.common.capabilities.Capability;
@@ -56,9 +53,12 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     private long partialUnits;
 //? if >=1.21.1 {
 //?} else {
-    @Nullable private LazyOptional<IItemHandler> itemCap;
-    @Nullable private LazyOptional<IItemHandler> bottomCap;
+    @Nullable
+    private LazyOptional<IItemHandler> itemCap;
+    @Nullable
+    private LazyOptional<IItemHandler> bottomCap;
 //?}
+
     public MassStorageBlockEntity(BlockPos pos, BlockState state) {
 //? if >=1.21.1 {
         /*this(com.gregtech.gregtech.platform.neoforge.logistics.StorageRegistries.MASS_STORAGE.get(), pos, state);
@@ -66,19 +66,48 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         this(com.gregtech.gregtech.registry.GTBlockEntities.MASS_STORAGE.get(), pos, state);
 //?}
     }
+
     protected MassStorageBlockEntity(BlockEntityType<? extends MassStorageBlockEntity> type,
                                      BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-    public ItemStack template() { ItemStack result = storage.filter(); return result == null ? ItemStack.EMPTY : result; }
-    public long stored() { return storage.count(); }
-    public long partialUnits() { return partialUnits; }
-    public boolean isPacked() { return (mode & 8) != 0; }
-    public int mode() { return mode; }
-    public boolean resetsFilter() { return (mode & 2) != 0; }
-    public boolean autoOutput() { return (mode & 1) != 0; }
-    public boolean emitsOverflow() { return (mode & 4) != 0; }
-    public long maximumItems() { return CAPACITY + (emitsOverflow() ? 256 : 0); }
+
+    public ItemStack template() {
+        ItemStack result = storage.filter();
+        return result == null ? ItemStack.EMPTY : result;
+    }
+
+    public long stored() {
+        return storage.count();
+    }
+
+    public long partialUnits() {
+        return partialUnits;
+    }
+
+    public boolean isPacked() {
+        return (mode & 8) != 0;
+    }
+
+    public int mode() {
+        return mode;
+    }
+
+    public boolean resetsFilter() {
+        return (mode & 2) != 0;
+    }
+
+    public boolean autoOutput() {
+        return (mode & 1) != 0;
+    }
+
+    public boolean emitsOverflow() {
+        return (mode & 4) != 0;
+    }
+
+    public long maximumItems() {
+        return CAPACITY + (emitsOverflow() ? 256 : 0);
+    }
 
     public void toggleAutoOutput() {
         mode ^= 1;
@@ -136,6 +165,7 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         drops.addAll(MassStorageMaterialForms.partialDrops(template(), partialUnits));
         return drops;
     }
+
     private boolean matches(ItemStack stack) {
         if (stack.isEmpty()) return false;
         ItemStack key = template();
@@ -146,7 +176,11 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
 //?}
                 || MassStorageMaterialForms.compatibleUnits(key, stack) > 0;
     }
-    public int insert(ItemStack stack) { return (int) insert(stack, false); }
+
+    public int insert(ItemStack stack) {
+        return (int) insert(stack, false);
+    }
+
     private long insert(ItemStack stack, boolean simulate) {
         if (stack.isEmpty() || isPacked()) return 0;
         ItemStack key = template();
@@ -180,23 +214,38 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
         }
         return accepted;
     }
-    public ItemStack extractStack() { return extract(Integer.MAX_VALUE, false); }
-    public ItemStack extractAmount(int amount) { return extract(amount, false); }
+
+    public ItemStack extractStack() {
+        return extract(Integer.MAX_VALUE, false);
+    }
+
+    public ItemStack extractAmount(int amount) {
+        return extract(amount, false);
+    }
+
     private ItemStack extract(int amount, boolean simulate) {
         if (isPacked()) return ItemStack.EMPTY;
         ItemStack key = template();
         if (key.isEmpty() || amount <= 0) return ItemStack.EMPTY;
         int taken = (int) storage.extract(Math.min(amount, key.getMaxStackSize()), simulate);
         if (taken == 0) return ItemStack.EMPTY;
-        if (!simulate) { clearFilterIfEmpty(); markUpdated(); }
+        if (!simulate) {
+            clearFilterIfEmpty();
+            markUpdated();
+        }
         return key.copyWithCount(taken);
     }
+
     private void clearFilterIfEmpty() {
         // GT6 keeps a zero-count template while partial material remains, even
         // when the reset-when-empty screwdriver mode is enabled.
         if (resetsFilter() && stored() == 0 && partialUnits == 0) storage.restore(null, 0);
     }
-    private static void checkSlot(int slot) { if (slot != 0) throw new IllegalArgumentException("Bulk storage slot: " + slot); }
+
+    private static void checkSlot(int slot) {
+        if (slot != 0) throw new IllegalArgumentException("Bulk storage slot: " + slot);
+    }
+
     private void markUpdated() {
         inventoryChanged = true;
         setChanged();
@@ -206,26 +255,67 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     // ── Item capability ──────────────────────────────────────────────────────
 
     private final IItemHandler handler = new IItemHandler() {
-        @Override public int getSlots() { return 1; }
-        @Override public ItemStack getStackInSlot(int slot) { checkSlot(slot); return extract(Integer.MAX_VALUE, true); }
-        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            checkSlot(slot); int accepted = (int) insert(stack, simulate);
+        @Override
+        public int getSlots() {
+            return 1;
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            checkSlot(slot);
+            return extract(Integer.MAX_VALUE, true);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            checkSlot(slot);
+            int accepted = (int) insert(stack, simulate);
             return stack.copyWithCount(stack.getCount() - accepted);
         }
-        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) { checkSlot(slot); return extract(amount, simulate); }
-        @Override public int getSlotLimit(int slot) { checkSlot(slot); return (int) maximumItems(); }
-        @Override public boolean isItemValid(int slot, ItemStack stack) { checkSlot(slot); return !isPacked() && matches(stack); }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            checkSlot(slot);
+            return extract(amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            checkSlot(slot);
+            return (int) maximumItems();
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            checkSlot(slot);
+            return !isPacked() && matches(stack);
+        }
     };
 
     private final IItemHandler bottomHandler = new IItemHandler() {
-        public int getSlots() { return handler.getSlots(); }
-        public ItemStack getStackInSlot(int slot) { return handler.getStackInSlot(slot); }
+        public int getSlots() {
+            return handler.getSlots();
+        }
+
+        public ItemStack getStackInSlot(int slot) {
+            return handler.getStackInSlot(slot);
+        }
+
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
             return autoOutput() ? stack : handler.insertItem(slot, stack, simulate);
         }
-        public ItemStack extractItem(int slot, int amount, boolean simulate) { return handler.extractItem(slot, amount, simulate); }
-        public int getSlotLimit(int slot) { return handler.getSlotLimit(slot); }
-        public boolean isItemValid(int slot, ItemStack stack) { return !autoOutput() && handler.isItemValid(slot, stack); }
+
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return handler.extractItem(slot, amount, simulate);
+        }
+
+        public int getSlotLimit(int slot) {
+            return handler.getSlotLimit(slot);
+        }
+
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return !autoOutput() && handler.isItemValid(slot, stack);
+        }
     };
 
     public void tickAutomaticOutput() {
@@ -265,8 +355,13 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     }
 
 //? if >=1.21.1 {
-    /*public IItemHandler itemHandler() { return handler; }
-    public IItemHandler itemHandler(@Nullable Direction side) { return side == Direction.DOWN ? bottomHandler : handler; }
+    /*public IItemHandler itemHandler() {
+        return handler;
+    }
+
+    public IItemHandler itemHandler(@Nullable Direction side) {
+        return side == Direction.DOWN ? bottomHandler : handler;
+    }
 *///?} else {
     @Override
     public <T> @org.jetbrains.annotations.NotNull LazyOptional<T> getCapability(
@@ -287,8 +382,14 @@ public class MassStorageBlockEntity extends BlockEntity implements BehaviorDuctT
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        if (itemCap != null) { itemCap.invalidate(); itemCap = null; }
-        if (bottomCap != null) { bottomCap.invalidate(); bottomCap = null; }
+        if (itemCap != null) {
+            itemCap.invalidate();
+            itemCap = null;
+        }
+        if (bottomCap != null) {
+            bottomCap.invalidate();
+            bottomCap = null;
+        }
     }
 //?}
 

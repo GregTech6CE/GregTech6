@@ -116,3 +116,5 @@
 2026-10-21 第八十六批：core LogisticsRoutingRules展开短条件、明确处理器／轮次／结果／等级／数量局部名，DisplayRules展开判断并明确参数；共享LogisticsItemRouter展开记录／条件，宿主／目标及转换／槽位循环使用描述性名称。核心BE仅纠正公开单轮方法与普通ticker门槛说明。四源六完整执行716、234、2240／2241、3094／3135及字面量位置／其它注释／指令保持，材料未动，见[专题](LOGISTICS_SCHEDULING_AUDIT.md)和[回执](verification/logistics-scheduling-audit-20261021.json)。全面标准化／原版核查继续。
 
 2026-10-21 同步前可读性提交：展开物流大容量存储实体及两类方块入口、Neo StorageRegistries注册／构造流程，明确eventBus／materialSpec／registryId等局部名，两个显式import缩短相同类型；普通存储Neo说明修正已完成的137，注册说明不再称物流变种未接。五源九执行344／378、291／291、170／170、2053／2128、855在列明局部名和两个类型import归一后保持；原始字面量值、恢复类型拼写后的字面量位置、其它注释／Stonecutter指令不变，见[回执](verification/logistics-storage-readability-20261021.json)。材料不动，未构建／游戏，直接存储核查及全面队列继续。
+
+2026-10-21 第八十七批：MassStorageBlockEntity展开模板／模式getter、提取后更新、匿名物品能力方法与失效清理，维护源374→475行；纯空白调整，无名称／import归一。Forge2577／Neo2354全部有序执行词法、各60个字面量原始位置、注释及Stonecutter条件不变。同步前五源九视图另复核，未计作本批新修改；材料摘要保持，见[直接存储专题](LOGISTICS_DIRECT_STORAGE_AUDIT.md)和[回执](verification/logistics-direct-storage-audit-20261021.json)。未修玩法／编译／游戏／构建，全面目标继续。

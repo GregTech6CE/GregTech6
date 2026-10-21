@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-21 续核：第八十六批核物流调度相位／完整等级顺序，新增284并区分原满载多加1与相同显示饱和。行为记录至ALIGN-284，共284条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是284个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-21 续核：第八十七批核直接物流存储，新增285物流桶覆盖板客户端更新、286专用实体渲染器漏注册；保存／最终掉落及已修137分开。行为记录至ALIGN-286，共286条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是286个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -311,6 +311,8 @@
 | ALIGN-282 | 确认纯流体过滤器缺有效材料环境流体的模板转换。 | 原30257左键未取得容器流体时，经OM材料关联→fluid(U,true)→FL.display；Milk粉在293K选择实际milk。 | 当前仅复制粉末，展示载体解析和真实流体能力均不承担材料相态回退；120有限非主面条件，声明生成链非活注册表，见[材料模板](FILTER_FLUID_TOOLS_AUDIT.md)。 |
 | ALIGN-283 | 确认前缀过滤器未完整消费原版物品的实际前缀成员。 | 原版铁块直接关联blockIngot；六木板注册plank集合，主关联／备用扫描分开。 | 当前原生物品落到六种通用标签返回值，不能产生plank／blockIngot；木材组成和plate标签已有。14身份／128标签组合是有限源分析，不冒充活注册表或运输，见[成员专题](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)。 |
 | ALIGN-284 | 确认物流核心秒节拍从全局服务端计数改为世界存档时间相位。 | 原启动清SERVER_TIME、START递增前求SYNC_SECOND，核心注册预回调。 | 当前普通ticker按gameTime%20，原生先增世界时间且Time持久保存；20有限余数中19相位不同，频率仍20刻一次。不是吞吐或实际重启验收，见[调度专题](LOGISTICS_SCHEDULING_AUDIT.md)。 |
+| ALIGN-285 | 确认物流桶覆盖板缺有效客户端更新消费者。 | 原继承覆盖板完整ID／meta与视觉包，安装调用updateClientData。 | 当前世界保存已有；父getUpdateTag漏物流板、默认getUpdatePacket为null，原生getCover覆盖又排除fallback跟踪。不是掉落／存档丢失，见[直接存储](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。 |
+| ALIGN-286 | 确认独立物流桶实体漏注册覆盖板渲染器。 | 原覆盖板父类最终渲染pass消费表面／支架／附件。 | 两端TankCoverRenderer仅注册普通TANK，实际是LOGISTICS_TANK；原生按getType精确查map，fallback也不接受该宿主。不是外壳资源缺失或CPU自亮问题，见[客户端入口](LOGISTICS_DIRECT_STORAGE_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

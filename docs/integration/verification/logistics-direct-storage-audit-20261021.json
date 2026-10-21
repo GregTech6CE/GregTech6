@@ -1,0 +1,1332 @@
+{
+  "date": "2026-10-21",
+  "batch": 87,
+  "baseline": "7fd6111bc5967fc81ae1ccda6a2f3fe67bb090c7",
+  "scope": "Direct logistics mass-storage and barrel registration, priorities, memory, tool modes, world save, cover drop, client dispatch. Not full runtime logistics acceptance.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityMassStorageLogistics.java",
+      "sha256": "07efb64ed30f65ddff98cb47137d36d371945379316a460e91b9d2d5a5d728c3",
+      "copyright": [
+        "Copyright (c) 2021 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2021 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tanks/MultiTileEntityBarrelLogistics.java",
+      "sha256": "1247122cf9a7d7d000da70dde1641dc9cb67b624ba71c840b3e11f9f28e538dc",
+      "copyright": [
+        "Copyright (c) 2020 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/inventories/MultiTileEntityMassStorage.java",
+      "sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "copyright": [
+        "Copyright (c) 2023 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "copyright": [
+        "Copyright (c) 2020 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "copyright": [
+        "Copyright (c) 2022 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2022 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/tank/TileEntityBase08Barrel.java",
+      "sha256": "4723bed8e3871eee500b2ac988f60c899897629e9b4f5aefc028df6c7958fc45",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/multiblocks/MultiTileEntityLogisticsCore.java",
+      "sha256": "b23b182503bedd96a13bc040035037792810b01894e8350301622f464c777fd3",
+      "copyright": [
+        "Copyright (c) 2025 GregTech-6 Team"
+      ],
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "copyright": [
+        "Copyright (c) 2026 GregTech-6 Team"
+      ],
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/inventory/BulkStorageState.java",
+      "sha256": "0e63d316441ded310a226664fe28f04d072f17f4b5735a4568f961629012242d",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java",
+      "sha256": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java",
+      "sha256": "5bbc6eba4d0f0448b3816aa48eca79ac56a64dfa027430b24da9f8049bdb5470",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/transport/fluid/LogisticsTankSpec.java",
+      "sha256": "9c70e78e74399469f9e45375ac7bc2cc0440f81d5a09fcadc960cad7ae5e1fd2",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "sha256": "1fe16c33591b21723182ab530016c4a6a3a3fed24fc881a6d9cc09edf47d86f9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "fb3ebd3445b74bf0c8fa63f9b075a04e6de8d222ac183918ae937727ad56fcac",
+          "tokens": 2577
+        },
+        "neoforge": {
+          "sha256": "6a035114f5bcabb8003e877d1268c71c6455da99661e12dc6357f0d1c27da432",
+          "tokens": 2354
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/LogisticsMassStorageBlockEntity.java",
+      "sha256": "14ad57dd176d42b118fb55cdcd9bf858e66bd6985f559985d45fbba5777dc0c4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "100d3cfe8af85d347c822cfb62de9639d87f26905f976b24c295f8cfd4ce3bee",
+          "tokens": 344
+        },
+        "neoforge": {
+          "sha256": "2c202482c49f4561f79ad2d83d64a4119756be3fa046a7604feb056d08c33261",
+          "tokens": 378
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/LogisticsTankBlockEntity.java",
+      "sha256": "c6aa7a3144ed0c5d53a4f5669be416216a9939c9c9f74d26588da5daf0de17d7",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "32875760fefb534a8080795f07db75600e28433d3ab1100f71c230ad00ebe448",
+          "tokens": 410
+        },
+        "neoforge": {
+          "sha256": "205f3eefffdf3e21096de9486c6906ee2ec24a7f41bf3fde436a4be3cbe58a6c",
+          "tokens": 440
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/machine/TankBlockEntity.java",
+      "sha256": "3dadd179616c587c55b7138ca7072675875b14f6d2693199a53935e8b96f9c17",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "6e0607bfe4f591314a288b5a98d9f46b577b5978ca3859e0254cec76e8a1f11c",
+          "tokens": 3570
+        },
+        "neoforge": {
+          "sha256": "3114fdb4c903ec4c50dc0ea7a1ba1e647f181dede512d1e974d1e38c69a38890",
+          "tokens": 3358
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "sha256": "8e4d0cc3b205520ff2aa7760d4c44dd19d251eaa74be2cf7c4662445bac396e8",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b1cd5003a47a67e726ddee466847c49a22ea2f9b07d52c785fc8208a62f6ee19",
+          "tokens": 2053
+        },
+        "neoforge": {
+          "sha256": "ba035ab05a2b1ffea0d37306c5865e24dbf93d49ae7afaaf9a10b1d0841d823a",
+          "tokens": 2128
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LogisticsMassStorageBlock.java",
+      "sha256": "d5a42e485031530b74e7ec2404004a39d959dd643db5c7745e1e35c3b118f06d",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "d5a42e485031530b74e7ec2404004a39d959dd643db5c7745e1e35c3b118f06d",
+          "tokens": 170
+        },
+        "neoforge": {
+          "sha256": "d5a42e485031530b74e7ec2404004a39d959dd643db5c7745e1e35c3b118f06d",
+          "tokens": 170
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/machine/LogisticsTankBlock.java",
+      "sha256": "8da5ea2d4903e9329cb8a2cd7835ad57f0bb2fe518bcc9f124c72180db8f3d7c",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "8da5ea2d4903e9329cb8a2cd7835ad57f0bb2fe518bcc9f124c72180db8f3d7c",
+          "tokens": 291
+        },
+        "neoforge": {
+          "sha256": "8da5ea2d4903e9329cb8a2cd7835ad57f0bb2fe518bcc9f124c72180db8f3d7c",
+          "tokens": 291
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageMaterialForms.java",
+      "sha256": "8ac532a3b5b503908836afb4d8afc875f9711ffe9ed1253d1a7e1a2626261e15",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "6e2d9576ef4ccbe8a57dab395ee20ff3ecb154bb60e353e03bcbe3476203a197",
+          "tokens": 2046
+        },
+        "neoforge": {
+          "sha256": "dfa48fae4cb3b26020c3e1811578b72644e2601cba86e9e8c00b2d732078bb07",
+          "tokens": 2047
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+          "tokens": 1504
+        },
+        "neoforge": {
+          "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+          "tokens": 1527
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/BlockHarvestPolicy.java",
+      "sha256": "049e96dbead037754ac0d397005597ac00dd41ede9901d2999bc173faf4a44fa",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "6bdc674625a31ce5e2104657b2bdce87768fd3357ea971545a851446be0a0305",
+          "tokens": 1307
+        },
+        "neoforge": {
+          "sha256": "848e7fb4094680b2400ea7f0aa5ed3f3ce5bbcc9d3a75f6aeb970cfde286decf",
+          "tokens": 1309
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsStorageHost.java",
+      "sha256": "5a14d12cb99687b2d2dbffcef2988fbf027e698e79e9c8dfa08c5d9661534198",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "4c8e0cd2898f81d409fef45dc8422633a2a1095b9f344d53cbb365476d16e6f2",
+          "tokens": 75
+        },
+        "neoforge": {
+          "sha256": "4c8e0cd2898f81d409fef45dc8422633a2a1095b9f344d53cbb365476d16e6f2",
+          "tokens": 75
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsHost.java",
+      "sha256": "0acb902e14184c01d57a818830a29c491ff26141c4f1a42fcb71b61bad73a6e8",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "8045c313a35083f583e4e27f1bbec4731e15f70136a96b709154f8bf27028c3d",
+          "tokens": 43
+        },
+        "neoforge": {
+          "sha256": "8045c313a35083f583e4e27f1bbec4731e15f70136a96b709154f8bf27028c3d",
+          "tokens": 43
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsItemRouter.java",
+      "sha256": "c5bd4a05a6d36201af59ec380ef5619f08dfbcc5a84aa74f1c26ec3a6932b2d4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e977764dd636d2631c27565046ffb87c279fb11919450d0f87b3782f870d4aa2",
+          "tokens": 2240
+        },
+        "neoforge": {
+          "sha256": "c2c7668013a54ea122456b280f4620e77ddd23127f664e5d98943591c08690fa",
+          "tokens": 2241
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsFluidRouter.java",
+      "sha256": "cd65ece2f245aa7e044fbadcd1c1ec38e223966b28e87e65a128d2ecb2e64ef7",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "d28cb843b1423a7a792c0fc2e73480a6dd690ad5215483ef50210d27efcecc2b",
+          "tokens": 1518
+        },
+        "neoforge": {
+          "sha256": "edc0c5a8d52dd30add07d13705e4ec4dc6d07d15099ddac4fbfdb5d2d174206d",
+          "tokens": 1521
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCovers.java",
+      "sha256": "239a415d2d9f5150482f2ea1e70feddc01cbca65a882f71d3144e4575dce9fc5",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c39b9c725ae60efb7cfa8812b4a0d9cb81c93acc649fe00c524eaaa1da48c9e5",
+          "tokens": 1382
+        },
+        "neoforge": {
+          "sha256": "9807cebf9e3d13239ba5e225e3497ad43499c8cb715199e54392c15339dbf988",
+          "tokens": 1420
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/logistics/LogisticsCoverInteraction.java",
+      "sha256": "a617246e9ccb45104a08ad12482c5e2fd5d9795c105dd4c1aa5d7dd866c33fd2",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "a23008d23524e9e4048e45fb23202ace95993d4f7ea4b3e383598040b0cf7afd",
+          "tokens": 1720
+        },
+        "neoforge": {
+          "sha256": "6c5db37b979b6ee637e603ebf51c20f89d4efac21b296ea56a537572d0ad85d7",
+          "tokens": 1729
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "sha256": "b2317aec9b0452b16456829eda4da89032f124210baafc4e8255701bfb59a7d5",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3c63b81a35dc90a0f8d4093895224b552e5183370380ba5286cb5a2797a8b187",
+          "tokens": 453
+        },
+        "neoforge": {
+          "sha256": "4060aa78bc22dd3030fc6b03335c82e5a5ca9f7ede73ff71eb9e58e9f9461ec3",
+          "tokens": 453
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverFallback.java",
+      "sha256": "d68ff86788c61cad3aa370502c918034902a9193dcf0049d2f1fe3c6a78ce4d4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e54b9cc082b3474f59ad30bc579b2d3d0d591a21135967b01a8b1e295efcb5de",
+          "tokens": 1338
+        },
+        "neoforge": {
+          "sha256": "20e3bcd6856082f1186ee7fc19d818583c8a05f62f2633cd04e6aeb03a976283",
+          "tokens": 1384
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+          "tokens": 862
+        },
+        "neoforge": {
+          "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+          "tokens": 944
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/ComponentCoverHostMixin.java",
+      "sha256": "afd6d00235399a7a1b115cbab778d691997836a49e25e62a442a36c59a2733d9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "e24f795ad736c83b2f6dce086fbed48d837be4a058aeb328419e5fee5728a544",
+          "tokens": 812
+        },
+        "neoforge": {
+          "sha256": "73a46b5d7f458323121f4457cbede985ecbde249a82769afb425a40fd5a07960",
+          "tokens": 905
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+          "tokens": 316
+        },
+        "neoforge": {
+          "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+          "tokens": 316
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/ComponentCoverFallbackRenderer.java",
+      "sha256": "1715fef44be3dfdff82f2407a8bac1c99f5136695ff020ae452086aa723066c9",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "9af89ed3a4e0500ff9ff07bfaa5cb03a5b4d518dc00e60d865b0311e725368e4",
+          "tokens": 526
+        },
+        "neoforge": {
+          "sha256": "321749181d80c811535f03723286fc74512db0e281353e44e2116bde0c1ae6a9",
+          "tokens": 532
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/TankCoverRenderer.java",
+      "sha256": "37ef661200515f9df5a45150813ee4314461a74976ec054f56ce5b5e1971a40e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "ef56930a89075c6294aa29eac7452b788320edb1e548650606c9e784b6fee7c1",
+          "tokens": 181
+        },
+        "neoforge": {
+          "sha256": "ef56930a89075c6294aa29eac7452b788320edb1e548650606c9e784b6fee7c1",
+          "tokens": 181
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/MassStorageRenderer.java",
+      "sha256": "0e7a77edc2ef664fb442b922dc68b2fdaa85f2ddba722799c492aee8a4d89a7e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "041b2225ad7d74925bdd92e081586d4d87a9a230ad15cbefbf5f6869a3add114",
+          "tokens": 500
+        },
+        "neoforge": {
+          "sha256": "041b2225ad7d74925bdd92e081586d4d87a9a230ad15cbefbf5f6869a3add114",
+          "tokens": 500
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/LogisticsCoverRenderer.java",
+      "sha256": "efb4523a171850c48c588c6305fbe4474ab390979ec2f9f7c85a8b16eb7647bb",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "699a8c195881a64326226739b8975d4d6f54956f1ced054cec6dd1e334d0ab2a",
+          "tokens": 904
+        },
+        "neoforge": {
+          "sha256": "108d0368be97cee29e1eba01d12ccac82483d506de1e97fbb22b417617896eef",
+          "tokens": 890
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/network/PacketSyncComponentCovers.java",
+      "sha256": "6ebf1d6264cc25a7ff6b871499382c739fdadbb35e10ba980afed57608fe3318",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "3eb4ee6e92fd7483b92a9d685fc93b64ee366e8b1f5605f753d651944e85786e",
+          "tokens": 369
+        },
+        "neoforge": {
+          "sha256": "602a9ccbeba314419204e6d8ac11615177f169aaa1bfe8179bdc8e24ba229f60",
+          "tokens": 453
+        }
+      }
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTTanks.java",
+      "sha256": "661c5f6c7b9ac0c2a3bc458e9eac211e71a40b0e0c4ec570b7fa9f9e7c93993e",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/content/fluid/TankDefinitions.java",
+      "sha256": "2a2d9b10af5514d2b1edc165008abcb8c8d100fc6d8d42802b72b35e6d9e3b8d",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageRegistries.java",
+      "sha256": "2250b51083e3bf6bd40c4dd5b7a7415228f2e84597388905450ee9175cc91d06",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageCapabilities.java",
+      "sha256": "438e64e7e0ef8f9d1c883bae397a02d32ddd49c3fe54da836165fd57565d461a",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/energy/EngineCapabilities.java",
+      "sha256": "4c386ce22e3185728d5880bf64939048b581a9d2e383a6ce5e9d4d8511acf2dd",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTLogisticsTank.java",
+      "sha256": "d92b43ad3c38242d2081be95e7ada87b26d2e712a79fbe32dbb3f9038b7f9e75",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/api/fluid/FluidStackNbt.java",
+      "sha256": "74bba1a934e090332fad287214308b583195e7f850b20d4a2b8724e2af4e7737",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageClientSetup.java",
+      "sha256": "2088e65b74d0db0e6d9ac7575b1f48ebc1ab6944aabaf9c64a3603e78232d569",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/FluidTransportClientSetup.java",
+      "sha256": "c96f79bd01efd3bddcaa1955c7f415c8867f90ea0c3aec804a7a1cf729aabddb",
+      "shared_platform_views": {}
+    }
+  ],
+  "mixin_configs": [
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/resources/gregtech.mixins.json",
+      "sha256": "9a11fa5b224b5e4dfce0a242137db26795c0931e2fc33d0bd223f22b722949bf"
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/resources/gregtech-neoforge.mixins.json",
+      "sha256": "4286c1ca895a299369fe5d617055752d83f8fd648c27a4bb650b6d04d3432542"
+    }
+  ],
+  "new_alignment_findings": [
+    {
+      "id": "ALIGN-285",
+      "contract": "Logistics barrel cover data has world-save consumers but no effective normal client-update consumer.",
+      "evidence": "TankBlockEntity overrides getCover, so fallback uses/track=false. Inherited getUpdateTag omits logistics faces; native getUpdatePacket is null. Save/load and final harvested cover data are separate positive paths."
+    },
+    {
+      "id": "ALIGN-286",
+      "contract": "Dedicated LOGISTICS_TANK type is omitted from both renderer registrations.",
+      "evidence": "TankCoverRenderer can draw logistics faces but is registered only for ordinary TANK; native dispatcher keys by exact getType, and fallback rendering visits only its tracked hosts."
+    }
+  ],
+  "source_equivalence": {
+    "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+    "before_raw_sha256": "cf64f9ff48465803dbc0c52f308eeb877ad37868911f62fbee2b36c857784143",
+    "after_raw_sha256": "1fe16c33591b21723182ab530016c4a6a3a3fed24fc881a6d9cc09edf47d86f9",
+    "before_maintenance_lines": 374,
+    "after_maintenance_lines": 475,
+    "changes": "Whitespace only. No normalization, gameplay, comments, directives, imports or identifiers changed.",
+    "views": [
+      {
+        "platform": "forge",
+        "tokens": 2577,
+        "execution_sha256": "dbbca5686a182aee169b9b83e10b24f52465436845449dc93b5d076983bc35ca",
+        "literal_positions_sha256": "f369d874eb622c1425cbe1589c28af2fcd821cefd0bbbf8cb6dffe794e5bdd99",
+        "literal_count": 60,
+        "before_lines": 331,
+        "after_lines": 430
+      },
+      {
+        "platform": "neoforge",
+        "tokens": 2354,
+        "execution_sha256": "e8ad9892f133d7b16edb793d69b6f1c35d657cdb60356a098aa965ec5db47929",
+        "literal_positions_sha256": "c838b6e35c4eb6a70a48f76b5a4f21d973bdfb1a2383cacf051c04e054eaa306",
+        "literal_count": 60,
+        "before_lines": 298,
+        "after_lines": 391
+      }
+    ]
+  },
+  "earlier_readability_checkpoint": {
+    "receipt": "docs/integration/verification/logistics-storage-readability-20261021.json",
+    "receipt_sha256": "cdff14cabea2d13e73ccb286fb711800aa962ef5dc0944e9be11dc010020d5bd",
+    "source_files_revalidated": 5,
+    "scope": "Previously committed five-source/nine-view checkpoint; not new edits in batch 87."
+  },
+  "bounded_family_projection": {
+    "original": {
+      "DUST": [
+        "blockDust",
+        "dust",
+        "dustSmall",
+        "dustTiny",
+        "dustDiv72"
+      ],
+      "INGOT": [
+        "blockIngot",
+        "ingot",
+        "billet",
+        "chunkGt",
+        "nugget"
+      ],
+      "WIRE": [
+        "wireGt01",
+        "wireGt02",
+        "wireGt03",
+        "wireGt04",
+        "wireGt05",
+        "wireGt06",
+        "wireGt07",
+        "wireGt08",
+        "wireGt09",
+        "wireGt10",
+        "wireGt11",
+        "wireGt12",
+        "wireGt13",
+        "wireGt14",
+        "wireGt15",
+        "wireGt16"
+      ],
+      "GEM": [
+        "gem",
+        "blockGem"
+      ],
+      "PLATE": [
+        "plate",
+        "blockPlate"
+      ],
+      "GEM_PLATE": [
+        "plateGem",
+        "blockPlateGem"
+      ],
+      "CRUSHED": [
+        "crushed",
+        "crushedTiny"
+      ],
+      "CRUSHED_PURIFIED": [
+        "crushedPurified",
+        "crushedPurifiedTiny"
+      ],
+      "CRUSHED_CENTRIFUGED": [
+        "crushedCentrifuged",
+        "crushedCentrifugedTiny"
+      ],
+      "RAW": [
+        "oreRaw",
+        "blockRaw"
+      ]
+    },
+    "current": {
+      "DUST": [
+        "dust",
+        "dustSmall",
+        "dustTiny",
+        "dustDiv72",
+        "blockDust"
+      ],
+      "INGOT": [
+        "ingot",
+        "nugget",
+        "billet",
+        "chunkGt",
+        "blockIngot"
+      ],
+      "GEM": [
+        "gem",
+        "blockGem"
+      ],
+      "PLATE": [
+        "plate",
+        "blockPlate"
+      ],
+      "GEM_PLATE": [
+        "plateGem",
+        "blockPlateGem"
+      ],
+      "CRUSHED": [
+        "crushed",
+        "crushedTiny"
+      ],
+      "CRUSHED_PURIFIED": [
+        "crushedPurified",
+        "crushedPurifiedTiny"
+      ],
+      "CRUSHED_CENTRIFUGED": [
+        "crushedCentrifuged",
+        "crushedCentrifugedTiny"
+      ],
+      "RAW": [
+        "oreRaw",
+        "blockRaw"
+      ],
+      "WIRE": [
+        "wireGt01",
+        "wireGt02",
+        "wireGt03",
+        "wireGt04",
+        "wireGt05",
+        "wireGt06",
+        "wireGt07",
+        "wireGt08",
+        "wireGt09",
+        "wireGt10",
+        "wireGt11",
+        "wireGt12",
+        "wireGt13",
+        "wireGt14",
+        "wireGt15",
+        "wireGt16"
+      ]
+    },
+    "declared_forms": 40,
+    "pair_conditions": 1600,
+    "pair_sha256": "3f0e1221bc7ea081b09d7ca773753af1c2e3b685b585e9adcf73c4a09cb5f677",
+    "limits": "Declared builtin family labels only. Does not execute Java, ore membership, tags, all materials, components, units, extraction or external providers."
+  },
+  "client_dispatch_source_witnesses": [
+    {
+      "platform": "forge",
+      "tank_update_body": "public CompoundTag getUpdateTag() {\n        CompoundTag tag = super.getUpdateTag();\n\n        tag.putLong(NBT_TEMPERATURE, temperature);\n        tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);\n        tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);\n        tag.putLong(NBT_SEALED_TIME, sealedTime);\n        tag.putLong(NBT_MAX_SEALED_TIME, maxSealedTime);\n        CompoundTag tankTag = new CompoundTag();\n\n        tank.writeToNBT(tankTag);\n\n        tag.put(\"gt.tank\", tankTag);\n\n        componentCovers.save(tag);\n\n        return tag;\n    }",
+      "mass_update_body": "public CompoundTag getUpdateTag() {\n\n        CompoundTag tag = new CompoundTag();\n\n        saveAdditional(tag);\n\n        return tag;\n    }",
+      "logistics_tank_world_save_and_load": true,
+      "logistics_tank_update_packet_is_inherited_null": true,
+      "logistics_tank_update_tag_contains_logistics_faces": false,
+      "logistics_tank_qualifies_for_fallback_tracker": false,
+      "logistics_mass_update_tag_uses_virtual_save_additional": true,
+      "logistics_mass_native_update_packet_exists": true,
+      "logistics_mass_qualifies_for_fallback_tracker": true
+    },
+    {
+      "platform": "neoforge",
+      "tank_update_body": "public CompoundTag getUpdateTag(HolderLookup.Provider lookup) {\n        CompoundTag tag = super.getUpdateTag(lookup);\n\n        tag.putLong(NBT_TEMPERATURE, temperature);\n        tag.putBoolean(NBT_AUTO_OUTPUT, autoOutput);\n        tag.putBoolean(NBT_SOFT_HAMMER, softHammerState);\n        tag.putLong(NBT_SEALED_TIME, sealedTime);\n        tag.putLong(NBT_MAX_SEALED_TIME, maxSealedTime);\n        CompoundTag tankTag = new CompoundTag();\n\n        tank.writeToNBT(tankTag,lookup);\n\n        tag.put(\"gt.tank\", tankTag);\n\n        componentCovers.save(tag,lookup);\n\n        return tag;\n    }",
+      "mass_update_body": "public CompoundTag getUpdateTag(net.minecraft.core.HolderLookup.Provider lookup) {\n\n        CompoundTag tag = new CompoundTag();\n\n        saveAdditional(tag, lookup);\n\n        return tag;\n    }",
+      "logistics_tank_world_save_and_load": true,
+      "logistics_tank_update_packet_is_inherited_null": true,
+      "logistics_tank_update_tag_contains_logistics_faces": false,
+      "logistics_tank_qualifies_for_fallback_tracker": false,
+      "logistics_mass_update_tag_uses_virtual_save_additional": true,
+      "logistics_mass_native_update_packet_exists": true,
+      "logistics_mass_qualifies_for_fallback_tracker": true
+    }
+  ],
+  "renderer_declaration_inventory": {
+    "roots": [
+      "multiversion/src/main/java/com/gregtech/gregtech/",
+      "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/",
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/"
+    ],
+    "scanned_files": 1250,
+    "path_list_sha256": "adb3804c1341a805cdb23d6b4a589f51d4cdce4f4a6407cfc79bf8a2c9a864d1",
+    "declarations": [
+      {
+        "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+        "calls": [
+          [
+            "GTBlockEntities.BOTTLE_CRATE.get()",
+            "BottleCrateRenderer::new"
+          ],
+          [
+            "GTBlockEntities.BOOKSHELF.get()",
+            "BookShelfRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LOGISTICS_CORE.get()",
+            "LogisticsCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LOGISTICS_WIRE.get()",
+            "LogisticsCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MULTIBLOCK_PORT.get()",
+            "LogisticsCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.COIN_PILE.get()",
+            "CoinPileRenderer::new"
+          ],
+          [
+            "GTBlockEntities.COIN_MOLD.get()",
+            "CoinMoldRenderer::new"
+          ],
+          [
+            "GTBlockEntities.SANDWICH_BLOCK.get()",
+            "SandwichRenderer::new"
+          ],
+          [
+            "GTBlockEntities.SMELTING_CRUCIBLE.get()",
+            "SmeltingCrucibleRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_CRUCIBLE.get()",
+            "LargeCrucibleRenderer::new"
+          ],
+          [
+            "GTBlockEntities.PORTABLE_CONTAINER.get()",
+            "CapsuleCellRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MOLD.get()",
+            "SmelteryHullRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MOLD_BASIN.get()",
+            "SmelteryHullRenderer::new"
+          ],
+          [
+            "GTBlockEntities.METAL_CHEST.get()",
+            "MetalChestRenderer::new"
+          ],
+          [
+            "GTBlockEntities.TANK.get()",
+            "TankCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.ENERGY_NODE.get()",
+            "EnergyNodeRenderer::new"
+          ],
+          [
+            "GTBlockEntities.CHEMICAL_BATTERY.get()",
+            "ChemicalBatteryRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MASS_STORAGE.get()",
+            "MassStorageRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LOGISTICS_MASS_STORAGE.get()",
+            "MassStorageRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MATERIAL_ANVIL.get()",
+            "MaterialAnvilRenderer::new"
+          ],
+          [
+            "GTBlockEntities.PROCESSING_TOOL.get()",
+            "ProcessingToolRenderer::new"
+          ],
+          [
+            "GTBlockEntities.REACTOR_CORE.get()",
+            "ReactorRodRenderer::new"
+          ],
+          [
+            "GTBlockEntities.REACTOR_CORE_2X2.get()",
+            "ReactorRodRenderer::new"
+          ],
+          [
+            "GTBlockEntities.SENSOR.get()",
+            "SensorRenderer::new"
+          ],
+          [
+            "GTBlockEntities.EXTENDER.get()",
+            "ExtenderCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.USB_SWITCH.get()",
+            "DataSwitchCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.FLUID_PIPE.get()",
+            "PipeCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.ITEM_PIPE.get()",
+            "ItemPipeCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.STEAM_BOILER.get()",
+            "BoilerBarometerRenderer::new"
+          ],
+          [
+            "GTBlockEntities.ORIGINAL_LARGE_BOILER.get()",
+            "OriginalLargeBoilerBarometerRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_TURBINE.get()",
+            "LargeTurbineRotorRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_GAS_TURBINE.get()",
+            "LargeTurbineRotorRenderer::new"
+          ],
+          [
+            "GTBlockEntities.FUSION_REACTOR.get()",
+            "MachineCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.COKE_OVEN.get()",
+            "MachineCoverRenderer::new"
+          ],
+          [
+            "typed",
+            "MachineCoverRenderer::new"
+          ],
+          [
+            "(BlockEntityType<KineticSteamEngineBlockEntity>) (Object) blockRO.get().getBeType()",
+            "SteamEngineRenderer::new"
+          ],
+          [
+            "(BlockEntityType<KineticSteamEngineBlockEntity>) (Object) blockRO.get().getBeType()",
+            "SteamEngineRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/BasicMachineClientSetup.java",
+        "sha256": "33ff325a8d1b569967d03be3e4f6c4b413eef88c09117ff65d82bc902d7187f6",
+        "calls": [
+          [
+            "type.get()",
+            "MachineCoverRenderer::new"
+          ],
+          [
+            "com.gregtech.gregtech.registry.GTBlockEntities.COKE_OVEN.get()",
+            "MachineCoverRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/BookShelfClientSetup.java",
+        "sha256": "e281917e11d3520b2a61d47a9e264a03c9d629044eedbbdb2483360431aa67ca",
+        "calls": [
+          [
+            "GTBlockEntities.BOOKSHELF.get()",
+            "BookShelfRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/ChemicalBatteryClientSetup.java",
+        "sha256": "4872e58df07b19ccfa51e12e54902103f1fa871417fc89bf1aa18d8807cd3c87",
+        "calls": [
+          [
+            "GTChemicalBatteries.CHEMICAL_BATTERY.get()",
+            "ChemicalBatteryRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/CoinClientSetup.java",
+        "sha256": "1e7ffff5e0215f1be3d94973af9a9b075014a864c54f93dad19a1c7f95cb71e4",
+        "calls": [
+          [
+            "GTBlockEntities.COIN_PILE.get()",
+            "CoinPileRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/EnergyNodeClientSetup.java",
+        "sha256": "3dce87dffc03b9d8c2364d662f3cf4cee83689ec3e04a94ccec9f811c8d1ce10",
+        "calls": [
+          [
+            "com.gregtech.gregtech.registry.GTEnergyNodes.ENERGY_NODE.get()",
+            "EnergyNodeRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/EngineClientSetup.java",
+        "sha256": "52d853eaa89480e02d8bd1aeceb391c4af3209278a36aacbaaa87e294a059b96",
+        "calls": [
+          [
+            "GTBlockEntities.STEAM_BOILER.get()",
+            "BoilerBarometerRenderer::new"
+          ],
+          [
+            "GTBlockEntities.SANDWICH_BLOCK.get()",
+            "SandwichRenderer::new"
+          ],
+          [
+            "(net.minecraft.world.level.block.entity.BlockEntityType<KineticSteamEngineBlockEntity>)\n                                h.get().getBeType()",
+            "SteamEngineRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/FluidTransportClientSetup.java",
+        "sha256": "c96f79bd01efd3bddcaa1955c7f415c8867f90ea0c3aec804a7a1cf729aabddb",
+        "calls": [
+          [
+            "FluidTransportRegistries.FLUID_PIPE.get()",
+            "PipeCoverRenderer::new"
+          ],
+          [
+            "FluidTransportRegistries.TANK.get()",
+            "TankCoverRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/ItemLogisticsClientSetup.java",
+        "sha256": "d158acdb0b6c25ae471e95b17efc0bc689eceb28d4a05d35d16bc30f1f188324",
+        "calls": [
+          [
+            "GTBlockEntities.ITEM_PIPE.get()",
+            "ItemPipeCoverRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/LogisticsClientSetup.java",
+        "sha256": "33d2153ced01a710b2baa446656aba7185787425482312566b2adc38d1ea31ff",
+        "calls": [
+          [
+            "com.gregtech.gregtech.registry.GTBlockEntities.LOGISTICS_CORE.get()",
+            "LogisticsCoverRenderer::new"
+          ],
+          [
+            "com.gregtech.gregtech.registry.GTBlockEntities.MULTIBLOCK_PORT.get()",
+            "LogisticsCoverRenderer::new"
+          ],
+          [
+            "LogisticsRegistries.LOGISTICS_WIRE.get()",
+            "LogisticsCoverRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MetalChestClientSetup.java",
+        "sha256": "56e62f9df9ac6b7e6036961df79c318002f7673b915e53efeaa8c0b38ff43826",
+        "calls": [
+          [
+            "GTBlockEntities.METAL_CHEST.get()",
+            "MetalChestRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/MultiblockClientSetup.java",
+        "sha256": "d96762bf2d9a78706c81c394b2d77e8fea8c3ad1a8cc9328556785054bbdebcc",
+        "calls": [
+          [
+            "GTBlockEntities.ORIGINAL_LARGE_BOILER.get()",
+            "OriginalLargeBoilerBarometerRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_CRUCIBLE.get()",
+            "LargeCrucibleRenderer::new"
+          ],
+          [
+            "com.gregtech.gregtech.platform.neoforge.smeltery.SmelteryRegistries.SMELTING_CRUCIBLE.get()",
+            "SmeltingCrucibleRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_TURBINE.get()",
+            "LargeTurbineRotorRenderer::new"
+          ],
+          [
+            "GTBlockEntities.LARGE_GAS_TURBINE.get()",
+            "LargeTurbineRotorRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/NuclearClientSetup.java",
+        "sha256": "09e83c581b13971464117fb0a2f8b632736e40c665eaa1efc4c05f105be96c08",
+        "calls": [
+          [
+            "GTBlockEntities.REACTOR_CORE.get()",
+            "ReactorRodRenderer::new"
+          ],
+          [
+            "GTBlockEntities.REACTOR_CORE_2X2.get()",
+            "ReactorRodRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/PoweredToolClient.java",
+        "sha256": "cc609155f7495c5e69e3a699b7fa1b7b652848b43adf19f242634353d6f6c9bd",
+        "calls": [
+          [
+            "com.gregtech.gregtech.registry.GTBlockEntities.PORTABLE_CONTAINER.get()",
+            "CapsuleCellRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SensorClientSetup.java",
+        "sha256": "44f4331e6389ed62c45dbce7123d8093d8aa0784e101308b14b57de3ec2fc1e3",
+        "calls": [
+          [
+            "com.gregtech.gregtech.registry.GTBlockEntities.SENSOR.get()",
+            "SensorRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/SmelteryCompanionClientSetup.java",
+        "sha256": "18d03c80c31d7dc1ce327d406a1f0a5cd5af0b9890f1b86e716ba4eca49a261a",
+        "calls": [
+          [
+            "SmelteryRegistries.MOLD.get()",
+            "context->new SmelteryHullRenderer(context"
+          ],
+          [
+            "GTBlockEntities.MOLD_BASIN.get()",
+            "context->new SmelteryHullRenderer(context"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageClientSetup.java",
+        "sha256": "2088e65b74d0db0e6d9ac7575b1f48ebc1ab6944aabaf9c64a3603e78232d569",
+        "calls": [
+          [
+            "StorageRegistries.MASS_STORAGE.get()",
+            "MassStorageRenderer::new"
+          ],
+          [
+            "StorageRegistries.LOGISTICS_MASS_STORAGE.get()",
+            "MassStorageRenderer::new"
+          ]
+        ]
+      },
+      {
+        "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+        "sha256": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+        "calls": [
+          [
+            "GTBlockEntities.COIN_MOLD.get()",
+            "CoinMoldRenderer::new"
+          ],
+          [
+            "GTBlockEntities.PROCESSING_TOOL.get()",
+            "ProcessingToolRenderer::new"
+          ],
+          [
+            "GTBlockEntities.MATERIAL_ANVIL.get()",
+            "MaterialAnvilRenderer::new"
+          ],
+          [
+            "GTBlockEntities.EXTENDER.get()",
+            "ExtenderCoverRenderer::new"
+          ],
+          [
+            "GTBlockEntities.USB_SWITCH.get()",
+            "(context"
+          ],
+          [
+            "GTBlockEntities.BOTTLE_CRATE.get()",
+            "BottleCrateRenderer::new"
+          ]
+        ]
+      }
+    ],
+    "ordinary_tank_registrations": [
+      [
+        "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+        "GTBlockEntities.TANK.get()"
+      ],
+      [
+        "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/FluidTransportClientSetup.java",
+        "FluidTransportRegistries.TANK.get()"
+      ]
+    ],
+    "logistics_tank_registration_count": 0,
+    "limits": "Current maintained production source calls only; excludes addons, injected third-party renderers and actual event execution."
+  },
+  "native_context": {
+    "artifacts": [
+      {
+        "path": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965"
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c"
+      }
+    ],
+    "entries": [
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "sha256": "ddc07e689dccf9953e41f35e2724a0d8752ab1a6ce98a7b77992a65fcab9848a",
+        "bytes": 13236
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.java",
+        "sha256": "c278b134769eefd1033c7952a2a5d461efd4e3e7fbe2c2f7d864182a9aeece6d",
+        "bytes": 14908,
+        "extracted": "work/logistics-network-audit-20261021/neo-BlockEntity.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/neoforged/neoforge/common/extensions/IBlockEntityExtension.java",
+        "sha256": "611205fdc0afec68787b55c499800eabf87c44a260667989c3a61b02454b9c1a",
+        "bytes": 4674,
+        "extracted": "work/logistics-network-audit-20261021/neo-IBlockEntityExtension.java"
+      },
+      {
+        "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+        "entry": "net/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher.java",
+        "sha256": "d2555e8adeca0a100e88d7e51308af65841167743d2c575083d847607108c56b",
+        "bytes": 5492,
+        "extracted": "work/direct-storage-audit-20261021/neo-BlockEntityRenderDispatcher.java"
+      },
+      {
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher.class",
+        "sha256": "8c823b185dd719865ef28ef9a6ee8f2f0e0f5bea116518a8f6eaf8024a59e87e",
+        "bytes": 11103
+      }
+    ],
+    "readonly_views": [
+      {
+        "class": "net.minecraft.world.level.block.entity.BlockEntity",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/world/level/block/entity/BlockEntity.class",
+        "output": "work/logistics-network-audit-20261021/forge-BlockEntity.javap.txt",
+        "sha256": "40b2e51a18bba46cd54ef3d556e108c8f9d32945dc560eb0a59f1b228f032089",
+        "kind": "Read-only javap; no compilation or target initialization."
+      },
+      {
+        "class": "net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher",
+        "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+        "entry": "net/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher.class",
+        "output": "work/direct-storage-audit-20261021/forge-BlockEntityRenderDispatcher.javap.txt",
+        "sha256": "50c7b28efb1b2259caec5512dc639fcb81715f285cbc0a00e38c2e7d7640b39e",
+        "kind": "Read-only javap; no Java compilation or target initialization."
+      }
+    ],
+    "reused_receipt": "docs/integration/verification/logistics-network-audit-20261021.json",
+    "reused_receipt_sha256": "a19067980dfa9371d41371be8701eb09da149d734937c4598dedfcc66cc6ea88"
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00"
+  },
+  "limits": [
+    "No Java compilation, target initialization, Gradle, tests, game, client screenshot, build or push.",
+    "No independent saved-world restart, full external tag/component acceptance or complete project acceptance.",
+    "ALIGN-092/093/094/097/136/138 remain separately scoped; 137 and the storage instance of 126 remain fixed.",
+    "Formal record count includes fixes, partial fixes and policies; 286 is not an unfixed issue count."
+  ],
+  "previous_goal_turn": "Sync request completed by successful fetch and confirmed equal refs; repeated push hit network errors, with no new commits pending. Local audit work is not blocked by that network condition.",
+  "root_revalidation": {
+    "original_sources": 12,
+    "current_sources": 44,
+    "shared_platform_views": 54,
+    "current_readability_files": 1,
+    "current_readability_execution_views": 2,
+    "current_literal_positions": [
+      60,
+      60
+    ],
+    "native_artifacts": 2,
+    "native_entries": 5,
+    "readonly_views": 2,
+    "ledger_contiguous": [
+      1,
+      286
+    ],
+    "new_or_added_local_links": 15,
+    "protected_materials_unchanged": true,
+    "target_execution_build_or_tests": false,
+    "method": "Rehash named evidence and selected platform sources; compare complete ordered code and original literal positions; inspect native packet/renderer method bodies; verify ledger sequence and added local links."
+  }
+}
