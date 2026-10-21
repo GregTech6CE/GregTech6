@@ -71,8 +71,8 @@ import java.util.List;
  *       tick once no player targets the crank any more ({@code :74-96}), so the crank is active exactly
  *       as long as it is cranked. GT6 mirrors that flag into the block's own metadata for the client
  *       ({@code getDirectionData}, {@code :201}: {@code (mFacing &amp; 7) | (mActive ? 8 : 0)}), which is
- *       the block state {@link #ACTIVE} here, and a click arms a pulse of {@link #ACTIVE_TICKS} ticks:
- *       the same "the crank turns for a moment, then stops" behaviour without a block entity.</li>
+ *       the block state {@link #ACTIVE} here. A click queues a pulse-ending tick after
+ *       {@link #ACTIVE_TICKS}; that deadline is not tied to the current player target.</li>
  *   <li><b>One packet per click.</b> GT6 emits one packet per tick for every player that still targets
  *       the crank ({@code :76-80}, plus one for a villager standing in it, {@code :82-91}); the port
  *       keeps its one packet per right click and ignores villagers.</li>
@@ -87,16 +87,18 @@ import java.util.List;
  * </ul>
  */
 public class CrankBlock extends DirectionalBlock {
+
     /** Loader_MultiTileEntities 32111 uses ANY.Iron, whose appearance is MT.Fe. */
-    public static int tintRgb() { return com.gregtech.gregtech.content.material.Materials.Iron.getColor(); }
+    public static int tintRgb() {
+        return com.gregtech.gregtech.content.material.Materials.Iron.getColor();
+    }
 
     /** GT6 {@code mActive} ({@code MultiTileEntityCrank:52}): the crank is being turned right now. */
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
     /**
-     * Port model of GT6's {@code mActive}: how long one turn keeps the crank active. GT6 keeps it set
-     * for as long as a player keeps targeting the crank ({@code :76-96}); half a second is the port's
-     * stand-in for "the player let go".
+     * Delay requested for a queued stop tick. Native tick de-duplication keeps an existing
+     * deadline when the same crank is clicked again; this is not a player-target timer.
      */
     public static final int ACTIVE_TICKS = com.gregtech.gregtech.content.tool.UtilityToolRules.CRANK_TICKS;
 
@@ -114,9 +116,26 @@ public class CrankBlock extends DirectionalBlock {
     }
 
 //? if >=1.21.1 {
-    /*@Override public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return com.mojang.serialization.MapCodec.unit(this);}
-    @Override public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,BlockHitResult hit){return switch(interact(state,level,pos,player,hand,hit)){case SUCCESS->net.minecraft.world.ItemInteractionResult.SUCCESS;case CONSUME,CONSUME_PARTIAL->net.minecraft.world.ItemInteractionResult.CONSUME;case FAIL->net.minecraft.world.ItemInteractionResult.FAIL;default->net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;};}
-    @Override public InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit){return interact(state,level,pos,player,InteractionHand.MAIN_HAND,hit);}
+    /*@Override
+    public com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec() {
+        return com.mojang.serialization.MapCodec.unit(this);
+    }
+
+    @Override
+    public net.minecraft.world.ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+            InteractionHand hand, BlockHitResult hit) {
+        return switch (interact(state, level, pos, player, hand, hit)) {
+            case SUCCESS -> net.minecraft.world.ItemInteractionResult.SUCCESS;
+            case CONSUME, CONSUME_PARTIAL -> net.minecraft.world.ItemInteractionResult.CONSUME;
+            case FAIL -> net.minecraft.world.ItemInteractionResult.FAIL;
+            default -> net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        return interact(state, level, pos, player, InteractionHand.MAIN_HAND, hit);
+    }
 *///?} else {
 //?}
     public CrankBlock(Properties properties) {
@@ -174,6 +193,7 @@ public class CrankBlock extends DirectionalBlock {
      * OPOS[mFacing] therefore powers the mounting block, rather than the handle's neighbour.
      * This port stores the handle in FACING, the same query value as OPOS[mFacing].
      */
+
     private static boolean isProvidingPower(BlockState state, Direction side) {
         return state.getValue(ACTIVE) && side == state.getValue(FACING);
     }
@@ -207,16 +227,15 @@ public class CrankBlock extends DirectionalBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
 //?}
-                                 InteractionHand hand, BlockHitResult hit) {
-        // both hands fire use(); handling the off hand double-triggers
-        // (insert+extract in one click, double withdrawals, armor swap-backs)
+            InteractionHand hand, BlockHitResult hit) {
+        // Only the main hand drives the crank; processing the off hand would send a second packet.
         if (hand == net.minecraft.world.InteractionHand.OFF_HAND) return InteractionResult.PASS;
         if (!level.isClientSide) {
             Direction handle = state.getValue(FACING);
             Direction mounting = handle.getOpposite();
             long strength = 2L + effectLevel(player, net.minecraft.world.effect.MobEffects.DAMAGE_BOOST);
             long weakness = 1 + effectLevel(player, net.minecraft.world.effect.MobEffects.WEAKNESS);
-            long speed = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize((int)(strength-2),(int)(weakness-1));
+            long packetSize = com.gregtech.gregtech.content.tool.UtilityToolRules.crankSize((int)(strength - 2), (int)(weakness - 1));
 
             // GT6 MultiTileEntityCrank:78/193: the packet goes into the block the crank is mounted on,
             // i.e. the machine on the side opposite the handle. There is no machine on most cranks, and
@@ -224,7 +243,7 @@ public class CrankBlock extends DirectionalBlock {
             long accepted = 0;
             var target = level.getBlockEntity(pos.relative(mounting));
             if (EnergyBlockViews.view(target) != null) {
-                accepted = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, handle, speed,
+                accepted = EnergyTransfer.insertEnergyInto(GregTechTags.Energy.RU, handle, packetSize,
                         1 + effectLevel(player, net.minecraft.world.effect.MobEffects.DIG_SPEED), null, target);
             }
             if (accepted > 0) player.causeFoodExhaustion(0.025F);
@@ -254,12 +273,15 @@ public class CrankBlock extends DirectionalBlock {
     }
 
 //? if >=1.21.1 {
-    /*@Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder builder){return java.util.List.of(new ItemStack(this));}
+    /*@Override
+    public java.util.List<ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+        return java.util.List.of(new ItemStack(this));
+    }
 *///?} else {
 //?}
     @Override
 //? if >=1.21.1 {
-    /*public void appendHoverText(ItemStack stack,net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    /*public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
 *///?} else {
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag) {
 //?}
