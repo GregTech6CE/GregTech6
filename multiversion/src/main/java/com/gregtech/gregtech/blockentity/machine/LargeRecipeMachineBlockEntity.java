@@ -25,15 +25,11 @@ import java.util.*;
 public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity implements MultiblockPortOwner {
     private final PartBindings<BlockPos,MultiblockLayout.Role> bindings=new PartBindings<>();
     public LargeRecipeMachineBlockEntity(BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
-    private boolean originalProcessingController() {return spec()!=null && (com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.handles(spec().machineName())||spec().machineName().equals("largemassfab"));}
-    private boolean sourceUnlimitedOutputs() {return originalProcessingController()||spec()!=null&&spec().machineName().equals("fusionreactor");}
+    private boolean originalProcessingController() {return spec()!=null && spec().suppressSideAutoInput();}
+    private boolean sourceUnlimitedOutputs() {return spec()!=null && spec().unlimitedOutputTanks();}
     private BlockPos sourcePosition(int right,int up,int back) {
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return worldPosition.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back);
-    }
-    private Direction sourceFace(com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.Face face) {
-        var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
-        return switch(face) {case UP->Direction.UP;case DOWN->Direction.DOWN;case LEFT->front.getCounterClockWise();case RIGHT->front.getClockWise();case FRONT->front;};
     }
     private Direction declaredFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return relativeToAbsolute(face.index());
@@ -43,21 +39,35 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     private Placed declared(com.gregtech.gregtech.api.addon.IoTarget target) {
         return target == null ? null : place(target.right(), target.up(), target.back(), declaredFace(target.receiver()));
     }
-    private Placed itemOutput() {
+    private record OutputCell(int right, int up, int back, Direction face, String label) {}
+    private OutputCell outputCell(boolean items) {
         if (spec() == null) return null;
-        var declared = declared(spec().itemOutputTarget());
-        if (declared != null) return declared;
-        if (!originalProcessingController()) return null;
-        var output = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(), true);
-        return place(output.right(), output.up(), output.back(), sourceFace(output.receiverFace()));
+        var declared = items ? spec().itemOutputTarget() : spec().fluidOutputTarget();
+        if (declared == null) return null;
+        return new OutputCell(declared.right(), declared.up(), declared.back(),
+                declaredFace(declared.receiver()),
+                declared.right() + "," + declared.up() + "," + declared.back() + "," + outputLabelFace(declared.receiver()));
+    }
+    /** The snapshot still prints the original UP and DOWN tokens. TOP and BOTTOM are those directions. */
+    private static String outputLabelFace(com.gregtech.gregtech.api.addon.MachineFace face) {
+        return switch (face) {
+            case TOP -> "UP";
+            case BOTTOM -> "DOWN";
+            default -> face.name();
+        };
+    }
+    /** Relative cell the processing path pushes to. Empty when this controller does not name one. */
+    protected String outputCellLabel(boolean items) {
+        var cell = outputCell(items);
+        return cell == null ? "" : cell.label();
+    }
+    private Placed itemOutput() {
+        var cell = outputCell(true);
+        return cell == null ? null : place(cell.right(), cell.up(), cell.back(), cell.face());
     }
     private Placed fluidOutput() {
-        if (spec() == null) return null;
-        var declared = declared(spec().fluidOutputTarget());
-        if (declared != null) return declared;
-        if (!originalProcessingController()) return null;
-        var output = com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.output(spec().machineName(), false);
-        return place(output.right(), output.up(), output.back(), sourceFace(output.receiverFace()));
+        var cell = outputCell(false);
+        return cell == null ? null : place(cell.right(), cell.up(), cell.back(), cell.face());
     }
     private IItemHandler itemsAt(BlockPos pos, Direction face) {
         if (level == null || !level.hasChunkAt(pos)) return null;
@@ -146,12 +156,40 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if (!actuallyDrained.isEmpty()) fill(actuallyDrained, IFluidHandler.FluidAction.EXECUTE);
     }
     // The source multiblock parent suppresses ordinary six-neighbor requests; only explicit layouts opt in.
+    protected record EnergySourceCell(int right, int up, int back, String face) {}
+    /** Cells whose neighbor is toggled with this controller. Empty means the six neighbors are left alone. */
+    protected java.util.List<EnergySourceCell> energySourceCells() {
+        if (spec() == null) return java.util.List.of();
+        var list = new java.util.ArrayList<EnergySourceCell>();
+        for (var source : spec().energySources())
+            list.add(new EnergySourceCell(source.right(), source.up(), source.back(), source.face()));
+        return list;
+    }
+    protected String energySourceText() {
+        var text = new StringBuilder();
+        for (var source : energySourceCells()) {
+            if (!text.isEmpty()) text.append(';');
+            text.append(source.right()).append(',').append(source.up()).append(',').append(source.back()).append(',').append(source.face());
+        }
+        return text.toString();
+    }
+    private Direction energySourceFace(String face) {
+        var front = getBlockState().getValue(HorizontalDirectionalBlock.FACING);
+        return switch (face) {
+            case "UP" -> Direction.UP;
+            case "DOWN" -> Direction.DOWN;
+            case "LEFT" -> front.getCounterClockWise();
+            case "RIGHT" -> front.getClockWise();
+            case "FRONT" -> front;
+            default -> throw new IllegalStateException("Unknown energy source face: " + face);
+        };
+    }
     @Override protected void updateAdjacentToggleableEnergySources() {
-        if(level==null || level.isClientSide || !originalProcessingController() || isRemoved())return;
-        for(var source:com.gregtech.gregtech.content.multiblock.OriginalLargeRecipeMachineData.sources(spec().machineName())) {
-            var pos=sourcePosition(source.right(),source.up(),source.back());
-            if(level.hasChunkAt(pos))com.gregtech.gregtech.api.machine.AdjacentEnergyControl.update(level.getBlockEntity(pos),
-                    spec().energyTag(),sourceFace(source.outputFace()),machineControl(null).enabled());
+        if (level == null || level.isClientSide || spec() == null || isRemoved()) return;
+        for (var source : energySourceCells()) {
+            var pos = sourcePosition(source.right(), source.up(), source.back());
+            if (level.hasChunkAt(pos)) com.gregtech.gregtech.api.machine.AdjacentEnergyControl.update(level.getBlockEntity(pos),
+                    spec().energyTag(), energySourceFace(source.face()), machineControl(null).enabled());
         }
     }
     @Override public void setSpec(com.gregtech.gregtech.api.machine.BasicMachineSpec spec) {
@@ -206,23 +244,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         if(sourceUnlimitedOutputs())for(var tank:getTanksOutput())tank.setCapacity(Long.MAX_VALUE);
     }
     @Override protected boolean usesTimeEnergy() { return spec()!=null&&spec().energyTag()==GregTechTags.Energy.TU; }
-    @Override protected long inputMinimum() {
-        if (spec().energyRangeDeclared()) return spec().energyInMin();
-        return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMinimum(usesTimeEnergy(), spec().energyTag()==GregTechTags.Energy.HU);
-    }
-    @Override protected long inputMaximum() {
-        if (spec().energyRangeDeclared()) return spec().energyInMax();
-        return com.gregtech.gregtech.content.multiblock.LargeMachineProcessingRules.inputMaximum(usesTimeEnergy());
-    }
-    @Override protected boolean cheapOverclocking() {
-        return com.gregtech.gregtech.api.addon.AddonOverclock.enabled(false,
-                spec() != null && spec().cheapOverclockingDeclared(),
-                spec() != null && spec().cheapOverclocking(),
-                !usesTimeEnergy());
-    }
-    @Override protected boolean requiresConstantEnergy() { return !usesTimeEnergy() && spec().constantEnergy(); }
     @Override protected int efficiency() { return spec().processingEfficiency(); }
-    @Override protected boolean parallelScalesDuration() { return !usesTimeEnergy(); }
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
