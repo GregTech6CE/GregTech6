@@ -63,7 +63,8 @@ public final class AddonMachines {
                              boolean cheapOverclocking, boolean cheapOverclockingSpecified, int minimumLightAbove,
                              boolean searchOutputTanks, boolean exclusiveOutputs,
                              MachineDeclaration.Target itemOutputTarget, MachineDeclaration.Target fluidOutputTarget,
-                             MachineDeclaration.Target itemInputSource, MachineDeclaration.Target fluidInputSource) {}
+                             MachineDeclaration.Target itemInputSource, MachineDeclaration.Target fluidInputSource,
+                             boolean energyRangeSpecified, long energyInMin, long energyInMax) {}
     private record FuelSignature(String fuelMap, int efficiency, String energy, long outputPerTick, int tankCapacity,
                                  FuelGeneratorDeclaration.Output output, FuelGeneratorDeclaration.Kind kind) {}
     private record BehaviorSignature(String energy, String energyOut, List<BehaviorMachineDeclaration.SlotRole> items,
@@ -141,6 +142,10 @@ public final class AddonMachines {
                     .fluidOutputTarget(declaration.fluidOutputTarget())
                     .itemInputSource(declaration.itemInputSource())
                     .fluidInputSource(declaration.fluidInputSource());
+            if (declaration.energyRangeSpecified())
+                parameters.energyRange(declaration.energyInMin(), declaration.energyInMax());
+            else if (declaration.kind() == MachineDeclaration.Kind.LARGE_RECIPE)
+                parameters.omitEnergyRange();
             if (declaration.cheapOverclockingSpecified()) parameters.cheapOverclocking(declaration.cheapOverclocking());
             var built = parameters.build();
             definitions.add(new AddonMachineDefinition(built, declaration.recipeMap(),
@@ -427,12 +432,18 @@ public final class AddonMachines {
                 if (previousOwner != null && !previousOwner.equals(submission.addonId))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
                             + "' uses the same machine name as addon '" + previousOwner + "'");
+                if (parameters.energyTag() == GregTechTags.Energy.TU && parameters.energyRangeSpecified())
+                    throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
+                            + "' cannot declare an energy range for TU");
                 var signature = new Signature(definition.recipeMapName(), definition.kind(), definition.efficiency(),
                         definition.constantEnergy(), definition.structureKeys(), parameters.faceConfig(),
                         parameters.cheapOverclocking(), parameters.cheapOverclockingSpecified(),
                         parameters.minimumLightAbove(), parameters.searchOutputTanks(), parameters.exclusiveOutputs(),
                         parameters.itemOutputTarget(), parameters.fluidOutputTarget(),
-                        parameters.itemInputSource(), parameters.fluidInputSource());
+                        parameters.itemInputSource(), parameters.fluidInputSource(),
+                        parameters.energyRangeSpecified(),
+                        parameters.energyRangeSpecified() ? parameters.energyInMin() : 0,
+                        parameters.energyRangeSpecified() ? parameters.energyInMax() : 0);
                 Signature existing = machineSignature.putIfAbsent(machineName, signature);
                 if (existing != null && !existing.equals(signature))
                     throw new IllegalStateException("Addon '" + submission.addonId + "' machine '" + machineName
