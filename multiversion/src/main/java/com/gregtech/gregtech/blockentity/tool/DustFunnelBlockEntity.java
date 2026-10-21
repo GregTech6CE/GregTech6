@@ -8,11 +8,9 @@ import com.gregtech.gregtech.api.machine.crucible.CrucibleMaterialStack;
 import com.gregtech.gregtech.blockentity.machine.SmeltingCrucibleBlockEntity;
 //?}
 import com.gregtech.gregtech.data.MaterialPrefix;
-import com.gregtech.gregtech.item.MaterialItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -74,17 +72,33 @@ public class DustFunnelBlockEntity extends BlockEntity {
         for (int slot : new int[]{1, 0}) if (!buffer.getStackInSlot(slot).isEmpty()) {
             var out = buffer.getStackInSlot(slot); buffer.setStackInSlot(slot, ItemStack.EMPTY); return out;
         }
+        return retrieveFraction();
+    }
+
+    /** GT6 pincers empty the material reservoir, leaving both ordinary slots alone. */
+    public ItemStack retrieveFraction() {
         var out = material == null ? ItemStack.EMPTY : com.gregtech.gregtech.util.OM.dust(material, amount);
         if (!out.isEmpty()) {
             var parts = CrucibleItemInput.parse(out.copyWithCount(1));
             if (!parts.isEmpty()) amount -= parts.get(0).amount * out.getCount();
             if (amount <= 0) { amount = 0; material = null; }
+            inventoryChanged = true;
             setChanged();
         }
         return out;
     }
 
-    public void cycleMode(boolean reverse) { mode = Math.floorMod(mode + (reverse ? -1 : 1), 5); setChanged(); }
+    public int mode() { return mode; }
+    public long retainedAmount() { return amount; }
+    public boolean needsMoreDust() { return amount > 0 && amount < outputAmount(); }
+    @Nullable
+    public com.gregtech.gregtech.api.material.GTMaterial retainedMaterial() { return material; }
+
+    public void cycleMode(boolean reverse) {
+        mode = Math.floorMod(mode + (reverse ? -1 : 1), 5);
+        inventoryChanged = true;
+        setChanged();
+    }
     private long outputAmount() { return mode == 0 ? 9 * com.gregtech.gregtech.api.material.GTValues.U
             : outputPrefix().getMaterialWeight(); }
     private MaterialPrefix outputPrefix() { return new MaterialPrefix[]{MaterialPrefix.dust, MaterialPrefix.dust,
@@ -109,10 +123,7 @@ public class DustFunnelBlockEntity extends BlockEntity {
             var above = com.gregtech.gregtech.api.inventory.NativeItemInventories.at(level, pos.above(), Direction.DOWN);
             if (above != null) for (int slot = 0; slot < above.getSlots(); slot++) {
                 var offered = above.extractItem(slot, 64, true);
-                if (!isDust(offered)) continue;
-                var parts = CrucibleItemInput.parse(offered.copyWithCount(1));
-                if (parts.isEmpty() || funnel.material != null && funnel.amount > 0 && parts.get(0).material.resolve() != funnel.material.resolve()
-                        || funnel.output(parts.get(0).material).isEmpty()) continue;
+                if (!funnel.accepts(offered)) continue;
                 var taken = above.extractItem(slot, offered.getCount(), false);
                 if (!taken.isEmpty()) funnel.buffer.setStackInSlot(0, taken);
                 break;
