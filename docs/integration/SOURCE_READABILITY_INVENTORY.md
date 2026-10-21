@@ -110,3 +110,5 @@
 2026-10-21 第八十三批：FilterBlockEntity展开保存／加载／模板循环，i／data／stack按限定区域改templateSlot／entryData／templateStack；FilterBlock的b／ctx改builder／context并展开两版交互／掉落／包装。FilterMenu拆构造／槽位，col改column；FilterScreen展开两版render／布局，partial／button改partialTick／clickedButton。四源八完整执行1355／1399、1242／1536、820／820、454／449与字面量位置保持，一说明限定主面选择旁路，用户材料不动，见[专题](FILTER_BLOCKS_AUDIT.md)及[回执](verification/filter-blocks-audit-20261021.json)。全面源码标准化与对齐继续。
 
 2026-10-21 第八十四批：FluidDisplayBinding展开两版序列化／查找，id／item／out／tag改fluidId／carrierItem／displayStack／payloadData；两版FluidItem／FluidDisplayItem展开handler等方法，f改resolvedFluid；ManualToolRules只展开方法。四源五执行421／697、1297、1510、129及字面量位置保持；五说明准确限定饮用载体和无玩家检查的source handler，成员／数值／序列化／玩法不变，用户材料不动，见[专题](FILTER_FLUID_TOOLS_AUDIT.md)及[回执](verification/filter-fluid-tools-audit-20261021.json)。全面标准化／对齐继续。
+
+2026-10-21 第八十五批：core ContainerShapeLike／PipeFormLike展开接口；共享FilterRules展开短条件及映射，限定方法中参数／模式变量／循环局部名改为具体用途。LogisticsItemFilter展开条件并纠正两处说明。四源六执行21、21、514／505、235／235和字面量位置／其它注释／指令保持，材料表未动，见[专题](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)及[回执](verification/filter-prefix-membership-audit-20261021.json)。全面标准化／原版核查继续。

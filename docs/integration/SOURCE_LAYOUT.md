@@ -28,6 +28,8 @@
 
 流体模板边界：FluidDisplayBinding仅处理真实流体展示载体，FluidUtil查询容器能力；材料默认相态需另外消费MaterialFormItem／材料关联，不能把三者合成一个猜测。两版展示物品在各自FluidItem／FluidDisplayItem；工具返回费用的纯公式在core ManualToolRules，实际收费入口还需追GTToolHelper，见[材料与工具](FILTER_FLUID_TOOLS_AUDIT.md)。
 
+前缀过滤入口在共享FilterRules，core ContainerShapeLike／PipeFormLike只给形状元数据；FilterMenu选择、FilterBlockEntity筛选和LogisticsItemFilter预留共用它。材料组成的ItemMaterialRegistry及MaterialTagPack生成标签是另一层，不能推定过滤器已消费所有成员；原生物品的具体缺口见[前缀成员](FILTER_PREFIX_MEMBERSHIP_AUDIT.md)。
+
 ## 先按层找代码
 
 | 目录 | 职责 |
