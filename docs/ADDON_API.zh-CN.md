@@ -391,11 +391,44 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 方块 id 是 `<附属>:<id>`。模型是 `<附属>:block/machine/basic/<机器类型>`，再加 `_running` 和 `_active`。方块状态、模型和 GUI 贴图由附属自己带。显示名是 `block.<附属>.<id>`。开关文案是声明上的翻译键。GT 的行为 GUI 字符串是 `gui.gregtech.behavior.energy`、`progress`、`tank`、`on`、`off`。
 
-行为机器不是配方机器。它不创建 `RecipeMap`，也不是 JEI 或 EMI 的催化剂。配方机器仍用 `gt6ce:basic_machine`。
+行为机器不是配方机器。它不创建 `RecipeMap`，GT 也不替它查行、扣输入或写产物。配方机器仍用 `gt6ce:basic_machine`。
+
+`recipeMaps(String... names)` 列出机器表或燃料表。方块成为这些表在 JEI 和 EMI 里的催化剂。名字必须是本附属声明的表，或内置表，例如 `gt.recipe.compressor`、`gt.recipe.fuels.engine`。另一个附属的表算未知。未知名字在启动时失败，并写出附属和机器。重复的名字，或不符合 `[a-z0-9_.]+` 的名字，在声明时失败。不调用它就不增加催化剂，配方机器和燃料机已经登记的名单保持原样。
+
+`AddonRecipes.map` 能取到燃料表，和机器表一样。`find` 在输入对得上时返回燃料行。`Line.euPerTick` 是存进去的值。数据包在燃料表上写的正数 `eu_per_tick` 会存成负数，这就是每 tick 产出的能量。`generate` 要的是正数，所以行为用这个负数的相反数。`AddonRecipes.add` 按写进去的数存储，从这里加的燃料行要自己写成负数。非负数不是产出。
+
+配方页按表上声明的槽数画格子。燃料表的物品输入不少于 1 时，物品槽会画出来。内置燃料表多数声明了 0 个物品槽，行上带了物品也不另开一格。
+
+样例固体锅炉点名 `addon_sample.fuel.solid`。这张表有 1 个物品输入和 1 个物品输出。煤变成木炭，每 tick 16 EU，烧 20 tick。行为查到这一行，扣掉煤，把木炭放进输出槽，然后每个燃烧 tick 调用 `generate`，并从顶面 `emit`。计数 `left`、`eu`、`burn` 记在 `BehaviorState` 里。外壳不新增存档字段。
+
+```java
+BehaviorMachineDeclaration.builder("sample_boiler", "Steel")
+        .machineType("sampleboiler").energy("EU", 32).tier(1)
+        .gui("my_addon:textures/gui/machine.png")
+        .item(44, 26, BehaviorMachineDeclaration.SlotRole.INPUT)
+        .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+        .energyOutputs(BehaviorMachineDeclaration.Face.TOP)
+        .energyOut("EU").energyOutMax(32, 1)
+        .energyCapacity(10_000)
+        .recipeMaps("my_addon.fuel.solid")
+        .build();
+```
+
+```java
+AddonRecipes.Line line = AddonRecipes.map("my_addon.fuel.solid")
+        .find(List.of(context.item(0)), List.of(), false, 1, 0);
+if (line != null && line.euPerTick() < 0) {
+    ItemStack fuel = context.item(0).copy();
+    fuel.shrink(line.itemInputs()[0].getCount());
+    context.setItem(0, fuel);
+    context.generate(-line.euPerTick());
+    context.emit(-line.euPerTick(), 1);
+}
+```
 
 ## 燃料能源机器
 
-`fuelMaps()` 返回 `FuelMapDeclaration`。`fuelGenerators()` 返回 `FuelGeneratorDeclaration`。燃料表不是机器表。名字用 `[a-z0-9_.]+`，槽数和内置燃料表一样。GT 在数据包基线之前建好这张表，所以它进入 JEI、EMI 和 `gt6ce:machine`。燃料表上正数的 `eu_per_tick` 是每 tick 产出的能量，存成负数。这一行仍要有输出。机器可以点名附属燃料表，也可以点名内置表，例如 `gt.recipe.fuels.engine` 或 `gt.recipe.fuels.gas`。配方机器点名燃料表时，按未知配方表失败。燃料表和机器表或已有燃料表重名时，启动失败并写出附属。
+`fuelMaps()` 返回 `FuelMapDeclaration`。`fuelGenerators()` 返回 `FuelGeneratorDeclaration`。燃料表不是机器表。名字用 `[a-z0-9_.]+`，槽数和内置燃料表一样。GT 在数据包基线之前建好这张表，所以它进入 JEI、EMI 和 `gt6ce:machine`。燃料表上正数的 `eu_per_tick` 是每 tick 产出的能量，存成负数。`AddonRecipes.map` 能取到这张表，`find` 返回对得上的行，`Line.euPerTick` 就是这个负数。`AddonRecipes.add` 按写进去的数存储，从这里加的燃料行要自己写成负数。这一行仍要有输出。机器可以点名附属燃料表，也可以点名内置表，例如 `gt.recipe.fuels.engine` 或 `gt.recipe.fuels.gas`。配方机器点名燃料表时，按未知配方表失败。燃料表和机器表或已有燃料表重名时，启动失败并写出附属。
 
 `efficiency` 是万分比，范围 1 到 100000。`energy` 是短名，例如 `RU`。`outputPerTick` 是一个包，范围 1 到 1,000,000,000,000。缓冲只在对方收下这个包之后才扣掉它。储罐容量是 1 到 1,024,000,000 mB，燃料罐和每个废液罐都用这个容量。废液罐数量等于燃料表的流体输出数。燃料表至少要有一个流体输入。`outputFront()` 和 `outputBack()` 向相邻面输出。`outputBehind(distance)` 注入到正面背后这么多格的方块。距离是 1 到 8。燃气涡轮的 4 格就是这种形式。没有任意坐标。
 
@@ -419,7 +452,7 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 }
 ```
 
-这一节不做能量转换，不烧固体燃料，内置柴油引擎和燃气涡轮仍走自己的方块实体。
+这一节不做能量转换，不烧固体燃料，内置柴油引擎和燃气涡轮仍走自己的方块实体。行为可以自己烧一行燃料，包括带物品输入的行。那是行为，不是这个燃料机模板。
 
 ## 压缩气罐
 
@@ -448,7 +481,7 @@ private static boolean adjacentWater(MachineBehaviorContext context) {
 
 ## 支持范围
 
-当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas` 判断这种流体是不是气体；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`energyRange(min, max)`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `parts()` 里的外壳和能量零件，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id 或 `#` 标签，这种格子只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 只灌相邻的这种罐，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`energyCapacity`、`emit`、`generate`、`setCapacity`、`onUse`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()` 和 `energyParts()` 可用，`charge`、`setOutput` 和 `stop` 写能量零件，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `parts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
+当前支持注册和配方就绪生命周期；`AddonMaterialContributor` 按名字排队材料和已有前缀的追加形态（生成 `gt6ce:` 物品），`dust()` 和 `metal()` 选择生成哪些形态，`prefixes()` 在附属自己的命名空间里增加物品前缀，读取用 `GregTechMaterials`（含 `byproducts()`），前缀是否存在用 `GregTechPrefixes.exists`，数字 id 从 10000 起在启动时分配，不写入存档；`oreVeins()` 和 `smallOres()` 把大矿脉和小矿追加在 `minecraft:overworld`、`minecraft:the_nether` 或 `minecraft:the_end` 的内置行之后；`compositions()`、`smeltingTargets()`、`crucibleReactions()` 和 `crucibleRemovals()` 用材料名，在材料链接时生效；`AddonItems.stack` 和 `AddonItems.selectorTag`（0 到 24 号编程电路）；`AddonFluids` 按 GT 流体字段名取静液或流动液（`DistW`，不是材料名），`AddonFluids.gas` 判断这种流体是不是气体；已有配方表上的 `AddonRecipes`（添加、展示、碰撞、物品输入检查、动态 provider、查找，`add` 返回 null 表示被拒绝；`keptInputs` 标出留在机器里的物品输入，数量 0 仍被拒绝）；`AddonMachineContributor` 的配方机器和大型配方机器，含 `searchOutputTanks`、`exclusiveOutputs`、`energyRange(min, max)`，没声明范围的大型机不是标称的一半到两倍，大型配方机器还可以各指定一格物品输出、流体输出、物品输入和流体输入，能源用短名例如 `EU`，多方块可以写 GT 零件名，或 `parts()` 里的外壳和能量零件，机器和零件都由 GT 注册到附属命名空间，结构角色是 `StructureRole`，结构格还可以写方块 id 或 `#` 标签，这种格子只作 `CASING` 且不绑定；`fluidPipes()` 和 `itemPipes()` 各加一行材料，GT 按内置档位展开，方块在附属自己的命名空间；`compressedGasTanks()` 声明压缩气罐，普通灌入关闭，`pushCompressedGas` 只灌相邻的这种罐，燃料能源机器每 tick 最多抽 1000 mB；`BehaviorMachineDeclaration` 以及加载器上的 `BehaviorMachineContributor`、`MachineBehavior`、`MachineBehaviorContext`、`BehaviorState`，外壳由 GT 持有，附属不继承它，也不接触 NBT，`recipeMaps` 点名机器表或燃料表后这台机器成为 JEI 和 EMI 的催化剂，加工仍由行为自己做，`find` 读到的燃料行把产出能量存成负数的 `euPerTick`，`energyCapacity`、`emit`、`generate`、`setCapacity`、`onUse`、`maxRange`、`breakBlock` 和 `collectItems` 属于这层外壳，同名结构让 `structureFormed()` 和 `energyParts()` 可用，`charge`、`setOutput` 和 `stop` 写能量零件，改过的容量由 GT 写成 `gt.capacity`，零件缓存存在零件自己的 NBT；`FuelMapDeclaration` 和 `FuelGeneratorDeclaration`，燃料表进入 JEI、EMI 和数据包覆盖层，机器烧流体燃料，每 tick 从正面、背面或背后 1 到 8 格输出一个能量包，多方块结构可以写 GT 零件名，或 `parts()` 里的外壳；`GTValues`、`GTVoltageTiers`、`BasicMachineEnergy`、`MachineWorkCost`；附属实现的 `EnergyBlock`，`AddonEnergy` 走 GT 的能量包门槛，EU 电缆的插入和抽出接受这个接口，轴、激光纤维、中继、远距变压器和内置机器的注入或抽取经 `EnergyBlockViews` 也能看见这个接口，扫描仪、Jade 和盖板读数仍只看见 GT 自己的能量方块；`AddonTool` 的 `SPADE`、`UNIVERSAL_SPADE`、`MAGNIFYING_GLASS`，以及 `AddonTools.matches`、`isMagnifyingGlass`、`damageForUse`；`gt6ce:machine` 与 `gt6ce:machine_removal` 两种数据包配方；`GtSignalCarrier`、`GtSignalSource`、`GtSignalReceiver`、`CropScanSource` 和空的 `gt6ce:signal_wire_receivers` 方块标签。
 
 这些保持关闭。`BasicMachineBlock` 和 `BasicMachineBlockEntity` 是 GT 的机器实现，附属机器是数据，不是子类。`Recipe.mRecipeList` 是内部行表，正式代码用 `add` 返回的 `AddonRecipes.Line`。`GTMaterial`、`GTMaterialRegistry` 和材料哨兵由 `GregTechMaterials` 代替。`GregTechTags` 由能源短名代替。`MachineRecipeMaps` 的字段由 `AddonRecipes.map(name)` 代替。`MaterialPrefix` 常量由前缀名字符串代替。完整工具目录留在 GT 里。
 
