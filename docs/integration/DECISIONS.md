@@ -1,5 +1,84 @@
 # 实现选择记录
 
+## 2026-10-21 / 附属机器声明的移除期限
+
+当前 `API_VERSION` 是 0，`mod_version` 是 `0.0.0`。卡 38 要换掉的入口，弃用起点都是 `0.0`，`removeAt` 都是 `0.2`。`0.1` 仍保留这些入口，最早 `0.2` 可以删。这是「当时的 MINOR 再加 2」，不再往后推。已经排到 `0.9` 和 `0.10` 的入口不提前，也不改它们的 `removeAt`。
+
+`AddonMachineDefinition` 和 `AddonMachineLayout` 的替代现在写着 `MachineDeclaration` 和 `MachineLayout`，这两条要到 `0.10` 才删。它们的字段并不引用那两个类型。实施加上新类型时，把这两格替代改成 `RecipeMachine` 和 `StructureLayout`，`removeAt` 仍是 `0.10`。这样 `0.2` 删掉中间那层以后，还留着的旧入口不会指向一个已经不在的类型。
+
+加注解时如果 MINOR 已经不是 0，按当时的 MINOR 重算：`since` 用那个 MINOR，`removeAt` 至少再加 2。现在树仍是 0，所以表上就是 `0.0` / `0.2`。这次不改源码注解，也不改两份 `ADDON_API` 的移除表。版本合约要求文档行和注解一致，新类型还没落地，写进行会对不上。实施卡加注解时再写入文档。
+
+一个类型一行。嵌套类型单独一行，因为弃用外层不会标到里面的类。贡献者接口留下，七个旧方法各一行。规范构造器、访问器、派生方法和界面常量随所属类型移除，不单列。`StructureRole`、管子、压缩气罐、材料，以及 `BehaviorEnergyRules`、`BehaviorRangeRules`、`BehaviorRecipeCatalysts` 不在这张表里。
+
+| 入口 | 弃用 | 替代 | removeAt |
+| --- | --- | --- | --- |
+| com.gregtech.gregtech.api.addon.MachineDeclaration | 0.0 | RecipeMachine | 0.2 |
+| com.gregtech.gregtech.api.addon.MachineDeclaration.Builder | 0.0 | RecipeMachine.builder | 0.2 |
+| com.gregtech.gregtech.api.addon.MachineDeclaration.Kind | 0.0 | RecipeMachine.basic() / largeRecipe() | 0.2 |
+| com.gregtech.gregtech.api.addon.MachineDeclaration.Target | 0.0 | IoTarget | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration | 0.0 | BehaviorMachine | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Builder | 0.0 | BehaviorMachine.builder | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face | 0.0 | MachineFace | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.SlotRole | 0.0 | BehaviorMachine.SlotRole | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.ItemSlot | 0.0 | BehaviorMachine.ItemSlot | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.FluidSlot | 0.0 | BehaviorMachine.FluidSlot | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Toggle | 0.0 | BehaviorMachine.Toggle | 0.2 |
+| com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Progress | 0.0 | BehaviorMachine.Progress | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration | 0.0 | FuelGenerator | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Builder | 0.0 | FuelGenerator.builder | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind | 0.0 | FuelGenerator.single() / multi() | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output | 0.0 | FuelOutput | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Output.Side | 0.0 | FuelOutput 的 FRONT、BACK、behind | 0.2 |
+| com.gregtech.gregtech.api.addon.MachineLayout | 0.0 | StructureLayout | 0.2 |
+| com.gregtech.gregtech.api.addon.MachineLayout.Cell | 0.0 | LayoutCell | 0.2 |
+| com.gregtech.gregtech.api.addon.StructurePartDeclaration | 0.0 | LayoutPart | 0.2 |
+| com.gregtech.gregtech.api.addon.StructurePartEnergy | 0.0 | LayoutPart.energyOutput(EnergyOutput, capacity) | 0.2 |
+| com.gregtech.gregtech.api.addon.RecipeMapDeclaration | 0.0 | RecipeTable.machine(name) | 0.2 |
+| com.gregtech.gregtech.api.addon.FuelMapDeclaration | 0.0 | RecipeTable.fuel(name) | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#machines | 0.0 | addonMachines() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#behaviorMachines | 0.0 | addonMachines() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelGenerators | 0.0 | addonMachines() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#layouts | 0.0 | structureLayouts() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#parts | 0.0 | layoutParts() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#recipeMaps | 0.0 | recipeTables() | 0.2 |
+| com.gregtech.gregtech.api.addon.AddonMachineContributor#fuelMaps | 0.0 | recipeTables() | 0.2 |
+
+字段怎么对到新 builder，写在卡 38。`energyRangeSpecified` 变成 `EnergyInput.rangeSpecified()`。行为机器的 `blockEntityPath`、`playerInventoryY`、`energyMask`、`emitsEnergy`、`energyOutMask`、`initialToggles` 同名留在 `BehaviorMachine`。界面常量同名留在 `BehaviorMachine`。`MAX_BEHIND` 和 `MAX_TANK` 同名留在 `FuelGenerator`。`StructurePartEnergy.accept` 和 `requireOutput` 不进入新声明，容量截断和包上限检查留在零件运行时。
+
+## 2026-10-21 / 附属机器声明的组件和模板
+
+附属机器声明拆成组件和模板。组件是外壳 `MachineCasing`、能量输入 `EnergyInput`、能量输出 `EnergyOutput`、燃料输出 `FuelOutput`、物品流体面 `MachineIo` 和结构内位置 `IoTarget`。模板是 `RecipeMachine`、`BehaviorMachine`、`FuelGenerator`，都实现密封接口 `AddonMachine`，只各自保留怎么加工的那部分字段。面是顶层枚举 `MachineFace`，序号和位与旧的 `BehaviorMachineDeclaration.Face` 相同。
+
+新类型都是构造器私有的 `final class`，只从 builder 或静态工厂拿，校验在 `build()` 里。不用 record：record 的规范构造器必须公开，加一个字段就改一次签名。新入口里面列表一律拒绝重复；旧配方声明允许重复面，转换时去重，掩码不变。
+
+一个组件在不同模板里的规则可以不同，差异按卡 38 的十三条写明，不合并成一个公式。燃料机写 `tier`、`EnergyInput`、`MachineIo` 都失败；配方机写 `EnergyInput.capacity` 失败；行为机写 `EnergyInput.range` 失败。这些现在都没有入口，放开就是新能力。燃料输出不折成 `EnergyOutput` 的包大小乘包次数。
+
+配方机器的能量面在新入口里只看 `EnergyInput.faces`，不写是六面，空表表示没有收能量的面。旧入口调用过任一面方法、又没写 `energyInputs` 时，能量掩码是 0，转换时写成空表。这是新旧入口唯一的缺省差别。
+
+结构仍按名字绑定：`StructureLayout` 的名字等于控制器的 `machineType`，不支持内联。格子用 `LayoutCell.at(right, up, back, CellMatch, StructureRole)`。`CellMatch` 是密封接口，有 `part(name)`、`air()`、`block(id)`、`tag(id)` 四种。GT 内置零件、结构壳和附属零件本来就共用一个名字空间，附属零件不能占内置名，所以 `part` 不再拆成两种。`block` 和 `tag` 只能配 `CASING`。`CellMatch.parse` 按今天的字符串规则解析，旧格子走它转换。附属零件改用 `LayoutPart`，什么能力都不写就是外壳，`energyOutput(EnergyOutput, capacity)` 让它变成能量零件。配方表和燃料表都用 `RecipeTable`，分 `machine(name)` 和 `fuel(name)` 两个入口，名字空间仍分开。
+
+`AddonMachineContributor` 加 `addonMachines()`、`structureLayouts()`、`layoutParts()`、`recipeTables()`。同一个贡献者可以新旧混用，名字、id 和签名的冲突检查跨两套一起做。旧声明先在 `AddonMachines` 里转成新类型，再和新声明走同一条路径变成内部定义。内部行和平台代码改读新类型，旧类型只留在入口和转换里。
+
+行为机器不挂 GT 的配方处理，模板边界不重画。第二种输入能量分两处：条件能量零件加在 `LayoutPart` 上，行为机器和 `LARGE_RECIPE` 控制器都按「绑上的条件零件全部满足」开工；控制器级的附加输入只给 `BehaviorMachine`，交给行为，不进主缓存。功能零件的槽、tick、右键和存档也加在 `LayoutPart` 上，平台侧按零件名配对行为。这三项由卡 40、41 实施，不在这次整合里加。
+
+## 2026-10-21 / 内置机器特例放在 spec 还是子类
+
+内置机器的效率、恒定耗能、并行上限、并行是否拉长时长、接受范围、廉价超频、输出位置和能量源位置，在构造 spec 时写成运行时现在算出的值。加工和提示之后只读 spec。名字表留在构造期，不在加工时再查，这张卡不删表。
+
+`energyRangeDeclared` 和 `cheapOverclockingDeclared` 仍只表示附属显式写了。内置填好的数不把这两个标志改成「附属声明了」。附属没写时的缺省不变。单方块接受范围是标称的一半到两倍，TU 是 1–16。大型配方机器没写范围时仍是现在的 `LargeMachineProcessingRules` 结果，这个结果在构造 spec 时写入最小和最大。单方块没写廉价超频则关，大型配方机器没写则不是 TU 就开。没写输出位置的机器不套发酵罐或正下方那组坐标。
+
+没有现成字段的用内部字段，不进 `MachineDeclaration`。并行是否拉长时长，缺省按现在：单方块没有原版行则为真，大型机按不是 TU。能量源位置缺省空列表，空表示不点邻格。另外两个内部布尔也缺省为假：关掉六面自动输入，输出罐不封顶。只有现在会这样做的内置机器写成真。
+
+留在子类的是行为。焦炉点火。融合堆充能和 LU/EU 端口。内爆的结构，以及控制器不收能量。物质制造机只收 QU，还有结构零件互换。蒸馏塔和低温蒸馏按流体种类选出口高度。单方块燃烧搅拌机的点火。大型电炉允许第二种加热线圈，留在结构检查里。
+
+这些类里的纯数字改由 spec 提供。蒸馏塔上限 1024。低温蒸馏下限 1。内爆 1–16。物质制造机 1 到 2097152，并且不恒定耗能。紧凑物质制造机的效率、廉价超频和不恒定耗能，与 `massfab` 名字表现在是同一组数。
+
+融合堆的配方接受上限现在沿用 TU 的 1–16。端口和提示用的是 1–16384，spec 上的最大也是 16384。父类改成读 spec 时，融合堆的配方上限保持 1–16，不和端口合成一个数。
+
+快照仍按方块实体方法取值，包括 `originalProcessingController` 和 `sourceUnlimitedOutputs`。这两个方法改成读 spec 上的旗标，这一卡先留着方法名。删掉方法会让反射得到假，265 行快照会变。
+
+输出罐不封顶的旗标只覆盖 `sourceUnlimitedOutputs` 现在返回真的机器，也就是那 13 台和融合堆。蒸馏塔和低温蒸馏的反射结果是假，两个输出槽的最大容量仍由它们自己的 `setSpec` 写成，不写进这个旗标。焦炉也不写进旗标，0 号输出槽仍由焦炉自己的 `setSpec` 设成最大容量。
+
 ## 2026-10-21 / 行为机器的配方表催化剂
 
 `BehaviorMachineDeclaration.recipeMaps` 列出机器表或燃料表的名字。不调用时是空名单。JEI 和 EMI 登记催化剂时，除了配方机器和燃料机，再把这些行为机器的方块加到点名的表上。空名单不改已经收集到的催化剂列表。同一个方块不会在同一张表上出现两次。
