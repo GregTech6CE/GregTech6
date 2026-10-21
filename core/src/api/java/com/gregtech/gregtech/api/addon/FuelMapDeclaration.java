@@ -7,7 +7,11 @@ import java.util.Objects;
 /**
  * One addon fuel map. Slot counts match a built-in fuel map. A fuel map is not a machine map:
  * a recipe machine cannot name it, and a fuel generator cannot name a machine map.
+ *
+ * @deprecated Use {@link RecipeTable#fuel(String)}. Removal is 0.2.
  */
+@Deprecated(since = "0.0", forRemoval = true)
+@AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.FuelMapDeclaration", removeAt = "0.2")
 public record FuelMapDeclaration(
         String name,
         String title,
