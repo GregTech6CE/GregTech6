@@ -19,7 +19,8 @@ public interface FixedConstructionColor {
         Block block = com.gregtech.gregtech.registry.GTConstructionVariants.coloredBlock(state.getBlock(), color);
         if (block == null) return state.hasProperty(ConcreteBlock.COLOR) ? state.setValue(ConcreteBlock.COLOR, color) : state;
         BlockState result = block.defaultBlockState();
-        for (var property : state.getProperties()) result = copy(result, state, property);
+        for (var property : state.getProperties())
+            result = copy(result, state, property);
         return result;
     }
 
