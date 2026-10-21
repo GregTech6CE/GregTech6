@@ -1,0 +1,8 @@
+{
+  "type": "gt6ce:machine",
+  "map": "addon_sample.fuel.solid",
+  "item_inputs": [{ "item": "minecraft:coal" }],
+  "item_outputs": [{ "item": "minecraft:charcoal" }],
+  "eu_per_tick": 16,
+  "duration": 20
+}
