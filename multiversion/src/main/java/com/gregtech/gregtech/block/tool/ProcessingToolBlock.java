@@ -13,20 +13,38 @@ import net.minecraft.world.phys.BlockHitResult;
 
 /** Existing GT6 utility meshes with real manual recipe processing. */
 public final class ProcessingToolBlock extends ShapedToolBlock implements EntityBlock {
-    public ProcessingToolBlock(String id, Properties properties) { super(id, properties); }
-    private boolean wooden() { return toolId().equals("bathing_pot_wood") || toolId().equals("bathing_pot_table_wood"); }
-    @Override public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+
+    public ProcessingToolBlock(String id, Properties properties) {
+        super(id, properties);
+    }
+
+    private boolean wooden() {
+        return toolId().equals("bathing_pot_wood") || toolId().equals("bathing_pot_table_wood");
+    }
+
+    @Override
+    public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return wooden() ? 100 : super.getFlammability(state, level, pos, face);
     }
-    @Override public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
+
+    @Override
+    public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction face) {
         return wooden() ? 100 : super.getFireSpreadSpeed(state, level, pos, face);
     }
-    @Override public int tintRgb() {
+
+    @Override
+    public int tintRgb() {
         return toolId().equals("bathing_pot") || toolId().equals("bathing_pot_table")
-                ? com.gregtech.gregtech.content.material.Materials.StainlessSteel.getColor() : super.tintRgb();
+        ? com.gregtech.gregtech.content.material.Materials.StainlessSteel.getColor() : super.tintRgb();
     }
-    @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new ProcessingToolBlockEntity(pos, state); }
-    @Override public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ProcessingToolBlockEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(
             Level level, BlockState state, net.minecraft.world.level.block.entity.BlockEntityType<T> type) {
         if (level.isClientSide || type != com.gregtech.gregtech.registry.GTBlockEntities.PROCESSING_TOOL.get()
                 || toolId().equals("juicer")) return null;
@@ -35,9 +53,11 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
         };
     }
 //? if >=1.21.1 {
-    /*@Override public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    /*@Override
+    public InteractionResult interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 *///?} else {
-    @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 //?}
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
 //? if >=1.21.1 {
@@ -46,20 +66,31 @@ public final class ProcessingToolBlock extends ShapedToolBlock implements Entity
         var rotation = super.use(state, level, pos, player, hand, hit);
 //?}
         if (rotation.consumesAction()) return rotation;
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.interact(player, hand, hit.getDirection());
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.interact(player, hand,
+                hit.getDirection());
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
-    @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
-        if (!state.is(next.getBlock()) && !level.isClientSide && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.dropContents();
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock()) && !level.isClientSide
+                && level.getBlockEntity(pos) instanceof ProcessingToolBlockEntity tool) tool.dropContents();
         super.onRemove(state, level, pos, next, moving);
     }
-    @Override public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state, net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
+
+    @Override
+    public java.util.List<net.minecraft.world.item.ItemStack> getDrops(BlockState state,
+            net.minecraft.world.level.storage.loot.LootParams.Builder builder) {
         return java.util.List.of(new net.minecraft.world.item.ItemStack(this));
     }
 //? if >=1.21.1 {
-    /*@Override public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+    /*@Override
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context,
+            java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 *///?} else {
-    @Override public void appendHoverText(ItemStack stack, BlockGetter context, java.util.List<net.minecraft.network.chat.Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+    @Override
+    public void appendHoverText(ItemStack stack, BlockGetter context, java.util.List<net.minecraft.network.chat.Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
 //?}
         com.gregtech.gregtech.client.FunctionalBlockTooltips.appendManual(toolId(), getExplosionResistance(), tooltip);
     }

@@ -1,0 +1,1045 @@
+{
+  "date": "2026-10-22",
+  "batch": 99,
+  "baseline": "f260e3e6eff647b05a97473f1652e60d3a84e848",
+  "previous_goal_turn": "Progress: f260e3e6e recorded grinding contracts and preserved seven complete code views. No live process or blocker.",
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMixingBowl.java",
+      "sha256": "c5a3e1422ca4113b8e95e40dd02ce34313ec4ab85c53d01368956300532cc08c",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityMixingBowlTable.java",
+      "sha256": "f8ec5640c025e9df10db5b4726528dadc8ebd43edb5f42bf64bdb8f0bcbc5d93",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityBathingPot.java",
+      "sha256": "fef4fb033b46670651307a6127c220f04d2a7fcfb11058345b32a0f43c8d7eab",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityBathingPotTable.java",
+      "sha256": "7b01ff5ec63d87fa8416fff72db0b8dfcb991657bf99a0288f288c3762ee120f",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityBathingPotWood.java",
+      "sha256": "b6e9cb0db00bb61cfa952e728701d64e74507c0e231ebdab771145b428070d49",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityBathingPotTableWood.java",
+      "sha256": "b2a89718f05ccdd7aedec954c4e6654a4ab90ebb848153281af9024e883e32d1",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2019 Gregorius Techneticies\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/tools/MultiTileEntityJuicer.java",
+      "sha256": "2c98bf960cc89cd5c5477f66c71ab9ba013265a6d651bb76225e0c099bba572c",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase05Inventories.java",
+      "sha256": "b936ba963238a078d934a7b5b63853fbc603540945d77f152101e0b55cde59e7",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2023 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase06Covers.java",
+      "sha256": "c592d3905904adf81b14dd29e3b3e28310229314deefb232bef371cc950c0bb9",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase07Paintable.java",
+      "sha256": "5d1319131c91d93690e5f6ece787210de15756283103a4ec6b94738bb07c5b28",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2020 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/fluid/FluidTankGT.java",
+      "sha256": "9e9c1500fb947048cc8ddcd4a19f44561d6d1278e2208381936b1ad483b25d7d",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/FL.java",
+      "sha256": "87ec6759b7c3b1ad7d7c6d574e24ec7d7371fa285e93ab67cfa26cd83f2b18b3",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/RM.java",
+      "sha256": "c7cb07faef0235ace4bb26656fddaabfa10da6aa4a2689a7f4cdcaef10d366e6",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "authors": [],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/oredict/OreDictMaterial.java",
+      "sha256": "768707d5eeeb6b60f0c5d0a24b39ab50f6f173a29a40f0fa3365308cf0688371",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2025 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/recipes/Recipe.java",
+      "sha256": "8bb9a0bd00aa839a48a2c082281a988e9a796a540137d1cf50249d2250ad1c7e",
+      "authors": [
+        "@author Gregorius Techneticies"
+      ],
+      "license_header": "/**\n * Copyright (c) 2026 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/OpenVesselRules.java",
+      "sha256": "9931570c6e084d0ddd8783feaa48cd1e9d0d24303abffce3c41a4807fa450906",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ProcessingToolBlockEntity.java",
+      "sha256": "9bd50c42d6dd52f65a8068b3be79d6a1415642baa447c1509d7d02ec4e47fdc4",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "b4f985ee1f82c5c6191604f6345a3a62d066cb02674b7b7f49c9f071d07d47f7",
+          "tokens": 4133
+        },
+        "neoforge": {
+          "sha256": "0da35fb67858ef65b436ccf4c0fb88d846fa1817ef36a160ea43ffae7e538e95",
+          "tokens": 4030
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ProcessingToolBlock.java",
+      "sha256": "459391596750e05cbe1692409b388153e991b6d7135237a8b239273d2a6b07a5",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "0a54c06ed7e8b4cafb12d935f588187a0f538bb6c64e88d8930b17aef767c44d",
+          "tokens": 794
+        },
+        "neoforge": {
+          "sha256": "1fa8bd3aa37b9a5627566337fc4bd56ff2a51e41b761733cee83daad0569a670",
+          "tokens": 804
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/client/ProcessingToolRenderer.java",
+      "sha256": "40ab2e6cd5f71a5343d806d9b2852cf654ce8e934e9a67a6aa5c173d3e58c845",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "99d272877f373c1650d1afb60be92c3edbac9bf6daed8aa12acbd9ba4c7dc391",
+          "tokens": 681
+        },
+        "neoforge": {
+          "sha256": "c8e8f794d79f8613391527ea6ffd034c795c098d3ef9215a99f1bd7306aa11b2",
+          "tokens": 683
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/data/MachineRecipeMaps.java",
+      "sha256": "88ea4001ad21f6c8892d346f20cfb8a0f86ad6844c9e72aecb33e8af46b12f7e",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "7f7d0cbe040892fe1e187d55a7afb04b5086256cb46dc9b4aa7beb12057e8b05",
+          "tokens": 4242
+        },
+        "neoforge": {
+          "sha256": "424319e8c378ab2380ad8ddb30d8a13f0a3c4b0c5650a0712ecd8a5f7b7d5a96",
+          "tokens": 3731
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeMap.java",
+      "sha256": "b3401a8aa4dd1c1dbfe823bc8b152f7c99490b61b6db8b2c0bf16c70ab439a7a",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "644daac8ccb6d8a94483e935a39ae1c6a2925e99a49a453e4381dcc52a1f8a10",
+          "tokens": 9306
+        },
+        "neoforge": {
+          "sha256": "dc50b1bbe9a07a5b77df16dff2ff356f7384e7f62351105fce42075bea804ea4",
+          "tokens": 9312
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/RecipeInputs.java",
+      "sha256": "3dd41d01162170872d7e0e172f538118d0b6e2df8a5eec04e8d11ceb82ce1c16",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "f4fd32a3b489b5beda3864598a621d639a91abdbb7ed6a35db1913d7c71ea0b5",
+          "tokens": 791
+        },
+        "neoforge": {
+          "sha256": "472839942cd79850e0e8c0d8702a63b63ac2a041dfa61f43e62d1b1281e92255",
+          "tokens": 804
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/recipe/Recipe.java",
+      "sha256": "e6bf4941590236ac4851acce49d28a4e40df998f187733a91ca82447c4c467c6",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "bc44f45b51ac27bc2073a864bac6309366e51bdb17553a62e95853315881f25b",
+          "tokens": 1049
+        },
+        "neoforge": {
+          "sha256": "ad0c1c42c26808c8cde74696a4d5b9c96ddf499931546fb293775584bce0c8f8",
+          "tokens": 1051
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidTankGT.java",
+      "sha256": "4184c560d23498d1eb02c72d2171de2d04b80110aada399e852e81d9e2cc4905",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "180005d80f65bc8743eaf43840fe6a47bf9e559a43415b5fa771b308b24e00f4",
+          "tokens": 1504
+        },
+        "neoforge": {
+          "sha256": "a28f1d74cbd6161b22f3b4ab8bbc8d7484d4eef2e9f21d5821656ff7954b8f2c",
+          "tokens": 1527
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd857ed2aa4e138090d32001a0777cfe38b90935fa1f5946eacec188a2f02d4d",
+          "tokens": 8033
+        },
+        "neoforge": {
+          "sha256": "98785c75a78501d4cc1232a887ac9bc9bfa79efde64e9ef84f79f88febaf3f66",
+          "tokens": 6299
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTToolBlocks.java",
+      "sha256": "6bf7985f7054bfa396e63161c56a0605315f2e2fc53eee3666df897df2680d62",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "a7f85fb0487c3dc23ace1b6af073693dc9b8c5f6c735372ae0c62d8f05838962",
+          "tokens": 4005
+        },
+        "neoforge": {
+          "sha256": "0fdb02e317c27b546a688728c56efc319d349eed4f811336bb702cc60f2c8c5b",
+          "tokens": 913
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/inventory/BlockContents.java",
+      "sha256": "3a0a536ca3edaae2b5a0c79c72b0e59e6f0a5c0fa2f4fbcfdd3d4aeb679b6f5f",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "28e37d72bc348f9c0fe99d19f72707b41bfb5950f42915462398a647cead201b",
+          "tokens": 247
+        },
+        "neoforge": {
+          "sha256": "685d64de0a807ed16fea9213ec64a978732705275b1b4f24201eeddcbef76268",
+          "tokens": 249
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/CoverDrops.java",
+      "sha256": "09ef5f3d7b7722dbead7c77e8b0b116d6c7c466184242a05f6a70d2d13aef805",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "cd150eed13228a3f20f33aab8d91034ef0089e12f57a224c86c689aeebdb1fcf",
+          "tokens": 862
+        },
+        "neoforge": {
+          "sha256": "eb37f478a04072dd32186ec397e484430ccd2c1be4740c5bf61dfb96f3c99e7f",
+          "tokens": 944
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/mixin/CoverDropMixin.java",
+      "sha256": "5d76dc7fcfab4ab93a81b7137a6a412e3b8ad985c8d00852f36c4081ee040b1b",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+          "tokens": 316
+        },
+        "neoforge": {
+          "sha256": "c96a923b95408d6a6dad2fc6cb4b36b876482e4cb04dede20bb9ae2d82cb1468",
+          "tokens": 316
+        }
+      }
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/ElectricToolItem.java",
+      "sha256": "3e99973cba6df5e355fb88e0e2c2a700223dd6515602b366296a8d7020efd603",
+      "shared_platform_views": {
+        "forge": {
+          "sha256": "c9861434b83408b22c91f20350de54fc605242b5b5d3abd6c8bc59326461134b",
+          "tokens": 4083
+        },
+        "neoforge": {
+          "sha256": "bb04025047cb6d98e1c46a421c16e9495af681d811bba8ef3572c06a5057d2d2",
+          "tokens": 4319
+        }
+      }
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/data/MachineRecipeMapDefinitions.java",
+      "sha256": "107ffcf13019a3cc7a1bc7ea40776b7d528446121787b3b7e465fb8f6fa369d6",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/tool/ManualWorkRules.java",
+      "sha256": "3e58e8bbe73b8d9e254e323b39c190b784b3652b089f8f30a22507d6d578a5bc",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/api/fluid/LongFluidStorage.java",
+      "sha256": "c0fabf1063019faa3c85a0adde970ad80ed1727403c063564c38d95a79887ff0",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTManualStations.java",
+      "sha256": "814eb95c770e5c62e86406b99fc5703268fdf79c9a096d8b3d5785c68cb0232f",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/client/StorageContainerClientSetup.java",
+      "sha256": "5a5ad29d4910850f8d1c69822afb3b79ea4dec870d1e75df4d8cad0bb74d391c",
+      "shared_platform_views": {}
+    },
+    {
+      "path": "multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/client/GregTechClient.java",
+      "sha256": "4f62bc352b16e6e4395538d1ef36cbcb395265ef5c3887ca6fd2c705fdce682f",
+      "shared_platform_views": {}
+    }
+  ],
+  "readability": {
+    "baseline": "f260e3e6eff647b05a97473f1652e60d3a84e848",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/tool/OpenVesselRules.java": {
+        "before_raw_sha256": "4073a978d293ccdc04d2130b500759e43fa7f87a929949c08e41f6eef1b70e6c",
+        "after_raw_sha256": "9931570c6e084d0ddd8783feaa48cd1e9d0d24303abffce3c41a4807fa450906",
+        "before_lines": 13,
+        "after_lines": 57,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 478,
+            "execution_sha256": "5906bf818128c5a8a87db0657319856116e3ee99688d12e7da1da7f6fec050cb",
+            "literal_positions_sha256": "39ed04ac97bf2fbbcc6bf19caf11b092b3bb4a27df04c8e4b01fe43a6cd59bc3",
+            "literal_count": 39
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/tool/ProcessingToolBlockEntity.java": {
+        "before_raw_sha256": "45157759a0ad70742bd6d8f28aebc2d9a7277a4bf5d9ad72f66ab14987672985",
+        "after_raw_sha256": "9bd50c42d6dd52f65a8068b3be79d6a1415642baa447c1509d7d02ec4e47fdc4",
+        "before_lines": 317,
+        "after_lines": 491,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 4133,
+            "execution_sha256": "60bb94061fc88beac5a0c1c03c272a24ba3ecbcdf86fd84f5553ab41b435bdbf",
+            "literal_positions_sha256": "4fa1c986fb2f663887e9b82cb72e2afcd0078dd453949d95e627431e43b48429",
+            "literal_count": 58
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 4030,
+            "execution_sha256": "263bc63ddd79a1a67700362fa14bb1e43f45ce7c667049fb3296d335c1d80084",
+            "literal_positions_sha256": "60afa9599844e4da053ff879a39597a128c12943ca7634e97eeb2083d4a621a3",
+            "literal_count": 58
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/tool/ProcessingToolBlock.java": {
+        "before_raw_sha256": "856073057ba3720ab1a7797e551f90f82aa73799135b929adf9fa8dec060cef0",
+        "after_raw_sha256": "459391596750e05cbe1692409b388153e991b6d7135237a8b239273d2a6b07a5",
+        "before_lines": 66,
+        "after_lines": 97,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 794,
+            "execution_sha256": "543199e57d9a5e3fc6c0cd5f9450b7cec97d28ff7c41e4ed9755569824a2cc72",
+            "literal_positions_sha256": "9bbc966f6949dce16a3d1e7ecc84fc7a3142a6feda63dd528bf0d685b7fbb111",
+            "literal_count": 7
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 804,
+            "execution_sha256": "045ea9ac54c2c3d77e9157924e75e4f7eedec84b9912ce8dc5c385027b7cc6ab",
+            "literal_positions_sha256": "9bbc966f6949dce16a3d1e7ecc84fc7a3142a6feda63dd528bf0d685b7fbb111",
+            "literal_count": 7
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/client/ProcessingToolRenderer.java": {
+        "before_raw_sha256": "95a93903f84a4078eea52a3a61e26f7307e986fc4e0d74199d93148f60ed1c79",
+        "after_raw_sha256": "40ab2e6cd5f71a5343d806d9b2852cf654ce8e934e9a67a6aa5c173d3e58c845",
+        "before_lines": 54,
+        "after_lines": 61,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 681,
+            "execution_sha256": "ff00f7a8b452089d38d62db9f7a73500410a969773157cbaab1bfb9490ccf4ac",
+            "literal_positions_sha256": "d47f41adfc9fd3301dcb49c1a30487ca08f57c61a000fb7f70f833ea98abd310",
+            "literal_count": 41
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 683,
+            "execution_sha256": "652703b6101a7a021f9ab46ffac7b8afa874493eed60eed0a94d46e3311d90ab",
+            "literal_positions_sha256": "a7dd4b4ca2def96633487c899630f47f1403ccb9f546ba87372f721b3484aa7e",
+            "literal_count": 41
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    "ALIGN-309",
+    "ALIGN-310",
+    "ALIGN-311",
+    "ALIGN-312"
+  ],
+  "extended_findings": [
+    "ALIGN-172",
+    "ALIGN-308"
+  ],
+  "source_registrations": [
+    {
+      "source_class": "MultiTileEntityBathingPotWood",
+      "current_id": "bathing_pot_wood",
+      "capacity": 4000,
+      "source": "aMat = ANY.Wood;            aRegistry.add(\"Wooden Bathing Pot\"                                  , \"Misc Tool Blocks\"                    , 32721, 32720, MultiTileEntityBathingPotWood.class                     ,                 0, 16, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   5.0F, NBT_RECIPEMAP, RM.Bath   , NBT_TANK_CAPACITY,           4000, NBT_FLAMMABILITY, 100), \"sGh\", \"PLP\", \"PPP\", 'P', OD.plankAnyWood, 'L', OP.stickLong.dat(MT.Pb), 'G', OD.itemGlue);"
+    },
+    {
+      "source_class": "MultiTileEntityBathingPotTableWood",
+      "current_id": "bathing_pot_table_wood",
+      "capacity": 4000,
+      "source": "aMat = ANY.Wood;            aRegistry.add(\"Wooden Bathing Pot Table\"                            , \"Misc Tool Blocks\"                    , 32720, 32720, MultiTileEntityBathingPotTableWood.class                ,                 0, 16, aUtilWood      , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   5.0F, NBT_RECIPEMAP, RM.Bath   , NBT_TANK_CAPACITY,           4000, NBT_FLAMMABILITY, 100), \"M\", \"S\", 'M', aRegistry.getItem(), 'S', ST.make(Blocks.stone_slab, 1, 4));"
+    },
+    {
+      "source_class": "MultiTileEntityBathingPot",
+      "current_id": "bathing_pot",
+      "capacity": 8000,
+      "source": "aMat = MT.StainlessSteel;   aRegistry.add(\"Bathing Pot\"                                         , \"Misc Tool Blocks\"                    , 32708, 32720, MultiTileEntityBathingPot.class                         ,                 0, 16, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   6.0F, NBT_RECIPEMAP, RM.Bath   , NBT_TANK_CAPACITY,           8000), \" f \", \"PhP\", \"PPP\", 'P', OP.plate.dat(aMat));"
+    },
+    {
+      "source_class": "MultiTileEntityBathingPotTable",
+      "current_id": "bathing_pot_table",
+      "capacity": 8000,
+      "source": "aMat = MT.StainlessSteel;   aRegistry.add(\"Bathing Pot Table\"                                   , \"Misc Tool Blocks\"                    , 32707, 32720, MultiTileEntityBathingPotTable.class                    ,                 0, 16, aUtilMetal     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   6.0F, NBT_RECIPEMAP, RM.Bath   , NBT_TANK_CAPACITY,           8000), \"M\", \"S\", 'M', aRegistry.getItem(), 'S', ST.make(Blocks.stone_slab, 1, 4));"
+    },
+    {
+      "source_class": "MultiTileEntityMixingBowl",
+      "current_id": "mixing_bowl",
+      "capacity": 8000,
+      "source": "aMat = MT.Ceramic;          aRegistry.add(\"Ceramic Bowl\"                                        , \"Misc Tool Blocks\"                    , 32706, 32720, MultiTileEntityMixingBowl.class                         ,                 0, 16, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   5.0F, NBT_RECIPEMAP, RM.Mixer  , NBT_TANK_CAPACITY,           8000)); IL.Ceramic_Bowl.set(aRegistry.getItem(), new OreDictItemData(MT.Ceramic, U*5)); RM.add_smelting(IL.Ceramic_Bowl_Raw.get(1), IL.Ceramic_Bowl.get(1), F, F, T);"
+    },
+    {
+      "source_class": "MultiTileEntityMixingBowlTable",
+      "current_id": "mixing_bowl_table",
+      "capacity": 8000,
+      "source": "aMat = MT.Ceramic;          aRegistry.add(\"Ceramic Bowl Table\"                                  , \"Misc Tool Blocks\"                    , 32705, 32720, MultiTileEntityMixingBowlTable.class                    ,                 0, 16, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   5.0F, NBT_RECIPEMAP, RM.Mixer  , NBT_TANK_CAPACITY,           8000), \"M\", \"S\", 'M', aRegistry.getItem(), 'S', ST.make(Blocks.stone_slab, 1, 4));"
+    },
+    {
+      "source_class": "MultiTileEntityJuicer",
+      "current_id": "juicer",
+      "capacity": 1000000,
+      "source": "aMat = MT.Ceramic;          aRegistry.add(\"Juicer\"                                              , \"Misc Tool Blocks\"                    , 32722, 32720, MultiTileEntityJuicer.class                             ,                 0, 16, aUtilStone     , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS,   1.0F, NBT_RESISTANCE,   5.0F, NBT_RECIPEMAP, RM.Juicer                                    )); IL.Juicer.set(aRegistry.getItem(), new OreDictItemData(MT.Ceramic, U*4)); RM.add_smelting(IL.Juicer_Raw.get(1), IL.Juicer.get(1), F, F, T);"
+    }
+  ],
+  "current_profiles": [
+    [
+      "mixing_bowl",
+      false,
+      true,
+      false,
+      1,
+      5
+    ],
+    [
+      "mixing_bowl_table",
+      false,
+      true,
+      false,
+      1,
+      5
+    ],
+    [
+      "juicer",
+      false,
+      false,
+      true,
+      1,
+      5
+    ],
+    [
+      "bathing_pot",
+      false,
+      false,
+      false,
+      1,
+      6
+    ],
+    [
+      "bathing_pot_table",
+      false,
+      false,
+      false,
+      1,
+      6
+    ],
+    [
+      "bathing_pot_wood",
+      true,
+      false,
+      false,
+      1,
+      5
+    ],
+    [
+      "bathing_pot_table_wood",
+      true,
+      false,
+      false,
+      1,
+      5
+    ]
+  ],
+  "automatic_same_item_admission_source_projection": [
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 0,
+      "source_admits_matching_stack": true,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 1,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 2,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 3,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 4,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "mixing_bowl",
+      "candidate_slot": 5,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 0,
+      "source_admits_matching_stack": true,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 1,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 2,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 3,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 4,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot",
+      "candidate_slot": 5,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 0,
+      "source_admits_matching_stack": true,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 1,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 2,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 3,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 4,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    },
+    {
+      "family": "bathing_pot_wood",
+      "candidate_slot": 5,
+      "source_admits_matching_stack": false,
+      "current_admits_matching_stack": true,
+      "precondition": "Slot 0 already holds the same plain matching item; automatic admission only."
+    }
+  ],
+  "compatible_output_amount_source_projection": [
+    {
+      "id": "mixing_bowl",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl",
+      "stored": 7750,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl_table",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl_table",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl_table",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "mixing_bowl_table",
+      "stored": 7750,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot",
+      "stored": 7750,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table",
+      "stored": 7750,
+      "next_output": 250,
+      "capacity": 8000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_wood",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_wood",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_wood",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_wood",
+      "stored": 3750,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table_wood",
+      "stored": 0,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table_wood",
+      "stored": 999,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": true,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table_wood",
+      "stored": 1000,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    },
+    {
+      "id": "bathing_pot_table_wood",
+      "stored": 3750,
+      "next_output": 250,
+      "capacity": 4000,
+      "source_amount_gate_allows": false,
+      "current_amount_gate_allows": true
+    }
+  ],
+  "untyped_output_selection_source_projection": [
+    {
+      "output_tanks": 2,
+      "source_second_phase": 0,
+      "source_first_index": 0,
+      "current_first_index": 0
+    },
+    {
+      "output_tanks": 2,
+      "source_second_phase": 1,
+      "source_first_index": 1,
+      "current_first_index": 0
+    },
+    {
+      "output_tanks": 3,
+      "source_second_phase": 0,
+      "source_first_index": 0,
+      "current_first_index": 0
+    },
+    {
+      "output_tanks": 3,
+      "source_second_phase": 1,
+      "source_first_index": 1,
+      "current_first_index": 0
+    },
+    {
+      "output_tanks": 3,
+      "source_second_phase": 2,
+      "source_first_index": 2,
+      "current_first_index": 0
+    }
+  ],
+  "ordinary_vs_hand_drain_source_projection": {
+    "precondition": "Ambient compatible liquid: no output liquid, input contains 1000, request 1000, no covers or external overrides.",
+    "source_ordinary_drain": 0,
+    "current_ordinary_drain": 1000,
+    "hand_container_input_drain": "Separate original path exists."
+  },
+  "reused_native_exhaustion_consumers": [
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/entity/player/Player.class",
+      "entry_sha256": "d2aa0f24db1d3bdda5e54938ee93a8d5cf6d524ba5986e03500239179a49d520",
+      "method": "causeFoodExhaustion",
+      "method_evidence": "public void causeFoodExhaustion(float);\r\n    Code:\r\n         0: aload_0\r\n         1: getfield      #210                // Field abilities:Lnet/minecraft/world/entity/player/Abilities;\r\n         4: getfield      #744                // Field net/minecraft/world/entity/player/Abilities.invulnerable:Z\r\n         7: ifne          28\r\n        10: aload_0\r\n        11: invokevirtual #510                // Method level:()Lnet/minecraft/world/level/Level;\r\n        14: getfield      #302                // Field net/minecraft/world/level/Level.isClientSide:Z\r\n        17: ifne          28\r\n        20: aload_0\r\n        21: getfield      #205                // Field foodData:Lnet/minecraft/world/food/FoodData;\r\n        24: fload_1\r\n        25: invokevirtual #2744               // Method net/minecraft/world/food/FoodData.addExhaustion:(F)V\r\n        28: return",
+      "javap_stdout_sha256": "3e7ade934f5d7bb6685976e79f3f2aa77e7788432b1cfc9ceb7de89b1260b5a4",
+      "javap_output": "work/manual-grinding-audit-20261022/Player-forge.javap.txt"
+    },
+    {
+      "platform": "forge",
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/food/FoodData.class",
+      "entry_sha256": "685315ed22bc03e05f085f1652eea3895c7cd8d89347849e4edb345f8b97a3a2",
+      "method": "addExhaustion",
+      "method_evidence": "public void addExhaustion(float);\r\n    Code:\r\n         0: aload_0\r\n         1: aload_0\r\n         2: getfield      #97                 // Field exhaustionLevel:F\r\n         5: fload_1\r\n         6: fadd\r\n         7: ldc           #203                // float 40.0f\r\n         9: invokestatic  #41                 // Method java/lang/Math.min:(FF)F\r\n        12: putfield      #97                 // Field exhaustionLevel:F\r\n        15: return",
+      "javap_stdout_sha256": "7589299e4de74ce00aa78ef5cf0b8736694e01bca91089b795fc16bd1847cfc3",
+      "javap_output": "work/manual-grinding-audit-20261022/FoodData-forge.javap.txt"
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/entity/player/Player.java",
+      "entry_sha256": "750fc78b308139047c444bf6ac766d4afa5285154b2d69c9da20bdda046515c8",
+      "method": "causeFoodExhaustion",
+      "method_evidence": "public void causeFoodExhaustion(float p_36400_) {\n        if (!this.abilities.invulnerable) {\n            if (!this.level().isClientSide) {\n                this.foodData.addExhaustion(p_36400_);\n            }\n        }\n    }"
+    },
+    {
+      "platform": "neoforge",
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/food/FoodData.java",
+      "entry_sha256": "1145d3fe509ef299c52a736da3e29773490e4a96ed69b45bcc969e6f4858deca",
+      "method": "addExhaustion",
+      "method_evidence": "public void addExhaustion(float p_38704_) {\n        this.exhaustionLevel = Math.min(this.exhaustionLevel + p_38704_, 40.0F);\n    }"
+    }
+  ],
+  "positive_scope": [
+    "Seven native identities with original nominal capacities, actual item/fluid capability registration, Juicer zero fluid-input slots and no item automation, basic input fluid gates, manual/held recipe processing and saving hooks exist.",
+    "Recipe output capacity is simulated before commit; this does not validate output temperature/density/gas/simple flags because the low-level fill does not enforce them.",
+    "Original input-fluid withdrawal by a held container is distinct from ordinary output-only fluid automation. Duplicate-item admission is scoped to the native sided automatic callback, not plain ST.move hand transfer.",
+    "Source Root updateAdjacentInventories actually sends six-side callbacks. Extend 172 for Bath/Juicer successful recipes and the MixingBowl fluid-container branch; do not infer all manual recipe branches invoke it.",
+    "Source/current rain entry and ordinary formula are present, but SERVER_TIME versus saved world time phase, high custom climate and complete environmental/physical behavior remain separate pending work."
+  ],
+  "limits": [
+    "18 automatic admission roles, 24 output amount cases, five rotating-selector phases and one empty-output/input-drain scenario are source projections, not actual Java, handlers, fluids, recipes or game runs.",
+    "Four Bath variants take a native item-model render path instead of the original material dust surface; output-slot 7..11 selection is also broader. Existing bowl glow 008 and Bath dynamic recipes 050 are not repaired or re-counted.",
+    "Native exhaustion evidence is rehashed from batch98 cached entries only; no new javap, compile, Gradle, test, game, build or push. Current field writes do not prove independent saved-world restart or old saves.",
+    "Do not restore discarded/unsafe output arithmetic, missed bounds checks or source display omissions during formatting. Full recipe reachability/overrides, fluid physical cases, viewer buttons, powered mixing, tools and rendering frames remain unverified."
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "root_revalidation": {
+    "date": "2026-10-22",
+    "original_sources": 20,
+    "current_sources": 22,
+    "shared_platform_views": 28,
+    "readability_files": 4,
+    "complete_code_views": 7,
+    "profiles": 7,
+    "automatic_same_item_conditions": 18,
+    "output_amount_conditions": 24,
+    "untyped_output_phases": 5,
+    "input_drain_scenario": 1,
+    "reused_native_artifacts": 2,
+    "reused_native_entries": 4,
+    "ledger_contiguous": [
+      1,
+      312
+    ],
+    "added_local_links": 20,
+    "protected_materials_unchanged": true,
+    "method": "Rehash original/current/platform views and reused native entries; trace sided automatic admission, public fluid drain callbacks, processing amount/physical gates, source/render consumers and concrete notification/exhaustion calls. Compare git snapshots and full tokens/literal positions/comments/directives. No target, recipe, handler, player or game execution."
+  }
+}

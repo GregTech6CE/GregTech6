@@ -1,6 +1,6 @@
 # 原版对齐与源码结构审计
 
-2026-10-22 续核：第九十八批核磨石／研钵，新增304–308磨料物品保存、余粉概率、电动工具去魔排除、点击重置政策和疲劳消耗，013补磨削条件；普通XP与不扣去魔磨料已有。行为记录至ALIGN-308，共308条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是308个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
+2026-10-22 续核：第九十九批核开放手作容器，新增309同物品自动准入、310普通排液、311加工产物门控、312浸洗盆固体显示，172／308补实际容器分支。行为记录至ALIGN-312，共312条正式记录，包含已修复／部分修复、扩展合同及保留政策，不是312个未修复问题。全面核查尚未完成，旧批次证据保留日期边界。
 
 本轮玩家反馈已修复 ALIGN-137 及 ALIGN-126 的大容量存储实例，并恢复普通流体管道的原版更新前两相调度；颜色拆分和定向验证见[反馈记录](verification/storage-direction-colors-20261020.md)。其余全面队列继续。
 
@@ -198,7 +198,7 @@
 | ALIGN-169 | 确认自然蜂巢遗漏普通火焰消费／传播参数。 | 原实体两个接口均返回 300，GT 方块和 Forge 火焰调用有实际转发。 | 当前继承默认 FireBlock 映射且没有登记该方块；ignitedByLava 是另一入口，不能替代，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-170 | 确认自然蜂巢遗漏末影龙破坏保护。 | 原 canEntityDestroy 拒绝 EntityDragon，旧 Forge 龙破坏链实际查询。 | 当前无覆写、immune／transparent 标签或专用事件补偿；限默认数据、允许生物破坏且无外部取消，未游戏复现，见[报告](BUMBLE_HIVE_PHYSICAL_AUDIT.md)。 |
 | ALIGN-171 | 确认养蜂寿命／配对倒计时存在条件性保存回退。 | 原养蜂箱继承 NeedsSaving 标记，全局每 20 tick 调 WD.mark 将区块标脏。 | 当前纯 tick 改字段无对应补偿，两版保存跳过干净区块；库存／开箱等变化仍可保存，正常 brood 切换不算全丢，见[报告](BUMBLE_PERSISTENCE_AUDIT.md)。 |
-| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费；工作台onTick亦有明确广播。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。工作台回调仅revision／标脏／输出信号，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。 |
+| ALIGN-172 | 确认相邻库存变更通知的发送／接收链未完整接入。 | 原箱变更后六面广播，漏斗、筛粉漏斗、机器等实际消费；工作台onTick亦有明确广播。 | 当前正常 setChanged 的原生 onNeighborChange 不等于专用回调或普通 neighborChanged；现有 20／100 tick 等重试仍在，不能断言永久卡死，见[报告](INVENTORY_NOTIFICATION_AUDIT.md)。USB模式原直接markDirty匹配线缆的邻库，当前普通通知只置BasicMachine能源来源标志；自行再次查配方仍有，不报固定12tick延迟，见[交换器](USB_SWITCH_AUDIT.md)。工作台回调仅revision／标脏／输出信号，见[生命周期](WORKTABLE_LIFECYCLE_AUDIT.md)。Root广播亦有实际容器调用：浸洗／榨汁成功加工、搅拌盆灌液分支，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
 | ALIGN-173 | 确认共用菜单部分 shift 转出绕过自身库存回调，扩展至六类宿主。 | 原容器和槽明确设置库存变化标志。 | 槽许可通过、背包仅接纳部分且源堆非空时只通知 SlotItemHandler 的空容器；全部转空正常 setter。箱子、保险箱、抽屉、两种漏斗及垃圾桶同源；Queue 限合法末格／多件模式，工作台储物页、电池盒、垃圾场另有补偿或限制。Neo 合并已有堆另有入口，Forge 有例外，见[共用菜单核查](SHARED_MENU_AUDIT.md)。 |
 | ALIGN-174 | 确认灌木雨天加速额外受现代群系降雨判定限制。 | 原 Bush 在见天空时查询全局雨与高度 helper，没有降雪／干燥群系门控。 | 当前 Level.isRainingAt 还要求群系降水为 RAIN；合法手动种在降雪／干燥群系时可能少一次增长，普通降雨群系已有对应，见[报告](BERRY_BUSH_AUDIT.md)。 |
 | ALIGN-175 | 确认灌木屋下光照 helper 实际行为不同，原版截断可能属于历史缺陷，需明确取舍。 | 原 getLightLevel 在乘15前先把亮度转 long；普通原生亮度表0–14均小于1，实际满亮度才通过。 | 当前直接接受原始光照>9，10–14亦可生长。不在排版中盲目恢复原截断，第三方亮度表另有边界，见[报告](BERRY_BUSH_AUDIT.md)。 |
@@ -334,7 +334,11 @@
 | ALIGN-305 | 确认磨削非空余粉的75%概率变默认必得。 | 原七磨削行chances(10000,7500)经Prefix生成和磨石getOutputs实际逐件抽取。 | 当前有余粉路线用无概率addRecipe1，真实rollOutputCount缺省10000；不扩至无第二产物行，最终配方表待验，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
 | ALIGN-306 | 确认GT电动工具漏过去附魔类型排除。 | 原ST.isGT_查IItemGT，实际电动工具经MultiItemTool／ItemBase属于该接口。 | 当前只排除GTToolItem，ElectricToolItem另继承TieredItem且有真实注册／赋魔入口；限带有效非诅咒附魔并进入交互，未施魔实测，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
 | ALIGN-307 | 确认磨石按手持身份重置点击的政策不同。 | 原非空物品共享块内mClickCount，没有上次物品比较。 | 当前lastHeld物品／标签或组件不同便归零；九次A换B时只算B第1次，保留现代重置不借排版恢复旧预累计，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
-| ALIGN-308 | 确认研钵／磨石／筛选台缺少原疲劳饥饿消耗倍率。 | 原三基础除数／去魔0.5再经UT.Entities.exhaust乘pot1Fatique，普通1及疲劳I–III的2／3／4。 | 当前直接causeFoodExhaustion，两版本机Player／FoodData不补倍率；限普通未封顶，非实际饥饿格或创造扣除结论，见[磨削](MANUAL_GRINDING_AUDIT.md)。 |
+| ALIGN-308 | 确认部分手作设备缺少原疲劳饥饿消耗倍率。 | 原三基础除数／去魔0.5再经UT.Entities.exhaust乘pot1Fatique，普通1及疲劳I–III的2／3／4。 | 当前直接causeFoodExhaustion，两版本机Player／FoodData不补倍率；限普通未封顶，非实际饥饿格或创造扣除结论，见[磨削](MANUAL_GRINDING_AUDIT.md)。搅拌／浸洗／榨汁三家族亦有同一原helper和当前直接调用，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-309 | 确认搅拌盆／浸洗盆自动输入缺少重复物品占格限制。 | 原canInsertItem2遇已有同物品时只放入原格，再查配方，木盆继承。 | 当前isItemValid只查输入范围和containsInput；限原生自动准入，原手动ST.move另核，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-310 | 确认盆类普通排液开放输入罐且不轮换产物。 | 原公开drain到产物专用查询，无指定流体时按SERVER_TIME/20换起点；手持容器可另取输入。 | 当前两drain遍历输出后输入、固定起点0；无产物而有1000输入水例原0现1000为源码推导，不报必卡管，榨汁无输入不套用，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-311 | 确认开放容器加工产物储量／物性门控未完整保留。 | 原非空产物罐查max(1000,1+next)及温度／轻质，按家族另查simple或gas。 | 当前只有juicer保留量门槛，SIMULATE fill不验证物性；限原门控生效状态，空罐旧分支、实际配方可达及危险结果未验，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
+| ALIGN-312 | 确认四种浸洗盆固体显示路径与选择范围不同。 | 原钢／木及桌式用材料blockDust平面，扫描6～0格。 | 当前仅mixing_bowl走材料面，Bath走renderStatic并选11～0；两端注册已追，不借排版隐藏额外产物，未客户端画面验收，见[开放容器](OPEN_VESSEL_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

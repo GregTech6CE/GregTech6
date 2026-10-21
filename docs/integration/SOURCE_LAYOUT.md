@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+开放手作容器：core `OpenVesselRules`列七身份与容量／气候／准入；共享`ProcessingToolBlockEntity`负责物品与产物／输入液、预检、手工及电动处理和保存，`ProcessingToolBlock`接原生调用，`ProcessingToolRenderer`绘制内容。自动排液和手持取液角色不能混同，实际两端能力／渲染入口见[核查](OPEN_VESSEL_AUDIT.md)。
+
 磨削制作：共享`SharpeningRecipes`／`MortarGrindingRecipes`声明路线与粉碎余量，core `PulverizationRules`做防溢出的单位换算；`ManualToolBlockEntity`实际扣料、抽取和给予产物。`GTElectricItems`创建独立ElectricToolItem身份，去魔时不能用GTToolItem代替全部GT工具判定；磨料世界／物品保存与原生消耗见[专题](MANUAL_GRINDING_AUDIT.md)。
 
 手工筛选台：core `ManualWorkRules`定义周期／正常药水门槛；共享`ManualToolBlockEntity`负责输入、十二产物、单操作者及保存，`ManualToolBlock`接原生交互／tick／拆除。Forge的`GTToolBlocks`和Neo的`GTManualStations`分别注册；不能从实体字段推定自动化能力，见[核查](SIFTING_TABLE_AUDIT.md)。
