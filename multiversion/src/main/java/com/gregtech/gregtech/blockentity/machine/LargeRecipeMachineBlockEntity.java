@@ -35,12 +35,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return switch(face) {case UP->Direction.UP;case DOWN->Direction.DOWN;case LEFT->front.getCounterClockWise();case RIGHT->front.getClockWise();case FRONT->front;};
     }
-    private Direction declaredFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+    private Direction declaredFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return relativeToAbsolute(face.index());
     }
     private record Placed(BlockPos pos, Direction face) {}
     private Placed place(int right, int up, int back, Direction face) { return new Placed(sourcePosition(right, up, back), face); }
-    private Placed declared(com.gregtech.gregtech.api.addon.MachineDeclaration.Target target) {
+    private Placed declared(com.gregtech.gregtech.api.addon.IoTarget target) {
         return target == null ? null : place(target.right(), target.up(), target.back(), declaredFace(target.receiver()));
     }
     private Placed itemOutput() {

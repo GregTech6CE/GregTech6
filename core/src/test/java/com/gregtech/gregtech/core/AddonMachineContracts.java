@@ -20,6 +20,8 @@ import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
 import com.gregtech.gregtech.api.addon.BehaviorMachineFactories;
 import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
+import com.gregtech.gregtech.api.addon.IoTarget;
+import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.GregTechMachineContributor;
 import com.gregtech.gregtech.api.machine.BasicMachineEnergy;
 import com.gregtech.gregtech.api.machine.BasicMachineParameters;
@@ -512,7 +514,8 @@ public final class AddonMachineContracts {
         AddonMachines.install(Set.of("centrifuge"), AddonMachines.builtInRecipeMapNames());
         check(AddonMachines.structureParts().get(0).declaration().energy() == null, "installed casing matches card 25");
         var energy = AddonMachines.structureParts().get(1).declaration().energy();
-        check(energy != null && "EU".equals(energy.type()) && energy.capacity() == 1_000, "energy role kept");
+        check(energy != null && "EU".equals(energy.type())
+                && AddonMachines.structureParts().get(1).declaration().energyCapacity() == 1_000, "energy role kept");
         check(SharedLargeMachineParts.idForName("steel_wall") == steel && steel == 18009, "steel wall stays 18009");
         check(AddonMachines.partId("sample_wall") == 1_000_000, "casing id still starts at 1000000");
     }
@@ -572,7 +575,7 @@ public final class AddonMachineContracts {
         check(AddonMachines.fuelMaps().size() == 1, "one fuel map accepted");
         check("aa.fuel.gas".equals(AddonMachines.fuelMaps().get(0).spec().mNameInternal), "fuel map name kept");
         check(AddonMachines.fuelGenerators().size() == 2, "engine and turbine accepted");
-        check(AddonMachines.fuelGenerators().get(1).declaration().output().distance() == 4, "turbine outputs four blocks behind");
+        check(AddonMachines.fuelGenerators().get(1).declaration().output().behind() == 4, "turbine outputs four blocks behind");
         var cells = SharedLargeMachineLayouts.cells("sampleturbine");
         check(cells != null && cells.size() == 1 && cells.get(0).part() == 18002, "turbine layout uses the tank wall");
         boolean closed = false;
@@ -710,7 +713,7 @@ public final class AddonMachineContracts {
         expectThrows(IllegalArgumentException.class, () -> BasicMachineParameters.builder("press", steel)
                 .energy(GregTechTags.Energy.EU, 32)
                 .faces(MachineFaceMasks.builder().itemAutoOut(MachineFaceMasks.BOTTOM).build())
-                .itemOutputTarget(new MachineDeclaration.Target(1, 0, 0, right))
+                .itemOutputTarget(IoTarget.at(1, 0, 0, MachineFace.RIGHT))
                 .build(), "conflicts");
         var bare = BasicMachineParameters.builder("plain_press", steel).machineType("sampleplain")
                 .energy(GregTechTags.Energy.EU, 512).build();
@@ -718,10 +721,10 @@ public final class AddonMachineContracts {
                 && bare.itemInputSource() == null && bare.fluidInputSource() == null
                 && bare.faceConfig().itemAutoOutput() == -1 && bare.faceConfig().fluidAutoOutput() == -1,
                 "no target leaves the previous face mask");
-        var item = new MachineDeclaration.Target(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT);
-        var fluid = new MachineDeclaration.Target(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT);
-        var itemIn = new MachineDeclaration.Target(0, 2, 1, BehaviorMachineDeclaration.Face.BOTTOM);
-        var fluidIn = new MachineDeclaration.Target(0, 1, 2, BehaviorMachineDeclaration.Face.FRONT);
+        var item = IoTarget.at(2, 0, 1, MachineFace.RIGHT);
+        var fluid = IoTarget.at(-2, 0, 1, MachineFace.LEFT);
+        var itemIn = IoTarget.at(0, 2, 1, MachineFace.BOTTOM);
+        var fluidIn = IoTarget.at(0, 1, 2, MachineFace.FRONT);
         var aimedParameters = BasicMachineParameters.builder("aimed_press", steel).machineType("sampletarget")
                 .energy(GregTechTags.Energy.EU, 512)
                 .itemOutputTarget(item).fluidOutputTarget(fluid)
@@ -914,11 +917,11 @@ public final class AddonMachineContracts {
     private static void plainRole() {
         prepare();
         GTMaterialRegistry.init();
-        AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
+        expectThrows(IllegalStateException.class, () -> AddonMachines.accept("aa_sample", List.of(map("aa.recipe.press")),
                 List.of(large("large_press", "largesamplepress", "aa.recipe.press")),
                 List.of(new AddonMachineLayout("largesamplepress", List.of(
-                        new AddonMachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureGrid.Role.ENERGY_INPUT)))));
-        expectInstall("aa_sample", "largesamplepress", "casing");
+                        new AddonMachineLayout.Cell(1, 0, 0, "minecraft:glass", StructureGrid.Role.ENERGY_INPUT))))),
+                "aa_sample", "largesamplepress", "casing");
     }
 
     private static MachineLayout wall(String name) {

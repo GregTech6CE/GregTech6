@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.block.machine;
 
-import com.gregtech.gregtech.api.addon.StructurePartEnergy;
+import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.blockentity.machine.AddonEnergyPartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,15 +17,19 @@ import javax.annotation.Nullable;
 
 /** Addon energy part. Output faces are relative to {@link #FACING}. Casings do not use this block. */
 public class AddonEnergyPartBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    private final StructurePartEnergy energy;
+    private final EnergyOutput energy;
+    private final long capacity;
 
-    public AddonEnergyPartBlock(Properties properties, StructurePartEnergy energy) {
+    public AddonEnergyPartBlock(Properties properties, EnergyOutput energy, long capacity) {
         super(properties);
         this.energy = energy;
+        this.capacity = capacity;
         registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public StructurePartEnergy energy() { return energy; }
+    public EnergyOutput energy() { return energy; }
+
+    public long capacity() { return capacity; }
 
 //? if >=1.21.1 {
     /*@Override public com.mojang.serialization.MapCodec<AddonEnergyPartBlock> codec() {

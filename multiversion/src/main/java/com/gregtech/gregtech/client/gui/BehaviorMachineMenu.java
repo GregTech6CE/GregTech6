@@ -1,6 +1,6 @@
 package com.gregtech.gregtech.client.gui;
 
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorMachine;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
 import com.gregtech.gregtech.registry.GTMenuTypes;
 import net.minecraft.core.BlockPos;
@@ -41,11 +41,11 @@ public class BehaviorMachineMenu extends AbstractContainerMenu {
         this.data = inventory.player.level().isClientSide ? new SimpleContainerData(values) : machine.menuData();
         this.access = ContainerLevelAccess.create(machine.getLevel(), machine.getBlockPos());
         addDataSlots(data);
-        BehaviorMachineDeclaration declaration = machine.declaration();
+        BehaviorMachine declaration = machine.declaration();
         for (int slot = 0; slot < declaration.items().size(); slot++) {
             var placed = declaration.items().get(slot);
             int index = slot;
-            boolean output = placed.role() == BehaviorMachineDeclaration.SlotRole.OUTPUT;
+            boolean output = placed.role() == BehaviorMachine.SlotRole.OUTPUT;
             addSlot(new SlotItemHandler(machine.inventory(), slot, placed.x(), placed.y()) {
                 @Override public boolean mayPlace(ItemStack stack) {
                     return !output && machine.behaviorAllows(index, stack);
