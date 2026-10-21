@@ -1,5 +1,7 @@
 # P3 — USB data, filters, relays and automatic tools
 
+2026-10-22 blueprint/autocrafting follow-up: program storage, native selection, per-cell remainders and shared grouping/optimization have actual consumers. ALIGN-292 records the stricter final match for untagged blueprint specimens, separately from the source's already-strict automatic input filter. The original punch-card manual describes an unfinished idea; enum and printer stubs do not establish a missing completed built-in system. See [blueprint audit](BLUEPRINT_AUTOCRAFTING_AUDIT.md); full tools, recipes, reload and save compatibility remain unverified.
+
 2026-10-21 visual-document follow-up: ordinary book/map and canvas scan/print providers, component conversion and canvas rendering consumers are present. ALIGN-291 records comparator/repeater image mappings using modern unpowered defaults instead of the original powered block targets. This does not prove pixel parity, all mappings, punch cards, optional-mod documents, binding/generation or saved-world acceptance; see [visual-document audit](VISUAL_DOCUMENT_AUDIT.md).
 
 2026-10-21 material-data follow-up: SCANNABLE/UUM gates, priority forms, ambient-fluid preference and printed-page output already have current consumers. The brokestar/source1 comparison below is historical; it is not a current missing-feature list. ALIGN-290 separately records replicator mixed stick/cable ordering through both native machine paths. See [material-data chain audit](MATERIAL_DATA_CHAIN_AUDIT.md); no new gameplay acceptance is claimed.
