@@ -20,9 +20,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = com.gregtech.gregtech.api.mod.GregTechIdentity.MOD_ID)
 //?}
 public final class OriginSpawnEvents {
-    @SubscribeEvent public static void createSpawn(LevelEvent.CreateSpawnPosition event) {
+
+    @SubscribeEvent
+    public static void createSpawn(LevelEvent.CreateSpawnPosition event) {
         if (event.getLevel() instanceof ServerLevel level && level.dimension() == Level.OVERWORLD) {
-            level.setDefaultSpawnPos(new BlockPos(0,level.getSeaLevel()+8,0),0);
+            level.setDefaultSpawnPos(new BlockPos(0, level.getSeaLevel() + 8, 0), 0);
             event.setCanceled(true);
         }
     }
