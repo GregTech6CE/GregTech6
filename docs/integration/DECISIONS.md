@@ -1,5 +1,19 @@
 # 实现选择记录
 
+## 2026-10-21 / 配方机器的能量接受范围
+
+`MachineDeclaration.energyRange(min, max)` 是两个 long。两个都是 0，或者不调用，表示没声明。声明了就要 `1 <= min <= max`，否则启动失败。标称 `energyPerTick` 可以落在范围外，不校验。TU 机器声明范围就启动失败，单方块和大型配方机器都一样。
+
+没声明时，单方块仍是标称的一半到两倍，TU 是 1–16。大型配方机器不按一半到两倍。它走 `LargeMachineProcessingRules`：TU 是 1–16，HU 是 1–4096，其余类型包括 EU 和 RU 是 512–4096。spec 上 `energyRangeDeclared` 为假，显示用的最小最大写成这组数。`LargeRecipeMachineBlockEntity.inputMinimum` 和 `inputMaximum` 在没声明时仍调用这套规则；声明了就返回 spec 的值。
+
+物品提示、Jade，以及 JEI 和 EMI 里作为催化剂的机器物品，读的都是 spec 上的最小和最大。配方页画的是配方功耗，不是这台机器的接受范围。结构能量零件的 `portEnergyInputMin` 和 `portEnergyInputMax` 已经读这两个方法，所以跟着变。
+
+蒸馏塔、低温蒸馏塔、内爆压缩机和物质制造机各自覆盖了接受范围，这些覆盖不改。内置机器的 spec 不标成已声明，所以它们的运行时仍走原来的规则或子类覆盖。行为机器和燃料机不在这张入口里。行为机器仍是 `energyPerTick` 的一半到两倍，TU 除外。
+
+同一机器类型的两台机器，声明的范围必须一致。两边都没声明也算一致，不拿推算出来的一半到两倍或大型机规则去比。API 版本仍是 0。
+
+样例大型压机标称 512 EU，声明 256–2048。这和大型机缺省的 512–4096 不同，也和一半到两倍的 256–1024 不同。
+
 ## 2026-10-21 / 大型配方机器的输入输出位置
 
 坐标和 `MachineLayout.Cell` 相同。`right` 是朝向的顺时针方向，`up` 是向上，`back` 是朝向的反方向。接收面是 `BehaviorMachineDeclaration.Face`，换成世界方向时用面罩那套相对方向，能力查询用这个面本身。

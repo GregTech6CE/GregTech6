@@ -70,6 +70,7 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 MachineDeclaration.builder("large_sample_press", "Steel")
                         .machineType("largesamplepress").energy("EU", 512).tier(1)
                         .recipeMap("addon_sample.recipe.large_press").largeRecipe()
+                        .energyRange(256, 2048)
                         .structureKeys(List.of("addon_sample.structure.press.1"))
                         .itemOutputTarget(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT)
                         .fluidOutputTarget(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT)

@@ -51,7 +51,9 @@ public record BasicMachineSpec(
         MachineDeclaration.Target itemOutputTarget,
         MachineDeclaration.Target fluidOutputTarget,
         MachineDeclaration.Target itemInputSource,
-        MachineDeclaration.Target fluidInputSource
+        MachineDeclaration.Target fluidInputSource,
+        /** An addon called {@code energyRange}. Built-in specs stay false and keep their own limits. */
+        boolean energyRangeDeclared
 ) {
     public BasicMachineSpec {
         if (id == null || !id.matches("[a-z0-9/._-]+"))
@@ -103,7 +105,7 @@ public record BasicMachineSpec(
                 LargeMachineProcessingRules.constantEnergy(false, machineName),
                 OriginalLargeRecipeMachineData.structureKeys(machineName),
                 false, false, 0, false, false,
-                null, null, null, null);
+                null, null, null, null, false);
     }
 
     /**
@@ -181,6 +183,7 @@ public record BasicMachineSpec(
         private MachineDeclaration.Target fluidOutputTarget;
         private MachineDeclaration.Target itemInputSource;
         private MachineDeclaration.Target fluidInputSource;
+        private boolean energyRangeDeclared;
 
         private Builder(String id, GTMaterial casing) {
             this.id = id; material = casing; machineType = id;
@@ -191,7 +194,13 @@ public record BasicMachineSpec(
         public Builder energy(GregTechTags.Tag type, long inputPerTick) { energy = type; energyIn = inputPerTick; return this; }
         public Builder energyOutput(long outputPerTick) { energyOut = outputPerTick; return this; }
         /** GT6 {@code NBT_INPUT_MIN} / {@code NBT_INPUT_MAX}: the accepted input range. */
-        public Builder energyRange(long inputMin, long inputMax) { energyInMin = inputMin; energyInMax = inputMax; return this; }
+        public Builder energyRange(long inputMin, long inputMax) {
+            energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = inputMin > 0 || inputMax > 0; return this;
+        }
+        /** Display numbers for a large machine that did not declare a range. Runtime still uses the rules. */
+        public Builder implicitEnergyRange(long inputMin, long inputMax) {
+            energyInMin = inputMin; energyInMax = inputMax; energyRangeDeclared = false; return this;
+        }
         public Builder tier(int value) { tier = value; return this; }
         public Builder parallel(int value) { parallel = value; return this; }
         public Builder strength(float hardness, float resistance) { this.hardness = hardness; this.resistance = resistance; return this; }
@@ -223,7 +232,8 @@ public record BasicMachineSpec(
                     structureKeys != null ? structureKeys : OriginalLargeRecipeMachineData.structureKeys(machineType),
                     cheapOverclocking, cheapOverclockingDeclared, minimumLightAbove,
                     searchOutputTanks, exclusiveOutputs,
-                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource);
+                    itemOutputTarget, fluidOutputTarget, itemInputSource, fluidInputSource,
+                    energyRangeDeclared);
         }
     }
     public String textureFolder() { return machineName; }
