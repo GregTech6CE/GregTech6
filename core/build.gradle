@@ -92,7 +92,10 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
     materialBehaviorContracts: 'MaterialBehaviorContracts',
     thermalBehaviorContracts: 'ThermalBehaviorContracts',
     machineSpecBehaviorContracts: 'MachineSpecBehaviorContracts',
-    machineInputContracts: 'MachineInputContracts'
+    machineInputContracts: 'MachineInputContracts',
+    packetEnergyBufferContracts: 'PacketEnergyBufferContracts',
+    pumpEnergyContracts: 'PumpEnergyContracts',
+    radiationConsumableContracts: 'RadiationConsumableContracts'
 ].each { taskName, entryPoint ->
     def contract = tasks.register(taskName, JavaExec) {
         description = "Runs ${entryPoint} without Minecraft; reuses unchanged successful inputs."
@@ -100,6 +103,12 @@ tasks.named('check').configure { dependsOn addonApiClosureCheck }
         dependsOn tasks.named('testClasses')
         classpath = sourceSets.test.runtimeClasspath
         mainClass = "com.gregtech.gregtech.core.${entryPoint}"
+        if (entryPoint == 'RadiationConsumableContracts') {
+            args rootProject.projectDir.absolutePath
+            inputs.files(rootProject.file('multiversion/src/main/java/com/gregtech/gregtech/item/RadawayItem.java'),
+                    rootProject.file('multiversion/src/main/java/com/gregtech/gregtech/content/food/FoodStatEvents.java'))
+                    .withPropertyName('radiationConsumptionOwnership').withPathSensitivity(PathSensitivity.RELATIVE)
+        }
         javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(17) }
         def marker = layout.buildDirectory.file("reports/contracts/${taskName}.passed")
         outputs.file(marker)
