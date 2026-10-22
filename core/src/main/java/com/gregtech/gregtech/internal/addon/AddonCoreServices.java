@@ -62,6 +62,10 @@ public final class AddonCoreServices {
         @Override public float density() { return material.getDensity(); }
         @Override public String formula() { return material.getResolvedTooltipChemical(); }
         @Override public String translationKey() { return material.getTranslationKey(); }
+        @Override public long mass() { return material.getMass(); }
+        @Override public int toolQuality() { return material.getToolQuality(); }
+        @Override public float toolSpeed() { return material.getToolSpeed(); }
+        @Override public long toolDurability() { return material.getToolDurability(); }
 
         @Override public List<GregTechMaterials.Component> composition() {
             var components = new ArrayList<GregTechMaterials.Component>();

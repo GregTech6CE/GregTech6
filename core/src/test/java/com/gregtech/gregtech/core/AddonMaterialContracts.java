@@ -82,6 +82,7 @@ public final class AddonMaterialContracts {
             case "prefixmiss" -> prefixMissing();
             case "prefixcond" -> prefixCondition();
             case "byproducts" -> byproducts();
+            case "reads" -> reads();
             default -> throw new IllegalArgumentException("Unknown scenario: " + args[0]);
         }
         System.out.println(args[0] + " passed " + assertions);
@@ -568,6 +569,31 @@ public final class AddonMaterialContracts {
         for (var definition : MaterialItemDefinitions.all()) if (definition.prefix() == prefix) items++;
         check(items > 0 && items < 2000, "the condition does not cover every material: " + items);
         check(ITEM_ID_SHA256.equals(coreAutomaticFingerprint()), "condition prefixes do not change built-in item ids");
+    }
+
+    private static void reads() {
+        prepare();
+        com.gregtech.gregtech.internal.addon.AddonCoreServices.bind();
+        GTMaterialRegistry.init();
+        var table = GTMaterialRegistry.get("Iron");
+        var iron = GregTechMaterials.find("Iron");
+        check(iron.mass() == table.getMass() && table.getMass() == 56, "iron mass matches the table");
+        check(iron.toolQuality() == table.getToolQuality() && table.getToolQuality() == 2, "iron tool quality matches the table");
+        check(iron.toolSpeed() == table.getToolSpeed() && table.getToolSpeed() == 6F, "iron tool speed matches the table");
+        check(iron.toolDurability() == table.getToolDurability() && table.getToolDurability() == 256L,
+                "iron tool durability matches the table");
+        var unknown = GregTechMaterials.find("NotRegisteredYet");
+        check(!unknown.valid() && unknown.mass() == GregTechMaterials.invalid().mass(), "an unknown material reads the sentinel");
+        var ingot = GregTechMaterials.StackComposition.of("ingot",
+                List.of(new GregTechMaterials.Component("Iron", MaterialPrefix.ingot.getMaterialWeight())));
+        check(ingot.present() && "ingot".equals(ingot.prefix()) && ingot.units().size() == 1
+                        && "Iron".equals(ingot.units().get(0).material())
+                        && ingot.units().get(0).amount() == GTValues.U,
+                "an iron ingot is one iron unit");
+        var dirt = GregTechMaterials.StackComposition.of(null, List.of());
+        check(!dirt.present() && dirt.prefix().isEmpty() && dirt.units().isEmpty(), "an unknown stack is empty");
+        check(!GregTechMaterials.StackComposition.of("ingot",
+                List.of(new GregTechMaterials.Component("Iron", 0))).present(), "a zero amount is not a unit");
     }
 
     private static void byproducts() throws Exception {
