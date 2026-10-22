@@ -4,6 +4,7 @@ import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.gregtech.gregtech.api.addon.BehaviorEnergyRules;
 import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.CrucibleContent;
 import com.gregtech.gregtech.api.addon.CrucibleMold;
 import com.gregtech.gregtech.api.addon.MachineFace;
 import com.gregtech.gregtech.api.addon.PartEnergyRules;
@@ -206,6 +207,13 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     @Override
     public long getCrucibleContentAmount() {
         return behavior.getCrucibleContentAmount(context);
+    }
+
+    /** Read-only crucible snapshot for a bound part. Nothing is removed and no controller is kept. */
+    public CrucibleContent crucibleContent() {
+        return new CrucibleContent(behavior.getCrucibleMaterial(context),
+                behavior.getCrucibleContentAmount(context),
+                behavior.getCrucibleTemperature(context));
     }
 
     private static CrucibleMold moldTarget(ITileEntityMold mold) {
