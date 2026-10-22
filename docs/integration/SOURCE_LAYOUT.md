@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：`MassStorageBlock.interact`现在共用手持／按钮／背包交互，`isUnpackingTool`保留NeoToolBindings与Forge GTToolHelper边界，原生use入口只转换返回值。Neo `GTMetalChests`注册和查找方法展开，m／w／b改明确局部名，两源368→396行；完整旧业务归一、剩余代码和双版编译范围见[存储输入器与去重](STORAGE_INSERTER_AUDIT.md)。当前单台存入不等于原32751的跨设备扫描，后者登记413待移植。
+
 2026-10-22：GarbageStorageRules、GarbageData和两类垃圾实体四源509→621行，存取／保留／平台能力逐操作展开；70处e／f／t／c／i等改明确名称，包含Stonecutter非活动代码，并防止新名称捕获。原本保存能力、相同标签合并及首屏淘汰政策说明更正，七完整视图保持，见[专题](GARBAGE_POOL_AUDIT.md)／[回执](verification/garbage-pool-audit-20261022.json)。没有改变存储策略或菜单行为，其余职责拆分与全系统继续。
 
 2026-10-22：FluidAttachmentSpec集中acceptsGas／fillsTarget角色查询，平台附件三处复用；FluidToolTarget中继逐操作展开并明确handler，保留重新取目标语义。四源326→376行、26局部标识出现位置、五调用及三个helper与七剩余代码视图受控证明见[专题](FLUID_ATTACHMENTS_AUDIT.md)／[回执](verification/fluid-attachments-audit-20261022.json)。旧公开类型／签名保留，新增只读查询，不改变物性、传输、配方或ID。

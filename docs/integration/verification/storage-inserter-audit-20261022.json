@@ -1,0 +1,593 @@
+{
+  "date": "2026-10-22",
+  "batch": 119,
+  "baseline": "74c5e8326e2dcb1c5ce6a8e75cc3f5946fb0bf09",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "74c5e8326",
+    "evidence": "Four garbage/native registration sources clarified and six physical/resource differences recorded."
+  },
+  "provenance": {
+    "original_tree_read_only": true,
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices preserved; current interaction refactoring does not import new source."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "raw_sha256": "16aa4e857f27b49d9e664651c097397ca5c53114f4a675875cc392fae440a367",
+      "lines": 120,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/inventories/MultiTileEntityMassStorage.java",
+      "raw_sha256": "ecf73ec1fba294c5f137cc814ea2152aa372861f4e60a1f81939ea60c2dc70cd",
+      "lines": 759,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "raw_sha256": "5ff16d9051e2744a66c711bd5f2581785ba8af7b2272fb1023a6d2f4ddb783a8",
+      "lines": 1402,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "raw_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityLockerCharging.java",
+      "raw_sha256": "3982cc23c6805dec4b6c0fb5adc09326cf27adbd905317c943050e681028a7ef",
+      "lines": 85,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "raw_sha256": "ecaad8e2231ce59d63c0f1214373f45c47d601fd415e2c690fa709edce42bc37",
+      "lines": 342
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java",
+      "raw_sha256": "2e0ae4ed8fe5921dd30d7510fce2ed9a8081eeec8a6ae5dcee6f637de00753bc",
+      "lines": 54
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "raw_sha256": "1fe16c33591b21723182ab530016c4a6a3a3fed24fc881a6d9cc09edf47d86f9",
+      "lines": 475
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageFace.java",
+      "raw_sha256": "1dfe4512cb46b0ec8e755e16c12f4839bb145cec28c0fad2429c14ce963367f3",
+      "lines": 40
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTStorage.java",
+      "raw_sha256": "4eefb889c50fd513b84e4751774a47ead8870d379c1f2bb295e7abfe96a4ae94",
+      "lines": 206
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTStorageContainers.java",
+      "raw_sha256": "f189e47930718d20e52520b90e7ed353523badf691faf37a0c58743db8d0033c",
+      "lines": 107
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "raw_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+      "lines": 53
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTStorageMetals.java",
+      "raw_sha256": "5bbc6eba4d0f0448b3816aa48eca79ac56a64dfa027430b24da9f8049bdb5470",
+      "lines": 82
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/OriginalSurvivalRecipes.java",
+      "raw_sha256": "f68a3935d0426b3883c3b61b691074b40852f94f0c336787d684390dbc050f4c",
+      "lines": 234,
+      "notice_sha256": "aabc70503900b7cfd796aa94b05aed953ad0782aead096a238bd26341349ae67"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/machine/OriginalStorageMaterialData.java",
+      "raw_sha256": "b3cfc5cb035f32ae563b21318e26aeb46566e679c6b2a683d68cfe2008027d07",
+      "lines": 101,
+      "notice_sha256": "1ff34edb44eb6075e7711b3d10771aa0298a38632324880b4dbbbb037f4d56f0"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/LockerBlock.java",
+      "raw_sha256": "6980dd4199c7099ff462d1c1b32b5876a3fb361089e97c4352b912c497c2839a",
+      "lines": 140
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/LockerBlockEntity.java",
+      "raw_sha256": "c9d3b57e9753fd3a0ca76d0c54b570795e02eda6430f498a053ec1ee32164f6c",
+      "lines": 96
+    }
+  ],
+  "source_scope": "Listed paths and excerpts support this contract, not whole-file or complete-system acceptance.",
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "start_line": 47,
+      "end_line": 71,
+      "excerpt_sha256": "689714dcacdd7db055091a10d1725922cdae2208a5fe9242c9d5f2f6591efd1e",
+      "text": "\tpublic boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (!UT.Entities.isPlayer(aPlayer)) return T;\n\t\tArrayListNoNulls<MultiTileEntityMassStorage> tList = new ArrayListNoNulls<>();\n\t\tint tX = getOffsetX(aSide), tY = getOffsetY(aSide), tZ = getOffsetZ(aSide);\n\t\tboolean tDirectionsToGo[] = new boolean[] {T,T,T,T}, tOnlyHand = (aPlayer.inventory.getCurrentItem() != null);\n\t\tfor (int i = 0; i <= 6 && checkColumn(aPlayer, tX, --tY, tZ, tList, tOnlyHand); i++) if (i == 6) return T;\n\t\tfor (int i = 0; i < 50 && UT.Code.containsBoolean(T, tDirectionsToGo); i++) {\n\t\t\tif (tOnlyHand && aPlayer.inventory.getCurrentItem() == null) break;\n\t\t\tif (tDirectionsToGo[0] && checkColumn(aPlayer, tX+i, tY, tZ  , tList, tOnlyHand)) tDirectionsToGo[0] = F;\n\t\t\tif (tOnlyHand && aPlayer.inventory.getCurrentItem() == null) break;\n\t\t\tif (tDirectionsToGo[1] && checkColumn(aPlayer, tX-i, tY, tZ  , tList, tOnlyHand)) tDirectionsToGo[1] = F;\n\t\t\tif (tOnlyHand && aPlayer.inventory.getCurrentItem() == null) break;\n\t\t\tif (tDirectionsToGo[2] && checkColumn(aPlayer, tX  , tY, tZ+i, tList, tOnlyHand)) tDirectionsToGo[2] = F;\n\t\t\tif (tOnlyHand && aPlayer.inventory.getCurrentItem() == null) break;\n\t\t\tif (tDirectionsToGo[3] && checkColumn(aPlayer, tX  , tY, tZ-i, tList, tOnlyHand)) tDirectionsToGo[3] = F;\n\t\t}\n\t\tfor (MultiTileEntityMassStorage tTileEntity : tList) {\n\t\t\tif (tOnlyHand && aPlayer.inventory.getCurrentItem() == null) break;\n\t\t\ttryInsert(aPlayer, tTileEntity, tOnlyHand);\n\t\t}\n\t\tST.update(aPlayer);\n\t\treturn T;\n\t}\n\t\n\tpublic boolean checkColumn(EntityPlayer aPlayer, int aX, int aY, int aZ, ArrayListNoNulls<MultiTileEntityMassStorage> aList, boolean aOnlyHand) {"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "start_line": 71,
+      "end_line": 95,
+      "excerpt_sha256": "fcbebdd61e17e1c49fab2202f2c7078a4a028e9739f907fb626b4c606e045336",
+      "text": "\tpublic boolean checkColumn(EntityPlayer aPlayer, int aX, int aY, int aZ, ArrayListNoNulls<MultiTileEntityMassStorage> aList, boolean aOnlyHand) {\n\t\tif (!WD.floor(worldObj, aX, aY, aZ)) return T;\n\t\tboolean temp = T;\n\t\tfor (int i = 1; i < 8; i++) {\n\t\t\tBlock tBlock = WD.block(worldObj, aX, aY+i, aZ);\n\t\t\tif (tBlock.getMaterial() != Material.carpet && WD.hasCollide(worldObj, aX, aY+i, aZ, tBlock)) break;\n\t\t\tfor (byte tSide : ALL_SIDES_HORIZONTAL) {\n\t\t\t\tTileEntity tTileEntity = getTileEntity(aX+OFFX[tSide], aY+i, aZ+OFFZ[tSide]);\n\t\t\t\tif (tTileEntity instanceof MultiTileEntityStorageInserter) {\n\t\t\t\t\ttemp = F;\n\t\t\t\t} else if (tTileEntity instanceof MultiTileEntityMassStorage) {\n\t\t\t\t\tif (((MultiTileEntityMassStorage)tTileEntity).mFacing == OPOS[tSide]) {\n\t\t\t\t\t\ttemp = F;\n\t\t\t\t\t\tif (((MultiTileEntityMassStorage)tTileEntity).slotHas(1)) {\n\t\t\t\t\t\t\ttryInsert(aPlayer, (MultiTileEntityMassStorage)tTileEntity, aOnlyHand);\n\t\t\t\t\t\t\tif (aOnlyHand && aPlayer.inventory.getCurrentItem() == null) return temp;\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\taList.add((MultiTileEntityMassStorage)tTileEntity);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn temp;\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "start_line": 97,
+      "end_line": 104,
+      "excerpt_sha256": "a52c89d047a4c8333e809db0c7cff6c4014d90ff4c673716bcdb8423f21c5d8d",
+      "text": "\tpublic void tryInsert(EntityPlayer aPlayer, MultiTileEntityMassStorage aStorage, boolean aOnlyHand) {\n\t\tif (aPlayer.inventory.getCurrentItem() != null) aPlayer.inventory.mainInventory[aPlayer.inventory.currentItem] = aStorage.insertItems(aPlayer.inventory.mainInventory[aPlayer.inventory.currentItem], T);\n\t\tif (!aOnlyHand) for (int i = 9; i < aPlayer.inventory.mainInventory.length; i++) {\n\t\t\tif (aPlayer.inventory.mainInventory[i] != null && !ST.nonautoinsert(aPlayer.inventory.mainInventory[i]) && (aStorage.slotHas(1) || aPlayer.inventory.mainInventory[i].getMaxStackSize() > 1)) {\n\t\t\t\taPlayer.inventory.mainInventory[i] = aStorage.insertItems(aPlayer.inventory.mainInventory[i], F);\n\t\t\t}\n\t\t}\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "start_line": 112,
+      "end_line": 119,
+      "excerpt_sha256": "48e5b64900ebb88f568a5b055916e42cd631789568b12732d8b430bd1686b29e",
+      "text": "\t@Override public boolean allowCovers(byte aSide) {return F;}\n\t\n\t// Icons\n\tpublic static IIconContainer\n\tsColored = new Textures.BlockIcons.CustomIcon(\"machines/massstorage/inserter/colored/sides\"),\n\tsOverlay = new Textures.BlockIcons.CustomIcon(\"machines/massstorage/inserter/overlay/sides\");\n\t\n\t@Override public String getTileEntityName() {return \"gt.multitileentity.storage.inserter\";}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/inventories/MultiTileEntityMassStorage.java",
+      "start_line": 382,
+      "end_line": 420,
+      "excerpt_sha256": "04bf3fdd5f8b7435571ce51af489f2d48a7e6929692460453d59d60a90038a1d",
+      "text": "\tpublic ItemStack insertItems(ItemStack aStack, boolean aCheckForNEI) {\n\t\tif (ST.invalid(aStack) || (mMode & B[3]) != 0) return aStack;\n\t\t\n\t\tif (!slotHas(1)) {\n\t\t\tmLogisticsCache = null;\n\t\t\tif (aCheckForNEI && aStack.stackSize == NEI_INFINITE) {\n\t\t\t\tslot(1, ST.amount(mMaxStorage, aStack));\n\t\t\t\tmPartialUnits = 0;\n\t\t\t\tupdateClientData();\n\t\t\t\tupdateInventory();\n\t\t\t\treturn aStack;\n\t\t\t}\n\t\t\tslot(1, ST.copy(aStack));\n\t\t\tupdateClientData();\n\t\t\tupdateInventory();\n\t\t\tif ((mMode & B[2]) != 0 && aStack.stackSize > mMaxStorage) emitOverflow();\n\t\t\treturn null;\n\t\t}\n\t\t\n\t\tint tMaxStorage = getMaxContent();\n\t\tItemStack tContent = slot(1);\n\t\t\n\t\tif (tContent.stackSize >= tMaxStorage) return aStack;\n\t\t\n\t\tif (ST.equal(aStack, tContent)) {\n\t\t\tif (aCheckForNEI && aStack.stackSize == NEI_INFINITE) {\n\t\t\t\ttContent.stackSize = mMaxStorage;\n\t\t\t\tmPartialUnits = 0;\n\t\t\t\tupdateInventory();\n\t\t\t\treturn aStack;\n\t\t\t}\n\t\t\tItemStack rStack = null;\n\t\t\tif (aStack.stackSize + tContent.stackSize > tMaxStorage) rStack = ST.amount(aStack.stackSize + tContent.stackSize - tMaxStorage, aStack);\n\t\t\ttContent.stackSize = Math.min(tMaxStorage, tContent.stackSize + aStack.stackSize);\n\t\t\tupdateInventory();\n\t\t\tif ((mMode & B[2]) != 0 && tContent.stackSize > mMaxStorage) emitOverflow();\n\t\t\treturn rStack;\n\t\t}\n\t\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 153,
+      "end_line": 153,
+      "excerpt_sha256": "48c5ef3bce5335446931a475362b6fc7a81cb27e65c26ea13ffc6b2ce4f0d54a",
+      "text": "\t\taMat = ANY.Steel;           aRegistry.add(\"Storage Inserter\"          , \"Storage\", 32751, 32751, MultiTileEntityStorageInserter.class  , aMat.mToolQuality, 16, aMachine , UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 6.0F, NBT_RESISTANCE, 6.0F), \"PhP\", \"SDE\", \"PwP\", 'P', OP.pipeQuadruple.dat(aMat), 'S', OP.gem.dat(ANY.Sapphire), 'E', OP.gem.dat(ANY.Emerald), 'D', OP.gem.dat(ANY.Diamond));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 139,
+      "end_line": 139,
+      "excerpt_sha256": "5f62a7c441ed04cd0eca7ae08ed22bc9833db317ec436379ed7331e41d86409e",
+      "text": "\t\taRegistry.add(\"Charging Locker (\"            +aMat.getLocal()+\")\", \"Storage\"        , 7500+aID, 32751, MultiTileEntityLockerCharging.class       , aMat.mToolQuality, 16, aMachine  , UT.NBT.make(NBT_MATERIAL, aMat    , NBT_HARDNESS, aHardness  , NBT_RESISTANCE, aResistance                                                                                                               ), \"WCW\", \"WMW\", \"WCW\", 'M', aRegistry.getItem(7300+aID), 'W', MT.DATA.CABLES_01[3], 'C', OD_CIRCUITS[3]);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/ST.java",
+      "start_line": 821,
+      "end_line": 825,
+      "excerpt_sha256": "cc3394b0f1a44ed0d151572f06215b8e2f0b2a6bfb25d8f361e4b602b678162b",
+      "text": "\tpublic static boolean nonautoinsert(ItemStack aStack) {\n\t\tif (ItemsGT.NON_AUTO_INSERT_ITEMS.contains(aStack, T) || torch(aStack)) return T;\n\t\tOreDictItemData tData = OM.anydata(aStack);\n\t\treturn tData != null && tData.nonemptyData() && tData.mPrefix.contains(TD.Prefix.AMMO_ALIKE);\n\t}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "start_line": 636,
+      "end_line": 638,
+      "excerpt_sha256": "a6c55c8822b2bdac33a7d34f561c8768a14a16258dcfe92058c7e14bf83cfa0a",
+      "text": "\tpublic static boolean floor(World aWorld, int aX, int aY, int aZ) {return floor(aWorld, aX, aY, aZ, aWorld.getBlock(aX, aY, aZ));}\n\tpublic static boolean floor(World aWorld, int aX, int aY, int aZ, Block aBlock) {return aBlock.isSideSolid(aWorld, aX, aY, aZ, FORGE_DIR[SIDE_UP]) || floor(aBlock);}\n\tpublic static boolean floor(Block aBlock) {return aBlock.isOpaqueCube() || aBlock instanceof BlockSlab || aBlock instanceof BlockStairs || aBlock instanceof BlockMetaType;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/inventories/MultiTileEntityLockerCharging.java",
+      "start_line": 44,
+      "end_line": 49,
+      "excerpt_sha256": "0700bdd0613ee3386a7d2008e84456d3aefdeda940652ac8b361f120a0fe0b71",
+      "text": "\tpublic long doInject(TagData aEnergyType, byte aSide, long aSize, long aAmount, boolean aDoInject) {\n\t\tlong rReturn = 0;\n\t\tfor (int i = 0; i < 4; i++) if (slotHas(i)) rReturn += IItemEnergy.Utility.inject(aEnergyType, slot(i), aSize, aAmount-rReturn, this, getWorld(), getX(), getY(), getZ(), aDoInject);\n\t\treturn rReturn;\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "start_line": 238,
+      "end_line": 303,
+      "excerpt_sha256": "23474ec1e3f8edaeafeb0f52881880352fe1245cec20ddd7e0579139e58cc39c",
+      "text": "    private boolean interact(BlockState state, Level level, BlockPos pos, Player player,\n            InteractionHand hand, BlockHitResult hit) {\n        // both hands fire use(); handling the off hand double-triggers\n        // (insert+extract in one click, double withdrawals, armor swap-backs)\n        if (hand == InteractionHand.OFF_HAND || !(level.getBlockEntity(pos) instanceof MassStorageBlockEntity store))\n            return false;\n        ItemStack held = player.getItemInHand(hand);\n        if (store.isPacked() && isUnpackingTool(held)) {\n            if (!level.isClientSide && store.unseal())\n                com.gregtech.gregtech.api.tool.GTToolHelper.damageForToolClickReturn(held, 1000, player);\n            return true;\n        }\n        if (useStorageModeTool(store, player, held)) return true;\n        if (store.isPacked()) return false;\n        if (hit.getDirection() != state.getValue(FACING)) return false;\n        double x = com.gregtech.gregtech.api.inventory.MassStorageFace.x(state.getValue(FACING),\n                hit.getLocation().x - pos.getX(), hit.getLocation().z - pos.getZ());\n        double y = 16 * (1 - (hit.getLocation().y - pos.getY()));\n        if (!com.gregtech.gregtech.api.inventory.MassStorageFace.active(x, y)) return false;\n        int requested = com.gregtech.gregtech.api.inventory.MassStorageFace.withdrawal(x, y);\n        // The six buttons take priority even if the player is holding an item.\n        if (requested > 0 && store.stored() > 0) {\n            if (!level.isClientSide) {\n                Direction front = state.getValue(FACING);\n                int left = requested;\n                while (left > 0) {\n                    ItemStack out = store.extractAmount(left);\n                    if (out.isEmpty()) break;\n                    left -= out.getCount();\n                    com.gregtech.gregtech.util.GTItemDrops.dropItemStack(level, pos.getX() + .5 + front.getStepX(),\n                            pos.getY() + .5, pos.getZ() + .5 + front.getStepZ(), out);\n                }\n            }\n            return true;\n        }\n        if (!held.isEmpty()) {\n            if (!level.isClientSide) {\n                int count = store.insert(held);\n                if (count > 0 && !player.getAbilities().instabuild) held.shrink(count);\n            }\n            return true;\n        }\n        if (player.isShiftKeyDown()) {\n            if (!level.isClientSide) {\n                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(\"message.gt6ce.mass_storage.status\",\n                        store.stored(), store.template().isEmpty()\n                                ? net.minecraft.network.chat.Component.translatable(\"gui.gt6ce.empty\")\n                                : store.template().getHoverName()), true);\n            }\n            return true;\n        }\n        if (!level.isClientSide && !store.template().isEmpty()\n                && com.gregtech.gregtech.api.inventory.MassStorageFace.depositInventory(x, y)) {\n            for (ItemStack stack : player.getInventory().items) {\n                int inserted = store.insert(stack);\n                if (inserted > 0 && !player.getAbilities().instabuild) stack.shrink(inserted);\n            }\n            player.getInventory().setChanged();\n        }\n        return true;\n    }\n\n    private static boolean isUnpackingTool(ItemStack held) {\n//? if >=1.21.1 {\n        /*return (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,\"scissors\") || com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,\"knife\"));\n*///?} else {"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "start_line": 300,
+      "end_line": 310,
+      "excerpt_sha256": "9c744cdfcf931d8813829f346b4d36585e424931bacc7cc054436654b6752bf4",
+      "text": "    private static boolean isUnpackingTool(ItemStack held) {\n//? if >=1.21.1 {\n        /*return (com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,\"scissors\") || com.gregtech.gregtech.platform.neoforge.NeoToolBindings.matches(held,\"knife\"));\n*///?} else {\n        return (com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,\n                com.gregtech.gregtech.api.tool.GTToolType.SCISSORS)\n                || com.gregtech.gregtech.api.tool.GTToolHelper.matchesTool(held,\n                com.gregtech.gregtech.api.tool.GTToolType.KNIFE));\n//?}\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java",
+      "start_line": 226,
+      "end_line": 230,
+      "excerpt_sha256": "0b76d7e76c90fe41c86fa85ec161ae0da62794fcbc7dec94f7f11408a9b0ae5f",
+      "text": "    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,\n                                 InteractionHand hand, BlockHitResult hit) {\n        return interact(state, level, pos, player, hand, hit)\n                ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/MassStorageBlockEntity.java",
+      "start_line": 180,
+      "end_line": 215,
+      "excerpt_sha256": "bee7715bbd7edeaaa1eccc81b332fc22f7107f7856999b07ccba3df1543a35d6",
+      "text": "    public int insert(ItemStack stack) {\n        return (int) insert(stack, false);\n    }\n\n    private long insert(ItemStack stack, boolean simulate) {\n        if (stack.isEmpty() || isPacked()) return 0;\n        ItemStack key = template();\n        if (key.isEmpty()) {\n            long accepted = storage.insert(stack, stack.getCount(), simulate);\n            if (!simulate && accepted > 0) markUpdated();\n            return accepted;\n        }\n//? if >=1.21.1 {\n        /*boolean exact = ItemStack.isSameItemSameComponents(key, stack);\n*///?} else {\n        boolean exact = ItemStack.isSameItemSameTags(key, stack);\n//?}\n        long templateUnits = MassStorageMaterialForms.templateUnits(key);\n        if (exact && templateUnits == 0) {\n            long accepted = storage.insert(stack, stack.getCount(), simulate);\n            if (!simulate && accepted > 0) markUpdated();\n            return accepted;\n        }\n        long offeredUnits = exact ? templateUnits : MassStorageMaterialForms.compatibleUnits(key, stack);\n        if (offeredUnits <= 0 || templateUnits <= 0) return 0;\n        long availableUnits = Math.max(0, maximumItems() - stored()) * templateUnits - partialUnits;\n        if (availableUnits < offeredUnits) return 0;\n        long accepted = Math.min(stack.getCount(), availableUnits / offeredUnits);\n        if (!simulate && accepted > 0) {\n            long totalUnits = partialUnits + accepted * offeredUnits;\n            long completeItems = totalUnits / templateUnits;\n            if (completeItems > 0) storage.insert(key, completeItems, false);\n            partialUnits = totalUnits % templateUnits;\n            markUpdated();\n        }\n        return accepted;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/inventory/MassStorageFace.java",
+      "start_line": 37,
+      "end_line": 39,
+      "excerpt_sha256": "b49417fbc47785637901a8fe2d2cda80cbd6883e63995059457354a3176f680e",
+      "text": "    public static boolean depositInventory(double x, double y) {\n        return active(x, y) && x >= 4 && x <= 12 && y >= 6;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "start_line": 31,
+      "end_line": 31,
+      "excerpt_sha256": "10f359e294c0bdd833a04c768bb2a93abc5764564828b7d714fd688d207c5b77",
+      "text": "        GTStorage.registerAll();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 71,
+      "end_line": 71,
+      "excerpt_sha256": "4ceff4f6a39b2b3b0a70aa85a8a99f82f9b7eba07b53e875fa946b882e3f73df",
+      "text": "        com.gregtech.gregtech.registry.GTStorageContainers.initialize();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 86,
+      "end_line": 86,
+      "excerpt_sha256": "edd0892590b850547e090b74aa85ef6d5272e1bc33aae60d5762c0d6c0cc1466",
+      "text": "        com.gregtech.gregtech.registry.GTMetalChests.initialize();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/inventory/LockerBlockEntity.java",
+      "start_line": 30,
+      "end_line": 50,
+      "excerpt_sha256": "8a61030bb347b93b4fbe0787cf117c8290556a0be09258c1399f7bbd0f59117b",
+      "text": "    public void swapArmor(Player player) {\n        for (int i = 0; i < SLOTS.length; i++) {\n            ItemStack worn = player.getItemBySlot(SLOTS[i]);\n            player.setItemSlot(SLOTS[i], armor[i]);\n            armor[i] = worn;\n        }\n        if (level != null) {\n//? if >=1.21.1 {\n            /*level.playSound(null, worldPosition, SoundEvents.ARMOR_EQUIP_IRON.value(),\n*///?} else {\n            level.playSound(null, worldPosition, SoundEvents.ARMOR_EQUIP_IRON,\n//?}\n                    SoundSource.BLOCKS, 1.0F, 1.0F);\n        }\n        setChanged();\n    }\n\n    public void dropContents() {\n        if (level == null) return;\n        for (int i = 0; i < armor.length; i++) {\n            if (!armor[i].isEmpty()) {"
+    }
+  ],
+  "native_inventory_field": {
+    "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+    "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+    "entry": "net/minecraft/world/entity/player/Inventory.java",
+    "entry_sha256": "86a79a24644f3d40f90443f524cb8b06b8a166490e4400989dc79791a545bc8e",
+    "extracted_path": "work/storage-inserter-audit-20261022/neo-Inventory.java",
+    "field_line": 32,
+    "field": "    public final NonNullList<ItemStack> items = NonNullList.withSize(36, ItemStack.EMPTY);"
+  },
+  "refactoring": {
+    "baseline": "74c5e8326e2dcb1c5ce6a8e75cc3f5946fb0bf09",
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/block/inventory/MassStorageBlock.java": {
+        "before_raw_sha256": "8e4d0cc3b205520ff2aa7760d4c44dd19d251eaa74be2cf7c4662445bac396e8",
+        "after_raw_sha256": "ecaad8e2231ce59d63c0f1214373f45c47d601fd415e2c690fa709edce42bc37",
+        "before_lines": 358,
+        "after_lines": 342,
+        "views": [
+          {
+            "platform": "forge",
+            "remaining_tokens": 1295,
+            "remaining_sha256": "4c8f6d8af63b1de5aad7ab20eda6ef3f471ad80fd1a7766c5b68423fb918b6a5",
+            "shared_body_tokens": 572,
+            "shared_body_sha256": "04425915df353e769a769a8f7b376c803a0f9ed3d5ce111a4ab18657cfd0f5ed",
+            "tool_predicate_tokens": 65,
+            "old_interaction_tokens": 734
+          },
+          {
+            "platform": "neoforge",
+            "remaining_tokens": 1483,
+            "remaining_sha256": "6917eadd4ae05ae0a880556e6f7198bd47378cf3f4c7fc52c739d649bcc27df8",
+            "shared_body_tokens": 572,
+            "shared_body_sha256": "04425915df353e769a769a8f7b376c803a0f9ed3d5ce111a4ab18657cfd0f5ed",
+            "tool_predicate_tokens": 41,
+            "old_interaction_tokens": 621
+          }
+        ],
+        "controlled_transformations": [
+          "Forge result returns normalized to boolean; wrapper maps boolean back to the same sidedSuccess/PASS.",
+          "Two early guards combined with short-circuit OR in original evaluation order.",
+          "Forge taken -> count at three occurrences; name absent from old Forge interaction.",
+          "MassStorageFace and Component references qualified for the shared method.",
+          "Native unpacking predicates moved unchanged behind isUnpackingTool; no cross-loader substitution.",
+          "Neo var for Inventory.items uses explicit ItemStack, with native field type checked; its one-expression status conditional gains braces.",
+          "Old Forge interaction comments retained in shared method; unrelated code and comments unchanged."
+        ]
+      },
+      "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTMetalChests.java": {
+        "before_raw_sha256": "d34e3f5c9aa7c289582a9fd20bd3792947962f7c4dd4f1e03acf22ee4fe457b4",
+        "after_raw_sha256": "2e0ae4ed8fe5921dd30d7510fce2ed9a8081eeec8a6ae5dcee6f637de00753bc",
+        "before_lines": 10,
+        "after_lines": 54,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 544,
+            "execution_sha256": "372d51649c3f5016df83cf09504f95597fc9f8e6e221a583aae995c19ff9cae7",
+            "literal_positions_sha256": "5b423135eaa0e7e8f9e66ff869f9bd5dfbc396d5af52b95fe14bff1d830896eb",
+            "literal_count": 8
+          }
+        ],
+        "renames": {
+          "m": "registeredChest",
+          "w": "registeredWoodChest",
+          "b": "chestEntry",
+          "occurrences": {
+            "m": 3,
+            "w": 3,
+            "b": 3
+          }
+        }
+      }
+    },
+    "scope": "Compare complete remaining platform code after removing precisely listed old/new methods; independently compare full normalized interaction bodies, exact native adapters and unchanged fields/literals. This is an explicit refactoring proof, not raw whole-file identity."
+  },
+  "formal_findings_added": [
+    413
+  ],
+  "formal_findings_extended": [],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "scope_refresh": {
+    "original_java_files": 1229,
+    "current_maintained_java_files": 1826,
+    "opaque_path_hits": [],
+    "audit_receipts_screened_before_this_batch": 112,
+    "exact_hash_referenced_original_files": 341,
+    "registered_class_candidates_not_hit_by_this_screen": 91,
+    "limits": [
+      "Candidates use class literals from the original registration loader, not a complete inheritance or conditional-registration graph.",
+      "Historical hash differences are not classified as source regressions.",
+      "Exact references are not proof of review/completion; absence is not proof of missing functionality.",
+      "The 91-candidate snapshot is from before adding this receipt; charging lockers already tracked as ALIGN-143."
+    ],
+    "inventory_snapshot_sha256": "cc24c58995847e7306fe3b6738914119ffdfe4ab464250a0c2eb06bd921e79e8",
+    "reference_snapshot_sha256": "417e753e310ace975797779e7de591c99119cd82d15d3f650acf5ed8f9e43029",
+    "tools": [
+      {
+        "path": "C:/Dev/GregTech6/tools/integration/inventory_alignment_scope.py",
+        "raw_sha256": "ed2d1d3f1158ddb1b17070f4e1d566d0d8ac5dd8b6954835b1bea08da1051c95",
+        "lines": 60
+      },
+      {
+        "path": "C:/Dev/GregTech6/tools/integration/inventory_audit_references.py",
+        "raw_sha256": "a4a028d43eb1eeadadf2a527c08f35e2725a86f8b07ea1688fedf86662e86e51",
+        "lines": 109
+      }
+    ],
+    "candidate_paths": [
+      "gregapi/block/multitileentity/example/MultiTileEntityChest.java",
+      "gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "gregapi/tileentity/inventories/MultiTileEntityBookShelf.java",
+      "gregtech/tileentity/batteries/eu/MultiTileEntityAneutronicFusion.java",
+      "gregtech/tileentity/batteries/eu/MultiTileEntityBatteryAdvEU2048.java",
+      "gregtech/tileentity/batteries/eu/MultiTileEntityBatteryEU2048.java",
+      "gregtech/tileentity/batteries/lu/MultiTileEntityBatteryLU2048.java",
+      "gregtech/tileentity/batteries/lu/MultiTileEntityBatteryLU8192.java",
+      "gregtech/tileentity/energy/converters/MultiTileEntityEngineRotation.java",
+      "gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "gregtech/tileentity/energy/storage/MultiTileEntityCrystalChargerLarge.java",
+      "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerEU.java",
+      "gregtech/tileentity/energy/storage/MultiTileEntityZPMDechargerQU.java",
+      "gregtech/tileentity/energy/transformers/MultiTileEntityGearBox.java",
+      "gregtech/tileentity/energy/transformers/MultiTileEntityTransformerRotation.java",
+      "gregtech/tileentity/inventories/MultiTileEntityBottleCrate.java",
+      "gregtech/tileentity/inventories/MultiTileEntityDrawerQuad.java",
+      "gregtech/tileentity/inventories/MultiTileEntityHopper.java",
+      "gregtech/tileentity/inventories/MultiTileEntityLocker.java",
+      "gregtech/tileentity/inventories/MultiTileEntityLockerCharging.java",
+      "gregtech/tileentity/inventories/MultiTileEntityMassStorageBarrel.java",
+      "gregtech/tileentity/inventories/MultiTileEntityMassStorageBox.java",
+      "gregtech/tileentity/inventories/MultiTileEntityMassStorageStandard.java",
+      "gregtech/tileentity/inventories/MultiTileEntityQueueHopper.java",
+      "gregtech/tileentity/inventories/MultiTileEntitySafeKeyLocked.java",
+      "gregtech/tileentity/inventories/MultiTileEntitySafeMechanical.java",
+      "gregtech/tileentity/inventories/MultiTileEntityStorageInserter.java",
+      "gregtech/tileentity/misc/MultiTileEntityBumbleHive.java",
+      "gregtech/tileentity/misc/MultiTileEntityCFoam.java",
+      "gregtech/tileentity/misc/MultiTileEntityCertificate.java",
+      "gregtech/tileentity/misc/MultiTileEntityLootCrate.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityAutoclave.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityBath.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCentrifuge.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCoagulator.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCokeOven.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCrucible.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCrusher.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityCryoDistillationTower.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityDistillationTower.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityElectrolyzer.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityFermenter.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityFusionReactor.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityImplosionCompressor.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityLargeBoiler.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityMatterFabricator.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityMixer.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityOven.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntityShredder.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntitySluice.java",
+      "gregtech/tileentity/multiblocks/MultiTileEntitySqueezer.java",
+      "gregtech/tileentity/panels/MultiTileEntityPanelAsphalt.java",
+      "gregtech/tileentity/panels/MultiTileEntityPanelCFoam.java",
+      "gregtech/tileentity/panels/MultiTileEntityPanelConcrete.java",
+      "gregtech/tileentity/panels/MultiTileEntityPanelWood.java",
+      "gregtech/tileentity/plants/MultiTileEntityBush.java",
+      "gregtech/tileentity/sensors/MultiTileEntityBucketometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityChronometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityElectrometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityFluidometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityGeigerCounter.java",
+      "gregtech/tileentity/sensors/MultiTileEntityGibblometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityItemometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityKiloBucketometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityKiloGibblometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityLaserometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityLuminometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityPlayerCounter.java",
+      "gregtech/tileentity/sensors/MultiTileEntityProgressmeter.java",
+      "gregtech/tileentity/sensors/MultiTileEntityStackometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityTPSmeter.java",
+      "gregtech/tileentity/sensors/MultiTileEntityTachometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityThermometer.java",
+      "gregtech/tileentity/sensors/MultiTileEntityWeightometerHeavy.java",
+      "gregtech/tileentity/sensors/MultiTileEntityWeightometerLight.java",
+      "gregtech/tileentity/sensors/MultiTileEntityWeightometerMedium.java",
+      "gregtech/tileentity/sensors/MultiTileEntityWeightometerSuperHeavy.java",
+      "gregtech/tileentity/tanks/MultiTileEntityBarometerGasCylinder.java",
+      "gregtech/tileentity/tanks/MultiTileEntityBarrelMetal.java",
+      "gregtech/tileentity/tanks/MultiTileEntityBarrelPlastic.java",
+      "gregtech/tileentity/tanks/MultiTileEntityBarrelWood.java",
+      "gregtech/tileentity/tanks/MultiTileEntityCell.java",
+      "gregtech/tileentity/tanks/MultiTileEntityCup.java",
+      "gregtech/tileentity/tanks/MultiTileEntityJug.java",
+      "gregtech/tileentity/tanks/MultiTileEntityMeasuringPot.java",
+      "gregtech/tileentity/tanks/MultiTileEntityThermos.java",
+      "gregtech/tileentity/tools/MultiTileEntityAnvil.java",
+      "gregtech/tileentity/tools/MultiTileEntityBumbliary.java",
+      "gregtech/tileentity/tools/MultiTileEntityBumbliaryAdvanced.java",
+      "gregtech/tileentity/tools/MultiTileEntityDustFunnel.java",
+      "gregtech/tileentity/tools/MultiTileEntityDynamite.java"
+    ]
+  },
+  "bounded_absence_screen": {
+    "query": "StorageInserter|storage[_ .]?inserter|\\b32751\\b",
+    "input": "1826 maintained Java paths from explicit source roots",
+    "matches": [],
+    "manual_consumers": [
+      "GTStorage.registerAll",
+      "GTStorageContainers.initialize",
+      "GTMetalChests.initialize",
+      "MassStorageBlock common interaction and MassStorageBlockEntity insert"
+    ],
+    "limits": "Name/ID screen alone is not completeness proof; actual storage registry and one-target interaction consumers were read too. Localization alone does not register a block."
+  },
+  "compile": {
+    "result": "success",
+    "duration": "1m",
+    "tasks": [
+      ":multiversion:1.20.1-forge:compileJava",
+      ":multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "log_sha256": "82ba5727190af4f1a8d292eefc96c638725425846d53c1c84b9aee323b07085c",
+    "attempt_logs": [
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-artifact-fallback-miss.log",
+        "sha256": "a111900d6dae59cae885828282b987292bc8562cc079d0d1aa08050934a2ddd4"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-forge-pass-neo-cache-miss.log",
+        "sha256": "fd2e94864f8ff7a37d7a46da56844ab520cfb6216714a9d04dcb129932b2233e"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-init-closure-error.log",
+        "sha256": "203abe818f8aab965d9a8c50f1ecfe7bfa93c0dfc1c0dba3a55c1a2905ed07b6"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-init-repository-miss.log",
+        "sha256": "c17e7c7030a58fefbabd8fa3c5961052aaa3ffb92138090e59e0f69cf1879a86"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-offline-cache-miss.log",
+        "sha256": "e393fe53f54cd4218c2cd4501836ba6d17835a6630161e5d8be19e899e36e538"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-restored-jars-metadata-miss.log",
+        "sha256": "e45e7cd35ea9ccbb0570f6268e5f9834f72596e0f276e50603cd23e8967efef7"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-sandbox.log",
+        "sha256": "cbccc7e3684cd72bdba2e8d984c31bcc50d72189a052ba528af74d6c1ff43124"
+      },
+      {
+        "path": "work/storage-inserter-audit-20261022/compile-wrapper.log",
+        "sha256": "39eb488b1701464c95b3626327b1e39686f583590de3c4a6e85eebb0188609ea"
+      }
+    ],
+    "mode": "Offline Gradle 8.8 from existing workspace distribution; temporary exact-version cached API file dependencies.",
+    "initial_wrapper": "Sandbox wrapper lock access failed; outside sandbox wrapper distribution download timed out.",
+    "default_offline_resolution": "Failed on local mapped-dependency metadata and missing Neo EMI module metadata, before relevant compiler steps.",
+    "temporary_adapter_path": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "persistent_project_configuration_changed": false,
+    "default_offline_build_claimed_passed": false,
+    "first_forge_compile_log_sha256": "fd2e94864f8ff7a37d7a46da56844ab520cfb6216714a9d04dcb129932b2233e"
+  },
+  "limits": {
+    "game": "not_run",
+    "source_contract_game_probe": "not_run",
+    "packaging": "not_run",
+    "push": "not_run",
+    "github_write": "not_run",
+    "old_save": "not_run",
+    "gameplay_fix": "No inserter implementation or behavior correction; current interaction semantics retained.",
+    "goal": "active; complete original behavior audit and architecture/readability work are still incomplete."
+  },
+  "root_revalidation": {
+    "current_sources_and_original_hashes": "match",
+    "excerpts": "match exact current spans",
+    "native_field_and_artifact": "match",
+    "refactor_proof": "matches all current full-body/remainder comparisons",
+    "compile_log_and_exact_api_inputs": "match",
+    "production_build_configuration": "unchanged",
+    "protected_materials": "unchanged",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 413
+    },
+    "new_links": "resolve",
+    "default_offline_build": "not claimed passed",
+    "whole_goal_complete": false
+  }
+}
