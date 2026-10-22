@@ -1,0 +1,621 @@
+{
+  "schema": 1,
+  "original_root": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java",
+  "scope": "gregtech/items/behaviors/Behavior_*.java and external references in the supplied Java tree.",
+  "meaning": "Locator only. Neither class names nor references prove runtime registration or port parity.",
+  "line_basis": "Java Unicode-expanded code view; comments/imports/literals excluded from code matches.",
+  "source_input_count": 1229,
+  "source_input_identity_sha256": "a1766ccf98c30b0483a729919f565e26a4a91e40a4d2719e4c157b365c20376a",
+  "behavior_count": 30,
+  "classes": [
+    {
+      "class": "Behavior_Arrow",
+      "path": "gregtech/items/behaviors/Behavior_Arrow.java",
+      "sha256": "fa8f497335a2175b801e4c5390e6b71063477fa3d2a086bc544a2c904a97b2ae",
+      "code_references": [
+        {
+          "path": "gregtech/items/behaviors/Behavior_Arrow_Potion.java",
+          "sha256": "2fe0a23b36ad185acc0e35350be85708b43122366e9018c3290c27c716b08cc4",
+          "line": 36,
+          "kind": "inheritance"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Arrow_Potion",
+      "path": "gregtech/items/behaviors/Behavior_Arrow_Potion.java",
+      "sha256": "2fe0a23b36ad185acc0e35350be85708b43122366e9018c3290c27c716b08cc4",
+      "code_references": [],
+      "literal_hints": [],
+      "classification": "no_external_reference_found"
+    },
+    {
+      "class": "Behavior_Builderwand",
+      "path": "gregtech/items/behaviors/Behavior_Builderwand.java",
+      "sha256": "fcc75ee16df4dddb1a6d576ccc7ca0db14d84fa17ab15de24f8ee83da40adf3d",
+      "code_references": [
+        {
+          "path": "gregtech/items/tools/machine/GT_Tool_Builderwand.java",
+          "sha256": "cc87d1cadaf030a0137459c02d73fb13dcdde6af8b6a0c6857f8775f50f5cff7",
+          "line": 62,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Chunk_Remover",
+      "path": "gregtech/items/behaviors/Behavior_Chunk_Remover.java",
+      "sha256": "0fed52565f0f7479255f24a435e7b056695590fef6f3ea33575e8e56d1630f30",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 519,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Cropnalyzer",
+      "path": "gregtech/items/behaviors/Behavior_Cropnalyzer.java",
+      "sha256": "850ae16295d6741da10d61b462d7b04bcb748db05d8693b1fb4a957886428884",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 516,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 517,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 518,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_DataOrb",
+      "path": "gregtech/items/behaviors/Behavior_DataOrb.java",
+      "sha256": "ec9bd27d7edfd9b5cbb74f285d174277b1e7b8741bb14caad1cfa4cfa205802e",
+      "code_references": [],
+      "literal_hints": [],
+      "classification": "no_external_reference_found"
+    },
+    {
+      "class": "Behavior_DataStorage",
+      "path": "gregtech/items/behaviors/Behavior_DataStorage.java",
+      "sha256": "077c822b00da36bb1192505b2089c431a4fd9cbf1c83474346c74882b615c12d",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 791,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 792,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 793,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 794,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_DataStorage16",
+      "path": "gregtech/items/behaviors/Behavior_DataStorage16.java",
+      "sha256": "affa989d175c14e7639b62d827dded56cb12c146b7b61fff7f2157ea0da0e67e",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 814,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 815,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 816,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemTechnological.java",
+          "sha256": "7367922c4938318dd50b1320e7fc7a7453c33cffa46f75a437325314d2536ddc",
+          "line": 817,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Duct_Tape",
+      "path": "gregtech/items/behaviors/Behavior_Duct_Tape.java",
+      "sha256": "cca99b4fc11f1ce47245286bf94717e8535c8e6f0ecb9ffd8428207ed25e7262",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 559,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 568,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 577,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_FlintAndTinder",
+      "path": "gregtech/items/behaviors/Behavior_FlintAndTinder.java",
+      "sha256": "688c248191642c5260ea9f659a50ea3dd13c9c9662b02638a092b84c317af224",
+      "code_references": [
+        {
+          "path": "gregtech/items/tools/machine/GT_Tool_FlintAndTinder.java",
+          "sha256": "14e271b833ffcc160d0a0db9d5fde9a33b2ddc29de4847de1fcec62a24250d70",
+          "line": 68,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Gun",
+      "path": "gregtech/items/behaviors/Behavior_Gun.java",
+      "sha256": "28f5ec281b8f6cc1c34324228d9d54dba84504b51e060cf3e55c6d895fd4d2ab",
+      "code_references": [
+        {
+          "path": "gregapi/GT_API_Proxy.java",
+          "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+          "line": 1219,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregapi/GT_API_Proxy.java",
+          "sha256": "e773eae6cd22825b3cd231cfb916040b52166af7653ccc8c9f994f5e53101819",
+          "line": 1220,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/tools/guns/GT_Tool_Carbine.java",
+          "sha256": "3fd57daeaa8775ef82cdabf4dab174b4f36db00f282015827f79d7a5b43c82c7",
+          "line": 33,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/tools/guns/GT_Tool_Pistol.java",
+          "sha256": "9acc5f26d32594b379d5368f9e48e87c3dc0846b54420d3715fda13783b01ee3",
+          "line": 49,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/tools/guns/GT_Tool_Rifle.java",
+          "sha256": "6f4b1778ad2904275ffb854eb1df714505e546641acf883227b87db60dd2a9f0",
+          "line": 33,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Key",
+      "path": "gregtech/items/behaviors/Behavior_Key.java",
+      "sha256": "2fead9665a564eb0eebf9732d3087762beff63fadefe9a087079a7c9e002edf4",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 589,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 590,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 591,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 592,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 593,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 594,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 595,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 596,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 597,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 598,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Lighter",
+      "path": "gregtech/items/behaviors/Behavior_Lighter.java",
+      "sha256": "f7d5168f203e52f7c4886abe542a91c08ebbd1115043c4857e7e7c1f2d077a72",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 343,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 358,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 368,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 377,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 387,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 394,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 397,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Place_Dynamite",
+      "path": "gregtech/items/behaviors/Behavior_Place_Dynamite.java",
+      "sha256": "ef246bd643c458bd2c53e2d2b3d0bc710d2e1a6d6147d26950a89ac8b0378c2b",
+      "code_references": [
+        {
+          "path": "gregtech/items/tools/electric/GT_Tool_Drill_LV.java",
+          "sha256": "1d3dfebbb0c628496432021020ef61150e3ef36279c649731bcbddbb36521716",
+          "line": 125,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Plunger_Essentia",
+      "path": "gregtech/items/behaviors/Behavior_Plunger_Essentia.java",
+      "sha256": "c0e86553ad89869a37de8bbe02e7ac3c80a33022d87277d979f48d5a8b945296",
+      "code_references": [],
+      "literal_hints": [
+        {
+          "path": "gregtech/items/tools/machine/GT_Tool_Plunger.java",
+          "sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+          "line": 89,
+          "literal": "\"gregtech.common.items.behaviors.Behaviour_Plunger_Essentia\"",
+          "meaning": "String hint only; spelling, package and target existence need review."
+        }
+      ],
+      "classification": "literal_hint_only"
+    },
+    {
+      "class": "Behavior_Plunger_Fluid",
+      "path": "gregtech/items/behaviors/Behavior_Plunger_Fluid.java",
+      "sha256": "023ca531f154987cbedaa94a0e7ecede5a46e9d23bf15d5be0c8b0568c3995c8",
+      "code_references": [
+        {
+          "path": "gregtech/items/tools/machine/GT_Tool_Plunger.java",
+          "sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+          "line": 87,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Plunger_Item",
+      "path": "gregtech/items/behaviors/Behavior_Plunger_Item.java",
+      "sha256": "2731f13d5ed9815a972bf36afdb86516d121aa0495c691dfbf00eb8f77f16bd3",
+      "code_references": [
+        {
+          "path": "gregtech/items/tools/machine/GT_Tool_Plunger.java",
+          "sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+          "line": 86,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Remote",
+      "path": "gregtech/items/behaviors/Behavior_Remote.java",
+      "sha256": "f7b3d56ecde1116d1de5ab2971df138b61891660720f625c1850ec74d8f7842b",
+      "code_references": [
+        {
+          "path": "gregtech/items/behaviors/Behavior_Place_Dynamite.java",
+          "sha256": "ef246bd643c458bd2c53e2d2b3d0bc710d2e1a6d6147d26950a89ac8b0378c2b",
+          "line": 77,
+          "kind": "type_or_static_reference"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 515,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Scanner",
+      "path": "gregtech/items/behaviors/Behavior_Scanner.java",
+      "sha256": "e56f3c51a3ee4c3fd85d5a5dc4800cebb2bf800b01eab0513da1c338481830bc",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 516,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 517,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Scoop",
+      "path": "gregtech/items/behaviors/Behavior_Scoop.java",
+      "sha256": "5b2b4092f5ba0d3178a2bd0251a9019c6980d5a6a6d66168c2d3f0913d804660",
+      "code_references": [],
+      "literal_hints": [
+        {
+          "path": "gregtech/items/tools/early/GT_Tool_Scoop.java",
+          "sha256": "f9c2ead5c4414a5dce99cdc9ba658270be153c750617c3458cbceff7b2d9960c",
+          "line": 103,
+          "literal": "\"gregtech.items.behaviors.Behavior_Scoop\"",
+          "meaning": "String hint only; spelling, package and target existence need review."
+        }
+      ],
+      "classification": "literal_hint_only"
+    },
+    {
+      "class": "Behavior_SensorKit",
+      "path": "gregtech/items/behaviors/Behavior_SensorKit.java",
+      "sha256": "f32aa3eb98c95ff9f86242d9f2b5e236a71061dfed0b7b82a92dcf68be6cc8a7",
+      "code_references": [],
+      "literal_hints": [],
+      "classification": "no_external_reference_found"
+    },
+    {
+      "class": "Behavior_Sonictron",
+      "path": "gregtech/items/behaviors/Behavior_Sonictron.java",
+      "sha256": "335f88b67620bfd77fcfa6d489eb3f098c5e9a9d92df0567cb7fd8557cd15e0a",
+      "code_references": [],
+      "literal_hints": [],
+      "classification": "no_external_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Color",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Color.java",
+      "sha256": "8185b432ec7e87f44541a41e8d196ea0ff94c4a182eddf8dffab0c531d5c4318",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 245,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Color_Remover",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Color_Remover.java",
+      "sha256": "bcfe19392ca9f494b731189220dc6aadcd0a74ddcf5f75667f1de3e88f7f9063",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 271,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Extinguisher",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Extinguisher.java",
+      "sha256": "0b3b043c05c076b918e974c6c9e944f9f1215b2beda14d68eee3ce30efef01e4",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 298,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Foam",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Foam.java",
+      "sha256": "612bd5962ee068a3b0948a2d289a48ba5536179ffff75ca69d7db6c52fd67d17",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 253,
+          "kind": "construction"
+        },
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 261,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Foam_Hardener",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Foam_Hardener.java",
+      "sha256": "8a5b40f7051901f5641160be52d7a86af333b1ffa4e8004c0c2b4b7933f674b2",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 288,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Spray_Foam_Remover",
+      "path": "gregtech/items/behaviors/Behavior_Spray_Foam_Remover.java",
+      "sha256": "e4a7cf96fa5903b6b2c1ede873d567e80dc1c2b76c3f7bfb573781641213be54",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 279,
+          "kind": "construction"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    },
+    {
+      "class": "Behavior_Watering_Crops",
+      "path": "gregtech/items/behaviors/Behavior_Watering_Crops.java",
+      "sha256": "06e834c9ecd1186c07e2161ab7b081bc7cdd9a265130e31ff2c5a524f6a0ed29",
+      "code_references": [],
+      "literal_hints": [],
+      "classification": "no_external_reference_found"
+    },
+    {
+      "class": "Behavior_Worldgen_Debugger",
+      "path": "gregtech/items/behaviors/Behavior_Worldgen_Debugger.java",
+      "sha256": "d42480d08dd2c2ea17429d87bbfe22f15f1256ff5257f25982b1bf38fd5290f7",
+      "code_references": [
+        {
+          "path": "gregtech/items/MultiItemRandomTools.java",
+          "sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+          "line": 520,
+          "kind": "type_or_static_reference"
+        }
+      ],
+      "literal_hints": [],
+      "classification": "code_reference_found"
+    }
+  ]
+}

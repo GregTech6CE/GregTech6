@@ -1,0 +1,2664 @@
+{
+  "date": "2026-10-22",
+  "batch": 128,
+  "baseline": "9f3c27a20aa8dccb9eeff46d6c0177076b3a5c51",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "9f3c27a20",
+    "evidence": "Shared reactor tick completion committed;427/428 verified and a thermometer false positive rejected."
+  },
+  "provenance": {
+    "original_tree_read_only": true,
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; source census does not import or execute original code."
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "raw_sha256": "f2eef98ddb1b10298a981ff78369bccb7e8317fb421f7bdd84086257819ad84d",
+      "lines": 723,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Foam.java",
+      "raw_sha256": "612bd5962ee068a3b0948a2d289a48ba5536179ffff75ca69d7db6c52fd67d17",
+      "lines": 215,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_DataOrb.java",
+      "raw_sha256": "ec9bd27d7edfd9b5cbb74f285d174277b1e7b8741bb14caad1cfa4cfa205802e",
+      "lines": 112,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_SensorKit.java",
+      "raw_sha256": "f32aa3eb98c95ff9f86242d9f2b5e236a71061dfed0b7b82a92dcf68be6cc8a7",
+      "lines": 66,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Sonictron.java",
+      "raw_sha256": "335f88b67620bfd77fcfa6d489eb3f098c5e9a9d92df0567cb7fd8557cd15e0a",
+      "lines": 148,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Watering_Crops.java",
+      "raw_sha256": "06e834c9ecd1186c07e2161ab7b081bc7cdd9a265130e31ff2c5a524f6a0ed29",
+      "lines": 62,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Plunger_Item.java",
+      "raw_sha256": "2731f13d5ed9815a972bf36afdb86516d121aa0495c691dfbf00eb8f77f16bd3",
+      "lines": 77,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_Plunger.java",
+      "raw_sha256": "a4fda81070ee9989abaf26da67712efff022e558966828abc3e0e99d14f902e1",
+      "lines": 98,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/early/GT_Tool_Scoop.java",
+      "raw_sha256": "f9c2ead5c4414a5dce99cdc9ba658270be153c750617c3458cbceff7b2d9960c",
+      "lines": 114,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Scoop.java",
+      "raw_sha256": "5b2b4092f5ba0d3178a2bd0251a9019c6980d5a6a6d66168c2d3f0913d804660",
+      "lines": 76,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/WD.java",
+      "raw_sha256": "c8335988b7bd9dbf44df6790d867ac6cfe2e6414793abb0cdd14c32cd342f095",
+      "lines": 1056,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/ToolCompat.java",
+      "raw_sha256": "aa00ae01ae324ee15a39fb713bd1ca65c7b7cdc3f3a080870e1126367808afb4",
+      "lines": 438,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "raw_sha256": "3338b24ba34a32608a2d74a470a63c253a48eeb5e1f692f7b1e83c50a61bf552",
+      "lines": 655
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "raw_sha256": "d91622f80513bb0ee15a2035a0a977153001bb762c6d2f4eb13d164a8f87fb50",
+      "lines": 177
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "raw_sha256": "aab379aa689ef4f83c62746d22ccca6bc511c6b323ca11e026ab6f215d1abff4",
+      "lines": 224
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "raw_sha256": "6d0c1d04d7795296dc3a498b545b7e53419e8ba1cc8ae4787bdf608b035aa41f",
+      "lines": 103
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "raw_sha256": "7d9437729ef50eb29d9c51e0668fc27b41400fccc889c76de34f524873168c30",
+      "lines": 104
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamRemover.java",
+      "raw_sha256": "8a6d8d1a09651638b7d3d2d1183f8ecbe4434a8780b9ce6acd338a0d96bf5346",
+      "lines": 91
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamHardener.java",
+      "raw_sha256": "a4dbbbb0c1e0afc0582ead7c97734aaa097811d779fbf9e2106ed92b3fae9419",
+      "lines": 86
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+      "raw_sha256": "f1bac99e43fd186664e4a2b206c16bee5a930724f211f27c1469312f62184789",
+      "lines": 29
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CFoamBlockEntity.java",
+      "raw_sha256": "a09ee3d08a6ba4d4303ac4194be7d91f0e4e7ef2d48da22facda659fa8432a2d",
+      "lines": 83
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "raw_sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+      "lines": 1297
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/TechnologicalItemDefinitions.java",
+      "raw_sha256": "ed15884a595a7f809dacc7232ceba5732f4b26449e9d4bf3184a8e93c1938a0f",
+      "lines": 416
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+      "raw_sha256": "54b67d9c4b6cafa554afbe1f0c65c488dcf929c567ff1180603aa37e23b5b396",
+      "lines": 57
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/PaintingRules.java",
+      "raw_sha256": "1de6b70dcd76dc2723b2c3922e04fb74ce7ee3b097997b2ed66ffcb13e4d65fd",
+      "lines": 73
+    }
+  ],
+  "source_excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/MultiItemRandomTools.java",
+      "anchor": "for (byte i = 0; i < 16; i++)",
+      "start_line": 242,
+      "end_line": 267,
+      "excerpt_sha256": "2cb6f7e8255d91cce20afb3299ebfe33750ecda302e749af719ac07ddfad4b8c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Foam.java",
+      "anchor": "public Behavior_Spray_Foam(",
+      "start_line": 52,
+      "end_line": 61,
+      "excerpt_sha256": "e358a8fa09079110c4fc8ce8e2c0504a1ac203bbcbcc2e9d712dbcf3ce30bae7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Foam.java",
+      "anchor": "public ItemStack onItemRightClick(",
+      "start_line": 62,
+      "end_line": 66,
+      "excerpt_sha256": "b9b37446ebc8b4b51c4c995f94a95179509b02f63400ed0084cb1bfb0ae403e1"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Spray_Foam.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 68,
+      "end_line": 100,
+      "excerpt_sha256": "9febb4260f0ab0d62982cd9618dc145f0371aacf7b9f45d0852a27530442df1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Plunger_Item.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 40,
+      "end_line": 66,
+      "excerpt_sha256": "3be28401febf6b77970cda76cd3ecd8478a6b725d97156750d3bf6d6158e3433"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/machine/GT_Tool_Plunger.java",
+      "anchor": "new Behavior_Plunger_Item",
+      "start_line": 86,
+      "end_line": 91,
+      "excerpt_sha256": "e58c6a4698b47f3a4f2a0bb7fa5c9c6ef7384e7930cb6ef0a844195ba7088993"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/tools/early/GT_Tool_Scoop.java",
+      "anchor": "UT.Reflection.callConstructor(",
+      "start_line": 103,
+      "end_line": 107,
+      "excerpt_sha256": "af57105ab2e14550d295994c658230207b473033cd15e6619118d1700e7a7950"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Scoop.java",
+      "anchor": "public boolean onLeftClickEntity(",
+      "start_line": 48,
+      "end_line": 60,
+      "excerpt_sha256": "f0035b00013e03ebd2ca2eb52640bbb634a9c81cb0ff6bd2e5b982b62c64415d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_SensorKit.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 39,
+      "end_line": 59,
+      "excerpt_sha256": "460625c514c75ec5afb17efaf8321d3aea633a60699c85fc68b22b73f768deef"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/items/behaviors/Behavior_Sonictron.java",
+      "anchor": "public boolean onItemUseFirst(",
+      "start_line": 38,
+      "end_line": 57,
+      "excerpt_sha256": "890b1e4e7c48a90c10ece22f183c207293ad2cec9a6272437f2830d523a387f6"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTMultiItems.java",
+      "anchor": "BY_ID.put(id,ITEMS.register",
+      "start_line": 26,
+      "end_line": 26,
+      "excerpt_sha256": "5c5e4af75919a9f92ebbf18794172f9323c4c8e8c8bc3d7d0a57f9e0be636d15"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTTechnological.java",
+      "anchor": "public static void registerAll()",
+      "start_line": 46,
+      "end_line": 60,
+      "excerpt_sha256": "a3c9a2617624635dd669c41f25ebe04b34716f2f0c52766d91978802f8c83ab2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+      "anchor": "\"c_foam_removal_spray\"",
+      "start_line": 66,
+      "end_line": 67,
+      "excerpt_sha256": "f3162ab681df5fe8acc62e22615cc504be55b4c3fa63cfd18baf358c2015ccea"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static Outcome useOn(Level",
+      "start_line": 218,
+      "end_line": 283,
+      "excerpt_sha256": "0b890a4cc740b8b5eef6161bae62b02fb5f41863bc7f33588ba512d579c6fe32"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/PaintSprayItem.java",
+      "anchor": "public InteractionResult onItemUseFirst(",
+      "start_line": 35,
+      "end_line": 54,
+      "excerpt_sha256": "0d22741ec517d32d4dbf44e91b8c4658df4158761bb83089b67989d854e953a2"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static boolean obstructed(",
+      "start_line": 161,
+      "end_line": 163,
+      "excerpt_sha256": "3b96826724ae8e2ee58fc5527584ce0873cd5e1d96659ffa7effdc21508bceda"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static boolean creative(",
+      "start_line": 166,
+      "end_line": 168,
+      "excerpt_sha256": "f8ba05d3a9c86d7a6e4834e9dc76fbe69f4de2f11a3ba17d57499b77e29cca61"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static boolean mayEdit(",
+      "start_line": 177,
+      "end_line": 179,
+      "excerpt_sha256": "28b68eaea449940e5d94409be179d0bb9b8e0f95af4c232b17d82620d41c84ca"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static boolean lightVanillaFire(",
+      "start_line": 640,
+      "end_line": 643,
+      "excerpt_sha256": "3a66b59633382ec2764a3d45d99b90c9284bbc2c7ddb58c365ae207459cb4483"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "anchor": "public static boolean primeTnt(",
+      "start_line": 652,
+      "end_line": 654,
+      "excerpt_sha256": "133e689ec54ab22858ba638bd2a9543a2e98a2d32de15076331ebdab928e5832"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "anchor": "public static boolean obstructed(",
+      "start_line": 52,
+      "end_line": 82,
+      "excerpt_sha256": "998f7557af72b4478e56f5a73a4cb994996e929e5fa68e7b92838e85262d030a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "anchor": "public static boolean mayEdit(",
+      "start_line": 92,
+      "end_line": 95,
+      "excerpt_sha256": "7f27613bf01aabfe6ad2ea393730bc630dec4b3450d2cd90fb191dd63d978a2c"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "anchor": "public static boolean lightVanillaFire(",
+      "start_line": 153,
+      "end_line": 161,
+      "excerpt_sha256": "ea237571b8883e6a9755e2e0fc1d1ac0154e2e961728d6abd0115a2e65155997"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "anchor": "public static boolean primeTnt(",
+      "start_line": 170,
+      "end_line": 177,
+      "excerpt_sha256": "76d8d5645650047b14bb40873d4bce59b45693dc1c0241eecf59228bff101372"
+    }
+  ],
+  "behavior_census": {
+    "path": "docs/integration/verification/original-item-behavior-ownership-20261022.json",
+    "raw_sha256": "cb58a3fb76f0646ae68ec0ebad30112f893fe161b487d6e0d84cb1f720be5c16",
+    "source_input_count": 1229,
+    "classes": 30,
+    "external_code_references": 55,
+    "classification_counts": {
+      "code_reference_found": 23,
+      "literal_hint_only": 2,
+      "no_external_reference_found": 5
+    },
+    "limitations": "Imports/comments excluded; constructors, inheritance and type/static references are locators, not proof of live attachment or parity. Dynamic reflection may require separate review.",
+    "no_external_reference_found": [
+      "Behavior_Arrow_Potion",
+      "Behavior_DataOrb",
+      "Behavior_SensorKit",
+      "Behavior_Sonictron",
+      "Behavior_Watering_Crops"
+    ],
+    "counterexamples": {
+      "Behavior_Arrow": "Its one external code reference is inheritance from Arrow_Potion, not an item registration.",
+      "Behavior_Plunger_Item": "Constructed by plunger tool, but original item-pipe operation is commented out and actual callback returnsfalse.",
+      "Behavior_Scoop": "Reflection string resolves this provided class; its entity handling requires Forestry butterfly APIs. Do not call it inactive merely because no code-name reference appears.",
+      "Behavior_Plunger_Essentia": "String points to a differently spelled class in gregtech.common; verify old compatibility package/external provision separately."
+    }
+  },
+  "read_only_tools": [
+    {
+      "path": "tools/integration/inventory_original_item_behaviors.py",
+      "raw_sha256": "10d3b8360e700c53e8996ced09e7eae4a80f5109f397a5a6780c3a588e0f4b36"
+    },
+    {
+      "path": "tools/integration/check_source.py",
+      "raw_sha256": "7a9901280b629a1c45f3cdcdfa55d8e3a7973538daecadb4976390121c6acfe3"
+    }
+  ],
+  "foam_locator": {
+    "source_count": 1828,
+    "roots": [
+      "core/src/main/java",
+      "core/src/api/java",
+      "multiversion/src/main/java",
+      "multiversion/src/api/java",
+      "multiversion/versions/1.20.1-forge/src/main/java",
+      "multiversion/versions/1.20.1-forge/src/api/java",
+      "multiversion/versions/1.21.1-neoforge/src/main/java",
+      "multiversion/versions/1.21.1-neoforge/src/api/java"
+    ],
+    "matches": [
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/material/OriginalMaterialNameRules.java",
+        "sha256": "02b6700c0ac926346fa65b4bd97bb821682a808aab77c01963c7d2ea80ed135a",
+        "matches": [
+          {
+            "line": 353,
+            "text": "if (is(material, 8228, \"Indigo\") || is(material, 9883, \"ConstructionFoam\") || is(material, 9782, \"Cocoa\") || is(material, 9789, \"Curry\") || is(material, 9783, \"Chocolate\") || is(material, 9784, \"Coffee\") || is(material, 9781, \"Chili\") || is(material, 9780, \"Cheese\") || is(material, 9801, \"Snow\")) {"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/block/ConstructionRules.java",
+        "sha256": "f9d7c643ccf4843be3773cfde49c6d77dd1b33574dc2014569109c2b67f163d8",
+        "matches": [
+          {
+            "line": 2,
+            "text": "/** Source construction palette, reinforcement material aliases and foam timing. */"
+          },
+          {
+            "line": 4,
+            "text": "private ConstructionRules(){}public static final double ASPHALT_SPEED=1.3;public static final int FOAM_GRACE=100,FOAM_DRY_CHANCE=5900;"
+          },
+          {
+            "line": 7,
+            "text": "public static boolean dries(long age,java.util.function.IntUnaryOperator random){return age>=FOAM_GRACE&&random.applyAsInt(FOAM_DRY_CHANCE)==0;}"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/creative/CreativeTabCatalog.java",
+        "sha256": "1c5cc30885ebb0e0c641fdd56d2b4ead568c0f12f6047e8bdd951f444c36716f",
+        "matches": [
+          {
+            "line": 6,
+            "text": "public static final List<String> FAMILIES=List.of(\"tools\",\"stones\",\"construction\",\"woods\",\"fluids\",\"pipes\",\"item_pipes\",\"wires\",\"technology\",\"iconsets\",\"chests\",\"safes\",\"crafting_tables\",\"storage\",\"logistics\",\"hoppers\",\"scaffolds\",\"smelting_crucibles\",\"crucibles_faucets\",\"molds\",\"burning_boxes\",\"steam_boilers\",\"engines\",\"heat_exchangers\",\"reactors\""
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/creative/EmiCatalogOrder.java",
+        "sha256": "247342d090b53074588df03096489f090f7f242b133b9b99b852827b3586f56f",
+        "matches": [
+          {
+            "line": 34,
+            "text": "case \"stones\", \"construction\", \"woods\", \"foam\", \"panels\", \"scaffolds\" -> 20;"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/creative/SourceCreativeCatalog.java",
+        "sha256": "82c04e294915c49937e383b940b6800a623301dc1de7779506df9b73aac88987",
+        "matches": [
+          {
+            "line": 384,
+            "text": "ITEMS.put(\"c_foam_removal_spray\",new Entry(\"equipment\",51));"
+          },
+          {
+            "line": 385,
+            "text": "ITEMS.put(\"c_foam_removal_spray_2\",new Entry(\"equipment\",52));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java",
+        "sha256": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210",
+        "matches": [
+          {
+            "line": 155,
+            "text": "public static final GTMaterial ConstructionFoam              = gas(9883, \"Construction Foam\",                                           0x808080).setTextureSet(MaterialTextureSet.DULL).setStats(500, 2000, 1.0F);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/material/Materials.java",
+        "sha256": "d73635bac396ecc1a4ba5ee2253de90b6733c048d02d0f0fc51fa9bf41afacdf",
+        "matches": [
+          {
+            "line": 181,
+            "text": "public static final GTMaterial ConstructionFoam              = CompoundMaterials.ConstructionFoam;"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/plant/IconPlantCatalog.java",
+        "sha256": "28105fad501d5d5a0dc608c8a4dee6b48db651ec600feb87880300db0960b792",
+        "matches": [
+          {
+            "line": 5,
+            "text": "\"cfoam_fresh\", \"cfoam_fresh_owned\", \"cfoam_hardened\", \"cfoam_hardened_owned\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/EquipmentCraftingCatalog.java",
+        "sha256": "9924c93cbcbfc12d75bed1e4a4dcebf63052a13f408e1cfd90cb2e4c150f2e1a",
+        "matches": [
+          {
+            "line": 2400,
+            "text": "\"decorative_panels/panel_cfoam_black.json\","
+          },
+          {
+            "line": 2403,
+            "text": "\"decorative_panels/panel_cfoam_red.json\","
+          },
+          {
+            "line": 2406,
+            "text": "\"decorative_panels/panel_cfoam_green.json\","
+          },
+          {
+            "line": 2409,
+            "text": "\"decorative_panels/panel_cfoam_brown.json\","
+          },
+          {
+            "line": 2412,
+            "text": "\"decorative_panels/panel_cfoam_blue.json\","
+          },
+          {
+            "line": 2415,
+            "text": "\"decorative_panels/panel_cfoam_purple.json\","
+          },
+          {
+            "line": 2418,
+            "text": "\"decorative_panels/panel_cfoam_cyan.json\","
+          },
+          {
+            "line": 2421,
+            "text": "\"decorative_panels/panel_cfoam_light_gray.json\","
+          },
+          {
+            "line": 2424,
+            "text": "\"decorative_panels/panel_cfoam_gray.json\","
+          },
+          {
+            "line": 2427,
+            "text": "\"decorative_panels/panel_cfoam_pink.json\","
+          },
+          {
+            "line": 2430,
+            "text": "\"decorative_panels/panel_cfoam_lime.json\","
+          },
+          {
+            "line": 2433,
+            "text": "\"decorative_panels/panel_cfoam_yellow.json\","
+          },
+          {
+            "line": 2436,
+            "text": "\"decorative_panels/panel_cfoam_light_blue.json\","
+          },
+          {
+            "line": 2439,
+            "text": "\"decorative_panels/panel_cfoam_magenta.json\","
+          },
+          {
+            "line": 2442,
+            "text": "\"decorative_panels/panel_cfoam_orange.json\","
+          },
+          {
+            "line": 2445,
+            "text": "\"decorative_panels/panel_cfoam_white.json\","
+          },
+          {
+            "line": 2510,
+            "text": "\"gt6ce:construction/cfoam\","
+          },
+          {
+            "line": 2511,
+            "text": "\"gt6ce:construction/cfoam_fresh\","
+          },
+          {
+            "line": 2512,
+            "text": "\"gt6ce:construction/cfoam_slab\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTMaterialFields.java",
+        "sha256": "a1c18d4543e846d71a17686a1fc825cabf39f4fc9045a44ab3f9b804250e3715",
+        "matches": [
+          {
+            "line": 358,
+            "text": "BY_FIELD.put(\"ConstructionFoam\", \"Construction Foam\");"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/recipe/generated/GTOtherGen.java",
+        "sha256": "e710352c4de8cf333394f811b011f1147fd37ceec92a6b898e87cdb2a9bc956a",
+        "matches": [
+          {
+            "line": 74,
+            "text": "r(\"Mixer\", 16, 16, null, sp(\"omd:ConstructionFoam:1000\"), sp(\"w:100\"), sp(\"f:CFoam:100\"), NONE);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/tool/ItemBehaviorCatalog.java",
+        "sha256": "54b67d9c4b6cafa554afbe1f0c65c488dcf929c567ff1180603aa37e23b5b396",
+        "matches": [
+          {
+            "line": 37,
+            "text": "new Entry(\"c_foam_removal_spray\",                                       \"BehaviorSprayFoamRemover\"),"
+          },
+          {
+            "line": 38,
+            "text": "new Entry(\"c_foam_removal_spray_2\",                                     \"BehaviorSprayFoamRemover\"),"
+          },
+          {
+            "line": 39,
+            "text": "new Entry(\"hardening_spray\",                                            \"BehaviorSprayFoamHardener\"),"
+          },
+          {
+            "line": 40,
+            "text": "new Entry(\"hardening_spray_2\",                                          \"BehaviorSprayFoamHardener\"),"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/transport/PanelCatalog.java",
+        "sha256": "781f27137f1b1b857d5445287c4e1413baba8c44d00ae9c03e02ae263c87ae49",
+        "matches": [
+          {
+            "line": 21,
+            "text": "return switch (kind) { case \"concrete\" -> 32452; case \"cfoam\" -> 32468; default -> 32484; } + sourceIndex;"
+          },
+          {
+            "line": 25,
+            "text": "return sourceIndex * 3 + switch (kind) { case \"concrete\" -> 0; case \"cfoam\" -> 1; default -> 2; };"
+          },
+          {
+            "line": 34,
+            "text": "return new Spec(suffix, kind, ConstructionRules.tint(color), kind.equals(\"cfoam\") ? \"WOOL\" : \"STONE\","
+          },
+          {
+            "line": 35,
+            "text": "kind.equals(\"cfoam\") ? 1F : kind.equals(\"asphalt\") ? 3F : 4F,"
+          },
+          {
+            "line": 36,
+            "text": "\"gt6ce:block/iconsets/\" + (kind.equals(\"cfoam\") ? \"cfoam_hardened\" : kind),"
+          },
+          {
+            "line": 44,
+            "text": "result.add(colored(\"cfoam\", \"cfoam\", \"white\", 15, false));"
+          },
+          {
+            "line": 48,
+            "text": "for (var dye : PaintingRules.DYES) for (String kind : List.of(\"concrete\", \"cfoam\", \"asphalt\"))"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/FluidCatalog.java",
+        "sha256": "d11781f19478450c1caa326380a462143dbcba6a6726a150607b0f1423a474fb",
+        "matches": [
+          {
+            "line": 671,
+            "text": "CFoam = fluid(\"CFoam\", \"ic2constructionfoam\"),"
+          },
+          {
+            "line": 873,
+            "text": "public static final FluidEntry[] DYED_C_FOAMS        = new FluidEntry[16];"
+          },
+          {
+            "line": 874,
+            "text": "public static final FluidEntry[] DYED_C_FOAMS_OWNED  = new FluidEntry[16];"
+          },
+          {
+            "line": 885,
+            "text": "DYED_C_FOAMS[i] = register(\"CFoam_Dyed_\" + DYE_OREDICTS_POST[i],"
+          },
+          {
+            "line": 886,
+            "text": "new FluidEntry(\"cfoam.\" + post, FluidTextureMode.DEDICATED, null, 0, true, false, false, 0, 0, 0, DEF_ENV_TEMP, FluidFlags.LIQUID | FluidFlags.SIMPLE));"
+          },
+          {
+            "line": 887,
+            "text": "DYED_C_FOAMS_OWNED[i] = register(\"CFoam_DyedOwned_\" + DYE_OREDICTS_POST[i],"
+          },
+          {
+            "line": 888,
+            "text": "new FluidEntry(\"cfoam.owned.\" + post, FluidTextureMode.DEDICATED, null, 0, true, false, false, 0, 0, 0, DEF_ENV_TEMP, FluidFlags.LIQUID | FluidFlags.SIMPLE));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/GT6Materials.java",
+        "sha256": "0ef835c2b7fa1b57f0b0f7a1c5090df0bacc843bb1ad92006b7ca63d726eb5a3",
+        "matches": [
+          {
+            "line": 355,
+            "text": "public static final GTMaterial ConstructionFoam     = com.gregtech.gregtech.content.material.generated.CompoundMaterials.ConstructionFoam;"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialForms.java",
+        "sha256": "f43075ebe80e561bd04b9202b4be59cf3c2c917626ab86146c81da546c478066",
+        "matches": [
+          {
+            "line": 1349,
+            "text": "\"constructionfoam|CONTAINERS,CONTAINERS_FLUID,DUSTS,PLANTS\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialModTags.java",
+        "sha256": "933d0c19666e1bf748a8ea106b8b8a2e362ee721db6fd1384069aa0ea1e5d0cd",
+        "matches": [
+          {
+            "line": 113,
+            "text": "ImportedMaterialData.ConstructionFoam.mod(ModReferences.IC2);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialRegistryExtras.java",
+        "sha256": "5f5ef7ae19ccbe9a66af4f56319f6a447f38ca0b882fa6e22ea2112cf8f5f4ce",
+        "matches": [
+          {
+            "line": 594,
+            "text": "GTMaterialRegistry.setDisplayName(\"ConstructionFoam\", \"Construction Foam\");"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/generated/MaterialWorkability.java",
+        "sha256": "e460efaed48f54ebe0f7f1ef3d249e31d7d3011ada59b10bf51916f15e0751ba",
+        "matches": [
+          {
+            "line": 66,
+            "text": "\"coal\", \"constructionfoam\", \"crimsonmiddle\", \"crystal\", \"crystalflux\", \"darkash\", \"endereye\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/data/ImportedMaterialData.java",
+        "sha256": "e319f98ceaf4d213630c824d8e19ec4c962cb0b044e1c6be1c3043d36c232ab1",
+        "matches": [
+          {
+            "line": 269,
+            "text": "ConstructionFoam = GT6Materials.Compounds.ConstructionFoam,"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/registry/GTMultiItemsGen.java",
+        "sha256": "d4b794642713c208ad27ccd765a9dd9cbcdb13a7c568aec1e910f7ead3058611",
+        "matches": [
+          {
+            "line": 66,
+            "text": "\"c_foam_removal_spray\", \"C-Foam Removal Spray\", \"randomtools\", \"T\","
+          },
+          {
+            "line": 67,
+            "text": "\"c_foam_removal_spray_2\", \"C-Foam Removal Spray\", \"randomtools\", \"T\","
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/OriginSupport.java",
+        "sha256": "d0abdca975885ea4117b8998968a62ea0ef80e669bbeb0c71f6c82a608846efb",
+        "matches": [
+          {
+            "line": 47,
+            "text": "CFoam = new OriginWorld.Block(\"gt6ce:cfoam\"), Asphalt = new OriginWorld.Block(\"gt6ce:asphalt\"),"
+          },
+          {
+            "line": 59,
+            "text": "public static final OriginWorld.Block[] FOAM_SLABS = {CFoam.slab(0), CFoam.slab(1), CFoam.slab(2), CFoam.slab(3), CFoam.slab(4), CFoam.slab(5)};"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceNexus.java",
+        "sha256": "8fb815d34887d518a797ee6570c01c5e8dc09de0b21b6baf9779d0f9dea90b81",
+        "matches": [
+          {
+            "line": 46,
+            "text": "set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 54,
+            "text": "set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 69,
+            "text": "set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 104,
+            "text": "//      set(aChunk, 5, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 105,
+            "text": "//      set(aChunk, 6, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 106,
+            "text": "//      set(aChunk, 7, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 107,
+            "text": "//      set(aChunk, 8, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 108,
+            "text": "//      set(aChunk, 9, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 109,
+            "text": "//      set(aChunk,10, mHeight+1,15, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 110,
+            "text": "set(aChunk, 5, mHeight + 2, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 115,
+            "text": "set(aChunk, 10, mHeight + 2, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 116,
+            "text": "set(aChunk, 5, mHeight + 3, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 121,
+            "text": "set(aChunk, 10, mHeight + 3, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 122,
+            "text": "set(aChunk, 5, mHeight + 4, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 127,
+            "text": "set(aChunk, 10, mHeight + 4, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 128,
+            "text": "set(aChunk, 5, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 129,
+            "text": "set(aChunk, 6, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 130,
+            "text": "set(aChunk, 7, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 131,
+            "text": "set(aChunk, 8, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 132,
+            "text": "set(aChunk, 9, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 133,
+            "text": "set(aChunk, 10, mHeight + 5, 15, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 135,
+            "text": "//      set(aChunk, 6, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 136,
+            "text": "//      set(aChunk, 7, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 137,
+            "text": "//      set(aChunk, 8, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 138,
+            "text": "//      set(aChunk, 9, mHeight+1,14, GENERATE_STREETS?BlocksGT.CFoam:Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 139,
+            "text": "set(aChunk, 6, mHeight + 2, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 140,
+            "text": "set(aChunk, 9, mHeight + 2, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 141,
+            "text": "set(aChunk, 6, mHeight + 3, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 142,
+            "text": "set(aChunk, 9, mHeight + 3, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 143,
+            "text": "set(aChunk, 6, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 144,
+            "text": "set(aChunk, 7, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 145,
+            "text": "set(aChunk, 8, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 146,
+            "text": "set(aChunk, 9, mHeight + 4, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 194,
+            "text": "set(aChunk, 10, mHeight + 1, 2, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 195,
+            "text": "set(aChunk, 10, mHeight + 1, 3, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 196,
+            "text": "set(aChunk, 10, mHeight + 1, 4, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 202,
+            "text": "set(aChunk, 11, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 207,
+            "text": "set(aChunk, 12, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 212,
+            "text": "set(aChunk, 13, mHeight + 1, 5, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 303,
+            "text": "set(aChunk, 10, mHeight + 1, 11, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 304,
+            "text": "set(aChunk, 10, mHeight + 1, 12, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 305,
+            "text": "set(aChunk, 10, mHeight + 1, 13, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 307,
+            "text": "set(aChunk, 11, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 308,
+            "text": "set(aChunk, 12, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 309,
+            "text": "set(aChunk, 13, mHeight + 1, 14, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 311,
+            "text": "set(aChunk, 14, mHeight + 1, 13, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 312,
+            "text": "set(aChunk, 14, mHeight + 1, 12, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 313,
+            "text": "set(aChunk, 14, mHeight + 1, 11, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 315,
+            "text": "set(aChunk, 13, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 316,
+            "text": "set(aChunk, 12, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          },
+          {
+            "line": 317,
+            "text": "set(aChunk, 11, mHeight + 1, 10, GENERATE_STREETS ? BlocksGT.CFoam : Blocks.stained_hardened_clay, DYE_INDEX_Black);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceStreets.java",
+        "sha256": "1e8cfed04894466d5451f67419c678b72d78207e5c9335bbea5727a68ab38dfb",
+        "matches": [
+          {
+            "line": 57,
+            "text": "aWorld.setBlock(i, mHeight + 1, j, even(i, 1, j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 58,
+            "text": "aWorld.setBlock(i, mHeight + 2, j, even(i, 2, j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 59,
+            "text": "aWorld.setBlock(i, mHeight + 3, j, even(i, 3, j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 60,
+            "text": "aWorld.setBlock(i, mHeight + 4, j, even(i, 4, j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 61,
+            "text": "aWorld.setBlock(i, mHeight + 5, j, even(i, 5, j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 63,
+            "text": "aWorld.setBlock(i, mHeight + 1, j, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 69,
+            "text": "aWorld.setBlock(i, mHeight + 1, j, inside(-11, 10, i) && inside(-11, 10, j) ? BlocksGT.Concrete : BlocksGT.CFoam,"
+          },
+          {
+            "line": 90,
+            "text": "aWorld.setBlock(-32, mHeight + 4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 91,
+            "text": "aWorld.setBlock(-31, mHeight + 4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 92,
+            "text": "aWorld.setBlock(-32, mHeight + 4, 0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 93,
+            "text": "aWorld.setBlock(-31, mHeight + 4, 0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 94,
+            "text": "aWorld.setBlock(-32, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 95,
+            "text": "aWorld.setBlock(-31, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 96,
+            "text": "aWorld.setBlock(-30, mHeight + 1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 97,
+            "text": "aWorld.setBlock(-30, mHeight + 1, 0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 98,
+            "text": "aWorld.setBlock(-31, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 99,
+            "text": "aWorld.setBlock(-32, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 142,
+            "text": "aWorld.setBlock( 31, mHeight + 4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 143,
+            "text": "aWorld.setBlock( 30, mHeight + 4, - 1, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 144,
+            "text": "aWorld.setBlock( 31, mHeight + 4, 0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 145,
+            "text": "aWorld.setBlock( 30, mHeight + 4, 0, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 146,
+            "text": "aWorld.setBlock( 31, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 147,
+            "text": "aWorld.setBlock( 30, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 148,
+            "text": "aWorld.setBlock( 29, mHeight + 1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 149,
+            "text": "aWorld.setBlock( 29, mHeight + 1, 0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 150,
+            "text": "aWorld.setBlock( 30, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 151,
+            "text": "aWorld.setBlock( 31, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 194,
+            "text": "aWorld.setBlock(- 1, mHeight + 4, -32, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 195,
+            "text": "aWorld.setBlock(- 1, mHeight + 4, -31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 196,
+            "text": "aWorld.setBlock(  0, mHeight + 4, -32, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 197,
+            "text": "aWorld.setBlock(  0, mHeight + 4, -31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 198,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, -32, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 199,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, -31, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 200,
+            "text": "aWorld.setBlock(- 1, mHeight + 1, -30, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 201,
+            "text": "aWorld.setBlock(  0, mHeight + 1, -30, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 202,
+            "text": "aWorld.setBlock(  1, mHeight + 1, -31, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 203,
+            "text": "aWorld.setBlock(  1, mHeight + 1, -32, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 246,
+            "text": "aWorld.setBlock(- 1, mHeight + 4, 31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 247,
+            "text": "aWorld.setBlock(- 1, mHeight + 4, 30, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 248,
+            "text": "aWorld.setBlock(  0, mHeight + 4, 31, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 249,
+            "text": "aWorld.setBlock(  0, mHeight + 4, 30, BlocksGT.FOAM_SLABS[SIDE_Y_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 250,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, 31, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 251,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, 30, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 252,
+            "text": "aWorld.setBlock(- 1, mHeight + 1, 29, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 253,
+            "text": "aWorld.setBlock(  0, mHeight + 1, 29, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 254,
+            "text": "aWorld.setBlock(  1, mHeight + 1, 30, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 255,
+            "text": "aWorld.setBlock(  1, mHeight + 1, 31, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 427,
+            "text": "aWorld.setBlock(-12, mHeight + 1, aMinZ + i, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 441,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, aMinZ + i, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 466,
+            "text": "aWorld.setBlock(  1, mHeight + 1, aMinZ + i, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 480,
+            "text": "aWorld.setBlock( 11, mHeight + 1, aMinZ + i, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 498,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 506,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 514,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 522,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 552,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, aMinZ + 0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 553,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, aMinZ + 1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 555,
+            "text": "aWorld.setBlock(- 1, mHeight + 1, aMinZ + 2, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 556,
+            "text": "aWorld.setBlock(  0, mHeight + 1, aMinZ + 2, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 558,
+            "text": "aWorld.setBlock(  1, mHeight + 1, aMinZ + 1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 559,
+            "text": "aWorld.setBlock(  1, mHeight + 1, aMinZ + 0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 572,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, aMinZ + 15, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 573,
+            "text": "aWorld.setBlock(- 2, mHeight + 1, aMinZ + 14, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 575,
+            "text": "aWorld.setBlock(- 1, mHeight + 1, aMinZ + 13, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 576,
+            "text": "aWorld.setBlock(  0, mHeight + 1, aMinZ + 13, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 578,
+            "text": "aWorld.setBlock(  1, mHeight + 1, aMinZ + 14, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 579,
+            "text": "aWorld.setBlock(  1, mHeight + 1, aMinZ + 15, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 733,
+            "text": "aWorld.setBlock(aMinX + i, mHeight + 1, -12, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 747,
+            "text": "aWorld.setBlock(aMinX + i, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 772,
+            "text": "aWorld.setBlock(aMinX + i, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 786,
+            "text": "aWorld.setBlock(aMinX + i, mHeight + 1, 11, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_LightGray, 0);"
+          },
+          {
+            "line": 804,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 812,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 820,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 828,
+            "text": "j) ? BlocksGT.CFoam : BlocksGT.Concrete, DYE_INDEX_LightGray, 0, T);"
+          },
+          {
+            "line": 858,
+            "text": "aWorld.setBlock(aMinX + 0, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 859,
+            "text": "aWorld.setBlock(aMinX + 1, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 861,
+            "text": "aWorld.setBlock(aMinX + 2, mHeight + 1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 862,
+            "text": "aWorld.setBlock(aMinX + 2, mHeight + 1, 0, BlocksGT.FOAM_SLABS[SIDE_X_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 864,
+            "text": "aWorld.setBlock(aMinX + 1, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 865,
+            "text": "aWorld.setBlock(aMinX + 0, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 878,
+            "text": "aWorld.setBlock(aMinX + 15, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 879,
+            "text": "aWorld.setBlock(aMinX + 14, mHeight + 1, - 2, BlocksGT.FOAM_SLABS[SIDE_Z_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 881,
+            "text": "aWorld.setBlock(aMinX + 13, mHeight + 1, - 1, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 882,
+            "text": "aWorld.setBlock(aMinX + 13, mHeight + 1, 0, BlocksGT.FOAM_SLABS[SIDE_X_POS], DYE_INDEX_White, 0);"
+          },
+          {
+            "line": 884,
+            "text": "aWorld.setBlock(aMinX + 14, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_Red, 0);"
+          },
+          {
+            "line": 885,
+            "text": "aWorld.setBlock(aMinX + 15, mHeight + 1, 1, BlocksGT.FOAM_SLABS[SIDE_Z_NEG], DYE_INDEX_White, 0);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/worldgen/center/SourceTesting.java",
+        "sha256": "79f7ee4f96e3a8b4c5fde5ccb35b5f9fe2baf12b7964147acc3e08911fe3cdd6",
+        "matches": [
+          {
+            "line": 39,
+            "text": "set(aChunk, i, mHeight + 1, j, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 41,
+            "text": "set(aChunk, i, mHeight + 2, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 42,
+            "text": "set(aChunk, i, mHeight + 3, j, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 43,
+            "text": "set(aChunk, i, mHeight + 4, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 44,
+            "text": "set(aChunk, i, mHeight + 5, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 45,
+            "text": "set(aChunk, i, mHeight + 6, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 46,
+            "text": "set(aChunk, i, mHeight + 7, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 47,
+            "text": "set(aChunk, i, mHeight + 8, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 48,
+            "text": "set(aChunk, i, mHeight + 9, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 49,
+            "text": "set(aChunk, i, mHeight + 10, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 50,
+            "text": "set(aChunk, i, mHeight + 11, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 51,
+            "text": "set(aChunk, i, mHeight + 12, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 52,
+            "text": "set(aChunk, i, mHeight + 13, j, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 53,
+            "text": "set(aChunk, i, mHeight + 14, j, BlocksGT.CFoam, DYE_INDEX_LightBlue);"
+          },
+          {
+            "line": 54,
+            "text": "set(aChunk, i, mHeight + 15, j, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 58,
+            "text": "set(aChunk, i, mHeight + 15, j, BlocksGT.FOAM_SLABS[1], DYE_INDEX_LightGray);"
+          },
+          {
+            "line": 63,
+            "text": "set(aChunk, 0, mHeight + 2, 5, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 68,
+            "text": "set(aChunk, 0, mHeight + 2, 10, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 69,
+            "text": "set(aChunk, 1, mHeight + 2, 6, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 70,
+            "text": "set(aChunk, 1, mHeight + 2, 9, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 72,
+            "text": "set(aChunk, 0, mHeight + 3, 5, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 77,
+            "text": "set(aChunk, 0, mHeight + 3, 10, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 78,
+            "text": "set(aChunk, 1, mHeight + 3, 6, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 79,
+            "text": "set(aChunk, 1, mHeight + 3, 9, BlocksGT.CFoam, DYE_INDEX_Yellow);"
+          },
+          {
+            "line": 81,
+            "text": "set(aChunk, 0, mHeight + 4, 5, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 86,
+            "text": "set(aChunk, 0, mHeight + 4, 10, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 87,
+            "text": "set(aChunk, 1, mHeight + 4, 6, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 88,
+            "text": "set(aChunk, 1, mHeight + 4, 7, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 89,
+            "text": "set(aChunk, 1, mHeight + 4, 8, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 90,
+            "text": "set(aChunk, 1, mHeight + 4, 9, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 92,
+            "text": "set(aChunk, 0, mHeight + 5, 5, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 93,
+            "text": "set(aChunk, 0, mHeight + 5, 6, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 94,
+            "text": "set(aChunk, 0, mHeight + 5, 7, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 95,
+            "text": "set(aChunk, 0, mHeight + 5, 8, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 96,
+            "text": "set(aChunk, 0, mHeight + 5, 9, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          },
+          {
+            "line": 97,
+            "text": "set(aChunk, 0, mHeight + 5, 10, BlocksGT.CFoam, DYE_INDEX_Gray);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/fluid/FluidVisualPolicy.java",
+        "sha256": "73ab74e4119edcf1c05c6637fdaf07690758e9cdc77a423592a539f707bbf935",
+        "matches": [
+          {
+            "line": 42,
+            "text": "name.startsWith(\"dye.chemical.\")?\"dyes.chemical\":name.startsWith(\"cfoam.\")?\"cfoam\":null;"
+          },
+          {
+            "line": 75,
+            "text": "if(name.startsWith(\"dye.\")||name.startsWith(\"cfoam.\"))return dyeTint(name.substring(name.lastIndexOf('.')+1));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/CFoamBlock.java",
+        "sha256": "9cd0bc81cec01a832125ecc6c50d4f9425ef2e21d451ec1980d9c52406fcd42a",
+        "matches": [
+          {
+            "line": 23,
+            "text": "* GT6's construction foam ({@code MultiTileEntityCFoam} and the hardened {@code BlocksGT.CFoam})."
+          },
+          {
+            "line": 27,
+            "text": "* tick ({@code MultiTileEntityCFoam.onTick2}), about five minutes on average. A wet block that is"
+          },
+          {
+            "line": 28,
+            "text": "* removed is scraped away (GT6's {@code removeFoam} sets the block to air), so it drops nothing; the"
+          },
+          {
+            "line": 31,
+            "text": "public class CFoamBlock extends ColoredConstructionBlock {"
+          },
+          {
+            "line": 34,
+            "text": "public CFoamBlock(Properties properties) {"
+          },
+          {
+            "line": 38,
+            "text": "public CFoamBlock(boolean fresh, Properties properties) {"
+          },
+          {
+            "line": 43,
+            "text": "/** True for the still wet foam that dries over time. */"
+          },
+          {
+            "line": 51,
+            "text": "/** GT6's {@code removeFoam}: wet foam is scraped away, only the hardened block drops itself. */"
+          },
+          {
+            "line": 58,
+            "text": "/** The hardened block this foam turns into (GT6's {@code BlocksGT.CFoam}). */"
+          },
+          {
+            "line": 62,
+            "text": "/*        return GTConstructionBlocks.CFOAM.get();"
+          },
+          {
+            "line": 64,
+            "text": "return GTDecorBlocks.CFOAM.get();"
+          },
+          {
+            "line": 71,
+            "text": "return state.getBlock() instanceof CFoamBlock foam && foam.fresh();"
+          },
+          {
+            "line": 74,
+            "text": "/** The block entity type used by the wet foam. */"
+          },
+          {
+            "line": 76,
+            "text": "return GTBlockEntities.CFOAM.get();"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/CFoamSlabBlock.java",
+        "sha256": "04964149f59e95237123cb9d1e7fbccefa07c58a248bcc031f67cf6e63840e01",
+        "matches": [
+          {
+            "line": 19,
+            "text": "public class CFoamSlabBlock extends ColoredConstructionBlock implements com.gregtech.gregtech.api.block.FaceGridSlab {"
+          },
+          {
+            "line": 26,
+            "text": "public CFoamSlabBlock(Properties properties) {"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/ColoredGlassSlabBlock.java",
+        "sha256": "97411289d180aac1faa566e657693e2d7dbce0fe45a97443b22c5fdf22053d5a",
+        "matches": [
+          {
+            "line": 7,
+            "text": "public class ColoredGlassSlabBlock extends CFoamSlabBlock {"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionBlocks.java",
+        "sha256": "ebadd86f9c5e6a68f61a07f967b86a70f62855bb473a91a624b350b08aa134d0",
+        "matches": [
+          {
+            "line": 23,
+            "text": "public static final class Foam extends CFoamBlock implements FixedConstructionColor {"
+          },
+          {
+            "line": 25,
+            "text": "public Foam(DyeColor color, Properties properties) { super(properties); this.color = color; }"
+          },
+          {
+            "line": 27,
+            "text": "public String family() { return \"cfoam\"; }"
+          },
+          {
+            "line": 30,
+            "text": "public static final class WetFoam extends FreshCFoamBlock implements FixedConstructionColor {"
+          },
+          {
+            "line": 32,
+            "text": "public WetFoam(DyeColor color, Properties properties) { super(properties); this.color = color; }"
+          },
+          {
+            "line": 34,
+            "text": "public String family() { return \"cfoam_fresh\"; }"
+          },
+          {
+            "line": 37,
+            "text": "public static final class FoamSlab extends CFoamSlabBlock implements FixedConstructionColor {"
+          },
+          {
+            "line": 39,
+            "text": "public FoamSlab(DyeColor color, Properties properties) { super(properties); this.color = color; }"
+          },
+          {
+            "line": 41,
+            "text": "public String family() { return \"cfoam_slab\"; }"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FixedConstructionColor.java",
+        "sha256": "6b58c9eed1b292305a59d5a38a982806469cc22c0ff50bda913b4130cac8fd1e",
+        "matches": [
+          {
+            "line": 31,
+            "text": "long age = level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.CFoamBlockEntity foam"
+          },
+          {
+            "line": 32,
+            "text": "? foam.timer() : 0;"
+          },
+          {
+            "line": 34,
+            "text": "if (level.getBlockEntity(pos) instanceof com.gregtech.gregtech.blockentity.CFoamBlockEntity foam)"
+          },
+          {
+            "line": 35,
+            "text": "foam.restoreTimer(age);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/FreshCFoamBlock.java",
+        "sha256": "f1bac99e43fd186664e4a2b206c16bee5a930724f211f27c1469312f62184789",
+        "matches": [
+          {
+            "line": 3,
+            "text": "import com.gregtech.gregtech.blockentity.CFoamBlockEntity;"
+          },
+          {
+            "line": 12,
+            "text": "/** Only wet GT6 construction foam has a drying block entity. Hardened foam is an ordinary block. */"
+          },
+          {
+            "line": 13,
+            "text": "public class FreshCFoamBlock extends CFoamBlock implements EntityBlock {"
+          },
+          {
+            "line": 14,
+            "text": "public FreshCFoamBlock(Properties properties) { super(true, properties); }"
+          },
+          {
+            "line": 19,
+            "text": "return fresh() ? new CFoamBlockEntity(pos, state) : null;"
+          },
+          {
+            "line": 26,
+            "text": "if (be instanceof CFoamBlockEntity foam) foam.tick();"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/CFoamBlockEntity.java",
+        "sha256": "a09ee3d08a6ba4d4303ac4194be7d91f0e4e7ef2d48da22facda659fa8432a2d",
+        "matches": [
+          {
+            "line": 3,
+            "text": "import com.gregtech.gregtech.block.misc.CFoamBlock;"
+          },
+          {
+            "line": 11,
+            "text": "* GT6's drying construction foam ({@code MultiTileEntityCFoam})."
+          },
+          {
+            "line": 13,
+            "text": "* <p>GT6 rolls once per tick after a hundred tick grace period: {@code aTimer >= 100 && !mFoamDried"
+          },
+          {
+            "line": 14,
+            "text": "* && rng(5900) == 0} sets {@code mFoamDried} and swaps in the hardened texture. A player can also dry"
+          },
+          {
+            "line": 15,
+            "text": "* it by hand ({@code dryFoam}, which the port exposes as {@link #dry()}). The port turns the wet block"
+          },
+          {
+            "line": 16,
+            "text": "* into {@code gt6ce:cfoam} — the same block GT6 swaps to."
+          },
+          {
+            "line": 18,
+            "text": "public class CFoamBlockEntity extends BlockEntity {"
+          },
+          {
+            "line": 20,
+            "text": "public static final int GRACE_TICKS = com.gregtech.gregtech.block.ConstructionRules.FOAM_GRACE;"
+          },
+          {
+            "line": 22,
+            "text": "public static final int DRY_CHANCE = com.gregtech.gregtech.block.ConstructionRules.FOAM_DRY_CHANCE;"
+          },
+          {
+            "line": 27,
+            "text": "public CFoamBlockEntity(BlockPos pos, BlockState state) {"
+          },
+          {
+            "line": 28,
+            "text": "super(GTBlockEntities.CFOAM.get(), pos, state);"
+          },
+          {
+            "line": 46,
+            "text": "* GT6's {@code dryFoam}: the wet foam becomes the hardened block. Public so the GameTest (and a"
+          },
+          {
+            "line": 49,
+            "text": "* @return true when this call dried the foam"
+          },
+          {
+            "line": 55,
+            "text": "CFoamBlock.hardened().defaultBlockState(),"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/bootstrap/registration/OriginCreativeContents.java",
+        "sha256": "b1cc1bd2676299e724f1bde25cf379ca875908cbd3287e87ddbda4f61d33bdbe",
+        "matches": [
+          {
+            "line": 40,
+            "text": "if(type.equals(\"ConcreteBlock\")||type.equals(\"ColoredConstructionBlock\")||type.equals(\"ColoredGlassBlock\")||id.startsWith(\"glass_\")||id.startsWith(\"cfoam_\")||id.equals(\"asphalt\")) return \"construction\";"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/DyeProcessingRecipes.java",
+        "sha256": "7c73da3467c76ea41e09a9a51b5cf2e164bbc9fccaa9c2f3200eae2efb7f9168",
+        "matches": [
+          {
+            "line": 22,
+            "text": "/** Original Loader_Recipes_Other dye/oil/foam chain and Loader_Recipes_Vanilla flowers."
+          },
+          {
+            "line": 26,
+            "text": "/** Original Loader_Recipes_Other dye/oil/foam chain and Loader_Recipes_Vanilla flowers."
+          },
+          {
+            "line": 45,
+            "text": "mixer(16,null,new FluidStack[]{fluid(\"Dye_Chemical_\"+color,16),fluid(\"CFoam\",100)},fluid(\"CFoam_Dyed_\"+color,100));"
+          },
+          {
+            "line": 51,
+            "text": "var wet = colored(\"cfoam_fresh\", dyeColor, 1);"
+          },
+          {
+            "line": 53,
+            "text": "new FluidStack[]{fluid(\"CFoam_Dyed_\"+color,100),fluid(\"Air\",1000)},null,16,16,0));"
+          },
+          {
+            "line": 54,
+            "text": "add(MachineRecipeMaps.Drying,new Recipe(new ItemStack[]{wet},new ItemStack[]{colored(\"cfoam\",dyeColor,1)},null,null,null,null,16,16,0));"
+          },
+          {
+            "line": 64,
+            "text": "for(String kind:new String[]{\"glass_clear\",\"glass_glow\",\"cfoam\"})"
+          },
+          {
+            "line": 72,
+            "text": "new FluidStack[]{fluid(\"CFoam_Dyed_\"+color,100)},fluid(\"CFoam_DyedOwned_\"+color,100));"
+          },
+          {
+            "line": 74,
+            "text": "new FluidStack[]{fluid(\"CFoam_Dyed_\"+color,400)},fluid(\"CFoam_DyedOwned_\"+color,400));"
+          },
+          {
+            "line": 100,
+            "text": "/** GT6 Loader_Recipes_Crops seed oils and Loader_Recipes_Other foam hydration. */"
+          },
+          {
+            "line": 112,
+            "text": "new FluidStack[]{fluid(water,1000)},fluid(\"CFoam\",1000));"
+          },
+          {
+            "line": 114,
+            "text": "new FluidStack[]{fluid(water,4000)},fluid(\"CFoam\",4000));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/PanelMaterialRegistration.java",
+        "sha256": "91fd4448c5aa93c9de4360094da26acc3d80d017c8134cfb5a6614d53a4749fd",
+        "matches": [
+          {
+            "line": 29,
+            "text": "for (String kind : List.of(\"concrete\", \"asphalt\", \"cfoam\", \"cfoam_fresh\", \"cfoam_slab\")) {"
+          },
+          {
+            "line": 33,
+            "text": "default -> com.gregtech.gregtech.data.generated.GT6Materials.Compounds.ConstructionFoam;"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/content/recipe/UtilityProcessingRecipes.java",
+        "sha256": "87b0bb3021128b29cc2950d5815d7d71ad56679ac019d017b2328ae6803d5fdc",
+        "matches": [
+          {
+            "line": 35,
+            "text": "add(\"foam_remover/\"+acid,MachineRecipeMaps.Canner,256,16,items(item(\"gt6ce:empty_spray_can\",1)),items(item(\"gt6ce:c_foam_removal_spray\",1)),"
+          },
+          {
+            "line": 37,
+            "text": "add(\"foam_hardener\",MachineRecipeMaps.Canner,256,16,items(item(\"minecraft:sand\",7),item(\"gt6ce:empty_spray_can\",1)),items(item(\"gt6ce:hardening_spray\",1)),null,null);"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamHardener.java",
+        "sha256": "a4dbbbb0c1e0afc0582ead7c97734aaa097811d779fbf9e2106ed92b3fae9419",
+        "matches": [
+          {
+            "line": 3,
+            "text": "import com.gregtech.gregtech.blockentity.CFoamBlockEntity;"
+          },
+          {
+            "line": 15,
+            "text": "* GT6 {@code Behavior_Spray_Foam_Hardener} ({@code Behavior_Spray_Foam_Hardener.java:46-133}) — the"
+          },
+          {
+            "line": 21,
+            "text": "* same order — {@code ITileEntityFoamable} ({@code :99}), {@code IBlockFoamable} ({@code :101}), the"
+          },
+          {
+            "line": 22,
+            "text": "* IC2 cable's {@code foamed} byte ({@code :103-111}), the two IC2 foam blocks ({@code :113-114}) —"
+          },
+          {
+            "line": 23,
+            "text": "* and reports {@code 10} uses for a full block, {@code 5} for a C-Foam slab"
+          },
+          {
+            "line": 24,
+            "text": "* ({@code :101}, {@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}).</p>"
+          },
+          {
+            "line": 26,
+            "text": "* <p>Only the wet block dries: {@code BlockCFoamFresh.dryFoam} swaps in {@code BlocksGT.CFoam} with"
+          },
+          {
+            "line": 27,
+            "text": "* the same metadata ({@code BlockCFoamFresh:110-112}), while {@code BlockCFoam.dryFoam} answers"
+          },
+          {
+            "line": 28,
+            "text": "* {@code F} ({@code BlockCFoam:57-60}), so an already hardened block costs nothing.</p>"
+          },
+          {
+            "line": 32,
+            "text": "* <p>The port's wet foam already owns exactly that operation: {@link CFoamBlockEntity#dry()} is"
+          },
+          {
+            "line": 33,
+            "text": "* documented as GT6's {@code dryFoam} and swaps the block for {@code gt6ce:cfoam}"
+          },
+          {
+            "line": 34,
+            "text": "* ({@code CFoamBlockEntity:43-54}), reporting whether it did. GT6's {@code MultiTileEntityCFoam}"
+          },
+          {
+            "line": 35,
+            "text": "* reaches it through {@code ITileEntityFoamable} ({@code MultiTileEntityCFoam:118-124}), which is the"
+          },
+          {
+            "line": 41,
+            "text": "* {@link BehaviorSprayFoamRemover} for why.</p>"
+          },
+          {
+            "line": 43,
+            "text": "public final class BehaviorSprayFoamHardener {"
+          },
+          {
+            "line": 45,
+            "text": "/** GT6 {@code MultiItemRandomTools:288}: {@code (Spray_Empty, Spray_Foam_Hardener_Used, Spray_Foam_Hardener, 256)}. */"
+          },
+          {
+            "line": 48,
+            "text": "/** GT6 {@code Behavior_Spray_Foam_Hardener:54}: {@code mUses = aUses * 10}. */"
+          },
+          {
+            "line": 51,
+            "text": "/** GT6 {@code :99,101}: hardening a full C-Foam block costs this many uses. */"
+          },
+          {
+            "line": 54,
+            "text": "/** GT6 {@code :101}: the same block as a slab costs this many. Nothing in the port is a foam slab. */"
+          },
+          {
+            "line": 57,
+            "text": "private BehaviorSprayFoamHardener() {}"
+          },
+          {
+            "line": 67,
+            "text": "/** GT6 {@code Behavior_Spray_Foam_Hardener:58-93}: one click. */"
+          },
+          {
+            "line": 71,
+            "text": "BehaviorSprayFoamHardener::harden, hitX, hitY, hitZ);"
+          },
+          {
+            "line": 75,
+            "text": "* GT6 {@code :95-116} for the port's content: the wet foam dries."
+          },
+          {
+            "line": 77,
+            "text": "* @return {@link #HARDEN_COST} when the foam dried, {@code 0} when it was already hard or not"
+          },
+          {
+            "line": 78,
+            "text": "*         foam at all"
+          },
+          {
+            "line": 83,
+            "text": "if (!(level.getBlockEntity(pos) instanceof CFoamBlockEntity foam)) return 0L; // :99 / :101→F"
+          },
+          {
+            "line": 84,
+            "text": "return foam.dry() ? HARDEN_COST : 0L;                                 // :99"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/BehaviorSprayFoamRemover.java",
+        "sha256": "8a6d8d1a09651638b7d3d2d1183f8ecbe4434a8780b9ce6acd338a0d96bf5346",
+        "matches": [
+          {
+            "line": 3,
+            "text": "import com.gregtech.gregtech.block.misc.CFoamBlock;"
+          },
+          {
+            "line": 17,
+            "text": "* GT6 {@code Behavior_Spray_Foam_Remover} ({@code Behavior_Spray_Foam_Remover.java:46-132}) — the"
+          },
+          {
+            "line": 18,
+            "text": "* C-Foam Removal Spray."
+          },
+          {
+            "line": 22,
+            "text": "* <p>{@code remove(...)} ({@code :95-115}) asks, in this order: an {@code ITileEntityFoamable} block"
+          },
+          {
+            "line": 23,
+            "text": "* entity ({@code :99}), an {@code IBlockFoamable} block ({@code :101}), an IC2 cable's"
+          },
+          {
+            "line": 24,
+            "text": "* {@code foamed} byte ({@code :103-111}), then the IC2 foam and reinforced-foam blocks"
+          },
+          {
+            "line": 25,
+            "text": "* ({@code :113}). The first two answer with {@code 10} uses; a C-Foam <em>slab</em> costs {@code 5}"
+          },
+          {
+            "line": 26,
+            "text": "* instead ({@code :101}, {@code aBlock instanceof BlockCFoamFresh && SIDES_VALID[mSide]}). Note the"
+          },
+          {
+            "line": 30,
+            "text": "* <p>Both C-Foam blocks are foamable, and both answer {@code removeFoam} by setting the block to air"
+          },
+          {
+            "line": 31,
+            "text": "* ({@code BlockCFoamFresh:115-117} for the wet one, {@code BlockCFoam:63-65} for the hardened one), so"
+          },
+          {
+            "line": 32,
+            "text": "* the spray removes hardened foam too. The wet/hardened pair is in the port as"
+          },
+          {
+            "line": 33,
+            "text": "* {@code gt6ce:cfoam_fresh} / {@code gt6ce:cfoam} ({@code CFoamBlock}, {@code GTDecorBlocks:96-97}).</p>"
+          },
+          {
+            "line": 38,
+            "text": "*   <li><b>No slabs.</b> The port registers the two full C-Foam blocks only, so the {@code 5} use"
+          },
+          {
+            "line": 41,
+            "text": "*   <li><b>No IC2 and no {@code ITileEntityFoamable}.</b> The IC2 foam/reinforced-foam/scaffold"
+          },
+          {
+            "line": 42,
+            "text": "*       branches ({@code :113}, and {@code Behavior_Spray_Foam:129-130} on the placement side) and"
+          },
+          {
+            "line": 43,
+            "text": "*       the machine-face foaming ({@code :99}) need content the port does not have.</li>"
+          },
+          {
+            "line": 46,
+            "text": "public final class BehaviorSprayFoamRemover {"
+          },
+          {
+            "line": 48,
+            "text": "/** GT6 {@code MultiItemRandomTools:279}: {@code new Behavior_Spray_Foam_Remover(Spray_Empty, Spray_Foam_Remover_Used, Spray_Foam_Remover, 256)}. */"
+          },
+          {
+            "line": 51,
+            "text": "/** GT6 {@code Behavior_Spray_Foam_Remover:54}: {@code mUses = aUses * 10}. */"
+          },
+          {
+            "line": 54,
+            "text": "/** GT6 {@code :101}: a full C-Foam block costs this many uses. */"
+          },
+          {
+            "line": 57,
+            "text": "/** GT6 {@code :101}: the same block as a slab costs this many. Nothing in the port is a foam slab. */"
+          },
+          {
+            "line": 60,
+            "text": "private BehaviorSprayFoamRemover() {}"
+          },
+          {
+            "line": 63,
+            "text": "public static Consumable cFoamRemovalSpray() {"
+          },
+          {
+            "line": 65,
+            "text": "ItemBehaviors.stack(\"gt6ce:c_foam_removal_spray_2\"),"
+          },
+          {
+            "line": 66,
+            "text": "ItemBehaviors.stack(\"gt6ce:c_foam_removal_spray\"),"
+          },
+          {
+            "line": 70,
+            "text": "/** GT6 {@code Behavior_Spray_Foam_Remover:58-93}: one click. */"
+          },
+          {
+            "line": 73,
+            "text": "return ItemBehaviors.useSpray(level, pos, side, player, stack, cFoamRemovalSpray(),"
+          },
+          {
+            "line": 74,
+            "text": "BehaviorSprayFoamRemover::remove, hitX, hitY, hitZ);"
+          },
+          {
+            "line": 78,
+            "text": "* GT6 {@code :95-115} for the port's content: wet and hardened C-Foam are set to air."
+          },
+          {
+            "line": 80,
+            "text": "* @return {@link #REMOVE_COST} when a foam block was removed, {@code 0} otherwise"
+          },
+          {
+            "line": 86,
+            "text": "if (!(state.getBlock() instanceof CFoamBlock)) return 0L;      // :101, :113 replaced"
+          },
+          {
+            "line": 87,
+            "text": "// GT6's removeFoam is `setBlockToAir` with WD's flag 3 on both foam blocks."
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+        "sha256": "3338b24ba34a32608a2d74a470a63c253a48eeb5e1f692f7b1e83c50a61bf552",
+        "matches": [
+          {
+            "line": 37,
+            "text": "* to it (e.g. {@code MultiItemRandomTools:279} for the C-Foam removal spray, {@code :517} for the"
+          },
+          {
+            "line": 98,
+            "text": "case \"BehaviorSprayFoamHardener\" -> BehaviorSprayFoamHardener.class;"
+          },
+          {
+            "line": 99,
+            "text": "case \"BehaviorSprayFoamRemover\" -> BehaviorSprayFoamRemover.class;"
+          },
+          {
+            "line": 238,
+            "text": "return BehaviorSprayFoamHardener.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);"
+          },
+          {
+            "line": 243,
+            "text": "if (id.startsWith(\"c_foam_removal_spray\")) {"
+          },
+          {
+            "line": 244,
+            "text": "return BehaviorSprayFoamRemover.useOn(level, pos, side, player, stack, hitX, hitY, hitZ);"
+          },
+          {
+            "line": 460,
+            "text": "* {@code Behavior_Spray_Foam_Hardener:80-91}): subtract, and when nothing is left run"
+          },
+          {
+            "line": 516,
+            "text": "* One spray operation — GT6's {@code foam} ({@code Behavior_Spray_Foam:109-178}),"
+          },
+          {
+            "line": 517,
+            "text": "* {@code harden} ({@code Behavior_Spray_Foam_Hardener:95-116}),"
+          },
+          {
+            "line": 518,
+            "text": "* {@code remove} ({@code Behavior_Spray_Foam_Remover:95-115}) and"
+          },
+          {
+            "line": 535,
+            "text": "* ({@code Behavior_Spray_Foam_Remover:58-93} is the shortest copy): refuse while the client side"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+        "sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+        "matches": [
+          {
+            "line": 89,
+            "text": "public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<com.gregtech.gregtech.blockentity.CFoamBlockEntity>> CFOAM=BLOCK_ENTITIES.register(\"cfoam\",()->BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.CFoamBlockEntity::new,GTConstructionVariants.wetFoams()).build(null));"
+          },
+          {
+            "line": 534,
+            "text": "/** GT6's drying construction foam ({@code MultiTileEntityCFoam}). */"
+          },
+          {
+            "line": 535,
+            "text": "public static final RegistryObject<BlockEntityType<com.gregtech.gregtech.blockentity.CFoamBlockEntity>> CFOAM ="
+          },
+          {
+            "line": 536,
+            "text": "BLOCK_ENTITY_TYPES.register(\"cfoam\", () ->"
+          },
+          {
+            "line": 537,
+            "text": "BlockEntityType.Builder.of(com.gregtech.gregtech.blockentity.CFoamBlockEntity::new,"
+          },
+          {
+            "line": 538,
+            "text": "GTConstructionVariants.wetFoams()).build(null));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionBlocks.java",
+        "sha256": "8ec2e4bb6019cb17711ce859ce065e2c2695fa623e614fcf70b3c7d7f3e2ac2b",
+        "matches": [
+          {
+            "line": 16,
+            "text": "public static RegisteredBlock<CFoamSlabBlock> CFOAM_SLAB;"
+          },
+          {
+            "line": 18,
+            "text": "public static RegisteredBlock<CFoamBlock> CFOAM, CFOAM_FRESH;"
+          },
+          {
+            "line": 36,
+            "text": "CFOAM_SLAB = RegisteredBlock.registerBlock(\"cfoam_slab\", () -> new CFoamSlabBlock("
+          },
+          {
+            "line": 39,
+            "text": "item(\"cfoam_slab\", CFOAM_SLAB);"
+          },
+          {
+            "line": 46,
+            "text": "CFOAM = RegisteredBlock.registerBlock(\"cfoam\", () -> new CFoamBlock("
+          },
+          {
+            "line": 49,
+            "text": "item(\"cfoam\", CFOAM);"
+          },
+          {
+            "line": 50,
+            "text": "CFOAM_FRESH = RegisteredBlock.registerBlock(\"cfoam_fresh\", () -> new FreshCFoamBlock("
+          },
+          {
+            "line": 53,
+            "text": "item(\"cfoam_fresh\", CFOAM_FRESH);"
+          },
+          {
+            "line": 61,
+            "text": "CFOAM = GTConstructionVariants.defaultBlock(\"cfoam\");"
+          },
+          {
+            "line": 62,
+            "text": "CFOAM_FRESH = GTConstructionVariants.defaultBlock(\"cfoam_fresh\");"
+          },
+          {
+            "line": 63,
+            "text": "CFOAM_SLAB = GTConstructionVariants.defaultBlock(\"cfoam_slab\");"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTConstructionVariants.java",
+        "sha256": "63fa87fcfa3f65d2233d19349f16ca361050ce7476faf5f7c859e9c9e2ed0977",
+        "matches": [
+          {
+            "line": 49,
+            "text": "case \"cfoam\" -> new FixedConstructionBlocks.Foam(color, properties);"
+          },
+          {
+            "line": 50,
+            "text": "case \"cfoam_fresh\" -> new FixedConstructionBlocks.WetFoam(color, properties);"
+          },
+          {
+            "line": 51,
+            "text": "case \"cfoam_slab\" -> new FixedConstructionBlocks.FoamSlab(color, properties);"
+          },
+          {
+            "line": 73,
+            "text": "public static Block[] wetFoams() {"
+          },
+          {
+            "line": 75,
+            "text": "result.add(LEGACY.get(\"cfoam_fresh\").get());"
+          },
+          {
+            "line": 76,
+            "text": "VARIANTS.get(\"cfoam_fresh\").values().forEach(block -> result.add(block.get()));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/worldgen/center/NativeOriginWorld.java",
+        "sha256": "103c41523322071b04ad0ea7d5d7045231b601a66f76c7d3bd68194aaf24f314",
+        "matches": [
+          {
+            "line": 3,
+            "text": "import com.gregtech.gregtech.block.misc.CFoamSlabBlock;"
+          },
+          {
+            "line": 80,
+            "text": "String blockId = key.side >= 0 ? (key.id.equals(\"gt6ce:glass_glow\") ? \"gt6ce:glass_glow_slab\" : \"gt6ce:cfoam_slab\") : key.id;"
+          },
+          {
+            "line": 111,
+            "text": "if (key.side >= 0) state = state.setValue(CFoamSlabBlock.FACING, Direction.from3DDataValue(key.side));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTDecorBlocks.java",
+        "sha256": "9facc5d99806ac5ac82384deb7f0c2582e76fe5725b9504dc861be7d00f2c266",
+        "matches": [
+          {
+            "line": 29,
+            "text": "// N11: CFoam"
+          },
+          {
+            "line": 30,
+            "text": "public static RegistryObject<CFoamBlock> CFOAM;"
+          },
+          {
+            "line": 31,
+            "text": "public static RegistryObject<com.gregtech.gregtech.block.misc.CFoamSlabBlock> CFOAM_SLAB;"
+          },
+          {
+            "line": 32,
+            "text": "public static RegistryObject<CFoamBlock> CFOAM_FRESH;"
+          },
+          {
+            "line": 118,
+            "text": "public static RegistryObject<com.gregtech.gregtech.block.misc.CFoamSlabBlock> GLOW_GLASS_SLAB;"
+          },
+          {
+            "line": 126,
+            "text": "CFOAM=reference(GTConstructionVariants.defaultId(\"cfoam\"));"
+          },
+          {
+            "line": 127,
+            "text": "CFOAM_FRESH=reference(GTConstructionVariants.defaultId(\"cfoam_fresh\"));"
+          },
+          {
+            "line": 128,
+            "text": "CFOAM_SLAB=reference(GTConstructionVariants.defaultId(\"cfoam_slab\"));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTIconSetBlocks.java",
+        "sha256": "bdd07cb9b3a033cb7b3f4113d363bc11da6e25399a7ec50866106f0311fecfbe",
+        "matches": [
+          {
+            "line": 36,
+            "text": "skip.addAll(Set.of(\"asphalt\", \"cfoam_fresh\", \"concrete\", \"concrete_reinforced\","
+          },
+          {
+            "line": 273,
+            "text": "if (n.startsWith(\"cfoam_fresh\")) {"
+          },
+          {
+            "line": 276,
+            "text": "if (n.startsWith(\"cfoam_hardened\")) {"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/registry/GTMiscBlocks.java",
+        "sha256": "6107c45c9fe4b8aca61e2c2de9495e5aea2415b427c71f65d9e86516de15b332",
+        "matches": [
+          {
+            "line": 23,
+            "text": "public static RegistryObject<PanelBlock> PANEL_CFOAM;"
+          },
+          {
+            "line": 86,
+            "text": "return List.of(PANEL_WOOD, PANEL_CONCRETE, PANEL_CFOAM, PANEL_ASPHALT, PANEL_COLORED_GRAY, PANEL_COLORED_BLACK);"
+          },
+          {
+            "line": 108,
+            "text": "PANEL_CFOAM = reg(\"panel_cfoam\", () -> panel(\"cfoam\"));"
+          },
+          {
+            "line": 114,
+            "text": "if(!java.util.Set.of(\"wood\",\"concrete\",\"cfoam\",\"asphalt\",\"colored_gray\",\"colored_black\").contains(spec.material()))GTBlocks.BLOCK_ITEMS.register(spec.id(),()->new com.gregtech.gregtech.item.PanelItem(spec,new Item.Properties()));"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingDecor.java",
+        "sha256": "6a2939aa34968b4f91a145f5c010e8ee012a8f905359498d491f802e830febe3",
+        "matches": [
+          {
+            "line": 29,
+            "text": "if (java.util.Set.of(\"wood\", \"concrete\", \"cfoam\", \"asphalt\", \"colored_gray\", \"colored_black\").contains(variant.material()))"
+          },
+          {
+            "line": 39,
+            "text": "if (!java.util.Set.of(\"wood\", \"concrete\", \"cfoam\", \"asphalt\", \"colored_gray\", \"colored_black\").contains(variant.material()))"
+          }
+        ]
+      },
+      {
+        "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/registry/GTRemainingIconBlocks.java",
+        "sha256": "d28b89f2491505d39e8b136c3c675a38fa77fcb1b2cbd7ce170955f2c90d358e",
+        "matches": [
+          {
+            "line": 19,
+            "text": "skip.addAll(Set.of(\"asphalt\", \"cfoam_fresh\", \"concrete\", \"concrete_reinforced\","
+          },
+          {
+            "line": 166,
+            "text": "if (n.startsWith(\"cfoam_fresh\")) {"
+          },
+          {
+            "line": 169,
+            "text": "if (n.startsWith(\"cfoam_hardened\")) {"
+          }
+        ]
+      }
+    ],
+    "scope": "Foam identifier locator only; actual item definitions/factories/dispatch read separately."
+  },
+  "formal_findings_added": [
+    429
+  ],
+  "findings": [
+    {
+      "id": 429,
+      "contract": "Original sixteen-color loop creates normal and owned C-Foam sprays, each full/used:64 item forms, with Behavior_Spray_Foam attached; it handles sneak mode switching and placement. Constructor uses argument256 and multiplies it by10 internally.",
+      "current": "Current GTMultiItemsGen/TechnologicalItemDefinitions and their actual factories do not provide this family; ItemBehaviorCatalog/ItemBehaviors have hardener/remover and paint routes but no foam placement/mode route. PaintSprayItem handles dye, not C-Foam.",
+      "scope": "Missing dedicated original spray family/item behavior. Existing fresh/hardened foam blocks, slab/state/owner data, removal/hardening and unrelated placement methods are not reported wholly absent. Wire coating remains separate078.",
+      "status": "Source contract gap; no registry/game execution or feature fix in this readability batch."
+    }
+  ],
+  "legacy_forms": [
+    {
+      "color_index": 0,
+      "normal_full_meta": 1100,
+      "normal_used_meta": 1101,
+      "owned_full_meta": 1132,
+      "owned_used_meta": 1133
+    },
+    {
+      "color_index": 1,
+      "normal_full_meta": 1102,
+      "normal_used_meta": 1103,
+      "owned_full_meta": 1134,
+      "owned_used_meta": 1135
+    },
+    {
+      "color_index": 2,
+      "normal_full_meta": 1104,
+      "normal_used_meta": 1105,
+      "owned_full_meta": 1136,
+      "owned_used_meta": 1137
+    },
+    {
+      "color_index": 3,
+      "normal_full_meta": 1106,
+      "normal_used_meta": 1107,
+      "owned_full_meta": 1138,
+      "owned_used_meta": 1139
+    },
+    {
+      "color_index": 4,
+      "normal_full_meta": 1108,
+      "normal_used_meta": 1109,
+      "owned_full_meta": 1140,
+      "owned_used_meta": 1141
+    },
+    {
+      "color_index": 5,
+      "normal_full_meta": 1110,
+      "normal_used_meta": 1111,
+      "owned_full_meta": 1142,
+      "owned_used_meta": 1143
+    },
+    {
+      "color_index": 6,
+      "normal_full_meta": 1112,
+      "normal_used_meta": 1113,
+      "owned_full_meta": 1144,
+      "owned_used_meta": 1145
+    },
+    {
+      "color_index": 7,
+      "normal_full_meta": 1114,
+      "normal_used_meta": 1115,
+      "owned_full_meta": 1146,
+      "owned_used_meta": 1147
+    },
+    {
+      "color_index": 8,
+      "normal_full_meta": 1116,
+      "normal_used_meta": 1117,
+      "owned_full_meta": 1148,
+      "owned_used_meta": 1149
+    },
+    {
+      "color_index": 9,
+      "normal_full_meta": 1118,
+      "normal_used_meta": 1119,
+      "owned_full_meta": 1150,
+      "owned_used_meta": 1151
+    },
+    {
+      "color_index": 10,
+      "normal_full_meta": 1120,
+      "normal_used_meta": 1121,
+      "owned_full_meta": 1152,
+      "owned_used_meta": 1153
+    },
+    {
+      "color_index": 11,
+      "normal_full_meta": 1122,
+      "normal_used_meta": 1123,
+      "owned_full_meta": 1154,
+      "owned_used_meta": 1155
+    },
+    {
+      "color_index": 12,
+      "normal_full_meta": 1124,
+      "normal_used_meta": 1125,
+      "owned_full_meta": 1156,
+      "owned_used_meta": 1157
+    },
+    {
+      "color_index": 13,
+      "normal_full_meta": 1126,
+      "normal_used_meta": 1127,
+      "owned_full_meta": 1158,
+      "owned_used_meta": 1159
+    },
+    {
+      "color_index": 14,
+      "normal_full_meta": 1128,
+      "normal_used_meta": 1129,
+      "owned_full_meta": 1160,
+      "owned_used_meta": 1161
+    },
+    {
+      "color_index": 15,
+      "normal_full_meta": 1130,
+      "normal_used_meta": 1131,
+      "owned_full_meta": 1162,
+      "owned_used_meta": 1163
+    }
+  ],
+  "refactoring": {
+    "files": {
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java": {
+        "old_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+        "before_raw_sha256": "5988d830de0b678a5f35bb94e7d3cdb699c3bc84d22ef72bb6130f5839b5bd70",
+        "after_raw_sha256": "3338b24ba34a32608a2d74a470a63c253a48eeb5e1f692f7b1e83c50a61bf552",
+        "before_lines": 710,
+        "after_lines": 655,
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2709,
+            "token_sha256": "a7ace4cf909b2837b74f6f513f9b665735012321c7cf6f91d0f5669004fee0b8"
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2725,
+            "token_sha256": "c3ebd1e11789e20cdee2a8bbdefe1b4ace051736cb23d250ed60467f6f1bc607"
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java": {
+        "old_path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+        "before_raw_sha256": "fdf4278766b6b2269ddbe3760bf435a5e2796b805a077a9808c3d4c0a11840e0",
+        "after_raw_sha256": "d91622f80513bb0ee15a2035a0a977153001bb762c6d2f4eb13d164a8f87fb50",
+        "before_lines": 156,
+        "after_lines": 177,
+        "views": [
+          {
+            "platform": "neoforge",
+            "tokens": 817,
+            "scope": "Complete former Neo code retained"
+          },
+          {
+            "platform": "forge-newly-shared",
+            "tokens": 817,
+            "scope": "Same complete code; requires actual Forge compile"
+          }
+        ]
+      }
+    },
+    "helpers": [
+      {
+        "method": "obstructed",
+        "tokens": 227,
+        "body_sha256": "54fd482efa5a2d1ba6d7c3fe61f10fd5463282cafac2e54d27465a231e02fe5a"
+      },
+      {
+        "method": "creative",
+        "tokens": 13,
+        "body_sha256": "970521debeb43e3acf47b5d58f26910b2ee7abd76b388edc06709248daa7b551"
+      },
+      {
+        "method": "mayEdit",
+        "tokens": 25,
+        "body_sha256": "37d2ed675f0901b3ba76d08b7bf8bcb7c4454a77c4ba8e3658fc88b298f7f26f"
+      },
+      {
+        "method": "lightVanillaFire",
+        "tokens": 70,
+        "body_sha256": "cc017abd55bbe386cc3e2c24b191a937d1cd97d83b64fa5a5cc831973f5f099d"
+      },
+      {
+        "method": "primeTnt",
+        "tokens": 54,
+        "body_sha256": "86f705ff38d320e544afd2eb427023db8211b1df1ce2c0a624b978d916d0b4d8"
+      }
+    ],
+    "scope": "Exact old Forge bodies versus old/new shared helper bodies; complete remaining native views, imports, constants and comment changes enumerated.",
+    "boundary_types": "ItemBehaviors.Outcome/Ignitable and ManualToolBehaviorAccess.Outcome/Ignitable remain distinct public types. Forge igniteToolClick retains its own target identity; not included in five helper delegation.",
+    "constant_changes": {
+      "private_obstruction_bands": "One identical definition retained in shared access class; old declaration comment moved there.",
+      "public_TNT_COST": "Original10000L retained in access class; ItemBehaviors now compile-time alias with same value."
+    },
+    "removed_unused_imports": [
+      "net.minecraft.world.level.block.DoorBlock",
+      "net.minecraft.world.level.block.LadderBlock",
+      "net.minecraft.world.level.block.TrapDoorBlock",
+      "net.minecraft.world.phys.AABB"
+    ]
+  },
+  "compiled_inputs": [
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "raw_sha256": "3338b24ba34a32608a2d74a470a63c253a48eeb5e1f692f7b1e83c50a61bf552"
+    },
+    {
+      "platform": "forge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "path": "multiversion/versions/1.20.1-forge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "raw_sha256": "d91622f80513bb0ee15a2035a0a977153001bb762c6d2f4eb13d164a8f87fb50"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/ItemBehaviors.java",
+      "raw_sha256": "1060a629c7760347358e9c62033e2f6b59347f291939c1f6dab11cdd4fd6495b"
+    },
+    {
+      "platform": "neoforge",
+      "current_path": "multiversion/src/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "path": "multiversion/versions/1.21.1-neoforge/build/generated/stonecutter/main/java/com/gregtech/gregtech/item/behavior/ManualToolBehaviorAccess.java",
+      "raw_sha256": "d91622f80513bb0ee15a2035a0a977153001bb762c6d2f4eb13d164a8f87fb50"
+    }
+  ],
+  "compile": {
+    "status": "passed",
+    "duration_seconds": 117,
+    "log": "work/item-behavior-ownership-audit-20261022/compile.log",
+    "log_sha256": "9447ee5a9ec76463b931c3e5565ba8d41e91fa8f103106321a845303dede9831",
+    "tasks": [
+      "multiversion:1.20.1-forge:compileJava",
+      "multiversion:1.21.1-neoforge:compileJava"
+    ],
+    "temporary_adapter": "work/storage-inserter-audit-20261022/cached-api-classpath.gradle",
+    "temporary_adapter_sha256": "51a1ed5becc4b14c87f6eeef31d2c8fc984e02735ee630b3c292496c2798cdbe",
+    "cached_forge_artifacts": [
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-common-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-common-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "7786d88e4ffd38f62d057b86eb56aa6a116037f2a4dbccb0aa77877b7dc8f4fd",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/mezz/jei/jei-1.20.1-forge-api/15.20.0.119_mapped_official_1.20.1/jei-1.20.1-forge-api-15.20.0.119_mapped_official_1.20.1.jar",
+        "sha256": "b50a6a64c629e51346deec045495ba932be2bcab4ffb5a46fe483df1e06c832a",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1-api.jar",
+        "sha256": "268f4572a6297bcd38c176e9361ee245364bb255e1a74e0fec96a973ef1379c0",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/dev/emi/emi-forge/1.1.24+1.20.1_mapped_official_1.20.1/emi-forge-1.1.24+1.20.1_mapped_official_1.20.1.jar",
+        "sha256": "a2df46e253e208d39576808509eb384b42d992ba77d1c3aec31b97611be6e64b",
+        "action": "copied existing exact-coordinate jar"
+      },
+      {
+        "source": "C:/Users/90499/.gradle/caches/forge_gradle/deobf_dependencies/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "target": "C:/Users/90499/.gradle/caches/forge_gradle/bundled_deobf_repo/maven/modrinth/jade/11.13.2+forge_mapped_official_1.20.1/jade-11.13.2+forge_mapped_official_1.20.1.jar",
+        "sha256": "15030cb00590540a5a37bd6bd509df4c01116406dd7c1a760b55e81f83f2bd62",
+        "action": "copied existing exact-coordinate jar"
+      }
+    ],
+    "cached_neo_emi_api": {
+      "path": "C:/Dev/GregTech6/work/emi-maven/dev/emi/emi-neoforge/1.1.24+1.21.1/emi-neoforge-1.1.24+1.21.1-api.jar",
+      "sha256": "b3a8e23c5e59813f184423b94e37bb635867ddc9be2b68b3502fad7b9134779b"
+    },
+    "scope": "Actual dual compile with unchanged same-version local API adapter and four generated-input comparisons; not default offline/CI, game, old-save or full parity acceptance."
+  },
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "gameplay_changes": false,
+  "game_launched": false,
+  "jar_built": false,
+  "github_writes": false,
+  "goal_status": "active",
+  "whole_goal_complete": false,
+  "root_revalidation": {
+    "selected_sources_and_spans": "12 original/13 current and24 exact ranges match",
+    "closed_census_inputs": "All1229 path/hash tuples reproduce the saved aggregate; all30 definition paths and references match",
+    "census_meaning": "Reference locator only; code, inheritance, strings and no-op callbacks distinguished",
+    "read_only_tool_and_lexer": "Match recorded source identities",
+    "foam_sources": "Locator input hashes and64 distinct legacy item forms match",
+    "refactoring": "Five complete method bodies/comments and4 full platform views match controlled normalization",
+    "native_contracts": "Both Outcome/Ignitable identities retained; Forge target dispatch unchanged",
+    "class_move": "Old version path absent; shared path and four compiler inputs confirmed",
+    "compile": "117s dual compile; actual inputs/current projected tokens/exact local API identities match",
+    "protected_materials": "unchanged",
+    "historical_docs": "Prior lines preserved, new insertions only",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 429,
+      "new": [
+        429
+      ]
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "gameplay_acceptance": false,
+    "whole_goal_complete": false
+  }
+}
