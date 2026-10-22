@@ -1,5 +1,7 @@
 # P3 — Food, drinks, finite portable vessels and bottle filling
 
+2026-10-23 audit correction: the historical finite storage and capability implementation below does not include all original vessel behaviors. The source trace now confirms missing Cup/Jug/Thermos drinking, six open-vessel rain intake paths, the filled-item stack limit, and Jug held source pickup (433–436), in [the portable-vessel audit](PORTABLE_VESSEL_AUDIT.md). The 51 specifications and native storage remain present; this audit refactors capacity code without fixing those gameplay gaps.
+
 2026-10-22 audit correction: the historical “potential Forge double application” below is now a confirmed current source path on both platforms. The shared RadawayItem subtracts50 and the completion event subtracts the generated row again, using a pre-consumption copy. Duration also defaults to32 instead of original16 ticks. These are recorded, not gameplay fixes, in [the radiation-consumables audit](RADIATION_CONSUMABLES_AUDIT.md); older progress statements below describe their original implementation state.
 
 The single shared core now carries all 266 original food definitions, 272 drink definitions, 201 explicit food-statistic rows, source omission lists, nutrition mutation/threshold effects, measuring-pot/barometer capacity bands and original bottle-filling family definitions. Existing shared 51-vessel specifications, shape geometry and bottle catalog remain authoritative. Forge public row APIs are preserved by thin binding adapters; source snapshots are untouched.

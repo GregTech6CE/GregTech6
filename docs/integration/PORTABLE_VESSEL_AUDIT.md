@@ -1,0 +1,45 @@
+# 便携容器交互核对与容量规则整理
+
+2026-10-23，第一百三十批，基线 `2a5cf979b`。上一轮木桶核对、29个远端提交合并及双版构建交付已经完成，属于进展；本批以合并后源码为准。11原版／11当前重点Java、30段来源引用、14个实际原生条目及12段原生引用见[回执](verification/portable-vessel-audit-20261023.json)。原树只读，保留GregTech-6 Team／Gregorius Techneticies的LGPL来源；未导入或执行原游戏方法。
+
+## 当前已有范围
+
+PortableFluidContainerSpec含51种容器，其中40种胶囊、四种量杯、四种计压瓶及陶罐／瓷杯／保温杯。两版GTToolBlocks均遍历目录，注册真实PortableFluidContainerItem和PortableContainerBlock；物品和放置方块均有流体能力、内容保存及空满转移入口。这些不能再报成全部占位或完全没有容器能力。
+
+当前源码定位器读取八个列明根目录下1881份维护Java，区分类型引用、GTDrinks调用和天气入口。它排除普通注释／字面量／import，原始非活动Stonecutter代码也按注释排除，因此只是导航，不代替两端实际投影或运行验收。完整输入摘要和命中来源保存在回执中；1881不是已核文件数或完成率。
+
+## 433：三种可饮容器缺少原饮用入口
+
+原Cup、Jug和Thermos实现IMTE_GetFoodValues等接口。父类TileEntityBase08FluidContainer在内容至少250L且流体登记为饮料时提供手持使用、动作／时长和onEaten；每次扣250L并回写容器。Cup与Jug还分别允许所有面／顶面从放置容器饮用，Thermos继承默认不允许从方块面饮用。饮用还受饥饿、alwaysEdible及单件等条件限制，不能简化为任何流体都可直接喝。
+
+当前统一PortableFluidContainerItem没有对应use／完成饮用回调，注册属性也没有食物数据；真实原生Item.use只会在存在食物属性时启动消费。方块交互处理调容或FluidUtil搬液，空手并不会进入饮用链。已有BottleItem及流体展示物的GTDrinks调用不替代这三类容器。登记433，限饮用入口，不把另外48种容器也误报为应该能喝。本批不改变玩法。
+
+## 434：开放容器缺少自行接雨
+
+原Cup、Jug及四种MeasuringPot启用canFillWithRain。父类在全局时间600tick周期、降雨／露天／气候和顶部遮挡等条件下填入雨水，雷雨加倍；封闭计压瓶、胶囊和保温杯没有据此加入接雨范围。
+
+当前PortableContainerBlock没有getTicker或接雨入口，实体只维护物品、流体交互和保存同步；两端实际EntityBlock.getTicker默认返回null。相关注册没有给这一实体另挂自有天气任务。登记434为这六种开放容器的自接雨缺口；外部排水覆盖板或管道主动灌水是不同功能，不据此说它们永远无法得到水。未运行降雨世界。
+
+## 435：装液后仍使用空容器堆叠上限
+
+原物品入口MultiTileEntityItemInternal.getItemStackLimit会创建带物品数据的实体并调用IMTE_GetMaxStackSize。该容器父类只要mTank有液体就返回1；空容器才使用登记的默认值。
+
+当前51种物品统一登记为胶囊64、其他16，没有装液后的动态上限覆写。Forge实际ItemStack经物品扩展读取固定maxStackSize，Neo读取MAX_STACK_SIZE组件；stacksTo分别写入这两处。原生FluidHandlerItemStack只写Fluid标签或指定的VESSEL_CONTENTS组件，不自动把上限改成1。登记435为装液形态合同差异，和218的普通能源设备16→64不同；没有执行背包合并、物品复制或管道场景，不能把上限差异直接称为复制漏洞。
+
+## 436：陶罐缺少手持视线取液入口
+
+原Jug覆盖canPickUpFluids=true。父类onItemRightClick对单件陶罐进行视线检测，处理原版水／熔岩源、GT水体和其他IFluidBlock，按各分支模拟可接受量后取液；普通水还区分无限水条件。当前PortableFluidContainerItem只接对现有流体处理器的点击搬液，没有对应的空气右键／视线取源use入口，原生BlockItem也没有另给它实现该动作。
+
+登记436，限原手持取源路径，不宣称所有机器取液或所有容器交互都失败。另读到canWaterCrops的旧实现针对炼药锅及GrC／IC2／Thaumcraft等特定目标，不能误写成原版Minecraft耕地通用浇水；现代对应目标和可选联动仍待审查。
+
+## 容量规则整理与验证
+
+PortableCapacityRules原来八行的构造／查询／调节代码已展开；s、current、y改为spec、currentCapacity、hitY。四档量杯和八档计压瓶分别进入measuringPotStep／gasCylinderStep，再由adjustmentStep选择。完整原表达式的两支及选择条件逐字面量对应，严格大于边界、细调除10、容量1至额定上限的夹取和调用顺序保持。
+
+PortableContainerLimits把重复KEY、构造器和adjustable委托放到共用位置；两端容量读取和调节保存仍各自适配。Forge对非可调规格的提前返回、Neo的组件空数据清理，以及读取long／写入int等现有差异保留，没有为追求相同外观强行统一。非活动Neo代码也展开并明确参数名。
+
+PortableFluidContainerSpec展开构造和查询，补全参数间隔；全部51行、标志、温度及顺序不变。PortableFluidContainerItem展开能力包装和填充方法，把room改为availableCapacity；未改变准入、容量、交互或提示文本。
+
+四源237→351行，六份完整core／平台代码视图及注释受控保持，三个纯分档helper和两端被共用的成员签名／正文另核；四个实际Stonecutter生成输入对应当前源码。一次core／双版Java编译129秒通过，使用现有同版本缓存API及已缓存的合并后依赖，生产构建配置未变。本批没有新测试、游戏、存档重启、构建或发布，上一轮已交付的JAR不会自动包含本轮整理。
+
+原完整流体别名／材料矩阵、陶罐浇灌联动、放置／取回／旧档、腐坏及其余物品系统仍继续核对。436是累计编号，含已修与策略条目的账本不是待修数量或完成率；全面目标继续。

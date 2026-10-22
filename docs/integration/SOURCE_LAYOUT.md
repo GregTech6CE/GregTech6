@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-23：core PortableFluidContainerSpec定义51规格，PortableCapacityRules.adjustmentStep分派到量杯／计压瓶的严格高度分档。共享PortableContainerLimits只共用KEY／构造器／adjustable委托，容量数据仍分别适配标签／组件；PortableFluidContainerItem处理能力／准入／点击搬液，BlockEntity只存同一容器物品。四源整理及433–436实际入口缺口见[专题](PORTABLE_VESSEL_AUDIT.md)。
+
 2026-10-23：core WoodenBucketCatalog只定义箍／内容物目录；共享WoodenBucketItem负责变体、交互和1000L物品能力。GTMultiItems.registerWoodenBuckets／registerPaintSprays拥有各自唯一家族遍历，调用点／顺序不变，事件注册与平台类型保留。方法展开、完整投影和430–432差异见[木桶核对](WOODEN_BUCKET_AUDIT.md)。
 
 2026-10-22：共享item/behavior/ManualToolBehaviorAccess拥有权限、创造、遮挡、原版点火／TNT五个实际helper；ItemBehaviors保持公有委托与物品分派。两个Ignitable接口及Outcome记录仍分别保留，Forge点火目标不换身份。只读`tools/integration/inventory_original_item_behaviors.py --original <原src/main/java> --output <JSON>`排除注释／import，分开代码与反射线索，不据计数判移植完成；30类导航与泡沫喷罐429见[行为盘点](ITEM_BEHAVIOR_OWNERSHIP_AUDIT.md)。
