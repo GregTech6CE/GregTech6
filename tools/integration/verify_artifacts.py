@@ -32,20 +32,22 @@ PLATFORMS = {
 }
 
 
+# Exact known API-only injections use remap=false. Everything else must retain
+# compiler-generated named-to-SRG mappings, including future mixins.
+# GasImmersionMixin injects only setFluidTypeHeight, which Forge adds to Entity;
+# it is not a Mojang-obfuscated method. Do not exempt Entity injections generally.
+UNMAPPED_FORGE_API_MIXINS = frozenset({
+    'WaterContainerMixin', 'ComponentCoverCapabilitiesMixin',
+    'ReliableEmiNamespaceMixin', 'ReliableEmiGearboxIconMixin',
+    'GasImmersionMixin',
+})
+
+
 def required_forge_mixin_mappings(config):
-    # Exact known API-only injections use remap=false. Everything else must retain
-    # compiler-generated named-to-SRG mappings, including future mixins.
-    # GasImmersionMixin injects only setFluidTypeHeight, which Forge adds to Entity;
-    # it is not a Mojang-obfuscated method. Do not exempt Entity injections generally.
-    api_mixins = {
-        'WaterContainerMixin', 'ComponentCoverCapabilitiesMixin',
-        'ReliableEmiNamespaceMixin', 'ReliableEmiGearboxIconMixin',
-        'GasImmersionMixin',
-    }
     package = config['package'].replace('.', '/')
     return {package + '/' + name
             for name in config['mixins'] + config.get('client', [])
-            if package != 'com/gregtech/gregtech/mixin' or name not in api_mixins}
+            if package != 'com/gregtech/gregtech/mixin' or name not in UNMAPPED_FORGE_API_MIXINS}
 
 # Both production platforms must retain the restored gameplay implementations.
 # Shared-core agreement alone also accepts a material-only NeoForge skeleton.
@@ -319,7 +321,7 @@ def inspect(path, platform, required_core, properties, forbidden_tests):
                 raise ValueError(f'{path}: missing production Mixin manifest registration')
             mixin_verification = {'refmap': refmap_name, 'mapped_classes': len(mappings),
                                   'sha256': hashlib.sha256(archive.read(refmap_name)).hexdigest(),
-                                  'unmapped_forge_api_mixins': sorted(api_mixins)}
+                                  'unmapped_forge_api_mixins': sorted(UNMAPPED_FORGE_API_MIXINS)}
         hashes = {}
         for name, expected_hash in required_core.items():
             if counts.get(name) != 1:
