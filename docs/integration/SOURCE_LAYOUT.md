@@ -1,5 +1,7 @@
 # 当前源码导航与命名约定
 
+2026-10-22：core `content/energy/SignalWireColors.java`只给默认染色三元规则，Forge GregTechClient的物品／方块与Neo SignalWireClientSetup共用，BlockPaintColorMixin仍独立处理喷漆。Neo WireToolInteractions／SignalWireClientSetup展开，42局部名称明确，三完整流与含120双版编译见[客户端核查](SIGNAL_WIRE_CLIENT_AUDIT.md)。覆盖板准入和裸线继承资格分别追真实消费者，未在整理时改变策略。
+
 2026-10-22：`MassStorageBlock.interact`现在共用手持／按钮／背包交互，`isUnpackingTool`保留NeoToolBindings与Forge GTToolHelper边界，原生use入口只转换返回值。Neo `GTMetalChests`注册和查找方法展开，m／w／b改明确局部名，两源368→396行；完整旧业务归一、剩余代码和双版编译范围见[存储输入器与去重](STORAGE_INSERTER_AUDIT.md)。当前单台存入不等于原32751的跨设备扫描，后者登记413待移植。
 
 2026-10-22：GarbageStorageRules、GarbageData和两类垃圾实体四源509→621行，存取／保留／平台能力逐操作展开；70处e／f／t／c／i等改明确名称，包含Stonecutter非活动代码，并防止新名称捕获。原本保存能力、相同标签合并及首屏淘汰政策说明更正，七完整视图保持，见[专题](GARBAGE_POOL_AUDIT.md)／[回执](verification/garbage-pool-audit-20261022.json)。没有改变存储策略或菜单行为，其余职责拆分与全系统继续。
