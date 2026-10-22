@@ -1,8 +1,12 @@
 package com.gregtech.gregtech.gametest;
 
 import com.gregtech.gregtech.api.recipe.RecipeMap;
+import com.gregtech.gregtech.api.tool.GTToolType;
 import com.gregtech.gregtech.block.machine.BehaviorMachineBlock;
 import com.gregtech.gregtech.blockentity.machine.BehaviorMachineBlockEntity;
+import com.gregtech.gregtech.content.material.Materials;
+import com.gregtech.gregtech.content.material.generated.WoodMaterials;
+import com.gregtech.gregtech.item.GTToolItem;
 import com.gregtech.gregtech.client.gui.BehaviorMachineMenu;
 import com.gregtech.gregtech.jei.RecipeMachines;
 import net.minecraft.core.BlockPos;
@@ -11,9 +15,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.material.Fluids;
 //? if >=1.21.1 {
@@ -190,6 +198,58 @@ public final class BehaviorMachineTests {
         helper.getLevel().removeBlock(pos, false);
         helper.getLevel().removeBlock(above, false);
         helper.succeed();
+    }
+
+    @GameTest(template = "test_empty", timeoutTicks = 100)
+    public static void softHammerTogglesAndWrenchStillRotates(GameTestHelper helper) {
+        var pos = helper.absolutePos(new BlockPos(2, 0, 2)).atY(250);
+        var machine = place(helper, pos, "addon_sample:sample_switch");
+        helper.assertTrue(machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH, "starts north");
+        var player = survival(helper);
+        var hammer = GTToolItem.create(GTToolType.SOFT_HAMMER, Materials.Steel, WoodMaterials.Wood);
+        player.setItemInHand(InteractionHand.MAIN_HAND, hammer);
+        click(helper, pos, player, Direction.UP);
+        helper.assertTrue(machine.state().getBoolean("armed"), "soft hammer toggles");
+        helper.assertTrue(machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH,
+                "soft hammer does not rotate");
+        helper.assertTrue(hammer.getDamageValue() == 100, "soft hammer spends one tool click");
+        var crowbar = GTToolItem.create(GTToolType.CROWBAR, Materials.Steel, WoodMaterials.Wood);
+        helper.assertTrue(!crowbar.isEmpty(), "crowbar");
+        player.setItemInHand(InteractionHand.MAIN_HAND, crowbar);
+        click(helper, pos, player, Direction.UP);
+        helper.assertTrue(machine.state().getBoolean("armed")
+                && machine.getBlockState().getValue(BehaviorMachineBlock.FACING) == Direction.NORTH,
+                "an unrecognized tool keeps the old click");
+        var wrench = GTToolItem.create(GTToolType.WRENCH, Materials.Steel, WoodMaterials.Wood);
+        player.setItemInHand(InteractionHand.MAIN_HAND, wrench);
+        click(helper, pos, player, Direction.EAST);
+        helper.assertTrue(helper.getLevel().getBlockState(pos).getValue(BehaviorMachineBlock.FACING) == Direction.EAST,
+                "wrench still rotates");
+        helper.assertTrue(machine.state().getBoolean("armed"), "wrench does not toggle");
+        helper.getLevel().removeBlock(pos, false);
+        helper.succeed();
+    }
+
+    private static Player survival(GameTestHelper helper) {
+//? if >=1.21.1 {
+/*        return helper.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+*///?} else {
+        var player = helper.makeMockPlayer();
+        if (player instanceof net.minecraft.server.level.ServerPlayer server)
+            server.gameMode.changeGameModeForPlayer(net.minecraft.world.level.GameType.SURVIVAL);
+        return player;
+//?}
+    }
+
+    private static void click(GameTestHelper helper, BlockPos pos, Player player, Direction side) {
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos).add(side.getStepX() * 0.5, side.getStepY() * 0.5, side.getStepZ() * 0.5),
+                side, pos, false);
+        var state = helper.getLevel().getBlockState(pos);
+//? if >=1.21.1 {
+/*        state.useItemOn(player.getItemInHand(InteractionHand.MAIN_HAND), helper.getLevel(), player, InteractionHand.MAIN_HAND, hit);
+*///?} else {
+        state.use(helper.getLevel(), player, InteractionHand.MAIN_HAND, hit);
+//?}
     }
 
     private static BehaviorMachineBlockEntity place(GameTestHelper helper, BlockPos pos) {

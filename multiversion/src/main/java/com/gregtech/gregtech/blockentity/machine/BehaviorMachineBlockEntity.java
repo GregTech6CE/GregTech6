@@ -167,6 +167,15 @@ public class BehaviorMachineBlockEntity extends BlockEntity implements EnergyBlo
     /** Gauge maximum: the storage cap, or the rated input when the machine does not store. */
     public long energyBarMax() { return bufferCapacity(); }
     public boolean onUse(Player player, InteractionHand hand) { return behavior.onUse(context, player, hand); }
+    public boolean onTool(com.gregtech.gregtech.api.addon.platform.AddonTool tool, Player player,
+                          InteractionHand hand, MachineFace face) {
+        return behavior.onTool(context, tool, player, hand, face);
+    }
+    public MachineFace clickedFace(Direction side) {
+        int index = relative(side);
+        for (MachineFace face : MachineFace.values()) if (face.index() == index) return face;
+        return MachineFace.FRONT;
+    }
     public MachineBehavior behavior() { return behavior; }
     public boolean toggle(int index) { return context.toggle(index); }
 //? if >=1.21.1 {
