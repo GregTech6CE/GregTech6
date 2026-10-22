@@ -1,5 +1,9 @@
 # 实现选择记录
 
+## 2026-10-22 / 原生注册边界与共用创建策略
+
+注册器类型／时机不等于创建策略，前者保留原位，后者的三份业务抽取分别证明。Neo var与Forge显式类型、全限定名和strength的数值字面量只在实际类型／重载证据下归一；目录值表不借改名重写。Flux与Electric具体类不同，堆叠矩阵须按原Loader的aClass真实分配追继承。218扩围而不按每台机器重复建号，见[专题](ENERGY_NODE_REGISTRATION_AUDIT.md)。
+
 ## 2026-10-22 / 颜色层、继承准入与实际工具入口
 
 默认色相同不证明喷漆正确，静态JSON不替代动态模型tint消费。Insulated父类名不替代instanceof继承判定；Neo专用工具路径不自动继承共用canApply限制。见证选空本地面／被阻断邻面排除本地面板配置。三默认颜色表达式集中core，玩法差异另记，见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。

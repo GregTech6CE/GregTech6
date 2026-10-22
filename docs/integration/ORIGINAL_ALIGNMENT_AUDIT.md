@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百二十二批：能源创建业务去重，两源215→269行，265token旧工厂／三完整剩余流受控对应。218补39项至62，未增加编号；24原／19当前、54引用及五原生条目见[专题](ENERGY_NODE_REGISTRATION_AUDIT.md)。core／双版编译2分21秒通过，非世界／默认离线验收，419不是待修数，全面目标继续。
+
 2026-10-22 第一百二十一批：新增416喷漆层、417放置开邻端、418Neo连接准入、419裸线火把／中继器资格，扩078。8原／29当前、38引用及八资源见[专题](SIGNAL_WIRE_CLIENT_AUDIT.md)。两压行源54→111行，三颜色表达式共用12行core，三完整平台流受控保持；含120双版／core首次编译79秒、最终增量26秒通过，非默认离线／CI或游戏验收。419不是待修数，全面目标继续。
 
 2026-10-22 第一百二十批：新增414魔法场吸收器独立设备缺失、415红石导线等强输入面策略差异。9原／16当前Java、32引用及两端Direction顺序见[专题](SIGNAL_WIRE_AUDIT.md)。四源446→670行，三个原数值表达式抽到23行core，七完整剩余视图保持，约0.505秒24716数值核验非原生网络。无整平台编译／游戏／构建，415不是待修数，全面goal继续。
@@ -280,7 +282,7 @@
 | ALIGN-215 | 确认post反应的逐核心异常隔离边界缺失。 | 原GT_API_Proxy逐项catch回调Throwable、移相位表并记录后继续；不保证catch自身再抛或全部原tick。 | exchange／react在两端END无隔离，总线会重抛，给定E可中断后续核心；外部fill可达但原fill属普通tick，不能声称同一fill原被post保护。未注错／复现崩服，见[网络生命周期](NUCLEAR_NETWORK_LIFECYCLE_AUDIT.md)。 |
 | ALIGN-216 | 确认核棒行为接入由任意Item回调收窄为FuelRodItem＋固定Kind。 | 原IItemReactorRod被手动／自动准入、收发／反应／慢化真实消费，回调获得栈／槽／核心。 | 当前静态RodPhysics只读definition并按八Kind执行；public Rod构造器仍允许第47种参数棒，自行原生注册可用，但不是等价行为回调或支持SDK。未证明实际addon损坏，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
 | ALIGN-217 | 确认实现类路线自定义棒的耗尽产物受封闭目录限制。 | 原反应回调可直接改槽为自有产物，不强制内置目录。 | 新NUCLEAR棒life100／非慢化flux100≤max，product10001未进ALL，耗尽先byOriginal得null→EMPTY，外部原生注册B也不查；内置产物仍可工作，见[核扩展](NUCLEAR_EXTENSION_AUDIT.md)。 |
-| ALIGN-218 | 确认已核23种能源设备默认堆叠上限16→64。 | 原两太阳能、四泵、八大型涡轮、四大型发电机、17998避雷输出、17197大型换热器、17996禁刷怪塔、17999钻机及17997物流核心均注册stack16并被原Item消费。 | 当前对应plain BlockItem默认64；只核这23项，未实测库存，见[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)与[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)。17996原stack16、当前普通BlockItem64，已核能源设备扩为21项，见[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)。17999钻机原16、现64，已核能源设备扩为22项，见[钻机](BEDROCK_DRILL_AUDIT.md)。17997原16、两端实际普通BlockItem64，能源设备扩23项，见[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)。 |
+| ALIGN-218 | 确认已核62项能源设备默认堆叠上限16→64。 | 原先两太阳能、四泵、八大型涡轮、四大型发电机及五特殊主控共23项；本批再核电／Flux电动机与发电机20、电／Flux磁铁10、电变压器9，均默认stack16并被原物品入口消费。 | 当前对应普通BlockItem默认64；本批39项按七具体类／继承及原生默认值核实，现有蒸汽涡轮stack16保留，限普通默认形态。见[39项矩阵与去重](ENERGY_NODE_REGISTRATION_AUDIT.md)、[太阳能](SOLAR_PANEL_AUDIT.md)、[泵](ROTATIONAL_PUMP_AUDIT.md)、[涡轮](LARGE_TURBINE_AUDIT.md)、[大型发电机](LARGE_DYNAMO_AUDIT.md)、[避雷针](LIGHTNING_ROD_AUDIT.md)、[大型换热器](LARGE_HEAT_EXCHANGER_AUDIT.md)、[禁刷怪塔](VON_DA_GRAAGG_AUDIT.md)、[钻机](BEDROCK_DRILL_AUDIT.md)与[物流状态](LOGISTICS_CORE_STATE_AUDIT.md)；不是全部能源设备或库存实测。 |
 | ALIGN-219 | 确认单块热交换器缺少原有只读运行／活动状态提供者。 | 原RunningActively继承相关接口，检测板读取mActive与热液准入，不要求原本不存在的开关。 | 当前BE／父类无MachineControl.Provider，fallback running／active=false；安装supportsSwitch门控另属既有110，possible近似沿111。换热本身仍工作，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-220 | 确认单块热交换器周围点火的目标／可燃准入不同。 | 原WD.fire(true)接受可燃地毯／无碰撞目标或有可燃邻居，排除无可燃邻居空气。 | 当前仅空位＋现代flame.canSurvive；石顶且无可燃邻居可放火、可燃地毯被先拒。需明确现代火险政策，不直接回退规则，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。 |
 | ALIGN-221 | 确认玩家排液先被通用1000L行为接管，绕过设备专用整罐／顺序。 | 原工具先Behavior_Tool专用、成功即停，才到通用排液fallback。 | 当前GTToolItem先通用，cold2000时排1000并请求100耐久，原清2000／请求20；两端原生非PASS截断Block使用已追。hot-only专用成本另扩126，不代表所有工具入口，见[热交换器](HEAT_EXCHANGER_AUDIT.md)。大型蒸汽涡轮输入2000／水1000时也先排水，绕过输入优先专用清空，见[大型涡轮](LARGE_TURBINE_AUDIT.md)。 |
