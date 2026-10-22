@@ -58,6 +58,7 @@ public final class MachineSpecBehaviorContracts {
         originalBipolarMagnets();
         originalSteamTurbines();
         assertions += HotFluidSourceContracts.verify();
+        assertions += FluidPhysicalPropertiesChecks.verify();
         System.out.println("Machine spec behavior contracts passed: " + assertions
                 + " assertions; brick25percent/16HU, ceramic7U/2500K, mold5U, charged45HU/K, original machine CR.REV data; no game runtime");
     }

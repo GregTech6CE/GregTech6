@@ -4,6 +4,7 @@
   "package": "com.gregtech.gregtech.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "GasImmersionMixin",
     "ConstructionRecipeMixin",
     "LegacyConstructionStackMixin",
     "BaseSpawnerAccessor",
