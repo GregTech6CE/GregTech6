@@ -1,9 +1,9 @@
 """Require actual passing GameTest results for the focused open-issue audit."""
-import sys
+import argparse
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-EXPECTED = {
+FORGE_METHODS = {
     'extrudershapesdonotsplitthemachinecreativefamily',
     'dungeonwaterplacementschedulesflowonlyaftersuccessfulwrite',
     'gtorehostsadmitsmalloreandrejectbedrockwithoutconsumption',
@@ -11,7 +11,15 @@ EXPECTED = {
 }
 
 
-def check(path):
+GAS_CASE = 'gasmotionregressiontests.gasusesairmotionwithoutremovinghazards'
+EXPECTED = {
+    'forge': {'openissueregressiontests.' + method for method in FORGE_METHODS} | {GAS_CASE},
+    'neoforge': {GAS_CASE},
+}
+
+
+def check(path, platform='forge'):
+    expected = EXPECTED[platform]
     root = ET.parse(path).getroot()
     cases = list(root.iter('testcase'))
     failures = [node for node in root.iter() if node.tag in ('failure', 'error', 'skipped')]
@@ -26,21 +34,24 @@ def check(path):
     for case in cases:
         name = case.get('name', '').lower()
         classname = case.get('classname', '').lower()
-        for method in EXPECTED:
-            if name == method and classname.endswith('openissueregressiontests'):
-                found.add(method)
-            elif name.endswith('openissueregressiontests.' + method):
-                found.add(method)
-    missing = EXPECTED - found
+        for identity in expected:
+            test_class, method = identity.split('.', 1)
+            if name == method and classname.endswith(test_class):
+                found.add(identity)
+            elif name.endswith(identity):
+                found.add(identity)
+    missing = expected - found
     if missing:
         raise ValueError('Selected tests did not execute: ' + ', '.join(sorted(missing)))
-    print(f'All {len(EXPECTED)} selected issue regressions executed and passed ({len(cases)} cases reported)')
+    print(f'All {len(expected)} selected issue regressions executed and passed ({len(cases)} cases reported)')
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        raise SystemExit('Usage: check_issue_gametest_report.py REPORT.xml')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('report', type=Path)
+    parser.add_argument('--platform', choices=sorted(EXPECTED), default='forge')
+    args = parser.parse_args()
     try:
-        check(Path(sys.argv[1]))
+        check(args.report, args.platform)
     except (OSError, ET.ParseError, ValueError) as error:
         raise SystemExit(str(error)) from error

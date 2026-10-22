@@ -17,10 +17,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  forge-issues:
-    name: Forge issue gameplay regressions
+  issue-gameplay:
+    name: ${{ matrix.loader }} issue gameplay regressions
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - loader: forge
+            node: 1.20.1-forge
+          - loader: neoforge
+            node: 1.21.1-neoforge
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -54,21 +62,23 @@ jobs:
             -PgameTestNamespaces=gregtech_issue_audit \
             -PgameTestHeap=3g \
             -PgameTestDirectory=build/issues-64-81-gametest \
+            -PneoforgeGameTestDirectory=build/issues-64-81-gametest \
             -PgameTestReport=build/reports/gametest/issues-64-81.xml \
-            :multiversion:1.20.1-forge:runGameTestServer \
+            :multiversion:${{ matrix.node }}:runGameTestServer \
             2>&1 | tee work/issues-gametest.log
       - name: Require every selected regression to execute and pass
         if: always()
         run: >-
           python -X utf8 tools/integration/check_issue_gametest_report.py
-          multiversion/versions/1.20.1-forge/build/reports/gametest/issues-64-81.xml
+          multiversion/versions/${{ matrix.node }}/build/reports/gametest/issues-64-81.xml
+          --platform ${{ matrix.loader }}
       - name: Preserve regression evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: forge-issue-regressions-${{ github.sha }}
+          name: ${{ matrix.loader }}-issue-regressions-${{ github.sha }}
           if-no-files-found: warn
           path: |
             work/issues-gametest.log
-            multiversion/versions/1.20.1-forge/build/reports/gametest/issues-64-81.xml
-            multiversion/versions/1.20.1-forge/build/issues-64-81-gametest/logs/
+            multiversion/versions/${{ matrix.node }}/build/reports/gametest/issues-64-81.xml
+            multiversion/versions/${{ matrix.node }}/build/issues-64-81-gametest/logs/
