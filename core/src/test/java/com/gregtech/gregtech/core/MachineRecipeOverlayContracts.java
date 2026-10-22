@@ -1,5 +1,6 @@
 package com.gregtech.gregtech.core;
 
+import com.gregtech.gregtech.api.kubejs.KubeJsLoadOrder;
 import com.gregtech.gregtech.api.recipe.data.FluidComponent;
 import com.gregtech.gregtech.api.recipe.data.JsonMaps;
 import com.gregtech.gregtech.api.recipe.data.ItemComponent;
@@ -8,6 +9,7 @@ import com.gregtech.gregtech.api.recipe.data.MachineRecipeDocuments;
 import com.gregtech.gregtech.api.recipe.data.MachineRecipeFields;
 import com.gregtech.gregtech.api.recipe.data.MachineRecipeMatch;
 import com.gregtech.gregtech.api.recipe.data.MachineRecipeRemovalSpec;
+import com.gregtech.gregtech.api.recipe.data.MachineRecipeScript;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public final class MachineRecipeOverlayContracts {
         removalRoundTrip();
         rejectedDocuments();
         matching();
+        scriptJson();
         System.out.println("machine recipe overlay passed " + assertions);
     }
 
@@ -144,6 +147,42 @@ public final class MachineRecipeOverlayContracts {
             public String outputFluid(int index) { return outFluids[index]; }
             public long outputFluidAmount(int index) { return outAmounts[index]; }
         };
+    }
+
+    private static void scriptJson() {
+        var handwritten = MachineRecipeDocuments.addition("""
+                {"type":"gt6ce:machine","map":"gt.recipe.crusher",
+                "item_inputs":[{"tag":"minecraft:coals","count":2}],
+                "fluid_inputs":[{"fluid":"minecraft:water","amount":1000}],
+                "item_outputs":[{"item":"minecraft:emerald","count":1,"chance":5000}],
+                "fluid_outputs":[],"eu_per_tick":16,"duration":64,"special":0}""");
+        var generated = MachineRecipeScript.typed(MachineRecipeFields.TYPE_ADDITION, MachineRecipeScript.addition(
+                "gt.recipe.crusher",
+                List.of(MachineRecipeScript.item("#minecraft:coals", 2)),
+                List.of(MachineRecipeScript.fluid("minecraft:water", 1000)),
+                List.of(MachineRecipeScript.result("minecraft:emerald", 1, 5000)),
+                List.of(), 16, 64, 0));
+        check(MachineRecipeDocuments.addition(generated).equals(handwritten), "script addition matches a handwritten document");
+        var removal = MachineRecipeDocuments.removal(MachineRecipeScript.typed(MachineRecipeFields.TYPE_REMOVAL,
+                MachineRecipeScript.removal("gt.recipe.crusher",
+                        List.of(MachineRecipeScript.item("minecraft:iron_ore", 0)),
+                        List.of(), List.of(), List.of())));
+        check(removal.itemInputs().equals(List.of(new ItemComponent("minecraft:iron_ore", null, 0))), "script removal");
+        check(MachineRecipeDocuments.removal(MachineRecipeScript.typed(MachineRecipeFields.TYPE_REMOVAL,
+                MachineRecipeScript.clear("gt.recipe.crusher"))).clear(), "script clear");
+        try {
+            MachineRecipeScript.requireKnownMap("no.such.map");
+            throw new AssertionError("unknown map");
+        } catch (IllegalArgumentException expected) {
+            check(expected.getMessage().contains("Unknown machine recipe map"), "unknown map message");
+        }
+        KubeJsLoadOrder.requireScriptsLoaded(true);
+        try {
+            KubeJsLoadOrder.requireScriptsLoaded(false);
+            throw new AssertionError("load order");
+        } catch (IllegalStateException expected) {
+            check(expected.getMessage().contains("KubeJS startup scripts have not loaded"), "load order message");
+        }
     }
 
     private static void check(boolean condition, String message) {

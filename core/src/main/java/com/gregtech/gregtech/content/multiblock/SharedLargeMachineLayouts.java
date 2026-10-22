@@ -7,8 +7,38 @@ public final class SharedLargeMachineLayouts {private SharedLargeMachineLayouts(
         public Cell(int right,int up,int back,int part,Role role){this(right,up,back,part,role,null);}
     }
     private static final Map<String,List<Cell>> DEFINITIONS=new LinkedHashMap<>(create());
+    /** Names present before any addon layout is added. Those layouts are not replaceable. */
+    private static final Set<String> BUILTIN=Set.copyOf(DEFINITIONS.keySet());
+    private static Map<String,List<Cell>> overlay=Map.of();
     private static boolean frozen;
-    public static List<Cell> cells(String machine) { return DEFINITIONS.get(machine); }
+    public static List<Cell> cells(String machine) {
+        var replaced=overlay.get(machine);
+        return replaced!=null?replaced:DEFINITIONS.get(machine);
+    }
+    /** The layout stored at startup, ignoring a datapack replacement. */
+    public static List<Cell> baseline(String machine) { return DEFINITIONS.get(machine); }
+    public static boolean builtIn(String machine) { return BUILTIN.contains(machine); }
+    /** True after layouts freeze, for an addon or script machine that already has a layout. */
+    public static boolean replaceable(String machine) {
+        return frozen && machine!=null && !BUILTIN.contains(machine) && DEFINITIONS.containsKey(machine);
+    }
+    public static Set<String> overlaid() { return overlay.keySet(); }
+    /**
+     * Replaces addon and script layouts. An empty map restores every baseline.
+     * Built-in controllers are rejected. Callers drop unknown files before this.
+     */
+    public static void overlay(Map<String,List<Cell>> replacements) {
+        if (!frozen) throw new IllegalStateException("Large machine layouts are not ready");
+        var next=new LinkedHashMap<String,List<Cell>>();
+        if (replacements!=null) for (var entry:replacements.entrySet()) {
+            if (!replaceable(entry.getKey()))
+                throw new IllegalArgumentException("Layout cannot be replaced: "+entry.getKey());
+            if (entry.getValue()==null || entry.getValue().isEmpty())
+                throw new IllegalArgumentException("Large machine layout '"+entry.getKey()+"' is empty");
+            next.put(entry.getKey(), List.copyOf(entry.getValue()));
+        }
+        overlay=Map.copyOf(next);
+    }
     public static Set<String> machines() { return Collections.unmodifiableSet(DEFINITIONS.keySet()); }
     /** Open only while addon layouts are collected. Built-in names stay reserved. */
     public static void add(String machine, List<Cell> cells) {

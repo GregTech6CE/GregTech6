@@ -45,4 +45,9 @@ public final class LargeMachineLayouts {
         for (String machine : SharedLargeMachineLayouts.machines()) cells(machine);
         return Set.copyOf(CACHE.keySet());
     }
+    /** Drops cached cells so the next check reads a reloaded layout. Built-in caches refill from the baseline. */
+    public static void forget(Iterable<String> machines) {
+        if (machines == null) return;
+        for (String machine : machines) CACHE.remove(machine);
+    }
 }

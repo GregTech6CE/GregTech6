@@ -272,6 +272,28 @@ public final class AddonMachines {
                 parts, fluidPipes, itemPipes, tanks);
     }
 
+    /**
+     * Queues the same lists an {@link AddonMachineContributor} returns.
+     * KubeJS and the machine contracts use this path.
+     */
+    public static synchronized void acceptContributor(String addonId, List<RecipeTable> tables, List<AddonMachine> machines,
+                                                      List<StructureLayout> layouts, List<LayoutPart> parts) {
+        var recipes = new ArrayList<RecipeMapSpec>();
+        var fuels = new ArrayList<RecipeMapSpec>();
+        for (RecipeTable table : Objects.requireNonNull(tables, "tables"))
+            (table.fuel() ? fuels : recipes).add(spec(table));
+        var definitions = new ArrayList<AddonMachineDefinition>();
+        var behavior = new ArrayList<BehaviorMachine>();
+        var generators = new ArrayList<FuelGenerator>();
+        for (AddonMachine machine : Objects.requireNonNull(machines, "machines")) {
+            if (machine instanceof RecipeMachine recipe) definitions.add(definition(recipe));
+            else if (machine instanceof BehaviorMachine behaviorMachine) behavior.add(behaviorMachine);
+            else generators.add((FuelGenerator) machine);
+        }
+        enqueue(addonId, recipes, definitions, Objects.requireNonNull(layouts, "layouts"), behavior, fuels, generators,
+                Objects.requireNonNull(parts, "parts"), List.of(), List.of(), List.of());
+    }
+
     /** Direct queue for {@link LayoutPart}, including parts that declare slots, a tick, a click or a field. */
     public static synchronized void acceptLayoutParts(String addonId, List<LayoutPart> parts) {
         enqueue(addonId, List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
@@ -322,6 +344,21 @@ public final class AddonMachines {
             } catch (IllegalAccessException failure) {
                 throw new IllegalStateException(failure);
             }
+        }
+        return Set.copyOf(names);
+    }
+
+    /**
+     * Built-in maps plus addon maps installed so far. Fuel maps are included: the datapack overlay
+     * writes every {@link com.gregtech.gregtech.api.recipe.RecipeMap}.
+     */
+    public static Set<String> knownRecipeMapNames() {
+        var names = new java.util.TreeSet<String>();
+        names.addAll(builtInRecipeMapNames());
+        names.addAll(builtInFuelMapNames());
+        if (installed) {
+            for (AcceptedRecipeMap map : recipeMaps) names.add(map.spec().mNameInternal);
+            for (AcceptedRecipeMap map : fuelMaps) names.add(map.spec().mNameInternal);
         }
         return Set.copyOf(names);
     }
@@ -749,24 +786,34 @@ public final class AddonMachines {
     }
 
     private static List<SharedLargeMachineLayouts.Cell> cells(String addonId, StructureLayout layout) {
+        for (LayoutCell cell : layout.cells()) {
+            CellMatch match = cell.match();
+            if (match instanceof CellMatch.Block block)
+                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), block.id()));
+            else if (match instanceof CellMatch.Tag tag)
+                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), "#" + tag.id()));
+        }
+        return sharedCells("Addon '" + addonId + "'", layout);
+    }
+
+    /** Converts a layout without recording plain blocks. {@code source} is the error prefix. */
+    public static List<SharedLargeMachineLayouts.Cell> sharedCells(String source, StructureLayout layout) {
+        Objects.requireNonNull(layout, "layout");
         var cells = new ArrayList<SharedLargeMachineLayouts.Cell>();
         for (LayoutCell cell : layout.cells()) {
             var role = StructureGrid.Role.valueOf(cell.role().name());
             CellMatch match = cell.match();
             if (match instanceof CellMatch.Block block) {
-                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), block.id()));
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
                         role, block.id()));
             } else if (match instanceof CellMatch.Tag tag) {
-                String name = "#" + tag.id();
-                PLAIN_BLOCKS.add(new PlainBlock(addonId, layout.name(), name));
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), 0,
-                        role, name));
+                        role, "#" + tag.id()));
             } else {
                 String name = match instanceof CellMatch.Air ? "air" : ((CellMatch.Part) match).name();
                 int part = SharedLargeMachineParts.idForName(name);
                 if (part < 0)
-                    throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.name()
+                    throw new IllegalStateException(source + " layout '" + layout.name()
                             + "' uses unknown part '" + name + "'");
                 cells.add(new SharedLargeMachineLayouts.Cell(cell.right(), cell.up(), cell.back(), part, role));
             }

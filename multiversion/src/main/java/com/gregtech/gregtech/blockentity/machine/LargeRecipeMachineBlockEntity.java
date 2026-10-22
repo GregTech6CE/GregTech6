@@ -249,6 +249,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
     @Override protected boolean structureComplete() { return isStructureOk() && conditionPartsMet(); }
+    /** Read on every structure check, so a reloaded layout is applied on the next server tick. */
     protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return LargeMachineLayouts.cells(spec().machineName()); }
     protected boolean validStructureParts() {return true;}
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}

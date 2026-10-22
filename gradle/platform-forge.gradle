@@ -193,6 +193,14 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        name = "Latvian"
+        url = "https://maven.latvian.dev/releases"
+    }
+    maven {
+        name = "Architectury"
+        url = "https://maven.architectury.dev/"
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
@@ -246,6 +254,15 @@ dependencies {
     }
     if (project.findProperty('compatRuntime') == 'hc') {
         runtimeOnly fg.deobf("maven.modrinth:pams-harvestcraft-2-food-core:${hc_version}")
+    }
+    // KubeJS stays off the production jar. The classes are loaded only when KubeJS reads kubejs.plugins.txt.
+    compileOnly fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_forge_version}")
+    compileOnly fg.deobf("dev.latvian.mods:rhino-forge:${rhino_forge_version}")
+    compileOnly fg.deobf("dev.architectury:architectury-forge:${architectury_forge_version}")
+    if (project.findProperty('kubejsRuntime')?.toString() == 'true') {
+        runtimeOnly fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_forge_version}")
+        runtimeOnly fg.deobf("dev.latvian.mods:rhino-forge:${rhino_forge_version}")
+        runtimeOnly fg.deobf("dev.architectury:architectury-forge:${architectury_forge_version}")
     }
 
     // §105: the mixin annotation processor generates gregtech.refmap.json (named -> SRG), which is what
