@@ -7,8 +7,7 @@ import java.util.List;
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /**
- * Machine-relative face. {@link #index()} and {@link #bit()} match
- * {@link BehaviorMachineDeclaration.Face}. There is no public conversion between the two.
+ * Machine-relative face. {@link #index()} and {@link #bit()} are the mask positions.
  */
 public enum MachineFace {
     BOTTOM(0), TOP(1), RIGHT(2), FRONT(3), LEFT(4), BACK(5);

@@ -16,7 +16,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.ServiceLoader;
@@ -98,36 +97,20 @@ public final class AddonMachines {
         for (AddonMachineContributor contributor : ServiceLoader.load(AddonMachineContributor.class, loader)) {
             try {
                 var recipes = new ArrayList<RecipeMapSpec>();
-                for (RecipeMapDeclaration declaration : contributor.recipeMaps())
-                    recipes.add(spec(recipeTable(declaration)));
                 var fuels = new ArrayList<RecipeMapSpec>();
-                for (FuelMapDeclaration declaration : contributor.fuelMaps())
-                    fuels.add(spec(fuelTable(declaration)));
                 for (RecipeTable table : contributor.recipeTables())
                     (table.fuel() ? fuels : recipes).add(spec(table));
                 var machines = new ArrayList<AddonMachineDefinition>();
-                for (MachineDeclaration declaration : contributor.machines())
-                    machines.add(definition(recipeMachine(declaration)));
                 var behavior = new ArrayList<BehaviorMachine>();
-                for (BehaviorMachineDeclaration declaration : contributor.behaviorMachines())
-                    behavior.add(behaviorMachine(declaration));
                 var generators = new ArrayList<FuelGenerator>();
-                for (FuelGeneratorDeclaration declaration : contributor.fuelGenerators())
-                    generators.add(fuelGenerator(declaration));
-                var layouts = new ArrayList<StructureLayout>();
-                for (MachineLayout layout : contributor.layouts()) layouts.add(structureLayout(layout));
-                layouts.addAll(contributor.structureLayouts());
-                var parts = new ArrayList<LayoutPart>();
-                for (StructurePartDeclaration declaration : contributor.parts())
-                    parts.add(layoutPart(declaration));
-                parts.addAll(contributor.layoutParts());
                 for (AddonMachine machine : contributor.addonMachines()) {
                     if (machine instanceof RecipeMachine recipe) machines.add(definition(recipe));
                     else if (machine instanceof BehaviorMachine behaviorMachine) behavior.add(behaviorMachine);
                     else generators.add((FuelGenerator) machine);
                 }
-                enqueue(contributor.addonId(), recipes, machines, layouts, behavior, fuels, generators, parts,
-                        contributor.fluidPipes(), contributor.itemPipes(), contributor.compressedGasTanks());
+                enqueue(contributor.addonId(), recipes, machines, contributor.structureLayouts(), behavior, fuels,
+                        generators, contributor.layoutParts(), contributor.fluidPipes(), contributor.itemPipes(),
+                        contributor.compressedGasTanks());
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon machine contributor failed: " + safeMachineId(contributor)
                         + " (" + contributor.getClass().getName() + ")", failure);
@@ -141,118 +124,6 @@ public final class AddonMachines {
     }
 
     private static final int ALL_MASK = 0b111111;
-    private static final List<BehaviorMachineDeclaration.Face> BEHAVIOR_FACES = List.of(
-            BehaviorMachineDeclaration.Face.BOTTOM, BehaviorMachineDeclaration.Face.TOP,
-            BehaviorMachineDeclaration.Face.LEFT, BehaviorMachineDeclaration.Face.RIGHT,
-            BehaviorMachineDeclaration.Face.BACK);
-
-    /** Old recipe declaration, with repeated faces removed. The resulting mask is unchanged. */
-    public static RecipeMachine recipeMachine(MachineDeclaration declaration) {
-        Objects.requireNonNull(declaration, "declaration");
-        var casing = MachineCasing.builder(declaration.id(), declaration.material())
-                .machineType(declaration.machineType()).tier(declaration.tier());
-        var energy = EnergyInput.builder(declaration.energy(), declaration.energyPerTick());
-        if (declaration.energyRangeSpecified())
-            energy.range(declaration.energyInMin(), declaration.energyInMax());
-        if (declaration.facesSpecified()) energy.faces(distinctFaces(declaration.energyInputs()));
-        var builder = RecipeMachine.builder(casing.build()).energy(energy.build())
-                .recipeMap(declaration.recipeMap()).parallel(declaration.parallel())
-                .efficiency(declaration.efficiency()).constantEnergy(declaration.constantEnergy())
-                .minimumLightAbove(declaration.minimumLightAbove())
-                .searchOutputTanks(declaration.searchOutputTanks())
-                .exclusiveOutputs(declaration.exclusiveOutputs())
-                .structureKeys(declaration.structureKeys());
-        if (declaration.kind() == MachineDeclaration.Kind.LARGE_RECIPE) builder.largeRecipe();
-        if (declaration.cheapOverclockingSpecified())
-            builder.cheapOverclocking(declaration.cheapOverclocking());
-        if (declaration.facesSpecified() || hasTarget(declaration)) builder.io(io(declaration));
-        return builder.build();
-    }
-
-    /** Old behavior declaration. The default five input faces stay unspecified. */
-    public static BehaviorMachine behaviorMachine(BehaviorMachineDeclaration declaration) {
-        Objects.requireNonNull(declaration, "declaration");
-        var casing = MachineCasing.builder(declaration.id(), declaration.material())
-                .machineType(declaration.machineType()).tier(declaration.tier());
-        var energy = EnergyInput.builder(declaration.energy(), declaration.energyPerTick());
-        if (!declaration.energyFaces().equals(BEHAVIOR_FACES))
-            energy.faces(distinctFaces(declaration.energyFaces()));
-        if (declaration.energyCapacity() != 0) energy.capacity(declaration.energyCapacity());
-        var builder = BehaviorMachine.builder(casing.build()).energy(energy.build())
-                .gui(declaration.gui()).guiSize(declaration.guiWidth(), declaration.guiHeight())
-                .energyGauge(declaration.energyX(), declaration.energyY())
-                .progress(declaration.progress().x(), declaration.progress().y())
-                .maxRange(declaration.maxRange());
-        if (!declaration.blockEntityId().isEmpty()) builder.blockEntityId(declaration.blockEntityId());
-        if (declaration.emitsEnergy()) {
-            builder.energyOutput(EnergyOutput.builder(declaration.energyOut(),
-                            declaration.energyOutSize(), declaration.energyOutAmount())
-                    .faces(faceArray(declaration.energyOutputFaces())).build());
-        }
-        for (BehaviorMachineDeclaration.ItemSlot item : declaration.items())
-            builder.item(item.x(), item.y(), BehaviorMachine.SlotRole.valueOf(item.role().name()));
-        for (BehaviorMachineDeclaration.FluidSlot fluid : declaration.fluids())
-            builder.fluid(fluid.capacity(), fluid.x(), fluid.y(), BehaviorMachine.SlotRole.valueOf(fluid.role().name()));
-        for (BehaviorMachineDeclaration.Toggle toggle : declaration.toggles())
-            builder.toggle(toggle.translationKey(), toggle.x(), toggle.y(), toggle.initiallyOn());
-        if (!declaration.recipeMaps().isEmpty())
-            builder.recipeMaps(declaration.recipeMaps().toArray(String[]::new));
-        return builder.build();
-    }
-
-    /** Old fuel declaration. A single block and a front output stay the defaults. */
-    public static FuelGenerator fuelGenerator(FuelGeneratorDeclaration declaration) {
-        Objects.requireNonNull(declaration, "declaration");
-        var casing = MachineCasing.builder(declaration.id(), declaration.material())
-                .machineType(declaration.machineType());
-        var output = FuelOutput.builder(declaration.energy(), declaration.outputPerTick());
-        switch (declaration.output().side()) {
-            case FRONT -> output.front();
-            case BACK -> output.back();
-            case BEHIND -> output.behind(declaration.output().distance());
-        }
-        var builder = FuelGenerator.builder(casing.build()).output(output.build())
-                .fuelMap(declaration.fuelMap()).efficiency(declaration.efficiency())
-                .tank(declaration.tankCapacity());
-        if (declaration.kind() == FuelGeneratorDeclaration.Kind.MULTI) builder.multi();
-        return builder.build();
-    }
-
-    public static StructureLayout structureLayout(MachineLayout layout) {
-        Objects.requireNonNull(layout, "layout");
-        var builder = StructureLayout.builder(layout.machineName());
-        for (MachineLayout.Cell cell : layout.cells())
-            builder.cell(cell.right(), cell.up(), cell.back(), CellMatch.parse(cell.part()), cell.role());
-        return builder.build();
-    }
-
-    public static LayoutPart layoutPart(StructurePartDeclaration declaration) {
-        Objects.requireNonNull(declaration, "declaration");
-        var builder = LayoutPart.builder(declaration.name(), declaration.material())
-                .texture(declaration.texture()).hardness(declaration.hardness());
-        StructurePartEnergy energy = declaration.energy();
-        if (energy != null) {
-            builder.energyOutput(EnergyOutput.builder(energy.type(), energy.maxSize(), energy.maxAmount())
-                    .faces(faceArray(energy.outputFaces())).build(), energy.capacity());
-        }
-        return builder.build();
-    }
-
-    public static RecipeTable recipeTable(RecipeMapDeclaration declaration) {
-        return table(RecipeTable.machine(declaration.name()), declaration.title(), declaration.gui(),
-                declaration.inputItems(), declaration.outputItems(), declaration.minimalInputItems(),
-                declaration.inputFluids(), declaration.outputFluids(), declaration.minimalInputFluids(),
-                declaration.minimalInputs(), declaration.needsOutputs(), declaration.combinePower(),
-                declaration.bucketIn(), declaration.bucketOut());
-    }
-
-    public static RecipeTable fuelTable(FuelMapDeclaration declaration) {
-        return table(RecipeTable.fuel(declaration.name()), declaration.title(), declaration.gui(),
-                declaration.inputItems(), declaration.outputItems(), declaration.minimalInputItems(),
-                declaration.inputFluids(), declaration.outputFluids(), declaration.minimalInputFluids(),
-                declaration.minimalInputs(), declaration.needsOutputs(), declaration.combinePower(),
-                declaration.bucketIn(), declaration.bucketOut());
-    }
 
     /** The one path from a recipe machine to the installed definition. */
     public static AddonMachineDefinition definition(RecipeMachine machine) {
@@ -291,52 +162,6 @@ public final class AddonMachines {
                 table.bucketIn(), table.bucketOut());
     }
 
-    private static RecipeTable table(RecipeTable.Builder builder, String title, String gui,
-                                     int inputItems, int outputItems, int minimalInputItems,
-                                     int inputFluids, int outputFluids, int minimalInputFluids, int minimalInputs,
-                                     boolean needsOutputs, boolean combinePower, boolean bucketIn, boolean bucketOut) {
-        return builder.title(title).gui(gui).inputItems(inputItems).outputItems(outputItems)
-                .minimalInputItems(minimalInputItems).inputFluids(inputFluids).outputFluids(outputFluids)
-                .minimalInputFluids(minimalInputFluids).minimalInputs(minimalInputs)
-                .needsOutputs(needsOutputs).combinePower(combinePower).bucketIn(bucketIn).bucketOut(bucketOut)
-                .build();
-    }
-
-    private static boolean hasTarget(MachineDeclaration declaration) {
-        return declaration.itemOutputTarget() != null || declaration.fluidOutputTarget() != null
-                || declaration.itemInputSource() != null || declaration.fluidInputSource() != null;
-    }
-
-    /**
-     * Targets live on the io object. An old declaration can name targets without calling a face
-     * method, and that still means six-side channels. Naming the six faces keeps that mask.
-     */
-    private static MachineIo io(MachineDeclaration declaration) {
-        var io = MachineIo.builder();
-        if (declaration.facesSpecified()) {
-            io.itemInputs(faceArray(declaration.itemInputs()))
-                    .itemOutputs(faceArray(declaration.itemOutputs()))
-                    .fluidInputs(faceArray(declaration.fluidInputs()))
-                    .fluidOutputs(faceArray(declaration.fluidOutputs()));
-        } else {
-            var all = MachineFace.all().toArray(MachineFace[]::new);
-            io.itemInputs(all).itemOutputs(all).fluidInputs(all).fluidOutputs(all);
-        }
-        if (declaration.itemAutoInput() != null) io.itemAutoInput(face(declaration.itemAutoInput()));
-        if (declaration.itemAutoOutput() != null) io.itemAutoOutput(face(declaration.itemAutoOutput()));
-        if (declaration.fluidAutoInput() != null) io.fluidAutoInput(face(declaration.fluidAutoInput()));
-        if (declaration.fluidAutoOutput() != null) io.fluidAutoOutput(face(declaration.fluidAutoOutput()));
-        MachineDeclaration.Target itemOut = declaration.itemOutputTarget();
-        MachineDeclaration.Target fluidOut = declaration.fluidOutputTarget();
-        MachineDeclaration.Target itemIn = declaration.itemInputSource();
-        MachineDeclaration.Target fluidIn = declaration.fluidInputSource();
-        if (itemOut != null) io.itemOutputTarget(itemOut.right(), itemOut.up(), itemOut.back(), face(itemOut.receiver()));
-        if (fluidOut != null) io.fluidOutputTarget(fluidOut.right(), fluidOut.up(), fluidOut.back(), face(fluidOut.receiver()));
-        if (itemIn != null) io.itemInputSource(itemIn.right(), itemIn.up(), itemIn.back(), face(itemIn.receiver()));
-        if (fluidIn != null) io.fluidInputSource(fluidIn.right(), fluidIn.up(), fluidIn.back(), face(fluidIn.receiver()));
-        return io.build();
-    }
-
     private static StructureLayout structureLayout(AddonMachineLayout layout) {
         var builder = StructureLayout.builder(layout.machineName());
         for (AddonMachineLayout.Cell cell : layout.cells())
@@ -359,21 +184,6 @@ public final class AddonMachines {
                 io == null ? MachineFaceMasks.AUTO_NONE : auto(io.itemAutoOutput()),
                 io == null ? MachineFaceMasks.AUTO_NONE : auto(io.fluidAutoInput()),
                 io == null ? MachineFaceMasks.AUTO_NONE : auto(io.fluidAutoOutput()));
-    }
-
-    private static MachineFace face(BehaviorMachineDeclaration.Face face) {
-        return MachineFace.values()[face.ordinal()];
-    }
-
-    /** First occurrence wins. A repeated face does not change the mask. */
-    private static List<MachineFace> distinctFaces(List<BehaviorMachineDeclaration.Face> faces) {
-        var seen = new LinkedHashSet<MachineFace>();
-        for (BehaviorMachineDeclaration.Face face : faces) seen.add(face(face));
-        return List.copyOf(seen);
-    }
-
-    private static MachineFace[] faceArray(List<BehaviorMachineDeclaration.Face> faces) {
-        return distinctFaces(faces).toArray(MachineFace[]::new);
     }
 
     private static int mask(List<MachineFace> faces) {
@@ -409,33 +219,33 @@ public final class AddonMachines {
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
-                                           List<BehaviorMachineDeclaration> behavior) {
+                                           List<BehaviorMachine> behavior) {
         accept(addonId, recipeMaps, machines, layouts, behavior, List.of(), List.of());
     }
 
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
-                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                                           List<FuelGeneratorDeclaration> generators) {
+                                           List<BehaviorMachine> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGenerator> generators) {
         accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, List.of());
     }
 
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
-                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                                           List<FuelGeneratorDeclaration> generators,
-                                           List<StructurePartDeclaration> parts) {
+                                           List<BehaviorMachine> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGenerator> generators,
+                                           List<LayoutPart> parts) {
         accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts, List.of(), List.of());
     }
 
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
-                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                                           List<FuelGeneratorDeclaration> generators,
-                                           List<StructurePartDeclaration> parts,
+                                           List<BehaviorMachine> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGenerator> generators,
+                                           List<LayoutPart> parts,
                                            List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes) {
         accept(addonId, recipeMaps, machines, layouts, behavior, fuelMaps, generators, parts,
                 fluidPipes, itemPipes, List.of());
@@ -444,31 +254,22 @@ public final class AddonMachines {
     /** Direct queue used by tests and by {@link #collectContributors(ClassLoader)}. */
     public static synchronized void accept(String addonId, List<RecipeMapSpec> recipeMaps,
                                            List<AddonMachineDefinition> machines, List<AddonMachineLayout> layouts,
-                                           List<BehaviorMachineDeclaration> behavior, List<RecipeMapSpec> fuelMaps,
-                                           List<FuelGeneratorDeclaration> generators,
-                                           List<StructurePartDeclaration> parts,
+                                           List<BehaviorMachine> behavior, List<RecipeMapSpec> fuelMaps,
+                                           List<FuelGenerator> generators,
+                                           List<LayoutPart> parts,
                                            List<FluidPipeDeclaration> fluidPipes, List<ItemPipeDeclaration> itemPipes,
                                            List<CompressedGasTankDeclaration> tanks) {
         var convertedLayouts = new ArrayList<StructureLayout>();
         for (AddonMachineLayout layout : Objects.requireNonNull(layouts, "layouts")) {
             for (AddonMachineLayout.Cell cell : layout.cells()) {
-                if (MachineLayout.plainBlock(cell.part()) && cell.role() != StructureGrid.Role.CASING)
+                if ((cell.part().startsWith("#") || cell.part().indexOf(':') >= 0) && cell.role() != StructureGrid.Role.CASING)
                     throw new IllegalStateException("Addon '" + addonId + "' layout '" + layout.machineName()
                             + "' plain block '" + cell.part() + "' requires the casing role");
             }
             convertedLayouts.add(structureLayout(layout));
         }
-        var convertedBehavior = new ArrayList<BehaviorMachine>();
-        for (BehaviorMachineDeclaration declaration : Objects.requireNonNull(behavior, "behaviorMachines"))
-            convertedBehavior.add(behaviorMachine(declaration));
-        var convertedGenerators = new ArrayList<FuelGenerator>();
-        for (FuelGeneratorDeclaration declaration : Objects.requireNonNull(generators, "fuelGenerators"))
-            convertedGenerators.add(fuelGenerator(declaration));
-        var convertedParts = new ArrayList<LayoutPart>();
-        for (StructurePartDeclaration declaration : Objects.requireNonNull(parts, "parts"))
-            convertedParts.add(layoutPart(declaration));
-        enqueue(addonId, recipeMaps, machines, convertedLayouts, convertedBehavior, fuelMaps, convertedGenerators,
-                convertedParts, fluidPipes, itemPipes, tanks);
+        enqueue(addonId, recipeMaps, machines, convertedLayouts, behavior, fuelMaps, generators,
+                parts, fluidPipes, itemPipes, tanks);
     }
 
     /** Direct queue for {@link LayoutPart}, including parts that declare slots, a tick, a click or a field. */
