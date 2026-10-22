@@ -1,19 +1,26 @@
 package com.gregtech.addonsample;
 
+import com.gregtech.gregtech.api.addon.AddonMachine;
 import com.gregtech.gregtech.api.addon.AddonMachineContributor;
-import com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration;
+import com.gregtech.gregtech.api.addon.BehaviorMachine;
+import com.gregtech.gregtech.api.addon.CellMatch;
 import com.gregtech.gregtech.api.addon.CompressedGasTankDeclaration;
+import com.gregtech.gregtech.api.addon.EnergyInput;
+import com.gregtech.gregtech.api.addon.EnergyOutput;
 import com.gregtech.gregtech.api.addon.FluidPipeDeclaration;
+import com.gregtech.gregtech.api.addon.FuelGenerator;
+import com.gregtech.gregtech.api.addon.FuelOutput;
 import com.gregtech.gregtech.api.addon.ItemPipeDeclaration;
-import com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration;
-import com.gregtech.gregtech.api.addon.FuelMapDeclaration;
-import com.gregtech.gregtech.api.addon.MachineDeclaration;
-import com.gregtech.gregtech.api.addon.MachineLayout;
-import com.gregtech.gregtech.api.addon.RecipeMapDeclaration;
-import com.gregtech.gregtech.api.addon.StructurePartDeclaration;
-import com.gregtech.gregtech.api.addon.StructurePartEnergy;
+import com.gregtech.gregtech.api.addon.LayoutPart;
+import com.gregtech.gregtech.api.addon.MachineCasing;
+import com.gregtech.gregtech.api.addon.MachineFace;
+import com.gregtech.gregtech.api.addon.MachineIo;
+import com.gregtech.gregtech.api.addon.RecipeMachine;
+import com.gregtech.gregtech.api.addon.RecipeTable;
+import com.gregtech.gregtech.api.addon.StructureLayout;
 import com.gregtech.gregtech.api.addon.StructureRole;
 import com.gregtech.gregtech.api.addon.platform.AddonFluids;
+import com.gregtech.gregtech.api.addon.platform.AddonTool;
 import com.gregtech.gregtech.api.addon.platform.AddonRecipes;
 import com.gregtech.gregtech.api.addon.platform.BehaviorMachineContributor;
 import com.gregtech.gregtech.api.addon.platform.MachineBehavior;
@@ -29,7 +36,6 @@ import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -37,53 +43,85 @@ import java.util.Set;
 public final class AddonSampleMachines implements AddonMachineContributor, BehaviorMachineContributor {
     @Override public String addonId() { return "addon_sample"; }
 
-    @Override public List<RecipeMapDeclaration> recipeMaps() {
+    @Override public List<RecipeTable> recipeTables() {
         return List.of(
                 map("addon_sample.recipe.press", "Sample Press", "press", 2),
-                new RecipeMapDeclaration("addon_sample.recipe.large_press", "Large Sample Press",
-                        "addon_sample:textures/gui/machines/large_press",
-                        1, 6, 1, 0, 1, 0, 1, true, false, false, false),
-                new RecipeMapDeclaration("addon_sample.recipe.detector", "Sample Detector",
-                        "addon_sample:textures/gui/machines/press",
-                        1, 2, 1, 1, 1, 0, 1, true, false, false, false));
+                RecipeTable.machine("addon_sample.recipe.large_press")
+                        .title("Large Sample Press")
+                        .gui("addon_sample:textures/gui/machines/large_press")
+                        .inputItems(1).outputItems(6).minimalInputItems(1)
+                        .outputFluids(1).minimalInputs(1).needsOutputs(true).build(),
+                RecipeTable.machine("addon_sample.recipe.detector")
+                        .title("Sample Detector")
+                        .gui("addon_sample:textures/gui/machines/press")
+                        .inputItems(1).outputItems(2).minimalInputItems(1)
+                        .inputFluids(1).outputFluids(1).minimalInputs(1).needsOutputs(true).build(),
+                RecipeTable.fuel("addon_sample.fuel.gas")
+                        .title("Sample Gas")
+                        .gui("addon_sample:textures/gui/machines/press")
+                        .inputFluids(1).outputFluids(1).minimalInputFluids(1).minimalInputs(1).build(),
+                RecipeTable.fuel("addon_sample.fuel.solid")
+                        .title("Sample Solid")
+                        .gui("addon_sample:textures/gui/machines/press")
+                        .inputItems(1).outputItems(1).minimalInputItems(1).minimalInputs(1)
+                        .needsOutputs(true).build());
     }
 
-    @Override public List<MachineDeclaration> machines() {
+    @Override public List<AddonMachine> addonMachines() {
+        var allFaces = MachineFace.all().toArray(MachineFace[]::new);
         return List.of(
-                MachineDeclaration.builder("sample_press", "Steel")
-                        .machineType("samplepress").energy("EU", 32).tier(1)
+                RecipeMachine.builder(MachineCasing.builder("sample_press", "Steel").machineType("samplepress").tier(1).build())
+                        .energy(EnergyInput.builder("EU", 32).faces(MachineFace.BACK).build())
+                        .io(MachineIo.builder()
+                                .itemInputs(MachineFace.TOP)
+                                .itemOutputs(MachineFace.BOTTOM)
+                                .fluidInputs(MachineFace.LEFT)
+                                .fluidOutputs(MachineFace.RIGHT)
+                                .itemAutoOutput(MachineFace.BOTTOM)
+                                .build())
                         .recipeMap("addon_sample.recipe.press").basic()
-                        .itemInputs(BehaviorMachineDeclaration.Face.TOP)
-                        .itemOutputs(BehaviorMachineDeclaration.Face.BOTTOM)
-                        .fluidInputs(BehaviorMachineDeclaration.Face.LEFT)
-                        .fluidOutputs(BehaviorMachineDeclaration.Face.RIGHT)
-                        .energyInputs(BehaviorMachineDeclaration.Face.BACK)
-                        .itemAutoOutput(BehaviorMachineDeclaration.Face.BOTTOM)
                         .cheapOverclocking(true)
                         .minimumLightAbove(14)
                         .build(),
-                MachineDeclaration.builder("sample_detector", "Steel")
-                        .machineType("sampledetector").energy("EU", 32).tier(1)
+                RecipeMachine.builder(MachineCasing.builder("sample_detector", "Steel").machineType("sampledetector").tier(1).build())
+                        .energy(EnergyInput.builder("EU", 32).build())
                         .recipeMap("addon_sample.recipe.detector").basic()
                         .searchOutputTanks(true)
                         .exclusiveOutputs(true)
                         .build(),
-                MachineDeclaration.builder("large_sample_press", "Steel")
-                        .machineType("largesamplepress").energy("EU", 512).tier(1)
+                RecipeMachine.builder(MachineCasing.builder("large_sample_press", "Steel").machineType("largesamplepress").tier(1).build())
+                        .energy(EnergyInput.builder("EU", 512).range(256, 2048).build())
+                        .io(MachineIo.builder()
+                                .itemInputs(allFaces).itemOutputs(allFaces)
+                                .fluidInputs(allFaces).fluidOutputs(allFaces)
+                                .itemOutputTarget(2, 0, 1, MachineFace.RIGHT)
+                                .fluidOutputTarget(-2, 0, 1, MachineFace.LEFT)
+                                .build())
                         .recipeMap("addon_sample.recipe.large_press").largeRecipe()
-                        .energyRange(256, 2048)
                         .structureKeys(List.of("addon_sample.structure.press.1"))
-                        .itemOutputTarget(2, 0, 1, BehaviorMachineDeclaration.Face.RIGHT)
-                        .fluidOutputTarget(-2, 0, 1, BehaviorMachineDeclaration.Face.LEFT)
-                        .build());
+                        .build(),
+                FuelGenerator.builder(MachineCasing.builder("sample_engine", "Steel").machineType("sample_engine").build())
+                        .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
+                        .output(FuelOutput.builder("RU", 32).front().build())
+                        .tank(4_000).single().build(),
+                FuelGenerator.builder(MachineCasing.builder("sample_motor", "Steel").machineType("sample_motor").build())
+                        .fuelMap("addon_sample.fuel.gas").efficiency(10_000)
+                        .output(FuelOutput.builder("RU", 32).front().build())
+                        .amperes(4).tank(4_000).single().build(),
+                FuelGenerator.builder(MachineCasing.builder("sample_turbine", "Steel").machineType("sample_turbine").build())
+                        .fuelMap("addon_sample.fuel.gas").efficiency(5_000)
+                        .output(FuelOutput.builder("RU", 32).behind(4).build())
+                        .tank(8_000).multi().build(),
+                IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, CLUSTER, SOLID_BOILER, COMPRESSOR, WATER_WHEEL, HAMMER_SWITCH, INLET, MIRROR);
     }
 
-    @Override public List<StructurePartDeclaration> parts() {
+    @Override public List<LayoutPart> layoutParts() {
         return List.of(
-                new StructurePartDeclaration("sample_wall", "Steel", "", 6.0F),
-                new StructurePartDeclaration("sample_emitter", "Steel", "", 6.0F,
-                        new StructurePartEnergy("EU", 100_000L,
-                                List.of(BehaviorMachineDeclaration.Face.FRONT), 32, 4)));
+                LayoutPart.builder("sample_wall", "Steel").hardness(6.0F).build(),
+                LayoutPart.builder("sample_emitter", "Steel").hardness(6.0F)
+                        .energyOutput(EnergyOutput.builder("EU", 32, 4).faces(MachineFace.FRONT).build(), 100_000L)
+                        .build(),
+                AddonSampleParts.PART);
     }
 
     @Override public List<FluidPipeDeclaration> fluidPipes() {
@@ -98,56 +136,36 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
         return List.of(new CompressedGasTankDeclaration("sample_drum", "Steel", 12_800_000, false, false, false));
     }
 
-    @Override public List<MachineLayout> layouts() {
-        var cells = new ArrayList<MachineLayout.Cell>();
+    @Override public List<StructureLayout> structureLayouts() {
+        var press = StructureLayout.builder("largesamplepress");
         for (int up = 0; up < 2; up++) {
             for (int right = -1; right <= 1; right++) {
                 for (int back = 0; back <= 2; back++) {
                     if (right == 0 && up == 0 && back == 0) continue;
                     if (right == -1 && up == 1 && back == 2) {
-                        cells.add(new MachineLayout.Cell(right, up, back, "minecraft:glass", StructureRole.CASING));
+                        press.cell(right, up, back, CellMatch.block("minecraft:glass"), StructureRole.CASING);
                         continue;
                     }
                     var role = back == 1 && right == 0
                             ? StructureRole.ENERGY_INPUT : StructureRole.ITEM_FLUID_IO;
                     String part = right == 1 && up == 0 && back == 0 ? "sample_wall" : "tank_wall";
-                    cells.add(new MachineLayout.Cell(right, up, back, part, role));
+                    press.cell(right, up, back, CellMatch.part(part), role);
                 }
             }
         }
-        return List.of(new MachineLayout("largesamplepress", cells),
-                new MachineLayout("sample_turbine", List.of(
-                        new MachineLayout.Cell(0, 0, 1, "tank_wall", StructureRole.FLUID_INPUT))),
-                new MachineLayout("sample_transformer", List.of(
-                        new MachineLayout.Cell(0, 0, 1, "sample_emitter", StructureRole.ENERGY_OUTPUT))));
-    }
-
-    @Override public List<FuelMapDeclaration> fuelMaps() {
-        return List.of(new FuelMapDeclaration("addon_sample.fuel.gas", "Sample Gas",
-                "addon_sample:textures/gui/machines/press",
-                0, 0, 0, 1, 1, 1, 1, false, false, false, false),
-                new FuelMapDeclaration("addon_sample.fuel.solid", "Sample Solid",
-                        "addon_sample:textures/gui/machines/press",
-                        1, 1, 1, 0, 0, 0, 1, true, false, false, false));
-    }
-
-    @Override public List<FuelGeneratorDeclaration> fuelGenerators() {
-        return List.of(
-                FuelGeneratorDeclaration.builder("sample_engine", "Steel")
-                        .machineType("sample_engine").fuelMap("addon_sample.fuel.gas")
-                        .efficiency(10_000).energy("RU", 32).tank(4_000).outputFront().single().build(),
-                FuelGeneratorDeclaration.builder("sample_turbine", "Steel")
-                        .machineType("sample_turbine").fuelMap("addon_sample.fuel.gas")
-                        .efficiency(5_000).energy("RU", 32).tank(8_000).outputBehind(4).multi().build());
-    }
-
-    @Override public List<BehaviorMachineDeclaration> behaviorMachines() {
-        return List.of(IRRIGATOR, MINER, VOID_HOPPER, ROTATION_BUFFER, HAND_CRANK, TRANSFORMER, SOLID_BOILER, COMPRESSOR);
+        return List.of(press.build(),
+                StructureLayout.builder("sample_turbine")
+                        .cell(0, 0, 1, CellMatch.part("tank_wall"), StructureRole.FLUID_INPUT).build(),
+                StructureLayout.builder("sample_transformer")
+                        .cell(0, 0, 1, CellMatch.part("sample_emitter"), StructureRole.ENERGY_OUTPUT).build(),
+                StructureLayout.builder("sample_cluster")
+                        .cell(0, 0, 1, CellMatch.part("sample_compute"), StructureRole.CASING).build());
     }
 
     @Override public Set<String> machineTypes() {
         return Set.of("irrigator", "sampleminer", "samplehopper", "ru_buffer", "hand_crank",
-                "sample_transformer", "sampleboiler", "samplecompressor");
+                "sample_transformer", "sample_cluster", "sampleboiler", "samplecompressor", "sample_wheel", "sample_switch",
+                "sample_inlet", "sample_mirror");
     }
 
     @Override public MachineBehavior create(String machineType) {
@@ -158,100 +176,207 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
             case "ru_buffer" -> new RotationBuffer();
             case "hand_crank" -> new HandCrank();
             case "sample_transformer" -> new Transformer();
+            case "sample_cluster" -> new Cluster();
             case "sampleboiler" -> new SolidBoiler();
             case "samplecompressor" -> new Compressor();
+            case "sample_wheel" -> new WaterWheel();
+            case "sample_switch" -> new HammerSwitch();
+            case "sample_inlet" -> new Inlet();
+            case "sample_mirror" -> new Mirror();
             default -> throw new IllegalArgumentException(machineType);
         };
     }
 
-    private static RecipeMapDeclaration map(String name, String title, String gui) {
+    private static RecipeTable map(String name, String title, String gui) {
         return map(name, title, gui, 1);
     }
 
-    private static RecipeMapDeclaration map(String name, String title, String gui, int inputItems) {
-        return new RecipeMapDeclaration(name, title, "addon_sample:textures/gui/machines/" + gui,
-                inputItems, 1, 1, 0, 0, 0, 1, true, false, false, false);
+    private static RecipeTable map(String name, String title, String gui, int inputItems) {
+        return RecipeTable.machine(name)
+                .title(title).gui("addon_sample:textures/gui/machines/" + gui)
+                .inputItems(inputItems).outputItems(1).minimalInputItems(1).minimalInputs(1)
+                .needsOutputs(true).build();
     }
 
-    private static final BehaviorMachineDeclaration IRRIGATOR = BehaviorMachineDeclaration.builder("irrigator", "Steel")
-            .machineType("irrigator").energy("EU", 32).tier(1)
+    private static final BehaviorMachine IRRIGATOR = BehaviorMachine.builder(
+            MachineCasing.builder("irrigator", "Steel").machineType("irrigator").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .item(44, 26, BehaviorMachineDeclaration.SlotRole.INPUT)
-            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
-            .fluid(8000, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
+            .item(44, 26, BehaviorMachine.SlotRole.INPUT)
+            .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
+            .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
             .toggle("addon_sample.irrigator.water", 26, 64, true)
             .build();
 
     /** Breaks one block under itself per tick and keeps the scan index. */
-    private static final BehaviorMachineDeclaration MINER = BehaviorMachineDeclaration.builder("sample_miner", "Steel")
-            .machineType("sampleminer").energy("EU", 32).tier(1)
+    private static final BehaviorMachine MINER = BehaviorMachine.builder(
+            MachineCasing.builder("sample_miner", "Steel").machineType("sampleminer").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+            .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
             .maxRange(2)
             .build();
 
     /** Pulls item entities into the output slot, or voids them while the switch is on. */
-    private static final BehaviorMachineDeclaration VOID_HOPPER = BehaviorMachineDeclaration.builder("sample_hopper", "Steel")
-            .machineType("samplehopper").energy("EU", 32).tier(1)
+    private static final BehaviorMachine VOID_HOPPER = BehaviorMachine.builder(
+            MachineCasing.builder("sample_hopper", "Steel").machineType("samplehopper").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
+            .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
             .toggle("addon_sample.hopper.void", 26, 64, false)
             .maxRange(4)
             .build();
 
     /** Stores RU from the sides and, while the switch is on, emits one packet from the back. */
-    private static final BehaviorMachineDeclaration ROTATION_BUFFER = BehaviorMachineDeclaration.builder("ru_buffer", "Steel")
-            .machineType("ru_buffer").energy("RU", 32).tier(1)
+    private static final BehaviorMachine ROTATION_BUFFER = BehaviorMachine.builder(
+            MachineCasing.builder("ru_buffer", "Steel").machineType("ru_buffer").tier(1).build())
+            .energy(EnergyInput.builder("RU", 32).capacity(32_000)
+                    .faces(MachineFace.LEFT, MachineFace.RIGHT, MachineFace.TOP, MachineFace.BOTTOM).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .energyFaces(List.of(BehaviorMachineDeclaration.Face.LEFT, BehaviorMachineDeclaration.Face.RIGHT,
-                    BehaviorMachineDeclaration.Face.TOP, BehaviorMachineDeclaration.Face.BOTTOM))
-            .energyCapacity(32_000)
-            .energyOutputs(BehaviorMachineDeclaration.Face.BACK)
-            .energyOut("RU").energyOutMax(32, 1)
+            .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.BACK).build())
             .toggle("addon_sample.ru_buffer.release", 116, 64, false)
             .build();
 
     /** Receives EU on the free faces and moves it into the emitter one block behind. */
-    private static final BehaviorMachineDeclaration TRANSFORMER = BehaviorMachineDeclaration.builder("sample_transformer", "Steel")
-            .machineType("sample_transformer").energy("EU", 32).tier(1)
+    private static final BehaviorMachine TRANSFORMER = BehaviorMachine.builder(
+            MachineCasing.builder("sample_transformer", "Steel").machineType("sample_transformer").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).capacity(32_000)
+                    .faces(MachineFace.FRONT, MachineFace.LEFT, MachineFace.RIGHT, MachineFace.TOP, MachineFace.BOTTOM).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .energyFaces(List.of(BehaviorMachineDeclaration.Face.FRONT, BehaviorMachineDeclaration.Face.LEFT,
-                    BehaviorMachineDeclaration.Face.RIGHT, BehaviorMachineDeclaration.Face.TOP,
-                    BehaviorMachineDeclaration.Face.BOTTOM))
-            .energyCapacity(32_000)
+            .build();
+
+    /** Starts the compute part behind this block while the switch is on. */
+    private static final BehaviorMachine CLUSTER = BehaviorMachine.builder(
+            MachineCasing.builder("sample_cluster", "Steel").machineType("sample_cluster").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .toggle("addon_sample.cluster.run", 44, 64, false)
             .build();
 
     /** A click stores one RU packet and pushes it out the front. */
-    private static final BehaviorMachineDeclaration HAND_CRANK = BehaviorMachineDeclaration.builder("hand_crank", "Steel")
-            .machineType("hand_crank").energy("RU", 32).tier(1)
+    private static final BehaviorMachine HAND_CRANK = BehaviorMachine.builder(
+            MachineCasing.builder("hand_crank", "Steel").machineType("hand_crank").tier(1).build())
+            .energy(EnergyInput.builder("RU", 32).capacity(32).faces(MachineFace.BOTTOM).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM))
-            .energyCapacity(32)
-            .energyOutputs(BehaviorMachineDeclaration.Face.FRONT)
-            .energyOut("RU").energyOutMax(32, 1)
+            .energyOutput(EnergyOutput.builder("RU", 32, 1).faces(MachineFace.FRONT).build())
             .build();
 
     /** Coal in, charcoal out. Produced EU leaves through the top. */
-    private static final BehaviorMachineDeclaration SOLID_BOILER = BehaviorMachineDeclaration.builder("sample_boiler", "Steel")
-            .machineType("sampleboiler").energy("EU", 32).tier(1)
+    private static final BehaviorMachine SOLID_BOILER = BehaviorMachine.builder(
+            MachineCasing.builder("sample_boiler", "Steel").machineType("sampleboiler").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).capacity(10_000)
+                    .faces(MachineFace.BOTTOM, MachineFace.LEFT, MachineFace.RIGHT, MachineFace.BACK).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .item(44, 26, BehaviorMachineDeclaration.SlotRole.INPUT)
-            .item(116, 26, BehaviorMachineDeclaration.SlotRole.OUTPUT)
-            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM, BehaviorMachineDeclaration.Face.LEFT,
-                    BehaviorMachineDeclaration.Face.RIGHT, BehaviorMachineDeclaration.Face.BACK))
-            .energyCapacity(10_000)
-            .energyOutputs(BehaviorMachineDeclaration.Face.TOP)
-            .energyOut("EU").energyOutMax(32, 1)
+            .item(44, 26, BehaviorMachine.SlotRole.INPUT)
+            .item(116, 26, BehaviorMachine.SlotRole.OUTPUT)
+            .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
             .recipeMaps("addon_sample.fuel.solid")
             .build();
 
-    /** KU on the bottom, gas in the tank, compressed drum on the back. */
-    private static final BehaviorMachineDeclaration COMPRESSOR = BehaviorMachineDeclaration.builder("sample_compressor", "Steel")
-            .machineType("samplecompressor").energy("KU", 32).tier(1)
+    /** Emits one EU packet upward. No face accepts energy, and the menu has no energy bar. */
+    private static final BehaviorMachine WATER_WHEEL = BehaviorMachine.builder(
+            MachineCasing.builder("sample_wheel", "Steel").machineType("sample_wheel").tier(1).build())
             .gui("addon_sample:textures/gui/machine.png")
-            .energyFaces(List.of(BehaviorMachineDeclaration.Face.BOTTOM))
-            .fluid(8000, 152, 8, BehaviorMachineDeclaration.SlotRole.INPUT)
+            .energyOutput(EnergyOutput.builder("EU", 32, 1).faces(MachineFace.TOP).build())
             .build();
+
+    /** Generates one HU packet and sends it to a saved coordinate three blocks down. No output face. */
+    private static final BehaviorMachine MIRROR = BehaviorMachine.builder(
+            MachineCasing.builder("sample_mirror", "Steel").machineType("sample_mirror").tier(1).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .energyOutput(EnergyOutput.builder("HU", 16, 1).remote().build())
+            .build();
+
+    /** A soft hammer flips a saved flag. A wrench is left to GregTech and still rotates the block. */
+    private static final BehaviorMachine HAMMER_SWITCH = BehaviorMachine.builder(
+            MachineCasing.builder("sample_switch", "Steel").machineType("sample_switch").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .build();
+
+    /** Water only from the top. A saved {@code shut} flag refuses the next energy packet. */
+    private static final BehaviorMachine INLET = BehaviorMachine.builder(
+            MachineCasing.builder("sample_inlet", "Steel").machineType("sample_inlet").tier(1).build())
+            .energy(EnergyInput.builder("EU", 32).capacity(10_000).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
+            .io(MachineIo.builder().fluidInputs(MachineFace.TOP).build())
+            .build();
+
+    /** KU on the bottom, gas in the tank, compressed drum on the back. */
+    private static final BehaviorMachine COMPRESSOR = BehaviorMachine.builder(
+            MachineCasing.builder("sample_compressor", "Steel").machineType("samplecompressor").tier(1).build())
+            .energy(EnergyInput.builder("KU", 32).faces(MachineFace.BOTTOM).build())
+            .gui("addon_sample:textures/gui/machine.png")
+            .fluid(8000, 152, 8, BehaviorMachine.SlotRole.INPUT)
+            .build();
+
+    /** Generates one EU packet and pushes it out the top. The main input cache stays empty. */
+    private static final class WaterWheel implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            var state = context.state();
+            state.setLong("seen", context.energy());
+            state.setLong("added", context.generate(32));
+            state.setLong("after", context.energy());
+            long sent = context.emit(32, 1);
+            state.setLong("sent", sent);
+            if (sent > 0) context.working(true);
+        }
+    }
+
+    /** Saves a target once, then sends one generated HU packet there every tick. */
+    private static final class Mirror implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            var state = context.state();
+            if (!state.getBoolean("bound")) {
+                BlockPos target = context.pos().below(3);
+                state.setInt("target_x", target.getX());
+                state.setInt("target_y", target.getY());
+                state.setInt("target_z", target.getZ());
+                state.setBoolean("bound", true);
+            }
+            var target = new BlockPos(state.getInt("target_x"), state.getInt("target_y"),
+                    state.getInt("target_z"));
+            context.generate(16);
+            long sent = context.emitTo(target, Direction.UP, 16, 1);
+            state.setLong("sent", sent);
+            if (sent > 0) context.working(true);
+        }
+    }
+
+    /** Soft hammer flips {@code armed}. Any other tool, including a wrench, is not handled. */
+    private static final class HammerSwitch implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+        @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public boolean onTool(MachineBehaviorContext context, AddonTool tool, Player player,
+                                        InteractionHand hand, MachineFace face) {
+            if (tool != AddonTool.SOFT_HAMMER) return false;
+            context.state().setBoolean("armed", !context.state().getBoolean("armed"));
+            return true;
+        }
+    }
+
+    /** Top fluid face only. {@code shut} makes {@link #acceptsEnergy} refuse the packet. */
+    private static final class Inlet implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) {
+            return stack != null && !stack.isEmpty() && stack.getFluid() == Fluids.WATER;
+        }
+        @Override public void tick(MachineBehaviorContext context) {}
+
+        @Override public boolean acceptsEnergy(MachineBehaviorContext context, String type, MachineFace face,
+                                               long size, long amount) {
+            return !context.state().getBoolean("shut");
+        }
+    }
 
     /** Waters one dry farmland within two blocks, spending water and EU. */
     private static final class Irrigator implements MachineBehavior {
@@ -398,6 +523,22 @@ public final class AddonSampleMachines implements AddonMachineContributor, Behav
                 long move = Math.min(context.energy(), Math.max(0, room));
                 if (move > 0 && context.consume(move)) part.charge(move);
                 if (part.stored() > 0) part.setOutput(32, 1);
+            }
+        }
+    }
+
+    /** Turns the compute part behind this block on while the switch is on. */
+    private static final class Cluster implements MachineBehavior {
+        @Override public boolean canInsert(MachineBehaviorContext context, int slot, ItemStack stack) { return false; }
+        @Override public boolean canFill(MachineBehaviorContext context, int tank, FluidStack stack) { return false; }
+
+        @Override public void tick(MachineBehaviorContext context) {
+            if (!context.structureFormed()) return;
+            boolean run = context.toggle(0);
+            for (var part : context.parts()) {
+                if (!(part.behavior() instanceof AddonSampleParts.ComputePart compute) || part.context() == null) continue;
+                if (run) compute.tryStart(part.context(), 1);
+                else compute.stop(part.context());
             }
         }
     }

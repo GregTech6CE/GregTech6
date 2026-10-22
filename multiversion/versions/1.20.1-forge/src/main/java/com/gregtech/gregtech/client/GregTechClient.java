@@ -688,6 +688,9 @@ public final class GregTechClient {
         event.registerBlockEntityRenderer(GTBlockEntities.COIN_PILE.get(), CoinPileRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.COIN_MOLD.get(), CoinMoldRenderer::new);
         event.registerBlockEntityRenderer(GTBlockEntities.SANDWICH_BLOCK.get(), SandwichRenderer::new);
+        LayoutPartClients.collect();
+        event.registerBlockEntityRenderer(GTBlockEntities.ADDON_FUNCTIONAL_PART.get(), FunctionalPartRenderer::new);
+        event.registerBlockEntityRenderer(GTBlockEntities.ADDON_ENERGY_PART.get(), FunctionalPartRenderer::new);
         MaterialFluidVisuals.bootstrap();
         MaterialFluidVisuals.linkAllMoltenMaterials();
         event.registerBlockEntityRenderer(GTBlockEntities.SMELTING_CRUCIBLE.get(), SmeltingCrucibleRenderer::new);
@@ -808,6 +811,7 @@ public final class GregTechClient {
             MenuScreens.register(GTMenuTypes.GARBAGE_DUMP.get(), HopperScreen::new);
             MenuScreens.register(GTMenuTypes.BASIC_MACHINE.get(), BasicMachineScreen::new);
             MenuScreens.register(GTMenuTypes.BEHAVIOR_MACHINE.get(), com.gregtech.gregtech.client.gui.BehaviorMachineScreen::new);
+            MenuScreens.register(GTMenuTypes.PART.get(), com.gregtech.gregtech.client.gui.PartScreen::new);
             MenuScreens.register(GTMenuTypes.FILTER.get(),com.gregtech.gregtech.client.gui.FilterScreen::new);
             MenuScreens.register(GTMenuTypes.USB_SWITCH.get(), com.gregtech.gregtech.client.gui.DataSwitchScreen::new);
             MenuScreens.register(GTMenuTypes.HDD_SWITCH.get(), com.gregtech.gregtech.client.gui.DataSwitchScreen::new);

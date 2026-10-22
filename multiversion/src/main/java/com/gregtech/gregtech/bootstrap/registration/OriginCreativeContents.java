@@ -77,7 +77,7 @@ public final class OriginCreativeContents {
             if(id.contains("crucible")&&!id.contains("large"))return "smelting_crucibles";
             if(id.startsWith("mold")||id.contains("casting_basin"))return "molds";
             if(id.contains("faucet")||id.contains("crossing"))return "crucibles_faucets";
-            if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock"))return "multiblocks";
+            if(id.startsWith("large_")||idClass.contains("Controller")||idClass.equals("MultiblockPortBlock")||idClass.equals("AddonEnergyPartBlock")||idClass.equals("AddonFunctionalPartBlock"))return "multiblocks";
             if(idClass.contains("Wood")||idClass.contains("Log")||idClass.contains("Leaves")||id.contains("planks"))return "woods";
             if(idClass.contains("Wire"))return id.contains("redstone")?"redstone_wires":"wires";
             if(idClass.contains("Tank")||idClass.contains("Drum")||idClass.contains("PortableFluid"))return "fluid_containers";
@@ -108,7 +108,8 @@ public final class OriginCreativeContents {
                     || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
             boolean addonPart = item instanceof BlockItem partItem
                     && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
-                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
             if ((!itemId.getNamespace().equals("gt6ce") && !addonMachine && !addonPipe && !addonPart && !addonDrum)
@@ -120,7 +121,8 @@ public final class OriginCreativeContents {
                     || pipeItem.getBlock() instanceof com.gregtech.gregtech.block.machine.ItemPipeBlock);
             boolean addonPart = item instanceof BlockItem partItem
                     && (partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.MultiblockPortBlock
-                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock);
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock
+                    || partItem.getBlock() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock);
             boolean addonDrum = item instanceof BlockItem drumItem
                     && drumItem.getBlock() instanceof com.gregtech.gregtech.block.machine.CompressedGasTankBlock;
             if((!itemId.getNamespace().equals("gt6ce") && !addonPipe && !addonPart && !addonDrum)||item instanceof MaterialFormItem||item instanceof CreativeTabIconItem)continue;

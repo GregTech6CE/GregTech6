@@ -87,6 +87,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         emitStructureParts(result);
         emitAddonPipes(result);
         emitCompressedTanks(result);
+        emitAddonBlockPrefixes(result);
         for (var item : BuiltInRegistries.ITEM) {
             ResourceLocation id = BuiltInRegistries.ITEM.getKey(item);
             if (item instanceof com.gregtech.gregtech.api.material.MaterialFormItem material && material.getPrefix().isAddon()) {
@@ -173,6 +174,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             ResourceLocation id = part.block().getId();
             String texture = part.texture() == null ? "" : part.texture();
             boolean energy = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonEnergyPartBlock;
+            boolean functional = part.block().get() instanceof com.gregtech.gregtech.block.machine.AddonFunctionalPartBlock;
             String model = texture.isEmpty()
                     ? "gt6ce:block/machine/multiblock/steel_wall"
                     : id.getNamespace() + ":block/" + id.getPath();
@@ -183,6 +185,7 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
             }
             String blockstate = energy
                     ? facingBlockstate(model)
+                    : functional ? facingOnlyBlockstate(model)
                     : "{\"variants\":{\"\":{\"model\":\"" + model + "\"}}}";
             result.put(named(id.getNamespace(), "blockstates/" + id.getPath() + ".json"), blockstate.getBytes(StandardCharsets.UTF_8));
             result.put(named(id.getNamespace(), "models/item/" + id.getPath() + ".json"),
@@ -192,8 +195,26 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
 
     private static String facingBlockstate(String model) {
         String variant = "{\"model\":\"" + model + "\"}";
-        return "{\"variants\":{\"facing=north\":" + variant + ",\"facing=south\":" + variant
-                + ",\"facing=west\":" + variant + ",\"facing=east\":" + variant + "}}";
+        var json = new StringBuilder("{\"variants\":{");
+        boolean first = true;
+        for (String facing : new String[] {"north", "south", "west", "east"}) {
+            for (String satisfied : new String[] {"false", "true"}) {
+                if (!first) json.append(',');
+                first = false;
+                json.append("\"facing=").append(facing).append(",satisfied=").append(satisfied).append("\":").append(variant);
+            }
+        }
+        return json.append("}}").toString();
+    }
+
+    private static String facingOnlyBlockstate(String model) {
+        String variant = "{\"model\":\"" + model + "\"}";
+        return "{\"variants\":{"
+                + "\"facing=north\":" + variant + ","
+                + "\"facing=south\":" + variant + ","
+                + "\"facing=west\":" + variant + ","
+                + "\"facing=east\":" + variant
+                + "}}";
     }
 
     /** Iron cube so a drum has a model before an addon ships its own. */
@@ -245,6 +266,31 @@ public final class SharedInventoryModelPack extends AbstractPackResources {
         return new ResourceLocation(namespace, path);
     }
 //?}
+
+    private static void emitAddonBlockPrefixes(Map<ResourceLocation, byte[]> result) {
+        var emitted = new HashSet<String>();
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof MaterialBlockLike like) || !like.prefix().isAddon()) continue;
+            var prefix = like.prefix();
+            var id = BuiltInRegistries.BLOCK.getKey(block);
+            if (id == null || !emitted.add(prefix.getTextureFileName())) continue;
+            String texture = prefix.textureNamespace() + ":" + prefix.addonTexturePath();
+            String model = "{\"parent\":\"minecraft:block/cube_all\",\"textures\":{\"all\":\"" + texture
+                    + "\",\"particle\":\"" + texture + "\"}}";
+            result.put(location("models/block/material/addon/" + prefix.getTextureFileName() + ".json"),
+                    model.getBytes(StandardCharsets.UTF_8));
+        }
+        for (var block : BuiltInRegistries.BLOCK) {
+            if (!(block instanceof MaterialBlockLike like) || !like.prefix().isAddon()) continue;
+            var id = BuiltInRegistries.BLOCK.getKey(block);
+            if (id == null || !"gt6ce".equals(id.getNamespace())) continue;
+            String parent = "gt6ce:block/material/addon/" + like.prefix().getTextureFileName();
+            result.put(location("blockstates/" + id.getPath() + ".json"),
+                    ("{\"variants\":{\"\":{\"model\":\"" + parent + "\"}}}").getBytes(StandardCharsets.UTF_8));
+            result.put(location("models/item/" + id.getPath() + ".json"),
+                    ("{\"parent\":\"" + parent + "\"}").getBytes(StandardCharsets.UTF_8));
+        }
+    }
 
     @Override
     public IoSupplier<InputStream> getRootResource(String... path) {

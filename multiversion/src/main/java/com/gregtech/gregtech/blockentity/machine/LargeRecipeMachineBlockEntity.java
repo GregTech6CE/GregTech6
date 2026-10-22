@@ -31,12 +31,12 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         return worldPosition.relative(front.getClockWise(),right).above(up).relative(front.getOpposite(),back);
     }
-    private Direction declaredFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+    private Direction declaredFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return relativeToAbsolute(face.index());
     }
     private record Placed(BlockPos pos, Direction face) {}
     private Placed place(int right, int up, int back, Direction face) { return new Placed(sourcePosition(right, up, back), face); }
-    private Placed declared(com.gregtech.gregtech.api.addon.MachineDeclaration.Target target) {
+    private Placed declared(com.gregtech.gregtech.api.addon.IoTarget target) {
         return target == null ? null : place(target.right(), target.up(), target.back(), declaredFace(target.receiver()));
     }
     private record OutputCell(int right, int up, int back, Direction face, String label) {}
@@ -49,7 +49,7 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
                 declared.right() + "," + declared.up() + "," + declared.back() + "," + outputLabelFace(declared.receiver()));
     }
     /** The snapshot still prints the original UP and DOWN tokens. TOP and BOTTOM are those directions. */
-    private static String outputLabelFace(com.gregtech.gregtech.api.addon.BehaviorMachineDeclaration.Face face) {
+    private static String outputLabelFace(com.gregtech.gregtech.api.addon.MachineFace face) {
         return switch (face) {
             case TOP -> "UP";
             case BOTTOM -> "DOWN";
@@ -248,38 +248,70 @@ public class LargeRecipeMachineBlockEntity extends BasicMachineBlockEntity imple
     @Override public long getEnergySizeInputRecommended(GregTechTags.Tag type,Direction side) { return usesTimeEnergy()?1:512; }
     @Override public long getEnergySizeInputMin(GregTechTags.Tag type,Direction side) { return inputMinimum(); }
     @Override public long getEnergySizeInputMax(GregTechTags.Tag type,Direction side) { return inputMaximum(); }
-    @Override protected boolean structureComplete() { return isStructureOk(); }
-    protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return LargeMachineLayouts.cells(spec().machineName()); }
+    @Override protected boolean structureComplete() { return isStructureOk() && conditionPartsMet(); }
+    /** The layout a structure check reads. Controllers with hand-built cells override {@link #structureCells()}. */
+    protected LargeMachineLayouts.Layout structureLayout() {
+        var layout=LargeMachineLayouts.layout(spec().machineName());
+        if(layout!=null)return layout;
+        var cells=structureCells();
+        return cells==null?null:new LargeMachineLayouts.Layout(cells,java.util.List.of());
+    }
+    /** Hand-built cells for a controller without a shared layout. Read on every check. */
+    protected java.util.List<LargeMachineLayouts.Cell> structureCells() { return null; }
     protected boolean validStructureParts() {return true;}
     protected boolean matchesPart(LargeMachineLayouts.Cell cell,net.minecraft.world.level.block.Block expected,net.minecraft.world.level.block.Block actual) {return (actual == expected);}
     @Override public boolean isStructureOk() {
         if(level==null||spec()==null||isRemoved()) return false;
-        var layout=structureCells();if(layout==null)return false;
+        var layout=structureLayout();if(layout==null)return false;
         if(!validStructureParts()){bindings.clear(this::release);return false;}
         var front=getBlockState().getValue(HorizontalDirectionalBlock.FACING);
         var parts=new LinkedHashMap<BlockPos,MultiblockLayout.Role>();
-        net.minecraft.world.level.block.Block ovenCoil=null;
-        for(var cell:layout) {
+        var ovenCoil=new net.minecraft.world.level.block.Block[1];
+        for(var cell:layout.cells()) {
             var pos=cell.at(worldPosition,front);
-            if(!level.hasChunkAt(pos)) {bindings.clear(this::release);return false;}
-            if(cell.role()==MultiblockLayout.Role.AIR) {if(level.isEmptyBlock(pos))continue;bindings.clear(this::release);return false;}
-            if(cell.plainBlock()) {
-                if(!cell.matches(level, level.getBlockState(pos))) {bindings.clear(this::release);return false;}
-                continue;
-            }
-            var expected=cell.block();
-            if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
-                if(ovenCoil==null) {
-                    ovenCoil=level.getBlockState(pos).getBlock();
-                    if(ovenCoil!=expected&&ovenCoil!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043)) {bindings.clear(this::release);return false;}
-                }
-                expected=ovenCoil;
-            }
-            if(!matchesPart(cell,expected,level.getBlockState(pos).getBlock()) || !(level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity)) {bindings.clear(this::release);return false;}
-            parts.put(pos,cell.role());
+            if(!matchesCell(cell,pos,ovenCoil)) {bindings.clear(this::release);return false;}
+            if(cell.role()!=MultiblockLayout.Role.AIR&&!cell.plainBlock())parts.put(pos,cell.role());
         }
-        return bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
+        var repeatPlaced=new java.util.ArrayList<LargeMachineLayouts.Placed>();
+        for(var repeat:layout.repeats()) {
+            var placed=LargeMachineLayouts.repeatCells(level,worldPosition,front,repeat,
+                    (cell,pos)->matchesCell(cell,pos,ovenCoil));
+            if(placed==null){bindings.clear(this::release);return false;}
+            repeatPlaced.addAll(placed);
+            for(var cell:placed)
+                if(cell.cell().role()!=MultiblockLayout.Role.AIR&&!cell.cell().plainBlock())parts.put(cell.pos(),cell.cell().role());
+        }
+        boolean formed = bindings.update(parts,pos->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos,role)->((MultiblockPortBlockEntity)level.getBlockEntity(pos)).bind(worldPosition,role),this::release);
+        if (formed) {
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout.cells());
+            com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, repeatPlaced);
+        }
+        return formed;
+    }
+    private boolean matchesCell(LargeMachineLayouts.Cell cell,BlockPos pos,net.minecraft.world.level.block.Block[] ovenCoil) {
+        if(!level.hasChunkAt(pos))return false;
+        if(cell.role()==MultiblockLayout.Role.AIR)return level.isEmptyBlock(pos);
+        if(cell.plainBlock())return cell.matches(level,pos,level.getBlockState(pos));
+        var expected=cell.block();
+        if(cell.part()==18042 && "largeoven".equals(spec().machineName())) {
+            if(ovenCoil[0]==null) {
+                ovenCoil[0]=level.getBlockState(pos).getBlock();
+                if(ovenCoil[0]!=expected&&ovenCoil[0]!=com.gregtech.gregtech.content.multiblock.LargeMachineParts.block(18043))return false;
+            }
+            expected=ovenCoil[0];
+        }
+        return matchesPart(cell,expected,level.getBlockState(pos).getBlock())
+                && level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity;
+    }
+    /** Bound condition parts must all be satisfied. A structure with none works as before. */
+    private boolean conditionPartsMet() {
+        if (level == null) return true;
+        for (BlockPos pos : bindings.positions()) {
+            if (level.getBlockEntity(pos) instanceof AddonEnergyPartBlockEntity part && part.condition() && !part.satisfied())
+                return false;
+        }
+        return true;
     }
     private void release(BlockPos pos) { if(level!=null&&level.hasChunkAt(pos)&&level.getBlockEntity(pos) instanceof MultiblockPortBlockEntity part) part.release(worldPosition); }
     @Override public void setRemoved() {bindings.clear(this::release);super.setRemoved();}

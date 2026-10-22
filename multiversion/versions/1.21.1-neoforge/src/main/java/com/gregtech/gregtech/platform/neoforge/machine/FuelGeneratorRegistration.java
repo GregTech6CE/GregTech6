@@ -43,14 +43,14 @@ public final class FuelGeneratorRegistration {
         DeferredRegister<Item> items = DeferredRegister.create(Registries.ITEM, namespace);
         DeferredRegister<BlockEntityType<?>> entities = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, namespace);
         for (AddonMachines.AcceptedFuel accepted : machines) {
-            DeferredHolder<Block, FuelGeneratorBlock> block = blocks.register(accepted.declaration().id(), () ->
+            DeferredHolder<Block, FuelGeneratorBlock> block = blocks.register(accepted.declaration().casing().id(), () ->
                     new FuelGeneratorBlock(accepted, BlockBehaviour.Properties.of()
                             .mapColor(MapColor.METAL)
                             .strength(5.0F, 5.0F)
                             .requiresCorrectToolForDrops()));
             BLOCKS.add(block);
-            items.register(accepted.declaration().id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
-            String path = "be_" + accepted.declaration().id().replace('/', '_');
+            items.register(accepted.declaration().casing().id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
+            String path = "be_" + accepted.declaration().casing().id().replace('/', '_');
             DeferredHolder<BlockEntityType<?>, BlockEntityType<FuelGeneratorBlockEntity>> type = entities.register(path, () -> {
                 AtomicReference<BlockEntityType<FuelGeneratorBlockEntity>> typeRef = new AtomicReference<>();
                 BlockEntityType<FuelGeneratorBlockEntity> built = BlockEntityType.Builder.of(

@@ -11,6 +11,8 @@ import java.util.Objects;
 public final class FuelGenerator implements AddonMachine {
     /** Furthest fixed output, matching the room past a gas turbine's rear wall. */
     public static final int MAX_BEHIND = 8;
+    /** Most packets one tick may push. The default is one. */
+    public static final int MAX_AMPERES = 64;
     /** Same tank bound as a behavior machine. */
     public static final int MAX_TANK = 1_024_000_000;
 
@@ -20,15 +22,17 @@ public final class FuelGenerator implements AddonMachine {
     private final int efficiency;
     private final int tankCapacity;
     private final boolean multi;
+    private final int amperes;
 
     private FuelGenerator(MachineCasing casing, FuelOutput output, String fuelMap, int efficiency,
-                          int tankCapacity, boolean multi) {
+                          int tankCapacity, boolean multi, int amperes) {
         this.casing = casing;
         this.output = output;
         this.fuelMap = fuelMap;
         this.efficiency = efficiency;
         this.tankCapacity = tankCapacity;
         this.multi = multi;
+        this.amperes = amperes;
     }
 
     @Override public MachineCasing casing() { return casing; }
@@ -38,16 +42,19 @@ public final class FuelGenerator implements AddonMachine {
     public int tankCapacity() { return tankCapacity; }
     public boolean single() { return !multi; }
     public boolean multi() { return multi; }
+    /** Packets pushed in one tick. Defaults to 1. */
+    public int amperes() { return amperes; }
 
     @Override public boolean equals(Object other) {
         if (this == other) return true;
         if (!(other instanceof FuelGenerator that)) return false;
         return efficiency == that.efficiency && tankCapacity == that.tankCapacity && multi == that.multi
+                && amperes == that.amperes
                 && casing.equals(that.casing) && output.equals(that.output) && fuelMap.equals(that.fuelMap);
     }
 
     @Override public int hashCode() {
-        return Objects.hash(casing, output, fuelMap, efficiency, tankCapacity, multi);
+        return Objects.hash(casing, output, fuelMap, efficiency, tankCapacity, multi, amperes);
     }
 
     public static Builder builder(MachineCasing casing) { return new Builder(casing); }
@@ -62,6 +69,7 @@ public final class FuelGenerator implements AddonMachine {
         private int efficiency = 10_000;
         private int tankCapacity = 4_000;
         private boolean multi;
+        private int amperes = 1;
 
         private Builder(MachineCasing casing) { this.casing = casing; }
 
@@ -74,6 +82,8 @@ public final class FuelGenerator implements AddonMachine {
         public Builder tank(int millibuckets) { tankCapacity = millibuckets; return this; }
         public Builder single() { multi = false; return this; }
         public Builder multi() { multi = true; return this; }
+        /** Packets of {@code perTick} pushed in one tick. Defaults to 1. */
+        public Builder amperes(int value) { amperes = value; return this; }
 
         public FuelGenerator build() {
             if (casing == null) throw new IllegalArgumentException("Missing casing");
@@ -96,8 +106,10 @@ public final class FuelGenerator implements AddonMachine {
                 throw new IllegalArgumentException("Fuel efficiency out of range for " + id);
             if (tankCapacity < 1 || tankCapacity > MAX_TANK)
                 throw new IllegalArgumentException("Invalid machine parameters for " + id);
+            if (amperes < 1 || amperes > MAX_AMPERES)
+                throw new IllegalArgumentException("Fuel amperes out of range for " + id + ": " + amperes);
             return new FuelGenerator(casing.resolve(machineType, false, 0), output, fuelMap, efficiency,
-                    tankCapacity, multi);
+                    tankCapacity, multi, amperes);
         }
     }
 }

@@ -45,8 +45,18 @@ public final class MaterialBlockClientModels {
     public static void registerSharedModels(ModelEvent.RegisterAdditional event) {
         BlockPrefixRegistry.ensurePrefixesLoaded();
         java.util.Set<ResourceLocation> registered = new java.util.HashSet<>();
+        for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+            if (!prefix.isAddon()) continue;
+            ResourceLocation location = BlockMaterialIcons.addonModel(prefix);
+//? if >=1.21.1 {
+            /*if (registered.add(location)) event.register(ModelResourceLocation.standalone(location));
+*///?} else {
+            if (registered.add(location)) event.register(location);
+//?}
+        }
         for (MaterialTextureSet set : MaterialTextureSet.MODELED) {
             for (BlockMaterialPrefix prefix : BlockPrefixRegistry.all()) {
+                if (prefix.isAddon()) continue;
 //? if >=1.21.1 {
                 /*// Ores are baked from the stone template by OreClientModels, not a material cube.
                 if (prefix == BlockMaterialPrefix.ore || prefix == BlockMaterialPrefix.oreSmall) continue;
@@ -141,6 +151,8 @@ public final class MaterialBlockClientModels {
 *///?} else {
     private static BakedModel resolveSharedModel(Map<ResourceLocation, BakedModel> models, MaterialBlockLike materialBlock) {
 //?}
+        if (materialBlock.prefix().isAddon())
+            return BakedModelLookup.find(models, BlockMaterialIcons.addonModel(materialBlock.prefix()));
         MaterialTextureSet primary = MaterialIcons.resolveTextureSet(materialBlock.material());
         BakedModel model = lookupModel(models, primary, materialBlock.prefix());
         if (model != null) {

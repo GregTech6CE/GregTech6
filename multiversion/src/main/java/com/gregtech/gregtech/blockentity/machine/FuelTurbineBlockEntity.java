@@ -39,7 +39,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
             formed = false;
             return false;
         }
-        var layout = LargeMachineLayouts.cells(declaration().machineType());
+        var layout = LargeMachineLayouts.cells(declaration().casing().machineType());
         if (layout == null) {
             bindings.clear(this::release);
             formed = false;
@@ -61,7 +61,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 return false;
             }
             if (cell.plainBlock()) {
-                if (!cell.matches(level, level.getBlockState(pos))) {
+                if (!cell.matches(level, pos, level.getBlockState(pos))) {
                     bindings.clear(this::release);
                     formed = false;
                     return false;
@@ -80,6 +80,7 @@ public class FuelTurbineBlockEntity extends FuelGeneratorBlockEntity implements 
                 pos -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).canBind(worldPosition),
                 (pos, role) -> ((com.gregtech.gregtech.blockentity.machine.MultiblockPortBlockEntity) level.getBlockEntity(pos)).bind(worldPosition, role),
                 this::release);
+        if (formed) com.gregtech.gregtech.content.multiblock.StructureDesigns.apply(level, worldPosition, front, layout);
         return formed;
     }
 

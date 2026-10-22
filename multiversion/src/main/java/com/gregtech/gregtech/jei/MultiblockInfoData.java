@@ -91,12 +91,12 @@ public static List<Info> recipes() {
 //?}
 
 //? if >=1.21.1 {
-/*            if (entry.get().declaration().kind() != com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind.MULTI) continue;
+/*            if (!entry.get().declaration().multi()) continue;
 *///?} else {
-            if (!entry.isPresent() || entry.get().declaration().kind() != com.gregtech.gregtech.api.addon.FuelGeneratorDeclaration.Kind.MULTI) continue;
+            if (!entry.isPresent() || !entry.get().declaration().multi()) continue;
 //?}
 
-            var layout = com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(entry.get().declaration().machineType());
+            var layout = com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(entry.get().declaration().casing().machineType());
 
             if (layout == null) continue;
 
@@ -279,7 +279,7 @@ public static ItemStack expectedPart(Info info,BlockPos pos) {
 
         if(info.controller().getItem() instanceof net.minecraft.world.item.BlockItem item && item.getBlock() instanceof com.gregtech.gregtech.block.machine.FuelGeneratorBlock generator) {
 
-            var cells=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(generator.declaration().machineType());
+            var cells=com.gregtech.gregtech.content.multiblock.LargeMachineLayouts.cells(generator.declaration().casing().machineType());
 
             if(cells!=null)for(var cell:cells)if(cell.at(BlockPos.ZERO,Direction.NORTH).equals(pos))return new ItemStack(cell.block());
 

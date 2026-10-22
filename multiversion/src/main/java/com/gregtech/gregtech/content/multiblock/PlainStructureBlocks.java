@@ -2,6 +2,7 @@ package com.gregtech.gregtech.content.multiblock;
 
 import com.gregtech.gregtech.api.addon.AddonMachines;
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -37,7 +38,15 @@ public final class PlainStructureBlocks {
         }
     }
 
-    public static boolean matches(Level level, String plain, BlockState state) {
+    public static boolean matches(Level level, BlockPos pos, String plain, BlockState state) {
+        if (plain.equals("anyopaque")) return state.isSolidRender(level, pos);
+        if (plain.startsWith("anyfluid")) {
+            var fluid = state.getFluidState();
+            if (fluid.isEmpty()) return false;
+            int hash = plain.indexOf('#');
+            if (hash < 0) return true;
+            return fluid.is(TagKey.create(Registries.FLUID, location(plain.substring(hash + 1))));
+        }
         if (plain.startsWith("#")) {
             TagKey<Block> tag = TagKey.create(Registries.BLOCK, location(plain.substring(1)));
             var registry = level.registryAccess().registryOrThrow(Registries.BLOCK);
@@ -55,6 +64,8 @@ public final class PlainStructureBlocks {
 
     /** The block shown in a structure preview. An empty tag uses a barrier until its members arrive. */
     public static Block preview(String plain) {
+        if (plain.equals("anyopaque")) return Blocks.STONE;
+        if (plain.startsWith("anyfluid")) return Blocks.WATER;
         if (!plain.startsWith("#")) {
             Block resolved = RESOLVED.get(plain);
             return resolved == null ? Blocks.BARRIER : resolved;

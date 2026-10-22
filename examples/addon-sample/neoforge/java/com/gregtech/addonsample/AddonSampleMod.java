@@ -54,6 +54,12 @@ public final class AddonSampleMod {
                         new FluidStack[]{new FluidStack(Fluids.WATER, 250)}, null,
                         20, 16, 0, new int[]{6_000, 4_000}));
                 if (read == null) throw new IllegalStateException("sample detector read row rejected");
+                var keptFluid = AddonRecipes.map("addon_sample.recipe.detector").add(new AddonRecipes.Line(
+                        new ItemStack[]{new ItemStack(Items.CLAY_BALL)},
+                        new ItemStack[]{new ItemStack(Items.BRICK), new ItemStack(Items.CLAY)},
+                        new FluidStack[]{new FluidStack(Fluids.LAVA, 100)}, null,
+                        20, 16, 0, new int[]{10_000, 10_000}, null, new int[]{0}));
+                if (keptFluid == null) throw new IllegalStateException("sample kept fluid row rejected");
                 var hydrogen = AddonFluids.still("Hydrogen", 2);
                 if (hydrogen == null || hydrogen.isEmpty())
                     throw new IllegalStateException("sample hydrogen missing");

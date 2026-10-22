@@ -17,8 +17,32 @@ public record PrefixDeclaration(
         long unitAmount,
         String texture,
         List<String> materials,
-        Set<PrefixCondition> conditions
+        Set<PrefixCondition> conditions,
+        boolean block,
+        String oreDictionary
 ) {
+    /** Item prefix. A block prefix uses {@link #block}. */
+    public PrefixDeclaration(String name, String displayPrefix, String displaySuffix, long unitAmount,
+                             String texture, List<String> materials, Set<PrefixCondition> conditions) {
+        this(name, displayPrefix, displaySuffix, unitAmount, texture, materials, conditions, false, "");
+    }
+
+    /**
+     * Solid cube block prefix. {@code shape} is {@code cube}. {@code texture} is a path in the addon namespace.
+     * {@code oreDictionary} is a tag path, such as {@code storage_blocks/sample_casing}. Each material is tagged
+     * {@code forge:<oreDictionary>/<material>}.
+     */
+    public static PrefixDeclaration block(String name, String displayPrefix, String displaySuffix, long unitAmount,
+                                          String shape, String texture, String oreDictionary, List<String> materials) {
+        if (!"cube".equals(shape))
+            throw new IllegalArgumentException("Prefix '" + name + "' block shape must be cube");
+        if (oreDictionary == null || !oreDictionary.matches("[a-z0-9_]+(?:/[a-z0-9_]+)*"))
+            throw new IllegalArgumentException(
+                    "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
+        return new PrefixDeclaration(name, displayPrefix, displaySuffix, unitAmount, texture, materials, Set.of(),
+                true, oreDictionary);
+    }
+
     public PrefixDeclaration {
         if (name == null || !name.matches("[a-z][A-Za-z0-9]{0,63}"))
             throw new IllegalArgumentException(
@@ -53,5 +77,11 @@ public record PrefixDeclaration(
         if (materials.isEmpty() && !positive)
             throw new IllegalArgumentException(
                     "Prefix '" + name + "' needs materials or a tool or smithable condition");
+        oreDictionary = oreDictionary == null ? "" : oreDictionary;
+        if (block && !oreDictionary.matches("[a-z0-9_]+(?:/[a-z0-9_]+)*"))
+            throw new IllegalArgumentException(
+                    "Prefix '" + name + "' ore dictionary name must be a tag path: " + oreDictionary);
+        if (!block && !oreDictionary.isEmpty())
+            throw new IllegalArgumentException("Prefix '" + name + "' is an item prefix and has no ore dictionary");
     }
 }

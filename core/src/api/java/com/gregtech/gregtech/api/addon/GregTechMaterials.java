@@ -48,6 +48,18 @@ public final class GregTechMaterials {
 
         String translationKey();
 
+        /** Material-table mass, in nucleons. Not converted. */
+        long mass();
+
+        /** Material-table tool quality. Not converted. */
+        int toolQuality();
+
+        /** Material-table tool speed. Not converted. */
+        float toolSpeed();
+
+        /** Material-table tool durability. Not converted. */
+        long toolDurability();
+
         List<Component> composition();
 
         /**
@@ -60,6 +72,36 @@ public final class GregTechMaterials {
         Material resolve();
     }
 
-    /** One entry of a material's composition. {@code amount} is in GregTech units ({@link com.gregtech.gregtech.api.material.GTValues#U}). */
+    /**
+     * One material unit. {@code amount} is in GregTech units ({@link com.gregtech.gregtech.api.material.GTValues#U}).
+     * One ingot is {@code 1 U}.
+     */
     public record Component(String material, long amount) {}
+
+    /**
+     * Prefix name and material units of one item. An unrecognized item is {@link #EMPTY}.
+     * {@code prefix} is empty when the item has units and no prefix.
+     */
+    public record StackComposition(String prefix, List<Component> units) {
+        public static final StackComposition EMPTY = new StackComposition("", List.of());
+
+        public StackComposition {
+            prefix = prefix == null ? "" : prefix;
+            units = units == null || units.isEmpty() ? List.of() : List.copyOf(units);
+        }
+
+        /** A unit list with nothing positive is empty. A null prefix becomes an empty name. */
+        public static StackComposition of(String prefix, List<Component> units) {
+            if (units == null || units.isEmpty()) return EMPTY;
+            var copy = new java.util.ArrayList<Component>();
+            for (Component unit : units) {
+                if (unit == null || unit.material() == null || unit.material().isEmpty() || unit.amount() <= 0) continue;
+                copy.add(new Component(unit.material(), unit.amount()));
+            }
+            if (copy.isEmpty()) return EMPTY;
+            return new StackComposition(prefix, copy);
+        }
+
+        public boolean present() { return !units.isEmpty(); }
+    }
 }

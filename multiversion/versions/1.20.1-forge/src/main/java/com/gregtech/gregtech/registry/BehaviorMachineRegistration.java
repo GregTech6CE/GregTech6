@@ -41,14 +41,14 @@ public final class BehaviorMachineRegistration {
         DeferredRegister<BlockEntityType<?>> entities = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, namespace);
         var holders = new ArrayList<RegistryObject<BehaviorMachineBlock>>();
         for (AddonMachines.AcceptedBehavior accepted : machines) {
-            RegistryObject<BehaviorMachineBlock> block = blocks.register(accepted.declaration().id(), () ->
+            RegistryObject<BehaviorMachineBlock> block = blocks.register(accepted.declaration().casing().id(), () ->
                     new BehaviorMachineBlock(accepted, BlockBehaviour.Properties.of()
                             .mapColor(MapColor.METAL)
                             .strength(5.0F, 5.0F)
                             .requiresCorrectToolForDrops()));
             holders.add(block);
             BLOCKS.add(block);
-            items.register(accepted.declaration().id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
+            items.register(accepted.declaration().casing().id(), () -> new BlockItem(block.get(), new Item.Properties().stacksTo(16)));
         }
         var groups = new LinkedHashMap<String, List<RegistryObject<BehaviorMachineBlock>>>();
         for (int i = 0; i < machines.size(); i++)

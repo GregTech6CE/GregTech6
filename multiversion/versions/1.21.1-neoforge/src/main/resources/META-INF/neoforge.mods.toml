@@ -23,5 +23,13 @@ versionRange="[1.21.1]"
 ordering="NONE"
 side="BOTH"
 
+# KubeJS is optional. AFTER makes its constructor, which loads startup scripts, finish before this mod's registry events.
+[[dependencies.${mod_id}]]
+modId="kubejs"
+type="optional"
+versionRange="[2101.7.2,)"
+ordering="AFTER"
+side="BOTH"
+
 [[mixins]]
 config="gregtech-neoforge.mixins.json"

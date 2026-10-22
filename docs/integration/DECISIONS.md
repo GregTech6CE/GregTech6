@@ -161,6 +161,73 @@ GEN_FLOOR是含下界的列表数组，不能按名字当作主世界专属；�
 ## 2026-10-21 / 数据配方必须核实际介质选择次序
 
 共享提供者存在、准入事实表匹配和展示fake行不能代替正常机器的混合介质路径。复制机三个输入可同时放U盘与数据线；先直接提供者后端口的两版消费者会改变原槽位次序，登记290。本批不改运行顺序，只整理四源并更新过时P3结论；原Error流体、畸形数值及直接便利读者与端口层级保持分开，见[专题](MATERIAL_DATA_CHAIN_AUDIT.md)。
+## 2026-10-22 / 行为机器远程送能
+
+`MachineBehaviorContext.emitTo(target, side, size, amount)` 用机器已有的 `energyOutput` 声明（类型、包下限、上限、包次数和负包开关），不看声明上的面。`EnergyOutput.remote()` 允许这种输出不写面：没有相邻面路径，`emit` 送不出去，只走 `emitTo`；写了面再加 `remote()` 时两条路都能用。能量零件不能写 `remote()`，结构零件仍要面。原来面为空的声明会启动失败，现在只有带 `remote()` 才通过，这是新增能力而不是放宽旧声明。每有一包被目标收下就扣控制器储能，返回收下的包数；请求超出声明时和 `emit(size, amount)` 一样抛出。`side` 是接收方的面，null 表示不分面。目标每次调用现查：区块没加载、方块实体不存在或已经被移除都返回 0，不保留方块实体。目标坐标存在 `BehaviorState`（三个 `setInt` 键），不写在机器声明上，因为坐标属于放下的这一块，而声明由同类型机器共用；这样也不新增存档键或格式。太阳镜仍是行为模板里的机器，不做成结构零件，客户端朝向渲染不在这一批。
+
+## 2026-10-22 / 坩埚只读视图
+
+读数挂在控制器侧。`MachineBehavior` 增加 `getCrucibleMaterial(context)`，返回熔融材料名或空串；现有的 `getCrucibleTemperature` 和 `getCrucibleContentAmount` 不变。绑定零件通过 `PartContext.crucible()` 读取三者合成的 `CrucibleContent` 快照（材料名、GT 单位数量、开尔文温度、`present()`）。不放在 `MachineBehaviorContext` 上，因为零件拿不到控制器那一侧的上下文；由控制器的方块实体在每次调用时现取行为结果，结构拆开、控制器方块实体被移除或没有绑定后返回空视图，不保留方块实体。材料用名字而不是 `GTMaterial`，附属用 `GregTechMaterials.find` 解析，避免把内部材料类型带进 SDK。读取只读，不扣除材料；取材料仍走 `fillMoldAtSide`。只覆盖行为机器控制器，因为附属零件只绑在行为机器上。
+
+## 2026-10-22 / 双向结构零件与控制器内部送能
+
+`LayoutPart` 允许同时声明 `energyOutput` 和 `energyInput`；双向时输入只表示控制器通道，不带 `faces`、不带 `condition`，缓冲复用输出缓冲。`MachineBehaviorContext.pushToPart` 只把能量充进零件、不扣控制器储能，`emit(part, size, amount)` 从控制器储能扣并转入零件；零件在自己的 tick 从 `energyOutput.faces()` 送出。`AddonEnergyPartBlockEntity` 的输出零件 `charge` 进入输出缓冲，空 `faces` 的内部输入不再暴露给外部能量能力（包括无面查询）。这样不扩充 `MachineFace` 的六面模型，环路由“内部通道不是外部面、双向零件没有外部输入面”避免，和 GT6 `SIDE_INSIDE` 的语义一致。
+
+## 2026-10-22 / 结构布局重复段与方块谓词
+
+`StructureLayout` 增加 `LayoutRepeat` 组：一组层按 `min`–`max` 重复，`step` 为 -1 时向下（基岩钻），`max` 为 -1 时以首层匹配失败为界，检查封顶 64 份。声明用独立的顶层 `repeats` 数组，JSON 与 KubeJS 对象形式一致；预览按 `min` 份显示。`CellMatch` 的封闭集合增加 `AnyFluid`（可限定流体标签）和 `AnyOpaque`；两者仍是普通方块格，只允许 `CASING`，不绑定也不运送物品、流体或能量。运行时 `SharedLargeMachineLayouts.cells` 给预览展开到 `min`，结构检查读 `layout`，行为机器上下文用 `structureRepeats(key)` 读取实际份数。选择独立段而不是逐格 `repeat` 键，因为一组层必须整组出现；选择封闭谓词而不是任意 lambda，因为预览和 KubeJS 要能序列化。
+
+## 2026-10-22 / BehaviorMachine 坩埚桥接
+
+`BehaviorMachineBlockEntity` 实现内部 `ITileEntityCrucible`，把温度、熔融材料总量和浇铸动作交给 `MachineBehavior` 的默认回调。附属 API 不暴露内部 `GTMaterial` 或 `ITileEntityMold`，而是用 `CrucibleMold` 和 `GregTechMaterials.Material`；GT 在边界处按已解析材料名转换并复用现有模具、坩埚盆和龙头校验。未实现这些回调的旧行为保持零温度、零内容量并拒绝浇铸。行为自己扣除 `CrucibleMold.fillMold` 返回的实际消耗量，避免壳层复制或保存附属库存。
+
+## 2026-10-22 / 功能零件的组合方式
+
+`LayoutPart` 上的物品槽、tick、右键和命名字段可以单独写，也可以和能量输出或条件输入写在同一零件上。什么都不写仍是外壳。`energyOutput` 和 `energyInput` 仍不能一起写。
+
+平台用 `LayoutPartContributor` 按零件名配对行为，服务文件是 `META-INF/services/com.gregtech.gregtech.api.addon.platform.LayoutPartContributor`。外壳和只含能量的零件不登记。功能零件没有工厂时启动失败，并写出附属和零件名。行为实例在方块实体构造时创建，每个方块实体一份。附属不继承 GT 的方块实体。
+
+`MachineBehaviorContext.parts()` 是绑定零件的总入口。`energyParts()` 留着，是同一份绑定里带能量角色的那一部分。既有能量又有功能的格子在 `parts()` 里出现一次，`energy()` 和 `behavior()` 都有，并且也在 `energyParts()` 里。外壳不进这两份列表。不另加 `computeParts()`。结构拆开或零件被移除之后，这两份列表清空。`BoundPart`、它的行为和上下文不要留到回调外面。
+
+槽存 `gt.part_slots`，字段存 `gt.part_fields`。字段形状和行为机器的 `i`、`l`、`b`、`s`、`t` 相同。已有的 `gt.part_energy`、`gt.part_output`、`gt.part_amount`、`gt.part_stopped`、`gt.part_input`、`gt.part_satisfied` 不改。外壳和只含能量的零件不写新键，也不因此发方块实体更新包。
+
+没有能量角色的功能零件用新方块实体 `gt6ce:addon_functional_part`。同时带能量的零件仍用 `gt6ce:addon_energy_part`。内置零件不加这些能力。`StructurePartDeclaration` 不改。
+
+无线计算零件、太阳镜往远处送能不在功能零件这次。坩埚只读视图已由上面的 BehaviorMachine 桥接记录覆盖；远程送能另开卡。无线计算等计算机集群有卡以后再写零件侧。
+
+## 2026-10-22 / 第二种输入能量的名字和存档
+
+`EnergyInput.anyPacket()` 是「不检查包大小」。它和 `range` 不能一起写。配方机器、行为机器的主输入、条件零件写了就失败。只有 `BehaviorMachine.auxiliaryEnergy` 接受它。
+
+条件零件是 `LayoutPart.energyInput` 加 `condition(perTick)`，两者必须一起写。输入的 `perTick` 是推荐包大小，必须落在包范围内。`condition` 至少是 1，不超过容量。容量必须为正。
+
+方块状态属性是 `satisfied`。满足时亮度 12。输入缓存和满足标记是 `gt.part_input`、`gt.part_satisfied`。附加缓存是 `gt.aux_energy`，只在声明了附加输入时写入。缺键是空缓存、不满足。`gt.part_energy` 始终是输出缓存，不会被读成输入缓存。
+
+`energy(type)` / `consume(type, amount)` 只看附加缓存，类型字符串和主能量相同也一样。面决定能量进哪一份缓存。比较忽略大小写。附加缓存不参加主输入在 tick 结束时的抽取。共用方块实体的签名带上附加能量短名，没有附加输入是空字符串。
+
+大型配方机用现有的 `structureComplete` 挡开工：不满足时停机，进度留下。没有条件零件时多一次空扫描，结果和以前一样。内爆压缩机自己覆盖了 `structureComplete`，不走这道门。附属大型机走 `LargeRecipeMachineBlockEntity`，会走这道门。行为机器的 `tick` 不因此停。
+
+零件按声明的输入面收电，不看格子角色，也不要求已经绑定。每 tick 自己扣。满足状态可以比控制器晚一 tick。附属能量零件不把注入转给控制器，输出零件不再报告控制器的输入最小和最大。内置 `MultiblockPortBlockEntity.canBind` 没改。
+
+## 2026-10-21 / 第二种输入能量的接法
+
+条件能量零件和控制器附加输入仍分两处，归属见同日「附属机器声明的组件和模板」。实施时再定的三条：
+
+一个 `LayoutPart` 不能同时 `energyInput` 和 `energyOutput`。一起写就在 `build()` 失败。来源里没有这种零件。
+
+行为机器的附加输入用第二缓存。`MachineBehaviorContext.energy(type)` / `consume(type, amount)` 只动这组缓存，不进主缓存。主能量仍走无类型的 `energy()` / `consume(long)`。不用注入回调。
+
+附加输入的面不能和主输入重叠，重叠就失败。`EnergyInput` 另有「不检查包大小」的写法，脱燃工厂的 HU 用它，过载规则和主能量分开。
+
+大型配方机由外壳挡住开工：绑定的条件零件有一个不满足就不开工，没有条件零件则和现在一样。行为机器的 `tick` 不因此停掉，上下文另给出条件是否全部满足，行为自己看。
+
+## 2026-10-21 / 附属文档按概念分节
+
+两份 `ADDON_API` 里，机器声明改成按组件写一次，三种模板只写自己的旋钮。旧入口集中在「弃用与移除」，概念节不再出现旧类型名。「API 版本仍是 0」只留在「版本」。
+
+「版本」到「坩埚」保持原顺序。其后是：注册机器、外壳、能量、物品和流体、结构、配方表、配方机器、行为机器、燃料机、管子、压缩气罐，然后仍是构建附属和支持范围。管子从现在的「配方机器」里移出，规则不变。英文标题与中文标题同一顺序。
+
+这次只定目录，不改两份文档。重写和弃用注解一起做，因为移除表必须和源码注解一致。实施顺序是：先加新类型，再把旧声明转成新类型并让平台改读新类型，最后加注解、重写文档。`0.9` 和 `0.10` 的 `removeAt` 不改。`AddonMachineDefinition`、`AddonMachineLayout` 的替代在加注解时改成 `RecipeMachine`、`StructureLayout`。
 
 ## 2026-10-21 / USB模式职责与邻库通知消费者分开
 

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /** SPDX-License-Identifier: LGPL-3.0-or-later */
 /**
- * @deprecated Use {@link MachineLayout}. Removal is 0.10.
+ * @deprecated Use {@link StructureLayout}. Removal is 0.10.
  */
 @Deprecated(since = "0.0", forRemoval = true)
 @AddonApiRemoval(id = "com.gregtech.gregtech.api.addon.AddonMachineLayout", removeAt = "0.10")

@@ -54,6 +54,8 @@ public final class AddonMaterials {
     private static boolean closed;
     private static volatile List<AcceptedForm> acceptedForms = List.of();
     private static final Set<GTMaterial> ORE_FORMS = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+    private static final Set<GTMaterial> POLYMERS = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
+    private static final Set<GTMaterial> WIRES = java.util.Collections.newSetFromMap(new IdentityHashMap<>());
     private static final List<QueuedByproducts> QUEUED_BYPRODUCTS = new ArrayList<>();
 
     private AddonMaterials() {}
@@ -61,14 +63,16 @@ public final class AddonMaterials {
     public record AcceptedForm(String addonId, String materialName, String prefixName) {}
 
     /**
-     * An addon material may request {@code plate} or {@code foil} even when it has no ingot.
-     * Core materials keep {@code MaterialPrefix.isValidFor}. Other prefixes stay on that check.
+     * {@code polymer()} allows {@code plate} and {@code foil}. {@code wires()} allows {@code wireFine}.
+     * Core materials and every other prefix keep {@code MaterialPrefix.isValidFor}.
      */
     public static boolean explicitPlateOrFoil(com.gregtech.gregtech.data.MaterialPrefix prefix, GTMaterial material) {
         if (prefix == null || material == null || !material.isValid() || GTMaterialRegistry.isCoreMaterial(material.resolve()))
             return false;
         String name = prefix.getName();
-        return "plate".equals(name) || "foil".equals(name);
+        GTMaterial resolved = material.resolve();
+        if (("plate".equals(name) || "foil".equals(name)) && POLYMERS.contains(resolved)) return true;
+        return "wireFine".equals(name) && WIRES.contains(resolved);
     }
 
     private static final Set<String> COAL = Set.of(
@@ -84,13 +88,16 @@ public final class AddonMaterials {
                               List<PrefixDeclaration> prefixes,
                               List<OreDeclaration> ores,
                               List<OreVeinDeclaration> veins,
-                              List<SmallOreDeclaration> smallOres) {}
+                              List<SmallOreDeclaration> smallOres,
+                              List<FormTag> formTags) {}
 
     private record OreDeclaration(String materialName, List<String> byproducts) {}
 
+    private record FormTag(String materialName, boolean polymer, boolean wires) {}
+
     private record QueuedByproducts(String addonId, GTMaterial material, List<String> byproducts) {}
 
-    private record Pending(String addonId, MaterialDefinition definition, OreDeclaration ore) {}
+    private record Pending(String addonId, MaterialDefinition definition, OreDeclaration ore, FormTag formTag) {}
 
     /** Flags applied by {@link MaterialDeclaration.Builder#metal()}. */
     public static MaterialProperty[] metalFlags() { return METAL_FLAGS.clone(); }
@@ -121,7 +128,8 @@ public final class AddonMaterials {
                 enqueue(contributor.addonId(), definitions(declarations), contributor.forms(), contributor::link,
                         contributor.compositions(), contributor.smeltingTargets(),
                         contributor.crucibleReactions(), contributor.crucibleRemovals(), contributor.prefixes(),
-                        oreDeclarations(declarations), contributor.oreVeins(), contributor.smallOres());
+                        oreDeclarations(declarations), contributor.oreVeins(), contributor.smallOres(),
+                        formTags(declarations));
             } catch (RuntimeException | Error failure) {
                 throw new IllegalStateException("Addon material contributor failed: "
                         + contributor.getClass().getName(), failure);
@@ -168,10 +176,17 @@ public final class AddonMaterials {
     /** Test entry for a declaration that carries {@link MaterialDeclaration#ores()}. */
     public static synchronized void submitDeclared(String addonId, List<MaterialDeclaration> materials,
                                                    List<MaterialFormRequest> forms) {
+        submitDeclared(addonId, materials, forms, List.of());
+    }
+
+    /** Test entry. Production addons return prefixes from {@link AddonMaterialContributor#prefixes()}. */
+    public static synchronized void submitDeclared(String addonId, List<MaterialDeclaration> materials,
+                                                   List<MaterialFormRequest> forms, List<PrefixDeclaration> prefixes) {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         warnIgnoredDeclarationIds(addonId, copied);
-        enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
-                oreDeclarations(copied), List.of(), List.of());
+        enqueue(addonId, definitions(copied), forms, () -> {}, List.of(), List.of(), List.of(), List.of(),
+                List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
+                oreDeclarations(copied), List.of(), List.of(), formTags(copied));
     }
 
     /** Test entry. Production addons return these lists from {@link AddonMaterialContributor}. */
@@ -203,7 +218,7 @@ public final class AddonMaterials {
         List<MaterialDeclaration> copied = List.copyOf(Objects.requireNonNull(materials, "materials"));
         warnIgnoredDeclarationIds(addonId, copied);
         enqueue(addonId, definitions(copied), List.of(), () -> {}, List.of(), List.of(), List.of(), List.of(), List.of(),
-                oreDeclarations(copied), veins, smallOres);
+                oreDeclarations(copied), veins, smallOres, formTags(copied));
     }
 
     private static synchronized void submit(String addonId, List<MaterialDefinition> materials,
@@ -222,7 +237,7 @@ public final class AddonMaterials {
                     + "' declared numeric id " + definition.id() + "; the id is ignored");
         }
         enqueue(addonId, copied, forms, link, compositions, smeltingTargets, crucibleReactions, crucibleRemovals,
-                prefixes, ores, veins, smallOres);
+                prefixes, ores, veins, smallOres, List.of());
     }
 
     private static synchronized void enqueue(String addonId, List<MaterialDefinition> materials,
@@ -234,7 +249,8 @@ public final class AddonMaterials {
                                              List<PrefixDeclaration> prefixes,
                                              List<OreDeclaration> ores,
                                              List<OreVeinDeclaration> veins,
-                                             List<SmallOreDeclaration> smallOres) {
+                                             List<SmallOreDeclaration> smallOres,
+                                             List<FormTag> formTags) {
         if (closed) throw new IllegalStateException("Addon material queue is closed: " + addonId);
         if (addonId == null || !addonId.matches("[a-z][a-z0-9_]{1,63}"))
             throw new IllegalArgumentException("Invalid addon mod ID: " + addonId);
@@ -252,7 +268,8 @@ public final class AddonMaterials {
                 List.copyOf(Objects.requireNonNull(prefixes, "prefixes")),
                 List.copyOf(Objects.requireNonNull(ores, "ores")),
                 List.copyOf(Objects.requireNonNull(veins, "veins")),
-                List.copyOf(Objects.requireNonNull(smallOres, "smallOres"))));
+                List.copyOf(Objects.requireNonNull(smallOres, "smallOres")),
+                List.copyOf(Objects.requireNonNull(formTags, "formTags"))));
     }
 
     private static List<OreDeclaration> oreDeclarations(List<MaterialDeclaration> declarations) {
@@ -262,6 +279,15 @@ public final class AddonMaterials {
             ores.add(new OreDeclaration(GTMaterial.sanitize(declaration.name()), declaration.oreByproducts()));
         }
         return List.copyOf(ores);
+    }
+
+    private static List<FormTag> formTags(List<MaterialDeclaration> declarations) {
+        var tags = new ArrayList<FormTag>();
+        for (MaterialDeclaration declaration : declarations) {
+            if (!declaration.polymer() && !declaration.wires()) continue;
+            tags.add(new FormTag(GTMaterial.sanitize(declaration.name()), declaration.polymer(), declaration.wires()));
+        }
+        return List.copyOf(tags);
     }
 
     /** True when this addon material declared {@link MaterialDeclaration.Builder#ores()}. */
@@ -309,14 +335,15 @@ public final class AddonMaterials {
                             + "' differs only by case from core material '" + registered + "'");
                 }
                 OreDeclaration ore = oreOf(submission, exact);
-                Pending seen = exactByLower.putIfAbsent(lower, new Pending(submission.addonId, definition, ore));
+                FormTag formTag = formTagOf(submission, exact);
+                Pending seen = exactByLower.putIfAbsent(lower, new Pending(submission.addonId, definition, ore, formTag));
                 if (seen != null && !seen.definition().name().equals(definition.name())) {
                     throw new IllegalStateException("Addon '" + submission.addonId + "' material '" + exact
                             + "' differs only by case from addon '" + seen.addonId() + "' material '"
                             + seen.definition().name() + "'");
                 }
                 grouped.computeIfAbsent(exact, ignored -> new ArrayList<>())
-                        .add(new Pending(submission.addonId, definition, ore));
+                        .add(new Pending(submission.addonId, definition, ore, formTag));
             }
         }
         List<String> names = new ArrayList<>(grouped.keySet());
@@ -327,6 +354,7 @@ public final class AddonMaterials {
             for (int i = 1; i < group.size(); i++) {
                 String field = difference(first, group.get(i).definition());
                 if (field == null) field = oreDifference(group.get(0).ore(), group.get(i).ore());
+                if (field == null) field = formTagDifference(group.get(0).formTag(), group.get(i).formTag());
                 if (field != null) {
                     throw new IllegalStateException("Addon '" + group.get(i).addonId() + "' material '" + name
                             + "' field " + field + " does not match addon '" + group.get(0).addonId() + "'");
@@ -344,11 +372,27 @@ public final class AddonMaterials {
                 QUEUED_BYPRODUCTS.add(new QueuedByproducts(group.get(0).addonId(), material.resolve(),
                         group.get(0).ore().byproducts()));
             }
+            FormTag tag = group.get(0).formTag();
+            if (tag != null && tag.polymer()) POLYMERS.add(material.resolve());
+            if (tag != null && tag.wires()) WIRES.add(material.resolve());
         }
     }
 
     private static OreDeclaration oreOf(Submission submission, String name) {
         for (OreDeclaration ore : submission.ores) if (ore.materialName().equals(name)) return ore;
+        return null;
+    }
+
+    private static FormTag formTagOf(Submission submission, String name) {
+        for (FormTag tag : submission.formTags) if (tag.materialName().equals(name)) return tag;
+        return new FormTag(name, false, false);
+    }
+
+    private static String formTagDifference(FormTag left, FormTag right) {
+        FormTag a = left == null ? new FormTag("", false, false) : left;
+        FormTag b = right == null ? new FormTag("", false, false) : right;
+        if (a.polymer() != b.polymer()) return "polymer";
+        if (a.wires() != b.wires()) return "wires";
         return null;
     }
 
@@ -434,9 +478,16 @@ public final class AddonMaterials {
     }
 
     private static void installPrefix(String addonId, PrefixDeclaration declaration) {
+        if (declaration.block()) {
+            installBlockPrefix(addonId, declaration);
+            return;
+        }
         MaterialPrefix existing = PrefixRegistry.conflict(declaration.name());
         if (existing != null) throw new IllegalStateException("Addon '" + addonId + "' prefix '"
                 + declaration.name() + "' already exists as '" + existing.getName() + "'");
+        if (com.gregtech.gregtech.api.prefix.BlockPrefixRegistry.byName(declaration.name()) != null)
+            throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
+                    + "' already exists as a block prefix");
         Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
         long weight;
         try {
@@ -448,6 +499,25 @@ public final class AddonMaterials {
         String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
         MaterialPrefix.defineAddon(declaration.name(), label, declaration.displayPrefix(), declaration.displaySuffix(),
                 weight, addonId, declaration.texture(), material -> selected.contains(material.resolve()));
+    }
+
+    private static void installBlockPrefix(String addonId, PrefixDeclaration declaration) {
+        if (PrefixRegistry.conflict(declaration.name()) != null
+                || com.gregtech.gregtech.api.prefix.BlockPrefixRegistry.byName(declaration.name()) != null)
+            throw new IllegalStateException("Addon '" + addonId + "' block prefix '" + declaration.name()
+                    + "' already exists");
+        Set<GTMaterial> selected = selectPrefixMaterials(addonId, declaration);
+        long weight;
+        try {
+            weight = Math.multiplyExact(declaration.unitAmount(), GTValues.U);
+        } catch (ArithmeticException overflow) {
+            throw new IllegalStateException("Addon '" + addonId + "' prefix '" + declaration.name()
+                    + "' unit amount overflows", overflow);
+        }
+        String label = (declaration.displayPrefix() + declaration.displaySuffix()).trim();
+        com.gregtech.gregtech.api.prefix.BlockMaterialPrefix.defineAddon(declaration.name(), label,
+                declaration.displayPrefix(), declaration.displaySuffix(), weight, addonId, declaration.texture(),
+                declaration.oreDictionary(), material -> selected.contains(material.resolve()));
     }
 
     private static Set<GTMaterial> selectPrefixMaterials(String addonId, PrefixDeclaration declaration) {
@@ -508,9 +578,13 @@ public final class AddonMaterials {
             for (MaterialFormRequest request : submission.forms) {
                 MaterialPrefix prefix = PrefixRegistry.byName(request.prefixName());
                 GTMaterial material = GTMaterialRegistry.get(request.materialName());
-                if (prefix == null)
+                if (prefix == null) {
+                    if (com.gregtech.gregtech.api.prefix.BlockPrefixRegistry.byName(request.prefixName()) != null)
+                        throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
+                                + request.prefixName() + " / " + request.materialName() + "' is a block prefix");
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + request.prefixName() + " / " + request.materialName() + "' uses an unknown prefix");
+                }
                 if (!material.isValid())
                     throw new IllegalStateException("Addon '" + submission.addonId + "' form '"
                             + request.prefixName() + " / " + request.materialName() + "' uses an unknown material");

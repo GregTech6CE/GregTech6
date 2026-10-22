@@ -24,6 +24,7 @@ public final class GTMenuTypes {
 /* private GTMenuTypes(){}
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.BasicMachineContainerMenu>> BASIC_MACHINE=com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.MENU;
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MACHINE=com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.BEHAVIOR_MENU;
+ public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.PartMenu>> PART=com.gregtech.gregtech.platform.neoforge.machine.BasicMachineRegistries.PART_MENU;
  public static final net.neoforged.neoforge.registries.DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENU_TYPES=net.neoforged.neoforge.registries.DeferredRegister.create(net.minecraft.core.registries.Registries.MENU,"gt6ce");
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.BumbliaryContainerMenu>> BUMBLIARY=MENU_TYPES.register("bumbliary",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.BumbliaryContainerMenu(id,inventory,false)));
  public static final net.neoforged.neoforge.registries.DeferredHolder<net.minecraft.world.inventory.MenuType<?>,net.minecraft.world.inventory.MenuType<com.gregtech.gregtech.client.gui.BumbliaryContainerMenu>> ADVANCED_BUMBLIARY=MENU_TYPES.register("advanced_bumbliary",()->net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create((id,inventory,buffer)->new com.gregtech.gregtech.client.gui.BumbliaryContainerMenu(id,inventory,true)));
@@ -81,6 +82,10 @@ public final class GTMenuTypes {
     public static final RegistryObject<MenuType<com.gregtech.gregtech.client.gui.BehaviorMachineMenu>> BEHAVIOR_MACHINE =
             MENU_TYPES.register("behavior_machine",
                     () -> IForgeMenuType.create((w, i, b) -> new com.gregtech.gregtech.client.gui.BehaviorMachineMenu(w, i, b)));
+
+    public static final RegistryObject<MenuType<com.gregtech.gregtech.client.gui.PartMenu>> PART =
+            MENU_TYPES.register("part",
+                    () -> IForgeMenuType.create((w, i, b) -> new com.gregtech.gregtech.client.gui.PartMenu(w, i, b)));
 
     public static final RegistryObject<MenuType<HopperContainerMenu>> GARBAGE_DUMP =
             MENU_TYPES.register("garbage_dump",
