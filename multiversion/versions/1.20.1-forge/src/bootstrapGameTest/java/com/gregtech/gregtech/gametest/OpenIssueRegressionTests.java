@@ -17,14 +17,52 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import com.gregtech.gregtech.block.tool.DynamiteBlock;
+import com.gregtech.gregtech.content.tool.DynamiteSubstrates;
+import com.gregtech.gregtech.registry.GTElectricItems;
+import com.gregtech.gregtech.registry.GTToolBlocks;
+import com.gregtech.gregtech.api.material.GTMaterialRegistry;
+import com.gregtech.gregtech.block.misc.PileBlock;
+import com.gregtech.gregtech.blockentity.misc.PileBlockEntity;
+import com.gregtech.gregtech.registry.GTItems;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-/** Exact registry/placement contracts behind issues #64 and #79; not a client visual test. */
-@GameTestHolder("gregtech_repair")
+/** Focused regressions for issues #64, #77, #79, #80 and #81; not client visual tests. */
+@GameTestHolder("gregtech_issue_audit")
 @PrefixGameTestTemplate(false)
 public final class OpenIssueRegressionTests {
+    private static final BlockPos SUPPORT = new BlockPos(2,2,2);
+    private static Player player(GameTestHelper h, boolean creative) {
+        var player = new Player(h.getLevel(), BlockPos.ZERO, 0,
+                new com.mojang.authlib.GameProfile(java.util.UUID.randomUUID(), "drill-test")) {
+            @Override public boolean isSpectator() { return false; }
+            @Override public boolean isCreative() { return creative; }
+        };
+        player.getAbilities().instabuild = creative;
+        player.getAbilities().mayBuild = true;
+        var drill = new ItemStack(GTElectricItems.ELECTRIC_DRILL.get());
+        drill.getOrCreateTag().putLong("gt.charge", 1000);
+        player.setItemInHand(InteractionHand.MAIN_HAND, drill);
+        player.getInventory().items.set(35, new ItemStack(GTToolBlocks.DYNAMITE.get(), 3));
+        return player;
+    }
+    private static boolean place(GameTestHelper h, Player player, Direction face) {
+        var support = h.absolutePos(SUPPORT);
+        var hit = new BlockHitResult(Vec3.atCenterOf(support).add(Vec3.atLowerCornerOf(face.getNormal()).scale(.5)), face, support, false);
+        var drill = player.getMainHandItem();
+        return drill.getItem().onItemUseFirst(drill, new UseOnContext(h.getLevel(), player,
+                InteractionHand.MAIN_HAND, drill, hit)).consumesAction();
+    }
+
     @GameTest(template="test_empty")
     public static void extruderShapesDoNotSplitTheMachineCreativeFamily(GameTestHelper h) {
         int shapes = 0;
@@ -68,4 +106,87 @@ public final class OpenIssueRegressionTests {
         h.assertTrue(ticks.size() == 1, "failed water writes do not schedule phantom ticks");
         h.succeed();
     }
+    /** Issues #80/#81: the host state, not an ore tag, controls embedded charges. */
+    @GameTest(template="test_empty")
+    public static void gtOreHostsAdmitSmallOreAndRejectBedrockWithoutConsumption(GameTestHelper h) {
+        for (String prefix : java.util.List.of("ore_iron", "ore_small_iron")) {
+            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix);
+            var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(id);
+            h.assertTrue(block instanceof com.gregtech.gregtech.block.OreBlock, "registered GT ore: " + id);
+            for (var host : java.util.List.of(com.gregtech.gregtech.block.OreHostStone.STONE,
+                    com.gregtech.gregtech.block.OreHostStone.DEEPSLATE,
+                    com.gregtech.gregtech.block.OreHostStone.BEDROCK)) {
+                h.setBlock(SUPPORT.above(), Blocks.AIR);
+                h.setBlock(SUPPORT, block.defaultBlockState().setValue(com.gregtech.gregtech.block.OreBlock.STONE, host));
+                var player = player(h, false);
+                boolean allowed = host != com.gregtech.gregtech.block.OreHostStone.BEDROCK;
+                h.assertTrue(DynamiteSubstrates.canDrill(h.getLevel(), h.absolutePos(SUPPORT)) == allowed,
+                        id + " admission for " + host);
+                h.assertTrue(place(h, player, Direction.UP) == allowed, id + " placement for " + host);
+                h.assertTrue(player.getInventory().items.get(35).getCount() == (allowed ? 2 : 3)
+                        && player.getMainHandItem().getTag().getLong("gt.charge") == (allowed ? 900 : 1000),
+                        "only successful GT ore placement consumes charge and energy");
+                if (allowed) {
+                    var target = h.absolutePos(SUPPORT.above());
+                    var state = h.getLevel().getBlockState(target);
+                    h.assertTrue(state.getValue(DynamiteBlock.SUNK), "GT ore charge is embedded");
+                    ((DynamiteBlock) state.getBlock()).refreshSupport(h.getLevel(), target);
+                    h.assertTrue(h.getLevel().getBlockState(target).getValue(DynamiteBlock.SUNK),
+                            "small and normal ore preserve embedded support");
+                } else h.assertTrue(h.getBlockState(SUPPORT.above()).isAir(), "bedrock ore creates no charge");
+            }
+        }
+        h.succeed();
+    }
+
+    /** Issue #77: cover interception must preserve native sneak-add and clear the final snapshot. */
+    @GameTest(template = "test_empty")
+    public static void pileCoverEventPreservesSneakAddAndEmptySnapshotClearsLegacyCover(GameTestHelper helper) {
+        var kind = PileBlock.Kind.PLATE;
+        ItemStack material = ItemStack.EMPTY;
+        for (var candidate : GTMaterialRegistry.sortedMaterials()) {
+            material = GTItems.getStack(kind.prefix(), candidate);
+            if (!material.isEmpty()) break;
+        }
+        helper.assertTrue(!material.isEmpty() && com.gregtech.gregtech.content.cover.CoverItems.isCover(material),
+                "plate material also qualifies as a cover, reproducing interception");
+        var pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var level = helper.getLevel();
+        level.setBlock(pos, kind.block().defaultBlockState(), 3);
+        var pile = (PileBlockEntity) level.getBlockEntity(pos);
+        helper.assertTrue(pile != null && pile.add(material.copyWithCount(1)) == 1, "initial plate pile");
+        var player = helper.makeMockPlayer();
+        player.setShiftKeyDown(true);
+        player.setItemInHand(InteractionHand.MAIN_HAND, material.copyWithCount(2));
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos).add(0, .5, 0), Direction.UP, pos, false);
+        var event = new net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock(
+                player, InteractionHand.MAIN_HAND, pos, hit);
+        com.gregtech.gregtech.content.cover.ComponentCoverEvents.use(event);
+        helper.assertTrue(!event.isCanceled()
+                        && event.getUseBlock() == net.minecraftforge.eventbus.api.Event.Result.ALLOW,
+                "sneak-add reaches the native block callback, not cover placement");
+        helper.assertTrue(level.getBlockState(pos).use(level, player, InteractionHand.MAIN_HAND, hit).consumesAction()
+                        && pile.count() == 3 && player.getMainHandItem().isEmpty(),
+                "native callback adds both held plates");
+        helper.assertTrue(!com.gregtech.gregtech.content.cover.ComponentCoverFallback.eligible(pile),
+                "piles cannot receive new fallback covers");
+        var host = (com.gregtech.gregtech.content.cover.FallbackCoverHost) (Object) pile;
+        var storage = host.gregtechComponentStorage(true);
+        // Reproduce an old-save cover directly; new cover attachment is intentionally forbidden.
+        var legacy = new net.minecraft.nbt.CompoundTag();
+        legacy.put("gt_cover_" + Direction.UP.ordinal(), material.copyWithCount(1).save(new net.minecraft.nbt.CompoundTag()));
+        storage.load(legacy);
+        helper.assertTrue(!host.getCover(Direction.UP).isEmpty(), "legacy cover seeded");
+        com.gregtech.gregtech.content.cover.ComponentCoverFallback.read(pile, new net.minecraft.nbt.CompoundTag());
+        helper.assertTrue(!host.getCover(Direction.UP).isEmpty(), "partial update preserves existing cover");
+        storage.remove(Direction.UP);
+        var emptySnapshot = new net.minecraft.nbt.CompoundTag();
+        com.gregtech.gregtech.content.cover.ComponentCoverFallback.write(pile, emptySnapshot);
+        helper.assertTrue(emptySnapshot.getBoolean("gt.component_covers"), "last removal writes authoritative empty marker");
+        storage.load(legacy); // Simulate receiver still holding the previous snapshot.
+        com.gregtech.gregtech.content.cover.ComponentCoverFallback.read(pile, emptySnapshot);
+        helper.assertTrue(host.getCover(Direction.UP).isEmpty(), "authoritative empty snapshot removes stale last cover");
+        helper.succeed();
+    }
+
 }

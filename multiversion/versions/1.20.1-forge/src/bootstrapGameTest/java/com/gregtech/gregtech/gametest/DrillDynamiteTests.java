@@ -120,37 +120,4 @@ public final class DrillDynamiteTests {
                 && BehaviorRemote.getCoords(remote.getTag(),h.getLevel()).isEmpty(),"cancellation preserves inventory, energy and remote");
         h.succeed();
     }
-    /** Issues #80/#81: the host state, not an ore tag, controls embedded charges. */
-    @GameTest(template="test_empty")
-    public static void gtOreHostsAdmitSmallOreAndRejectBedrockWithoutConsumption(GameTestHelper h) {
-        for (String prefix : java.util.List.of("ore_iron", "ore_small_iron")) {
-            var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("gt6ce", prefix);
-            var block = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getValue(id);
-            h.assertTrue(block instanceof com.gregtech.gregtech.block.OreBlock, "registered GT ore: " + id);
-            for (var host : java.util.List.of(com.gregtech.gregtech.block.OreHostStone.STONE,
-                    com.gregtech.gregtech.block.OreHostStone.DEEPSLATE,
-                    com.gregtech.gregtech.block.OreHostStone.BEDROCK)) {
-                h.setBlock(SUPPORT.above(), Blocks.AIR);
-                h.setBlock(SUPPORT, block.defaultBlockState().setValue(com.gregtech.gregtech.block.OreBlock.STONE, host));
-                var player = player(h, false);
-                boolean allowed = host != com.gregtech.gregtech.block.OreHostStone.BEDROCK;
-                h.assertTrue(DynamiteSubstrates.canDrill(h.getLevel(), h.absolutePos(SUPPORT)) == allowed,
-                        id + " admission for " + host);
-                h.assertTrue(place(h, player, Direction.UP) == allowed, id + " placement for " + host);
-                h.assertTrue(player.getInventory().items.get(35).getCount() == (allowed ? 2 : 3)
-                        && player.getMainHandItem().getTag().getLong("gt.charge") == (allowed ? 900 : 1000),
-                        "only successful GT ore placement consumes charge and energy");
-                if (allowed) {
-                    var target = h.absolutePos(SUPPORT.above());
-                    var state = h.getLevel().getBlockState(target);
-                    h.assertTrue(state.getValue(DynamiteBlock.SUNK), "GT ore charge is embedded");
-                    ((DynamiteBlock) state.getBlock()).refreshSupport(h.getLevel(), target);
-                    h.assertTrue(h.getLevel().getBlockState(target).getValue(DynamiteBlock.SUNK),
-                            "small and normal ore preserve embedded support");
-                } else h.assertTrue(h.getBlockState(SUPPORT.above()).isAir(), "bedrock ore creates no charge");
-            }
-        }
-        h.succeed();
-    }
-
 }
