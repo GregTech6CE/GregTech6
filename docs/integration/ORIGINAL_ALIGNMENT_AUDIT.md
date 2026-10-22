@@ -1,5 +1,7 @@
 # 原版对齐与源码结构审计
 
+2026-10-22 第一百一十二批：微型门新增370–376联动定义、放大镜、眼类准入、碰撞、遮光、提示和粒子差异，132／278扩具体入口。29原／14当前Java、12资源、四原生条目和19引用留痕；四源716→797行、七完整视图保持，短信号时序与13／12模型盒核对见[专题](MINI_PORTAL_AUDIT.md)。376不是未修数；真实跨维度、其余系统和全面goal继续。
+
 2026-10-22 第一百一十一批：材料轨新增367工具操作绑定、368检测框、369助推传播身份差异；两原／十当前Java、13引用和八原生条目核实。三源342→397行、五完整平台视图在四处私有标识更名归一后保持，已有轮询／基本信号另列，见[专题](RAIL_CONTROLS_AUDIT.md)。未改玩法／编译／游戏／构建，369条不是未修数，全面goal继续。
 
 2026-10-22 第一百一十批：道路／轨道新增364邻轨身份、365加载半径、366木材遮挡语义；4原／10当前Java、15视图、12资源和八原生条目核实。整段三道路方法16480 token按适配对应；五源1129→1353行并删两无普通引用私有方法，三完整／四受控剩余视图保持。40输入核心记录器及边界见[专题](STREETS_RAILS_AUDIT.md)。正式366不是待修数，全面goal继续。
@@ -174,7 +176,7 @@
 | ALIGN-129 | 确认苦力怕点火回调不同。 | 原版为服务端左键实体拦截。 | 当前多物品右键，起火工具 hurtEnemy；完整攻击效果未世界验证，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-130 | 确认燃烧室点火／灭火工具分派不完整。 | 原版三类宿主识别两个工具钩子。 | Forge 缺随机工具点火接口，Neo 有该接口；两版都缺喷罐灭火接口，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
 | ALIGN-131 | 确认原生点火返回零后错误兼容回退。 | 原版按目标类型选择原生或 ToolCompat，不以返回值切换。 | 当前零成本后仍点 TNT／相邻空气；已燃雷管可进入此路径，未世界复现，见[报告](IGNITION_EXTINGUISHER_AUDIT.md)。 |
-| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。 |
+| ALIGN-132 | 确认部分物品／库存交互缺少反馈声音。 | 原版起火尝试、成功喷射／封装和瓶框成功取放分别主动发送声音。 | 当前对应回调未调用；雷管、自动点火器、书架取物等已有声音，不列为全局无声。见[工具报告](CONSUMABLE_FEEDBACK_AUDIT.md)及[瓶框补充](BOTTLE_BOOKSHELF_AUDIT.md)。颜色喷罐已有FIRE_EXTINGUISH占位调用，清漆仍缺专用物品层声，见[喷漆目标](PAINT_TARGETS_AUDIT.md)。USB／HDD持有U盘复制／清除缺原playClick，普通面板入口不补声，见[数据交换](USB_SWITCH_AUDIT.md)。 高级按钮原手动脉冲有释放声且音高随活跃变化，当前仅固定按下声；见[按钮曲柄](BUTTON_CRANK_AUDIT.md)。  微型门客户端晚激活的portal专有声也未接；通用起火声不补此路径，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 | ALIGN-133 | 确认原版起火概率配置未接入。 | `GT6_Main` 读取 1–100 的 `FlintAndSteelChance`，默认 30。 | GT 工具固定传默认 30；默认一致，配置收尾仍按先前安排延后，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-134 | 确认胶带创造预算及扣量与原版不同。 | 无限物品玩家使用整卷预算，成功不减剩余量。 | 当前传已存余量且成功照扣；大容量存储存在真实预算准入路径，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。 |
 | ALIGN-135 | 确认部分零余量耗材未完成空形态转换。 | 喷罐／胶带在目标无反应后仍统一检查耗尽。 | 创造喷罐受非创造分支限制，胶带提前退出；非创造喷罐已对应，见[报告](CONSUMABLE_FEEDBACK_AUDIT.md)。有效目标还存在原先动作后清空、当前正余量准入的差异；实体零罐会清空但拒染色，保留防免费动作，见[消耗边界](PAINT_TARGETS_AUDIT.md)。 |
@@ -320,7 +322,7 @@
 | ALIGN-275 | 确认扩展器原生覆盖板处理器查询丢失方向，阻止过滤器／主动组件安装。 | 原普通30000／30001具库存／流体及canTick接口，满足原过滤器、传送带和泵安装门槛。 | 默认及Mixin原生分支以null查询，而转发器exposes拒绝null；48有限安装分支。根复核否定初稿可正常装上的假设，见[入口](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 | ALIGN-276 | 确认恢复后的原生覆盖板缺过滤／方向权限和主动组件tick。 | 原Base06最终库存权限及Extender流体入口问intercept；final onTick分派CoverData.tickPre。 | 限现有load恢复gt_cover_n：现谓词只看闸板，Mixin／fallback排除own getCover，ticker只panel链。不是普通安装成功，也不是实际搬运量测，见[恢复消费者](EXTENDER_CAPABILITIES_AUDIT.md)。 |
 | ALIGN-277 | 确认扩展器继承完整方块强信号传导，绕过自身路由。 | 原MTE方块将shouldCheckWeakPower交实体，继承Base01返回false；六普通身份弱／强输出0。 | 当前默认导体为true，SignalGetter合并六邻直接强信号，360有限分支旧合同0／现15；不是自身强输出，未游戏实测，见[原生入口](EXTENDER_SIGNALS_AUDIT.md)。 四过滤器同机制追加240条件，见[实例](FILTER_BLOCKS_AUDIT.md)。 |
-| ALIGN-278 | 确认万能桥原生比较器入口丢失原GT按面合同。 | 原Bridge按aSide读取反面incoming，MTE块保留方向参数。 | 内部GT有面查询仍在；原生比较器调用无面block入口，comparator(null)六面取最大，384水平投影300不同；不是旧MC引擎复现，见[比较器](EXTENDER_SIGNALS_AUDIT.md)。 |
+| ALIGN-278 | 确认万能桥原生比较器入口丢失原GT按面合同。 | 原Bridge按aSide读取反面incoming，MTE块保留方向参数。 | 内部GT有面查询仍在；原生比较器调用无面block入口，comparator(null)六面取最大，384水平投影300不同；不是旧MC引擎复现，见[比较器](EXTENDER_SIGNALS_AUDIT.md)。  微型门原生入口同样把六面缓存取最大，内部按面查询仍在；北2／南11投影原北读2现11，非世界复现，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 | ALIGN-279 | 确认万能扩展器采样输出改成查询时实时重算。 | 原30255的onTick2保存In／Out／Comparator，输出读取字段。 | 当前previous字段仅通知判断，raw查询每次incoming；72有限转换中60弱／72比较器不同。保留循环保护，不泛称所有环路坏掉，见[采样](EXTENDER_SIGNALS_AUDIT.md)。 |
 | ALIGN-280 | 确认过滤器方块模板快捷复制／右键编辑操作缺失。 | 原普通三类型Shift复制首空模板，右键去NBT／通配或写入配置，流体展示空鼠标右键保持。 | 当前quickMoveStack恒EMPTY，右键PICKUP恒清模板；12复制／四右键源条件，保留幽灵槽防取出，不报整个GUI失效，见[菜单](FILTER_BLOCKS_AUDIT.md)。 |
 | ALIGN-281 | 确认前缀过滤器家族代表的周期展示未移植。 | 原mFilter与mCycle分离，%10==1从注册集合选代表，经Slot_Base.getStack读getStackInSlotGUI。 | 当前显示复制模板、无模板周期ticker；四相位源条件，不承诺原随机每次不同，也未验全部多前缀关系，见[展示](FILTER_BLOCKS_AUDIT.md)。 |
@@ -412,6 +414,13 @@
 | ALIGN-367 | 确认三类材料轨缺撬棍／助推轨软锤绑定。 | 原onToolClick切元数据／电源位，成功分别返回2000／10000。 | 三十轨包装没有工具目标／回调；已有工具helper不能替代消费者，道路条纹轨独立交互不算缺失，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
 | ALIGN-368 | 确认检测轨查询范围缩小。 | 原水平0.125–0.875，高度0–0.875。 | 原生水平0.2–0.8，高度0–0.8，检测和比较器共用；有限边缘包围盒有不同结果，非矿车实测，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
 | ALIGN-369 | 确认助推轨电源传播身份门槛扩大。 | 原要求邻块与本块为同一注册实例。 | 原生允许PoweredRailBlock同轴同激活类型，当前不同GT材料助推轨可传播；源码条件见证，非真实红石网络验收，见[轨道控制](RAIL_CONTROLS_AUDIT.md)。 |
+| ALIGN-370 | 确认17种联动微型门定义未移植。 | 原登记19种，其中17种在无依赖时隐藏且无配方。 | 当前只有下界／末地Target与注册，联动兼容待办，不报普通环境17故障，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-371 | 确认微型门缺独立放大镜诊断。 | 原报告目标坐标或No Target并返回费用1。 | 当前无对应工具目标；启用消息／覆盖板提示不能替代，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-372 | 确认末地微型门激活准入收窄。 | 原接受gemEnderEye矿辞成员。 | 当前只认Items.ENDER_EYE；属于扩展合同，不假定当前已装其它成员，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-373 | 确认微型门整块碰撞变为空。 | 原MTE块的实体回退及继承Root方法都返回完整立方体，未覆写为空。 | 当前注册noCollission，两端原生返回空形状；模型框架不能证明移动碰撞，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-374 | 确认微型门明确遮光值1变0。 | 原返回LIGHT_OPACITY_LEAVES，常量1。 | 当前getLightBlock返回0；实际世界光照及独立激活发光参数未验，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-375 | 确认微型门实际提示缺两项原信息。 | 原包括最近激活目标选择和区块加载器要求。 | 当前appendHoverText没有消费这两项，语言键存在不能代替提示入口，见[微型门](MINI_PORTAL_AUDIT.md)。 |
+| ALIGN-376 | 确认下界微型门缺原激活世界粒子。 | 原随机显示回调生成四个portal粒子。 | 当前无客户端动画回调／ticker；纹理动画已有，非全部动画缺失，见[微型门](MINI_PORTAL_AUDIT.md)。 |
 
 可读性第二十六批：按用户要求为 46 份共享属性定义表补齐空格，内容与顺序保持，生成／读取工具同步适配。旧材料再生成自检的数量断言和四文件快照漂移单列为工具链后续核查，未将其直接判断为原版玩法差异；见 [源码导航](SOURCE_LAYOUT.md) 和 [回执](verification/definition-table-formatting-20261019.json)。
 

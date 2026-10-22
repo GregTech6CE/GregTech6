@@ -1,0 +1,980 @@
+{
+  "date": "2026-10-22",
+  "batch": 112,
+  "baseline": "2f4a187c3b8dc506f64673c6ab5f61ef8623b1f8",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "commit": "2f4a187c3"
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "raw_sha256": "3ea67b7b593d98b3620050e3d80cbb043c2f7fd5504ff83c5030dbd64de87e9c",
+      "lines": 520,
+      "notice_sha256": "36e3d024041926fe48f5024ea2175f63dcd6ec92fdc33bcfecf357b4bb27e51d"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalAether.java",
+      "raw_sha256": "8866307b52b829be4b2b7a730f8a7823f1ed8e1a39179d9a55dd7b2f7dead090",
+      "lines": 137,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalAlfheim.java",
+      "raw_sha256": "9c06f7a4f69a1b652ade5d7de9f5be36dbfad837f77e6992bdb35483e167d14d",
+      "lines": 136,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalAroma.java",
+      "raw_sha256": "e4339086c01d02f81a5df93074137ce65fa86001fa534d67d3ed6d04e6ebde83",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalAtum.java",
+      "raw_sha256": "430b5a44b5b31dabe9330705388a66dfc5418ceaedef8baf07ea2009b55ecdfd",
+      "lines": 137,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalBetweenlands.java",
+      "raw_sha256": "9cb42a11f8b83c465fd9338589649ec8ddd844e04f1cb10a37d50438e05e57d3",
+      "lines": 136,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCandyCraft.java",
+      "raw_sha256": "2dfbffd3e35ae186f5eedcdb3fc37a29521d0025e153c04f4b8777e25456ee26",
+      "lines": 134,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2AquaCavern.java",
+      "raw_sha256": "01535ccb36520cdeedb471e7c09bd5342859a652feb8616c859cf3246c6a2adf",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Caveland.java",
+      "raw_sha256": "0db754b346ddbbf1db4a89d80f8eeaaf7f9916bad0789393a32f8ac3bd8031a2",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Cavenia.java",
+      "raw_sha256": "96939f6b017ef9a68d212a75b9e249bdba0a14d2371a6e5421a2c5c95e4b7195",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Cavern.java",
+      "raw_sha256": "07128dedd1e922300264bfbc77f14648af1acf4f5229b30bcff228963088d954",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalCW2Caveworld.java",
+      "raw_sha256": "9bcac7822dbeb38d7d71cc5cc13e840a6d79fad35cd4874b9472ebcad600c2a6",
+      "lines": 134,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalDeepDark.java",
+      "raw_sha256": "52d3138e4c3be5388d98c5b4109d3fb969346436068b15000c863a5919c370a7",
+      "lines": 136,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalEnd.java",
+      "raw_sha256": "d37486d4aadb065f2f6784498324655ef73083d405d4427106fe35de4acc8cd9",
+      "lines": 134,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalEndOfTime.java",
+      "raw_sha256": "8bf8dbfad11cfa19fd2aa59e920eb270e19e71dda62f5e365b8d8a779b1d4fa2",
+      "lines": 136,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalEnviromine.java",
+      "raw_sha256": "12bdab8639e5b5b61a7de8018e8b6b73573fc80ea4c4e2d0561be1bda6ab84b0",
+      "lines": 134,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalErebus.java",
+      "raw_sha256": "b749b5d07f376f079b9e162351702bac5a454f84e399a6033ce26f8df0d80550",
+      "lines": 136,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalNether.java",
+      "raw_sha256": "92832b3470606ffad4ce153c1889c38d22818be3091b0cbec34475560faa94e4",
+      "lines": 138,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalTropics.java",
+      "raw_sha256": "67bc94a3d67c3b68274d764a648afb733f1852ba5bb5c6041988714a08931b89",
+      "lines": 134,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalTwilight.java",
+      "raw_sha256": "4e958b1cbe6c6b4aa3738e840fc920791973ab3743bac5e4ce7a87301f9a5739",
+      "lines": 137,
+      "notice_sha256": "c635bd8e84f1d5b02a1299180479660a636e876419d763c9cd0714b9487e28b7"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "raw_sha256": "78ef2ca64595500bb841faec8304dee0f3e276e14b54c62f494c3116c29ce0b7",
+      "lines": 307,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlockWithCompat.java",
+      "raw_sha256": "d87d86dec887d71434641c5a4ff114d8f1b164f9283f112bd8219f8d3397e32b",
+      "lines": 58,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "raw_sha256": "6fb532deff9cf3a423e0606771852e63eb2beb72f5c976782aa8060cd77a8b95",
+      "lines": 1011,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase02AdjacentTEBuffer.java",
+      "raw_sha256": "428885bd6d436be6fefaef3bcd70fdd883a29ae329bb4d0826ddaf152eaef00f",
+      "lines": 173,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase03TicksAndSync.java",
+      "raw_sha256": "f3d52213bf41c3132a37e6f838719db85c85ac94e48b9f24b932a1996688489d",
+      "lines": 166,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "raw_sha256": "c929088170e520a964a87db9212cf1d5ded21d67ccd54d6000f1987779d829e9",
+      "lines": 256,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/MiniPortalSignals.java",
+      "raw_sha256": "1ee7d05cfb51d6eecdd8b107f2167e2f0610654ce20e7d9435c3906d8085e498",
+      "lines": 87
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "raw_sha256": "2da61759d7276a62cc4b71b58d5024ab14b791f3f5693ab1f101c529ad0e688a",
+      "lines": 222
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlockEntity.java",
+      "raw_sha256": "56f302d9ecfd5cd61826d91c6d089bc1c78a01aa43cf47d565aa5574f05b751a",
+      "lines": 335
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTDungeonBlocks.java",
+      "raw_sha256": "a2356c4399696b65cdd7d82fe0f7ae414945fc609c7b7f3c7745e2054670936d",
+      "lines": 153
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/CapabilityRelayBlockEntity.java",
+      "raw_sha256": "bd8665d147434ac17ffb506df64d26b6fd5bf9a73256d822e02576b52ba66628",
+      "lines": 253
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/blockentity/EnergyRelayBlockEntity.java",
+      "raw_sha256": "cf0e2c90e37aea17437863ba1b150a9fec8c31802e48b3c7231dd4b4c9953a00",
+      "lines": 228
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/item/GTToolItem.java",
+      "raw_sha256": "ce185e389023571915282f6ee52793a18e9f0e2ee33cce1085b857274010a044",
+      "lines": 336
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "raw_sha256": "39aa688e0f5c16ae00e313f4abec426e7ada8148361dd5c6ff2f10037a31856d",
+      "lines": 86,
+      "notice_sha256": "99e54d773ae1bdfd02f05e856088c323e4f54f395b30602a1740be0c877cab08"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/ComponentCoverEvents.java",
+      "raw_sha256": "29a6eb369286918b8562adae2a5a3f415a9a48f80840a69aa9902ad4bb1ddf32",
+      "lines": 80,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/content/cover/PanelCoverInteraction.java",
+      "raw_sha256": "c96b22600c70b4c722ec4489cdc70e41dc73005158c4330c1a215fef7d78541e",
+      "lines": 100
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalNether.java",
+      "raw_sha256": "c5abd308486f38cc89cafa99dce2569319ea9fad0d300160f3463941f50c95f5",
+      "lines": 207
+    },
+    {
+      "path": "multiversion/src/main/java/com/gregtech/gregtech/worldgen/dungeon/GTDungeonChunkRoomPortalEnd.java",
+      "raw_sha256": "e89f6e2d4b208666b7d1fd720127f81f9a0fe791197c6da9a753ab4e7bde682d",
+      "lines": 152
+    },
+    {
+      "path": "multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/logistics/StorageContainerCapabilities.java",
+      "raw_sha256": "d6e62e69491d69f904307d82523a6e3e9c49f7fcccdda7ae0f6c1a040c4a74e0",
+      "lines": 72
+    }
+  ],
+  "source_scope": "Twenty original portal files inventoried; full common consumer and Nether/End paths reviewed. Seventeen optional subtype bodies are not individually certified. Supporting sources are hashed in full; excerpts bound the reviewed surrounding scope.",
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "original_notice": "/**\n * Copyright (c) 2024 GregTech-6 Team\n *\n * This file is part of GregTech.\n *\n * GregTech is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * GregTech is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the\n * GNU Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with GregTech. If not, see <http://www.gnu.org/licenses/>.\n */",
+    "handling": "Read-only source tree; no removed or replaced author/license notice."
+  },
+  "registrations": [
+    {
+      "line": 2003,
+      "name": "Miniature Nether Portal",
+      "id": 32766,
+      "class": "MultiTileEntityMiniPortalNether",
+      "hidden_without_dependency": false,
+      "dependency_symbols": [],
+      "source": "aRegistry.add(\"Miniature Nether Portal\"                             , \"Portals\"                             , 32766, 32766, MultiTileEntityMiniPortalNether.class                   ,                 3, 16, aStone         , null                                                                                        ,\"SSS\", \"SsS\", \"SSS\", 'S', OP.stickLong.dat(MT.Obsidian));"
+    },
+    {
+      "line": 2004,
+      "name": "Miniature End Portal",
+      "id": 32000,
+      "class": "MultiTileEntityMiniPortalEnd",
+      "hidden_without_dependency": false,
+      "dependency_symbols": [],
+      "source": "aRegistry.add(\"Miniature End Portal\"                                , \"Portals\"                             , 32000, 32766, MultiTileEntityMiniPortalEnd.class                      ,                 1, 16, aStone         , null                                                                                        ,\"ESE\", \"SGS\", \"ESE\", 'S', OP.stickLong.dat(MT.Endstone), 'E', OP.gem.dat(MT.EnderEye), 'G', Items.ghast_tear);"
+    },
+    {
+      "line": 2005,
+      "name": "Miniature Twilight Portal",
+      "id": 32001,
+      "class": "MultiTileEntityMiniPortalTwilight",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "TF"
+      ],
+      "source": "aRegistry.add(\"Miniature Twilight Portal\"                           , \"Portals\"                             , 32001, 32766, MultiTileEntityMiniPortalTwilight.class                 ,                 0, 16, aBush          , UT.NBT.make(NBT_HIDDEN, !MD.TF                          .mLoaded ), MD.TF                         .mLoaded ? new Object[] {\"FGF\", \"GWG\", \"FGF\", 'G', Blocks.grass, 'W', OD.container1000water, 'F', OD.flower} : ZL);"
+    },
+    {
+      "line": 2006,
+      "name": "Miniature Erebus Portal",
+      "id": 32002,
+      "class": "MultiTileEntityMiniPortalErebus",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ERE"
+      ],
+      "source": "aRegistry.add(\"Miniature Erebus Portal\"                             , \"Portals\"                             , 32002, 32766, MultiTileEntityMiniPortalErebus.class                   ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.ERE                         .mLoaded ), MD.ERE                        .mLoaded ? new Object[] {\"SLS\", \"LKL\", \"SLS\", 'S', OP.stickLong.dat(MT.STONES.Umber), 'L', OP.treeLeaves, 'K', ST.make(MD.ERE, \"gaeanKeystone\", 1, 0)} : ZL);"
+    },
+    {
+      "line": 2007,
+      "name": "Miniature Atum Portal",
+      "id": 32005,
+      "class": "MultiTileEntityMiniPortalAtum",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ATUM"
+      ],
+      "source": "aRegistry.add(\"Miniature Atum Portal\"                               , \"Portals\"                             , 32005, 32766, MultiTileEntityMiniPortalAtum.class                     ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.ATUM                        .mLoaded ), MD.ATUM                       .mLoaded ? new Object[] {\"SSS\", \"SsS\", \"SSS\", 'S', OP.stickLong.dat(MT.STONES.Limestone)} : ZL);"
+    },
+    {
+      "line": 2008,
+      "name": "Miniature Betweenlands Portal",
+      "id": 32006,
+      "class": "MultiTileEntityMiniPortalBetweenlands",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "BTL"
+      ],
+      "source": "aRegistry.add(\"Miniature Betweenlands Portal\"                       , \"Portals\"                             , 32006, 32766, MultiTileEntityMiniPortalBetweenlands.class             ,                 0, 16, aWooden        , UT.NBT.make(NBT_HIDDEN, !MD.BTL                         .mLoaded ), MD.BTL                        .mLoaded ? new Object[] {\"PsP\", \"PSP\", \"PGP\", 'P', ST.make(MD.BTL, \"portalBark\", 1, 0), 'S', OP.treeSapling, 'G', Blocks.grass} : ZL);"
+    },
+    {
+      "line": 2009,
+      "name": "Miniature Aether Portal",
+      "id": 32015,
+      "class": "MultiTileEntityMiniPortalAether",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "AETHEL",
+        "AETHER"
+      ],
+      "source": "aRegistry.add(\"Miniature Aether Portal\"                             , \"Portals\"                             , 32015, 32766, MultiTileEntityMiniPortalAether.class                   ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !(MD.AETHER.mLoaded || MD.AETHEL.mLoaded)), MD.AETHER.mLoaded || MD.AETHEL.mLoaded ? new Object[] {\"SSS\", \"SsS\", \"SSS\", 'S', OP.stickLong.dat(ANY.Glowstone)} : ZL);"
+    },
+    {
+      "line": 2010,
+      "name": "Miniature Enviromine Portal",
+      "id": 32051,
+      "class": "MultiTileEntityMiniPortalEnviromine",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ENVM"
+      ],
+      "source": "aRegistry.add(\"Miniature Enviromine Portal\"                         , \"Portals\"                             , 32051, 32766, MultiTileEntityMiniPortalEnviromine.class               ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.ENVM                        .mLoaded ), MD.ENVM                       .mLoaded ? new Object[] {\"SSS\", \"SsS\", \"SSS\", 'S', OP.stickLong.dat(MT.STONES.GraniteBlack)} : ZL);"
+    },
+    {
+      "line": 2011,
+      "name": "Miniature Mining Dimension Portal",
+      "id": 32096,
+      "class": "MultiTileEntityMiniPortalAroma",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "A97_MINING"
+      ],
+      "source": "aRegistry.add(\"Miniature Mining Dimension Portal\"                   , \"Portals\"                             , 32096, 32766, MultiTileEntityMiniPortalAroma.class                    ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.A97_MINING                  .mLoaded ), MD.A97_MINING                 .mLoaded ? new Object[] {\"BBB\", \"ByB\", \"BBB\", 'B', ST.make(MD.A97_MINING, \"portalFrame\", 1, 0)} : ZL);"
+    },
+    {
+      "line": 2012,
+      "name": "Miniature Caveworld Dimension Portal",
+      "id": 32097,
+      "class": "MultiTileEntityMiniPortalCW2Caveworld",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CW2"
+      ],
+      "source": "aRegistry.add(\"Miniature Caveworld Dimension Portal\"                , \"Portals\"                             , 32097, 32766, MultiTileEntityMiniPortalCW2Caveworld.class             ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CW2                         .mLoaded ), MD.CW2                        .mLoaded ? new Object[] {\"BBB\", \"BXB\", \"BBB\", 'B', OP.stoneMossy, 'X', OD.enderChest} : ZL);"
+    },
+    {
+      "line": 2013,
+      "name": "Miniature Cavern Dimension Portal",
+      "id": 32098,
+      "class": "MultiTileEntityMiniPortalCW2Cavern",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CW2"
+      ],
+      "source": "aRegistry.add(\"Miniature Cavern Dimension Portal\"                   , \"Portals\"                             , 32098, 32766, MultiTileEntityMiniPortalCW2Cavern.class                ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CW2                         .mLoaded ), MD.CW2                        .mLoaded ? new Object[] {\"BBB\", \"BXB\", \"BBB\", 'B', OP.stoneMossy, 'X', OP.gem.dat(MT.Emerald)} : ZL);"
+    },
+    {
+      "line": 2014,
+      "name": "Miniature Aqua Cavern Dimension Portal",
+      "id": 32099,
+      "class": "MultiTileEntityMiniPortalCW2AquaCavern",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CW2"
+      ],
+      "source": "aRegistry.add(\"Miniature Aqua Cavern Dimension Portal\"              , \"Portals\"                             , 32099, 32766, MultiTileEntityMiniPortalCW2AquaCavern.class            ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CW2                         .mLoaded ), MD.CW2                        .mLoaded ? new Object[] {\"BBB\", \"BXB\", \"BBB\", 'B', OP.stoneMossy, 'X', OP.gem.dat(MT.Aquamarine)} : ZL);"
+    },
+    {
+      "line": 2015,
+      "name": "Miniature Caveland Dimension Portal",
+      "id": 32100,
+      "class": "MultiTileEntityMiniPortalCW2Caveland",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CW2"
+      ],
+      "source": "aRegistry.add(\"Miniature Caveland Dimension Portal\"                 , \"Portals\"                             , 32100, 32766, MultiTileEntityMiniPortalCW2Caveland.class              ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CW2                         .mLoaded ), MD.CW2                        .mLoaded ? new Object[] {\"BBB\", \"BXB\", \"BBB\", 'B', OP.stoneMossy, 'X', OP.gem.dat(MT.UNUSED.Cavenium)} : ZL);"
+    },
+    {
+      "line": 2016,
+      "name": "Miniature Cavenia Dimension Portal",
+      "id": 32101,
+      "class": "MultiTileEntityMiniPortalCW2Cavenia",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CW2"
+      ],
+      "source": "aRegistry.add(\"Miniature Cavenia Dimension Portal\"                  , \"Portals\"                             , 32101, 32766, MultiTileEntityMiniPortalCW2Cavenia.class               ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CW2                         .mLoaded ), MD.CW2                        .mLoaded ? new Object[] {\"BBB\", \"BXB\", \"BBB\", 'B', OP.stoneMossy, 'X', OP.gem.dat(MT.UNUSED.CaveniumRefined)} : ZL);"
+    },
+    {
+      "line": 2017,
+      "name": "Miniature Alfheim Portal",
+      "id": 32052,
+      "class": "MultiTileEntityMiniPortalAlfheim",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ALF"
+      ],
+      "source": "aRegistry.add(\"Miniature Alfheim Portal\"                            , \"Portals\"                             , 32052, 32766, MultiTileEntityMiniPortalAlfheim.class                  ,                 0, 16, aWooden        , UT.NBT.make(NBT_HIDDEN, !MD.ALF                         .mLoaded ), MD.ALF                        .mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OP.stickLong.dat(MT.Dreamwood), 'X', ST.make(MD.ALF, \"AlfheimPortal\", 1, 0)} : ZL);"
+    },
+    {
+      "line": 2018,
+      "name": "Miniature Tropics Portal",
+      "id": 32053,
+      "class": "MultiTileEntityMiniPortalTropics",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "TROPIC"
+      ],
+      "source": "aRegistry.add(\"Miniature Tropics Portal\"                            , \"Portals\"                             , 32053, 32766, MultiTileEntityMiniPortalTropics.class                  ,                 0, 16, aWooden        , UT.NBT.make(NBT_HIDDEN, !MD.TROPIC                      .mLoaded ), MD.TROPIC                     .mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OD.bamboo, 'X', ST.item(MD.TROPIC, \"bucketTropicsWater\")} : ZL);"
+    },
+    {
+      "line": 2019,
+      "name": "Miniature Candy Portal",
+      "id": 32054,
+      "class": "MultiTileEntityMiniPortalCandyCraft",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "CANDY"
+      ],
+      "source": "aRegistry.add(\"Miniature Candy Portal\"                              , \"Portals\"                             , 32054, 32766, MultiTileEntityMiniPortalCandyCraft.class               ,                 0, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !MD.CANDY                       .mLoaded ), MD.CANDY                      .mLoaded ? new Object[] {\"SSS\", \"SsS\", \"SSS\", 'S', ST.item(MD.CANDY, \"I12\")} : ZL);"
+    },
+    {
+      "line": 2020,
+      "name": "Miniature Deep Dark Portal",
+      "id": 32003,
+      "class": "MultiTileEntityMiniPortalDeepDark",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ExS",
+        "ExU"
+      ],
+      "source": "aRegistry.add(\"Miniature Deep Dark Portal\"                          , \"Portals\"                             , 32003, 32766, MultiTileEntityMiniPortalDeepDark.class                 ,                 2, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !(MD.ExU   .mLoaded || MD.ExS   .mLoaded)), MD.ExS                        .mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OP.stickLong.dat(MT.Obsidian), 'X', ST.make(MD.ExS, \"deepPortal\", 1, 0)} : MD.ExU.mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OP.stickLong.dat(MT.Obsidian), 'X', ST.make(MD.ExU, \"dark_portal\", 1, 0)} : ZL);"
+    },
+    {
+      "line": 2021,
+      "name": "Miniature Last Millenium Portal",
+      "id": 32004,
+      "class": "MultiTileEntityMiniPortalEndOfTime",
+      "hidden_without_dependency": true,
+      "dependency_symbols": [
+        "ExS",
+        "ExU"
+      ],
+      "source": "aRegistry.add(\"Miniature Last Millenium Portal\"                     , \"Portals\"                             , 32004, 32766, MultiTileEntityMiniPortalEndOfTime.class                ,                 2, 16, aStone         , UT.NBT.make(NBT_HIDDEN, !(MD.ExU   .mLoaded || MD.ExS   .mLoaded)), MD.ExS                        .mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OP.stickLong.dat(MT.Obsidian), 'X', ST.make(MD.ExS, \"deepPortal\", 1, 2)} : MD.ExU.mLoaded ? new Object[] {\"SSS\", \"SXS\", \"SSS\", 'S', OP.stickLong.dat(MT.Obsidian), 'X', ST.make(MD.ExU, \"dark_portal\", 1, 2)} : ZL);"
+    }
+  ],
+  "resources": [
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/dungeon_portal_end.json",
+      "raw_sha256": "fa3b8dd5a862cb9ebb0efa19f6e284eeaa90211568eaeea86bbb5ff0f0b9f3d5",
+      "lines": 10
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/blockstates/dungeon_portal_nether.json",
+      "raw_sha256": "ccd807984a787be7a802814270f8648267289435bd6dc08f8dce2b63e012a135",
+      "lines": 10
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/lang/en_us.json",
+      "raw_sha256": "22b457eebef8f2eea9df0cb6590d1192c626969bfdbecf985d3d8f28ac22fc28",
+      "lines": 16479
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/lang/zh_cn.json",
+      "raw_sha256": "9fde3bab081cd65e464a5d918fdc9ff92ab910c4660fd8311c7ba73a4e710cb4",
+      "lines": 142305
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/block/dungeon/dungeon_portal_end.json",
+      "raw_sha256": "92472e7dc5b1a6212378f500545c89f9b31877bafe54e00ced719564ad3f8e22",
+      "lines": 427
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/block/dungeon/dungeon_portal_end_frame.json",
+      "raw_sha256": "7ce51a7a648313183d91e050c97bc6918760ecfdf09a7195e06d915efff565d2",
+      "lines": 394
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/block/dungeon/dungeon_portal_nether.json",
+      "raw_sha256": "3ab64079674ee93eb4011dd9e8bb095b66f34e3486c99f8b6b8fa18615d0d6ed",
+      "lines": 427
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/block/dungeon/dungeon_portal_nether_frame.json",
+      "raw_sha256": "15e1896442f27f97552fbe40f8279c3f96d71ad23e6450421adcddfedd88ff79",
+      "lines": 394
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/dungeon_portal_end.json",
+      "raw_sha256": "9343f059d435e4f054669523db2e728011d3767903840fc79e3d8bd097296b0c",
+      "lines": 3
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/models/item/dungeon_portal_nether.json",
+      "raw_sha256": "23ca7787194ae905f28102b069f496b8373b607a07e1bd0a42b43e71a4e7988d",
+      "lines": 3
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/dungeon/portal_end.png",
+      "raw_sha256": "7bd1267c28d0c6c13efe611e5113666461041cff90f7cbe2c81b21b307aacda3",
+      "bytes": 17507
+    },
+    {
+      "path": "core/src/main/resources/assets/gt6ce/textures/block/dungeon/portal_end.png.mcmeta",
+      "raw_sha256": "6f08e68ecfbc5c9e870792cd91328c2b1c7c029324507418a8450db25b0e96c1",
+      "lines": 3
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "first_line": 228,
+      "last_line": 242,
+      "purpose": "Original magnifying-glass target/no-target diagnostic.",
+      "text": "\tpublic long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {\n\t\tif (isClientSide()) return 0;\n\t\tif (aTool.equals(TOOL_magnifyingglass)) {\n\t\t\tif (aChatReturn != null) {\n\t\t\t\tif (mTarget == null) {\n\t\t\t\t\taChatReturn.add(\"No Target\");\n\t\t\t\t} else {\n\t\t\t\t\taChatReturn.add(\"X: \" + mTarget.xCoord + \"   Y: \" + mTarget.yCoord + \"   Z: \" + mTarget.zCoord);\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn 1;\n\t\t}\n\t\treturn 0;\n\t}\n\t",
+      "sha256": "112c296940cebc978ed898b4f5579f3a40652007d860137f91bbd72712b17739"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalEnd.java",
+      "first_line": 115,
+      "last_line": 119,
+      "purpose": "Original accepts ore-dictionary Ender Eye members, not an exact vanilla item only.",
+      "text": "\t\t\tif (ST.valid(aStack) && aStack.stackSize > 0 && OM.is_(\"gemEnderEye\", aStack)) {\n\t\t\t\tsetPortalActive();\n\t\t\t\tif (mTarget != null) UT.Entities.sendchat(aPlayer, \"X: \" + mTarget.xCoord + \"   Y: \" + mTarget.yCoord + \"   Z: \" + mTarget.zCoord);\n\t\t\t\tif (!UT.Entities.hasInfiniteItems(aPlayer)) aStack.stackSize--;\n\t\t\t\t",
+      "sha256": "d3fb91ea4016df81a550d23b0d507aedca5fb63ae1af585f73c8200d035c8533"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "first_line": 93,
+      "last_line": 99,
+      "purpose": "Closest-active and chunk-loader requirements are actual item tooltip consumers.",
+      "text": "\tpublic void addToolTips(@SuppressWarnings(\"rawtypes\") List aList, ItemStack aStack, boolean aF3_H) {\n\t\taList.add(Chat.CYAN     + LH.get(sToolTipFunction1));\n\t\taList.add(Chat.CYAN     + LH.get(sToolTipFunction2));\n\t\taddToolTips2(aList, aStack, aF3_H);\n\t\taList.add(Chat.ORANGE   + LH.get(LH.REQUIREMENT_CHUNKLOADER));\n\t}\n\t",
+      "sha256": "af1887a3fb2fc45ae3058d957f6087e1ec38a5e9cd16584d6c746f6c71d522c1"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "first_line": 259,
+      "last_line": 259,
+      "purpose": "Original portal explicitly returns LIGHT_OPACITY_LEAVES.",
+      "text": "\t@Override public int getLightOpacity() {return LIGHT_OPACITY_LEAVES;}",
+      "sha256": "bece9f392790c9fdd0aed9dd2f236f6bccb279a4afc0fdcaf88068d7b8f42032"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "first_line": 245,
+      "last_line": 245,
+      "purpose": "The opacity constant is 1.",
+      "text": "\tpublic static final int LIGHT_OPACITY_NONE = 0, LIGHT_OPACITY_LEAVES = 1, LIGHT_OPACITY_WATER = 3, LIGHT_OPACITY_MAX = 255;",
+      "sha256": "74fdc3f93d68d3dac1276e5810f8b31e02fce6f814d4a42843a62152c9efac19"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/block/multitileentity/MultiTileEntityBlock.java",
+      "first_line": 192,
+      "last_line": 192,
+      "purpose": "No collision override interface gives the existing tile a full block collision box.",
+      "text": "\t@Override public final AxisAlignedBB getCollisionBoundingBoxFromPool(World aWorld, int aX, int aY, int aZ) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); return aTileEntity instanceof IMTE_GetCollisionBoundingBoxFromPool ? ((IMTE_GetCollisionBoundingBoxFromPool)aTileEntity).getCollisionBoundingBoxFromPool() : aTileEntity == null ? null : AxisAlignedBB.getBoundingBox(aX, aY, aZ, aX+1, aY+1, aZ+1);}",
+      "sha256": "4f0a879bbf14ed91a3d2374f2629ad49e9a511a96766b2ec7b9a692576e2f03e"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "first_line": 833,
+      "last_line": 833,
+      "purpose": "Inherited collision method also returns the full default box.",
+      "text": "\tpublic AxisAlignedBB getCollisionBoundingBoxFromPool() {return box();}",
+      "sha256": "9dc3a81ede64eaebf930ea7c6bab01e0c2a64b9ad1a9ca01ba0ceec386adb226"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase01Root.java",
+      "first_line": 954,
+      "last_line": 954,
+      "purpose": "Inherited default box spans the entire block.",
+      "text": "\tpublic AxisAlignedBB box() {return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord+1, yCoord+1, zCoord+1);}",
+      "sha256": "4250b4adbeab2ac6c3e7b7c902acaa9f88e5907e35248e1b2974c1e63c595255"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/base/TileEntityBase04MultiTileEntities.java",
+      "first_line": 51,
+      "last_line": 51,
+      "purpose": "Portal direct parent identity; collision override inventory reviewed separately.",
+      "text": "public abstract class TileEntityBase04MultiTileEntities extends TileEntityBase03TicksAndSync implements IRenderedBlockObjectSideCheck, IRenderedBlockObject, IMTE_OnPainting, IMTE_OnNeighborBlockChange, IMTE_GetPickBlock, IMTE_OnRegistrationFirst, IMTE_RecolourBlock, IMTE_GetDrops, IMTE_OnBlockActivated, IMTE_ShouldSideBeRendered, IMTE_GetFlammability, IMTE_GetFireSpreadSpeed {",
+      "sha256": "f0d454885735b26f2bea03c1965fbae64fe85f5b504c712bdc251967b6fb907a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortalNether.java",
+      "first_line": 62,
+      "last_line": 64,
+      "purpose": "Original active Nether mini portal emits four particles.",
+      "text": "\tpublic void randomDisplayTick(Random aRandom) {\n\t\tif (mActive) for (int i = 0; i < 4; ++i) worldObj.spawnParticle(\"portal\", xCoord + aRandom.nextFloat(), yCoord + aRandom.nextFloat(), zCoord + aRandom.nextFloat(), (aRandom.nextFloat() - 0.5D) * 0.5D, (aRandom.nextFloat() - 0.5D) * 0.5D, (aRandom.nextFloat() - 0.5D) * 0.5D);\n\t}",
+      "sha256": "371dcde03ec41c8e9fa1a4a377af62985597d7ff7ac1a436d45c13bb66c194ad"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "first_line": 254,
+      "last_line": 254,
+      "purpose": "Original late client activation sound.",
+      "text": "\t\t\tif (mActive && mTimer > 20) UT.Sounds.play(\"portal.portal\", 10, 1.0F, 1.0F, getCoords());",
+      "sha256": "1baee74b7a99efffc57b6ade4ab2ab1750256e47b730c8c11bfa8be9888d4687"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/portals/MultiTileEntityMiniPortal.java",
+      "first_line": 341,
+      "last_line": 343,
+      "purpose": "Original direction-specific comparator result.",
+      "text": "\tpublic int getComparatorInputOverride(byte aSide) {\n\t\treturn mComparator[aSide];\n\t}",
+      "sha256": "013f1bf90aea342b0e6a10971464fa5dc9715aa3dfabeef646fcbd74fbe48890"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "first_line": 138,
+      "last_line": 140,
+      "purpose": "Current activation accepts only Items.ENDER_EYE.",
+      "text": "        boolean eye = target == Target.END && held.is(Items.ENDER_EYE);\n        if (!igniter && !eye) return InteractionResult.PASS;\n        if (level.isClientSide) return InteractionResult.SUCCESS;",
+      "sha256": "d72301aef1e4580776fbb1668c2ff2536a189b52b68f0c3a60296b04d047e92a"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTDungeonBlocks.java",
+      "first_line": 111,
+      "last_line": 114,
+      "purpose": "Current no collision and active light level 11.",
+      "text": "                .noCollission()\n                .noOcclusion()\n                .lightLevel(state -> state.getValue(DungeonPortalBlock.ACTIVE) ? 11 : 0);\n    }",
+      "sha256": "e4ac8ab2e12fa7a04fef13b912ed30266db1ae783ffa6c23ef01d30cbf03599b"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "first_line": 219,
+      "last_line": 221,
+      "purpose": "Current explicit zero opacity.",
+      "text": "    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {\n        return 0;\n    }",
+      "sha256": "6be0297faf4e622afc36800783868cc69dc36038e7b2a210d1beb88e0e225893"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java",
+      "first_line": 208,
+      "last_line": 210,
+      "purpose": "Native comparator entry calls the maximum of six faces.",
+      "text": "    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {\n        return level.getBlockEntity(pos) instanceof DungeonPortalBlockEntity portal ? portal.comparator(null) : 0;\n    }",
+      "sha256": "f0200e65cbdce0825941c6957f6b5819404569fa93db0aac4c2ff7663319baef"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/api/multiblock/MultiblockTools.java",
+      "first_line": 29,
+      "last_line": 35,
+      "purpose": "Current early magnifier delegate requires MultiblockToolTarget.",
+      "text": "        boolean builder = GTToolHelper.matchesTool(stack, GTToolType.BUILDER_WAND);\n        if (!builder && !GTToolHelper.matchesTool(stack, GTToolType.MAGNIFYING_GLASS)) return InteractionResult.PASS;\n        var level = context.getLevel();\n        var player = context.getPlayer();\n        if (level.isClientSide || player == null || !level.hasChunkAt(context.getClickedPos())) return InteractionResult.PASS;\n        if (!(level.getBlockEntity(context.getClickedPos()) instanceof MultiblockToolTarget target)) return InteractionResult.PASS;\n        var messages = new ArrayList<Component>();",
+      "sha256": "f1c9fb1a9cd46f79f103b830fef96c491cdc0327e9b64b646b965118e1dd3e81"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlockEntity.java",
+      "first_line": 240,
+      "last_line": 245,
+      "purpose": "Remote opposite neighbor and its facing are already forwarded.",
+      "text": "    protected Target target(net.minecraft.core.Direction side) {\n        if (side == null) return null;\n        var portal = linkedPortal();\n        if (portal == null || portal.level == null) return null;\n        return new Target(portal.worldPosition.relative(side.getOpposite()), side, portal.level);\n    }",
+      "sha256": "68ee0cae37387c30567fddb79c1fdedb909fe7421bc29086225dbbd58e661948"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlockEntity.java",
+      "first_line": 295,
+      "last_line": 309,
+      "purpose": "Actual server tick uses MiniPortalSignals with server tick count.",
+      "text": "    public void tickRelay() {\n        if (!(level instanceof ServerLevel server)) return;\n        long tick = server.getServer().getTickCount();\n        if (!active) signals.clear();\n        else {\n            signals.advance(tick);\n            var remote = linkedPortal();\n            if (remote != null) for (var side : net.minecraft.core.Direction.values())\n                remote.signals.receive(tick, side.getOpposite().ordinal(), incoming(side, false), incoming(side, true));\n        }\n        if (signals.consumeChanged()) {\n            level.updateNeighborsAt(worldPosition, getBlockState().getBlock());\n            level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());\n        }\n    }",
+      "sha256": "3c650390de56beb0324f77ffca5243365f34798025c48dc67ca08da00e39bfd9"
+    }
+  ],
+  "native_evidence": [
+    {
+      "artifact": "C:/Dev/GregTech6/work/center-biomes-audit-20261022/minecraft-1.7.10-client.jar",
+      "artifact_sha256": "a4fc2284657544e0f4bcc964f927c2fda3e3a205178ed1d5d58883aaf9780cce",
+      "entry": "aji.class",
+      "entry_sha256": "d3af9ac23bc8ea67d02ad824d70e5c43fc2dc1b938e7bd5612ffb818abb43dd4",
+      "javap_output": "work/mini-portal-audit-20261022/old-Block.javap.txt",
+      "javap_sha256": "e780569472495ffe7754efcf9a35617930c057266cf6998bb7fb32102ce61b6d"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.class",
+      "entry_sha256": "33a73cccc684a0d41bb0f075c13b2cad5721b3d9e6402c85f3e965d83890a288",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour.javap.txt",
+      "javap_sha256": "a1e2188951987f35b0a0dd596900422aa96c8cd981b5c97331d02f442b8a3332"
+    },
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour$Properties.class",
+      "entry_sha256": "7b379ccb00fa99762c6961f9e94d2258c994c12c59a46aa4789ee5851ed3eb52",
+      "javap_output": "work/mini-portal-audit-20261022/forge-BlockBehaviour$Properties.javap.txt",
+      "javap_sha256": "7ac86268ff86932e5c8cb6737878da61b2fe46dc71bd3c8a222b82d468171cc4"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/world/level/block/state/BlockBehaviour.java",
+      "entry_sha256": "410ae028d36585b6c210e853720ea3fb973154a4d7800a082d541293cf355014",
+      "extracted_path": "work/mini-portal-audit-20261022/BlockBehaviour.java"
+    }
+  ],
+  "native_scope": "Forge/Neo actual BlockBehaviour and Properties noCollission/empty-shape path; old official Block bytecode is supplementary constructor/light context, not a full old Forge installation.",
+  "model_geometry": [
+    {
+      "kind": "nether",
+      "active_elements": 13,
+      "inactive_elements": 12,
+      "all_box_coordinates_match": true
+    },
+    {
+      "kind": "end",
+      "active_elements": 13,
+      "inactive_elements": 12,
+      "all_box_coordinates_match": true
+    }
+  ],
+  "signal_probe": {
+    "scope": "Actual core class, baseline renamed copy, original explicit onTickStart signal body with only super delegation omitted and captured bind_/scan expressions. All portals active. No world, deactivate/unload, native neighbor notifications or cross-dimension execution.",
+    "seconds": 0.532,
+    "result": {
+      "schedule_runs": 16,
+      "ticks": 2048,
+      "face_pairs": 12288
+    },
+    "original_advance_body_without_super": "\n\t\t\n\t\t\n\t\tif (aIsServerSide) {\n\t\t\tfor (byte tSide : ALL_SIDES_VALID) {\n\t\t\t\tif (mActive) {\n\t\t\t\t\tif (xRedstone[tSide] >= 0) {\n\t\t\t\t\t\tif (mRedstone[tSide] != xRedstone[tSide]) {\n\t\t\t\t\t\t\tmRedstone[tSide]  = xRedstone[tSide];\n\t\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t\t}\n\t\t\t\t\t\txRedstone[tSide] = -1;\n\t\t\t\t\t\twRedstone[tSide] =  0;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tif (wRedstone[tSide] >= 20) {\n\t\t\t\t\t\t\tif (mRedstone[tSide] != 0) {\n\t\t\t\t\t\t\t\tmRedstone[tSide]  = 0;\n\t\t\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\twRedstone[tSide]++;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\t\n\t\t\t\t\tif (xComparator[tSide] >= 0) {\n\t\t\t\t\t\tif (mComparator[tSide] != xComparator[tSide]) {\n\t\t\t\t\t\t\tmComparator[tSide]  = xComparator[tSide];\n\t\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t\t}\n\t\t\t\t\t\txComparator[tSide] = -1;\n\t\t\t\t\t\twComparator[tSide] =  0;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tif (wComparator[tSide] >= 20) {\n\t\t\t\t\t\t\tif (mComparator[tSide] != 0) {\n\t\t\t\t\t\t\t\tmComparator[tSide]  = 0;\n\t\t\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\twComparator[tSide]++;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif (mRedstone[tSide] != 0) {\n\t\t\t\t\t\tmRedstone[tSide]  = 0;\n\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t}\n\t\t\t\t\tif (mComparator[tSide] != 0) {\n\t\t\t\t\t\tmComparator[tSide]  = 0;\n\t\t\t\t\t\tcauseBlockUpdate();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t",
+    "original_bind_body": "\n\t\t\treturn Math.max(aMin, Math.min(aMax, aBoundValue));\n\t\t",
+    "adapted_receive": "xRedstone  [side] = (byte)bind_(xRedstone  [side], 15, power);\nxComparator[side] = (byte)bind_(xComparator[side], 15, comparison);",
+    "inputs": [
+      {
+        "path": "core/src/main/java/com/gregtech/gregtech/content/logistics/MiniPortalSignals.java",
+        "sha256": "1ee7d05cfb51d6eecdd8b107f2167e2f0610654ce20e7d9435c3906d8085e498"
+      },
+      {
+        "path": "work/mini-portal-audit-20261022/BaselineMiniPortalSignals.java",
+        "sha256": "7e98d3385e25411b20c9a88f0e88d5b6888f14a0ee4a0bb2d6586a80172b8366"
+      },
+      {
+        "path": "work/mini-portal-audit-20261022/SourceSignalPhase.java",
+        "sha256": "aefb68b032c3bb17528ea4df04283f7ee0fba4a3a14ae67d8c8f5d15db5e2f16"
+      },
+      {
+        "path": "work/mini-portal-audit-20261022/SignalPhaseProbe.java",
+        "sha256": "018e10e4bbd285f611f842d61f18fa3373e862e0b8e2e89b887ded5ce41a1882"
+      }
+    ]
+  },
+  "readability": {
+    "baseline": "2f4a187c3b8dc506f64673c6ab5f61ef8623b1f8",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/logistics/MiniPortalSignals.java": {
+        "before_raw_sha256": "1315dedfb838c71aef48d976af6796b314a4b5ebb189cf28f5d4b3fc60a18005",
+        "after_raw_sha256": "1ee7d05cfb51d6eecdd8b107f2167e2f0610654ce20e7d9435c3906d8085e498",
+        "before_lines": 67,
+        "after_lines": 87,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 581,
+            "execution_sha256": "f4597c00a5154c11d7dcade7fe6e7c343b35c34d70662e7542afa2071e26efa7",
+            "literal_positions_sha256": "d6498bafd5e0932cfb54e29a018bd3941de2d403f61ff7b67ac8859d5c65fe1f",
+            "literal_count": 28
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlock.java": {
+        "before_raw_sha256": "bdbad21c1fc5188520b6dbe19aad9ce619cc7c77e6097860ec584454aa4630c7",
+        "after_raw_sha256": "2da61759d7276a62cc4b71b58d5024ab14b791f3f5693ab1f101c529ad0e688a",
+        "before_lines": 188,
+        "after_lines": 222,
+        "comment_corrections": [
+          [
+            "The two dimensions GT6's own mini portals serve (see the subclasses of {@code MultiTileEntityMiniPortal}).",
+            "The two dimension pairs currently supported by this port."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1290,
+            "execution_sha256": "80ed99aa821045f9b2d1c11cbca18765fcaceb14219210b39e16efcf20f197b8",
+            "literal_positions_sha256": "9322724f6671832a37c074f931716951d25533292c67690931bbd05b15a283c2",
+            "literal_count": 23
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1501,
+            "execution_sha256": "bb613a3c83e60bcebf672a49f2ebc8034236a8da3e16a0b8821375908fe2f018",
+            "literal_positions_sha256": "f2cd90432f0c685972f6d0234a9c7cd9bca6ec9294540edcc8d7a6cfe94b2c6c",
+            "literal_count": 23
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/misc/DungeonPortalBlockEntity.java": {
+        "before_raw_sha256": "f621162d20ff113182830172b01cb4a1e7016f51782c1bfab76f2f4e373451e5",
+        "after_raw_sha256": "56f302d9ecfd5cd61826d91c6d089bc1c78a01aa43cf47d565aa5574f05b751a",
+        "before_lines": 308,
+        "after_lines": 335,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2184,
+            "execution_sha256": "ca2ef60ade22615cefff899cd13b27fa308d4f3adc70e2a97d6d82dc9652ce66",
+            "literal_positions_sha256": "1bc44c6472976630d021c04a73e3786ce1247693b74a3bb1a6bb6cfc14f51404",
+            "literal_count": 13
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2208,
+            "execution_sha256": "709d8b11da36fc1216a0c42e592ee7e17b8995e0d02cf5813a322c89fc3c19bb",
+            "literal_positions_sha256": "273d0e067e60f64f991ee0fa478d16fca7e1758fbfb615ae972216c41d5767db",
+            "literal_count": 13
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTDungeonBlocks.java": {
+        "before_raw_sha256": "597de9eb701bbc8764b6af733615febff7003f859c08859c8988048eb30d4de1",
+        "after_raw_sha256": "a2356c4399696b65cdd7d82fe0f7ae414945fc609c7b7f3c7745e2054670936d",
+        "before_lines": 153,
+        "after_lines": 153,
+        "comment_corrections": [
+          [
+            "GT6's portal properties: obsidian/end stone hardness, no collision, light while it is open.",
+            "Current portal properties: source hardness, with port-specific collision and lighting settings."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 757,
+            "execution_sha256": "7ddfcafbd40f4320e9ef8e9abe8354d84a0a0039782c69213117de0cda02bfc9",
+            "literal_positions_sha256": "ad6c9057e66307ba92a53c8ca80b3ea518d30cb34dcc8086eb73c86dba3dfb7c",
+            "literal_count": 12
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 805,
+            "execution_sha256": "04282cc9f71d7931421e8fa6173450ce600ce9f7f8237816fd2cc69df8ea4ad5",
+            "literal_positions_sha256": "d606aa062dbc00bac9b75903b734b740b0920cba4ffa635daf32f772f6d3da89",
+            "literal_count": 15
+          }
+        ]
+      }
+    }
+  },
+  "formal_findings_added": [
+    {
+      "id": "ALIGN-370",
+      "finding": "Seventeen original optional dimension mini portals have no current target/registration implementation.",
+      "scope": "Old loader registers all nineteen; seventeen carry hidden/recipe gates when their dependency mods are absent. Optional compatibility backlog, not seventeen failures in a vanilla-only installation."
+    },
+    {
+      "id": "ALIGN-371",
+      "finding": "Mini portal magnifying-glass target/no-target diagnostic has no native tool consumer binding.",
+      "scope": "Activation coordinate messages exist; they do not provide the original independent magnifier operation. Covered-face generic cover messages are a separate path."
+    },
+    {
+      "id": "ALIGN-372",
+      "finding": "End portal activation narrows ore-dictionary gemEnderEye membership to exact Items.ENDER_EYE.",
+      "scope": "Compatibility acceptance contract; no claim that a specific additional member is installed in the current test pack."
+    },
+    {
+      "id": "ALIGN-373",
+      "finding": "Original full-block collision becomes no collision on both mini portals.",
+      "scope": "Original MultiTileEntityBlock full fallback and inherited Root full box, with no portal/parent collision override, versus current noCollission/native empty shape. No claim based solely on a direct interface declaration. Rendered frame geometry is not movement collision."
+    },
+    {
+      "id": "ALIGN-374",
+      "finding": "Explicit light opacity changes from 1 to 0.",
+      "scope": "Original LIGHT_OPACITY_LEAVES constant versus current getLightBlock. World lighting/render appearance and the independent active emission setting 11 are not declared verified."
+    },
+    {
+      "id": "ALIGN-375",
+      "finding": "Item tooltips omit original closest-active selection and chunk-loader requirement.",
+      "scope": "Compare actual appendHoverText consumers and referenced language values, not the mere existence of unused language keys."
+    },
+    {
+      "id": "ALIGN-376",
+      "finding": "Active Nether mini portal lacks original four-particle random-display callback.",
+      "scope": "Native block has no animation callback/client ticker; animated portal texture exists and is not the missing world particle behavior.",
+      "original_dispatcher": {
+        "path": "gregapi/block/multitileentity/MultiTileEntityBlock.java",
+        "line": 248,
+        "text": "\t@Override public final void randomDisplayTick(World aWorld, int aX, int aY, int aZ, Random aRandom) {TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ); if (aTileEntity instanceof IMTE_RandomDisplayTick) ((IMTE_RandomDisplayTick)aTileEntity).randomDisplayTick(aRandom); else super.randomDisplayTick(aWorld, aX, aY, aZ, aRandom);}"
+      }
+    }
+  ],
+  "formal_findings_extended": [
+    {
+      "id": "ALIGN-132",
+      "scope": "Original mini portal client late-activation portal sound has no corresponding current client transition callback."
+    },
+    {
+      "id": "ALIGN-278",
+      "scope": "Mini portal native comparator calls comparator(null) and merges all six outputs, while old getComparatorInputOverride takes a side. Internal portal/extender side-aware queries remain."
+    }
+  ],
+  "positive_scope": [
+    "Two actual dimension pairs have factor/margin 8/128 and 128/512, nearest horizontal target and Y tie breaker; no chunk-force-load requested in target lookup.",
+    "Opposite neighbor addressing, shared item/fluid/GT-energy forwarding and both platform FE entry points exist. No live cross-dimensional transfer certification.",
+    "Both dimension models have the original thirteen active / twelve inactive box coordinates; no pixel/face-culling/render certification.",
+    "Pure core active-state signal phases match the extracted original finite schedule; unload/deactivate/native notifications are outside this probe.",
+    "Craftable mini portals do not transport entities. Dungeon portal-room code is a distinct vanilla-portal consumer."
+  ],
+  "preparation_attempts": [
+    {
+      "result": "failed before compilation",
+      "detail": "Initial scan-expression extraction also matched disable assignments; restricted to byte-cast scan expressions."
+    },
+    {
+      "result": "two failed probe compilations, second used only to expose diagnostics",
+      "detail": "Original aligned getRedstoneIncoming spaces left tSide unresolved in generated oracle; replaced calls with whitespace-aware exact adaptation. No production compile defect."
+    },
+    {
+      "result": "failed receipt preparation",
+      "detail": "Text metadata reader was initially used for a PNG; binary resource metadata now hashes bytes without UTF-8 decoding."
+    },
+    {
+      "result": "passed",
+      "detail": "Corrected actual-core/source-fragment probe; scope and elapsed time above."
+    },
+    {
+      "result": "failed method-locator preparation",
+      "detail": "Forge getCollisionShape is public; locator initially expected protected. Actual public method subsequently inspected; no code behavior changed."
+    }
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "limits": [
+    "Only readability and two comment corrections; no gameplay or registry identity changes.",
+    "No Gradle, whole-mod dual compilation, GameTest, game, rendering, save restart, build, push, issue comment or closure.",
+    "All optional dimensions, native transfer/lifecycle and remaining systems still require review; no global completion claim.",
+    "376 formal records include repaired/policy entries, not an unresolved count or percentage. Goal remains active."
+  ],
+  "root_revalidation": {
+    "baseline_and_original_git_text": true,
+    "readability_proof_reproduced": true,
+    "edited_sources": 4,
+    "platform_views": 7,
+    "lines_before": 716,
+    "lines_after": 797,
+    "original_sources": 29,
+    "current_sources": 14,
+    "resources": 12,
+    "native_artifact_entry_output_hashes": true,
+    "source_probe_inputs_current": true,
+    "protected_materials": true,
+    "formal_ids_contiguous": 376,
+    "six_navigation_ledger_links": true,
+    "source_resource_excerpt_hashes": true,
+    "extended_rows_have_topic_link": true,
+    "collision_override_inventory": "No collision override in three concrete/common portal classes or three intermediate parents; Root default and block fallback both full.",
+    "native_no_collision_consumers": "Forge and Neo both set hasCollision false and return Shapes.empty when false; Forge collision method is public, Neo protected."
+  }
+}
