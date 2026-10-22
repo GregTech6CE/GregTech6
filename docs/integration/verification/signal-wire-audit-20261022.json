@@ -1,0 +1,701 @@
+{
+  "date": "2026-10-22",
+  "batch": 120,
+  "baseline": "88b5c66f3a268609403d91e8d77695e508623e07",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "evidence": "Issue #78 source trace reconfirmed original 16..64 Sky Stone count; no gameplay change."
+  },
+  "provenance": {
+    "authors": "GregTech-6 Team / Gregorius Techneticies",
+    "license": "Original LGPL notices retained; current source refactoring and arithmetic extraction import no additional original source.",
+    "original_tree_read_only": true
+  },
+  "original_sources": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "raw_sha256": "9082dbb0ec5cda4fbb847a45f4b47de1f1ed61704abbfac52909df2cc406641d",
+      "lines": 161,
+      "notice_sha256": "f725b56fe37d3a831cd3826d847a605130cd32b7a80f0ed749fe08c8a7a12e7a"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "raw_sha256": "96f579dd5c0a26a759ddee34c312dadbc5d52123e2b85e82da6a40f68b494393",
+      "lines": 2243,
+      "notice_sha256": "6855675ee4a01a21169dd2a3ed5df729ac3198a4b2e3b869f91e1a45c79e6aca"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "raw_sha256": "4f93b8caf163e85f0560bfba5934bb42e76c39caf9a954c279cfcb10af49b8c2",
+      "lines": 191,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "raw_sha256": "cd79da42bb5b24a211615bb25edb653995c867f7404928f40d8e6f73ca59ec15",
+      "lines": 90,
+      "notice_sha256": "89f9e02b0b015ff5f4217ca3040d5322fd7430dd362573dda295e5906ca0942c"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/ITileEntityRedstoneWire.java",
+      "raw_sha256": "191c58b9bb61d48d2cd8d07f493157c3a4f6968ebc644114577e0b09a2b47717",
+      "lines": 58,
+      "notice_sha256": "63c517dd35b913cfc46d1f7881d524c83334db090a72278eefbb881a3ef42a1b"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "raw_sha256": "407edce9f541bcf34b6573d59e4ae14e477fb9c145439deddb831e2a2e2887a5",
+      "lines": 2345,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "raw_sha256": "fd91c2354dfb655f386f65b71c46add1caa067b85958dd3cd61a469b63bc7709",
+      "lines": 3476,
+      "notice_sha256": "c012c49a5f07e679e78ad4c680362804dfec8f040bb5cd957c40e8ed07c80862"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase09Connector.java",
+      "raw_sha256": "7c77c0fd093e5ff5fb889ad7f3cf6e0b75f5f7390a637b1ce76a2252269526ff",
+      "lines": 177,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/TileEntityBase10ConnectorRendered.java",
+      "raw_sha256": "4337cc83a2d68d44525e973faf3a7a4383bb56166562cc60f1bce77b8f9b0ad0",
+      "lines": 266,
+      "notice_sha256": "accc18a4bf87847b3134c2814611b821dcb8c3083277f78c0f8f2cf8e6f05caf"
+    }
+  ],
+  "current_sources": [
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireCatalog.java",
+      "raw_sha256": "29246fc12f6aee57ea1e2797b106cc8da4dcbba8c0da9496496b4ba88c3555b5",
+      "lines": 22
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTSignalWires.java",
+      "raw_sha256": "231321630e8c48a9f9fb59ec998940c13ede3860e33056fd42d858a0ece80eca",
+      "lines": 74
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "raw_sha256": "c36ff964971ad6d83b9c549d3d93674aa1ab80d86f97980f1888416d169977c9",
+      "lines": 271
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "raw_sha256": "33af0f59c41b40f18215f0f437141e020cc3cb949f13ce0279a003b41b3575eb",
+      "lines": 303
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireRules.java",
+      "raw_sha256": "aa75170d3d367021a0c653ec58e7005958e6bbe2003e9ca21b3cdc8f020d26ed",
+      "lines": 23
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/api/java/com/gregtech/gregtech/api/signal/GtSignalCarrier.java",
+      "raw_sha256": "e74e6372da71292c6528fcaee0629b1d9e15110f9a57dd4842d21318a51e262e",
+      "lines": 25
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/api/java/com/gregtech/gregtech/api/signal/GtSignalSource.java",
+      "raw_sha256": "ad30d63c79bbd87de79c7be361d9634d8c0e390dce261d70518639d05e7eed14",
+      "lines": 19
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/api/java/com/gregtech/gregtech/api/signal/GtSignalReceiver.java",
+      "raw_sha256": "87b5ebe7a55e0041869548be7e3aa79fd8d445512aa945a23e73ace440151d1c",
+      "lines": 11
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/EnergyNodeDefinitions.java",
+      "raw_sha256": "6b8afc634fd848a8be26be8fc5fa0828873c1990ed4c95a0f63534bc6c8e182c",
+      "lines": 88
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "raw_sha256": "f1c241bbe59ee6e6c5b7565472d72ca140a55f672d7d82fe1ff97da918ae65e0",
+      "lines": 129
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/MagnetMachineDefinitions.java",
+      "raw_sha256": "94895981c92304174ee4fd4f9ffe07e3af8c38616fc4b327bc68476282b2edf4",
+      "lines": 60,
+      "notice_sha256": "b8b42846c9698cb676531b8a17feea70b4c31137e250b4b53c24e2c5535a4cec"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "raw_sha256": "390ed71c0c3398836de5588a81f81e8a06c6112e154d5c9c809bd0bfc021e507",
+      "lines": 127
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "raw_sha256": "c85914e0ae9b509383c9323d85dba161baf4dbb53875f3581a63fca8c8a426c8",
+      "lines": 1242
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTBlockEntities.java",
+      "raw_sha256": "05409cc45a965be4efbcde15b420091d3222e6fe390069a0d58031e43faf9308",
+      "lines": 707
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "raw_sha256": "b421bde641834b50ad763f586dbcf5f484bdb30b0131d2735d4efbb0f20bd477",
+      "lines": 53
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "raw_sha256": "a83787a7e2ca56b3b695b41f221cff2ee046880b09354fdf78b35bd2cc070a02",
+      "lines": 191
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "start_line": 77,
+      "end_line": 119,
+      "excerpt_sha256": "d95b9ce8edb32d12b40b97cef2844f74f8a89ab10b3f6db9d47390c62fd63cb8",
+      "text": "\tpublic void onTick2(long aTimer, boolean aIsServerSide) {\n\t\tif (aIsServerSide && !mStopped) {\n\t\t\tif ((mCheck || mBlockUpdated || aTimer % 600 == 5)) {\n\t\t\t\tboolean tActive = mActive;\n\t\t\t\tmCheck = F;\n\t\t\t\tmActive = F;\n\t\t\t\tmOutput = 64;\n\t\t\t\tBlock tBlock = getBlockAtSide(SIDE_TOP);\n\t\t\t\tif (tBlock == Blocks.dragon_egg) {\n\t\t\t\t\tmActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.QU;\n\t\t\t\t} else if (tBlock == Blocks.skull) {\n\t\t\t\t\tmActive = T; mOutput = 1; mEnergyTypeEmitted = TD.Energy.TU; // I can't forsee this getting OP as heck. XD\n\t\t\t\t} else if (IL.TF_Trophy.equal(tBlock)) {\n\t\t\t\t\tswitch(tBlock.getDamageValue(worldObj, xCoord, yCoord+1, zCoord)) {\n\t\t\t\t\tcase  1: mActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.KU; break; // Naga\n\t\t\t\t\tcase  2: mActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.QU; break; // Lich\n\t\t\t\t\tdefault: mActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.HU; break; // Hydra\n\t\t\t\t\tcase  3: mActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.LU; break; // Ur-Ghast\n\t\t\t\t\tcase  4: mActive = T; mOutput = 64; mEnergyTypeEmitted = TD.Energy.CU; break; // Snow Queen\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif (tActive != mActive) updateClientData();\n\t\t\t}\n\t\t\t\n\t\t\tif (mActive) {\n\t\t\t\tif (mEnergyTypeEmitted == TD.Energy.KU) {\n\t\t\t\t\tUtil.emitEnergyToNetwork(mEnergyTypeEmitted, aTimer % 128 < 64 ? -mOutput : mOutput, 1, this);\n\t\t\t\t} else if (TD.Energy.ALL_SIZE_IRRELEVANT.contains(mEnergyTypeEmitted)) {\n\t\t\t\t\tUtil.emitEnergyToNetwork(mEnergyTypeEmitted, 1, mOutput, this);\n\t\t\t\t} else {\n\t\t\t\t\tUtil.emitEnergyToNetwork(mEnergyTypeEmitted, mOutput, 1, this);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\t\n\t@Override public void setVisualData(byte aData) {mActive = ((aData & 1) != 0);}\n\t@Override public byte getVisualData() {return (byte)(mActive?1:0);}\n\t\n\t@Override public boolean isEnergyType                   (TagData aEnergyType, byte aSide, boolean aEmitting) {return aEmitting;}\n\t@Override public boolean isEnergyEmittingTo             (TagData aEnergyType, byte aSide, boolean aTheoretical) {return aSide == mFacing && super.isEnergyEmittingTo(aEnergyType, aSide, aTheoretical);}\n\t@Override public long getEnergySizeOutputMin            (TagData aEnergyType, byte aSide) {return mOutput;}\n\t@Override public long getEnergySizeOutputMax            (TagData aEnergyType, byte aSide) {return mOutput;}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "start_line": 116,
+      "end_line": 133,
+      "excerpt_sha256": "e419b8f191e0b65dec321a7317401aab0e349776e585c711cd74fa13bc77404c",
+      "text": "\t@Override public boolean isEnergyType                   (TagData aEnergyType, byte aSide, boolean aEmitting) {return aEmitting;}\n\t@Override public boolean isEnergyEmittingTo             (TagData aEnergyType, byte aSide, boolean aTheoretical) {return aSide == mFacing && super.isEnergyEmittingTo(aEnergyType, aSide, aTheoretical);}\n\t@Override public long getEnergySizeOutputMin            (TagData aEnergyType, byte aSide) {return mOutput;}\n\t@Override public long getEnergySizeOutputMax            (TagData aEnergyType, byte aSide) {return mOutput;}\n\t@Override public long getEnergySizeOutputRecommended    (TagData aEnergyType, byte aSide) {return mOutput;}\n\t@Override public Collection<TagData> getEnergyTypes(byte aSide) {return TD.Energy.ALL_GT;}\n\t\n\t@Override public boolean getStateRunningPossible() {return T;}\n\t@Override public boolean getStateRunningPassively() {return mActive;}\n\t@Override public boolean getStateRunningActively() {return mActive;}\n\t@Override public boolean setStateOnOff(boolean aOnOff) {if (mStopped && aOnOff) mCheck = T; mStopped = !aOnOff; return !mStopped;}\n\t@Override public boolean getStateOnOff() {return !mStopped;}\n\t@Override public boolean[] getValidSides() {return SIDES_BOTTOM_HORIZONTAL;}\n\t@Override public byte getDefaultSide() {return SIDE_BOTTOM;}\n\t@Override public boolean canDrop(int aInventorySlot) {return F;}\n\t\n\t@Override\n\tpublic ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "start_line": 52,
+      "end_line": 69,
+      "excerpt_sha256": "86d88a9f0fd5cbaf2bb30b5b934cfdcb16710e6ee61dfa0516ef192d294ca118",
+      "text": "\tpublic void readFromNBT2(NBTTagCompound aNBT) {\n\t\tsuper.readFromNBT2(aNBT);\n\t\tif (aNBT.hasKey(NBT_STOPPED)) mStopped = aNBT.getBoolean(NBT_STOPPED);\n\t\tif (aNBT.hasKey(NBT_ACTIVE)) mActive = aNBT.getBoolean(NBT_ACTIVE);\n\t}\n\t\n\t@Override\n\tpublic void writeToNBT2(NBTTagCompound aNBT) {\n\t\tsuper.writeToNBT2(aNBT);\n\t\tUT.NBT.setBoolean(aNBT, NBT_ACTIVE, mActive);\n\t\tUT.NBT.setBoolean(aNBT, NBT_STOPPED, mStopped);\n\t}\n\t\n\tstatic {\n\t\tLH.add(\"gt.tooltip.magicenergyabsorber\", \"Generates Power from Magical Trophies on top of it.\");\n\t}\n\t\n\t@Override"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/tileentity/energy/generators/MultiTileEntityMagicFieldAbsorber.java",
+      "start_line": 140,
+      "end_line": 161,
+      "excerpt_sha256": "5969efbb8c87b45945a538930103ee7a1f57a9924a7cf4aaea352eeb7e265611",
+      "text": "\tpublic static IIconContainer sColoreds[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/colored/side_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/colored/side\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/colored/bottom_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/colored/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/colored/top\"),\n\t}, sOverlays[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay/side_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay/side\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay/bottom_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay/top\"),\n\t}, sOverlaysActive[] = new IIconContainer[] {\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay_active/side_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay_active/side\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay_active/bottom_facing\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay_active/bottom\"),\n\t\tnew Textures.BlockIcons.CustomIcon(\"machines/magicenergyabsorber/overlay_active/top\"),\n\t};\n\t\n\t@Override public String getTileEntityName() {return \"gt.multitileentity.magicenergyabsorber\";}\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 1005,
+      "end_line": 1005,
+      "excerpt_sha256": "3b93d06f1ff80ea098f06cad0e8890270c91bbf7486119101bf3746fc8fda458",
+      "text": "\t\taMat = MT.Pd;                   aRegistry.add(\"Magic Field Absorber\"                                , \"Magical Energy Production\"           , 10180, 10180, MultiTileEntityMagicFieldAbsorber.class, aMat.mToolQuality, 16, aMachine, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 4.0F, NBT_RESISTANCE, 4.0F), \"GOG\", \"LBL\", \"CMC\", 'M', OP.casingMachine.dat(aMat), 'C', IL.Circuit_Magic, 'G', OP.wireFine.dat(MT.Au), 'O', OP.plate.dat(MT.Obsidian), 'L', OP.gem.dat(MT.Lapis), 'B', Blocks.beacon);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregtech/loaders/b/Loader_MultiTileEntities.java",
+      "start_line": 1895,
+      "end_line": 1903,
+      "excerpt_sha256": "848d24c8d9448ca2821a272142006f2193e0560a366ba4ba6d3b57cabcc88a47",
+      "text": "\t\tOreDictManager.INSTANCE.setTarget_(OP.wireGt01 , aMat, aRegistry.add(aMat.getLocal() + \" Wire\"    , \"Redstone Wires\", 27000, 27050, MultiTileEntityWireRedstone         .class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[2], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 16)), T, F, T);\n\t\tOreDictManager.INSTANCE.setTarget_(OP.cableGt01, aMat, aRegistry.add(aMat.getLocal() + \" Cable\"   , \"Redstone Wires\", 27006, 27050, MultiTileEntityWireRedstoneInsulated.class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[4], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 16)), T, F, T);\n\t\taMat = MT.Signalum;\n\t\tOreDictManager.INSTANCE.setTarget_(OP.wireGt01 , aMat, aRegistry.add(aMat.getLocal() + \" Wire\"    , \"Redstone Wires\", 27050, 27050, MultiTileEntityWireRedstone         .class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[2], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 64)), T, F, T);\n\t\tOreDictManager.INSTANCE.setTarget_(OP.cableGt01, aMat, aRegistry.add(aMat.getLocal() + \" Cable\"   , \"Redstone Wires\", 27056, 27050, MultiTileEntityWireRedstoneInsulated.class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[4], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 64)), T, F, T);\n\t\taMat = MT.Lumium;\n\t\tOreDictManager.INSTANCE.setTarget_(OP.wireGt01 , aMat, aRegistry.add(aMat.getLocal() + \" Wirelamp\", \"Redstone Wires\", 27500, 27050, MultiTileEntityWireRedstone         .class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[2], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 16)), T, F, T);\n\t\tOreDictManager.INSTANCE.setTarget_(OP.cableGt01, aMat, aRegistry.add(aMat.getLocal() + \" Cable\"   , \"Redstone Wires\", 27506, 27050, MultiTileEntityWireRedstoneInsulated.class, aMat.mToolQuality, 64, aMetalWires, UT.NBT.make(NBT_MATERIAL, aMat, NBT_HARDNESS, 1.0F, NBT_RESISTANCE, 2.0F, NBT_PIPERENDER, 0, NBT_DIAMETER, PX_P[4], NBT_PIPELOSS, ITileEntityRedstoneWire.MAX_RANGE / 16)), T, F, T);\n\t\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "start_line": 108,
+      "end_line": 137,
+      "excerpt_sha256": "ad867ca5beb208801d4349980ab4daf171a05734ce01f21b22c9a310701a1643",
+      "text": "\tpublic long getRedstoneAtSide(byte aSide) {\n\t\tif (SIDES_INVALID[aSide]) return 0;\n\t\tDelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(aSide);\n\t\tif (tDelegator.mTileEntity instanceof ITileEntityRedstoneWire) return canAcceptRedstoneFromWire(aSide, REDSTONE_ID) && ((ITileEntityRedstoneWire)tDelegator.mTileEntity).canEmitRedstoneToWire(tDelegator.mSideOfTileEntity, REDSTONE_ID) ? ((ITileEntityRedstoneWire)tDelegator.mTileEntity).getRedstoneMinusLoss(tDelegator.mSideOfTileEntity, REDSTONE_ID) : 0;\n\t\tif (!canAcceptRedstoneFromVanilla(aSide)) return 0;\n\t\t// Do not accept Redstone coming from any Redstone Sink! (Such as Droppers or Dispensers)\n\t\tif (REDSTONE_SINKS.contains(tDelegator.getBlock())) return 0;\n\t\t// Making sure the Glowstone Illuminators from Thermal Expansion are not flickering due to their weird Redstone emitting Mechanics.\n\t\tif (MD.TE.mLoaded && tDelegator.mTileEntity != null && tDelegator.mTileEntity.getClass().getName().startsWith(\"cofh.thermalexpansion.block.light\")) return 0;\n\t\tif (mVanillaSides[aSide] < 0) mVanillaSides[aSide] = getRedstoneIncoming(aSide);\n\t\treturn MAX_RANGE * mVanillaSides[aSide] - mLoss;\n\t}\n\t\n\t@Override\n\tpublic boolean updateRedstone(int aRedstoneID) {\n\t\tif (aRedstoneID != REDSTONE_ID) return F;\n\t\tlong oRedstone = mRedstone, tRedstone = mMode * MAX_RANGE - mLoss;\n\t\tbyte oReceived = mReceived;\n\t\tif ((mRedstone = getRedstoneAtSide(oReceived)) <= tRedstone) {\n\t\t\tmRedstone = tRedstone;\n\t\t\tmReceived = SIDE_UNDEFINED;\n\t\t}\n\t\tfor (byte tSide : ALL_SIDES_VALID_BUT[oReceived]) if ((tRedstone = getRedstoneAtSide(tSide)) > mRedstone) {mRedstone = tRedstone; mReceived = tSide;}\n\t\tif (mRedstone != oRedstone) {if (mConnectedToNonWire) causeBlockUpdate(); return T;}\n\t\treturn F;\n\t}\n\t\n\tpublic void updateConnectionStatus() {\n\t\tmConnectedToNonWire = F;\n\t\tfor (byte tSide : ALL_SIDES_VALID) if (canAcceptRedstoneFromVanilla(tSide) && !(getAdjacentTileEntity(tSide).mTileEntity instanceof ITileEntityRedstoneWire)) mConnectedToNonWire = T;"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "start_line": 141,
+      "end_line": 165,
+      "excerpt_sha256": "0fadfa0c7a272f056c81db50d9347d707717e675538a2436e76b398054c42ea6",
+      "text": "\tpublic byte isProvidingWeakPower2(byte aSide) {\n\t\tif (!canEmitRedstoneToVanilla(aSide = OPOS[aSide]) || mRedstone <= 0) return 0;\n\t\tBlock tBlock = getBlockAtSide(aSide);\n\t\treturn UT.Code.bind4(UT.Code.divup(mRedstone, MAX_RANGE) - (tBlock instanceof BlockRedstoneWire || tBlock.isNormalCube(worldObj, xCoord+OFFX[aSide], yCoord+OFFY[aSide], zCoord+OFFZ[aSide]) ? 1 : 0));\n\t}\n\t\n\t@Override\n\tpublic byte isProvidingStrongPower2(byte aSide) {\n\t\tif (!canEmitRedstoneToVanilla(aSide = OPOS[aSide]) || mRedstone <= 0) return 0;\n\t\tBlock tBlock = getBlockAtSide(aSide);\n\t\treturn UT.Code.bind4(UT.Code.divup(mRedstone, MAX_RANGE) - (tBlock instanceof BlockRedstoneWire || tBlock.isNormalCube(worldObj, xCoord+OFFX[aSide], yCoord+OFFY[aSide], zCoord+OFFZ[aSide]) ? 1 : 0));\n\t}\n\t\n\t@Override\n\tpublic int getComparatorInputOverride(byte aSide) {\n\t\treturn UT.Code.bind4(mRedstone / MAX_RANGE);\n\t}\n\t\n\t@Override public boolean canDrop(int aInventorySlot) {return F;}\n\t@Override public boolean isObstructingBlockAt(byte aSide) {return F;} // Btw, Wires have this but Pipes don't. This is because Wires are flexible, while Pipes aren't.\n\t\n\tpublic boolean canEmitRedstoneToVanilla                 (byte aSide) {return aSide != mReceived && connected(aSide) && !(getAdjacentTileEntity(aSide).mTileEntity instanceof ITileEntityRedstoneWire);}\n\tpublic boolean canAcceptRedstoneFromVanilla             (byte aSide) {return connected(aSide);}\n\t\n\t@Override public boolean canEmitRedstoneToWire          (byte aSide, int aRedstoneID) {return aRedstoneID == REDSTONE_ID && connected(aSide);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstoneInsulated.java",
+      "start_line": 60,
+      "end_line": 79,
+      "excerpt_sha256": "799d12b260f8c8fc317126007085a2ffcccd7d08bb8600e544b0a56e0679fc96",
+      "text": "\tpublic void readFromNBT2(NBTTagCompound aNBT) {\n\t\tsuper.readFromNBT2(aNBT);\n\t\tif (aNBT.hasKey(\"gt.mreceived\")) mReceived = aNBT.getByte(\"gt.mreceived\");\n\t\tif (aNBT.hasKey(\"gt.mredstone\")) mRedstone = aNBT.getByte(\"gt.mredstone\");\n\t\tif (aNBT.hasKey(NBT_MODE)) mMode = aNBT.getByte(NBT_MODE);\n\t\tif (aNBT.hasKey(NBT_PIPELOSS)) mLoss = Math.max(1, aNBT.getLong(NBT_PIPELOSS));\n\t\tif (aNBT.hasKey(NBT_PIPERENDER)) mRenderType = aNBT.getByte(NBT_PIPERENDER);\n\t}\n\t\n\t@Override\n\tpublic void writeToNBT2(NBTTagCompound aNBT) {\n\t\tsuper.writeToNBT2(aNBT);\n\t\tif (mMode != 0) aNBT.setByte(NBT_MODE, mMode);\n\t\taNBT.setByte(\"gt.mreceived\", mReceived);\n\t\tUT.NBT.setNumber(aNBT, \"gt.mredstone\", mRedstone);\n\t}\n\t\n\t@Override\n\tpublic void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {\n\t\taList.add(Chat.CYAN + LH.get(LH.PIPE_STATS_RANGE) + (MAX_RANGE / mLoss));"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "start_line": 51,
+      "end_line": 60,
+      "excerpt_sha256": "e4e671bb1e8c9326ba0cc6142b0035423654f27ea3d85069ffe1718847908ca9",
+      "text": "\tpublic boolean onTickCheck(long aTimer) {\n\t\tbyte tOldState = mState;\n\t\tmState = UT.Code.bind4(UT.Code.divup(mRedstone, MAX_RANGE));\n\t\tif (tOldState != mState) {\n\t\t\tif (mIsGlowing) updateLightValue();\n\t\t\treturn T;\n\t\t}\n\t\treturn super.onTickCheck(aTimer);\n\t}\n\t"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/MultiTileEntityWireRedstone.java",
+      "start_line": 75,
+      "end_line": 82,
+      "excerpt_sha256": "790ef6f451c9df6dc2d32362ddd8ed74a86641636e8f12ba3af6fba0f68c2a43",
+      "text": "\tpublic int getLightOpacity() {\n\t\treturn mIsGlowing ? LIGHT_OPACITY_NONE : super.getLightOpacity();\n\t}\n\t\n\t@Override public int getLightValue                      () {return mIsGlowing ? mState : 0;}\n\t\n\t@Override public ITexture getTextureSide                (byte aSide, byte aConnections, float aDiameter, int aRenderPass) {return BlockTextureDefault.get(mMaterial, getIconIndexSide       (aSide, aConnections, aDiameter, aRenderPass), mState > 0, mRGBa);}\n\t@Override public ITexture getTextureConnected           (byte aSide, byte aConnections, float aDiameter, int aRenderPass) {return BlockTextureDefault.get(mMaterial, getIconIndexConnected  (aSide, aConnections, aDiameter, aRenderPass), mState > 0, mRGBa);}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/ITileEntityRedstoneWire.java",
+      "start_line": 32,
+      "end_line": 40,
+      "excerpt_sha256": "32c64102566a3cc81fa5d46556562e3c9ed421b7f6b0ad7d840af7cf48853a36",
+      "text": "\tpublic static final long MAX_RANGE = Integer.MAX_VALUE;\n\t\n\tpublic boolean canEmitRedstoneToWire(byte aSide, int aRedstoneID);\n\tpublic boolean canAcceptRedstoneFromWire(byte aSide, int aRedstoneID);\n\t\n\tpublic boolean updateRedstone(int aRedstoneID);\n\tpublic long getRedstoneMinusLoss(byte aSide, int aRedstoneID);\n\tpublic long getRedstoneValue(byte aSide, int aRedstoneID);\n\tpublic long getRedstoneLoss(int aRedstoneID);"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/tileentity/connectors/ITileEntityRedstoneWire.java",
+      "start_line": 43,
+      "end_line": 58,
+      "excerpt_sha256": "829dd9a85677662999aced37270e18561d195b6d6932792957addc3d9ec3ba51",
+      "text": "\t\tpublic static void doRedstoneUpdate(ITileEntityRedstoneWire aTileEntity, int aRedstoneID) {\n\t\t\tHashSetNoNulls<ITileEntityRedstoneWire> tSetUpdating = new HashSetNoNulls<>(F, aTileEntity), tSetNext = new HashSetNoNulls<>();\n\t\t\twhile (!tSetUpdating.isEmpty()) {\n\t\t\t\tfor (ITileEntityRedstoneWire tTileEntity : tSetUpdating) for (byte tSide : ALL_SIDES_VALID) if (tTileEntity.canEmitRedstoneToWire(tSide, aRedstoneID)) {\n\t\t\t\t\tDelegatorTileEntity<TileEntity> tDelegator = tTileEntity.getAdjacentTileEntity(tSide);\n\t\t\t\t\tif (tDelegator.mTileEntity instanceof ITileEntityRedstoneWire && ((ITileEntityRedstoneWire)tDelegator.mTileEntity).canAcceptRedstoneFromWire(tDelegator.mSideOfTileEntity, aRedstoneID) && ((ITileEntityRedstoneWire)tDelegator.mTileEntity).updateRedstone(aRedstoneID)) {\n\t\t\t\t\t\ttSetNext.add((ITileEntityRedstoneWire)tDelegator.mTileEntity);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\ttSetUpdating.clear();\n\t\t\t\ttSetUpdating.addAll(tSetNext);\n\t\t\t\ttSetNext.clear();\n\t\t\t}\n\t\t}\n\t}\n}"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start_line": 516,
+      "end_line": 521,
+      "excerpt_sha256": "9be2e62cec8cf9cc0d5d67fb05b6060082e84f71a3a6511325eb71114b9ef9d5",
+      "text": "\tpublic static final byte        SIDE_Y_NEG  = 0, SIDE_BOTTOM    = 0, SIDE_DOWN      = 0,\n\t\t\t\t\t\t\t\t\tSIDE_Y_POS  = 1, SIDE_TOP       = 1, SIDE_UP        = 1,\n\t\t\t\t\t\t\t\t\tSIDE_Z_NEG  = 2, SIDE_NORTH     = 2, // Also a Side with a stupidly mirrored Texture\n\t\t\t\t\t\t\t\t\tSIDE_Z_POS  = 3, SIDE_SOUTH     = 3,\n\t\t\t\t\t\t\t\t\tSIDE_X_NEG  = 4, SIDE_WEST      = 4,\n\t\t\t\t\t\t\t\t\tSIDE_X_POS  = 5, SIDE_EAST      = 5, // Also a Side with a stupidly mirrored Texture"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/data/CS.java",
+      "start_line": 671,
+      "end_line": 675,
+      "excerpt_sha256": "5d86e1df26661003f9917f15228aff8e8aa88f981066840e1cbf06b8db5e2ad9",
+      "text": "\t\t\t\t\t\t\t\t\t\t\tALL_SIDES_VALID              =  {0,1,2,3,4,5  },\n\t\t\t\t\t\t\t\t\t\t\tALL_SIDES_VALID_ORDER[]      = {{0,1,2,3,4,5  },{1,2,3,4,5,0  },{2,3,4,5,0,1  },{3,4,5,0,1,2  },{4,5,0,1,2,3  },{5,0,1,2,3,4  },{0,1,2,3,4,5  }},\n\t\t\t\t\t\t\t\t\t\t\tALL_SIDES_VALID_FIRST[]      = {{0,1,2,3,4,5  },{1,0,2,3,4,5  },{2,0,1,3,4,5  },{3,0,1,2,4,5  },{4,0,1,2,3,5  },{5,0,1,2,3,4  },{0,1,2,3,4,5  }},\n\t\t\t\t\t\t\t\t\t\t\tALL_SIDES_VALID_ONLY[]       = {{0            },{1            },{2            },{3            },{4            },{5            },{0,1,2,3,4,5  }},\n\t\t\t\t\t\t\t\t\t\t\tALL_SIDES_VALID_BUT[]        = {{  1,2,3,4,5  },{0  ,2,3,4,5  },{0,1  ,3,4,5  },{0,1,2  ,4,5  },{0,1,2,3  ,5  },{0,1,2,3,4    },{0,1,2,3,4,5  }},"
+    },
+    {
+      "path": "C:/Dev/gregtech6-master/gregtech6-master/src/main/java/gregapi/util/UT.java",
+      "start_line": 1697,
+      "end_line": 1699,
+      "excerpt_sha256": "03a94198207f98d1a86a7173262ee648fb1f6fb4f0b3849d29d2e1c3ac4744c0",
+      "text": "\t\tpublic static long divup(long aNumber, long aDivider) {\n\t\t\treturn aNumber / aDivider + (aNumber % aDivider == 0 ? 0 : 1);\n\t\t}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireCatalog.java",
+      "start_line": 16,
+      "end_line": 22,
+      "excerpt_sha256": "48bbbdc184e096119b0c3160f4243c6f03d4dde638b39bb658932e8881d92178",
+      "text": "    public static List<Family> families() {\n        return List.of(\n                new Family(\"redalloy\", Materials.RedAlloy, 16, false),\n                new Family(\"signalum\", Materials.Signalum, 64, false),\n                new Family(\"lumium\", Materials.Lumium, 16, true));\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTSignalWires.java",
+      "start_line": 57,
+      "end_line": 74,
+      "excerpt_sha256": "a3c4ea9217c624ea271adc8df3a561777fd5d563b02cd7d7a5616db6bfc71ad6",
+      "text": "    private static void registerFamily(String name, GTMaterial material, int range, boolean luminous) {\n        for (boolean insulated : new boolean[]{false, true}) {\n            String id = (insulated ? \"cable_01_\" : \"wire_01_\") + name;\n//? if >=1.21.1 {\n            /*var block = BLOCKS.register(id, () -> new SignalWireBlock(material, range, insulated,\n*///?} else {\n            var block = GTBlocks.BLOCKS.register(id, () -> new SignalWireBlock(material, range, insulated,\n//?}\n                    luminous && !insulated, BlockBehaviour.Properties.of().strength(1, 2).noOcclusion()));\n            ALL.add(block);\n//? if >=1.21.1 {\n            /*ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));\n*///?} else {\n            GTBlocks.BLOCK_ITEMS.register(id, () -> new BlockItem(block.get(), new Item.Properties()));\n//?}\n        }\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 84,
+      "end_line": 86,
+      "excerpt_sha256": "9f213cbb5d332c1d2bfc77016dd043314605b7438e6642b7f2605ad4b69477ba",
+      "text": "    public int halfThickness() {\n        return insulated ? 2 : 1;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java",
+      "start_line": 62,
+      "end_line": 70,
+      "excerpt_sha256": "7dec36f9a0613d6969819412fcd43d9ce8eccf42f013e9c31b3206a1e69fc0e7",
+      "text": "    public SignalWireBlock(GTMaterial material, int range, boolean insulated, boolean luminous, Properties properties) {\n        super(properties.lightLevel(state -> luminous ? state.getValue(POWER) : 0));\n        this.material = material;\n        this.range = range;\n        this.insulated = insulated;\n        var state = defaultBlockState().setValue(POWER, 0);\n        for (var property : ElectricWireBlock.CONNECTIONS) state = state.setValue(property, false);\n        registerDefaultState(state);\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "start_line": 113,
+      "end_line": 129,
+      "excerpt_sha256": "3548db59b097c3d0503156d0e4262b4d600f33afc93d7a39415fd0d82cbe27ee",
+      "text": "    public int output(Direction side) {\n        if (SAMPLING.get() || level == null || isRemoved()) return 0;\n        if ((Object) this instanceof com.gregtech.gregtech.content.cover.PanelCoverHost host\n                && !host.getCover(side).isEmpty()) return host.panels().signal(side);\n        if (signal <= 0 || side == received || !connected(side)) return 0;\n        var pos = worldPosition.relative(side);\n        if (!level.hasChunkAt(pos)) return 0;\n        var state = level.getBlockState(pos);\n        if (state.getBlock() instanceof SignalWireBlock) return 0;\n        return com.gregtech.gregtech.content.energy.SignalWireRules.vanillaOutput(signal,\n                state.getBlock() instanceof RedStoneWireBlock || state.isRedstoneConductor(level, pos));\n    }\n\n    private SignalWireBlockEntity neighbor(Direction side) {\n        var pos = worldPosition.relative(side);\n        return connected(side) && level.hasChunkAt(pos) && level.getBlockEntity(pos) instanceof SignalWireBlockEntity other\n                && !other.isRemoved() && other.connected(side.getOpposite()) ? other : null;"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "start_line": 135,
+      "end_line": 220,
+      "excerpt_sha256": "c38f8f47d217945f16c32bb237cb93a343bc95a34b9922389444d0d8f5b411b3",
+      "text": "    public void tickNetwork() {\n        if (level == null || level.isClientSide || isRemoved() || solvedTick == level.getGameTime()) return;\n        var component = new LinkedHashSet<SignalWireBlockEntity>();\n        var queuedWires = new ArrayDeque<SignalWireBlockEntity>();\n        component.add(this);\n        queuedWires.add(this);\n        while (!queuedWires.isEmpty()) {\n            var wire = queuedWires.remove();\n            for (var side : Direction.values()) {\n                var other = wire.neighbor(side);\n                if (other != null && component.add(other)) queuedWires.add(other);\n            }\n        }\n        var values = new HashMap<SignalWireBlockEntity, Long>();\n        var inputSides = new HashMap<SignalWireBlockEntity, Direction>();\n        var propagationQueue = new PriorityQueue<Wave>(Comparator.comparingLong(Wave::value).reversed());\n        SAMPLING.set(true);\n        try {\n            for (var wire : component) {\n                long value = Math.max(0, wire.mode * UNIT - wire.loss());\n                for (var side : Direction.values()) if (wire.connected(side)) {\n                    var pos = wire.worldPosition.relative(side);\n                    if (!level.hasChunkAt(pos)) continue;\n                    var state = level.getBlockState(pos);\n                    // Vanilla consumers are not sources, even when strongly powered through their solid body.\n                    if (state.getBlock() instanceof SignalWireBlock || state.getBlock() instanceof DispenserBlock\n                            || state.getBlock() instanceof HopperBlock || state.getBlock() instanceof PistonBaseBlock\n                            || state.getBlock() instanceof TntBlock || state.getBlock() instanceof NoteBlock\n                            || state.getBlock() instanceof TrapDoorBlock || state.getBlock() instanceof DoorBlock\n                            || state.getBlock() instanceof PoweredRailBlock || state.getBlock() instanceof RedstoneLampBlock) continue;\n                    if (state.is(RECEIVERS)) continue;\n                    long emitted;\n                    if (state.hasBlockEntity()) {\n                        var entity = level.getBlockEntity(pos);\n                        if (entity instanceof GtSignalReceiver) continue;\n                        if (entity instanceof GtSignalSource source) emitted = GtSignalCarrier.clamp(source.gtSignal(side.ordinal()));\n                        else emitted = level.getSignal(pos, side) * UNIT;\n                    } else emitted = level.getSignal(pos, side) * UNIT;\n                    long candidate = emitted - wire.loss();\n                    if (candidate > value) {\n                        value = candidate;\n                        inputSides.put(wire, side);\n                    }\n                }\n                values.put(wire, value);\n                if (value > 0) propagationQueue.add(new Wave(wire, value));\n            }\n        } finally {\n            SAMPLING.remove();\n        }\n        while (!propagationQueue.isEmpty()) {\n            var wave = propagationQueue.remove();\n            if (wave.value() != values.get(wave.wire())) continue;\n            long next = wave.value() - wave.wire().loss();\n            if (next <= 0) continue;\n            for (var side : Direction.values()) {\n                var other = wave.wire().neighbor(side);\n                if (other != null && next > values.get(other)) {\n                    values.put(other, next);\n                    inputSides.put(other, side.getOpposite());\n                    propagationQueue.add(new Wave(other, next));\n                }\n            }\n        }\n        var changedWires = new ArrayList<SignalWireBlockEntity>();\n        for (var wire : component) {\n            long next = values.get(wire);\n            var input = inputSides.get(wire);\n            if (wire.signal != next || wire.received != input\n                    || wire.getBlockState().getValue(SignalWireBlock.POWER) != (next + UNIT - 1) / UNIT) changedWires.add(wire);\n            wire.signal = next;\n            wire.received = input;\n            wire.solvedTick = level.getGameTime();\n        }\n        // Publish the entire solution before notifying consumers; observers never see half an update.\n        for (var wire : changedWires) {\n            int power = (int)((wire.signal + UNIT - 1) / UNIT);\n            var state = wire.getBlockState();\n            if (state.getValue(SignalWireBlock.POWER) != power) level.setBlock(wire.worldPosition, state.setValue(SignalWireBlock.POWER, power), 2);\n            level.updateNeighborsAt(wire.worldPosition, state.getBlock());\n            for (var side : Direction.values()) if (wire.connected(side) && level.hasChunkAt(wire.worldPosition.relative(side)))\n                level.updateNeighborsAt(wire.worldPosition.relative(side), state.getBlock());\n            level.updateNeighbourForOutputSignal(wire.worldPosition, state.getBlock());\n        }\n    }\n"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java",
+      "start_line": 90,
+      "end_line": 95,
+      "excerpt_sha256": "f8822e8406af188bf185d80c858dd38a331fbc44b7c699f560086a90ee2564dc",
+      "text": "    public void setMode(int value) {\n        if (isRemoved() || level != null && level.isClientSide) return;\n        mode = Math.max(0, Math.min(15, value));\n        setChanged();\n        solvedTick = Long.MIN_VALUE;\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireRules.java",
+      "start_line": 11,
+      "end_line": 23,
+      "excerpt_sha256": "0956d592618473f8ff9339f887df246d7c8887b0b8d8d8b6ec2686df807148d0",
+      "text": "    public static long loss(int range) {\n        return UNIT / range;\n    }\n\n    public static int comparator(long signal) {\n        return (int) (signal / UNIT);\n    }\n\n    public static int vanillaOutput(long signal, boolean attenuated) {\n        int power = (int) ((signal + UNIT - 1) / UNIT);\n        return Math.max(0, power - (attenuated ? 1 : 0));\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/api/java/com/gregtech/gregtech/api/signal/GtSignalCarrier.java",
+      "start_line": 11,
+      "end_line": 25,
+      "excerpt_sha256": "0e591a8931137581198f5dd5872a3ce96403147fa5f55932737e7c32f5a2c2b3",
+      "text": "    long UNIT = Integer.MAX_VALUE;\n\n    /** Fractional strength currently on this carrier, in {@link #UNIT} units. */\n    long signal();\n\n    /**\n     * Clamps an emitted strength into {@code [0, 15 * UNIT]}.\n     * Negative values become 0. Values above fifteen redstone levels become {@code 15 * UNIT}.\n     */\n    static long clamp(long emitted) {\n        if (emitted <= 0) return 0;\n        long max = 15L * UNIT;\n        return emitted > max ? max : emitted;\n    }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/core/src/main/java/com/gregtech/gregtech/api/energy/EnergyNodeSpec.java",
+      "start_line": 128,
+      "end_line": 129,
+      "excerpt_sha256": "6366e680b5fb11e523e65c52aca514df30f6161e25524264aa9d5ffd34bb1d89",
+      "text": "    public enum Kind { CONVERTER, MAGNET, TURBINE, SOLAR, STORAGE }\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 59,
+      "end_line": 59,
+      "excerpt_sha256": "a38ae263399535a8578893207cc4e2e8eff1b5f493609a74d5aed6b1a7aa61e5",
+      "text": " public static void register(IEventBus bus){if(!ALL.isEmpty())throw new IllegalStateException(\"Energy nodes registered twice\");com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications().forEach(GTEnergyNodes::add);com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.specifications().forEach(GTEnergyNodes::add);BLOCKS.register(bus);ITEMS.register(bus);ENTITIES.register(bus);bus.addListener(GTEnergyNodes::capabilities);}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/registry/GTEnergyNodes.java",
+      "start_line": 105,
+      "end_line": 127,
+      "excerpt_sha256": "1470ba8c94d49fc6eca34c2bd923d7c37d3c59761db448073272c3d8be104a9c",
+      "text": "    public static void registerAll() {\n        REACTOR_CORE_BLOCK = GTBlocks.BLOCKS.register(\"reactor_core\", () ->\n                new com.gregtech.gregtech.block.energy.ReactorCoreBlock(\n                        BlockBehaviour.Properties.of()\n                                .mapColor(MapColor.METAL)\n                                .strength(8.0f, 12.0f)\n                                .requiresCorrectToolForDrops()));\n        GTBlocks.BLOCK_ITEMS.register(\"reactor_core\",\n                () -> new BlockItem(REACTOR_CORE_BLOCK.get(), new Item.Properties()));\n\n        REACTOR_CASING = GTBlocks.BLOCKS.register(\"reactor_casing\", ReactorCasingBlock::new);\n        GTBlocks.BLOCK_ITEMS.register(\"reactor_casing\",\n                () -> new BlockItem(REACTOR_CASING.get(), new Item.Properties()));\n\n        REACTOR_CORE_2X2 = GTBlocks.BLOCKS.register(\"reactor_core_2x2\", ReactorCore2x2Block::new);\n        GTBlocks.BLOCK_ITEMS.register(\"reactor_core_2x2\",\n                () -> new BlockItem(REACTOR_CORE_2X2.get(), new Item.Properties()));\n\n        com.gregtech.gregtech.content.energy.EnergyNodeDefinitions.specifications().forEach(GTEnergyNodes::add);\n        com.gregtech.gregtech.content.energy.MagnetMachineDefinitions.specifications().forEach(GTEnergyNodes::add);\n    }\n//?}\n}"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/EnergyNodeBlockEntity.java",
+      "start_line": 398,
+      "end_line": 436,
+      "excerpt_sha256": "c0da7aa25c6aeeb6dcf5361fbd8bbc83b05d395d5deeca7cdeeb23613c799845",
+      "text": "    public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyNodeBlockEntity be) {\n        if (be.spec == null) return;\n        if(!be.hasOriginalConverter()&&!be.isBatteryBox()&&!be.isSolar()&&!be.isElectricTransformer()&&!be.batteryCovers.isEmpty()) {\n            be.panels().beforeTick();\n            for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());\n            be.panels().afterTick();\n        }\n        if (be.isBatteryBox()) {\n            be.panels().beforeTick();\n            for(var side:Direction.values())com.gregtech.gregtech.content.cover.ComponentCoverRuntime.tick(be,side,level.getGameTime());\n            be.batteryEnergy.tick(level.getGameTime(),level,pos);\n            long offered=be.batteryEnergy.offered();\n            if(offered>0) be.batteryEnergy.emitted(EnergyTransfer.emitEnergyToSide(\n                    be.spec.outType(),be.facing(),be.outRate(),offered,be));\n            be.panels().afterTick();\n            be.setChanged();\n            if(level.getGameTime()%20==0){\n                var property=com.gregtech.gregtech.block.energy.BatteryBoxBlock.CHARGE_STATE;\n                if(state.hasProperty(property)&&state.getValue(property)!=be.batteryEnergy.displayState())\n                    level.setBlock(pos,state.setValue(property,be.batteryEnergy.displayState()),3);\n                else level.sendBlockUpdated(pos,state,state,2);\n            }\n            return;\n        }\n        if (be.isSolar()) {\n            be.tickSolar(level, pos);\n            return;\n        }\n        if (be.hasOriginalConverter()) {\n            be.tickOriginalConverter();\n            return;\n        }\n        be.emitOutput();\n        // charge bar: sync the buffer to clients at most every 20 ticks\n        if (level.getGameTime() % 20 == 0 && be.lastSyncedBuffer != be.buffer) {\n            be.lastSyncedBuffer = be.buffer;\n            level.sendBlockUpdated(pos, state, state, net.minecraft.world.level.block.Block.UPDATE_CLIENTS);\n        }\n    }"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "start_line": 14,
+      "end_line": 14,
+      "excerpt_sha256": "dc0ae9cbdce496877888f5240dc21e68e8e5322669d3333cecf2438c01268c52",
+      "text": "        com.gregtech.gregtech.registry.GTSignalWires.register();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.20.1-forge/src/main/java/com/gregtech/gregtech/bootstrap/registration/MachineBlockBootstrap.java",
+      "start_line": 25,
+      "end_line": 25,
+      "excerpt_sha256": "7f054df4e758d66f966ae39c6b8ba1087833ff3fbe074b082401d1fd8604ddf9",
+      "text": "        GTEnergyNodes.registerAll();"
+    },
+    {
+      "path": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/src/main/java/com/gregtech/gregtech/platform/neoforge/GregTechNeoForge.java",
+      "start_line": 104,
+      "end_line": 106,
+      "excerpt_sha256": "5fc0b240c410ed36d53e6febbbb3a21e531c9e308c59699fcb4274c45b990c39",
+      "text": "        com.gregtech.gregtech.registry.GTSignalWires.register(modEventBus);\n        com.gregtech.gregtech.registry.GTMenuTypes.register(modEventBus);\n        com.gregtech.gregtech.registry.GTEnergyNodes.register(modEventBus);"
+    }
+  ],
+  "scope": "Named contract excerpts, not whole-file or full signal-network acceptance.",
+  "formal_findings_added": [
+    414,
+    415
+  ],
+  "missing_absorber": {
+    "original_id": 10180,
+    "registered_material": "Pd",
+    "original_recipe": "GOG / LBL / CMC; Pd machine casing, magical circuit, fine gold wire, obsidian plate, lapis gem, vanilla beacon",
+    "sources": {
+      "vanilla_dragon_egg": "64 QU",
+      "vanilla_skull": "1 TU",
+      "optional_twilight_trophies": "64 KU/QU/HU/LU/CU by metadata"
+    },
+    "current_registration_and_consumer_trace": "EnergyNodeDefinitions and MagnetMachineDefinitions -> both actual GTEnergyNodes registration branches -> EnergyNodeBlockEntity; no corresponding generator or trophy-consumption path",
+    "limits": "Optional Twilight integration compatibility is not declared implemented; vanilla sources prove the device is not wholly optional."
+  },
+  "bounded_name_screen": {
+    "query": "MagicFieldAbsorber|magicenergyabsorber|magic[_ .]?field|magic[_ .]?absor|\\b10180\\b|魔法场吸收",
+    "maintained_java_files": 1827,
+    "matches": [
+      "core/src/main/java/com/gregtech/gregtech/content/book/GTBooksGen.java"
+    ],
+    "inventory_sha256": "0faac67aa0a974bd2bd6ec21a662c33d09732c29c27c09b45758baf911c00005",
+    "not_proof_alone": "GTBooksGen mentions the device in book prose; prose is not registration. Actual registration and consumers independently inspected."
+  },
+  "tie_preference_source_witness": {
+    "method": "Finite source-contract derivation, not execution of either world or solver.",
+    "mode": 0,
+    "range": 16,
+    "unit": 2147483647,
+    "loss": 134217727,
+    "previous_received": "EAST",
+    "connected_external_candidates": {
+      "WEST": 32078036978,
+      "EAST": 32078036978
+    },
+    "original_next_received": "EAST",
+    "current_next_received": "WEST",
+    "reason": "Original samples previous received first and changes on strict >; current recreates inputSides and scans Direction.values WEST before EAST using strict >.",
+    "effect": "Both keep identical scalar signal; the received-side output-suppression predicate can select a different face.",
+    "limits": "No observed flicker, Minecraft circuit witness, loop behavior or original-save acceptance is claimed. Modern anti-latch rebuilding is preserved."
+  },
+  "native_direction_order": [
+    {
+      "artifact": "C:/Users/90499/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.20_mapped_official_1.20.1/forge-1.20.1-47.4.20_mapped_official_1.20.1.jar",
+      "artifact_sha256": "90cda9b6f513c2bb033cb94b99f8c0e8691fe6cc1582dd520beb243a2616f965",
+      "entry": "net/minecraft/core/Direction.class",
+      "entry_sha256": "f07c56b09cffe921728f6a3b17fb1ba0bb2ace5bcc6f78ec5537c66d9703e04f",
+      "javap_output": "work/signal-wire-audit-20261022/forge-Direction.javap.txt",
+      "javap_sha256": "0da08407981df4403ff455b9a89daa06078f6c171e2638e1f682b4a4076e4079",
+      "value_order": [
+        "DOWN",
+        "UP",
+        "NORTH",
+        "SOUTH",
+        "WEST",
+        "EAST"
+      ],
+      "values_method": "private static net.minecraft.core.Direction[] $values();\r\n    Code:\r\n       0: bipush        6\r\n       2: anewarray     #2                  // class net/minecraft/core/Direction\r\n       5: dup\r\n       6: iconst_0\r\n       7: getstatic     #134                // Field DOWN:Lnet/minecraft/core/Direction;\r\n      10: aastore\r\n      11: dup\r\n      12: iconst_1\r\n      13: getstatic     #132                // Field UP:Lnet/minecraft/core/Direction;\r\n      16: aastore\r\n      17: dup\r\n      18: iconst_2\r\n      19: getstatic     #138                // Field NORTH:Lnet/minecraft/core/Direction;\r\n      22: aastore\r\n      23: dup\r\n      24: iconst_3\r\n      25: getstatic     #136                // Field SOUTH:Lnet/minecraft/core/Direction;\r\n      28: aastore\r\n      29: dup\r\n      30: iconst_4\r\n      31: getstatic     #130                // Field WEST:Lnet/minecraft/core/Direction;\r\n      34: aastore\r\n      35: dup\r\n      36: iconst_5\r\n      37: getstatic     #128                // Field EAST:Lnet/minecraft/core/Direction;\r\n      40: aastore\r\n      41: areturn\r\n\r"
+    },
+    {
+      "artifact": "C:/Dev/GregTech6/multiversion/versions/1.21.1-neoforge/build/moddev/artifacts/neoforge-21.1.243-sources.jar",
+      "artifact_sha256": "c6848c8b8c36a9abf7e82eb7a5eb85ba6edf6e9ba5a5cc236468746b6cd21c3c",
+      "entry": "net/minecraft/core/Direction.java",
+      "entry_sha256": "2e88a62eea174e239bec606cf7e39baad1d68de0d8cb1b5e9202943b3bdc384e",
+      "extracted_path": "work/signal-wire-audit-20261022/neo-Direction.java",
+      "value_order": [
+        "DOWN",
+        "UP",
+        "NORTH",
+        "SOUTH",
+        "WEST",
+        "EAST"
+      ]
+    }
+  ],
+  "refactoring": {
+    "baseline": "88b5c66f3a268609403d91e8d77695e508623e07",
+    "files": {
+      "core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireCatalog.java": {
+        "before_raw_sha256": "9a1988199404c7b886d344e07a35bc468d4bd2dc3d55b46899f11c0c6256ac11",
+        "after_raw_sha256": "29246fc12f6aee57ea1e2797b106cc8da4dcbba8c0da9496496b4ba88c3555b5",
+        "before_lines": 10,
+        "after_lines": 22,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "core",
+            "tokens": 133,
+            "execution_sha256": "f796966aca5076009481184ed7654a000b40c5de3f9327bf85120b7bffd009d2",
+            "literal_positions_sha256": "0226486a9c9bcb14b8e252496612849b567ad41b9681c5ad40476eb247d93c52",
+            "literal_count": 6
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTSignalWires.java": {
+        "before_raw_sha256": "a007a09b893565ee1da30fc10ba9d5c71f213db26e4838ed1016dc5f98fb058a",
+        "after_raw_sha256": "231321630e8c48a9f9fb59ec998940c13ede3860e33056fd42d858a0ece80eca",
+        "before_lines": 58,
+        "after_lines": 74,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 331,
+            "execution_sha256": "fcaa833565747a9866530208ad338eeb37bfa11add84e78f12f05dd49fda8cac",
+            "literal_positions_sha256": "29ff404900ba7f8fc7b47940e1a9b01cddd52e79276b4e45ba13612e6308f11d",
+            "literal_count": 4
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 582,
+            "execution_sha256": "00696a93b2152aa67d48402e4e7922e4e26f9dcaedd793c4cf0e7a8f42e45f05",
+            "literal_positions_sha256": "4f923a9d4f92cd39e0aeff315f3a601a3c6c05872304ab7393d7096601c99907",
+            "literal_count": 9
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java": {
+        "before_raw_sha256": "4b0fdc8aac9819f7d7fc3bd874be37d4b1080e876f5f5574f053ecff540371b5",
+        "after_raw_sha256": "c36ff964971ad6d83b9c549d3d93674aa1ab80d86f97980f1888416d169977c9",
+        "before_lines": 191,
+        "after_lines": 271,
+        "comment_corrections": [],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 1666,
+            "execution_sha256": "14d1db26143941d9ccc9ea4c0febb2508822ae61bccfb89a8f36bb1eab12796b",
+            "literal_positions_sha256": "c3ea5b8b07b6cc6662bde6ec99e1b04c945a9a949666ec5d1301014c4649b3a8",
+            "literal_count": 29
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 1846,
+            "execution_sha256": "460796d497c4ecbef75892b1fe6b068562033c6b738792c6a780caf919310a28",
+            "literal_positions_sha256": "bf937a821cfb6ed9e1e7f0f415cfd5ed68305c381b6a291ef68b698cb74dfa4b",
+            "literal_count": 29
+          }
+        ]
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java": {
+        "before_raw_sha256": "a70b45a0ee3391f4854b1eb9abb3764ccf6441701c3ee616b2df28793b0baba7",
+        "after_raw_sha256": "33af0f59c41b40f18215f0f437141e020cc3cb949f13ce0279a003b41b3575eb",
+        "before_lines": 187,
+        "after_lines": 303,
+        "comment_corrections": [
+          [
+            " * Loaded components are solved once per server tick; no static world/network cache or chunk loading.",
+            " * Members cache their solved tick; mode changes invalidate that member. No world cache or chunk loading."
+          ]
+        ],
+        "views": [
+          {
+            "platform": "forge",
+            "tokens": 2119,
+            "execution_sha256": "392a18ffaa4571c570f46281010198fc13274ef6b98d76f2d7b8e81b233f2336",
+            "literal_positions_sha256": "27a84f7e033f5aeab1ad1c23346881d32e1eedff017fd564b336de1e544a0a37",
+            "literal_count": 27
+          },
+          {
+            "platform": "neoforge",
+            "tokens": 2137,
+            "execution_sha256": "780cc00e83a8f1a479605d4d6bd3490fc547c62afc6614c984af25da9e4628e3",
+            "literal_positions_sha256": "8f047f3e537572250e1316e54691a52e2aadebfb6c6a6f459b197ba978f0ac7c",
+            "literal_count": 27
+          }
+        ]
+      }
+    },
+    "controlled_identifier_renames": {
+      "multiversion/src/main/java/com/gregtech/gregtech/registry/GTSignalWires.java": {
+        "mapping": {
+          "def": "familySpec",
+          "family": "registerFamily"
+        },
+        "occurrences": {
+          "def": 5,
+          "family": 2
+        },
+        "new_name_and_member_guards": "pass"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/block/energy/SignalWireBlock.java": {
+        "mapping": {
+          "a": "minimum",
+          "b": "maximum",
+          "e": "entityContext"
+        },
+        "occurrences": {
+          "a": 7,
+          "b": 7,
+          "e": 4
+        },
+        "new_name_and_member_guards": "pass"
+      },
+      "multiversion/src/main/java/com/gregtech/gregtech/blockentity/energy/SignalWireBlockEntity.java": {
+        "mapping": {
+          "pending": "queuedWires",
+          "inputs": "inputSides",
+          "waves": "propagationQueue",
+          "changed": "changedWires"
+        },
+        "occurrences": {
+          "pending": 5,
+          "inputs": 4,
+          "waves": 5,
+          "changed": 3
+        },
+        "new_name_and_member_guards": "pass"
+      }
+    },
+    "scoped_player_and_ticker_names": [
+      {
+        "before": "(l,p,s,be)->((SignalWireBlockEntity)be).tickNetwork()",
+        "after": "(tickLevel,tickPos,tickState,wireEntity)->((SignalWireBlockEntity)wireEntity).tickNetwork()",
+        "occurrences": 2
+      },
+      {
+        "before": "instanceof Player p &&",
+        "after": "instanceof Player playerHoldingTool &&",
+        "occurrences": 2
+      },
+      {
+        "before": "isWireCutter(p.getMainHandItem())",
+        "after": "isWireCutter(playerHoldingTool.getMainHandItem())",
+        "occurrences": 2
+      }
+    ],
+    "controlled_numeric_extractions": [
+      {
+        "before": "return UNIT/((SignalWireBlock)getBlockState().getBlock()).range();",
+        "after": "return com.gregtech.gregtech.content.energy.SignalWireRules.loss(((SignalWireBlock)getBlockState().getBlock()).range());"
+      },
+      {
+        "before": "return (int)(signal/UNIT);",
+        "after": "return com.gregtech.gregtech.content.energy.SignalWireRules.comparator(signal);"
+      },
+      {
+        "before": "int power=(int)((signal+UNIT-1)/UNIT);\n        return Math.max(0,power-(state.getBlock() instanceof RedStoneWireBlock||state.isRedstoneConductor(level,pos)?1:0));",
+        "after": "return com.gregtech.gregtech.content.energy.SignalWireRules.vanillaOutput(signal,\n                state.getBlock() instanceof RedStoneWireBlock||state.isRedstoneConductor(level,pos));"
+      }
+    ],
+    "new_core_helper": {
+      "path": "core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireRules.java",
+      "raw_sha256": "aa75170d3d367021a0c653ec58e7005958e6bbe2003e9ca21b3cdc8f020d26ed",
+      "methods": [
+        "loss(int)",
+        "comparator(long)",
+        "vanillaOutput(long,boolean)"
+      ],
+      "unit_binding": "Same compile-time GtSignalCarrier.UNIT as original native alias",
+      "complete_expected_code_sha256": "019bec1ce9cc5862c73639f9a66bd1b8fffc155e21ba042df4743fa876db4624"
+    },
+    "scope": "Complete remaining platform streams after listed local renames and three exact arithmetic extractions; literal positions, comments and Stonecutter directives retained. Helper body fixed and independently executed with actual core API."
+  },
+  "core_numeric_probe": {
+    "legal_strengths": 8238,
+    "numeric_checks": 24716,
+    "unit": 2147483647,
+    "registered_ranges": [
+      16,
+      64
+    ],
+    "world_execution": false,
+    "duration_seconds": 0.505,
+    "source_sha256": {
+      "core/src/api/java/com/gregtech/gregtech/api/signal/GtSignalCarrier.java": "e74e6372da71292c6528fcaee0629b1d9e15110f9a57dd4842d21318a51e262e",
+      "core/src/main/java/com/gregtech/gregtech/content/energy/SignalWireRules.java": "aa75170d3d367021a0c653ec58e7005958e6bbe2003e9ca21b3cdc8f020d26ed",
+      "work/signal-wire-audit-20261022/SignalWireProbe.java": "1f0c6e36e1de2189d562e48c70c9f3d825449e48c6f7dc29c811087da368bddb"
+    },
+    "oracle": "BigInteger divide/remainder over legal 0..15*UNIT strengths; registered 16/64 ranges. Not the native solver or original world."
+  },
+  "probe_logs": [
+    {
+      "path": "C:/Dev/GregTech6/work/signal-wire-audit-20261022/javac.log",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lines": 0
+    },
+    {
+      "path": "C:/Dev/GregTech6/work/signal-wire-audit-20261022/probe.log",
+      "raw_sha256": "80e441531bb0659d8c03f41d10a90176a341504a8709b8ac9cffb86f97503d1a",
+      "lines": 1
+    }
+  ],
+  "protected_materials": {
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/WoodMaterials.java": "060284661a2f9aa8f2097d453cc06de48b54e9f267f6f54781867447d4596d00",
+    "core/src/main/java/com/gregtech/gregtech/content/material/generated/CompoundMaterials.java": "26751d09eb9151bd6703b766ae53e0b9c01cbea67750105b247d8782f9bce210"
+  },
+  "preparation_notes": [
+    "Scoped ticker/player names distinguish BlockPos and Player; collision checks ran before applying.",
+    "An apparent duplicated inputSides.put was overlapping terminal excerpts, not duplicate source; no line was deleted.",
+    "PowerShell literal-glob and guessed API path reads were corrected by actual file inventory; neither modified source.",
+    "The root link check initially required an uppercase report link in every document; VERIFICATION correctly linked the lowercase receipt. The checker now accepts both real destinations."
+  ],
+  "verification_limits": {
+    "full_platform_compile_this_batch": false,
+    "gradle": false,
+    "GameTest": false,
+    "game": false,
+    "original_1710_game": false,
+    "world_restart": false,
+    "build": false,
+    "push": false,
+    "github_writes": false,
+    "whole_goal_complete": false
+  },
+  "root_revalidation": {
+    "current_original_and_probe_hashes": "match",
+    "source_excerpts": "match exact current spans",
+    "actual_native_artifacts_and_order_evidence": "match",
+    "refactoring": "all seven current platform views and complete helper match the controlled proof",
+    "maintained_source_inventory_hashes": "match 1827 paths",
+    "protected_materials": "unchanged",
+    "formal_ids": {
+      "contiguous": true,
+      "count": 415
+    },
+    "new_links": "resolve",
+    "production_build_configuration": "unchanged",
+    "whole_goal_complete": false
+  }
+}

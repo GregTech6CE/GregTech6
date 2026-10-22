@@ -433,3 +433,5 @@ core `content/energy/ZpmWorkRules.java` 管容量、补缓存量和光照，`ref
 物流网络的物理扫描与坐标快照在`LogisticsNetwork`，安装物及显示数据在`LogisticsCovers`，线的持久化／原生同步在`LogisticsWireBlockEntity`；能力代理的目标选择在`ExtenderSpec`／`RelayRoutingRules`和原生`ExtenderBlockEntity`／`CapabilityRelayBlockEntity`，不等于物流节点委托。五源码已展开并保留执行，见[网络与生命周期核查](LOGISTICS_NETWORK_AUDIT.md)。
 
 物流线客户端：共享`LogisticsWireBlock`维护连接与形状，`LogisticsCoverRenderer`消费安装物和CPU刻度；Neo的`LogisticsRegistries`／`LogisticsClientSetup`分别处理原生注册和渲染订阅。图集目录源位于core资源assets/minecraft/atlases/blocks.json，模型loader改写在multiversion/build.gradle；局部class没有注册或原维护JSON仍写forge并不直接代表缺实现。四源已展开并保留执行，见[客户端核查](LOGISTICS_CLIENT_AUDIT.md)。
+
+红石导线：core `content/energy/SignalWireCatalog.java` 给三材料族，`SignalWireRules.java` 只给现有损耗／比较器／原版输出三数值表达式。共享 `registry/GTSignalWires.java` 注册六项；`block/energy/SignalWireBlock.java` 管原生连接／形状与工具，`blockentity/energy/SignalWireBlockEntity.java` 管组件采样、传播、输入面、瞬态保存与世界通知。core `api/signal` 在 `src/api/java`，不要按其它旧api路径猜位置。魔法场吸收器缺口及平值策略见[核查](SIGNAL_WIRE_AUDIT.md)；不能把书籍提及当成注册。
