@@ -19,7 +19,8 @@ import java.util.List;
 /**
  * GT6 {@code GarbageGT}: the server-wide "Garbage Dimension". Ender Garbage Bins
  * teleport their contents here; the (admin-only) Ender Garbage Dump retrieves them.
- * Unlike GT6's static lists this survives restarts as world SavedData.
+ * GT6 also saves its static pools through GarbageGT server save/load hooks.
+ * This port stores the server-wide pools in overworld SavedData.
  */
 public class GarbageData extends SavedData {
 
@@ -28,21 +29,22 @@ public class GarbageData extends SavedData {
     /**
      * Hard cap on the number of distinct garbage piles kept in the dump.
      *
-     * <p>A pile merges by {@link ItemStack#isSameItemSameTags}, so a stack carrying per-instance NBT
-     * (a used tool, a charged battery, a bee's random genome) never merges with anything: every trashed
-     * stack became a <em>new</em> permanent entry. Nothing else removes an entry - the only removal
-     * path is {@link #extractItem} draining that exact pile to zero - so the list grew with every
-     * NBT-carrying stack the Ender Garbage Bin ever voided, in the heap and in the world save alike.
-     * Past this cap the oldest pile is dropped, which bounds the dump while leaving the behaviour for
-     * every dump a player can actually reach through the container (it shows 54 piles) unchanged.</p>
+     * <p>Equal item/tag or component combinations merge; distinct combinations use separate entries.
+     * Adding a new entry at this cap discards the oldest pile, including one visible in the first
+     * 54 GUI slots. This is the port's bounded retention policy, rather than an original GT6 limit.
+     * The original pool also persists, but does not impose this entry cap.</p>
      */
     public static final int MAX_ENTRIES = com.gregtech.gregtech.content.storage.GarbageStorageRules.MAX_ENTRIES;
 
-    /** One merged garbage pile: an item template (count 1) plus an unbounded count. */
+    /** One merged garbage pile: an item template (count 1) plus a long count. */
     private static final class Entry {
         final ItemStack template;
         long count;
-        Entry(ItemStack template, long count) { this.template = template; this.count = count; }
+
+        Entry(ItemStack template, long count) {
+            this.template = template;
+            this.count = count;
+        }
     }
 
     private final List<Entry> items = new ArrayList<>();
@@ -53,7 +55,7 @@ public class GarbageData extends SavedData {
         if (server == null) throw new IllegalStateException("GarbageData requested on the client");
         return server.overworld().getDataStorage()
 //? if >=1.21.1 {
-                /*.computeIfAbsent(new SavedData.Factory<>(GarbageData::new,GarbageData::load,net.minecraft.util.datafix.DataFixTypes.LEVEL), NAME);
+        /*.computeIfAbsent(new SavedData.Factory<>(GarbageData::new, GarbageData::load, net.minecraft.util.datafix.DataFixTypes.LEVEL), NAME);
 *///?} else {
                 .computeIfAbsent(GarbageData::load, GarbageData::new, NAME);
 //?}
@@ -63,13 +65,13 @@ public class GarbageData extends SavedData {
 
     public void trash(ItemStack stack) {
         if (stack == null || stack.isEmpty()) return;
-        for (Entry e : items) {
+        for (Entry entry : items) {
 //? if >=1.21.1 {
-            /*if (ItemStack.isSameItemSameComponents(e.template, stack)) {
+            /*if (ItemStack.isSameItemSameComponents(entry.template, stack)) {
 *///?} else {
-            if (ItemStack.isSameItemSameTags(e.template, stack)) {
+            if (ItemStack.isSameItemSameTags(entry.template, stack)) {
 //?}
-                e.count += stack.getCount();
+                entry.count += stack.getCount();
                 setDirty();
                 return;
             }
@@ -81,13 +83,14 @@ public class GarbageData extends SavedData {
 
     public void trash(FluidStack fluid) {
         if (fluid == null || fluid.isEmpty()) return;
-        for (FluidStack f : fluids) {
+        for (FluidStack storedFluid : fluids) {
 //? if >=1.21.1 {
-            /*if (FluidStack.isSameFluidSameComponents(f,fluid)) {
+            /*if (FluidStack.isSameFluidSameComponents(storedFluid, fluid)) {
 *///?} else {
-            if (f.isFluidEqual(fluid)) {
+            if (storedFluid.isFluidEqual(fluid)) {
 //?}
-                f.setAmount(com.gregtech.gregtech.content.storage.GarbageStorageRules.fluidMerge(f.getAmount(),fluid.getAmount()));
+                storedFluid.setAmount(com.gregtech.gregtech.content.storage.GarbageStorageRules.fluidMerge(storedFluid.getAmount(),
+                        fluid.getAmount()));
                 setDirty();
                 return;
             }
@@ -109,24 +112,27 @@ public class GarbageData extends SavedData {
 
     // ── retrieval (Ender Garbage Dump) ───────────────────────────────────
 
-    public int entryCount() { return items.size(); }
+    public int entryCount() {
+        return items.size();
+    }
 
     /** Pile {@code slot} clamped to a displayable stack for container slots. */
     public ItemStack viewItem(int slot) {
         if (slot < 0 || slot >= items.size()) return ItemStack.EMPTY;
-        Entry e = items.get(slot);
-        return e.template.copyWithCount(com.gregtech.gregtech.content.storage.GarbageStorageRules.take(e.count,Integer.MAX_VALUE,e.template.getMaxStackSize()));
+        Entry entry = items.get(slot);
+        return entry.template.copyWithCount(com.gregtech.gregtech.content.storage.GarbageStorageRules.take(entry.count, Integer.MAX_VALUE,
+                entry.template.getMaxStackSize()));
     }
 
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (slot < 0 || slot >= items.size() || amount <= 0) return ItemStack.EMPTY;
-        Entry e = items.get(slot);
-        int take = com.gregtech.gregtech.content.storage.GarbageStorageRules.take(e.count,amount,e.template.getMaxStackSize());
+        Entry entry = items.get(slot);
+        int take = com.gregtech.gregtech.content.storage.GarbageStorageRules.take(entry.count, amount, entry.template.getMaxStackSize());
         if (take <= 0) return ItemStack.EMPTY;
-        ItemStack out = e.template.copyWithCount(take);
+        ItemStack out = entry.template.copyWithCount(take);
         if (!simulate) {
-            e.count -= take;
-            if (e.count <= 0) items.remove(slot);
+            entry.count -= take;
+            if (entry.count <= 0) items.remove(slot);
             setDirty();
         }
         return out;
@@ -134,18 +140,18 @@ public class GarbageData extends SavedData {
 
     /** Drains from the first non-empty garbage fluid, up to {@code maxDrain}. */
     public FluidStack drain(int maxDrain, boolean simulate) {
-        for (int i = 0; i < fluids.size(); i++) {
-            FluidStack f = fluids.get(i);
-            if (f.isEmpty()) continue;
-            int take = Math.min(maxDrain, f.getAmount());
+        for (int fluidIndex = 0; fluidIndex < fluids.size(); fluidIndex++) {
+            FluidStack storedFluid = fluids.get(fluidIndex);
+            if (storedFluid.isEmpty()) continue;
+            int take = Math.min(maxDrain, storedFluid.getAmount());
 //? if >=1.21.1 {
-            /*FluidStack out = f.copyWithAmount(take);
+            /*FluidStack out = storedFluid.copyWithAmount(take);
 *///?} else {
-            FluidStack out = new FluidStack(f, take);
+            FluidStack out = new FluidStack(storedFluid, take);
 //?}
             if (!simulate) {
-                f.shrink(take);
-                if (f.isEmpty()) fluids.remove(i);
+                storedFluid.shrink(take);
+                if (storedFluid.isEmpty()) fluids.remove(fluidIndex);
                 setDirty();
             }
             return out;
@@ -156,60 +162,60 @@ public class GarbageData extends SavedData {
     // ── persistence ──────────────────────────────────────────────────────
 
 //? if >=1.21.1 {
-    /*public static GarbageData load(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    /*public static GarbageData load(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
     public static GarbageData load(CompoundTag tag) {
 //?}
         GarbageData data = new GarbageData();
-        for (Tag t : tag.getList("Items", Tag.TAG_COMPOUND)) {
+        for (Tag savedTag : tag.getList("Items", Tag.TAG_COMPOUND)) {
             // A save written before the cap existed can hold far more piles than MAX_ENTRIES; keep the
             // oldest ones, which are exactly the ones the container shows and drains.
             if (data.items.size() >= MAX_ENTRIES) break;
-            CompoundTag c = (CompoundTag) t;
+            CompoundTag compound = (CompoundTag) savedTag;
 //? if >=1.21.1 {
-            /*ItemStack template = ItemStack.parseOptional(lookup,c.getCompound("Item"));
+            /*ItemStack template = ItemStack.parseOptional(lookup, compound.getCompound("Item"));
 *///?} else {
-            ItemStack template = ItemStack.of(c.getCompound("Item"));
+            ItemStack template = ItemStack.of(compound.getCompound("Item"));
 //?}
-            long count = c.getLong("Count");
+            long count = compound.getLong("Count");
             if (!template.isEmpty() && count > 0) data.items.add(new Entry(template, count));
         }
-        for (Tag t : tag.getList("Fluids", Tag.TAG_COMPOUND)) {
+        for (Tag savedTag : tag.getList("Fluids", Tag.TAG_COMPOUND)) {
             if (data.fluids.size() >= MAX_ENTRIES) break;
 //? if >=1.21.1 {
-            /*FluidStack f = FluidStack.parseOptional(lookup,(CompoundTag)t);
+            /*FluidStack storedFluid = FluidStack.parseOptional(lookup, (CompoundTag) savedTag);
 *///?} else {
-            FluidStack f = FluidStack.loadFluidStackFromNBT((CompoundTag) t);
+            FluidStack storedFluid = FluidStack.loadFluidStackFromNBT((CompoundTag) savedTag);
 //?}
-            if (!f.isEmpty()) data.fluids.add(f);
+            if (!storedFluid.isEmpty()) data.fluids.add(storedFluid);
         }
         return data;
     }
 
     @Override
 //? if >=1.21.1 {
-    /*public CompoundTag save(CompoundTag tag,net.minecraft.core.HolderLookup.Provider lookup) {
+    /*public CompoundTag save(CompoundTag tag, net.minecraft.core.HolderLookup.Provider lookup) {
 *///?} else {
     public CompoundTag save(CompoundTag tag) {
 //?}
         ListTag itemList = new ListTag();
-        for (Entry e : items) {
-            CompoundTag c = new CompoundTag();
-            // ItemStack.save clamps Count to a byte, so the real count is kept beside it
+        for (Entry entry : items) {
+            CompoundTag compound = new CompoundTag();
+            // Keep the pool count separately; the saved item template represents one item
 //? if >=1.21.1 {
-            /*c.put("Item", e.template.save(lookup));
+            /*compound.put("Item", entry.template.save(lookup));
 *///?} else {
-            c.put("Item", e.template.save(new CompoundTag()));
+            compound.put("Item", entry.template.save(new CompoundTag()));
 //?}
-            c.putLong("Count", e.count);
-            itemList.add(c);
+            compound.putLong("Count", entry.count);
+            itemList.add(compound);
         }
         tag.put("Items", itemList);
         ListTag fluidList = new ListTag();
 //? if >=1.21.1 {
-        /*for (FluidStack f : fluids) fluidList.add(f.save(lookup));
+        /*for (FluidStack storedFluid : fluids) fluidList.add(storedFluid.save(lookup));
 *///?} else {
-        for (FluidStack f : fluids) fluidList.add(f.writeToNBT(new CompoundTag()));
+        for (FluidStack storedFluid : fluids) fluidList.add(storedFluid.writeToNBT(new CompoundTag()));
 //?}
         tag.put("Fluids", fluidList);
         return tag;
